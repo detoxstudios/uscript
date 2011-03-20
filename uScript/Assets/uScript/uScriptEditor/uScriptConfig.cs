@@ -188,21 +188,40 @@ public partial class uScriptConfig
    public static float bezierPenWidth = 1.25f;
    public static float bezierPenWidthSelected = 1.5f;
 
-   public static String[] NodeTypes = {
-                                       "Detox.ScriptEditor.CommentNode",
-                                       "Detox.ScriptEditor.EntityEventDisplayNode",
-                                       "Detox.ScriptEditor.EntityMethodDisplayNode",
-                                       "Detox.ScriptEditor.EntityPropertyDisplayNode",
-                                       "Detox.ScriptEditor.LocalNodeDisplayNode",
-                                       "Detox.ScriptEditor.LogicNodeDisplayNode"
+   public static String[] StyleTypes = {
+                                       "variable_string",
+                                       "variable_bool",
+                                       "variable_float",
+                                       "variable_int",
+                                       "variable_default",
+                                       "variable_vector3",
+                                       "variable_gameobject",
+                                       "variable_object",
+                                       "variable_selected"
                                     };
    public static UnityEngine.Color[] LineColors = 
                                     {
-                                       UnityEngine.Color.black,
-                                       new UnityEngine.Color(255.0f, 0.0f, 0.0f),
-                                       UnityEngine.Color.blue,
-                                       UnityEngine.Color.green,
-                                       UnityEngine.Color.yellow,
-                                       UnityEngine.Color.magenta
+                                       new UnityEngine.Color(109.0f/255.0f, 224.0f/255.0f, 120.0f/255.0f),
+                                       new UnityEngine.Color(255.0f/255.0f, 58.0f/255.0f, 58.0f/255.0f),
+                                       new UnityEngine.Color(72.0f/255.0f, 115.0f/255.0f, 255.0f/255.0f),
+                                       new UnityEngine.Color(0.0f/255.0f, 222.0f/255.0f, 255.0f/255.0f),
+                                       new UnityEngine.Color(255.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f),
+                                       new UnityEngine.Color(243.0f/255.0f, 204.0f/255.0f, 110.0f/255.0f),
+                                       new UnityEngine.Color(200.0f/255.0f, 100.0f/255.0f, 255.0f/255.0f),
+                                       new UnityEngine.Color(247.0f/255.0f, 194.0f/255.0f, 255.0f/255.0f),
+                                       new UnityEngine.Color(255.0f/255.0f, 255.0f/255.0f, 196.0f/255.0f)
                                     };
+
+   public static float[] LineWidths = 
+                              {
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.25f
+                              };
 }

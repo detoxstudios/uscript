@@ -870,25 +870,36 @@ namespace Detox.FlowChart
             else
             {
                int index = -1;
-               for (int j = 0; j < uScriptConfig.NodeTypes.Length; j++)
+               string styleName = "";
+               float lineWidth = pen.Width;
+               Handles.color = new UnityEngine.Color(pen.Color.FR, pen.Color.FG, pen.Color.FB);
+               Detox.ScriptEditor.DisplayNode dNode = link.Source.Node as Detox.ScriptEditor.DisplayNode;
+
+               if (dNode != null)
                {
-                  if (link.Source.Node.GetType().ToString() == uScriptConfig.NodeTypes[j])
+                  styleName = dNode.StyleName;
+                  if (!String.IsNullOrEmpty(styleName))
                   {
-                     index = j;
-                     break;
+                     for (int j = 0; j < uScriptConfig.StyleTypes.Length; j++)
+                     {
+                        if (styleName == uScriptConfig.StyleTypes[j])
+                        {
+                           index = j;
+                           break;
+                        }
+                     }
                   }
                }
+
                if (index != -1)
                {
                   Handles.color = uScriptConfig.LineColors[index];
+                  lineWidth = uScriptConfig.LineWidths[index];
                }
-               else
-               {
-                  Handles.color = new UnityEngine.Color(pen.Color.FR, pen.Color.FG, pen.Color.FB);
-               }
+
                Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0), 
                                    new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0), 
-                                    Handles.color, uScriptConfig.lineTexture, pen.Width );
+                                   Handles.color, uScriptConfig.lineTexture, lineWidth );
             }
          }
 
