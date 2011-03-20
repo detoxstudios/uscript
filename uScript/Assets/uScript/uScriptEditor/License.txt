@@ -1,0 +1,16 @@
+uScript
+End User License Agreement
+v1.0
+
+Copyright (C) Detox Studios LLC
+
+This software is provided 'as-is', without any express or implied
+warranty.  In no event will the author be held liable for any damages
+arising from the use of this software.
+
+Don't steal-- we worked hard on this!
+
+
+Contact Information:
+www.detoxstudios.com
+support@detoxstudios.com
