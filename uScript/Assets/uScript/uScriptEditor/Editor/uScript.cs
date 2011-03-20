@@ -126,7 +126,7 @@ public class uScript : EditorWindow
       System.IO.Directory.CreateDirectory( uScriptConfig.Paths.GeneratedScripts );
       System.IO.Directory.CreateDirectory( uScriptConfig.Paths.SubsequenceScripts );
 
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.TutorialFiles );
+      //System.IO.Directory.CreateDirectory( uScriptConfig.Paths.TutorialFiles );
    }
 
    static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)

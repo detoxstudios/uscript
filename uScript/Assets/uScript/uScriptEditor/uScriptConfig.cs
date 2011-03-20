@@ -173,7 +173,7 @@ public partial class uScriptConfig
       public static string SubsequenceScripts{ get {return GeneratedScripts + "/SubSeq";} }
       public static string GuiPath           { get {return uScriptEditor    + "/Editor/_GUI"; } }
       public static string SkinPath          { get {return GuiPath          + "/uScriptDefault"; } } 
-      public static string TutorialFiles     { get {return RootFolder + "/TutorialFiles";} }
+      //public static string TutorialFiles     { get {return RootFolder + "/TutorialFiles";} }
    
       public static string RelativePath(string absolutePath)
       {
