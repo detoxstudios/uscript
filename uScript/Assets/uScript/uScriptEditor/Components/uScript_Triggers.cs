@@ -5,6 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
+
 [AddComponentMenu("uScript/Trigger")]
 public class uScript_Triggers : uScriptEvent
 {
@@ -27,6 +28,15 @@ public class uScript_Triggers : uScriptEvent
    {
       uScript_EventHandler.DoEvent(this, WhileInsideTrigger, new object[] { });
    }
+	
+	
+	// uScript GUI Options
+	void OnDrawGizmos()
+	{
+		// @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
+        Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
+
+    }
 
 
 }
