@@ -18,10 +18,10 @@ public class uScriptAct_Delay : uScriptLogic
 {
    private float m_TimeToTrigger;
 
-   [FriendlyName("Immediate")]
+   [FriendlyName("Immediate Out")]
    public bool Immediate { get { return true; } }
 
-   [FriendlyName("Delayed")]
+   [FriendlyName("Delayed Out")]
    public event uScriptEventHandler AfterDelay;
 
    [FriendlyName("In")]

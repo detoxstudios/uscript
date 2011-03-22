@@ -5,6 +5,15 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/Misc")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip( "Allows the signal to pass through to the Out link depending on the state of the gate.")]
+[NodeDescription("Allows the signal to pass through to the Out link depending on the state of the gate.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Gate")]
 public class uScriptAct_Gate : uScriptLogic
 {
    private bool m_gateOpen = false;

@@ -5,15 +5,24 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/Math")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip( "Converts a variable into another type.")]
+[NodeDescription("Converts a variable into another type.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Convert Variable")]
 public class uScriptAct_ConvertVariable : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(object Target,
-      out int IntValue,
-      out float FloatValue,
-      out string StringValue,
-      out bool BooleanValue
+      [FriendlyName("Int Value")] out int IntValue,
+      [FriendlyName("Float Value")] out float FloatValue,
+      [FriendlyName("String Value")] out string StringValue,
+      [FriendlyName("Boolean Value")] out bool BooleanValue
       )
    {
 
