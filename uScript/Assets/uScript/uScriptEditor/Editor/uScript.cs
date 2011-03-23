@@ -855,7 +855,15 @@ public class uScript : EditorWindow
       {
          _guiHelpScrollPos = EditorGUILayout.BeginScrollView ( _guiHelpScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview" );
          {
-            GUILayout.Label( "GUI.matrix:\n\n" + GUI.matrix );
+            if (GUILayout.Button("WEB"))
+            {
+               Help.BrowseURL("http://detoxstudios.com/");
+            }
+            if (GUILayout.Button("HELP PAGE"))
+            {
+               Help.ShowHelpPage("file:///unity/ScriptReference/index.html");
+            }
+            GUILayout.Label("GUI.matrix:\n\n" + GUI.matrix);
          }
          EditorGUILayout.EndScrollView ();
       }
