@@ -623,7 +623,7 @@ public class uScriptDefaultStyle : uScriptStyle
 
       if (m_Styles.ContainsKey(name)) return m_Styles[name];
 
-	  UnityEngine.Debug.LogWarning( "Can not find style: " + name );
+	  //UnityEngine.Debug.LogWarning( "Can not find style: " + name );
 
       if (false == name.Contains("socket") &&
           true == name.Contains("node") &&
@@ -656,11 +656,6 @@ public class uScriptDefaultStyle : uScriptStyle
       {
          return m_Styles[ "property_default" ];
       }
-      else if (true == name.Contains("variable") &&
-              false == name.Contains("node"))
-      {
-	     return m_Styles[ "variable" ];
-	  }
 	  else
 	  {
          return m_Styles[ "variable_default" ];
