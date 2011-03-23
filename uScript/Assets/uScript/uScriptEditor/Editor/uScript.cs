@@ -476,8 +476,31 @@ public class uScript : EditorWindow
          EditorGUILayout.BeginHorizontal( EditorStyles.toolbar, GUILayout.Width( _guiSidebarWidth ) );
          {
             _sidebarPopupIndex = EditorGUILayout.Popup(_sidebarPopupIndex, _sidebarPopupArray, "toolbarDropDown");
-            _sidebarFilterText = EditorGUILayout.TextField(new GUIContent(), _sidebarFilterText, "toolbarTextField");
-            EditorGUILayout.Space();
+
+            Texture icon;  // temporary icon for toolbar buttons -- reuse when possible
+
+            // Collapse hierarchy
+            icon = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/collapse_hierarchy.png", typeof(UnityEngine.Texture)) as UnityEngine.Texture;
+            if (icon && GUILayout.Button(icon, "toolbarButton"))
+            {
+               CollapseSidebarMenuItems();
+            }
+
+            // Expand hierarchy
+            icon = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/expand_hierarchy.png", typeof(UnityEngine.Texture)) as UnityEngine.Texture;
+            if (icon && GUILayout.Button(icon, "toolbarButton"))
+            {
+               ExpandSidebarMenuItems();
+            }
+
+            string _filterText = GUILayout.TextField(_sidebarFilterText, 10, "toolbarTextField", GUILayout.Width(80));
+            if (_filterText != _sidebarFilterText)
+            {
+               _sidebarFilterText = _filterText;
+
+               Debug.Log("Filtering with '" + _sidebarFilterText + "'\n");
+               FilterSidebarMenuItems();
+            }
          }
          EditorGUILayout.EndHorizontal();
 
@@ -496,7 +519,89 @@ public class uScript : EditorWindow
    }
 
 
+   private void ExpandSidebarMenuItems()
+   {
+      foreach (SidebarMenuItem item in _sidebarMenuItems)
+      {
+         ExpandSidebarMenuItem(item);
+      }
+   }
 
+   private void ExpandSidebarMenuItem(SidebarMenuItem sidebarMenuItem)
+   {
+      if (sidebarMenuItem.Items != null && sidebarMenuItem.Items.Count > 0)
+      {
+         sidebarMenuItem.Expanded = true;
+         foreach (SidebarMenuItem item in sidebarMenuItem.Items)
+         {
+            ExpandSidebarMenuItem(item);
+         }
+      }
+   }
+
+   private void CollapseSidebarMenuItems()
+   {
+      foreach (SidebarMenuItem item in _sidebarMenuItems)
+      {
+         CollapseSidebarMenuItem(item);
+      }
+   }
+
+   private void CollapseSidebarMenuItem(SidebarMenuItem sidebarMenuItem)
+   {
+      if (sidebarMenuItem.Items != null && sidebarMenuItem.Items.Count > 0)
+      {
+         sidebarMenuItem.Expanded = false;
+         foreach (SidebarMenuItem item in sidebarMenuItem.Items)
+         {
+            CollapseSidebarMenuItem(item);
+         }
+      }
+   }
+
+
+   private void FilterSidebarMenuItems()
+   {
+      foreach (SidebarMenuItem item in _sidebarMenuItems)
+      {
+         item.Hidden = FilterSidebarMenuItem(item, false);
+      }
+   }
+
+   private bool FilterSidebarMenuItem(SidebarMenuItem sidebarMenuItem, bool shouldForceVisible)
+   {
+      // return TRUE if the parent or item should be hidden
+      if (shouldForceVisible || sidebarMenuItem.Name.ToLower().Contains(_sidebarFilterText.ToLower()))
+      {
+         // filter matched, so this and all children should be visible
+         if (sidebarMenuItem.Items != null)
+         {
+            foreach (SidebarMenuItem item in sidebarMenuItem.Items)
+            {
+               FilterSidebarMenuItem(item, true);
+            }
+         }
+         return false;
+      }
+      else if (sidebarMenuItem.Items != null)
+      {
+         // check each child to see if this should be visible
+         bool shouldHideParent = true;
+         foreach (SidebarMenuItem item in sidebarMenuItem.Items)
+         {
+            item.Hidden = FilterSidebarMenuItem(item, false);
+            if (item.Hidden == false)
+            {
+               shouldHideParent = false;
+            }
+         }
+
+         return shouldHideParent;
+      }
+
+      // has no children and wasn't a match
+      return true;
+   }
 
    private void BuildSidebarMenu()
    {
@@ -557,6 +662,11 @@ public class uScript : EditorWindow
 
    private void DrawSidebarMenu(SidebarMenuItem item)
    {
+      if (item.Hidden)
+      {
+         return;
+      }
+
       if (item.Items != null)
       {
          // This is should be a folding menu item that contains more buttons
