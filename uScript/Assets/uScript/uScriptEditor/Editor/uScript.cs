@@ -239,23 +239,23 @@ public class uScript : EditorWindow
             OpenScript( m_FullPath );
          }
 
-         GameObject uScriptMaster = GameObject.Find( "_uScript" );
+         GameObject uScriptMaster = GameObject.Find( uScriptConfig.MasterObjectName );
          
          if ( null == uScriptMaster )
          {
-            Debug.Log( "Adding default _uScript object" );
+            Debug.Log( "Adding default uScript master gameobject: " + uScriptConfig.MasterObjectName );
 
-            uScriptMaster = new GameObject("_uScript");
-		      uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
+            uScriptMaster = new GameObject( uScriptConfig.MasterObjectName );
+		    uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
          }
          if ( null == uScriptMaster.GetComponent<uScript_Global>( ) )
          {
-            Debug.Log( "Adding global to _uScript object" );
+            Debug.Log( "Adding global to master gameobject (" + uScriptConfig.MasterObjectName + ")" );
             uScriptMaster.AddComponent(typeof(uScript_Global));
          }
          if ( null == uScriptMaster.GetComponent<uScript_Triggers>( ) )
          {
-            Debug.Log( "Adding triggers to _uScript object" );
+            Debug.Log( "Adding triggers to master gameobject (" + uScriptConfig.MasterObjectName + ")" );
 		      uScriptMaster.AddComponent(typeof(uScript_Triggers));
          }
       }
@@ -1449,7 +1449,7 @@ public class uScript : EditorWindow
    //it to the parent game object
    private Type FindMatchingScript(Component component)
    {
-      GameObject master = GameObject.Find("_uScript" );
+      GameObject master = GameObject.Find( uScriptConfig.MasterObjectName );
       if ( null == master ) return null;
 
       Component []eventScripts = master.GetComponents<uScriptEvent>( );

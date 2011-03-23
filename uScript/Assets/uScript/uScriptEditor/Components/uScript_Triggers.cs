@@ -37,7 +37,10 @@ public class uScript_Triggers : uScriptEvent
 	void OnDrawGizmos()
 	{
 		// @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
-        Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
+		if ( this.name != uScriptConfig.MasterObjectName )
+		{
+        	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
+		}
 
     }
 

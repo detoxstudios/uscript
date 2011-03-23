@@ -7,6 +7,10 @@ using System.Collections.Generic;
 
 public partial class uScriptConfig
 {
+	// What GameObject to create/use for the master uScript object in the scene.
+	public static string MasterObjectName = "_uScript";
+	
+	
    public static uScriptConfigBlock [] Variables
    {
       get
