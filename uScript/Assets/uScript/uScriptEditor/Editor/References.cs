@@ -194,9 +194,11 @@ namespace System.Windows.Forms
                }
                else if ( val.GetType() == typeof(Vector4) )
                {
-                  val = UnityEditor.EditorGUILayout.Vector3Field( p.Name, (Vector4) val );
+                  val = UnityEditor.EditorGUILayout.Vector4Field( p.Name, (Vector4) val );
                }
-               else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "GameObject" )
+               else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "GameObject" ||
+                         typeof(Component).IsAssignableFrom(uScript.Instance.GetType(p.Type)) 
+                        )
                {
                   //game objects are held/treated as strings
                   //but we will custom convert them to actual game objects (if they exist)

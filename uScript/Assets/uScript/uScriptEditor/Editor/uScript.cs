@@ -247,7 +247,16 @@ public class uScript : EditorWindow
 
             uScriptMaster = new GameObject("_uScript");
 		      uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
-		      uScriptMaster.AddComponent(typeof(uScript_Global));
+         }
+         if ( null == uScriptMaster.GetComponent<uScript_Global>( ) )
+         {
+            Debug.Log( "Adding global to _uScript object" );
+            uScriptMaster.AddComponent(typeof(uScript_Global));
+         }
+         if ( null == uScriptMaster.GetComponent<uScript_Triggers>( ) )
+         {
+            Debug.Log( "Adding triggers to _uScript object" );
+		      uScriptMaster.AddComponent(typeof(uScript_Triggers));
          }
       }
 
@@ -817,11 +826,6 @@ public class uScript : EditorWindow
 
       if ( null == type ) type = m_Types[ typeName ] as Type;
 
-      if ( null == type )
-      {
-         Debug.LogError( "Unity type " + typeName + " was not recognized" );
-      }
-
       return type;
    }
 
@@ -879,13 +883,6 @@ public class uScript : EditorWindow
          item.OnClick( );
       }
    }
-
-
-
-
-
-
-
 
    public void OnKeyDown( )
    {
@@ -1446,6 +1443,87 @@ public class uScript : EditorWindow
       return entityDescs.ToArray( );
    }
 
+   //go through the master uscript and see if there
+   //is an attach script which works this component
+   //and if so return the script type so we can attach
+   //it to the parent game object
+   private Type FindMatchingScript(Component component)
+   {
+      GameObject master = GameObject.Find("_uScript" );
+      if ( null == master ) return null;
+
+      Component []eventScripts = master.GetComponents<uScriptEvent>( );
+
+      foreach ( Component eventScript in eventScripts )
+      {
+         Type type = FindNodeComponentType(eventScript.GetType());
+
+         if ( type.IsAssignableFrom(component.GetType()) )
+         {
+            return eventScript.GetType();
+         }
+      }
+
+      return null;
+   }
+
+   //loop through all the components and see if we have any
+   //event scripts which match up with them.  if so
+   //then attach them to the parent game object
+   public void AttachEventScripts(string objectName)
+   {
+      GameObject gameObject = GameObject.Find( objectName );
+      if ( null == gameObject ) return;
+
+      Component [] components = gameObject.GetComponents<Component>( );
+
+      foreach ( Component c in components )
+      {
+         Type type = FindMatchingScript( c );
+         
+         if ( null != type )
+         {
+            if ( null == gameObject.GetComponent(type) )
+            {
+               gameObject.AddComponent( type );
+            }
+         }
+      }
+   }
+
+   //loop through all the components and see if
+   //any match up with the event script we're trying to add
+   //if so then attach them to the parent game object
+   public bool AttachEventScript(string eventType, string objectName)
+   {
+      GameObject gameObject = GameObject.Find( objectName );
+      if ( null == gameObject ) return false;
+
+      Type type = GetType(eventType);
+      if ( null == type ) return false;
+
+      Component [] components = gameObject.GetComponents<Component>( );
+
+      foreach ( Component c in components )
+      {
+         Type scriptType = FindMatchingScript( c );
+         
+         //if we can add the script type we care about
+         //then add it and return true
+         if ( scriptType == type )
+         {
+            if ( null == gameObject.GetComponent(type) )
+            {
+               gameObject.AddComponent( type );
+            }
+
+            return true;
+         }
+      }
+
+      return false;
+   }
+
    private void CheckDragDrop( )
    {
       if ( Event.current.type == EventType.DragUpdated ||
@@ -1465,6 +1543,17 @@ public class uScript : EditorWindow
          {
             foreach ( object o in DragAndDrop.objectReferences )
             {
+               //we are going to perform a dragdrop, so before we do
+               //see if there are any event scripts which can be
+               //attached to this game object
+               if ( true == m_ScriptEditorCtrl.CanDragDrop(o) )
+               {
+                  if ( o is GameObject )
+                  {
+                     AttachEventScripts( (o as GameObject).name );
+                  }
+               }
+
                if ( true == m_ScriptEditorCtrl.DoDragDrop(o) )
                {
                   DragAndDrop.AcceptDrag( );
@@ -1543,9 +1632,9 @@ public class uScript : EditorWindow
       return defaultName;
    }
 
-   public static string FindCategoryName(string defaultCategory, string type)
+   public static string FindNodePath(string defaultCategory, string type)
    {
-      Type uscriptType  = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.Instance.GetType(type);
 
       if ( type != null )
       {
@@ -1561,5 +1650,163 @@ public class uScript : EditorWindow
       }
 
       return defaultCategory;
+   }
+
+   public static string FindNodeLicense(string type)
+   {
+      Type uscriptType = uScript.Instance.GetType(type);
+
+      if ( type != null )
+      {
+         object [] attributes = uscriptType.GetCustomAttributes(false);
+
+         foreach ( object a in attributes )
+         {
+            if ( a is NodeLicense ) 
+            {
+               return ((NodeLicense)a).Value;
+            }
+         }
+      }
+
+      return "";
+   }
+
+   public static string FindNodeCopyright(string type)
+   {
+      Type uscriptType = uScript.Instance.GetType(type);
+
+      if ( type != null )
+      {
+         object [] attributes = uscriptType.GetCustomAttributes(false);
+
+         foreach ( object a in attributes )
+         {
+            if ( a is NodeCopyright ) 
+            {
+               return ((NodeCopyright)a).Value;
+            }
+         }
+      }
+
+      return "";
+   }
+
+   public static string FindNodeToolTip(string type)
+   {
+      Type uscriptType = uScript.Instance.GetType(type);
+
+      if ( type != null )
+      {
+         object [] attributes = uscriptType.GetCustomAttributes(false);
+
+         foreach ( object a in attributes )
+         {
+            if ( a is NodeToolTip ) 
+            {
+               return ((NodeToolTip)a).Value;
+            }
+         }
+      }
+
+      return "";
+   }
+
+   public static string FindNodeDescription(string type)
+   {
+      Type uscriptType = uScript.Instance.GetType(type);
+
+      if ( type != null )
+      {
+         object [] attributes = uscriptType.GetCustomAttributes(false);
+
+         foreach ( object a in attributes )
+         {
+            if ( a is NodeDescription ) 
+            {
+               return ((NodeDescription)a).Value;
+            }
+         }
+      }
+
+      return "";
+   }
+
+   public static string FindNodeAuthorName(string type)
+   {
+      Type uscriptType = uScript.Instance.GetType(type);
+
+      if ( type != null )
+      {
+         object [] attributes = uscriptType.GetCustomAttributes(false);
+
+         foreach ( object a in attributes )
+         {
+            if ( a is NodeAuthor ) 
+            {
+               return ((NodeAuthor)a).Value;
+            }
+         }
+      }
+
+      return "";
+   }
+
+   public static string FindNodeAuthorURL(string type)
+   {
+      Type uscriptType = uScript.Instance.GetType(type);
+
+      if ( type != null )
+      {
+         object [] attributes = uscriptType.GetCustomAttributes(false);
+
+         foreach ( object a in attributes )
+         {
+            if ( a is NodeAuthor ) 
+            {
+               return ((NodeAuthor)a).URL;
+            }
+         }
+      }
+
+      return "";
+   }
+
+   public static string FindNodeHelp(string type)
+   {
+      Type uscriptType = uScript.Instance.GetType(type);
+
+      if ( type != null )
+      {
+         object [] attributes = uscriptType.GetCustomAttributes(false);
+
+         foreach ( object a in attributes )
+         {
+            if ( a is NodeHelp ) 
+            {
+               return ((NodeHelp)a).Value;
+            }
+         }
+      }
+
+      return "";
+   }
+
+   public static Type FindNodeComponentType(Type type)
+   {
+      if ( type != null )
+      {
+         object [] attributes = type.GetCustomAttributes(false);
+
+         foreach ( object a in attributes )
+         {
+            if ( a is NodeComponentType ) 
+            {
+               return ((NodeComponentType)a).ComponentType;
+            }
+         }
+      }
+
+      return null;
    }
 }

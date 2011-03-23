@@ -7,6 +7,9 @@ using System.Collections;
 
 
 [AddComponentMenu("uScript/Trigger")]
+[NodeComponentType(typeof(Collider))]
+
+[NodePath("Events")]
 public class uScript_Triggers : uScriptEvent
 {
    public event uScriptEventHandler OnEnterTrigger;

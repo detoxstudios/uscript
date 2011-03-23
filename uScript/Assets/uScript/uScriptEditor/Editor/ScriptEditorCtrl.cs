@@ -935,6 +935,22 @@ namespace Detox.ScriptEditor
             entityNode.Comment     = p.GetParameters( "Comment" ) [ 1 ];
             entityNode.Instance    = p.GetParameters( "Instance" )[ 0 ];
 
+            //special case to add required scripts to gameobjects
+            if ( entityNode is EntityEvent )
+            {
+               if ( false == uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default) )
+               {
+                  //couldn't attach an appropriate script for this game object
+                  //so refresh the property grid
+                  Parameter instance = entityNode.Instance;
+                  instance.Default = "";
+
+                  entityNode.Instance = instance;
+
+                  FlowchartSelectionModified( null, null );
+               }
+            }
+
             m_ScriptEditor.AddNode( entityNode );
          }
 
@@ -1191,7 +1207,7 @@ namespace Detox.ScriptEditor
 
             if ( desc.Events.Length > 0 )
             {   
-               string categoryName = uScript.FindCategoryName("Advanced/Events", desc.Type);
+               string categoryName = uScript.FindNodePath("Advanced/Events", desc.Type);
 
                string friendlyName = uScriptConfig.Variable.FriendlyName(desc.Type);
                ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName);
@@ -1207,7 +1223,7 @@ namespace Detox.ScriptEditor
 
             if ( desc.Methods.Length > 0 )
             {
-               string categoryName = uScript.FindCategoryName("Advanced/Actions", desc.Type);
+               string categoryName = uScript.FindNodePath("Advanced/Actions", desc.Type);
 
                string friendlyName = uScriptConfig.Variable.FriendlyName(desc.Type);
                ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName);
@@ -1255,7 +1271,7 @@ namespace Detox.ScriptEditor
 
             if ( desc.Properties.Length > 0 )
             {
-               string categoryName = uScript.FindCategoryName("Advanced/Properties", desc.Type);
+               string categoryName = uScript.FindNodePath("Advanced/Properties", desc.Type);
 
                string friendlyName = uScriptConfig.Variable.FriendlyName(desc.Type);
                ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName);
@@ -1275,7 +1291,7 @@ namespace Detox.ScriptEditor
             //if we care about types, and this type isn't registered, ignore it
             if ( null != typeHash && false == typeHash.Contains(node.Type) ) continue;
 
-            string categoryName = uScript.FindCategoryName("Advanced/Logic", node.Type);
+            string categoryName = uScript.FindNodePath("Advanced/Logic", node.Type);
 
             string friendlyName = node.FriendlyName;
             ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName);

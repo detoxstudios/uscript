@@ -7,6 +7,8 @@ using UnityEngine;
 using System.Collections;
 
 [AddComponentMenu("uScript/Global (assign to uScripts master GameObject)")]
+
+[NodePath("Events")]
 public class uScript_Global : MonoBehaviour
 {
     public event uScriptEventHandler GameStart;

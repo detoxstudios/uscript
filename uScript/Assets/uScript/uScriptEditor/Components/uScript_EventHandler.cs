@@ -17,6 +17,13 @@ public class FriendlyName : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Class)]
+public class NodeComponentType : Attribute
+{
+   public NodeComponentType(Type type) { ComponentType = type; }
+   public Type ComponentType;
+}
+
+[AttributeUsage(AttributeTargets.Class)]
 public class NodePath : Attribute
 {
    public NodePath(string value) { Value = value; }
@@ -503,7 +510,7 @@ public class uScriptDefaultStyle : uScriptStyle
          string name = System.IO.Path.GetFileName(file.Name);
 
          Texture2D styleBackground = AssetDatabase.LoadAssetAtPath(relativePath + "/" + name, typeof(Texture2D)) as Texture2D;
-   		 styleBackground.wrapMode = TextureWrapMode.Clamp;
+         styleBackground.wrapMode = TextureWrapMode.Clamp;
 			
          name = System.IO.Path.GetFileNameWithoutExtension( name );
 
@@ -516,11 +523,11 @@ public class uScriptDefaultStyle : uScriptStyle
 
          if (false == name.Contains("socket") &&
              true == name.Contains("node") &&
-			 false == name.Contains("selected"))
+			    false == name.Contains("selected"))
          {
             key = "node";
          }
-		 else if (true == name.Contains("node_selected"))
+         else if (true == name.Contains("node_selected"))
          {
             key = "node_selected";
          }
@@ -533,11 +540,11 @@ public class uScriptDefaultStyle : uScriptStyle
             key = "static";
          }
          else if (true == name.Contains("comment") &&
-			      false == name.Contains("selected"))
-		 {
+			         false == name.Contains("selected"))
+		   {
             key = "comment";
          }
-		 else if (true == name.Contains("comment_selected"))
+		   else if (true == name.Contains("comment_selected"))
          {
             key = "comment_selected";
          }
@@ -571,9 +578,9 @@ public class uScriptDefaultStyle : uScriptStyle
          style.fixedHeight = settings.fixedHeight;
          style.fixedWidth = settings.fixedWidth;
          style.normal.background = styleBackground;
-		 style.alignment = settings.alignment;
-		 style.fontStyle = settings.fontStyle;
-		 style.fontSize = settings.fontSize;
+	      style.alignment = settings.alignment;
+		   style.fontStyle = settings.fontStyle;
+		   style.fontSize = settings.fontSize;
 
          m_Styles[name] = style;
       }
