@@ -870,8 +870,15 @@ namespace Detox.ScriptEditor
          OnScriptModified();
 
          AddEventHandlers( );
+      
+         foreach ( LocalNode node in m_ScriptEditor.Locals )
+         {
+            if ( uScriptConfig.Variable.FriendlyName(node.Value.Type) == "GameObject" )
+            {
+               uScript.Instance.AttachVariableScript(node.Value.Default);
+            }
+         }
       }
-
 
       private void FlowchartNodesModified(object sender, FlowchartNodesModifiedEventArgs e)
       {
@@ -982,14 +989,36 @@ namespace Detox.ScriptEditor
 
       private void FlowchartPointRender(object sender, FlowchartPointRenderEventArgs e)
       {
-         if ( e.Connecting )
+         Node node = sender as Node;
+
+         //the point rendering is the source connection
+         if ( e.Connecting && node == m_FlowChart.LinkStartNode )
          {
-            //m_FlowChart.LinkStartAnchor;
-               //if ( true == m_ScriptEditor.VerifyLink(potentialLink) )
-               //{
-               //   AnchorPoint point = e.Point;
-               //   point.StyleName += 
-               //}
+            e.Point.StyleName += "_connecting";
+            node.AnchorPoints[ e.Index ] = e.Point;
+            return;
+         }
+
+         //see if the point rendering is the potential destination connection
+         if ( e.Connecting && null != m_FlowChart.LinkStartNode )
+         {
+            LinkNode linkNode = new LinkNode( m_FlowChart.LinkStartNode.Guid, m_FlowChart.LinkStartAnchor.Name, 
+                                              node.Guid, e.Point.Name );
+
+            //if it's allowed to connect then update the style
+            if ( true == m_ScriptEditor.VerifyLink(linkNode) )
+            {
+               e.Point.StyleName += "_connecting";
+               node.AnchorPoints[ e.Index ] = e.Point;            
+               return;
+            }
+         }
+
+         //everything else failed - so just render selected if we are selected
+         if ( node.Selected )
+         {
+            e.Point.StyleName += "_selected";
+            node.AnchorPoints[ e.Index ] = e.Point;
          }
       }
 

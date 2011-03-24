@@ -128,9 +128,9 @@ namespace Detox.FlowChart
       public delegate void FlowChartPointRenderEventHandler(object sender, FlowchartPointRenderEventArgs e);
       public event FlowChartPointRenderEventHandler PointRender;
 
-      public void OnPointRender(int index, AnchorPoint point, bool connecting)
+      public void OnPointRender(Node sender, int index, AnchorPoint point, bool connecting)
       {
-         if (null != PointRender) PointRender(this, new FlowchartPointRenderEventArgs(index, point, connecting));
+         if (null != PointRender) PointRender(sender, new FlowchartPointRenderEventArgs(index, point, connecting));
       }
 
       public delegate void FlowChartSelectionModifiedEventHandler(object sender, EventArgs e);
@@ -789,27 +789,6 @@ namespace Detox.FlowChart
                                  uScriptConfig.PointerLineEnd);
          }
 
-         if ( Point.Empty != m_StartMarquee )
-         {
-            Point position = System.Windows.Forms.Cursor.Position;
-            position = this.PointToClient( position );
-
-            int startX = Math.Min( m_StartMarquee.X, position.X );
-            int endX   = Math.Max( m_StartMarquee.X, position.X );
-
-            int startY = Math.Min( m_StartMarquee.Y, position.Y );
-            int endY   = Math.Max( m_StartMarquee.Y, position.Y );
-
-            startX += Location.X;
-            startY += Location.Y;
-
-            endX += Location.X;
-            endY += Location.Y;
-               
-            e.Graphics.DrawRectangle( pen, startX, startY, endX - startX, endY - startY );
-         }
-
-
          // render pre-link nodes
          int i;
 
@@ -873,11 +852,11 @@ namespace Detox.FlowChart
                string styleName = "";
                float lineWidth = pen.Width;
                Handles.color = new UnityEngine.Color(pen.Color.FR, pen.Color.FG, pen.Color.FB);
-               Detox.ScriptEditor.DisplayNode dNode = link.Source.Node as Detox.ScriptEditor.DisplayNode;
 
-               if (dNode != null)
+               if (link.Source.Node != null)
                {
-                  styleName = dNode.StyleName;
+                  styleName = link.Source.Node.StyleName;
+
                   if (!String.IsNullOrEmpty(styleName))
                   {
                      for (int j = 0; j < uScriptConfig.StyleTypes.Length; j++)
@@ -928,6 +907,26 @@ namespace Detox.FlowChart
                   node.OnPaint(e);
                }
             }
+         }
+
+         if ( Point.Empty != m_StartMarquee )
+         {
+            Point position = System.Windows.Forms.Cursor.Position;
+            position = this.PointToClient( position );
+
+            int startX = Math.Min( m_StartMarquee.X, position.X );
+            int endX   = Math.Max( m_StartMarquee.X, position.X );
+
+            int startY = Math.Min( m_StartMarquee.Y, position.Y );
+            int endY   = Math.Max( m_StartMarquee.Y, position.Y );
+
+            startX += Location.X;
+            startY += Location.Y;
+
+            endX += Location.X;
+            endY += Location.Y;
+               
+            e.Graphics.DrawRectangle( pen, startX, startY, endX - startX, endY - startY );
          }
 
 
@@ -1195,27 +1194,23 @@ namespace Detox.FlowChart
             {
                if ( null != flowChart.LinkStartNode )
                {
-                  connecting = flowChart.LinkStartAnchor.Name == point.Name;
+                  connecting = flowChart.LinkStartNode == this &&
+                               flowChart.LinkStartAnchor.Name == point.Name;
                }
             }
 
-            flowChart.OnPointRender( i, point, connecting );
+            //save original style in case it'll be modified for rendering
+            string originalStyle = point.StyleName;
+
+            flowChart.OnPointRender( this, i, point, connecting );
 
             //reget point incase the point render modified it
             point = m_AnchorPoints[ i ];
 
-            string styleName = point.StyleName;
+            GUI.Box(new Rect(x + location.X - radius, y + location.Y - radius, diameter, diameter), "", uScriptConfig.Style.Get(point.StyleName));
 
-            if ( true == connecting )
-            {
-               styleName += "_connecting";
-            }
-            else if ( true == Selected )
-            {
-               styleName += "_selected";
-            }
-
-            GUI.Box(new Rect(x + location.X - radius, y + location.Y - radius, diameter, diameter), "", uScriptConfig.Style.Get(styleName));
+            //return original style in case it was modified for rendering
+            m_AnchorPoints[ i ].StyleName = originalStyle;
          }
 
          if (Selected || m_RenderShape == NodeRenderShape.Box)

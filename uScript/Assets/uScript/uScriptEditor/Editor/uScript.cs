@@ -1642,6 +1642,21 @@ public class uScript : EditorWindow
       return false;
    }
 
+   public bool AttachVariableScript(string objectName)
+   {
+      GameObject gameObject = GameObject.Find( objectName );
+      if ( null == gameObject ) return false;
+
+      Component component = gameObject.GetComponent<uScript_Variable_Gizmo>( );
+
+      if ( null == component )
+      {
+         gameObject.AddComponent<uScript_Variable_Gizmo>( );
+      }
+
+      return true;
+   }
+
    private void CheckDragDrop( )
    {
       if ( Event.current.type == EventType.DragUpdated ||
