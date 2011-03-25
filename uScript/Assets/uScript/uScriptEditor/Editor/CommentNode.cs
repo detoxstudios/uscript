@@ -50,7 +50,7 @@ namespace Detox.ScriptEditor
             newLine++;
          }
 
-         Name = "Comment:\n" + formatComment;
+         //Name = "Comment:\n" + formatComment;
 
          UpdateSockets( new Socket[]{} );
       }
