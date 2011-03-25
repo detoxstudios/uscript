@@ -1461,10 +1461,10 @@ namespace Detox.ScriptEditor
 
       protected virtual void LeftPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, Graphics g)
       {
-         SizeF titleLength = null == g ? new SizeF(uScriptConfig.Style.PointPad, uScriptConfig.Style.PointPad) : g.MeasureString( Name, NodeStyle );
+         SizeF titleLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( Name, NodeStyle );
 
          float xStart= uScriptConfig.Style.LeftPad;
-         float yStep = uScriptConfig.Style.PointSize + uScriptConfig.Style.PointPad;
+         float yStep = uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize;
 
          float y = (uScriptConfig.Style.TopPad + uScriptConfig.Style.TitleTopBottomPad + titleLength.Height) + topPointsExtraPad;
 
@@ -1490,8 +1490,8 @@ namespace Detox.ScriptEditor
                points.Add( point );
 
                textPoint.Name = FormatName(socket);
-               textPoint.X = xStart + uScriptConfig.Style.PointSize;
-               textPoint.Y = (y - (textLength.Height / 2));
+               textPoint.X = xStart + uScriptConfig.Style.PointSize + uScriptConfig.Style.IOSocketLabelHorizontalOffset;
+               textPoint.Y = (y - (textLength.Height / 2 + uScriptConfig.Style.IOSocketLabelVerticalOffset));
                textPoint.StyleName = "socket_text";
                textPoints.Add( textPoint );
             
@@ -1502,10 +1502,10 @@ namespace Detox.ScriptEditor
 
       protected virtual void RightPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, Graphics g)
       {
-         SizeF titleLength = null == g ? new SizeF(uScriptConfig.Style.PointPad, uScriptConfig.Style.PointPad) : g.MeasureString( Name, NodeStyle );
+         SizeF titleLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( Name, NodeStyle );
 
          float xStart = Size.Width - uScriptConfig.Style.RightPad;
-         float yStep  = uScriptConfig.Style.PointSize + uScriptConfig.Style.PointPad;
+         float yStep  = uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize;
 
          float y = (uScriptConfig.Style.TopPad + uScriptConfig.Style.TitleTopBottomPad + titleLength.Height) + topPointsExtraPad;
 
@@ -1531,8 +1531,8 @@ namespace Detox.ScriptEditor
                points.Add( point );
 
                textPoint.Name = FormatName(socket);
-               textPoint.X =  (xStart - (uScriptConfig.Style.PointSize + textLength.Width));
-               textPoint.Y =  (y - (textLength.Height / 2));
+               textPoint.X =  (xStart - (uScriptConfig.Style.PointSize + textLength.Width)) - uScriptConfig.Style.IOSocketLabelHorizontalOffset;
+               textPoint.Y =  (y - (textLength.Height / 2)) - uScriptConfig.Style.IOSocketLabelVerticalOffset;
                textPoint.StyleName = "socket_text";
                textPoints.Add( textPoint );
             
@@ -1546,7 +1546,7 @@ namespace Detox.ScriptEditor
          float yStart = Size.Height - uScriptConfig.Style.BottomPad;
         
          float totalTextWidth = 0;
-         float xStep = uScriptConfig.Style.PointPad + uScriptConfig.Style.PointSize + uScriptConfig.Style.PointPad;
+         float xStep = uScriptConfig.Style.BottomSocketLabelGapSize + uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize;
 
          foreach ( Socket socket in sockets )
          {
@@ -1564,7 +1564,7 @@ namespace Detox.ScriptEditor
          
          //starting offset to draw the point and text for each x position
          //point pad preceeding the x and half the point size
-         float xOffset = uScriptConfig.Style.PointPad + uScriptConfig.Style.PointSize / 2;
+         float xOffset = uScriptConfig.Style.BottomSocketLabelGapSize + uScriptConfig.Style.PointSize / 2;
 
          foreach ( Socket socket in sockets )
          {
@@ -1601,7 +1601,7 @@ namespace Detox.ScriptEditor
 
                textPoint.Name = FormatName(socket);
                textPoint.X = x + xOffset;
-               textPoint.Y = (yStart - uScriptConfig.Style.PointSize - textLength.Height);
+               textPoint.Y = (yStart - uScriptConfig.Style.PointSize - textLength.Height + uScriptConfig.Style.BottomSocketLabelGap);
                textPoint.StyleName = "socket_text";
                textPoints.Add( textPoint );
             
@@ -1712,24 +1712,24 @@ namespace Detox.ScriptEditor
 
          foreach ( Socket socket in sockets )
          {
-            SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.PointPad, uScriptConfig.Style.PointPad) : g.MeasureString( FormatName(socket), "socket_text" );
+            SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( FormatName(socket), "socket_text" );
             
-            if ( socket.Alignment == Socket.Align.Bottom )
+            if ( socket.Alignment == Socket.Align.Bottom ) // Used for Action Node bottom sockect left/right border spacing.
             {
-               requiredWidth += uScriptConfig.Style.PointPad + uScriptConfig.Style.PointSize + uScriptConfig.Style.PointPad;
+               requiredWidth += uScriptConfig.Style.BottomSocketLabelGapSize + uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize + uScriptConfig.Style.BottomSocketBorderAdjustmentPad;
                requiredWidth += textLength.Width;
             }
-            else if ( socket.Alignment == Socket.Align.Left )
+            else if ( socket.Alignment == Socket.Align.Left ) // Used for Action Nodes
             {
-               maxLeftAlignedText = Math.Max( maxLeftAlignedText, textLength.Width + uScriptConfig.Style.PointSize + uScriptConfig.Style.PointPad );
-               leftRequiredHeight += (uScriptConfig.Style.PointPad + uScriptConfig.Style.PointSize + textLength.Height);
+               maxLeftAlignedText = Math.Max( maxLeftAlignedText, textLength.Width + uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize );
+               leftRequiredHeight += (uScriptConfig.Style.SideSocketToBottomSocketPad + uScriptConfig.Style.PointSize + textLength.Height);
             }
-            else if ( socket.Alignment == Socket.Align.Right )
+            else if ( socket.Alignment == Socket.Align.Right ) // Used for Event Nodes
             {
-               maxRightAlignedText = Math.Max( maxRightAlignedText, textLength.Width + uScriptConfig.Style.PointSize + uScriptConfig.Style.PointPad );
-               rightRequiredHeight += (uScriptConfig.Style.PointPad + uScriptConfig.Style.PointSize + textLength.Height);
+               maxRightAlignedText = Math.Max( maxRightAlignedText, textLength.Width + uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize );
+               rightRequiredHeight += ((uScriptConfig.Style.PointSize / 2 + 2) + textLength.Height);
             }
-            else if ( socket.Alignment == Socket.Align.Center )
+            else if ( socket.Alignment == Socket.Align.Center )  // Used for properties
             {
                maxCenterAlignedText = Math.Max( maxCenterAlignedText, textLength.Width );
                centerRequiredHeight = Math.Max( centerRequiredHeight, textLength.Height );
@@ -1746,7 +1746,7 @@ namespace Detox.ScriptEditor
          requiredWidth  = Math.Max( requiredWidth, maxLeftAlignedText + maxRightAlignedText );
          requiredWidth  = Math.Max( requiredWidth, maxCenterAlignedText );
 
-         SizeF titleLength = null == g ? new SizeF(uScriptConfig.Style.PointPad, uScriptConfig.Style.PointPad) : g.MeasureString( Name, NodeStyle );
+         SizeF titleLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( Name, NodeStyle );
          requiredHeight += uScriptConfig.Style.TopPad + uScriptConfig.Style.BottomPad;
          requiredHeight += (titleLength.Height + uScriptConfig.Style.TitleTopBottomPad);
 

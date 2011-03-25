@@ -349,10 +349,13 @@ public abstract class uScriptStyle
 {
    public abstract GUIStyle Get(string name);
 
-   public abstract int PointPad { get; }
+   public abstract int BottomSocketLabelGapSize { get; }
+   public abstract int BottomSocketBorderAdjustmentPad { get; }
+   public abstract int SideSocketToBottomSocketPad { get; }
+   public abstract int BottomSocketLabelGap { get; }
    public abstract int TopPad   { get; }
    public abstract int LeftPad  { get; }
-   public abstract int LeftPadBottom  { get; }
+   //public abstract int LeftPadBottom  { get; }
    public abstract int RightPad { get; }
    public abstract int BottomPad{ get; }
    public abstract int PointSize{ get; }
@@ -361,6 +364,8 @@ public abstract class uScriptStyle
    public abstract int RightShadow { get; }
    public abstract int BottomShadow{ get; }
    public abstract int OutputOnlyPointOffset { get; }
+   public abstract int IOSocketLabelVerticalOffset { get; }
+   public abstract int IOSocketLabelHorizontalOffset { get; }
    public abstract float GridSizeVertical   { get; }
    public abstract float GridSizeHorizontal { get; }
    public abstract Color GridColorMajor { get; }
@@ -384,9 +389,9 @@ public class uScriptDefaultStyle : uScriptStyle
       element.border.right = 15;
       element.border.top = 23;
       element.border.bottom = 15;
-      element.padding.left = 0;
+      element.padding.left = -6;
       element.padding.right = 0;
-      element.padding.top = 0;
+      element.padding.top = 2;
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
@@ -401,9 +406,9 @@ public class uScriptDefaultStyle : uScriptStyle
       element.border.right = 15;
       element.border.top = 23;
       element.border.bottom = 15;
-      element.padding.left = 0;
+      element.padding.left = -6;
       element.padding.right = 0;
-      element.padding.top = 0;
+      element.padding.top = 2;
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
@@ -669,42 +674,57 @@ public class uScriptDefaultStyle : uScriptStyle
 	  }
    }
 
-   //how many pixels to pad objects next to link points // Horizontal text gap done 11
-   public override int PointPad { get { return 11; } }
-   
-   //how many pixels to pad objects from the top of the node // Top txt vert offset done 2
+   //how many pixels between variable socket labels (horizontal)
+   public override int BottomSocketLabelGapSize { get { return 4; } }
+	
+   //how many pixels to adjust between variable socket labels and side borders (verticle)
+   public override int BottomSocketBorderAdjustmentPad { get { return 6; } }
+	
+   //how many pixels between variable socket labels and In/Out sockets (verticle)
+   public override int SideSocketToBottomSocketPad { get { return 16; } }
+	
+   //how many pixels between a variable socket and its label (verticle)
+   public override int BottomSocketLabelGap { get { return 2; } }
+	
+   //how many pixels to pad objects from the top of the node (verticle)
    public override int TopPad   { get { return 2; } }
 
-   //how many pixels to pad objects from the left of the node // Left socket offset done 3
+   //how many pixels to pad objects from the left of the node (horizontal)
    public override int LeftPad  { get { return 2; } }
 	
-	//how many pixels to pad bottom objects from the left of the node // Left text offset done 14
-   public override int LeftPadBottom  { get { return 14; } }
+	//how many pixels to pad bottom objects from the left of the node // WAS NOT USED
+   //public override int LeftPadBottom  { get { return 14; } }
 
-   //how many pixels to pad objects from the right of the node // Right socket offset done
+   //how many pixels to pad objects from the right of the node (horizontal)
    public override int RightPad { get { return 7; } }
 
-   //how many pixels to pad objects from the bottom of the node  // Bottom socket offset done
+   //how many pixels to pad objects from the bottom of the node  (verticle)
    public override int BottomPad{ get { return 7; } }
 
    //how big (in pixels) the link points should be (used for spacing and hit detection)
    public override int PointSize{ get { return 13; } }
 
-   //top and bottom padding for titles
+   //top and bottom padding for titles (verticle)
    public override int TitleTopBottomPad { get { return 18; } }
 
-   //left and right padding for titles
+   //left and right padding for title labels (horizontal)
    public override int TitleLeftRightPad { get { return 18; } }
 
-   //right shadow width
+   //right shadow width (horizontal)
    public override int RightShadow { get { return 6; } }
 
-   //bottom shadow height
+   //bottom shadow height (verticle)
    public override int BottomShadow { get { return 6; } }
 
    //when rendering output only nodes, any additional offset
-   //because they can be different style than input/output
+   //because they can be different style/shape than input/output (verticle)
    public override int OutputOnlyPointOffset { get { return 5; } }
+	
+   // sets and additional vertical offset for IO socket labels (verticle)
+   public override int IOSocketLabelVerticalOffset { get { return 2; } }
+	
+   // sets and additional horizontal offset for IO socket labels (horizontal)
+   public override int IOSocketLabelHorizontalOffset { get { return -2; } }
 
    //background grid size
    public override bool ShowGrid { get { return true; } }
