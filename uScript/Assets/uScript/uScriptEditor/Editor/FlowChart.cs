@@ -27,6 +27,7 @@ namespace Detox.FlowChart
       private List<Link> m_Links = new List<Link>( );
 
       private bool m_NodeMouseTracking = false;
+      private bool m_NodeMouseSizing   = false;
       private bool m_NodeIsMoving = false;
 
       private Point m_MoveOffset = Point.Empty;
@@ -344,8 +345,20 @@ namespace Detox.FlowChart
 
             if ( false == pointSourced )
             {
-               m_NodeMouseTracking = true;
-               
+               if ( true == node.CanResize )
+               {
+                  if ( position.X > node.Size.Width  - uScriptConfig.ResizeTexture.width &&
+                       position.Y > node.Size.Height - uScriptConfig.ResizeTexture.height )
+                  {
+                     m_NodeMouseSizing = true;
+                  }
+               }
+
+               if ( false == m_NodeMouseSizing )
+               {
+                  m_NodeMouseTracking = true;
+               }
+
                //I want the user to easily click and move a node without having to select it
                //but I also want to move all selected nodes if they click on an already selected node
                //so.. if the node is not previously selected, it's just a quick click to move
@@ -353,13 +366,36 @@ namespace Detox.FlowChart
                //selected nodes
                if ( false == node.Selected )
                {
-                  node.StartNodeMove( );
+                  if ( true == m_NodeMouseSizing )
+                  {
+                     node.StartNodeResize( );
+                  }
+                  else
+                  {
+                     node.StartNodeMove( );
+                  }
                }
                else
-               {            
-                  foreach ( Node selectedNode in SelectedNodes )
+               {   
+                  if ( true == m_NodeMouseSizing )
                   {
-                     selectedNode.StartNodeMove( );
+                     foreach ( Node selectedNode in SelectedNodes )
+                     {
+                        //these are part of a selection group
+                        //so they didn't have to pass the initial resize hit test
+                        //which means we have no idea if they are authorized to resize or not
+                        if ( true == selectedNode.CanResize )
+                        {
+                           selectedNode.StartNodeResize( );
+                        }
+                     }
+                  }
+                  else
+                  {
+                     foreach ( Node selectedNode in SelectedNodes )
+                     {
+                        selectedNode.StartNodeMove( );
+                     }
                   }
                }
             }
@@ -391,6 +427,31 @@ namespace Detox.FlowChart
                   }
                }
             }
+            else if ( true == m_NodeMouseSizing )
+            {
+               Node node = sender as Node;
+               
+               m_NodeIsMoving = true;
+
+               //see comments in NodeMouseDown for why we have this if/else
+               if ( false == node.Selected )
+               {
+                  node.NodeResize( );
+               }
+               else
+               {
+                  foreach ( Node selectedNode in SelectedNodes )
+                  {
+                     //these are part of a selection group
+                     //so they didn't have to pass the initial resize hit test
+                     //which means we have no idea if they are authorized to resize or not
+                     if ( selectedNode.CanResize )
+                     {
+                        selectedNode.NodeResize( );
+                     }
+                  }
+               }
+            }
          }
          
          Invalidate( );
@@ -409,7 +470,7 @@ namespace Detox.FlowChart
    
          //if we were moving the node
          //simply finish moving it, don't unselect anything
-         if ( true == m_NodeMouseTracking && true == m_NodeIsMoving )
+         if ( (true == m_NodeMouseTracking || true == m_NodeMouseSizing) && true == m_NodeIsMoving )
          {
             //see comments in NodeMouseDown for why we have this if/else
             if ( false == ((Node)sender).Selected )
@@ -451,6 +512,7 @@ namespace Detox.FlowChart
          }
 
          m_NodeMouseTracking = false;
+         m_NodeMouseSizing   = false;
          m_NodeIsMoving      = false;
 
          if ( null != m_StartLinkNode )
@@ -707,10 +769,10 @@ namespace Detox.FlowChart
          }
 
 
-         foreach ( Node node in Nodes )
-         {
-            node.PreparePoints( e.Graphics );
-         }
+         //foreach ( Node node in Nodes )
+         //{
+         //   node.PreparePoints( e.Graphics );
+         //}
 
          if ( true == InMoveMode )
          {
@@ -783,7 +845,6 @@ namespace Detox.FlowChart
                                 new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0), 
                                  Handles.color, uScriptConfig.lineTexture, selectedPen.Width );
 
-            //e.Graphics.DrawBezier( selectedPen, start, control1, control2, end );
             UnityEngine.GUI.Box( new UnityEngine.Rect(end.X - uScriptConfig.PointerLineEnd.width / 2, end.Y - uScriptConfig.PointerLineEnd.height / 2, 
                                  uScriptConfig.PointerLineEnd.width, uScriptConfig.PointerLineEnd.height), 
                                  uScriptConfig.PointerLineEnd);
@@ -1013,27 +1074,12 @@ namespace Detox.FlowChart
 
    public abstract class Node : UserControl
    {
-      public enum NodeRenderShape
-      {
-         Box,
-         Circle
-      }
-
       public string StyleName = "";
-
-      private NodeRenderShape m_RenderShape = NodeRenderShape.Box;
-      public NodeRenderShape RenderShape
-      {
-         get { return m_RenderShape; }
-         set
-         {
-            m_RenderShape = value;
-            Invalidate();
-         }
-      }
 
       // render all nodes below link lines by default
       virtual public int RenderDepth { get { return FlowChartCtrl.LinkRenderDepth - 1; } }
+
+      public bool CanResize = false;
 
       private bool m_Selected = false;
       public bool Selected 
@@ -1048,6 +1094,7 @@ namespace Detox.FlowChart
 
       public abstract Guid Guid { get; }
       private Point m_MouseOffset;
+      private Size  m_ResizeOffset;
 
       private AnchorPoint[] m_AnchorPoints;
 
@@ -1110,6 +1157,12 @@ namespace Detox.FlowChart
          m_MouseOffset = new System.Drawing.Point(position.X - Location.X, position.Y - Location.Y);
       }
 
+      public void StartNodeResize( )
+      {
+         m_MouseOffset  = System.Windows.Forms.Cursor.Position;
+         m_ResizeOffset = Size;
+      }
+
       public void NodeMove( )
       {
          //use the parent's position
@@ -1120,6 +1173,20 @@ namespace Detox.FlowChart
          position = this.Parent.PointToClient( position );
 
          Location = new System.Drawing.Point(position.X - m_MouseOffset.X, position.Y - m_MouseOffset.Y );
+      }
+
+      public void NodeResize( )
+      {
+         //use the parent's position
+         //for mouse coords, if we use our position
+         //the mouse is relative to us which throws it off when
+         //we move ourselves
+         Point position = System.Windows.Forms.Cursor.Position;
+
+         Size = new System.Drawing.Size(m_ResizeOffset.Width + position.X - m_MouseOffset.X, m_ResizeOffset.Height + position.Y - m_MouseOffset.Y );
+      
+         if ( Size.Width  < uScriptConfig.ResizeTexture.width  ) Size.Width = uScriptConfig.ResizeTexture.width;
+         if ( Size.Height < uScriptConfig.ResizeTexture.height ) Size.Height = uScriptConfig.ResizeTexture.height;
       }
 
       public AnchorPoint GetAnchorPoint(string name)
@@ -1152,16 +1219,7 @@ namespace Detox.FlowChart
 
          Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
 
-         switch (m_RenderShape)
-         {
-            case NodeRenderShape.Circle:
-               //e.Graphics.FillCircle(StyleName, location.X + (Size.Width / 2), location.Y + (Size.Width / 2), Size.Width / 2 ); // Not used in uScript?
-               break;
-            case NodeRenderShape.Box:
-            default:
-               e.Graphics.FillRectangle(StyleName, new Rectangle(location.X, location.Y, Size.Width, Size.Height), Name);
-               break;
-         }
+         e.Graphics.FillRectangle(StyleName, new Rectangle(location.X, location.Y, Size.Width, Size.Height), Name);
 
          FlowChartCtrl flowChart = Parent as FlowChartCtrl;
 
@@ -1200,39 +1258,31 @@ namespace Detox.FlowChart
             }
 
             //save original style in case it'll be modified for rendering
-            string originalStyle = point.StyleName;
+            AnchorPoint originalPoint = point;
 
             flowChart.OnPointRender( this, i, point, connecting );
 
             //reget point incase the point render modified it
             point = m_AnchorPoints[ i ];
-
+            
             GUI.Box(new Rect(x + location.X - radius, y + location.Y - radius, diameter, diameter), "", uScriptConfig.Style.Get(point.StyleName));
 
             //return original style in case it was modified for rendering
-            m_AnchorPoints[ i ].StyleName = originalStyle;
+            m_AnchorPoints[ i ] = originalPoint;
          }
 
-         if (Selected || m_RenderShape == NodeRenderShape.Box)
+         for (int i = 0; i < TextPoints.Count(); i++)
          {
-             for (int i = 0; i < TextPoints.Count(); i++)
-             {
-                 float x = TextPoints[i].X / 100.0f * Size.Width;
-                 float y = TextPoints[i].Y / 100.0f * Size.Height;
+            float x = TextPoints[i].X / 100.0f * Size.Width;
+            float y = TextPoints[i].Y / 100.0f * Size.Height;
 
-                 e.Graphics.DrawString(TextPoints[i].Name, TextPoints[i].StyleName, new PointF(x + location.X, y + location.Y));
-             }
+            e.Graphics.DrawString(TextPoints[i].Name, TextPoints[i].StyleName, new PointF(x + location.X, y + location.Y));
          }
-         else
-         {
-            for (int i = 0; i < TextPoints.Count(); i++)
-            {
-               float x = TextPoints[i].X / 100.0f * Size.Width;
-               float y = TextPoints[i].Y / 100.0f * Size.Height;
 
-               int length = TextPoints[i].Name.Length;
-               e.Graphics.DrawString(TextPoints[i].Name.Substring(0,length < 8?length:8), TextPoints[i].StyleName, new PointF(x + location.X, y + location.Y));
-            }
+         if ( CanResize )
+         {
+            Rect rect = new Rect( location.X + Size.Width - uScriptConfig.ResizeTexture.width, location.Y + Size.Height - uScriptConfig.ResizeTexture.height, uScriptConfig.ResizeTexture.width, uScriptConfig.ResizeTexture.height );
+            GUI.DrawTexture( rect, uScriptConfig.ResizeTexture );
          }
       }
    }

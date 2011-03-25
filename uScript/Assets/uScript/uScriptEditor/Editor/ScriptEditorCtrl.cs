@@ -891,6 +891,18 @@ namespace Detox.ScriptEditor
                EntityNode entityNode = ((DisplayNode)node).EntityNode;
                entityNode.Position = ((DisplayNode)node).Location;
 
+               if ( entityNode is CommentNode )
+               {
+                  CommentNode clone = (CommentNode) entityNode;
+                  
+                  Parameter size = clone.Size;
+
+                  size.DefaultAsObject = new int[2]{node.Size.Width, node.Size.Height};
+                  clone.Size = size;
+
+                  entityNode = clone;
+               }
+
                m_ScriptEditor.AddNode( entityNode );
             }
          
@@ -1673,8 +1685,6 @@ namespace Detox.ScriptEditor
          else 
          {
             string []subString = NodeStyle.Split( '_' );
-            
-            if ( subString[0] == "comment" ) subString[0] = "node";
             StyleName = subString[0] + "_selected";
   
          }

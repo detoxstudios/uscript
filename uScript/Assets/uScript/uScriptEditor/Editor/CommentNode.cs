@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Detox.FlowChart;
+using UnityEngine;
 
 namespace Detox.ScriptEditor
 {
@@ -23,6 +24,7 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
+         CanResize = true;
          NodeStyle = "comment";
    
          Location = new System.Drawing.Point( comment.Position.X, comment.Position.Y );
@@ -53,7 +55,7 @@ namespace Detox.ScriptEditor
          UpdateSockets( new Socket[]{} );
       }
 
-      protected override Size CalculateSize(Socket []sockets, Graphics g)
+      protected override Size CalculateSize(Socket []sockets, System.Drawing.Graphics g)
       {
          Size size = base.CalculateSize(sockets, g);
          

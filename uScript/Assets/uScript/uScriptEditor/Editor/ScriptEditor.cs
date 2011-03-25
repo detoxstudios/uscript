@@ -106,6 +106,25 @@ namespace Detox.ScriptEditor
                   return 0.0f;
                }
             }
+            if ( type == "Int[]" )
+            {
+               try
+               {
+                  string []values = Default.Split( ',' );
+                  List<int> vals = new List<int>( );
+
+                  foreach ( string s in values )
+                  {
+                     vals.Add( Int32.Parse(s) );
+                  }
+
+                  return vals.ToArray( );
+               }
+               catch
+               {
+                  return 0;
+               }
+            }
             if ( type == "Vector2" )
             {
                try
@@ -163,6 +182,34 @@ namespace Detox.ScriptEditor
             if ( type == "Int" )
             {
                Default = "" + value;
+               return;
+            }
+            if ( type == "Int[]" )
+            {
+               try
+               {
+                  if ( value is string )
+                  {
+                     Default = value as string;
+                  }
+                  else
+                  {
+                     int[] vals = (int[]) value;
+
+                     Default = "";
+
+                     foreach ( int v in vals )
+                     {
+                        Default += v + ",";
+                     }
+
+                     Default = Default.Substring( 0, Default.Length - 1 );
+                  }
+               }
+               catch
+               {
+                  Default = "0";
+               }
                return;
             }
             if ( type == "Vector2" )
