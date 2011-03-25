@@ -677,16 +677,16 @@ public class uScriptDefaultStyle : uScriptStyle
    //how many pixels between variable socket labels (horizontal)
    public override int BottomSocketLabelGapSize { get { return 4; } }
 	
-   //how many pixels to adjust between variable socket labels and side borders (verticle)
+   //how many pixels to adjust between variable socket labels and side borders (vertical)
    public override int BottomSocketBorderAdjustmentPad { get { return 6; } }
 	
-   //how many pixels between variable socket labels and In/Out sockets (verticle)
+   //how many pixels between variable socket labels and In/Out sockets (vertical)
    public override int SideSocketToBottomSocketPad { get { return 16; } }
 	
-   //how many pixels between a variable socket and its label (verticle)
+   //how many pixels between a variable socket and its label (vertical)
    public override int BottomSocketLabelGap { get { return 2; } }
 	
-   //how many pixels to pad objects from the top of the node (verticle)
+   //how many pixels to pad objects from the top of the node (vertical)
    public override int TopPad   { get { return 2; } }
 
    //how many pixels to pad objects from the left of the node (horizontal)
@@ -698,13 +698,13 @@ public class uScriptDefaultStyle : uScriptStyle
    //how many pixels to pad objects from the right of the node (horizontal)
    public override int RightPad { get { return 7; } }
 
-   //how many pixels to pad objects from the bottom of the node  (verticle)
+   //how many pixels to pad objects from the bottom of the node  (vertical)
    public override int BottomPad{ get { return 7; } }
 
    //how big (in pixels) the link points should be (used for spacing and hit detection)
    public override int PointSize{ get { return 13; } }
 
-   //top and bottom padding for titles (verticle)
+   //top and bottom padding for titles (vertical)
    public override int TitleTopBottomPad { get { return 18; } }
 
    //left and right padding for title labels (horizontal)
@@ -713,14 +713,14 @@ public class uScriptDefaultStyle : uScriptStyle
    //right shadow width (horizontal)
    public override int RightShadow { get { return 6; } }
 
-   //bottom shadow height (verticle)
+   //bottom shadow height (vertical)
    public override int BottomShadow { get { return 6; } }
 
    //when rendering output only nodes, any additional offset
-   //because they can be different style/shape than input/output (verticle)
+   //because they can be different style/shape than input/output (vertical)
    public override int OutputOnlyPointOffset { get { return 5; } }
 	
-   // sets and additional vertical offset for IO socket labels (verticle)
+   // sets and additional vertical offset for IO socket labels (vertical)
    public override int IOSocketLabelVerticalOffset { get { return 2; } }
 	
    // sets and additional horizontal offset for IO socket labels (horizontal)
