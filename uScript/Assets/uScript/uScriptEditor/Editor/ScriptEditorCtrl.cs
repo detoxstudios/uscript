@@ -1635,34 +1635,19 @@ namespace Detox.ScriptEditor
 
                if ( socket.Input == false && socket.Output == false )
                {
-                  float height = null == g ? uScriptConfig.Style.PointSize : g.MeasureString( FormatName(socket), "socket_text" ).Height;
+                  SizeF size = null == g ? new SizeF(0,0) : g.MeasureString( FormatName(socket), "socket_text" );
 
-                  float y = (Size.Height - uScriptConfig.Style.BottomShadow - height) /  2;
+                  TextPoint textPoint = new TextPoint( );
 
-                  string [] subString = FormatName(socket).Split( '\n' );
+                  textPoint.Name = FormatName(socket);
+                  textPoint.X = (Size.Width - uScriptConfig.Style.RightShadow - size.Width) / 2;
+                  textPoint.Y = (Size.Height - uScriptConfig.Style.BottomShadow - size.Height) / 2;
+                  textPoint.StyleName = "socket_text";
 
-                  foreach ( string s in subString )
-                  {
-                     TextPoint textPoint = new TextPoint( );
+                  if ( textPoint.X < 0 ) textPoint.X = 0;
+                  if ( textPoint.Y < 0 ) textPoint.Y = 0;
 
-                     string style = "socket_text";
-
-                     if ( s == subString[0] && subString.Length > 1 )
-                     {
-                        style = "socket_text_bold";
-                     }
-
-                     SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.PointSize, uScriptConfig.Style.PointSize) : g.MeasureString( s, style );
-
-                     textPoint.Name = s;
-                     textPoint.X = (Size.Width - uScriptConfig.Style.RightShadow - textLength.Width) / 2;
-                     textPoint.Y = y;
-                     textPoint.StyleName = style;
-                     
-                     y += textLength.Height;
-
-                     textPoints.Add( textPoint );
-                  }
+                  textPoints.Add( textPoint );
                }
             }
          }

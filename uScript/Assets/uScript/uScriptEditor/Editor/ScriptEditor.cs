@@ -918,19 +918,16 @@ namespace Detox.ScriptEditor
 
       public Parameter Instance { get { return Parameter.Empty; } set {} }
 
-      private Parameter m_ShowComment;
-      private Parameter m_Comment;
-
       public Parameter ShowComment 
       {
-         get { return m_ShowComment; }
-         set { m_ShowComment = value; } 
+         get { return Parameter.Empty; }
+         set { ; } 
       }
 
       public Parameter Comment 
       {
-         get { return m_Comment; }
-         set { m_Comment = value; } 
+         get { return Parameter.Empty; }
+         set { ; } 
       }
 
       private Parameter m_BodyText;
@@ -942,8 +939,8 @@ namespace Detox.ScriptEditor
 
       public Parameter[] Parameters 
       { 
-         get { return new Parameter[] { m_BodyText, m_BodyTextColor, m_TitleText, m_TitleTextColor, m_NodeColor, m_Size}; } 
-         set { m_BodyText = value[ 0 ]; m_BodyTextColor = value[ 1 ]; m_TitleText = value[ 2 ]; m_TitleTextColor = value[ 3 ]; m_NodeColor = value[ 4 ]; m_Size = value[ 5 ]; } 
+         get { return new Parameter[] { m_TitleText, m_TitleTextColor, m_BodyText, m_BodyTextColor, m_NodeColor, m_Size}; } 
+         set { m_TitleText = value[ 0 ]; m_TitleTextColor = value[ 1 ]; m_BodyText = value[ 2 ]; m_BodyTextColor = value[ 3 ]; m_NodeColor = value[ 4 ]; m_Size = value[ 5 ]; } 
       }
       
       public Parameter BodyText       { get { return m_BodyText; } set { m_BodyText = value; } }
@@ -989,7 +986,7 @@ namespace Detox.ScriptEditor
          m_BodyText.Name = "Body";
          m_BodyText.FriendlyName = "Body";
          m_BodyText.Default = "";
-         m_BodyText.Type = "String";
+         m_BodyText.Type = "TextArea";
          m_BodyText.Input = true;
          m_BodyText.Output = false;
 
@@ -1015,22 +1012,6 @@ namespace Detox.ScriptEditor
          m_Size.Input = true;
          m_Size.Output= false;
          m_Size.Default = "0, 0";
-
-         m_ShowComment = new Parameter( );
-         m_ShowComment.Name    = "Show Comment";
-         m_ShowComment.FriendlyName = "Show Comment";
-         m_ShowComment.Default = "false";
-         m_ShowComment.Type    = "Bool";
-         m_ShowComment.Input   = true;
-         m_ShowComment.Output  = false;
-
-         m_Comment = new Parameter( );
-         m_Comment.Name    = "Comment";
-         m_Comment.FriendlyName = "Comment";
-         m_Comment.Default = "";
-         m_Comment.Type    = "String";
-         m_Comment.Input   = true;
-         m_Comment.Output  = false;
       }
    }
 
@@ -1945,10 +1926,8 @@ namespace Detox.ScriptEditor
          if ( (source is EntityMethod || source is EntityEvent || source is LogicNode) &&
               (dest   is EntityMethod || dest   is EntityEvent || dest   is LogicNode) ) return false;
 
-         //source must be output and dest must be input OR
-         //dest must be output and source must be input
-         if ( (sourceParam.Output != true && destParam.Input != true) ||
-              (destParam.Output   != true && sourceParam.Input != true) ) return false;
+         //source must be output and dest must be input
+         if ( true != sourceParam.Output || true != destParam.Input ) return false;
 
          //if source param is an array and dest param is an array
          //remove both array qualifiers because we only care if the types are compatible

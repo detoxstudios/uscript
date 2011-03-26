@@ -31,34 +31,28 @@ namespace Detox.ScriptEditor
 
          Name = comment.TitleText.Default;
 
-         int newLine = 0;
+         List<Socket> sockets = new List<Socket>( );
+         Socket socket;
 
-         string formatComment = "";
+         socket = new Socket( );
+         socket.Alignment = Socket.Align.Center;
+         socket.InternalName = "";
+         socket.FriendlyName = comment.BodyText.Default;
+         socket.Input  = false;
+         socket.Output = false;
+         socket.Type   = "";
+         sockets.Add( socket );
 
-         foreach ( char c in comment.BodyText.Default )
-         {
-            if ( newLine > 64 && c == ' ' )
-            {
-               formatComment += "\n";
-               newLine = 0;
-            }
-            else
-            {
-               formatComment += c;
-            }
-
-            newLine++;
-         }
-
-		 Name += "\n" + formatComment;
-
-         UpdateSockets( new Socket[]{} );
+         UpdateSockets( sockets.ToArray( ) );
       }
 
       protected override Size CalculateSize(Socket []sockets, System.Drawing.Graphics g)
       {
          Size size = base.CalculateSize(sockets, g);
          
+         CommentNode clone = Comment;
+         Parameter p = clone.Size;
+
          try
          {
             int []intArray = (int[]) Comment.Size.DefaultAsObject;
@@ -69,6 +63,13 @@ namespace Detox.ScriptEditor
             if ( width  > 0 ) size.Width = width;
             if ( height > 0 ) size.Height = height;
          
+            if ( size.Width  < uScriptConfig.MinResizeX ) size.Width = uScriptConfig.MinResizeX;
+            if ( size.Height < uScriptConfig.MinResizeY ) size.Height = uScriptConfig.MinResizeY;
+
+            p.DefaultAsObject = new int[2] { size.Width, size.Height };
+            clone.Size = p;
+            UpdateNode( clone );
+
             return size;
          }
          catch
@@ -84,10 +85,24 @@ namespace Detox.ScriptEditor
             if ( width  > 0 ) size.Width = width;
             if ( height > 0 ) size.Height = height;
  
+            if ( size.Width  < uScriptConfig.MinResizeX ) size.Width = uScriptConfig.MinResizeX;
+            if ( size.Height < uScriptConfig.MinResizeY ) size.Height = uScriptConfig.MinResizeY;
+
+            p.DefaultAsObject = new int[2] { size.Width, size.Height };
+            clone.Size = p;
+            UpdateNode( clone );
+
             return size;
          }
          catch
          {}
+
+         if ( size.Width  < uScriptConfig.MinResizeX ) size.Width = uScriptConfig.MinResizeX;
+         if ( size.Height < uScriptConfig.MinResizeY ) size.Height = uScriptConfig.MinResizeY;
+
+         p.DefaultAsObject = new int[2] { size.Width, size.Height };
+         clone.Size = p;
+         UpdateNode( clone );
 
          return size;
       }

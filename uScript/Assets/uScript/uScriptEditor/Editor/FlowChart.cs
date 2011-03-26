@@ -533,12 +533,24 @@ namespace Detox.FlowChart
                      if ( true == m_LinkStartAnchor.Output && true == hitPoint.Input ||
                           true == m_LinkStartAnchor.Input  && true == hitPoint.Output )
                      {
-                        //default to start is output and dest is input
-                        AnchorPoint sourceAnchor = m_LinkStartAnchor.Output ? m_LinkStartAnchor : hitPoint;
-                        AnchorPoint destAnchor   = m_LinkStartAnchor.Output ? hitPoint : m_LinkStartAnchor;
+                        AnchorPoint sourceAnchor, destAnchor;
+                        Node sourceNode, destNode;
 
-                        Node sourceNode = m_LinkStartAnchor.Output ? m_StartLinkNode : node;
-                        Node destNode   = m_LinkStartAnchor.Output ? node : m_StartLinkNode;
+                        //default to start is output and dest is input
+                        if ( true == m_LinkStartAnchor.Output && true == hitPoint.Input )
+                        {
+                           sourceNode   = m_StartLinkNode;
+                           destNode     = node;
+                           sourceAnchor = m_LinkStartAnchor.Output ? m_LinkStartAnchor : hitPoint;
+                           destAnchor   = m_LinkStartAnchor.Output ? hitPoint : m_LinkStartAnchor;
+                        }
+                        else
+                        {
+                           sourceNode   = node;
+                           destNode     = m_StartLinkNode;
+                           sourceAnchor = hitPoint;
+                           destAnchor   = m_LinkStartAnchor;
+                        }
    
                         bool exists = false;
 
@@ -1185,8 +1197,8 @@ namespace Detox.FlowChart
 
          Size = new System.Drawing.Size(m_ResizeOffset.Width + position.X - m_MouseOffset.X, m_ResizeOffset.Height + position.Y - m_MouseOffset.Y );
       
-         if ( Size.Width  < uScriptConfig.ResizeTexture.width  ) Size.Width = uScriptConfig.ResizeTexture.width;
-         if ( Size.Height < uScriptConfig.ResizeTexture.height ) Size.Height = uScriptConfig.ResizeTexture.height;
+         if ( Size.Width  < uScriptConfig.MinResizeX  ) Size.Width = uScriptConfig.MinResizeX;
+         if ( Size.Height < uScriptConfig.MinResizeY ) Size.Height = uScriptConfig.MinResizeY;
       }
 
       public AnchorPoint GetAnchorPoint(string name)
@@ -1276,7 +1288,8 @@ namespace Detox.FlowChart
             float x = TextPoints[i].X / 100.0f * Size.Width;
             float y = TextPoints[i].Y / 100.0f * Size.Height;
 
-            e.Graphics.DrawString(TextPoints[i].Name, TextPoints[i].StyleName, new PointF(x + location.X, y + location.Y));
+            GUI.Label( new Rect(x + location.X, y + location.Y, Size.Width - x, Size.Height - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
+            //e.Graphics.DrawString(TextPoints[i].Name, TextPoints[i].StyleName, new PointF(x + location.X, y + location.Y));
          }
 
          if ( CanResize )

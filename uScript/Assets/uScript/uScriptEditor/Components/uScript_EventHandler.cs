@@ -447,7 +447,7 @@ public class uScriptDefaultStyle : uScriptStyle
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
 	   element.alignment = TextAnchor.UpperCenter;
-      element.fontStyle = FontStyle.Normal;
+      element.fontStyle = FontStyle.Bold;
 	   element.fontSize = 0;
       elementSettings["comment"] = element;
 		
@@ -464,7 +464,7 @@ public class uScriptDefaultStyle : uScriptStyle
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
 	  element.alignment = TextAnchor.UpperCenter;
-      element.fontStyle = FontStyle.Normal;
+      element.fontStyle = FontStyle.Bold;
 	  element.fontSize = 0;
       elementSettings["comment_selected"] = element;
 
@@ -591,6 +591,7 @@ public class uScriptDefaultStyle : uScriptStyle
       }
 
       element = new GUIStyle();
+      element.wordWrap = true;
       element.normal.textColor = nodeTextGrey;
       element.border.left = 6;
       element.border.right = 6;
