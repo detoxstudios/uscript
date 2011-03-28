@@ -152,12 +152,19 @@ public class uScript : EditorWindow
       // Test for Unity Pro - Unity 3.1 Indie does not support RenderTextures
       isPro = ( SystemInfo.supportsRenderTextures );
 
+      EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
+
       _statusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
    }
 
    void Update()
    {
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
+
+      if (EditorApplication.playmodeStateChanged == null)
+      {
+         EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
+      }
 
 //      Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
 
@@ -384,6 +391,19 @@ public class uScript : EditorWindow
       }
 
       CheckDragDrop( );
+   }
+
+   void OnPlaymodeStateChanged()
+   {
+      if (EditorApplication.isPlayingOrWillChangePlaymode)
+      {
+         AllowNewFile();
+      }
+   }
+
+   void OnDestroy()
+   {
+      AllowNewFile();
    }
 
    void OpenLogicNode( )
@@ -1058,7 +1078,7 @@ public class uScript : EditorWindow
 
    private bool AllowNewFile( )
    {
-      if ( true == m_ScriptEditorCtrl.IsDirty )
+      if (m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.IsDirty)
       {
          int result = EditorUtility.DisplayDialogComplex( "Save File?", m_ScriptEditorCtrl.Name + " has been modified, would you like to save?", "Yes", "No", "Cancel" );
 
