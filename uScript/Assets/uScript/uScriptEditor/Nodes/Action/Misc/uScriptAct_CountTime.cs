@@ -19,12 +19,13 @@ public class uScriptAct_CountTime : uScriptLogic
    private bool m_TimerStarted = false;
    private float m_TotalTime = 0F;
 
+   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    public event uScriptEventHandler Out;
 
    public void Start()
    {
       m_TimerStarted = true;
-      uScript_EventHandler.DoEvent(this, Out, new object[] { });
+      if ( Out != null ) Out(this, new System.EventArgs());
    }
 
    public void Stop(out float Seconds)

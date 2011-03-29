@@ -324,11 +324,16 @@ namespace Detox.ScriptEditor
             
             foreach ( UnityEngine.Component component in gameObject.GetComponents(typeof(UnityEngine.Component)) )
             {
-               typeHash[ component.GetType().ToString() ] = true;
+               if ( component.GetType().ToString() != uScriptConfig.Variable.FriendlyName(component.GetType().ToString()))
+               {
+                  typeHash[ component.GetType().ToString() ] = true;
+               }
             }
+
+            typeHash[ gameObject.GetType().ToString() ] = true;
             
             BuildAddMenu( addMenu, typeHash );
-
+            
             m_ContextMenuStrip.Items.AddRange( addMenu.DropDownItems.Items.ToArray( ) );
 
             return true;
@@ -1350,7 +1355,17 @@ namespace Detox.ScriptEditor
             if ("" == categoryName) categoryName = "Advanced/Variables";
 
             string friendlyName = uScriptConfig.Variable.FriendlyName(type);
-            ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName);
+
+            ToolStripMenuItem friendlyMenu = null;
+            
+            if ( null == typeHash )
+            {
+               friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName );
+            }
+            else
+            {
+               friendlyMenu = GetMenu(addMenu, "Place " + friendlyName + " Variable");
+            }
 
             friendlyMenu.Tag = new LocalNode( "", type, "" );
             friendlyMenu.Click += new System.EventHandler(m_MenuAddNode_Click);

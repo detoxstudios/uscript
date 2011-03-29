@@ -84,6 +84,18 @@ namespace Detox.ScriptEditor
             {
                return "true" == Default;
             }
+            if ( type == "Color" )
+            {
+               try
+               {
+                  string []values = Default.Split( ',' );
+                  return new UnityEngine.Color( Single.Parse(values[0]), values.Length > 1 ? Single.Parse(values[1]) : 0, values.Length > 2 ? Single.Parse(values[2]) : 0 );
+               }
+               catch 
+               {
+                  return new UnityEngine.Color(0, 0, 0);
+               }
+            }
             if ( type == "Float" )
             {
                try
@@ -248,6 +260,19 @@ namespace Detox.ScriptEditor
                catch ( Exception )
                {
                   Default = "0,0,0,0";
+               }
+               return;
+            }
+            if ( type == "Color" )
+            {
+               try
+               {
+                  UnityEngine.Color v = (UnityEngine.Color) value;
+                  Default = v.r + "," + v.g + "," + v.b;
+               }
+               catch ( Exception )
+               {
+                  Default = "0,0,0";
                }
                return;
             }
@@ -1021,6 +1046,7 @@ namespace Detox.ScriptEditor
       {
          EntityEvent entityEvent = new EntityEvent( );
          entityEvent.Instance  = Instance;
+         entityEvent.EventArgs = EventArgs;
          entityEvent.Parameters= Parameters;
          entityEvent.Position  = Position;
          entityEvent.Output    = Output;
@@ -1038,6 +1064,7 @@ namespace Detox.ScriptEditor
             EntityEventData nodeData = new EntityEventData( );
             nodeData.Position.X= Position.X;
             nodeData.Position.Y= Position.Y;
+            nodeData.EventArgs = EventArgs;
             nodeData.Instance  = Instance.ToParameterData( );
             nodeData.Output    = Output.ToPlugData( );
             nodeData.Guid      = Guid;
@@ -1053,7 +1080,7 @@ namespace Detox.ScriptEditor
       {
          return base.GetHashCode();
       }
-
+         
       public override bool Equals(object obj)
       {
          if ( obj.GetType() != typeof(EntityEvent) ) return false;
@@ -1090,6 +1117,8 @@ namespace Detox.ScriptEditor
          set { m_Comment = value; } 
       }
 
+      public string EventArgs;
+
       public Parameter m_Instance;
       public Parameter Instance { get { return m_Instance; } set { m_Instance = value; } }
 
@@ -1108,13 +1137,13 @@ namespace Detox.ScriptEditor
          set { m_Guid = value; }
       }
 
-      public EntityEvent(string type, string name, string friendlyName)
+      public EntityEvent(string type, string friendlyType, string name, string friendlyName)
       { 
          Output.Name = name;
          Output.FriendlyName = friendlyName;
 
          m_Instance.Name = "Instance";
-         m_Instance.FriendlyName = "Instance";
+         m_Instance.FriendlyName = friendlyType;
          m_Instance.Type    = type;
          m_Instance.Input   = true;
          m_Instance.Output  = false;
@@ -1140,6 +1169,8 @@ namespace Detox.ScriptEditor
          m_Comment.Type    = "String";
          m_Comment.Input   = true;
          m_Comment.Output  = false;
+
+         EventArgs = "System.EventArgs";
       }
    }
 
@@ -2322,7 +2353,7 @@ namespace Detox.ScriptEditor
 
       private EntityEvent CreateEntityEvent( EntityEventData data )
       {
-         EntityEvent cloned = new EntityEvent( data.Instance.Type, data.Output.Name, data.Output.FriendlyName );
+         EntityEvent cloned = new EntityEvent( data.Instance.Type, data.Instance.FriendlyName, data.Output.Name, data.Output.FriendlyName );
          bool exactMatch= false;
 
          foreach ( EntityDesc desc in m_EntityDescs )
@@ -2347,6 +2378,7 @@ namespace Detox.ScriptEditor
             }
          }
 
+         cloned.EventArgs   = data.EventArgs;
          cloned.Guid        = data.Guid;
          cloned.Position    = data.Position;
          cloned.ShowComment = new Parameter( data.ShowComment );

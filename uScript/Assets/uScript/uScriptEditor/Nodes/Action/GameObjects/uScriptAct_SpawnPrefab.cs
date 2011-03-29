@@ -17,6 +17,7 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
    // 6. Logic to check for a legal spawn collision check before doing a spwan Prefab (would have Aborted out).
    // 7. Would it be better to have another master uScript script to hold an array of prefabs to spawn (instead of Resources folder)? Both?
 
+   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    private bool m_FinishedSpawning = false;
 
    public bool Immediate { get { return true; } }
@@ -118,7 +119,7 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
       if (m_FinishedSpawning)
       {
          m_FinishedSpawning = false;
-         uScript_EventHandler.DoEvent(this, FinishedSpawning, new object[] { });
+         if ( FinishedSpawning != null ) FinishedSpawning(this, new System.EventArgs());
       }
    }
 

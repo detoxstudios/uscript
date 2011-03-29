@@ -326,7 +326,8 @@ namespace Detox.Data.ScriptEditor
 
    public class EntityEventData : EntityNodeData
    {
-      public Plug Output;
+      public Plug   Output;
+      public string EventArgs;
 
       public Parameter Instance;
       public Parameter []Parameters;
@@ -338,14 +339,15 @@ namespace Detox.Data.ScriptEditor
          EntityEventData data = cloneFrom as EntityEventData;
          if ( null == data ) return;
 
-         Output   = data.Output;
-         Instance = data.Instance;
+         Output       = data.Output;
+         Instance     = data.Instance;
+         EventArgs    = data.EventArgs;
 
          Parameters = new Parameter[ data.Parameters.Length ];
          data.Parameters.CopyTo( Parameters, 0 );
       }
 
-      public new int Version { get { return 3; } }
+      public new int Version { get { return 4; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -368,6 +370,15 @@ namespace Detox.Data.ScriptEditor
             Output = (Plug) serializer.LoadNamedObject( "Output" );
          }
 
+         if ( serializer.CurrentVersion > 3 )
+         {
+            EventArgs = (string) serializer.LoadNamedObject( "EventArgs" );
+         }
+         else
+         {
+            EventArgs = "System.EventArgs";
+         }
+
          Parameters = (Parameter[]) serializer.LoadNamedObject( "Parameters" );
       }
 
@@ -375,9 +386,10 @@ namespace Detox.Data.ScriptEditor
       {
          serializer.SaveBaseObject( this, typeof(EntityNodeData) );
 
-         serializer.SaveNamedObject( "Output",     Output );
-         serializer.SaveNamedObject( "Instance",   Instance );
-         serializer.SaveNamedObject( "Parameters", Parameters );
+         serializer.SaveNamedObject( "Output",       Output );
+         serializer.SaveNamedObject( "Instance",     Instance );
+         serializer.SaveNamedObject( "Parameters",   Parameters );
+         serializer.SaveNamedObject( "EventArgs",    EventArgs );
       }
    }
 

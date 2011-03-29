@@ -1351,8 +1351,6 @@ public class uScript : EditorWindow
 
          LogicNode logicNode = new LogicNode( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)) );
          
-         //Debug.Log( "type = " + type );
-
          List<Plug> inputs = new List<Plug>( );
 
          Hashtable accessorMethods = new Hashtable( );
@@ -1475,6 +1473,36 @@ public class uScript : EditorWindow
 
       List<EntityDesc> entityDescs = new List<EntityDesc>( );
 
+      foreach ( MethodInfo m in typeof(UnityEngine.Behaviour).GetMethods( ) )
+      {
+         baseMethods[ m.Name ] = m.Name;
+      }
+
+      foreach ( EventInfo e in typeof(UnityEngine.Behaviour).GetEvents( ) )
+      {
+         baseEvents[ e.Name ] = e.Name;
+      }
+
+      foreach ( PropertyInfo p in typeof(UnityEngine.Behaviour).GetProperties( ) )
+      {
+         baseProperties[ p.Name ] = p.Name;
+      }
+
+      foreach ( MethodInfo m in typeof(UnityEngine.MonoBehaviour).GetMethods( ) )
+      {
+         baseMethods[ m.Name ] = m.Name;
+      }
+
+      foreach ( EventInfo e in typeof(UnityEngine.MonoBehaviour).GetEvents( ) )
+      {
+         baseEvents[ e.Name ] = e.Name;
+      }
+
+      foreach ( PropertyInfo p in typeof(UnityEngine.MonoBehaviour).GetProperties( ) )
+      {
+         baseProperties[ p.Name ] = p.Name;
+      }
+
       foreach ( MethodInfo m in typeof(UnityEngine.Object).GetMethods( ) )
       {
          baseMethods[ m.Name ] = m.Name;
@@ -1552,7 +1580,7 @@ public class uScript : EditorWindow
          {
             if ( p.GetGetMethod( ) != null )
             {
-               accessorMethods[ p.GetGetMethod( ).Name ] = true;
+               accessorMethods[ p.GetGetMethod( ).Name ]  = true;
             }
 
             if ( p.GetSetMethod( ) != null )
@@ -1610,14 +1638,83 @@ public class uScript : EditorWindow
          entityDesc.Methods = entityMethods.ToArray( );
 
          List<EntityEvent> entityEvents = new List<EntityEvent>( );
-
+   
          foreach ( EventInfo e in eventInfos )
          {
             if ( true == baseEvents.Contains(e.Name) ) continue;
 
-            EntityEvent entityEvent = new EntityEvent( type.ToString( ), e.Name, FindFriendlyName(e.Name, e.GetCustomAttributes(false)) );
+            List<Parameter> eventInputsOutpus = new List<Parameter>( );
 
-            entityEvent.Parameters = new Parameter[ 0 ];
+            //look for any set properties which will exist on the event
+            //because we can't set them via method parameters
+            foreach ( PropertyInfo p in propertyInfos )
+            {
+               if ( baseProperties.Contains(p.Name) ) continue;
+
+               if ( p.GetSetMethod( ) != null )
+               {
+                  Parameter input = new Parameter( );
+                  
+                  input.Name     = p.Name;
+                  input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
+                  input.Type    = p.PropertyType.ToString( ).Replace( "&", "" );
+                  input.Input   = true;
+                  input.Output  = false;
+                  input.Default = "";
+
+                  AddType( p.PropertyType );
+               
+                  eventInputsOutpus.Add( input );
+               }
+            }
+
+            EntityEvent entityEvent = new EntityEvent( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)), 
+                                                        e.Name, FindFriendlyName(e.Name, e.GetCustomAttributes(false)));
+
+            ParameterInfo [] eventParameters = e.GetAddMethod( ).GetParameters( );
+
+            foreach ( ParameterInfo eventParameter in eventParameters )
+            {
+               MethodInfo [] eventHandlerMethods = eventParameter.ParameterType.GetMethods( );
+
+               foreach ( MethodInfo eventHandlerMethod in eventHandlerMethods )
+               {
+                  if ( eventHandlerMethod.Name == "Invoke" )
+                  {
+                     ParameterInfo [] methodParameters = eventHandlerMethod.GetParameters( );
+
+                     foreach ( ParameterInfo methodParameter in methodParameters )
+                     {
+                        if ( typeof(EventArgs).IsAssignableFrom(methodParameter.ParameterType) )
+                        {
+                           entityEvent.EventArgs = methodParameter.ParameterType.ToString( ).Replace( "+", "." );
+                           
+                           PropertyInfo []eventProperties = methodParameter.ParameterType.GetProperties( );
+                        
+                           foreach ( PropertyInfo eventProperty in eventProperties )
+                           {
+                              Parameter output = new Parameter( );
+                              output.Name    = eventProperty.Name;
+                              output.FriendlyName = FindFriendlyName(eventProperty.Name, eventProperty.GetCustomAttributes(false));
+                              output.Type    = eventProperty.PropertyType.ToString( ).Replace( "&", "" );
+                              output.Input   = false;
+                              output.Output  = true;
+                              output.Default = "";
+
+                              AddType( eventProperty.PropertyType );
+
+                              eventInputsOutpus.Add( output );                           
+                           }
+                        }
+                     }
+                     
+                     //break after Invoke parameter, it's the only one we care about
+                     break;
+                  }
+               }
+            }
+
+            entityEvent.Parameters = eventInputsOutpus.ToArray( );
             entityEvents.Add( entityEvent );
          }
 
@@ -1781,53 +1878,6 @@ public class uScript : EditorWindow
                   DragAndDrop.AcceptDrag( );
                }
             }
-
-            //below for reference if they are dragging scripts in
-            //foreach ( string o in DragAndDrop.paths )
-            //{
-            //   if ( System.IO.Path.GetExtension(o) != ".cs" ) continue;
-
-            //   string result = System.IO.Path.GetFileNameWithoutExtension( o );
-            //   Debug.Log( "type = " + result );
-
-            //   UnityEngine.Object []bs = FindObjectsOfType( typeof(MonoBehaviour) );
-
-            //   Type type = null;
-            //   foreach ( UnityEngine.Object b in bs )
-            //   {
-            //      if ( b.GetType().ToString( ) == result )
-            //      {
-            //         type = b.GetType( );
-            //         break;
-            //      }
-            //   }
-
-            //   MethodInfo []methods = type.GetMethods( );
-
-            //   foreach ( MethodInfo m in methods )
-            //   {
-            //      if ( true == m.IsPublic )
-            //      {
-            //         Debug.Log( "method = " + m.Name );
-            //      }
-            //   }
-
-            //   EventInfo []events = type.GetEvents( );
-
-            //   foreach ( EventInfo e in events )
-            //   {
-            //      Debug.Log( "event = " + e.Name );
-            //   }
-
-            //   PropertyInfo []properties = type.GetProperties( );
-
-            //   foreach ( PropertyInfo p in properties )
-            //   {
-            //      Debug.Log( "property = " + p.Name );
-            //   }
-
-            //   break;
-            //}
          }
 
          Event.current.Use( );

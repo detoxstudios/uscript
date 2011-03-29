@@ -17,16 +17,13 @@ public class uScriptAct_MoveToLocation : uScriptLogic
    private bool m_UseLerp = false;
    private float m_LerpSpeedModifier = 0.0F;
 
-   
-
-   // @TODO: remove once event hack no longer needed to run Update().
-   //public bool Out { get { return true; } }
+   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    public event uScriptEventHandler Out;
 
 
    public void In(GameObject[] Target, Vector3 Location, bool AsOffset, bool UseLerp, float LerpSpeedModifier)
    {
-      uScript_EventHandler.DoEvent(this, Out, new object[] { });
+      if ( Out != null ) Out(this, new System.EventArgs() );
 
       m_TargetArray = Target;
 

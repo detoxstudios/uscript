@@ -23,7 +23,7 @@ namespace Detox.ScriptEditor
 
          NodeStyle = "node_event";
          Location  = new System.Drawing.Point( entityEvent.Position.X, entityEvent.Position.Y );
-         Name = uScriptConfig.Variable.FriendlyName(entityEvent.Instance.Type);
+         Name = entityEvent.Instance.FriendlyName;
 			
          List<Socket> sockets = new List<Socket>( );
 
@@ -31,6 +31,12 @@ namespace Detox.ScriptEditor
 
          foreach ( Parameter parameter in entityEvent.Parameters )
          {
+            //nothing from the script can call events
+            //so we can't allow on input links to set us
+            //which means we should only be exposed in the property grid
+            //not as a socket
+            if ( true == parameter.Input ) continue;
+            
             socket = new Socket( );
             socket.Alignment = Socket.Align.Bottom;
             socket.InternalName = parameter.Name;

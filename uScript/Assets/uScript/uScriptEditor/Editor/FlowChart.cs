@@ -501,14 +501,33 @@ namespace Detox.FlowChart
                }
             }
 
-            Node nodeSelected = sender as Node;
+            Point position = System.Windows.Forms.Cursor.Position;
+            position = PointToClient( position );
 
-            //change selection state
-            //(if ctrl key was down it will toggle selection state)
-            //(if ctrl key was up it will always have been unselected
-            // because of the above code and so this will always select it)
-            nodeSelected.Selected = ! nodeSelected.Selected;
-            selectionSetChanged = true;
+            foreach ( Link link in m_Links )
+            {
+               if ( true == InLink(link, position) )
+               {
+                  //change selection state
+                  //(if ctrl key was down it will toggle selection state)
+                  //(if ctrl key was up it will always have been unselected
+                  // because of the above code and so this will always select it)
+                  link.Selected = ! link.Selected;
+                  selectionSetChanged = true;
+               }
+            }
+
+            if ( false == selectionSetChanged )
+            {
+               Node nodeSelected = sender as Node;
+
+               //change selection state
+               //(if ctrl key was down it will toggle selection state)
+               //(if ctrl key was up it will always have been unselected
+               // because of the above code and so this will always select it)
+               nodeSelected.Selected = ! nodeSelected.Selected;
+               selectionSetChanged = true;
+            }
          }
 
          m_NodeMouseTracking = false;
@@ -1289,7 +1308,6 @@ namespace Detox.FlowChart
             float y = TextPoints[i].Y / 100.0f * Size.Height;
 
             GUI.Label( new Rect(x + location.X, y + location.Y, Size.Width - x, Size.Height - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
-            //e.Graphics.DrawString(TextPoints[i].Name, TextPoints[i].StyleName, new PointF(x + location.X, y + location.Y));
          }
 
          if ( CanResize )

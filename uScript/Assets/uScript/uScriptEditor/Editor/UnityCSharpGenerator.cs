@@ -811,6 +811,12 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );               
                   ++m_TabStack;
                      AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = gameObject.GetComponent<" + type + ">();" );
+
+                     if ( node is EntityEvent )
+                     {
+                        SetEventInputs( CSharpName(node, parameter.Name) + "[" + i + "]", ((EntityEvent)node) );
+                     }
+
                   --m_TabStack;
                   AddCSharpLine( "}" );               
                }
@@ -833,6 +839,12 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );               
                ++m_TabStack;
                   AddCSharpLine( CSharpName(node, parameter.Name) + " = gameObject.GetComponent<" + parameter.Type + ">();" );
+                  
+                  if ( node is EntityEvent )
+                  {
+                     SetEventInputs( CSharpName(node, parameter.Name), ((EntityEvent)node) );
+                  }
+            
                --m_TabStack;
                AddCSharpLine( "}" );               
 
@@ -850,6 +862,22 @@ namespace Detox.ScriptEditor
             --m_TabStack;
             AddCSharpLine( "}" );
          }
+      }
+
+      private void SetEventInputs( string eventVariable, EntityEvent eventNode )
+      {
+         AddCSharpLine( "if ( null != " + eventVariable + " )" );
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+            foreach ( Parameter p in eventNode.Parameters )
+            {
+               if ( p.Input == true )
+               {
+                  AddCSharpLine( eventVariable + "." + p.Name + " = " + CSharpName(eventNode, p.Name) + ";" );
+               }
+            }
+         --m_TabStack;
+         AddCSharpLine( "}" );               
       }
 
       private void DefineDestruction( )
@@ -912,7 +940,7 @@ namespace Detox.ScriptEditor
       //create the function which the event listener will call
       private void DefineEvent( EntityEvent entityEvent )
       {
-         AddCSharpLine( "void " + CSharpEventDeclaration(entityEvent) + "(object o, uScriptEventArgs e)" );
+         AddCSharpLine( "void " + CSharpEventDeclaration(entityEvent) + "(object o, " + entityEvent.EventArgs + " e)" );
          AddCSharpLine( "{" );
 
          ++m_TabStack;
@@ -924,7 +952,10 @@ namespace Detox.ScriptEditor
             AddCSharpLine( "//fill globals" );
             foreach ( Parameter parameter in entityEvent.Parameters )
             {
-               AddCSharpLine( CSharpName(entityEvent, parameter.Name) + " = e.Args[ " + i + " ];" );
+               //only allow output parameters, those come through in the event args
+               if ( parameter.Input == true ) continue;
+
+               AddCSharpLine( CSharpName(entityEvent, parameter.Name) + " = e. " + parameter.Name + ";" );//Args[ " + i + " ];" );
                ++i;
             }
 
@@ -1024,7 +1055,7 @@ namespace Detox.ScriptEditor
 
          return externalLinks.ToArray( );
       }
-
+      
       private string[] FindExternalEvents( )
       {
          List<string> externalLinks = new List<string>( );
@@ -1250,7 +1281,7 @@ namespace Detox.ScriptEditor
       //create the function which the event listener will call
       private void DefineLogicEvent( LogicNode logicNode, string eventName )
       {
-         AddCSharpLine( "void " + CSharpEventDeclaration(logicNode, eventName) + "(object o, uScriptEventArgs e)" );
+         AddCSharpLine( "void " + CSharpEventDeclaration(logicNode, eventName) + "(object o, System.EventArgs e)" );
          AddCSharpLine( "{" );
 
          ++m_TabStack;

@@ -23,6 +23,7 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(System.Single[]), "Float List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(System.Boolean), "Bool", "Variables" ),
             new uScriptConfigBlock( typeof(System.String), "String", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Color), "Color", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Vector2), "Vector2", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Vector3), "Vector3", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Vector4), "Vector4", "Variables" ),
@@ -30,8 +31,9 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(UnityEngine.GameObject[]), "GameObject List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Camera), "Camera", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Camera[]), "Camera List", "Variables/Lists" ),           
-            new uScriptConfigBlock( typeof(uScript_Triggers), "Trigger Object", "Variables" ),            
+            new uScriptConfigBlock( typeof(uScript_Triggers), "Trigger Object", "Variables" ),
             new uScriptConfigBlock( typeof(uScript_Global), "Global Events", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.AudioClip), "Audio Clip", "Variables" ),
          };
       }
    }

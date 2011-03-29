@@ -10,26 +10,44 @@ using System.Collections;
 [NodeComponentType(typeof(Collider))]
 
 [NodePath("Events")]
+[FriendlyName("Trigger Event")]
 public class uScript_Triggers : uScriptEvent
 {
+   public delegate void uScriptEventHandler(object sender, TriggerEventArgs args);
+
+   public class TriggerEventArgs : System.EventArgs
+   {
+      private GameObject m_GameObject;
+      
+      [FriendlyName("Game Object")]
+      public GameObject GameObject { get { return m_GameObject; } }
+
+      public TriggerEventArgs(GameObject gameObject)
+      {
+         m_GameObject = gameObject;
+      }
+   }
+
    public event uScriptEventHandler OnEnterTrigger;
    public event uScriptEventHandler OnExitTrigger;
    public event uScriptEventHandler WhileInsideTrigger;
 
+   private int m_TimesToTrigger;
+   public int TimesToTrigger { set { m_TimesToTrigger = value; } }
 
    void OnTriggerEnter(Collider other)
    {
-      uScript_EventHandler.DoEvent(this, OnEnterTrigger, new object[] { });
+      if ( OnEnterTrigger != null ) OnEnterTrigger( this, new TriggerEventArgs(other.gameObject) ); 
    }
 
    void OnTriggerExit(Collider other)
    {
-      uScript_EventHandler.DoEvent(this, OnExitTrigger, new object[] { });
+      if ( OnExitTrigger != null ) OnExitTrigger( this, new TriggerEventArgs(other.gameObject) ); 
    }
 
    void OnTriggerStay(Collider other)
    {
-      uScript_EventHandler.DoEvent(this, WhileInsideTrigger, new object[] { });
+      if ( WhileInsideTrigger != null ) WhileInsideTrigger( this, new TriggerEventArgs(other.gameObject) ); 
    }
 	
 	
@@ -43,6 +61,4 @@ public class uScript_Triggers : uScriptEvent
 		}
 
     }
-
-
 }

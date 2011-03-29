@@ -18,13 +18,14 @@ public class uScriptAct_Gate : uScriptLogic
 {
    private bool m_gateOpen = false;
 
+   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    public event uScriptEventHandler Out;
 
    public void In()
    {
       if (m_gateOpen)
       {
-         uScript_EventHandler.DoEvent(this, Out, new object[] { });
+         if ( Out != null ) Out(this, new System.EventArgs( ));
       }
 
    }

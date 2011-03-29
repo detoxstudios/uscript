@@ -11,28 +11,28 @@ using System.Collections;
 [NodePath("Events")]
 public class uScript_Global : MonoBehaviour
 {
-    public event uScriptEventHandler GameStart;
-    public event uScriptEventHandler KeyPress;
+   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
+   
+   public event uScriptEventHandler GameStart;
+   public event uScriptEventHandler KeyPress;
 
-    void Start()
-    {
-        uScript_EventHandler.DoEvent(this, GameStart, new object[] { });
-    }
+   void Start()
+   {
+      if ( GameStart != null ) GameStart(this, new System.EventArgs());
+   }
 
-    void Update()
-    {
-        if (Input.anyKeyDown)
-        {
-            uScript_EventHandler.DoEvent(this, KeyPress, new object[] { });
-        }
-    }
+   void Update()
+   {
+      if (Input.anyKeyDown)
+      {
+         if( KeyPress != null ) KeyPress(this, new System.EventArgs());
+      }
+   }
 	
 	// uScript GUI Options
 	void OnDrawGizmos()
 	{
 		// @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
-        Gizmos.DrawIcon(transform.position, "uscript_gizmo_master.png");
-
-    }
-
+      Gizmos.DrawIcon(transform.position, "uscript_gizmo_master.png");
+   }
 }

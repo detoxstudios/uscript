@@ -16,11 +16,12 @@ using System.Collections;
 [FriendlyName("Delay")]
 public class uScriptAct_Delay : uScriptLogic
 {
+   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    private float m_TimeToTrigger;
 
    [FriendlyName("Immediate Out")]
    public bool Immediate { get { return true; } }
-
+  
    [FriendlyName("Delayed Out")]
    public event uScriptEventHandler AfterDelay;
 
@@ -40,7 +41,7 @@ public class uScriptAct_Delay : uScriptLogic
       
          if ( m_TimeToTrigger <= 0 )
          {
-            uScript_EventHandler.DoEvent( this, AfterDelay, new object[] { });
+            if ( AfterDelay != null ) AfterDelay( this, new System.EventArgs());
          }
       }
    }

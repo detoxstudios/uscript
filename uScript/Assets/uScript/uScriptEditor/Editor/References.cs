@@ -161,9 +161,9 @@ namespace System.Windows.Forms
       {
          bool signalUpdate = false;
 
-         foreach ( object o in SelectedObjects )
+         foreach ( object selectedObjectx in SelectedObjects )
          {
-            PropertyGridParameters parameters = o as PropertyGridParameters;
+            PropertyGridParameters parameters = selectedObjectx as PropertyGridParameters;
             GUILayout.Label( parameters.Description );
 
             List<Parameter> updatedParameters = new List<Parameter>( );
@@ -196,10 +196,14 @@ namespace System.Windows.Forms
                {
                   val = UnityEditor.EditorGUILayout.Vector4Field( p.Name, (Vector4) val );
                }
-               else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "GameObject" ||
-                         typeof(Component).IsAssignableFrom(uScript.Instance.GetType(p.Type)) 
-                        )
+               else if ( val.GetType() == typeof(UnityEngine.Color) )
                {
+                  val = UnityEditor.EditorGUILayout.ColorField( p.Name, (UnityEngine.Color) val );
+               }
+               else if ( null != uScriptConfig.Variable.GetObjectFieldType(uScript.Instance.GetType(p.Type)) )
+               {
+                  Type type = uScriptConfig.Variable.GetObjectFieldType(uScript.Instance.GetType(p.Type));
+
                   //game objects are held/treated as strings
                   //but we will custom convert them to actual game objects (if they exist)
                   //so we can use the game object browser
@@ -208,13 +212,24 @@ namespace System.Windows.Forms
                      //first show the text field and get back the same (or changed value)
                      val = EditorGUILayout.TextField( p.Name, p.Default );
 
-                     //now try and update the game object browser with an instance of the specified game object
-                     GameObject go = GameObject.Find( val as string );
-                     go = EditorGUILayout.ObjectField( "", go, typeof(GameObject) ) as GameObject;
+                     //now try and update the object browser with an instance of the specified object
+                     Object []objects   = Object.FindObjectsOfType(type);
+                     Object unityObject = null;
+
+                     foreach ( Object o in objects )
+                     {
+                        if ( o.name == val as string )
+                        {
+                           unityObject = o;
+                           break;
+                        }
+                     }
+
+                     unityObject = EditorGUILayout.ObjectField( "", unityObject, type ) as Object;
 
                      //if that object (or the changed object) does exist, use it's name to update the property value
                      //if it doesn't exist then the 'val' will stay as what was entered into the TextField
-                     if ( go != null ) val = go.name;
+                     if ( unityObject != null ) val = unityObject.name;
 
                   EditorGUILayout.EndHorizontal();
                }

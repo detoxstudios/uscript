@@ -91,29 +91,15 @@ public abstract class uScriptLogic : ScriptableObject
    public virtual void _InternalUpdate() { }
 }
 
-public class uScriptEventArgs : System.EventArgs
-{
-   public object[] Args = new object[0];
+//public class uScriptEventArgs : System.EventArgs
+//{
+//   public object[] Args = new object[0];
 
-   public uScriptEventArgs(object[] args)
-   {
-      Args = args;
-   }
-}
-
-public delegate void uScriptEventHandler(object sender, uScriptEventArgs args);
-
-public class uScript_EventHandler : MonoBehaviour
-{
-
-   public static void DoEvent(object o, uScriptEventHandler handler, object[] args)
-   {
-      if (null != handler)
-      {
-         handler(o, new uScriptEventArgs(args));
-      }
-   }
-}
+//   public uScriptEventArgs(object[] args)
+//   {
+//      Args = args;
+//   }
+//}
 
 public class uScriptDebug : MonoBehaviour
 {
@@ -317,6 +303,23 @@ public partial class uScriptConfig
          return type;
       }
       
+      public static Type GetObjectFieldType(Type type)
+      {
+         if ( null == type ) return type;
+
+         if ( false == typeof(UnityEngine.Object).IsAssignableFrom(type) ) return null;
+
+         foreach (uScriptConfigBlock filter in uScriptConfig.Variables)
+         {
+            if (filter.Type == type)
+            {
+               return filter.Type;
+            }
+         }
+
+         return null;
+      }
+
       //return a style based on the friendly name,
       //but if the friendly name can't be found return "default"
       public static string FriendlyStyleName(string type)
