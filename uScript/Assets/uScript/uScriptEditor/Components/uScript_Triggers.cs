@@ -37,16 +37,25 @@ public class uScript_Triggers : uScriptEvent
 
    void OnTriggerEnter(Collider other)
    {
+      if ( 0 == m_TimesToTrigger ) return;
+      --m_TimesToTrigger;
+
       if ( OnEnterTrigger != null ) OnEnterTrigger( this, new TriggerEventArgs(other.gameObject) ); 
    }
 
    void OnTriggerExit(Collider other)
    {
+      if ( 0 == m_TimesToTrigger ) return;
+      --m_TimesToTrigger;
+
       if ( OnExitTrigger != null ) OnExitTrigger( this, new TriggerEventArgs(other.gameObject) ); 
    }
 
    void OnTriggerStay(Collider other)
    {
+      if ( 0 == m_TimesToTrigger ) return;
+      --m_TimesToTrigger;
+
       if ( WhileInsideTrigger != null ) WhileInsideTrigger( this, new TriggerEventArgs(other.gameObject) ); 
    }
 	
