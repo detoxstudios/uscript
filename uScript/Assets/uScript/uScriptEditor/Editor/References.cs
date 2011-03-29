@@ -216,7 +216,7 @@ namespace System.Windows.Forms
                      //if it doesn't exist then the 'val' will stay as what was entered into the TextField
                      if ( go != null ) val = go.name;
 
-                  EditorGUILayout.BeginHorizontal();
+                  EditorGUILayout.EndHorizontal();
                }
                else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "TextArea" )
                {
