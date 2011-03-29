@@ -1712,7 +1712,7 @@ namespace Detox.ScriptEditor
             else if ( socket.Alignment == Socket.Align.Right ) // Used for Event Nodes
             {
                maxRightAlignedText = Math.Max( maxRightAlignedText, textLength.Width + uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize );
-               rightRequiredHeight += ((uScriptConfig.Style.PointSize / 2 + 2) + textLength.Height);
+               rightRequiredHeight += (uScriptConfig.Style.SideSocketToBottomSocketPad + (uScriptConfig.Style.PointSize / 2 + 2) + textLength.Height);
             }
             else if ( socket.Alignment == Socket.Align.Center )  // Used for properties
             {
