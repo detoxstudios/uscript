@@ -148,7 +148,7 @@ public class uScript : EditorWindow
    static public void SetSetting(string key, object value)
    {
       m_AppData.Set(key, value);
-      m_AppData.Save(uScriptConfig.Paths.RootFolder + "\\uScript.settings");
+      m_AppData.Save(uScriptConfig.Paths.RootFolder + "/uScript.settings");
    }
 
    static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)
@@ -176,9 +176,9 @@ public class uScript : EditorWindow
 
       EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
 
-      if (System.IO.File.Exists(uScriptConfig.Paths.RootFolder + "\\uScript.settings"))
+      if (System.IO.File.Exists(uScriptConfig.Paths.RootFolder + "/uScript.settings"))
       {
-         m_AppData.Load(uScriptConfig.Paths.RootFolder + "\\uScript.settings");
+         m_AppData.Load(uScriptConfig.Paths.RootFolder + "/uScript.settings");
       }
 
       _statusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
