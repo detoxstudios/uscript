@@ -4,6 +4,7 @@ using Detox.ScriptEditor;
 using Detox.Data.Tools;
 using System.Windows.Forms;
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
@@ -556,9 +557,16 @@ public class uScript : EditorWindow
             string _filterText = GUILayout.TextField(_sidebarFilterText, 10, "toolbarTextField", GUILayout.Width(80));
             if (_filterText != _sidebarFilterText)
             {
-               _sidebarFilterText = _filterText;
+                // Drop focus if the user inserted a newline (hit enter)
+                if (_filterText.Contains('\n'))
+                {
+                    GUIUtility.keyboardControl = 0;
+                }
 
-               Debug.Log("Filtering with '" + _sidebarFilterText + "'\n");
+                // Only allow letters and digits
+                _filterText = new string(_filterText.Where(ch => char.IsLetterOrDigit(ch)).ToArray());
+
+                _sidebarFilterText = _filterText;
                FilterSidebarMenuItems();
             }
          }
@@ -647,7 +655,7 @@ public class uScript : EditorWindow
          {
             foreach (SidebarMenuItem item in sidebarMenuItem.Items)
             {
-               FilterSidebarMenuItem(item, true);
+                item.Hidden = FilterSidebarMenuItem(item, true);
             }
          }
          return false;
@@ -874,7 +882,7 @@ public class uScript : EditorWindow
             Matrix4x4 oldMatrix = GUI.matrix;
             GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(Vector3.zero), new Vector3(_canvasZoom, _canvasZoom, 1));
 
-            GUILayout.Box("test", GUILayout.Width(5000));
+//            GUILayout.Box("test", GUILayout.Width(4096));
             PaintEventArgs args = new PaintEventArgs();
             args.Graphics = new System.Drawing.Graphics();
 
