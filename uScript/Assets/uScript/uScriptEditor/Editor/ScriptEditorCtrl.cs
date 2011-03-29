@@ -691,7 +691,7 @@ namespace Detox.ScriptEditor
          RefreshScript(guidsToSelect, false);
       }
 
-      private void RefreshScript( List<Guid> guidsToSelect, bool zoomExtents )
+      public void RefreshScript( List<Guid> guidsToSelect, bool zoomExtents )
       {
          RemoveEventHandlers( );
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using Detox.ScriptEditor;
+using Detox.Data.Tools;
 using System.Windows.Forms;
 using System;
 using System.Reflection;
@@ -25,6 +26,9 @@ public class uScript : EditorWindow
    private bool m_KeyDown    = false;
    private bool m_Repainting = false;
    private string m_FullPath = "";
+
+   static private AppFrameworkData m_AppData = new AppFrameworkData();
+   private double m_RefreshTimestamp = -1.0;
 
    private int m_ContextX = 0;
    private int m_ContextY = 0;
@@ -129,6 +133,23 @@ public class uScript : EditorWindow
       //System.IO.Directory.CreateDirectory( uScriptConfig.Paths.TutorialFiles );
    }
 
+   static public object GetSetting(string key)
+   {
+      return m_AppData.Get(key);
+   }
+
+   static public object GetSetting(string key, object defaultValue)
+   {
+      object value = m_AppData.Get(key);
+      return null != value ? value : defaultValue;
+   }
+
+   static public void SetSetting(string key, object value)
+   {
+      m_AppData.Set(key, value);
+      m_AppData.Save(uScriptConfig.Paths.RootFolder + "\\uScript.settings");
+   }
+
    static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)
    {
       uScriptDebug.Type uScriptType = uScriptDebug.Type.Message;
@@ -153,6 +174,11 @@ public class uScript : EditorWindow
       isPro = ( SystemInfo.supportsRenderTextures );
 
       EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
+
+      if (System.IO.File.Exists(uScriptConfig.Paths.RootFolder + "\\uScript.settings"))
+      {
+         m_AppData.Load(uScriptConfig.Paths.RootFolder + "\\uScript.settings");
+      }
 
       _statusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
    }
@@ -208,6 +234,7 @@ public class uScript : EditorWindow
       OnMouseMove( );
    }
 
+
    void OnGUI()
    {
       // As little logic as possible should be performed here.  It is better
@@ -215,55 +242,62 @@ public class uScript : EditorWindow
 
       // Initialization
       //
-      if ( null == m_ScriptEditorCtrl )
+      if (null == m_ScriptEditorCtrl)
       {
          //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
          //we don't save the fully qualified type name which is required to return types of assemblies not loaded
-         List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>( GameObject.FindObjectsOfType(typeof(UnityEngine.Object)) );
+         List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(GameObject.FindObjectsOfType(typeof(UnityEngine.Object)));
 
-         foreach ( UnityEngine.Object o in allObjects )
+         foreach (UnityEngine.Object o in allObjects)
          {
-            AddType( o.GetType() );
+            AddType(o.GetType());
          }
 
-         ScriptEditor scriptEditor = new ScriptEditor( "Untitled", PopulateEntityTypes( ), PopulateLogicTypes( ) );
+         ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(), PopulateLogicTypes());
 
-         m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor );
+         m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor);
          m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 
-         m_ScriptEditorCtrl.BuildContextMenu( );
+         m_ScriptEditorCtrl.BuildContextMenu();
 
          BuildSidebarMenu(null, null);
 
          Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
+         GameObject uScriptMaster = GameObject.Find(uScriptConfig.MasterObjectName);
+
+         if (null == uScriptMaster)
+         {
+            Debug.Log("Adding default uScript master gameobject: " + uScriptConfig.MasterObjectName);
+
+            uScriptMaster = new GameObject(uScriptConfig.MasterObjectName);
+            uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
+         }
+         if (null == uScriptMaster.GetComponent<uScript_Global>())
+         {
+            Debug.Log("Adding global to master gameobject (" + uScriptConfig.MasterObjectName + ")");
+            uScriptMaster.AddComponent(typeof(uScript_Global));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_Triggers>())
+         {
+            Debug.Log("Adding triggers to master gameobject (" + uScriptConfig.MasterObjectName + ")");
+            uScriptMaster.AddComponent(typeof(uScript_Triggers));
+         }
+
+         String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
+         if (!String.IsNullOrEmpty(lastOpened))
+         {
+            m_FullPath = lastOpened;
+         }
+
          //when doing certain operations like 'play' in unity
          //it seems to set any class references back to null
          //since the string isn't a reference it stays valid
          //so reopen our script
-         if ( "" != m_FullPath )
+         if ("" != m_FullPath)
          {
-            OpenScript( m_FullPath );
-         }
-
-         GameObject uScriptMaster = GameObject.Find( uScriptConfig.MasterObjectName );
-         
-         if ( null == uScriptMaster )
-         {
-            Debug.Log( "Adding default uScript master gameobject: " + uScriptConfig.MasterObjectName );
-
-            uScriptMaster = new GameObject( uScriptConfig.MasterObjectName );
-		    uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
-         }
-         if ( null == uScriptMaster.GetComponent<uScript_Global>( ) )
-         {
-            Debug.Log( "Adding global to master gameobject (" + uScriptConfig.MasterObjectName + ")" );
-            uScriptMaster.AddComponent(typeof(uScript_Global));
-         }
-         if ( null == uScriptMaster.GetComponent<uScript_Triggers>( ) )
-         {
-            Debug.Log( "Adding triggers to master gameobject (" + uScriptConfig.MasterObjectName + ")" );
-		      uScriptMaster.AddComponent(typeof(uScript_Triggers));
+            OpenScript(m_FullPath);
+            m_RefreshTimestamp = EditorApplication.timeSinceStartup;
          }
       }
 
@@ -271,7 +305,6 @@ public class uScript : EditorWindow
       // All the GUI drawing code
       //
       DrawGUI();
-
 
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
 
@@ -390,7 +423,14 @@ public class uScript : EditorWindow
          Repaint( );
       }
 
-      CheckDragDrop( );
+      CheckDragDrop();
+
+      if (m_RefreshTimestamp > 0.0 && EditorApplication.timeSinceStartup - m_RefreshTimestamp >= 0.05)
+      {
+         // re-center now that the gui is initialized
+         m_ScriptEditorCtrl.RefreshScript(null, true);
+         m_RefreshTimestamp = -1.0;
+      }
    }
 
    void OnPlaymodeStateChanged()
@@ -1130,6 +1170,8 @@ public class uScript : EditorWindow
          m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 
          m_FullPath = fullPath;
+
+         uScript.SetSetting("uScript\\LastOpened", fullPath);
       }
       else
       {
