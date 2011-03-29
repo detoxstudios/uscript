@@ -233,7 +233,7 @@ public class uScript : EditorWindow
 
          m_ScriptEditorCtrl.BuildContextMenu( );
 
-         BuildSidebarMenu();
+         BuildSidebarMenu(null, null);
 
          Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
@@ -503,14 +503,14 @@ public class uScript : EditorWindow
             icon = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/collapse_hierarchy.png", typeof(UnityEngine.Texture)) as UnityEngine.Texture;
             if (icon && GUILayout.Button(icon, "toolbarButton"))
             {
-               CollapseSidebarMenuItems();
+               CollapseSidebarMenuItem(null);
             }
 
             // Expand hierarchy
             icon = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/expand_hierarchy.png", typeof(UnityEngine.Texture)) as UnityEngine.Texture;
             if (icon && GUILayout.Button(icon, "toolbarButton"))
             {
-               ExpandSidebarMenuItems();
+               ExpandSidebarMenuItem(null);
             }
 
             string _filterText = GUILayout.TextField(_sidebarFilterText, 10, "toolbarTextField", GUILayout.Width(80));
@@ -539,41 +539,50 @@ public class uScript : EditorWindow
    }
 
 
-   private void ExpandSidebarMenuItems()
-   {
-      foreach (SidebarMenuItem item in _sidebarMenuItems)
-      {
-         ExpandSidebarMenuItem(item);
-      }
-   }
-
    private void ExpandSidebarMenuItem(SidebarMenuItem sidebarMenuItem)
    {
-      if (sidebarMenuItem.Items != null && sidebarMenuItem.Items.Count > 0)
+      if (sidebarMenuItem == null)
+      {
+         foreach (SidebarMenuItem item in _sidebarMenuItems)
+         {
+            ExpandSidebarMenuItem(item);
+         }
+      }
+      else if (sidebarMenuItem.Items != null && sidebarMenuItem.Items.Count > 0)
       {
          sidebarMenuItem.Expanded = true;
          foreach (SidebarMenuItem item in sidebarMenuItem.Items)
          {
+            if (item == null)
+            {
+               Debug.LogError(sidebarMenuItem.Name + " has a null child!\n");
+               return;
+            }
             ExpandSidebarMenuItem(item);
          }
       }
    }
 
-   private void CollapseSidebarMenuItems()
-   {
-      foreach (SidebarMenuItem item in _sidebarMenuItems)
-      {
-         CollapseSidebarMenuItem(item);
-      }
-   }
 
    private void CollapseSidebarMenuItem(SidebarMenuItem sidebarMenuItem)
    {
-      if (sidebarMenuItem.Items != null && sidebarMenuItem.Items.Count > 0)
+      if (sidebarMenuItem == null)
+      {
+         foreach (SidebarMenuItem item in _sidebarMenuItems)
+         {
+            CollapseSidebarMenuItem(item);
+         }
+      }
+      else if (sidebarMenuItem.Items != null && sidebarMenuItem.Items.Count > 0)
       {
          sidebarMenuItem.Expanded = false;
          foreach (SidebarMenuItem item in sidebarMenuItem.Items)
          {
+            if (item == null)
+            {
+               Debug.LogError(sidebarMenuItem.Name + " has a null child!\n");
+               return;
+            }
             CollapseSidebarMenuItem(item);
          }
       }
@@ -623,36 +632,33 @@ public class uScript : EditorWindow
       return true;
    }
 
-   private void BuildSidebarMenu()
-   {
-      _sidebarMenuItems = new List<SidebarMenuItem>();
-
-      foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
-      {
-         if ((item is ToolStripMenuItem) && (item.Text == "Add..."))
-         {
-            foreach (ToolStripItem subitem in ((ToolStripMenuItem)item).DropDownItems.Items)
-            {
-               SidebarMenuItem sidebarItem = new SidebarMenuItem();
-               sidebarItem.Indent = 0;
-
-               BuildSidebarMenu(subitem, sidebarItem);
-
-               _sidebarMenuItems.Add(sidebarItem);
-            }
-         }
-      }
-   }
 
    private void BuildSidebarMenu(ToolStripItem contextMenuItem, SidebarMenuItem sidebarMenuItem)
    {
       if (contextMenuItem == null || sidebarMenuItem == null)
       {
-         Debug.LogError("BuildSidebarMenu() recieved one or more null parameters!\n");
-         return;
-      }
+         //
+         // Create a new sidebar menu, destroying the old one
+         //
+         _sidebarMenuItems = new List<SidebarMenuItem>();
 
-      if (!(contextMenuItem is ToolStripSeparator))
+         foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
+         {
+            if ((item is ToolStripMenuItem) && (item.Text == "Add..."))
+            {
+               foreach (ToolStripItem subitem in ((ToolStripMenuItem)item).DropDownItems.Items)
+               {
+                  SidebarMenuItem sidebarItem = new SidebarMenuItem();
+                  sidebarItem.Indent = 0;
+
+                  BuildSidebarMenu(subitem, sidebarItem);
+
+                  _sidebarMenuItems.Add(sidebarItem);
+               }
+            }
+         }
+      }
+      else if (!(contextMenuItem is ToolStripSeparator))
       {
          if ((contextMenuItem is ToolStripMenuItem) && ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items.Count > 0)
          {
@@ -663,6 +669,11 @@ public class uScript : EditorWindow
             {
                SidebarMenuItem newItem = new SidebarMenuItem();
                newItem.Indent = sidebarMenuItem.Indent + 1;
+               if (item == null || newItem == null)
+               {
+                  Debug.LogError("Trying to pass a null parameter to BuildSidebarMenu()!\n");
+                  return;
+               }
                BuildSidebarMenu(item, newItem);
                sidebarMenuItem.Items.Add(newItem);
             }
@@ -823,6 +834,7 @@ public class uScript : EditorWindow
             Matrix4x4 oldMatrix = GUI.matrix;
             GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(Vector3.zero), new Vector3(_canvasZoom, _canvasZoom, 1));
 
+            GUILayout.Box("test", GUILayout.Width(5000));
             PaintEventArgs args = new PaintEventArgs();
             args.Graphics = new System.Drawing.Graphics();
 
