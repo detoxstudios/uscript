@@ -28,7 +28,7 @@ namespace Detox.FlowChart
 
       private bool m_NodeMouseTracking = false;
       private bool m_NodeMouseSizing   = false;
-      private bool m_NodeIsMoving = false;
+      private bool m_AllowPanning = false;
 
       private Point m_MoveOffset = Point.Empty;
       private Point m_StartMoveLocation = Point.Empty;
@@ -37,8 +37,9 @@ namespace Detox.FlowChart
       { 
          get 
          { 
-            return Control.ModifierKeys == Keys.Control &&
-                   Control.MouseButtons == MouseButtons.Left;   
+            return Control.MouseButtons == MouseButtons.Left && 
+                   Control.ModifierKeys == Keys.None &&
+                   true == m_AllowPanning;
          } 
       }
 
@@ -295,15 +296,28 @@ namespace Detox.FlowChart
 
       private void FlowChartCtrl_MouseDown(object sender, MouseEventArgs e)
       {
-         if ( true == InMoveMode ) 
-         {
-            Invalidate( );
-            return;
-         }
-
-         if ( e.Button == MouseButtons.Left )
+         if ( e.Button == MouseButtons.Left && Control.ModifierKeys.Contains(Keys.Alt) )
          {
             m_StartMarquee = new Point( e.X, e.Y );
+         }
+         else if ( true == Control.ModifierKeys.Contains(Keys.Shift) )
+         {
+            if ( false == m_NodeMouseSizing )
+            {
+               m_NodeMouseTracking = true;
+            }
+
+            if ( true == m_NodeMouseTracking )
+            {
+               foreach ( Node selectedNode in SelectedNodes )
+               {
+                  selectedNode.StartNodeMove( );
+               }
+            }
+         }
+         else
+         {
+            m_AllowPanning = true;
          }
       }
 
@@ -314,12 +328,6 @@ namespace Detox.FlowChart
 
       private void FlowChartCtrl_NodeMouseDown(object sender, MouseEventArgs e)
       {
-         if ( true == InMoveMode )
-         {
-            Invalidate( );
-            return;
-         }
-
          if ( e.Button == MouseButtons.Left )
          {
             Node node = sender as Node;
@@ -332,72 +340,80 @@ namespace Detox.FlowChart
             position = node.PointToClient( position );
 
             AnchorPoint anchorPoint = new AnchorPoint( );
-            bool pointSourced = false;               
-            if ( true == node.PointInAnchorPoint(position, ref anchorPoint) )
-            {
-               if ( true == anchorPoint.CanSource )
-               {
-                  OnAnchorPointActivated( node, anchorPoint );
-                  Invalidate( );
-                  pointSourced = true;
-               }
-            }
+            bool pointSourced = false; 
 
-            if ( false == pointSourced )
+            if ( true == Control.ModifierKeys.Contains(Keys.Shift) )
             {
-               if ( true == node.CanResize )
-               {
-                  if ( position.X > node.Size.Width  - uScriptConfig.ResizeTexture.width &&
-                       position.Y > node.Size.Height - uScriptConfig.ResizeTexture.height )
-                  {
-                     m_NodeMouseSizing = true;
-                  }
-               }
-
                if ( false == m_NodeMouseSizing )
                {
                   m_NodeMouseTracking = true;
                }
 
-               //I want the user to easily click and move a node without having to select it
-               //but I also want to move all selected nodes if they click on an already selected node
-               //so.. if the node is not previously selected, it's just a quick click to move
-               //only that node.  if the node is selected, then i'm assuming they want to move all
-               //selected nodes
-               if ( false == node.Selected )
+               if ( true == m_NodeMouseTracking )
                {
-                  if ( true == m_NodeMouseSizing )
+                  foreach ( Node selectedNode in SelectedNodes )
                   {
-                     node.StartNodeResize( );
-                  }
-                  else
-                  {
-                     node.StartNodeMove( );
+                     selectedNode.StartNodeMove( );
                   }
                }
-               else
-               {   
-                  if ( true == m_NodeMouseSizing )
+            }
+            else
+            {
+               if ( true == node.PointInAnchorPoint(position, ref anchorPoint) )
+               {
+                  if ( true == anchorPoint.CanSource )
                   {
-                     foreach ( Node selectedNode in SelectedNodes )
+                     OnAnchorPointActivated( node, anchorPoint );
+                     Invalidate( );
+
+                     pointSourced = true;
+                  }
+               }
+
+               if ( false == pointSourced )
+               {
+                  if ( true == node.CanResize )
+                  {
+                     if ( position.X > node.Size.Width  - uScriptConfig.ResizeTexture.width &&
+                          position.Y > node.Size.Height - uScriptConfig.ResizeTexture.height )
                      {
-                        //these are part of a selection group
-                        //so they didn't have to pass the initial resize hit test
-                        //which means we have no idea if they are authorized to resize or not
-                        if ( true == selectedNode.CanResize )
+                        m_NodeMouseSizing = true;
+                     }
+                  }
+
+                  if ( false == node.Selected )
+                  {
+                     if ( true == m_NodeMouseSizing )
+                     {
+                        node.StartNodeResize( );
+                     }
+                  }
+                  else
+                  {   
+                     if ( true == m_NodeMouseSizing )
+                     {
+                        foreach ( Node selectedNode in SelectedNodes )
                         {
-                           selectedNode.StartNodeResize( );
+                           //these are part of a selection group
+                           //so they didn't have to pass the initial resize hit test
+                           //which means we have no idea if they are authorized to resize or not
+                           if ( true == selectedNode.CanResize )
+                           {
+                              selectedNode.StartNodeResize( );
+                           }
                         }
                      }
                   }
-                  else
-                  {
-                     foreach ( Node selectedNode in SelectedNodes )
-                     {
-                        selectedNode.StartNodeMove( );
-                     }
-                  }
                }
+            }
+         
+            if ( false == pointSourced && false == m_NodeMouseSizing )
+            {
+               m_AllowPanning = true;
+            }
+            else
+            {
+               m_AllowPanning = false;
             }
          }
       }
@@ -410,29 +426,15 @@ namespace Detox.FlowChart
          {
             if ( true == m_NodeMouseTracking )
             {
-               Node node = sender as Node;
-               
-               m_NodeIsMoving = true;
-
-               //see comments in NodeMouseDown for why we have this if/else
-               if ( false == node.Selected )
+               foreach ( Node selectedNode in SelectedNodes )
                {
-                  node.NodeMove( );
-               }
-               else
-               {
-                  foreach ( Node selectedNode in SelectedNodes )
-                  {
-                     selectedNode.NodeMove( );
-                  }
+                  selectedNode.NodeMove( );
                }
             }
             else if ( true == m_NodeMouseSizing )
             {
                Node node = sender as Node;
                
-               m_NodeIsMoving = true;
-
                //see comments in NodeMouseDown for why we have this if/else
                if ( false == node.Selected )
                {
@@ -470,7 +472,7 @@ namespace Detox.FlowChart
    
          //if we were moving the node
          //simply finish moving it, don't unselect anything
-         if ( (true == m_NodeMouseTracking || true == m_NodeMouseSizing) && true == m_NodeIsMoving )
+         if ( true == m_NodeMouseTracking || true == m_NodeMouseSizing  )
          {
             //see comments in NodeMouseDown for why we have this if/else
             if ( false == ((Node)sender).Selected )
@@ -487,52 +489,64 @@ namespace Detox.FlowChart
          }
          else
          {
-            //if no control key, unselect the rest
-            if ( Control.ModifierKeys != Keys.Control )
+            //they let up the mouse without moving the canvas
+            //and they weren't marquee selecting
+            //so deselect everything
+            if ( Point.Empty == m_StartMarquee )
             {
-               foreach (Node node in SelectedNodes)
+               if ( m_StartMoveLocation.X == Location.X &&
+                    m_StartMoveLocation.Y == Location.Y )
                {
-                  node.Selected = false;
+                  //if no control key, unselect the rest
+                  if ( false == Control.ModifierKeys.Contains(Keys.Control) )
+                  {
+                     foreach (Node node in SelectedNodes)
+                     {
+                        node.Selected = false;
+                     }
+
+                     foreach ( Link link in SelectedLinks )
+                     {
+                        link.Selected = false;
+                     }
+                  }
+
+                  Point position = System.Windows.Forms.Cursor.Position;
+                  position = PointToClient( position );
+
+                  Node nodeSelected = sender as Node;
+
+                  foreach ( Link link in m_Links )
+                  {
+                     if ( nodeSelected.RenderDepth < LinkRenderDepth )
+                     {
+                        if ( true == InLink(link, position) )
+                        {
+                           //change selection state
+                           //(if ctrl key was down it will toggle selection state)
+                           //(if ctrl key was up it will always have been unselected
+                           // because of the above code and so this will always select it)
+                           link.Selected = ! link.Selected;
+                           selectionSetChanged = true;
+                        }
+                     }
+                  }
+
+                  if ( false == selectionSetChanged )
+                  {
+                     //change selection state
+                     //(if ctrl key was down it will toggle selection state)
+                     //(if ctrl key was up it will always have been unselected
+                     // because of the above code and so this will always select it)
+                     nodeSelected.Selected = ! nodeSelected.Selected;
+                     selectionSetChanged = true;
+                  }
                }
-
-               foreach ( Link link in SelectedLinks )
-               {
-                  link.Selected = false;
-               }
-            }
-
-            Point position = System.Windows.Forms.Cursor.Position;
-            position = PointToClient( position );
-
-            foreach ( Link link in m_Links )
-            {
-               if ( true == InLink(link, position) )
-               {
-                  //change selection state
-                  //(if ctrl key was down it will toggle selection state)
-                  //(if ctrl key was up it will always have been unselected
-                  // because of the above code and so this will always select it)
-                  link.Selected = ! link.Selected;
-                  selectionSetChanged = true;
-               }
-            }
-
-            if ( false == selectionSetChanged )
-            {
-               Node nodeSelected = sender as Node;
-
-               //change selection state
-               //(if ctrl key was down it will toggle selection state)
-               //(if ctrl key was up it will always have been unselected
-               // because of the above code and so this will always select it)
-               nodeSelected.Selected = ! nodeSelected.Selected;
-               selectionSetChanged = true;
             }
          }
 
          m_NodeMouseTracking = false;
          m_NodeMouseSizing   = false;
-         m_NodeIsMoving      = false;
 
          if ( null != m_StartLinkNode )
          {
@@ -632,25 +646,64 @@ namespace Detox.FlowChart
             selectionSetModified = true;
          }
 
-         Point position = System.Windows.Forms.Cursor.Position;
-         position = PointToClient( position );
-
-         foreach ( Link link in m_Links )
+         //if we were moving the node
+         //simply finish moving it, don't unselect anything
+         if ( true == m_NodeMouseTracking || true == m_NodeMouseSizing )
          {
-            if ( true == InLink(link, position) )
+            List<Node> modifiedNodes = new List<Node>( );
+
+            foreach ( Node node in SelectedNodes )
             {
-               //change selection state
-               //(if ctrl key was down it will toggle selection state)
-               //(if ctrl key was up it will always have been unselected
-               // because of the above code and so this will always select it)
-               link.Selected = ! link.Selected;
-               selectionSetModified = true;
+               modifiedNodes.Add( node );
+            }
+
+            OnNodesModified( modifiedNodes.ToArray( ) );
+
+         }
+         else
+         {
+            Point position = System.Windows.Forms.Cursor.Position;
+            position = PointToClient( position );
+
+            foreach ( Link link in m_Links )
+            {
+               if ( true == InLink(link, position) )
+               {
+                  //change selection state
+                  //(if ctrl key was down it will toggle selection state)
+                  //(if ctrl key was up it will always have been unselected
+                  // because of the above code and so this will always select it)
+                  link.Selected = ! link.Selected;
+                  selectionSetModified = true;
+               }
+            }
+
+            //they let up the mouse without moving the canvas
+            //and they weren't marquee selecting
+            //so deselect everything
+            if ( false == selectionSetModified && Point.Empty == m_StartMarquee )
+            {
+               if ( m_StartMoveLocation.X == Location.X &&
+                    m_StartMoveLocation.Y == Location.Y )
+               {
+                  foreach ( Node node in SelectedNodes )
+                  {
+                     node.Selected = false;
+                  }
+
+                  foreach ( Link link in SelectedLinks )
+                  {
+                     link.Selected = false;
+                  }
+
+                  selectionSetModified = true;
+               }
             }
          }
-         
+
          m_StartLinkNode = null;
          m_StartMarquee  = Point.Empty;
-         
+
          if ( true == selectionSetModified )
          {
             OnSelectionModified( );
@@ -665,7 +718,7 @@ namespace Detox.FlowChart
          position = this.PointToClient( position );
 
          //if no control key, unselect the rest
-         if ( Control.ModifierKeys != Keys.Control )
+         if ( false == Control.ModifierKeys.Contains(Keys.Control) )
          {
             foreach (Node node in SelectedNodes)
             {
@@ -716,6 +769,15 @@ namespace Detox.FlowChart
                if ( Point.Empty != m_StartMarquee )
                {
                   RunMarqueeSelect( );
+               }
+
+               Invalidate( );
+            }
+            else if ( true == m_NodeMouseTracking )
+            {
+               foreach ( Node selectedNode in SelectedNodes )
+               {
+                  selectedNode.NodeMove( );
                }
 
                Invalidate( );
@@ -799,15 +861,8 @@ namespace Detox.FlowChart
             }
          }
 
-
-         //foreach ( Node node in Nodes )
-         //{
-         //   node.PreparePoints( e.Graphics );
-         //}
-
-         if ( true == InMoveMode )
+         if ( true == InMoveMode && m_StartMarquee == Point.Empty )
          {
-            m_StartMarquee  = Point.Empty;
             m_StartLinkNode = null;
 
             Point position = System.Windows.Forms.Cursor.Position;

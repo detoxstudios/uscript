@@ -666,7 +666,7 @@ namespace Detox.ScriptEditor
          }
       }
 
-      private void m_MenuDeleteNode_Click(object sender, EventArgs e)
+      public void DeleteSelectedNodes( )
       {
          ScriptEditor oldEditor = m_ScriptEditor.Copy( );
 
@@ -689,6 +689,11 @@ namespace Detox.ScriptEditor
          m_ChangeStack.AddChange( new ChangeStack.Change("Delete", oldEditor, m_ScriptEditor.Copy( )) );
 
          RefreshScript( null );
+      }
+
+      private void m_MenuDeleteNode_Click(object sender, EventArgs e)
+      {
+         DeleteSelectedNodes( );
       }
 
       private void RefreshScript( List<Guid> guidsToSelect )

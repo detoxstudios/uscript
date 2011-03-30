@@ -24,7 +24,6 @@ public class uScript : EditorWindow
 
    private ScriptEditorCtrl m_ScriptEditorCtrl = null;
    private bool m_MouseDown  = false;
-   private bool m_KeyDown    = false;
    private bool m_Repainting = false;
    private string m_FullPath = "";
 
@@ -99,20 +98,9 @@ public class uScript : EditorWindow
    //
    bool _openScriptToggle = false;
 
-
-   //
-   // Mouse and Input Variables
-   //
-   bool m_TriggerKeyDown   = false;
-   bool m_TriggerKeyUp     = false;
-
    MouseEventArgs m_MouseDownArgs = null;
    MouseEventArgs m_MouseUpArgs   = null;
    MouseEventArgs m_MouseMoveArgs = new MouseEventArgs( );
-
-
-
-
    //
    // Editor Window Initialization
    //
@@ -198,23 +186,6 @@ public class uScript : EditorWindow
 
       if ( false == contextActive )
       {
-         if ( true == m_TriggerKeyDown )
-         {
-            //Debug.Log( "key down" );
-            m_KeyDown = true;
-            OnKeyDown( );
-
-            m_TriggerKeyDown = false;
-         }
-         else if ( true == m_TriggerKeyUp )
-         {
-            //Debug.Log( "key up" );
-            m_KeyDown = false;
-            OnKeyUp( );
-
-            m_TriggerKeyUp = false;
-         }
-
          if ( null != m_MouseDownArgs )
          {
             //Debug.Log( "mouse down" );
@@ -325,6 +296,13 @@ public class uScript : EditorWindow
       if ( true == contextActive )
       {
          DrawContextMenu( m_ContextX, m_ContextY );
+
+         if ( Event.current.type == EventType.MouseDown )
+         {
+            m_ContextX = 0;
+            m_ContextY = 0;
+            m_CurrentMenu = null;
+         }
       }
 
       if (_openScriptToggle)
@@ -354,16 +332,74 @@ public class uScript : EditorWindow
 
       if ( false == contextActive )
       {
-         if ( false == m_KeyDown && Event.current.type == EventType.KeyDown )
-         {
-            m_TriggerKeyDown = true;
+         int modifierKeys = 0;
 
-            //keep key events from going to the rest of unity
-            Event.current.Use( );
-         }
-         else if ( true == m_KeyDown && Event.current.type == EventType.KeyUp )
+         if ( Event.current.alt )     modifierKeys |= Keys.Alt;
+         if ( Event.current.control ) modifierKeys |= Keys.Control;
+         if ( Event.current.shift )   modifierKeys |= Keys.Shift;
+         
+         Control.ModifierKeys.Pressed = modifierKeys;
+
+         if ( Event.current.type == EventType.ValidateCommand)
          {
-            m_TriggerKeyUp = true;
+            if ( Event.current.commandName == "Copy" )
+            {
+               if ( m_ScriptEditorCtrl.CanCopy )
+               {
+                  Event.current.Use( );
+               }
+            }
+            else if ( Event.current.commandName == "Paste" )
+            {
+               if ( m_ScriptEditorCtrl.CanPaste )
+               {
+                  Event.current.Use( );
+               }
+            }
+            else if ( Event.current.commandName == "Undo" )
+            {
+               if ( m_ScriptEditorCtrl.CanUndo )
+               {
+                  Event.current.Use( );
+               }
+            }
+            else if ( Event.current.commandName == "Redo" )
+            {
+               if ( m_ScriptEditorCtrl.CanRedo )
+               {
+                  Event.current.Use( );
+               }
+            }
+         }
+
+         if ( Event.current.type == EventType.ExecuteCommand)
+         {
+            if ( Event.current.commandName == "Copy" )
+            {
+               m_ScriptEditorCtrl.CopyToClipboard( );
+            }
+            else if ( Event.current.commandName == "Paste" )
+            {
+               m_ScriptEditorCtrl.PasteFromClipboard( );
+            }
+            else if ( Event.current.commandName == "Undo" )
+            {
+               Debug.Log( "UNDO!" );
+               m_ScriptEditorCtrl.Undo( );
+            }
+            else if ( Event.current.commandName == "Redo" )
+            {
+               m_ScriptEditorCtrl.Redo( );
+            }
+         }
+
+         if ( Event.current.type == EventType.KeyDown ||
+              Event.current.type == EventType.KeyUp )
+         {
+            if ( Event.current.keyCode == KeyCode.Delete )
+            {
+               m_ScriptEditorCtrl.DeleteSelectedNodes( );
+            }
 
             //keep key events from going to the rest of unity
             Event.current.Use( );
@@ -371,11 +407,16 @@ public class uScript : EditorWindow
 
          if ( false == m_MouseDown && Event.current.type == EventType.MouseDown )
          {
-             if ((int)Event.current.mousePosition.x - _guiSidebarWidth - _guiDividerSize - _guiDividerMouseBuffer >= 0)
+            if ((int)Event.current.mousePosition.x - _guiSidebarWidth - _guiDividerSize - _guiDividerMouseBuffer >= 0)
              {
                  m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
 
-                 m_MouseDownArgs.Button = MouseButtons.Left;
+                int button = 0;
+
+                if ( Event.current.button == 0 ) button = MouseButtons.Left;
+                else if ( Event.current.button == 2 ) button = MouseButtons.Right;
+ 
+                 m_MouseDownArgs.Button = button;
                  m_MouseDownArgs.X = (int)Event.current.mousePosition.x - _guiSidebarWidth - _guiDividerSize - _guiDividerMouseBuffer;
                  m_MouseDownArgs.Y = (int)Event.current.mousePosition.y - _guiTopMenuHeight;
              }
@@ -389,12 +430,17 @@ public class uScript : EditorWindow
          {
             m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
 
-            m_MouseUpArgs.Button = MouseButtons.Left;
+            int button = 0;
+
+            if ( Event.current.button == 0 ) button = MouseButtons.Left;
+            else if ( Event.current.button == 2 ) button = MouseButtons.Right;
+
+            m_MouseUpArgs.Button = button;
             m_MouseUpArgs.X = (int)Event.current.mousePosition.x - _guiSidebarWidth - _guiDividerSize - _guiDividerMouseBuffer;
             m_MouseUpArgs.Y = (int) Event.current.mousePosition.y - _guiTopMenuHeight;
          }
 
-         m_MouseMoveArgs.Button = MouseButtons.Left;
+         m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
          m_MouseMoveArgs.X = (int)Event.current.mousePosition.x - _guiSidebarWidth - _guiDividerSize - _guiDividerMouseBuffer;
          m_MouseMoveArgs.Y = (int) Event.current.mousePosition.y - _guiTopMenuHeight;
       }
@@ -412,19 +458,10 @@ public class uScript : EditorWindow
 
       if ( Event.current.type == EventType.ContextClick )
       {
-         if ( 0 == m_ContextX && 0 == m_ContextY )
-         {
-            m_ScriptEditorCtrl.BuildContextMenu( );
+         m_ScriptEditorCtrl.BuildContextMenu( );
 
-            m_ContextX = (int) Event.current.mousePosition.x;
-            m_ContextY = (int) Event.current.mousePosition.y - _guiTopMenuHeight;
-         }
-         else
-         {
-            m_ContextX = 0;
-            m_ContextY = 0;
-            m_CurrentMenu = null;
-         }
+         m_ContextX = (int) Event.current.mousePosition.x;
+         m_ContextY = (int) Event.current.mousePosition.y - _guiTopMenuHeight;
 
          //refresh screen so context menu shows up
          Repaint( );
@@ -1115,19 +1152,9 @@ public class uScript : EditorWindow
       }
    }
 
-   public void OnKeyDown( )
-   {
-      Control.ModifierKeys.Pressed = Keys.Control;
-   }
-
-   public void OnKeyUp( )
-   {
-      Control.ModifierKeys.Pressed = 0;
-   }
-
    public void OnMouseDown( )
    {
-      Control.MouseButtons.Buttons = MouseButtons.Left;
+      Control.MouseButtons.Buttons = m_MouseDownArgs.Button;
 
       System.Windows.Forms.Cursor.Position.X = m_MouseDownArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseDownArgs.Y;
@@ -1149,13 +1176,12 @@ public class uScript : EditorWindow
 
    public void OnMouseUp( )
    {
-      Control.MouseButtons.Buttons = 0;
-      //Debug.Log( "buttons = " + Control.MouseButtons.Buttons);
-
       System.Windows.Forms.Cursor.Position.X = m_MouseUpArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseUpArgs.Y;
 
       m_ScriptEditorCtrl.OnMouseUp( m_MouseUpArgs );
+
+      Control.MouseButtons.Buttons = 0;
    }
 
    public void Redraw( )

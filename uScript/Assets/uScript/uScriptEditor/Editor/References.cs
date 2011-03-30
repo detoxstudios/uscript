@@ -573,16 +573,24 @@ namespace System.Windows.Forms
    {
       public int Pressed;
 
-      static public int Control = 1 << 0;
+      public const int None    = 0;
+      public const int Control = 1 << 0;
+      public const int Alt     = 1 << 1;
+      public const int Shift   = 1 << 2;
 
+      public bool Contains(int key)
+      {
+         return 0 != (key & Pressed);
+      }
+      
       static public bool operator != (Keys keys, int key)
       {
-         return 0 == (key & keys.Pressed);
+         return key != keys.Pressed;
       }
 
       static public bool operator == (Keys keys, int key)
       {
-         return 0 != (key & keys.Pressed);
+         return key == keys.Pressed;
       }
 
       public override bool Equals(object o)
@@ -600,16 +608,22 @@ namespace System.Windows.Forms
    {
       public int Buttons;
 
-      public const int Left = 1 << 0;
+      public const int Left  = 1 << 0;
+      public const int Right = 1 << 1;
 
+      public bool Contains(int button)
+      {
+         return 0 != (button & Buttons);
+      }
+      
       static public bool operator != (MouseButtons buttons, int button)
       {
-         return 0 == (button & buttons.Buttons);
+         return button != buttons.Buttons;
       }
 
       static public bool operator == (MouseButtons buttons, int button)
       {
-         return 0 != (button & buttons.Buttons);
+         return button == buttons.Buttons;
       }
 
       public override bool Equals(object o)
