@@ -71,6 +71,7 @@ public class uScript : EditorWindow
    public class SidebarMenuItem : System.Windows.Forms.MenuItem
    {
       public String Name;
+      public String Tooltip;
       public System.EventHandler Click;
       public List<SidebarMenuItem> Items;
       public bool Expanded;
@@ -186,7 +187,7 @@ public class uScript : EditorWindow
 
    void Update()
    {
-      bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
+       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
 
       if (EditorApplication.playmodeStateChanged == null)
       {
@@ -734,6 +735,7 @@ public class uScript : EditorWindow
          else
          {
             sidebarMenuItem.Name = contextMenuItem.Text.Replace("&", "");
+            sidebarMenuItem.Tooltip = FindNodeToolTip(contextMenuItem.Tag as EntityNode);
             sidebarMenuItem.Click = contextMenuItem.Click;
             sidebarMenuItem.Tag   = contextMenuItem.Tag;
          }
@@ -775,7 +777,7 @@ public class uScript : EditorWindow
                                        _guiSidebarButtonStyle.margin.top,
                                        _guiSidebarButtonStyle.margin.bottom);
 
-         if (GUILayout.Button(new GUIContent(item.Name, item.Name), style))
+         if (GUILayout.Button(new GUIContent(item.Name, item.Tooltip), style))
          {
             if (item.Click != null)
             {
@@ -934,21 +936,47 @@ public class uScript : EditorWindow
       EditorGUILayout.EndVertical();
    }
 
+
    void DrawGUIHelp()
    {
       EditorGUILayout.BeginVertical( "window" );
       {
          _guiHelpScrollPos = EditorGUILayout.BeginScrollView ( _guiHelpScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview" );
          {
-            if (GUILayout.Button("WEB"))
+             string helpDescription = String.Empty;
+             string helpButtonURL = String.Empty;
+
+             if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
+             {
+                 helpButtonURL = FindNodeHelp(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
+                 if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
+                 {
+                     helpDescription = FindNodeDescription(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
+                 }
+             }
+             else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
+             {
+                 helpDescription = "Help cannot be provided when multiple nodes are selected.";
+             }
+
+             // Show the online reference button
+             if (String.IsNullOrEmpty(helpButtonURL))
+             {
+                 helpButtonURL = "http://www.uscript.net/wiki/";
+             }
+             if (GUILayout.Button(new GUIContent("Online Reference", "Open the online reference for the selected node in the default web browser. (" + helpButtonURL + ")")))
+             {
+                 Help.BrowseURL(helpButtonURL);
+             }
+             
+            
+            // prevent the help TextArea from getting focus
+            GUI.SetNextControlName("helpTextArea");
+            GUILayout.TextArea(helpDescription, "label");
+            if (GUI.GetNameOfFocusedControl() == "helpTextArea")
             {
-               Help.BrowseURL("http://detoxstudios.com/");
+                GUIUtility.keyboardControl = 0;
             }
-            if (GUILayout.Button("HELP PAGE"))
-            {
-               Help.ShowHelpPage("file:///unity/ScriptReference/index.html");
-            }
-            GUILayout.Label("GUI.matrix:\n\n" + GUI.matrix);
          }
          EditorGUILayout.EndScrollView ();
       }
@@ -1964,6 +1992,11 @@ public class uScript : EditorWindow
       return "";
    }
 
+   public static string FindNodeToolTip(EntityNode type)
+   {
+       return "TOOLTIP using FindNodeTooltip(EntityNode type)";
+   }
+
    public static string FindNodeToolTip(string type)
    {
       Type uscriptType = uScript.Instance.GetType(type);
@@ -1982,6 +2015,11 @@ public class uScript : EditorWindow
       }
 
       return "";
+   }
+
+   public static string FindNodeDescription(EntityNode type)
+   {
+       return "DESCRIPTION using FindNodeDescription(EntityNode type)";
    }
 
    public static string FindNodeDescription(string type)
@@ -2042,6 +2080,11 @@ public class uScript : EditorWindow
       }
 
       return "";
+   }
+
+   public static string FindNodeHelp(EntityNode type)
+   {
+       return "URL using FindNodeHelp(EntityNode type)";
    }
 
    public static string FindNodeHelp(string type)
