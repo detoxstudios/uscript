@@ -33,7 +33,7 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(UnityEngine.Camera[]), "Camera List", "Variables/Lists" ),           
             new uScriptConfigBlock( typeof(uScript_Triggers), "Trigger Object", "Variables" ),
             new uScriptConfigBlock( typeof(uScript_Global), "Global Events", "Variables" ),
-            new uScriptConfigBlock( typeof(UnityEngine.AudioClip), "Audio Clip", "Variables" ),
+            new uScriptConfigBlock( typeof(uScript_Input), "Input Events", "Variables" ),
          };
       }
    }

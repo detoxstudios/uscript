@@ -6,28 +6,23 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Global (assign to uScripts master GameObject)")]
+[NodeComponentType(typeof(uScript_Global))]
 
 [NodePath("Events")]
-public class uScript_Global : MonoBehaviour
+
+[FriendlyName("Global Events")]
+public class uScript_Global : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    
+   [FriendlyName("On Game Start")]
    public event uScriptEventHandler GameStart;
-   public event uScriptEventHandler KeyPress;
 
    void Start()
    {
       if ( GameStart != null ) GameStart(this, new System.EventArgs());
    }
 
-   void Update()
-   {
-      if (Input.anyKeyDown)
-      {
-         if( KeyPress != null ) KeyPress(this, new System.EventArgs());
-      }
-   }
 	
 	// uScript GUI Options
 	void OnDrawGizmos()

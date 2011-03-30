@@ -1794,9 +1794,11 @@ public class uScript : EditorWindow
    public bool AttachEventScript(string eventType, string objectName)
    {
       GameObject gameObject = GameObject.Find( objectName );
+      Debug.Log ("uScript.cs - GameObject = " + gameObject);
       if ( null == gameObject ) return false;
 
       Type type = GetType(eventType);
+      Debug.Log ("uScript.cs - Type = " + type);
       if ( null == type ) return false;
 
       Component [] components = gameObject.GetComponents<Component>( );

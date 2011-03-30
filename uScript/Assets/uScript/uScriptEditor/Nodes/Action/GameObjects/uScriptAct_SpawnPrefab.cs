@@ -38,13 +38,7 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
          {
             ResourcePath = ResourcePath.Replace("\\", "/");
          }
-
-         //prune Resources text if user added it
-         if (ResourcePath.StartsWith("Resources") || ResourcePath.StartsWith("resources"))
-         {
-            ResourcePath = ResourcePath.Remove(0, 9);
-         }
-
+         
          // Prune any begining or ending slashes
          if (ResourcePath.StartsWith("/") || ResourcePath.StartsWith(@"\"))
          {
@@ -55,6 +49,20 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
             int stringLength = ResourcePath.Length - 1;
             ResourcePath = ResourcePath.Remove(stringLength, 1);
          }
+         
+         //prune Assets text if user added it
+         if (ResourcePath.StartsWith("Assets") || ResourcePath.StartsWith("assets"))
+         {
+            ResourcePath = ResourcePath.Remove(0, 6);
+         }
+
+         //prune Resources text if user added it
+         if (ResourcePath.StartsWith("Resources") || ResourcePath.StartsWith("resources"))
+         {
+            ResourcePath = ResourcePath.Remove(0, 9);
+         }
+
+         
       }
 
       // Build final PrefabName string

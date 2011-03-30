@@ -10,7 +10,7 @@ using System.Collections;
 [NodeComponentType(typeof(Collider))]
 
 [NodePath("Events")]
-[FriendlyName("Trigger Event")]
+[FriendlyName("Trigger Events")]
 public class uScript_Triggers : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, TriggerEventArgs args);
@@ -19,7 +19,7 @@ public class uScript_Triggers : uScriptEvent
    {
       private GameObject m_GameObject;
       
-      [FriendlyName("Game Object")]
+      [FriendlyName("Instigator")]
       public GameObject GameObject { get { return m_GameObject; } }
 
       public TriggerEventArgs(GameObject gameObject)
@@ -31,13 +31,22 @@ public class uScript_Triggers : uScriptEvent
    public event uScriptEventHandler OnEnterTrigger;
    public event uScriptEventHandler OnExitTrigger;
    public event uScriptEventHandler WhileInsideTrigger;
-
+ 
+   private bool m_AlwaysTrigger = false;
+   
    private int m_TimesToTrigger;
-   public int TimesToTrigger { set { m_TimesToTrigger = value; } }
+   public int TimesToTrigger 
+   { 
+      set 
+      { 
+         m_TimesToTrigger = value;
+         if ( 0 == m_TimesToTrigger ) m_AlwaysTrigger = true;
+      } 
+   }
 
    void OnTriggerEnter(Collider other)
    {
-      if ( 0 == m_TimesToTrigger ) return;
+      if ( 0 == m_TimesToTrigger && false == m_AlwaysTrigger ) return;
       --m_TimesToTrigger;
 
       if ( OnEnterTrigger != null ) OnEnterTrigger( this, new TriggerEventArgs(other.gameObject) ); 
@@ -45,7 +54,7 @@ public class uScript_Triggers : uScriptEvent
 
    void OnTriggerExit(Collider other)
    {
-      if ( 0 == m_TimesToTrigger ) return;
+      if ( 0 == m_TimesToTrigger && false == m_AlwaysTrigger ) return;
       --m_TimesToTrigger;
 
       if ( OnExitTrigger != null ) OnExitTrigger( this, new TriggerEventArgs(other.gameObject) ); 
@@ -53,7 +62,7 @@ public class uScript_Triggers : uScriptEvent
 
    void OnTriggerStay(Collider other)
    {
-      if ( 0 == m_TimesToTrigger ) return;
+      if ( 0 == m_TimesToTrigger && false == m_AlwaysTrigger ) return;
       --m_TimesToTrigger;
 
       if ( WhileInsideTrigger != null ) WhileInsideTrigger( this, new TriggerEventArgs(other.gameObject) ); 
