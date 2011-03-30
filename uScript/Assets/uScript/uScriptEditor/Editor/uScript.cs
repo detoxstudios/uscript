@@ -274,6 +274,11 @@ public class uScript : EditorWindow
             uScriptMaster = new GameObject(uScriptConfig.MasterObjectName);
             uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
          }
+         if (null == uScriptMaster.GetComponent<uScript_MasterObject>())
+         {
+            Debug.Log("Adding Master Object to master gameobject (" + uScriptConfig.MasterObjectName + ")");
+            uScriptMaster.AddComponent(typeof(uScript_MasterObject));
+         }
          if (null == uScriptMaster.GetComponent<uScript_Global>())
          {
             Debug.Log("Adding global to master gameobject (" + uScriptConfig.MasterObjectName + ")");

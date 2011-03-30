@@ -24,8 +24,11 @@ public class DetoxUtilities : EditorWindow
 		Debug.Log("Creating new _uScript GameObject.\n");
 		GameObject new_uScript = new GameObject("_uScript");
 		new_uScript.transform.position = new Vector3(0f, 0f, 0f);
+      new_uScript.AddComponent(typeof(uScript_MasterObject));
 		new_uScript.AddComponent(typeof(uScript_Global));
-		new_uScript.AddComponent(typeof(uScript_TestBed));
+      new_uScript.AddComponent(typeof(uScript_Input));
+      new_uScript.AddComponent(typeof(uScript_Triggers));
+      new_uScript.AddComponent(typeof(uScript_TestBed));
 		
 		// Trigger GO:
 		currentObject = null;
