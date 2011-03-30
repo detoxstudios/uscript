@@ -22,12 +22,15 @@ public class uScript_Global : uScriptEvent
    {
       if ( GameStart != null ) GameStart(this, new System.EventArgs());
    }
-
-	
-	// uScript GUI Options
-	void OnDrawGizmos()
-	{
-		// @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
-      Gizmos.DrawIcon(transform.position, "uscript_gizmo_master.png");
+   
+   // uScript GUI Options
+   void OnDrawGizmos()
+   {
+      // @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
+      if ( this.name != uScriptConfig.MasterObjectName )
+      {
+         Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
+      }
    }
+
 }

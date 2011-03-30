@@ -77,6 +77,6 @@ public class uScript_Triggers : uScriptEvent
 		{
         	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
 		}
-
     }
+   
 }
