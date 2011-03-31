@@ -6,13 +6,22 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/GameObjects")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Play the specified animation on the target object.")]
+[NodeDescription("Play the specified animation on the target object. Animation must exist in the GameObject's AnimationClip.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Play Animation")]
 public class uScriptAct_PlayAnimation : uScriptLogic
 {
 
    public bool Out { get { return true; } }
    //TODO: Have another output that fired when the animation is done.
 
-   public void In(GameObject[] Target, string Animation, float SpeedFactor, bool StopOtherAnimations)
+   public void In(GameObject[] Target, string Animation, [FriendlyName("Speed Factor")] float SpeedFactor, [FriendlyName("Stop Other Animation")] bool StopOtherAnimations)
    {
       foreach ( GameObject currentTarget in Target )
       {
