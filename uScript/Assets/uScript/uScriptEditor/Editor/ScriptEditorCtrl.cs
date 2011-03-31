@@ -88,6 +88,16 @@ namespace Detox.ScriptEditor
       Point  m_ContextCursor;
       object m_ContextObject;
 
+      public Point ContextCursor
+      {
+         get { return m_ContextCursor; }
+         set
+         {
+            m_ContextCursor = value;
+            m_ContextCursor = m_FlowChart.PointToClient( m_ContextCursor );
+         }
+      }
+
       public ScriptEditorCtrl(ScriptEditor scriptEditor)
       {  
          InitializeComponent();

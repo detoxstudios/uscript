@@ -818,6 +818,9 @@ public class uScript : EditorWindow
          {
             if (item.Click != null)
             {
+               // Attempt to create the node on the canvas
+               m_ScriptEditorCtrl.ContextCursor = new System.Drawing.Point(400, 50);
+
                item.OnClick();
                Debug.Log("Clicked '" + item.Name + "'\n");
             }
