@@ -91,16 +91,6 @@ public abstract class uScriptLogic : ScriptableObject
    public virtual void _InternalUpdate() { }
 }
 
-//public class uScriptEventArgs : System.EventArgs
-//{
-//   public object[] Args = new object[0];
-
-//   public uScriptEventArgs(object[] args)
-//   {
-//      Args = args;
-//   }
-//}
-
 public class uScriptDebug : MonoBehaviour
 {
 
@@ -210,71 +200,6 @@ public struct uScriptConfigBlock
 
 public partial class uScriptConfig
 {
-   //public class Filter
-   //{
-   //   public static bool Exists(string type)
-   //   {
-   //      foreach (uScriptConfigBlock filter in uScriptConfig.Filters)
-   //      {
-   //         if (filter.Type.ToString() == type)
-   //         {
-   //            return true;
-   //         }
-   //      }
-
-   //      return false;
-   //   }
-
-   //   public static string FriendlyName(string type)
-   //   {
-   //      foreach (uScriptConfigBlock filter in uScriptConfig.Filters)
-   //      {
-				
-   //         if (filter.Type.ToString() == type)
-   //         {
-   //            return filter.FriendlyName;
-   //         }
-   //      }
-			
-   //    foreach (uScriptConfigBlock variable in uScriptConfig.Variables)
-   //      {
-				
-   //         if (variable.Type.ToString() == type)
-   //         {
-   //            return variable.FriendlyName;
-   //         }
-   //      }
-
-   //      return type;
-   //   }
-
-   //   //return a style based on the friendly name,
-   //   //but if the friendly name can't be found return "default"
-   //   public static string FriendlyStyleName(string type)
-   //   {
-   //      //Debug.Log( "uScript_EventHandler.cs: " + type);
-   //      type = type.Replace( "[]", "" );
-
-   //      string friendly = FriendlyName( type );
-   //      if ( type == friendly ) friendly = "default";
-
-   //      return friendly.ToLower( );
-   //   }
-
-   //   public static string Category(string type)
-   //   {
-   //      foreach (uScriptConfigBlock filter in uScriptConfig.Filters)
-   //      {
-   //         if (filter.Type.ToString() == type)
-   //         {
-   //            return filter.Category;
-   //         }
-   //      }
-
-   //      return "";
-   //   }
-   //}
-
    public class Variable
    {
       public static bool Exists(string type)

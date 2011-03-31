@@ -772,7 +772,7 @@ public class uScript : EditorWindow
          else
          {
             sidebarMenuItem.Name = contextMenuItem.Text.Replace("&", "");
-            sidebarMenuItem.Tooltip = FindNodeToolTip(contextMenuItem.Tag as EntityNode);
+            sidebarMenuItem.Tooltip = FindNodeToolTip( FindNodeType(contextMenuItem.Tag as EntityNode) );
             sidebarMenuItem.Click = contextMenuItem.Click;
             sidebarMenuItem.Tag   = contextMenuItem.Tag;
          }
@@ -985,10 +985,10 @@ public class uScript : EditorWindow
 
              if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
              {
-                 helpButtonURL = FindNodeHelp(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
+                 helpButtonURL = FindNodeHelp( FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode) );
                  if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
                  {
-                     helpDescription = FindNodeDescription(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
+                     helpDescription = FindNodeDescription( FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode) );
                  }
              }
              else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
@@ -1978,6 +1978,22 @@ public class uScript : EditorWindow
       return defaultCategory;
    }
 
+   public static string FindNodeType(EntityNode node)
+   {
+      if ( node is EntityEvent )
+      {
+         EntityEvent entityEvent = (EntityEvent) node;         
+         return entityEvent.Instance.Type;
+      }
+      else if ( node is LogicNode )
+      {
+         LogicNode logicNode = (LogicNode) node;         
+         return logicNode.Type;
+      }
+
+      return "";
+   }
+
    public static string FindNodeLicense(string type)
    {
       Type uscriptType = uScript.Instance.GetType(type);
@@ -2018,11 +2034,6 @@ public class uScript : EditorWindow
       return "";
    }
 
-   public static string FindNodeToolTip(EntityNode type)
-   {
-       return "TOOLTIP using FindNodeTooltip(EntityNode type)";
-   }
-
    public static string FindNodeToolTip(string type)
    {
       Type uscriptType = uScript.Instance.GetType(type);
@@ -2041,11 +2052,6 @@ public class uScript : EditorWindow
       }
 
       return "";
-   }
-
-   public static string FindNodeDescription(EntityNode type)
-   {
-       return "DESCRIPTION using FindNodeDescription(EntityNode type)";
    }
 
    public static string FindNodeDescription(string type)
@@ -2106,11 +2112,6 @@ public class uScript : EditorWindow
       }
 
       return "";
-   }
-
-   public static string FindNodeHelp(EntityNode type)
-   {
-       return "URL using FindNodeHelp(EntityNode type)";
    }
 
    public static string FindNodeHelp(string type)
