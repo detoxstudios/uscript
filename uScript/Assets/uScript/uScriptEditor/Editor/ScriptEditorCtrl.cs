@@ -1719,7 +1719,7 @@ namespace Detox.ScriptEditor
          {
             SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( FormatName(socket), "socket_text" );
             
-            if ( socket.Alignment == Socket.Align.Bottom ) // Used for Action Node bottom sockect left/right border spacing.
+            if ( socket.Alignment == Socket.Align.Bottom ) // Used for Action Node bottom socket left/right border spacing.
             {
                requiredWidth += uScriptConfig.Style.BottomSocketLabelGapSize + uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize + uScriptConfig.Style.BottomSocketBorderAdjustmentPad;
                requiredWidth += textLength.Width;
@@ -1727,12 +1727,12 @@ namespace Detox.ScriptEditor
             else if ( socket.Alignment == Socket.Align.Left ) // Used for Action Nodes
             {
                maxLeftAlignedText = Math.Max( maxLeftAlignedText, textLength.Width + uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize );
-               leftRequiredHeight += (uScriptConfig.Style.SideSocketToBottomSocketPad + uScriptConfig.Style.PointSize + textLength.Height);
+               leftRequiredHeight += (uScriptConfig.Style.SideSocketToBottomSocketPad + textLength.Height );
             }
             else if ( socket.Alignment == Socket.Align.Right ) // Used for Event Nodes
             {
                maxRightAlignedText = Math.Max( maxRightAlignedText, textLength.Width + uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize );
-               rightRequiredHeight += (uScriptConfig.Style.SideSocketToBottomSocketPad + (uScriptConfig.Style.PointSize / 2 + 2) + textLength.Height);
+               rightRequiredHeight += (uScriptConfig.Style.SideSocketToBottomSocketPad + textLength.Height );
             }
             else if ( socket.Alignment == Socket.Align.Center )  // Used for properties
             {
@@ -1740,6 +1740,10 @@ namespace Detox.ScriptEditor
                centerRequiredHeight = Math.Max( centerRequiredHeight, textLength.Height );
             }
          }
+         
+         // Add in PointSize after the foreach (we only want to add this once, not once for each socket).
+         leftRequiredHeight = leftRequiredHeight + uScriptConfig.Style.PointSize;
+         rightRequiredHeight = rightRequiredHeight + uScriptConfig.Style.PointSize;
 
          //centered text should have extra title padding
          maxCenterAlignedText += uScriptConfig.Style.TitleLeftRightPad + uScriptConfig.Style.TitleLeftRightPad;
