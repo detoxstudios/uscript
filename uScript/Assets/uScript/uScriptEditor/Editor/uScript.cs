@@ -25,6 +25,12 @@ public class uScript : EditorWindow
    private ScriptEditorCtrl m_ScriptEditorCtrl = null;
    private bool m_MouseDown  = false;
    private bool m_Repainting = false;
+   private bool m_WantsUndo  = false;
+   private bool m_WantsRedo  = false;
+   private bool m_WantsCopy  = false;
+   private bool m_WantsPaste = false;
+   private bool m_WantsRefresh = false;
+
    private string m_FullPath = "";
 
    static private AppFrameworkData m_AppData = new AppFrameworkData();
@@ -204,6 +210,31 @@ public class uScript : EditorWindow
          }
       }
 
+      if ( true == m_WantsRefresh )
+      {
+         m_ScriptEditorCtrl.RefreshScript(null, true);
+         m_WantsRefresh = false;
+      }
+      if ( true == m_WantsCopy )
+      {
+         m_ScriptEditorCtrl.CopyToClipboard( );
+         m_WantsCopy = false;
+      }
+      if ( true == m_WantsPaste )
+      {
+         m_ScriptEditorCtrl.PasteFromClipboard( );
+         m_WantsPaste = false;
+      }
+      if ( true == m_WantsUndo )
+      {
+         m_ScriptEditorCtrl.Undo( );
+         m_WantsUndo = false;
+      }
+      if ( true == m_WantsRedo )
+      {
+         m_ScriptEditorCtrl.Redo( );
+         m_WantsRedo = false;
+      }
       OnMouseMove( );
    }
 
@@ -376,20 +407,19 @@ public class uScript : EditorWindow
          {
             if ( Event.current.commandName == "Copy" )
             {
-               m_ScriptEditorCtrl.CopyToClipboard( );
+               m_WantsCopy = true;
             }
             else if ( Event.current.commandName == "Paste" )
             {
-               m_ScriptEditorCtrl.PasteFromClipboard( );
+               m_WantsPaste = true;
             }
             else if ( Event.current.commandName == "Undo" )
             {
-               Debug.Log( "UNDO!" );
-               m_ScriptEditorCtrl.Undo( );
+               m_WantsUndo = true;
             }
             else if ( Event.current.commandName == "Redo" )
             {
-               m_ScriptEditorCtrl.Redo( );
+               m_WantsRedo = true;
             }
          }
 
@@ -472,7 +502,7 @@ public class uScript : EditorWindow
       if (m_RefreshTimestamp > 0.0 && EditorApplication.timeSinceStartup - m_RefreshTimestamp >= 0.05)
       {
          // re-center now that the gui is initialized
-         m_ScriptEditorCtrl.RefreshScript(null, true);
+         m_WantsRefresh = true;
          m_RefreshTimestamp = -1.0;
       }
    }
@@ -1950,6 +1980,8 @@ public class uScript : EditorWindow
    
    public static string FindFriendlyName(string defaultName, object [] attributes)
    {
+      if ( null == attributes ) return defaultName;
+
       foreach ( object a in attributes )
       {
          if ( a is FriendlyName ) 
@@ -1965,9 +1997,10 @@ public class uScript : EditorWindow
    {
       Type uscriptType = uScript.Instance.GetType(type);
 
-      if ( type != null )
+      if ( uscriptType != null )
       {
          object [] attributes = uscriptType.GetCustomAttributes(false);
+         if ( null == attributes ) return "";
 
          foreach ( object a in attributes )
          {
@@ -2001,9 +2034,10 @@ public class uScript : EditorWindow
    {
       Type uscriptType = uScript.Instance.GetType(type);
 
-      if ( type != null )
+      if ( uscriptType != null )
       {
          object [] attributes = uscriptType.GetCustomAttributes(false);
+         if ( null == attributes ) return "";
 
          foreach ( object a in attributes )
          {
@@ -2021,9 +2055,10 @@ public class uScript : EditorWindow
    {
       Type uscriptType = uScript.Instance.GetType(type);
 
-      if ( type != null )
+      if ( uscriptType != null )
       {
          object [] attributes = uscriptType.GetCustomAttributes(false);
+         if ( null == attributes ) return "";
 
          foreach ( object a in attributes )
          {
@@ -2041,9 +2076,10 @@ public class uScript : EditorWindow
    {
       Type uscriptType = uScript.Instance.GetType(type);
 
-      if ( type != null )
+      if ( uscriptType != null )
       {
          object [] attributes = uscriptType.GetCustomAttributes(false);
+         if ( null == attributes ) return "";
 
          foreach ( object a in attributes )
          {
@@ -2061,9 +2097,10 @@ public class uScript : EditorWindow
    {
       Type uscriptType = uScript.Instance.GetType(type);
 
-      if ( type != null )
+      if ( uscriptType != null )
       {
          object [] attributes = uscriptType.GetCustomAttributes(false);
+         if ( null == attributes ) return "";
 
          foreach ( object a in attributes )
          {
@@ -2081,9 +2118,10 @@ public class uScript : EditorWindow
    {
       Type uscriptType = uScript.Instance.GetType(type);
 
-      if ( type != null )
+      if ( uscriptType != null )
       {
          object [] attributes = uscriptType.GetCustomAttributes(false);
+         if ( null == attributes ) return "";
 
          foreach ( object a in attributes )
          {
@@ -2101,9 +2139,10 @@ public class uScript : EditorWindow
    {
       Type uscriptType = uScript.Instance.GetType(type);
 
-      if ( type != null )
+      if ( uscriptType != null )
       {
          object [] attributes = uscriptType.GetCustomAttributes(false);
+         if ( null == attributes ) return "";
 
          foreach ( object a in attributes )
          {
@@ -2121,9 +2160,10 @@ public class uScript : EditorWindow
    {
       Type uscriptType = uScript.Instance.GetType(type);
 
-      if ( type != null )
+      if ( uscriptType != null )
       {
          object [] attributes = uscriptType.GetCustomAttributes(false);
+         if ( null == attributes ) return "";
 
          foreach ( object a in attributes )
          {
@@ -2142,6 +2182,7 @@ public class uScript : EditorWindow
       if ( type != null )
       {
          object [] attributes = type.GetCustomAttributes(false);
+         if ( null == attributes ) return null;
 
          foreach ( object a in attributes )
          {

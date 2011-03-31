@@ -2386,7 +2386,7 @@ namespace Detox.ScriptEditor
       
          if ( false == exactMatch )
          {
-            Status.Error( "Matching EntityEvent " + data.Instance.Type + " " + data.Output + " could not be found" );
+            Status.Error( "Matching EntityEvent " + data.Instance.Type + " " + data.Output.Name + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 
@@ -2422,7 +2422,7 @@ namespace Detox.ScriptEditor
 
          if ( false == exactMatch )
          {
-            Status.Error( "Matching EntityMethod " + data.Instance.Type + " " + data.Input + " could not be found" );
+            Status.Error( "Matching EntityMethod " + data.Instance.Type + " " + data.Input.Name + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 
@@ -2466,7 +2466,7 @@ namespace Detox.ScriptEditor
 
          if ( false == exactMatch )
          {
-            Status.Error( "Matching EntityProperty " + data.Instance + " " + data.Parameter.Name + " could not be found" );
+            Status.Error( "Matching EntityProperty " + data.Instance.Name + " " + data.Parameter.Name + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 
