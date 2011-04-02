@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 
 //todo
 //do all the nodes
@@ -490,7 +491,9 @@ public class uScript : EditorWindow
       {
          m_ScriptEditorCtrl.BuildContextMenu( );
 
-         m_ContextX = (int) Event.current.mousePosition.x;
+         BuildSidebarMenu(null, null);
+
+		 m_ContextX = (int) Event.current.mousePosition.x;
          m_ContextY = (int) Event.current.mousePosition.y - _guiTopMenuHeight;
 
          //refresh screen so context menu shows up
@@ -556,7 +559,7 @@ public class uScript : EditorWindow
       _guiSidebarButtonStyle.alignment = TextAnchor.UpperLeft;
       _guiSidebarButtonStyle.padding = new RectOffset( 4, 4, 2, 2 );
       _guiSidebarButtonStyle.margin = new RectOffset( 4, 4, 0, 0 );
-      _guiSidebarButtonStyle.active.textColor = Color.white;
+      _guiSidebarButtonStyle.active.textColor = UnityEngine.Color.white;
 
       DrawGUITopAreas();
       DrawGUIHorizontalDivider();
@@ -848,9 +851,11 @@ public class uScript : EditorWindow
          {
             if (item.Click != null)
             {
-               // Attempt to create the node on the canvas
-               m_ScriptEditorCtrl.ContextCursor = new System.Drawing.Point(400, 50);
-
+               // Create the node on the canvas
+               int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
+               int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
+               Point center = new Point(halfWidth, halfHeight);
+               m_ScriptEditorCtrl.ContextCursor = center;
                item.OnClick();
                Debug.Log("Clicked '" + item.Name + "'\n");
             }
@@ -1268,6 +1273,9 @@ public class uScript : EditorWindow
       {
          m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor );
          m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
+			
+		 m_ScriptEditorCtrl.BuildContextMenu();
+		 BuildSidebarMenu(null, null);
 
          m_FullPath = fullPath;
 
