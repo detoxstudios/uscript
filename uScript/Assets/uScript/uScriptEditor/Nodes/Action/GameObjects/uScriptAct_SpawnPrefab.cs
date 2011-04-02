@@ -1,11 +1,19 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Create (instantiate) an instance of a Prefab at the specified spawn point GameObject
-//       at runtime (must be in the Resources folder structure).
+// Desc: Create (instantiate) an instance of a Prefab at the specified spawn point GameObject at runtime (must be in the Resources folder structure).
 
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/GameObjects")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Create an instance of a Prefab at the specified spawn point.")]
+[NodeDescription("Create (instantiate) an instance of a Prefab at the specified spawn point GameObject at runtime (must be in the Resources folder structure).")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Spawn Prefab")]
 public class uScriptAct_SpawnPrefab : uScriptLogic
 {
    // @TODO: Needed functionality includes:
@@ -21,9 +29,19 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
    private bool m_FinishedSpawning = false;
 
    public bool Immediate { get { return true; } }
+
+    [FriendlyName("Finished Spawning")]
    public event uScriptEventHandler FinishedSpawning;
 
-   public void In(string PrefabName, string ResourcePath, GameObject SpawnPoint, string SpawnedName, Vector3 LocationOffset, out GameObject SpawnedGameObject, out int SpawnedInstancedID)
+   public void In(
+      [FriendlyName("Prefab Name")] string PrefabName,
+      [FriendlyName("Resource Path")] string ResourcePath,
+      [FriendlyName("Spawn Point")] GameObject SpawnPoint,
+      [FriendlyName("Spawned Name")] string SpawnedName,
+      [FriendlyName("Location Offset")] Vector3 LocationOffset,
+      [FriendlyName("Spawned GameObject")] out GameObject SpawnedGameObject,
+      [FriendlyName("Spawned InstancedID")] out int SpawnedInstancedID
+      )
    {
       //Get Spawn point location and rotation
 

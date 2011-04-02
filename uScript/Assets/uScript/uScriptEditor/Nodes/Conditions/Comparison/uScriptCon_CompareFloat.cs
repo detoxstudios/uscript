@@ -5,6 +5,15 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Conditions/Comparison")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Fires the appropriate output link(s) depending on the comparison of the attached float variables.")]
+[NodeDescription("Fires the appropriate output link(s) depending on the comparison of the attached float variables.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Compare Float")]
 public class uScriptCon_CompareFloat : uScriptLogic
 {
 
@@ -14,10 +23,19 @@ public class uScriptCon_CompareFloat : uScriptLogic
    private bool lessThanOrEqualTo = false;
    private bool lessThan = false;
 
+   [FriendlyName("(Greater Than)   >")]
    public bool GreaterThan { get { return greaterThan; } }
+
+   [FriendlyName("(Greater Than or Equal To) >=")]
    public bool GreaterThanOrEqualTo { get { return greaterThanOrEqualTo; } }
+
+   [FriendlyName("(Equal To)   =")]
    public bool EqualTo { get { return equalTo; } }
+
+   [FriendlyName("(Less Than or Equal To) <=")]
    public bool LessThanOrEqualTo { get { return lessThanOrEqualTo; } }
+
+   [FriendlyName("(Less Than)   <")]
    public bool LessThan { get { return lessThan; } }
    
    public void In(float A, float B)

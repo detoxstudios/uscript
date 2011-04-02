@@ -5,11 +5,20 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/Math")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Subtracts two float variables together and returns the result.")]
+[NodeDescription("Subtracts two float variables together and returns the result.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Subtract Float")]
 public class uScriptAct_SubtractFloat : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(float[] A, float[] B, out float FloatResult, out int IntResult)
+   public void In(float[] A, float[] B, [FriendlyName("Result")] out float FloatResult, [FriendlyName("Int Result")] out int IntResult)
    {
       float aTotals = 0F;
       float bTotals = 0F;

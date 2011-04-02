@@ -5,12 +5,21 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/Camera")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Switches to the Target GameObject's camera.")]
+[NodeDescription("Switches to the Target GameObject's camera. Can optionally enable that camera's AudioListener component.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Switch Camera")]
 public class uScriptAct_SwitchCamera : uScriptLogic
 {
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject Target, bool EnableAudioListener, bool DisableOtherCameras)
+   public void In(GameObject Target, [FriendlyName("Enable AudioListener")] bool EnableAudioListener, [FriendlyName("Disable Other Cameras")] bool DisableOtherCameras)
    {
 
       if ( Target != null)

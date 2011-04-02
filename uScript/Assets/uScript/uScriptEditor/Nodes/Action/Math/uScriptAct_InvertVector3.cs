@@ -5,11 +5,26 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/Math")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Mirrors the X, Y, and Z of a Vector3.")]
+[NodeDescription("Mirrors the X, Y, and Z of a Vector3.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Invert Vector3")]
 public class uScriptAct_InvertVector3 : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(Vector3 Target, bool IgnoreX, bool IgnoreY, bool IgnoreZ, out Vector3 Value)
+   public void In(
+      Vector3 Target,
+      [FriendlyName("Ignore X")] bool IgnoreX,
+      [FriendlyName("Ignore Y")] bool IgnoreY,
+      [FriendlyName("Ignore Z")]bool IgnoreZ,
+      out Vector3 Value
+      )
    {
       float newX = Target.x;
       float newY = Target.y;

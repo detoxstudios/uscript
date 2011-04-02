@@ -5,6 +5,15 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/GameObjects")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Tells a GameObject to look at another GameObject transform or Vector3 position.")]
+[NodeDescription("Tells a GameObject (target) to look at another GameObject (focus) transform or Vector3 position.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Look At")]
 public class uScriptAct_LookAt : uScriptLogic
 {
 

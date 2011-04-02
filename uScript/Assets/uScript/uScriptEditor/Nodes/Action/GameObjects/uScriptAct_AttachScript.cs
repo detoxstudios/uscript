@@ -5,12 +5,21 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/GameObjects")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Attaches a script component to a GameObject.")]
+[NodeDescription("Attaches a script component to a GameObject.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Attach Script")]
 public class uScriptAct_AttachScript : uScriptLogic
 {
 
    public bool Out { get { return true; } }
 
-   public void In( GameObject[] Target, string[] ScriptName )
+   public void In(GameObject[] Target, [FriendlyName("Script Name")] string[] ScriptName)
    {
       foreach ( string currentScript in ScriptName )
       {

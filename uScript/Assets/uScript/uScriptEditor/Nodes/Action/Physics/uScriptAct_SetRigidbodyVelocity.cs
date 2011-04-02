@@ -5,6 +5,15 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/Physics")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Sets the velocity of a GameObject's Rigidbody as a Vector3.")]
+[NodeDescription("Sets the velocity of a GameObject's Rigidbody as a Vector3.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Set Rigidbody Velocity")]
 public class uScriptAct_SetRigidbodyVelocity : uScriptLogic
 {
 

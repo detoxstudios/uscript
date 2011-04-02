@@ -5,12 +5,21 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/GameObjects")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Removes the specified Component from then target GameObject.")]
+[NodeDescription("Removes the specified Component from then target GameObject. Can optionally set a delay.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Destroy Component")]
 public class uScriptAct_DestroyComponent : uScriptLogic
 {
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, string[] ComponentName, float DelayTime)
+   public void In(GameObject[] Target, [FriendlyName("Component Name")] string[] ComponentName, [FriendlyName("Delay")]float DelayTime)
    {
       foreach ( GameObject currentTarget in Target )
       {

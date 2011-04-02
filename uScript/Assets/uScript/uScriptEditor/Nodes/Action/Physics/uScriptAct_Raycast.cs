@@ -6,6 +6,15 @@
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/Physics")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Performs a ray trace from the starting point to the end point. Returns any hit data.")]
+[NodeDescription("Performs a ray trace from the starting point to the end point, determines if anything was hit along the way, and fires the associated output link.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Raycast")]
 public class uScriptAct_Raycast : uScriptLogic
 {
    // @TODO: I wish I could return the GameObject hit, but it looks like Unity (RaycastHit) doesn't provide that functionality (at least for static GOs).
@@ -20,7 +29,7 @@ public class uScriptAct_Raycast : uScriptLogic
    public bool NotObstructed { get { return m_NotObstructed; } }
    public bool Obstructed { get { return m_Obstructed; } }
 
-   public void In(object Start, object End, int LayerMask, out float HitDistance, out Vector3 HitLocation)
+   public void In(object Start, object End, [FriendlyName("Layer Mask")] int LayerMask, [FriendlyName("Hit Distance")] out float HitDistance, [FriendlyName("Hit Location")] out Vector3 HitLocation)
    {
       m_NotObstructed = false;
       m_Obstructed = false;

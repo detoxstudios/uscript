@@ -1,11 +1,19 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Moves a GameObject to a Vector3 Location. Optionally can choose to Lerp to
-//       the location and use a local offset.
+// Desc: Moves a GameObject to a Vector3 Location. Optionally can choose to Lerp to the location and use a local offset.
 
 using UnityEngine;
 using System.Collections;
 
+[NodePath("Action/GameObjects")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Moves a GameObject to a Vector3 Location.")]
+[NodeDescription("Moves a GameObject to a Vector3 Location. Optionally can choose to Lerp to the location and use a local offset.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Move To Location")]
 public class uScriptAct_MoveToLocation : uScriptLogic
 {
 
@@ -21,7 +29,7 @@ public class uScriptAct_MoveToLocation : uScriptLogic
    public event uScriptEventHandler Out;
 
 
-   public void In(GameObject[] Target, Vector3 Location, bool AsOffset, bool UseLerp, float LerpSpeedModifier)
+   public void In(GameObject[] Target, Vector3 Location, [FriendlyName("As Offset")] bool AsOffset, [FriendlyName("Use Lerp")] bool UseLerp, [FriendlyName("Lerp Speed Modifier")] float LerpSpeedModifier)
    {
       if ( Out != null ) Out(this, new System.EventArgs() );
 
