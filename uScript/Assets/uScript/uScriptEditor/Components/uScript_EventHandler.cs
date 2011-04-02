@@ -370,11 +370,11 @@ public class uScriptDefaultStyle : uScriptStyle
       element.border.bottom = 6;
       element.padding.left = 0;
       element.padding.right = 0;
-      element.padding.top = 0;
+      element.padding.top = -12;
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
-	   element.alignment = TextAnchor.UpperCenter;
+	   element.alignment = TextAnchor.UpperLeft;
       element.fontStyle = FontStyle.Bold;
 	   element.fontSize = 0;
       elementSettings["comment"] = element;
@@ -387,13 +387,13 @@ public class uScriptDefaultStyle : uScriptStyle
       element.border.bottom = 6;
       element.padding.left = 0;
       element.padding.right = 0;
-      element.padding.top = 0;
+      element.padding.top = -12;
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
-	  element.alignment = TextAnchor.UpperCenter;
+      element.alignment = TextAnchor.UpperLeft;
       element.fontStyle = FontStyle.Bold;
-	  element.fontSize = 0;
+	   element.fontSize = 0;
       elementSettings["comment_selected"] = element;
 
       element = new GUIStyle();
