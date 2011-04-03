@@ -50,19 +50,35 @@ public class uScript : EditorWindow
    private Hashtable m_Types = new Hashtable();
 
    /* uScript GUI Window Panel Layout Variables */
-      int      _guiDividerSize = 4;
-   int      _guiDividerMouseBuffer = 8;
-   int      _guiTopMenuHeight = 20;
 
-   int      _guiSidebarWidth = 250;
-   Vector2  _guiSidebarScrollPos;
+   int      _guiPanelSidebar_Width = 250;
+   int      _guiPanelProperties_Height = 250;
+   int      _guiPanelProperties_Width = 0;
+   int      _guiPanelSequence_Width = 0;
+   //int      _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
+   //int      _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
+
+
+
+
+
+   int      _guiPanelDivider_Size = 4;
+   int      _guiPanelDivider_MouseBuffer = 0;
+   int      _guiPanelToolbar_Height = 20;
+
+
+   Vector2  _guiPanelSidebar_ScrollPos;
 
    Vector2  _guiContentScrollPos;
    float    _canvasZoom = 1;
 
-   int      _guiGridHeight = 250;
-   int      _guiGridWidth = 450;
-   Vector2  _guiGridScrollPos;
+
+
+
+
+
+
+   Vector2  _guiPanelProperties_ScrollPos;
 
    Vector2  _guiHelpScrollPos;
 
@@ -94,6 +110,18 @@ public class uScript : EditorWindow
    }
 
 
+   //
+   // Property grid and help panel styles
+   //
+   GUIStyle _guiPanelBoxStyle;
+   GUIStyle _guiPanelTitleStyle;
+
+
+    //
+    // Sub-Sequence variables
+    //
+   Vector2 _guiPanelSequence_ScrollPos;
+    
    //
    // Statusbar Variables
    //
@@ -438,7 +466,7 @@ public class uScript : EditorWindow
 
          if ( false == m_MouseDown && Event.current.type == EventType.MouseDown )
          {
-            if ((int)Event.current.mousePosition.x - _guiSidebarWidth - _guiDividerSize - _guiDividerMouseBuffer >= 0)
+            if ((int)Event.current.mousePosition.x - _guiPanelSidebar_Width - _guiPanelDivider_Size - _guiPanelDivider_MouseBuffer >= 0)
              {
                  m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
 
@@ -448,8 +476,8 @@ public class uScript : EditorWindow
                 else if ( Event.current.button == 2 ) button = MouseButtons.Right;
  
                  m_MouseDownArgs.Button = button;
-                 m_MouseDownArgs.X = (int)Event.current.mousePosition.x - _guiSidebarWidth - _guiDividerSize - _guiDividerMouseBuffer;
-                 m_MouseDownArgs.Y = (int)Event.current.mousePosition.y - _guiTopMenuHeight;
+                 m_MouseDownArgs.X = (int)Event.current.mousePosition.x - _guiPanelSidebar_Width - _guiPanelDivider_Size - _guiPanelDivider_MouseBuffer;
+                 m_MouseDownArgs.Y = (int)Event.current.mousePosition.y - _guiPanelToolbar_Height;
              }
 
             if ( Event.current.clickCount == 2 )
@@ -467,13 +495,13 @@ public class uScript : EditorWindow
             else if ( Event.current.button == 2 ) button = MouseButtons.Right;
 
             m_MouseUpArgs.Button = button;
-            m_MouseUpArgs.X = (int)Event.current.mousePosition.x - _guiSidebarWidth - _guiDividerSize - _guiDividerMouseBuffer;
-            m_MouseUpArgs.Y = (int) Event.current.mousePosition.y - _guiTopMenuHeight;
+            m_MouseUpArgs.X = (int)Event.current.mousePosition.x - _guiPanelSidebar_Width - _guiPanelDivider_Size - _guiPanelDivider_MouseBuffer;
+            m_MouseUpArgs.Y = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
          }
 
          m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
-         m_MouseMoveArgs.X = (int)Event.current.mousePosition.x - _guiSidebarWidth - _guiDividerSize - _guiDividerMouseBuffer;
-         m_MouseMoveArgs.Y = (int) Event.current.mousePosition.y - _guiTopMenuHeight;
+         m_MouseMoveArgs.X = (int)Event.current.mousePosition.x - _guiPanelSidebar_Width - _guiPanelDivider_Size - _guiPanelDivider_MouseBuffer;
+         m_MouseMoveArgs.Y = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
       }
       else
       {
@@ -483,7 +511,7 @@ public class uScript : EditorWindow
 
             m_MouseUpArgs.Button = MouseButtons.Left;
             m_MouseUpArgs.X = (int) Event.current.mousePosition.x;
-            m_MouseUpArgs.Y = (int) Event.current.mousePosition.y - _guiTopMenuHeight;
+            m_MouseUpArgs.Y = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
          }
       }
 
@@ -494,7 +522,7 @@ public class uScript : EditorWindow
          BuildSidebarMenu(null, null);
 
 		 m_ContextX = (int) Event.current.mousePosition.x;
-         m_ContextY = (int) Event.current.mousePosition.y - _guiTopMenuHeight;
+         m_ContextY = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
 
          //refresh screen so context menu shows up
          Repaint( );
@@ -551,6 +579,23 @@ public class uScript : EditorWindow
 
    void DrawGUI()
    {
+       if (_guiPanelProperties_Width == 0 && _guiPanelSequence_Width == 0)
+       {
+           _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
+           _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
+       }
+       else if (_guiPanelProperties_Width == 0)
+       {
+           _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 2);
+       }
+       else if (_guiPanelSequence_Width == 0)
+       {
+           _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 2);
+       }
+
+       _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
+       _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
+
       _guiSidebarFoldoutStyle = new GUIStyle(EditorStyles.foldout);
       _guiSidebarFoldoutStyle.padding = new RectOffset(12, 4, 2, 2);
       _guiSidebarFoldoutStyle.margin = new RectOffset(4, 4, 0, 0);
@@ -561,7 +606,18 @@ public class uScript : EditorWindow
       _guiSidebarButtonStyle.margin = new RectOffset( 4, 4, 0, 0 );
       _guiSidebarButtonStyle.active.textColor = UnityEngine.Color.white;
 
-      DrawGUITopAreas();
+           _guiPanelBoxStyle = new GUIStyle(GUI.skin.box);
+           _guiPanelBoxStyle.padding = new RectOffset(1, 1, 1, 1);
+           _guiPanelBoxStyle.margin = new RectOffset(2, 2, 2, 0);
+
+       _guiPanelTitleStyle = new GUIStyle(EditorStyles.boldLabel);
+           _guiPanelTitleStyle.margin = new RectOffset(4, 4, 0, 0);
+
+
+
+
+
+    DrawGUITopAreas();
       DrawGUIHorizontalDivider();
       DrawGUIBottomAreas();
       DrawGUIStatusbar();
@@ -580,23 +636,47 @@ public class uScript : EditorWindow
 
    void DrawGUIBottomAreas()
    {
-      EditorGUILayout.BeginHorizontal( GUILayout.Height( _guiGridHeight ) );
+      EditorGUILayout.BeginHorizontal( GUILayout.Height( _guiPanelProperties_Height ) );
       {
          DrawGUIPropertyGrid();
          DrawGUIVerticalDivider();
          DrawGUIHelp();
+         DrawGUIVerticalDivider();
+         DrawGUISubsequences();
       }
       EditorGUILayout.EndHorizontal();
    }
 
    void DrawGUIHorizontalDivider()
    {
-      GUILayout.Box( "", GUILayout.Height( _guiDividerSize ), GUILayout.ExpandWidth(true) );
+       GUILayout.BeginHorizontal();
+       {
+           GUILayout.FlexibleSpace();
+           GUIStyle hDivider = new GUIStyle(GUI.skin.box);
+           //       hDivider.normal.background = null;
+           hDivider.margin = new RectOffset(8, 8, 4, 4);
+           hDivider.padding = new RectOffset(0, 0, 0, 0);
+           hDivider.border = new RectOffset(1, 1, 1, 1);
+           GUILayout.Box("", hDivider, GUILayout.Height(2), GUILayout.Width(16));
+           GUILayout.FlexibleSpace();
+       }
+       GUILayout.EndHorizontal();
    }
 
    void DrawGUIVerticalDivider()
    {
-      GUILayout.Box( "", GUILayout.Width( _guiDividerSize ), GUILayout.ExpandHeight(true) );
+       GUILayout.BeginVertical();
+       {
+//           GUILayout.Space(20);
+//           GUILayout.FlexibleSpace();
+           GUIStyle vDivider = new GUIStyle(GUI.skin.box);
+           vDivider.margin = new RectOffset(4, 4, 8, 8);
+           vDivider.padding = new RectOffset(0, 0, 0, 0);
+           vDivider.border = new RectOffset(1, 1, 1, 1);
+           GUILayout.Box("", vDivider, GUILayout.Width(2), GUILayout.Height(16));
+//           GUILayout.FlexibleSpace();
+       }
+       GUILayout.EndVertical();
    }
 
    void DrawGUIStatusbar()
@@ -606,13 +686,15 @@ public class uScript : EditorWindow
 
    void DrawGUISidebar()
    {
-      EditorGUILayout.BeginVertical( GUILayout.Width( _guiSidebarWidth ) );
+      EditorGUILayout.BeginVertical( _guiPanelBoxStyle, GUILayout.Width( _guiPanelSidebar_Width ) );
       {
          // Toolbar
          //
-         EditorGUILayout.BeginHorizontal( EditorStyles.toolbar, GUILayout.Width( _guiSidebarWidth ) );
+          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.Width(_guiPanelSidebar_Width));
          {
-            _sidebarPopupIndex = EditorGUILayout.Popup(_sidebarPopupIndex, _sidebarPopupArray, "toolbarDropDown");
+             GUILayout.Label("Node Palette", _guiPanelTitleStyle);
+
+//            _sidebarPopupIndex = EditorGUILayout.Popup(_sidebarPopupIndex, _sidebarPopupArray, "toolbarDropDown");
 
             Texture icon;  // temporary icon for toolbar buttons -- reuse when possible
 
@@ -650,7 +732,7 @@ public class uScript : EditorWindow
 
          // Node list
          //
-         _guiSidebarScrollPos = EditorGUILayout.BeginScrollView ( _guiSidebarScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.Width( _guiSidebarWidth ) );
+         _guiPanelSidebar_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelSidebar_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.Width( _guiPanelSidebar_Width ) );
          {
             foreach (SidebarMenuItem item in _sidebarMenuItems)
             {
@@ -977,30 +1059,21 @@ public class uScript : EditorWindow
       EditorGUILayout.EndVertical();
    }
 
+
+
    void DrawGUIPropertyGrid()
    {
-      EditorGUILayout.BeginVertical( "window", GUILayout.Width( _guiGridWidth ) );
+      EditorGUILayout.BeginVertical( _guiPanelBoxStyle, GUILayout.Width( _guiPanelProperties_Width ) );
       {
          // Toolbar
          //
-/*
          EditorGUILayout.BeginHorizontal( EditorStyles.toolbar );
          {
-            if ( GUILayout.Button( "Name", EditorStyles.toolbarButton ) )
-            {
-               uScriptDebug.Log("Sort the grid by property name\n");
-            }
-            if ( GUILayout.Button( "Value", EditorStyles.toolbarButton ) )
-            {
-               uScriptDebug.Log("Sort the grid by value\n");
-            }
+             GUILayout.Label("Properties", _guiPanelTitleStyle);
          }
          EditorGUILayout.EndHorizontal();
-*/
 
-         GUILayout.Label("Properties");
-
-         _guiGridScrollPos = EditorGUILayout.BeginScrollView ( _guiGridScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview" );
+         _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelProperties_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview" );
          {
             m_ScriptEditorCtrl.PropertyGrid.OnPaint( );
          }
@@ -1014,40 +1087,56 @@ public class uScript : EditorWindow
 
    void DrawGUIHelp()
    {
-      EditorGUILayout.BeginVertical( "window" );
-      {
-         _guiHelpScrollPos = EditorGUILayout.BeginScrollView ( _guiHelpScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview" );
+       EditorGUILayout.BeginVertical(_guiPanelBoxStyle);
+       {
+           string helpDescription = String.Empty;
+           string helpButtonURL = String.Empty;
+
+           if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
+           {
+               helpButtonURL = FindNodeHelp(FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
+               if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
+               {
+                   helpDescription = FindNodeDescription(FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
+               }
+           }
+           else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
+           {
+               helpDescription = "Help cannot be provided when multiple nodes are selected.";
+           }
+           else
+           {
+               helpDescription = "Select a node on the canvas to view usage and behavior information.";
+           }
+
+           // Show the online reference button
+           if (String.IsNullOrEmpty(helpButtonURL))
+           {
+               helpButtonURL = "http://www.uscript.net/wiki/";
+           }
+
+           // Toolbar
+           //
+           EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+           {
+               GUILayout.Label("Reference", _guiPanelTitleStyle, GUILayout.ExpandWidth(true));
+               GUILayout.FlexibleSpace();
+               if (GUILayout.Button(new GUIContent("Online Reference", "Open the online reference for the selected node in the default web browser. (" + helpButtonURL + ")"), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+               {
+                   Help.BrowseURL(helpButtonURL);
+               }
+           }
+           EditorGUILayout.EndHorizontal();
+
+           _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
          {
-             string helpDescription = String.Empty;
-             string helpButtonURL = String.Empty;
+             GUIStyle referenceTextArea = new GUIStyle(GUI.skin.label);
+             referenceTextArea.wordWrap = true;
+             referenceTextArea.stretchWidth = true;
 
-             if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
-             {
-                 helpButtonURL = FindNodeHelp( FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode) );
-                 if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
-                 {
-                     helpDescription = FindNodeDescription( FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode) );
-                 }
-             }
-             else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
-             {
-                 helpDescription = "Help cannot be provided when multiple nodes are selected.";
-             }
-
-             // Show the online reference button
-             if (String.IsNullOrEmpty(helpButtonURL))
-             {
-                 helpButtonURL = "http://www.uscript.net/wiki/";
-             }
-             if (GUILayout.Button(new GUIContent("Online Reference", "Open the online reference for the selected node in the default web browser. (" + helpButtonURL + ")")))
-             {
-                 Help.BrowseURL(helpButtonURL);
-             }
-             
-            
             // prevent the help TextArea from getting focus
             GUI.SetNextControlName("helpTextArea");
-            GUILayout.TextArea(helpDescription, "label");
+            GUILayout.TextArea(helpDescription, referenceTextArea);
             if (GUI.GetNameOfFocusedControl() == "helpTextArea")
             {
                 GUIUtility.keyboardControl = 0;
@@ -1057,6 +1146,31 @@ public class uScript : EditorWindow
       }
       EditorGUILayout.EndVertical();
    }
+
+
+   void DrawGUISubsequences()
+   {
+       EditorGUILayout.BeginVertical(_guiPanelBoxStyle, GUILayout.Width(_guiPanelSequence_Width));
+       {
+           // Toolbar
+           //
+           EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+           {
+               GUILayout.Label("Sub-Sequences", _guiPanelTitleStyle);
+           }
+           EditorGUILayout.EndHorizontal();
+
+           _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
+           {
+           }
+           EditorGUILayout.EndScrollView();
+       }
+
+
+       EditorGUILayout.EndVertical();
+   }
+
+
 
    void m_ScriptEditorCtrl_ScriptModified(object sender, EventArgs e)
    {
@@ -1078,7 +1192,7 @@ public class uScript : EditorWindow
 
    public void DrawAssetList( )
    {
-      Rect windowRect = new Rect( _guiDividerSize + _guiSidebarWidth + 50, 50, 10, 10 );
+      Rect windowRect = new Rect( _guiPanelDivider_Size + _guiPanelSidebar_Width + 50, 50, 10, 10 );
       windowRect = GUILayout.Window(10000, windowRect, DoAssetList, "");
    }
 
@@ -1975,7 +2089,7 @@ public class uScript : EditorWindow
                else if ( true == m_ScriptEditorCtrl.DoDragDropContextMenu(o) )
                {
                   m_ContextX = (int) Event.current.mousePosition.x;
-                  m_ContextY = (int) Event.current.mousePosition.y - _guiTopMenuHeight;
+                  m_ContextY = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
 
                   DragAndDrop.AcceptDrag( );
                }
