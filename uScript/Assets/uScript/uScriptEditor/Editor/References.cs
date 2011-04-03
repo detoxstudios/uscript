@@ -453,9 +453,11 @@ namespace System.Windows.Forms
       public bool OnMouseDown( System.Windows.Forms.MouseEventArgs e )
       {
          Control []controls = Controls.ToArray( );
+		 int i;
 
-         foreach ( Control control in controls )
+         for ( i = controls.Length - 1; i >= 0; i-- )
          {
+			Control control = controls[i];
             if ( true == control.OnMouseDown(e) ) return true;
          }
 
