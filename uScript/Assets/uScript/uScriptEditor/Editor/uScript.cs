@@ -608,7 +608,7 @@ public class uScript : EditorWindow
 
            _guiPanelBoxStyle = new GUIStyle(GUI.skin.box);
            _guiPanelBoxStyle.padding = new RectOffset(1, 1, 1, 1);
-           _guiPanelBoxStyle.margin = new RectOffset(2, 2, 2, 0);
+           _guiPanelBoxStyle.margin = new RectOffset(0, 0, 0, 0);
 
        _guiPanelTitleStyle = new GUIStyle(EditorStyles.boldLabel);
            _guiPanelTitleStyle.margin = new RectOffset(4, 4, 0, 0);
@@ -649,34 +649,61 @@ public class uScript : EditorWindow
 
    void DrawGUIHorizontalDivider()
    {
-       GUILayout.BeginHorizontal();
+       //GUILayout.BeginHorizontal();
+       //{
+       //    GUILayout.FlexibleSpace();
+       //    GUIStyle hDivider = new GUIStyle(GUI.skin.box);
+       //    //       hDivider.normal.background = null;
+       //    hDivider.margin = new RectOffset(8, 8, 4, 4);
+       //    hDivider.padding = new RectOffset(0, 0, 0, 0);
+       //    hDivider.border = new RectOffset(1, 1, 1, 1);
+       //    GUILayout.Box("", hDivider, GUILayout.Height(2), GUILayout.Width(16));
+       //    GUILayout.FlexibleSpace();
+       //}
+       //GUILayout.EndHorizontal();
+
+       GUIStyle hDivider = new GUIStyle(GUI.skin.box);
+       hDivider.margin = new RectOffset(0, 0, 0, 0);
+       hDivider.padding = new RectOffset(0, 0, 0, 0);
+       hDivider.border = new RectOffset(0, 0, 0, 0);
+       hDivider.normal.background = null;
+       GUILayout.Box("", hDivider, GUILayout.Height(3), GUILayout.ExpandWidth(true));
+
+       if (Event.current.type == EventType.Repaint)
        {
-           GUILayout.FlexibleSpace();
-           GUIStyle hDivider = new GUIStyle(GUI.skin.box);
-           //       hDivider.normal.background = null;
-           hDivider.margin = new RectOffset(8, 8, 4, 4);
-           hDivider.padding = new RectOffset(0, 0, 0, 0);
-           hDivider.border = new RectOffset(1, 1, 1, 1);
-           GUILayout.Box("", hDivider, GUILayout.Height(2), GUILayout.Width(16));
-           GUILayout.FlexibleSpace();
+           Rect r = new Rect(GUILayoutUtility.GetLastRect());
+           r.y = r.y - 3;
+           r.height = r.height + 6;
+           EditorGUIUtility.AddCursorRect(r, MouseCursor.ResizeVertical);
        }
-       GUILayout.EndHorizontal();
    }
 
    void DrawGUIVerticalDivider()
    {
-       GUILayout.BeginVertical();
+       //GUILayout.BeginVertical();
+       //{
+       //    GUIStyle vDivider = new GUIStyle(GUI.skin.box);
+       //    vDivider.margin = new RectOffset(4, 4, 8, 8);
+       //    vDivider.padding = new RectOffset(0, 0, 0, 0);
+       //    vDivider.border = new RectOffset(1, 1, 1, 1);
+       //    GUILayout.Box("", vDivider, GUILayout.Width(2), GUILayout.Height(16));
+       //}
+       //GUILayout.EndVertical();
+
+       GUIStyle vDivider = new GUIStyle(GUI.skin.box);
+       vDivider.margin = new RectOffset(0, 0, 0, 0);
+       vDivider.padding = new RectOffset(0, 0, 0, 0);
+       vDivider.border = new RectOffset(0, 0, 0, 0);
+       vDivider.normal.background = null;
+       GUILayout.Box("", vDivider, GUILayout.Width(3), GUILayout.ExpandHeight(true));
+
+       if (Event.current.type == EventType.Repaint)
        {
-//           GUILayout.Space(20);
-//           GUILayout.FlexibleSpace();
-           GUIStyle vDivider = new GUIStyle(GUI.skin.box);
-           vDivider.margin = new RectOffset(4, 4, 8, 8);
-           vDivider.padding = new RectOffset(0, 0, 0, 0);
-           vDivider.border = new RectOffset(1, 1, 1, 1);
-           GUILayout.Box("", vDivider, GUILayout.Width(2), GUILayout.Height(16));
-//           GUILayout.FlexibleSpace();
+           Rect r = new Rect(GUILayoutUtility.GetLastRect());
+           r.x = r.x - 3;
+           r.width = r.width + 6;
+           EditorGUIUtility.AddCursorRect(r, MouseCursor.ResizeHorizontal);
        }
-       GUILayout.EndVertical();
    }
 
    void DrawGUIStatusbar()
