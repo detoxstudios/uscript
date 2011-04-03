@@ -1,0 +1,44 @@
+fileFormatVersion: 1
+guid: f7e1fa3652e17a94fbe409d18d9e22ca
+ModelImporter:
+  importerVersion: 7
+  meshes:
+    scaleFactor: 0.01
+    useFileUnits: 1
+    meshCompression: 0
+    generateColliders: 0
+    swapUVs: 0
+  tangentSpace:
+    normalImportMode: 0
+    tangentImportMode: 1
+    smoothingAngle: 60
+    splitTangents: 1
+  materials:
+    generation: 1
+  animations:
+    generation: 3
+    bakeAnimations: 0
+    animationCompression: 1
+    animationWrapMode: 1
+    splitAnimations: 1
+  nodeInfo:
+    Door_Panel_Right:
+    - 100000
+    - 400000
+    - 3300000
+    - 2300000
+    Door_Panel_Left:
+    - 100002
+    - 400002
+    - 3300002
+    - 2300002
+    //RootNode:
+    - 100004
+    - 400004
+    - 11100000
+AssetImporter:
+  importerVersion: 1
+  fileIDToRecycleName:
+    4300000: Door_Panel_Left
+    4300002: Door_Panel_Right
+    7400000: ModoAnim //// Door_Panels

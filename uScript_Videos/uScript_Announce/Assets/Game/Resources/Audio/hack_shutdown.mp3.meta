@@ -1,9 +1,9 @@
 fileFormatVersion: 1
-guid: 971e9c8e36a9841db9e43138313831e7
+guid: de60bcfbb22efdd49aa3cb78126adb45
 AudioImporter:
   importerVersion: 4
-  format: -1
-  quality: -1
+  format: 0
+  quality: 0.159995
   3d: 0
   forceToMono: 0
   stream: 1
