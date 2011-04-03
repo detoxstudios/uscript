@@ -24,7 +24,7 @@ public class uScriptAct_PrintList : uScriptLogic
    {
       foreach ( object s in strings )
       {
-         Debug.Log( "string = " + s );
+         uScriptDebug.Log( "string = " + s );
       }
    }
 }

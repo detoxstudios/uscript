@@ -39,7 +39,7 @@ public class uScriptAct_AttachScript : uScriptLogic
                tempScript = tempScript.Remove(stringLength, 4);
             }
 
-            //Debug.Log("ScriptName = " + tempScript);
+            //uScriptDebug.Log("ScriptName = " + tempScript);
 
             try
             {

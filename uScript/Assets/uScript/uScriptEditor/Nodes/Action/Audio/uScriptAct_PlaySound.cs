@@ -26,7 +26,7 @@ public class uScriptAct_PlaySound : uScriptLogic
    public void Play( [FriendlyName("File Name")] string FileName, [FriendlyName("Resource Path")] string ResourcePath, [FriendlyName("Target")] GameObject Target, [FriendlyName("Volume")] float Volume, [FriendlyName("Loop")] bool Loop )
    {
 		
-      Debug.Log("Resource Path = " + ResourcePath);
+      uScriptDebug.Log("Resource Path = " + ResourcePath);
 		
 		// Build final ResourcePath string
       if (ResourcePath != "")
@@ -105,9 +105,9 @@ public class uScriptAct_PlaySound : uScriptLogic
       // Spawn the Prefab
       try
       {
-			Debug.Log("Full Path = " + fullPath);
+			uScriptDebug.Log("Full Path = " + fullPath);
          m_AudioClip = Resources.Load(fullPath, typeof(AudioClip)) as AudioClip;
-			Debug.Log("AudioClip = " + m_AudioClip);
+			uScriptDebug.Log("AudioClip = " + m_AudioClip);
       }
       catch (System.Exception e)
       {
@@ -119,7 +119,7 @@ public class uScriptAct_PlaySound : uScriptLogic
 		
       if ( m_AudioClip != null && Target != null )
 	  {
-         Debug.Log("NOT NULL!");
+         uScriptDebug.Log("NOT NULL!");
 			
 	     m_AudioSource = (AudioSource)Target.AddComponent(typeof(AudioSource));;
 			

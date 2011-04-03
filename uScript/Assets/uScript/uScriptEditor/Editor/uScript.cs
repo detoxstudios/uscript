@@ -189,13 +189,13 @@ public class uScript : EditorWindow
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
 
-//      Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+	  //uScriptDebug.Log(Input.GetAxis("Mouse ScrollWheel"));
 
       if ( false == contextActive )
       {
          if ( null != m_MouseDownArgs )
          {
-            //Debug.Log( "mouse down" );
+            //uScriptDebug.Log( "mouse down" );
             m_MouseDown = true;
             OnMouseDown( );
 
@@ -203,7 +203,7 @@ public class uScript : EditorWindow
          }
          else if ( null != m_MouseUpArgs )
          {
-            //Debug.Log( "mouse up" );
+            //uScriptDebug.Log( "mouse up" );
             m_MouseDown = false;
             OnMouseUp( );
 
@@ -273,24 +273,24 @@ public class uScript : EditorWindow
 
          if (null == uScriptMaster)
          {
-            Debug.Log("Adding default uScript master gameobject: " + uScriptConfig.MasterObjectName);
+            uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptConfig.MasterObjectName);
 
             uScriptMaster = new GameObject(uScriptConfig.MasterObjectName);
             uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
          }
          if (null == uScriptMaster.GetComponent<uScript_MasterObject>())
          {
-            Debug.Log("Adding Master Object to master gameobject (" + uScriptConfig.MasterObjectName + ")");
+            uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptConfig.MasterObjectName + ")");
             uScriptMaster.AddComponent(typeof(uScript_MasterObject));
          }
          if (null == uScriptMaster.GetComponent<uScript_Global>())
          {
-            Debug.Log("Adding global to master gameobject (" + uScriptConfig.MasterObjectName + ")");
+            uScriptDebug.Log("Adding global to master gameobject (" + uScriptConfig.MasterObjectName + ")");
             uScriptMaster.AddComponent(typeof(uScript_Global));
          }
          if (null == uScriptMaster.GetComponent<uScript_Triggers>())
          {
-            Debug.Log("Adding triggers to master gameobject (" + uScriptConfig.MasterObjectName + ")");
+            uScriptDebug.Log("Adding triggers to master gameobject (" + uScriptConfig.MasterObjectName + ")");
             uScriptMaster.AddComponent(typeof(uScript_Triggers));
          }
 
@@ -344,18 +344,18 @@ public class uScript : EditorWindow
       EndWindows( );
 
 
-//      Debug.Log(Event.current.type);
+//      uScriptDebug.Log(Event.current.type);
 //      if ( Event.current.type == EventType.ScrollWheel )
 //      {
-//         Debug.Log( "Scroll Wheel Event" );
+//         uScriptDebug.Log( "Scroll Wheel Event" );
 //      }
 
 //      Event e = Event.current;
 //      if (e.isMouse)
 //      {
-////         Debug.Log(EventType.scrollWheel);
-////         Debug.Log(EventType.ScrollWheel);
-////         Debug.Log(e.delta);
+////         uScriptDebug.Log(EventType.scrollWheel);
+////         uScriptDebug.Log(EventType.ScrollWheel);
+////         uScriptDebug.Log(e.delta);
 //      }
 
 
@@ -679,7 +679,7 @@ public class uScript : EditorWindow
          {
             if (item == null)
             {
-               Debug.LogError(sidebarMenuItem.Name + " has a null child!\n");
+               uScriptDebug.Log(sidebarMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
                return;
             }
             ExpandSidebarMenuItem(item);
@@ -704,7 +704,7 @@ public class uScript : EditorWindow
          {
             if (item == null)
             {
-               Debug.LogError(sidebarMenuItem.Name + " has a null child!\n");
+               uScriptDebug.Log(sidebarMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
                return;
             }
             CollapseSidebarMenuItem(item);
@@ -795,7 +795,7 @@ public class uScript : EditorWindow
                newItem.Indent = sidebarMenuItem.Indent + 1;
                if (item == null || newItem == null)
                {
-                  Debug.LogError("Trying to pass a null parameter to BuildSidebarMenu()!\n");
+                  uScriptDebug.Log("Trying to pass a null parameter to BuildSidebarMenu()!\n", uScriptDebug.Type.Error);
                   return;
                }
                BuildSidebarMenu(item, newItem);
@@ -812,7 +812,7 @@ public class uScript : EditorWindow
       }
       else
       {
-         Debug.LogWarning("The contextMenuItem (" + contextMenuItem.Text + ") is a " + contextMenuItem.GetType() + " and is unhandled!\n");
+         uScriptDebug.Log("The contextMenuItem (" + contextMenuItem.Text + ") is a " + contextMenuItem.GetType() + " and is unhandled!\n", uScriptDebug.Type.Warning);
       }
    }
 
@@ -857,11 +857,11 @@ public class uScript : EditorWindow
                Point center = new Point(halfWidth, halfHeight);
                m_ScriptEditorCtrl.ContextCursor = center;
                item.OnClick();
-               Debug.Log("Clicked '" + item.Name + "'\n");
+               uScriptDebug.Log("Clicked '" + item.Name + "'\n");
             }
             else
             {
-               Debug.Log("Cannot execute menu item: " + item.Name + "\n");
+               uScriptDebug.Log("Cannot execute menu item: " + item.Name + "\n");
             }
          }
       }
@@ -881,8 +881,8 @@ public class uScript : EditorWindow
       string logicPath = relativePath + "/SubSeq_" + fileName + ".cs";
       string wrapperPath = relativePath + "/" + fileName + ".cs";
 
-      //Debug.Log( "refreshing " + logicPath );
-      //Debug.Log( "refreshing " + wrapperPath );
+      //uScriptDebug.Log( "refreshing " + logicPath );
+      //uScriptDebug.Log( "refreshing " + wrapperPath );
 
       AssetDatabase.ImportAsset( logicPath, ImportAssetOptions.ForceUpdate );
       AssetDatabase.ImportAsset( wrapperPath, ImportAssetOptions.ForceUpdate );
@@ -946,7 +946,7 @@ public class uScript : EditorWindow
             _canvasZoom = EditorGUILayout.Slider(_canvasZoom, 0.25f, 1.0f);
 //            if ( GUILayout.Button( "ToolbarButton3", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
 //            {
-//               Debug.Log("ToolbarButton3");
+//               uScriptDebug.Log("ToolbarButton3");
 //            }
          }
          EditorGUILayout.EndHorizontal();
@@ -988,11 +988,11 @@ public class uScript : EditorWindow
          {
             if ( GUILayout.Button( "Name", EditorStyles.toolbarButton ) )
             {
-               Debug.Log("Sort the grid by property name\n");
+               uScriptDebug.Log("Sort the grid by property name\n");
             }
             if ( GUILayout.Button( "Value", EditorStyles.toolbarButton ) )
             {
-               Debug.Log("Sort the grid by value\n");
+               uScriptDebug.Log("Sort the grid by value\n");
             }
          }
          EditorGUILayout.EndHorizontal();
@@ -1283,7 +1283,7 @@ public class uScript : EditorWindow
       }
       else
       {
-         Debug.LogError( "An error occured opening " + fullPath );
+         uScriptDebug.Log( "An error occured opening " + fullPath, uScriptDebug.Type.Error );
       }
    }
 
@@ -1303,11 +1303,11 @@ public class uScript : EditorWindow
          {
             if ( true == SaveScript(scriptEditor, file.FullName) )
             {
-               UnityEngine.Debug.Log( "Rebuilt " + file.FullName );
+               uScriptDebug.Log( "Rebuilt " + file.FullName );
             }
             else
             {
-               UnityEngine.Debug.LogError( "Could not save " + file.FullName );
+               uScriptDebug.Log( "Could not save " + file.FullName, uScriptDebug.Type.Error );
             }
          }
       }
@@ -1359,7 +1359,7 @@ public class uScript : EditorWindow
          }
          else
          {
-            Debug.LogError( "there was an error saving " + m_FullPath );
+            uScriptDebug.Log( "there was an error saving " + m_FullPath, uScriptDebug.Type.Error );
          }
       }
 
@@ -1894,11 +1894,11 @@ public class uScript : EditorWindow
    public bool AttachEventScript(string eventType, string objectName)
    {
       GameObject gameObject = GameObject.Find( objectName );
-      Debug.Log ("uScript.cs - GameObject = " + gameObject);
+      uScriptDebug.Log ("uScript.cs - GameObject = " + gameObject);
       if ( null == gameObject ) return false;
 
       Type type = GetType(eventType);
-      Debug.Log ("uScript.cs - Type = " + type);
+      uScriptDebug.Log ("uScript.cs - Type = " + type);
       if ( null == type ) return false;
 
       Component [] components = gameObject.GetComponents<Component>( );

@@ -3,6 +3,8 @@
 // Desc: uScript_EventHandler contains event handeling and configuration code.
 //       This does NOT need to be attached to any GameObject in your project.
 
+#define ENABLE_LOG
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -101,6 +103,11 @@ public class uScriptDebug : MonoBehaviour
       Error
    }
 
+   public static void Log(string msgString)
+   {
+      Log(msgString, Type.Message);
+   }
+
    /// <summary>
    /// Displays a uScript message in Unity's console window.
    /// </summary>
@@ -108,6 +115,7 @@ public class uScriptDebug : MonoBehaviour
    /// <param name="msgType">Message type to output (0 = message, 1 = warning, 2 = error).</param>
    public static void Log(string msgString, Type msgType)
    {
+#if ( ENABLE_LOG )
       string appName = "uScript: ";
       string msgOutput = appName + msgString;
 
@@ -134,6 +142,7 @@ public class uScriptDebug : MonoBehaviour
                break;
             }
       }
+#endif
    }
 }
 
@@ -249,7 +258,7 @@ public partial class uScriptConfig
       //but if the friendly name can't be found return "default"
       public static string FriendlyStyleName(string type)
       {
-         //Debug.Log( "uScript_EventHandler.cs: " + type);
+         //uScriptDebug.Log( "uScript_EventHandler.cs: " + type );
          type = type.Replace( "[]", "" );
 
          string friendly = FriendlyName( type );
@@ -492,7 +501,7 @@ public class uScriptDefaultStyle : uScriptStyle
          }
          else
          {
-            Debug.LogError("Can't find element setttings for " + name + ", defaulting to 'node'");
+            uScriptDebug.Log("Can't find element setttings for " + name + ", defaulting to 'node'", uScriptDebug.Type.Error);
             key = "node";
          }
 
@@ -564,7 +573,7 @@ public class uScriptDefaultStyle : uScriptStyle
 
       if (m_Styles.ContainsKey(name)) return m_Styles[name];
 
-	  //UnityEngine.Debug.LogWarning( "Can not find style: " + name );
+	  //uScriptDebug( "Can not find style: " + name, uScriptDebug.Type.Warning );
 
       if (false == name.Contains("socket") &&
           true == name.Contains("node") &&
