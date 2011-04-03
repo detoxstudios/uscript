@@ -86,9 +86,9 @@ public class uScript : EditorWindow
    private List<SidebarMenuItem> _sidebarMenuItems;
    GUIStyle _guiSidebarButtonStyle;
    GUIStyle _guiSidebarFoldoutStyle;
-   int _sidebarPopupIndex = 0;
+   //int _sidebarPopupIndex = 0;
    String _sidebarFilterText = "";
-   String[] _sidebarPopupArray = { "All Nodes" };
+   //String[] _sidebarPopupArray = { "All Nodes" };
 
    public class SidebarMenuItem : System.Windows.Forms.MenuItem
    {
