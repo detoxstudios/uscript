@@ -62,7 +62,6 @@ public class MovePlayer : MonoBehaviour
       else
       {
          //Use arrow keys to move the player
-
          if (Input.GetKeyUp("up"))
          {
             moveDistance = new Vector3(0, 0, keyBasedMovementSettings.unitsToMove);
