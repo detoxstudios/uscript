@@ -1000,8 +1000,9 @@ namespace Detox.FlowChart
                float lineWidth = pen.Width;
                Handles.color = new UnityEngine.Color(pen.Color.FR, pen.Color.FG, pen.Color.FB);
 
-               if (link.Source.Node != null)
+               if (link.Source.Node != null || link.Destination.Node != null)
                {
+				  // check source node type first
                   styleName = link.Source.Node.StyleName;
 
                   if (!String.IsNullOrEmpty(styleName))
@@ -1015,6 +1016,24 @@ namespace Detox.FlowChart
                         }
                      }
                   }
+						
+				  if (index == -1)
+				  {
+				     // didn't find source node style, try the destination
+                     styleName = link.Destination.Node.StyleName;
+
+                     if (!String.IsNullOrEmpty(styleName))
+                     {
+                        for (int j = 0; j < uScriptConfig.StyleTypes.Length; j++)
+                        {
+                           if (styleName == uScriptConfig.StyleTypes[j])
+                           {
+                              index = j;
+                              break;
+                           }
+                        }
+                     }
+				  }
                }
 
                if (index != -1)
