@@ -91,6 +91,7 @@ public abstract class uScriptLogic : ScriptableObject
    public virtual void _InternalAwake() { }
    public virtual void _InternalDestroy() { }
    public virtual void _InternalUpdate() { }
+   public virtual void _InternalOnGUI() { }
 }
 
 public class uScriptDebug : MonoBehaviour
@@ -281,7 +282,6 @@ public abstract class uScriptStyle
    public abstract int BottomSocketLabelGap { get; }
    public abstract int TopPad   { get; }
    public abstract int LeftPad  { get; }
-   //public abstract int LeftPadBottom  { get; }
    public abstract int RightPad { get; }
    public abstract int BottomPad{ get; }
    public abstract int PointSize{ get; }
@@ -619,9 +619,6 @@ public class uScriptDefaultStyle : uScriptStyle
    //how many pixels to pad objects from the left of the node (horizontal)
    public override int LeftPad  { get { return 2; } }
 	
-	//how many pixels to pad bottom objects from the left of the node // WAS NOT USED
-   //public override int LeftPadBottom  { get { return 14; } }
-
    //how many pixels to pad objects from the right of the node (horizontal)
    public override int RightPad { get { return 7; } }
 

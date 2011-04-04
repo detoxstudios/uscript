@@ -201,6 +201,15 @@ namespace Detox.ScriptEditor
                --m_TabStack;
                AddCSharpLine( "}" );
 
+               AddCSharpLine( "void OnGUI( )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+            
+                  AddCSharpLine( "uScript._InternalOnGUI( );" );
+            
+               --m_TabStack;
+               AddCSharpLine( "}" );
+
             --m_TabStack;
             AddCSharpLine( "}" );
          }
@@ -261,6 +270,12 @@ namespace Detox.ScriptEditor
                --m_TabStack;
                AddCSharpLine( "}" );
 
+               AddCSharpLine( "public override void _InternalOnGUI()" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+                  DefineOnGUI( );
+               --m_TabStack;
+               AddCSharpLine( "}" );
 
                DefineEvents( );
             --m_TabStack;
@@ -897,6 +912,14 @@ namespace Detox.ScriptEditor
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
             AddCSharpLine( CSharpName(logicNode, logicNode.Type) + "._InternalUpdate( );" );
+         }
+      }
+
+      private void DefineOnGUI( )
+      {
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
+            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + "._InternalOnGUI( );" );
          }
       }
 
