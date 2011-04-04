@@ -338,7 +338,6 @@ public class uScript : EditorWindow
             m_RefreshTimestamp = EditorApplication.timeSinceStartup;
          }
       }
-
       //
       // All the GUI drawing code
       //
@@ -466,6 +465,12 @@ public class uScript : EditorWindow
 
          if ( false == m_MouseDown && Event.current.type == EventType.MouseDown )
          {
+            //if mouse is down we assume the property grid should no longer have focus
+            //so switch to the filtersearch box.  by leaving the property grid
+            //it forces unity to update the rendering of it and show the latest
+            //text from the selected node
+            GUI.FocusControl( "FilterSearch" );
+
             if ((int)Event.current.mousePosition.x - _guiPanelSidebar_Width - _guiPanelDivider_Size - _guiPanelDivider_MouseBuffer >= 0)
              {
                  m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
@@ -739,7 +744,9 @@ public class uScript : EditorWindow
                ExpandSidebarMenuItem(null);
             }
 
+            GUI.SetNextControlName ("FilterSearch" );
             string _filterText = GUILayout.TextField(_sidebarFilterText, 10, "toolbarTextField", GUILayout.Width(80));
+            GUI.SetNextControlName ("" );
             if (_filterText != _sidebarFilterText)
             {
                 // Drop focus if the user inserted a newline (hit enter)
@@ -754,6 +761,7 @@ public class uScript : EditorWindow
                 _sidebarFilterText = _filterText;
                FilterSidebarMenuItems();
             }
+
          }
          EditorGUILayout.EndHorizontal();
 

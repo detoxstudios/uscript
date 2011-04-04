@@ -460,6 +460,20 @@ namespace Detox.FlowChart
          Invalidate( );
       }
 
+      private bool UserProbablyDidntMeanToMoveMouse( )
+      {
+         int dx = m_StartMoveLocation.X - Location.X;
+         int dy = m_StartMoveLocation.Y - Location.Y;
+
+         dx = Math.Abs(dx);
+         dy = Math.Abs(dy);
+
+         int pixelTolerance = 3;
+
+         return ( dx * dx + dy * dy ) < pixelTolerance * pixelTolerance;
+      }
+
+
       //called "NodeMouseUp" because it's a relayed message from
       //the node, which will have the mouse coords in node space
       private void FlowChartCtrl_NodeMouseUp(object sender, MouseEventArgs e)
@@ -495,8 +509,7 @@ namespace Detox.FlowChart
             //so deselect everything
             if ( Point.Empty == m_StartMarquee )
             {
-               if ( m_StartMoveLocation.X == Location.X &&
-                    m_StartMoveLocation.Y == Location.Y )
+               if ( true == UserProbablyDidntMeanToMoveMouse( ) )
                {
                   //if no control key, unselect the rest
                   if ( false == Control.ModifierKeys.Contains(Keys.Control) )
@@ -684,8 +697,7 @@ namespace Detox.FlowChart
             //so deselect everything
             if ( false == selectionSetModified && Point.Empty == m_StartMarquee )
             {
-               if ( m_StartMoveLocation.X == Location.X &&
-                    m_StartMoveLocation.Y == Location.Y )
+               if ( true == UserProbablyDidntMeanToMoveMouse( ) )
                {
                   foreach ( Node node in SelectedNodes )
                   {
