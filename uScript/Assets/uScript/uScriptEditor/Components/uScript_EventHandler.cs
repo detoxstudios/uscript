@@ -3,7 +3,7 @@
 // Desc: uScript_EventHandler contains event handeling and configuration code.
 //       This does NOT need to be attached to any GameObject in your project.
 
-#define ENABLE_LOG
+#define ENABLE_DEBUG_LOG
 
 using System;
 using System.Collections;
@@ -100,7 +100,8 @@ public class uScriptDebug : MonoBehaviour
    {
       Message,
       Warning,
-      Error
+      Error,
+	  Debug
    }
 
    public static void Log(string msgString)
@@ -115,7 +116,6 @@ public class uScriptDebug : MonoBehaviour
    /// <param name="msgType">Message type to output (0 = message, 1 = warning, 2 = error).</param>
    public static void Log(string msgString, Type msgType)
    {
-#if ( ENABLE_LOG )
       string appName = "uScript: ";
       string msgOutput = appName + msgString;
 
@@ -136,13 +136,19 @@ public class uScriptDebug : MonoBehaviour
                Debug.LogError(msgOutput);
                break;
             }
+         case Type.Debug:
+            {
+#if ( ENABLE_DEBUG_LOG )
+               Debug.Log(msgOutput);
+#endif
+               break;
+            }
          default:
             {
                Debug.Log(msgOutput);
                break;
             }
       }
-#endif
    }
 }
 

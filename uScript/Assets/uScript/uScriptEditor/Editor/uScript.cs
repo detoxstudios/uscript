@@ -301,24 +301,24 @@ public class uScript : EditorWindow
 
          if (null == uScriptMaster)
          {
-            uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptConfig.MasterObjectName);
+            uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptConfig.MasterObjectName, uScriptDebug.Type.Debug);
 
             uScriptMaster = new GameObject(uScriptConfig.MasterObjectName);
             uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
          }
          if (null == uScriptMaster.GetComponent<uScript_MasterObject>())
          {
-            uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptConfig.MasterObjectName + ")");
+            uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_MasterObject));
          }
          if (null == uScriptMaster.GetComponent<uScript_Global>())
          {
-            uScriptDebug.Log("Adding global to master gameobject (" + uScriptConfig.MasterObjectName + ")");
+            uScriptDebug.Log("Adding global to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_Global));
          }
          if (null == uScriptMaster.GetComponent<uScript_Triggers>())
          {
-            uScriptDebug.Log("Adding triggers to master gameobject (" + uScriptConfig.MasterObjectName + ")");
+            uScriptDebug.Log("Adding triggers to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_Triggers));
          }
 
