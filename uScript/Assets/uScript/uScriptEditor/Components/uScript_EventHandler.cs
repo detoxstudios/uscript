@@ -554,6 +554,24 @@ public class uScriptDefaultStyle : uScriptStyle
       element.fontStyle = FontStyle.Bold;
       element.fontSize = 0;
       m_Styles["socket_text_bold"] = element;
+
+      element = new GUIStyle();
+      element.wordWrap = true;
+      element.normal.textColor = nodeTextGrey;
+      element.border.left = 6;
+      element.border.right = 6;
+      element.border.top = 6;
+      element.border.bottom = 6;
+      element.padding.left = 8;
+      element.padding.right = 8;
+      element.padding.top = 8;
+      element.padding.bottom = 8;
+      element.fixedHeight = 0f;
+      element.fixedWidth = 0f;
+      element.alignment = TextAnchor.UpperLeft;
+      element.fontStyle = FontStyle.Normal;
+      element.fontSize = 0;
+      m_Styles["comment_body_text"] = element;
    }
 
    public override GUIStyle Get(string name)

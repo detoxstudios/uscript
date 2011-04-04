@@ -974,11 +974,11 @@ public class uScript : EditorWindow
                Point center = new Point(halfWidth, halfHeight);
                m_ScriptEditorCtrl.ContextCursor = center;
                item.OnClick();
-               uScriptDebug.Log("Clicked '" + item.Name + "'\n");
+               uScriptDebug.Log("Clicked '" + item.Name + "'\n", uScriptDebug.Type.Debug);
             }
             else
             {
-               uScriptDebug.Log("Cannot execute menu item: " + item.Name + "\n");
+               uScriptDebug.Log("Cannot execute menu item: " + item.Name + "\n", uScriptDebug.Type.Debug);
             }
          }
       }

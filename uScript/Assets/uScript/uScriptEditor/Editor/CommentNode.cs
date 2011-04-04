@@ -106,5 +106,44 @@ namespace Detox.ScriptEditor
 
          return size;
       }
+
+      protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, System.Drawing.Graphics g)
+      {
+         foreach ( Socket socket in sockets )
+         {
+            if ( socket.Input == true || socket.Output == true )
+            {
+               AnchorPoint point = new AnchorPoint( );
+               point.Name   = socket.InternalName;
+               point.X      = Size.Width / 2;
+               point.Y      = Size.Height / 2;
+
+               point.Width  = Size.Width;
+               point.Height = Size.Height;
+                  
+               point.Input  = socket.Input;
+               point.Output = socket.Output;
+               point.CanSource = false;
+               point.StyleName = "clear_socket";
+               points.Add( point );
+            }
+
+            if ( socket.Input == false && socket.Output == false )
+            {
+               TextPoint textPoint = new TextPoint( );
+
+               textPoint.Name = FormatName(socket);
+               textPoint.X = 0;
+               textPoint.Y = 0;
+               textPoint.StyleName = "comment_body_text";
+
+               if ( textPoint.X < 0 ) textPoint.X = 0;
+               if ( textPoint.Y < 0 ) textPoint.Y = 0;
+
+               textPoints.Add( textPoint );
+            }
+         }
+      }
+
    }
 }
