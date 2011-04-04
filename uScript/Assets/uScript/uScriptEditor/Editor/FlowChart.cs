@@ -317,6 +317,7 @@ namespace Detox.FlowChart
          }
          else
          {
+            m_NodeMouseTracking = false;
             m_AllowPanning = true;
          }
       }
