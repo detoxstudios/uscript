@@ -2000,6 +2000,8 @@ public class uScript : EditorWindow
    //it to the parent game object
    private Type FindMatchingScript(Component component)
    {
+      if ( null == component ) return null;
+
       GameObject master = GameObject.Find( uScriptConfig.MasterObjectName );
       if ( null == master ) return null;
 
@@ -2008,6 +2010,7 @@ public class uScript : EditorWindow
       foreach ( Component eventScript in eventScripts )
       {
          Type type = FindNodeComponentType(eventScript.GetType());
+         if ( null == type ) return null;
 
          if ( type.IsAssignableFrom(component.GetType()) )
          {
