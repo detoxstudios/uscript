@@ -139,7 +139,7 @@ public class uScript : EditorWindow
    //
    // Editor Window Initialization
    //
-   [UnityEditor.MenuItem ("Window/uScript %u")]
+   [UnityEditor.MenuItem ("Detox Tools/uScript Editor %u")]
    static void Init ()
    {
       s_Instance = (uScript) EditorWindow.GetWindow(typeof(uScript));
