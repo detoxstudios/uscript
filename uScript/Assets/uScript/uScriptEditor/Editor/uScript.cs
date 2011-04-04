@@ -321,6 +321,11 @@ public class uScript : EditorWindow
             uScriptDebug.Log("Adding triggers to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_Triggers));
          }
+         if (null == uScriptMaster.GetComponent<uScript_Input>())
+         {
+            uScriptDebug.Log("Adding input to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_Input));
+         }
 
          String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
          if (!String.IsNullOrEmpty(lastOpened))
