@@ -243,23 +243,6 @@ public partial class uScriptConfig
          return type;
       }
       
-      public static Type GetObjectFieldType(Type type)
-      {
-         if ( null == type ) return type;
-
-         if ( false == typeof(UnityEngine.Object).IsAssignableFrom(type) ) return null;
-
-         foreach (uScriptConfigBlock filter in uScriptConfig.Variables)
-         {
-            if (filter.Type == type)
-            {
-               return filter.Type;
-            }
-         }
-
-         return null;
-      }
-
       //return a style based on the friendly name,
       //but if the friendly name can't be found return "default"
       public static string FriendlyStyleName(string type)

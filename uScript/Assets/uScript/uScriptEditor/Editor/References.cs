@@ -157,6 +157,16 @@ namespace System.Windows.Forms
          if ( null != PropertyValueChanged ) PropertyValueChanged( this, new PropertyValueChangedEventArgs( ) );
       }
 
+      private Type GetObjectFieldType(string stringType)
+      {
+         Type type = uScript.Instance.GetType(stringType);
+         if ( null == type ) return null;
+
+         if ( typeof(UnityEngine.Object).IsAssignableFrom(type) ) return type;
+
+         return null;
+      }
+
       public void OnPaint( )
       {
          bool signalUpdate = false;
@@ -200,9 +210,9 @@ namespace System.Windows.Forms
                {
                   val = UnityEditor.EditorGUILayout.ColorField( p.Name, (UnityEngine.Color) val );
                }
-               else if ( null != uScriptConfig.Variable.GetObjectFieldType(uScript.Instance.GetType(p.Type)) )
+               else if ( null != GetObjectFieldType(p.Type) )
                {
-                  Type type = uScriptConfig.Variable.GetObjectFieldType(uScript.Instance.GetType(p.Type));
+                  Type type = GetObjectFieldType(p.Type);
 
                   //game objects are held/treated as strings
                   //but we will custom convert them to actual game objects (if they exist)
