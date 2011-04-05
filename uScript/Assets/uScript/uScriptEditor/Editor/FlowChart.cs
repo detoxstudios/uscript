@@ -678,6 +678,7 @@ namespace Detox.FlowChart
          {
             Point position = System.Windows.Forms.Cursor.Position;
             position = PointToClient( position );
+		    bool linkClicked = false;
 
             foreach ( Link link in m_Links )
             {
@@ -689,7 +690,13 @@ namespace Detox.FlowChart
                   // because of the above code and so this will always select it)
                   link.Selected = ! link.Selected;
                   selectionSetModified = true;
+				  linkClicked = true;
                }
+			   else if ( false == Control.ModifierKeys.Contains(Keys.Control) )
+			   {
+			      if ( link.Selected ) selectionSetModified = true;
+			      link.Selected = false;
+			   }
             }
 
             //they let up the mouse without moving the canvas
@@ -712,6 +719,18 @@ namespace Detox.FlowChart
                   selectionSetModified = true;
                }
             }
+		    else if ( false == Control.ModifierKeys.Contains(Keys.Control) && (!linkClicked || true == selectionSetModified) )
+			{
+               if ( true == UserProbablyDidntMeanToMoveMouse( ) )
+               {
+                  foreach ( Node node in SelectedNodes )
+                  {
+                     node.Selected = false;
+                  }
+
+                  selectionSetModified = true;
+               }
+			}
          }
 
          m_StartLinkNode = null;
