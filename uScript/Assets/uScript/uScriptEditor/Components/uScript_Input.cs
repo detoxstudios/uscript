@@ -6,7 +6,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodeComponentType(typeof(uScript_Global))]
+[NodeComponentType(typeof(uScript_Input))]
 
 [NodePath("Events")]
 
