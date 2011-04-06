@@ -674,7 +674,7 @@ namespace Detox.FlowChart
             OnNodesModified( modifiedNodes.ToArray( ) );
 
          }
-         else
+         else if ( Point.Empty == m_StartMarquee )
          {
             Point position = System.Windows.Forms.Cursor.Position;
             position = PointToClient( position );
