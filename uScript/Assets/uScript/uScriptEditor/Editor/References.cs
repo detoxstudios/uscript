@@ -234,6 +234,14 @@ namespace System.Windows.Forms
                            break;
                         }
                      }
+                     
+                     //components should never be instances in the property grid
+                     //we must refer to (and select) their parent game object
+                     if ( true == typeof(Component).IsAssignableFrom(type) )
+                     {
+                        type = typeof(GameObject);
+                        if ( null != unityObject ) unityObject = ((Component) unityObject).gameObject;
+                     }
 
                      unityObject = EditorGUILayout.ObjectField( "", unityObject, type ) as Object;
 
