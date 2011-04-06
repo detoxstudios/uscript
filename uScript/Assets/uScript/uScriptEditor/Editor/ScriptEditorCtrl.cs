@@ -520,7 +520,16 @@ namespace Detox.ScriptEditor
 
             m_ScriptEditor.AddNode( localNode );
 
-            LinkNode linkNode = new LinkNode( localNode.Guid, localNode.Value.Name, node.Guid, linkTo.Name );
+            LinkNode linkNode;
+
+            linkNode = new LinkNode( localNode.Guid, localNode.Value.Name, node.Guid, linkTo.Name );
+
+            //if we can't like from->to try linking the other way (to->from)
+            if ( false == m_ScriptEditor.VerifyLink(linkNode) )
+            {
+               linkNode = new LinkNode( node.Guid, linkTo.Name, localNode.Guid, localNode.Value.Name );
+            }
+
             m_ScriptEditor.AddNode( linkNode );
 
             m_Dirty = true;
