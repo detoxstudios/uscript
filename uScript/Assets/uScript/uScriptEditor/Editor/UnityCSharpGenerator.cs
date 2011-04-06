@@ -576,10 +576,15 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "//externally exposed events" );
          string []events = FindExternalEvents( );
 
-         foreach ( string eventName in events )
+         if ( events.Length > 0 )
          {
-            AddCSharpLine( "public event uScriptEventHandler " + eventName + ";" );
+            AddCSharpLine( "public delegate void uScriptEventHandler(object sender, System.EventArgs args);" );
+            foreach ( string eventName in events )
+            {
+               AddCSharpLine( "public event uScriptEventHandler " + eventName + ";" );
+            }
          }
+
 
          AddCSharpLine( "" );
          AddCSharpLine( "//external parameters" );         
@@ -1333,7 +1338,12 @@ namespace Detox.ScriptEditor
 
                if ( link.Source.Anchor == entityEvent.Output.Name )
                {
-                  AddCSharpLine( "uScript_EventHandler.DoEvent( this, " + CSharpExternalEventDeclaration(external.Name.Default, entityEvent, entityEvent.Output.Name) + ", new object[] { });" );
+                  AddCSharpLine( "if ( " + CSharpExternalEventDeclaration(external.Name.Default, entityEvent, entityEvent.Output.Name) + " != null )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default, entityEvent, entityEvent.Output.Name) + "( this, new System.EventArgs());" );
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
                }
             }
             else if ( node is EntityMethod ) 
@@ -1353,7 +1363,13 @@ namespace Detox.ScriptEditor
                {
                   if ( link.Source.Anchor == eventName.Name )
                   {
-                     AddCSharpLine( "uScript_EventHandler.DoEvent( this, " + CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name) + ", new object[] { });" );
+                     //AddCSharpLine( "uScript_EventHandler.DoEvent( this, " + CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name) + ", new object[] { });" );
+                     AddCSharpLine( "if ( " + CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name) + " != null )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                        AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name) + "( this, new System.EventArgs());" );
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
                   }
                }
 

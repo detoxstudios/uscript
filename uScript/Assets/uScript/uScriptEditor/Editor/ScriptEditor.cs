@@ -1901,6 +1901,28 @@ namespace Detox.ScriptEditor
                   return false;
                }
             }
+
+            if ( source is EntityEvent )
+            {
+               ExternalConnection destConnection = (ExternalConnection) dest;
+
+               EntityEvent sourceEvent = (EntityEvent) source;
+
+               foreach ( Parameter p in sourceEvent.Parameters )
+               {
+                  if ( p.Output == false ) continue;
+
+                  //don't allow parameter outputs of events to be exposed externally
+                  //it makes the subsequence node too confusing as to which are output parameters
+                  //and which are event output parameters
+                  //plus it makes the code more complex to generate
+                  if ( p.Name == link.Source.Anchor && 
+                       destConnection.Connection == link.Destination.Anchor )
+                  {
+                     return false;
+                  }
+               }
+            }
          }
 
          Parameter sourceParam = new Parameter( );

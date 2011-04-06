@@ -98,6 +98,8 @@ namespace Detox.ScriptEditor
 
    public partial class ExternalConnectionDisplayNode : DisplayNode
    {
+      override public int RenderDepth { get { return FlowChartCtrl.LinkRenderDepth + 1; } }
+
       public  ExternalConnection ExternalConnection
       { get { return (ExternalConnection) EntityNode; } }
 
@@ -106,25 +108,68 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
+         NodeStyle = "variable_default";
+
          Location = new System.Drawing.Point( externalConnection.Position.X, externalConnection.Position.Y );
-         string name = "";
 
-         if ( "" != externalConnection.Name.Default ) name += "Name: " + externalConnection.Name.Default + "\n";
-         Name = name + "(External)";
+         Name = "";
 
+         PrepareNode( );
+      }
+
+      private void PrepareNode( )
+      {
+         string name = "(External)";
+
+         if ( "" != ExternalConnection.Name.Default ) name = ExternalConnection.Name.Default;
+
+         if ( false == Selected )
+         {
+            if ( name.Length > 3 )
+            {
+               name = name.Substring( 0, 3 ) + "...";
+            }
+         }
+			
          List<Socket> sockets = new List<Socket>( );
          Socket socket;
 
          socket = new Socket( );
          socket.Alignment = Socket.Align.Center;
-         socket.InternalName = externalConnection.Connection;
-         socket.FriendlyName = externalConnection.Connection;
+         socket.InternalName = ExternalConnection.Connection;
+         socket.FriendlyName = ExternalConnection.Connection;
          socket.Input  = true;
          socket.Output = true;
          socket.Type   = "";
          sockets.Add( socket );
 
+         socket = new Socket( );
+         socket.Alignment = Socket.Align.Center;
+         socket.InternalName = name;
+         socket.FriendlyName = name;
+         socket.Input  = false;
+         socket.Output = false;
+         socket.Type   = "";
+         sockets.Add( socket );
+
          UpdateSockets( sockets.ToArray( ) );
+      }
+
+      protected override Size CalculateSize(Socket []sockets, Graphics g)
+      {
+         if ( false == Selected ) return new Size(57, 57);
+
+         Size size = base.CalculateSize(sockets, g);
+         size.Height = 57;
+
+         return size;
+      }
+
+      //overridden so we can expand if we are selected
+      public override void OnPaint( PaintEventArgs e )
+      {
+         PrepareNode( );
+         base.OnPaint( e );
       }
    }
 }

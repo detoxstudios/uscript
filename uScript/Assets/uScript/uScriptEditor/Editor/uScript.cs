@@ -2045,32 +2045,45 @@ public class uScript : EditorWindow
       }
    }
 
-   //loop through all the components and see if
-   //any match up with the event script we're trying to add
-   //if so then attach them to the parent game object
+   //when adding an instance for an event script, asks the event script what 
+   //component needs to exist for it to work
+   //then go through all components and if the required component exists, allow the instance
+   //and attach the event script to the game object
    public bool AttachEventScript(string eventType, string objectName)
    {
+      //what game object do we want to be the instance for our event script
       GameObject gameObject = GameObject.Find( objectName );
-      //uScriptDebug.Log ("uScript.cs - GameObject = " + gameObject);
       if ( null == gameObject ) return false;
 
+      //unity type of our event script
       Type type = GetType(eventType);
-      //uScriptDebug.Log ("uScript.cs - Type = " + type);
       if ( null == type ) return false;
 
+      //what component is required to exist for our event script to run
+      Type requiredComponentType = FindNodeComponentType(type);
+      if ( null == requiredComponentType ) return false;
+
+      //uScriptDebug.Log ("uScript.cs - GameObject = " + gameObject);
+      //uScriptDebug.Log ("uScript.cs - RequiredType = " + requiredComponentType);
+
+      //go through all the components and see if the required one exists
       Component [] components = gameObject.GetComponents<Component>( );
 
       foreach ( Component c in components )
       {
-         Type scriptType = FindMatchingScript( c );
-         
-         //if we can add the script type we care about
-         //then add it and return true
-         if ( scriptType == type )
+         //yes for some reason unity is giving me null components
+         if ( null == c ) continue;
+
+         //uScriptDebug.Log ("Checking component = " + c.GetType());
+
+         //if the required component exists then attach the script
+         if ( requiredComponentType.IsAssignableFrom(c.GetType()) )
          {
+            //uScriptDebug.Log ("Is Assignable!");
+            
             if ( null == gameObject.GetComponent(type) )
             {
-               gameObject.AddComponent( type );
+               gameObject.AddComponent( type ); 
             }
 
             return true;
