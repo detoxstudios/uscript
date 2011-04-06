@@ -1734,6 +1734,8 @@ namespace Detox.ScriptEditor
          float maxRightAlignedText = 0;
          float maxCenterAlignedText = 0;
 
+         bool hasBottomSockets = false;
+
          foreach ( Socket socket in sockets )
          {
             SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( FormatName(socket), "socket_text" );
@@ -1742,6 +1744,8 @@ namespace Detox.ScriptEditor
             {
                requiredWidth += uScriptConfig.Style.BottomSocketLabelGapSize + uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize + uScriptConfig.Style.BottomSocketBorderAdjustmentPad;
                requiredWidth += textLength.Width;
+               
+               hasBottomSockets = true;
             }
             else if ( socket.Alignment == Socket.Align.Left ) // Used for Action Nodes
             {
@@ -1775,8 +1779,14 @@ namespace Detox.ScriptEditor
          requiredWidth  = Math.Max( requiredWidth, maxCenterAlignedText );
 
          SizeF titleLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( Name, NodeStyle );
-         requiredHeight += uScriptConfig.Style.TopPad + uScriptConfig.Style.BottomPad;
-         requiredHeight += (titleLength.Height + uScriptConfig.Style.TitleTopBottomPad);
+         
+         if ( true == hasBottomSockets )
+         {
+            requiredHeight += uScriptConfig.Style.BottomPad;
+            requiredHeight += uScriptConfig.Style.TitleTopBottomPad;
+         }
+
+         requiredHeight += titleLength.Height + uScriptConfig.Style.TopPad;
 
          requiredWidth = Math.Max( requiredWidth, (titleLength.Width + uScriptConfig.Style.TitleLeftRightPad + uScriptConfig.Style.TitleLeftRightPad ) );
          requiredWidth += uScriptConfig.Style.LeftPad + uScriptConfig.Style.RightPad; 
