@@ -827,6 +827,38 @@ namespace Detox.FlowChart
 
       public override void OnPaint(PaintEventArgs e)
       {
+         if ( true == InMoveMode && m_StartMarquee == Point.Empty )
+         {
+            m_StartLinkNode = null;
+
+            Point position = System.Windows.Forms.Cursor.Position;
+
+            if ( Point.Empty == m_MoveOffset )
+            {
+               m_MoveOffset        = System.Windows.Forms.Cursor.Position;
+               m_StartMoveLocation = Location;
+            }
+
+            position = new Point( position.X - m_MoveOffset.X, position.Y - m_MoveOffset.Y );
+            position = new Point( m_StartMoveLocation.X + position.X, m_StartMoveLocation.Y + position.Y );
+
+            //clamp top left
+            if ( position.X > 0 ) position.X = 0;
+            if ( position.Y > 0 ) position.Y = 0;
+
+            //clamp bottom right
+            if ( position.X + Bounds.Width  < Parent.Bounds.Right  ) position.X += Parent.Bounds.Right  - ( position.X + Bounds.Width); 
+            if ( position.Y + Bounds.Height < Parent.Bounds.Bottom ) position.Y += Parent.Bounds.Bottom - ( position.Y + Bounds.Height); 
+
+            Location = position;
+         }
+         else
+         {
+            m_MoveOffset = Point.Empty;
+         }
+
+		 Rectangle visibleRect = new Rectangle(-Location.X, -Location.Y, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
+
          //draw grid if ShowGrid == true
          {
             if ( uScriptConfig.Style.ShowGrid )
@@ -893,36 +925,6 @@ namespace Detox.FlowChart
             }
          }
 
-         if ( true == InMoveMode && m_StartMarquee == Point.Empty )
-         {
-            m_StartLinkNode = null;
-
-            Point position = System.Windows.Forms.Cursor.Position;
-
-            if ( Point.Empty == m_MoveOffset )
-            {
-               m_MoveOffset        = System.Windows.Forms.Cursor.Position;
-               m_StartMoveLocation = Location;
-            }
-
-            position = new Point( position.X - m_MoveOffset.X, position.Y - m_MoveOffset.Y );
-            position = new Point( m_StartMoveLocation.X + position.X, m_StartMoveLocation.Y + position.Y );
-
-            //clamp top left
-            if ( position.X > 0 ) position.X = 0;
-            if ( position.Y > 0 ) position.Y = 0;
-
-            //clamp bottom right
-            if ( position.X + Bounds.Width  < Parent.Bounds.Right  ) position.X += Parent.Bounds.Right  - ( position.X + Bounds.Width); 
-            if ( position.Y + Bounds.Height < Parent.Bounds.Bottom ) position.Y += Parent.Bounds.Bottom - ( position.Y + Bounds.Height); 
-
-            Location = position;
-         }
-         else
-         {
-            m_MoveOffset = Point.Empty;
-         }
-
          Pen pen = new Pen( System.Drawing.Color.Black, uScriptConfig.bezierPenWidth );
          Pen selectedPen = new Pen( System.Drawing.Color.LightYellow, uScriptConfig.bezierPenWidthSelected );
 
@@ -980,8 +982,11 @@ namespace Detox.FlowChart
                {
                   break;
                }
-
-               node.OnPaint(e);
+					
+			   if (node.IsVisible(visibleRect))
+			   {
+	              node.OnPaint(e);
+			   }
             }
          }
 
@@ -1089,7 +1094,10 @@ namespace Detox.FlowChart
             {
                if (!node.Selected)
                {
-                  node.OnPaint(e);
+			      if (node.IsVisible(visibleRect))
+				  {
+                     node.OnPaint(e);
+				  }
                }
             }
          }
@@ -1102,7 +1110,10 @@ namespace Detox.FlowChart
             {
                if (node.Selected)
                {
-                  node.OnPaint(e);
+			      if (node.IsVisible(visibleRect))
+			      {
+                     node.OnPaint(e);
+				  }
                }
             }
          }
@@ -1254,6 +1265,19 @@ namespace Detox.FlowChart
       public virtual void PreparePoints( System.Drawing.Graphics g )
       {
       }
+		
+      public virtual bool IsVisible( Rectangle visibleRect )
+	  {
+	     float leftSide = Location.X;
+	     float rightSide = Location.X + Size.Width;
+		 if (rightSide < visibleRect.X || leftSide > visibleRect.Right) return false;
+			
+	     float topSide = Location.Y;
+	     float bottomSide = Location.Y + Size.Height;
+		 if (bottomSide < visibleRect.Y || topSide > visibleRect.Bottom) return false;
+			
+	     return true;
+	  }
 
       public bool PointInAnchorPoint( Point point, ref AnchorPoint hitPoint )
       {
