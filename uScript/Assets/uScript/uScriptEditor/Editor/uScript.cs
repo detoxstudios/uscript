@@ -251,7 +251,7 @@ public class uScript : EditorWindow
       }
       if ( true == m_WantsPaste )
       {
-         m_ScriptEditorCtrl.PasteFromClipboard( );
+         m_ScriptEditorCtrl.PasteFromClipboard( Point.Empty );
          m_WantsPaste = false;
       }
       if ( true == m_WantsUndo )

@@ -388,7 +388,7 @@ namespace Detox.ScriptEditor
          OnScriptModified( );
       }
 
-      public void PasteFromClipboard( )
+      public void PasteFromClipboard( Point cursorPoint )
       {
          string text = GetClipboardData( );
          if ( null == text ) return;
@@ -403,6 +403,20 @@ namespace Detox.ScriptEditor
             ScriptEditor oldEditor = m_ScriptEditor.Copy( );
 
             Hashtable remappedGuid = new Hashtable( );
+				
+			Point basePoint = Point.Empty;
+			if (cursorPoint != Point.Empty)
+			{
+			   // if executed from the context menu, calculate a base point for this script chunk
+			   float left = float.MaxValue, top = float.MaxValue;
+			   foreach ( EntityNode entityNode in scriptEditor.EntityNodes )
+			   {
+                  if ( typeof(LinkNode).IsAssignableFrom(entityNode.GetType()) ) continue;
+			      if (entityNode.Position.X < left) left = entityNode.Position.X;
+			      if (entityNode.Position.Y < top)  top  = entityNode.Position.Y;
+			   }
+			   basePoint = new Point( (int)left, (int)top );
+			}
 
             foreach ( EntityNode entityNode in scriptEditor.EntityNodes )
             {
@@ -416,7 +430,15 @@ namespace Detox.ScriptEditor
                //from a previous paste or existing node
                EntityNode clone = entityNode;
                clone.Guid = (Guid) remappedGuid[ entityNode.Guid ];
-               clone.Position = new Point( clone.Position.X + 10, clone.Position.Y + 10 );
+			   if (basePoint == Point.Empty)
+			   {
+	              clone.Position = new Point( clone.Position.X + 10, clone.Position.Y + 10 );
+			   }
+			   else
+			   {
+				  Point diff = new Point( clone.Position.X - basePoint.X, clone.Position.Y - basePoint.Y );
+	              clone.Position = new Point( cursorPoint.X + diff.X, cursorPoint.Y + diff.Y );
+			   }
                m_ScriptEditor.AddNode( clone );
                guidsToSelect.Add( clone.Guid );
                m_Dirty = true;
@@ -472,7 +494,7 @@ namespace Detox.ScriptEditor
 
       private void m_MenuPaste_Click(object sender, EventArgs e)
       {
-         PasteFromClipboard( );
+         PasteFromClipboard( ContextCursor );
       }
 
       private void m_MenuAddLinkedVariable_Click(object sender, EventArgs e)
