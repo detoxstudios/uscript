@@ -1,5 +1,0 @@
-Getting the default TestBed scene hooked up for testing:
-
-1. Load the TestBed scene in "Game/Scenes" if it is not already loaded.
-
-2. Run the TestBes Setup Script.
