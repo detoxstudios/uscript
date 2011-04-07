@@ -2225,7 +2225,6 @@ namespace Detox.ScriptEditor
 
          ScriptEditorData = data as ScriptEditorData;
 
-         UnityEngine.Debug.Log( "relinking" );
          //re-add the links
          //to make sure all the node connections still exist
          LinkNode []links = this.Links;
