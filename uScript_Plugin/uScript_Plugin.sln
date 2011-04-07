@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uScript", "uScript.csproj", "{7761F2C3-F719-A3C5-C99C-2D7E1B75A6F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uScript_Plugin", "uScript_Plugin.csproj", "{7761F2C3-F719-A3C5-C99C-2D7E1B75A6F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
