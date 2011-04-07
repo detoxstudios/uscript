@@ -399,7 +399,7 @@ namespace Detox.ScriptEditor
             //can't find a matching default
             //then use the blank one
             if ( false == found )
-            {
+            {               
                parameters.Add( d );
             }
          }
@@ -1776,6 +1776,11 @@ namespace Detox.ScriptEditor
       Hashtable m_Nodes = new Hashtable( );
       Hashtable m_DeprecatedNodes = new Hashtable( );
 
+      public bool IsDeprecated( EntityNode node )
+      {
+         return m_DeprecatedNodes.Contains(node.Guid);
+      }
+
       private EntityDesc []m_EntityDescs = new EntityDesc[ 0 ];
       private LogicNode  []m_LogicNodes  = new LogicNode [ 0 ];
 
@@ -2130,6 +2135,11 @@ namespace Detox.ScriptEditor
          {
             m_Nodes.Remove( node.Guid );
          }
+
+         if ( m_DeprecatedNodes.Contains(removeNode.Guid) )
+         {
+            m_DeprecatedNodes.Remove(removeNode.Guid);
+         }
       }
 
       public ScriptEditorData ScriptEditorData
@@ -2215,6 +2225,7 @@ namespace Detox.ScriptEditor
 
          ScriptEditorData = data as ScriptEditorData;
 
+         UnityEngine.Debug.Log( "relinking" );
          //re-add the links
          //to make sure all the node connections still exist
          LinkNode []links = this.Links;
@@ -2462,17 +2473,17 @@ namespace Detox.ScriptEditor
             }
          }
 
+         cloned.Guid        = data.Guid;
+         cloned.Position    = data.Position;
+         cloned.ShowComment = new Parameter( data.ShowComment );
+         cloned.Comment     = new Parameter( data.Comment );
+         
          if ( false == exactMatch )
          {
             Status.Error( "Matching EntityMethod " + data.Instance.Type + " " + data.Input.Name + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 
-         cloned.Guid        = data.Guid;
-         cloned.Position    = data.Position;
-         cloned.ShowComment = new Parameter( data.ShowComment );
-         cloned.Comment     = new Parameter( data.Comment );
-         
          return cloned;
       }
 
@@ -2506,16 +2517,16 @@ namespace Detox.ScriptEditor
             }
          }
 
+         cloned.Guid        = data.Guid;
+         cloned.Position    = data.Position;
+         cloned.ShowComment = new Parameter( data.ShowComment );
+         cloned.Comment     = new Parameter( data.Comment );
+
          if ( false == exactMatch )
          {
             Status.Error( "Matching EntityProperty " + data.Instance.Name + " " + data.Parameter.Name + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
-
-         cloned.Guid        = data.Guid;
-         cloned.Position    = data.Position;
-         cloned.ShowComment = new Parameter( data.ShowComment );
-         cloned.Comment     = new Parameter( data.Comment );
 
          return cloned;
       }
@@ -2544,16 +2555,16 @@ namespace Detox.ScriptEditor
             }
          }
 
+         cloned.Guid       = data.Guid;
+         cloned.Position   = data.Position;
+         cloned.ShowComment= new Parameter( data.ShowComment );
+         cloned.Comment    = new Parameter( data.Comment );
+
          if ( false == exactMatch )
          {
             Status.Error( "Matching LogicNode " + data.Type + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
-
-         cloned.Guid       = data.Guid;
-         cloned.Position   = data.Position;
-         cloned.ShowComment= new Parameter( data.ShowComment );
-         cloned.Comment    = new Parameter( data.Comment );
 
          return cloned;
       }

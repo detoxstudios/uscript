@@ -769,7 +769,9 @@ namespace Detox.ScriptEditor
          foreach ( CommentNode commentNode in m_ScriptEditor.Comments )
          {
             CommentDisplayNode node = new CommentDisplayNode( commentNode );
-                     
+            
+            if ( m_ScriptEditor.IsDeprecated(commentNode) ) node.Deprecate( );
+         
             if ( guidsToSelect.Contains(node.Guid) )
             {
                node.Selected = true;
@@ -787,6 +789,8 @@ namespace Detox.ScriptEditor
          {
             EntityEventDisplayNode node = new EntityEventDisplayNode( entityEvent );
                      
+            if ( m_ScriptEditor.IsDeprecated(entityEvent) ) node.Deprecate( );
+
             if ( guidsToSelect.Contains(node.Guid) )
             {
                node.Selected = true;
@@ -803,6 +807,8 @@ namespace Detox.ScriptEditor
          foreach ( EntityMethod entityMethod in m_ScriptEditor.Methods )
          {
             EntityMethodDisplayNode node = new EntityMethodDisplayNode( entityMethod );
+
+            if ( m_ScriptEditor.IsDeprecated(entityMethod) ) node.Deprecate( );
 
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -821,6 +827,8 @@ namespace Detox.ScriptEditor
          {
             EntityPropertyDisplayNode node = new EntityPropertyDisplayNode( entityProperty );
 
+            if ( m_ScriptEditor.IsDeprecated(entityProperty) ) node.Deprecate( );
+
             if ( guidsToSelect.Contains(node.Guid) )
             {
                node.Selected = true;
@@ -837,6 +845,8 @@ namespace Detox.ScriptEditor
          foreach ( LocalNode localNode in m_ScriptEditor.Locals )
          {
             LocalNodeDisplayNode node = new LocalNodeDisplayNode( localNode );
+
+            if ( m_ScriptEditor.IsDeprecated(localNode) ) node.Deprecate( );
 
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -855,6 +865,8 @@ namespace Detox.ScriptEditor
          {
             LogicNodeDisplayNode node = new LogicNodeDisplayNode( logicNode );
 
+            if ( m_ScriptEditor.IsDeprecated(logicNode) ) node.Deprecate( );
+
             if ( guidsToSelect.Contains(node.Guid) )
             {
                node.Selected = true;
@@ -871,6 +883,8 @@ namespace Detox.ScriptEditor
          foreach ( ExternalConnection external in m_ScriptEditor.Externals )
          {
             ExternalConnectionDisplayNode node = new ExternalConnectionDisplayNode( external );
+
+            if ( m_ScriptEditor.IsDeprecated(external) ) node.Deprecate( );
 
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -976,7 +990,10 @@ namespace Detox.ScriptEditor
          {
             EntityNode entityNode = ((DisplayNode)node).EntityNode;
 
-            PropertyGridParameters parameters = new PropertyGridParameters( node.Name, entityNode ); 
+            string name = node.Name;
+            if ( ((DisplayNode)node).Deprecated ) name += " ***DEPRECATED, MUST BE REPLACED***";
+
+            PropertyGridParameters parameters = new PropertyGridParameters( name, entityNode ); 
             parameters.AddParameters( "Parameters", entityNode.Parameters );
             parameters.AddParameters( "Comment", new Parameter[] {entityNode.ShowComment, entityNode.Comment} );
             parameters.AddParameters( "Instance",new Parameter[] {entityNode.Instance} );
@@ -1490,6 +1507,14 @@ namespace Detox.ScriptEditor
 
       protected string NodeStyle = "node_default";
 
+      private bool m_Deprecated = false;
+
+      public bool Deprecated { get { return m_Deprecated; } }
+      public void Deprecate( )
+      {
+         m_Deprecated = true;
+      }
+
       private bool m_DirtySockets = false;
 
       private EntityNode m_EntityNode;
@@ -1731,7 +1756,11 @@ namespace Detox.ScriptEditor
          {
             string []subString = NodeStyle.Split( '_' );
             StyleName = subString[0] + "_selected";
-  
+         }
+
+         if ( true == m_Deprecated )
+         {
+            StyleName = "node_deprecated";
          }
 
          if ( true == m_DirtySockets )
