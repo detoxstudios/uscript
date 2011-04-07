@@ -1042,15 +1042,36 @@ namespace Detox.ScriptEditor
 
    public struct EntityEvent : EntityNode
    {
+      //assumes the caller knows the parameters match up
+      //and the entities should be consolidated
+      public static EntityEvent Consolidator(EntityEvent []events)
+      {
+         EntityEvent consolidatedEvent = events[ 0 ];
+
+         List<Plug> outputs = new List<Plug>( );
+
+         foreach ( EntityEvent entityEvent in events )
+         {
+            foreach ( Plug output in entityEvent.Outputs )
+            {
+               outputs.Add( output );
+            }
+         }
+
+         consolidatedEvent.Outputs = outputs.ToArray( );
+
+         return consolidatedEvent;
+      }
+
       public EntityNode Copy( )
       {
          EntityEvent entityEvent = new EntityEvent( );
-         entityEvent.Instance  = Instance;
-         entityEvent.EventArgs = EventArgs;
-         entityEvent.Parameters= Parameters;
-         entityEvent.Position  = Position;
-         entityEvent.Output    = Output;
-         entityEvent.Guid      = Guid.NewGuid( );
+         entityEvent.Instance    = Instance;
+         entityEvent.EventArgs   = EventArgs;
+         entityEvent.Parameters  = Parameters;
+         entityEvent.Position    = Position;
+         entityEvent.Outputs     = Outputs;
+         entityEvent.Guid        = Guid.NewGuid( );
          entityEvent.Comment     = Comment;
          entityEvent.ShowComment = ShowComment;
       
@@ -1066,7 +1087,7 @@ namespace Detox.ScriptEditor
             nodeData.Position.Y= Position.Y;
             nodeData.EventArgs = EventArgs;
             nodeData.Instance  = Instance.ToParameterData( );
-            nodeData.Output    = Output.ToPlugData( );
+            nodeData.Outputs   = ArrayUtil.ToPlugDatas( Outputs );
             nodeData.Guid      = Guid;
             nodeData.Parameters= ArrayUtil.ToParameterDatas( Parameters );
             nodeData.Comment     = Comment.ToParameterData( );
@@ -1094,7 +1115,7 @@ namespace Detox.ScriptEditor
          if ( Position != node.Position ) return false;
          if ( Guid != node.Guid ) return false;
 
-         if ( Output != node.Output ) return false;
+         if ( false == ArrayUtil.ArraysAreEqual(Outputs, node.Outputs) ) return false;
 
          if ( ShowComment != node.ShowComment ) return false;
          if ( Comment != node.Comment ) return false;
@@ -1122,7 +1143,7 @@ namespace Detox.ScriptEditor
       public Parameter m_Instance;
       public Parameter Instance { get { return m_Instance; } set { m_Instance = value; } }
 
-      public Plug Output;
+      public Plug []Outputs;
       
       private Parameter[] m_Parameters;
       public Parameter[] Parameters { get { return m_Parameters; } set { m_Parameters = value; } }
@@ -1137,10 +1158,9 @@ namespace Detox.ScriptEditor
          set { m_Guid = value; }
       }
 
-      public EntityEvent(string type, string friendlyType, string name, string friendlyName)
+      public EntityEvent(string type, string friendlyType, Plug [] outputs)
       { 
-         Output.Name = name;
-         Output.FriendlyName = friendlyName;
+         Outputs = outputs;
 
          m_Instance.Name = "Instance";
          m_Instance.FriendlyName = friendlyType;
@@ -2375,7 +2395,7 @@ namespace Detox.ScriptEditor
 
       private EntityEvent CreateEntityEvent( EntityEventData data )
       {
-         EntityEvent cloned = new EntityEvent( data.Instance.Type, data.Instance.FriendlyName, data.Output.Name, data.Output.FriendlyName );
+         EntityEvent cloned = new EntityEvent( data.Instance.Type, data.Instance.FriendlyName, ArrayUtil.ToPlugs(data.Outputs) );
          bool exactMatch= false;
 
          foreach ( EntityDesc desc in m_EntityDescs )
@@ -2383,7 +2403,7 @@ namespace Detox.ScriptEditor
             foreach ( EntityEvent entityEvent in desc.Events )
             {
                if ( entityEvent.Instance.Type == data.Instance.Type &&
-                    entityEvent.Output.Name == data.Output.Name )
+                    true == ArrayUtil.ArraysAreEqual(entityEvent.Outputs, ArrayUtil.ToPlugs(data.Outputs)) )
                {
                   cloned = entityEvent;
                   
@@ -2408,7 +2428,7 @@ namespace Detox.ScriptEditor
       
          if ( false == exactMatch )
          {
-            Status.Error( "Matching EntityEvent " + data.Instance.Type + " " + data.Output.Name + " could not be found" );
+            Status.Error( "Matching EntityEvent " + data.Instance.Type + " " + data.Instance.FriendlyName + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 

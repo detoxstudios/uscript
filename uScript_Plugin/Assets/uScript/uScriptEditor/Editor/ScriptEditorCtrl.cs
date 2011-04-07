@@ -1302,11 +1302,11 @@ namespace Detox.ScriptEditor
                string categoryName = uScript.FindNodePath("Advanced/Events", desc.Type);
 
                string friendlyName = uScriptConfig.Variable.FriendlyName(desc.Type);
-               ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName);
+               ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName );
 
                foreach ( EntityEvent e in desc.Events )
                {
-                  ToolStripItem item = friendlyMenu.DropDownItems.Add( e.Output.FriendlyName + BuildSignature(e) );
+                  ToolStripItem item = friendlyMenu.DropDownItems.Add( e.Instance.FriendlyName );
                   item.Tag = e;
 
                   item.Click += new System.EventHandler(m_MenuAddNode_Click);
@@ -1363,14 +1363,13 @@ namespace Detox.ScriptEditor
 
             if ( desc.Properties.Length > 0 )
             {
-               string categoryName = uScript.FindNodePath("Advanced/Properties", desc.Type);
-
-               string friendlyName = uScriptConfig.Variable.FriendlyName(desc.Type);
-               ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName);
+               string categoryName = uScript.FindNodePropertiesPath("Advanced/Properties/" + desc.Type, desc.Type);
 
                foreach ( EntityProperty e in desc.Properties )
                {
-                  ToolStripItem item = friendlyMenu.DropDownItems.Add( e.Parameter.Name );
+                  ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName );
+
+                  ToolStripItem item = friendlyMenu.DropDownItems.Add( e.Parameter.FriendlyName );
                   item.Tag = e;
 
                   item.Click += new System.EventHandler(m_MenuAddNode_Click);

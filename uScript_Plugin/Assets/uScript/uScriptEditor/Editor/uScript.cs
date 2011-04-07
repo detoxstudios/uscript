@@ -1937,8 +1937,12 @@ public class uScript : EditorWindow
                }
             }
 
-            EntityEvent entityEvent = new EntityEvent( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)), 
-                                                        e.Name, FindFriendlyName(e.Name, e.GetCustomAttributes(false)));
+            Plug []outputPlug = new Plug[ 1 ];
+
+            outputPlug[ 0 ].Name = e.Name;
+            outputPlug[ 0 ].FriendlyName = FindFriendlyName(e.Name, e.GetCustomAttributes(false));
+
+            EntityEvent entityEvent = new EntityEvent( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)), outputPlug );
 
             ParameterInfo [] eventParameters = e.GetAddMethod( ).GetParameters( );
 
@@ -2006,7 +2010,39 @@ public class uScript : EditorWindow
          entityDescs.Add( entityDesc );
       }
 
-      return entityDescs.ToArray( );
+      //consolidate like events so they appear on the same node
+      EntityDesc [] descs = entityDescs.ToArray( );
+      for ( int i = 0; i < descs.Length; i++ )
+      {
+         EntityDesc desc = descs[ i ];
+
+         //one or less event? no need to consolidate
+         if ( desc.Events.Length <= 1 ) continue;
+
+         Parameter [] parameters = desc.Events[0].Parameters;
+         
+         int c;
+
+         for ( c = 1; c < desc.Events.Length; c++ )
+         {
+            if ( false == ArrayUtil.ArraysAreEqual(desc.Events[0].Parameters, desc.Events[c].Parameters) )
+            {
+               break;
+            }
+         }
+
+         //all parameters were matching because
+         //we never had to break the for loop early
+         if ( c == desc.Events.Length )
+         {
+            EntityEvent entityEvent = EntityEvent.Consolidator(desc.Events);
+            desc.Events = new EntityEvent[] {entityEvent};
+
+            descs[ i ] = desc;
+         }
+      }
+
+      return descs;
    }
 
    //go through the master uscript and see if there
@@ -2200,6 +2236,27 @@ public class uScript : EditorWindow
             if ( a is NodePath ) 
             {
                return ((NodePath)a).Value;
+            }
+         }
+      }
+
+      return defaultCategory;
+   }
+
+   public static string FindNodePropertiesPath(string defaultCategory, string type)
+   {
+      Type uscriptType = uScript.Instance.GetType(type);
+
+      if ( uscriptType != null )
+      {
+         object [] attributes = uscriptType.GetCustomAttributes(false);
+         if ( null == attributes ) return "";
+
+         foreach ( object a in attributes )
+         {
+            if ( a is NodePropertiesPath ) 
+            {
+               return ((NodePropertiesPath)a).Value;
             }
          }
       }

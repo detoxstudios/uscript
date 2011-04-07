@@ -934,7 +934,10 @@ namespace Detox.ScriptEditor
          //define the function the event will call
          foreach ( EntityEvent entityEvent in m_Script.Events )
          {
-            DefineEvent( entityEvent );
+            foreach ( Plug output in entityEvent.Outputs )
+            {
+               DefineEntityEvent( entityEvent, output.Name );
+            }
          }
 
          //for every registered logic node event listener
@@ -966,9 +969,9 @@ namespace Detox.ScriptEditor
       }
 
       //create the function which the event listener will call
-      private void DefineEvent( EntityEvent entityEvent )
+      private void DefineEntityEvent( EntityEvent entityEvent, string output )
       {
-         AddCSharpLine( "void " + CSharpEventDeclaration(entityEvent) + "(object o, " + entityEvent.EventArgs + " e)" );
+         AddCSharpLine( "void " + CSharpEventDeclaration(entityEvent, output) + "(object o, " + entityEvent.EventArgs + " e)" );
          AddCSharpLine( "{" );
 
          ++m_TabStack;
@@ -983,12 +986,12 @@ namespace Detox.ScriptEditor
                //only allow output parameters, those come through in the event args
                if ( parameter.Input == true ) continue;
 
-               AddCSharpLine( CSharpName(entityEvent, parameter.Name) + " = e. " + parameter.Name + ";" );//Args[ " + i + " ];" );
+               AddCSharpLine( CSharpName(entityEvent, parameter.Name) + " = e. " + parameter.Name + ";" );
                ++i;
             }
 
             AddCSharpLine( "//relay event to nodes" );
-            AddCSharpLine( CSharpRelay(entityEvent, entityEvent.Output.Name) + "( );" );
+            AddCSharpLine( CSharpRelay(entityEvent, output) + "( );" );
 
          --m_TabStack;
 
@@ -1102,9 +1105,13 @@ namespace Detox.ScriptEditor
                {
                   EntityEvent entityEvent = (EntityEvent) node;
 
-                  if ( link.Source.Anchor == entityEvent.Output.Name )
+                  foreach ( Plug output in entityEvent.Outputs )
                   {
-                     externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default, entityEvent, entityEvent.Output.Name) );
+                     if ( link.Source.Anchor == output.Name )
+                     {
+                        externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default, entityEvent, output.Name) );
+                        break;
+                     }
                   }
                }
                else if ( node is LogicNode ) 
@@ -1116,6 +1123,7 @@ namespace Detox.ScriptEditor
                      if ( link.Source.Anchor == eventName.Name )
                      {
                         externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name) );
+                        break;
                      }
                   }
                }
@@ -1336,14 +1344,18 @@ namespace Detox.ScriptEditor
             {
                EntityEvent entityEvent = (EntityEvent) node;
 
-               if ( link.Source.Anchor == entityEvent.Output.Name )
+               foreach ( Plug output in entityEvent.Outputs )
                {
-                  AddCSharpLine( "if ( " + CSharpExternalEventDeclaration(external.Name.Default, entityEvent, entityEvent.Output.Name) + " != null )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-                     AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default, entityEvent, entityEvent.Output.Name) + "( this, new System.EventArgs());" );
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
+                  if ( link.Source.Anchor == output.Name )
+                  {
+                     AddCSharpLine( "if ( " + CSharpExternalEventDeclaration(external.Name.Default, entityEvent, output.Name) + " != null )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                        AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default, entityEvent, output.Name) + "( this, new System.EventArgs());" );
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                     break;
+                  }
                }
             }
             else if ( node is EntityMethod ) 
@@ -1363,13 +1375,13 @@ namespace Detox.ScriptEditor
                {
                   if ( link.Source.Anchor == eventName.Name )
                   {
-                     //AddCSharpLine( "uScript_EventHandler.DoEvent( this, " + CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name) + ", new object[] { });" );
                      AddCSharpLine( "if ( " + CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name) + " != null )" );
                      AddCSharpLine( "{" );
                      ++m_TabStack;
                         AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name) + "( this, new System.EventArgs());" );
                      --m_TabStack;
                      AddCSharpLine( "}" );
+                     break;
                   }
                }
 
@@ -1378,6 +1390,7 @@ namespace Detox.ScriptEditor
                   if ( link.Source.Anchor == output.Name )
                   {
                      AddCSharpLine( CSharpExternalOutputDeclaration(logic, output.Name) + " = true;" );
+                     break;
                   }
                }
             }
@@ -1389,7 +1402,7 @@ namespace Detox.ScriptEditor
 
       //define the function which our event listeners will call
       //when an entity event is triggered
-      private void RelayToEvent( EntityEvent receiver )
+      private void RelayToEvent( EntityEvent receiver, string eventName )
       {
          List<Parameter> outputList = new List<Parameter>( );
 
@@ -1413,7 +1426,7 @@ namespace Detox.ScriptEditor
          RefreshSetProperties( receiver, outputList.ToArray( ) );
 
          //call anyone else connected to us
-         CallRelays(receiver.Guid, receiver.Output.Name);
+         CallRelays(receiver.Guid, eventName);
       }
 
       //define the function which a node will call if they're
@@ -1564,18 +1577,23 @@ namespace Detox.ScriptEditor
          }
          if ( receiver is EntityEvent ) 
          {
-            AddCSharpLine( "void " + CSharpRelay(receiver, ((EntityEvent)receiver).Output.Name) + "()" );
-            AddCSharpLine( "{" );
+            EntityEvent entityEvent = (EntityEvent) receiver;
 
-            ++m_TabStack;
+            foreach ( Plug eventName in entityEvent.Outputs )
+            {
+               AddCSharpLine( "void " + CSharpRelay(receiver, eventName.Name) + "()" );
+               AddCSharpLine( "{" );
 
-               PrintDebug( receiver );
-               RelayToEvent( (EntityEvent) receiver );            
+               ++m_TabStack;
 
-            --m_TabStack;
+                  PrintDebug( receiver );
+                  RelayToEvent( entityEvent, eventName.Name );            
 
-            AddCSharpLine( "}" );
-            AddCSharpLine( "" );
+               --m_TabStack;
+
+               AddCSharpLine( "}" );
+               AddCSharpLine( "" );
+            }
          }
          if ( receiver is ExternalConnection )
          {
@@ -1605,9 +1623,7 @@ namespace Detox.ScriptEditor
 
                ++m_TabStack;
 
-                  PrintDebug( receiver );
-                  
-                  //call anyone connected to us
+                  PrintDebug( receiver );                  
                   CallRelays(receiver.Guid, eventName.Name);
 
                --m_TabStack;
@@ -1623,9 +1639,8 @@ namespace Detox.ScriptEditor
 
                ++m_TabStack;
 
-                  PrintDebug(receiver);
-                  
-                   RelayToLogic((LogicNode)receiver, input.Name);
+                  PrintDebug(receiver);                  
+                  RelayToLogic((LogicNode)receiver, input.Name);
 
                --m_TabStack;
 
@@ -1660,7 +1675,7 @@ namespace Detox.ScriptEditor
          if ( entityNode is EntityEvent )
          {
             EntityEvent entityEvent = (EntityEvent) entityNode;
-            name = "event_" + entityEvent.Output + "_" + entityEvent.Instance.Type + "_" + parameterName + "_" + guidId;
+            name = "event_" + entityEvent.Instance.Type + "_" + parameterName + "_" + guidId;
          }
          else if ( entityNode is EntityMethod )
          {
@@ -1760,12 +1775,19 @@ namespace Detox.ScriptEditor
          foreach ( LinkNode link in links )
          {
             EntityNode entityNode = m_Script.GetNode( link.Source.Guid );
-            AddCSharpLine( CSharpName(entityNode) +"." + entityEvent.Output.Name + " += "+ CSharpEventDeclaration(entityEvent) + ";" );            
+            
+            foreach ( Plug output in entityEvent.Outputs )
+            {
+               AddCSharpLine( CSharpName(entityNode) +"." + output.Name + " += "+ CSharpEventDeclaration(entityEvent, output.Name) + ";" );            
+            }
          }
 
          if ( entityEvent.Instance.Default != "" )
          {
-            AddCSharpLine( CSharpName(entityEvent, entityEvent.Instance.Name) +"." + entityEvent.Output.Name + " += "+ CSharpEventDeclaration(entityEvent) + ";" );            
+            foreach ( Plug output in entityEvent.Outputs )
+            {
+               AddCSharpLine( CSharpName(entityEvent, entityEvent.Instance.Name) +"." + output.Name + " += "+ CSharpEventDeclaration(entityEvent, output.Name) + ";" );            
+            }
          }
       }
 
@@ -1826,9 +1848,9 @@ namespace Detox.ScriptEditor
       }
 
       //unique function name per entity event to receive
-      private string CSharpEventDeclaration(EntityEvent entityEvent)
+      private string CSharpEventDeclaration(EntityEvent entityEvent, string output)
       {
-         return entityEvent.Output.Name + "_" + GetGuidId(entityEvent.Guid);
+         return entityEvent.Instance.Name + "_" + output + "_" + GetGuidId(entityEvent.Guid);
       }
 
       //unique function name per entity event to receive

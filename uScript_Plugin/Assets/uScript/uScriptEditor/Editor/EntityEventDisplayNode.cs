@@ -47,14 +47,17 @@ namespace Detox.ScriptEditor
             sockets.Add( socket );
          }
 
-         socket = new Socket( );
-         socket.Alignment = Socket.Align.Right;
-         socket.InternalName = entityEvent.Output.Name;
-         socket.FriendlyName = entityEvent.Output.FriendlyName;
-         socket.Input = false;
-         socket.Type = "";
-         socket.Output = true;
-         sockets.Add( socket );
+         foreach ( Plug output in entityEvent.Outputs )
+         {
+            socket = new Socket( );
+            socket.Alignment = Socket.Align.Right;
+            socket.InternalName = output.Name;
+            socket.FriendlyName = output.FriendlyName;
+            socket.Input = false;
+            socket.Type = "";
+            socket.Output = true;
+            sockets.Add( socket );
+         }
 
          UpdateSockets( sockets.ToArray( ) );
       }

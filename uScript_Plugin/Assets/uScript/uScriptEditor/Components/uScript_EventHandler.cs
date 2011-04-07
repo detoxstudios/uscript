@@ -33,6 +33,13 @@ public class NodePath : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Class)]
+public class NodePropertiesPath : Attribute
+{
+   public NodePropertiesPath(string value) { Value = value; }
+   public string Value;
+}
+
+[AttributeUsage(AttributeTargets.Class)]
 public class NodeLicense : Attribute
 {
    public NodeLicense(string value) { Value = value; }

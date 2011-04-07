@@ -10,6 +10,7 @@ using System.Collections;
 [NodeComponentType(typeof(Collider))]
 
 [NodePath("Events")]
+[NodePropertiesPath("Properties/Triggers")]
 [FriendlyName("Trigger Events")]
 public class uScript_Triggers : uScriptEvent
 {
