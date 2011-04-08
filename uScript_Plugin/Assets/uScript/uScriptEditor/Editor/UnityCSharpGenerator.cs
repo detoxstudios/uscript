@@ -1714,20 +1714,21 @@ namespace Detox.ScriptEditor
 
       public static string MakeSyntaxSafe(string s)
       {
-	     bool isSafe;
-		 return MakeSyntaxSafe(s, out isSafe);
-	  }
+	      bool isSafe;
+         return MakeSyntaxSafe(s, out isSafe);
+      }
 
-	  public static string MakeSyntaxSafe(string s, out bool isSafe)
+	   public static string MakeSyntaxSafe(string s, out bool isSafe)
       {
          string typeSafe = "";
-		 int count = 0;
-		 isSafe = true;
+         int count = 0;
+         isSafe = true;
 
          foreach ( char c in s )
          {
             if ( c >= 'A' && c <= 'Z' ||
                  c >= 'a' && c <= 'z' ||
+                 c == '_'             ||
                ( c >= '0' && c <= '9' && count > 0 ) )
             {
                typeSafe += c;
@@ -1735,10 +1736,10 @@ namespace Detox.ScriptEditor
             else
             {
                typeSafe += "_";
-			   isSafe = false;
+			      isSafe = false;
             }
 				
-			count++;
+            count++;
          }
       
          return typeSafe;
