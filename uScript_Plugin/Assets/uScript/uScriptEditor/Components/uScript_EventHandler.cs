@@ -447,6 +447,12 @@ public class uScriptDefaultStyle : uScriptStyle
       {
          string name = System.IO.Path.GetFileName(file.Name);
 
+         // Make sure we only load in .png files. Solves Unity source control .meta file issue.
+         if (!name.EndsWith("png"))
+         {
+            return;
+         }
+
          Texture2D styleBackground = AssetDatabase.LoadAssetAtPath(relativePath + "/" + name, typeof(Texture2D)) as Texture2D;
          styleBackground.wrapMode = TextureWrapMode.Clamp;
 			
