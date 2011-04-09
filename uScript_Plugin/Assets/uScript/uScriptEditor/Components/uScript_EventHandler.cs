@@ -439,99 +439,89 @@ public class uScriptDefaultStyle : uScriptStyle
       string assetPath = uScriptConfig.Paths.SkinPath + "/elements";
 
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( assetPath );
-      System.IO.FileInfo [] files = directory.GetFiles( );
+      System.IO.FileInfo [] files = directory.GetFiles( "*.png" );
 
       string relativePath = uScriptConfig.Paths.RelativePath(assetPath);
 
       foreach (System.IO.FileInfo file in files)
       {
          string name = System.IO.Path.GetFileName(file.Name);
+         
+         Texture2D styleBackground = AssetDatabase.LoadAssetAtPath(relativePath + "/" + name, typeof(Texture2D)) as Texture2D;
+         styleBackground.wrapMode = TextureWrapMode.Clamp;
 
-         // Make sure we only load in .png files. Solves Unity source control .meta file issue.
-         if (!name.EndsWith("png"))
+         name = System.IO.Path.GetFileNameWithoutExtension(name);
+
+         if (name.StartsWith("uscript_"))
          {
-            return;
+            name = name.Substring("uscript_".Length);
+         }
+
+         string key = "";
+
+         if (false == name.Contains("socket") &&
+             true == name.Contains("node") &&
+             false == name.Contains("selected"))
+         {
+            key = "node";
+         }
+         else if (true == name.Contains("node_selected"))
+         {
+            key = "node_selected";
+         }
+         else if (true == name.Contains("socket"))
+         {
+            key = "static";
+         }
+         else if (true == name.Contains("icon"))
+         {
+            key = "static";
+         }
+         else if (true == name.Contains("comment") &&
+                  false == name.Contains("selected"))
+         {
+            key = "comment";
+         }
+         else if (true == name.Contains("comment_selected"))
+         {
+            key = "comment_selected";
+         }
+         else if (true == name.Contains("property"))
+         {
+            key = "property";
+         }
+         else if (true == name.Contains("variable") &&
+            false == name.Contains("node"))
+         {
+            key = "variable";
          }
          else
          {
-            Texture2D styleBackground = AssetDatabase.LoadAssetAtPath(relativePath + "/" + name, typeof(Texture2D)) as Texture2D;
-            styleBackground.wrapMode = TextureWrapMode.Clamp;
-
-            name = System.IO.Path.GetFileNameWithoutExtension(name);
-
-            if (name.StartsWith("uscript_"))
-            {
-               name = name.Substring("uscript_".Length);
-            }
-
-            string key = "";
-
-            if (false == name.Contains("socket") &&
-                true == name.Contains("node") &&
-                false == name.Contains("selected"))
-            {
-               key = "node";
-            }
-            else if (true == name.Contains("node_selected"))
-            {
-               key = "node_selected";
-            }
-            else if (true == name.Contains("socket"))
-            {
-               key = "static";
-            }
-            else if (true == name.Contains("icon"))
-            {
-               key = "static";
-            }
-            else if (true == name.Contains("comment") &&
-                     false == name.Contains("selected"))
-            {
-               key = "comment";
-            }
-            else if (true == name.Contains("comment_selected"))
-            {
-               key = "comment_selected";
-            }
-            else if (true == name.Contains("property"))
-            {
-               key = "property";
-            }
-            else if (true == name.Contains("variable") &&
-               false == name.Contains("node"))
-            {
-               key = "variable";
-            }
-            else
-            {
-               uScriptDebug.Log("Can't find element setttings for " + name + ", defaulting to 'node'", uScriptDebug.Type.Error);
-               key = "node";
-            }
-
-            GUIStyle settings = elementSettings[key];
-            GUIStyle style = new GUIStyle();
-            style.name = name;
-            style.normal.textColor = Color.black;
-            style.border.left = settings.border.left;
-            style.border.right = settings.border.right;
-            style.border.top = settings.border.top;
-            style.border.bottom = settings.border.bottom;
-            style.padding.left = settings.padding.left;
-            style.padding.right = settings.padding.right;
-            style.padding.top = settings.padding.top;
-            style.padding.bottom = settings.padding.bottom;
-            style.fixedHeight = settings.fixedHeight;
-            style.fixedWidth = settings.fixedWidth;
-            style.normal.background = styleBackground;
-            style.alignment = settings.alignment;
-            style.fontStyle = settings.fontStyle;
-            style.fontSize = settings.fontSize;
-
-            m_Styles[name] = style;
-
+            uScriptDebug.Log("Can't find element setttings for " + name + ", defaulting to 'node'", uScriptDebug.Type.Error);
+            key = "node";
          }
 
-         
+         GUIStyle settings = elementSettings[key];
+         GUIStyle style = new GUIStyle();
+         style.name = name;
+         style.normal.textColor = Color.black;
+         style.border.left = settings.border.left;
+         style.border.right = settings.border.right;
+         style.border.top = settings.border.top;
+         style.border.bottom = settings.border.bottom;
+         style.padding.left = settings.padding.left;
+         style.padding.right = settings.padding.right;
+         style.padding.top = settings.padding.top;
+         style.padding.bottom = settings.padding.bottom;
+         style.fixedHeight = settings.fixedHeight;
+         style.fixedWidth = settings.fixedWidth;
+         style.normal.background = styleBackground;
+         style.alignment = settings.alignment;
+         style.fontStyle = settings.fontStyle;
+         style.fontSize = settings.fontSize;
+
+         m_Styles[name] = style;
+
       }
 
       element = new GUIStyle();
