@@ -6,7 +6,7 @@ using System.Collections;
 public class DetoxUtilities : EditorWindow
 {
 
-	[MenuItem("Detox Utilities/Setup TestBed Scene")]
+	[MenuItem("Detox Tools/Internal/Setup TestBed Scene")]
 	public static void SetupScene()
 	{
 		Debug.Log("STARTING TESTBED REBUILD...\n");
@@ -107,7 +107,7 @@ public class DetoxUtilities : EditorWindow
 	}
 	
    /*
-	[MenuItem("Detox Utilities/Fix GUI Texture Settings")]
+	[MenuItem("Detox Tools/Internal/Fix GUI Texture Settings")]
 	public static void FixGUITextures()
 	{
 		Debug.Log("Fix GUI Texture Settings: Not Yet Working!");
