@@ -25,6 +25,7 @@ public class uScriptAct_SetGameObject : uScriptLogic
       // uScript might need to be using InstanceIDs instead of by the name?
 
       TargetGameObject = Value;
+
    }
 
 }
