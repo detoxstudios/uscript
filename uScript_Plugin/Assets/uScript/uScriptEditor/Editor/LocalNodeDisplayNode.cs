@@ -32,23 +32,25 @@ namespace Detox.ScriptEditor
 
       private void PrepareNode( )
       {
-         string name = LocalNode.Name.Default;
+         string value = "";
 			
+         Name = LocalNode.Name.Default;
+
          // Use the variable type name if the variable is empty/null
          if ( "" == LocalNode.Value.Default )
          {
-            name = name + "(" + uScriptConfig.Variable.FriendlyName(LocalNode.Value.Type) + ")";
+            value = "(" + uScriptConfig.Variable.FriendlyName(LocalNode.Value.Type) + ")";
          }
          else
          {
-            name = LocalNode.Value.Default;
+            value = LocalNode.Value.Default;
          }
 
          if ( false == Selected )
          {
-            if ( name.Length > 3 )
+            if ( value.Length > 3 )
             {
-               name = name.Substring( 0, 3 ) + "...";
+               value = value.Substring( 0, 3 ) + "...";
             }
          }
 
@@ -68,8 +70,8 @@ namespace Detox.ScriptEditor
 
          socket = new Socket( );
          socket.Alignment = Socket.Align.Center;
-         socket.InternalName = name;
-         socket.FriendlyName = name;
+         socket.InternalName = value;
+         socket.FriendlyName = value;
          socket.Input  = false;
          socket.Output = false;
          socket.Type   = "";
