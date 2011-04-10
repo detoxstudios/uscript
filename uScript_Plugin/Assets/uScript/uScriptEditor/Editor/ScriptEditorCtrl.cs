@@ -1547,8 +1547,6 @@ namespace Detox.ScriptEditor
          m_EntityNode = entityNode;
       }
 
-      int topPointsExtraPad = 0;
-
       protected string FormatName(Socket socket)
       {
          return socket.FriendlyName;
@@ -1561,7 +1559,7 @@ namespace Detox.ScriptEditor
          float xStart= uScriptConfig.Style.LeftPad;
          float yStep = uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize;
 
-         float y = (uScriptConfig.Style.TopPad + uScriptConfig.Style.TitleTopBottomPad + titleLength.Height) + topPointsExtraPad;
+         float y = (uScriptConfig.Style.TopPad + uScriptConfig.Style.TitleTopBottomPad + titleLength.Height);
 
          foreach ( Socket socket in sockets )
          {
@@ -1602,7 +1600,7 @@ namespace Detox.ScriptEditor
          float xStart = Size.Width - uScriptConfig.Style.RightPad;
          float yStep  = uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize;
 
-         float y = (uScriptConfig.Style.TopPad + uScriptConfig.Style.TitleTopBottomPad + titleLength.Height) + topPointsExtraPad;
+         float y = (uScriptConfig.Style.TopPad + uScriptConfig.Style.TitleTopBottomPad + titleLength.Height);
 
          foreach ( Socket socket in sockets )
          {

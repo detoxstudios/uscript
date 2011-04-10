@@ -48,7 +48,6 @@ public class uScript : EditorWindow
    public Rect NodeToolbarRect { get { return m_NodeToolbarRect; } }
 
    private Hashtable m_Types = new Hashtable();
-   public bool UsedEvent = false;
 
 
    /* uScript GUI Window Panel Layout Variables */
@@ -347,18 +346,8 @@ public class uScript : EditorWindow
       //
       // All the GUI drawing code
       //
-      UsedEvent = false;
       DrawGUI();
       
-      //for whatever reason
-      //calling this in the DrawGUI code property grid
-      //makes unity barf, so i just set a flag and call it 
-      //when the property grid is done drawing
-      if ( true == UsedEvent ) 
-      {
-         Event.current.Use( );
-      }
-
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
 
       if ( false == contextActive ) contextActive = ( Event.current.type == EventType.ContextClick );
@@ -463,11 +452,14 @@ public class uScript : EditorWindow
             }
          }
 
-         if ( Event.current.type == EventType.KeyDown )
+         if ( Event.current.type == EventType.KeyUp )
          {
-            if ( Event.current.keyCode == KeyCode.Delete )
+            if ( "MainView" == GUI.GetNameOfFocusedControl( ) )
             {
-               m_ScriptEditorCtrl.DeleteSelectedNodes( );
+               if ( Event.current.keyCode == KeyCode.Delete )
+               {
+                  m_ScriptEditorCtrl.DeleteSelectedNodes( );
+               }
             }
 
             //keep key events from going to the rest of unity
@@ -480,7 +472,7 @@ public class uScript : EditorWindow
             //so switch to the filtersearch box.  by leaving the property grid
             //it forces unity to update the rendering of it and show the latest
             //text from the selected node
-            GUI.FocusControl( "FilterSearch" );
+            GUI.FocusControl( "MainView" );
 
             if ((int)Event.current.mousePosition.x - _guiPanelSidebar_Width - _guiPanelDivider_Size - _guiPanelDivider_MouseBuffer >= 0)
              {
@@ -1085,6 +1077,7 @@ public class uScript : EditorWindow
 
          GUI.skin.scrollView.normal.background = uScriptConfig.canvasBackgroundTexture;
 
+         GUI.SetNextControlName ("MainView" );
          _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true));
          {               
             GUI.skin.scrollView.normal.background = null;
@@ -1101,6 +1094,7 @@ public class uScript : EditorWindow
             GUI.matrix = oldMatrix;
          }
          EditorGUILayout.EndScrollView();
+         GUI.SetNextControlName ("" );
       }
       EditorGUILayout.EndVertical();
    }
