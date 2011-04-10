@@ -322,6 +322,7 @@ public class uScriptDefaultStyle : uScriptStyle
    {
       Dictionary<string, GUIStyle> elementSettings = new Dictionary<string, GUIStyle>();
       Color nodeTextGrey = new Color(188 / 255.0f, 188 / 255.0f, 188 / 255.0f);
+      //Color nodeTextLightGrey = new Color(215 / 255.0f, 220 / 255.0f, 240 / 255.0f);
 
       GUIStyle element = new GUIStyle();
       element.normal.textColor = Color.black;
@@ -431,13 +432,13 @@ public class uScriptDefaultStyle : uScriptStyle
       element.border.right = 31;
       element.border.top = 25;
       element.border.bottom = 31;
-      element.padding.left = 0;
-      element.padding.right = 0;
+      element.padding.left = -139;
+      element.padding.right = -128;
       element.padding.top = 0;
-      element.padding.bottom = 0;
+      element.padding.bottom = -12;
       element.fixedHeight = 0;
       element.fixedWidth = 0f;
-	   element.alignment = TextAnchor.UpperCenter;
+	   element.alignment = TextAnchor.LowerCenter;
       element.fontStyle = FontStyle.Normal;
 	   element.fontSize = 0;
       elementSettings["variable"] = element;
