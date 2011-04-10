@@ -522,13 +522,27 @@ namespace Detox.ScriptEditor
          }
          else if ( "UnityEngine.GameObject[]" == type )
          {
-            //this will be filled in the FillComponent step
-            return "new UnityEngine.GameObject[] {}";
+            declaration = "new UnityEngine.GameObject[" + elements.Length +"] {";
+
+            for ( int i = 0; i < elements.Length; i++ )
+            {
+               declaration += "null,";
+            };
+
+            declaration = declaration.Substring( 0, declaration.Length - 1 );
+            declaration += "}";
          }
          else if ( "UnityEngine.Component[]" == type )
          {
-            //this will be filled in the FillComponent step
-            return "new UnityEngine.Component[] {}";
+            declaration = "new UnityEngine.Component[" + elements.Length +"] {";
+
+            for ( int i = 0; i < elements.Length; i++ )
+            {
+               declaration += "null,";
+            };
+
+            declaration = declaration.Substring( 0, declaration.Length - 1 );
+            declaration += "}";
          }
          else
          {
@@ -793,53 +807,43 @@ namespace Detox.ScriptEditor
 
          if ( true == gameObjectArrayType.IsAssignableFrom(nodeType) )
          {
-            AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
-            AddCSharpLine( "{" );
-            ++m_TabStack;
+            //remove curly braces from type declaration
+            //so we can use it to cast the object to the array element type
+            string type = parameter.Type;
+            type = type.Substring( 0, type.Length - 2 );
 
-               AddCSharpLine( CSharpName(node, parameter.Name) + " = new " + nodeType );
+            string []values = parameter.Default.Split( ',' );
+
+            for ( int i = 0; i < values.Length; i++ )
+            {
+               AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )" );
                AddCSharpLine( "{" );
                ++m_TabStack;
-               
-               string []values = parameter.Default.Split( ',' );
-            
-               //remove curly braces from type declaration
-               //so we can use it to cast the object to the array element type
-               string type = parameter.Type;
-               type = type.Substring( 0, type.Length - 2 );
-
-               foreach ( string value in values )
-               {
-                  AddCSharpLine( "(" + type + ") GameObject.Find( \"" + value.Trim( ) + "\" )," );
-               }
-
+                  AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + values[i].Trim( ) + "\" ) as " + type + ";" );
                --m_TabStack;
-               AddCSharpLine( "};" );
-
-            --m_TabStack;
-            AddCSharpLine( "}" );
+               AddCSharpLine( "}" );
+            }
          }
          else if ( true == componentArrayType.IsAssignableFrom(nodeType) )
          {
-            AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
+            string []values = parameter.Default.Split( ',' );
+         
+            //remove curly braces from type declaration
+            //so we can use it to cast the object to the array element type
+            string type = parameter.Type;
+            type = type.Substring( 0, type.Length - 2 );
+
             AddCSharpLine( "{" );
             ++m_TabStack;
 
-               string []values = parameter.Default.Split( ',' );
+            AddCSharpLine( "GameObject gameObject = null;" );
             
-               //remove curly braces from type declaration
-               //so we can use it to cast the object to the array element type
-               string type = parameter.Type;
-               type = type.Substring( 0, type.Length - 2 );
-
-               AddCSharpLine( CSharpName(node, parameter.Name) + " = new " + type + "[" + values.Length + "];" );
-               AddCSharpLine( "{" );
+            for ( int i = 0; i < values.Length; i++ )
+            {
+               AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )" );
+               AddCSharpLine( "{" );               
                ++m_TabStack;
 
-               AddCSharpLine( "GameObject gameObject = null;" );
-               
-               for ( int i = 0; i < values.Length; i++ )
-               {
                   AddCSharpLine( "gameObject = GameObject.Find( \"" + values[i].Trim( ) + "\" );" );
                   AddCSharpLine( "if ( null != " + "gameObject )" );
          
@@ -854,13 +858,13 @@ namespace Detox.ScriptEditor
 
                   --m_TabStack;
                   AddCSharpLine( "}" );               
-               }
 
                --m_TabStack;
                AddCSharpLine( "};" );
+            }
 
             --m_TabStack;
-            AddCSharpLine( "}" );
+            AddCSharpLine( "};" );
          }
          else if ( true == componentType.IsAssignableFrom(nodeType) )
          {
@@ -892,13 +896,15 @@ namespace Detox.ScriptEditor
             AddCSharpLine( "{" );
             ++m_TabStack;
 
-               AddCSharpLine( CSharpName(node, parameter.Name) + " = (" + parameter.Type + ") GameObject.Find( \"" + parameter.Default + "\" );" );
+               AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + parameter.Type + ";" );
 
             --m_TabStack;
             AddCSharpLine( "}" );
          }
       }
 
+      //default inputs for events which can only be set through the property grid
+      //so they are only set once (in fillcomponents)
       private void SetEventInputs( string eventVariable, EntityEvent eventNode )
       {
          AddCSharpLine( "if ( null != " + eventVariable + " )" );
