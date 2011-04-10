@@ -62,7 +62,7 @@ namespace Detox.ScriptEditor
          socket = new Socket( );
          socket.Alignment = Socket.Align.Center;
          socket.InternalName   = LocalNode.Value.Name;
-         socket.FriendlyName   = LocalNode.Value.FriendlyName;
+         socket.FriendlyName   = "";
          socket.Input  = LocalNode.Value.Input;
          socket.Output = LocalNode.Value.Output;
          socket.Type   = LocalNode.Value.Type;
@@ -85,6 +85,8 @@ namespace Detox.ScriptEditor
          if ( false == Selected ) return new Size(57, 57);
 
          Size size = base.CalculateSize(sockets, g);
+         if ( size.Width < 57 ) size.Width = 57;
+
          size.Height = 57;
 
          return size;
