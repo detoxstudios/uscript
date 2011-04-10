@@ -267,7 +267,6 @@ public class uScript : EditorWindow
       OnMouseMove( );
    }
 
-
    void OnGUI()
    {
       // As little logic as possible should be performed here.  It is better
@@ -456,8 +455,7 @@ public class uScript : EditorWindow
             }
          }
 
-         if ( Event.current.type == EventType.KeyDown ||
-              Event.current.type == EventType.KeyUp )
+         if ( Event.current.type == EventType.KeyDown )
          {
             if ( Event.current.keyCode == KeyCode.Delete )
             {

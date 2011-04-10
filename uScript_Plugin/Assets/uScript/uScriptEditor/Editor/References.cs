@@ -278,6 +278,7 @@ namespace System.Windows.Forms
 
          if ( true == signalUpdate )
          {
+            Event.current.Use( );
             OnPropertyValueChanged( );
          }
       }
