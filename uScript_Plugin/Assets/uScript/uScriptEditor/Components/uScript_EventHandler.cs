@@ -26,6 +26,13 @@ public class NodeComponentType : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Class)]
+public class NodeAutoAssignMasterInstance : Attribute
+{
+   public NodeAutoAssignMasterInstance(bool assign) { Value = assign; }
+   public bool Value;
+}
+
+[AttributeUsage(AttributeTargets.Class)]
 public class NodePath : Attribute
 {
    public NodePath(string value) { Value = value; }

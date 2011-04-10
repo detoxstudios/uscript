@@ -589,6 +589,16 @@ namespace Detox.ScriptEditor
                entityNode = local;
             }
          }
+         else
+         {
+            if ( "" != uScript.Instance.AutoAssignInstance(entityNode) )
+            {
+               Parameter instance = entityNode.Instance;
+               instance.Default = uScript.Instance.AutoAssignInstance(entityNode);
+            
+               entityNode.Instance = instance;
+            }
+         }
 
          m_ScriptEditor.AddNode( entityNode );
          m_Dirty = true;

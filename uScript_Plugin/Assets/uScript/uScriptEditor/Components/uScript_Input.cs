@@ -6,6 +6,7 @@
 using UnityEngine;
 using System.Collections;
 
+[NodeAutoAssignMasterInstance(true)]
 [NodeComponentType(typeof(uScript_Input))]
 
 [NodePath("Events")]

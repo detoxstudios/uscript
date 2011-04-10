@@ -2045,6 +2045,19 @@ public class uScript : EditorWindow
       return descs;
    }
 
+   public string AutoAssignInstance(EntityNode entityNode)
+   {
+      string type = uScript.FindNodeType(entityNode);
+      if ( "" == type ) return "";
+
+      if ( true == uScript.FindNodeAutoAssignMasterInstance(type) )
+      {
+         return uScriptConfig.MasterObjectName;
+      }
+
+      return "";
+   }
+
    //go through the master uscript and see if there
    //is an attach script which works this component
    //and if so return the script type so we can attach
@@ -2220,6 +2233,27 @@ public class uScript : EditorWindow
       }
 
       return defaultName;
+   }
+
+   public static bool FindNodeAutoAssignMasterInstance(string type)
+   {
+      Type uscriptType = uScript.Instance.GetType(type);
+
+      if ( uscriptType != null )
+      {
+         object [] attributes = uscriptType.GetCustomAttributes(false);
+         if ( null == attributes ) return false;
+
+         foreach ( object a in attributes )
+         {
+            if ( a is NodeAutoAssignMasterInstance ) 
+            {
+               return ((NodeAutoAssignMasterInstance)a).Value;
+            }
+         }
+      }
+
+      return false;
    }
 
    public static string FindNodePath(string defaultCategory, string type)
