@@ -19,7 +19,7 @@ public class uScriptAct_SetVector3 : uScriptLogic
 
    public bool Out { get { return true; } }
 
-   public void In(Vector3 Value, [FriendlyName("Target Vector3")] out Vector4 TargetVector3)
+   public void In(Vector3 Value, [FriendlyName("Target Vector3")] out Vector3 TargetVector3)
    {
 
       TargetVector3 = Value;
