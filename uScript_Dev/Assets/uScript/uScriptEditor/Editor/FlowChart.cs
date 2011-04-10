@@ -983,10 +983,10 @@ namespace Detox.FlowChart
                   break;
                }
 					
-			   if (node.IsVisible(visibleRect))
-			   {
-	              node.OnPaint(e);
-			   }
+               if (node.IsVisible(visibleRect))
+               {
+                  node.OnPaint(e);
+               }
             }
          }
 
@@ -1010,7 +1010,7 @@ namespace Detox.FlowChart
 
             end.X += Location.X;
             end.Y += Location.Y;
-
+            
             //control point 1
             //is 25% of the X length and only 10% of the Y length
             PointF control1 = new PointF( 
@@ -1094,10 +1094,10 @@ namespace Detox.FlowChart
             {
                if (!node.Selected)
                {
-			      if (node.IsVisible(visibleRect))
-				  {
+                  if (node.IsVisible(visibleRect))
+                  {
                      node.OnPaint(e);
-				  }
+                  }
                }
             }
          }
@@ -1110,10 +1110,10 @@ namespace Detox.FlowChart
             {
                if (node.Selected)
                {
-			      if (node.IsVisible(visibleRect))
-			      {
+                  if (node.IsVisible(visibleRect))
+                  {
                      node.OnPaint(e);
-				  }
+                  }
                }
             }
          }
@@ -1229,8 +1229,8 @@ namespace Detox.FlowChart
 
       public bool CanResize = false;
 
-      private bool m_Selected = false;
-      public bool Selected 
+      protected bool m_Selected = false;
+      virtual public bool Selected 
       {
          get { return m_Selected; }
          set 
@@ -1267,17 +1267,17 @@ namespace Detox.FlowChart
       }
 		
       public virtual bool IsVisible( Rectangle visibleRect )
-	  {
-	     float leftSide = Location.X;
-	     float rightSide = Location.X + Size.Width;
-		 if (rightSide < visibleRect.X || leftSide > visibleRect.Right) return false;
-			
-	     float topSide = Location.Y;
-	     float bottomSide = Location.Y + Size.Height;
-		 if (bottomSide < visibleRect.Y || topSide > visibleRect.Bottom) return false;
-			
-	     return true;
-	  }
+      {
+         float leftSide = Location.X;
+         float rightSide = Location.X + Size.Width;
+         if (rightSide < visibleRect.X || leftSide > visibleRect.Right) return false;
+         
+         float topSide = Location.Y;
+         float bottomSide = Location.Y + Size.Height;
+         if (bottomSide < visibleRect.Y || topSide > visibleRect.Bottom) return false;
+         
+         return true;
+      }
 
       public bool PointInAnchorPoint( Point point, ref AnchorPoint hitPoint )
       {

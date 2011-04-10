@@ -1540,12 +1540,26 @@ namespace Detox.ScriptEditor
 
       protected string NodeStyle = "node_default";
 
+      override public bool Selected 
+      {
+         set 
+         { 
+            m_Selected = value; 
+    
+            UpdateStyleName();
+   
+            base.Selected = value;
+         }
+      }
+
       private bool m_Deprecated = false;
 
       public bool Deprecated { get { return m_Deprecated; } }
       public void Deprecate( )
       {
          m_Deprecated = true;
+
+         UpdateStyleName();
       }
 
       private bool m_DirtySockets = false;
@@ -1560,14 +1574,20 @@ namespace Detox.ScriptEditor
       protected void UpdateNode(EntityNode node)
       {
          m_EntityNode = node;
+
+         UpdateStyleName(); 
       }
 
       public DisplayNode()
-      {}
+      { 
+         UpdateStyleName(); 
+      }
 
       public DisplayNode(EntityNode entityNode)
       {
          m_EntityNode = entityNode;
+         
+         UpdateStyleName();
       }
 
       protected string FormatName(Socket socket)
@@ -1779,8 +1799,8 @@ namespace Detox.ScriptEditor
 
          m_DirtySockets = true;
       }
-
-      public override void OnPaint( PaintEventArgs e )
+      
+      protected void UpdateStyleName()
       {
          if ( false == Selected ) StyleName = NodeStyle;
          else 
@@ -1793,6 +1813,11 @@ namespace Detox.ScriptEditor
          {
             StyleName = "node_deprecated";
          }
+      }
+
+      public override void OnPaint( PaintEventArgs e )
+      {
+         UpdateStyleName();   // remove this later when we figure out why removing it doesn't initialize StyleName correctly
 
          if ( true == m_DirtySockets )
          {

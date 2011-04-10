@@ -30,6 +30,16 @@ namespace Detox.ScriptEditor
          PrepareNode( );
       }
 
+      public override bool Selected 
+      {
+         set 
+         { 
+            base.Selected = value;
+            PrepareNode( );
+            Invalidate( );
+         }
+      }
+
       private void PrepareNode( )
       {
          string value = "";
@@ -95,7 +105,6 @@ namespace Detox.ScriptEditor
       //overridden so we can expand if we are selected
       public override void OnPaint( PaintEventArgs e )
       {
-         PrepareNode( );
          base.OnPaint( e );
       }
    }
