@@ -739,6 +739,12 @@ namespace Detox.ScriptEditor
                {
                   FillComponent( entityMethod, entityMethod.Instance );
                }
+
+               foreach ( Parameter p in entityMethod.Parameters )
+               {
+                  if ( false == p.Input ) continue;
+                  FillComponent( entityMethod, p );
+               }
             }
 
             foreach ( EntityEvent entityEvent in m_Script.Events )
@@ -754,6 +760,15 @@ namespace Detox.ScriptEditor
                if ( entityProperty.Instance.Default != "" )
                {
                   FillComponent( entityProperty, entityProperty.Instance );
+               }
+            }
+
+            foreach ( LogicNode logicNode in m_Script.Logics )
+            {
+               foreach ( Parameter p in logicNode.Parameters )
+               {
+                  if ( false == p.Input ) continue;
+                  FillComponent( logicNode, p );
                }
             }
 
