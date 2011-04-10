@@ -15,7 +15,7 @@ using System.Collections;
 public class uScript_Input : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
-   
+
    [FriendlyName("On Key Press")]
    public event uScriptEventHandler KeyPress;
 
@@ -23,18 +23,18 @@ public class uScript_Input : uScriptEvent
    {
       if (Input.anyKeyDown)
       {
-         if( KeyPress != null ) KeyPress(this, new System.EventArgs());
+         if (KeyPress != null) KeyPress(this, new System.EventArgs());
       }
    }
-   
+
    // uScript GUI Options
    void OnDrawGizmos()
    {
       // @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
-      if ( this.name != uScriptConfig.MasterObjectName )
+      if (this.name != uScriptConfig.MasterObjectName)
       {
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
-   
+
 }
