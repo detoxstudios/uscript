@@ -33,6 +33,7 @@ public class uScript : EditorWindow
    private bool m_WantsRefresh = false;
 
    private string m_FullPath = "";
+   private string m_CurrentCanvasPosition = "";
 
    static private AppFrameworkData m_AppData = new AppFrameworkData();
    private double m_RefreshTimestamp = -1.0;
@@ -243,6 +244,11 @@ public class uScript : EditorWindow
       if ( true == m_WantsRefresh )
       {
          m_ScriptEditorCtrl.RefreshScript(null, true);
+		 if (!String.IsNullOrEmpty(m_CurrentCanvasPosition))
+		 {
+			Point loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
+		    m_ScriptEditorCtrl.FlowChart.Location = loc;
+		 }
          m_WantsRefresh = false;
       }
       if ( true == m_WantsCopy )
@@ -327,11 +333,14 @@ public class uScript : EditorWindow
             uScriptMaster.AddComponent(typeof(uScript_Input));
          }
 
-         String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
-         if (!String.IsNullOrEmpty(lastOpened))
-         {
-            m_FullPath = lastOpened;
-         }
+		 if (String.IsNullOrEmpty(m_FullPath))
+		 {
+            String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
+            if (!String.IsNullOrEmpty(lastOpened))
+            {
+               m_FullPath = lastOpened;
+            }
+		 }
 
          //when doing certain operations like 'play' in unity
          //it seems to set any class references back to null
@@ -1372,6 +1381,8 @@ public class uScript : EditorWindow
       System.Windows.Forms.Cursor.Position.Y = m_MouseUpArgs.Y;
 
       m_ScriptEditorCtrl.OnMouseUp( m_MouseUpArgs );
+		
+	  m_CurrentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
 
       Control.MouseButtons.Buttons = 0;
    }
@@ -1425,7 +1436,10 @@ public class uScript : EditorWindow
 
       if ( true == scriptEditor.Open(fullPath) )
       {
-         m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor );
+		 Point loc = Point.Empty;
+		 if (fullPath != m_FullPath) m_CurrentCanvasPosition = "";	// reset canvas position
+		 if (!String.IsNullOrEmpty(m_CurrentCanvasPosition)) loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
+         m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor, loc );
          m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 			
 		 m_ScriptEditorCtrl.BuildContextMenu();
@@ -2025,7 +2039,7 @@ public class uScript : EditorWindow
 
          for ( c = 1; c < desc.Events.Length; c++ )
          {
-            if ( false == ArrayUtil.ArraysAreEqual(desc.Events[0].Parameters, desc.Events[c].Parameters) )
+            if ( false == ArrayUtil.ArraysAreEqual(parameters, desc.Events[c].Parameters) )
             {
                break;
             }

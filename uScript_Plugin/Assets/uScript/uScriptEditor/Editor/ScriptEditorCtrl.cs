@@ -62,7 +62,9 @@ namespace Detox.ScriptEditor
 
       private ScriptEditor m_ScriptEditor = null;
       public ScriptEditor ScriptEditor { get { return m_ScriptEditor; } }
-      
+		
+	  public Detox.FlowChart.FlowChartCtrl FlowChart { get { return m_FlowChart; } }
+		
       public DisplayNode [] SelectedNodes
       {
          get
@@ -100,6 +102,16 @@ namespace Detox.ScriptEditor
 
       public ScriptEditorCtrl(ScriptEditor scriptEditor)
       {  
+	     Initialize(scriptEditor, Point.Empty);
+	  }
+
+	  public ScriptEditorCtrl(ScriptEditor scriptEditor, Point location)
+      {
+	     Initialize(scriptEditor, location);
+	  }
+		
+	  private void Initialize(ScriptEditor scriptEditor, Point location)
+	  {
          InitializeComponent();
                   
          m_ContextObject = null;
@@ -113,7 +125,7 @@ namespace Detox.ScriptEditor
          Text    = m_ScriptEditor.Name;
          TabText = m_ScriptEditor.Name;
 
-         RefreshScript( null, true );
+         RefreshScript( null, true, location );
       }
 
       private void UndoChange(object sender, ChangeStack.ChangeEventArgs args)
@@ -749,10 +761,15 @@ namespace Detox.ScriptEditor
 
       private void RefreshScript( List<Guid> guidsToSelect )
       {
-         RefreshScript(guidsToSelect, false);
+         RefreshScript(guidsToSelect, false, Point.Empty);
       }
 
       public void RefreshScript( List<Guid> guidsToSelect, bool zoomExtents )
+      {
+         RefreshScript(guidsToSelect, zoomExtents, Point.Empty);
+      }
+
+      public void RefreshScript( List<Guid> guidsToSelect, bool zoomExtents, Point location )
       {
          RemoveEventHandlers( );
 
@@ -930,17 +947,24 @@ namespace Detox.ScriptEditor
 
          m_FlowChart.ResumeLayout( );
          m_FlowChart.Invalidate( );
-
-         // zoom extents
-         if (zoomExtents && m_FlowChart.Nodes.Length > 0)
-         {
-            // center on the center for now - later, we'll calculate zoom amount, etc.
-            int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
-            int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
-            Point center = new Point((int)(minX + (maxX - minX) / 2.0f), (int)(minY + (maxY - minY) / 2.0f));
-            m_FlowChart.Location = new Point(Math.Min(0, Math.Max(-4096, -center.X + halfWidth)), Math.Min(0, Math.Max(-4096, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
-            m_FlowChart.Invalidate();
-         }
+			
+		 if (m_FlowChart.Nodes.Length > 0)
+		 {
+			if (location != Point.Empty)
+			{
+               m_FlowChart.Location = location;
+               m_FlowChart.Invalidate();
+			}
+            else if (zoomExtents)
+            {
+               // center on the center for now - later, we'll calculate zoom amount, etc.
+               int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
+               int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
+               Point center = new Point((int)(minX + (maxX - minX) / 2.0f), (int)(minY + (maxY - minY) / 2.0f));
+               m_FlowChart.Location = new Point(Math.Min(0, Math.Max(-4096, -center.X + halfWidth)), Math.Min(0, Math.Max(-4096, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
+               m_FlowChart.Invalidate();
+            }
+		 }
 
          OnScriptModified();
 
@@ -1328,7 +1352,6 @@ namespace Detox.ScriptEditor
             {   
                string categoryName = uScript.FindNodePath("Advanced/Events", desc.Type);
 
-               string friendlyName = uScriptConfig.Variable.FriendlyName(desc.Type);
                ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName );
 
                foreach ( EntityEvent e in desc.Events )
