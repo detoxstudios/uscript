@@ -16,6 +16,14 @@ using System.Collections;
 [FriendlyName("Toggle")]
 public class uScriptAct_Toggle : uScriptLogic
 {
+   [FriendlyName("Out (Turn On)")]
+   public event System.EventHandler OnOut;
+
+   [FriendlyName("Out (Turn Off)")]
+   public event System.EventHandler OffOut;
+
+   [FriendlyName("Out (Toggle)")]
+   public event System.EventHandler ToggleOut;
 
    public bool Out { get { return true; } }
 
@@ -45,6 +53,10 @@ public class uScriptAct_Toggle : uScriptLogic
          }
       }
 
+
+      OnOut(this, new System.EventArgs());
+
+
    }
 
    [FriendlyName("Turn Off")]
@@ -72,6 +84,8 @@ public class uScriptAct_Toggle : uScriptLogic
             }
          }
       }
+
+      OffOut(this, new System.EventArgs());
 
    }
 
@@ -108,6 +122,8 @@ public class uScriptAct_Toggle : uScriptLogic
             }
          }
       }
+
+      ToggleOut(this, new System.EventArgs());
 
    }
 
