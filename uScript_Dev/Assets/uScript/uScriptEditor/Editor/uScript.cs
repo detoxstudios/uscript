@@ -2168,6 +2168,9 @@ public class uScript : EditorWindow
          }
       }
 
+      uScriptDebug.Log( "Could not attach " + objectName + " to " + eventType + " because " + 
+                         objectName + " requires a " + requiredComponentType.ToString() + " component." );
+
       return false;
    }
 
