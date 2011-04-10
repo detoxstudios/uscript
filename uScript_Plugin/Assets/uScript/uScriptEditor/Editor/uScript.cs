@@ -48,6 +48,8 @@ public class uScript : EditorWindow
    public Rect NodeToolbarRect { get { return m_NodeToolbarRect; } }
 
    private Hashtable m_Types = new Hashtable();
+   public bool UsedEvent = false;
+
 
    /* uScript GUI Window Panel Layout Variables */
 
@@ -345,7 +347,17 @@ public class uScript : EditorWindow
       //
       // All the GUI drawing code
       //
+      UsedEvent = false;
       DrawGUI();
+      
+      //for whatever reason
+      //calling this in the DrawGUI code property grid
+      //makes unity barf, so i just set a flag and call it 
+      //when the property grid is done drawing
+      if ( true == UsedEvent ) 
+      {
+         Event.current.Use( );
+      }
 
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
 
@@ -388,10 +400,6 @@ public class uScript : EditorWindow
 ////         uScriptDebug.Log(EventType.ScrollWheel);
 ////         uScriptDebug.Log(e.delta);
 //      }
-
-
-
-
 
       if ( false == contextActive )
       {
@@ -529,7 +537,7 @@ public class uScript : EditorWindow
 
          BuildSidebarMenu(null, null);
 
-		 m_ContextX = (int) Event.current.mousePosition.x;
+	    m_ContextX = (int) Event.current.mousePosition.x;
          m_ContextY = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
 
          //refresh screen so context menu shows up
@@ -625,7 +633,7 @@ public class uScript : EditorWindow
 
 
 
-    DrawGUITopAreas();
+      DrawGUITopAreas();
       DrawGUIHorizontalDivider();
       DrawGUIBottomAreas();
       DrawGUIStatusbar();

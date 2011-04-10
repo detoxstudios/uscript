@@ -278,8 +278,12 @@ namespace System.Windows.Forms
 
          if ( true == signalUpdate )
          {
-            Event.current.Use( );
             OnPropertyValueChanged( );
+            //for some reason actually using the event here
+            //causes all types of problems
+            //so we'll just tell uScript we used it and let it deal with it
+            //Event.current.Use( );
+            uScript.Instance.UsedEvent = true;
          }
       }
    }
