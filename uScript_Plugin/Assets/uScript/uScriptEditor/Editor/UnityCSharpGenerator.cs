@@ -458,6 +458,16 @@ namespace Detox.ScriptEditor
 
             return "(int) " + stringValue;
          }
+         else if ( "UnityEngine.Color" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "UnityEngine.Color.black";
+            }
+
+            string [] subString = stringValue.Split( ',' );
+            return "new UnityEngine.Color( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + " )";
+         }
          else if ( type.Contains("[]") )
          {
             return FormatArrayValue( stringValue, type );
@@ -515,6 +525,18 @@ namespace Detox.ScriptEditor
             for ( int i = 0; i < elements.Length; i += 4 )
             {
                declaration += "new Vector4(" + elements[i] + "," + elements[i+1] + "," + elements[i+2] + "," + elements[i+3] + "),";
+            }
+
+            declaration = declaration.Substring( 0, declaration.Length - 1 );
+            declaration += "}";
+         }
+         else if ( "UnityEngine.Color[]" == type )
+         {
+            declaration = "new UnityEngine.Color[] {";
+
+            for ( int i = 0; i < elements.Length; i += 3 )
+            {
+               declaration += "new UnityEngine.Color((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + "),";
             }
 
             declaration = declaration.Substring( 0, declaration.Length - 1 );
