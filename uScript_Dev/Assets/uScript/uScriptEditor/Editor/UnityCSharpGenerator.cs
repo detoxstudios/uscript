@@ -1495,14 +1495,14 @@ namespace Detox.ScriptEditor
          foreach ( LinkNode link in instanceLinks )
          {
             EntityNode node = m_Script.GetNode( link.Source.Guid );
-            AddCSharpLine( CSharpName(node) + "." + receiver.Input + "(" + args + ");" );            
+            AddCSharpLine( CSharpName(node) + "." + receiver.Input.Name + "(" + args + ");" );            
 
             ++local;
          }
 
          if ( receiver.Instance.Default != "" )
          {
-            AddCSharpLine( CSharpName(receiver, receiver.Instance.Name) + "." + receiver.Input + "(" + args + ");" );            
+            AddCSharpLine( CSharpName(receiver, receiver.Instance.Name) + "." + receiver.Input.Name + "(" + args + ");" );            
          }
 
          //call anyone else connected to us

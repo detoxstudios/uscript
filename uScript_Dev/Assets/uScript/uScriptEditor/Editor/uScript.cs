@@ -2134,7 +2134,10 @@ public class uScript : EditorWindow
          {
             if ( true == baseProperties.Contains(p.Name) ) continue;
 
-            EntityProperty property = new EntityProperty( p.Name, FindFriendlyName(p.Name, p.GetCustomAttributes(false)), type.ToString( ), p.PropertyType.ToString( ) );
+            bool isInput = p.GetSetMethod( ) != null;
+            bool isOutput= p.GetGetMethod( ) != null;
+
+            EntityProperty property = new EntityProperty( p.Name, FindFriendlyName(p.Name, p.GetCustomAttributes(false)), type.ToString( ), p.PropertyType.ToString( ), isInput, isOutput );
             entityProperties.Add( property );
 
             AddType( p.PropertyType );

@@ -1416,7 +1416,7 @@ namespace Detox.ScriptEditor
          set { m_Guid = value; }
       }
 
-      public EntityProperty(string name, string friendlyName, string entityType, string valueType)
+      public EntityProperty(string name, string friendlyName, string entityType, string valueType, bool input, bool output)
       { 
          m_Instance.Name   = "Instance";
          m_Instance.FriendlyName = "Instance";
@@ -1428,8 +1428,8 @@ namespace Detox.ScriptEditor
          m_Parameter = new Parameter( );
          m_Parameter.Name    = name;
          m_Parameter.FriendlyName = friendlyName;
-         m_Parameter.Input   = true;
-         m_Parameter.Output  = true;
+         m_Parameter.Input   = input;
+         m_Parameter.Output  = output;
          m_Parameter.Default = "";
          m_Parameter.Type    = valueType;
 
@@ -2438,7 +2438,7 @@ namespace Detox.ScriptEditor
       
          if ( false == exactMatch )
          {
-            Status.Error( "Matching EntityEvent " + data.Instance.Type + " " + data.Instance.FriendlyName + " could not be found" );
+            Status.Warning( "Matching EntityEvent " + data.Instance.Type + " " + data.Instance.FriendlyName + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 
@@ -2479,7 +2479,7 @@ namespace Detox.ScriptEditor
          
          if ( false == exactMatch )
          {
-            Status.Error( "Matching EntityMethod " + data.Instance.Type + " " + data.Input.Name + " could not be found" );
+            Status.Warning( "Matching EntityMethod " + data.Instance.Type + " " + data.Input.Name + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 
@@ -2488,7 +2488,8 @@ namespace Detox.ScriptEditor
 
       private EntityProperty CreateEntityProperty( EntityPropertyData data )
       {
-         EntityProperty cloned = new EntityProperty( data.Parameter.Name, data.Parameter.FriendlyName, data.Instance.Type, data.Parameter.Default );
+         EntityProperty cloned = new EntityProperty( data.Parameter.Name, data.Parameter.FriendlyName, data.Instance.Type, 
+                                                     data.Parameter.Default, data.Parameter.Input, data.Parameter.Output );
          bool exactMatch = false;
 
          foreach ( EntityDesc desc in m_EntityDescs )
@@ -2523,7 +2524,7 @@ namespace Detox.ScriptEditor
 
          if ( false == exactMatch )
          {
-            Status.Error( "Matching EntityProperty " + data.Instance.Name + " " + data.Parameter.Name + " could not be found" );
+            Status.Warning( "Matching EntityProperty " + data.Instance.Name + " " + data.Parameter.Name + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 
@@ -2561,7 +2562,7 @@ namespace Detox.ScriptEditor
 
          if ( false == exactMatch )
          {
-            Status.Error( "Matching LogicNode " + data.Type + " could not be found" );
+            Status.Warning( "Matching LogicNode " + data.Type + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 
