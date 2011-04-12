@@ -321,26 +321,32 @@ namespace Detox.ScriptEditor
          {
             if ( entityProperty.Instance.Default != "" )
             {
-               //as stated above, cretae a function which 
-               //gets the property from the entity and sets the corresponding CSharp variable
-               AddCSharpLine( entityProperty.Parameter.Type + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-                  AddCSharpLine( "return " + CSharpName(entityProperty, entityProperty.Instance.Name) + "." + entityProperty.Parameter.Name + ";" );               
-               --m_TabStack;
+               if ( true == entityProperty.Parameter.Output )
+               {
+                  //as stated above, cretae a function which 
+                  //gets the property from the entity and sets the corresponding CSharp variable
+                  AddCSharpLine( entityProperty.Parameter.Type + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     AddCSharpLine( "return " + CSharpName(entityProperty, entityProperty.Instance.Name) + "." + entityProperty.Parameter.Name + ";" );               
+                  --m_TabStack;
 
-               AddCSharpLine( "}" );
-               AddCSharpLine( "" );
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "" );
+               }
 
-               //as stated above, create a function which sets the entity's property to the
-               //corresponding CSharp variable's value
-               AddCSharpLine( "void " + CSharpRefreshSetPropertyDeclaration( entityProperty ) + "( )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-                  AddCSharpLine( CSharpName(entityProperty, entityProperty.Instance.Name) + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
-               --m_TabStack;
-               AddCSharpLine( "}" );               
-               AddCSharpLine( "" );
+               if ( true == entityProperty.Parameter.Input )
+               {
+                  //as stated above, create a function which sets the entity's property to the
+                  //corresponding CSharp variable's value
+                  AddCSharpLine( "void " + CSharpRefreshSetPropertyDeclaration( entityProperty ) + "( )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     AddCSharpLine( CSharpName(entityProperty, entityProperty.Instance.Name) + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
+                  --m_TabStack;
+                  AddCSharpLine( "}" );               
+                  AddCSharpLine( "" );
+               }
             }
             else
             {
@@ -353,26 +359,32 @@ namespace Detox.ScriptEditor
                {
                   EntityNode entityNode = m_Script.GetNode( instanceLink.Source.Guid );
 
-                  //as stated above, cretae a function which 
-                  //gets the property from the entity and sets the corresponding CSharp variable
-                  AddCSharpLine( entityProperty.Parameter.Type + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-                     AddCSharpLine( "return " + CSharpName(entityNode) + "." + entityProperty.Parameter.Name + ";" );               
-                  --m_TabStack;
+                  if ( true == entityProperty.Parameter.Output )
+                  {
+                     //as stated above, cretae a function which 
+                     //gets the property from the entity and sets the corresponding CSharp variable
+                     AddCSharpLine( entityProperty.Parameter.Type + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                        AddCSharpLine( "return " + CSharpName(entityNode) + "." + entityProperty.Parameter.Name + ";" );               
+                     --m_TabStack;
 
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "" );
+                     AddCSharpLine( "}" );
+                     AddCSharpLine( "" );
+                  }
 
-                  //as stated above, create a function which sets the entity's property to the
-                  //corresponding CSharp variable's value
-                  AddCSharpLine( "void " + CSharpRefreshSetPropertyDeclaration( entityProperty ) + "( )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-                     AddCSharpLine( CSharpName(entityNode) + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
-                  --m_TabStack;
-                  AddCSharpLine( "}" );               
-                  AddCSharpLine( "" );
+                  if ( true == entityProperty.Parameter.Input )
+                  {
+                     //as stated above, create a function which sets the entity's property to the
+                     //corresponding CSharp variable's value
+                     AddCSharpLine( "void " + CSharpRefreshSetPropertyDeclaration( entityProperty ) + "( )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                        AddCSharpLine( CSharpName(entityNode) + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
+                     --m_TabStack;
+                     AddCSharpLine( "}" );               
+                     AddCSharpLine( "" );
+                  }
 
                   //only one instance allowed
                   break;
@@ -1977,35 +1989,38 @@ namespace Detox.ScriptEditor
                   {
                      EntityProperty entityProperty = (EntityProperty) argNode;
                      
-                     //if the property variable is an array then we need to copy the array
-                     //to the next available index of the input parameter
-                     if ( entityProperty.Parameter.Type.Contains("[]") )
+                     if ( true == entityProperty.Parameter.Output )
                      {
-                        AddCSharpLine( "properties = " + CSharpRefreshGetPropertyDeclaration( (EntityProperty) argNode ) + "( );" );
+                        //if the property variable is an array then we need to copy the array
+                        //to the next available index of the input parameter
+                        if ( entityProperty.Parameter.Type.Contains("[]") )
+                        {
+                           AddCSharpLine( "properties = " + CSharpRefreshGetPropertyDeclaration( (EntityProperty) argNode ) + "( );" );
 
-                        //make sure our input array is large enough to hold the array we're copying into it
-                        AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length < index + properties.Length)" );
-                        AddCSharpLine( "{" );
-                        ++m_TabStack;
-                           AddCSharpLine( "System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);" );
-                        --m_TabStack;
-                        AddCSharpLine( "}" );
+                           //make sure our input array is large enough to hold the array we're copying into it
+                           AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length < index + properties.Length)" );
+                           AddCSharpLine( "{" );
+                           ++m_TabStack;
+                              AddCSharpLine( "System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);" );
+                           --m_TabStack;
+                           AddCSharpLine( "}" );
 
-                        AddCSharpLine( "System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);" );
-                        AddCSharpLine( "index += properties.Length;" );
-                     }
-                     else
-                     {
-                        //make sure our input array is large enough to hold another value
-                        AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length <= index)" );
-                        AddCSharpLine( "{" );
-                        ++m_TabStack;
-                           AddCSharpLine( "System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);" );
-                        --m_TabStack;
-                        AddCSharpLine( "}" );
+                           AddCSharpLine( "System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);" );
+                           AddCSharpLine( "index += properties.Length;" );
+                        }
+                        else
+                        {
+                           //make sure our input array is large enough to hold another value
+                           AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length <= index)" );
+                           AddCSharpLine( "{" );
+                           ++m_TabStack;
+                              AddCSharpLine( "System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);" );
+                           --m_TabStack;
+                           AddCSharpLine( "}" );
 
-                        //copy the source node value into the input parameter array
-                        AddCSharpLine( CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration( (EntityProperty) argNode ) + "( );" );
+                           //copy the source node value into the input parameter array
+                           AddCSharpLine( CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration( (EntityProperty) argNode ) + "( );" );
+                        }
                      }
                   }
 
@@ -2060,7 +2075,12 @@ namespace Detox.ScriptEditor
                
                if ( argNode is EntityProperty )
                {
-                  AddCSharpLine( CSharpRefreshSetPropertyDeclaration( (EntityProperty) argNode ) + "( );" );
+                  EntityProperty property = (EntityProperty) argNode;
+                
+                  if ( true == property.Parameter.Input )
+                  {
+                     AddCSharpLine( CSharpRefreshSetPropertyDeclaration( property ) + "( );" );
+                  }
                }
             }
          }
