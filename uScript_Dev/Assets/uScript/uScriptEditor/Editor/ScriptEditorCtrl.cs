@@ -948,13 +948,13 @@ namespace Detox.ScriptEditor
          m_FlowChart.ResumeLayout( );
          m_FlowChart.Invalidate( );
 			
-		 if (m_FlowChart.Nodes.Length > 0)
-		 {
-			if (location != Point.Empty)
-			{
+         if (m_FlowChart.Nodes.Length > 0)
+         {
+            if (location != Point.Empty)
+            {
                m_FlowChart.Location = location;
                m_FlowChart.Invalidate();
-			}
+            }
             else if (zoomExtents)
             {
                // center on the center for now - later, we'll calculate zoom amount, etc.
@@ -964,7 +964,9 @@ namespace Detox.ScriptEditor
                m_FlowChart.Location = new Point(Math.Min(0, Math.Max(-4096, -center.X + halfWidth)), Math.Min(0, Math.Max(-4096, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
                m_FlowChart.Invalidate();
             }
-		 }
+         }
+
+         FlowchartSelectionModified( null, null );
 
          OnScriptModified();
 
