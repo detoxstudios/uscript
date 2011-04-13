@@ -2322,7 +2322,7 @@ public class uScript : EditorWindow
          {
             if ( false == (o is UnityEngine.Object) ) continue;
 
-            if ( true == m_ScriptEditorCtrl.CanDragDrop(o) )
+            if ( (m_ScriptEditorCtrl.CanDragDropOnNode(o) && DragAndDrop.objectReferences.Length == 1) || m_ScriptEditorCtrl.CanDragDropContextMenu(o) )
             {
                DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
             }
@@ -2330,29 +2330,49 @@ public class uScript : EditorWindow
 
          if ( Event.current.type == EventType.DragPerform )
          {
+            // if all objects in the drag are droppable via context menu
+            // create a new game object variable for each one
+            bool canDropAll = true;
             foreach ( object o in DragAndDrop.objectReferences )
             {
-               //we are going to perform a dragdrop, so before we do
-               //see if there are any event scripts which can be
-               //attached to this game object
-               if ( true == m_ScriptEditorCtrl.CanDragDrop(o) )
+               if ( !m_ScriptEditorCtrl.CanDragDropOnNode(o) && m_ScriptEditorCtrl.CanDragDropContextMenu(o) )
                {
-                  if ( o is GameObject )
-                  {
-                     AttachEventScripts( (o as GameObject).name );
-                  }
+                  continue;
                }
-
-               if ( true == m_ScriptEditorCtrl.DoDragDrop(o) )
-               {
-                  DragAndDrop.AcceptDrag( );
-               }
-               else if ( true == m_ScriptEditorCtrl.DoDragDropContextMenu(o) )
+               
+               canDropAll = false;
+               break;
+            }
+            
+            if (canDropAll)
+            {
+               if (m_ScriptEditorCtrl.DoDragDropContextMenu( DragAndDrop.objectReferences ))
                {
                   m_ContextX = (int) Event.current.mousePosition.x;
                   m_ContextY = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
 
                   DragAndDrop.AcceptDrag( );
+               }
+            }
+            else
+            {
+               foreach ( object o in DragAndDrop.objectReferences )
+               {
+                  //we are going to perform a dragdrop, so before we do
+                  //see if there are any event scripts which can be
+                  //attached to this game object
+                  if ( true == m_ScriptEditorCtrl.CanDragDropOnNode(o) )
+                  {
+                     if ( o is GameObject )
+                     {
+                        AttachEventScripts( (o as GameObject).name );
+                     }
+                  }
+   
+                  if ( true == m_ScriptEditorCtrl.DoDragDrop(o) )
+                  {
+                     DragAndDrop.AcceptDrag( );
+                  }
                }
             }
          }

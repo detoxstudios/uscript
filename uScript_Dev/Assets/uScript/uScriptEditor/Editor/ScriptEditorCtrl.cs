@@ -88,7 +88,7 @@ namespace Detox.ScriptEditor
 
       private bool m_Dirty = false;
       Point  m_ContextCursor;
-      object m_ContextObject;
+      object[] m_ContextObject;
 
       public Point ContextCursor
       {
@@ -150,7 +150,7 @@ namespace Detox.ScriptEditor
          m_ChangeStack.Redo( );
       }
 
-      public bool CanDragDrop( object o )
+      public bool CanDragDropOnNode( object o )
       {
          foreach ( Node node in m_FlowChart.Nodes )
          {
@@ -207,12 +207,6 @@ namespace Detox.ScriptEditor
             }
          }
 
-         //no nodes were intersected so allow context menu
-         if ( true == typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) )
-         {
-            return true;
-         }
-         
          return false;
       }
 
@@ -326,24 +320,42 @@ namespace Detox.ScriptEditor
          return false;
       }
 
-      public bool DoDragDropContextMenu( object o )
+      public bool CanDragDropContextMenu( object o )
+      {
+         // first check to make sure we're not over a node
+         foreach ( Node node in m_FlowChart.Nodes )
+         {
+            Point point = node.PointToClient( Cursor.Position );
+
+            if ( point.X >= 0 && point.Y >= 0 && 
+                 point.X <= node.Size.Width &&
+                 point.Y <= node.Size.Height )
+            {               
+               return false;
+            }
+         }
+
+         // are we a game object?
+         return typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType());
+      }
+      
+      public bool DoDragDropContextMenu( object[] objects )
       {
          //no nodes were intersected so allow context menu
-         if ( true == typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) )
+         m_ContextObject = objects;
+         m_ContextCursor = System.Windows.Forms.Cursor.Position;
+         m_ContextCursor = m_FlowChart.PointToClient( m_ContextCursor );
+
+         m_ContextMenuStrip.Items.Clear( );
+
+         ToolStripMenuItem addMenu = new ToolStripMenuItem();
+         addMenu.Text = "Add";
+
+         Hashtable typeHash = new Hashtable( );
+ 
+         foreach (object obj in objects )
          {
-            m_ContextObject = o;
-            m_ContextCursor = System.Windows.Forms.Cursor.Position;
-            m_ContextCursor = m_FlowChart.PointToClient( m_ContextCursor );
-
-            m_ContextMenuStrip.Items.Clear( );
-
-            ToolStripMenuItem addMenu = new ToolStripMenuItem();
-            addMenu.Text = "Add";
-
-            Hashtable typeHash = new Hashtable( );
-
-            UnityEngine.GameObject gameObject = (UnityEngine.GameObject) o;
-            
+            UnityEngine.GameObject gameObject = obj as UnityEngine.GameObject;
             foreach ( UnityEngine.Component component in gameObject.GetComponents(typeof(UnityEngine.Component)) )
             {
                if ( component.GetType().ToString() != uScriptConfig.Variable.FriendlyName(component.GetType().ToString()))
@@ -353,15 +365,18 @@ namespace Detox.ScriptEditor
             }
 
             typeHash[ gameObject.GetType().ToString() ] = true;
-            
-            BuildAddMenu( addMenu, typeHash );
-            
-            m_ContextMenuStrip.Items.AddRange( addMenu.DropDownItems.Items.ToArray( ) );
-
-            return true;
          }
+   
+         string type = typeof(UnityEngine.GameObject).ToString();
+         string friendlyName = uScriptConfig.Variable.FriendlyName(type);
+         ToolStripMenuItem friendlyMenu = null;
+         friendlyMenu = GetMenu(addMenu, "Place " + friendlyName + " Variable");
+         friendlyMenu.Tag = new LocalNode( "", type, "" );
+         friendlyMenu.Click += new System.EventHandler(m_MenuAddNode_Click);
+         
+         m_ContextMenuStrip.Items.AddRange( addMenu.DropDownItems.Items.ToArray( ) );
 
-         return false;
+         return true;
       }
 
       public void CopyToClipboard( )
@@ -578,31 +593,59 @@ namespace Detox.ScriptEditor
          ScriptEditor oldEditor = m_ScriptEditor.Copy( );
 
          MenuItem item = sender as MenuItem;
-         EntityNode entityNode = (EntityNode) ((EntityNode) item.Tag).Copy( );
-
-         entityNode.Position = new Point( m_ContextCursor.X, m_ContextCursor.Y );
-
-         if ( null != m_ContextObject && typeof(UnityEngine.Object).IsAssignableFrom(m_ContextObject.GetType()) )
+         EntityNode entityNode;
+         Point offset = new Point(0, 0);
+         if ( null != m_ContextObject && typeof(Object[]).IsAssignableFrom(m_ContextObject.GetType()) )
          {
-            if ( entityNode.Instance != Parameter.Empty )
+            foreach (object obj in m_ContextObject)
             {
-               Parameter instance = entityNode.Instance;
-               instance.Default = ((UnityEngine.Object)m_ContextObject).name;
-               entityNode.Instance = instance;
-            }
-            else if ( entityNode is LocalNode )
-            {
-               LocalNode local = (LocalNode) entityNode;
-
-               Parameter value = local.Value;
-               value.Default = ((UnityEngine.Object)m_ContextObject).name;
-               local.Value = value;
-            
-               entityNode = local;
+               entityNode = (EntityNode) ((EntityNode) item.Tag).Copy( );
+      
+               entityNode.Position = new Point( m_ContextCursor.X + offset.X, m_ContextCursor.Y + offset.Y );
+               object contextObject = obj;
+      
+               if ( null != contextObject && typeof(UnityEngine.Object).IsAssignableFrom(contextObject.GetType()) )
+               {
+                  if ( entityNode.Instance != Parameter.Empty )
+                  {
+                     Parameter instance = entityNode.Instance;
+                     instance.Default = ((UnityEngine.Object)contextObject).name;
+                     entityNode.Instance = instance;
+                  }
+                  else if ( entityNode is LocalNode )
+                  {
+                     LocalNode local = (LocalNode) entityNode;
+      
+                     Parameter value = local.Value;
+                     value.Default = ((UnityEngine.Object)contextObject).name;
+                     local.Value = value;
+                  
+                     entityNode = local;
+                  }
+               }
+               else
+               {
+                  if ( "" != uScript.Instance.AutoAssignInstance(entityNode) )
+                  {
+                     Parameter instance = entityNode.Instance;
+                     instance.Default = uScript.Instance.AutoAssignInstance(entityNode);
+                  
+                     entityNode.Instance = instance;
+                  }
+               }
+      
+               m_ScriptEditor.AddNode( entityNode );
+               m_Dirty = true;
+               
+               offset.X += 10;
+               offset.Y += 10;
             }
          }
          else
          {
+            entityNode = (EntityNode) ((EntityNode) item.Tag).Copy( );
+   
+            entityNode.Position = new Point( m_ContextCursor.X, m_ContextCursor.Y );
             if ( "" != uScript.Instance.AutoAssignInstance(entityNode) )
             {
                Parameter instance = entityNode.Instance;
@@ -610,10 +653,10 @@ namespace Detox.ScriptEditor
             
                entityNode.Instance = instance;
             }
-         }
 
-         m_ScriptEditor.AddNode( entityNode );
-         m_Dirty = true;
+            m_ScriptEditor.AddNode( entityNode );
+            m_Dirty = true;
+         }
 
          m_ChangeStack.AddChange( new ChangeStack.Change("Add", oldEditor, m_ScriptEditor.Copy( )) );
 
@@ -1045,6 +1088,7 @@ namespace Detox.ScriptEditor
       void m_PropertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
       {
          ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+         bool requiresUndo = false;
 
          RemoveEventHandlers( );
 
@@ -1071,6 +1115,7 @@ namespace Detox.ScriptEditor
                   entityNode.Instance = instance;
 
                   FlowchartSelectionModified( null, null );
+                  requiresUndo = true;
                }
             }
 
@@ -1083,6 +1128,11 @@ namespace Detox.ScriptEditor
          {
             m_ChangeStack.AddChange( new ChangeStack.Change("Node Modified", oldEditor, m_ScriptEditor.Copy( )) );
             RefreshScript( null );
+         }
+         
+         if (requiresUndo)
+         {
+            Undo();
          }
       }
 
