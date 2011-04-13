@@ -1844,6 +1844,21 @@ public class uScript : EditorWindow
                variables.Add( variable );
             }
 
+            if ( m.ReturnType != typeof(void) )
+            {
+               Parameter parameter = new Parameter( );
+               parameter.Name    = "Return";
+               parameter.Type    = m.ReturnType.ToString( ).Replace( "&", "" );
+               parameter.Input   = false;
+               parameter.Output  = true;         
+               parameter.Default = "";
+               parameter.FriendlyName = "Return Value";
+
+               AddType( m.ReturnType );
+                  
+               variables.Add( parameter );
+            }
+
             Plug plug;
             plug.Name = m.Name;
             plug.FriendlyName = FindFriendlyName( m.Name, m.GetCustomAttributes(false) );

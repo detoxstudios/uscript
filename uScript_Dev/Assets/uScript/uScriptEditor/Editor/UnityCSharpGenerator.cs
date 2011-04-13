@@ -1572,7 +1572,6 @@ namespace Detox.ScriptEditor
          //make sure any properties or variables connected to us are up to date
          SyncSlaveConnections( receiver, receiver.Parameters );
 
-         List<Parameter> outputList = new List<Parameter>( );
          Parameter returnParam = Parameter.Empty;
          string args = "";
 
@@ -1592,8 +1591,6 @@ namespace Detox.ScriptEditor
                {
                   args += "out " + CSharpName(receiver, parameter.Name) + ", ";
                }
-
-               outputList.Add( parameter );
             }
             else if ( true == parameter.Input )
             {
@@ -1627,7 +1624,7 @@ namespace Detox.ScriptEditor
          }
 
          //force any potential entites affected to update
-         RefreshSetProperties( receiver, outputList.ToArray( ) );
+         RefreshSetProperties( receiver, receiver.Parameters );
 
          //push the output values
          //to all the links we connect out to
@@ -1666,43 +1663,45 @@ namespace Detox.ScriptEditor
       //they are connected to a logic node
       private void RelayToLogic( LogicNode receiver, string methodName )
       {
-         //our incoming links(variables) should be set
-         //we just add their names to the arg list
-         string inputArgs = "";
-         List<Parameter> inputList = new List<Parameter>( );
+         Parameter returnParam = Parameter.Empty;
+         string args = "";
 
          foreach ( Parameter parameter in receiver.Parameters )
          {
-            if ( false == parameter.Input ) continue;
-            
-            inputArgs += CSharpName(receiver, parameter.Name) + ", ";
-            inputList.Add( parameter );
+            if ( true == parameter.Input && true == parameter.Output )
+            {
+               args += "ref " + CSharpName(receiver, parameter.Name) + ", ";
+            }
+            else if ( true == parameter.Output )
+            {
+               if ( parameter.Name == "Return" )
+               {
+                  returnParam = parameter;
+               }
+               else
+               {
+                  args += "out " + CSharpName(receiver, parameter.Name) + ", ";
+               }
+            }
+            else if ( true == parameter.Input )
+            {
+               args += CSharpName(receiver, parameter.Name) + ", ";
+            }
          }
 
-         if ( inputArgs != "" ) inputArgs = inputArgs.Substring( 0, inputArgs.Length - 2 );
-
-         string outputArgs = "";
-         List<Parameter> outputList = new List<Parameter>( );
-
-         //save outgoing links to temp variables
-         foreach ( Parameter parameter in receiver.Parameters )
-         {
-            if ( false == parameter.Output ) continue;
-
-            outputArgs += "out " + CSharpName(receiver, parameter.Name) + ", ";
-            outputList.Add( parameter );
-         }
-
-         if ( outputArgs != "" ) outputArgs = outputArgs.Substring( 0, outputArgs.Length - 2 );
-
+         if ( args != "" ) args = args.Substring( 0, args.Length - 2 );
+         
          //make sure any properties or variables connected to us are up to date
-         SyncSlaveConnections( receiver, inputList.ToArray( ) );
+         SyncSlaveConnections( receiver, receiver.Parameters );
 
-         string totalArgs = inputArgs;
-
-         if ( totalArgs != "" && outputArgs != "" ) totalArgs += ", " + outputArgs;
-
-         AddCSharpLine( CSharpName(receiver, receiver.Type) + "." + methodName + "(" + totalArgs + ");" );
+         if ( returnParam != Parameter.Empty )
+         {
+            AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = " + CSharpName(receiver, receiver.Type) + "." + methodName + "(" + args + ");" );            
+         }
+         else
+         {
+            AddCSharpLine( CSharpName(receiver, receiver.Type) + "." + methodName + "(" + args + ");" );            
+         }
 
          //use previously saved temp variables to push the values
          //to all the links we connect out to
@@ -1720,7 +1719,7 @@ namespace Detox.ScriptEditor
          }
 
          //force any potential entites affected to update
-         RefreshSetProperties( receiver, outputList.ToArray( ) );
+         RefreshSetProperties( receiver, receiver.Parameters );
 
          //call anyone else connected to our outputs
          //if the result of the logic node has set our output to true
