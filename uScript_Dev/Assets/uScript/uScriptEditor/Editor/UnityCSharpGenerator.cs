@@ -28,54 +28,51 @@ namespace Detox.ScriptEditor
          //first prune out any nodes which dont' have valid instances
          foreach ( EntityNode entityNode in m_Script.EntityNodes )
          {
-            if ( entityNode is EntityProperty )
+            //if it doesn't need an instance, don't worry about finding one
+            if ( false == entityNode is EntityProperty &&
+                 false == entityNode is EntityEvent &&
+                 false == entityNode is EntityMethod ) continue;
+
+
+            //an instance set in the property grid?
+            if ( entityNode.Instance.Default != "" ) continue;
+      
+            bool includeNode = false;
+
+            //how about an instance linked to it?
+            LinkNode []instanceLinks = FindLinksByDestination( entityNode.Guid, entityNode.Instance.Name );
+            
+            foreach ( LinkNode link in instanceLinks )
             {
-               EntityProperty property = (EntityProperty) entityNode;
-               
-               bool includeProperty = false;
+               LocalNode node = (LocalNode) m_Script.GetNode( link.Source.Guid );
 
-               //an instance set in the property grid?
-               if ( property.Instance.Default != "" )
+               if ( node.Instance.Default != "" )
                {
-                  includeProperty = true;
+                  includeNode = true;
+                  break;
                }
-               else
+            }
+
+            if ( false == includeNode )
+            {
+               instanceLinks = FindLinksBySource( entityNode.Guid, entityNode.Instance.Name );
+            
+               foreach ( LinkNode link in instanceLinks )
                {
-                  //how about an instance linked to it?
-                  LinkNode []instanceLinks = FindLinksByDestination( property.Guid, property.Instance.Name );
-                  
-                  foreach ( LinkNode link in instanceLinks )
+                  LocalNode node = (LocalNode) m_Script.GetNode( link.Destination.Guid );
+
+                  if ( node.Instance.Default != "" )
                   {
-                     LocalNode node = (LocalNode) m_Script.GetNode( link.Source.Guid );
-
-                     if ( node.Instance.Default != "" )
-                     {
-                        includeProperty = true;
-                        break;
-                     }
-                  }
-
-                  if ( false == includeProperty )
-                  {
-                     instanceLinks = FindLinksBySource( property.Guid, property.Instance.Name );
-                  
-                     foreach ( LinkNode link in instanceLinks )
-                     {
-                        LocalNode node = (LocalNode) m_Script.GetNode( link.Destination.Guid );
-
-                        if ( node.Instance.Default != "" )
-                        {
-                           includeProperty = true;
-                           break;
-                        }
-                     }
+                     includeNode = true;
+                     break;
                   }
                }
-               //no valid instance, so remove it
-               if ( false == includeProperty )
-               {
-                  m_Script.RemoveNode( entityNode );
-               }
+            }
+
+            //no valid instance, so remove it
+            if ( false == includeNode )
+            {
+               m_Script.RemoveNode( entityNode );
             }
          }
 
@@ -916,6 +913,8 @@ namespace Detox.ScriptEditor
 
             for ( int i = 0; i < values.Length; i++ )
             {
+               if ( values[i].Trim( ) == "" ) continue;
+
                AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )" );
                AddCSharpLine( "{" );
                ++m_TabStack;
@@ -940,6 +939,8 @@ namespace Detox.ScriptEditor
             
             for ( int i = 0; i < values.Length; i++ )
             {
+               if ( values[i].Trim( ) == "" ) continue;
+
                AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )" );
                AddCSharpLine( "{" );               
                ++m_TabStack;
@@ -968,38 +969,44 @@ namespace Detox.ScriptEditor
          }
          else if ( true == componentType.IsAssignableFrom(nodeType) )
          {
-            AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
-            AddCSharpLine( "{" );
-            ++m_TabStack;
-
-               AddCSharpLine( "GameObject gameObject = GameObject.Find( \"" + parameter.Default + "\" );" );
-               AddCSharpLine( "if ( null != " + "gameObject )" );
-         
-               AddCSharpLine( "{" );               
+            if ( parameter.Default != "" )
+            {
+               AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
+               AddCSharpLine( "{" );
                ++m_TabStack;
-                  AddCSharpLine( CSharpName(node, parameter.Name) + " = gameObject.GetComponent<" + parameter.Type + ">();" );
-                  
-                  if ( node is EntityEvent )
-                  {
-                     SetEventInputs( CSharpName(node, parameter.Name), ((EntityEvent)node) );
-                  }
-            
-               --m_TabStack;
-               AddCSharpLine( "}" );               
 
-            --m_TabStack;
-            AddCSharpLine( "}" );
+                  AddCSharpLine( "GameObject gameObject = GameObject.Find( \"" + parameter.Default + "\" );" );
+                  AddCSharpLine( "if ( null != " + "gameObject )" );
+            
+                  AddCSharpLine( "{" );               
+                  ++m_TabStack;
+                     AddCSharpLine( CSharpName(node, parameter.Name) + " = gameObject.GetComponent<" + parameter.Type + ">();" );
+                     
+                     if ( node is EntityEvent )
+                     {
+                        SetEventInputs( CSharpName(node, parameter.Name), ((EntityEvent)node) );
+                     }
+               
+                  --m_TabStack;
+                  AddCSharpLine( "}" );               
+
+               --m_TabStack;
+               AddCSharpLine( "}" );
+            }
          }
          else if ( true == gameObjectType.IsAssignableFrom(nodeType) )
          {
-            AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
-            AddCSharpLine( "{" );
-            ++m_TabStack;
+            if ( parameter.Default != "" )
+            {
+               AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
 
-               AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + parameter.Type + ";" );
+                  AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + parameter.Type + ";" );
 
-            --m_TabStack;
-            AddCSharpLine( "}" );
+               --m_TabStack;
+               AddCSharpLine( "}" );
+            }
          }
       }
 

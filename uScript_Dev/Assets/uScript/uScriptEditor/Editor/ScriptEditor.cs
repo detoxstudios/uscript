@@ -2339,7 +2339,6 @@ namespace Detox.ScriptEditor
 
             streamWriter = File.CreateText( wrapperFile );
             streamWriter.Write( codeGenerator.GenerateGameObjectScript(logicClass, this) );
-            streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
             streamWriter.Close( );
          }
          catch (Exception e)
@@ -2358,7 +2357,6 @@ namespace Detox.ScriptEditor
 
             streamWriter = File.CreateText( logicFile );
             streamWriter.Write( codeGenerator.GenerateLogicScript(logicClass, this) );
-            streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
             streamWriter.Close( );
          }
          catch (Exception e)
