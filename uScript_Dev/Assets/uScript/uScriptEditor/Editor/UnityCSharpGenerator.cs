@@ -24,6 +24,66 @@ namespace Detox.ScriptEditor
       private void Preprocess( )
       {
          //prune out unused nodes (nodes which have no links)
+         
+         //first prune out any nodes which dont' have valid instances
+         foreach ( EntityNode entityNode in m_Script.EntityNodes )
+         {
+            if ( entityNode is EntityProperty )
+            {
+               EntityProperty property = (EntityProperty) entityNode;
+               
+               bool includeProperty = false;
+
+               //an instance set in the property grid?
+               if ( property.Instance.Default != "" )
+               {
+                  includeProperty = true;
+               }
+               else
+               {
+                  //how about an instance linked to it?
+                  LinkNode []instanceLinks = FindLinksByDestination( property.Guid, property.Instance.Name );
+                  
+                  foreach ( LinkNode link in instanceLinks )
+                  {
+                     LocalNode node = (LocalNode) m_Script.GetNode( link.Source.Guid );
+
+                     if ( node.Instance.Default != "" )
+                     {
+                        includeProperty = true;
+                        break;
+                     }
+                  }
+
+                  if ( false == includeProperty )
+                  {
+                     instanceLinks = FindLinksBySource( property.Guid, property.Instance.Name );
+                  
+                     foreach ( LinkNode link in instanceLinks )
+                     {
+                        LocalNode node = (LocalNode) m_Script.GetNode( link.Destination.Guid );
+
+                        if ( node.Instance.Default != "" )
+                        {
+                           includeProperty = true;
+                           break;
+                        }
+                     }
+                  }
+               }
+               //no valid instance, so remove it
+               if ( false == includeProperty )
+               {
+                  m_Script.RemoveNode( entityNode );
+               }
+            }
+         }
+
+         //now that we have removed all the nodes
+         //which don't have valid instances assigned
+         //lets remove any nodes which don't have links to them
+         
+         //track all the link source / destination nodes
          Hashtable usedNodes = new Hashtable( );
 
          foreach ( LinkNode link in m_Script.Links )
@@ -33,6 +93,7 @@ namespace Detox.ScriptEditor
             usedNodes[ link.Guid ] = true;
          }
 
+         //pruen any nodes which aren't linked
          foreach ( EntityNode entityNode in m_Script.EntityNodes )
          {
             if ( false == usedNodes.Contains(entityNode.Guid) )
@@ -354,6 +415,11 @@ namespace Detox.ScriptEditor
                
                //get links attached to this property
                LinkNode []instanceLinks = FindLinksByDestination( entityProperty.Guid, entityProperty.Instance.Name );
+
+               if ( instanceLinks.Length == 0 )
+               {
+                  instanceLinks = FindLinksBySource( entityProperty.Guid, entityProperty.Instance.Name );
+               }
 
                foreach ( LinkNode instanceLink in instanceLinks )
                {
@@ -1995,7 +2061,7 @@ namespace Detox.ScriptEditor
                         //to the next available index of the input parameter
                         if ( entityProperty.Parameter.Type.Contains("[]") )
                         {
-                           AddCSharpLine( "properties = " + CSharpRefreshGetPropertyDeclaration( (EntityProperty) argNode ) + "( );" );
+                           AddCSharpLine( "properties = " + CSharpRefreshGetPropertyDeclaration( entityProperty ) + "( );" );
 
                            //make sure our input array is large enough to hold the array we're copying into it
                            AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length < index + properties.Length)" );
@@ -2018,8 +2084,9 @@ namespace Detox.ScriptEditor
                            --m_TabStack;
                            AddCSharpLine( "}" );
 
+                           AddCSharpLine( "//here" );
                            //copy the source node value into the input parameter array
-                           AddCSharpLine( CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration( (EntityProperty) argNode ) + "( );" );
+                           AddCSharpLine( CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration( entityProperty ) + "( );" );
                         }
                      }
                   }
@@ -2047,7 +2114,12 @@ namespace Detox.ScriptEditor
                   //we need to write the line for the property to refresh
                   else if ( argNode is EntityProperty )
                   {
-                     AddCSharpLine( CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration( (EntityProperty) argNode ) + "( );" );
+                     EntityProperty entityProperty = (EntityProperty) argNode;
+
+                     if ( true == entityProperty.Parameter.Output )
+                     {
+                        AddCSharpLine( CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration( entityProperty ) + "( );" );
+                     }
                   }
                }
             }
