@@ -30,6 +30,8 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(UnityEngine.GameObject), "GameObject", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.GameObject[]), "GameObject List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Camera), "Camera", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.RaycastHit), "RaycastHit", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Ray), "Ray", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Camera[]), "Camera List", "Variables/Lists" ),           
          };
       }

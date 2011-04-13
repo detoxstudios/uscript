@@ -543,6 +543,14 @@ namespace Detox.ScriptEditor
             string [] subString = stringValue.Split( ',' );
             return "new UnityEngine.Color( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + " )";
          }
+         else if ( "UnityEngine.Ray" == type )
+         {
+            return "new UnityEngine.Ray( )";
+         }
+         else if ( "UnityEngine.RaycastHit" == type )
+         {
+            return "new UnityEngine.RaycastHit( )";
+         }
          else if ( type.Contains("[]") )
          {
             return FormatArrayValue( stringValue, type );
@@ -1564,30 +1572,76 @@ namespace Detox.ScriptEditor
          //make sure any properties or variables connected to us are up to date
          SyncSlaveConnections( receiver, receiver.Parameters );
 
+         List<Parameter> outputList = new List<Parameter>( );
+         Parameter returnParam = Parameter.Empty;
          string args = "";
 
          foreach ( Parameter parameter in receiver.Parameters )
          {
-            args += CSharpName(receiver, parameter.Name) + ", ";
+            if ( true == parameter.Input && true == parameter.Output )
+            {
+               args += "ref " + CSharpName(receiver, parameter.Name) + ", ";
+            }
+            else if ( true == parameter.Output )
+            {
+               if ( parameter.Name == "Return" )
+               {
+                  returnParam = parameter;
+               }
+               else
+               {
+                  args += "out " + CSharpName(receiver, parameter.Name) + ", ";
+               }
+
+               outputList.Add( parameter );
+            }
+            else if ( true == parameter.Input )
+            {
+               args += CSharpName(receiver, parameter.Name) + ", ";
+            }
          }
 
          if ( args != "" ) args = args.Substring( 0, args.Length - 2 );
 
-         LinkNode []instanceLinks = FindLinksByDestination( receiver.Guid, receiver.Instance.Name );
 
-         int local = 0;
+         LinkNode []instanceLinks = FindLinksByDestination( receiver.Guid, receiver.Instance.Name );
 
          foreach ( LinkNode link in instanceLinks )
          {
+            AddCSharpLine( "//Instance Links not supported when methods have return types or variables" );
+
             EntityNode node = m_Script.GetNode( link.Source.Guid );
             AddCSharpLine( CSharpName(node) + "." + receiver.Input.Name + "(" + args + ");" );            
-
-            ++local;
          }
 
          if ( receiver.Instance.Default != "" )
          {
-            AddCSharpLine( CSharpName(receiver, receiver.Instance.Name) + "." + receiver.Input.Name + "(" + args + ");" );            
+            if ( returnParam != Parameter.Empty )
+            {
+               AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = " + CSharpName(receiver, receiver.Instance.Name) + "." + receiver.Input.Name + "(" + args + ");" );            
+            }
+            else
+            {
+               AddCSharpLine( CSharpName(receiver, receiver.Instance.Name) + "." + receiver.Input.Name + "(" + args + ");" );            
+            }
+         }
+
+         //force any potential entites affected to update
+         RefreshSetProperties( receiver, outputList.ToArray( ) );
+
+         //push the output values
+         //to all the links we connect out to
+         foreach ( Parameter parameter in receiver.Parameters )
+         {
+            if ( false == parameter.Output ) continue;
+
+            LinkNode []argLinks = FindLinksBySource( receiver.Guid, parameter.Name );
+
+            foreach ( LinkNode link in argLinks )
+            {
+               EntityNode argNode = m_Script.GetNode( link.Destination.Guid );
+               AddCSharpLine( CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";" );
+            }
          }
 
          //call anyone else connected to us

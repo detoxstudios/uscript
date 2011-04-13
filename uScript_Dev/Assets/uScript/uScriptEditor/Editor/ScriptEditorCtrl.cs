@@ -1218,7 +1218,10 @@ namespace Detox.ScriptEditor
       {
          foreach ( ToolStripItem item in menu.DropDownItems.Items )
          {
-            if ( item.Text == name ) return (ToolStripMenuItem) item;
+            if ( item.Text == name ) 
+            {
+               return (ToolStripMenuItem) item;
+            }
          }
 
          return null;
@@ -1235,7 +1238,7 @@ namespace Detox.ScriptEditor
             if ( null == GetItem(subMenu, key) )
             {
                subMenu.DropDownItems.Add( new ToolStripMenuItem(key) );
-            }
+            } 
 
             subMenu = GetItem(subMenu, key);
          }
@@ -1784,7 +1787,7 @@ namespace Detox.ScriptEditor
                string style = NodeStyle;
                point.StyleName = style + "_socket_" + additionalFlag + "variable_" +
                                  uScriptConfig.Variable.FriendlyStyleName(socket.Type);
-
+               
                points.Add( point );
 
                textPoint.Name = FormatName(socket);
@@ -2126,12 +2129,7 @@ namespace Detox.ScriptEditor
 
          List<Parameter> p = new List<Parameter>( );
 
-         foreach ( Parameter ep in desc.EditableParameters )
-         {
-            p.Add( ep );
-         }
-
-         foreach ( Parameter ep in desc.ReadOnlyParameters )
+         foreach ( Parameter ep in desc.Parameters )
          {
             p.Add( ep );
          }
@@ -2147,7 +2145,7 @@ namespace Detox.ScriptEditor
 
             foreach ( ParameterDesc desc in m_ParameterDescs.Values )
             {
-               foreach ( Parameter property in desc.EditableParameters )
+               foreach ( Parameter property in desc.Parameters )
                {
                   parameters.Add( property );
                }
@@ -2166,9 +2164,8 @@ namespace Detox.ScriptEditor
                ParameterDesc newDesc = new ParameterDesc( );
                
                newDesc.Key = desc.Key;
-               newDesc.ReadOnlyParameters = desc.ReadOnlyParameters;
 
-               int count = desc.EditableParameters.Length;
+               int count = desc.Parameters.Length;
 
                List<Parameter> parameters = new List<Parameter>( );
 
@@ -2178,7 +2175,7 @@ namespace Detox.ScriptEditor
                   index++;
                }
 
-               newDesc.EditableParameters = parameters.ToArray( );
+               newDesc.Parameters = parameters.ToArray( );
                newDescs[ newDesc.Key ] = newDesc;
             }
 
@@ -2188,8 +2185,7 @@ namespace Detox.ScriptEditor
 
       private struct ParameterDesc
       {
-         public Parameter[] EditableParameters;
-         public Parameter[] ReadOnlyParameters;
+         public Parameter[] Parameters;
          public string Key;
       }
 
@@ -2197,27 +2193,10 @@ namespace Detox.ScriptEditor
 
       public void AddParameters( string key, Parameter[] parameters )
       {
-         List<Parameter> editableParams = new List<Parameter>( );
-         List<Parameter> readOnlyParams = new List<Parameter>( );
-
-         if ( null != parameters )
-         {
-            foreach ( Parameter p in parameters )
-            {
-               if ( true == p.Input )
-               {
-                  editableParams.Add( p );
-               }
-               else
-               {
-                  readOnlyParams.Add( p );
-               }
-            }
-         }
-
          ParameterDesc desc = new ParameterDesc( );
-         desc.EditableParameters = editableParams.ToArray( );
-         desc.ReadOnlyParameters = readOnlyParams.ToArray( );
+         desc.Parameters = new Parameter[ parameters.Length ];
+         
+         parameters.CopyTo( desc.Parameters, 0 );
          desc.Key = key;
 
          m_ParameterDescs[ key ] = desc;

@@ -361,14 +361,20 @@ public class uScript : EditorWindow
             uScriptMaster.AddComponent(typeof(uScript_Input));
          }
 
-		 if (String.IsNullOrEmpty(m_FullPath))
-		 {
+         foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
+         {
+            AddType(b.Type);
+         }
+
+		   if (String.IsNullOrEmpty(m_FullPath))
+		   {
             String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
             if (!String.IsNullOrEmpty(lastOpened))
             {
                m_FullPath = lastOpened;
             }
-		 }
+		   }
+
 
          //when doing certain operations like 'play' in unity
          //it seems to set any class references back to null
@@ -1873,6 +1879,193 @@ public class uScript : EditorWindow
       return logicNodes.ToArray( );
    }
 
+   private void Reflect(Type type, List<EntityDesc> entityDescs, Hashtable baseMethods, Hashtable baseEvents, Hashtable baseProperties )
+   {
+      EntityDesc entityDesc = new EntityDesc( );
+
+      entityDesc.Type = type.ToString( );
+      AddType( type );
+
+      MethodInfo   []methodInfos   = type.GetMethods( );
+      EventInfo    []eventInfos    = type.GetEvents( );
+      PropertyInfo []propertyInfos = type.GetProperties( );
+
+      List<EntityMethod> entityMethods = new List<EntityMethod>( );
+
+      Hashtable accessorMethods = new Hashtable( );
+
+      foreach ( PropertyInfo p in propertyInfos )
+      {
+         if ( p.GetGetMethod( ) != null )
+         {
+            accessorMethods[ p.GetGetMethod( ).Name ]  = true;
+         }
+
+         if ( p.GetSetMethod( ) != null )
+         {
+            accessorMethods[ p.GetSetMethod( ).Name ] = true;
+         }
+      }
+
+      foreach ( MethodInfo m in methodInfos )
+      {
+         if ( accessorMethods.Contains(m.Name) ) continue;
+         if ( m.IsStatic ) continue;
+
+         //don't expose our event methods to the user
+         if ( typeof(uScriptEvent).IsAssignableFrom(type) ) continue;
+
+         if ( false == m.IsPublic ) continue;
+         if ( true  == baseMethods.Contains(m.Name) ) continue;
+
+         ParameterInfo [] parameterInfos = m.GetParameters( );
+
+         EntityMethod entityMethod = new EntityMethod( type.ToString( ), m.Name, FindFriendlyName(m.Name, m.GetCustomAttributes(false)) );
+         List<Parameter> parameters = new List<Parameter>( );
+
+         foreach ( ParameterInfo p in parameterInfos )
+         {
+            Parameter parameter = new Parameter( );
+            parameter.Name    = p.Name;
+            parameter.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
+            parameter.Type    = p.ParameterType.ToString( ).Replace( "&", "" );
+            parameter.Input   = false == p.IsOut;
+            parameter.Output  = true  == p.IsOut;
+            parameter.Default = (null != p.DefaultValue) ? p.DefaultValue.ToString( ) : "";
+
+            AddType( p.ParameterType );
+            
+            parameters.Add( parameter );
+         }
+
+         if ( m.ReturnType != typeof(void) )
+         {
+            Parameter parameter = new Parameter( );
+            parameter.Name    = "Return";
+            parameter.Type    = m.ReturnType.ToString( ).Replace( "&", "" );
+            parameter.Input   = false;
+            parameter.Output  = true;         
+            parameter.Default = "";
+            parameter.FriendlyName = "Return Value";
+
+            AddType( m.ReturnType );
+               
+            parameters.Add( parameter );
+         }
+
+         entityMethod.Parameters = parameters.ToArray( );
+         entityMethods.Add( entityMethod );
+      }
+
+      entityDesc.Methods = entityMethods.ToArray( );
+
+      List<EntityEvent> entityEvents = new List<EntityEvent>( );
+
+      foreach ( EventInfo e in eventInfos )
+      {
+         if ( true == baseEvents.Contains(e.Name) ) continue;
+
+         List<Parameter> eventInputsOutpus = new List<Parameter>( );
+
+         //look for any set properties which will exist on the event
+         //because we can't set them via method parameters
+         foreach ( PropertyInfo p in propertyInfos )
+         {
+            if ( baseProperties.Contains(p.Name) ) continue;
+
+            if ( p.GetSetMethod( ) != null )
+            {
+               Parameter input = new Parameter( );
+               
+               input.Name     = p.Name;
+               input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
+               input.Type    = p.PropertyType.ToString( ).Replace( "&", "" );
+               input.Input   = true;
+               input.Output  = false;
+               input.Default = "";
+
+               AddType( p.PropertyType );
+            
+               eventInputsOutpus.Add( input );
+            }
+         }
+
+         Plug []outputPlug = new Plug[ 1 ];
+
+         outputPlug[ 0 ].Name = e.Name;
+         outputPlug[ 0 ].FriendlyName = FindFriendlyName(e.Name, e.GetCustomAttributes(false));
+
+         EntityEvent entityEvent = new EntityEvent( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)), outputPlug );
+
+         ParameterInfo [] eventParameters = e.GetAddMethod( ).GetParameters( );
+
+         foreach ( ParameterInfo eventParameter in eventParameters )
+         {
+            MethodInfo [] eventHandlerMethods = eventParameter.ParameterType.GetMethods( );
+
+            foreach ( MethodInfo eventHandlerMethod in eventHandlerMethods )
+            {
+               if ( eventHandlerMethod.Name == "Invoke" )
+               {
+                  ParameterInfo [] methodParameters = eventHandlerMethod.GetParameters( );
+
+                  foreach ( ParameterInfo methodParameter in methodParameters )
+                  {
+                     if ( typeof(EventArgs).IsAssignableFrom(methodParameter.ParameterType) )
+                     {
+                        entityEvent.EventArgs = methodParameter.ParameterType.ToString( ).Replace( "+", "." );
+                        
+                        PropertyInfo []eventProperties = methodParameter.ParameterType.GetProperties( );
+                     
+                        foreach ( PropertyInfo eventProperty in eventProperties )
+                        {
+                           Parameter output = new Parameter( );
+                           output.Name    = eventProperty.Name;
+                           output.FriendlyName = FindFriendlyName(eventProperty.Name, eventProperty.GetCustomAttributes(false));
+                           output.Type    = eventProperty.PropertyType.ToString( ).Replace( "&", "" );
+                           output.Input   = false;
+                           output.Output  = true;
+                           output.Default = "";
+
+                           AddType( eventProperty.PropertyType );
+
+                           eventInputsOutpus.Add( output );                           
+                        }
+                     }
+                  }
+                  
+                  //break after Invoke parameter, it's the only one we care about
+                  break;
+               }
+            }
+         }
+
+         entityEvent.Parameters = eventInputsOutpus.ToArray( );
+         entityEvents.Add( entityEvent );
+      }
+
+      entityDesc.Events = entityEvents.ToArray( );
+
+      List<EntityProperty> entityProperties = new List<EntityProperty>( );
+
+      foreach ( PropertyInfo p in propertyInfos )
+      {
+         if ( true == baseProperties.Contains(p.Name) ) continue;
+
+         bool isInput = p.GetSetMethod( ) != null;
+         bool isOutput= p.GetGetMethod( ) != null;
+
+         EntityProperty property = new EntityProperty( p.Name, FindFriendlyName(p.Name, p.GetCustomAttributes(false)), type.ToString( ), p.PropertyType.ToString( ), isInput, isOutput );
+         entityProperties.Add( property );
+
+         AddType( p.PropertyType );
+      }
+
+      entityDesc.Properties = entityProperties.ToArray( );
+
+      entityDescs.Add( entityDesc );
+   }
+
    private EntityDesc[] PopulateEntityTypes( )
    {
       Hashtable baseMethods    = new Hashtable( );
@@ -1957,7 +2150,7 @@ public class uScript : EditorWindow
       }
 
       List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>( FindObjectsOfType(typeof(UnityEngine.Object)) );
-      Dictionary<Type, UnityEngine.Object> uniqueObjects = new Dictionary<Type, UnityEngine.Object>( );
+      Dictionary<Type, object> uniqueObjects = new Dictionary<Type, object>( );
 
       foreach ( UnityEngine.Object o in allObjects )
       {
@@ -1968,189 +2161,26 @@ public class uScript : EditorWindow
          uniqueObjects[ o.GetType() ] = o;
       }
 
-      foreach ( UnityEngine.Object node in uniqueObjects.Values )
+      foreach ( object node in uniqueObjects.Values )
       {
-         EntityDesc entityDesc = new EntityDesc( );
-
-         Type type = node.GetType( );
-         entityDesc.Type = type.ToString( );
-         AddType( type );
-
-         MethodInfo   []methodInfos   = type.GetMethods( );
-         EventInfo    []eventInfos    = type.GetEvents( );
-         PropertyInfo []propertyInfos = type.GetProperties( );
-
-         List<EntityMethod> entityMethods = new List<EntityMethod>( );
-
-         Hashtable accessorMethods = new Hashtable( );
-
-         foreach ( PropertyInfo p in propertyInfos )
-         {
-            if ( p.GetGetMethod( ) != null )
-            {
-               accessorMethods[ p.GetGetMethod( ).Name ]  = true;
-            }
-
-            if ( p.GetSetMethod( ) != null )
-            {
-               accessorMethods[ p.GetSetMethod( ).Name ] = true;
-            }
-         }
-
-         foreach ( MethodInfo m in methodInfos )
-         {
-            if ( accessorMethods.Contains(m.Name) ) continue;
-
-            //don't expose our event methods to the user
-            if ( typeof(uScriptEvent).IsAssignableFrom(node.GetType()) ) continue;
-
-            if ( false == m.IsPublic ) continue;
-            if ( true  == baseMethods.Contains(m.Name) ) continue;
-
-            ParameterInfo [] parameters = m.GetParameters( );
-
-            EntityMethod entityMethod = new EntityMethod( type.ToString( ), m.Name, FindFriendlyName(m.Name, m.GetCustomAttributes(false)) );
-            List<Parameter> inputs = new List<Parameter>( );
-
-            bool cancel = false;
-
-            foreach ( ParameterInfo p in parameters )
-            {
-               if ( false == p.IsOut )
-               {
-                  Parameter input = new Parameter( );
-                  input.Name    = p.Name;
-                  input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
-                  input.Type    = p.ParameterType.ToString( ).Replace( "&", "" );
-                  input.Input   = true;
-                  input.Output  = false;
-                  input.Default = (null != p.DefaultValue) ? p.DefaultValue.ToString( ) : "";
-
-                  AddType( p.ParameterType );
-
-                  inputs.Add( input );
-               }
-               else
-               {
-                  cancel = true;
-               }
-            }
-
-            if ( false == cancel )
-            {
-               entityMethod.Parameters = inputs.ToArray( );
-               entityMethods.Add( entityMethod );
-            }
-         }
-
-         entityDesc.Methods = entityMethods.ToArray( );
-
-         List<EntityEvent> entityEvents = new List<EntityEvent>( );
-   
-         foreach ( EventInfo e in eventInfos )
-         {
-            if ( true == baseEvents.Contains(e.Name) ) continue;
-
-            List<Parameter> eventInputsOutpus = new List<Parameter>( );
-
-            //look for any set properties which will exist on the event
-            //because we can't set them via method parameters
-            foreach ( PropertyInfo p in propertyInfos )
-            {
-               if ( baseProperties.Contains(p.Name) ) continue;
-
-               if ( p.GetSetMethod( ) != null )
-               {
-                  Parameter input = new Parameter( );
-                  
-                  input.Name     = p.Name;
-                  input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
-                  input.Type    = p.PropertyType.ToString( ).Replace( "&", "" );
-                  input.Input   = true;
-                  input.Output  = false;
-                  input.Default = "";
-
-                  AddType( p.PropertyType );
-               
-                  eventInputsOutpus.Add( input );
-               }
-            }
-
-            Plug []outputPlug = new Plug[ 1 ];
-
-            outputPlug[ 0 ].Name = e.Name;
-            outputPlug[ 0 ].FriendlyName = FindFriendlyName(e.Name, e.GetCustomAttributes(false));
-
-            EntityEvent entityEvent = new EntityEvent( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)), outputPlug );
-
-            ParameterInfo [] eventParameters = e.GetAddMethod( ).GetParameters( );
-
-            foreach ( ParameterInfo eventParameter in eventParameters )
-            {
-               MethodInfo [] eventHandlerMethods = eventParameter.ParameterType.GetMethods( );
-
-               foreach ( MethodInfo eventHandlerMethod in eventHandlerMethods )
-               {
-                  if ( eventHandlerMethod.Name == "Invoke" )
-                  {
-                     ParameterInfo [] methodParameters = eventHandlerMethod.GetParameters( );
-
-                     foreach ( ParameterInfo methodParameter in methodParameters )
-                     {
-                        if ( typeof(EventArgs).IsAssignableFrom(methodParameter.ParameterType) )
-                        {
-                           entityEvent.EventArgs = methodParameter.ParameterType.ToString( ).Replace( "+", "." );
-                           
-                           PropertyInfo []eventProperties = methodParameter.ParameterType.GetProperties( );
-                        
-                           foreach ( PropertyInfo eventProperty in eventProperties )
-                           {
-                              Parameter output = new Parameter( );
-                              output.Name    = eventProperty.Name;
-                              output.FriendlyName = FindFriendlyName(eventProperty.Name, eventProperty.GetCustomAttributes(false));
-                              output.Type    = eventProperty.PropertyType.ToString( ).Replace( "&", "" );
-                              output.Input   = false;
-                              output.Output  = true;
-                              output.Default = "";
-
-                              AddType( eventProperty.PropertyType );
-
-                              eventInputsOutpus.Add( output );                           
-                           }
-                        }
-                     }
-                     
-                     //break after Invoke parameter, it's the only one we care about
-                     break;
-                  }
-               }
-            }
-
-            entityEvent.Parameters = eventInputsOutpus.ToArray( );
-            entityEvents.Add( entityEvent );
-         }
-
-         entityDesc.Events = entityEvents.ToArray( );
-
-         List<EntityProperty> entityProperties = new List<EntityProperty>( );
-
-         foreach ( PropertyInfo p in propertyInfos )
-         {
-            if ( true == baseProperties.Contains(p.Name) ) continue;
-
-            bool isInput = p.GetSetMethod( ) != null;
-            bool isOutput= p.GetGetMethod( ) != null;
-
-            EntityProperty property = new EntityProperty( p.Name, FindFriendlyName(p.Name, p.GetCustomAttributes(false)), type.ToString( ), p.PropertyType.ToString( ), isInput, isOutput );
-            entityProperties.Add( property );
-
-            AddType( p.PropertyType );
-         }
-
-         entityDesc.Properties = entityProperties.ToArray( );
-
-         entityDescs.Add( entityDesc );
+         Reflect( node.GetType(), entityDescs, baseMethods, baseEvents, baseProperties );
       }
+
+      //if we want to reflect everything
+      //List<Type> types = new List<Type>( );
+
+      //foreach ( object t in m_Types.Values )
+      //{
+      //   types.Add( (Type) t );
+      //}
+
+      //foreach ( Type t in types.ToArray( ) )
+      //{
+      //   if ( false == uniqueObjects.ContainsKey(t) )
+      //   {
+      //      Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
+      //   }
+      //}
 
       //consolidate like events so they appear on the same node
       EntityDesc [] descs = entityDescs.ToArray( );

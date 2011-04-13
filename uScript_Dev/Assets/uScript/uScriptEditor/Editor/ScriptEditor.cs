@@ -754,7 +754,7 @@ namespace Detox.ScriptEditor
             nodeData.Position.Y= Position.Y;
             nodeData.Guid      = Guid;
             nodeData.Parameters  = ArrayUtil.ToParameterDatas( Parameters );
-         
+
             return nodeData;
          }
       }
@@ -1992,6 +1992,18 @@ namespace Detox.ScriptEditor
          //query unity objects which might not be loaded yet so we can't just use Type.GetType
          Type sourceType = uScript.Instance.GetType( sourceParam.Type );
          Type destType   = uScript.Instance.GetType( destParam.Type );
+
+         if ( null == destType ) 
+         {
+            Status.Warning( "Type " + destParam.Type + " could not be found in the Unity system" );
+            return false;
+         }
+
+         if ( null == sourceType ) 
+         {
+            Status.Warning( "Type " + sourceParam.Type + " could not be found in the Unity system" );
+            return false;
+         }
 
          //allow link if the types are compatible somewhere in the derived chain
          return destType.IsAssignableFrom( sourceType );

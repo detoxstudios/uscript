@@ -177,15 +177,21 @@ namespace System.Windows.Forms
       {
          bool signalUpdate = false;
 
-         foreach ( object selectedObjectx in SelectedObjects )
+         foreach ( object selectedObject in SelectedObjects )
          {
-            PropertyGridParameters parameters = selectedObjectx as PropertyGridParameters;
+            PropertyGridParameters parameters = selectedObject as PropertyGridParameters;
             GUILayout.Label( parameters.Description );
 
             List<Parameter> updatedParameters = new List<Parameter>( );
 
             foreach ( Parameter p in parameters.Parameters )
             {
+               if ( false == p.Input ) 
+               {
+                  updatedParameters.Add(  p );
+                  continue;
+               }
+
                object val = p.DefaultAsObject;
 
                if ( val.GetType() == typeof(System.Boolean) )

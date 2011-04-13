@@ -173,58 +173,12 @@ public struct uScriptConfigBlock
    public Type Type;
    public string FriendlyName;
    public string Category;
-   public Color Color;
-   public string Description;
-   public string URL;
-
-   public uScriptConfigBlock(Type type, string friendlyName)
-   {
-      Type = type != null ? type : typeof(Type);
-      FriendlyName = friendlyName != null ? friendlyName : "";
-      Category = "";
-      Color = new Color(196, 196, 196);
-      Description = "";
-      URL = "";
-   }
 
    public uScriptConfigBlock(Type type, string friendlyName, string category)
    {
       Type = type != null ? type : typeof(Type);
       FriendlyName = friendlyName != null ? friendlyName : "";
       Category = category;
-      Color = new Color(196, 196, 196);
-      Description = "";
-      URL = "";
-   }
-
-   public uScriptConfigBlock(Type type, string friendlyName, string category, Color color)
-   {
-      Type = type != null ? type : typeof(Type);
-      FriendlyName = friendlyName != null ? friendlyName : "";
-      Category = category != null ? category : "";
-      Color = color;
-      Description = "";
-      URL = "";
-   }
-
-   public uScriptConfigBlock(Type type, string friendlyName, string category, Color color, string description)
-   {
-      Type = type != null ? type : typeof(Type);
-      FriendlyName = friendlyName != null ? friendlyName : "";
-      Category = category != null ? category : "";
-      Color = color;
-      Description = description != null ? description : "";
-      URL = "";
-   }
-
-   public uScriptConfigBlock(Type type, string friendlyName, string category, Color color, string description, string url)
-   {
-      Type = type != null ? type : typeof(Type);
-      FriendlyName = friendlyName != null ? friendlyName : "";
-      Category = category != null ? category : "";
-      Color = color;
-      Description = description != null ? description : "";
-      URL = url != null ? url : "";
    }
 }
 
@@ -596,41 +550,67 @@ public class uScriptDefaultStyle : uScriptStyle
 
       if (m_Styles.ContainsKey(name)) return m_Styles[name];
 
-	  //uScriptDebug( "Can not find style: " + name, uScriptDebug.Type.Warning );
+	   //Debug.Log( "Can not find style: " + name );
 
       if (false == name.Contains("socket") &&
           true == name.Contains("node") &&
 		  false == name.Contains("selected"))
       {
+   	   //Debug.Log( "returning node_default" );
          return m_Styles[ "node_default" ];
       }
 		else if (true == name.Contains("node_selected"))
       {
+   	   //Debug.Log( "returning node_selected" );
          return m_Styles[ "node_selected" ];
       }
       else if (true == name.Contains("socket"))
       {
-         return m_Styles[ "node_default_socket_io" ];
+         if ( true == name.Contains("_io") )
+         {
+   	      //Debug.Log( "node_default_socket_io" );
+            return m_Styles[ "node_default_socket_io" ];
+         }
+         else
+         {
+            string type = "default";
+            if ( true == name.Contains("_event_") ) type = "event";
+
+            if ( true == name.Contains("_out_") )
+            {
+   	         //Debug.Log( "node_default_socket_io" );
+               return m_Styles[ "node_" + type + "_socket_out_variable_default" ];
+            }
+            else
+            {
+               return m_Styles[ "node_" + type + "_socket_variable_default" ];
+            }
+         }
       }
       else if (true == name.Contains("icon"))
       {
+   	   //Debug.Log( "icon_lock_open" );
          return m_Styles[ "icon_lock_open" ];
       }
       else if (true == name.Contains("comment") &&
 			   false == name.Contains("selected"))
       {
+   	   //Debug.Log( "comment" );
          return m_Styles[ "comment" ];
       }
 	  else if (true == name.Contains("comment_selected"))
       {
+   	   //Debug.Log( "comment_selected" );
          return m_Styles[ "comment_selected" ];
       }
       else if (true == name.Contains("property"))
       {
+   	   //Debug.Log( "property_default" );
          return m_Styles[ "property_default" ];
       }
 	  else
 	  {
+   	   //Debug.Log( "variable_default" );
          return m_Styles[ "variable_default" ];
 	  }
    }
