@@ -530,7 +530,11 @@ public class uScript : EditorWindow
                OpenLogicNode( );
             }
          }
-         else if ( true == m_MouseDown && Event.current.type == EventType.MouseUp )
+         //if the mouse is currently down and they've let the mouse up or
+         //they've left the control bounds (unity won't send us a mouse up event), 
+         //do the mouse up event
+         else if ( true == m_MouseDown && 
+                   (Event.current.type == EventType.MouseUp || mouseRegion == MouseRegion.Outside) )
          {
             m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
 
