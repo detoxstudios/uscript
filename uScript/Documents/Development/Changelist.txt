@@ -1,6 +1,0 @@
-uScript Changelist Notes
-
-3/20/2011 2:19:49 PM
-Changelist: 30
-Source control move for uScript completed. This should be considered the "virgin build" before any continued development has happened since the move.
-
