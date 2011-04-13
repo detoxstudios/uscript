@@ -80,6 +80,13 @@ namespace Detox.ScriptEditor
          { 
             string type = uScriptConfig.Variable.FriendlyName(Type);
 
+            //Arrays (lists) can't be set through a property grid, only through multiple links
+            //which means we never worry about our Default value being an array
+            //so we are safe to parse the "List" part out of the type and treat it as
+            //if it was just a single value
+            type = type.Replace( " List", "" );
+            type = type.Trim( );
+
             if ( type == "Bool" )
             {
                return "true" == Default;
@@ -116,25 +123,6 @@ namespace Detox.ScriptEditor
                catch 
                {
                   return 0.0f;
-               }
-            }
-            if ( type == "Int[]" )
-            {
-               try
-               {
-                  string []values = Default.Split( ',' );
-                  List<int> vals = new List<int>( );
-
-                  foreach ( string s in values )
-                  {
-                     vals.Add( Int32.Parse(s) );
-                  }
-
-                  return vals.ToArray( );
-               }
-               catch
-               {
-                  return 0;
                }
             }
             if ( type == "Vector2" )
@@ -181,6 +169,13 @@ namespace Detox.ScriptEditor
          {
             string type = uScriptConfig.Variable.FriendlyName(Type);
 
+            //Arrays (lists) can't be set through a property grid, only through multiple links
+            //which means we never worry about our Default value being an array
+            //so we are safe to parse the "List" part out of the type and treat it as
+            //if it was just a single value
+            type = type.Replace( " List", "" );
+            type = type.Trim( );
+
             if ( type == "Bool" )  
             {
                Default = ((bool)value) == true ? "true" : "false";
@@ -194,34 +189,6 @@ namespace Detox.ScriptEditor
             if ( type == "Int" )
             {
                Default = "" + value;
-               return;
-            }
-            if ( type == "Int[]" )
-            {
-               try
-               {
-                  if ( value is string )
-                  {
-                     Default = value as string;
-                  }
-                  else
-                  {
-                     int[] vals = (int[]) value;
-
-                     Default = "";
-
-                     foreach ( int v in vals )
-                     {
-                        Default += v + ",";
-                     }
-
-                     Default = Default.Substring( 0, Default.Length - 1 );
-                  }
-               }
-               catch
-               {
-                  Default = "0";
-               }
                return;
             }
             if ( type == "Vector2" )

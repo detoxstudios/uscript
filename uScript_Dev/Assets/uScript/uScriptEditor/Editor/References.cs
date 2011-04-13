@@ -159,6 +159,12 @@ namespace System.Windows.Forms
 
       private Type GetObjectFieldType(string stringType)
       {
+         //Arrays (lists) can't be set through a property grid, only through multiple links
+         //which means we never worry about our Default value being an array
+         //so we are safe to parse the "List" part out of the type and treat it as
+         //if it was just a single value
+         stringType = stringType.Replace("[]", "");
+         
          Type type = uScript.Instance.GetType(stringType);
          if ( null == type ) return null;
 
@@ -184,7 +190,7 @@ namespace System.Windows.Forms
 
                if ( val.GetType() == typeof(System.Boolean) )
                {
-                  val = UnityEditor.EditorGUILayout.Toggle( p.Name, (bool) p.DefaultAsObject );
+                  val = UnityEditor.EditorGUILayout.Toggle( p.Name, (bool) val );
                }
                else if ( val.GetType() == typeof(System.Int32) )
                {
