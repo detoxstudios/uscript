@@ -360,6 +360,11 @@ public class uScript : EditorWindow
             uScriptDebug.Log("Adding input to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_Input));
          }
+         if (null == uScriptMaster.GetComponent<uScript_Update>())
+         {
+            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_Update));
+         }
 
          foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
          {
@@ -1404,12 +1409,19 @@ public class uScript : EditorWindow
       {
          foreach ( ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items )
          {
-            bool pressed = GUILayout.Button( item.Text.Replace("&", ""), EditorStyles.label );
-
-            if ( true == pressed )
+            if ( item.Text == "<hr>" )
             {
-               m_CurrentMenu = item;
-               break;
+               GUILayout.HorizontalSlider( 0, 0, 0 );
+            }
+            else
+            {
+               bool pressed = GUILayout.Button( item.Text.Replace("&", ""), EditorStyles.label );
+
+               if ( true == pressed )
+               {
+                  m_CurrentMenu = item;
+                  break;
+               }
             }
          }
       }

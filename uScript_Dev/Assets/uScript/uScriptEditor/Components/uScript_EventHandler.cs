@@ -116,7 +116,7 @@ public class uScriptDebug : MonoBehaviour
       Message,
       Warning,
       Error,
-	  Debug
+      Debug
    }
 
    public static void Log(string msgString)

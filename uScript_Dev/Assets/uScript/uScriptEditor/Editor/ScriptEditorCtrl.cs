@@ -356,24 +356,29 @@ namespace Detox.ScriptEditor
          foreach (object obj in objects )
          {
             UnityEngine.GameObject gameObject = obj as UnityEngine.GameObject;
+            
             foreach ( UnityEngine.Component component in gameObject.GetComponents(typeof(UnityEngine.Component)) )
             {
-               if ( component.GetType().ToString() != uScriptConfig.Variable.FriendlyName(component.GetType().ToString()))
-               {
-                  typeHash[ component.GetType().ToString() ] = true;
-               }
+               typeHash[ component.GetType().ToString() ] = true;
             }
 
             typeHash[ gameObject.GetType().ToString() ] = true;
          }
    
-         string type = typeof(UnityEngine.GameObject).ToString();
+         string type         = typeof(UnityEngine.GameObject).ToString();
          string friendlyName = uScriptConfig.Variable.FriendlyName(type);
+
          ToolStripMenuItem friendlyMenu = null;
-         friendlyMenu = GetMenu(addMenu, "Place " + friendlyName + " Variable");
-         friendlyMenu.Tag = new LocalNode( "", type, "" );
+         
+         friendlyMenu        = GetMenu(addMenu, "Place " + friendlyName + " Variable");
+         friendlyMenu.Tag    = new LocalNode( "", type, "" );
          friendlyMenu.Click += new System.EventHandler(m_MenuAddNode_Click);
          
+         //add a separator
+         friendlyMenu = GetMenu(addMenu, "<hr>");
+
+         BuildAddMenu( addMenu, typeHash );
+
          m_ContextMenuStrip.Items.AddRange( addMenu.DropDownItems.Items.ToArray( ) );
 
          return true;
