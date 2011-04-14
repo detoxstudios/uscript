@@ -438,8 +438,8 @@ public class uScript : EditorWindow
          int modifierKeys = 0;
 
          if ( Event.current.alt )     modifierKeys |= Keys.Alt;
-         if ( Event.current.control ) modifierKeys |= Keys.Control;
          if ( Event.current.shift )   modifierKeys |= Keys.Shift;
+         if ( Event.current.control || Event.current.command ) modifierKeys |= Keys.Control;
          
          Control.ModifierKeys.Pressed = modifierKeys;
 
