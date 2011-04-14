@@ -100,12 +100,8 @@ public class uScriptEvent : MonoBehaviour
 }
 
 
-public abstract class uScriptLogic : ScriptableObject
+public class uScriptLogic : ScriptableObject
 {
-   public virtual void _InternalAwake() { }
-   public virtual void _InternalDestroy() { }
-   public virtual void _InternalUpdate() { }
-   public virtual void _InternalOnGUI() { }
 }
 
 public class uScriptDebug : MonoBehaviour

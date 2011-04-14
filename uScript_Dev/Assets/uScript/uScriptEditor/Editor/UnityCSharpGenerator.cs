@@ -229,42 +229,19 @@ namespace Detox.ScriptEditor
             AddCSharpLine( "public class " + System.IO.Path.GetFileNameWithoutExtension(script.Name) + " : uScriptCode" );
             AddCSharpLine( "{" );
             ++m_TabStack;
+
+               AddCSharpLine( "#pragma warning disable 414" );
                AddCSharpLine( logicClassName + " uScript; ");
+               AddCSharpLine( "#pragma warning restore 414" );
             
+               AddCSharpLine( "" );
+
                AddCSharpLine( "void Awake( )" );
                AddCSharpLine( "{" );
                ++m_TabStack;
 
                   AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
-                  AddCSharpLine( "uScript._InternalAwake( );" );
 
-               --m_TabStack;
-               AddCSharpLine( "}" );
-            
-               AddCSharpLine( "void Destroy( )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-               
-                  AddCSharpLine( "uScript._InternalDestroy( );" ); 
-   
-               --m_TabStack;
-               AddCSharpLine( "}" );
-
-               AddCSharpLine( "void Update( )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-            
-                  AddCSharpLine( "uScript._InternalUpdate( );" );
-            
-               --m_TabStack;
-               AddCSharpLine( "}" );
-
-               AddCSharpLine( "void OnGUI( )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-            
-                  AddCSharpLine( "uScript._InternalOnGUI( );" );
-            
                --m_TabStack;
                AddCSharpLine( "}" );
 
@@ -303,7 +280,7 @@ namespace Detox.ScriptEditor
                DefineFillComponents( );
                AddCSharpLine( "" );
                
-               AddCSharpLine( "public override void _InternalAwake()" );
+               AddCSharpLine( "public void Awake()" );
                AddCSharpLine( "{" );
 
                ++m_TabStack;
@@ -314,24 +291,10 @@ namespace Detox.ScriptEditor
 
                AddCSharpLine( "" );
                
-               AddCSharpLine( "public override void _InternalDestroy()" );
+               AddCSharpLine( "public void Destroy()" );
                AddCSharpLine( "{" );
                ++m_TabStack;
                   DefineDestruction( );
-               --m_TabStack;
-               AddCSharpLine( "}" );
-
-               AddCSharpLine( "public override void _InternalUpdate()" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-                  DefineUpdate( );
-               --m_TabStack;
-               AddCSharpLine( "}" );
-
-               AddCSharpLine( "public override void _InternalOnGUI()" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-                  DefineOnGUI( );
                --m_TabStack;
                AddCSharpLine( "}" );
 
@@ -830,7 +793,6 @@ namespace Detox.ScriptEditor
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
             AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = ScriptableObject.CreateInstance(typeof(" + logicNode.Type +")) as " + logicNode.Type + ";" );
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + "._InternalAwake( );" );
             AddCSharpLine( "" );
          }
 
@@ -1041,26 +1003,9 @@ namespace Detox.ScriptEditor
          //destroy script specific instances of the logic nodes
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + "._InternalDestroy( );" );
             AddCSharpLine( "ScriptableObject.Destroy( " + CSharpName(logicNode, logicNode.Type) + " );" );
             AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = null;" );
             AddCSharpLine( "" );
-         }
-      }
-
-      private void DefineUpdate( )
-      {
-         foreach ( LogicNode logicNode in m_Script.Logics )
-         {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + "._InternalUpdate( );" );
-         }
-      }
-
-      private void DefineOnGUI( )
-      {
-         foreach ( LogicNode logicNode in m_Script.Logics )
-         {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + "._InternalOnGUI( );" );
          }
       }
 
