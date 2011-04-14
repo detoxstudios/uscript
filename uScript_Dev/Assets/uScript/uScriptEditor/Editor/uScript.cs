@@ -35,6 +35,8 @@ public class uScript : EditorWindow
    private MouseRegion mouseRegion;
    private Point mousePosition;
 
+   Dictionary<string,GUIStyle> CustomGUIStyle = new Dictionary<string,GUIStyle>();
+
    private Rect _guiPaletteRect;
    private Rect _guiCanvasRect;
    private Rect _guiPropertiesRect;
@@ -112,8 +114,6 @@ public class uScript : EditorWindow
 
    /* Sidebar Variables */
    private List<SidebarMenuItem> _sidebarMenuItems;
-   GUIStyle _guiSidebarButtonStyle;
-   GUIStyle _guiSidebarFoldoutStyle;
    //int _sidebarPopupIndex = 0;
    String _sidebarFilterText = "";
    //String[] _sidebarPopupArray = { "All Nodes" };
@@ -136,13 +136,6 @@ public class uScript : EditorWindow
          }
       }
    }
-
-
-   //
-   // Property grid and help panel styles
-   //
-   GUIStyle _guiPanelBoxStyle;
-   GUIStyle _guiPanelTitleStyle;
 
 
     //
@@ -637,6 +630,57 @@ public class uScript : EditorWindow
       }
    }
 
+
+   void CustomGUIStyles()
+   {
+      if (CustomGUIStyle.Count() > 0)
+      {
+         return;
+      }
+
+      GUIStyle style;
+
+      style = new GUIStyle(EditorStyles.foldout);
+      style.padding = new RectOffset(12, 4, 2, 2);
+      style.margin = new RectOffset(4, 4, 0, 0);
+      CustomGUIStyle.Add("paletteFoldout", style);
+
+      style = new GUIStyle(GUI.skin.button);
+      style.alignment = TextAnchor.UpperLeft;
+      style.padding = new RectOffset( 4, 4, 2, 2 );
+      style.margin = new RectOffset( 4, 4, 0, 0 );
+      style.active.textColor = UnityEngine.Color.white;
+      CustomGUIStyle.Add("paletteButton", style);
+
+      style = new GUIStyle(GUI.skin.box);
+      style.padding = new RectOffset(1, 1, 1, 1);
+      style.margin = new RectOffset(0, 0, 0, 0);
+      CustomGUIStyle.Add("panelBox", style);
+
+      style = new GUIStyle(EditorStyles.boldLabel);
+      style.margin = new RectOffset(4, 4, 0, 0);
+      CustomGUIStyle.Add("panelTitle", style);
+
+      style = new GUIStyle(GUI.skin.label);
+      style.wordWrap = true;
+      style.stretchWidth = true;
+      CustomGUIStyle.Add("referenceText", style);
+
+      style = new GUIStyle(GUI.skin.box);
+      style.margin = new RectOffset(0, 0, 0, 0);
+      style.padding = new RectOffset(0, 0, 0, 0);
+      style.border = new RectOffset(0, 0, 0, 0);
+      style.normal.background = null;
+      CustomGUIStyle.Add("hDivider", style);
+
+      style = new GUIStyle(GUI.skin.box);
+      style.margin = new RectOffset(0, 0, 0, 0);
+      style.padding = new RectOffset(0, 0, 0, 0);
+      style.border = new RectOffset(0, 0, 0, 0);
+      style.normal.background = null;
+      CustomGUIStyle.Add("vDivider", style);
+   }
+
    void DrawGUI()
    {
       if (_guiPanelProperties_Width == 0 && _guiPanelSequence_Width == 0)
@@ -656,22 +700,7 @@ public class uScript : EditorWindow
       _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
       _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
 
-      _guiSidebarFoldoutStyle = new GUIStyle(EditorStyles.foldout);
-      _guiSidebarFoldoutStyle.padding = new RectOffset(12, 4, 2, 2);
-      _guiSidebarFoldoutStyle.margin = new RectOffset(4, 4, 0, 0);
-
-      _guiSidebarButtonStyle = new GUIStyle(GUI.skin.button);
-      _guiSidebarButtonStyle.alignment = TextAnchor.UpperLeft;
-      _guiSidebarButtonStyle.padding = new RectOffset( 4, 4, 2, 2 );
-      _guiSidebarButtonStyle.margin = new RectOffset( 4, 4, 0, 0 );
-      _guiSidebarButtonStyle.active.textColor = UnityEngine.Color.white;
-
-      _guiPanelBoxStyle = new GUIStyle(GUI.skin.box);
-      _guiPanelBoxStyle.padding = new RectOffset(1, 1, 1, 1);
-      _guiPanelBoxStyle.margin = new RectOffset(0, 0, 0, 0);
-
-      _guiPanelTitleStyle = new GUIStyle(EditorStyles.boldLabel);
-      _guiPanelTitleStyle.margin = new RectOffset(4, 4, 0, 0);
+      CustomGUIStyles();
 
       DrawGUITopAreas();
       DrawGUIHorizontalDivider();
@@ -769,22 +798,12 @@ public class uScript : EditorWindow
 
    void DrawGUIHorizontalDivider()
    {
-       GUIStyle hDivider = new GUIStyle(GUI.skin.box);
-       hDivider.margin = new RectOffset(0, 0, 0, 0);
-       hDivider.padding = new RectOffset(0, 0, 0, 0);
-       hDivider.border = new RectOffset(0, 0, 0, 0);
-       hDivider.normal.background = null;
-       GUILayout.Box("", hDivider, GUILayout.Height(3), GUILayout.ExpandWidth(true));
+       GUILayout.Box("", CustomGUIStyle["hDivider"], GUILayout.Height(3), GUILayout.ExpandWidth(true));
    }
 
    void DrawGUIVerticalDivider()
    {
-       GUIStyle vDivider = new GUIStyle(GUI.skin.box);
-       vDivider.margin = new RectOffset(0, 0, 0, 0);
-       vDivider.padding = new RectOffset(0, 0, 0, 0);
-       vDivider.border = new RectOffset(0, 0, 0, 0);
-       vDivider.normal.background = null;
-       GUILayout.Box("", vDivider, GUILayout.Width(3), GUILayout.ExpandHeight(true));
+       GUILayout.Box("", CustomGUIStyle["vDivider"], GUILayout.Width(3), GUILayout.ExpandHeight(true));
    }
 
    void DrawGUIStatusbar()
@@ -804,13 +823,13 @@ public class uScript : EditorWindow
 
    void DrawGUISidebar()
    {
-      EditorGUILayout.BeginVertical( _guiPanelBoxStyle, GUILayout.Width( _guiPanelSidebar_Width ) );
+      EditorGUILayout.BeginVertical( CustomGUIStyle["panelBox"], GUILayout.Width( _guiPanelSidebar_Width ) );
       {
          // Toolbar
          //
           EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.Width(_guiPanelSidebar_Width));
          {
-             GUILayout.Label("Node Palette", _guiPanelTitleStyle);
+             GUILayout.Label("Node Palette", CustomGUIStyle["panelTitle"]);
 
 //            _sidebarPopupIndex = EditorGUILayout.Popup(_sidebarPopupIndex, _sidebarPopupArray, "toolbarDropDown");
 
@@ -847,7 +866,6 @@ public class uScript : EditorWindow
                 _sidebarFilterText = _filterText;
                FilterSidebarMenuItems();
             }
-
          }
          EditorGUILayout.EndHorizontal();
 
@@ -872,6 +890,10 @@ public class uScript : EditorWindow
          _guiPaletteRect.y++;
          _guiPaletteRect.width -= 4;
          _guiPaletteRect.height -= 4;
+      }
+      if (_guiPaletteRect.Contains(Event.current.mousePosition))
+      {
+         mouseRegion = uScript.MouseRegion.Palette;
       }
    }
 
@@ -1039,7 +1061,7 @@ public class uScript : EditorWindow
       if (item.Items != null)
       {
          // This is should be a folding menu item that contains more buttons
-         GUIStyle style = new GUIStyle(_guiSidebarFoldoutStyle);
+         GUIStyle style = new GUIStyle(CustomGUIStyle["paletteFoldout"]);
          style.margin = new RectOffset(style.margin.left + (item.Indent * 12), 0, 0, 0);
 
          item.Expanded = GUILayout.Toggle(item.Expanded, item.Name, style);
@@ -1054,11 +1076,11 @@ public class uScript : EditorWindow
       else
       {
          // This is a simple menu item
-         GUIStyle style = new GUIStyle(_guiSidebarButtonStyle);
+         GUIStyle style = new GUIStyle(CustomGUIStyle["paletteButton"]);
          style.margin = new RectOffset(style.margin.left + 0 + (item.Indent * 12),
-                                       _guiSidebarButtonStyle.margin.right,
-                                       _guiSidebarButtonStyle.margin.top,
-                                       _guiSidebarButtonStyle.margin.bottom);
+                                       style.margin.right,
+                                       style.margin.top,
+                                       style.margin.bottom);
 
          if (GUILayout.Button(new GUIContent(item.Name, item.Tooltip), style))
          {
@@ -1210,13 +1232,13 @@ public class uScript : EditorWindow
 
    void DrawGUIPropertyGrid()
    {
-      EditorGUILayout.BeginVertical( _guiPanelBoxStyle, GUILayout.Width( _guiPanelProperties_Width ) );
+      EditorGUILayout.BeginVertical( CustomGUIStyle["panelBox"], GUILayout.Width( _guiPanelProperties_Width ) );
       {
          // Toolbar
          //
          EditorGUILayout.BeginHorizontal( EditorStyles.toolbar );
          {
-             GUILayout.Label("Properties", _guiPanelTitleStyle);
+             GUILayout.Label("Properties", CustomGUIStyle["panelTitle"]);
          }
          EditorGUILayout.EndHorizontal();
 
@@ -1246,7 +1268,7 @@ public class uScript : EditorWindow
 
    void DrawGUIHelp()
    {
-      EditorGUILayout.BeginVertical(_guiPanelBoxStyle);
+      EditorGUILayout.BeginVertical(CustomGUIStyle["panelBox"]);
       {
          string helpDescription = String.Empty;
          string helpButtonURL = String.Empty;
@@ -1278,7 +1300,7 @@ public class uScript : EditorWindow
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label("Reference", _guiPanelTitleStyle, GUILayout.ExpandWidth(true));
+            GUILayout.Label("Reference", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
             GUILayout.FlexibleSpace();
             if (GUILayout.Button(new GUIContent("Online Reference", "Open the online reference for the selected node in the default web browser. (" + helpButtonURL + ")"), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
@@ -1289,13 +1311,9 @@ public class uScript : EditorWindow
 
          _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
          {
-            GUIStyle referenceTextArea = new GUIStyle(GUI.skin.label);
-            referenceTextArea.wordWrap = true;
-            referenceTextArea.stretchWidth = true;
-
             // prevent the help TextArea from getting focus
             GUI.SetNextControlName("helpTextArea");
-            GUILayout.TextArea(helpDescription, referenceTextArea);
+            GUILayout.TextArea(helpDescription, CustomGUIStyle["referenceText"]);
             if (GUI.GetNameOfFocusedControl() == "helpTextArea")
             {
                 GUIUtility.keyboardControl = 0;
@@ -1323,13 +1341,13 @@ public class uScript : EditorWindow
 
    void DrawGUISubsequences()
    {
-      EditorGUILayout.BeginVertical(_guiPanelBoxStyle, GUILayout.Width(_guiPanelSequence_Width));
+      EditorGUILayout.BeginVertical(CustomGUIStyle["panelBox"], GUILayout.Width(_guiPanelSequence_Width));
       {
          // Toolbar
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label("Sub-Sequences", _guiPanelTitleStyle);
+            GUILayout.Label("Sub-Sequences", CustomGUIStyle["panelTitle"]);
          }
          EditorGUILayout.EndHorizontal();
 
