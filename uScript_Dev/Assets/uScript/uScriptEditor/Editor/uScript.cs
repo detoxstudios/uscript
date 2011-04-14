@@ -1772,6 +1772,9 @@ public class uScript : EditorWindow
          }
       }
 
+      baseMethods[ "Awake" ]   = "Awake";
+      baseMethods[ "Destroy" ] = "Destroy";
+
       EventInfo []events = typeof(uScriptLogic).GetEvents( );
 
       foreach ( EventInfo e in events )

@@ -1346,19 +1346,41 @@ namespace Detox.ScriptEditor
 
             if ( node.PointInAnchorPoint(position, ref hitPoint) )
             {
-               ToolStripMenuItem createLink = new ToolStripMenuItem( "Create Linked Variable" );
-               
-               AutoLinkDesc autoLink;
-               autoLink.Guid = entityNode.Guid;
-               autoLink.Name = hitPoint.Name;
+               bool allowLink = false;
 
-               createLink.Name   = "m_TypedLocalNode";
-               createLink.Size   = new System.Drawing.Size(152, 22);
-               createLink.Text   = "Create Linked Variable";
-               createLink.Tag    = autoLink;
-               createLink.Click += new System.EventHandler(m_MenuAddLinkedVariable_Click);
+               if ( hitPoint.Name == entityNode.Instance.Default )
+               {
+                  allowLink = true;
+               }
+               else
+               {
+                  foreach ( Parameter p in entityNode.Parameters )
+                  {
+                     if ( p.Name == hitPoint.Name )
+                     {
+                        allowLink = true;
+                        break;
+                     }
+                  }
+               }
 
-               m_ContextMenuStrip.Items.Add( createLink );
+               if ( true == allowLink )
+               {
+                  ToolStripMenuItem createLink = new ToolStripMenuItem( "Create Linked Variable" );
+                  
+                  AutoLinkDesc autoLink;
+                  autoLink.Guid = entityNode.Guid;
+                  autoLink.Name = hitPoint.Name;
+
+                  createLink.Name   = "m_TypedLocalNode";
+                  createLink.Size   = new System.Drawing.Size(152, 22);
+                  createLink.Text   = "Create Linked Variable";
+                  createLink.Tag    = autoLink;
+                  createLink.Click += new System.EventHandler(m_MenuAddLinkedVariable_Click);
+
+                  m_ContextMenuStrip.Items.Add( createLink );
+               }
+
                break;
             }
          }
