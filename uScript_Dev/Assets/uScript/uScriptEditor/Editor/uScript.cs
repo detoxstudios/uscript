@@ -32,20 +32,14 @@ public class uScript : EditorWindow
       HandleProperties,
       HandleReference
    }
-   private MouseRegion mouseRegion;
-   private Point mousePosition;
+   private MouseRegion _mouseRegion;
+
+   Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
    Dictionary<string,GUIStyle> CustomGUIStyle = new Dictionary<string,GUIStyle>();
 
-   private Rect _guiPaletteRect;
-   private Rect _guiCanvasRect;
-   private Rect _guiPropertiesRect;
-   private Rect _guiReferenceRect;
-   private Rect _guiSubsequencesRect;
-   private Rect _guiPaletteHandleRect;
-   private Rect _guiPropertiesHandleRect;
-   private Rect _guiReferenceHandleRect;
-   private Rect _guiHorizontalHandleRect;
+
+
 
    static private uScript s_Instance = null;
    static public uScript Instance { get { if ( null == s_Instance ) Init( ); return s_Instance; } }
@@ -294,7 +288,7 @@ public class uScript : EditorWindow
    void OnGUI()
    {
       // Set the default mouse region
-      mouseRegion = uScript.MouseRegion.Outside;
+      _mouseRegion = uScript.MouseRegion.Outside;
 
 
       // As little logic as possible should be performed here.  It is better
@@ -538,7 +532,7 @@ public class uScript : EditorWindow
          //they've left the control bounds (unity won't send us a mouse up event), 
          //do the mouse up event
          else if ( true == m_MouseDown && 
-                   (Event.current.type == EventType.MouseUp || mouseRegion == MouseRegion.Outside) )
+                   (Event.current.type == EventType.MouseUp || _mouseRegion == MouseRegion.Outside) )
          {
             m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
 
@@ -705,20 +699,7 @@ public class uScript : EditorWindow
       DrawGUITopAreas();
       DrawGUIHorizontalDivider();
 
-      // Get the dimensions of the section
-      if (Event.current.type == EventType.Repaint)
-      {
-         _guiHorizontalHandleRect = GUILayoutUtility.GetLastRect();
-         _guiHorizontalHandleRect.x += 1;
-         _guiHorizontalHandleRect.y -= 3;
-         _guiHorizontalHandleRect.width -= 1;
-         _guiHorizontalHandleRect.height += 6;
-      }
-      EditorGUIUtility.AddCursorRect(_guiHorizontalHandleRect, MouseCursor.ResizeVertical);
-      if (_guiHorizontalHandleRect.Contains(Event.current.mousePosition))
-      {
-         mouseRegion = uScript.MouseRegion.HandleCanvas;
-      }
+      SetMouseRegion( MouseRegion.HandleCanvas, 1, -3, -1, 6 );
 
       DrawGUIBottomAreas();
       DrawGUIStatusbar();
@@ -731,20 +712,7 @@ public class uScript : EditorWindow
          DrawGUISidebar();
          DrawGUIVerticalDivider();
 
-         // Get the dimensions of the section
-         if (Event.current.type == EventType.Repaint)
-         {
-            _guiPaletteHandleRect = GUILayoutUtility.GetLastRect();
-            _guiPaletteHandleRect.x -= 3;
-            _guiPaletteHandleRect.y += 1;
-            _guiPaletteHandleRect.width += 6;
-            _guiPaletteHandleRect.height -= 4;
-         }
-         EditorGUIUtility.AddCursorRect(_guiPaletteHandleRect, MouseCursor.ResizeHorizontal);
-         if (_guiPaletteHandleRect.Contains(Event.current.mousePosition))
-         {
-            mouseRegion = uScript.MouseRegion.HandlePalette;
-         }
+         SetMouseRegion( MouseRegion.HandlePalette, -3, 1, 6, -4 );
 
          DrawGUIContent();
       }
@@ -758,38 +726,12 @@ public class uScript : EditorWindow
          DrawGUIPropertyGrid();
          DrawGUIVerticalDivider();
 
-         // Get the dimensions of the section
-         if (Event.current.type == EventType.Repaint)
-         {
-            _guiPropertiesHandleRect = GUILayoutUtility.GetLastRect();
-            _guiPropertiesHandleRect.x -= 3;
-            _guiPropertiesHandleRect.y += 3;
-            _guiPropertiesHandleRect.width += 6;
-            _guiPropertiesHandleRect.height -= 4;
-         }
-         EditorGUIUtility.AddCursorRect(_guiPropertiesHandleRect, MouseCursor.ResizeHorizontal);
-         if (_guiPropertiesHandleRect.Contains(Event.current.mousePosition))
-         {
-            mouseRegion = uScript.MouseRegion.HandleProperties;
-         }
+         SetMouseRegion( MouseRegion.HandleProperties, -3, 3, 6, -3 );
 
          DrawGUIHelp();
          DrawGUIVerticalDivider();
 
-         // Get the dimensions of the section
-         if (Event.current.type == EventType.Repaint)
-         {
-            _guiReferenceHandleRect = GUILayoutUtility.GetLastRect();
-            _guiReferenceHandleRect.x -= 3;
-            _guiReferenceHandleRect.y += 3;
-            _guiReferenceHandleRect.width += 6;
-            _guiReferenceHandleRect.height -= 4;
-         }
-         EditorGUIUtility.AddCursorRect(_guiReferenceHandleRect, MouseCursor.ResizeHorizontal);
-         if (_guiReferenceHandleRect.Contains(Event.current.mousePosition))
-         {
-            mouseRegion = uScript.MouseRegion.HandleReference;
-         }
+         SetMouseRegion( MouseRegion.HandleReference, -3, 3, 6, -3 );
 
          DrawGUISubsequences();
       }
@@ -813,7 +755,7 @@ public class uScript : EditorWindow
          GUILayout.Label( (GUI.tooltip != "" ? GUI.tooltip : _statusbarMessage), GUILayout.ExpandWidth( true ) );
          GUILayout.Label( (Event.current.modifiers != 0 ? Event.current.modifiers + " :: " : "")
                            + (int)Event.current.mousePosition.x + ", "
-                           + (int)Event.current.mousePosition.y + " (" + mouseRegion + ")",
+                           + (int)Event.current.mousePosition.y + " (" + _mouseRegion + ")",
                            GUILayout.ExpandWidth( false ));
       }
       EditorGUILayout.EndHorizontal();
@@ -882,20 +824,43 @@ public class uScript : EditorWindow
       }
       EditorGUILayout.EndVertical();
 
-      // Get the dimensions of the section
+      SetMouseRegion( MouseRegion.Palette, 1, 1, -4, -4 );
+   }
+
+   void SetMouseRegion( MouseRegion region, int x, int y, int w, int h )
+   {
       if (Event.current.type == EventType.Repaint)
       {
-         _guiPaletteRect = GUILayoutUtility.GetLastRect();
-         _guiPaletteRect.x++;
-         _guiPaletteRect.y++;
-         _guiPaletteRect.width -= 4;
-         _guiPaletteRect.height -= 4;
+         Rect r = GUILayoutUtility.GetLastRect();
+         r.x += x;
+         r.y += y;
+         r.width += w;
+         r.height += h;
+         _mouseRegionRect[region] = r;
       }
-      if (_guiPaletteRect.Contains(Event.current.mousePosition))
+
+      if ( _mouseRegionRect.ContainsKey(region) )
       {
-         mouseRegion = uScript.MouseRegion.Palette;
+         switch ( region )
+         {
+            case MouseRegion.HandleCanvas:
+               EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeVertical);
+               break;
+            case MouseRegion.HandlePalette:
+            case MouseRegion.HandleProperties:
+            case MouseRegion.HandleReference:
+               EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeHorizontal);
+               break;
+         }
+
+         if ( _mouseRegionRect[region].Contains( Event.current.mousePosition ) )
+         {
+            _mouseRegion = region;
+         }
       }
    }
+
+
 
 
    private void ExpandSidebarMenuItem(SidebarMenuItem sidebarMenuItem)
@@ -1213,19 +1178,7 @@ public class uScript : EditorWindow
       }
       EditorGUILayout.EndVertical();
 
-      // Get the dimensions of the section
-      if (Event.current.type == EventType.Repaint)
-      {
-         _guiCanvasRect = GUILayoutUtility.GetLastRect();
-         _guiCanvasRect.x += 3;
-         _guiCanvasRect.y += 1;
-         _guiCanvasRect.width -= 2;
-         _guiCanvasRect.height -= 0;
-      }
-      if (_guiCanvasRect.Contains(Event.current.mousePosition))
-      {
-         mouseRegion = uScript.MouseRegion.Canvas;
-      }
+      SetMouseRegion( MouseRegion.Canvas, 3, 1, -2, -4 );
    }
 
 
@@ -1250,19 +1203,7 @@ public class uScript : EditorWindow
       }
       EditorGUILayout.EndVertical();
 
-      // Get the dimensions of the section
-      if (Event.current.type == EventType.Repaint)
-      {
-         _guiPropertiesRect = GUILayoutUtility.GetLastRect();
-         _guiPropertiesRect.x++;
-         _guiPropertiesRect.y += 3;
-         _guiPropertiesRect.width -= 4;
-         _guiPropertiesRect.height -= 4;
-      }
-      if (_guiPropertiesRect.Contains(Event.current.mousePosition))
-      {
-         mouseRegion = uScript.MouseRegion.Properties;
-      }
+      SetMouseRegion( MouseRegion.Properties, 1, 3, -4, -3 );
    }
 
 
@@ -1323,19 +1264,7 @@ public class uScript : EditorWindow
       }
       EditorGUILayout.EndVertical();
 
-      // Get the dimensions of the section
-      if (Event.current.type == EventType.Repaint)
-      {
-         _guiReferenceRect = GUILayoutUtility.GetLastRect();
-         _guiReferenceRect.x += 3;
-         _guiReferenceRect.y += 3;
-         _guiReferenceRect.width -= 6;
-         _guiReferenceRect.height -= 4;
-      }
-      if (_guiReferenceRect.Contains(Event.current.mousePosition))
-      {
-         mouseRegion = uScript.MouseRegion.Reference;
-      }
+      SetMouseRegion( MouseRegion.Reference, 3, 3, -6, -3 );
    }
 
 
@@ -1347,7 +1276,7 @@ public class uScript : EditorWindow
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label("Sub-Sequences", CustomGUIStyle["panelTitle"]);
+            GUILayout.Label("uScripts", CustomGUIStyle["panelTitle"]);
          }
          EditorGUILayout.EndHorizontal();
 
@@ -1358,19 +1287,7 @@ public class uScript : EditorWindow
       }
       EditorGUILayout.EndVertical();
 
-      // Get the dimensions of the section
-      if (Event.current.type == EventType.Repaint)
-      {
-         _guiSubsequencesRect = GUILayoutUtility.GetLastRect();
-         _guiSubsequencesRect.x += 3;
-         _guiSubsequencesRect.y += 3;
-         _guiSubsequencesRect.width -= 2;
-         _guiSubsequencesRect.height -= 4;
-      }
-      if (_guiSubsequencesRect.Contains(Event.current.mousePosition))
-      {
-         mouseRegion = uScript.MouseRegion.Subsequences;
-      }
+      SetMouseRegion( MouseRegion.Subsequences, 3, 3, -2, -3 );
    }
 
 
