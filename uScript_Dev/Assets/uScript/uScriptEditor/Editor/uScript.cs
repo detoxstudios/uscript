@@ -10,15 +10,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 
-//todo
-//do all the nodes
-//automaic sizing based off padding
-//padding numbers in uscript config
-//generate all nodes based on padding numbers
-// --create node in onpaint so we can get text size
-
 public class uScript : EditorWindow
 {
+   public string    uScriptBuild       { get { return "0.1.4.14.11"; } }
+   public string    RequiredUnityBuild { get { return  "3.3.0f4"; } }
+   public DateTime  ExpireDate         { get { return new DateTime( 2011, 5, 4 ); } }
+
    private enum MouseRegion
    {
       Outside,
@@ -37,10 +34,7 @@ public class uScript : EditorWindow
    Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
    Dictionary<string,GUIStyle> CustomGUIStyle = new Dictionary<string,GUIStyle>();
-
-
-
-
+   
    static private uScript s_Instance = null;
    static public uScript Instance { get { if ( null == s_Instance ) Init( ); return s_Instance; } }
    private bool isPro;
@@ -299,6 +293,22 @@ public class uScript : EditorWindow
       //
       if (null == m_ScriptEditorCtrl)
       {
+         if ( Application.unityVersion != RequiredUnityBuild )
+         {
+            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error );         
+            return;
+         }         
+
+         if ( DateTime.Now > ExpireDate )
+         {
+            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") has expired.", uScriptDebug.Type.Error );         
+            return;   
+         }
+         else
+         {
+            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message );         
+         }
+      
          //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
          //we don't save the fully qualified type name which is required to return types of assemblies not loaded
          List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(GameObject.FindObjectsOfType(typeof(UnityEngine.Object)));
