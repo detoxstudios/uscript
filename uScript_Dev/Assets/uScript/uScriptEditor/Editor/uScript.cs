@@ -59,6 +59,7 @@ public class uScript : EditorWindow
 
    static private AppFrameworkData m_AppData = new AppFrameworkData();
    private double m_RefreshTimestamp = -1.0;
+   private string m_AddToMaster = "";
 
    private int m_ContextX = 0;
    private int m_ContextY = 0;
@@ -582,6 +583,16 @@ public class uScript : EditorWindow
          // re-center now that the gui is initialized
          m_WantsRefresh = true;
          m_RefreshTimestamp = -1.0;
+      }
+      
+      if (!String.IsNullOrEmpty(m_AddToMaster) && !EditorApplication.isCompiling)
+      {
+         // add the new uScript to the master object
+         System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_AddToMaster);
+         String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf("."));
+         GameObject uScriptMaster = GameObject.Find(uScriptConfig.MasterObjectName);
+         uScriptMaster.AddComponent(typeName);
+         m_AddToMaster = "";
       }
    }
 
@@ -1612,10 +1623,26 @@ public class uScript : EditorWindow
 
       if ( "" != m_FullPath )
       {
+         bool firstSave = false;
+         if (!System.IO.File.Exists(m_FullPath))
+         {
+            firstSave = true;
+         }
+
          if ( true == SaveScript(script, m_FullPath) )
          {
             m_ScriptEditorCtrl.IsDirty = false;
-
+    
+            if (firstSave)
+            {
+               // ask the user if they want to assign this script to the master game object
+               if (EditorUtility.DisplayDialog("Assign To Master Game Object", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No"))
+               {
+                  AssetDatabase.Refresh( );
+                  m_AddToMaster = m_FullPath;
+               }
+            }
+   
             return true;
          }
          else
