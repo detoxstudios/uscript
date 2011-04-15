@@ -196,19 +196,19 @@ namespace System.Windows.Forms
 
                if ( val.GetType() == typeof(System.Boolean) )
                {
-                  val = UnityEditor.EditorGUILayout.Toggle( p.Name, (bool) val );
+                  val = UnityEditor.EditorGUILayout.Toggle( p.FriendlyName, (bool) val );
                }
                else if ( val.GetType() == typeof(System.Int32) )
                {
-                  val = UnityEditor.EditorGUILayout.IntField( p.Name, (int) val );
+                  val = UnityEditor.EditorGUILayout.IntField( p.FriendlyName, (int) val );
                }
                else if ( val.GetType() == typeof(System.Single) )
                {
-                  val = UnityEditor.EditorGUILayout.FloatField( p.Name, (float) val );
+                  val = UnityEditor.EditorGUILayout.FloatField( p.FriendlyName, (float) val );
                }
                else if ( val.GetType() == typeof(Vector2) )
                {
-                  val = UnityEditor.EditorGUILayout.Vector2Field( p.Name, (Vector2) val );
+                  val = UnityEditor.EditorGUILayout.Vector2Field( p.FriendlyName, (Vector2) val );
                }
                else if ( val.GetType() == typeof(Vector3) )
                {
@@ -216,11 +216,11 @@ namespace System.Windows.Forms
                }
                else if ( val.GetType() == typeof(Vector4) )
                {
-                  val = UnityEditor.EditorGUILayout.Vector4Field( p.Name, (Vector4) val );
+                  val = UnityEditor.EditorGUILayout.Vector4Field( p.FriendlyName, (Vector4) val );
                }
                else if ( val.GetType() == typeof(UnityEngine.Color) )
                {
-                  val = UnityEditor.EditorGUILayout.ColorField( p.Name, (UnityEngine.Color) val );
+                  val = UnityEditor.EditorGUILayout.ColorField( p.FriendlyName, (UnityEngine.Color) val );
                }
                else if ( null != GetObjectFieldType(p.Type) )
                {
@@ -232,7 +232,7 @@ namespace System.Windows.Forms
                   EditorGUILayout.BeginHorizontal();
                   
                      //first show the text field and get back the same (or changed value)
-                     val = EditorGUILayout.TextField( p.Name, p.Default );
+                     val = EditorGUILayout.TextField( p.FriendlyName, p.Default );
 
                      //now try and update the object browser with an instance of the specified object
                      Object []objects   = Object.FindObjectsOfType(type);
@@ -267,14 +267,14 @@ namespace System.Windows.Forms
                {
                   EditorGUILayout.BeginHorizontal();
                   
-                  EditorGUILayout.LabelField( p.Name, "" );
+                  EditorGUILayout.LabelField( p.FriendlyName, "" );
                   val = EditorGUILayout.TextArea( p.Default );
 
                   EditorGUILayout.EndHorizontal();
                }
                else
                {
-                  val = UnityEditor.EditorGUILayout.TextField( p.Name, p.Default );
+                  val = UnityEditor.EditorGUILayout.TextField( p.FriendlyName, p.Default );
                }
                            
                Parameter cloned = p;
