@@ -1046,7 +1046,7 @@ namespace Detox.ScriptEditor
                   
                   Parameter size = clone.Size;
 
-                  size.DefaultAsObject = new int[2]{node.Size.Width, node.Size.Height};
+                  size.DefaultAsObject = node.Size.Width + "," + node.Size.Height;
                   clone.Size = size;
 
                   entityNode = clone;

@@ -52,13 +52,14 @@ namespace Detox.ScriptEditor
          
          CommentNode clone = Comment;
          Parameter p = clone.Size;
+         int width, height;
 
          try
          {
             int []intArray = (int[]) Comment.Size.DefaultAsObject;
 
-            int width  = intArray[0];
-            int height = intArray.Length > 1 ? intArray[1] : 0;
+            width  = intArray[0];
+            height = intArray.Length > 1 ? intArray[1] : 0;
 
             if ( width  > 0 ) size.Width = width;
             if ( height > 0 ) size.Height = height;
@@ -66,7 +67,7 @@ namespace Detox.ScriptEditor
             if ( size.Width  < uScriptConfig.MinResizeX ) size.Width = uScriptConfig.MinResizeX;
             if ( size.Height < uScriptConfig.MinResizeY ) size.Height = uScriptConfig.MinResizeY;
 
-            p.DefaultAsObject = new int[2] { size.Width, size.Height };
+            p.DefaultAsObject = size.Width + "," + size.Height;
             clone.Size = p;
             UpdateNode( clone );
 
@@ -79,8 +80,8 @@ namespace Detox.ScriptEditor
          {
             string []intArray = Comment.Size.Default.Split( ',' );
 
-            int width  = Int32.Parse(intArray[0]);
-            int height = intArray.Length > 1 ? Int32.Parse(intArray[1]) : 0;
+            width  = Int32.Parse(intArray[0]);
+            height = intArray.Length > 1 ? Int32.Parse(intArray[1]) : 0;
 
             if ( width  > 0 ) size.Width = width;
             if ( height > 0 ) size.Height = height;
@@ -88,7 +89,7 @@ namespace Detox.ScriptEditor
             if ( size.Width  < uScriptConfig.MinResizeX ) size.Width = uScriptConfig.MinResizeX;
             if ( size.Height < uScriptConfig.MinResizeY ) size.Height = uScriptConfig.MinResizeY;
 
-            p.DefaultAsObject = new int[2] { size.Width, size.Height };
+            p.DefaultAsObject = size.Width + "," + size.Height;
             clone.Size = p;
             UpdateNode( clone );
 
@@ -100,7 +101,7 @@ namespace Detox.ScriptEditor
          if ( size.Width  < uScriptConfig.MinResizeX ) size.Width = uScriptConfig.MinResizeX;
          if ( size.Height < uScriptConfig.MinResizeY ) size.Height = uScriptConfig.MinResizeY;
 
-         p.DefaultAsObject = new int[2] { size.Width, size.Height };
+         p.DefaultAsObject = size.Width + "," + size.Height;
          clone.Size = p;
          UpdateNode( clone );
 
