@@ -146,6 +146,53 @@ public class uScript : EditorWindow
    MouseEventArgs m_MouseDownArgs = null;
    MouseEventArgs m_MouseUpArgs   = null;
    MouseEventArgs m_MouseMoveArgs = new MouseEventArgs( );
+
+
+
+
+   #region EULA Variables
+   private bool _EULAagreed;
+   private Vector2 _EULAscroll;
+   private bool _EULAtoggle;
+   private string _EULAtext = @"IMPORTANT, PLEASE READ CAREFULLY. THIS IS A LICENSE AGREEMENT
+
+	This SOFTWARE PRODUCT is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. This SOFTWARE PRODUCT is licensed, not sold.
+
+End User License Agreement
+
+This End User License Agreement (""EULA"") is a legal agreement between you (either an individual or a single entity) and Power Of 2 Software with regard to the copyrighted Software (herein referred to as ""SOFTWARE PRODUCT"" or ""SOFTWARE"") provided with this EULA.   The SOFTWARE PRODUCT includes computer software, the associated media, any printed materials, and any ""online"" or electronic documentation. Use of any software and related documentation (""Software"") provided to you by Power Of 2 Software in whatever form or media, will constitute your acceptance of these terms, unless separate terms are provided by the software supplier, in which case certain additional or different terms may apply. If you do not agree with the terms of this EULA, do not download, install, copy or use the Software. By installing, copying or otherwise using the SOFTWARE PRODUCT, you agree to be bound by the terms of this EULA.  If you do not agree to the terms of this EULA, Power Of 2 Software is unwilling to license the SOFTWARE PRODUCT to you. 
+
+1.  Eligible Licensees. This Software is available for license solely to SOFTWARE owners, with no right of duplication or further distribution, licensing, or sub-licensing.  IF YOU DO NOT OWN THE SOFTWARE, THEN DO NOT DOWNLOAD, INSTALL, COPY OR USE THE SOFTWARE.
+ 
+2.  License Grant.  Power Of 2 Software grants to you a personal, non-transferable and non-exclusive right to use the copy of the Software provided with this EULA. You agree you will not copy the Software except as necessary to use it on a single computer. You agree that you may not copy the written materials accompanying the Software. Modifying, translating, renting, copying, transferring or assigning all or part of the Software, or any rights granted hereunder, to any other persons and removing any proprietary notices, labels or marks from the Software is strictly prohibited.  Furthermore, you hereby agree not to create derivative works based on the Software.  You may not transfer this Software.
+
+3.  Copyright.  The Software is licensed, not sold.  You acknowledge that no title to the intellectual property in the Software is transferred to you. You further acknowledge that title and full ownership rights to the Software will remain the exclusive property of Power Of 2 Software and/or its suppliers, and you will not acquire any rights to the Software, except as expressly set forth above. All copies of the Software will contain the same proprietary notices as contained in or on the Software. All title and copyrights in and to the SOFTWARE PRODUCT (including but not limited to any images, photographs, animations, video, audio, music, text and ""applets,"" incorporated into the SOFTWARE PRODUCT), the accompanying printed materials, and any copies of the SOFTWARE PRODUCT, are owned by Power Of 2 Software or its suppliers.  The SOFTWARE PRODUCT is protected by copyright laws and international treaty provisions.  You may not copy the printed materials 
+accompanying the SOFTWARE PRODUCT.
+
+4.  Reverse Engineering.  You agree that you will not attempt, and if you are a corporation, you will use your best efforts to prevent your employees and contractors from attempting to reverse compile, modify, translate or disassemble the Software in whole or in part. Any failure to comply with the above or any other terms and conditions contained herein will result in the automatic termination of this license and the reversion of the rights granted hereunder to Power Of 2 Software.
+
+5.  Disclaimer of Warranty. The Software is provided ""AS IS"" without warranty of any kind. Power Of 2 Software and its suppliers disclaim and make no express or implied warranties and specifically disclaim the warranties of merchantability, fitness for a particular purpose and non-infringement of third-party rights. The entire risk as to the quality and performance of the Software is with you. Neither Power Of 2 Software nor its suppliers warrant that the functions contained in the Software will meet your requirements or that the operation of the Software will be uninterrupted or error-free. Power Of 2 Software IS NOT OBLIGATED TO PROVIDE ANY UPDATES TO THE SOFTWARE.
+
+6.  Limitation of Liability. Power Of 2 Software's entire liability and your exclusive remedy under this EULA shall not exceed the price paid for the Software, if any.  In no event shall Power Of 2 Software or its suppliers be liable to you for any consequential, special, incidental or indirect damages of any kind arising out of the use or inability to use the software, even if Power Of 2 Software or its supplier has been advised of the possibility of such damages, or 
+any claim by a third party. 
+
+7.  Rental.  You may not loan, rent, or lease the SOFTWARE.  
+
+8.  Upgrades.  If the SOFTWARE is an upgrade from an earlier release or previously released version, you now may use that upgraded product only in accordance with this EULA.  If the SOFTWARE PRODUCT is an upgrade of a software program which you licensed as a single product, the SOFTWARE PRODUCT may be used only as part of that single product package and may not be separated for use on more than one computer.
+
+9.  OEM Product Support. Product support for the SOFTWARE PRODUCT IS provided by Power Of 2 Software.  For product support, please call Power Of 2 Software.  Should you have any questions concerning this, please refer to the address provided in the documentation.
+
+10.  No Liability for Consequential Damages.  In no event shall Power Of 2 Software or its suppliers be liable for any damages whatsoever (including, without limitation, incidental, direct, indirect special and consequential damages, damages for loss of business profits, business interruption, loss of business information, or other pecuniary loss) arising out of the use or inability to use this ""Your Company"" product, even if Power Of 2 Software has been advised of the possibility of such damages.  Because some states/countries do not allow the exclusion or limitation of liability for consequential or incidental damages, the above limitation may not apply to you.
+
+11.  Indemnification By You.  If you distribute the Software in violation of this Agreement, you agree to indemnify, hold harmless and defend Power Of 2 Software and its suppliers from and against any claims or lawsuits, including attorney's fees that arise or result from the use or distribution of the Software in violation of this Agreement.
+
+Power Of 2 Software
+http://www.powerof2software.com";
+   #endregion
+
+
+
+
    //
    // Editor Window Initialization
    //
@@ -282,6 +329,11 @@ public class uScript : EditorWindow
 
    void OnGUI()
    {
+      if (!_EULAagreed)
+      {
+         GUI.enabled = false;
+      }
+		
       // Set the default mouse region
       _mouseRegion = uScript.MouseRegion.Outside;
 
@@ -295,20 +347,20 @@ public class uScript : EditorWindow
       {
          if ( Application.unityVersion != RequiredUnityBuild )
          {
-            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error );         
+            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".\n", uScriptDebug.Type.Error );
             return;
-         }         
+         }
 
          if ( DateTime.Now > ExpireDate )
          {
-            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") has expired.", uScriptDebug.Type.Error );         
-            return;   
+            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") has expired.\n", uScriptDebug.Type.Error );
+            return;
          }
          else
          {
-            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message );         
+            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will expire in " + (ExpireDate - DateTime.Now).Days + " days.\n", uScriptDebug.Type.Message );
          }
-      
+
          //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
          //we don't save the fully qualified type name which is required to return types of assemblies not loaded
          List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(GameObject.FindObjectsOfType(typeof(UnityEngine.Object)));
@@ -401,23 +453,35 @@ public class uScript : EditorWindow
 
       // Draw window elements, including the context menu
       //
+      GUI.enabled = true;
       BeginWindows();
 
-      if ( true == contextActive )
+      if (!_EULAagreed)
       {
-         DrawContextMenu( m_ContextX, m_ContextY );
-
-         if ( Event.current.type == EventType.MouseDown )
-         {
-            m_ContextX = 0;
-            m_ContextY = 0;
-            m_CurrentMenu = null;
-         }
+         int w = 500;
+         int h = Math.Max(300, (int)position.height - 400);
+         Rect r = new Rect((position.width-w)/2, (position.height-h)/2, w, h);
+			
+         GUI.Window(110, r, DoWindowEULA, "End User License Agreement");
       }
-
-      if (_openScriptToggle)
+      else
       {
-          DrawAssetList();
+         if ( true == contextActive )
+         {
+            DrawContextMenu( m_ContextX, m_ContextY );
+
+            if ( Event.current.type == EventType.MouseDown )
+            {
+               m_ContextX = 0;
+               m_ContextY = 0;
+               m_CurrentMenu = null;
+            }
+         }
+
+         if (_openScriptToggle)
+         {
+            DrawAssetList();
+         }
       }
       EndWindows( );
 
@@ -1297,7 +1361,12 @@ public class uScript : EditorWindow
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label("uScripts", CustomGUIStyle["panelTitle"]);
+            GUILayout.Label("uScripts", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button(new GUIContent("New uScript", "Create a new uScript. That active uScript will be closed automatically."), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            {
+               Debug.LogWarning("YO! We need to create a new uScript now!\nBe sure to first close any open uScript, prompting to save where appropriate.");
+            }
          }
          EditorGUILayout.EndHorizontal();
 
@@ -1310,6 +1379,51 @@ public class uScript : EditorWindow
 
       SetMouseRegion( MouseRegion.Subsequences, 3, 3, -2, -3 );
    }
+
+
+
+
+   void DoWindowEULA(int windowID)
+   {
+      GUIStyle EULAstyle = new GUIStyle("box");
+      EULAstyle.padding = new RectOffset(1, 1, 1, 1);
+
+      GUILayout.BeginHorizontal(EULAstyle);
+      {
+         _EULAscroll = GUILayout.BeginScrollView(_EULAscroll);
+         {
+            // prevent the help TextArea from getting focus
+            GUI.SetNextControlName("EULA");
+            GUILayout.TextArea(_EULAtext, CustomGUIStyle["referenceText"]);
+            if (GUI.GetNameOfFocusedControl() == "EULA")
+            {
+               GUIUtility.keyboardControl = 0;
+            }
+         }
+         GUILayout.EndScrollView();
+      }
+      GUILayout.EndHorizontal();
+
+      GUILayout.BeginHorizontal();
+      {
+         GUILayout.Space(20);
+         _EULAtoggle = GUILayout.Toggle(_EULAtoggle, "  I agree to the terms of this license agreement.");
+         GUI.enabled = false;
+         if (_EULAtoggle)
+         {
+            GUI.enabled = true;
+         }
+
+         GUILayout.FlexibleSpace();
+         if (GUILayout.Button("Accept", GUILayout.Width(100)))
+         {
+            _EULAagreed = true;
+         }
+         GUILayout.Space(20);
+      }
+      GUILayout.EndHorizontal();
+   }
+
 
 
 
