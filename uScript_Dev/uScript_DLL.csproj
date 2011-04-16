@@ -56,6 +56,7 @@
     </Compile>
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_MasterObject.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Triggers.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Update.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Variable_Gizmo.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\AnimData.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\BinaryXml.cs" />
