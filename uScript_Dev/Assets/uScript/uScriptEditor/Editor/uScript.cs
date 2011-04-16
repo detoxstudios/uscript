@@ -1198,6 +1198,14 @@ http://www.powerof2software.com";
          }
 
          {
+            if (GUILayout.Button(new GUIContent("New", "Create a new uScript. The active uScript will be closed automatically."), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            {
+               if (AllowNewFile(true))
+               {
+                  NewScript();
+               }
+            }
+
             if ( GUILayout.Button( "Open...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                string path = EditorUtility.OpenFilePanel( "Open uScript", uScriptConfig.Paths.UserScripts, "uscript" );
@@ -1366,11 +1374,6 @@ http://www.powerof2software.com";
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
             GUILayout.Label("uScripts", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("New uScript", "Create a new uScript. That active uScript will be closed automatically."), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
-            {
-               Debug.LogWarning("YO! We need to create a new uScript now!\nBe sure to first close any open uScript, prompting to save where appropriate.");
-            }
          }
          EditorGUILayout.EndHorizontal();
 
@@ -1656,6 +1659,21 @@ http://www.powerof2software.com";
 
       //file was not dirty
       return true;
+   }
+   
+   public void NewScript()
+   {
+      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes( ), PopulateLogicTypes( ) );
+
+      m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor );
+      m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
+      
+      m_ScriptEditorCtrl.BuildContextMenu();
+      BuildSidebarMenu(null, null);
+      
+      m_FullPath = "";
+      
+      uScript.SetSetting("uScript\\LastOpened", "");
    }
 
    public void OpenScript(string fullPath)
