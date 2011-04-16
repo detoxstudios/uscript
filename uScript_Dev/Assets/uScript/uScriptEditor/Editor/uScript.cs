@@ -12,7 +12,9 @@ using System.Drawing;
 
 public class uScript : EditorWindow
 {
-   public string    uScriptBuild       { get { return "0.1.4.14.11"; } }
+                                       //format is MAJOR.MINOR.YYMMDDa  
+                                       //(where 'a' is incremented if we have more than 1 daily build we release)
+   public string    uScriptBuild       { get { return "0.1.110415a"; } }
    public string    RequiredUnityBuild { get { return  "3.3.0f4"; } }
    public DateTime  ExpireDate         { get { return new DateTime( 2011, 5, 4 ); } }
 
@@ -151,7 +153,7 @@ public class uScript : EditorWindow
 
 
    #region EULA Variables
-   private bool _EULAagreed;
+   private bool _EULAagreed = false;
    private Vector2 _EULAscroll;
    private bool _EULAtoggle;
    private string _EULAtext = @"IMPORTANT, PLEASE READ CAREFULLY. THIS IS A LICENSE AGREEMENT
@@ -345,6 +347,8 @@ http://www.powerof2software.com";
       //
       if (null == m_ScriptEditorCtrl)
       {
+         _EULAagreed = (bool) uScript.GetSetting( "EULA\\Agreed", false );
+
          if ( Application.unityVersion != RequiredUnityBuild )
          {
             uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".\n", uScriptDebug.Type.Error );
@@ -1417,6 +1421,7 @@ http://www.powerof2software.com";
          GUILayout.FlexibleSpace();
          if (GUILayout.Button("Accept", GUILayout.Width(100)))
          {
+            uScript.SetSetting( "EULA\\Agreed", true );
             _EULAagreed = true;
          }
          GUILayout.Space(20);
@@ -1636,7 +1641,7 @@ http://www.powerof2software.com";
             AssetDatabase.StartAssetEditing( );
 
                scriptSaved = SaveScript( false );
-
+               
             AssetDatabase.StopAssetEditing( );
 
             return scriptSaved;
