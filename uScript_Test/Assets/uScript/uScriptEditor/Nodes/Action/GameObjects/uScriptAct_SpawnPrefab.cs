@@ -140,7 +140,7 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
 
    }
 
-   public override void _InternalUpdate()
+   public void Update()
    {
       if (m_FinishedSpawning)
       {

@@ -63,7 +63,7 @@ public class uScriptAct_MoveToLocation : uScriptLogic
 
    }
 
-   public override void _InternalUpdate()
+   public void Update()
    {
       if (m_UseLerp)
       {

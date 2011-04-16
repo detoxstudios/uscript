@@ -33,7 +33,7 @@ public class uScriptAct_Delay : uScriptLogic
       m_TimeToTrigger = Duration;
    }
 
-   public override void _InternalUpdate( )
+   public void Update( )
    {
       if ( m_TimeToTrigger > 0 )
       {
