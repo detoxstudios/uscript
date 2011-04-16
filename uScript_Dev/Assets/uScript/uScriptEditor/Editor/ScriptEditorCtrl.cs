@@ -668,6 +668,16 @@ namespace Detox.ScriptEditor
          RefreshScript( null );
       }
 
+      private void m_MenuUpgradeNode_Click(object sender, EventArgs e)
+      {
+         foreach ( DisplayNode node in SelectedNodes )
+         {
+            m_ScriptEditor.UpgradeNode( node.EntityNode );
+         }
+
+         RefreshScript( null );
+      }
+
       private void m_MenuCreateList_Click(object sender, EventArgs e)
       {
          List<LocalNode> locals = new List<LocalNode>( );
@@ -1264,6 +1274,7 @@ namespace Detox.ScriptEditor
          ToolStripMenuItem pasteMenu= new ToolStripMenuItem();
          ToolStripMenuItem undoMenu = new ToolStripMenuItem();
          ToolStripMenuItem redoMenu = new ToolStripMenuItem();
+         ToolStripMenuItem upgradeNode = new ToolStripMenuItem();
 
          m_ContextMenuStrip.Items.Add( addMenu );
          
@@ -1400,6 +1411,16 @@ namespace Detox.ScriptEditor
 
                   m_ContextMenuStrip.Items.Add( objectList );
                   break;
+               }
+
+               if ( true == node.Deprecated )
+               {
+                  upgradeNode.Name = "m_UpgradeNode";
+                  upgradeNode.Size = new System.Drawing.Size(152, 22);
+                  upgradeNode.Text = "Upgrade Node";
+                  upgradeNode.Click += new System.EventHandler(m_MenuUpgradeNode_Click);
+
+                  m_ContextMenuStrip.Items.Add( upgradeNode );
                }
             }
          }

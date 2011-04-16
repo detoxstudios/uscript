@@ -1743,6 +1743,14 @@ namespace Detox.ScriptEditor
       Hashtable m_Nodes = new Hashtable( );
       Hashtable m_DeprecatedNodes = new Hashtable( );
 
+      public void UpgradeNode( EntityNode node )
+      {
+         if ( m_DeprecatedNodes.Contains(node.Guid) )
+         {
+            m_DeprecatedNodes.Remove( node.Guid );
+         }
+      }
+
       public bool IsDeprecated( EntityNode node )
       {
          return m_DeprecatedNodes.Contains(node.Guid);
