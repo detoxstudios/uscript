@@ -49,6 +49,7 @@ public class uScript : EditorWindow
    private bool m_WantsCopy  = false;
    private bool m_WantsPaste = false;
    private bool m_WantsRefresh = false;
+   private bool m_WantsClose   = false;
 
    private string m_FullPath = "";
    private string m_CurrentCanvasPosition = "";
@@ -462,7 +463,7 @@ http://www.powerof2software.com";
 
       if (!_EULAagreed)
       {
-         int w = 500;
+         int w = 550;
          int h = Math.Max(300, (int)position.height - 400);
          Rect r = new Rect((position.width-w)/2, (position.height-h)/2, w, h);
 			
@@ -488,6 +489,14 @@ http://www.powerof2software.com";
          }
       }
       EndWindows( );
+      
+      if (m_WantsClose)
+      {
+         Close();
+         m_WantsClose = false;
+         return;
+      }
+      m_WantsClose = false;
 
 
 //      uScriptDebug.Log(Event.current.type);
@@ -1413,8 +1422,10 @@ http://www.powerof2software.com";
 
       GUILayout.BeginHorizontal();
       {
-         GUILayout.Space(20);
+         GUILayout.Space(10);
+
          _EULAtoggle = GUILayout.Toggle(_EULAtoggle, "  I agree to the terms of this license agreement.");
+
          GUI.enabled = false;
          if (_EULAtoggle)
          {
@@ -1427,7 +1438,16 @@ http://www.powerof2software.com";
             uScript.SetSetting( "EULA\\Agreed", true );
             _EULAagreed = true;
          }
-         GUILayout.Space(20);
+         
+         GUI.enabled = true;
+
+         GUILayout.FlexibleSpace();
+         if (GUILayout.Button("Close uScript", GUILayout.Width(100)))
+         {
+            m_WantsClose = true;
+         }
+
+         GUILayout.Space(10);
       }
       GUILayout.EndHorizontal();
    }
