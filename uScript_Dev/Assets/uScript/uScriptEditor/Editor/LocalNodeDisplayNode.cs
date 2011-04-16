@@ -95,7 +95,7 @@ namespace Detox.ScriptEditor
          if ( false == Selected ) return new Size(57, 57);
 
          Size size = base.CalculateSize(sockets, g);
-         if ( size.Width < 57 ) size.Width = 57;
+         if (size.Width < 57) size.Width = 57;
 
          size.Height = 57;
 
@@ -109,6 +109,8 @@ namespace Detox.ScriptEditor
       }
    }
 
+
+
    public partial class ExternalConnectionDisplayNode : DisplayNode
    {
       override public int RenderDepth { get { return FlowChartCtrl.LinkRenderDepth + 1; } }
@@ -121,14 +123,25 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
-         NodeStyle = "variable_default";
-
+         NodeStyle = "external_connection";
+                  
          Location = new System.Drawing.Point( externalConnection.Position.X, externalConnection.Position.Y );
 
          Name = "";
 
          PrepareNode( );
       }
+      
+      public override bool Selected
+      {
+         set
+         {
+            base.Selected = value;
+            PrepareNode();
+            Invalidate();
+         }
+      }
+
 
       private void PrepareNode( )
       {
@@ -136,13 +149,14 @@ namespace Detox.ScriptEditor
 
          if ( "" != ExternalConnection.Name.Default ) name = ExternalConnection.Name.Default;
 
-         if ( false == Selected )
+         if (false == Selected)
          {
-            if ( name.Length > 3 )
+            if (name.Length > 3)
             {
-               name = name.Substring( 0, 3 ) + "...";
+               name = name.Substring(0, 3) + "...";
             }
          }
+         
 			
          List<Socket> sockets = new List<Socket>( );
          Socket socket;
@@ -170,10 +184,10 @@ namespace Detox.ScriptEditor
 
       protected override Size CalculateSize(Socket []sockets, Graphics g)
       {
-         if ( false == Selected ) return new Size(57, 57);
+         if ( false == Selected ) return new Size(61, 59);
 
          Size size = base.CalculateSize(sockets, g);
-         size.Height = 57;
+         size.Height = 59;
 
          return size;
       }
@@ -181,6 +195,7 @@ namespace Detox.ScriptEditor
       //overridden so we can expand if we are selected
       public override void OnPaint( PaintEventArgs e )
       {
+         uScriptDebug.Log(NodeStyle);
          PrepareNode( );
          base.OnPaint( e );
       }

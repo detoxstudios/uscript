@@ -393,6 +393,40 @@ public class uScriptDefaultStyle : uScriptStyle
 	   element.fontSize = 0;
       elementSettings["variable"] = element;
 
+      element = new GUIStyle();
+      element.normal.textColor = Color.black;
+      element.border.left = 17;
+      element.border.right = 34;
+      element.border.top = 26;
+      element.border.bottom = 32;
+      element.padding.left = -139;
+      element.padding.right = -128;
+      element.padding.top = 0;
+      element.padding.bottom = -12;
+      element.fixedHeight = 0;
+      element.fixedWidth = 0f;
+      element.alignment = TextAnchor.LowerCenter;
+      element.fontStyle = FontStyle.Normal;
+      element.fontSize = 0;
+      elementSettings["external_connection"] = element;
+
+      element = new GUIStyle();
+      element.normal.textColor = Color.black;
+      element.border.left = 17;
+      element.border.right = 34;
+      element.border.top = 26;
+      element.border.bottom = 32;
+      element.padding.left = -139;
+      element.padding.right = -128;
+      element.padding.top = 0;
+      element.padding.bottom = -12;
+      element.fixedHeight = 0;
+      element.fixedWidth = 0f;
+      element.alignment = TextAnchor.LowerCenter;
+      element.fontStyle = FontStyle.Normal;
+      element.fontSize = 0;
+      elementSettings["external_connection_selected"] = element;
+
 
       string assetPath = uScriptConfig.Paths.SkinPath + "/elements";
 
@@ -443,6 +477,15 @@ public class uScriptDefaultStyle : uScriptStyle
          else if (true == name.Contains("comment_selected"))
          {
             key = "comment_selected";
+         }
+         else if (true == name.Contains("external_connection") &&
+               false == name.Contains("selected"))
+         {
+            key = "external_connection";
+         }
+         else if (true == name.Contains("external_connection_selected"))
+         {
+            key = "external_connection_selected";
          }
          else if (true == name.Contains("property"))
          {
@@ -598,6 +641,17 @@ public class uScriptDefaultStyle : uScriptStyle
       {
    	   //Debug.Log( "comment_selected" );
          return m_Styles[ "comment_selected" ];
+      }
+      else if (true == name.Contains("external_connection") &&
+         false == name.Contains("selected"))
+      {
+         //Debug.Log( "external_connection" );
+         return m_Styles["external_connection"];
+      }
+      else if (true == name.Contains("external_connection_selected"))
+      {
+         //Debug.Log( "external_connection_selected" );
+         return m_Styles["external_connection_selected"];
       }
       else if (true == name.Contains("property"))
       {
