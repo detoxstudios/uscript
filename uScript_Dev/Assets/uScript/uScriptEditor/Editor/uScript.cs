@@ -674,13 +674,13 @@ http://www.powerof2software.com";
    {
       if (EditorApplication.isPlayingOrWillChangePlaymode)
       {
-         AllowNewFile();
+         AllowNewFile(false);
       }
    }
 
    void OnDestroy()
    {
-      AllowNewFile();
+      AllowNewFile(true);
    }
 
    void OpenLogicNode( )
@@ -1611,11 +1611,23 @@ http://www.powerof2software.com";
       m_Repainting = false;
    }
 
-   private bool AllowNewFile( )
+   private bool AllowNewFile(bool allowCancel)
    {
       if (m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.IsDirty)
       {
-         int result = EditorUtility.DisplayDialogComplex( "Save File?", m_ScriptEditorCtrl.Name + " has been modified, would you like to save?", "Yes", "No", "Cancel" );
+         int result;
+         
+         if ( true == allowCancel )
+         {
+            result = EditorUtility.DisplayDialogComplex( "Save File?", m_ScriptEditorCtrl.Name + " has been modified, would you like to save?", "Yes", "No", "Cancel" );
+         }
+         else
+         {
+            bool yes = EditorUtility.DisplayDialog( "Save File?", m_ScriptEditorCtrl.Name + " has been modified, would you like to save?", "Yes", "No" );
+            
+            if ( true == yes ) result = 0;
+            else result = 1;
+         }
 
          if ( 0 == result )
          {
@@ -1643,7 +1655,7 @@ http://www.powerof2software.com";
 
    public void OpenScript(string fullPath)
    {
-      if ( false == AllowNewFile( ) ) return;
+      if ( false == AllowNewFile(true) ) return;
 
       Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes( ), PopulateLogicTypes( ) );
 
