@@ -36,7 +36,7 @@ public class uScript : EditorWindow
    Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
    Dictionary<string,GUIStyle> CustomGUIStyle = new Dictionary<string,GUIStyle>();
-   
+
    static private uScript s_Instance = null;
    static public uScript Instance { get { if ( null == s_Instance ) Init( ); return s_Instance; } }
    private bool isPro;
@@ -362,6 +362,8 @@ http://www.detoxstudios.com";
       //
       if (null == m_ScriptEditorCtrl)
       {
+         InitializeGUIButtons();
+
          if ( Application.unityVersion != RequiredUnityBuild )
          {
             uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".\n", uScriptDebug.Type.Error );
@@ -889,20 +891,14 @@ http://www.detoxstudios.com";
          {
              GUILayout.Label("Node Palette", CustomGUIStyle["panelTitle"]);
 
-//            _sidebarPopupIndex = EditorGUILayout.Popup(_sidebarPopupIndex, _sidebarPopupArray, "toolbarDropDown");
-
-            Texture icon;  // temporary icon for toolbar buttons -- reuse when possible
-
             // Collapse hierarchy
-            icon = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/collapse_hierarchy.png", typeof(UnityEngine.Texture)) as UnityEngine.Texture;
-            if (icon && GUILayout.Button(icon, "toolbarButton"))
+            if ( GUILayout.Button( Button.Content( Button.ID.Collapse ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                CollapseSidebarMenuItem(null);
             }
 
             // Expand hierarchy
-            icon = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/expand_hierarchy.png", typeof(UnityEngine.Texture)) as UnityEngine.Texture;
-            if (icon && GUILayout.Button(icon, "toolbarButton"))
+            if ( GUILayout.Button( Button.Content( Button.ID.Expand ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                ExpandSidebarMenuItem(null);
             }
@@ -922,6 +918,14 @@ http://www.detoxstudios.com";
                 _filterText = new string(_filterText.Where(ch => char.IsLetterOrDigit(ch)).ToArray());
 
                 _sidebarFilterText = _filterText;
+               FilterSidebarMenuItems();
+            }
+
+            // Clear the node text filter
+            if ( GUILayout.Button( Button.Content( Button.ID.ClearFilter ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            {
+               GUIUtility.keyboardControl = 0;
+               _sidebarFilterText = String.Empty;
                FilterSidebarMenuItems();
             }
          }
@@ -957,16 +961,19 @@ http://www.detoxstudios.com";
 
       if ( _mouseRegionRect.ContainsKey(region) )
       {
-         switch ( region )
+         if (GUI.enabled)
          {
-            case MouseRegion.HandleCanvas:
-               EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeVertical);
-               break;
-            case MouseRegion.HandlePalette:
-            case MouseRegion.HandleProperties:
-            case MouseRegion.HandleReference:
-               EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeHorizontal);
-               break;
+            switch ( region )
+            {
+               case MouseRegion.HandleCanvas:
+                  EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeVertical);
+                  break;
+               case MouseRegion.HandlePalette:
+               case MouseRegion.HandleProperties:
+               case MouseRegion.HandleReference:
+                  EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeHorizontal);
+                  break;
+            }
          }
 
          if ( _mouseRegionRect[region].Contains( Event.current.mousePosition ) )
@@ -1205,6 +1212,7 @@ http://www.detoxstudios.com";
       AssetDatabase.Refresh( );
    }
 
+
    void DrawGUIContent()
    {
       Rect rect = EditorGUILayout.BeginVertical();
@@ -1225,7 +1233,7 @@ http://www.detoxstudios.com";
          }
 
          {
-            if (GUILayout.Button(new GUIContent("New", "Create a new uScript. The active uScript will be closed automatically."), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            if ( GUILayout.Button( Button.Content( Button.ID.New ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                if (AllowNewFile(true))
                {
@@ -1233,7 +1241,7 @@ http://www.detoxstudios.com";
                }
             }
 
-            if ( GUILayout.Button( "Open...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if ( GUILayout.Button( Button.Content( Button.ID.Open ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                string path = EditorUtility.OpenFilePanel( "Open uScript", uScriptConfig.Paths.UserScripts, "uscript" );
                if ( path.Length > 0 )
@@ -1242,8 +1250,9 @@ http://www.detoxstudios.com";
                }
             }
 
-                _openScriptToggle = GUILayout.Toggle(_openScriptToggle, "Open Active uScripts...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
-            if ( GUILayout.Button( "Save", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            _openScriptToggle = GUILayout.Toggle(_openScriptToggle, "Open Active uScripts...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
+
+            if ( GUILayout.Button( Button.Content( Button.ID.Save ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                AssetDatabase.StartAssetEditing( );
                   SaveScript( false );
@@ -1251,7 +1260,7 @@ http://www.detoxstudios.com";
             
                RefreshScript( );
             }
-            if ( GUILayout.Button( "Save As...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if ( GUILayout.Button( Button.Content( Button.ID.SaveAs ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                AssetDatabase.StartAssetEditing( );
                   SaveScript( true );
@@ -1259,14 +1268,22 @@ http://www.detoxstudios.com";
 
                RefreshScript( );
             }
-            if ( GUILayout.Button( "Rebuild All Scripts", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if ( GUILayout.Button( Button.Content( Button.ID.RebuildAll ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                AssetDatabase.StartAssetEditing( );
                   RebuildScripts( uScriptConfig.Paths.UserScripts );
                AssetDatabase.StopAssetEditing( );
                AssetDatabase.Refresh();
             }
-            EditorGUILayout.Space();
+            GUILayout.FlexibleSpace();
+
+//            Button.StyleID newStyle = (Button.StyleID)EditorGUILayout.EnumPopup(Button.Style);
+//            if (newStyle != Button.Style)
+//            {
+//               Button.Style = newStyle;
+//            }
+
+//            EditorGUILayout.Space();
 //            _canvasZoom = EditorGUILayout.Slider(_canvasZoom, 0.25f, 1.0f);
 //            if ( GUILayout.Button( "ToolbarButton3", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
 //            {
@@ -1367,7 +1384,9 @@ http://www.detoxstudios.com";
          {
             GUILayout.Label("Reference", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button(new GUIContent("Online Reference", "Open the online reference for the selected node in the default web browser. (" + helpButtonURL + ")"), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+
+            Button.ChangeTooltip( Button.ID.OnlineReference, "Open the online reference for the selected node in the default web browser. (" + helpButtonURL + ")" );
+            if ( GUILayout.Button( Button.Content( Button.ID.OnlineReference ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                Help.BrowseURL(helpButtonURL);
             }
@@ -1401,6 +1420,7 @@ http://www.detoxstudios.com";
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
             GUILayout.Label("uScripts", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
+//            GUILayout.FlexibleSpace();
          }
          EditorGUILayout.EndHorizontal();
 
@@ -1413,8 +1433,6 @@ http://www.detoxstudios.com";
 
       SetMouseRegion( MouseRegion.Subsequences, 3, 3, -2, -3 );
    }
-
-
 
 
    void DoWindowEULA(int windowID)
@@ -2874,4 +2892,92 @@ http://www.detoxstudios.com";
 
       return null;
    }
+
+
+   void InitializeGUIButtons()
+   {
+//      Debug.Log("InitializeGUIButtons()\n");
+      Button.Default(Button.ID.New,          "iconNew",           "New",                  "Create a new uScript. The active uScript will be closed automatically.");
+      Button.Default(Button.ID.Open,         "iconOpen",          "Open...",              "Open a uScript using the file browser.");
+      Button.Default(Button.ID.Save,         "iconSave",          "Save",                 "Save the current uScript.");
+      Button.Default(Button.ID.SaveAs,       "iconSaveAs",        "Save As...",           "Save the current uScript using the file browser.");
+      Button.Default(Button.ID.RebuildAll,   "iconRebuildAll",    "Rebuild All uScripts", "Rebuild all uScripts in the scene.");
+      Button.Default(Button.ID.Collapse,     "iconCollapse",      String.Empty,           "Collapse all node categories.");
+      Button.Default(Button.ID.Expand,       "iconExpand",        String.Empty,           "Expand all node categories.");
+      Button.Default(Button.ID.ClearFilter,  "iconClearFilter",   String.Empty,           "Clear the node search filter.");
+      Button.Default(Button.ID.OnlineReference, "iconOnlineReference", "Online Reference",           "Clear the node search filter.");
+//      Open Active uScript
+//      Online Reference
+//      Zoom In
+//      Zoom Out
+   }
+
+
+   static class Button
+   {
+      public enum ID { New, Open, OpenAs, Save, SaveAs, RebuildAll, RemoveGenerated, Collapse, Expand, ClearFilter, OnlineReference }
+
+      public enum StyleID { Icon, IconText, Text }
+
+      static Dictionary<ID, GUIContent> _defaultGUIContent = new Dictionary<ID, GUIContent>();
+      static Dictionary<ID, GUIContent> _currentGUIContent = new Dictionary<ID, GUIContent>();
+
+      static StyleID _currentStyle = StyleID.IconText;
+
+      static public StyleID Style
+      {
+         get { return _currentStyle; }
+         set
+         {
+//            Debug.Log("Changing style from " + _currentStyle + " to " + value + "\n");
+            _currentStyle = value;
+            UpdateAll();
+         }
+      }
+
+      static public void Default(ID id, string imageFilename, string text, string tooltip)
+      {
+         _defaultGUIContent[id] = new GUIContent(text, UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + imageFilename + ".png", typeof(UnityEngine.Texture)) as UnityEngine.Texture, tooltip);
+         Update(id);
+      }
+
+      static public GUIContent Content(ID id)
+      {
+         return _currentGUIContent[id];
+      }
+
+      static public void ChangeTooltip(ID id, string tooltip)
+      {
+         GUIContent content = _defaultGUIContent[id];
+         content.tooltip = tooltip;
+         _defaultGUIContent[id] = content;
+         Update(id);
+      }
+
+      static void Update(ID id)
+      {
+         if ( (_currentStyle == uScript.Button.StyleID.Text && !String.IsNullOrEmpty(_defaultGUIContent[id].text) )
+             || _defaultGUIContent[id].image == null)
+         {
+            _currentGUIContent[id] = new GUIContent(_defaultGUIContent[id].text, _defaultGUIContent[id].tooltip);
+         }
+         else if (_currentStyle == uScript.Button.StyleID.Icon || String.IsNullOrEmpty(_defaultGUIContent[id].text))
+         {
+            _currentGUIContent[id] = new GUIContent(_defaultGUIContent[id].image, _defaultGUIContent[id].tooltip);
+         }
+         else
+         {
+            _currentGUIContent[id] = new GUIContent(_defaultGUIContent[id]);
+         }
+      }
+
+      static void UpdateAll()
+      {
+         foreach(KeyValuePair<ID, GUIContent> entry in _defaultGUIContent)
+         {
+            Update(entry.Key);
+         }
+      }
+   }
+
 }
