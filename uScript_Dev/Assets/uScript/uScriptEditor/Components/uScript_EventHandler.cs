@@ -408,7 +408,7 @@ public class uScriptDefaultStyle : uScriptStyle
       element.alignment = TextAnchor.LowerCenter;
       element.fontStyle = FontStyle.Normal;
       element.fontSize = 0;
-      elementSettings["external_connection"] = element;
+      elementSettings["externalconnection"] = element;
 
       element = new GUIStyle();
       element.normal.textColor = Color.black;
@@ -425,7 +425,7 @@ public class uScriptDefaultStyle : uScriptStyle
       element.alignment = TextAnchor.LowerCenter;
       element.fontStyle = FontStyle.Normal;
       element.fontSize = 0;
-      elementSettings["external_connection_selected"] = element;
+      elementSettings["externalconnection_selected"] = element;
 
 
       string assetPath = uScriptConfig.Paths.SkinPath + "/elements";
@@ -478,14 +478,14 @@ public class uScriptDefaultStyle : uScriptStyle
          {
             key = "comment_selected";
          }
-         else if (true == name.Contains("external_connection") &&
+         else if (true == name.Contains("externalconnection") &&
                false == name.Contains("selected"))
          {
-            key = "external_connection";
+            key = "externalconnection";
          }
-         else if (true == name.Contains("external_connection_selected"))
+         else if (true == name.Contains("externalconnection_selected"))
          {
-            key = "external_connection_selected";
+            key = "externalconnection_selected";
          }
          else if (true == name.Contains("property"))
          {
@@ -581,6 +581,24 @@ public class uScriptDefaultStyle : uScriptStyle
       element.fontStyle = FontStyle.Normal;
       element.fontSize = 0;
       m_Styles["comment_body_text"] = element;
+
+      element = new GUIStyle();
+      element.wordWrap = true;
+      element.normal.textColor = Color.black;
+      element.border.left = 6;
+      element.border.right = 6;
+      element.border.top = 6;
+      element.border.bottom = 6;
+      element.padding.left = 0;
+      element.padding.right = 0;
+      element.padding.top = 0;
+      element.padding.bottom = 0;
+      element.fixedHeight = 0f;
+      element.fixedWidth = 0f;
+      element.alignment = TextAnchor.UpperLeft;
+      element.fontStyle = FontStyle.Normal;
+      element.fontSize = 0;
+      m_Styles["externalconnection_text"] = element;
    }
 
    public override GUIStyle Get(string name)
@@ -642,16 +660,16 @@ public class uScriptDefaultStyle : uScriptStyle
    	   //Debug.Log( "comment_selected" );
          return m_Styles[ "comment_selected" ];
       }
-      else if (true == name.Contains("external_connection") &&
+      else if (true == name.Contains("externalconnection") &&
          false == name.Contains("selected"))
       {
-         //Debug.Log( "external_connection" );
-         return m_Styles["external_connection"];
+         //Debug.Log( "externalconnection" );
+         return m_Styles["externalconnection"];
       }
-      else if (true == name.Contains("external_connection_selected"))
+      else if (true == name.Contains("externalconnection_selected"))
       {
-         //Debug.Log( "external_connection_selected" );
-         return m_Styles["external_connection_selected"];
+         //Debug.Log( "externalconnection_selected" );
+         return m_Styles["externalconnection_selected"];
       }
       else if (true == name.Contains("property"))
       {

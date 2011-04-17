@@ -123,7 +123,7 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
-         NodeStyle = "external_connection";
+         NodeStyle = "externalconnection";
                   
          Location = new System.Drawing.Point( externalConnection.Position.X, externalConnection.Position.Y );
 
@@ -131,17 +131,6 @@ namespace Detox.ScriptEditor
 
          PrepareNode( );
       }
-      
-      public override bool Selected
-      {
-         set
-         {
-            base.Selected = value;
-            PrepareNode();
-            Invalidate();
-         }
-      }
-
 
       private void PrepareNode( )
       {
@@ -157,7 +146,6 @@ namespace Detox.ScriptEditor
             }
          }
          
-			
          List<Socket> sockets = new List<Socket>( );
          Socket socket;
 
@@ -184,20 +172,47 @@ namespace Detox.ScriptEditor
 
       protected override Size CalculateSize(Socket []sockets, Graphics g)
       {
-         if ( false == Selected ) return new Size(61, 59);
-
-         Size size = base.CalculateSize(sockets, g);
-         size.Height = 59;
-
-         return size;
+         return new Size(61, 59);
       }
 
-      //overridden so we can expand if we are selected
-      public override void OnPaint( PaintEventArgs e )
+      protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, System.Drawing.Graphics g)
       {
-         uScriptDebug.Log(NodeStyle);
-         PrepareNode( );
-         base.OnPaint( e );
+         foreach ( Socket socket in sockets )
+         {
+            if ( socket.Input == true || socket.Output == true )
+            {
+               AnchorPoint point = new AnchorPoint( );
+               point.Name   = socket.InternalName;
+               point.X      = Size.Width / 2;
+               point.Y      = Size.Height / 2;
+
+               point.Width  = Size.Width;
+               point.Height = Size.Height;
+                  
+               point.Input  = socket.Input;
+               point.Output = socket.Output;
+               point.CanSource = false;
+               point.StyleName = "clear_socket";
+               points.Add( point );
+            }
+
+            if ( socket.Input == false && socket.Output == false )
+            {
+               SizeF size = null == g ? new SizeF(0,0) : g.MeasureString( FormatName(socket), "socket_text" );
+
+               TextPoint textPoint = new TextPoint( );
+
+               textPoint.Name = FormatName(socket);
+               textPoint.X = (Size.Width - uScriptConfig.Style.RightShadow - size.Width) / 2;
+               textPoint.Y = (Size.Height - uScriptConfig.Style.BottomShadow - size.Height) / 2;
+               textPoint.StyleName = "externalconnection_text";
+
+               if ( textPoint.X < 0 ) textPoint.X = 0;
+               if ( textPoint.Y < 0 ) textPoint.Y = 0;
+
+               textPoints.Add( textPoint );
+            }
+         }
       }
    }
 }
