@@ -221,7 +221,7 @@ public class SubSeq_uScript_StressTest : uScriptLogic
    {
    }
    
-   public void Awake()
+   public override void Awake()
    {
       FillComponents( );
       

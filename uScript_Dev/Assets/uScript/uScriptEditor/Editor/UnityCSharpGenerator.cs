@@ -869,14 +869,22 @@ namespace Detox.ScriptEditor
          foreach ( EntityEvent entityEvent in m_Script.Events )
          {
             AddEventListener( entityEvent );
-            AddCSharpLine( "" );
          }
+
+         AddCSharpLine( "" );
 
          //for each logic node, create an script specific instance
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
             AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = ScriptableObject.CreateInstance(typeof(" + logicNode.Type +")) as " + logicNode.Type + ";" );
-            AddCSharpLine( "" );
+         }
+         
+         AddCSharpLine( "" );
+
+         //for each logic node, create an script specific instance
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
+            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Awake( );" );
          }
 
          //for each logic node event, register event listeners with it
