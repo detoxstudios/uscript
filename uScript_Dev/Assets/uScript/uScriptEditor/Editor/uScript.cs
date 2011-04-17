@@ -55,6 +55,7 @@ public class uScript : EditorWindow
    private string m_CurrentCanvasPosition = "";
 
    static private AppFrameworkData m_AppData = new AppFrameworkData();
+   static private bool m_SettingsLoaded = false;
    private double m_RefreshTimestamp = -1.0;
    private string m_AddToMaster = "";
 
@@ -220,17 +221,26 @@ http://www.detoxstudios.com";
 
    static public object GetSetting(string key)
    {
+      if (!m_SettingsLoaded) LoadSettings();
+      m_SettingsLoaded = true;
+
       return m_AppData.Get(key);
    }
 
    static public object GetSetting(string key, object defaultValue)
    {
+      if (!m_SettingsLoaded) LoadSettings();
+      m_SettingsLoaded = true;
+
       object value = m_AppData.Get(key);
       return null != value ? value : defaultValue;
    }
 
    static public void SetSetting(string key, object value)
    {
+      if (!m_SettingsLoaded) LoadSettings();
+      m_SettingsLoaded = true;
+
       m_AppData.Set(key, value);
       m_AppData.Save(uScriptConfig.Paths.RootFolder + "/uScript.settings");
    }
@@ -268,8 +278,6 @@ http://www.detoxstudios.com";
 
       EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       
-      LoadSettings();
-
       _statusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
    }
 
@@ -339,7 +347,6 @@ http://www.detoxstudios.com";
    {
       if (!_EULAagreed)
       {
-         LoadSettings();
          _EULAagreed = (bool) uScript.GetSetting( "EULA\\Agreed", false );
          GUI.enabled = _EULAagreed;
       }
@@ -468,8 +475,6 @@ http://www.detoxstudios.com";
 
       if (!_EULAagreed)
       {
-         LoadSettings();
-         
          _EULAagreed = (bool) uScript.GetSetting( "EULA\\Agreed", false );
          
          if (!_EULAagreed)
