@@ -190,7 +190,7 @@ any claim by a third party.
 
 11. Indemnification By You.  If you distribute the Software in violation of this Agreement, you agree to indemnify, hold harmless and defend Detox Studios LLC and its suppliers from and against any claims or lawsuits, including attorney's fees that arise or result from the use or distribution of the Software in violation of this Agreement.
 
-12. Confidentiality. You agree by accepting this LICENSE AGREEMENT and using the SOFTWARE PRODUCT that your knowledge and experiences with this SOFTWARE PRODUCT is to remain confidential. You agree that you will not provide any information or images regarding this product without express permision from Detox Studios LLC. Detox Studios LLC does grant you to share information on our designated Beta Forum with other SOFTWARE PRODUCT beta testers.
+12. Confidentiality. You agree by accepting this LICENSE AGREEMENT and using the SOFTWARE PRODUCT that your knowledge and experiences with this SOFTWARE PRODUCT is to remain confidential. You agree that you will not provide any information or images regarding this product without express permision from Detox Studios LLC. Detox Studios LLC does grant you the right to share information on our designated Beta Forum with other SOFTWARE PRODUCT beta testers.
 
 Detox Studios LLC
 legal@detoxstudios.com
