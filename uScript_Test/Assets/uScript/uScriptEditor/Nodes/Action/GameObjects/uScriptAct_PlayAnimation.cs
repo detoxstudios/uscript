@@ -34,6 +34,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
             }
             else
             {
+               
                currentTarget.animation[Animation].speed = SpeedFactor;
             }
 
@@ -42,6 +43,11 @@ public class uScriptAct_PlayAnimation : uScriptLogic
                currentTarget.animation.Play(PlayMode.StopAll);
             }
 
+            if (SpeedFactor < 0)
+            {
+               // Needed to play in reverse with a negative speed
+               currentTarget.animation[Animation].time = currentTarget.animation[Animation].length;
+            }
             currentTarget.animation.Play(Animation);
          }
       }
