@@ -144,7 +144,7 @@ public class uScriptAct_PlaySound : uScriptLogic
 
    }
 
-   public void Update()
+   public override void Update()
    {
       // Called every tick
       if (m_AudioSource != null)

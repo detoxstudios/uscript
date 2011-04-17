@@ -355,8 +355,6 @@ http://www.detoxstudios.com";
       //
       if (null == m_ScriptEditorCtrl)
       {
-         _EULAagreed = (bool) uScript.GetSetting( "EULA\\Agreed", false );
-
          if ( Application.unityVersion != RequiredUnityBuild )
          {
             uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".\n", uScriptDebug.Type.Error );
@@ -1910,8 +1908,19 @@ http://www.detoxstudios.com";
          }
       }
 
-      baseMethods[ "Awake" ]   = "Awake";
-      baseMethods[ "Destroy" ] = "Destroy";
+      methods = typeof(ScriptableObject).GetMethods( );
+
+      foreach ( MethodInfo m in methods )
+      {
+         if ( true == m.IsPublic )
+         {
+            baseMethods[ m.Name ] = m.Name;
+         }
+      }
+
+      baseMethods[ "OnDestroy" ] = "OnDestroy";
+      baseMethods[ "OnDisable" ] = "OnDisable";
+      baseMethods[ "OnEnable" ]  = "OnEnable";
 
       EventInfo []events = typeof(uScriptLogic).GetEvents( );
 
@@ -1989,12 +1998,12 @@ http://www.detoxstudios.com";
 
          foreach ( MethodInfo m in methods )
          {
-            if ( true == accessorMethods.Contains(m.Name) ) continue;
-            if ( false == m.IsPublic ) continue;
+            if ( true  == accessorMethods.Contains(m.Name) ) continue;
             if ( true  == baseMethods.Contains(m.Name) ) continue;
-            if ( true == m.IsStatic && "Create"  == m.Name ) continue;
-            if ( true == m.IsStatic && "Destroy" == m.Name ) continue;
 
+            if ( false == m.IsPublic ) continue;
+            if ( true  == m.IsStatic ) continue;
+            
             ParameterInfo [] parameters = m.GetParameters( );
 
             List<Parameter> variables = new List<Parameter>( );

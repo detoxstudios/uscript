@@ -61,7 +61,7 @@ public class uScriptAct_Rotate : uScriptLogic
    }
    
    
-   public void Update()
+   public override void Update()
    {
       if ( null == m_Target ) return;
       if ( true == m_Done ) return;

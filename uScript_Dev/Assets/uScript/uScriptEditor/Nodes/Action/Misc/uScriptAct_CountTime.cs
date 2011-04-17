@@ -35,7 +35,7 @@ public class uScriptAct_CountTime : uScriptLogic
       m_TotalTime = 0F;
    }
 
-   public void Update()
+   public override void Update()
    {
       if (m_TimerStarted)
       {

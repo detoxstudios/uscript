@@ -33,7 +33,10 @@ public class uScriptAct_Delay : uScriptLogic
       m_TimeToTrigger = Duration;
    }
 
-   public void Update( )
+   public void OnDestroy( )
+   {}
+
+   public override void Update( )
    {
       if ( m_TimeToTrigger > 0 )
       {

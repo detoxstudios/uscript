@@ -102,6 +102,11 @@ public class uScriptEvent : MonoBehaviour
 
 public class uScriptLogic : ScriptableObject
 {
+   public virtual void Awake( )      {}
+   public virtual void Update( )     {}
+   public virtual void LateUpdate( ) {}
+   public virtual void FixedUpdate( ){}
+   public virtual void OnGUI( )      {}
 }
 
 public class uScriptDebug : MonoBehaviour

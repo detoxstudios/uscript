@@ -245,7 +245,44 @@ namespace Detox.ScriptEditor
                ++m_TabStack;
 
                   AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
+                  AddCSharpLine( "uScript.Awake( );" );
 
+               --m_TabStack;
+               AddCSharpLine( "}" );
+            
+               AddCSharpLine( "void Update( )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+            
+                  AddCSharpLine( "uScript.Update( );" );
+            
+               --m_TabStack;
+               AddCSharpLine( "}" );
+
+               AddCSharpLine( "void LateUpdate( )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+            
+                  AddCSharpLine( "uScript.LateUpdate( );" );
+            
+               --m_TabStack;
+               AddCSharpLine( "}" );
+
+               AddCSharpLine( "void FixedUpdate( )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+            
+                  AddCSharpLine( "uScript.FixedUpdate( );" );
+            
+               --m_TabStack;
+               AddCSharpLine( "}" );
+
+               AddCSharpLine( "void OnGUI( )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+            
+                  AddCSharpLine( "uScript.OnGUI( );" );
+            
                --m_TabStack;
                AddCSharpLine( "}" );
 
@@ -284,7 +321,7 @@ namespace Detox.ScriptEditor
                DefineFillComponents( );
                AddCSharpLine( "" );
                
-               AddCSharpLine( "public void Awake()" );
+               AddCSharpLine( "public override void Awake()" );
                AddCSharpLine( "{" );
 
                ++m_TabStack;
@@ -292,13 +329,52 @@ namespace Detox.ScriptEditor
                --m_TabStack;
 
                AddCSharpLine( "}" );
-
                AddCSharpLine( "" );
                
-               AddCSharpLine( "public void Destroy()" );
+               AddCSharpLine( "public override void Update()" );
+               AddCSharpLine( "{" );
+
+               ++m_TabStack;
+                  DefineUpdate( );
+               --m_TabStack;
+
+               AddCSharpLine( "}" );
+               AddCSharpLine( "" );
+
+               AddCSharpLine( "public override void LateUpdate()" );
+               AddCSharpLine( "{" );
+
+               ++m_TabStack;
+                  DefineLateUpdate( );
+               --m_TabStack;
+
+               AddCSharpLine( "}" );
+               AddCSharpLine( "" );
+
+               AddCSharpLine( "public override void FixedUpdate()" );
+               AddCSharpLine( "{" );
+
+               ++m_TabStack;
+                  DefineFixedUpdate( );
+               --m_TabStack;
+
+               AddCSharpLine( "}" );
+               AddCSharpLine( "" );
+
+               AddCSharpLine( "public override void OnGUI()" );
+               AddCSharpLine( "{" );
+
+               ++m_TabStack;
+                  DefineOnGUI( );
+               --m_TabStack;
+
+               AddCSharpLine( "}" );
+               AddCSharpLine( "" );
+
+               AddCSharpLine( "public void OnDestroy()" );
                AddCSharpLine( "{" );
                ++m_TabStack;
-                  DefineDestruction( );
+                  DefineOnDestroy( );
                --m_TabStack;
                AddCSharpLine( "}" );
 
@@ -813,6 +889,73 @@ namespace Detox.ScriptEditor
          }
       }
 
+      private void DefineUpdate( )
+      {
+         //for each logic node, create an script specific instance
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
+            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Update( );" );
+         }
+      }
+
+      private void DefineLateUpdate( )
+      {
+         //for each logic node, create an script specific instance
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
+            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".LateUpdate( );" );
+         }
+      }
+
+      private void DefineFixedUpdate( )
+      {
+         //for each logic node, create an script specific instance
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
+            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".FixedUpdate( );" );
+         }
+      }
+
+      private void DefineOnGUI( )
+      {
+         //for each logic node, create an script specific instance
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
+            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".OnGUI( );" );
+         }
+      }
+
+      private void DefineOnDestroy( )
+      {
+         AddCSharpLine( "if (false == Application.isEditor )" );
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+            //destroy script specific instances of the logic nodes
+            foreach ( LogicNode logicNode in m_Script.Logics )
+            {
+               AddCSharpLine( "ScriptableObject.Destroy( " + CSharpName(logicNode, logicNode.Type) + " );" );
+            }
+         --m_TabStack;
+         AddCSharpLine( "}" );
+         AddCSharpLine( "else" );
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+            //destroy script specific instances of the logic nodes
+            foreach ( LogicNode logicNode in m_Script.Logics )
+            {
+               AddCSharpLine( "ScriptableObject.DestroyImmediate( " + CSharpName(logicNode, logicNode.Type) + " );" );
+            }
+         --m_TabStack;
+          AddCSharpLine( "}" );
+         AddCSharpLine( "" );
+
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
+            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = null;" );
+         }
+         AddCSharpLine( "" );
+      }
+
       private void DefineFillComponents( )
       {
          AddCSharpLine( "void " + CSharpFillComponentsDeclaration( ) );
@@ -1003,17 +1146,6 @@ namespace Detox.ScriptEditor
             }
          --m_TabStack;
          AddCSharpLine( "}" );               
-      }
-
-      private void DefineDestruction( )
-      {
-         //destroy script specific instances of the logic nodes
-         foreach ( LogicNode logicNode in m_Script.Logics )
-         {
-            AddCSharpLine( "ScriptableObject.Destroy( " + CSharpName(logicNode, logicNode.Type) + " );" );
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = null;" );
-            AddCSharpLine( "" );
-         }
       }
 
       private void DefineEvents( )
