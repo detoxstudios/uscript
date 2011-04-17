@@ -1262,7 +1262,7 @@ http://www.detoxstudios.com";
                AssetDatabase.Refresh();
             }
             EditorGUILayout.Space();
-            _canvasZoom = EditorGUILayout.Slider(_canvasZoom, 0.25f, 1.0f);
+//            _canvasZoom = EditorGUILayout.Slider(_canvasZoom, 0.25f, 1.0f);
 //            if ( GUILayout.Button( "ToolbarButton3", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
 //            {
 //               uScriptDebug.Log("ToolbarButton3");
