@@ -184,13 +184,16 @@ any claim by a third party.
 
 8.  Upgrades.  If the SOFTWARE is an upgrade from an earlier release or previously released version, you now may use that upgraded product only in accordance with this EULA.  If the SOFTWARE PRODUCT is an upgrade of a software program which you licensed as a single product, the SOFTWARE PRODUCT may be used only as part of that single product package and may not be separated for use on more than one computer.
 
-9.  OEM Product Support. Product support for the SOFTWARE PRODUCT IS provided by Detox Studios LLC.  For product support, please call Detox Studios LLC.  Should you have any questions concerning this, please refer to the address provided in the documentation.
+9.  OEM Product Support. Product support for the SOFTWARE PRODUCT is provided by Detox Studios LLC.  For product support, please call Detox Studios LLC.  Should you have any questions concerning this, please refer to the address provided in the documentation.
 
-10.  No Liability for Consequential Damages.  In no event shall Detox Studios LLC or its suppliers be liable for any damages whatsoever (including, without limitation, incidental, direct, indirect special and consequential damages, damages for loss of business profits, business interruption, loss of business information, or other pecuniary loss) arising out of the use or inability to use this ""Your Company"" product, even if Detox Studios LLC has been advised of the possibility of such damages.  Because some states/countries do not allow the exclusion or limitation of liability for consequential or incidental damages, the above limitation may not apply to you.
+10. No Liability for Consequential Damages.  In no event shall Detox Studios LLC or its suppliers be liable for any damages whatsoever (including, without limitation, incidental, direct, indirect special and consequential damages, damages for loss of business profits, business interruption, loss of business information, or other pecuniary loss) arising out of the use or inability to use this ""Your Company"" product, even if Detox Studios LLC has been advised of the possibility of such damages.  Because some states/countries do not allow the exclusion or limitation of liability for consequential or incidental damages, the above limitation may not apply to you.
 
-11.  Indemnification By You.  If you distribute the Software in violation of this Agreement, you agree to indemnify, hold harmless and defend Detox Studios LLC and its suppliers from and against any claims or lawsuits, including attorney's fees that arise or result from the use or distribution of the Software in violation of this Agreement.
+11. Indemnification By You.  If you distribute the Software in violation of this Agreement, you agree to indemnify, hold harmless and defend Detox Studios LLC and its suppliers from and against any claims or lawsuits, including attorney's fees that arise or result from the use or distribution of the Software in violation of this Agreement.
+
+12. Confidentiality. You agree by accepting this LICENSE AGREEMENT and using the SOFTWARE PRODUCT that your knowledge and experiences with this SOFTWARE PRODUCT is to remain confidential. You agree that you will not provide any information or images regarding this product without express permision from Detox Studios LLC. Detox Studios LLC does grant you to share information on our designated Beta Forum with other SOFTWARE PRODUCT beta testers.
 
 Detox Studios LLC
+legal@detoxstudios.com
 http://www.detoxstudios.com";
    #endregion
 
