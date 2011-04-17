@@ -21,19 +21,8 @@ public class uScriptAct_OnKeyPressFilter : uScriptLogic
    public bool Out { get { return m_KeyCode; } }
 
    // @TODO: This is firing twice.
-   public void In([FriendlyName("Key Code")] string[] KeyCode)
+   public void In([FriendlyName("Key Code")] UnityEngine.KeyCode KeyCode)
    {
-      m_KeyCode = false;
-      bool shouldFire = false;
-
-      foreach ( string keyCodeIstance in KeyCode)
-      {
-         if ( UnityEngine.Input.GetKeyDown(keyCodeIstance) )
-         {
-            shouldFire = true;
-         }
-      }
-
-      m_KeyCode = shouldFire;
+      m_KeyCode = UnityEngine.Input.GetKeyDown(KeyCode);
    }
 }

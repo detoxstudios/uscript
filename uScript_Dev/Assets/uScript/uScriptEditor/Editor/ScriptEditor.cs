@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 
 using Detox.Utility;
 using Detox.Data;
@@ -160,6 +161,18 @@ namespace Detox.ScriptEditor
                catch 
                {
                   return new Vector4(0, 0, 0, 0);
+               }
+            }
+            System.Type eType = ScriptEditor.GetAssemblyQualifiedType(this.Type);
+            if ( typeof(System.Enum).IsAssignableFrom(eType) )
+            {
+               try
+               {
+                  return System.Enum.Parse(eType, Default);
+               }
+               catch 
+               {
+                  return System.Enum.Parse(eType, System.Enum.GetNames(eType)[0]);
                }
             }
 
@@ -1771,6 +1784,20 @@ namespace Detox.ScriptEditor
          get { return m_LogicNodes; }
       }
 
+      public static Type GetAssemblyQualifiedType(String typeName)
+      {
+         // try the basic version first
+         if ( Type.GetType(typeName) != null ) return Type.GetType(typeName);
+         
+         // not found, look through all the assemblies
+         foreach ( Assembly assembly in AppDomain.CurrentDomain.GetAssemblies() )
+         {
+            if ( Type.GetType(typeName + ", " + assembly.ToString()) != null ) return Type.GetType(typeName + ", " + assembly.ToString());
+         }
+         
+         return null;
+      }
+   
       public string [] Types
       {
          get 

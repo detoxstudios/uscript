@@ -222,6 +222,10 @@ namespace System.Windows.Forms
                {
                   val = UnityEditor.EditorGUILayout.ColorField( p.FriendlyName, (UnityEngine.Color) val );
                }
+               else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
+               {
+                  val = UnityEditor.EditorGUILayout.EnumPopup( p.FriendlyName, (System.Enum) val );
+               }
                else if ( null != GetObjectFieldType(p.Type) )
                {
                   Type type = GetObjectFieldType(p.Type);
