@@ -12,62 +12,38 @@ public class SubSeq_uScript_TestBed : uScriptLogic
    //external parameters
    
    //local nodes
-   UnityEngine.Ray local_0_UnityEngine_Ray = new UnityEngine.Ray( );
-   System.Single local_1_System_Single = (float) 5;
-   UnityEngine.RaycastHit local_2_UnityEngine_RaycastHit = new UnityEngine.RaycastHit( );
-   System.Boolean local_3_System_Boolean = (bool) false;
    
    //logic nodes
    //pointer to script instanced logic node
-   uScriptAct_PrintList logic_uScriptAct_PrintList_uScriptAct_PrintList_4 = null;
-   System.String[] logic_uScriptAct_PrintList_strings_4 = new System.String[] {"on update"};
-   bool logic_uScriptAct_PrintList_Out_4 = true;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_0 = null;
+   System.String logic_uScriptAct_Log_Prefix_0 = "";
+   System.Object[] logic_uScriptAct_Log_Target_0 = new System.Object[] {"Trigger fired!"};
+   System.String logic_uScriptAct_Log_Postfix_0 = "";
+   bool logic_uScriptAct_Log_Out_0 = true;
    
    //event nodes
-   uScript_Input event_uScript_Input_Instance_5 = null;
-   uScript_Update event_uScript_Update_Instance_6 = null;
+   System.Int32 event_uScript_Triggers_TimesToTrigger_1 = (int) 0;
+   UnityEngine.GameObject event_uScript_Triggers_GameObject_1 = null;
+   uScript_Triggers event_uScript_Triggers_Instance_1 = null;
    
    //property nodes
    
    //method nodes
-   UnityEngine.Ray method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_ray_7 = new UnityEngine.Ray( );
-   UnityEngine.RaycastHit method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_hitInfo_7 = new UnityEngine.RaycastHit( );
-   System.Single method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_distance_7 = (float) 0;
-   System.Boolean method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_Return_7 = (bool) false;
-   UnityEngine.BoxCollider method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_Instance_7 = null;
    #pragma warning restore 414
    
    //functions to refresh properties from entities
    
    void FillComponents( )
    {
-      if ( null == method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_Instance_7 )
+      if ( null == event_uScript_Triggers_Instance_1 )
       {
-         GameObject gameObject = GameObject.Find( "Player" );
+         GameObject gameObject = GameObject.Find( "Trigger" );
          if ( null != gameObject )
          {
-            method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_Instance_7 = gameObject.GetComponent<UnityEngine.BoxCollider>();
-         }
-      }
-      if ( null == event_uScript_Input_Instance_5 )
-      {
-         GameObject gameObject = GameObject.Find( "_uScript" );
-         if ( null != gameObject )
-         {
-            event_uScript_Input_Instance_5 = gameObject.GetComponent<uScript_Input>();
-            if ( null != event_uScript_Input_Instance_5 )
+            event_uScript_Triggers_Instance_1 = gameObject.GetComponent<uScript_Triggers>();
+            if ( null != event_uScript_Triggers_Instance_1 )
             {
-            }
-         }
-      }
-      if ( null == event_uScript_Update_Instance_6 )
-      {
-         GameObject gameObject = GameObject.Find( "_uScript" );
-         if ( null != gameObject )
-         {
-            event_uScript_Update_Instance_6 = gameObject.GetComponent<uScript_Update>();
-            if ( null != event_uScript_Update_Instance_6 )
-            {
+               event_uScript_Triggers_Instance_1.TimesToTrigger = event_uScript_Triggers_TimesToTrigger_1;
             }
          }
       }
@@ -77,37 +53,74 @@ public class SubSeq_uScript_TestBed : uScriptLogic
    {
       FillComponents( );
       
-      event_uScript_Input_Instance_5.KeyPress += Instance_KeyPress_5;
+      event_uScript_Triggers_Instance_1.OnEnterTrigger += Instance_OnEnterTrigger_1;
+      event_uScript_Triggers_Instance_1.OnExitTrigger += Instance_OnExitTrigger_1;
+      event_uScript_Triggers_Instance_1.WhileInsideTrigger += Instance_WhileInsideTrigger_1;
       
-      event_uScript_Update_Instance_6.OnUpdate += Instance_OnUpdate_6;
-      
-      logic_uScriptAct_PrintList_uScriptAct_PrintList_4 = ScriptableObject.CreateInstance(typeof(uScriptAct_PrintList)) as uScriptAct_PrintList;
+      logic_uScriptAct_Log_uScriptAct_Log_0 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
       
    }
    
-   public void Destroy()
+   public override void Update()
    {
-      ScriptableObject.Destroy( logic_uScriptAct_PrintList_uScriptAct_PrintList_4 );
-      logic_uScriptAct_PrintList_uScriptAct_PrintList_4 = null;
+      logic_uScriptAct_Log_uScriptAct_Log_0.Update( );
+   }
+   
+   public override void LateUpdate()
+   {
+      logic_uScriptAct_Log_uScriptAct_Log_0.LateUpdate( );
+   }
+   
+   public override void FixedUpdate()
+   {
+      logic_uScriptAct_Log_uScriptAct_Log_0.FixedUpdate( );
+   }
+   
+   public override void OnGUI()
+   {
+      logic_uScriptAct_Log_uScriptAct_Log_0.OnGUI( );
+   }
+   
+   public void OnDestroy()
+   {
+      if (false == Application.isEditor )
+      {
+         ScriptableObject.Destroy( logic_uScriptAct_Log_uScriptAct_Log_0 );
+      }
+      else
+      {
+         ScriptableObject.DestroyImmediate( logic_uScriptAct_Log_uScriptAct_Log_0 );
+      }
+      
+      logic_uScriptAct_Log_uScriptAct_Log_0 = null;
       
    }
-   void Instance_KeyPress_5(object o, System.EventArgs e)
+   void Instance_OnEnterTrigger_1(object o, uScript_Triggers.TriggerEventArgs e)
    {
       //fill globals
+      event_uScript_Triggers_GameObject_1 = e. GameObject;
       //relay event to nodes
-      Relay_KeyPress_5( );
+      Relay_OnEnterTrigger_1( );
    }
    
-   void Instance_OnUpdate_6(object o, System.EventArgs e)
+   void Instance_OnExitTrigger_1(object o, uScript_Triggers.TriggerEventArgs e)
    {
       //fill globals
+      event_uScript_Triggers_GameObject_1 = e. GameObject;
       //relay event to nodes
-      Relay_OnUpdate_6( );
+      Relay_OnExitTrigger_1( );
    }
    
-   void Relay_In_4()
+   void Instance_WhileInsideTrigger_1(object o, uScript_Triggers.TriggerEventArgs e)
    {
-      //args = logic_uScriptAct_PrintList_strings_4
+      //fill globals
+      event_uScript_Triggers_GameObject_1 = e. GameObject;
+      //relay event to nodes
+      Relay_WhileInsideTrigger_1( );
+   }
+   
+   void Relay_In_0()
+   {
       FillComponents( );
       #pragma warning disable 219
       #pragma warning disable 168
@@ -117,48 +130,31 @@ public class SubSeq_uScript_TestBed : uScriptLogic
       #pragma warning restore 168
       index = 0;
       properties = null;
-      logic_uScriptAct_PrintList_uScriptAct_PrintList_4.In(logic_uScriptAct_PrintList_strings_4);
+      index = 0;
+      properties = null;
+      index = 0;
+      properties = null;
+      logic_uScriptAct_Log_uScriptAct_Log_0.In(logic_uScriptAct_Log_Prefix_0, logic_uScriptAct_Log_Target_0, logic_uScriptAct_Log_Postfix_0);
       FillComponents( );
-      if ( logic_uScriptAct_PrintList_uScriptAct_PrintList_4.Out == true )
+      if ( logic_uScriptAct_Log_uScriptAct_Log_0.Out == true )
       {
       }
    }
    
-   void Relay_KeyPress_5()
+   void Relay_OnEnterTrigger_1()
    {
       FillComponents( );
-      Relay_Raycast_7();
+      Relay_In_0();
    }
    
-   void Relay_OnUpdate_6()
+   void Relay_OnExitTrigger_1()
    {
       FillComponents( );
-      Relay_In_4();
    }
    
-   void Relay_Raycast_7()
+   void Relay_WhileInsideTrigger_1()
    {
       FillComponents( );
-      #pragma warning disable 219
-      #pragma warning disable 168
-      int index = 0;
-      System.Array properties;
-      #pragma warning restore 219
-      #pragma warning restore 168
-      index = 0;
-      properties = null;
-      method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_ray_7 = local_0_UnityEngine_Ray;
-      index = 0;
-      properties = null;
-      index = 0;
-      properties = null;
-      method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_distance_7 = local_1_System_Single;
-      index = 0;
-      properties = null;
-      method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_Return_7 = method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_Instance_7.Raycast(method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_ray_7, out method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_hitInfo_7, method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_distance_7);
-      FillComponents( );
-      local_2_UnityEngine_RaycastHit = method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_hitInfo_7;
-      local_3_System_Boolean = method_Detox_ScriptEditor_Plug_UnityEngine_BoxCollider_Return_7;
    }
    
 }

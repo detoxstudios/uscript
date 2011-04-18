@@ -11,4 +11,20 @@ public class uScript_TestBed : uScriptCode
    {
       uScript = ScriptableObject.CreateInstance(typeof(SubSeq_uScript_TestBed)) as SubSeq_uScript_TestBed;
    }
+   void Update( )
+   {
+      uScript.Update( );
+   }
+   void LateUpdate( )
+   {
+      uScript.LateUpdate( );
+   }
+   void FixedUpdate( )
+   {
+      uScript.FixedUpdate( );
+   }
+   void OnGUI( )
+   {
+      uScript.OnGUI( );
+   }
 }
