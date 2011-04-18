@@ -11,4 +11,20 @@ public class uScript_StressTest : uScriptCode
    {
       uScript = ScriptableObject.CreateInstance(typeof(SubSeq_uScript_StressTest)) as SubSeq_uScript_StressTest;
    }
+   void Update( )
+   {
+      uScript.Update( );
+   }
+   void LateUpdate( )
+   {
+      uScript.LateUpdate( );
+   }
+   void FixedUpdate( )
+   {
+      uScript.FixedUpdate( );
+   }
+   void OnGUI( )
+   {
+      uScript.OnGUI( );
+   }
 }
