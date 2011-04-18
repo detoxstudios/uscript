@@ -18,8 +18,14 @@ public class uScriptAct_SetBool : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(bool Value, out bool Target)
+   public void True(out bool Target)
    {
-      Target = Value;
+      Target = true;
    }
+
+   public void False(out bool Target)
+   {
+      Target = false;
+   }
+
 }

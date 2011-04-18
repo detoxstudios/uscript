@@ -139,8 +139,10 @@ public class uScriptAct_PlaySound : uScriptLogic
 
    public void Stop([FriendlyName("File Name")] string FileName, [FriendlyName("Resource Path")] string ResourcePath, [FriendlyName("Target")] GameObject Target, [FriendlyName("Volume")] float Volume, [FriendlyName("Loop")] bool Loop)
    {
-
-      m_AudioSource.Stop();
+      if (null != m_AudioSource)
+      {
+         m_AudioSource.Stop();
+      }
 
    }
 
