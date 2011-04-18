@@ -372,7 +372,6 @@ namespace Detox.ScriptEditor
          
          friendlyMenu        = GetMenu(addMenu, "Place " + friendlyName + " Variable");
          friendlyMenu.Tag    = new LocalNode( "", type, "" );
-         friendlyMenu.Click += new System.EventHandler(m_MenuAddNode_Click);
          
          //add a separator
          friendlyMenu = GetMenu(addMenu, "<hr>");
@@ -645,6 +644,8 @@ namespace Detox.ScriptEditor
                offset.X += 10;
                offset.Y += 10;
             }
+				
+            m_ContextObject = null;
          }
          else
          {
