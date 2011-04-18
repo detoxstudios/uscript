@@ -1253,7 +1253,7 @@ http://www.detoxstudios.com";
                }
             }
 
-            _openScriptToggle = GUILayout.Toggle(_openScriptToggle, "Open Active uScripts...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
+//            _openScriptToggle = GUILayout.Toggle(_openScriptToggle, "Open Active uScripts...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
 
             if ( GUILayout.Button( Button.Content( Button.ID.Save ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
@@ -1429,6 +1429,30 @@ http://www.detoxstudios.com";
 
          _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
          {
+            foreach ( UnityEngine.Object o in GameObject.FindObjectsOfType(typeof(uScriptCode)) )
+            {
+               uScriptCode code = o as uScriptCode;
+
+               if (code.GetType().ToString() == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.Name))
+               {
+                  GUIStyle style = new GUIStyle(CustomGUIStyle["paletteButton"]);
+                  style.normal.background = style.active.background;
+                  GUILayout.Label( code.GetType().ToString(), style );
+               }
+               else
+               {
+                  GUIContent content = new GUIContent( code.GetType().ToString(), "Click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
+                  if ( GUILayout.Button( content, CustomGUIStyle["paletteButton"] ) )
+                  {
+                     string path = FindFile( Application.dataPath, code.GetType().ToString() + ".uscript" );
+                     if ( "" != path )
+                     {
+                        _openScriptToggle = false;
+                        OpenScript( path );
+                     }
+                  }
+               }
+            }
          }
          EditorGUILayout.EndScrollView();
       }
