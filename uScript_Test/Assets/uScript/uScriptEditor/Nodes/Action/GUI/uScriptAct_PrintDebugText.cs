@@ -13,56 +13,52 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-// @TODO: This node has some hard coded stuff in it until property pull down lists (enums) are working.
-
 [FriendlyName("Print Debug Text")]
 public class uScriptAct_PrintDebugText : uScriptLogic
 {
    private string m_Text;
-   //private float m_X;
-   //private float m_Y;
    private float m_Width;
    private float m_Height;
-   //private bool m_CenterOnScreen;
    private bool m_DisplayText;
    private GUIStyle m_Style = new GUIStyle();
-         
-
 
    public bool Out { get { return true; } }
 
-   
    [FriendlyName("Show Text")]
-   public void ShowLabel(string Text, [FriendlyName("Font Size")] int FontSize, [FriendlyName("CenterText")] bool CenterText)
+   public void ShowLabel(
+      string Text,
+      [FriendlyName("Font Size")] int FontSize,
+      [FriendlyName("Font Style")] UnityEngine.FontStyle FontStyle,
+      [FriendlyName("Color")] UnityEngine.Color FontColor,
+      [FriendlyName("Alignment")] UnityEngine.TextAnchor textAnchor,
+      [FriendlyName("Edge Padding")] int EdgePadding
+      )
    {
-      Debug.Log("Show Label fired");
+
       m_Text = Text;
-      //m_X = X;
-      //m_Y = Y;
-      m_Width = Screen.width - 32f;
-      m_Height = Screen.height - 32f;
-      //m_CenterOnScreen = CenterText;
+      m_Width = Screen.width - EdgePadding;
+      m_Height = Screen.height - EdgePadding;
 
       m_Style.fontSize = FontSize;
-      m_Style.fontStyle = FontStyle.Bold;
+      m_Style.fontStyle = FontStyle;
 
-      if (CenterText)
-      {
-         m_Style.alignment = TextAnchor.UpperCenter;
-      }
-      else
-      {
-         m_Style.alignment = TextAnchor.UpperLeft;
-      }
-      
-      m_Style.normal.textColor = UnityEngine.Color.yellow;
-      
+      m_Style.alignment = textAnchor;
+
+      m_Style.normal.textColor = FontColor;
+
       m_DisplayText = true;
 
    }
 
    [FriendlyName("Hide Text")]
-   public void HideLabel(string Text, [FriendlyName("Font Size")] int FontSize, [FriendlyName("CenterText")] bool CenterText)
+   public void HideLabel(
+      string Text,
+      [FriendlyName("Font Size")] int FontSize,
+      [FriendlyName("Font Style")] UnityEngine.FontStyle FontStyle,
+      [FriendlyName("Color")] UnityEngine.Color FontColor,
+      [FriendlyName("Alignment")] UnityEngine.TextAnchor textAnchor,
+      [FriendlyName("Edge Padding")] int EdgePadding
+      )
    {
 
       m_DisplayText = false;
@@ -81,8 +77,7 @@ public class uScriptAct_PrintDebugText : uScriptLogic
          GUI.Label(new Rect(Screen.width / 2 - halfWidth, Screen.height / 2 - halfHeight, m_Width, m_Height), m_Text, m_Style);
 
       }
-      
+
    }
 
-  
 }
