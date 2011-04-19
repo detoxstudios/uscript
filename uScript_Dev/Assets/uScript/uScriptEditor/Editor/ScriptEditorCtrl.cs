@@ -161,8 +161,16 @@ namespace Detox.ScriptEditor
             if ( point.X >= 0 && point.Y >= 0 && 
                  point.X <= node.Size.Width &&
                  point.Y <= node.Size.Height )
-            {               
-               if ( true == typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) )
+            {      
+               string type = uScript.FindNodeType(entityNode);
+               Type t = ScriptEditor.GetAssemblyQualifiedType(type);
+
+               if ( typeof(uScriptLogic).IsAssignableFrom(t) )
+               {  
+                  uScriptLogic logic = UnityEngine.ScriptableObject.CreateInstance( t ) as uScriptLogic;
+                  return null != logic.EditorDragDrop( o );
+               }
+               else if ( true == typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) )
                {   
                   string destTypeString = null;
 
@@ -222,7 +230,33 @@ namespace Detox.ScriptEditor
                  point.X <= node.Size.Width &&
                  point.Y <= node.Size.Height )
             {
-               if ( true == typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType( )) )
+               string type = uScript.FindNodeType(entityNode);
+               Type t = ScriptEditor.GetAssemblyQualifiedType(type);
+
+               if ( typeof(uScriptLogic).IsAssignableFrom(t) )
+               {  
+                  uScriptLogic logic = UnityEngine.ScriptableObject.CreateInstance( t ) as uScriptLogic;
+                  Hashtable hash = logic.EditorDragDrop( o );
+               
+                  Parameter [] parameters = entityNode.Parameters;
+
+                  for ( int i = 0; i < parameters.Length; i++ )
+                  {
+                     if ( hash.Contains(parameters[i].FriendlyName) )
+                     {
+                        parameters[i].Default = hash[ parameters[i].FriendlyName ].ToString();
+                     }
+                     else if ( hash.Contains(parameters[i].Name) )
+                     {
+                        parameters[i].Default = hash[ parameters[i].Name ].ToString();
+                     }
+                  }
+
+                  entityNode.Parameters = parameters;
+                  RefreshScript( null );
+                  return true;
+               }
+               else if ( true == typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType( )) )
                {
                   string destTypeString = null;
 

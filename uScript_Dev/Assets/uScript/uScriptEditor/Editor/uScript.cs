@@ -2597,66 +2597,73 @@ http://www.detoxstudios.com";
       if ( Event.current.type == EventType.DragUpdated ||
            Event.current.type == EventType.DragPerform )
       {
+         if ( _mouseRegion == MouseRegion.Canvas )
+         {
+            CheckDragDropCanvas( );
+            Event.current.Use( );
+         }
+      }
+   }
+
+   private void CheckDragDropCanvas( )
+   {
+      foreach ( object o in DragAndDrop.objectReferences )
+      {
+         if ( false == (o is UnityEngine.Object) ) continue;
+
+         if ( (m_ScriptEditorCtrl.CanDragDropOnNode(o) && DragAndDrop.objectReferences.Length == 1) || m_ScriptEditorCtrl.CanDragDropContextMenu(o) )
+         {
+            DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+         }
+      }
+
+      if ( Event.current.type == EventType.DragPerform )
+      {
+         // if all objects in the drag are droppable via context menu
+         // create a new game object variable for each one
+         bool canDropAll = true;
          foreach ( object o in DragAndDrop.objectReferences )
          {
-            if ( false == (o is UnityEngine.Object) ) continue;
-
-            if ( (m_ScriptEditorCtrl.CanDragDropOnNode(o) && DragAndDrop.objectReferences.Length == 1) || m_ScriptEditorCtrl.CanDragDropContextMenu(o) )
+            if ( !m_ScriptEditorCtrl.CanDragDropOnNode(o) && m_ScriptEditorCtrl.CanDragDropContextMenu(o) )
             {
-               DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
-            }
-         }
-
-         if ( Event.current.type == EventType.DragPerform )
-         {
-            // if all objects in the drag are droppable via context menu
-            // create a new game object variable for each one
-            bool canDropAll = true;
-            foreach ( object o in DragAndDrop.objectReferences )
-            {
-               if ( !m_ScriptEditorCtrl.CanDragDropOnNode(o) && m_ScriptEditorCtrl.CanDragDropContextMenu(o) )
-               {
-                  continue;
-               }
-               
-               canDropAll = false;
-               break;
+               continue;
             }
             
-            if (canDropAll)
+            canDropAll = false;
+            break;
+         }
+         
+         if (canDropAll)
+         {
+            if (m_ScriptEditorCtrl.DoDragDropContextMenu( DragAndDrop.objectReferences ))
             {
-               if (m_ScriptEditorCtrl.DoDragDropContextMenu( DragAndDrop.objectReferences ))
-               {
-                  m_ContextX = (int) Event.current.mousePosition.x;
-                  m_ContextY = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
+               m_ContextX = (int) Event.current.mousePosition.x;
+               m_ContextY = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
 
+               DragAndDrop.AcceptDrag( );
+            }
+         }
+         else
+         {
+            foreach ( object o in DragAndDrop.objectReferences )
+            {
+               //we are going to perform a dragdrop, so before we do
+               //see if there are any event scripts which can be
+               //attached to this game object
+               if ( true == m_ScriptEditorCtrl.CanDragDropOnNode(o) )
+               {
+                  if ( o is GameObject )
+                  {
+                     AttachEventScripts( (o as GameObject).name );
+                  }
+               }
+
+               if ( true == m_ScriptEditorCtrl.DoDragDrop(o) )
+               {
                   DragAndDrop.AcceptDrag( );
                }
             }
-            else
-            {
-               foreach ( object o in DragAndDrop.objectReferences )
-               {
-                  //we are going to perform a dragdrop, so before we do
-                  //see if there are any event scripts which can be
-                  //attached to this game object
-                  if ( true == m_ScriptEditorCtrl.CanDragDropOnNode(o) )
-                  {
-                     if ( o is GameObject )
-                     {
-                        AttachEventScripts( (o as GameObject).name );
-                     }
-                  }
-   
-                  if ( true == m_ScriptEditorCtrl.DoDragDrop(o) )
-                  {
-                     DragAndDrop.AcceptDrag( );
-                  }
-               }
-            }
          }
-
-         Event.current.Use( );
       }
    }
    

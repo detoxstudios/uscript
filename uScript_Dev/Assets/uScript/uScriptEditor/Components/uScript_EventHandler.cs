@@ -106,6 +106,9 @@ public class uScriptLogic : ScriptableObject
    public virtual void LateUpdate( ) {}
    public virtual void FixedUpdate( ){}
    public virtual void OnGUI( )      {}
+   
+   //editor
+   public virtual Hashtable EditorDragDrop( object o ) { return null; }
 }
 
 public class uScriptDebug : MonoBehaviour

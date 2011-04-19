@@ -166,9 +166,28 @@ public class uScriptAct_PlaySound : uScriptLogic
 
    }
 
+   public override Hashtable EditorDragDrop( object o )
+   {
+      if ( typeof(AudioClip).IsAssignableFrom(o.GetType()) )
+      {
+         AudioClip ac = (AudioClip) o;
 
+         Hashtable hashtable = new Hashtable( );
+         hashtable[ "File Name" ] = ac.name;
+         hashtable[ "Resource Path" ] = UnityEditor.AssetDatabase.GetAssetPath( ac.GetInstanceID( ) );
 
+         return hashtable;
+      }
+      if ( typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) )
+      {
+         GameObject go = (GameObject) o;
 
+         Hashtable hashtable = new Hashtable( );
+         hashtable[ "Target" ] = go.name;
 
+         return hashtable;
+      }
 
+      return null;
+   }
 }
