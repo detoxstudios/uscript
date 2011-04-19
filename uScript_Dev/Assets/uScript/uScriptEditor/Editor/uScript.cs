@@ -623,8 +623,8 @@ http://www.detoxstudios.com";
                else if ( Event.current.button == 2 ) button = MouseButtons.Right;
  
                m_MouseDownArgs.Button = button;
-               m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.left);
-               m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.top);
+               m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+               m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
             }
 
             if ( Event.current.clickCount == 2 )
@@ -646,13 +646,13 @@ http://www.detoxstudios.com";
             else if ( Event.current.button == 2 ) button = MouseButtons.Right;
 
             m_MouseUpArgs.Button = button;
-            m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.left);
-            m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.top);
+            m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+            m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
          }
 
          m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
-         m_MouseMoveArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.left);
-         m_MouseMoveArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.top);
+         m_MouseMoveArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+         m_MouseMoveArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
       }
       else
       {
@@ -662,7 +662,7 @@ http://www.detoxstudios.com";
 
             m_MouseUpArgs.Button = MouseButtons.Left;
             m_MouseUpArgs.X = (int) Event.current.mousePosition.x;
-            m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.top);
+            m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
          }
       }
 
@@ -672,8 +672,8 @@ http://www.detoxstudios.com";
 
          BuildSidebarMenu(null, null);
 
-	     m_ContextX = (int) Event.current.mousePosition.x;
-         m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.top);
+         m_ContextX = (int) Event.current.mousePosition.x;
+         m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
          //refresh screen so context menu shows up
          Repaint( );
@@ -1536,7 +1536,7 @@ http://www.detoxstudios.com";
 
    public void DrawAssetList( )
    {
-      Rect windowRect = new Rect( _canvasRect.left + 50, 50, 10, 10 );
+      Rect windowRect = new Rect( _canvasRect.xMin + 50, 50, 10, 10 );
       windowRect = GUILayout.Window(10000, windowRect, DoAssetList, "");
    }
 
@@ -2636,7 +2636,7 @@ http://www.detoxstudios.com";
             if (m_ScriptEditorCtrl.DoDragDropContextMenu( DragAndDrop.objectReferences ))
             {
                m_ContextX = (int) Event.current.mousePosition.x;
-               m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.top);
+               m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
                DragAndDrop.AcceptDrag( );
             }
