@@ -82,14 +82,7 @@ public class uScript : EditorWindow
    //int      _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
 
 
-
-
-
-   int      _guiPanelDivider_Size = 4;
-   int      _guiPanelDivider_MouseBuffer = 0;
-   int      _guiPanelToolbar_Height = 20;
-
-
+   Rect _canvasRect;
    Vector2  _guiPanelSidebar_ScrollPos;
 
    Vector2  _guiContentScrollPos;
@@ -620,19 +613,19 @@ http://www.detoxstudios.com";
             //text from the selected node
             GUI.FocusControl( "MainView" );
 
-            if ((int)Event.current.mousePosition.x - _guiPanelSidebar_Width - _guiPanelDivider_Size - _guiPanelDivider_MouseBuffer >= 0)
-             {
-                 m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
+            if ( _canvasRect.Contains( Event.current.mousePosition ) )
+            {
+               m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
 
-                int button = 0;
+               int button = 0;
 
-                if ( Event.current.button == 0 ) button = MouseButtons.Left;
-                else if ( Event.current.button == 2 ) button = MouseButtons.Right;
+               if ( Event.current.button == 0 ) button = MouseButtons.Left;
+               else if ( Event.current.button == 2 ) button = MouseButtons.Right;
  
-                 m_MouseDownArgs.Button = button;
-                 m_MouseDownArgs.X = (int)Event.current.mousePosition.x - _guiPanelSidebar_Width - _guiPanelDivider_Size - _guiPanelDivider_MouseBuffer;
-                 m_MouseDownArgs.Y = (int)Event.current.mousePosition.y - _guiPanelToolbar_Height;
-             }
+               m_MouseDownArgs.Button = button;
+               m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.left);
+               m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.top);
+            }
 
             if ( Event.current.clickCount == 2 )
             {
@@ -653,13 +646,13 @@ http://www.detoxstudios.com";
             else if ( Event.current.button == 2 ) button = MouseButtons.Right;
 
             m_MouseUpArgs.Button = button;
-            m_MouseUpArgs.X = (int)Event.current.mousePosition.x - _guiPanelSidebar_Width - _guiPanelDivider_Size - _guiPanelDivider_MouseBuffer;
-            m_MouseUpArgs.Y = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
+            m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.left);
+            m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.top);
          }
 
          m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
-         m_MouseMoveArgs.X = (int)Event.current.mousePosition.x - _guiPanelSidebar_Width - _guiPanelDivider_Size - _guiPanelDivider_MouseBuffer;
-         m_MouseMoveArgs.Y = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
+         m_MouseMoveArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.left);
+         m_MouseMoveArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.top);
       }
       else
       {
@@ -669,7 +662,7 @@ http://www.detoxstudios.com";
 
             m_MouseUpArgs.Button = MouseButtons.Left;
             m_MouseUpArgs.X = (int) Event.current.mousePosition.x;
-            m_MouseUpArgs.Y = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
+            m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.top);
          }
       }
 
@@ -679,8 +672,8 @@ http://www.detoxstudios.com";
 
          BuildSidebarMenu(null, null);
 
-	    m_ContextX = (int) Event.current.mousePosition.x;
-         m_ContextY = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
+	     m_ContextX = (int) Event.current.mousePosition.x;
+         m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.top);
 
          //refresh screen so context menu shows up
          Repaint( );
@@ -1318,7 +1311,12 @@ http://www.detoxstudios.com";
             GUI.matrix = oldMatrix;
          }
          EditorGUILayout.EndScrollView();
-         GUI.SetNextControlName ("" );
+         GUI.SetNextControlName ("");
+
+         if (Event.current.type == EventType.Repaint)
+         {
+            _canvasRect = GUILayoutUtility.GetLastRect();
+         }
       }
       EditorGUILayout.EndVertical();
 
@@ -1538,7 +1536,7 @@ http://www.detoxstudios.com";
 
    public void DrawAssetList( )
    {
-      Rect windowRect = new Rect( _guiPanelDivider_Size + _guiPanelSidebar_Width + 50, 50, 10, 10 );
+      Rect windowRect = new Rect( _canvasRect.left + 50, 50, 10, 10 );
       windowRect = GUILayout.Window(10000, windowRect, DoAssetList, "");
    }
 
@@ -2638,7 +2636,7 @@ http://www.detoxstudios.com";
             if (m_ScriptEditorCtrl.DoDragDropContextMenu( DragAndDrop.objectReferences ))
             {
                m_ContextX = (int) Event.current.mousePosition.x;
-               m_ContextY = (int) Event.current.mousePosition.y - _guiPanelToolbar_Height;
+               m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.top);
 
                DragAndDrop.AcceptDrag( );
             }
