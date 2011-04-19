@@ -892,7 +892,7 @@ http://www.detoxstudios.com";
          //
           EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.Width(_guiPanelSidebar_Width));
          {
-             GUILayout.Label("Node Palette", CustomGUIStyle["panelTitle"]);
+             GUILayout.Label("Nodes", CustomGUIStyle["panelTitle"]);
 
             // Collapse hierarchy
             if ( GUILayout.Button( Button.Content( Button.ID.Collapse ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
