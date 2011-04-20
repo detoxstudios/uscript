@@ -1,0 +1,65 @@
+// uScript Action Node
+// (C) 2011 Detox Studios LLC
+// Desc: Adds/removes GameObjects from a GameObject List. Can also empty the GameObject List.
+
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+[NodePath("Action/GameObjects")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Adds/removes GameObjects from a GameObject List. Can also empty the GameObject List.")]
+[NodeDescription("Adds/removes GameObjects from a GameObject List. Can also empty the GameObject List.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Modify GameObject List")]
+public class uScriptAct_ModifyGameObjectList : uScriptLogic
+{
+
+   public bool Out { get { return true; } }
+    
+   public void AddToList([FriendlyName("GameObject")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, [FriendlyName("List Count")] out int ListCount)
+   {
+      Debug.Log("In AddToList");
+      if (GameObjectList != null)
+      {
+         foreach (GameObject go in GameObjectList)
+         {
+            if (go != null)
+            {
+               Debug.Log("Already in list: " + go.name);
+            }
+         }
+      }
+
+      List<GameObject> list = new List<GameObject>(GameObjectList);
+      
+      list.Add(GameObj);
+ 
+      GameObjectList = list.ToArray();
+      ListCount = GameObjectList.Length;
+   }
+
+   public void RemoveFromList([FriendlyName("GameObject")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, [FriendlyName("List Count")] out int ListCount)
+   {
+      Debug.Log("In RemoveFromList");
+      List<GameObject> list = new List<GameObject>(GameObjectList);
+      
+      if (list.Contains(GameObj))
+      {
+         list.Remove(GameObj);
+      }
+      
+      GameObjectList = list.ToArray();
+      ListCount = GameObjectList.Length;
+   }
+
+   public void EmptyList([FriendlyName("Game Object")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList,  [FriendlyName("List Count")] out int ListCount)
+   {
+      Debug.Log("In EmptyList");
+      GameObjectList = new GameObject[] {};
+      ListCount = 0;
+   }
+}
