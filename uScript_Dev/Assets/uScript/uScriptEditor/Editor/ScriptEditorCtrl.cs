@@ -168,7 +168,11 @@ namespace Detox.ScriptEditor
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
                   uScriptLogic logic = UnityEngine.ScriptableObject.CreateInstance( t ) as uScriptLogic;
-                  return null != logic.EditorDragDrop( o );
+
+                  bool result = null != logic.EditorDragDrop( o );
+                  UnityEngine.ScriptableObject.DestroyImmediate( logic );
+
+                  return result;
                }
                else if ( true == typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) )
                {   
@@ -251,6 +255,8 @@ namespace Detox.ScriptEditor
                         parameters[i].Default = hash[ parameters[i].Name ].ToString();
                      }
                   }
+
+                  UnityEngine.ScriptableObject.DestroyImmediate( logic );
 
                   entityNode.Parameters = parameters;
                   RefreshScript( null );
