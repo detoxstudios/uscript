@@ -20,20 +20,9 @@ public class uScriptAct_ModifyGameObjectList : uScriptLogic
 
    public bool Out { get { return true; } }
     
+   [FriendlyName("Add To List")]
    public void AddToList([FriendlyName("GameObject")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, [FriendlyName("List Count")] out int ListCount)
    {
-      Debug.Log("In AddToList");
-      if (GameObjectList != null)
-      {
-         foreach (GameObject go in GameObjectList)
-         {
-            if (go != null)
-            {
-               Debug.Log("Already in list: " + go.name);
-            }
-         }
-      }
-
       List<GameObject> list = new List<GameObject>(GameObjectList);
       
       list.Add(GameObj);
@@ -42,9 +31,9 @@ public class uScriptAct_ModifyGameObjectList : uScriptLogic
       ListCount = GameObjectList.Length;
    }
 
+   [FriendlyName("Remove From List")]
    public void RemoveFromList([FriendlyName("GameObject")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, [FriendlyName("List Count")] out int ListCount)
    {
-      Debug.Log("In RemoveFromList");
       List<GameObject> list = new List<GameObject>(GameObjectList);
       
       if (list.Contains(GameObj))
@@ -56,9 +45,9 @@ public class uScriptAct_ModifyGameObjectList : uScriptLogic
       ListCount = GameObjectList.Length;
    }
 
+   [FriendlyName("Empty List")]
    public void EmptyList([FriendlyName("Game Object")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList,  [FriendlyName("List Count")] out int ListCount)
    {
-      Debug.Log("In EmptyList");
       GameObjectList = new GameObject[] {};
       ListCount = 0;
    }
