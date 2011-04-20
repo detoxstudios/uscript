@@ -1446,8 +1446,8 @@ http://www.detoxstudios.com";
                }
                else
                {
-                  GUIContent content = new GUIContent( code.GetType().ToString(), "Click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
-                  if ( GUILayout.Button( content, CustomGUIStyle["paletteButton"] ) )
+                  GUIContent content = new GUIContent( code.GetType().ToString(), "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
+                  if ( GUILayout.Button( content, CustomGUIStyle["paletteButton"] ) && Event.current.clickCount == 2 )
                   {
                      string path = FindFile( Application.dataPath, code.GetType().ToString() + ".uscript" );
                      if ( "" != path )
