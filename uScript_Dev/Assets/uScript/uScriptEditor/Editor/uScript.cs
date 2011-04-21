@@ -1419,6 +1419,20 @@ http://www.detoxstudios.com";
    }
 
 
+
+
+   bool _toggleTempPanel;
+   int _tmpInt1;
+   int _tmpInt2;
+   float _tmpFloat;
+   string _tmpString;
+   bool _tmpBool;
+   UnityEngine.Color _tmpColor;
+   Vector2 _tmpVector2;
+   Vector3 _tmpVector3;
+   Vector4 _tmpVector4;
+   Rect _tmpRect;
+
    void DrawGUISubsequences()
    {
       EditorGUILayout.BeginVertical(CustomGUIStyle["panelBox"], GUILayout.Width(_guiPanelSequence_Width));
@@ -1428,12 +1442,44 @@ http://www.detoxstudios.com";
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
             GUILayout.Label("uScripts", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
-//            GUILayout.FlexibleSpace();
+            GUILayout.FlexibleSpace();
+            _toggleTempPanel = GUILayout.Toggle( _toggleTempPanel, "Toggle Temp Panel", EditorStyles.toolbarButton );
          }
          EditorGUILayout.EndHorizontal();
 
          _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
          {
+            if ( _toggleTempPanel )
+            {
+               _tmpInt1 = CustomGUI.IntField("Int Label", _tmpInt1);
+               _tmpInt2 = CustomGUI.IntField("This is a really long label!", _tmpInt2);
+               _tmpFloat = CustomGUI.FloatField("Float Label", _tmpFloat);
+               _tmpString = CustomGUI.TextField("Text Label", _tmpString);
+               _tmpBool = CustomGUI.BoolField("Bool Label", _tmpBool);
+               _tmpColor = CustomGUI.ColorField("Color Label", _tmpColor);
+               _tmpVector2 = CustomGUI.Vector2Field("Vector2 Label", _tmpVector2);
+               _tmpVector3 = CustomGUI.Vector3Field("Vector3 Label", _tmpVector3);
+               _tmpVector4 = CustomGUI.Vector4Field("Vector4 Label", _tmpVector4);
+               _tmpRect = CustomGUI.RectField("Rect Label", _tmpRect);
+
+//               EditorGUILayout.LabelField();
+//               EditorGUILayout.Separator();
+//               EditorGUILayout.Space();
+
+//               EditorGUILayout.TextArea();
+//               EditorGUILayout.Slider();
+//               EditorGUILayout.IntSlider();
+//               EditorGUILayout.MinMaxSlider();
+//               EditorGUILayout.Popup();
+//               EditorGUILayout.EnumPopup();
+//               EditorGUILayout.IntPopup();
+//               EditorGUILayout.TagField();
+//               EditorGUILayout.LayerField();
+//               EditorGUILayout.ObjectField();
+//               EditorGUILayout.CurveField();
+//               EditorGUILayout.PropertyField();
+            }
+            else
             foreach ( UnityEngine.Object o in GameObject.FindObjectsOfType(typeof(uScriptCode)) )
             {
                uScriptCode code = o as uScriptCode;
