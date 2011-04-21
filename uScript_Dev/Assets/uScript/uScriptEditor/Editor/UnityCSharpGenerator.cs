@@ -370,13 +370,6 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "}" );
                AddCSharpLine( "" );
 
-               AddCSharpLine( "public void OnDestroy()" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-                  DefineOnDestroy( );
-               --m_TabStack;
-               AddCSharpLine( "}" );
-
                DefineEvents( );
             --m_TabStack;
             
@@ -935,37 +928,6 @@ namespace Detox.ScriptEditor
          }
       }
 
-      private void DefineOnDestroy( )
-      {
-         AddCSharpLine( "if (false == Application.isEditor )" );
-         AddCSharpLine( "{" );
-         ++m_TabStack;
-            //destroy script specific instances of the logic nodes
-            foreach ( LogicNode logicNode in m_Script.Logics )
-            {
-               AddCSharpLine( "ScriptableObject.Destroy( " + CSharpName(logicNode, logicNode.Type) + " );" );
-            }
-         --m_TabStack;
-         AddCSharpLine( "}" );
-         AddCSharpLine( "else" );
-         AddCSharpLine( "{" );
-         ++m_TabStack;
-            //destroy script specific instances of the logic nodes
-            foreach ( LogicNode logicNode in m_Script.Logics )
-            {
-               AddCSharpLine( "ScriptableObject.DestroyImmediate( " + CSharpName(logicNode, logicNode.Type) + " );" );
-            }
-         --m_TabStack;
-          AddCSharpLine( "}" );
-         AddCSharpLine( "" );
-
-         foreach ( LogicNode logicNode in m_Script.Logics )
-         {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = null;" );
-         }
-         AddCSharpLine( "" );
-      }
-
       private void DefineFillComponents( )
       {
          AddCSharpLine( "void " + CSharpFillComponentsDeclaration( ) );
@@ -1442,7 +1404,7 @@ namespace Detox.ScriptEditor
             {
                EntityMethod method = (EntityMethod) node;
 
-               if ( method.Output.Name == relayLink.Destination.Anchor )
+               if ( method.Input.Name == relayLink.Destination.Anchor )
                {
                   allowLink = true;
                }
@@ -2261,7 +2223,6 @@ namespace Detox.ScriptEditor
                            --m_TabStack;
                            AddCSharpLine( "}" );
 
-                           AddCSharpLine( "//here" );
                            //copy the source node value into the input parameter array
                            AddCSharpLine( CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration( entityProperty ) + "( );" );
                         }

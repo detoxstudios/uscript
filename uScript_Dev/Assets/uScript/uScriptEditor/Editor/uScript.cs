@@ -1965,7 +1965,7 @@ http://www.detoxstudios.com";
       return false;
    }
 
-   void CreateLogicNodes( Dictionary<Type, uScriptLogic> uniqueNodes, string path )
+   void CreateLogicNodes( Dictionary<Type, Type> uniqueNodes, string path )
    {
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
 
@@ -1988,12 +1988,10 @@ http://www.detoxstudios.com";
             if ( false == uniqueNodes.ContainsKey(scriptableObject.GetType()) &&
                  typeof(uScriptLogic).IsAssignableFrom(scriptableObject.GetType()) )
             {
-               uniqueNodes[ scriptableObject.GetType() ] = scriptableObject as uScriptLogic;
+               uniqueNodes[ scriptableObject.GetType() ] = scriptableObject.GetType( );
             }
-            else
-            {
-               ScriptableObject.DestroyImmediate( scriptableObject );
-            }
+
+            ScriptableObject.DestroyImmediate( scriptableObject );
          }
       }
 
@@ -2011,7 +2009,7 @@ http://www.detoxstudios.com";
       Hashtable baseEvents     = new Hashtable( );
       Hashtable baseProperties = new Hashtable( );
 
-      Dictionary<Type, uScriptLogic> uniqueNodes = new Dictionary<Type,uScriptLogic>( );
+      Dictionary<Type, Type> uniqueNodes = new Dictionary<Type, Type>( );
 
       CreateLogicNodes( uniqueNodes, uScriptConfig.Paths.UserNodes );
       CreateLogicNodes( uniqueNodes, uScriptConfig.Paths.SubsequenceScripts );
@@ -2057,9 +2055,8 @@ http://www.detoxstudios.com";
 
       List<LogicNode> logicNodes = new List<LogicNode>( );
 
-      foreach ( uScriptLogic logic in uniqueNodes.Values )
+      foreach ( Type type in uniqueNodes.Values )
       {
-         Type type = logic.GetType( );
          AddType( type );
 
          LogicNode logicNode = new LogicNode( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)) );
@@ -2180,8 +2177,6 @@ http://www.detoxstudios.com";
             //variables just set once here because
             //they must be the same for every logic node function
             logicNode.Parameters = variables.ToArray( );
-
-            ScriptableObject.DestroyImmediate( logic );
          }
 
          logicNode.Inputs = inputs.ToArray( );
