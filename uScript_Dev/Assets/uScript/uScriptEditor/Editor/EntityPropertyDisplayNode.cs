@@ -63,7 +63,7 @@ namespace Detox.ScriptEditor
       }
 
       //overridden so we can bold our title
-      protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, Graphics g)
+      protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
       {
          foreach ( Socket socket in sockets )
          {
@@ -100,7 +100,7 @@ namespace Detox.ScriptEditor
                         style = "socket_text_bold";
                      }
 
-                     height += null == g ? uScriptConfig.Style.PointSize : g.MeasureString( s, style ).Height;
+                     height += Graphics.sMeasureString( s, style ).Height;
                   }
 
                   float y = (Size.Height - uScriptConfig.Style.BottomShadow - height) /  2;
@@ -116,7 +116,7 @@ namespace Detox.ScriptEditor
                         style = "socket_text_bold";
                      }
 
-                     SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.PointSize, uScriptConfig.Style.PointSize) : g.MeasureString( s, style );
+                     SizeF textLength = Graphics.sMeasureString( s, style );
 
                      textPoint.Name = s;
                      textPoint.X = (Size.Width - uScriptConfig.Style.RightShadow - textLength.Width) / 2;

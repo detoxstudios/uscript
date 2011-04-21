@@ -329,6 +329,7 @@ namespace Detox.FlowChart
 
       private void FlowChartCtrl_NodeMouseDown(object sender, MouseEventArgs e)
       {
+
          if ( e.Button == MouseButtons.Left )
          {
             Node node = sender as Node;
@@ -678,7 +679,7 @@ namespace Detox.FlowChart
          {
             Point position = System.Windows.Forms.Cursor.Position;
             position = PointToClient( position );
-		    bool linkClicked = false;
+            bool linkClicked = false;
 
             foreach ( Link link in m_Links )
             {
@@ -690,13 +691,13 @@ namespace Detox.FlowChart
                   // because of the above code and so this will always select it)
                   link.Selected = ! link.Selected;
                   selectionSetModified = true;
-				  linkClicked = true;
+                  linkClicked = true;
                }
-			   else if ( false == Control.ModifierKeys.Contains(Keys.Control) )
-			   {
-			      if ( link.Selected ) selectionSetModified = true;
-			      link.Selected = false;
-			   }
+			      else if ( false == Control.ModifierKeys.Contains(Keys.Control) )
+			      {
+			         if ( link.Selected ) selectionSetModified = true;
+			         link.Selected = false;
+			      }
             }
 
             //they let up the mouse without moving the canvas
@@ -719,8 +720,8 @@ namespace Detox.FlowChart
                   selectionSetModified = true;
                }
             }
-		    else if ( false == Control.ModifierKeys.Contains(Keys.Control) && (!linkClicked || true == selectionSetModified) )
-			{
+            else if ( false == Control.ModifierKeys.Contains(Keys.Control) && (!linkClicked || true == selectionSetModified) )
+			   {
                if ( true == UserProbablyDidntMeanToMoveMouse( ) )
                {
                   foreach ( Node node in SelectedNodes )
@@ -730,7 +731,7 @@ namespace Detox.FlowChart
 
                   selectionSetModified = true;
                }
-			}
+			   }
          }
 
          m_StartLinkNode = null;
@@ -1262,7 +1263,7 @@ namespace Detox.FlowChart
       {
       }
 
-      public virtual void PreparePoints( System.Drawing.Graphics g )
+      public virtual void PreparePoints( )
       {
       }
 		

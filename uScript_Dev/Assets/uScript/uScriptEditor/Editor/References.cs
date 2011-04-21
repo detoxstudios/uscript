@@ -285,7 +285,6 @@ namespace System.Windows.Forms
                cloned.DefaultAsObject = val;
 
                signalUpdate |= cloned.Default != p.Default;
-
                updatedParameters.Add( cloned );
             }
 
@@ -487,12 +486,16 @@ namespace System.Windows.Forms
       public bool OnMouseDown( System.Windows.Forms.MouseEventArgs e )
       {
          Control []controls = Controls.ToArray( );
-		 int i;
+         int i;
 
          for ( i = controls.Length - 1; i >= 0; i-- )
          {
-			Control control = controls[i];
-            if ( true == control.OnMouseDown(e) ) return true;
+			   Control control = controls[i];
+
+            if ( true == control.OnMouseDown(e) )
+            {
+               return true;
+            }
          }
 
          Point point = PointToClient( new Point(e.X, e.Y) );
@@ -960,7 +963,7 @@ namespace System.Drawing
       public void Dispose( )
       {}
 
-      public SizeF MeasureString( string s, string styleName )
+      public static SizeF sMeasureString( string s, string styleName )
       {    
          string [] subString = s.Split( '\n' );
 

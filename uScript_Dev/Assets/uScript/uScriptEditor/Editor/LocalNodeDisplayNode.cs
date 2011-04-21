@@ -90,11 +90,11 @@ namespace Detox.ScriptEditor
          UpdateSockets( sockets.ToArray( ) );
       }
 
-      protected override Size CalculateSize(Socket []sockets, Graphics g)
+      protected override Size CalculateSize(Socket []sockets)
       {
          if ( false == Selected ) return new Size(57, 57);
 
-         Size size = base.CalculateSize(sockets, g);
+         Size size = base.CalculateSize(sockets);
          if (size.Width < 57) size.Width = 57;
 
          size.Height = 57;
@@ -170,12 +170,12 @@ namespace Detox.ScriptEditor
          UpdateSockets( sockets.ToArray( ) );
       }
 
-      protected override Size CalculateSize(Socket []sockets, Graphics g)
+      protected override Size CalculateSize(Socket []sockets)
       {
          return new Size(61, 59);
       }
 
-      protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, System.Drawing.Graphics g)
+      protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
       {
          foreach ( Socket socket in sockets )
          {
@@ -198,7 +198,7 @@ namespace Detox.ScriptEditor
 
             if ( socket.Input == false && socket.Output == false )
             {
-               SizeF size = null == g ? new SizeF(0,0) : g.MeasureString( FormatName(socket), "socket_text" );
+               SizeF size = Graphics.sMeasureString( FormatName(socket), "socket_text" );
 
                TextPoint textPoint = new TextPoint( );
 

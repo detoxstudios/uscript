@@ -46,9 +46,9 @@ namespace Detox.ScriptEditor
          UpdateSockets( sockets.ToArray( ) );
       }
 
-      protected override Size CalculateSize(Socket []sockets, System.Drawing.Graphics g)
+      protected override Size CalculateSize(Socket []sockets)
       {
-         Size size = base.CalculateSize(sockets, g);
+         Size size = base.CalculateSize(sockets);
          
          CommentNode clone = Comment;
          Parameter p = clone.Size;
@@ -108,7 +108,7 @@ namespace Detox.ScriptEditor
          return size;
       }
 
-      protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, System.Drawing.Graphics g)
+      protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
       {
          foreach ( Socket socket in sockets )
          {

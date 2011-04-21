@@ -1161,7 +1161,8 @@ namespace Detox.ScriptEditor
             //special case to add required scripts to gameobjects
             if ( entityNode is EntityEvent )
             {
-               if ( false == uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default) )
+               if ( entityNode.Instance.Default != "" && 
+                    false == uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default) )
                {
                   //couldn't attach an appropriate script for this game object
                   //so refresh the property grid
@@ -1706,8 +1707,6 @@ namespace Detox.ScriptEditor
          UpdateStyleName();
       }
 
-      private bool m_DirtySockets = false;
-
       private EntityNode m_EntityNode;
       public EntityNode EntityNode { get { return m_EntityNode; } }
 
@@ -1739,9 +1738,9 @@ namespace Detox.ScriptEditor
          return socket.FriendlyName;
       }
 
-      protected virtual void LeftPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, Graphics g)
+      protected virtual void LeftPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
       {
-         SizeF titleLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( Name, NodeStyle );
+         SizeF titleLength = Graphics.sMeasureString( Name, NodeStyle );
 
          float xStart= uScriptConfig.Style.LeftPad;
          float yStep = uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize;
@@ -1752,7 +1751,7 @@ namespace Detox.ScriptEditor
          {
             if ( socket.Alignment == Socket.Align.Left )
             {
-               SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.PointSize, uScriptConfig.Style.PointSize) : g.MeasureString( FormatName(socket), "socket_text" );
+               SizeF textLength = Graphics.sMeasureString( FormatName(socket), "socket_text" );
 
                AnchorPoint point = new AnchorPoint( );
                TextPoint textPoint = new TextPoint( );
@@ -1780,9 +1779,9 @@ namespace Detox.ScriptEditor
          }
       }
 
-      protected virtual void RightPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, Graphics g)
+      protected virtual void RightPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
       {
-         SizeF titleLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( Name, NodeStyle );
+         SizeF titleLength = Graphics.sMeasureString( Name, NodeStyle );
 
          float xStart = Size.Width - uScriptConfig.Style.RightPad;
          float yStep  = uScriptConfig.Style.PointSize + uScriptConfig.Style.BottomSocketLabelGapSize;
@@ -1793,7 +1792,7 @@ namespace Detox.ScriptEditor
          {
             if ( socket.Alignment == Socket.Align.Right )
             {
-               SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.PointSize, uScriptConfig.Style.PointSize) : g.MeasureString( FormatName(socket), "socket_text" );
+               SizeF textLength = Graphics.sMeasureString( FormatName(socket), "socket_text" );
 
                AnchorPoint point = new AnchorPoint( );
                TextPoint textPoint = new TextPoint( );
@@ -1821,7 +1820,7 @@ namespace Detox.ScriptEditor
          }
       }
 
-      protected virtual void BottomPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, Graphics g)
+      protected virtual void BottomPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
       {
          float yStart = Size.Height - uScriptConfig.Style.BottomPad;
         
@@ -1832,7 +1831,7 @@ namespace Detox.ScriptEditor
          {
             if ( socket.Alignment == Socket.Align.Bottom )
             {
-               SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.PointSize, uScriptConfig.Style.PointSize) : g.MeasureString( FormatName(socket), "socket_text" );
+               SizeF textLength = Graphics.sMeasureString( FormatName(socket), "socket_text" );
 
                totalTextWidth += xStep;
                totalTextWidth += textLength.Width;
@@ -1853,7 +1852,7 @@ namespace Detox.ScriptEditor
                AnchorPoint point = new AnchorPoint( );
                TextPoint textPoint = new TextPoint( );
 
-               SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.PointSize, uScriptConfig.Style.PointSize) : g.MeasureString( FormatName(socket), "socket_text" );
+               SizeF textLength = Graphics.sMeasureString( FormatName(socket), "socket_text" );
 
                string additionalFlag = "";
                float y = yStart;
@@ -1890,7 +1889,7 @@ namespace Detox.ScriptEditor
          }
       }
 
-      protected virtual void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints, Graphics g)
+      protected virtual void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
       {
          foreach ( Socket socket in sockets )
          {
@@ -1915,7 +1914,7 @@ namespace Detox.ScriptEditor
 
                if ( socket.Input == false && socket.Output == false )
                {
-                  SizeF size = null == g ? new SizeF(0,0) : g.MeasureString( FormatName(socket), "socket_text" );
+                  SizeF size = Graphics.sMeasureString( FormatName(socket), "socket_text" );
 
                   TextPoint textPoint = new TextPoint( );
 
@@ -1939,9 +1938,8 @@ namespace Detox.ScriptEditor
          TextPoints   = new TextPoint  [0];
          
          m_Sockets = sockets;
-         PreparePoints( null );
 
-         m_DirtySockets = true;
+         PreparePoints( );
       }
       
       protected void UpdateStyleName()
@@ -1963,16 +1961,10 @@ namespace Detox.ScriptEditor
       {
          UpdateStyleName();   // remove this later when we figure out why removing it doesn't initialize StyleName correctly
 
-         if ( true == m_DirtySockets )
-         {
-            PreparePoints( e.Graphics );
-            m_DirtySockets = false;
-         }
-
          base.OnPaint( e );
       }
 
-      protected virtual Size CalculateSize(Socket []sockets, Graphics g)
+      protected virtual Size CalculateSize(Socket []sockets)
       {
          float requiredWidth  = 0;
          float requiredHeight = 0;
@@ -1988,7 +1980,7 @@ namespace Detox.ScriptEditor
 
          foreach ( Socket socket in sockets )
          {
-            SizeF textLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( FormatName(socket), "socket_text" );
+            SizeF textLength = Graphics.sMeasureString( FormatName(socket), "socket_text" );
             
             if ( socket.Alignment == Socket.Align.Bottom ) // Used for Action Node bottom socket left/right border spacing.
             {
@@ -2014,6 +2006,9 @@ namespace Detox.ScriptEditor
             }
          }
          
+         //UnityEngine.Debug.Log( "reqwidth " + g + " = " + requiredWidth );
+
+         
          // Add in PointSize after the foreach (we only want to add this once, not once for each socket).
          leftRequiredHeight = leftRequiredHeight + uScriptConfig.Style.PointSize;
          rightRequiredHeight = rightRequiredHeight + uScriptConfig.Style.PointSize;
@@ -2028,7 +2023,7 @@ namespace Detox.ScriptEditor
          requiredWidth  = Math.Max( requiredWidth, maxLeftAlignedText + maxRightAlignedText );
          requiredWidth  = Math.Max( requiredWidth, maxCenterAlignedText );
 
-         SizeF titleLength = null == g ? new SizeF(uScriptConfig.Style.BottomSocketLabelGapSize, uScriptConfig.Style.BottomSocketLabelGapSize) : g.MeasureString( Name, NodeStyle );
+         SizeF titleLength = Graphics.sMeasureString( Name, NodeStyle );
          
          if ( true == hasBottomSockets )
          {
@@ -2044,17 +2039,17 @@ namespace Detox.ScriptEditor
          return new Size( (int) requiredWidth, (int) requiredHeight );
       }
 
-      public override void PreparePoints( Graphics g )
+      public override void PreparePoints( )
       {
          List<AnchorPoint> points   = new List<AnchorPoint>( );
          List<TextPoint> textPoints = new List<TextPoint>( );
 
-         Size = CalculateSize( m_Sockets, g );
+         Size = CalculateSize( m_Sockets );
 
-         LeftPoints  ( m_Sockets, points, textPoints, g );
-         RightPoints ( m_Sockets, points, textPoints, g );
-         BottomPoints( m_Sockets, points, textPoints, g );
-         CenterPoints( m_Sockets, points, textPoints, g );
+         LeftPoints  ( m_Sockets, points, textPoints );
+         RightPoints ( m_Sockets, points, textPoints );
+         BottomPoints( m_Sockets, points, textPoints );
+         CenterPoints( m_Sockets, points, textPoints );
 
          List<TextPoint> finalText     = new List<TextPoint>  ( );
          List<AnchorPoint> finalAnchor = new List<AnchorPoint>( );
