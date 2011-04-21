@@ -39,7 +39,7 @@ public class uScript : EditorWindow
 
    static private uScript s_Instance = null;
    static public uScript Instance { get { if ( null == s_Instance ) Init( ); return s_Instance; } }
-   private bool isPro;
+   private static bool isPro;
 
    private ScriptEditorCtrl m_ScriptEditorCtrl = null;
    private bool m_MouseDown  = false;
@@ -3035,7 +3035,7 @@ http://www.detoxstudios.com";
 
       static public void Default(ID id, string imageFilename, string text, string tooltip)
       {
-         _defaultGUIContent[id] = new GUIContent(text, UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + imageFilename + ".png", typeof(UnityEngine.Texture)) as UnityEngine.Texture, tooltip);
+         _defaultGUIContent[id] = new GUIContent(text, UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + imageFilename + (isPro ? "_pro" : string.Empty) + ".png", typeof(UnityEngine.Texture)) as UnityEngine.Texture, tooltip);
          Update(id);
       }
 
