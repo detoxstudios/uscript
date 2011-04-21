@@ -29,6 +29,16 @@ public class uScriptAct_IsInObjectList : uScriptLogic
    public void TestIfInList([FriendlyName("GameObject")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList)
    {
       List<GameObject> list = new List<GameObject>(GameObjectList);
+      
+      Debug.Log("List Contents:");
+      foreach (GameObject go in list)
+      {
+         if (go != null)
+         {
+            Debug.Log(go.name);
+         }
+      }
+      
       m_InList = list.Contains(GameObj);
    }
 }

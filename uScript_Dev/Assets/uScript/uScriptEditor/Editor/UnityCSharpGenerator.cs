@@ -2201,7 +2201,7 @@ namespace Detox.ScriptEditor
                         AddCSharpLine( "properties = " + CSharpName(argNode) + ";" );
 
                         //make sure our input array is large enough to hold the array we're copying into it
-                        AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length < index + properties.Length)" );
+                        AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)" );
                         AddCSharpLine( "{" );
                         ++m_TabStack;
                            AddCSharpLine( "System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);" );
@@ -2241,7 +2241,7 @@ namespace Detox.ScriptEditor
                            AddCSharpLine( "properties = " + CSharpRefreshGetPropertyDeclaration( entityProperty ) + "( );" );
 
                            //make sure our input array is large enough to hold the array we're copying into it
-                           AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length < index + properties.Length)" );
+                           AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)" );
                            AddCSharpLine( "{" );
                            ++m_TabStack;
                               AddCSharpLine( "System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);" );
