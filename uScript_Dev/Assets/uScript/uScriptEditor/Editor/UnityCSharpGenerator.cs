@@ -245,7 +245,6 @@ namespace Detox.ScriptEditor
                ++m_TabStack;
 
                   AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
-                  AddCSharpLine( "uScript.Awake( );" );
 
                --m_TabStack;
                AddCSharpLine( "}" );
@@ -321,7 +320,7 @@ namespace Detox.ScriptEditor
                DefineFillComponents( );
                AddCSharpLine( "" );
                
-               AddCSharpLine( "public override void Awake()" );
+               AddCSharpLine( "public void Awake()" );
                AddCSharpLine( "{" );
 
                ++m_TabStack;
@@ -879,7 +878,6 @@ namespace Detox.ScriptEditor
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
             AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = ScriptableObject.CreateInstance(typeof(" + logicNode.Type +")) as " + logicNode.Type + ";" );
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Awake( );" );
          }
          
          AddCSharpLine( "" );
