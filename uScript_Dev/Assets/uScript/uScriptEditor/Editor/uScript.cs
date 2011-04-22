@@ -1425,7 +1425,7 @@ http://www.detoxstudios.com";
    int _tmpInt1;
    int _tmpInt2;
    float _tmpFloat;
-   string _tmpString;
+   string _tmpString = string.Empty;
    bool _tmpBool;
    UnityEngine.Color _tmpColor;
    Vector2 _tmpVector2;
