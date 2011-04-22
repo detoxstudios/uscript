@@ -1443,7 +1443,7 @@ http://www.detoxstudios.com";
          {
             GUILayout.Label("uScripts", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
             GUILayout.FlexibleSpace();
-            _toggleTempPanel = GUILayout.Toggle( _toggleTempPanel, "Toggle Temp Panel", EditorStyles.toolbarButton );
+//            _toggleTempPanel = GUILayout.Toggle( _toggleTempPanel, "Toggle Temp Panel", EditorStyles.toolbarButton );
          }
          EditorGUILayout.EndHorizontal();
 
