@@ -189,6 +189,31 @@ public class uScriptDebug : MonoBehaviour
    }
 }
 
+public class uScriptCustomEvent
+{
+   public class CustomEventData
+   {
+      public CustomEventData() {}
+      public CustomEventData(string eventName, object eventData, GameObject sender = null) { EventName = eventName; EventData = eventData; Sender = sender; }
+      
+      public string EventName = "";
+      public object EventData = null;
+      public GameObject Sender = null;
+   }
+   
+   public static void BroadcastCustomEvent(string eventName, object eventData, GameObject eventSender)
+   {
+      GameObject[] gos = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+      CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
+      foreach (GameObject go in gos) 
+      {
+         if (go && go.transform.parent == null) 
+         {
+            go.gameObject.BroadcastMessage("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
+         }
+      }   
+   }
+}
 
 public struct uScriptConfigBlock
 {

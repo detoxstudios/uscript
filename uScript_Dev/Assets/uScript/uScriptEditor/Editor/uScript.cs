@@ -465,6 +465,46 @@ http://www.detoxstudios.com";
             uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_Level));
          }
+         if (null == uScriptMaster.GetComponent<uScript_CustomEventBool>())
+         {
+            uScriptDebug.Log("Adding custom event bool to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_CustomEventBool));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_CustomEventColor>())
+         {
+            uScriptDebug.Log("Adding custom event color to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_CustomEventColor));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_CustomEventFloat>())
+         {
+            uScriptDebug.Log("Adding custom event float to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_CustomEventFloat));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_CustomEventGameObject>())
+         {
+            uScriptDebug.Log("Adding custom event GameObject to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_CustomEventGameObject));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_CustomEventInt>())
+         {
+            uScriptDebug.Log("Adding custom event int to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_CustomEventInt));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_CustomEventString>())
+         {
+            uScriptDebug.Log("Adding custom event String to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_CustomEventString));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_CustomEventVector3>())
+         {
+            uScriptDebug.Log("Adding custom event Vector3 to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_CustomEventVector3));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_CustomEventVector4>())
+         {
+            uScriptDebug.Log("Adding custom event Vector4 to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_CustomEventVector4));
+         }
 
          foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
          {
