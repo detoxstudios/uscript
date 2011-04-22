@@ -430,6 +430,21 @@ http://www.detoxstudios.com";
             uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_Update));
          }
+         if (null == uScriptMaster.GetComponent<uScript_Mouse>())
+         {
+            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_Mouse));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_Collision>())
+         {
+            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_Collision));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_ProxyControllerCollision>())
+         {
+            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_ProxyControllerCollision));
+         }
 
          foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
          {
@@ -2588,13 +2603,21 @@ http://www.detoxstudios.com";
 
       foreach ( Component eventScript in eventScripts )
       {
-         Type type = FindNodeComponentType(eventScript.GetType());
-         if ( null == type ) return null;
+         NodeComponentType requiredComponentType = FindNodeComponentType(eventScript.GetType());
+         if ( null == requiredComponentType ) return null;
 
-         if ( type.IsAssignableFrom(component.GetType()) )
+         if ( requiredComponentType.ContainsType(component.GetType()) )
          {
-            return eventScript.GetType();
+            return eventScript.GetType( );
          }
+
+         //Type type = FindNodeComponentType(eventScript.GetType());
+         //if ( null == type ) return null;
+
+         //if ( type.IsAssignableFrom(component.GetType()) )
+         //{
+         //   return eventScript.GetType();
+         //}
       }
 
       return null;
@@ -2638,8 +2661,7 @@ http://www.detoxstudios.com";
       Type type = GetType(eventType);
       if ( null == type ) return false;
 
-      //what component is required to exist for our event script to run
-      Type requiredComponentType = FindNodeComponentType(type);
+      NodeComponentType requiredComponentType = FindNodeComponentType(type);
       if ( null == requiredComponentType ) return false;
 
       //uScriptDebug.Log ("uScript.cs - GameObject = " + gameObject);
@@ -2656,7 +2678,7 @@ http://www.detoxstudios.com";
          //uScriptDebug.Log ("Checking component = " + c.GetType());
 
          //if the required component exists then attach the script
-         if ( requiredComponentType.IsAssignableFrom(c.GetType()) )
+         if ( requiredComponentType.ContainsType(c.GetType()) )
          {
             //uScriptDebug.Log ("Is Assignable!");
             
@@ -3006,7 +3028,7 @@ http://www.detoxstudios.com";
       return "";
    }
 
-   public static Type FindNodeComponentType(Type type)
+   public static NodeComponentType FindNodeComponentType(Type type)
    {
       if ( type != null )
       {
@@ -3017,7 +3039,7 @@ http://www.detoxstudios.com";
          {
             if ( a is NodeComponentType ) 
             {
-               return ((NodeComponentType)a).ComponentType;
+               return ((NodeComponentType)a);
             }
          }
       }

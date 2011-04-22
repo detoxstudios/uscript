@@ -16,12 +16,12 @@ public class uScript_Global : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    
-   [FriendlyName("On Game Start")]
-   public event uScriptEventHandler GameStart;
+   [FriendlyName("On uScript Start")]
+   public event uScriptEventHandler uScriptStart;
 
    void Start()
    {
-      if ( GameStart != null ) GameStart(this, new System.EventArgs());
+      if ( uScriptStart != null ) uScriptStart(this, new System.EventArgs());
    }
    
    // uScript GUI Options

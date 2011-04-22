@@ -20,7 +20,6 @@ public class uScriptAct_OnKeyPressFilter : uScriptLogic
 
    public bool Out { get { return m_KeyCode; } }
 
-   // @TODO: This is firing twice.
    public void In([FriendlyName("Key Code")] UnityEngine.KeyCode KeyCode)
    {
       m_KeyCode = UnityEngine.Input.GetKeyDown(KeyCode);

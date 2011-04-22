@@ -21,8 +21,27 @@ public class FriendlyName : Attribute
 [AttributeUsage(AttributeTargets.Class)]
 public class NodeComponentType : Attribute
 {
-   public NodeComponentType(Type type) { ComponentType = type; }
-   public Type ComponentType;
+   public NodeComponentType(Type type) 
+   { 
+      m_ComponentTypes = new Type[] { type };
+   }
+   
+   public NodeComponentType(Type type1, Type type2) 
+   { 
+      m_ComponentTypes = new Type[] { type1, type2 };
+   }
+   
+   public Type [] m_ComponentTypes;
+
+   public bool ContainsType(Type type)
+   {
+      foreach ( Type t in m_ComponentTypes )
+      {
+         if ( t.IsAssignableFrom(type) ) return true;
+      }
+
+      return false;
+   }
 }
 
 [AttributeUsage(AttributeTargets.Class)]
