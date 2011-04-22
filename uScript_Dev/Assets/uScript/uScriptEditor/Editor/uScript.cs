@@ -1975,23 +1975,15 @@ http://www.detoxstudios.com";
       {
          if ( file.Name.StartsWith(".") || file.Name.StartsWith("_")  || !file.Name.EndsWith(".cs") ) continue;
 
-         ScriptableObject scriptableObject = null;
+         Type type = ScriptEditor.GetAssemblyQualifiedType( System.IO.Path.GetFileNameWithoutExtension(file.Name) );
 
-         try
+         if ( null != type )
          {
-            scriptableObject = ScriptableObject.CreateInstance( System.IO.Path.GetFileNameWithoutExtension(file.Name) );
-         }
-         catch ( Exception ) {}
-
-         if ( null != scriptableObject )
-         {
-            if ( false == uniqueNodes.ContainsKey(scriptableObject.GetType()) &&
-                 typeof(uScriptLogic).IsAssignableFrom(scriptableObject.GetType()) )
+            if ( false == uniqueNodes.ContainsKey(type) &&
+                 typeof(uScriptLogic).IsAssignableFrom(type) )
             {
-               uniqueNodes[ scriptableObject.GetType() ] = scriptableObject.GetType( );
+               uniqueNodes[ type ] = type;
             }
-
-            ScriptableObject.DestroyImmediate( scriptableObject );
          }
       }
 
