@@ -440,10 +440,20 @@ http://www.detoxstudios.com";
             uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_Collision));
          }
-         if (null == uScriptMaster.GetComponent<uScript_ProxyControllerCollision>())
+         if (null == uScriptMaster.GetComponent<uScript_ProxyController>())
          {
             uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_ProxyControllerCollision));
+            uScriptMaster.AddComponent(typeof(uScript_ProxyController));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_Joint>())
+         {
+            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_Joint));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_Particle>())
+         {
+            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_Particle));
          }
 
          foreach ( uScriptConfigBlock b in uScriptConfig.Variables )

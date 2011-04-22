@@ -7,11 +7,11 @@ using System.Collections;
 
 
 [AddComponentMenu("uScript/Collision")]
-[NodeComponentType(typeof(Collider), typeof(Rigidbody))]
+[NodeComponentType(typeof(CharacterController))]
 
 [NodePath("Events")]
 [FriendlyName("Controller Collision")]
-public class uScript_ProxyControllerCollision : uScriptEvent
+public class uScript_ProxyController : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, ProxyControllerCollisionEventArgs args);
 

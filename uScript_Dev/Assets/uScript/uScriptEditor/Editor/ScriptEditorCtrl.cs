@@ -1161,18 +1161,20 @@ namespace Detox.ScriptEditor
             //special case to add required scripts to gameobjects
             if ( entityNode is EntityEvent )
             {
+               //this code is broken because it calls undo as they are typing into the property grid
+               //disabling until we can think of a better solution
                if ( entityNode.Instance.Default != "" && 
                     false == uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default) )
                {
-                  //couldn't attach an appropriate script for this game object
-                  //so refresh the property grid
-                  Parameter instance = entityNode.Instance;
-                  instance.Default = "";
+                  ////couldn't attach an appropriate script for this game object
+                  ////so refresh the property grid
+                  //Parameter instance = entityNode.Instance;
+                  //instance.Default = "";
 
-                  entityNode.Instance = instance;
+                  //entityNode.Instance = instance;
 
-                  FlowchartSelectionModified( null, null );
-                  requiresUndo = true;
+                  //FlowchartSelectionModified( null, null );
+                  //requiresUndo = true;
                }
             }
 
