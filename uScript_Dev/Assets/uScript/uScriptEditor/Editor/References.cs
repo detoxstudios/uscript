@@ -223,8 +223,23 @@ namespace System.Windows.Forms
                   val = UnityEditor.EditorGUILayout.ColorField( p.FriendlyName, (UnityEngine.Color) val );
                }
                else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
-               {
-                  val = UnityEditor.EditorGUILayout.EnumPopup( p.FriendlyName, (System.Enum) val );
+               {  
+                  EditorGUILayout.BeginHorizontal();
+                  
+                     //first show the text field and get back the same (or changed value)
+                     string userText = EditorGUILayout.TextField( p.FriendlyName, p.Default );
+                     System.Enum newEnum;
+                  
+                     //try and turn the text field value back into an enum, if it doesn't work
+                     //then revert back to the original value
+                     try { newEnum = (System.Enum) System.Enum.Parse(val.GetType(), userText); }
+                     catch { newEnum = (System.Enum) val; }
+      
+                     //send the new value to the enum popup and whatever it
+                     //returns (in case the user modified it here) is what our final value is
+                     val = UnityEditor.EditorGUILayout.EnumPopup( p.FriendlyName, (System.Enum) newEnum );
+                  
+                  EditorGUILayout.EndHorizontal();
                }
                else if ( null != GetObjectFieldType(p.Type) )
                {
