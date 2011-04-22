@@ -28,7 +28,7 @@ public class uScriptAct_Rotate : uScriptLogic
    public bool Out { get { return true; } }
  
    
-   public void In(GameObject[] Target, int Degrees, string Axis, float Seconds, bool Loop)
+   public void In(GameObject[] Target, float Degrees, string Axis, float Seconds, bool Loop)
    {
       m_Target = new GameObject[Target.Length];
       m_TargetTransforms = new Quaternion[Target.Length];
@@ -37,10 +37,10 @@ public class uScriptAct_Rotate : uScriptLogic
       else if ( "y" == Axis || "Y" == Axis ) m_VectorAxis = Vector3.up;
       else m_VectorAxis = Vector3.forward;
       
-      if ( Degrees < 0 ) 
+      if ( Degrees < 0.0f ) 
       {
-         m_VectorAxis = m_VectorAxis * -1;
-         Degrees *= -1;
+         m_VectorAxis = m_VectorAxis * -1.0f;
+         Degrees *= -1.0f;
       }
       
       int i = 0;
