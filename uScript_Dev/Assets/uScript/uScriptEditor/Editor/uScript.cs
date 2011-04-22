@@ -455,6 +455,16 @@ http://www.detoxstudios.com";
             uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_Particle));
          }
+         if (null == uScriptMaster.GetComponent<uScript_Visibility>())
+         {
+            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_Visibility));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_Level>())
+         {
+            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_Level));
+         }
 
          foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
          {

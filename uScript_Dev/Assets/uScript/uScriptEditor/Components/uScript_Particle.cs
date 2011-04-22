@@ -10,7 +10,7 @@ using System.Collections;
 
 [NodePath("Events/Particles")]
 
-[FriendlyName("Controller Collision")]
+[FriendlyName("Particle Collision")]
 public class uScript_Particle : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, ParticleCollisionEventArgs args);
