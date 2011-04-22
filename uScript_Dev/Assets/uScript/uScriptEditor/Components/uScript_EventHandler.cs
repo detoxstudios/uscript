@@ -195,7 +195,7 @@ public class uScriptCustomEvent
    public class CustomEventData
    {
       public CustomEventData() {}
-      public CustomEventData(string eventName, object eventData, GameObject sender = null) { EventName = eventName; EventData = eventData; Sender = sender; }
+      public CustomEventData(string eventName, object eventData, GameObject sender) { EventName = eventName; EventData = eventData; Sender = sender; }
       
       public string EventName = "";
       public object EventData = null;
