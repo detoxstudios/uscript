@@ -874,7 +874,7 @@ http://www.detoxstudios.com";
       }
       EditorGUILayout.EndHorizontal();
 
-      Repaint();
+      //Repaint();  // This is taking to much CPU time.
    }
 
    void DrawGUISidebar()
@@ -1421,7 +1421,7 @@ http://www.detoxstudios.com";
 
 
 
-   bool _toggleTempPanel;
+   bool _toggleTempPanel = false;
    int _tmpInt1;
    int _tmpInt2;
    float _tmpFloat;

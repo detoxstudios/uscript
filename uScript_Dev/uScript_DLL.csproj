@@ -84,6 +84,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\UnityCSharpGenerator.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_EventHandler.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptUtility.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\uScriptConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
