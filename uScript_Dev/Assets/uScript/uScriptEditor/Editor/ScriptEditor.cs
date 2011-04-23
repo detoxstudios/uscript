@@ -2498,8 +2498,6 @@ namespace Detox.ScriptEditor
          {
             if ( potentialMatches.Count > 0 )
             {
-               EntityMethod entityMethod = potentialMatches[ 0 ];
-
                cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );
                cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
                                                                         ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Instance}) )[ 0 ];
