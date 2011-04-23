@@ -842,9 +842,14 @@ http://www.detoxstudios.com";
 
    void DrawGUIStatusbar()
    {
+      if (GUI.tooltip != _statusbarMessage || Event.current.type == EventType.MouseMove)
+      {
+         _statusbarMessage = GUI.tooltip;
+      }
+
       EditorGUILayout.BeginHorizontal();
       {
-         GUILayout.Label( (GUI.tooltip != "" ? GUI.tooltip : _statusbarMessage), GUILayout.ExpandWidth( true ) );
+         GUILayout.Label( _statusbarMessage, GUILayout.ExpandWidth( true ) );
          GUILayout.Label( (Event.current.modifiers != 0 ? Event.current.modifiers + " :: " : "")
                            + (int)Event.current.mousePosition.x + ", "
                            + (int)Event.current.mousePosition.y + " (" + _mouseRegion + ")",
@@ -852,7 +857,7 @@ http://www.detoxstudios.com";
       }
       EditorGUILayout.EndHorizontal();
 
-      //Repaint();  // This is taking to much CPU time.
+//      Redraw();  // This is taking to much CPU time.
    }
 
    void DrawGUISidebar()
@@ -1411,6 +1416,8 @@ http://www.detoxstudios.com";
    Vector4 _tmpVector4;
    Rect _tmpRect;
 
+   Rect _svRect;
+
    void DrawGUISubsequences()
    {
       EditorGUILayout.BeginVertical(CustomGUIStyle["panelBox"], GUILayout.Width(_guiPanelSequence_Width));
@@ -1425,20 +1432,28 @@ http://www.detoxstudios.com";
          }
          EditorGUILayout.EndHorizontal();
 
-         _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
+         if ( _toggleTempPanel )
          {
-            if ( _toggleTempPanel )
+            GUIStyle vsb = new GUIStyle( GUI.skin.verticalScrollbar );
+            vsb.margin = new RectOffset();
+
+            GUIStyle hsb = new GUIStyle( GUI.skin.horizontalScrollbar );
+            hsb.margin = new RectOffset();
+
+            _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView( _guiPanelSequence_ScrollPos, hsb, vsb );
             {
-               _tmpInt1 = CustomGUI.IntField("Int Label", _tmpInt1);
-               _tmpInt2 = CustomGUI.IntField("This is a really long label!", _tmpInt2);
-               _tmpFloat = CustomGUI.FloatField("Float Label", _tmpFloat);
-               _tmpString = CustomGUI.TextField("Text Label", _tmpString);
-               _tmpBool = CustomGUI.BoolField("Bool Label", _tmpBool);
-               _tmpColor = CustomGUI.ColorField("Color Label", _tmpColor);
-               _tmpVector2 = CustomGUI.Vector2Field("Vector2 Label", _tmpVector2);
-               _tmpVector3 = CustomGUI.Vector3Field("Vector3 Label", _tmpVector3);
-               _tmpVector4 = CustomGUI.Vector4Field("Vector4 Label", _tmpVector4);
-               _tmpRect = CustomGUI.RectField("Rect Label", _tmpRect);
+               CustomGUI.BeginColumns( "Property", "Value", "Type", _guiPanelSequence_ScrollPos, _svRect );
+               {
+                  _tmpInt1 = CustomGUI.IntField("Int Label", _tmpInt1);
+                  _tmpInt2 = CustomGUI.IntField("This is a really long label!", _tmpInt2);
+                  _tmpFloat = CustomGUI.FloatField("Float Label", _tmpFloat);
+                  _tmpString = CustomGUI.TextField("Text Label", _tmpString);
+                  _tmpBool = CustomGUI.BoolField("Bool Label", _tmpBool);
+                  _tmpColor = CustomGUI.ColorField("Color Label", _tmpColor);
+                  _tmpVector2 = CustomGUI.Vector2Field("Vector2 Label", _tmpVector2);
+                  _tmpVector3 = CustomGUI.Vector3Field("Vector3 Label", _tmpVector3);
+                  _tmpVector4 = CustomGUI.Vector4Field("Vector4 Label", _tmpVector4);
+                  _tmpRect = CustomGUI.RectField("Rect Label", _tmpRect);
 
 //               EditorGUILayout.LabelField();
 //               EditorGUILayout.Separator();
@@ -1456,34 +1471,47 @@ http://www.detoxstudios.com";
 //               EditorGUILayout.ObjectField();
 //               EditorGUILayout.CurveField();
 //               EditorGUILayout.PropertyField();
-            }
-            else
-            foreach ( UnityEngine.Object o in GameObject.FindObjectsOfType(typeof(uScriptCode)) )
-            {
-               uScriptCode code = o as uScriptCode;
-
-               if (code.GetType().ToString() == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.Name))
-               {
-                  GUIStyle style = new GUIStyle(CustomGUIStyle["paletteButton"]);
-                  style.normal.background = style.active.background;
-                  GUILayout.Label( code.GetType().ToString(), style );
                }
-               else
+               CustomGUI.EndColumns();
+            }
+            EditorGUILayout.EndScrollView();
+
+            if (Event.current.type == EventType.Repaint )
+            {
+               _svRect = GUILayoutUtility.GetLastRect();
+            }
+         }
+         else
+         {
+            _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
+            {
+               foreach ( UnityEngine.Object o in GameObject.FindObjectsOfType(typeof(uScriptCode)) )
                {
-                  GUIContent content = new GUIContent( code.GetType().ToString(), "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
-                  if ( GUILayout.Button( content, CustomGUIStyle["paletteButton"] ) && Event.current.clickCount == 2 )
+                  uScriptCode code = o as uScriptCode;
+
+                  if (code.GetType().ToString() == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.Name))
                   {
-                     string path = FindFile( Application.dataPath, code.GetType().ToString() + ".uscript" );
-                     if ( "" != path )
+                     GUIStyle style = new GUIStyle(CustomGUIStyle["paletteButton"]);
+                     style.normal.background = style.active.background;
+                     GUILayout.Label( code.GetType().ToString(), style );
+                  }
+                  else
+                  {
+                     GUIContent content = new GUIContent( code.GetType().ToString(), "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
+                     if ( GUILayout.Button( content, CustomGUIStyle["paletteButton"] ) && Event.current.clickCount == 2 )
                      {
-                        _openScriptToggle = false;
-                        OpenScript( path );
+                        string path = FindFile( Application.dataPath, code.GetType().ToString() + ".uscript" );
+                        if ( "" != path )
+                        {
+                           _openScriptToggle = false;
+                           OpenScript( path );
+                        }
                      }
                   }
                }
             }
+            EditorGUILayout.EndScrollView();
          }
-         EditorGUILayout.EndScrollView();
       }
       EditorGUILayout.EndVertical();
 
