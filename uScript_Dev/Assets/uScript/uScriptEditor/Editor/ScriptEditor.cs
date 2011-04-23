@@ -2462,6 +2462,10 @@ namespace Detox.ScriptEditor
          EntityMethod cloned = new EntityMethod( data.Instance.Type, data.Input.Name, data.Input.FriendlyName );
          bool exactMatch = false;
 
+         //entities might have overloaded methods so we need to go through all
+         //and if we don't find an exact match then just use the first potential one we come across
+         List<EntityMethod> potentialMatches = new List<EntityMethod>( );
+
          foreach ( EntityDesc desc in m_EntityDescs )
          {
             foreach ( EntityMethod entityMethod in desc.Methods )
@@ -2475,12 +2479,30 @@ namespace Detox.ScriptEditor
                   {
                      exactMatch = true;
                   }
+                  else
+                  {
+                     potentialMatches.Add(entityMethod);                     
+                     continue;
+                  }
 
                   cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );
                   cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
                                                                            ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Instance}) )[ 0 ];
                   break;
                }
+            }
+         }
+
+
+         if ( false == exactMatch )
+         {
+            if ( potentialMatches.Count > 0 )
+            {
+               EntityMethod entityMethod = potentialMatches[ 0 ];
+
+               cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );
+               cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
+                                                                        ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Instance}) )[ 0 ];
             }
          }
 

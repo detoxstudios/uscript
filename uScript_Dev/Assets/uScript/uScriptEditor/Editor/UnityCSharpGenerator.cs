@@ -595,7 +595,15 @@ namespace Detox.ScriptEditor
 
             if ( typeof(System.Enum).IsAssignableFrom(netType) )
             {
-               return netType + "." + stringValue;
+               System.Enum newEnum;
+
+               //try and turn the text field value back into an enum, if it doesn't work
+               //then revert back to the original value
+               try { newEnum = (System.Enum) System.Enum.Parse(netType, stringValue); }
+               catch { newEnum = (System.Enum) System.Enum.Parse(netType, System.Enum.GetNames(netType)[0]); }
+
+
+               return netType + "." + newEnum.ToString( );
             }
          }
 
