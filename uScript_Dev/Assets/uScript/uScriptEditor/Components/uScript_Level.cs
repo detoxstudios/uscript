@@ -11,7 +11,7 @@ using System.Collections;
 
 [NodePath("Events")]
 
-[FriendlyName("Level Events")]
+[FriendlyName("Level Load Events")]
 public class uScript_Level : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, LevelWasLoadedEventArgs args);
@@ -28,8 +28,8 @@ public class uScript_Level : uScriptEvent
          m_Level = level;
       }
    }
-   
-   [FriendlyName("On uScript Start")]
+
+   [FriendlyName("On Level Was Loaded")]
    public event uScriptEventHandler LevelWasLoaded;
 
    void OnLevelWasLoaded(int level)
