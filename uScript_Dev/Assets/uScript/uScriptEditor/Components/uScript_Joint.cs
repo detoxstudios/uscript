@@ -27,8 +27,8 @@ public class uScript_Joint : uScriptEvent
          m_BreakForce = force;
       }
    }
-   
-   [FriendlyName("On uScript Start")]
+
+   [FriendlyName("On Joint Break")]
    public event uScriptEventHandler JointBreak;
 
    void OnJointBreak(float force)
