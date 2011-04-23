@@ -28,7 +28,7 @@ public class uScript_Particle : uScriptEvent
       }
    }
 
-   [FriendlyName("On Controller Collider Hit")]
+   [FriendlyName("On Particle Collision")]
    public event uScriptEventHandler Collision;
  
    void OnParticleCollision(GameObject gameObject)
