@@ -309,11 +309,13 @@ http://www.detoxstudios.com";
       if ( true == m_WantsRefresh )
       {
          m_ScriptEditorCtrl.RefreshScript(null, true);
-		 if (!String.IsNullOrEmpty(m_CurrentCanvasPosition))
-		 {
-			Point loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
-		    m_ScriptEditorCtrl.FlowChart.Location = loc;
-		 }
+         if (!String.IsNullOrEmpty(m_CurrentCanvasPosition))
+         {
+            Point loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
+            m_ScriptEditorCtrl.FlowChart.Location = loc;
+         }
+         // reset menu offset
+         m_ScriptEditorCtrl.BuildContextMenu();
          m_WantsRefresh = false;
       }
       if ( true == m_WantsCopy )
