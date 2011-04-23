@@ -22,7 +22,7 @@ public class uScriptAct_ExampleNode : uScriptLogic
    private bool m_SpecialOut = false; 
 
 
-   // Without a friendly name, uScript will just use the method name-- 'Out' in this case.
+   // Without a friendly name, uScript will just use the property name-- 'Out' in this case.
    public bool Out { get { return true; } }
 
 
@@ -59,7 +59,7 @@ public class uScriptAct_ExampleNode : uScriptLogic
    }
 
 
-   // Remember to use the 'override' keyword for the standard Unity methods such as Update, Start, OnGUI, etc...
+   // Remember to use the 'override' keyword for the standard Unity methods Update, LateUpdate, FixedUpdate and OnGUI...
    // We are not using this at all so it doesn't need to be here. Just here for informational purposes!
    // If you wanted to do something over time you may put something here for example (like a time delay or
    // Lerp/Slerp of something.
