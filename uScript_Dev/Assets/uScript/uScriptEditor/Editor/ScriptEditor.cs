@@ -841,7 +841,7 @@ namespace Detox.ScriptEditor
          m_Instance.Input = true;
          m_Instance.Output = false;
          m_Instance.Name = "Instance";
-         m_Instance.FriendlyName = "Instance";
+         m_Instance.FriendlyName = "GameObject";
          
          m_ShowComment = new Parameter( );
          m_ShowComment.Name    = "Show Comment";
@@ -1399,7 +1399,7 @@ namespace Detox.ScriptEditor
       public EntityProperty(string name, string friendlyName, string entityType, string valueType, bool input, bool output)
       { 
          m_Instance.Name   = "Instance";
-         m_Instance.FriendlyName = "Instance";
+         m_Instance.FriendlyName = "GameObject";
          m_Instance.Type   = entityType;
          m_Instance.Input  = true;
          m_Instance.Output = false;

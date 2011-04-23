@@ -1941,7 +1941,7 @@ http://www.detoxstudios.com";
       return false;
    }
 
-   void CreateLogicNodes( Dictionary<Type, Type> uniqueNodes, string path )
+   void GatherDerivedTypes( Dictionary<Type, Type> uniqueNodes, string path, Type baseType )
    {
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
 
@@ -1956,7 +1956,7 @@ http://www.detoxstudios.com";
          if ( null != type )
          {
             if ( false == uniqueNodes.ContainsKey(type) &&
-                 typeof(uScriptLogic).IsAssignableFrom(type) )
+                 baseType.IsAssignableFrom(type) )
             {
                uniqueNodes[ type ] = type;
             }
@@ -1967,37 +1967,7 @@ http://www.detoxstudios.com";
       {
          if ( subDirectory.Name.StartsWith(".") || subDirectory.Name.StartsWith("_") ) continue;
 
-         CreateLogicNodes( uniqueNodes, subDirectory.FullName );
-      }
-   }
-
-   void CreateEventNodes( Dictionary<Type, Type> uniqueNodes, string path )
-   {
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
-
-      System.IO.FileInfo [] files = directory.GetFiles( );
-
-      foreach ( System.IO.FileInfo file in files )
-      {
-         if ( file.Name.StartsWith(".") || file.Name.StartsWith("_")  || !file.Name.EndsWith(".cs") ) continue;
-
-         Type type = ScriptEditor.GetAssemblyQualifiedType( System.IO.Path.GetFileNameWithoutExtension(file.Name) );
-
-         if ( null != type )
-         {
-            if ( false == uniqueNodes.ContainsKey(type) &&
-                 typeof(uScriptEvent).IsAssignableFrom(type) )
-            {
-               uniqueNodes[ type ] = type;
-            }
-         }
-      }
-
-      foreach ( System.IO.DirectoryInfo subDirectory in directory.GetDirectories( ) )
-      {
-         if ( subDirectory.Name.StartsWith(".") || subDirectory.Name.StartsWith("_") ) continue;
-
-         CreateEventNodes( uniqueNodes, subDirectory.FullName );
+         GatherDerivedTypes( uniqueNodes, subDirectory.FullName, baseType );
       }
    }
 
@@ -2009,9 +1979,9 @@ http://www.detoxstudios.com";
 
       Dictionary<Type, Type> uniqueNodes = new Dictionary<Type, Type>( );
 
-      CreateLogicNodes( uniqueNodes, uScriptConfig.Paths.UserNodes );
-      CreateLogicNodes( uniqueNodes, uScriptConfig.Paths.SubsequenceScripts );
-      CreateLogicNodes( uniqueNodes, uScriptConfig.Paths.uScriptNodes );
+      GatherDerivedTypes( uniqueNodes, uScriptConfig.Paths.UserNodes, typeof(uScriptLogic) );
+      GatherDerivedTypes( uniqueNodes, uScriptConfig.Paths.SubsequenceScripts, typeof(uScriptLogic) );
+      GatherDerivedTypes( uniqueNodes, uScriptConfig.Paths.uScriptNodes, typeof(uScriptLogic) );
 
       MethodInfo []methods = typeof(uScriptLogic).GetMethods( );
 
@@ -2502,7 +2472,7 @@ http://www.detoxstudios.com";
       Dictionary<Type, Type> uniqueObjects = new Dictionary<Type, Type>( );
 
       Dictionary<Type, Type> eventNodes = new Dictionary<Type,Type>( );
-      CreateEventNodes( eventNodes, uScriptConfig.Paths.uScriptEditor + "/Components" );
+      GatherDerivedTypes( eventNodes, uScriptConfig.Paths.uScriptNodes, typeof(uScriptEvent) );
 
       foreach ( UnityEngine.Object o in allObjects )
       {
