@@ -1,4 +1,4 @@
-var MyGlobalVar : String;
+var MyPublicVar : String;
 
 function MyFunction( Input1 : float, Input2 : String ) : String
 {
