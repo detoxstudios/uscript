@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodeAutoAssignMasterInstance(true)]
-[NodeComponentType(typeof(uScript_Global))]
+[NodeComponentType(typeof(Transform))]
 
 [NodePath("Events")]
 

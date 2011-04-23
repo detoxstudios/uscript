@@ -23,19 +23,19 @@ public class NodeComponentType : Attribute
 {
    public NodeComponentType(Type type) 
    { 
-      m_ComponentTypes = new Type[] { type };
+      ComponentTypes = new Type[] { type };
    }
    
    public NodeComponentType(Type type1, Type type2) 
    { 
-      m_ComponentTypes = new Type[] { type1, type2 };
+      ComponentTypes = new Type[] { type1, type2 };
    }
    
-   public Type [] m_ComponentTypes;
+   public Type [] ComponentTypes;
 
    public bool ContainsType(Type type)
    {
-      foreach ( Type t in m_ComponentTypes )
+      foreach ( Type t in ComponentTypes )
       {
          if ( t.IsAssignableFrom(type) ) return true;
       }

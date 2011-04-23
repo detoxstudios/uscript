@@ -16,12 +16,18 @@ using System.Collections;
 [FriendlyName("Filter On Key Press")]
 public class uScriptAct_OnKeyPressFilter : uScriptLogic
 {
-   public bool m_KeyCode = false;
+   public bool m_KeyHeld = false;
+   public bool m_KeyDown = false;
+   public bool m_KeyUp   = false;
 
-   public bool Out { get { return m_KeyCode; } }
+   public bool KeyHeld  { get { return m_KeyHeld; } }
+   public bool KeyDown  { get { return m_KeyDown; } }
+   public bool KeyUp    { get { return m_KeyUp; } }
 
    public void In([FriendlyName("Key Code")] UnityEngine.KeyCode KeyCode)
-   {
-      m_KeyCode = UnityEngine.Input.GetKeyDown(KeyCode);
+   {  
+      m_KeyDown = UnityEngine.Input.GetKeyDown(KeyCode);
+      m_KeyHeld = UnityEngine.Input.GetKey    (KeyCode);
+      m_KeyUp   = UnityEngine.Input.GetKeyUp  (KeyCode);
    }
 }

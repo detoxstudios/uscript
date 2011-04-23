@@ -673,8 +673,9 @@ namespace Detox.ScriptEditor
                   {
                      Parameter instance = entityNode.Instance;
                      instance.Default = uScript.Instance.AutoAssignInstance(entityNode);
-                  
                      entityNode.Instance = instance;
+
+                     uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default);
                   }
                }
       
@@ -698,6 +699,7 @@ namespace Detox.ScriptEditor
                instance.Default = uScript.Instance.AutoAssignInstance(entityNode);
             
                entityNode.Instance = instance;
+               uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default);
             }
 
             m_ScriptEditor.AddNode( entityNode );
@@ -1144,8 +1146,7 @@ namespace Detox.ScriptEditor
       void m_PropertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
       {
          ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-         bool requiresUndo = false;
-
+         
          RemoveEventHandlers( );
 
          foreach ( object o in m_PropertyGrid.SelectedObjects )
@@ -1163,18 +1164,18 @@ namespace Detox.ScriptEditor
             {
                //this code is broken because it calls undo as they are typing into the property grid
                //disabling until we can think of a better solution
-               if ( entityNode.Instance.Default != "" && 
-                    false == uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default) )
+               uScript.AttachError error = uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default);
+               if ( error == uScript.AttachError.MissingComponent )
                {
-                  ////couldn't attach an appropriate script for this game object
-                  ////so refresh the property grid
-                  //Parameter instance = entityNode.Instance;
-                  //instance.Default = "";
+                  //couldn't attach an appropriate script for this game object
+                  //because it was missing a key component
+                  //so refresh the property grid
+                  Parameter instance = entityNode.Instance;
+                  instance.Default = "";
 
-                  //entityNode.Instance = instance;
+                  entityNode.Instance = instance;
 
-                  //FlowchartSelectionModified( null, null );
-                  //requiresUndo = true;
+                  FlowchartSelectionModified( null, null );
                }
             }
 
@@ -1187,11 +1188,6 @@ namespace Detox.ScriptEditor
          {
             m_ChangeStack.AddChange( new ChangeStack.Change("Node Modified", oldEditor, m_ScriptEditor.Copy( )) );
             RefreshScript( null );
-         }
-         
-         if (requiresUndo)
-         {
-            Undo();
          }
       }
 

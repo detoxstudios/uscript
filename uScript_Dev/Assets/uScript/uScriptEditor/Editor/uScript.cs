@@ -410,101 +410,6 @@ http://www.detoxstudios.com";
             uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_MasterObject));
          }
-         if (null == uScriptMaster.GetComponent<uScript_Global>())
-         {
-            uScriptDebug.Log("Adding global to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Global));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_Triggers>())
-         {
-            uScriptDebug.Log("Adding triggers to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Triggers));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_Input>())
-         {
-            uScriptDebug.Log("Adding input to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Input));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_Update>())
-         {
-            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Update));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_Mouse>())
-         {
-            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Mouse));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_Collision>())
-         {
-            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Collision));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_ProxyController>())
-         {
-            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_ProxyController));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_Joint>())
-         {
-            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Joint));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_Particle>())
-         {
-            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Particle));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_Visibility>())
-         {
-            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Visibility));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_Level>())
-         {
-            uScriptDebug.Log("Adding update to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Level));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_CustomEventBool>())
-         {
-            uScriptDebug.Log("Adding custom event bool to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_CustomEventBool));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_CustomEventColor>())
-         {
-            uScriptDebug.Log("Adding custom event color to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_CustomEventColor));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_CustomEventFloat>())
-         {
-            uScriptDebug.Log("Adding custom event float to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_CustomEventFloat));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_CustomEventGameObject>())
-         {
-            uScriptDebug.Log("Adding custom event GameObject to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_CustomEventGameObject));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_CustomEventInt>())
-         {
-            uScriptDebug.Log("Adding custom event int to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_CustomEventInt));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_CustomEventString>())
-         {
-            uScriptDebug.Log("Adding custom event String to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_CustomEventString));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_CustomEventVector3>())
-         {
-            uScriptDebug.Log("Adding custom event Vector3 to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_CustomEventVector3));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_CustomEventVector4>())
-         {
-            uScriptDebug.Log("Adding custom event Vector4 to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_CustomEventVector4));
-         }
 
          foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
          {
@@ -682,10 +587,6 @@ http://www.detoxstudios.com";
 
          if ( false == m_MouseDown && Event.current.type == EventType.MouseDown )
          {
-            //if mouse is down we assume the property grid should no longer have focus
-            //so switch to the filtersearch box.  by leaving the property grid
-            //it forces unity to update the rendering of it and show the latest
-            //text from the selected node
             GUI.FocusControl( "MainView" );
 
             if ( _canvasRect.Contains( Event.current.mousePosition ) )
@@ -2070,6 +1971,36 @@ http://www.detoxstudios.com";
       }
    }
 
+   void CreateEventNodes( Dictionary<Type, Type> uniqueNodes, string path )
+   {
+      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
+
+      System.IO.FileInfo [] files = directory.GetFiles( );
+
+      foreach ( System.IO.FileInfo file in files )
+      {
+         if ( file.Name.StartsWith(".") || file.Name.StartsWith("_")  || !file.Name.EndsWith(".cs") ) continue;
+
+         Type type = ScriptEditor.GetAssemblyQualifiedType( System.IO.Path.GetFileNameWithoutExtension(file.Name) );
+
+         if ( null != type )
+         {
+            if ( false == uniqueNodes.ContainsKey(type) &&
+                 typeof(uScriptEvent).IsAssignableFrom(type) )
+            {
+               uniqueNodes[ type ] = type;
+            }
+         }
+      }
+
+      foreach ( System.IO.DirectoryInfo subDirectory in directory.GetDirectories( ) )
+      {
+         if ( subDirectory.Name.StartsWith(".") || subDirectory.Name.StartsWith("_") ) continue;
+
+         CreateEventNodes( uniqueNodes, subDirectory.FullName );
+      }
+   }
+
    private LogicNode[] PopulateLogicTypes( )
    {
       Hashtable baseMethods    = new Hashtable( );
@@ -2568,7 +2499,10 @@ http://www.detoxstudios.com";
       }
 
       List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>( FindObjectsOfType(typeof(UnityEngine.Object)) );
-      Dictionary<Type, object> uniqueObjects = new Dictionary<Type, object>( );
+      Dictionary<Type, Type> uniqueObjects = new Dictionary<Type, Type>( );
+
+      Dictionary<Type, Type> eventNodes = new Dictionary<Type,Type>( );
+      CreateEventNodes( eventNodes, uScriptConfig.Paths.uScriptEditor + "/Components" );
 
       foreach ( UnityEngine.Object o in allObjects )
       {
@@ -2576,29 +2510,18 @@ http://www.detoxstudios.com";
          if ( typeof(uScriptCode).IsAssignableFrom(o.GetType()) ) continue;
          if ( typeof(uScriptLogic).IsAssignableFrom(o.GetType()) ) continue;
 
-         uniqueObjects[ o.GetType() ] = o;
+         uniqueObjects[ o.GetType() ] = o.GetType();
       }
 
-      foreach ( object node in uniqueObjects.Values )
+      foreach ( Type t in eventNodes.Values )
       {
-         Reflect( node.GetType(), entityDescs, baseMethods, baseEvents, baseProperties );
+         uniqueObjects[ t ] = t;
       }
 
-      //if we want to reflect everything
-      //List<Type> types = new List<Type>( );
-
-      //foreach ( object t in m_Types.Values )
-      //{
-      //   types.Add( (Type) t );
-      //}
-
-      //foreach ( Type t in types.ToArray( ) )
-      //{
-      //   if ( false == uniqueObjects.ContainsKey(t) )
-      //   {
-      //      Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
-      //   }
-      //}
+      foreach ( Type t in uniqueObjects.Values )
+      {
+         Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
+      }
 
       //consolidate like events so they appear on the same node
       EntityDesc [] descs = entityDescs.ToArray( );
@@ -2711,18 +2634,25 @@ http://www.detoxstudios.com";
    //component needs to exist for it to work
    //then go through all components and if the required component exists, allow the instance
    //and attach the event script to the game object
-   public bool AttachEventScript(string eventType, string objectName)
+   public enum AttachError
+   {
+      None,
+      NotFound,
+      MissingComponent,
+   }
+
+   public AttachError AttachEventScript(string eventType, string objectName)
    {
       //what game object do we want to be the instance for our event script
       GameObject gameObject = GameObject.Find( objectName );
-      if ( null == gameObject ) return false;
+      if ( null == gameObject ) return AttachError.NotFound; //game object can't be found, let them proceed it might be created at runtime
 
       //unity type of our event script
       Type type = GetType(eventType);
-      if ( null == type ) return false;
+      if ( null == type ) return AttachError.NotFound; //type can't be found, just let them proceed
 
       NodeComponentType requiredComponentType = FindNodeComponentType(type);
-      if ( null == requiredComponentType ) return false;
+      if ( null == requiredComponentType ) return AttachError.None; //no required component
 
       //uScriptDebug.Log ("uScript.cs - GameObject = " + gameObject);
       //uScriptDebug.Log ("uScript.cs - RequiredType = " + requiredComponentType);
@@ -2747,14 +2677,23 @@ http://www.detoxstudios.com";
                gameObject.AddComponent( type ); 
             }
 
-            return true;
+            return AttachError.None;
          }
       }
 
-      uScriptDebug.Log( "Could not attach " + objectName + " to " + eventType + " because " + 
-                         objectName + " requires a " + requiredComponentType.ToString() + " component." );
+      string names = "";
 
-      return false;
+      foreach ( Type t in requiredComponentType.ComponentTypes )
+      {
+         names += t + ", ";
+      }
+
+      if ( names.Length >= 2 ) names = names.Substring( 0, names.Length - 2 );
+
+      uScriptDebug.Log( "Could not attach " + objectName + " to " + eventType + " because " + 
+                         objectName + " requires at one of the following components: " + names + ".", uScriptDebug.Type.Warning );
+
+      return AttachError.MissingComponent;
    }
 
    public bool AttachVariableScript(string objectName)

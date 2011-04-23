@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodeAutoAssignMasterInstance(true)]
-[NodeComponentType(typeof(uScript_Input))]
+[NodeComponentType(typeof(Transform))]
 
 [NodePath("Events")]
 
@@ -16,14 +16,26 @@ public class uScript_Input : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
-   [FriendlyName("On Key Press")]
-   public event uScriptEventHandler KeyPress;
+   [FriendlyName("On Key Event")]
+   public event uScriptEventHandler KeyEvent;
+
+   private bool m_AnyKeyWasDown = false;
 
    void Update()
    {
-      if (Input.anyKeyDown)
+      if (Input.anyKey)
       {
-         if (KeyPress != null) KeyPress(this, new System.EventArgs());
+         m_AnyKeyWasDown = true;
+
+         if (KeyEvent != null) KeyEvent(this, new System.EventArgs());
+      }
+      else if ( true == m_AnyKeyWasDown )
+      {
+         //no key is down now but it was the last frame
+         //so send a key up
+         m_AnyKeyWasDown = false;
+
+         if (KeyEvent != null) KeyEvent(this, new System.EventArgs());
       }
    }
 

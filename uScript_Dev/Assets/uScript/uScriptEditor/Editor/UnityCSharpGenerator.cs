@@ -74,8 +74,7 @@ namespace Detox.ScriptEditor
             {
                string name = uScriptConfig.Variable.FriendlyName( entityNode.Instance.Type );
 
-               uScriptDebug.Log( "Node " + name + " is being pruned because there is no GameObject instance assigned to it", uScriptDebug.Type.Warning );
-
+               uScriptDebug.Log( "Node " + name + " is being pruned because there is no GameObject instance assigned to it", uScriptDebug.Type.Debug );
                m_Script.RemoveNode( entityNode );
             }
          }
@@ -863,14 +862,15 @@ namespace Detox.ScriptEditor
          //make sure all components we plan to reference
          //have been placed in their local variables
          AddCSharpLine( CSharpFillComponentsDeclaration( ) + ";" );
-         AddCSharpLine( "" );
 
+         //NOW WE DO THIS IN FILLCOMPONENTS TO MAKE SURE THEY ARE LOADED
+         //
          //for every entity event node 
-         //register event listeners with the entity
-         foreach ( EntityEvent entityEvent in m_Script.Events )
-         {
-            AddEventListener( entityEvent );
-         }
+         //register event listeners with the entity         
+         //foreach ( EntityEvent entityEvent in m_Script.Events )
+         //{
+         //   AddEventListener( entityEvent );
+         //}
 
          AddCSharpLine( "" );
 
@@ -1046,7 +1046,7 @@ namespace Detox.ScriptEditor
 
                      if ( node is EntityEvent )
                      {
-                        SetEventInputs( CSharpName(node, parameter.Name) + "[" + i + "]", ((EntityEvent)node) );
+                        SetupEvent( CSharpName(node, parameter.Name) + "[" + i + "]", ((EntityEvent)node) );
                      }
 
                   --m_TabStack;
@@ -1073,10 +1073,10 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );               
                   ++m_TabStack;
                      AddCSharpLine( CSharpName(node, parameter.Name) + " = gameObject.GetComponent<" + parameter.Type + ">();" );
-                     
+
                      if ( node is EntityEvent )
                      {
-                        SetEventInputs( CSharpName(node, parameter.Name), ((EntityEvent)node) );
+                        SetupEvent( CSharpName(node, parameter.Name), ((EntityEvent)node) );
                      }
                
                   --m_TabStack;
@@ -1104,7 +1104,8 @@ namespace Detox.ScriptEditor
 
       //default inputs for events which can only be set through the property grid
       //so they are only set once (in fillcomponents)
-      private void SetEventInputs( string eventVariable, EntityEvent eventNode )
+      //and we add all our event listeners here
+      private void SetupEvent( string eventVariable, EntityEvent eventNode )
       {
          AddCSharpLine( "if ( null != " + eventVariable + " )" );
          AddCSharpLine( "{" );
@@ -1116,6 +1117,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( eventVariable + "." + p.Name + " = " + CSharpName(eventNode, p.Name) + ";" );
                }
             }
+
+            AddEventListener( eventNode );
          --m_TabStack;
          AddCSharpLine( "}" );               
       }
