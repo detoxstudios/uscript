@@ -50,14 +50,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Collision.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_CustomEventBool.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_CustomEventColor.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_CustomEventFloat.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_CustomEventGameObject.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_CustomEventInt.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_CustomEventString.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_CustomEventVector3.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_CustomEventVector4.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Global.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Input.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Joint.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Level.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_MasterObject.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Mouse.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Particle.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_ProxyController.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Triggers.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Update.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Variable_Gizmo.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Visibility.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\AnimData.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\BinaryXml.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\CommentNode.cs" />
