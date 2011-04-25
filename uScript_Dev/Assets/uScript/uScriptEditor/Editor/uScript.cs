@@ -2033,9 +2033,15 @@ http://www.detoxstudios.com";
          }
       }
 
+      //i think these are legacy uScript support and can go away
+      //but i want to wait until we're inbetween builds to risk it
       baseMethods[ "OnDestroy" ] = "OnDestroy";
       baseMethods[ "OnDisable" ] = "OnDisable";
       baseMethods[ "OnEnable" ]  = "OnEnable";
+      
+      //this function is added to nested uscripts by the code generator
+      //and we don't want to expose it to the user
+      baseMethods[ "Awake" ] = "Awake";
 
       EventInfo []events = typeof(uScriptLogic).GetEvents( );
 
