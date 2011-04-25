@@ -6,7 +6,6 @@
 using UnityEngine;
 using System.Collections;
 
-[NodeAutoAssignMasterInstance(true)]
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events")]
