@@ -12,17 +12,18 @@ using System.Collections;
 [NodePath("Events")]
 
 [FriendlyName("Touch Events")]
-public class uScript_Touches : uScriptEvent
+public class uScript_Touch : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, TouchEventArgs args);
   
    public class TouchEventArgs : System.EventArgs
    {
-      private Touch []Touches;
+      public Touch[] Touches { get { return m_Touches; } }
+      private Touch [] m_Touches;
      
       public TouchEventArgs(Touch []touches)
       {
-         Touches = touches;
+         m_Touches = touches;
       }
    }
 
