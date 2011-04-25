@@ -2528,7 +2528,9 @@ http://www.detoxstudios.com";
       {
          Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
       }
-
+  
+      Reflect( typeof(UnityEngine.RuntimePlatform), entityDescs, baseMethods, baseEvents, baseProperties );
+      
       //consolidate like events so they appear on the same node
       EntityDesc [] descs = entityDescs.ToArray( );
       for ( int i = 0; i < descs.Length; i++ )
