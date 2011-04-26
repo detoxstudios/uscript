@@ -281,7 +281,7 @@ namespace Detox.Data.ScriptEditor
          Parameters = data.Parameters;
       }
 
-      public new int Version { get { return 3; } }
+      public new int Version { get { return 4; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -349,7 +349,7 @@ namespace Detox.Data.ScriptEditor
          data.Parameters.CopyTo( Parameters, 0 );
       }
 
-      public new int Version { get { return 5; } }
+      public new int Version { get { return 6; } }
 
       public new void Load(ObjectSerializer serializer)
       {

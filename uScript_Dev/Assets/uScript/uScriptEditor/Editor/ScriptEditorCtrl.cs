@@ -617,8 +617,10 @@ namespace Detox.ScriptEditor
 
             linkNode = new LinkNode( localNode.Guid, localNode.Value.Name, node.Guid, linkTo.Name );
 
+            string reason;
+
             //if we can't like from->to try linking the other way (to->from)
-            if ( false == m_ScriptEditor.VerifyLink(linkNode) )
+            if ( false == m_ScriptEditor.VerifyLink(linkNode, out reason) )
             {
                linkNode = new LinkNode( node.Guid, linkTo.Name, localNode.Guid, localNode.Value.Name );
             }
@@ -1162,8 +1164,6 @@ namespace Detox.ScriptEditor
             //special case to add required scripts to gameobjects
             if ( entityNode is EntityEvent )
             {
-               //this code is broken because it calls undo as they are typing into the property grid
-               //disabling until we can think of a better solution
                uScript.AttachError error = uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default);
                if ( error == uScript.AttachError.MissingComponent )
                {
@@ -1227,7 +1227,9 @@ namespace Detox.ScriptEditor
                                               node.Guid, e.Point.Name );
 
             //if it's allowed to connect then update the style
-            if ( true == m_ScriptEditor.VerifyLink(linkNode) )
+            string reason;
+
+            if ( true == m_ScriptEditor.VerifyLink(linkNode, out reason) )
             {
                e.Point.StyleName += "_connecting";
                node.AnchorPoints[ e.Index ] = e.Point;            
@@ -1399,7 +1401,7 @@ namespace Detox.ScriptEditor
             {
                bool allowLink = false;
 
-               if ( hitPoint.Name == entityNode.Instance.Default )
+               if ( hitPoint.Name == entityNode.Instance.Name )
                {
                   allowLink = true;
                }
@@ -1499,7 +1501,7 @@ namespace Detox.ScriptEditor
 
                foreach ( EntityEvent e in desc.Events )
                {
-                  ToolStripItem item = friendlyMenu.DropDownItems.Add( e.Instance.FriendlyName );
+                  ToolStripItem item = friendlyMenu.DropDownItems.Add( e.FriendlyType );
                   item.Tag = e;
 
                   item.Click += new System.EventHandler(m_MenuAddNode_Click);

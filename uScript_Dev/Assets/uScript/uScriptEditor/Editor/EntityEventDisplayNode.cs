@@ -23,11 +23,20 @@ namespace Detox.ScriptEditor
 
          NodeStyle = "node_event";
          Location  = new System.Drawing.Point( entityEvent.Position.X, entityEvent.Position.Y );
-         Name = entityEvent.Instance.FriendlyName;
+         Name = entityEvent.FriendlyType;
 			
          List<Socket> sockets = new List<Socket>( );
 
          Socket socket;
+
+         socket = new Socket( );
+         socket.Alignment = Socket.Align.Bottom;
+         socket.InternalName = entityEvent.Instance.Name;
+         socket.FriendlyName = entityEvent.Instance.FriendlyName;
+         socket.Type = entityEvent.Instance.Type;
+         socket.Input  = true;
+         socket.Output = false;
+         sockets.Add( socket );
 
          foreach ( Parameter parameter in entityEvent.Parameters )
          {

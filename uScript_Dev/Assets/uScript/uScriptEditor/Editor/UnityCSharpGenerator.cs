@@ -1675,17 +1675,33 @@ namespace Detox.ScriptEditor
 
          foreach ( LinkNode link in instanceLinks )
          {
-            AddCSharpLine( "INTERNAL ERROR - Instance Links not supported when methods have return types or variables" );
-
             EntityNode node = m_Script.GetNode( link.Source.Guid );
-            AddCSharpLine( CSharpName(node) + "." + receiver.Input.Name + "(" + args + ");" );            
+
+            if ( returnParam != Parameter.Empty )
+            {
+               AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = " + CSharpName(node) + "." + receiver.Input.Name + "(" + args + ");" );                     
+
+               //only one instance link supported because of the return parameter - this should be enforced
+               //in the editor - this is just for a sanity check
+               break;
+            }
+            else
+            {
+               AddCSharpLine( CSharpName(node) + "." + receiver.Input.Name + "(" + args + ");" );            
+            }
          }
 
+         //only one instance because of the return parameter
          if ( receiver.Instance.Default != "" )
          {
             if ( returnParam != Parameter.Empty )
             {
-               AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = " + CSharpName(receiver, receiver.Instance.Name) + "." + receiver.Input.Name + "(" + args + ");" );            
+               //only one instance supported because of the return parameter - this should be enforced
+               //in the editor - this is just for a sanity check
+               if ( instanceLinks.Length == 0 )
+               {
+                  AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = " + CSharpName(receiver, receiver.Instance.Name) + "." + receiver.Input.Name + "(" + args + ");" );            
+               }
             }
             else
             {

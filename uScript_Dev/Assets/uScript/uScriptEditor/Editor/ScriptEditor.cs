@@ -784,7 +784,7 @@ namespace Detox.ScriptEditor
          EntityMethod node = (EntityMethod) obj;
 
          if ( Instance != node.Instance ) return false;
-
+         
          if ( false == ArrayUtil.ArraysAreEqual(node.Parameters, Parameters) ) return false;
 
          if ( Input  != node.Input ) return false;
@@ -841,7 +841,7 @@ namespace Detox.ScriptEditor
          m_Instance.Input = true;
          m_Instance.Output = false;
          m_Instance.Name = "Instance";
-         m_Instance.FriendlyName = "GameObject";
+         m_Instance.FriendlyName = "Instance";
          
          m_ShowComment = new Parameter( );
          m_ShowComment.Name    = "Show Comment";
@@ -1050,6 +1050,7 @@ namespace Detox.ScriptEditor
          entityEvent.EventArgs   = EventArgs;
          entityEvent.Parameters  = Parameters;
          entityEvent.Position    = Position;
+         entityEvent.FriendlyType= FriendlyType;
          entityEvent.Outputs     = Outputs;
          entityEvent.Guid        = Guid.NewGuid( );
          entityEvent.Comment     = Comment;
@@ -1095,6 +1096,8 @@ namespace Detox.ScriptEditor
          if ( Position != node.Position ) return false;
          if ( Guid != node.Guid ) return false;
 
+         if ( FriendlyType != node.FriendlyType ) return false;
+
          if ( false == ArrayUtil.ArraysAreEqual(Outputs, node.Outputs) ) return false;
 
          if ( ShowComment != node.ShowComment ) return false;
@@ -1119,6 +1122,7 @@ namespace Detox.ScriptEditor
       }
 
       public string EventArgs;
+      public string FriendlyType;
 
       public Parameter m_Instance;
       public Parameter Instance { get { return m_Instance; } set { m_Instance = value; } }
@@ -1142,8 +1146,10 @@ namespace Detox.ScriptEditor
       { 
          Outputs = outputs;
 
+         FriendlyType = friendlyType;
+
          m_Instance.Name = "Instance";
-         m_Instance.FriendlyName = friendlyType;
+         m_Instance.FriendlyName = "Instance";
          m_Instance.Type    = type;
          m_Instance.Input   = true;
          m_Instance.Output  = false;
@@ -1399,7 +1405,7 @@ namespace Detox.ScriptEditor
       public EntityProperty(string name, string friendlyName, string entityType, string valueType, bool input, bool output)
       { 
          m_Instance.Name   = "Instance";
-         m_Instance.FriendlyName = "GameObject";
+         m_Instance.FriendlyName = "Instance";
          m_Instance.Type   = entityType;
          m_Instance.Input  = true;
          m_Instance.Output = false;
@@ -1881,8 +1887,10 @@ namespace Detox.ScriptEditor
          m_LogicNodes  = nodes;
       }
 
-      public bool VerifyLink( LinkNode link )
+      public bool VerifyLink( LinkNode link, out string reason )
       {
+         reason = "";
+
          if ( false == m_Nodes.Contains(link.Source.Guid) ||
               false == m_Nodes.Contains(link.Destination.Guid) ) 
          {
@@ -1914,6 +1922,7 @@ namespace Detox.ScriptEditor
                if ( existingLinks.Source.Guid == source.Guid ||
                     existingLinks.Destination.Guid == source.Guid )
                {
+                  reason = "Each External Node can only be connected to one Node";
                   return false;
                }
             }
@@ -1925,6 +1934,7 @@ namespace Detox.ScriptEditor
                if ( existingLinks.Source.Guid == dest.Guid ||
                     existingLinks.Destination.Guid == dest.Guid )
                {
+                  reason = "Each External Node can only be connected to one Node";
                   return false;
                }
             }
@@ -1946,6 +1956,7 @@ namespace Detox.ScriptEditor
                   if ( p.Name == link.Source.Anchor && 
                        destConnection.Connection == link.Destination.Anchor )
                   {
+                     reason = "Externals cannot connect to Event Node Parameters";
                      return false;
                   }
                }
@@ -1980,6 +1991,39 @@ namespace Detox.ScriptEditor
             {
                destParam = ((EntityProperty)dest).Instance;
             }
+
+            if ( dest is EntityMethod )
+            {
+               EntityMethod em = (EntityMethod) dest;
+
+               bool allowOnlyOne = false;
+
+               foreach ( Parameter parameter in em.Parameters )
+               {
+                  if ( true == parameter.Output &&
+                       false== parameter.Input  &&
+                       parameter.Name == "Return"
+                     )
+                  {
+                     allowOnlyOne = true;
+                     break;
+                  }
+               }
+
+               if ( true == allowOnlyOne )
+               {
+                  //fail if something is already linked to our instance socket
+                  foreach ( LinkNode existingLink in Links )
+                  {
+                     if ( existingLink.Destination.Guid   == link.Destination.Guid &&
+                          existingLink.Destination.Anchor == link.Destination.Anchor ) 
+                     {
+                        reason = "Only one link can be connected per Instance socket if the destination has a return value";
+                        return false;
+                     }
+                  }
+               }
+            }
          }
          else
          {
@@ -1993,7 +2037,11 @@ namespace Detox.ScriptEditor
             }
          }
 
-         if ( source is ExternalConnection && dest is ExternalConnection ) return false;
+         if ( source is ExternalConnection && dest is ExternalConnection ) 
+         {
+            reason = "External Connections cannot be linked together";
+            return false;
+         }
 
          if ( source is ExternalConnection ) return true;
          if ( dest   is ExternalConnection ) return true;
@@ -2004,10 +2052,18 @@ namespace Detox.ScriptEditor
          //don't let parameters hook directly to others without going throug a variable
          //this fixes some script generation errors when dealing with outputting and inputting arrays
          if ( (source is EntityMethod || source is EntityEvent || source is LogicNode) &&
-              (dest   is EntityMethod || dest   is EntityEvent || dest   is LogicNode) ) return false;
+              (dest   is EntityMethod || dest   is EntityEvent || dest   is LogicNode) ) 
+         {
+            reason = "Parameters must be linked to Variable Nodes, they cannot be linked directly to other Action Nodes";
+            return false;
+         }
 
          //source must be output and dest must be input
-         if ( true != sourceParam.Output || true != destParam.Input ) return false;
+         if ( true != sourceParam.Output || true != destParam.Input ) 
+         {
+            reason = "The source link must allow an output and the destination must allow an input";
+            return false;
+         }
 
          //if source param is an array and dest param is an array
          //remove both array qualifiers because we only care if the types are compatible
@@ -2030,13 +2086,13 @@ namespace Detox.ScriptEditor
 
          if ( null == destType ) 
          {
-            Status.Warning( "Type " + destParam.Type + " could not be found in the Unity system" );
+            reason = "Type " + destParam.Type + " could not be found in the Unity system";
             return false;
          }
 
          if ( null == sourceType ) 
          {
-            Status.Warning( "Type " + sourceParam.Type + " could not be found in the Unity system" );
+            reason = "Type " + sourceParam.Type + " could not be found in the Unity system";
             return false;
          }
 
@@ -2050,7 +2106,13 @@ namespace Detox.ScriptEditor
 
          if ( node is LinkNode )
          {
-            allow = VerifyLink( (LinkNode) node );
+            string reason;
+            allow = VerifyLink( (LinkNode) node, out reason );
+
+            if ( false == allow )
+            {
+               Status.Info( reason );
+            }
          }
 
          if ( true == allow )
@@ -2417,7 +2479,7 @@ namespace Detox.ScriptEditor
 
       private EntityEvent CreateEntityEvent( EntityEventData data )
       {
-         EntityEvent cloned = new EntityEvent( data.Instance.Type, data.Instance.FriendlyName, ArrayUtil.ToPlugs(data.Outputs) );
+         EntityEvent cloned = new EntityEvent( data.Instance.Type, data.Instance.Type, ArrayUtil.ToPlugs(data.Outputs) );
          bool exactMatch= false;
 
          foreach ( EntityDesc desc in m_EntityDescs )
@@ -2450,7 +2512,7 @@ namespace Detox.ScriptEditor
       
          if ( false == exactMatch )
          {
-            Status.Warning( "Matching EntityEvent " + data.Instance.Type + " " + data.Instance.FriendlyName + " could not be found" );
+            Status.Warning( "Matching EntityEvent " + data.Instance.Type + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 

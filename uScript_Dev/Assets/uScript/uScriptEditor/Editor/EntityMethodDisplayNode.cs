@@ -28,6 +28,15 @@ namespace Detox.ScriptEditor
 
          Socket socket;
 
+         socket = new Socket( );
+         socket.Alignment = Socket.Align.Bottom;
+         socket.InternalName = entityMethod.Instance.Name;
+         socket.FriendlyName = entityMethod.Instance.FriendlyName;
+         socket.Type = entityMethod.Instance.Type;
+         socket.Input  = true;
+         socket.Output = false;
+         sockets.Add( socket );
+
          foreach ( Parameter parameter in entityMethod.Parameters )
          {
             socket = new Socket( );
