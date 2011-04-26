@@ -14,7 +14,7 @@ using System.Collections.Generic;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-[FriendlyName("Send Custom Event Color")]
+[FriendlyName("Send Custom Event (Color)")]
 public class uScriptAct_SendCustomEventColor : uScriptLogic
 {
 

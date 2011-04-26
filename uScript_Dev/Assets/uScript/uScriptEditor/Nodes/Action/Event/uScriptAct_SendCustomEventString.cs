@@ -14,7 +14,7 @@ using System.Collections.Generic;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-[FriendlyName("Send Custom Event String")]
+[FriendlyName("Send Custom Event (String)")]
 public class uScriptAct_SendCustomEventString : uScriptLogic
 {
 
