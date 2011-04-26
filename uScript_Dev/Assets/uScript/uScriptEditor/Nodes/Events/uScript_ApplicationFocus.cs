@@ -28,7 +28,7 @@ public class uScript_ApplicationFocus : uScriptEvent
       }
    }
 
-   [FriendlyName("On Focus Event")]
+   [FriendlyName("On Focus")]
    public event uScriptEventHandler FocusEvent;
 
    void OnApplicationFocus(bool focus)

@@ -10,7 +10,7 @@ using System.Collections;
 
 [NodePath("Events")]
 
-[FriendlyName("Game Object Events")]
+[FriendlyName("GameObject Events")]
 public class uScript_GameObject : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);

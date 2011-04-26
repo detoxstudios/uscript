@@ -16,7 +16,7 @@ public class uScript_ApplicationQuit : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
   
-   [FriendlyName("On Quit Event")]
+   [FriendlyName("On Quit")]
    public event uScriptEventHandler QuitEvent;
 
    void OnApplicationQuit( )
