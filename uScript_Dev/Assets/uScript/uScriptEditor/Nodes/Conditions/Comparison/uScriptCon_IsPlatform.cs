@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[NodePath("Action/Misc")]
+[NodePath("Conditions/Comparison")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Outputs true if the current platform is one of the attached platform variables.")]
@@ -15,7 +15,7 @@ using System.Collections.Generic;
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Is Platform")]
-public class uScriptAct_IsPlatform : uScriptLogic
+public class uScriptCon_IsPlatform : uScriptLogic
 {
    private bool m_IsPlatform = false;
 
