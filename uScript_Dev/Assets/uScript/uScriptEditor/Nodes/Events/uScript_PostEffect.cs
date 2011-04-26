@@ -8,7 +8,7 @@ using System.Collections;
 
 [NodeComponentType(typeof(Transform))]
 
-[NodePath("Events")]
+[NodePath("Events/Renderer Events")]
 
 [FriendlyName("Post Effect Events")]
 public class uScript_PostEffect : uScriptEvent

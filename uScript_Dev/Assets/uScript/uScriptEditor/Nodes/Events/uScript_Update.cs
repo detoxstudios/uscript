@@ -9,7 +9,7 @@ using System.Collections;
 [NodeAutoAssignMasterInstance(true)]
 [NodeComponentType(typeof(Transform))]
 
-[NodePath("Events")]
+[NodePath("Events/Game Events")]
 
 [FriendlyName("Global Update")]
 public class uScript_Update : uScriptEvent

@@ -9,8 +9,9 @@ using System.Collections;
 [AddComponentMenu("uScript/Collision")]
 [NodeComponentType(typeof(Collider), typeof(Rigidbody))]
 
-[NodePath("Events")]
-[FriendlyName("Collision Events")]
+[NodePath("Events/Physics Events")]
+
+[FriendlyName("On Collision")]
 public class uScript_Collision : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CollisionEventArgs args);

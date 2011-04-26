@@ -8,9 +8,9 @@ using System.Collections;
 
 [NodeComponentType(typeof(Joint))]
 
-[NodePath("Events")]
+[NodePath("Events/Physics Events")]
 
-[FriendlyName("Joint Events")]
+[FriendlyName("Joint Break")]
 public class uScript_Joint : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, JointBreakEventArgs args);

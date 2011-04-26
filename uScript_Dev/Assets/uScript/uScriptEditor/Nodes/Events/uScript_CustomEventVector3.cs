@@ -10,7 +10,7 @@ using System.Collections;
 
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEventVector3")]
-[FriendlyName("Custom Event Vector3")]
+[FriendlyName("Custom Event (Vector3)")]
 public class uScript_CustomEventVector3 : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventVector3Args args);

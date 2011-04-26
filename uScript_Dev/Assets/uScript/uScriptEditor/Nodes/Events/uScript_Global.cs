@@ -9,9 +9,9 @@ using System.Collections;
 [NodeAutoAssignMasterInstance(true)]
 [NodeComponentType(typeof(Transform))]
 
-[NodePath("Events")]
+[NodePath("Events/Game Events")]
 
-[FriendlyName("Global Events")]
+[FriendlyName("uScript Events")]
 public class uScript_Global : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);

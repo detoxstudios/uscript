@@ -9,9 +9,10 @@ using System.Collections;
 [NodeAutoAssignMasterInstance(true)]
 [NodeComponentType(typeof(Transform))]
 
-[NodePath("Events")]
+[NodePath("Events/Application Events")]
 
-[FriendlyName("Application Quit Event")]
+[FriendlyName("Application Quit")]
+
 public class uScript_ApplicationQuit : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);

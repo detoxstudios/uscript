@@ -8,7 +8,7 @@ using System.Collections;
 
 [NodeComponentType(typeof(Transform))]
 
-[NodePath("Events")]
+[NodePath("Events/GameObject Events")]
 
 [FriendlyName("GameObject Events")]
 public class uScript_GameObject : uScriptEvent

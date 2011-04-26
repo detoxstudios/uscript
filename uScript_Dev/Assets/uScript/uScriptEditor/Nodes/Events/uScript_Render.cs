@@ -8,7 +8,7 @@ using System.Collections;
 
 [NodeComponentType(typeof(Renderer))]
 
-[NodePath("Events")]
+[NodePath("Events/Renderer Events")]
 
 [FriendlyName("Render Events")]
 public class uScript_Render : uScriptEvent

@@ -10,7 +10,7 @@ using System.Collections;
 
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEventBool")]
-[FriendlyName("Custom Event Bool")]
+[FriendlyName("Custom Event (Bool)")]
 public class uScript_CustomEventBool : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventBoolArgs args);

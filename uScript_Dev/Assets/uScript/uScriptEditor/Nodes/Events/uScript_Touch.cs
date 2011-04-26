@@ -9,7 +9,7 @@ using System.Collections;
 [NodeAutoAssignMasterInstance(true)]
 [NodeComponentType(typeof(Transform))]
 
-[NodePath("Events")]
+[NodePath("Events/Input Events")]
 
 [FriendlyName("Touch Events")]
 public class uScript_Touch : uScriptEvent

@@ -10,7 +10,7 @@ using System.Collections;
 
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEventString")]
-[FriendlyName("Custom Event String")]
+[FriendlyName("Custom Event (String)")]
 public class uScript_CustomEventString : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventStringArgs args);

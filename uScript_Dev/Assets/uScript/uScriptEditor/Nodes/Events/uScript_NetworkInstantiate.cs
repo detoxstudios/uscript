@@ -8,7 +8,7 @@ using System.Collections;
 
 [NodeComponentType(typeof(Network))]
 
-[NodePath("Events")]
+[NodePath("Events/Network Events")]
 
 [FriendlyName("Network Instantiate")]
 public class uScript_NetworkInstantiate : uScriptEvent

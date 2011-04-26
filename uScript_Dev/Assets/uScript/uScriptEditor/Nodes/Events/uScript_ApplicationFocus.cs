@@ -9,9 +9,10 @@ using System.Collections;
 [NodeAutoAssignMasterInstance(true)]
 [NodeComponentType(typeof(Transform))]
 
-[NodePath("Events")]
+[NodePath("Events/Application Events")]
 
-[FriendlyName("Application Focus Event")]
+[FriendlyName("Application Focus")]
+
 public class uScript_ApplicationFocus : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, ApplicationFocusEventArgs args);

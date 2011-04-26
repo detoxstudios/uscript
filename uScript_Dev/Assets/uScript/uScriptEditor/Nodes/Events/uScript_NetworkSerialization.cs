@@ -8,7 +8,7 @@ using System.Collections;
 
 [NodeComponentType(typeof(Network))]
 
-[NodePath("Events")]
+[NodePath("Events/Network Events")]
 
 [FriendlyName("Network Serialization")]
 public class uScript_NetworkSerialization : uScriptEvent

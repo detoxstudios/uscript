@@ -8,7 +8,7 @@ using System.Collections;
 
 [NodeComponentType(typeof(Network))]
 
-[NodePath("Events")]
+[NodePath("Events/Network Events")]
 
 [FriendlyName("Network Master Server")]
 public class uScript_NetworkMasterServer : uScriptEvent

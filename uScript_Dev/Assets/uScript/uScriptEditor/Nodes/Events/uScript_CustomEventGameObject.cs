@@ -10,7 +10,7 @@ using System.Collections;
 
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEventGameObject")]
-[FriendlyName("Custom Event GameObject")]
+[FriendlyName("Custom Event (GameObject)")]
 public class uScript_CustomEventGameObject : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventGameObjectArgs args);

@@ -10,7 +10,7 @@ using System.Collections;
 
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEventColor")]
-[FriendlyName("Custom Event Color")]
+[FriendlyName("Custom Event (Color)")]
 public class uScript_CustomEventColor : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventColorArgs args);

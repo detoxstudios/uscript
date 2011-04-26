@@ -10,7 +10,7 @@ using System.Collections;
 
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEventFloat")]
-[FriendlyName("Custom Event Float")]
+[FriendlyName("Custom Event (Float)")]
 public class uScript_CustomEventFloat : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventFloatArgs args);

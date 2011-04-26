@@ -9,7 +9,8 @@ using System.Collections;
 [AddComponentMenu("uScript/Collision")]
 [NodeComponentType(typeof(CharacterController))]
 
-[NodePath("Events")]
+[NodePath("Events/Physics Events")]
+
 [FriendlyName("Controller Collision")]
 public class uScript_ProxyController : uScriptEvent
 {

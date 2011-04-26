@@ -8,7 +8,7 @@ using System.Collections;
 
 [NodeComponentType(typeof(Renderer))]
 
-[NodePath("Events")]
+[NodePath("Events/GameObject Events")]
 
 [FriendlyName("Visibility Events")]
 public class uScript_Visibility : uScriptEvent

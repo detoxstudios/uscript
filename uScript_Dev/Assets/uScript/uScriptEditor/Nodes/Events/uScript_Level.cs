@@ -9,9 +9,9 @@ using System.Collections;
 [NodeAutoAssignMasterInstance(true)]
 [NodeComponentType(typeof(Transform))]
 
-[NodePath("Events")]
+[NodePath("Events/Game Events")]
 
-[FriendlyName("Level Load Events")]
+[FriendlyName("Level Load")]
 public class uScript_Level : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, LevelWasLoadedEventArgs args);
