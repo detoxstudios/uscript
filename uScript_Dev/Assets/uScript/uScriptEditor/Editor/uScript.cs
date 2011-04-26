@@ -48,8 +48,7 @@ public class uScript : EditorWindow
    private bool m_WantsRedo  = false;
    private bool m_WantsCopy  = false;
    private bool m_WantsPaste = false;
-   private bool m_WantsRefresh = false;
-   private bool m_WantsClose   = false;
+   private bool m_WantsClose = false;
 
    private string m_FullPath = "";
    private string m_CurrentCanvasPosition = "";
@@ -286,6 +285,14 @@ http://www.detoxstudios.com";
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
 
+      if (m_WantsClose)
+      {
+         Close();
+         m_WantsClose = false;
+         return;
+      }
+      m_WantsClose = false;
+
       if ( false == contextActive )
       {
          if ( null != m_MouseDownArgs )
@@ -306,8 +313,9 @@ http://www.detoxstudios.com";
          }
       }
 
-      if ( true == m_WantsRefresh )
+      if (m_RefreshTimestamp > 0.0 && EditorApplication.timeSinceStartup - m_RefreshTimestamp >= 0.05)
       {
+         // re-center now that the gui is initialized
          if (m_ScriptEditorCtrl != null)
          {
             m_ScriptEditorCtrl.RefreshScript(null, true);
@@ -318,9 +326,10 @@ http://www.detoxstudios.com";
             }
             // reset menu offset
             m_ScriptEditorCtrl.BuildContextMenu();
-            m_WantsRefresh = false;
          }
+         m_RefreshTimestamp = -1.0;
       }
+      
       if ( true == m_WantsCopy )
       {
          m_ScriptEditorCtrl.CopyToClipboard( );
@@ -341,6 +350,17 @@ http://www.detoxstudios.com";
          m_ScriptEditorCtrl.Redo( );
          m_WantsRedo = false;
       }
+
+      if (!String.IsNullOrEmpty(m_AddToMaster) && !EditorApplication.isCompiling)
+      {
+         // add the new uScript to the master object
+         System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_AddToMaster);
+         String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf("."));
+         GameObject uScriptMaster = GameObject.Find(uScriptConfig.MasterObjectName);
+         uScriptMaster.AddComponent(typeName);
+         m_AddToMaster = "";
+      }
+
       OnMouseMove( );
    }
 
@@ -354,7 +374,6 @@ http://www.detoxstudios.com";
 		
       // Set the default mouse region
       _mouseRegion = uScript.MouseRegion.Outside;
-
 
       // As little logic as possible should be performed here.  It is better
       // to use Update() to perform tasks once per tick.
@@ -430,7 +449,6 @@ http://www.detoxstudios.com";
             }
 		   }
 
-
          //when doing certain operations like 'play' in unity
          //it seems to set any class references back to null
          //since the string isn't a reference it stays valid
@@ -441,6 +459,7 @@ http://www.detoxstudios.com";
             m_RefreshTimestamp = EditorApplication.timeSinceStartup;
          }
       }
+
       //
       // All the GUI drawing code
       //
@@ -449,7 +468,6 @@ http://www.detoxstudios.com";
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
 
       if ( false == contextActive ) contextActive = ( Event.current.type == EventType.ContextClick );
-
 
       // Draw window elements, including the context menu
       //
@@ -493,26 +511,8 @@ http://www.detoxstudios.com";
       
       if (m_WantsClose)
       {
-         Close();
-         m_WantsClose = false;
          return;
       }
-      m_WantsClose = false;
-
-
-//      uScriptDebug.Log(Event.current.type);
-//      if ( Event.current.type == EventType.ScrollWheel )
-//      {
-//         uScriptDebug.Log( "Scroll Wheel Event" );
-//      }
-
-//      Event e = Event.current;
-//      if (e.isMouse)
-//      {
-////         uScriptDebug.Log(EventType.scrollWheel);
-////         uScriptDebug.Log(EventType.ScrollWheel);
-////         uScriptDebug.Log(e.delta);
-//      }
 
       if ( false == contextActive )
       {
@@ -661,23 +661,6 @@ http://www.detoxstudios.com";
       }
 
       CheckDragDrop();
-
-      if (m_RefreshTimestamp > 0.0 && EditorApplication.timeSinceStartup - m_RefreshTimestamp >= 0.05)
-      {
-         // re-center now that the gui is initialized
-         m_WantsRefresh = true;
-         m_RefreshTimestamp = -1.0;
-      }
-      
-      if (!String.IsNullOrEmpty(m_AddToMaster) && !EditorApplication.isCompiling)
-      {
-         // add the new uScript to the master object
-         System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_AddToMaster);
-         String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf("."));
-         GameObject uScriptMaster = GameObject.Find(uScriptConfig.MasterObjectName);
-         uScriptMaster.AddComponent(typeName);
-         m_AddToMaster = "";
-      }
    }
 
    void OnPlaymodeStateChanged()
