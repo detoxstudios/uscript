@@ -163,7 +163,7 @@ namespace Detox.ScriptEditor
                  point.Y <= node.Size.Height )
             {      
                string type = uScript.FindNodeType(entityNode);
-               Type t = ScriptEditor.GetAssemblyQualifiedType(type);
+               Type t = uScript.Instance.GetAssemblyQualifiedType(type);
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
@@ -235,7 +235,7 @@ namespace Detox.ScriptEditor
                  point.Y <= node.Size.Height )
             {
                string type = uScript.FindNodeType(entityNode);
-               Type t = ScriptEditor.GetAssemblyQualifiedType(type);
+               Type t = uScript.Instance.GetAssemblyQualifiedType(type);
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
@@ -608,7 +608,19 @@ namespace Detox.ScriptEditor
    
             Point point = m_FlowChart.PointToClient( Cursor.Position );
 
-            LocalNode localNode = new LocalNode( "", linkTo.Type.Replace("[]", ""), "" );
+            LocalNode localNode;
+            
+            //if it's in input link we just want a single variable
+            //not an array hooked up to it
+            if ( true == linkTo.Input )
+            {
+               localNode = new LocalNode( "", linkTo.Type.Replace("[]", ""), "" );
+            }
+            else
+            {
+               //if it's an output link then need to use the exact link type
+               localNode = new LocalNode( "", linkTo.Type, "" );               
+            }
             localNode.Position = point;
 
             m_ScriptEditor.AddNode( localNode );
@@ -620,6 +632,11 @@ namespace Detox.ScriptEditor
             string reason;
 
             //if we can't like from->to try linking the other way (to->from)
+            if ( false == m_ScriptEditor.VerifyLink(linkNode, out reason) )
+            {
+               linkNode = new LinkNode( node.Guid, linkTo.Name, localNode.Guid, localNode.Value.Name );
+            }
+
             if ( false == m_ScriptEditor.VerifyLink(linkNode, out reason) )
             {
                linkNode = new LinkNode( node.Guid, linkTo.Name, localNode.Guid, localNode.Value.Name );

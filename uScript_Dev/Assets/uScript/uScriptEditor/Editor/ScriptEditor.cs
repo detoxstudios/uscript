@@ -163,7 +163,7 @@ namespace Detox.ScriptEditor
                   return new Vector4(0, 0, 0, 0);
                }
             }
-            System.Type eType = ScriptEditor.GetAssemblyQualifiedType(this.Type);
+            System.Type eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
             if ( typeof(System.Enum).IsAssignableFrom(eType) )
             {
                try
@@ -1790,20 +1790,6 @@ namespace Detox.ScriptEditor
          get { return m_LogicNodes; }
       }
 
-      public static Type GetAssemblyQualifiedType(String typeName)
-      {
-         // try the basic version first
-         if ( Type.GetType(typeName) != null ) return Type.GetType(typeName);
-         
-         // not found, look through all the assemblies
-         foreach ( Assembly assembly in AppDomain.CurrentDomain.GetAssemblies() )
-         {
-            if ( Type.GetType(typeName + ", " + assembly.ToString()) != null ) return Type.GetType(typeName + ", " + assembly.ToString());
-         }
-         
-         return null;
-      }
-   
       public string [] Types
       {
          get 

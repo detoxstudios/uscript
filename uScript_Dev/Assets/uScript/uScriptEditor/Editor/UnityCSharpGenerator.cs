@@ -589,9 +589,9 @@ namespace Detox.ScriptEditor
          {
             return FormatArrayValue( stringValue, type );
          }
-         else if ( null != ScriptEditor.GetAssemblyQualifiedType(type) )
+         else if ( null != uScript.Instance.GetAssemblyQualifiedType(type) )
          {
-            System.Type netType = ScriptEditor.GetAssemblyQualifiedType(type);
+            System.Type netType = uScript.Instance.GetAssemblyQualifiedType(type);
 
             if ( typeof(System.Enum).IsAssignableFrom(netType) )
             {

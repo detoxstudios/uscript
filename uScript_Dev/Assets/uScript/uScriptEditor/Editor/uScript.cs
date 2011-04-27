@@ -1642,9 +1642,25 @@ http://www.detoxstudios.com";
 
       if ( null == type ) type = m_Types[ typeName ] as Type;
 
+      if ( null == type ) type = GetAssemblyQualifiedType( typeName );
+
       return type;
    }
 
+   public Type GetAssemblyQualifiedType(String typeName)
+   {
+      // try the basic version first
+      if ( Type.GetType(typeName) != null ) return Type.GetType(typeName);
+      
+      // not found, look through all the assemblies
+      foreach ( Assembly assembly in AppDomain.CurrentDomain.GetAssemblies() )
+      {
+         if ( Type.GetType(typeName + ", " + assembly.ToString()) != null ) return Type.GetType(typeName + ", " + assembly.ToString());
+      }
+      
+      return null;
+   }
+   
    public void AddType(Type type)
    {
       m_Types[ type.ToString( ) ] = type;
@@ -1967,7 +1983,7 @@ http://www.detoxstudios.com";
       {
          if ( file.Name.StartsWith(".") || file.Name.StartsWith("_")  || !file.Name.EndsWith(".cs") ) continue;
 
-         Type type = ScriptEditor.GetAssemblyQualifiedType( System.IO.Path.GetFileNameWithoutExtension(file.Name) );
+         Type type = uScript.Instance.GetAssemblyQualifiedType( System.IO.Path.GetFileNameWithoutExtension(file.Name) );
 
          if ( null != type )
          {
