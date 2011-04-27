@@ -511,43 +511,39 @@ namespace Detox.ScriptEditor
          }
          else if ( "UnityEngine.Quaternion" == type )
          {
-            if ( false == stringValue.Contains(',') )
+            try
             {
-               return "new Quaternion( )";
+               string [] subString = stringValue.Split( ',' );
+               return "new Quaternion( " + subString[0] + ", " + subString[1] + ", " + subString[2] + ", " + subString[3] + " )";
             }
-
-            string [] subString = stringValue.Split( ',' );
-            return "new Quaternion( " + subString[0] + ", " + subString[1] + ", " + subString[2] + ", " + subString[3] + " )";
+            catch ( Exception ) { return "new Quaternion( )"; }
          }
          else if ( "UnityEngine.Vector2" == type )
          {
-            if ( false == stringValue.Contains(',') )
+            try
             {
-               return "new Vector2( )";
+               string [] subString = stringValue.Split( ',' );
+               return "new Vector2( " + subString[0] + ", " + subString[1] + " )";
             }
-
-            string [] subString = stringValue.Split( ',' );
-            return "new Vector2( " + subString[0] + ", " + subString[1] + " )";
+            catch ( Exception ) { return "new Vector2( )"; }
          }
          else if ( "UnityEngine.Vector3" == type )
          {
-            if ( false == stringValue.Contains(',') )
+            try
             {
-               return "new Vector3( )";
+               string [] subString = stringValue.Split( ',' );
+               return "new Vector3( " + subString[0] + ", " + subString[1] + ", " + subString[2] + " )";
             }
-
-            string [] subString = stringValue.Split( ',' );
-            return "new Vector3( " + subString[0] + ", " + subString[1] + ", " + subString[2] + " )";
+            catch ( Exception ) { return "new Vector3( )"; }
          }
          else if ( "UnityEngine.Vector4" == type )
          {
-            if ( false == stringValue.Contains(',') )
+            try
             {
-               return "new Vector4( )";
+               string [] subString = stringValue.Split( ',' );
+               return "new Vector4( " + subString[0] + ", " + subString[1] + ", " + subString[2] + ", " + subString[3] + " )";
             }
-
-            string [] subString = stringValue.Split( ',' );
-            return "new Vector4( " + subString[0] + ", " + subString[1] + ", " + subString[2] + ", " + subString[3] + " )";
+            catch ( Exception ) { return "new Vector4( )"; }
          }
          else if ( "System.Single" == type )
          {
@@ -569,13 +565,12 @@ namespace Detox.ScriptEditor
          }
          else if ( "UnityEngine.Color" == type )
          {
-            if ( "" == stringValue )
+            try
             {
-               return "UnityEngine.Color.black";
+               string [] subString = stringValue.Split( ',' );
+               return "new UnityEngine.Color( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + " )";
             }
-
-            string [] subString = stringValue.Split( ',' );
-            return "new UnityEngine.Color( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + " )";
+            catch ( Exception ) { return "UnityEngine.Color.black"; }
          }
          else if ( "UnityEngine.Ray" == type )
          {
@@ -618,108 +613,140 @@ namespace Detox.ScriptEditor
 
          if ( "UnityEngine.Quaternion[]" == type )
          {
-            declaration = "new Quaternion[] {";
-
-            for ( int i = 0; i < elements.Length; i += 2 )
+            try
             {
-               declaration += "new Quaternion(" + elements[i] + "," + elements[i+1] + "," + elements[i+2] + "," + elements[i+3] + "),";
-            }
+               declaration = "new Quaternion[] {";
 
-            declaration = declaration.Substring( 0, declaration.Length - 1 );
-            declaration += "}";
+               for ( int i = 0; i < elements.Length; i += 4 )
+               {
+                  declaration += "new Quaternion(" + elements[i] + "," + elements[i+1] + "," + elements[i+2] + "," + elements[i+3] + "),";
+               }
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new Quaternion[0]"; }
          }
          else if ( "UnityEngine.Vector2[]" == type )
          {
-            declaration = "new Vector2[] {";
-
-            for ( int i = 0; i < elements.Length; i += 2 )
+            try
             {
-               declaration += "new Vector2(" + elements[i] + "," + elements[i+1] + "),";
-            }
+               declaration = "new Vector2[] {";
 
-            declaration = declaration.Substring( 0, declaration.Length - 1 );
-            declaration += "}";
+               for ( int i = 0; i < elements.Length; i += 2 )
+               {
+                  declaration += "new Vector2(" + elements[i] + "," + elements[i+1] + "),";
+               }
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new Vector2[0]"; }
          }
          else if ( "UnityEngine.Vector3[]" == type )
          {
-            declaration = "new Vector3[] {";
-
-            for ( int i = 0; i < elements.Length; i += 3 )
+            try
             {
-               declaration += "new Vector3(" + elements[i] + "," + elements[i+1] + "," + elements[i+2] + "),";
-            }
+               declaration = "new Vector3[] {";
 
-            declaration = declaration.Substring( 0, declaration.Length - 1 );
-            declaration += "}";
+               for ( int i = 0; i < elements.Length; i += 3 )
+               {
+                  declaration += "new Vector3(" + elements[i] + "," + elements[i+1] + "," + elements[i+2] + "),";
+               }
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new Vector3[0]"; }
          }
          else if ( "UnityEngine.Vector4[]" == type )
          {
-            declaration = "new Vector4[] {";
-
-            for ( int i = 0; i < elements.Length; i += 4 )
+            try
             {
-               declaration += "new Vector4(" + elements[i] + "," + elements[i+1] + "," + elements[i+2] + "," + elements[i+3] + "),";
-            }
+               declaration = "new Vector4[] {";
 
-            declaration = declaration.Substring( 0, declaration.Length - 1 );
-            declaration += "}";
+               for ( int i = 0; i < elements.Length; i += 4 )
+               {
+                  declaration += "new Vector4(" + elements[i] + "," + elements[i+1] + "," + elements[i+2] + "," + elements[i+3] + "),";
+               }
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new Vector4[0]"; }
          }
          else if ( "UnityEngine.Color[]" == type )
          {
-            declaration = "new UnityEngine.Color[] {";
-
-            for ( int i = 0; i < elements.Length; i += 3 )
+            try
             {
-               declaration += "new UnityEngine.Color((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + "),";
-            }
+               declaration = "new UnityEngine.Color[] {";
 
-            declaration = declaration.Substring( 0, declaration.Length - 1 );
-            declaration += "}";
+               for ( int i = 0; i < elements.Length; i += 3 )
+               {
+                  declaration += "new UnityEngine.Color((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + "),";
+               }
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new UnityEngine.Color[0]"; }
          }
          else if ( "UnityEngine.GameObject[]" == type )
          {
-            declaration = "new UnityEngine.GameObject[" + elements.Length +"] {";
-
-            for ( int i = 0; i < elements.Length; i++ )
+            try
             {
-               declaration += "null,";
-            };
+               declaration = "new UnityEngine.GameObject[] {";
 
-            declaration = declaration.Substring( 0, declaration.Length - 1 );
-            declaration += "}";
+               for ( int i = 0; i < elements.Length; i++ )
+               {
+                  declaration += "null,";
+               };
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new UnityEngine.GameObject[0]"; }
          }
          else if ( "UnityEngine.Component[]" == type )
          {
-            declaration = "new UnityEngine.Component[" + elements.Length +"] {";
-
-            for ( int i = 0; i < elements.Length; i++ )
+            try
             {
-               declaration += "null,";
-            };
+               declaration = "new UnityEngine.Component[] {";
 
-            declaration = declaration.Substring( 0, declaration.Length - 1 );
-            declaration += "}";
+               for ( int i = 0; i < elements.Length; i++ )
+               {
+                  declaration += "null,";
+               };
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new UnityEngine.Component[0]"; }
          }
          else
          {
-            bool formatString = ( type == "System.String[]" || type == "System.Object[]" );
-            
-            declaration = "new " + type + " {";
-
-            foreach ( string element in elements )
+            try
             {
-               if ( true == formatString )
-               {
-                  declaration += "\"" + element.Trim().Replace( "\"", "\\\"" ) + "\"" + ",";
-               }
-               else
-               {
-                  declaration += element.Trim() + ",";
-               }
-            }
+               bool formatString = ( type == "System.String[]" || type == "System.Object[]" );
+               
+               declaration = "new " + type + " {";
 
-            declaration = declaration.Substring( 0, declaration.Length - 1 );
-            declaration += "}";
+               foreach ( string element in elements )
+               {
+                  if ( true == formatString )
+                  {
+                     declaration += "\"" + element.Trim().Replace( "\"", "\\\"" ) + "\"" + ",";
+                  }
+                  else
+                  {
+                     declaration += element.Trim() + ",";
+                  }
+               }
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new " + type.Replace("[]", "") + "[0]";  }
          }
 
          return declaration;

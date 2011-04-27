@@ -1638,9 +1638,7 @@ http://www.detoxstudios.com";
 
    public Type GetType(string typeName)
    {
-      Type type = Type.GetType(typeName);
-
-      if ( null == type ) type = m_Types[ typeName ] as Type;
+      Type type = m_Types[ typeName ] as Type;
 
       if ( null == type ) type = GetAssemblyQualifiedType( typeName );
 
