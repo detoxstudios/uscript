@@ -2150,9 +2150,9 @@ http://www.detoxstudios.com";
 
                variable.Name   = p.Name;
                variable.Type   = p.ParameterType.ToString( ).Replace( "&", "" );
-               variable.Default= (null != p.DefaultValue) ? p.DefaultValue.ToString( ) : "";
                variable.FriendlyName = FindFriendlyName( p.Name, p.GetCustomAttributes(false) );
-
+               variable.DefaultAsObject = FindDefaultValue( "", p.GetCustomAttributes(false) );
+               
                AddType( p.ParameterType );
 
                variables.Add( variable );
@@ -2274,7 +2274,7 @@ http://www.detoxstudios.com";
                parameter.Output = false;
             }
 
-            parameter.Default = (null != p.DefaultValue) ? p.DefaultValue.ToString( ) : "";
+            parameter.DefaultAsObject = FindDefaultValue( "", p.GetCustomAttributes(false) );
 
             AddType( p.ParameterType );
             
@@ -2325,7 +2325,7 @@ http://www.detoxstudios.com";
                input.Type    = p.PropertyType.ToString( ).Replace( "&", "" );
                input.Input   = true;
                input.Output  = false;
-               input.Default = "";
+               input.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
                AddType( p.PropertyType );
             
@@ -2368,7 +2368,7 @@ http://www.detoxstudios.com";
                            output.Type    = eventProperty.PropertyType.ToString( ).Replace( "&", "" );
                            output.Input   = false;
                            output.Output  = true;
-                           output.Default = "";
+                           output.DefaultAsObject = FindDefaultValue( "", eventProperty.GetCustomAttributes(false) );
 
                            AddType( eventProperty.PropertyType );
 
@@ -2794,6 +2794,21 @@ http://www.detoxstudios.com";
       }
    }
    
+   public static object FindDefaultValue(string defaultValue, object [] attributes)
+   {
+      if ( null == attributes ) return defaultValue;
+
+      foreach ( object a in attributes )
+      {
+         if ( a is DefaultValue ) 
+         {
+            return ((DefaultValue)a).Default;
+         }
+      }
+
+      return defaultValue;
+   }
+
    public static string FindFriendlyName(string defaultName, object [] attributes)
    {
       if ( null == attributes ) return defaultName;

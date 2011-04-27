@@ -191,7 +191,14 @@ namespace Detox.ScriptEditor
 
             if ( type == "Bool" )  
             {
-               Default = ((bool)value) == true ? "true" : "false";
+               try
+               {
+                  Default = ((bool)value) == true ? "true" : "false";
+               }
+               catch (Exception)
+               {
+                  Default = "false";
+               }
                return;
             }
             if ( type == "Float" )

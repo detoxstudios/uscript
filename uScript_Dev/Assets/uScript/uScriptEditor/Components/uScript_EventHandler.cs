@@ -11,6 +11,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[AttributeUsage(AttributeTargets.ReturnValue | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
+public class DefaultValue : Attribute
+{
+   public DefaultValue(object o) { Default = o; }
+   public object Default;
+}
+
 [AttributeUsage(AttributeTargets.All)]
 public class FriendlyName : Attribute
 {
