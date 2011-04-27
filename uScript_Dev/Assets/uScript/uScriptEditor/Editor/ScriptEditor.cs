@@ -1873,6 +1873,83 @@ namespace Detox.ScriptEditor
          m_LogicNodes  = nodes;
       }
 
+      public bool FailOnEvent( LinkNode link )
+      {
+         //if node can't be found we won't need to fail on the backtrace
+         if ( false == m_Nodes.Contains(link.Source.Guid) ) return true;
+      
+         EntityNode node = m_Nodes[ link.Source.Guid ] as EntityNode;
+         
+         if ( node is EntityEvent )
+         {
+            return false;
+         }
+
+         if ( node is LogicNode )
+         {
+            LogicNode logic = (LogicNode) node;
+
+            foreach ( Plug eventPlug in logic.Events )
+            {
+               if ( eventPlug.Name == link.Source.Anchor )
+               {
+                  return false;
+               }
+            }
+         }
+
+         foreach ( LinkNode sourceLink in Links )
+         {
+            if ( sourceLink.Destination.Guid == node.Guid )
+            {
+               bool result = FailOnEvent( sourceLink );            
+               if ( false == result ) return false;
+            }
+         }
+
+         return true;
+      }
+
+      public bool BacktraceExternal( LinkNode link )
+      {
+         //if node can't be found we won't need to fail on the backtrace
+         if ( false == m_Nodes.Contains(link.Source.Guid) ) return true;
+      
+         EntityNode node = m_Nodes[ link.Source.Guid ] as EntityNode;
+      
+         //if its first output is a method
+         //then see if it'll get hung up on an event
+         if ( node is EntityMethod || node is LogicNode )
+         {
+            if ( node is LogicNode )
+            {
+               LogicNode logic = (LogicNode) node;
+
+               //if it's hooked up to a logic event
+               //that's ok because the user doesn't assume
+               //it's an immediate output
+               foreach ( Plug eventPlug in logic.Events )
+               {
+                  if ( eventPlug.Name == link.Source.Anchor )
+                  {
+                     return true;
+                  }
+               }
+            }
+
+            foreach ( LinkNode sourceLink in Links )
+            {
+               if ( sourceLink.Destination.Guid == node.Guid )
+               {
+                  bool result = FailOnEvent( sourceLink );            
+                  if ( false == result ) return false;
+               }
+            }
+         }
+
+         return true;
+      }
+
       public bool VerifyLink( LinkNode link, out string reason )
       {
          reason = "";
@@ -2030,7 +2107,18 @@ namespace Detox.ScriptEditor
          }
 
          if ( source is ExternalConnection ) return true;
-         if ( dest   is ExternalConnection ) return true;
+         
+         if ( dest is ExternalConnection )
+         {
+            if ( false == BacktraceExternal(link) )
+            {
+               reason = "External Connections linked to an immediate output cannot also have an event in the same link chain. " +
+                        "This is because the parent script will be expecting an immediate output however the nested script will block on the event.";
+               return false;
+            }
+
+            return true;
+         }
 
          if ( sourceParam == emptyParam &&
               destParam   == emptyParam ) return true;
@@ -2156,6 +2244,39 @@ namespace Detox.ScriptEditor
             }
 
             m_Nodes[ node.Guid ] = node;
+
+            //now it's fully added - reverify our graph
+            //to make sure it's compatible with all externals
+            bool rejected = false;
+
+            foreach ( ExternalConnection connection in Externals )
+            {
+               foreach ( LinkNode link in Links )
+               {
+                  if ( link.Destination.Guid == connection.Guid )
+                  {
+                     if ( false == BacktraceExternal(link) )
+                     {
+                        m_Nodes.Remove( node.Guid );
+                        rejected = true;
+                        break;
+                     }
+                  }
+               }
+
+               if ( true == rejected ) break;
+            }
+
+            if ( true == rejected )
+            {
+               string reason = "This link would cause an External to be linked to an immediate output and to an event in the same link chain. " +
+                               "This is not allowed because the parent script will be expecting an immediate output however the nested script will block on the event.";
+               
+               //warn instead of info because breaking this link
+               //won't be clear to the user and I want them to see the message
+               Status.Warning( reason );
+
+            }
          }
       }
 
