@@ -562,19 +562,16 @@ namespace Detox.ScriptEditor
       }
 
 
-      private Parameter m_ShowComment;
-      private Parameter m_Comment;
-
       public Parameter ShowComment 
       {
-         get { return m_ShowComment; }
-         set { m_ShowComment = value; } 
+         get { return Parameter.Empty; }
+         set { ; } 
       }
 
       public Parameter Comment 
       {
-         get { return m_Comment; }
-         set { m_Comment = value; } 
+         get { return Parameter.Empty; }
+         set { ; } 
       }
 
       private Guid m_Guid;
@@ -598,22 +595,6 @@ namespace Detox.ScriptEditor
 
          Destination.Guid  = dest;
          Destination.Anchor= destAnchor;
-
-         m_ShowComment = new Parameter( );
-         m_ShowComment.Name    = "Show Comment";
-         m_ShowComment.FriendlyName = "Show Comment";
-         m_ShowComment.Default = "false";
-         m_ShowComment.Type    = "Bool";
-         m_ShowComment.Input   = true;
-         m_ShowComment.Output  = false;
-
-         m_Comment = new Parameter( );
-         m_Comment.Name         = "Comment";
-         m_Comment.FriendlyName = "Comment";
-         m_Comment.Default = "";
-         m_Comment.Type    = "String";
-         m_Comment.Input   = true;
-         m_Comment.Output  = false;
       }
 
       public LinkNode(LinkNodeData data)
@@ -623,9 +604,6 @@ namespace Detox.ScriptEditor
          Source.Anchor = data.Source.Anchor;
          Destination.Guid   = data.Destination.Guid;
          Destination.Anchor = data.Destination.Anchor;
-
-         m_ShowComment = new Parameter( data.ShowComment );
-         m_Comment     = new Parameter( data.Comment );
       }
    }
 
@@ -1332,8 +1310,6 @@ namespace Detox.ScriptEditor
          entityProperty.Parameter = Parameter;
          entityProperty.Position  = Position;
          entityProperty.Guid      = Guid.NewGuid( );
-         entityProperty.Comment    = Comment;
-         entityProperty.ShowComment= ShowComment;
       
          return entityProperty;
       }
@@ -1348,9 +1324,7 @@ namespace Detox.ScriptEditor
             nodeData.Position.X= Position.X;
             nodeData.Position.Y= Position.Y;
             nodeData.Guid      = Guid;
-            nodeData.Comment     = Comment.ToParameterData( );
-            nodeData.ShowComment = ShowComment.ToParameterData( );
-
+            
             return nodeData;
          }
       }
@@ -1371,25 +1345,19 @@ namespace Detox.ScriptEditor
          if ( Position != node.Position ) return false;
          if ( Guid != node.Guid ) return false;
 
-         if ( ShowComment != node.ShowComment ) return false;
-         if ( Comment != node.Comment ) return false;
-
          return true;
       }
 
-      private Parameter m_ShowComment;
-      private Parameter m_Comment;
-
       public Parameter ShowComment 
       {
-         get { return m_ShowComment; }
-         set { m_ShowComment = value; } 
+         get { return Parameter.Empty; }
+         set { ; } 
       }
 
       public Parameter Comment 
       {
-         get { return m_Comment; }
-         set { m_Comment = value; } 
+         get { return Parameter.Empty; }
+         set { ; } 
       }
 
       private Parameter m_Parameter;
@@ -1428,22 +1396,6 @@ namespace Detox.ScriptEditor
 
          m_Position = Point.Empty; 
          m_Guid     = Guid.NewGuid( ); 
-
-         m_ShowComment = new Parameter( );
-         m_ShowComment.Name    = "Show Comment";
-         m_ShowComment.FriendlyName = "Show Comment";
-         m_ShowComment.Default = "false";
-         m_ShowComment.Type    = "Bool";
-         m_ShowComment.Input   = true;
-         m_ShowComment.Output  = false;
-
-         m_Comment = new Parameter( );
-         m_Comment.Name    = "Comment";
-         m_Comment.FriendlyName = "Comment";
-         m_Comment.Default = "";
-         m_Comment.Type    = "String";
-         m_Comment.Input   = true;
-         m_Comment.Output  = false;
       }
    }
 
@@ -1455,9 +1407,7 @@ namespace Detox.ScriptEditor
          localNode.Parameters = Parameters;
          localNode.Position   = Position;
          localNode.Guid       = Guid.NewGuid( );
-         localNode.Comment    = Comment;
-         localNode.ShowComment= ShowComment;
-      
+         
          return localNode;
       }
 
@@ -1470,8 +1420,6 @@ namespace Detox.ScriptEditor
             nodeData.Position.X = Position.X;
             nodeData.Position.Y = Position.Y;
             nodeData.Guid       = Guid;
-            nodeData.Comment     = Comment.ToParameterData( );
-            nodeData.ShowComment = ShowComment.ToParameterData( );
 
             return nodeData;
          }
@@ -1492,10 +1440,7 @@ namespace Detox.ScriptEditor
 
          if ( Position != node.Position ) return false;
          if ( Guid != node.Guid ) return false;
-
-         if ( ShowComment != node.ShowComment ) return false;
-         if ( Comment != node.Comment ) return false;
-
+         
          return true;
       }
 
@@ -1527,20 +1472,17 @@ namespace Detox.ScriptEditor
 
       private Point m_Position;
       public Point Position { get { return m_Position; } set { m_Position = value; } }
-
-      private Parameter m_ShowComment;
-      private Parameter m_Comment;
-
+      
       public Parameter ShowComment 
       {
-         get { return m_ShowComment; }
-         set { m_ShowComment = value; } 
+         get { return Parameter.Empty; }
+         set { ; } 
       }
 
       public Parameter Comment 
       {
-         get { return m_Comment; }
-         set { m_Comment = value; } 
+         get { return Parameter.Empty; }
+         set { ; } 
       }
 
       public LocalNode(string name, string type, string defaultValue)
@@ -1561,22 +1503,6 @@ namespace Detox.ScriptEditor
 
          m_Position = Point.Empty; 
          m_Guid = Guid.NewGuid( ); 
-
-         m_ShowComment = new Parameter( );
-         m_ShowComment.Name    = "Show Comment";
-         m_ShowComment.FriendlyName    = "Show Comment";
-         m_ShowComment.Default = "false";
-         m_ShowComment.Type    = "Bool";
-         m_ShowComment.Input   = true;
-         m_ShowComment.Output  = false;
-
-         m_Comment = new Parameter( );
-         m_Comment.Name    = "Comment";
-         m_Comment.FriendlyName = "Comment";
-         m_Comment.Default = "";
-         m_Comment.Type    = "String";
-         m_Comment.Input   = true;
-         m_Comment.Output  = false;
       }
    }
 
@@ -1982,13 +1908,20 @@ namespace Detox.ScriptEditor
          EntityNode source = (EntityNode) m_Nodes[ link.Source.Guid ];
          EntityNode dest   = (EntityNode) m_Nodes[ link.Destination.Guid ];
 
-         //only allow 1 link to externals
+         //only allow 1 bi-directional link to externals (technically that is 2 links)
          //this keeps errors from happening in the code
          //generation logic if there are duplicate names
          if ( source is ExternalConnection )
          {
             foreach ( LinkNode existingLinks in Links )
             {
+               //allow bi-directional external link
+               if ( existingLinks.Source.Guid == dest.Guid &&
+                    existingLinks.Destination.Guid == source.Guid )
+               {
+                  continue;
+               }
+
                if ( existingLinks.Source.Guid == source.Guid ||
                     existingLinks.Destination.Guid == source.Guid )
                {
@@ -2001,6 +1934,13 @@ namespace Detox.ScriptEditor
          {
             foreach ( LinkNode existingLinks in Links )
             {
+               //allow bi-directional external link
+               if ( existingLinks.Source.Guid == dest.Guid &&
+                    existingLinks.Destination.Guid == source.Guid )
+               {
+                  continue;
+               }
+
                if ( existingLinks.Source.Guid == dest.Guid ||
                     existingLinks.Destination.Guid == dest.Guid )
                {
