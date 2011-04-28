@@ -87,12 +87,6 @@ public class uScript : EditorWindow
    Vector2  _guiContentScrollPos;
    float    _canvasZoom = 1;
 
-
-
-
-
-
-
    Vector2  _guiPanelProperties_ScrollPos;
 
    Vector2  _guiHelpScrollPos;
@@ -199,6 +193,7 @@ http://www.detoxstudios.com";
    static void Init ()
    {
       s_Instance = (uScript) EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
+      s_Instance.wantsMouseMove = true;
 
       System.IO.Directory.CreateDirectory( uScriptConfig.Paths.RootFolder );
       System.IO.Directory.CreateDirectory( uScriptConfig.Paths.uScriptNodes );
@@ -285,99 +280,6 @@ http://www.detoxstudios.com";
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
 
-      if (m_WantsClose)
-      {
-         Close();
-         m_WantsClose = false;
-         return;
-      }
-      m_WantsClose = false;
-
-      if ( false == contextActive )
-      {
-         if ( null != m_MouseDownArgs )
-         {
-            //uScriptDebug.Log( "mouse down" );
-            m_MouseDown = true;
-            OnMouseDown( );
-
-            m_MouseDownArgs = null;
-         }
-         else if ( null != m_MouseUpArgs )
-         {
-            //uScriptDebug.Log( "mouse up" );
-            m_MouseDown = false;
-            OnMouseUp( );
-
-            m_MouseUpArgs = null;
-         }
-      }
-
-      if (m_RefreshTimestamp > 0.0 && EditorApplication.timeSinceStartup - m_RefreshTimestamp >= 0.05)
-      {
-         // re-center now that the gui is initialized
-         if (m_ScriptEditorCtrl != null)
-         {
-            m_ScriptEditorCtrl.RefreshScript(null, true);
-            if (!String.IsNullOrEmpty(m_CurrentCanvasPosition))
-            {
-               Point loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
-               m_ScriptEditorCtrl.FlowChart.Location = loc;
-            }
-            // reset menu offset
-            m_ScriptEditorCtrl.BuildContextMenu();
-         }
-         m_RefreshTimestamp = -1.0;
-      }
-      
-      if ( true == m_WantsCopy )
-      {
-         m_ScriptEditorCtrl.CopyToClipboard( );
-         m_WantsCopy = false;
-      }
-      if ( true == m_WantsPaste )
-      {
-         m_ScriptEditorCtrl.PasteFromClipboard( Point.Empty );
-         m_WantsPaste = false;
-      }
-      if ( true == m_WantsUndo )
-      {
-         m_ScriptEditorCtrl.Undo( );
-         m_WantsUndo = false;
-      }
-      if ( true == m_WantsRedo )
-      {
-         m_ScriptEditorCtrl.Redo( );
-         m_WantsRedo = false;
-      }
-
-      if (!String.IsNullOrEmpty(m_AddToMaster) && !EditorApplication.isCompiling)
-      {
-         // add the new uScript to the master object
-         System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_AddToMaster);
-         String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf("."));
-         GameObject uScriptMaster = GameObject.Find(uScriptConfig.MasterObjectName);
-         uScriptMaster.AddComponent(typeName);
-         m_AddToMaster = "";
-      }
-
-      OnMouseMove( );
-   }
-
-   void OnGUI()
-   {
-      if (!_EULAagreed)
-      {
-         _EULAagreed = (bool) uScript.GetSetting( "EULA\\Agreed", false );
-         GUI.enabled = _EULAagreed;
-      }
-		
-      // Set the default mouse region
-      _mouseRegion = uScript.MouseRegion.Outside;
-
-      // As little logic as possible should be performed here.  It is better
-      // to use Update() to perform tasks once per tick.
-
       // Initialization
       //
       if (null == m_ScriptEditorCtrl)
@@ -440,14 +342,14 @@ http://www.detoxstudios.com";
             AddType(b.Type);
          }
 
-		   if (String.IsNullOrEmpty(m_FullPath))
-		   {
+         if (String.IsNullOrEmpty(m_FullPath))
+         {
             String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
             if (!String.IsNullOrEmpty(lastOpened))
             {
                m_FullPath = lastOpened;
             }
-		   }
+         }
 
          //when doing certain operations like 'play' in unity
          //it seems to set any class references back to null
@@ -460,15 +362,308 @@ http://www.detoxstudios.com";
          }
       }
 
+      if (m_WantsClose)
+      {
+         Close();
+         m_WantsClose = false;
+         return;
+      }
+      m_WantsClose = false;
+
+      if ( false == contextActive )
+      {
+         if ( null != m_MouseDownArgs )
+         {
+            //uScriptDebug.Log( "mouse down" );
+            OnMouseDown( );
+            m_MouseDownArgs = null;
+         }
+         else if ( null != m_MouseUpArgs )
+         {
+            //uScriptDebug.Log( "mouse up" );
+            OnMouseUp( );
+            m_MouseUpArgs = null;
+         }
+      }
+
+      if (m_RefreshTimestamp > 0.0 && EditorApplication.timeSinceStartup - m_RefreshTimestamp >= 0.05)
+      {
+         // re-center now that the gui is initialized
+         if (m_ScriptEditorCtrl != null)
+         {
+            m_ScriptEditorCtrl.RefreshScript(null, true);
+            if (!String.IsNullOrEmpty(m_CurrentCanvasPosition))
+            {
+               Point loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
+               m_ScriptEditorCtrl.FlowChart.Location = loc;
+            }
+            // reset menu offset
+            m_ScriptEditorCtrl.BuildContextMenu();
+         }
+         m_RefreshTimestamp = -1.0;
+      }
+      
+      if ( true == m_WantsCopy )
+      {
+         m_ScriptEditorCtrl.CopyToClipboard( );
+         m_WantsCopy = false;
+      }
+      if ( true == m_WantsPaste )
+      {
+         m_ScriptEditorCtrl.PasteFromClipboard( Point.Empty );
+         m_WantsPaste = false;
+      }
+      if ( true == m_WantsUndo )
+      {
+         m_ScriptEditorCtrl.Undo( );
+         m_WantsUndo = false;
+      }
+      if ( true == m_WantsRedo )
+      {
+         m_ScriptEditorCtrl.Redo( );
+         m_WantsRedo = false;
+      }
+
+      if (!String.IsNullOrEmpty(m_AddToMaster) && !EditorApplication.isCompiling)
+      {
+         // add the new uScript to the master object
+         System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_AddToMaster);
+         String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf("."));
+         GameObject uScriptMaster = GameObject.Find(uScriptConfig.MasterObjectName);
+         uScriptMaster.AddComponent(typeName);
+         m_AddToMaster = "";
+      }
+
+      OnMouseMove( );
+   }
+
+   void OnGUI()
+   {
+      if (m_ScriptEditorCtrl == null) return;
+      
+      if (!_EULAagreed)
+      {
+         _EULAagreed = (bool) uScript.GetSetting( "EULA\\Agreed", false );
+         GUI.enabled = _EULAagreed;
+      }
+		
+      // Set the default mouse region
+      _mouseRegion = uScript.MouseRegion.Outside;
+      
+      // As little logic as possible should be performed here.  It is better
+      // to use Update() to perform tasks once per tick.
+      bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
+      if ( false == contextActive )
+      {
+         int modifierKeys = 0;
+
+         if ( Event.current.alt )     modifierKeys |= Keys.Alt;
+         if ( Event.current.shift )   modifierKeys |= Keys.Shift;
+         if ( Event.current.control || Event.current.command ) modifierKeys |= Keys.Control;
+         
+         Control.ModifierKeys.Pressed = modifierKeys;
+
+         Event e = Event.current;
+         //Debug.Log(e.type);
+         switch (e.type)
+         {
+            // command events
+            case EventType.ContextClick:
+               m_ScriptEditorCtrl.BuildContextMenu( );
+      
+               BuildSidebarMenu(null, null);
+      
+               m_ContextX = (int) Event.current.mousePosition.x;
+               m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+      
+               //refresh screen so context menu shows up
+               Repaint( );
+               break;
+            case EventType.ValidateCommand:
+               if ( Event.current.commandName == "Copy" )
+               {
+                  if ( m_ScriptEditorCtrl.CanCopy )
+                  {
+                     Event.current.Use( );
+                  }
+               }
+               else if ( Event.current.commandName == "Paste" )
+               {
+                  if ( m_ScriptEditorCtrl.CanPaste )
+                  {
+                     Event.current.Use( );
+                  }
+               }
+               else if ( Event.current.commandName == "Undo" )
+               {
+                  if ( m_ScriptEditorCtrl.CanUndo )
+                  {
+                     Event.current.Use( );
+                  }
+               }
+               else if ( Event.current.commandName == "Redo" )
+               {
+                  if ( m_ScriptEditorCtrl.CanRedo )
+                  {
+                     Event.current.Use( );
+                  }
+               }
+               break;
+            case EventType.ExecuteCommand:
+               if ( Event.current.commandName == "Copy" )
+               {
+                  m_WantsCopy = true;
+               }
+               else if ( Event.current.commandName == "Paste" )
+               {
+                  m_WantsPaste = true;
+               }
+               else if ( Event.current.commandName == "Undo" )
+               {
+                  m_WantsUndo = true;
+               }
+               else if ( Event.current.commandName == "Redo" )
+               {
+                  m_WantsRedo = true;
+               }
+               break;
+   
+            // drag events
+            case EventType.DragExited:
+               break;
+            case EventType.DragPerform:
+            case EventType.DragUpdated:
+               // update mouse position
+               m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
+               m_MouseMoveArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+               m_MouseMoveArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+               break;
+            
+            // key events
+            case EventType.KeyDown:
+               break;
+            case EventType.KeyUp:
+               if ( "MainView" == GUI.GetNameOfFocusedControl( ) )
+               {
+                  if ( Event.current.keyCode == KeyCode.Delete )
+                  {
+                     m_ScriptEditorCtrl.DeleteSelectedNodes( );
+                  }
+               }
+   
+               //keep key events from going to the rest of unity
+               Event.current.Use( );
+               break;
+      
+            // mouse events
+            case EventType.MouseDown:
+               if ( false == m_MouseDown )
+               {
+                  GUI.FocusControl( "MainView" );
+      
+                  if ( _canvasRect.Contains( Event.current.mousePosition ) )
+                  {
+                     m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
+      
+                     int button = 0;
+      
+                     if ( Event.current.button == 0 ) button = MouseButtons.Left;
+                     else if ( Event.current.button == 2 ) button = MouseButtons.Right;
+       
+                     m_MouseDownArgs.Button = button;
+                     m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+                     m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+                  }
+      
+                  if ( Event.current.clickCount == 2 )
+                  {
+                     OpenLogicNode( );
+                  }
+               }
+               m_MouseDown = true;
+               break;
+            case EventType.MouseDrag:
+            case EventType.MouseMove:
+               // update mouse position
+               m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
+               m_MouseMoveArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+               m_MouseMoveArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+               break;
+            case EventType.MouseUp:
+               if ( true == m_MouseDown )
+               {
+                  m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
+      
+                  int button = 0;
+      
+                  if ( Event.current.button == 0 ) button = MouseButtons.Left;
+                  else if ( Event.current.button == 2 ) button = MouseButtons.Right;
+      
+                  m_MouseUpArgs.Button = button;
+                  m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+                  m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+               }
+               m_MouseDown = false;
+               break;
+            case EventType.ScrollWheel:
+               break;
+      
+            // paint/layout events
+            case EventType.Layout:
+               break;
+            case EventType.Repaint:
+               break;
+      
+            // ignore these events
+            case EventType.Ignore:
+            case EventType.Used:
+            default:
+               break;
+         }
+      }
+      else
+      {
+         if ( true == m_MouseDown )
+         {
+            m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
+
+            m_MouseUpArgs.Button = MouseButtons.Left;
+            m_MouseUpArgs.X = (int) Event.current.mousePosition.x;
+            m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+         }
+      }
+
       //
       // All the GUI drawing code
       //
-      DrawGUI();
-      
-      bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
+      DrawMainGUI();
+      DrawPopups(contextActive);
 
-      if ( false == contextActive ) contextActive = ( Event.current.type == EventType.ContextClick );
+      // the following code must be here because it needs to happen 
+      // after we've figured out what region the mouse is in
 
+      // if the mouse moved outside the window (and we haven't already 
+      // had a key up in this call), perform key up logic
+      if ( true == m_MouseDown && Event.current.type != EventType.MouseUp && _mouseRegion == MouseRegion.Outside )
+      {
+         m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
+
+         int button = 0;
+
+         if ( Event.current.button == 0 ) button = MouseButtons.Left;
+         else if ( Event.current.button == 2 ) button = MouseButtons.Right;
+
+         m_MouseUpArgs.Button = button;
+         m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+         m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+      }
+
+      // update drag/drop state
+      CheckDragDrop();
+   }
+   
+   public void DrawPopups(bool contextActive)
+   {
       // Draw window elements, including the context menu
       //
       GUI.enabled = true;
@@ -483,7 +678,7 @@ http://www.detoxstudios.com";
             int w = 550;
             int h = Math.Max(300, (int)position.height - 400);
             Rect r = new Rect((position.width-w)/2, (position.height-h)/2, w, h);
-   			
+            
             GUI.Window(110, r, DoWindowEULA, "End User License Agreement");
          }
       }
@@ -508,159 +703,6 @@ http://www.detoxstudios.com";
          }
       }
       EndWindows( );
-      
-      if (m_WantsClose)
-      {
-         return;
-      }
-
-      if ( false == contextActive )
-      {
-         int modifierKeys = 0;
-
-         if ( Event.current.alt )     modifierKeys |= Keys.Alt;
-         if ( Event.current.shift )   modifierKeys |= Keys.Shift;
-         if ( Event.current.control || Event.current.command ) modifierKeys |= Keys.Control;
-         
-         Control.ModifierKeys.Pressed = modifierKeys;
-
-         if ( Event.current.type == EventType.ValidateCommand)
-         {
-            if ( Event.current.commandName == "Copy" )
-            {
-               if ( m_ScriptEditorCtrl.CanCopy )
-               {
-                  Event.current.Use( );
-               }
-            }
-            else if ( Event.current.commandName == "Paste" )
-            {
-               if ( m_ScriptEditorCtrl.CanPaste )
-               {
-                  Event.current.Use( );
-               }
-            }
-            else if ( Event.current.commandName == "Undo" )
-            {
-               if ( m_ScriptEditorCtrl.CanUndo )
-               {
-                  Event.current.Use( );
-               }
-            }
-            else if ( Event.current.commandName == "Redo" )
-            {
-               if ( m_ScriptEditorCtrl.CanRedo )
-               {
-                  Event.current.Use( );
-               }
-            }
-         }
-
-         if ( Event.current.type == EventType.ExecuteCommand)
-         {
-            if ( Event.current.commandName == "Copy" )
-            {
-               m_WantsCopy = true;
-            }
-            else if ( Event.current.commandName == "Paste" )
-            {
-               m_WantsPaste = true;
-            }
-            else if ( Event.current.commandName == "Undo" )
-            {
-               m_WantsUndo = true;
-            }
-            else if ( Event.current.commandName == "Redo" )
-            {
-               m_WantsRedo = true;
-            }
-         }
-
-         if ( Event.current.type == EventType.KeyUp )
-         {
-            if ( "MainView" == GUI.GetNameOfFocusedControl( ) )
-            {
-               if ( Event.current.keyCode == KeyCode.Delete )
-               {
-                  m_ScriptEditorCtrl.DeleteSelectedNodes( );
-               }
-            }
-
-            //keep key events from going to the rest of unity
-            Event.current.Use( );
-         }
-
-         if ( false == m_MouseDown && Event.current.type == EventType.MouseDown )
-         {
-            GUI.FocusControl( "MainView" );
-
-            if ( _canvasRect.Contains( Event.current.mousePosition ) )
-            {
-               m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
-
-               int button = 0;
-
-               if ( Event.current.button == 0 ) button = MouseButtons.Left;
-               else if ( Event.current.button == 2 ) button = MouseButtons.Right;
- 
-               m_MouseDownArgs.Button = button;
-               m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
-               m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
-            }
-
-            if ( Event.current.clickCount == 2 )
-            {
-               OpenLogicNode( );
-            }
-         }
-         //if the mouse is currently down and they've let the mouse up or
-         //they've left the control bounds (unity won't send us a mouse up event), 
-         //do the mouse up event
-         else if ( true == m_MouseDown && 
-                   (Event.current.type == EventType.MouseUp || _mouseRegion == MouseRegion.Outside) )
-         {
-            m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
-
-            int button = 0;
-
-            if ( Event.current.button == 0 ) button = MouseButtons.Left;
-            else if ( Event.current.button == 2 ) button = MouseButtons.Right;
-
-            m_MouseUpArgs.Button = button;
-            m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
-            m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
-         }
-
-         m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
-         m_MouseMoveArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
-         m_MouseMoveArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
-      }
-      else
-      {
-         if ( true == m_MouseDown )
-         {
-            m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
-
-            m_MouseUpArgs.Button = MouseButtons.Left;
-            m_MouseUpArgs.X = (int) Event.current.mousePosition.x;
-            m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
-         }
-      }
-
-      if ( Event.current.type == EventType.ContextClick )
-      {
-         m_ScriptEditorCtrl.BuildContextMenu( );
-
-         BuildSidebarMenu(null, null);
-
-         m_ContextX = (int) Event.current.mousePosition.x;
-         m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
-
-         //refresh screen so context menu shows up
-         Repaint( );
-      }
-
-      CheckDragDrop();
    }
 
    void OnPlaymodeStateChanged()
@@ -670,10 +712,17 @@ http://www.detoxstudios.com";
          AllowNewFile(false);
       }
    }
-
+   
    void OnDestroy()
    {
       AllowNewFile(true);
+
+      if (m_ScriptEditorCtrl != null)
+      {
+         m_ScriptEditorCtrl.ScriptModified -= new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
+         m_ScriptEditorCtrl = null;
+      }
+      Detox.Utility.Status.StatusUpdate -= new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
    }
 
    void OpenLogicNode( )
@@ -753,7 +802,7 @@ http://www.detoxstudios.com";
       CustomGUIStyle.Add("vDivider", style);
    }
 
-   void DrawGUI()
+   void DrawMainGUI()
    {
       if (_guiPanelProperties_Width == 0 && _guiPanelSequence_Width == 0)
       {
@@ -1726,25 +1775,21 @@ http://www.detoxstudios.com";
 
    public void OnMouseMove( )
    {
-      if ( System.Windows.Forms.Cursor.Position.X != m_MouseMoveArgs.X ||
-           System.Windows.Forms.Cursor.Position.Y != m_MouseMoveArgs.Y )
-      {
-         System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
-         System.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
+      System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
+      System.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
 
-         m_ScriptEditorCtrl.OnMouseMove( m_MouseMoveArgs );
-      }
+      m_ScriptEditorCtrl.OnMouseMove( m_MouseMoveArgs );
    }
 
    public void OnMouseUp( )
    {
       System.Windows.Forms.Cursor.Position.X = m_MouseUpArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseUpArgs.Y;
-
+      
       m_ScriptEditorCtrl.OnMouseUp( m_MouseUpArgs );
-		
-	  m_CurrentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
-
+      
+      m_CurrentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
+      
       Control.MouseButtons.Buttons = 0;
    }
 
