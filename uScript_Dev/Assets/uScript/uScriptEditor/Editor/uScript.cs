@@ -1240,13 +1240,12 @@ http://www.detoxstudios.com";
    void DrawGUIContent()
    {
       Rect rect = EditorGUILayout.BeginVertical();
-      
-      if ( rect.width != 0 && rect.height != 0 )
       {
-         m_NodeWindowRect = rect;
-      }
+         if ( rect.width != 0 && rect.height != 0 )
+         {
+            m_NodeWindowRect = rect;
+         }
 
-      {
          // Toolbar
 
          Rect toolbarRect = EditorGUILayout.BeginHorizontal (EditorStyles.toolbar );
@@ -1360,6 +1359,36 @@ http://www.detoxstudios.com";
 
 
 
+
+	// TEMP Variables for testing the new property grid methods
+   int _tmpInt1;
+   int _tmpInt2;
+   float _tmpFloat;
+   string _tmpString = string.Empty;
+   bool _tmpBool = true;
+//   bool tmpBool = true;
+   UnityEngine.Color _tmpColor;
+   Vector2 _tmpVector2;
+   Vector3 _tmpVector3;
+   Vector4 _tmpVector4;
+   Rect _tmpRect;
+
+   bool _tmpIntBool1;
+   bool _tmpIntBool2 = false;
+   bool _tmpIntBool3 = true;
+
+   Rect _svRect;
+
+   KeyCode _enumKeyCode;
+   KeyCode[] _arrayKeyCode;
+   bool _arrayFoldoutBool;
+
+   bool _newPropertyGrid = false;
+   // END TEMP Variables
+
+
+
+
    void DrawGUIPropertyGrid()
    {
       EditorGUILayout.BeginVertical( CustomGUIStyle["panelBox"], GUILayout.Width( _guiPanelProperties_Width ) );
@@ -1368,15 +1397,83 @@ http://www.detoxstudios.com";
          //
          EditorGUILayout.BeginHorizontal( EditorStyles.toolbar );
          {
-             GUILayout.Label("Properties", CustomGUIStyle["panelTitle"]);
+            GUILayout.Label("Properties", CustomGUIStyle["panelTitle"]);
+            GUILayout.FlexibleSpace();
+//            _newPropertyGrid = GUILayout.Toggle(_newPropertyGrid, "Toggle New Panel", EditorStyles.toolbarButton);
          }
          EditorGUILayout.EndHorizontal();
 
-         _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelProperties_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview" );
+         if (_newPropertyGrid)
          {
-            m_ScriptEditorCtrl.PropertyGrid.OnPaint( );
+            GUIStyle vsb = new GUIStyle(GUI.skin.verticalScrollbar);
+            vsb.margin = new RectOffset();
+
+            GUIStyle hsb = new GUIStyle(GUI.skin.horizontalScrollbar);
+            hsb.margin = new RectOffset();
+
+            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, hsb, vsb);
+            {
+               CustomGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
+               {
+                  if (CustomGUI.BeginProperty("Node Name", "NODE12345"))
+                  {
+//                     _arrayKeyCode = CustomGUI.ArrayFoldout<KeyCode>("KeyCode Array", _arrayKeyCode, ref _arrayFoldoutBool, ref tmpBool, false);
+
+                     _tmpInt1 = CustomGUI.IntField("Int Label", _tmpInt1, ref _tmpIntBool1, false);
+                     _tmpInt1 = CustomGUI.IntField("Int Label", _tmpInt1, ref _tmpIntBool2, true);
+                     _tmpInt2 = CustomGUI.IntField("This is a really long label!", _tmpInt2, ref _tmpIntBool3, true);
+                     _tmpFloat = CustomGUI.FloatField("Float Label", _tmpFloat, ref _tmpIntBool1, false);
+                     _enumKeyCode = (KeyCode)CustomGUI.EnumField("Enum Label", _enumKeyCode, ref _tmpIntBool1, false);
+                     _tmpString = CustomGUI.TextField("Text Label", _tmpString, ref _tmpIntBool1, false);
+                     _tmpBool = CustomGUI.BoolField("Bool Label", _tmpBool, ref _tmpIntBool1, false);
+                     _tmpColor = CustomGUI.ColorField("Color Label", _tmpColor, ref _tmpIntBool1, false);
+                  }
+                  CustomGUI.EndProperty();
+
+                  if (CustomGUI.BeginProperty("Node 02", "NODE02-ID"))
+                  {
+                     _tmpVector2 = CustomGUI.Vector2Field("Vector2 Label", _tmpVector2, ref _tmpIntBool1, false);
+                     _tmpVector3 = CustomGUI.Vector3Field("Vector3 Label", _tmpVector3, ref _tmpIntBool1, false);
+                     _tmpVector4 = CustomGUI.Vector4Field("Vector4 Label", _tmpVector4, ref _tmpIntBool1, false);
+                     _tmpRect = CustomGUI.RectField("Rect Label", _tmpRect, ref _tmpIntBool1, false);
+                  }
+                  CustomGUI.EndProperty();
+
+
+                  //               EditorGUILayout.LabelField();
+                  //               EditorGUILayout.Separator();
+                  //               EditorGUILayout.Space();
+
+                  //               EditorGUILayout.TextArea();
+                  //               EditorGUILayout.Slider();
+                  //               EditorGUILayout.IntSlider();
+                  //               EditorGUILayout.MinMaxSlider();
+                  //               EditorGUILayout.Popup();
+                  //               EditorGUILayout.EnumPopup();
+                  //               EditorGUILayout.IntPopup();
+                  //               EditorGUILayout.TagField();
+                  //               EditorGUILayout.LayerField();
+                  //               EditorGUILayout.ObjectField();
+                  //               EditorGUILayout.CurveField();
+                  //               EditorGUILayout.PropertyField();
+               }
+               CustomGUI.EndColumns();
+            }
+            EditorGUILayout.EndScrollView();
+
+            if (Event.current.type == EventType.Repaint)
+            {
+               _svRect = GUILayoutUtility.GetLastRect();
+            }
          }
-         EditorGUILayout.EndScrollView ();
+         else
+         {
+            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
+            {
+               m_ScriptEditorCtrl.PropertyGrid.OnPaint();
+            }
+            EditorGUILayout.EndScrollView();
+         }
       }
       EditorGUILayout.EndVertical();
 
@@ -1447,22 +1544,6 @@ http://www.detoxstudios.com";
    }
 
 
-
-
-   bool _toggleTempPanel = false;
-   int _tmpInt1;
-   int _tmpInt2;
-   float _tmpFloat;
-   string _tmpString = string.Empty;
-   bool _tmpBool;
-   UnityEngine.Color _tmpColor;
-   Vector2 _tmpVector2;
-   Vector3 _tmpVector3;
-   Vector4 _tmpVector4;
-   Rect _tmpRect;
-
-   Rect _svRect;
-
    void DrawGUISubsequences()
    {
       EditorGUILayout.BeginVertical(CustomGUIStyle["panelBox"], GUILayout.Width(_guiPanelSequence_Width));
@@ -1472,95 +1553,41 @@ http://www.detoxstudios.com";
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
             GUILayout.Label("uScripts", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
-            GUILayout.FlexibleSpace();
-//            _toggleTempPanel = GUILayout.Toggle( _toggleTempPanel, "Toggle Temp Panel", EditorStyles.toolbarButton );
          }
          EditorGUILayout.EndHorizontal();
 
-         if ( _toggleTempPanel )
+         _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
          {
-            GUIStyle vsb = new GUIStyle( GUI.skin.verticalScrollbar );
-            vsb.margin = new RectOffset();
-
-            GUIStyle hsb = new GUIStyle( GUI.skin.horizontalScrollbar );
-            hsb.margin = new RectOffset();
-
-            _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView( _guiPanelSequence_ScrollPos, hsb, vsb );
+            foreach (UnityEngine.Object o in GameObject.FindObjectsOfType(typeof(uScriptCode)))
             {
-               CustomGUI.BeginColumns( "Property", "Value", "Type", _guiPanelSequence_ScrollPos, _svRect );
+               uScriptCode code = o as uScriptCode;
+
+               if (code.GetType().ToString() == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.Name))
                {
-                  _tmpInt1 = CustomGUI.IntField("Int Label", _tmpInt1);
-                  _tmpInt2 = CustomGUI.IntField("This is a really long label!", _tmpInt2);
-                  _tmpFloat = CustomGUI.FloatField("Float Label", _tmpFloat);
-                  _tmpString = CustomGUI.TextField("Text Label", _tmpString);
-                  _tmpBool = CustomGUI.BoolField("Bool Label", _tmpBool);
-                  _tmpColor = CustomGUI.ColorField("Color Label", _tmpColor);
-                  _tmpVector2 = CustomGUI.Vector2Field("Vector2 Label", _tmpVector2);
-                  _tmpVector3 = CustomGUI.Vector3Field("Vector3 Label", _tmpVector3);
-                  _tmpVector4 = CustomGUI.Vector4Field("Vector4 Label", _tmpVector4);
-                  _tmpRect = CustomGUI.RectField("Rect Label", _tmpRect);
-
-//               EditorGUILayout.LabelField();
-//               EditorGUILayout.Separator();
-//               EditorGUILayout.Space();
-
-//               EditorGUILayout.TextArea();
-//               EditorGUILayout.Slider();
-//               EditorGUILayout.IntSlider();
-//               EditorGUILayout.MinMaxSlider();
-//               EditorGUILayout.Popup();
-//               EditorGUILayout.EnumPopup();
-//               EditorGUILayout.IntPopup();
-//               EditorGUILayout.TagField();
-//               EditorGUILayout.LayerField();
-//               EditorGUILayout.ObjectField();
-//               EditorGUILayout.CurveField();
-//               EditorGUILayout.PropertyField();
+                  GUIStyle style = new GUIStyle(CustomGUIStyle["paletteButton"]);
+                  style.normal.background = style.active.background;
+                  GUILayout.Label(code.GetType().ToString(), style);
                }
-               CustomGUI.EndColumns();
-            }
-            EditorGUILayout.EndScrollView();
-
-            if (Event.current.type == EventType.Repaint )
-            {
-               _svRect = GUILayoutUtility.GetLastRect();
-            }
-         }
-         else
-         {
-            _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
-            {
-               foreach ( UnityEngine.Object o in GameObject.FindObjectsOfType(typeof(uScriptCode)) )
+               else
                {
-                  uScriptCode code = o as uScriptCode;
-
-                  if (code.GetType().ToString() == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.Name))
+                  GUIContent content = new GUIContent(code.GetType().ToString(), "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
+                  if (GUILayout.Button(content, CustomGUIStyle["paletteButton"]) && Event.current.clickCount == 2)
                   {
-                     GUIStyle style = new GUIStyle(CustomGUIStyle["paletteButton"]);
-                     style.normal.background = style.active.background;
-                     GUILayout.Label( code.GetType().ToString(), style );
-                  }
-                  else
-                  {
-                     GUIContent content = new GUIContent( code.GetType().ToString(), "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
-                     if ( GUILayout.Button( content, CustomGUIStyle["paletteButton"] ) && Event.current.clickCount == 2 )
+                     string path = FindFile(Application.dataPath, code.GetType().ToString() + ".uscript");
+                     if ("" != path)
                      {
-                        string path = FindFile( Application.dataPath, code.GetType().ToString() + ".uscript" );
-                        if ( "" != path )
-                        {
-                           _openScriptToggle = false;
-                           OpenScript( path );
-                        }
+                        _openScriptToggle = false;
+                        OpenScript(path);
                      }
                   }
                }
             }
-            EditorGUILayout.EndScrollView();
          }
+         EditorGUILayout.EndScrollView();
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion( MouseRegion.Subsequences, 3, 3, -2, -3 );
+      SetMouseRegion(MouseRegion.Subsequences, 3, 3, -2, -3);
    }
 
 
@@ -2631,9 +2658,9 @@ http://www.detoxstudios.com";
       {
          Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
       }
-  
+
       Reflect( typeof(UnityEngine.RuntimePlatform), entityDescs, baseMethods, baseEvents, baseProperties );
-      
+
       //consolidate like events so they appear on the same node
       EntityDesc [] descs = entityDescs.ToArray( );
       for ( int i = 0; i < descs.Length; i++ )
