@@ -32,6 +32,7 @@ public class uScript : EditorWindow
       HandleReference
    }
    private MouseRegion _mouseRegion;
+   private MouseRegion m_MouseDownRegion = MouseRegion.Outside;
 
    Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
@@ -75,8 +76,8 @@ public class uScript : EditorWindow
 
    int      _guiPanelSidebar_Width = 250;
    int      _guiPanelProperties_Height = 250;
-   int      _guiPanelProperties_Width = 0;
-   int      _guiPanelSequence_Width = 0;
+   int      _guiPanelProperties_Width = 250;
+   int      _guiPanelSequence_Width = 250;
    //int      _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
    //int      _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
 
@@ -360,6 +361,9 @@ http://www.detoxstudios.com";
             OpenScript(m_FullPath);
             m_RefreshTimestamp = EditorApplication.timeSinceStartup;
          }
+
+         _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
+         _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
       }
 
       if (m_WantsClose)
@@ -452,7 +456,15 @@ http://www.detoxstudios.com";
       
       // As little logic as possible should be performed here.  It is better
       // to use Update() to perform tasks once per tick.
+
+      bool lastMouseDown = m_MouseDown;
+      
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
+      if (Event.current.isMouse)
+      {
+         m_MouseMoveArgs.DeltaX = (int)Math.Round(Event.current.delta.x);
+         m_MouseMoveArgs.DeltaY = (int)Math.Round(Event.current.delta.y);
+      }
       if ( false == contextActive )
       {
          int modifierKeys = 0;
@@ -537,6 +549,12 @@ http://www.detoxstudios.com";
                m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
                m_MouseMoveArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
                m_MouseMoveArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+
+               if ( _mouseRegion == MouseRegion.Canvas )
+               {
+                  CheckDragDropCanvas( );
+                  Event.current.Use( );
+               }
                break;
             
             // key events
@@ -602,7 +620,9 @@ http://www.detoxstudios.com";
                   m_MouseUpArgs.Button = button;
                   m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
                   m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+
                }
+               m_MouseDownRegion = MouseRegion.Outside;
                m_MouseDown = false;
                break;
             case EventType.ScrollWheel:
@@ -632,19 +652,24 @@ http://www.detoxstudios.com";
             m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
          }
       }
-
+      
       //
       // All the GUI drawing code
       //
       DrawMainGUI();
       DrawPopups(contextActive);
 
-      // the following code must be here because it needs to happen 
-      // after we've figured out what region the mouse is in
+      if (lastMouseDown == false && m_MouseDown)
+      {
+         // mouse was pressed down this event, set the current region
+         m_MouseDownRegion = _mouseRegion;
+      }
 
-      // if the mouse moved outside the window (and we haven't already 
-      // had a key up in this call), perform key up logic
-      if ( true == m_MouseDown && Event.current.type != EventType.MouseUp && _mouseRegion == MouseRegion.Outside )
+      // the following code must be here because it needs to happen 
+      // after we've figured out what region the mouse is in and after
+      // the event processing has taken place so that we know we don't have
+      // a duplicate mouse up event
+      if ( true == m_MouseDown && _mouseRegion == MouseRegion.Outside && m_MouseUpArgs == null )
       {
          m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
 
@@ -656,10 +681,10 @@ http://www.detoxstudios.com";
          m_MouseUpArgs.Button = button;
          m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
          m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
-      }
 
-      // update drag/drop state
-      CheckDragDrop();
+         m_MouseDownRegion = MouseRegion.Outside;
+         m_MouseDown = false;
+      }
    }
    
    public void DrawPopups(bool contextActive)
@@ -812,23 +837,6 @@ http://www.detoxstudios.com";
 
    void DrawMainGUI()
    {
-      if (_guiPanelProperties_Width == 0 && _guiPanelSequence_Width == 0)
-      {
-         _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
-         _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
-      }
-      else if (_guiPanelProperties_Width == 0)
-      {
-         _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 2);
-      }
-      else if (_guiPanelSequence_Width == 0)
-      {
-         _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 2);
-      }
-
-      _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
-      _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
-
       CustomGUIStyles();
 
       DrawGUITopAreas();
@@ -909,9 +917,9 @@ http://www.detoxstudios.com";
       {
          // Toolbar
          //
-          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.Width(_guiPanelSidebar_Width));
+         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
          {
-             GUILayout.Label("Nodes", CustomGUIStyle["panelTitle"]);
+            GUILayout.Label("Nodes", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
 
             // Collapse hierarchy
             if ( GUILayout.Button( Button.Content( Button.ID.Collapse ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
@@ -955,7 +963,7 @@ http://www.detoxstudios.com";
 
          // Node list
          //
-         _guiPanelSidebar_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelSidebar_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.Width( _guiPanelSidebar_Width ) );
+         _guiPanelSidebar_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelSidebar_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
          {
             foreach (SidebarMenuItem item in _sidebarMenuItems)
             {
@@ -973,12 +981,7 @@ http://www.detoxstudios.com";
    {
       if (Event.current.type == EventType.Repaint)
       {
-         Rect r = GUILayoutUtility.GetLastRect();
-         r.x += x;
-         r.y += y;
-         r.width += w;
-         r.height += h;
-         _mouseRegionRect[region] = r;
+         _mouseRegionRect[region] = GUILayoutUtility.GetLastRect();
       }
 
       if ( _mouseRegionRect.ContainsKey(region) )
@@ -1001,11 +1004,10 @@ http://www.detoxstudios.com";
          if ( _mouseRegionRect[region].Contains( Event.current.mousePosition ) )
          {
             _mouseRegion = region;
+            //EditorGUIUtility.DrawColorSwatch(_mouseRegionRect[region], UnityEngine.Color.cyan);
          }
       }
    }
-
-
 
 
    private void ExpandSidebarMenuItem(SidebarMenuItem sidebarMenuItem)
@@ -1783,10 +1785,58 @@ http://www.detoxstudios.com";
 
    public void OnMouseMove( )
    {
+      int deltaX = m_MouseMoveArgs.X - System.Windows.Forms.Cursor.Position.X;
+      int deltaY = m_MouseMoveArgs.Y - System.Windows.Forms.Cursor.Position.Y;
+//      int deltaX = m_MouseMoveArgs.DeltaX;
+//      int deltaY = m_MouseMoveArgs.DeltaY;
+      
       System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
 
-      m_ScriptEditorCtrl.OnMouseMove( m_MouseMoveArgs );
+      if (_mouseRegion == MouseRegion.Canvas)
+      {
+         m_ScriptEditorCtrl.OnMouseMove( m_MouseMoveArgs );
+      }
+
+      if (GUI.enabled)
+      {
+         foreach ( KeyValuePair<MouseRegion, Rect>kvp in _mouseRegionRect)
+         {
+            MouseRegion region = kvp.Key;
+            switch ( region )
+            {
+               case MouseRegion.HandleCanvas:
+                  if (m_MouseDown && region == m_MouseDownRegion)
+                  {
+                     _guiPanelProperties_Height -= deltaY;
+                     Repaint();
+                  }
+                  break;
+               case MouseRegion.HandlePalette:
+                  if (m_MouseDown && region == m_MouseDownRegion)
+                  {
+                     _guiPanelSidebar_Width += deltaX;
+                     //Debug.Log(deltaX);
+                     Repaint();
+                  }
+                  break;
+               case MouseRegion.HandleProperties:
+                  if (m_MouseDown && region == m_MouseDownRegion)
+                  {
+                     _guiPanelProperties_Width += deltaX;
+                     Repaint();
+                  }
+                  break;
+               case MouseRegion.HandleReference:
+                  if (m_MouseDown && region == m_MouseDownRegion)
+                  {
+                     _guiPanelSequence_Width -= deltaX;
+                     Repaint();
+                  }
+                  break;
+            }
+         }
+      }
    }
 
    public void OnMouseUp( )
@@ -1800,7 +1850,7 @@ http://www.detoxstudios.com";
       
       Control.MouseButtons.Buttons = 0;
    }
-
+ 
    public void Redraw( )
    {
       if ( true == m_Repainting )  return;
@@ -2770,19 +2820,6 @@ http://www.detoxstudios.com";
       }
 
       return true;
-   }
-
-   private void CheckDragDrop( )
-   {
-      if ( Event.current.type == EventType.DragUpdated ||
-           Event.current.type == EventType.DragPerform )
-      {
-         if ( _mouseRegion == MouseRegion.Canvas )
-         {
-            CheckDragDropCanvas( );
-            Event.current.Use( );
-         }
-      }
    }
 
    private void CheckDragDropCanvas( )

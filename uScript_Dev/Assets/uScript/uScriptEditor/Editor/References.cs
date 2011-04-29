@@ -695,6 +695,8 @@ namespace System.Windows.Forms
    {
       public int X;
       public int Y;
+      public int DeltaX;
+      public int DeltaY;
       public int Button;
    }
 
