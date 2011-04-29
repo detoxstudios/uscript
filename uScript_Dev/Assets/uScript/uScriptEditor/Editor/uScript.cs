@@ -2945,7 +2945,7 @@ http://www.detoxstudios.com";
       if ( node is EntityEvent )
       {
          EntityEvent entityEvent = (EntityEvent) node;         
-         return entityEvent.Instance.Type;
+         return entityEvent.ComponentType;
       }
       else if ( node is LogicNode )
       {

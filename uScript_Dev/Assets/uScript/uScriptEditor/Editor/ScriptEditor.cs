@@ -737,6 +737,7 @@ namespace Detox.ScriptEditor
          method.Output    = Output;
          method.Position  = Position;
          method.Guid      = Guid.NewGuid( );
+         method.ComponentType = ComponentType;
          return method;
       }
 
@@ -745,7 +746,8 @@ namespace Detox.ScriptEditor
          get
          {
             EntityMethodData nodeData = new EntityMethodData( );
-            nodeData.Instance  = Instance.ToParameterData( );
+            nodeData.Instance      = Instance.ToParameterData( );
+            nodeData.ComponentType = ComponentType;
             nodeData.Input     = Input.ToPlugData( );
             nodeData.Output    = Output.ToPlugData( );
             nodeData.Position.X= Position.X;
@@ -769,6 +771,7 @@ namespace Detox.ScriptEditor
          EntityMethod node = (EntityMethod) obj;
 
          if ( Instance != node.Instance ) return false;
+         if ( ComponentType != node.ComponentType ) return false;
          
          if ( false == ArrayUtil.ArraysAreEqual(node.Parameters, Parameters) ) return false;
 
@@ -819,14 +822,18 @@ namespace Detox.ScriptEditor
          set { m_Guid = value; }
       }
 
+      public string ComponentType;
+
       public EntityMethod(string type, string name, string friendlyName)       
       { 
+         ComponentType = type;
+
          m_Instance.Default = "";
-         m_Instance.Type = type;
+         m_Instance.Type = typeof(UnityEngine.GameObject).ToString( );
          m_Instance.Input = true;
          m_Instance.Output = false;
          m_Instance.Name = "Instance";
-         m_Instance.FriendlyName = "Instance";
+         m_Instance.FriendlyName = "GameObject";
          
          m_ShowComment = new Parameter( );
          m_ShowComment.Name    = "Show Comment";
@@ -1030,16 +1037,17 @@ namespace Detox.ScriptEditor
 
       public EntityNode Copy( )
       {
-         EntityEvent entityEvent = new EntityEvent( );
-         entityEvent.Instance    = Instance;
-         entityEvent.EventArgs   = EventArgs;
-         entityEvent.Parameters  = Parameters;
-         entityEvent.Position    = Position;
-         entityEvent.FriendlyType= FriendlyType;
-         entityEvent.Outputs     = Outputs;
-         entityEvent.Guid        = Guid.NewGuid( );
-         entityEvent.Comment     = Comment;
-         entityEvent.ShowComment = ShowComment;
+         EntityEvent entityEvent   = new EntityEvent( );
+         entityEvent.Instance      = Instance;
+         entityEvent.EventArgs     = EventArgs;
+         entityEvent.Parameters    = Parameters;
+         entityEvent.Position      = Position;
+         entityEvent.FriendlyType  = FriendlyType;
+         entityEvent.ComponentType = ComponentType;
+         entityEvent.Outputs       = Outputs;
+         entityEvent.Guid          = Guid.NewGuid( );
+         entityEvent.Comment       = Comment;
+         entityEvent.ShowComment   = ShowComment;
       
          return entityEvent;
       }
@@ -1056,8 +1064,9 @@ namespace Detox.ScriptEditor
             nodeData.Outputs   = ArrayUtil.ToPlugDatas( Outputs );
             nodeData.Guid      = Guid;
             nodeData.Parameters= ArrayUtil.ToParameterDatas( Parameters );
-            nodeData.Comment     = Comment.ToParameterData( );
-            nodeData.ShowComment = ShowComment.ToParameterData( );
+            nodeData.Comment       = Comment.ToParameterData( );
+            nodeData.ShowComment   = ShowComment.ToParameterData( );
+            nodeData.ComponentType = ComponentType;
 
             return nodeData;
          }
@@ -1087,6 +1096,8 @@ namespace Detox.ScriptEditor
 
          if ( ShowComment != node.ShowComment ) return false;
          if ( Comment != node.Comment ) return false;
+
+         if ( ComponentType != node.ComponentType ) return false;
 
          return true;
       }
@@ -1120,6 +1131,8 @@ namespace Detox.ScriptEditor
       private Point m_Position;
       public Point Position { get { return m_Position; } set { m_Position = value; } }
 
+      public string ComponentType;
+
       private Guid m_Guid;
       public Guid Guid
       {
@@ -1133,9 +1146,11 @@ namespace Detox.ScriptEditor
 
          FriendlyType = friendlyType;
 
+         ComponentType = type;
+
          m_Instance.Name = "Instance";
-         m_Instance.FriendlyName = "Instance";
-         m_Instance.Type    = type;
+         m_Instance.FriendlyName = "GameObject";
+         m_Instance.Type    = typeof(UnityEngine.GameObject).ToString( );
          m_Instance.Input   = true;
          m_Instance.Output  = false;
          m_Instance.Default = "";
@@ -2586,7 +2601,8 @@ namespace Detox.ScriptEditor
          {
             foreach ( EntityMethod entityMethod in desc.Methods )
             {
-               if ( entityMethod.Instance.Type == data.Instance.Type &&
+               if ( entityMethod.ComponentType == data.ComponentType &&
+                    entityMethod.Instance.Type == data.Instance.Type &&
                     entityMethod.Input.Name == data.Input.Name )
                {
                   cloned = entityMethod;

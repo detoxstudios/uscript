@@ -22,7 +22,7 @@ namespace Detox.ScriptEditor
          AddEventHandlers( );
 
          Location = new System.Drawing.Point( entityMethod.Position.X, entityMethod.Position.Y );
-         Name = uScriptConfig.Variable.FriendlyName(entityMethod.Instance.Type);
+         Name = uScriptConfig.Variable.FriendlyName(entityMethod.ComponentType);
 
          List<Socket> sockets = new List<Socket>( );
 

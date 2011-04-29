@@ -897,16 +897,6 @@ namespace Detox.ScriptEditor
          //make sure all components we plan to reference
          //have been placed in their local variables
          AddCSharpLine( CSharpFillComponentsDeclaration( ) + ";" );
-
-         //NOW WE DO THIS IN FILLCOMPONENTS TO MAKE SURE THEY ARE LOADED
-         //
-         //for every entity event node 
-         //register event listeners with the entity         
-         //foreach ( EntityEvent entityEvent in m_Script.Events )
-         //{
-         //   AddEventListener( entityEvent );
-         //}
-
          AddCSharpLine( "" );
 
          //for each logic node, create an script specific instance
@@ -1046,6 +1036,8 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
                   AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + values[i].Trim( ) + "\" ) as " + type + ";" );
+                  SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node );
+                              
                --m_TabStack;
                AddCSharpLine( "}" );
             }
@@ -1078,12 +1070,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );               
                   ++m_TabStack;
                      AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = gameObject.GetComponent<" + type + ">();" );
-
-                     if ( node is EntityEvent )
-                     {
-                        SetupEvent( CSharpName(node, parameter.Name) + "[" + i + "]", ((EntityEvent)node) );
-                     }
-
+                     SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node );
+   
                   --m_TabStack;
                   AddCSharpLine( "}" );               
 
@@ -1108,11 +1096,7 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );               
                   ++m_TabStack;
                      AddCSharpLine( CSharpName(node, parameter.Name) + " = gameObject.GetComponent<" + parameter.Type + ">();" );
-
-                     if ( node is EntityEvent )
-                     {
-                        SetupEvent( CSharpName(node, parameter.Name), ((EntityEvent)node) );
-                     }
+                     SetupEventListeners( CSharpName(node, parameter.Name), node );
                
                   --m_TabStack;
                   AddCSharpLine( "}" );               
@@ -1130,6 +1114,7 @@ namespace Detox.ScriptEditor
                ++m_TabStack;
 
                   AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + parameter.Type + ";" );
+                  SetupEventListeners( CSharpName(node, parameter.Name), node );
 
                --m_TabStack;
                AddCSharpLine( "}" );
@@ -1137,25 +1122,63 @@ namespace Detox.ScriptEditor
          }
       }
 
-      //default inputs for events which can only be set through the property grid
-      //so they are only set once (in fillcomponents)
-      //and we add all our event listeners here
-      private void SetupEvent( string eventVariable, EntityEvent eventNode )
+      private void SetupEventListeners( string eventVariable, EntityNode node )
       {
          AddCSharpLine( "if ( null != " + eventVariable + " )" );
-         AddCSharpLine( "{" );
+
+         AddCSharpLine( "{" );               
          ++m_TabStack;
-            foreach ( Parameter p in eventNode.Parameters )
+
+            if ( node is EntityEvent )
             {
-               if ( p.Input == true )
+               SetupEvent( eventVariable, null, ((EntityEvent)node) );
+            }
+            else if ( node is LocalNode )
+            {
+               //if we are a local node, see if there are any event listeners
+               //hooked up to us - if so then we need to get the matching component
+               //and register the listeners
+               LocalNode local = (LocalNode) node;
+
+               foreach ( LinkNode link in m_Script.Links )
                {
-                  AddCSharpLine( eventVariable + "." + p.Name + " = " + CSharpName(eventNode, p.Name) + ";" );
+                  if ( link.Source.Guid   == local.Guid &&
+                       link.Source.Anchor == local.Value.Name )
+                  {
+                     EntityNode destNode = m_Script.GetNode( link.Destination.Guid );
+
+                     if ( destNode is EntityEvent )
+                     {
+                        EntityEvent eventNode = (EntityEvent) destNode;
+                        if ( link.Destination.Anchor == eventNode.Instance.Name )
+                        {
+                           SetupEvent( eventVariable, node, eventNode ); 
+                        }
+                     }
+                  }
                }
+
             }
 
-            AddEventListener( eventNode );
          --m_TabStack;
          AddCSharpLine( "}" );               
+
+      }
+
+         //default inputs for events which can only be set through the property grid
+      //so they are only set once (in fillcomponents)
+      //and we add all our event listeners here
+      private void SetupEvent( string eventVariable, EntityNode instanceNode, EntityEvent eventNode )
+      {
+         foreach ( Parameter p in eventNode.Parameters )
+         {
+            if ( p.Input == true )
+            {
+               AddCSharpLine( eventVariable + "." + p.Name + " = " + CSharpName(eventNode, p.Name) + ";" );
+            }
+         }
+
+         AddEventListener( instanceNode, eventNode );
       }
 
       private void DefineEvents( )
@@ -1700,13 +1723,23 @@ namespace Detox.ScriptEditor
 
          LinkNode []instanceLinks = FindLinksByDestination( receiver.Guid, receiver.Instance.Name );
 
+         AddCSharpLine( receiver.ComponentType + " component;" );
+
          foreach ( LinkNode link in instanceLinks )
          {
             EntityNode node = m_Script.GetNode( link.Source.Guid );
 
             if ( returnParam != Parameter.Empty )
             {
-               AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = " + CSharpName(node) + "." + receiver.Input.Name + "(" + args + ");" );                     
+               AddCSharpLine( "component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();" );
+               AddCSharpLine( "if ( null != component )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+
+                  AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");" );                     
+
+               --m_TabStack;
+               AddCSharpLine( "}" );
 
                //only one instance link supported because of the return parameter - this should be enforced
                //in the editor - this is just for a sanity check
@@ -1714,7 +1747,15 @@ namespace Detox.ScriptEditor
             }
             else
             {
-               AddCSharpLine( CSharpName(node) + "." + receiver.Input.Name + "(" + args + ");" );            
+               AddCSharpLine( "component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();" );
+               AddCSharpLine( "if ( null != component )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+
+                  AddCSharpLine( "component." + receiver.Input.Name + "(" + args + ");" );            
+
+               --m_TabStack;
+               AddCSharpLine( "}" );
             }
          }
 
@@ -1727,12 +1768,28 @@ namespace Detox.ScriptEditor
                //in the editor - this is just for a sanity check
                if ( instanceLinks.Length == 0 )
                {
-                  AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = " + CSharpName(receiver, receiver.Instance.Name) + "." + receiver.Input.Name + "(" + args + ");" );            
+                  AddCSharpLine( "component = " + CSharpName(receiver, receiver.Instance.Name) + ".GetComponent<" + receiver.ComponentType + ">();" );
+                  AddCSharpLine( "if ( null != component )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+
+                     AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");" );            
+
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
                }
             }
             else
             {
-               AddCSharpLine( CSharpName(receiver, receiver.Instance.Name) + "." + receiver.Input.Name + "(" + args + ");" );            
+               AddCSharpLine( "component = " + CSharpName(receiver, receiver.Instance.Name) + ".GetComponent<" + receiver.ComponentType + ">();" );
+               AddCSharpLine( "if ( null != component )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+
+                  AddCSharpLine( "component." + receiver.Input.Name + "(" + args + ");" );            
+
+               --m_TabStack;
+               AddCSharpLine( "}" );
             }
          }
 
@@ -2063,26 +2120,49 @@ namespace Detox.ScriptEditor
       }
 
       //register event listener function with an entity
-      private void AddEventListener( EntityEvent entityEvent )
+      private void AddEventListener( EntityNode instanceNode, EntityEvent entityEvent )
       {
          LinkNode [] links = FindLinksByDestination( entityEvent.Guid, entityEvent.Instance.Name );
 
-         foreach ( LinkNode link in links )
+         //if instanceNode is null we don't care about anything which originated us
+         //in this call, AddEventListeners will be called again when the instanceNodes
+         //are ready for their listeners
+         if ( null != instanceNode )
          {
-            EntityNode entityNode = m_Script.GetNode( link.Source.Guid );
-            
-            foreach ( Plug output in entityEvent.Outputs )
+            foreach ( LinkNode link in links )
             {
-               AddCSharpLine( CSharpName(entityNode) +"." + output.Name + " += "+ CSharpEventDeclaration(entityEvent, output.Name) + ";" );            
+               if ( link.Source.Guid != instanceNode.Guid ) continue;
+
+               EntityNode entityNode = m_Script.GetNode( link.Source.Guid );
+               
+               AddCSharpLine( entityEvent.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityEvent.ComponentType + ">();" );
+               AddCSharpLine( "if ( null != component )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+               
+                  foreach ( Plug output in entityEvent.Outputs )
+                  {
+                     AddCSharpLine( "component." + output.Name + " += "+ CSharpEventDeclaration(entityEvent, output.Name) + ";" );            
+                  }
+
+               --m_TabStack;
+               AddCSharpLine( "}" );
             }
          }
-
-         if ( entityEvent.Instance.Default != "" )
+         else if ( entityEvent.Instance.Default != "" )
          {
-            foreach ( Plug output in entityEvent.Outputs )
-            {
-               AddCSharpLine( CSharpName(entityEvent, entityEvent.Instance.Name) +"." + output.Name + " += "+ CSharpEventDeclaration(entityEvent, output.Name) + ";" );            
-            }
+            AddCSharpLine( entityEvent.ComponentType + " component = " + CSharpName(entityEvent, entityEvent.Instance.Name) + ".GetComponent<" + entityEvent.ComponentType + ">();" );
+            AddCSharpLine( "if ( null != component )" );
+            AddCSharpLine( "{" );
+            ++m_TabStack;
+
+               foreach ( Plug output in entityEvent.Outputs )
+               {
+                  AddCSharpLine( "component." + output.Name + " += "+ CSharpEventDeclaration(entityEvent, output.Name) + ";" );            
+               }
+
+            --m_TabStack;
+            AddCSharpLine( "}" );
          }
       }
 

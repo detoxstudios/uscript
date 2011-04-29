@@ -180,7 +180,18 @@ namespace Detox.ScriptEditor
 
                   if ( entityNode.Instance != Parameter.Empty )
                   {
-                     destTypeString = entityNode.Instance.Type;
+                     if ( entityNode is EntityMethod )
+                     {
+                        destTypeString = ((EntityMethod)entityNode).ComponentType;
+                     }
+                     else if ( entityNode is EntityEvent )
+                     {
+                        destTypeString = ((EntityEvent)entityNode).ComponentType;
+                     }
+                     else
+                     {
+                        destTypeString = entityNode.Instance.Type;
+                     }
                   }
                   else if ( entityNode is LocalNode )
                   {
@@ -191,19 +202,19 @@ namespace Detox.ScriptEditor
                   if ( null != destTypeString )
                   {
                      destTypeString = destTypeString.Replace( "[]", "" );
+                     Type destType = uScript.Instance.GetType(destTypeString);
 
                      //see if the game object being dragged
                      //has a component type we can use
                      UnityEngine.GameObject gameObject = (UnityEngine.GameObject) o;
                      
+
                      //see if the game object being dragged
                      //has a component type we can use
-                     if ( null != gameObject.GetComponent(destTypeString) )
+                     if ( null != gameObject.GetComponent(destType) )
                      {
                         return true;
                      }
-
-                     Type destType = uScript.Instance.GetType(destTypeString);
 
                      //see if the game object being dragged
                      //is the type we can use
@@ -268,7 +279,18 @@ namespace Detox.ScriptEditor
 
                   if ( entityNode.Instance != Parameter.Empty )
                   {
-                     destTypeString = entityNode.Instance.Type;
+                     if ( entityNode is EntityMethod )
+                     {
+                        destTypeString = ((EntityMethod)entityNode).ComponentType;
+                     }
+                     else if ( entityNode is EntityEvent )
+                     {
+                        destTypeString = ((EntityEvent)entityNode).ComponentType;
+                     }
+                     else
+                     {
+                        destTypeString = entityNode.Instance.Type;
+                     }
                   }
                   else if ( entityNode is LocalNode )
                   {
@@ -280,6 +302,7 @@ namespace Detox.ScriptEditor
                   {
                      bool isArray = destTypeString.Contains( "[]" );
                      destTypeString = destTypeString.Replace( "[]", "" );
+                     Type destType = uScript.Instance.GetType(destTypeString);
 
                      string name = null;
 
@@ -289,12 +312,10 @@ namespace Detox.ScriptEditor
                      
                      //see if the game object being dragged
                      //has a component type we can use
-                     if ( null != gameObject.GetComponent(destTypeString) )
+                     if ( null != gameObject.GetComponent(destType) )
                      {
                         name = ((UnityEngine.Object)o).name;
                      }
-
-                     Type destType = uScript.Instance.GetType(destTypeString);
 
                      //see if the game object being dragged
                      //is the type we can use
@@ -694,7 +715,18 @@ namespace Detox.ScriptEditor
                      instance.Default = uScript.Instance.AutoAssignInstance(entityNode);
                      entityNode.Instance = instance;
 
-                     uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default);
+                     string type = entityNode.Instance.Type;
+
+                     if ( entityNode is EntityMethod )
+                     {
+                        type = ((EntityMethod)entityNode).ComponentType;
+                     }
+                     else if ( entityNode is EntityEvent )
+                     {
+                        type = ((EntityEvent)entityNode).ComponentType;
+                     }
+
+                     uScript.Instance.AttachEventScript(type, entityNode.Instance.Default);
                   }
                }
       
@@ -718,7 +750,19 @@ namespace Detox.ScriptEditor
                instance.Default = uScript.Instance.AutoAssignInstance(entityNode);
             
                entityNode.Instance = instance;
-               uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default);
+         
+               string type = entityNode.Instance.Type;
+
+               if ( entityNode is EntityMethod )
+               {
+                  type = ((EntityMethod)entityNode).ComponentType;
+               }
+               else if ( entityNode is EntityEvent )
+               {
+                  type = ((EntityEvent)entityNode).ComponentType;
+               }
+
+               uScript.Instance.AttachEventScript(type, entityNode.Instance.Default);
             }
 
             m_ScriptEditor.AddNode( entityNode );
@@ -1181,7 +1225,7 @@ namespace Detox.ScriptEditor
             //special case to add required scripts to gameobjects
             if ( entityNode is EntityEvent )
             {
-               uScript.AttachError error = uScript.Instance.AttachEventScript(entityNode.Instance.Type, entityNode.Instance.Default);
+               uScript.AttachError error = uScript.Instance.AttachEventScript(((EntityEvent)entityNode).ComponentType, entityNode.Instance.Default);
                if ( error == uScript.AttachError.MissingComponent )
                {
                   //couldn't attach an appropriate script for this game object

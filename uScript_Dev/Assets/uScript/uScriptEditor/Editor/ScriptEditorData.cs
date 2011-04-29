@@ -264,6 +264,8 @@ namespace Detox.Data.ScriptEditor
       public Plug Input;
       public Plug Output;
 
+      public string ComponentType;
+
       public Parameter Instance;
       public Parameter []Parameters;
     
@@ -278,10 +280,11 @@ namespace Detox.Data.ScriptEditor
          Input      = data.Input;
          Output     = data.Output;
 
-         Parameters = data.Parameters;
+         ComponentType = data.ComponentType;
+         Parameters    = data.Parameters;
       }
 
-      public new int Version { get { return 4; } }
+      public new int Version { get { return 5; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -304,12 +307,22 @@ namespace Detox.Data.ScriptEditor
             Input.FriendlyName = Input.Name;
 
             Output.Name = (string) serializer.LoadNamedObject( "Output" );
-            Output.FriendlyName = Output.Name;
+            Output.FriendlyName = Output.Name;  
          }
          else
          {
             Input = (Plug) serializer.LoadNamedObject( "Input" );
             Output= (Plug) serializer.LoadNamedObject( "Output" );
+         }
+
+         if ( serializer.CurrentVersion < 5 )
+         {
+            ComponentType = Instance.Type;
+            Instance.Type = typeof(UnityEngine.GameObject).ToString( );
+         }
+         else
+         {
+            ComponentType = (string) serializer.LoadNamedObject( "ComponentType" );
          }
       }
 
@@ -321,6 +334,7 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObject( "Input", Input );
          serializer.SaveNamedObject( "Output", Output );
          serializer.SaveNamedObject( "Parameters", Parameters );
+         serializer.SaveNamedObject( "ComponentType", ComponentType );
       }
    }
 
@@ -328,6 +342,7 @@ namespace Detox.Data.ScriptEditor
    {
       public Plug[] Outputs;
       public string EventArgs;
+      public string ComponentType;
 
       public Parameter Instance;
       public Parameter []Parameters;
@@ -342,6 +357,8 @@ namespace Detox.Data.ScriptEditor
          Instance     = data.Instance;
          EventArgs    = data.EventArgs;
 
+         ComponentType = data.ComponentType;
+
          Outputs = new Plug[ data.Outputs.Length ];
          data.Outputs.CopyTo( Outputs, 0 );
 
@@ -349,7 +366,7 @@ namespace Detox.Data.ScriptEditor
          data.Parameters.CopyTo( Parameters, 0 );
       }
 
-      public new int Version { get { return 6; } }
+      public new int Version { get { return 7; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -391,6 +408,16 @@ namespace Detox.Data.ScriptEditor
          }
 
          Parameters = (Parameter[]) serializer.LoadNamedObject( "Parameters" );
+
+         if ( serializer.CurrentVersion < 7 )
+         {
+            ComponentType = Instance.Type;
+            Instance.Type = typeof(UnityEngine.GameObject).ToString( );
+         }
+         else
+         {
+            ComponentType = (string) serializer.LoadNamedObject( "ComponentType" );
+         }
       }
 
       public new void Save(ObjectSerializer serializer)
@@ -401,6 +428,7 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObject( "Instance",   Instance );
          serializer.SaveNamedObject( "Parameters", Parameters );
          serializer.SaveNamedObject( "EventArgs",  EventArgs );
+         serializer.SaveNamedObject( "ComponentType", ComponentType );
       }
    }
 
