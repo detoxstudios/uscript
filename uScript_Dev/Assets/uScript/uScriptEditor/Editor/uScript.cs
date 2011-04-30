@@ -750,14 +750,6 @@ http://www.detoxstudios.com";
    
    void OnDestroy()
    {
-      s_Instance.wantsMouseMove = false;    
-      
-      //wait for whatever to happen
-      if (m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.IsDirty)
-      {
-         System.Threading.Thread.Sleep( 1000 );
-      }
-
       AllowNewFile(true);
 
       if (m_ScriptEditorCtrl != null)
