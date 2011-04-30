@@ -269,7 +269,7 @@ http://www.detoxstudios.com";
       
       _statusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
    }
-
+   
    void Update()
    {
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
@@ -278,7 +278,7 @@ http://www.detoxstudios.com";
       {
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
-
+      
       // Initialization
       //
       if (null == m_ScriptEditorCtrl)
@@ -448,7 +448,7 @@ http://www.detoxstudios.com";
          _EULAagreed = (bool) uScript.GetSetting( "EULA\\Agreed", false );
          GUI.enabled = _EULAagreed;
       }
-		
+      
       // Set the default mouse region
       _mouseRegion = uScript.MouseRegion.Outside;
       
@@ -645,17 +645,30 @@ http://www.detoxstudios.com";
       //
       DrawMainGUI();
       DrawPopups(contextActive);
+      
+      // the following code must be here because it needs to happen 
+      // after we've figured out what region the mouse is in
+      if (_mouseRegion == uScript.MouseRegion.Outside)
+      {
+         // if the mouse is not over our window, don't look for mouse move events
+         // fixes an exception when trying to close a dirty uscript
+         wantsMouseMove = false;
+      }
+      else
+      {
+         // when the mouse is over our window, look for mouse move events
+         wantsMouseMove = true;
+      }
 
+      // mark mouse down region for dragging resize handles
       if (lastMouseDown == false && m_MouseDown)
       {
          // mouse was pressed down this event, set the current region
          m_MouseDownRegion = _mouseRegion;
       }
 
-      // the following code must be here because it needs to happen 
-      // after we've figured out what region the mouse is in and after
-      // the event processing has taken place so that we know we don't have
-      // a duplicate mouse up event
+      // Do this after the event processing has taken place so that we 
+      // know we don't have a duplicate mouse up event
       if ( true == m_MouseDown && _mouseRegion == MouseRegion.Outside && m_MouseUpArgs == null )
       {
          m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
