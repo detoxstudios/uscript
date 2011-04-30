@@ -1912,7 +1912,6 @@ namespace Detox.ScriptEditor
       //define a function which a node will if a logic node implements a 'driven' function
       private void RelayToDriven( LogicNode receiver, string methodName )
       {
-         Parameter returnParam = Parameter.Empty;
          string args = "";
 
          foreach ( Parameter parameter in receiver.Parameters )
@@ -1925,7 +1924,7 @@ namespace Detox.ScriptEditor
             {
                if ( parameter.Name == "Return" )
                {
-                  returnParam = parameter;
+                  //do nothing, there shouldn't be one for a driven node
                }
                else
                {
