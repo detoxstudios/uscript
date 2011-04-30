@@ -915,7 +915,7 @@ http://www.detoxstudios.com";
 
    void DrawGUISidebar()
    {
-      EditorGUILayout.BeginVertical( CustomGUIStyle["panelBox"], GUILayout.Width( _guiPanelSidebar_Width ) );
+      Rect r = EditorGUILayout.BeginVertical( CustomGUIStyle["panelBox"], GUILayout.Width( _guiPanelSidebar_Width ) );
       {
          // Toolbar
          //
@@ -975,6 +975,11 @@ http://www.detoxstudios.com";
          EditorGUILayout.EndScrollView();
       }
       EditorGUILayout.EndVertical();
+      
+      if ((int)r.width != 0 && (int)r.width != _guiPanelSidebar_Width)
+      {
+         _guiPanelSidebar_Width = (int)r.width;
+      }
 
       SetMouseRegion( MouseRegion.Palette );//, 1, 1, -4, -4 );
    }
