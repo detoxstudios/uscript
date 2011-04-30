@@ -576,7 +576,7 @@ http://www.detoxstudios.com";
                      else if ( Event.current.button == 2 ) button = MouseButtons.Right;
        
                      m_MouseDownArgs.Button = button;
-                     m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width - DIVIDER_WIDTH);
+                     m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width);
                      m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
                   }
       
@@ -1829,7 +1829,7 @@ http://www.detoxstudios.com";
       lastMouseY = m_MouseMoveArgs.Y;
 
       // convert to main canvas space
-      m_MouseMoveArgs.X -= _guiPanelSidebar_Width - DIVIDER_WIDTH;
+      m_MouseMoveArgs.X -= _guiPanelSidebar_Width;
       m_MouseMoveArgs.Y -= (int)_canvasRect.yMin;
       
       System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
@@ -1841,7 +1841,7 @@ http://www.detoxstudios.com";
       }
 
       // convert back to screen
-      m_MouseMoveArgs.X += _guiPanelSidebar_Width - DIVIDER_WIDTH;
+      m_MouseMoveArgs.X += _guiPanelSidebar_Width;
       m_MouseMoveArgs.Y += (int)_canvasRect.yMin;
       
       if (GUI.enabled)
