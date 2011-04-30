@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Shows a label on the screen. Must be hooked to an OnGUI Event.
+// Desc: Shows a label on the screen.
 
 using UnityEngine;
 using System.Collections;
@@ -8,8 +8,8 @@ using System.Collections;
 [NodePath("Action/GUI")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Shows a label on the screen. Must be hooked to an OnGUI Event.")]
-[NodeDescription("Shows a label on the screen. Must be hooked to an OnGUI Event.")]
+[NodeToolTip("Shows a label on the screen.")]
+[NodeDescription("Shows a label on the screen.\n \nText: The test you want to display. \nFont Size: The size of the font.\nFont Style: The font style (Normal,Bold, Italic, BoldAndItalic).\nColor: The color of the font.\nAlignment: The position of the text on the screen.\nEdge Padding: The number of pixels tp offset the text from the edge of the screen.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
