@@ -25,6 +25,12 @@ public class FriendlyName : Attribute
    public string Name;
 }
 
+[AttributeUsage(AttributeTargets.Method)]
+public class Driven : Attribute
+{
+   public Driven() {}
+}
+
 [AttributeUsage(AttributeTargets.Class)]
 public class NodeComponentType : Attribute
 {

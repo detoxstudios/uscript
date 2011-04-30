@@ -2214,7 +2214,8 @@ http://www.detoxstudios.com";
 
          LogicNode logicNode = new LogicNode( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)) );
          
-         List<Plug> inputs = new List<Plug>( );
+         List<Plug>  inputs   = new List<Plug>( );
+         List<string> drivens = new List<string>( );
 
          Hashtable accessorMethods = new Hashtable( );
 
@@ -2273,6 +2274,21 @@ http://www.detoxstudios.com";
             if ( false == m.IsPublic ) continue;
             if ( true  == m.IsStatic ) continue;
             
+            bool driven = FindDrivenAttribute( m.GetCustomAttributes(false) );
+
+            //driven functions are called automatically by the code generation
+            //and need no other information parsed 
+            //(they use the same parameters as the rest of the functions in the node)
+            if ( true == driven ) 
+            {
+               if ( m.ReturnParameter.ParameterType == typeof(bool) )
+               {
+                  drivens.Add( m.Name );
+               }
+
+               continue;
+            }
+
             ParameterInfo [] parameters = m.GetParameters( );
 
             List<Parameter> variables = new List<Parameter>( );
@@ -2332,7 +2348,8 @@ http://www.detoxstudios.com";
             logicNode.Parameters = variables.ToArray( );
          }
 
-         logicNode.Inputs = inputs.ToArray( );
+         logicNode.Inputs  = inputs.ToArray( );
+         logicNode.Drivens = drivens.ToArray( );
 
          List<Plug> outputs = new List<Plug>( );
 
@@ -2943,6 +2960,18 @@ http://www.detoxstudios.com";
       }
 
       return defaultValue;
+   }
+
+   public static bool FindDrivenAttribute(object [] attributes)
+   {
+      if ( null == attributes ) return false;
+
+      foreach ( object a in attributes )
+      {
+         if ( a is Driven ) return true;
+      }
+
+      return false;
    }
 
    public static string FindFriendlyName(string defaultName, object [] attributes)

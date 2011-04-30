@@ -923,6 +923,11 @@ namespace Detox.ScriptEditor
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
             AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Update( );" );
+         
+            foreach ( string driven in logicNode.Drivens )
+            {
+               RelayToDriven( logicNode, driven );
+            }
          }
       }
 
@@ -1904,6 +1909,87 @@ namespace Detox.ScriptEditor
          }
       }
 
+      //define a function which a node will if a logic node implements a 'driven' function
+      private void RelayToDriven( LogicNode receiver, string methodName )
+      {
+         Parameter returnParam = Parameter.Empty;
+         string args = "";
+
+         foreach ( Parameter parameter in receiver.Parameters )
+         {
+            if ( true == parameter.Input && true == parameter.Output )
+            {
+               args += "ref " + CSharpName(receiver, parameter.Name) + ", ";
+            }
+            else if ( true == parameter.Output )
+            {
+               if ( parameter.Name == "Return" )
+               {
+                  returnParam = parameter;
+               }
+               else
+               {
+                  args += "out " + CSharpName(receiver, parameter.Name) + ", ";
+               }
+            }
+            else if ( true == parameter.Input )
+            {
+               args += CSharpName(receiver, parameter.Name) + ", ";
+            }
+         }
+
+         if ( args != "" ) args = args.Substring( 0, args.Length - 2 );
+         
+         //make sure any properties or variables connected to us are up to date
+         SyncSlaveConnections( receiver, receiver.Parameters );
+
+         AddCSharpLine( "//scope isValid" );            
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+
+            AddCSharpLine( "bool isValid = " + CSharpName(receiver, receiver.Type) + "." + methodName + "(" + args + ");" );            
+
+            AddCSharpLine( "if ( true == isValid )" );
+            AddCSharpLine( "{" );
+            ++m_TabStack;
+
+               //use previously saved temp variables to push the values
+               //to all the links we connect out to
+               foreach ( Parameter parameter in receiver.Parameters )
+               {
+                  if ( false == parameter.Output ) continue;
+
+                  LinkNode []argLinks = FindLinksBySource( receiver.Guid, parameter.Name );
+
+                  foreach ( LinkNode link in argLinks )
+                  {
+                     EntityNode argNode = m_Script.GetNode( link.Destination.Guid );
+                     AddCSharpLine( CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";" );
+                  }
+               }
+
+               //force any potential entites affected to update
+               RefreshSetProperties( receiver, receiver.Parameters );
+
+               //call anyone else connected to our outputs
+               //if the result of the logic node has set our output to true
+               foreach ( Plug output in receiver.Outputs )
+               {
+                  AddCSharpLine( "if ( " + CSharpName(receiver, receiver.Type) + "." + output.Name + " == true )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     CallRelays(receiver.Guid, output.Name);
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
+
+            --m_TabStack;
+            AddCSharpLine( "}" );
+
+         --m_TabStack;
+         AddCSharpLine( "}" );
+      }
+      
       //define functions which get called by node connections
       private void DefineRelay( EntityNode receiver )
       {

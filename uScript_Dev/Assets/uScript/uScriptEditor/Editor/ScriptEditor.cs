@@ -1192,6 +1192,7 @@ namespace Detox.ScriptEditor
          node.Outputs   = Outputs;
          node.Position  = Position;
          node.Events    = Events;
+         node.Drivens   = Drivens;
          node.Guid      = Guid.NewGuid( );
          node.Comment    = Comment;
          node.ShowComment= ShowComment;
@@ -1237,6 +1238,7 @@ namespace Detox.ScriptEditor
          if ( false == ArrayUtil.ArraysAreEqual(node.Parameters, Parameters) ) return false;
          if ( false == ArrayUtil.ArraysAreEqual(node.Outputs, Outputs) ) return false;
          if ( false == ArrayUtil.ArraysAreEqual(node.Events, Events) ) return false;
+         if ( false == ArrayUtil.ArraysAreEqual(node.Drivens, Drivens) ) return false;
 
          if ( Position != node.Position ) return false;
          if ( Guid != node.Guid ) return false;
@@ -1252,6 +1254,7 @@ namespace Detox.ScriptEditor
       public Plug    []Inputs;
       public Plug    []Outputs;
       public Plug    []Events;
+      public string  []Drivens;
 
       private Parameter m_ShowComment;
       private Parameter m_Comment;
@@ -1291,6 +1294,7 @@ namespace Detox.ScriptEditor
 
          m_Guid = Guid.NewGuid( );
 
+         Drivens      = new string[ 0 ];
          Inputs       = new Plug[ 0 ];
          Outputs      = new Plug[ 0 ];
          Events       = new Plug[ 0 ];
