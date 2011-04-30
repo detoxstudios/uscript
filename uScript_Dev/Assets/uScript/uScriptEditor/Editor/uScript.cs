@@ -70,7 +70,8 @@ public class uScript : EditorWindow
    public Rect NodeToolbarRect { get { return m_NodeToolbarRect; } }
 
    private Hashtable m_Types = new Hashtable();
-
+ 
+   private const int DIVIDER_WIDTH = 4;
 
    /* uScript GUI Window Panel Layout Variables */
 
@@ -78,9 +79,6 @@ public class uScript : EditorWindow
    int      _guiPanelProperties_Height = 250;
    int      _guiPanelProperties_Width = 250;
    int      _guiPanelSequence_Width = 250;
-   //int      _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
-   //int      _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
-
 
    Rect _canvasRect;
    Vector2  _guiPanelSidebar_ScrollPos;
@@ -460,11 +458,6 @@ http://www.detoxstudios.com";
       bool lastMouseDown = m_MouseDown;
       
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
-      if (Event.current.isMouse)
-      {
-         m_MouseMoveArgs.DeltaX = (int)Math.Round(Event.current.delta.x);
-         m_MouseMoveArgs.DeltaY = (int)Math.Round(Event.current.delta.y);
-      }
       if ( false == contextActive )
       {
          int modifierKeys = 0;
@@ -547,14 +540,8 @@ http://www.detoxstudios.com";
             case EventType.DragUpdated:
                // update mouse position
                m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
-               m_MouseMoveArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
-               m_MouseMoveArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
-
-               if ( _mouseRegion == MouseRegion.Canvas )
-               {
-                  CheckDragDropCanvas( );
-                  Event.current.Use( );
-               }
+               m_MouseMoveArgs.X = (int)Event.current.mousePosition.x;
+               m_MouseMoveArgs.Y = (int)Event.current.mousePosition.y;
                break;
             
             // key events
@@ -589,7 +576,7 @@ http://www.detoxstudios.com";
                      else if ( Event.current.button == 2 ) button = MouseButtons.Right;
        
                      m_MouseDownArgs.Button = button;
-                     m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+                     m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width + DIVIDER_WIDTH);
                      m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
                   }
       
@@ -604,8 +591,8 @@ http://www.detoxstudios.com";
             case EventType.MouseMove:
                // update mouse position
                m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
-               m_MouseMoveArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
-               m_MouseMoveArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+               m_MouseMoveArgs.X = (int)Event.current.mousePosition.x;
+               m_MouseMoveArgs.Y = (int)Event.current.mousePosition.y;
                break;
             case EventType.MouseUp:
                if ( true == m_MouseDown )
@@ -618,7 +605,7 @@ http://www.detoxstudios.com";
                   else if ( Event.current.button == 2 ) button = MouseButtons.Right;
       
                   m_MouseUpArgs.Button = button;
-                  m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+                  m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width + DIVIDER_WIDTH);
                   m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
                }
@@ -679,12 +666,22 @@ http://www.detoxstudios.com";
          else if ( Event.current.button == 2 ) button = MouseButtons.Right;
 
          m_MouseUpArgs.Button = button;
-         m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _canvasRect.xMin);
+         m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width + DIVIDER_WIDTH);
          m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
          m_MouseDownRegion = MouseRegion.Outside;
          m_MouseDown = false;
       }
+      
+      if (Event.current.type == EventType.DragPerform || Event.current.type == EventType.DragUpdated)
+      {
+         if ( _mouseRegion == MouseRegion.Canvas )
+         {
+            CheckDragDropCanvas( );
+            Event.current.Use( );
+         }
+      }
+
    }
    
    public void DrawPopups(bool contextActive)
@@ -883,12 +880,12 @@ http://www.detoxstudios.com";
 
    void DrawGUIHorizontalDivider()
    {
-       GUILayout.Box("", CustomGUIStyle["hDivider"], GUILayout.Height(3), GUILayout.ExpandWidth(true));
+       GUILayout.Box("", CustomGUIStyle["hDivider"], GUILayout.Height(DIVIDER_WIDTH), GUILayout.ExpandWidth(true));
    }
 
    void DrawGUIVerticalDivider()
    {
-       GUILayout.Box("", CustomGUIStyle["vDivider"], GUILayout.Width(3), GUILayout.ExpandHeight(true));
+       GUILayout.Box("", CustomGUIStyle["vDivider"], GUILayout.Width(DIVIDER_WIDTH), GUILayout.ExpandHeight(true));
    }
 
    void DrawGUIStatusbar()
@@ -1809,13 +1806,21 @@ http://www.detoxstudios.com";
 
       m_ScriptEditorCtrl.OnMouseDown( m_MouseDownArgs );
    }
-
+ 
+   static int lastMouseX = 0;
+   static int lastMouseY = 0;
+   
    public void OnMouseMove( )
    {
-      int deltaX = m_MouseMoveArgs.X - System.Windows.Forms.Cursor.Position.X;
-      int deltaY = m_MouseMoveArgs.Y - System.Windows.Forms.Cursor.Position.Y;
-//      int deltaX = m_MouseMoveArgs.DeltaX;
-//      int deltaY = m_MouseMoveArgs.DeltaY;
+      // calculate delta for handle dragging
+      int deltaX = m_MouseMoveArgs.X - lastMouseX;
+      int deltaY = m_MouseMoveArgs.Y - lastMouseY;
+      lastMouseX = m_MouseMoveArgs.X;
+      lastMouseY = m_MouseMoveArgs.Y;
+
+      // convert to main canvas space
+      m_MouseMoveArgs.X -= _guiPanelSidebar_Width - DIVIDER_WIDTH;
+      m_MouseMoveArgs.Y -= (int)_canvasRect.yMin;
       
       System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
@@ -1825,8 +1830,13 @@ http://www.detoxstudios.com";
          m_ScriptEditorCtrl.OnMouseMove( m_MouseMoveArgs );
       }
 
+      // convert back to screen
+      m_MouseMoveArgs.X += _guiPanelSidebar_Width - DIVIDER_WIDTH;
+      m_MouseMoveArgs.Y += (int)_canvasRect.yMin;
+      
       if (GUI.enabled)
       {
+         // check for divider draggging
          foreach ( KeyValuePair<MouseRegion, Rect>kvp in _mouseRegionRect)
          {
             MouseRegion region = kvp.Key;
@@ -1843,7 +1853,6 @@ http://www.detoxstudios.com";
                   if (m_MouseDown && region == m_MouseDownRegion)
                   {
                      _guiPanelSidebar_Width += deltaX;
-                     //Debug.Log(deltaX);
                      Repaint();
                   }
                   break;
