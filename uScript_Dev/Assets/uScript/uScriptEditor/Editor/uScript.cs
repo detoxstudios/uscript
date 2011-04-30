@@ -839,7 +839,7 @@ http://www.detoxstudios.com";
       DrawGUITopAreas();
       DrawGUIHorizontalDivider();
 
-      SetMouseRegion( MouseRegion.HandleCanvas, 1, -3, -1, 6 );
+      SetMouseRegion( MouseRegion.HandleCanvas );//, 1, -3, -1, 6 );
 
       DrawGUIBottomAreas();
       DrawGUIStatusbar();
@@ -852,7 +852,7 @@ http://www.detoxstudios.com";
          DrawGUISidebar();
          DrawGUIVerticalDivider();
 
-         SetMouseRegion( MouseRegion.HandlePalette, -3, 1, 6, -4 );
+         SetMouseRegion( MouseRegion.HandlePalette );//, -3, 1, 6, -4 );
 
          DrawGUIContent();
       }
@@ -866,12 +866,12 @@ http://www.detoxstudios.com";
          DrawGUIPropertyGrid();
          DrawGUIVerticalDivider();
 
-         SetMouseRegion( MouseRegion.HandleProperties, -3, 3, 6, -3 );
+         SetMouseRegion( MouseRegion.HandleProperties );//, -3, 3, 6, -3 );
 
          DrawGUIHelp();
          DrawGUIVerticalDivider();
 
-         SetMouseRegion( MouseRegion.HandleReference, -3, 3, 6, -3 );
+         SetMouseRegion( MouseRegion.HandleReference );//, -3, 3, 6, -3 );
 
          DrawGUISubsequences();
       }
@@ -971,10 +971,10 @@ http://www.detoxstudios.com";
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion( MouseRegion.Palette, 1, 1, -4, -4 );
+      SetMouseRegion( MouseRegion.Palette );//, 1, 1, -4, -4 );
    }
 
-   void SetMouseRegion( MouseRegion region, int x, int y, int w, int h )
+   void SetMouseRegion( MouseRegion region )
    {
       if (Event.current.type == EventType.Repaint)
       {
@@ -1351,7 +1351,7 @@ http://www.detoxstudios.com";
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion( MouseRegion.Canvas, 3, 1, -2, -4 );
+      SetMouseRegion( MouseRegion.Canvas );//, 3, 1, -2, -4 );
    }
 
 
@@ -1474,7 +1474,7 @@ http://www.detoxstudios.com";
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion( MouseRegion.Properties, 1, 3, -4, -3 );
+      SetMouseRegion( MouseRegion.Properties );//, 1, 3, -4, -3 );
    }
 
 
@@ -1537,7 +1537,7 @@ http://www.detoxstudios.com";
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion( MouseRegion.Reference, 3, 3, -6, -3 );
+      SetMouseRegion( MouseRegion.Reference );//, 3, 3, -6, -3 );
    }
 
 
@@ -1584,7 +1584,7 @@ http://www.detoxstudios.com";
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion(MouseRegion.Subsequences, 3, 3, -2, -3);
+      SetMouseRegion(MouseRegion.Subsequences );//, 3, 3, -2, -3);
    }
 
 
