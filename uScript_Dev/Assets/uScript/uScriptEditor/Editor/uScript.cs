@@ -605,7 +605,7 @@ http://www.detoxstudios.com";
                   else if ( Event.current.button == 2 ) button = MouseButtons.Right;
       
                   m_MouseUpArgs.Button = button;
-                  m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width - DIVIDER_WIDTH);
+                  m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width);
                   m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
                }
@@ -679,7 +679,7 @@ http://www.detoxstudios.com";
          else if ( Event.current.button == 2 ) button = MouseButtons.Right;
 
          m_MouseUpArgs.Button = button;
-         m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width - DIVIDER_WIDTH);
+         m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width);
          m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
          m_MouseDownRegion = MouseRegion.Outside;
