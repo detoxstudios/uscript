@@ -34,6 +34,7 @@ public class uScript_NetworkMasterServer : uScriptEvent
       if (OnEvent != null) OnEvent(this, new NetworkMasterServerEventArgs(mse));
    }
 
+#if UNITY_EDITOR
    // uScript GUI Options
    void OnDrawGizmos()
    {
@@ -43,4 +44,6 @@ public class uScript_NetworkMasterServer : uScriptEvent
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
+#endif
+
 }

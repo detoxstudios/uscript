@@ -36,6 +36,7 @@ public class uScript_Particle : uScriptEvent
       if ( Collision != null ) Collision( this, new ParticleCollisionEventArgs(gameObject) ); 
    }
 	
+#if UNITY_EDITOR
 	// uScript GUI Options
 	void OnDrawGizmos()
 	{
@@ -45,5 +46,6 @@ public class uScript_Particle : uScriptEvent
         	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
 		}
     }
+#endif
    
 }

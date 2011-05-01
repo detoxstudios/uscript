@@ -166,6 +166,7 @@ public class uScriptAct_PlaySound : uScriptLogic
 
    }
 
+#if UNITY_EDITOR
    public override Hashtable EditorDragDrop( object o )
    {
       if ( typeof(AudioClip).IsAssignableFrom(o.GetType()) )
@@ -190,4 +191,6 @@ public class uScriptAct_PlaySound : uScriptLogic
 
       return null;
    }
+#endif
+
 }

@@ -37,6 +37,7 @@ public class uScript_Level : uScriptEvent
       if ( LevelWasLoaded != null ) LevelWasLoaded(this, new LevelWasLoadedEventArgs(level));
    }
    
+#if UNITY_EDITOR
    // uScript GUI Options
    void OnDrawGizmos()
    {
@@ -46,5 +47,6 @@ public class uScript_Level : uScriptEvent
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
+#endif
 
 }

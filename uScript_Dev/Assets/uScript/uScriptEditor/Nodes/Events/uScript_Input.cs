@@ -39,6 +39,7 @@ public class uScript_Input : uScriptEvent
       }
    }
 
+#if UNITY_EDITOR
    // uScript GUI Options
    void OnDrawGizmos()
    {
@@ -48,5 +49,6 @@ public class uScript_Input : uScriptEvent
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
+#endif
 
 }

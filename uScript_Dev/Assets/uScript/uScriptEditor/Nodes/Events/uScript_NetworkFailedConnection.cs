@@ -43,6 +43,7 @@ public class uScript_NetworkFailedConnection : uScriptEvent
       if (FailedToConnectToMaster != null) FailedToConnectToMaster(this, new NetworkFailedConnectionEventArgs(error));
    }
 
+#if UNITY_EDITOR
    // uScript GUI Options
    void OnDrawGizmos()
    {
@@ -52,4 +53,6 @@ public class uScript_NetworkFailedConnection : uScriptEvent
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
+#endif
+
 }

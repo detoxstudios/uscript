@@ -46,6 +46,7 @@ public class uScript_CustomEventInt : uScriptEvent
       if ( OnCustomEventInt != null ) OnCustomEventInt( this, new CustomEventIntArgs(cEventData.EventName, (int)cEventData.EventData, cEventData.Sender) ); 
    }	
 	
+#if UNITY_EDITOR
 	// uScript GUI Options
 	void OnDrawGizmos()
 	{
@@ -55,5 +56,6 @@ public class uScript_CustomEventInt : uScriptEvent
         	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
 		}
     }
+#endif
    
 }

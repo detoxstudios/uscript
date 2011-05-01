@@ -4,7 +4,7 @@ using System.Collections;
 [AddComponentMenu("uScript/Variable Reference Gizmo")]
 public class uScript_Variable_Gizmo : MonoBehaviour {
 
-		
+#if UNITY_EDITOR	
 	// uScript GUI Options
 	void OnDrawGizmos()
 	{
@@ -15,6 +15,6 @@ public class uScript_Variable_Gizmo : MonoBehaviour {
 		}
 
     }
-	
+#endif
 	
 }

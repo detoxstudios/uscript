@@ -68,6 +68,7 @@ public class uScript_Collision : uScriptEvent
       if ( WhileInsideCollision != null ) WhileInsideCollision( this, new CollisionEventArgs(collision) ); 
    }
 	
+#if UNITY_EDITOR
 	// uScript GUI Options
 	void OnDrawGizmos()
 	{
@@ -77,5 +78,6 @@ public class uScript_Collision : uScriptEvent
         	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
 		}
     }
-   
+#endif
+
 }

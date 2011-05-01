@@ -35,6 +35,7 @@ public class uScript_NetworkInstantiate : uScriptEvent
       if (OnInstantiate != null) OnInstantiate(this, new NetworkInstantiateEventArgs(info));
    }
 
+#if UNITY_EDITOR
    // uScript GUI Options
    void OnDrawGizmos()
    {
@@ -44,4 +45,6 @@ public class uScript_NetworkInstantiate : uScriptEvent
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
+#endif
+
 }

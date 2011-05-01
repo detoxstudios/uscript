@@ -61,6 +61,7 @@ public class uScript_ProxyController : uScriptEvent
       if ( OnHit != null ) OnHit( this, new ProxyControllerCollisionEventArgs(hit) ); 
    }
 	
+#if UNITY_EDITOR
 	// uScript GUI Options
 	void OnDrawGizmos()
 	{
@@ -70,5 +71,6 @@ public class uScript_ProxyController : uScriptEvent
         	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
 		}
     }
+#endif
    
 }

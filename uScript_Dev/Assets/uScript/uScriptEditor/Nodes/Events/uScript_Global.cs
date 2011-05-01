@@ -24,6 +24,7 @@ public class uScript_Global : uScriptEvent
       if ( uScriptStart != null ) uScriptStart(this, new System.EventArgs());
    }
    
+#if UNITY_EDITOR
    // uScript GUI Options
    void OnDrawGizmos()
    {
@@ -33,5 +34,6 @@ public class uScript_Global : uScriptEvent
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
+#endif
 
 }

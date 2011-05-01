@@ -46,6 +46,7 @@ public class uScript_CustomEventFloat : uScriptEvent
       if ( OnCustomEventFloat != null ) OnCustomEventFloat( this, new CustomEventFloatArgs(cEventData.EventName, (float)cEventData.EventData, cEventData.Sender) ); 
    }	
 	
+#if UNITY_EDITOR
 	// uScript GUI Options
 	void OnDrawGizmos()
 	{
@@ -55,5 +56,6 @@ public class uScript_CustomEventFloat : uScriptEvent
         	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
 		}
     }
+#endif
    
 }

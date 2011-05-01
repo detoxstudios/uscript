@@ -43,6 +43,7 @@ public class uScript_NetworkServerPlayer : uScriptEvent
       if (PlayerDisconnected != null) PlayerDisconnected(this, new NetworkServerPlayerEventArgs(netPlayer));
    }
 
+#if UNITY_EDITOR
    // uScript GUI Options
    void OnDrawGizmos()
    {
@@ -52,4 +53,6 @@ public class uScript_NetworkServerPlayer : uScriptEvent
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
+#endif
+
 }

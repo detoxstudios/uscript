@@ -36,6 +36,7 @@ public class uScript_Joint : uScriptEvent
       if ( JointBreak != null ) JointBreak(this, new JointBreakEventArgs(force));
    }
    
+#if UNITY_EDITOR
    // uScript GUI Options
    void OnDrawGizmos()
    {
@@ -45,5 +46,6 @@ public class uScript_Joint : uScriptEvent
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
+#endif
 
 }

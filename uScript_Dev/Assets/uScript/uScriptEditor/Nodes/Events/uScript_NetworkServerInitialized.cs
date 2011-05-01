@@ -23,6 +23,7 @@ public class uScript_NetworkServerInitialized: uScriptEvent
       if (OnInitialized != null) OnInitialized(this, new System.EventArgs());
    }
 
+#if UNITY_EDITOR
    // uScript GUI Options
    void OnDrawGizmos()
    {
@@ -32,4 +33,6 @@ public class uScript_NetworkServerInitialized: uScriptEvent
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
+#endif
+
 }

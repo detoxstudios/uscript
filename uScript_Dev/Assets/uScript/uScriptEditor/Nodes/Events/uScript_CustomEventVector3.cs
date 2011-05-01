@@ -46,6 +46,7 @@ public class uScript_CustomEventVector3 : uScriptEvent
       if ( OnCustomEventVector3 != null ) OnCustomEventVector3( this, new CustomEventVector3Args(cEventData.EventName, (Vector3)cEventData.EventData, cEventData.Sender) ); 
    }	
 	
+#if UNITY_EDITOR
 	// uScript GUI Options
 	void OnDrawGizmos()
 	{
@@ -55,5 +56,6 @@ public class uScript_CustomEventVector3 : uScriptEvent
         	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
 		}
     }
+#endif
    
 }

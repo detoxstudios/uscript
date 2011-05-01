@@ -46,6 +46,7 @@ public class uScript_CustomEventBool : uScriptEvent
       if ( OnCustomEventBool != null ) OnCustomEventBool( this, new CustomEventBoolArgs(cEventData.EventName, (bool)cEventData.EventData, cEventData.Sender) ); 
    }	
 	
+#if UNITY_EDITOR
 	// uScript GUI Options
 	void OnDrawGizmos()
 	{
@@ -55,5 +56,6 @@ public class uScript_CustomEventBool : uScriptEvent
         	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
 		}
     }
-   
+#endif
+
 }

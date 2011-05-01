@@ -39,6 +39,7 @@ public class uScript_NetworkSerialization : uScriptEvent
       if (OnSerialize != null) OnSerialize(this, new NetworkSerializationEventArgs(bs, info));
    }
 
+#if UNITY_EDITOR
    // uScript GUI Options
    void OnDrawGizmos()
    {
@@ -48,4 +49,6 @@ public class uScript_NetworkSerialization : uScriptEvent
          Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
       }
    }
+#endif
+
 }
