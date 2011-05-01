@@ -36,7 +36,6 @@ public class uScript : EditorWindow
 
    Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
-   Dictionary<string,GUIStyle> CustomGUIStyle = new Dictionary<string,GUIStyle>();
 
    static private uScript s_Instance = null;
    static public uScript Instance { get { if ( null == s_Instance ) Init( ); return s_Instance; } }
@@ -287,7 +286,7 @@ http://www.detoxstudios.com";
 
          if ( Application.unityVersion != RequiredUnityBuild )
          {
-            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".\n", uScriptDebug.Type.Error );
+            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error );
             return;
          }
 
@@ -298,7 +297,7 @@ http://www.detoxstudios.com";
          }
          else
          {
-            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will expire in " + (ExpireDate - DateTime.Now).Days + " days.\n", uScriptDebug.Type.Message );
+            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message );
          }
 
          //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
@@ -787,59 +786,14 @@ http://www.detoxstudios.com";
    }
 
 
-   void CustomGUIStyles()
-   {
-      if (CustomGUIStyle.Count() > 0)
-      {
-         return;
-      }
-
-      GUIStyle style;
-
-      style = new GUIStyle(EditorStyles.foldout);
-      style.padding = new RectOffset(12, 4, 2, 2);
-      style.margin = new RectOffset(4, 4, 0, 0);
-      CustomGUIStyle.Add("paletteFoldout", style);
-
-      style = new GUIStyle(GUI.skin.button);
-      style.alignment = TextAnchor.UpperLeft;
-      style.padding = new RectOffset( 4, 4, 2, 2 );
-      style.margin = new RectOffset( 4, 4, 0, 0 );
-      style.active.textColor = UnityEngine.Color.white;
-      CustomGUIStyle.Add("paletteButton", style);
-
-      style = new GUIStyle(GUI.skin.box);
-      style.padding = new RectOffset(1, 1, 1, 1);
-      style.margin = new RectOffset(0, 0, 0, 0);
-      CustomGUIStyle.Add("panelBox", style);
-
-      style = new GUIStyle(EditorStyles.boldLabel);
-      style.margin = new RectOffset(4, 4, 0, 0);
-      CustomGUIStyle.Add("panelTitle", style);
-
-      style = new GUIStyle(GUI.skin.label);
-      style.wordWrap = true;
-      style.stretchWidth = true;
-      CustomGUIStyle.Add("referenceText", style);
-
-      style = new GUIStyle(GUI.skin.box);
-      style.margin = new RectOffset(0, 0, 0, 0);
-      style.padding = new RectOffset(0, 0, 0, 0);
-      style.border = new RectOffset(0, 0, 0, 0);
-      style.normal.background = null;
-      CustomGUIStyle.Add("hDivider", style);
-
-      style = new GUIStyle(GUI.skin.box);
-      style.margin = new RectOffset(0, 0, 0, 0);
-      style.padding = new RectOffset(0, 0, 0, 0);
-      style.border = new RectOffset(0, 0, 0, 0);
-      style.normal.background = null;
-      CustomGUIStyle.Add("vDivider", style);
-   }
 
    void DrawMainGUI()
    {
-      CustomGUIStyles();
+      if (uScriptStyles.panelTitle == null)
+      {
+         // CustomGUI styles haven't been initialized yet
+         uScriptStyles.Init();
+      }
 
       DrawGUITopAreas();
       DrawGUIHorizontalDivider();
@@ -885,12 +839,12 @@ http://www.detoxstudios.com";
 
    void DrawGUIHorizontalDivider()
    {
-       GUILayout.Box("", CustomGUIStyle["hDivider"], GUILayout.Height(DIVIDER_WIDTH), GUILayout.ExpandWidth(true));
+       GUILayout.Box("", uScriptStyles.hDivider, GUILayout.Height(DIVIDER_WIDTH), GUILayout.ExpandWidth(true));
    }
 
    void DrawGUIVerticalDivider()
    {
-       GUILayout.Box("", CustomGUIStyle["vDivider"], GUILayout.Width(DIVIDER_WIDTH), GUILayout.ExpandHeight(true));
+       GUILayout.Box("", uScriptStyles.vDivider, GUILayout.Width(DIVIDER_WIDTH), GUILayout.ExpandHeight(true));
    }
 
    void DrawGUIStatusbar()
@@ -915,13 +869,13 @@ http://www.detoxstudios.com";
 
    void DrawGUISidebar()
    {
-      Rect r = EditorGUILayout.BeginVertical( CustomGUIStyle["panelBox"], GUILayout.Width( _guiPanelSidebar_Width ) );
+      Rect r = EditorGUILayout.BeginVertical( uScriptStyles.panelBox, GUILayout.Width( _guiPanelSidebar_Width ) );
       {
          // Toolbar
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
          {
-            GUILayout.Label("Nodes", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
+            GUILayout.Label("Nodes", uScriptStyles.panelTitle, GUILayout.ExpandWidth(true));
 
             // Collapse hierarchy
             if ( GUILayout.Button( Button.Content( Button.ID.Collapse ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
@@ -1180,7 +1134,7 @@ http://www.detoxstudios.com";
       if (item.Items != null)
       {
          // This is should be a folding menu item that contains more buttons
-         GUIStyle style = new GUIStyle(CustomGUIStyle["paletteFoldout"]);
+         GUIStyle style = new GUIStyle(uScriptStyles.paletteFoldout);
          style.margin = new RectOffset(style.margin.left + (item.Indent * 12), 0, 0, 0);
 
          item.Expanded = GUILayout.Toggle(item.Expanded, item.Name, style);
@@ -1195,7 +1149,7 @@ http://www.detoxstudios.com";
       else
       {
          // This is a simple menu item
-         GUIStyle style = new GUIStyle(CustomGUIStyle["paletteButton"]);
+         GUIStyle style = new GUIStyle(uScriptStyles.paletteButton);
          style.margin = new RectOffset(style.margin.left + 0 + (item.Indent * 12),
                                        style.margin.right,
                                        style.margin.top,
@@ -1398,13 +1352,13 @@ http://www.detoxstudios.com";
 
    void DrawGUIPropertyGrid()
    {
-      EditorGUILayout.BeginVertical( CustomGUIStyle["panelBox"], GUILayout.Width( _guiPanelProperties_Width ) );
+      EditorGUILayout.BeginVertical( uScriptStyles.panelBox, GUILayout.Width( _guiPanelProperties_Width ) );
       {
          // Toolbar
          //
          EditorGUILayout.BeginHorizontal( EditorStyles.toolbar );
          {
-            GUILayout.Label("Properties", CustomGUIStyle["panelTitle"]);
+            GUILayout.Label("Properties", uScriptStyles.panelTitle);
             GUILayout.FlexibleSpace();
 //            _newPropertyGrid = GUILayout.Toggle(_newPropertyGrid, "Toggle New Panel", EditorStyles.toolbarButton);
          }
@@ -1420,31 +1374,31 @@ http://www.detoxstudios.com";
 
             _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, hsb, vsb);
             {
-               CustomGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
+               uScriptGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
                {
-                  if (CustomGUI.BeginProperty("Node Name", "NODE12345"))
+                  if (uScriptGUI.BeginProperty("Node Name", "NODE12345"))
                   {
-//                     _arrayKeyCode = CustomGUI.ArrayFoldout<KeyCode>("KeyCode Array", _arrayKeyCode, ref _arrayFoldoutBool, ref tmpBool, false);
+//                     _arrayKeyCode = uScriptGUI.ArrayFoldout<KeyCode>("KeyCode Array", _arrayKeyCode, ref _arrayFoldoutBool, ref tmpBool, false);
 
-                     _tmpInt1 = CustomGUI.IntField("Int Label", _tmpInt1, ref _tmpIntBool1, false);
-                     _tmpInt1 = CustomGUI.IntField("Int Label", _tmpInt1, ref _tmpIntBool2, true);
-                     _tmpInt2 = CustomGUI.IntField("This is a really long label!", _tmpInt2, ref _tmpIntBool3, true);
-                     _tmpFloat = CustomGUI.FloatField("Float Label", _tmpFloat, ref _tmpIntBool1, false);
-                     _enumKeyCode = (KeyCode)CustomGUI.EnumField("Enum Label", _enumKeyCode, ref _tmpIntBool1, false);
-                     _tmpString = CustomGUI.TextField("Text Label", _tmpString, ref _tmpIntBool1, false);
-                     _tmpBool = CustomGUI.BoolField("Bool Label", _tmpBool, ref _tmpIntBool1, false);
-                     _tmpColor = CustomGUI.ColorField("Color Label", _tmpColor, ref _tmpIntBool1, false);
+                     _tmpInt1 = uScriptGUI.IntField("Int Label", _tmpInt1, ref _tmpIntBool1, false);
+                     _tmpInt1 = uScriptGUI.IntField("Int Label", _tmpInt1, ref _tmpIntBool2, true);
+                     _tmpInt2 = uScriptGUI.IntField("This is a really long label!", _tmpInt2, ref _tmpIntBool3, true);
+                     _tmpFloat = uScriptGUI.FloatField("Float Label", _tmpFloat, ref _tmpIntBool1, false);
+                     _enumKeyCode = (KeyCode)uScriptGUI.EnumField("Enum Label", _enumKeyCode, ref _tmpIntBool1, false);
+                     _tmpString = uScriptGUI.TextField("Text Label", _tmpString, ref _tmpIntBool1, false);
+                     _tmpBool = uScriptGUI.BoolField("Bool Label", _tmpBool, ref _tmpIntBool1, false);
+                     _tmpColor = uScriptGUI.ColorField("Color Label", _tmpColor, ref _tmpIntBool1, false);
                   }
-                  CustomGUI.EndProperty();
+                  uScriptGUI.EndProperty();
 
-                  if (CustomGUI.BeginProperty("Node 02", "NODE02-ID"))
+                  if (uScriptGUI.BeginProperty("Node 02", "NODE02-ID"))
                   {
-                     _tmpVector2 = CustomGUI.Vector2Field("Vector2 Label", _tmpVector2, ref _tmpIntBool1, false);
-                     _tmpVector3 = CustomGUI.Vector3Field("Vector3 Label", _tmpVector3, ref _tmpIntBool1, false);
-                     _tmpVector4 = CustomGUI.Vector4Field("Vector4 Label", _tmpVector4, ref _tmpIntBool1, false);
-                     _tmpRect = CustomGUI.RectField("Rect Label", _tmpRect, ref _tmpIntBool1, false);
+                     _tmpVector2 = uScriptGUI.Vector2Field("Vector2 Label", _tmpVector2, ref _tmpIntBool1, false);
+                     _tmpVector3 = uScriptGUI.Vector3Field("Vector3 Label", _tmpVector3, ref _tmpIntBool1, false);
+                     _tmpVector4 = uScriptGUI.Vector4Field("Vector4 Label", _tmpVector4, ref _tmpIntBool1, false);
+                     _tmpRect = uScriptGUI.RectField("Rect Label", _tmpRect, ref _tmpIntBool1, false);
                   }
-                  CustomGUI.EndProperty();
+                  uScriptGUI.EndProperty();
 
 
                   //               EditorGUILayout.LabelField();
@@ -1464,7 +1418,7 @@ http://www.detoxstudios.com";
                   //               EditorGUILayout.CurveField();
                   //               EditorGUILayout.PropertyField();
                }
-               CustomGUI.EndColumns();
+               uScriptGUI.EndColumns();
             }
             EditorGUILayout.EndScrollView();
 
@@ -1490,7 +1444,7 @@ http://www.detoxstudios.com";
 
    void DrawGUIHelp()
    {
-      EditorGUILayout.BeginVertical(CustomGUIStyle["panelBox"]);
+      EditorGUILayout.BeginVertical(uScriptStyles.panelBox);
       {
          string helpDescription = String.Empty;
          string helpButtonURL = String.Empty;
@@ -1522,7 +1476,7 @@ http://www.detoxstudios.com";
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label("Reference", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
+            GUILayout.Label("Reference", uScriptStyles.panelTitle, GUILayout.ExpandWidth(true));
             GUILayout.FlexibleSpace();
 
             Button.ChangeTooltip( Button.ID.OnlineReference, "Open the online reference for the selected node in the default web browser. (" + helpButtonURL + ")" );
@@ -1537,7 +1491,7 @@ http://www.detoxstudios.com";
          {
             // prevent the help TextArea from getting focus
             GUI.SetNextControlName("helpTextArea");
-            GUILayout.TextArea(helpDescription, CustomGUIStyle["referenceText"]);
+            GUILayout.TextArea(helpDescription, uScriptStyles.referenceText);
             if (GUI.GetNameOfFocusedControl() == "helpTextArea")
             {
                 GUIUtility.keyboardControl = 0;
@@ -1553,13 +1507,13 @@ http://www.detoxstudios.com";
 
    void DrawGUISubsequences()
    {
-      EditorGUILayout.BeginVertical(CustomGUIStyle["panelBox"], GUILayout.Width(_guiPanelSequence_Width));
+      EditorGUILayout.BeginVertical(uScriptStyles.panelBox, GUILayout.Width(_guiPanelSequence_Width));
       {
          // Toolbar
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label("uScripts", CustomGUIStyle["panelTitle"], GUILayout.ExpandWidth(true));
+            GUILayout.Label("uScripts", uScriptStyles.panelTitle, GUILayout.ExpandWidth(true));
          }
          EditorGUILayout.EndHorizontal();
 
@@ -1571,14 +1525,14 @@ http://www.detoxstudios.com";
 
                if (code.GetType().ToString() == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.Name))
                {
-                  GUIStyle style = new GUIStyle(CustomGUIStyle["paletteButton"]);
+                  GUIStyle style = new GUIStyle(uScriptStyles.paletteButton);
                   style.normal.background = style.active.background;
                   GUILayout.Label(code.GetType().ToString(), style);
                }
                else
                {
                   GUIContent content = new GUIContent(code.GetType().ToString(), "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
-                  if (GUILayout.Button(content, CustomGUIStyle["paletteButton"]) && Event.current.clickCount == 2)
+                  if (GUILayout.Button(content, uScriptStyles.paletteButton) && Event.current.clickCount == 2)
                   {
                      string path = FindFile(Application.dataPath, code.GetType().ToString() + ".uscript");
                      if ("" != path)
@@ -1609,7 +1563,7 @@ http://www.detoxstudios.com";
          {
             // prevent the help TextArea from getting focus
             GUI.SetNextControlName("EULA");
-            GUILayout.TextArea(_EULAtext, CustomGUIStyle["referenceText"]);
+            GUILayout.TextArea(_EULAtext, uScriptStyles.referenceText);
             if (GUI.GetNameOfFocusedControl() == "EULA")
             {
                GUIUtility.keyboardControl = 0;

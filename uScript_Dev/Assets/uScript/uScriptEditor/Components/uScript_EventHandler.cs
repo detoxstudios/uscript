@@ -167,7 +167,7 @@ public class uScriptDebug : MonoBehaviour
    public static void Log(string msgString, Type msgType)
    {
       string appName = "uScript: ";
-      string msgOutput = appName + msgString;
+      string msgOutput = appName + msgString + "\n";
 
       switch (msgType)
       {
