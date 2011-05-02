@@ -833,7 +833,7 @@ namespace Detox.ScriptEditor
          m_Instance.Input = true;
          m_Instance.Output = false;
          m_Instance.Name = "Instance";
-         m_Instance.FriendlyName = "GameObject";
+         m_Instance.FriendlyName = "Instance";
          
          m_ShowComment = new Parameter( );
          m_ShowComment.Name    = "Show Comment";
@@ -1149,7 +1149,7 @@ namespace Detox.ScriptEditor
          ComponentType = type;
 
          m_Instance.Name = "Instance";
-         m_Instance.FriendlyName = "GameObject";
+         m_Instance.FriendlyName = "Instance";
          m_Instance.Type    = typeof(UnityEngine.GameObject).ToString( );
          m_Instance.Input   = true;
          m_Instance.Output  = false;
