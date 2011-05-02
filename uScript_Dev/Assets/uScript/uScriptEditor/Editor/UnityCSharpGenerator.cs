@@ -1172,7 +1172,7 @@ namespace Detox.ScriptEditor
 
       }
 
-         //default inputs for events which can only be set through the property grid
+      //default inputs for events which can only be set through the property grid
       //so they are only set once (in fillcomponents)
       //and we add all our event listeners here
       private void SetupEvent( string eventVariable, EntityNode instanceNode, EntityEvent eventNode )
@@ -1181,11 +1181,43 @@ namespace Detox.ScriptEditor
          {
             if ( p.Input == true )
             {
-               AddCSharpLine( eventVariable + "." + p.Name + " = " + CSharpName(eventNode, p.Name) + ";" );
+               if ( null == instanceNode && "" != eventNode.Instance.Default )
+               {
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     AddCSharpLine( eventNode.ComponentType + " component = " + CSharpName(eventNode, eventNode.Instance.Name) + ".GetComponent<" + eventNode.ComponentType + ">();" );
+                     AddCSharpLine( "if ( null != component )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                        AddCSharpLine( "component." + p.Name + " = " + CSharpName(eventNode, p.Name) + ";" );
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
+
+               if ( null != instanceNode )
+               {
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     AddCSharpLine( eventNode.ComponentType + " component = " + CSharpName(instanceNode) + ".GetComponent<" + eventNode.ComponentType + ">();" );
+                     AddCSharpLine( "if ( null != component )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                        AddCSharpLine( "component." + p.Name + " = " + CSharpName(eventNode, p.Name) + ";" );
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
             }
          }
 
-         AddEventListener( instanceNode, eventNode );
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+            AddEventListener( instanceNode, eventNode );
+         --m_TabStack;
+         AddCSharpLine( "}" );
       }
 
       private void DefineEvents( )
