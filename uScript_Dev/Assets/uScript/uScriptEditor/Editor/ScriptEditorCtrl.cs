@@ -2021,6 +2021,14 @@ namespace Detox.ScriptEditor
       public override void OnPaint( PaintEventArgs e )
       {
          UpdateStyleName();   // remove this later when we figure out why removing it doesn't initialize StyleName correctly
+   
+         if (!String.IsNullOrEmpty(m_EntityNode.Comment.DefaultAsObject as String))
+         {
+            String comment = m_EntityNode.Comment.DefaultAsObject as String;
+            Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
+         
+            e.Graphics.FillRectangle("title_comment", new Rectangle(location.X, location.Y, Size.Width, Size.Height), comment);
+         }
 
          base.OnPaint( e );
       }

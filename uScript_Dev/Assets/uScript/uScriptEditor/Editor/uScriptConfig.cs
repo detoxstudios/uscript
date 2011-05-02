@@ -430,6 +430,23 @@ public class uScriptDefaultStyle : uScriptStyle
       m_Styles["comment_body_text"] = element;
 
       element = new GUIStyle();
+      element.normal.textColor = Color.black;
+      element.border.left = 6;
+      element.border.right = 6;
+      element.border.top = 6;
+      element.border.bottom = 6;
+      element.padding.left = 0;
+      element.padding.right = 0;
+      element.padding.top = -14;
+      element.padding.bottom = 0;
+      element.fixedHeight = 0f;
+      element.fixedWidth = 0f;
+      element.alignment = TextAnchor.UpperLeft;
+      element.fontStyle = FontStyle.Normal;
+      element.fontSize = 0;
+      m_Styles["title_comment"] = element;
+      
+      element = new GUIStyle();
       element.wordWrap = true;
       element.normal.textColor = Color.black;
       element.border.left = 6;

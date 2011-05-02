@@ -102,8 +102,8 @@ namespace Detox.Data.ScriptEditor
       public EntityNodeData( )
       {
          ShowComment = new Parameter( );
-         ShowComment.FriendlyName = "Show Comment";
-         ShowComment.Name         = "Show Comment";
+         ShowComment.FriendlyName = "Output Comment";
+         ShowComment.Name         = "Output Comment";
          ShowComment.Default      = "false";
          ShowComment.Type         = "Bool";
          ShowComment.Input        = true;
@@ -142,8 +142,8 @@ namespace Detox.Data.ScriptEditor
          else
          {
             ShowComment = new Parameter( );
-            ShowComment.FriendlyName = "Show Comment";
-            ShowComment.Name         = "Show Comment";
+            ShowComment.FriendlyName = "Output Comment";
+            ShowComment.Name         = "Output Comment";
             ShowComment.Default      = "false";
             ShowComment.Type         = "Bool";
             ShowComment.Input        = true;

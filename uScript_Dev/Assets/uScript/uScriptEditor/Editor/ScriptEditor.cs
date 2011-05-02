@@ -709,8 +709,8 @@ namespace Detox.ScriptEditor
          Name.Output  = false;
       
          m_ShowComment = new Parameter( );
-         m_ShowComment.Name    = "Show Comment";
-         m_ShowComment.FriendlyName = "Show Comment";
+         m_ShowComment.Name    = "Output Comment";
+         m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
          m_ShowComment.Type    = "Bool";
          m_ShowComment.Input   = true;
@@ -836,8 +836,8 @@ namespace Detox.ScriptEditor
          m_Instance.FriendlyName = "Instance";
          
          m_ShowComment = new Parameter( );
-         m_ShowComment.Name    = "Show Comment";
-         m_ShowComment.FriendlyName = "Show Comment";
+         m_ShowComment.Name    = "Output Comment";
+         m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
          m_ShowComment.Type    = "Bool";
          m_ShowComment.Input   = true;
@@ -1161,8 +1161,8 @@ namespace Detox.ScriptEditor
          m_Parameters  = new Parameter[ 0 ];
 
          m_ShowComment = new Parameter( );
-         m_ShowComment.Name    = "Show Comment";
-         m_ShowComment.FriendlyName = "Show Comment";
+         m_ShowComment.Name    = "Output Comment";
+         m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
          m_ShowComment.Type    = "Bool";
          m_ShowComment.Input   = true;
@@ -1303,8 +1303,8 @@ namespace Detox.ScriptEditor
          m_Position = Point.Empty; 
 
          m_ShowComment = new Parameter( );
-         m_ShowComment.Name    = "Show Comment";
-         m_ShowComment.FriendlyName = "Show Comment";
+         m_ShowComment.Name    = "Output Comment";
+         m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
          m_ShowComment.Type    = "Bool";
          m_ShowComment.Input   = true;
