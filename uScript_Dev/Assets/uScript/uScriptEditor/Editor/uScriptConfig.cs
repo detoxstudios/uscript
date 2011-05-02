@@ -3,7 +3,6 @@
 // Desc: uScript's configuration file. Edit settings here to configure the uScript visual scripting tool.
 
 #define ENABLE_DEBUG_LOG
-#if UNITY_EDITOR
 
 using System;
 using System.Collections.Generic;
@@ -688,4 +687,3 @@ public partial class uScriptConfig
                               };
 }
 
-#endif
