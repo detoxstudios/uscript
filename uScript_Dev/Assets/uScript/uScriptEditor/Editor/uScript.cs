@@ -553,6 +553,14 @@ http://www.detoxstudios.com";
                   {
                      m_ScriptEditorCtrl.DeleteSelectedNodes( );
                   }
+                  else if ( Event.current.keyCode == KeyCode.Home || (Event.current.keyCode == KeyCode.H && (modifierKeys & Keys.Control) != 0) )
+                  {
+                     // re-center the graph
+                     if (m_ScriptEditorCtrl != null)
+                     {
+                        m_ScriptEditorCtrl.RefreshScript(null, true);
+                     }
+                  }
                }
    
                //keep key events from going to the rest of unity
