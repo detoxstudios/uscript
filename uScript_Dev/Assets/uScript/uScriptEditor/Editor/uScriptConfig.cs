@@ -1,232 +1,17 @@
-// uScript uScript_EventHandler.cs
+// uScript uScriptConfig.cs
 // (C) 2010 Detox Studios LLC
-// Desc: uScript_EventHandler contains event handeling and configuration code.
-//       This does NOT need to be attached to any GameObject in your project.
+// Desc: uScript's configuration file. Edit settings here to configure the uScript visual scripting tool.
 
 #define ENABLE_DEBUG_LOG
+#if UNITY_EDITOR
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEditor;
 
-[AttributeUsage(AttributeTargets.ReturnValue | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
-public class DefaultValue : Attribute
-{
-   public DefaultValue(object o) { Default = o; }
-   public object Default;
-}
-
-[AttributeUsage(AttributeTargets.All)]
-public class FriendlyName : Attribute
-{
-   public FriendlyName(string name) { Name = name; }
-   public string Name;
-}
-
-[AttributeUsage(AttributeTargets.Method)]
-public class Driven : Attribute
-{
-   public Driven() {}
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class NodeComponentType : Attribute
-{
-   public NodeComponentType(Type type) 
-   { 
-      ComponentTypes = new Type[] { type };
-   }
-   
-   public NodeComponentType(Type type1, Type type2) 
-   { 
-      ComponentTypes = new Type[] { type1, type2 };
-   }
-   
-   public Type [] ComponentTypes;
-
-   public bool ContainsType(Type type)
-   {
-      foreach ( Type t in ComponentTypes )
-      {
-         if ( t.IsAssignableFrom(type) ) return true;
-      }
-
-      return false;
-   }
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class NodeAutoAssignMasterInstance : Attribute
-{
-   public NodeAutoAssignMasterInstance(bool assign) { Value = assign; }
-   public bool Value;
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class NodePath : Attribute
-{
-   public NodePath(string value) { Value = value; }
-   public string Value;
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class NodePropertiesPath : Attribute
-{
-   public NodePropertiesPath(string value) { Value = value; }
-   public string Value;
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class NodeLicense : Attribute
-{
-   public NodeLicense(string value) { Value = value; }
-   public string Value;
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class NodeCopyright : Attribute
-{
-   public NodeCopyright(string value) { Value = value; }
-   public string Value;
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class NodeToolTip : Attribute
-{
-   public NodeToolTip(string value) { Value = value; }
-   public string Value;
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class NodeDescription : Attribute
-{
-   public NodeDescription(string value) { Value = value; }
-   public string Value;
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class NodeAuthor : Attribute
-{
-   public NodeAuthor(string value, string url) { Value = value; URL = url; }
-   public string Value;
-   public string URL;
-}
-
-[AttributeUsage(AttributeTargets.Class)]
-public class NodeHelp : Attribute
-{
-   public NodeHelp(string value) { Value = value; }
-   public string Value;
-}
-
-
-
-public class uScriptCode : MonoBehaviour
-{
-}
-
-public class uScriptEvent : MonoBehaviour
-{
-}
-
-
-public class uScriptLogic : ScriptableObject
-{
-   public virtual void Update( )     {}
-   public virtual void LateUpdate( ) {}
-   public virtual void FixedUpdate( ){}
-   public virtual void OnGUI( )      {}
-   
-   //editor
-   public virtual Hashtable EditorDragDrop( object o ) { return null; }
-}
-
-public class uScriptDebug : MonoBehaviour
-{
-
-   public enum Type
-   {
-      Message,
-      Warning,
-      Error,
-      Debug
-   }
-
-   public static void Log(string msgString)
-   {
-      Log(msgString, Type.Message);
-   }
-
-   /// <summary>
-   /// Displays a uScript message in Unity's console window.
-   /// </summary>
-   /// <param name="msgString">Message string to output to the console.</param>
-   /// <param name="msgType">Message type to output (0 = message, 1 = warning, 2 = error).</param>
-   public static void Log(string msgString, Type msgType)
-   {
-      string appName = "uScript: ";
-      string msgOutput = appName + msgString + "\n";
-
-      switch (msgType)
-      {
-         case Type.Message:
-            {
-               Debug.Log(msgOutput);
-               break;
-            }
-         case Type.Warning:
-            {
-               Debug.LogWarning(msgOutput);
-               break;
-            }
-         case Type.Error:
-            {
-               Debug.LogError(msgOutput);
-               break;
-            }
-         case Type.Debug:
-            {
-#if ( ENABLE_DEBUG_LOG )
-               Debug.Log(msgOutput);
-#endif
-               break;
-            }
-         default:
-            {
-               Debug.Log(msgOutput);
-               break;
-            }
-      }
-   }
-}
-
-public class uScriptCustomEvent
-{
-   public class CustomEventData
-   {
-      public CustomEventData() {}
-      public CustomEventData(string eventName, object eventData, GameObject sender) { EventName = eventName; EventData = eventData; Sender = sender; }
-      
-      public string EventName = "";
-      public object EventData = null;
-      public GameObject Sender = null;
-   }
-   
-   public static void BroadcastCustomEvent(string eventName, object eventData, GameObject eventSender)
-   {
-      GameObject[] gos = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
-      CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
-      foreach (GameObject go in gos) 
-      {
-         if (go && go.transform.parent == null) 
-         {
-            go.gameObject.BroadcastMessage("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
-         }
-      }   
-   }
-}
+// uScript uScript_EventHandler.cs
+// (C) 2010 Detox Studios LLC
 
 public struct uScriptConfigBlock
 {
@@ -299,7 +84,6 @@ public partial class uScriptConfig
       }
    }
 }
-
 public abstract class uScriptStyle
 {
    public abstract GUIStyle Get(string name);
@@ -503,7 +287,7 @@ public class uScriptDefaultStyle : uScriptStyle
       {
          string name = System.IO.Path.GetFileName(file.Name);
          
-         Texture2D styleBackground = AssetDatabase.LoadAssetAtPath(relativePath + "/" + name, typeof(Texture2D)) as Texture2D;
+         Texture2D styleBackground = UnityEditor.AssetDatabase.LoadAssetAtPath(relativePath + "/" + name, typeof(Texture2D)) as Texture2D;
          styleBackground.wrapMode = TextureWrapMode.Clamp;
 
          name = System.IO.Path.GetFileNameWithoutExtension(name);
@@ -804,3 +588,104 @@ public class uScriptDefaultStyle : uScriptStyle
    public override Color GridColorMajor { get { return new Color((87/255f), (96/255f), (110/255f)); } }
    public override Color GridColorMinor { get { return new Color((95/255f), (103/255f), (118/255f)); } }
 }
+
+public partial class uScriptConfig
+{
+   public static uScriptConfigBlock [] Variables
+   {
+      get
+      {
+         return new uScriptConfigBlock []
+         {
+            // Variables
+            new uScriptConfigBlock( typeof(System.Int32), "Int", "Variables" ),
+            new uScriptConfigBlock( typeof(System.Single), "Float", "Variables" ),
+            new uScriptConfigBlock( typeof(System.Single[]), "Float List", "Variables/Lists" ),
+            new uScriptConfigBlock( typeof(System.Boolean), "Bool", "Variables" ),
+            new uScriptConfigBlock( typeof(System.String), "String", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Color), "Color", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Vector2), "Vector2", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Vector3), "Vector3", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Vector4), "Vector4", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.GameObject), "GameObject", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.GameObject[]), "GameObject List", "Variables/Lists" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Camera), "Camera", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.RaycastHit), "RaycastHit", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Ray), "Ray", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Camera[]), "Camera List", "Variables/Lists" ),           
+         };
+      }
+   }
+
+   public struct Paths
+   {
+      //uScriptEditor paths
+      public static string RootFolder        { get {return UnityEngine.Application.dataPath + "/uScript";} }
+      public static string uScriptNodes      { get {return uScriptEditor + "/Nodes";} }
+      public static string ProjectFiles      { get {return RootFolder + "/ProjectFiles";} }
+      public static string uScriptEditor     { get {return RootFolder + "/uScriptEditor";} }
+
+      //user paths
+      public static string UserScripts       { get {return ProjectFiles     + "/uScripts";} }
+      public static string UserNodes         { get {return ProjectFiles     + "/Nodes";} }
+      public static string GeneratedScripts  { get {return UserScripts      + "/~GeneratedScripts";} }
+      public static string SubsequenceScripts{ get {return GeneratedScripts + "/SubSeq";} }
+      public static string GuiPath           { get {return uScriptEditor    + "/Editor/_GUI"; } }
+      public static string SkinPath          { get {return GuiPath          + "/uScriptDefault"; } } 
+      //public static string TutorialFiles     { get {return RootFolder + "/TutorialFiles";} }
+   
+      public static string RelativePath(string absolutePath)
+      {
+         return absolutePath.Substring( UnityEngine.Application.dataPath.Length - "Assets".Length );
+      }
+   }
+
+   public static uScriptStyle Style = new uScriptDefaultStyle( );
+   public static UnityEngine.Texture2D canvasBackgroundTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( Paths.RelativePath(Paths.SkinPath) + "/uscript_background.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D lineTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( Paths.RelativePath(Paths.SkinPath) + "/icons/uscript_line.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D PointerLineEnd = UnityEditor.AssetDatabase.LoadAssetAtPath( Paths.RelativePath(Paths.SkinPath) + "/icons/uscript_pointer_line_end.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D ResizeTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( Paths.RelativePath(Paths.SkinPath) + "/icons/uscript_icon_resize_comment.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static int   MinResizeX = 60;
+   public static int   MinResizeY = 16;
+   public static float bezierPenWidth = 1.25f;
+   public static float bezierPenWidthSelected = 1.5f;
+
+   public static String[] StyleTypes = {
+                                       "variable_string",
+                                       "variable_bool",
+                                       "variable_float",
+                                       "variable_int",
+                                       "variable_default",
+                                       "variable_vector3",
+                                       "variable_gameobject",
+                                       "variable_object",
+                                       "variable_selected"
+                                    };
+   public static UnityEngine.Color[] LineColors = 
+                                    {
+                                       new UnityEngine.Color(109.0f/255.0f, 224.0f/255.0f, 120.0f/255.0f),
+                                       new UnityEngine.Color(255.0f/255.0f, 58.0f/255.0f, 58.0f/255.0f),
+                                       new UnityEngine.Color(72.0f/255.0f, 115.0f/255.0f, 255.0f/255.0f),
+                                       new UnityEngine.Color(0.0f/255.0f, 222.0f/255.0f, 255.0f/255.0f),
+                                       new UnityEngine.Color(255.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f),
+                                       new UnityEngine.Color(243.0f/255.0f, 204.0f/255.0f, 110.0f/255.0f),
+                                       new UnityEngine.Color(200.0f/255.0f, 100.0f/255.0f, 255.0f/255.0f),
+                                       new UnityEngine.Color(247.0f/255.0f, 194.0f/255.0f, 255.0f/255.0f),
+                                       new UnityEngine.Color(255.0f/255.0f, 255.0f/255.0f, 196.0f/255.0f)
+                                    };
+
+   public static float[] LineWidths = 
+                              {
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.0f,
+                                 1.25f
+                              };
+}
+
+#endif

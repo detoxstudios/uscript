@@ -320,18 +320,18 @@ http://www.detoxstudios.com";
 
          Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
-         GameObject uScriptMaster = GameObject.Find(uScriptConfig.MasterObjectName);
+         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
 
          if (null == uScriptMaster)
          {
-            uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptConfig.MasterObjectName, uScriptDebug.Type.Debug);
+            uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Debug);
 
-            uScriptMaster = new GameObject(uScriptConfig.MasterObjectName);
+            uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
             uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
          }
          if (null == uScriptMaster.GetComponent<uScript_MasterObject>())
          {
-            uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_MasterObject));
          }
 
@@ -430,7 +430,7 @@ http://www.detoxstudios.com";
          // add the new uScript to the master object
          System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_AddToMaster);
          String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf("."));
-         GameObject uScriptMaster = GameObject.Find(uScriptConfig.MasterObjectName);
+         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
          uScriptMaster.AddComponent(typeName);
          m_AddToMaster = "";
       }
@@ -2693,7 +2693,7 @@ http://www.detoxstudios.com";
 
       if ( true == uScript.FindNodeAutoAssignMasterInstance(type) )
       {
-         return uScriptConfig.MasterObjectName;
+         return uScriptRuntimeConfig.MasterObjectName;
       }
 
       return "";
@@ -2707,7 +2707,7 @@ http://www.detoxstudios.com";
    {
       if ( null == component ) return null;
 
-      GameObject master = GameObject.Find( uScriptConfig.MasterObjectName );
+      GameObject master = GameObject.Find( uScriptRuntimeConfig.MasterObjectName );
       if ( null == master ) return null;
 
       Component []eventScripts = master.GetComponents<uScriptEvent>( );
