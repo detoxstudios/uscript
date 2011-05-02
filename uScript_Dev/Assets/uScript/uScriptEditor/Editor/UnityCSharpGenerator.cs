@@ -919,14 +919,16 @@ namespace Detox.ScriptEditor
 
       private void DefineUpdate( )
       {
-         //for each logic node, create an script specific instance
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
             AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Update( );" );
-         
+         }
+
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
             foreach ( string driven in logicNode.Drivens )
             {
-               RelayToDriven( logicNode, driven );
+               AddCSharpLine( CSharpRelay(logicNode, driven) + "();" );
             }
          }
       }
@@ -1910,7 +1912,7 @@ namespace Detox.ScriptEditor
       }
 
       //define a function which a node will if a logic node implements a 'driven' function
-      private void RelayToDriven( LogicNode receiver, string methodName )
+      private void DefineDriven( LogicNode receiver, string methodName )
       {
          string args = "";
 
@@ -1942,48 +1944,41 @@ namespace Detox.ScriptEditor
          //make sure any properties or variables connected to us are up to date
          SyncSlaveConnections( receiver, receiver.Parameters );
 
-         AddCSharpLine( "//scope isValid" );            
+         AddCSharpLine( "bool isValid = " + CSharpName(receiver, receiver.Type) + "." + methodName + "(" + args + ");" );            
+
+         AddCSharpLine( "if ( true == isValid )" );
          AddCSharpLine( "{" );
          ++m_TabStack;
 
-            AddCSharpLine( "bool isValid = " + CSharpName(receiver, receiver.Type) + "." + methodName + "(" + args + ");" );            
+            //use previously saved temp variables to push the values
+            //to all the links we connect out to
+            foreach ( Parameter parameter in receiver.Parameters )
+            {
+               if ( false == parameter.Output ) continue;
 
-            AddCSharpLine( "if ( true == isValid )" );
-            AddCSharpLine( "{" );
-            ++m_TabStack;
+               LinkNode []argLinks = FindLinksBySource( receiver.Guid, parameter.Name );
 
-               //use previously saved temp variables to push the values
-               //to all the links we connect out to
-               foreach ( Parameter parameter in receiver.Parameters )
+               foreach ( LinkNode link in argLinks )
                {
-                  if ( false == parameter.Output ) continue;
-
-                  LinkNode []argLinks = FindLinksBySource( receiver.Guid, parameter.Name );
-
-                  foreach ( LinkNode link in argLinks )
-                  {
-                     EntityNode argNode = m_Script.GetNode( link.Destination.Guid );
-                     AddCSharpLine( CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";" );
-                  }
+                  EntityNode argNode = m_Script.GetNode( link.Destination.Guid );
+                  AddCSharpLine( CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";" );
                }
+            }
 
-               //force any potential entites affected to update
-               RefreshSetProperties( receiver, receiver.Parameters );
+            //force any potential entites affected to update
+            RefreshSetProperties( receiver, receiver.Parameters );
 
-               //call anyone else connected to our outputs
-               //if the result of the logic node has set our output to true
-               foreach ( Plug output in receiver.Outputs )
-               {
-                  AddCSharpLine( "if ( " + CSharpName(receiver, receiver.Type) + "." + output.Name + " == true )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-                     CallRelays(receiver.Guid, output.Name);
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-               }
-
-            --m_TabStack;
-            AddCSharpLine( "}" );
+            //call anyone else connected to our outputs
+            //if the result of the logic node has set our output to true
+            foreach ( Plug output in receiver.Outputs )
+            {
+               AddCSharpLine( "if ( " + CSharpName(receiver, receiver.Type) + "." + output.Name + " == true )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+                  CallRelays(receiver.Guid, output.Name);
+               --m_TabStack;
+               AddCSharpLine( "}" );
+            }
 
          --m_TabStack;
          AddCSharpLine( "}" );
@@ -2082,6 +2077,18 @@ namespace Detox.ScriptEditor
 
                AddCSharpLine( "}" );
                AddCSharpLine( "" );
+            }
+
+            foreach ( string driven in logicNode.Drivens )
+            {
+               AddCSharpLine( "void " + CSharpRelay(logicNode, driven) + "( )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+
+                  DefineDriven( logicNode, driven );
+
+               --m_TabStack;
+               AddCSharpLine( "}" );
             }
          }
       }
