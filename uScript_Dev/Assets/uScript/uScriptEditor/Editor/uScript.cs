@@ -749,7 +749,7 @@ http://www.detoxstudios.com";
    
    void OnDestroy()
    {
-      AllowNewFile(true);
+      AllowNewFile(false);
 
       if (m_ScriptEditorCtrl != null)
       {
