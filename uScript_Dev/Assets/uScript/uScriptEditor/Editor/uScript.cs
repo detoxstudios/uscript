@@ -345,7 +345,7 @@ http://www.detoxstudios.com";
             String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
             if (!String.IsNullOrEmpty(lastOpened))
             {
-               m_FullPath = lastOpened;
+               m_FullPath = UnityEngine.Application.dataPath + lastOpened;
             }
          }
 
@@ -1938,7 +1938,7 @@ http://www.detoxstudios.com";
 
          m_FullPath = fullPath;
 
-         uScript.SetSetting("uScript\\LastOpened", fullPath);
+         uScript.SetSetting("uScript\\LastOpened", uScriptConfig.Paths.RelativePath(fullPath).Substring("Assets".Length));
       }
       else
       {
