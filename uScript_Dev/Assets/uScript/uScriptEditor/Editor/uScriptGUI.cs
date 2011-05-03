@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEditor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 //
 // This file contains a collection of custom uScript GUI controls for use with uScriptEditor
@@ -581,7 +583,21 @@ public static class uScriptGUI
    }
 
 
-
+	public static string ToolbarSearchField(string value, params GUILayoutOption[] options)
+	{
+		// Unity's built-in search field is internal. Lame.
+		//
+		MethodInfo mi = typeof(EditorGUILayout).GetMethod("ToolbarSearchField",
+		                                                  BindingFlags.Static|BindingFlags.NonPublic,
+		                                                  null,
+		                                                  new Type[] { typeof(string), typeof(GUILayoutOption[]) },
+		                                                  null);
+		if (mi != null)
+		{
+			value = (string)mi.Invoke(null, new object[] { (string)value, (GUILayoutOption[])options });
+		}
+		return value;
+	}
 
 
 

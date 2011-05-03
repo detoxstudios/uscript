@@ -74,13 +74,13 @@ public class uScript : EditorWindow
 
    /* uScript GUI Window Panel Layout Variables */
 
-   int      _guiPanelSidebar_Width = 250;
+   int      _guiPanelPalette_Width = 250;
    int      _guiPanelProperties_Height = 250;
    int      _guiPanelProperties_Width = 250;
    int      _guiPanelSequence_Width = 250;
 
    Rect _canvasRect;
-   Vector2  _guiPanelSidebar_ScrollPos;
+   Vector2  _guiPanelPalette_ScrollPos;
 
    Vector2  _guiContentScrollPos;
    float    _canvasZoom = 1;
@@ -89,18 +89,17 @@ public class uScript : EditorWindow
 
    Vector2  _guiHelpScrollPos;
 
-   /* Sidebar Variables */
-   private List<SidebarMenuItem> _sidebarMenuItems;
-   //int _sidebarPopupIndex = 0;
-   String _sidebarFilterText = "";
-   //String[] _sidebarPopupArray = { "All Nodes" };
+   /* Palette Variables */
+   private List<PaletteMenuItem> _paletteMenuItems;
+   bool _paletteFoldoutToggle = false;
+   String _paletteFilterText = string.Empty;
 
-   public class SidebarMenuItem : System.Windows.Forms.MenuItem
+   public class PaletteMenuItem : System.Windows.Forms.MenuItem
    {
       public String Name;
       public String Tooltip;
       public System.EventHandler Click;
-      public List<SidebarMenuItem> Items;
+      public List<PaletteMenuItem> Items;
       public bool Expanded;
       public bool Hidden;
       public int Indent;
@@ -115,9 +114,9 @@ public class uScript : EditorWindow
    }
 
 
-    //
-    // Sub-Sequence variables
-    //
+   //
+   // Sub-Sequence variables
+   //
    Vector2 _guiPanelSequence_ScrollPos;
     
    //
@@ -316,7 +315,7 @@ http://www.detoxstudios.com";
 
          m_ScriptEditorCtrl.BuildContextMenu();
 
-         BuildSidebarMenu(null, null);
+         BuildPaletteMenu(null, null);
 
          Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
@@ -475,7 +474,7 @@ http://www.detoxstudios.com";
             case EventType.ContextClick:
                m_ScriptEditorCtrl.BuildContextMenu( );
       
-               BuildSidebarMenu(null, null);
+               BuildPaletteMenu(null, null);
       
                m_ContextX = (int) Event.current.mousePosition.x;
                m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
@@ -583,7 +582,7 @@ http://www.detoxstudios.com";
                      else if ( Event.current.button == 2 ) button = MouseButtons.Right;
        
                      m_MouseDownArgs.Button = button;
-                     m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width);
+                     m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _guiPanelPalette_Width);
                      m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
                   }
       
@@ -612,7 +611,7 @@ http://www.detoxstudios.com";
                   else if ( Event.current.button == 2 ) button = MouseButtons.Right;
       
                   m_MouseUpArgs.Button = button;
-                  m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width);
+                  m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelPalette_Width);
                   m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
                }
@@ -686,7 +685,7 @@ http://www.detoxstudios.com";
          else if ( Event.current.button == 2 ) button = MouseButtons.Right;
 
          m_MouseUpArgs.Button = button;
-         m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelSidebar_Width);
+         m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelPalette_Width);
          m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
          m_MouseDownRegion = MouseRegion.Outside;
@@ -816,7 +815,7 @@ http://www.detoxstudios.com";
    {
       EditorGUILayout.BeginHorizontal();
       {
-         DrawGUISidebar();
+         DrawGUIPalette();
          DrawGUIVerticalDivider();
 
          SetMouseRegion( MouseRegion.HandlePalette );//, -3, 1, 6, -4 );
@@ -874,10 +873,11 @@ http://www.detoxstudios.com";
 
 //      Redraw();  // This is taking to much CPU time.
    }
-
-   void DrawGUISidebar()
+	
+	
+   void DrawGUIPalette()
    {
-      Rect r = EditorGUILayout.BeginVertical( uScriptStyles.panelBox, GUILayout.Width( _guiPanelSidebar_Width ) );
+      Rect r = EditorGUILayout.BeginVertical( uScriptStyles.panelBox, GUILayout.Width( _guiPanelPalette_Width ) );
       {
          // Toolbar
          //
@@ -885,62 +885,81 @@ http://www.detoxstudios.com";
          {
             GUILayout.Label("Nodes", uScriptStyles.panelTitle, GUILayout.ExpandWidth(true));
 
-            // Collapse hierarchy
-            if ( GUILayout.Button( Button.Content( Button.ID.Collapse ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               CollapseSidebarMenuItem(null);
-            }
+//            // Collapse hierarchy
+//            if ( GUILayout.Button( Button.Content( Button.ID.Collapse ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               CollapsePaletteMenuItem(null);
+//            }
+//
+//            // Expand hierarchy
+//            if ( GUILayout.Button( Button.Content( Button.ID.Expand ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               ExpandPaletteMenuItem(null);
+//            }
 
-            // Expand hierarchy
-            if ( GUILayout.Button( Button.Content( Button.ID.Expand ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            // Toggle hierarchy foldouts
+			bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle, (_paletteFoldoutToggle ? Button.Content(Button.ID.Collapse) : Button.Content(Button.ID.Expand)), uScriptStyles.paletteToolbarButton, GUILayout.ExpandWidth(false));
+			if (_paletteFoldoutToggle != newToggleState)
             {
-               ExpandSidebarMenuItem(null);
+               _paletteFoldoutToggle = newToggleState;
+               if (_paletteFoldoutToggle)
+               {
+                  ExpandPaletteMenuItem(null);
+               }
+               else
+               {
+                  CollapsePaletteMenuItem(null);
+               }
             }
 
             GUI.SetNextControlName ("FilterSearch" );
-            string _filterText = GUILayout.TextField(_sidebarFilterText, 10, "toolbarTextField", GUILayout.Width(80));
+			string _filterText = uScriptGUI.ToolbarSearchField(_paletteFilterText, GUILayout.Width(100));
+//            string _filterText = GUILayout.TextField(_paletteFilterText, 10, "toolbarTextField", GUILayout.Width(80));
             GUI.SetNextControlName ("" );
-            if (_filterText != _sidebarFilterText)
+            if (_filterText != _paletteFilterText)
             {
-                // Drop focus if the user inserted a newline (hit enter)
-                if (_filterText.Contains('\n'))
-                {
-                    GUIUtility.keyboardControl = 0;
-                }
+               // Drop focus if the user inserted a newline (hit enter)
+               if (_filterText.Contains('\n'))
+               {
+                  GUIUtility.keyboardControl = 0;
+               }
 
-                // Only allow letters and digits
-                _filterText = new string(_filterText.Where(ch => char.IsLetterOrDigit(ch)).ToArray());
+               // Only allow letters and digits
+//               _filterText = new string(_filterText.Where(ch => char.IsLetterOrDigit(ch)).ToArray());
 
-                _sidebarFilterText = _filterText;
-               FilterSidebarMenuItems();
+               // Trim leading whitespace
+               _filterText = _filterText.TrimStart( new char[] { ' ' } );
+
+               _paletteFilterText = _filterText;
+               FilterPaletteMenuItems();
             }
 
-            // Clear the node text filter
-            if ( GUILayout.Button( Button.Content( Button.ID.ClearFilter ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               GUIUtility.keyboardControl = 0;
-               _sidebarFilterText = String.Empty;
-               FilterSidebarMenuItems();
-            }
+//            // Clear the node text filter
+//            if ( GUILayout.Button( Button.Content( Button.ID.ClearFilter ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               GUIUtility.keyboardControl = 0;
+//               _paletteFilterText = String.Empty;
+//               FilterPaletteMenuItems();
+//            }
          }
          EditorGUILayout.EndHorizontal();
 
          // Node list
          //
-         _guiPanelSidebar_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelSidebar_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
+         _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
          {
-            foreach (SidebarMenuItem item in _sidebarMenuItems)
+            foreach (PaletteMenuItem item in _paletteMenuItems)
             {
-               DrawSidebarMenu(item);
+               DrawPaletteMenu(item);
             }
          }
          EditorGUILayout.EndScrollView();
       }
       EditorGUILayout.EndVertical();
       
-      if ((int)r.width != 0 && (int)r.width != _guiPanelSidebar_Width)
+      if ((int)r.width != 0 && (int)r.width != _guiPanelPalette_Width)
       {
-         _guiPanelSidebar_Width = (int)r.width;
+         _guiPanelPalette_Width = (int)r.width;
       }
 
       SetMouseRegion( MouseRegion.Palette );//, 1, 1, -4, -4 );
@@ -979,86 +998,86 @@ http://www.detoxstudios.com";
    }
 
 
-   private void ExpandSidebarMenuItem(SidebarMenuItem sidebarMenuItem)
+   private void ExpandPaletteMenuItem(PaletteMenuItem paletteMenuItem)
    {
-      if (sidebarMenuItem == null)
+      if (paletteMenuItem == null)
       {
-         foreach (SidebarMenuItem item in _sidebarMenuItems)
+         foreach (PaletteMenuItem item in _paletteMenuItems)
          {
-            ExpandSidebarMenuItem(item);
+            ExpandPaletteMenuItem(item);
          }
       }
-      else if (sidebarMenuItem.Items != null && sidebarMenuItem.Items.Count > 0)
+      else if (paletteMenuItem.Items != null && paletteMenuItem.Items.Count > 0)
       {
-         sidebarMenuItem.Expanded = true;
-         foreach (SidebarMenuItem item in sidebarMenuItem.Items)
+         paletteMenuItem.Expanded = true;
+         foreach (PaletteMenuItem item in paletteMenuItem.Items)
          {
             if (item == null)
             {
-               uScriptDebug.Log(sidebarMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
+               uScriptDebug.Log(paletteMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
                return;
             }
-            ExpandSidebarMenuItem(item);
+            ExpandPaletteMenuItem(item);
          }
       }
    }
 
 
-   private void CollapseSidebarMenuItem(SidebarMenuItem sidebarMenuItem)
+   private void CollapsePaletteMenuItem(PaletteMenuItem paletteMenuItem)
    {
-      if (sidebarMenuItem == null)
+      if (paletteMenuItem == null)
       {
-         foreach (SidebarMenuItem item in _sidebarMenuItems)
+         foreach (PaletteMenuItem item in _paletteMenuItems)
          {
-            CollapseSidebarMenuItem(item);
+            CollapsePaletteMenuItem(item);
          }
       }
-      else if (sidebarMenuItem.Items != null && sidebarMenuItem.Items.Count > 0)
+      else if (paletteMenuItem.Items != null && paletteMenuItem.Items.Count > 0)
       {
-         sidebarMenuItem.Expanded = false;
-         foreach (SidebarMenuItem item in sidebarMenuItem.Items)
+         paletteMenuItem.Expanded = false;
+         foreach (PaletteMenuItem item in paletteMenuItem.Items)
          {
             if (item == null)
             {
-               uScriptDebug.Log(sidebarMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
+               uScriptDebug.Log(paletteMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
                return;
             }
-            CollapseSidebarMenuItem(item);
+            CollapsePaletteMenuItem(item);
          }
       }
    }
 
 
-   private void FilterSidebarMenuItems()
+   private void FilterPaletteMenuItems()
    {
-      foreach (SidebarMenuItem item in _sidebarMenuItems)
+      foreach (PaletteMenuItem item in _paletteMenuItems)
       {
-         item.Hidden = FilterSidebarMenuItem(item, false);
+         item.Hidden = FilterPaletteMenuItem(item, false);
       }
    }
 
-   private bool FilterSidebarMenuItem(SidebarMenuItem sidebarMenuItem, bool shouldForceVisible)
+   private bool FilterPaletteMenuItem(PaletteMenuItem paletteMenuItem, bool shouldForceVisible)
    {
       // return TRUE if the parent or item should be hidden
-      if (shouldForceVisible || sidebarMenuItem.Name.ToLower().Contains(_sidebarFilterText.ToLower()))
+      if (shouldForceVisible || paletteMenuItem.Name.ToLower().Contains(_paletteFilterText.ToLower()))
       {
          // filter matched, so this and all children should be visible
-         if (sidebarMenuItem.Items != null)
+         if (paletteMenuItem.Items != null)
          {
-            foreach (SidebarMenuItem item in sidebarMenuItem.Items)
+            foreach (PaletteMenuItem item in paletteMenuItem.Items)
             {
-                item.Hidden = FilterSidebarMenuItem(item, true);
+                item.Hidden = FilterPaletteMenuItem(item, true);
             }
          }
          return false;
       }
-      else if (sidebarMenuItem.Items != null)
+      else if (paletteMenuItem.Items != null)
       {
          // check each child to see if this should be visible
          bool shouldHideParent = true;
-         foreach (SidebarMenuItem item in sidebarMenuItem.Items)
+         foreach (PaletteMenuItem item in paletteMenuItem.Items)
          {
-            item.Hidden = FilterSidebarMenuItem(item, false);
+            item.Hidden = FilterPaletteMenuItem(item, false);
             if (item.Hidden == false)
             {
                shouldHideParent = false;
@@ -1073,14 +1092,14 @@ http://www.detoxstudios.com";
    }
 
 
-   private void BuildSidebarMenu(ToolStripItem contextMenuItem, SidebarMenuItem sidebarMenuItem)
+   private void BuildPaletteMenu(ToolStripItem contextMenuItem, PaletteMenuItem paletteMenuItem)
    {
-      if (contextMenuItem == null || sidebarMenuItem == null)
+      if (contextMenuItem == null || paletteMenuItem == null)
       {
          //
-         // Create a new sidebar menu, destroying the old one
+         // Create a new palette menu, destroying the old one
          //
-         _sidebarMenuItems = new List<SidebarMenuItem>();
+         _paletteMenuItems = new List<PaletteMenuItem>();
 
          foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
          {
@@ -1088,12 +1107,12 @@ http://www.detoxstudios.com";
             {
                foreach (ToolStripItem subitem in ((ToolStripMenuItem)item).DropDownItems.Items)
                {
-                  SidebarMenuItem sidebarItem = new SidebarMenuItem();
-                  sidebarItem.Indent = 0;
+                  PaletteMenuItem paletteItem = new PaletteMenuItem();
+                  paletteItem.Indent = 0;
 
-                  BuildSidebarMenu(subitem, sidebarItem);
+                  BuildPaletteMenu(subitem, paletteItem);
 
-                  _sidebarMenuItems.Add(sidebarItem);
+                  _paletteMenuItems.Add(paletteItem);
                }
             }
          }
@@ -1102,28 +1121,28 @@ http://www.detoxstudios.com";
       {
          if ((contextMenuItem is ToolStripMenuItem) && ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items.Count > 0)
          {
-            sidebarMenuItem.Name = contextMenuItem.Text.Replace("...", "");
-            sidebarMenuItem.Items = new List<SidebarMenuItem>();
+            paletteMenuItem.Name = contextMenuItem.Text.Replace("...", "");
+            paletteMenuItem.Items = new List<PaletteMenuItem>();
 
             foreach (ToolStripItem item in ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items)
             {
-               SidebarMenuItem newItem = new SidebarMenuItem();
-               newItem.Indent = sidebarMenuItem.Indent + 1;
+               PaletteMenuItem newItem = new PaletteMenuItem();
+               newItem.Indent = paletteMenuItem.Indent + 1;
                if (item == null || newItem == null)
                {
-                  uScriptDebug.Log("Trying to pass a null parameter to BuildSidebarMenu()!\n", uScriptDebug.Type.Error);
+                  uScriptDebug.Log("Trying to pass a null parameter to BuildPaletteMenu()!\n", uScriptDebug.Type.Error);
                   return;
                }
-               BuildSidebarMenu(item, newItem);
-               sidebarMenuItem.Items.Add(newItem);
+               BuildPaletteMenu(item, newItem);
+               paletteMenuItem.Items.Add(newItem);
             }
          }
          else
          {
-            sidebarMenuItem.Name = contextMenuItem.Text.Replace("&", "");
-            sidebarMenuItem.Tooltip = FindNodeToolTip( FindNodeType(contextMenuItem.Tag as EntityNode) );
-            sidebarMenuItem.Click = contextMenuItem.Click;
-            sidebarMenuItem.Tag   = contextMenuItem.Tag;
+            paletteMenuItem.Name = contextMenuItem.Text.Replace("&", "");
+            paletteMenuItem.Tooltip = FindNodeToolTip( FindNodeType(contextMenuItem.Tag as EntityNode) );
+            paletteMenuItem.Click = contextMenuItem.Click;
+            paletteMenuItem.Tag   = contextMenuItem.Tag;
          }
       }
       else
@@ -1132,7 +1151,7 @@ http://www.detoxstudios.com";
       }
    }
 
-   private void DrawSidebarMenu(SidebarMenuItem item)
+   private void DrawPaletteMenu(PaletteMenuItem item)
    {
       if (item.Hidden)
       {
@@ -1142,28 +1161,28 @@ http://www.detoxstudios.com";
       if (item.Items != null)
       {
          // This is should be a folding menu item that contains more buttons
-         GUIStyle style = new GUIStyle(uScriptStyles.paletteFoldout);
-         style.margin = new RectOffset(style.margin.left + (item.Indent * 12), 0, 0, 0);
+         GUIStyle tmpStyle = new GUIStyle(uScriptStyles.paletteFoldout);
+         tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (item.Indent * 12), 0, 0, 0);
 
-         item.Expanded = GUILayout.Toggle(item.Expanded, item.Name, style);
+         item.Expanded = GUILayout.Toggle(item.Expanded, item.Name, tmpStyle);
          if (item.Expanded)
          {
-            foreach (SidebarMenuItem subitem in item.Items)
+            foreach (PaletteMenuItem subitem in item.Items)
             {
-               DrawSidebarMenu(subitem);
+               DrawPaletteMenu(subitem);
             }
          }
       }
       else
       {
          // This is a simple menu item
-         GUIStyle style = new GUIStyle(uScriptStyles.paletteButton);
-         style.margin = new RectOffset(style.margin.left + 0 + (item.Indent * 12),
-                                       style.margin.right,
-                                       style.margin.top,
-                                       style.margin.bottom);
+         GUIStyle tmpStyle = new GUIStyle(uScriptStyles.paletteButton);
+         tmpStyle.margin = new RectOffset(tmpStyle.margin.left + 0 + (item.Indent * 12),
+                                       tmpStyle.margin.right,
+                                       tmpStyle.margin.top,
+                                       tmpStyle.margin.bottom);
 
-         if (GUILayout.Button(new GUIContent(item.Name, item.Tooltip), style))
+         if (GUILayout.Button(new GUIContent(item.Name, item.Tooltip), tmpStyle))
          {
             if (item.Click != null)
             {
@@ -1293,7 +1312,7 @@ http://www.detoxstudios.com";
 
          // Canvas
          //
-         //_guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.Width(_guiSidebarWidth));
+         //_guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.Width(_guiPaletteWidth));
 
          GUI.skin.scrollView.normal.background = uScriptConfig.canvasBackgroundTexture;
 
@@ -1793,7 +1812,7 @@ http://www.detoxstudios.com";
       lastMouseY = m_MouseMoveArgs.Y;
 
       // convert to main canvas space
-      m_MouseMoveArgs.X -= _guiPanelSidebar_Width;
+      m_MouseMoveArgs.X -= _guiPanelPalette_Width;
       m_MouseMoveArgs.Y -= (int)_canvasRect.yMin;
       
       System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
@@ -1805,7 +1824,7 @@ http://www.detoxstudios.com";
       }
 
       // convert back to screen
-      m_MouseMoveArgs.X += _guiPanelSidebar_Width;
+      m_MouseMoveArgs.X += _guiPanelPalette_Width;
       m_MouseMoveArgs.Y += (int)_canvasRect.yMin;
       
       if (GUI.enabled)
@@ -1826,7 +1845,7 @@ http://www.detoxstudios.com";
                case MouseRegion.HandlePalette:
                   if (m_MouseDown && region == m_MouseDownRegion)
                   {
-                     _guiPanelSidebar_Width += deltaX;
+                     _guiPanelPalette_Width += deltaX;
                      Repaint();
                   }
                   break;
@@ -1922,7 +1941,7 @@ http://www.detoxstudios.com";
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
       
       m_ScriptEditorCtrl.BuildContextMenu();
-      BuildSidebarMenu(null, null);
+      BuildPaletteMenu(null, null);
       
       m_FullPath = "";
       
@@ -1944,7 +1963,7 @@ http://www.detoxstudios.com";
          m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 			
 		 m_ScriptEditorCtrl.BuildContextMenu();
-		 BuildSidebarMenu(null, null);
+		 BuildPaletteMenu(null, null);
 
          m_FullPath = fullPath;
 

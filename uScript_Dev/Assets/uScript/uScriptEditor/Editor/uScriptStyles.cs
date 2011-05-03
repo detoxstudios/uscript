@@ -10,6 +10,9 @@ using UnityEditor;
 
 public static class uScriptStyles
 {
+   private static GUIStyle _paletteToolbarButton;
+   public static GUIStyle paletteToolbarButton { get { return _paletteToolbarButton; } }
+
    private static GUIStyle _paletteFoldout;
    public static GUIStyle paletteFoldout { get { return _paletteFoldout; } }
 
@@ -34,6 +37,9 @@ public static class uScriptStyles
    public static void Init()
    {
 //      uScriptDebug.Log("Initalizing uScriptStyles", uScriptDebug.Type.Debug);
+
+      _paletteToolbarButton = new GUIStyle(EditorStyles.toolbarButton);
+      _paletteToolbarButton.margin = new RectOffset(12, 6, 0, 0);
 
       _paletteFoldout = new GUIStyle(EditorStyles.foldout);
       _paletteFoldout.padding = new RectOffset(12, 4, 2, 2);
