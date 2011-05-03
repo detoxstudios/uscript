@@ -16,15 +16,27 @@ using System.Collections;
 [FriendlyName("Interpolate Float Linearly")]
 public class uScriptAct_InterpolateFloatLinear : uScriptLogic
 {
-   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
-
+   public enum LoopType
+   {
+      None,
+      Repeat,
+      PingPong,
+   }
+   
    private float m_Start;
    private float m_End;
    private float m_TotalTime;
    private float m_CurrentTime;
    private float m_LastValue;
+   private float m_LoopDelay;
+   private int   m_LoopCount;
+   private int   m_LoopIteration;
+   private float m_LoopRestartCountdown;
+   private bool  m_IsReversed;
    private bool  m_Running;
-   
+
+   private LoopType m_LoopType;   
+
    private bool  m_AllowStoppedOutput;
    private bool  m_AllowStartedOutput;
    private bool  m_AllowInterpolatingOutput;
@@ -35,13 +47,22 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
    public bool Interpolating { get { return m_AllowInterpolatingOutput; } }
    public bool Finished      { get { return m_AllowFinishedOutput; } }
    
-   public void Begin(float startValue, float endValue, float time, out float currentValue)
+   public void Begin(
+      [FriendlyName("Start Value")] float startValue, 
+      [FriendlyName("End Value")] float endValue, 
+      [FriendlyName("Time")] float time, 
+      [FriendlyName("Loop Type")] LoopType loopType, 
+      [FriendlyName("Loop Delay")] float loopDelay, 
+      [FriendlyName("Times to Loop")] int loopCount, 
+      [FriendlyName("Output Value")] out float currentValue)
    {
-      m_CurrentTime = 0;
-      m_Start       = startValue;
-      m_End         = endValue;
-      m_TotalTime   = time;
-
+      m_CurrentTime   = 0;
+      m_Start         = startValue;
+      m_End           = endValue;
+      m_TotalTime     = time;
+      m_LoopIteration = 0;
+      m_LoopDelay     = loopDelay;
+      m_LoopRestartCountdown = 0;
       m_Running = true;
 
       m_LastValue  = startValue;
@@ -51,37 +72,90 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       m_AllowStoppedOutput       = false;
       m_AllowFinishedOutput      = false;
       m_AllowStartedOutput       = true;
+   
+      m_IsReversed = false;
+      m_LoopType   = loopType;
+      m_LoopCount  = loopCount;
    }
 
    [Driven]
-   public bool Driven(float startValue, float endValue, float time, out float currentValue)
+   public bool Driven(out float currentValue)
    {
       m_AllowInterpolatingOutput = false;
       m_AllowStoppedOutput       = false;
       m_AllowFinishedOutput      = false;
       m_AllowStartedOutput       = false;
 
+      //if we're counting down till we can run again
+      //check and see if we've hit 0 so we can process this interpolation
+      if ( m_LoopRestartCountdown > 0 )
+      {
+         m_LoopRestartCountdown -= Time.deltaTime;
+
+         if ( m_LoopRestartCountdown <= 0 ) 
+         {
+            m_Running = true;
+            m_LoopRestartCountdown = 0;
+
+            ++m_LoopIteration;
+         }
+      }
+
+      //either we're still running or the loop restart countdown hit 0
+      //and we've been restarted
       if ( true == m_Running )
       {
          m_LastValue = Mathf.Lerp( m_Start, m_End, m_CurrentTime / m_TotalTime );
          
          //we'll hit it exactly because we clamp it on the previous tick's update
-         if ( m_CurrentTime == m_TotalTime ) 
+         if ( false == m_IsReversed && m_CurrentTime == m_TotalTime ) 
          {
             m_Running = false;
-            m_AllowFinishedOutput = true;
          }
-         else
+         else if ( true == m_IsReversed && m_CurrentTime == 0 )
+         {
+            m_Running = false;
+         }
+
+         //done running? see if we should loop and restart
+         if ( false == m_Running && m_LoopIteration < m_LoopCount )
+         {
+            m_LoopRestartCountdown = m_LoopDelay;
+
+            //pingpong - reverse direction and restart
+            if ( LoopType.PingPong == m_LoopType ) 
+            {
+               m_IsReversed = ! m_IsReversed;
+               if ( 0 == m_LoopRestartCountdown ) m_Running = true;
+            }
+            //repeate = reset time and restart
+            else if ( LoopType.Repeat == m_LoopType )
+            {
+               m_CurrentTime = (m_IsReversed == false) ? 0 : m_TotalTime;
+               if ( 0 == m_LoopRestartCountdown ) m_Running = true;
+            }
+         }         
+         
+         //still running or we were restarted
+         if ( true == m_Running )
          {
             m_AllowInterpolatingOutput = true;
    
             //clamp time at end but let it come through one more time
             //so we can hit the precise end value
-            m_CurrentTime += Time.deltaTime;
-            if ( m_CurrentTime > m_TotalTime ) m_CurrentTime = m_TotalTime;
+            m_CurrentTime = (m_IsReversed == false) ? m_CurrentTime + Time.deltaTime : m_CurrentTime - Time.deltaTime;            
+            m_CurrentTime = Mathf.Clamp( m_CurrentTime, 0, m_TotalTime );
+         }
+         else
+         {
+            if ( m_LoopRestartCountdown == 0 )
+            {
+               //no looping so consider us done and output the finished flag
+               m_AllowFinishedOutput = true;            
+            }
          }
 
-         currentValue = m_LastValue;
+         currentValue = m_LastValue;         
          return true;
       }
       else
@@ -91,7 +165,15 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       }
    }
 
-   public void Stop(float startValue, float endValue, float time, out float currentValue)
+   public void Stop(
+      [FriendlyName("Start Value")] float startValue, 
+      [FriendlyName("End Value")] float endValue, 
+      [FriendlyName("Time")] float time, 
+      [FriendlyName("Loop Type")] LoopType loopType, 
+      [FriendlyName("Loop Delay")] float loopDelay, 
+      [FriendlyName("Times to Loop")] int loopCount, 
+      [FriendlyName("Output Value")] out float currentValue
+   )
    {
       m_Running = false;
 
@@ -103,7 +185,15 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       currentValue = m_LastValue;
    }
 
-   public void Resume(float startValue, float endValue, float time, out float currentValue)
+   public void Resume(
+      [FriendlyName("Start Value")] float startValue, 
+      [FriendlyName("End Value")] float endValue, 
+      [FriendlyName("Time")] float time, 
+      [FriendlyName("Loop Type")] LoopType loopType, 
+      [FriendlyName("Loop Delay")] float loopDelay, 
+      [FriendlyName("Times to Loop")] int loopCount, 
+      [FriendlyName("Output Value")] out float currentValue
+   )
    {
       m_AllowStoppedOutput       = false;
       m_AllowStartedOutput       = false;

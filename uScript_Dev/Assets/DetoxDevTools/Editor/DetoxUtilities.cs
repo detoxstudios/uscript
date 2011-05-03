@@ -28,8 +28,13 @@ public class DetoxUtilities : EditorWindow
 		new_uScript.AddComponent(typeof(uScript_Global));
       new_uScript.AddComponent(typeof(uScript_Input));
       new_uScript.AddComponent(typeof(uScript_Triggers));
-      new_uScript.AddComponent(typeof(uScript_TestBed));
-		
+      
+      System.Type type = uScript.Instance.GetAssemblyQualifiedType( "uScript_TestBed" );
+      if ( null != type )
+      {
+         new_uScript.AddComponent(type);
+		}
+
 		// Trigger GO:
 		currentObject = null;
 		currentObject = GameObject.Find("Trigger");

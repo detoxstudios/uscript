@@ -417,7 +417,7 @@ namespace Detox.ScriptEditor
                {
                   //as stated above, cretae a function which 
                   //gets the property from the entity and sets the corresponding CSharp variable
-                  AddCSharpLine( entityProperty.Parameter.Type + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
+                  AddCSharpLine( FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
                   AddCSharpLine( "{" );
                   ++m_TabStack;
                      AddCSharpLine( "return " + CSharpName(entityProperty, entityProperty.Instance.Name) + "." + entityProperty.Parameter.Name + ";" );               
@@ -460,7 +460,7 @@ namespace Detox.ScriptEditor
                   {
                      //as stated above, cretae a function which 
                      //gets the property from the entity and sets the corresponding CSharp variable
-                     AddCSharpLine( entityProperty.Parameter.Type + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
+                     AddCSharpLine( FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
                      AddCSharpLine( "{" );
                      ++m_TabStack;
                         AddCSharpLine( "return " + CSharpName(entityNode) + "." + entityProperty.Parameter.Name + ";" );               
@@ -598,7 +598,7 @@ namespace Detox.ScriptEditor
                catch { newEnum = (System.Enum) System.Enum.Parse(netType, System.Enum.GetNames(netType)[0]); }
 
 
-               return netType + "." + newEnum.ToString( );
+               return FormatType(netType + "." + newEnum.ToString( ));
             }
          }
 
@@ -801,7 +801,7 @@ namespace Detox.ScriptEditor
                   if ( p.Name == link.Source.Anchor &&
                        true == p.Output )
                   {
-                     AddCSharpLine( p.Type + " " + CSharpName(external, p.Name) + " = " + FormatValue(p.Default, p.Type) + ";" );
+                     AddCSharpLine( FormatType(p.Type) + " " + CSharpName(external, p.Name) + " = " + FormatValue(p.Default, p.Type) + ";" );
                      break;
                   }
                }
@@ -815,7 +815,7 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "//local nodes" );
          foreach ( LocalNode local in m_Script.UniqueLocals )
          {
-            AddCSharpLine( local.Value.Type + " " + CSharpName(local) + " = " + FormatValue(local.Value.Default, local.Value.Type) + ";" );
+            AddCSharpLine( FormatType(local.Value.Type) + " " + CSharpName(local) + " = " + FormatValue(local.Value.Default, local.Value.Type) + ";" );
          }
 
          AddCSharpLine( "" );
@@ -824,23 +824,28 @@ namespace Detox.ScriptEditor
          foreach ( LogicNode logic in m_Script.Logics )
          {
             AddCSharpLine( "//pointer to script instanced logic node" );
-            AddCSharpLine( logic.Type + " " + CSharpName(logic, logic.Type) + " = null;" );
+            AddCSharpLine( FormatType(logic.Type) + " " + CSharpName(logic, logic.Type) + " = null;" );
             
             foreach ( Parameter parameter in logic.Parameters )
             {
                if ( true == parameter.Input )
                {
-                  AddCSharpLine( parameter.Type + " " + CSharpName(logic, parameter.Name) + " = " + FormatValue(parameter.Default, parameter.Type) + ";" );
+                  AddCSharpLine( FormatType(parameter.Type) + " " + CSharpName(logic, parameter.Name) + " = " + FormatValue(parameter.Default, parameter.Type) + ";" );
                }
                else
                {
-                  AddCSharpLine( parameter.Type + " " + CSharpName(logic, parameter.Name) + ";" );
+                  AddCSharpLine( FormatType(parameter.Type) + " " + CSharpName(logic, parameter.Name) + ";" );
                }
             }
 
             foreach ( Plug output in logic.Outputs )
             {
                AddCSharpLine( "bool " + CSharpName(logic, output.Name) + " = true;" );
+            }
+
+            foreach ( string driven in logic.Drivens )
+            {
+               AddCSharpLine( "bool " + CSharpName(logic, driven) + " = true;" );
             }
          }
 
@@ -851,12 +856,12 @@ namespace Detox.ScriptEditor
          {
             foreach ( Parameter parameter  in entityEvent.Parameters  )
             {
-               AddCSharpLine( parameter.Type + " " + CSharpName(entityEvent, parameter.Name) + " = " + FormatValue(parameter.Default, parameter.Type) + ";" );
+               AddCSharpLine( FormatType(parameter.Type) + " " + CSharpName(entityEvent, parameter.Name) + " = " + FormatValue(parameter.Default, parameter.Type) + ";" );
             }
 
             if ( entityEvent.Instance.Default != "" )
             {
-               AddCSharpLine( entityEvent.Instance.Type + " " + CSharpName(entityEvent, entityEvent.Instance.Name) + " = " + FormatValue(entityEvent.Instance.Default, entityEvent.Instance.Type) + ";" );
+               AddCSharpLine( FormatType(entityEvent.Instance.Type) + " " + CSharpName(entityEvent, entityEvent.Instance.Name) + " = " + FormatValue(entityEvent.Instance.Default, entityEvent.Instance.Type) + ";" );
             }
          }
 
@@ -865,11 +870,11 @@ namespace Detox.ScriptEditor
 
          foreach ( EntityProperty entityProperty in m_Script.Properties )
          {
-            AddCSharpLine( entityProperty.Parameter.Type + " " + CSharpName(entityProperty, entityProperty.Parameter.Name) + " = " + FormatValue(entityProperty.Parameter.Default, entityProperty.Parameter.Type) + ";" );
+            AddCSharpLine( FormatType(entityProperty.Parameter.Type) + " " + CSharpName(entityProperty, entityProperty.Parameter.Name) + " = " + FormatValue(entityProperty.Parameter.Default, entityProperty.Parameter.Type) + ";" );
 
             if ( entityProperty.Instance.Default != "" )
             {
-               AddCSharpLine( entityProperty.Instance.Type + " " + CSharpName(entityProperty, entityProperty.Instance.Name) + " = " + FormatValue(entityProperty.Instance.Default, entityProperty.Instance.Type) + ";" );
+               AddCSharpLine( FormatType(entityProperty.Instance.Type) + " " + CSharpName(entityProperty, entityProperty.Instance.Name) + " = " + FormatValue(entityProperty.Instance.Default, entityProperty.Instance.Type) + ";" );
             }
          }
 
@@ -880,12 +885,12 @@ namespace Detox.ScriptEditor
          {
             foreach ( Parameter parameter in entityMethod.Parameters )
             {
-               AddCSharpLine( parameter.Type + " " + CSharpName(entityMethod, parameter.Name) + " = " + FormatValue(parameter.Default, parameter.Type) + ";" );
+               AddCSharpLine( FormatType(parameter.Type) + " " + CSharpName(entityMethod, parameter.Name) + " = " + FormatValue(parameter.Default, parameter.Type) + ";" );
             }
 
             if ( entityMethod.Instance.Default != "" )
             {
-               AddCSharpLine( entityMethod.Instance.Type + " " + CSharpName(entityMethod, entityMethod.Instance.Name) + " = " + FormatValue(entityMethod.Instance.Default, entityMethod.Instance.Type) + ";" );
+               AddCSharpLine( FormatType(entityMethod.Instance.Type) + " " + CSharpName(entityMethod, entityMethod.Instance.Name) + " = " + FormatValue(entityMethod.Instance.Default, entityMethod.Instance.Type) + ";" );
             }
          }
 
@@ -902,7 +907,7 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = ScriptableObject.CreateInstance(typeof(" + logicNode.Type +")) as " + logicNode.Type + ";" );
+            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = ScriptableObject.CreateInstance(typeof(" + logicNode.Type +")) as " + FormatType(logicNode.Type) + ";" );
          }
          
          AddCSharpLine( "" );
@@ -1030,7 +1035,7 @@ namespace Detox.ScriptEditor
          {
             //remove curly braces from type declaration
             //so we can use it to cast the object to the array element type
-            string type = parameter.Type;
+            string type = FormatType(parameter.Type);
             type = type.Substring( 0, type.Length - 2 );
 
             string []values = parameter.Default.Split( ',' );
@@ -1055,7 +1060,7 @@ namespace Detox.ScriptEditor
          
             //remove curly braces from type declaration
             //so we can use it to cast the object to the array element type
-            string type = parameter.Type;
+            string type = FormatType(parameter.Type);
             type = type.Substring( 0, type.Length - 2 );
 
             AddCSharpLine( "{" );
@@ -1102,7 +1107,7 @@ namespace Detox.ScriptEditor
             
                   AddCSharpLine( "{" );               
                   ++m_TabStack;
-                     AddCSharpLine( CSharpName(node, parameter.Name) + " = gameObject.GetComponent<" + parameter.Type + ">();" );
+                     AddCSharpLine( CSharpName(node, parameter.Name) + " = gameObject.GetComponent<" + FormatType(parameter.Type) + ">();" );
                      SetupEventListeners( CSharpName(node, parameter.Name), node );
                
                   --m_TabStack;
@@ -1120,7 +1125,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + parameter.Type + ";" );
+                  AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + FormatType(parameter.Type) + ";" );
                   SetupEventListeners( CSharpName(node, parameter.Name), node );
 
                --m_TabStack;
@@ -1246,7 +1251,7 @@ namespace Detox.ScriptEditor
          //define the function the event will call
          foreach ( ExternalConnection external in m_Script.Externals )
          {
-            DefineExternalInput( external );
+            DefineExternalInput ( external );
          }
 
          //then for every node linked to the event listener or logic listener
@@ -1258,6 +1263,8 @@ namespace Detox.ScriptEditor
                DefineRelay( entityNode );
             }
          }
+
+         DefineExternalDrivens( );
       }
 
       //create the function which the event listener will call
@@ -1427,7 +1434,89 @@ namespace Detox.ScriptEditor
 
          return externalLinks.ToArray( );
       }
+      
+      //create the external function outsiders can call
+      private void DefineExternalDrivens( )
+      {
+         //all output args
+         string args = "";
+         
+         foreach ( ExternalConnection external in m_Script.Externals )
+         {
+            LinkNode []links = FindLinksByDestination( external.Guid, external.Connection );
 
+            foreach ( LinkNode link in links )
+            {
+               EntityNode node = m_Script.GetNode( link.Source.Guid );
+
+               foreach ( Parameter p in node.Parameters )
+               {
+                  if ( p.Name == link.Source.Anchor )
+                  {
+                     args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).Name + ", ";
+                  }
+               }
+
+               //only one link allowed for each external
+               break;
+            }
+         }
+
+         //remove trailing comma from last input arg
+         if ( args != "" ) args = args.Substring( 0, args.Length - 2 );
+ 
+         foreach ( LogicNode logic in m_Script.Logics )
+         {
+            foreach ( string driven in logic.Drivens )
+            {
+               DefineExternalDriven( logic, driven, args );
+            }
+         }
+      }
+
+      void DefineExternalDriven( LogicNode node, string driven, string args )
+      {
+         AddCSharpLine( "[Driven]" );
+         AddCSharpLine( "public bool " + CSharpExternalDriven(node, driven) + "( " + args + " )" );
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+
+            //transfer our member variables modified internally to the external call
+            foreach ( ExternalConnection external in m_Script.Externals )
+            {
+               LinkNode []outputs = FindLinksByDestination( external.Guid, external.Connection );
+
+               foreach ( LinkNode link in outputs )
+               {
+                  EntityNode parameterNode = m_Script.GetNode( link.Source.Guid );
+
+                  foreach ( Parameter p in parameterNode.Parameters )
+                  {
+                     if ( p.Name == link.Source.Anchor )
+                     {
+                        //external connections don't have a parameter
+                        //because they take on whatever parameter they link to
+                        Parameter parameter = new Parameter( );
+                        parameter.Name = external.Connection;
+                        parameter.Type = p.Type;
+                        SyncSlaveConnections(external, new Parameter[]{ parameter } );
+
+                        AddCSharpLine( CSharpExternalParameterDeclaration(external.Name.Default, parameterNode, p.Name).Name + " = " + CSharpName(external, p.Name) + ";" );
+                     }
+                  }
+
+                  //only one link allowed for each external
+                  break;
+               }
+            }
+
+            AddCSharpLine( "return " + CSharpName(node, driven) + ";" );
+
+         --m_TabStack;
+         AddCSharpLine( "}" );
+         AddCSharpLine( "" );
+      }
+      
       //create the external function outsiders can call
       private void DefineExternalInput( ExternalConnection externalInput )
       {
@@ -1447,7 +1536,7 @@ namespace Detox.ScriptEditor
                   if ( p.Name == link.Destination.Anchor )
                   {
                      inputArgs += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).FriendlyName + "\")] ";
-                     inputArgs += p.Type + " " + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).Name + ", ";
+                     inputArgs += FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).Name + ", ";
                   }
                }
             
@@ -1475,7 +1564,7 @@ namespace Detox.ScriptEditor
                   if ( p.Name == link.Source.Anchor )
                   {
                      outputArgs += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).FriendlyName + "\")] ";
-                     outputArgs += "out " + p.Type + " " + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).Name + ", ";
+                     outputArgs += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).Name + ", ";
                   }
                }
 
@@ -1507,6 +1596,7 @@ namespace Detox.ScriptEditor
                if ( method.Input.Name == relayLink.Destination.Anchor )
                {
                   allowLink = true;
+                  break;
                }
             }
             else if ( node is LogicNode )
@@ -1518,95 +1608,102 @@ namespace Detox.ScriptEditor
                   if ( input.Name == relayLink.Destination.Anchor )
                   {
                      allowLink = true;
+                     break;
                   }
                }
             }
 
             if ( false == allowLink ) continue;
-            
-            AddCSharpLine( "[FriendlyName(\"" + CSharpExternalInputDeclaration(externalInput.Name.Default, node, relayLink.Destination.Anchor).FriendlyName + "\")]" );
-            AddCSharpLine( "public void " + CSharpExternalInputDeclaration(externalInput.Name.Default, node, relayLink.Destination.Anchor).Name + "( " + args + " )" );
-            AddCSharpLine( "{" );
 
-            ++m_TabStack;
-
-            PrintDebug( externalInput );
-
-            //set all output links to false
-            string []outputLinks = FindExternalOutputs( );
-
-            foreach ( string s in outputLinks )
-            {
-               AddCSharpLine( s + " = false;" );
-            }
-            AddCSharpLine( "" );
-
-
-            //transfer input args to our member variables
-            foreach ( ExternalConnection external in m_Script.Externals )
-            {
-               LinkNode []inputs = FindLinksBySource( external.Guid, external.Connection );
-
-               foreach ( LinkNode link in inputs )
-               {
-                  EntityNode parameterNode = m_Script.GetNode( link.Destination.Guid );
-
-                  foreach ( Parameter p in parameterNode.Parameters )
-                  {
-                     if ( p.Name == link.Destination.Anchor )
-                     {
-                        AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default, parameterNode, p.Name).Name + ";" );
-                     }
-                  }
-
-                  //only one link allowed for each external
-                  break;
-               }
-
-               //external connections don't have a parameter
-               //because they take on whatever parameter they link to
-               Parameter parameter = new Parameter( );
-               parameter.Name = external.Connection;
-               RefreshSetProperties( external, new Parameter[] {parameter} );
-            }
-
-            AddCSharpLine( CSharpRelay(node, relayLink.Destination.Anchor) + "( );" );
-
-
-            //transfer our member variables to the output args
-            foreach ( ExternalConnection external in m_Script.Externals )
-            {
-               LinkNode []outputs = FindLinksByDestination( external.Guid, external.Connection );
-
-               foreach ( LinkNode link in outputs )
-               {
-                  EntityNode parameterNode = m_Script.GetNode( link.Source.Guid );
-
-                  foreach ( Parameter p in parameterNode.Parameters )
-                  {
-                     if ( p.Name == link.Source.Anchor )
-                     {
-                        //external connections don't have a parameter
-                        //because they take on whatever parameter they link to
-                        Parameter parameter = new Parameter( );
-                        parameter.Name = external.Connection;
-                        parameter.Type = p.Type;
-                        SyncSlaveConnections(external, new Parameter[]{ parameter } );
-
-                        AddCSharpLine( CSharpExternalParameterDeclaration(external.Name.Default, parameterNode, p.Name).Name + " = " + CSharpName(external, p.Name) + ";" );
-                     }
-                  }
-
-                  //only one link allowed for each external
-                  break;
-               }
-            }
-
-            --m_TabStack;
-
-            AddCSharpLine( "}" );
-            AddCSharpLine( "" );
+            DefineExternalInput( externalInput, node, relayLink.Destination, args );
          }
+      }
+
+      void DefineExternalInput( ExternalConnection externalInput, EntityNode node, LinkNode.Connection connection, string args )
+      {
+         AddCSharpLine( "[FriendlyName(\"" + CSharpExternalInputDeclaration(externalInput.Name.Default, node, connection.Anchor).FriendlyName + "\")]" );
+         AddCSharpLine( "public void " + CSharpExternalInputDeclaration(externalInput.Name.Default, node, connection.Anchor).Name + "( " + args + " )" );
+         AddCSharpLine( "{" );
+
+         ++m_TabStack;
+
+         PrintDebug( externalInput );
+
+         //set all output links to false
+         string []outputLinks = FindExternalOutputs( );
+
+         foreach ( string s in outputLinks )
+         {
+            AddCSharpLine( s + " = false;" );
+         }
+
+         AddCSharpLine( "" );
+
+
+         //transfer input args to our member variables
+         foreach ( ExternalConnection external in m_Script.Externals )
+         {
+            LinkNode []inputs = FindLinksBySource( external.Guid, external.Connection );
+
+            foreach ( LinkNode link in inputs )
+            {
+               EntityNode parameterNode = m_Script.GetNode( link.Destination.Guid );
+
+               foreach ( Parameter p in parameterNode.Parameters )
+               {
+                  if ( p.Name == link.Destination.Anchor )
+                  {
+                     AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default, parameterNode, p.Name).Name + ";" );
+                  }
+               }
+
+               //only one link allowed for each external
+               break;
+            }
+
+            //external connections don't have a parameter
+            //because they take on whatever parameter they link to
+            Parameter parameter = new Parameter( );
+            parameter.Name = external.Connection;
+            RefreshSetProperties( external, new Parameter[] {parameter} );
+         }
+
+         AddCSharpLine( CSharpRelay(node, connection.Anchor) + "( );" );
+
+
+         //transfer our member variables to the output args
+         foreach ( ExternalConnection external in m_Script.Externals )
+         {
+            LinkNode []outputs = FindLinksByDestination( external.Guid, external.Connection );
+
+            foreach ( LinkNode link in outputs )
+            {
+               EntityNode parameterNode = m_Script.GetNode( link.Source.Guid );
+
+               foreach ( Parameter p in parameterNode.Parameters )
+               {
+                  if ( p.Name == link.Source.Anchor )
+                  {
+                     //external connections don't have a parameter
+                     //because they take on whatever parameter they link to
+                     Parameter parameter = new Parameter( );
+                     parameter.Name = external.Connection;
+                     parameter.Type = p.Type;
+                     SyncSlaveConnections(external, new Parameter[]{ parameter } );
+
+                     AddCSharpLine( CSharpExternalParameterDeclaration(external.Name.Default, parameterNode, p.Name).Name + " = " + CSharpName(external, p.Name) + ";" );
+                  }
+               }
+
+               //only one link allowed for each external
+               break;
+            }
+         }
+
+         --m_TabStack;
+
+         AddCSharpLine( "}" );
+         AddCSharpLine( "" );
       }
 
       //create the function which the event listener will call
@@ -1965,10 +2062,6 @@ namespace Detox.ScriptEditor
                   args += "out " + CSharpName(receiver, parameter.Name) + ", ";
                }
             }
-            else if ( true == parameter.Input )
-            {
-               args += CSharpName(receiver, parameter.Name) + ", ";
-            }
          }
 
          if ( args != "" ) args = args.Substring( 0, args.Length - 2 );
@@ -1976,9 +2069,9 @@ namespace Detox.ScriptEditor
          //make sure any properties or variables connected to us are up to date
          SyncSlaveConnections( receiver, receiver.Parameters );
 
-         AddCSharpLine( "bool isValid = " + CSharpName(receiver, receiver.Type) + "." + methodName + "(" + args + ");" );            
+         AddCSharpLine( CSharpName(receiver, methodName) + " = " + CSharpName(receiver, receiver.Type) + "." + methodName + "(" + args + ");" );            
 
-         AddCSharpLine( "if ( true == isValid )" );
+         AddCSharpLine( "if ( true == " + CSharpName(receiver, methodName) + " )" );
          AddCSharpLine( "{" );
          ++m_TabStack;
 
@@ -2184,7 +2277,14 @@ namespace Detox.ScriptEditor
             throw new Exception( "CSharp GENERATION ERROR - UNKNOWN TYPE " + entityNode.GetType( ).ToString( ) );
          }
 
+         name = name.Replace( "+", "." );
+
          return MakeSyntaxSafe( name );
+      }
+
+      private string FormatType(string type)
+      {
+         return type.Replace( "+", "." );
       }
 
       public static string MakeSyntaxSafe(string s)
@@ -2313,6 +2413,11 @@ namespace Detox.ScriptEditor
          return "FillComponents( )";
       }
 
+      private string CSharpExternalDriven(EntityNode node, string name)
+      {
+         return name + "_" + GetGuidId(node.Guid);
+      }
+
       private Plug CSharpExternalInputDeclaration(string defaultName, EntityNode node, string name)
       {
          Plug plug;
@@ -2375,7 +2480,7 @@ namespace Detox.ScriptEditor
       //unique function name per entity event to receive
       private string CSharpEventDeclaration(LogicNode logicNode, string eventName)
       {
-         return logicNode.Type + "_" + eventName + "_" + GetGuidId(logicNode.Guid);
+         return FormatType(logicNode.Type) + "_" + eventName + "_" + GetGuidId(logicNode.Guid);
       }
 
       //have any non-triggable nodes (properties, local variables)

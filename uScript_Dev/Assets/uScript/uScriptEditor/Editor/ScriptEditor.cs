@@ -1862,7 +1862,7 @@ namespace Detox.ScriptEditor
          return true;
       }
 
-      public bool BacktraceExternal( LinkNode link )
+      public bool BacktraceExternalOutput( LinkNode link )
       {
          //if node can't be found we won't need to fail on the backtrace
          if ( false == m_Nodes.Contains(link.Source.Guid) ) return true;
@@ -2076,7 +2076,7 @@ namespace Detox.ScriptEditor
          
          if ( dest is ExternalConnection )
          {
-            if ( false == BacktraceExternal(link) )
+            if ( false == BacktraceExternalOutput(link) )
             {
                reason = "External Connections linked to an immediate output cannot also have an event in the same link chain. " +
                         "This is because the parent script will be expecting an immediate output however the nested script will block on the event.";
@@ -2221,7 +2221,7 @@ namespace Detox.ScriptEditor
                {
                   if ( link.Destination.Guid == connection.Guid )
                   {
-                     if ( false == BacktraceExternal(link) )
+                     if ( false == BacktraceExternalOutput(link) )
                      {
                         m_Nodes.Remove( node.Guid );
                         rejected = true;
