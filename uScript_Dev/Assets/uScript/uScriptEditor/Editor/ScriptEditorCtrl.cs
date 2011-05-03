@@ -2022,7 +2022,7 @@ namespace Detox.ScriptEditor
       {
          UpdateStyleName();   // remove this later when we figure out why removing it doesn't initialize StyleName correctly
    
-         if (!String.IsNullOrEmpty(m_EntityNode.Comment.DefaultAsObject as String))
+         if (m_EntityNode.Comment != Parameter.Empty && !String.IsNullOrEmpty(m_EntityNode.Comment.DefaultAsObject as String))
          {
             String comment = m_EntityNode.Comment.DefaultAsObject as String;
             Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
