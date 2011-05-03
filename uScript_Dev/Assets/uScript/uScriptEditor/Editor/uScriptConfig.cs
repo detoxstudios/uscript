@@ -53,7 +53,7 @@ public partial class uScriptConfig
             }
          }
 
-         return type;
+         return null == type ? "null" : type;
       }
       
       //return a style based on the friendly name,

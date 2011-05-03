@@ -1451,6 +1451,9 @@ namespace Detox.ScriptEditor
 
                foreach ( Parameter p in node.Parameters )
                {
+                  //we don't allow refs or inputs on drivens
+                  //because uScript standard doesn't allow changing of input variables
+                  //without a pulse in
                   if ( p.Name == link.Source.Anchor )
                   {
                      args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).Name + ", ";
@@ -1520,8 +1523,11 @@ namespace Detox.ScriptEditor
       //create the external function outsiders can call
       private void DefineExternalInput( ExternalConnection externalInput )
       {
-         //all input args
-         string inputArgs = "";
+         List<Parameter>  parameters = new List<Parameter>( );
+         List<EntityNode> nodes      = new List<EntityNode>( );
+
+         List<ExternalConnection> externals  = new List<ExternalConnection>( );
+         Hashtable uniqueMatches = new Hashtable( );
 
          foreach ( ExternalConnection external in m_Script.Externals )
          {
@@ -1535,8 +1541,16 @@ namespace Detox.ScriptEditor
                {
                   if ( p.Name == link.Destination.Anchor )
                   {
-                     inputArgs += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).FriendlyName + "\")] ";
-                     inputArgs += FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).Name + ", ";
+                     string key = node.Guid + "" + p.Name;
+
+                     if ( false == uniqueMatches.Contains(key) )
+                     {
+                        uniqueMatches[ key ] = true;
+
+                        parameters.Add( p );
+                        nodes.Add( node );
+                        externals.Add( external );
+                     }
                   }
                }
             
@@ -1545,12 +1559,6 @@ namespace Detox.ScriptEditor
             }
          }
 
-         //remove trailing comma from last input arg
-         if ( inputArgs != "" ) inputArgs = inputArgs.Substring( 0, inputArgs.Length - 2 );
-
-         //all output args
-         string outputArgs = "";
-         
          foreach ( ExternalConnection external in m_Script.Externals )
          {
             LinkNode []links = FindLinksByDestination( external.Guid, external.Connection );
@@ -1563,8 +1571,16 @@ namespace Detox.ScriptEditor
                {
                   if ( p.Name == link.Source.Anchor )
                   {
-                     outputArgs += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).FriendlyName + "\")] ";
-                     outputArgs += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).Name + ", ";
+                     string key = node.Guid + "" + p.Name;
+
+                     if ( false == uniqueMatches.Contains(key) )
+                     {
+                        uniqueMatches[ key ] = true;
+
+                        parameters.Add( p );
+                        nodes.Add( node );
+                        externals.Add( external );
+                     }
                   }
                }
 
@@ -1573,14 +1589,33 @@ namespace Detox.ScriptEditor
             }
          }
 
-         //remove trailing comma from last input arg
-         if ( outputArgs != "" ) outputArgs = outputArgs.Substring( 0, outputArgs.Length - 2 );
+         string args = "";
 
-         //consolidate our args
-         string args = inputArgs;
-         if ( args != "" && outputArgs != "" ) args += ", " + outputArgs;
-         else if ( outputArgs != "" ) args = outputArgs;
+         for ( int i = 0; i < parameters.Count; i++ )
+         {
+            Parameter p  = parameters[ i ];
+            EntityNode n = nodes[ i ];
+            ExternalConnection e = externals[ i ];
+         
+            if ( true == p.Input && false == p.Output )
+            {
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).FriendlyName + "\")] ";
+               args += FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).Name + ", ";
+            }
+            else if ( true == p.Input && true == p.Output )
+            {
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).FriendlyName + "\")] ";
+               args += "ref " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).Name + ", ";
+            }
+            else if ( false == p.Input && true == p.Output )
+            {
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).FriendlyName + "\")] ";
+               args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).Name + ", ";
+            }
+         }
  
+         if ( args != "" ) args = args.Substring( 0, args.Length - 2 );
+         
          LinkNode []relays = FindLinksBySource( externalInput.Guid, externalInput.Connection );
          
          foreach ( LinkNode relayLink in relays )
@@ -2047,11 +2082,10 @@ namespace Detox.ScriptEditor
 
          foreach ( Parameter parameter in receiver.Parameters )
          {
-            if ( true == parameter.Input && true == parameter.Output )
-            {
-               args += "ref " + CSharpName(receiver, parameter.Name) + ", ";
-            }
-            else if ( true == parameter.Output )
+            //we don't allow refs or inputs on drivens
+            //because uScript standard doesn't allow changing of input variables
+            //without a pulse in
+            if ( true == parameter.Output )
             {
                if ( parameter.Name == "Return" )
                {

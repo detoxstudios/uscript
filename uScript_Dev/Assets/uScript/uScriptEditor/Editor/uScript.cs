@@ -1702,6 +1702,8 @@ http://www.detoxstudios.com";
 
    public Type GetAssemblyQualifiedType(String typeName)
    {
+      if ( null == typeName ) return null;
+
       // try the basic version first
       if ( Type.GetType(typeName) != null ) return Type.GetType(typeName);
       

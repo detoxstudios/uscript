@@ -71,6 +71,12 @@ public class uScript_Lerper
          }
       }
 
+      //output the value before the modifications
+      //to time..this way we can fully output each value and then
+      //prepare the time for our next tick whether we start
+      //pingpong, loop, etc... 
+      currentTime = m_CurrentTime / m_TotalTime;         
+
       //either we're still running or the loop restart countdown hit 0
       //and we've been restarted
       if ( true == m_Running )
@@ -123,12 +129,10 @@ public class uScript_Lerper
             }
          }
 
-         currentTime = m_CurrentTime / m_TotalTime;         
          return true;
       }
       else
       {
-         currentTime = m_CurrentTime / m_TotalTime;         
          return false;      
       }
    }
