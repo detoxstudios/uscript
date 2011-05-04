@@ -2586,6 +2586,7 @@ namespace Detox.ScriptEditor
             foreach ( EntityEvent entityEvent in desc.Events )
             {
                if ( entityEvent.Instance.Type == data.Instance.Type &&
+                    entityEvent.ComponentType == data.ComponentType &&
                     true == ArrayUtil.ArraysAreEqual(entityEvent.Outputs, ArrayUtil.ToPlugs(data.Outputs)) )
                {
                   cloned = entityEvent;

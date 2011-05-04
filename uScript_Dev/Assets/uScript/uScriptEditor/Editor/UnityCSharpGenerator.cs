@@ -284,6 +284,21 @@ namespace Detox.ScriptEditor
                --m_TabStack;
                AddCSharpLine( "}" );
 
+               AddCSharpLine( "#if UNITY_EDITOR" );
+               ++m_TabStack;
+
+                  AddCSharpLine( "void OnDrawGizmos( )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+               
+                     DefineDrawGizmos( );
+               
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+
+               --m_TabStack;
+               AddCSharpLine( "#endif" );
+
             --m_TabStack;
             AddCSharpLine( "}" );
          }
@@ -750,6 +765,16 @@ namespace Detox.ScriptEditor
          }
 
          return declaration;
+      }
+
+      private void DefineDrawGizmos( )
+      {
+         foreach ( EntityNode node in m_Script.EntityNodes )
+         {
+            if ( "" != node.Instance.Default )
+            {
+            }
+         }
       }
 
       //declare all the members this file will use throughout the CSharp functions
@@ -1285,7 +1310,7 @@ namespace Detox.ScriptEditor
                //only allow output parameters, those come through in the event args
                if ( parameter.Input == true ) continue;
 
-               AddCSharpLine( CSharpName(entityEvent, parameter.Name) + " = e. " + parameter.Name + ";" );
+               AddCSharpLine( CSharpName(entityEvent, parameter.Name) + " = e." + parameter.Name + ";" );
                ++i;
             }
 
