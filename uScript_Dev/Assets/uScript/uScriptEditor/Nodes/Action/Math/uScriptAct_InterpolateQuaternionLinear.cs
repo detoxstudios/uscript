@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Linearly interpolate a float over time.
+// Desc: Linearly interpolate a Quaternion over time.
 
 using UnityEngine;
 using System.Collections;
@@ -8,17 +8,18 @@ using System.Collections;
 [NodePath("Action/Math/Interpolation")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Linearly interpolate a float over time.")]
-[NodeDescription("Linearly interpolate a float over time.")]
+[NodeToolTip("Linearly interpolate a Quaternion over time.")]
+[NodeDescription("Linearly interpolate a Quaternion over time.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-[FriendlyName("Interpolate Float Linear")]
-public class uScriptAct_InterpolateFloatLinear : uScriptLogic
+[FriendlyName("Interpolate Quaternion Linear")]
+public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
 { 
-   private float m_Start;
-   private float m_End;
-   private float m_LastValue;
+   private Vector4 m_Start;
+   private Vector4 m_End;
+
+   private Quaternion m_LastValue;
 
    private uScript_Lerper m_Lerper = new uScript_Lerper( );
 
@@ -28,34 +29,40 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
    public bool Finished      { get { return m_Lerper.AllowFinishedOutput; } }
    
    public void Begin(
-      [FriendlyName("Start Value")] float startValue, 
-      [FriendlyName("End Value")] float endValue, 
+      [FriendlyName("Start Value")] Quaternion startValue, 
+      [FriendlyName("End Value")] Quaternion endValue, 
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
       [FriendlyName("Times to Loop")] int loopCount, 
-      [FriendlyName("Output Value")] out float currentValue
+      [FriendlyName("Output Value")] out Quaternion currentValue
    )
    {
       m_Lerper.Set( time, loopType, loopDelay, loopCount );
 
-      m_Start      = startValue;
-      m_LastValue  = startValue;
-      m_End        = endValue;
+      m_Start      = new Vector4(startValue.x, startValue.y, startValue.z, startValue.w);
+      m_End        = new Vector4(endValue.x, endValue.y, endValue.z, endValue.w);
 
+      m_LastValue  = startValue;
       currentValue = startValue;
    }
 
    [Driven]
-   public bool Driven(out float currentValue)
+   public bool Driven(out Quaternion currentValue)
    {
       float t;
-
       bool isRunning = m_Lerper.Run( out t );
 
       if ( isRunning )
       {
-         m_LastValue = Mathf.Lerp( m_Start, m_End, t );
+         //Quaternion.Lerp throws an exception
+         //so i'm using v4 lerp for now
+         Vector4 v = Vector4.Lerp( m_Start, m_End, t );
+         
+         m_LastValue.x = v.x;
+         m_LastValue.y = v.y;
+         m_LastValue.z = v.z;
+         m_LastValue.w = v.w;
       }
 
       currentValue = m_LastValue;
@@ -64,13 +71,13 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
    }
 
    public void Stop(
-      [FriendlyName("Start Value")] float startValue, 
-      [FriendlyName("End Value")] float endValue, 
+      [FriendlyName("Start Value")] Quaternion startValue, 
+      [FriendlyName("End Value")] Quaternion endValue, 
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
       [FriendlyName("Times to Loop")] int loopCount, 
-      [FriendlyName("Output Value")] out float currentValue
+      [FriendlyName("Output Value")] out Quaternion currentValue
    )
    {
       m_Lerper.Stop( );
@@ -79,13 +86,13 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
    }
 
    public void Resume(
-      [FriendlyName("Start Value")] float startValue, 
-      [FriendlyName("End Value")] float endValue, 
+      [FriendlyName("Start Value")] Quaternion startValue, 
+      [FriendlyName("End Value")] Quaternion endValue, 
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
       [FriendlyName("Times to Loop")] int loopCount, 
-      [FriendlyName("Output Value")] out float currentValue
+      [FriendlyName("Output Value")] out Quaternion currentValue
    )
    {
       m_Lerper.Resume( );

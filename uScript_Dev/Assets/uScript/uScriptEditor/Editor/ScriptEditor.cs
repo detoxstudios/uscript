@@ -163,6 +163,19 @@ namespace Detox.ScriptEditor
                   return new Vector4(0, 0, 0, 0);
                }
             }
+            if ( type == "Quaternion" )
+            {
+               try
+               {
+                  string []values = Default.Split( ',' );
+                  return new Quaternion( Single.Parse(values[0]), values.Length > 1 ? Single.Parse(values[1]) : 0, 
+                                      values.Length > 2 ? Single.Parse(values[2]) : 0, values.Length > 3 ? Single.Parse(values[3]) : 0 );
+               }
+               catch 
+               {
+                  return new Quaternion(0, 0, 0, 0);
+               }
+            }
             System.Type eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
             if ( typeof(System.Enum).IsAssignableFrom(eType) )
             {
@@ -242,6 +255,19 @@ namespace Detox.ScriptEditor
                try
                {
                   Vector4 v = (Vector4) value;
+                  Default = v.x + "," + v.y + "," + v.z + "," + v.w;
+               }
+               catch ( Exception )
+               {
+                  Default = "0,0,0,0";
+               }
+               return;
+            }
+            if ( type == "Quaternion" )
+            {
+               try
+               {
+                  Quaternion v = (Quaternion) value;
                   Default = v.x + "," + v.y + "," + v.z + "," + v.w;
                }
                catch ( Exception )

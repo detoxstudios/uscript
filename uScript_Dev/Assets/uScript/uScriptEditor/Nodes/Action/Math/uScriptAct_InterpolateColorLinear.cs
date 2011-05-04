@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Linearly interpolate a float over time.
+// Desc: Linearly interpolate a Color over time.
 
 using UnityEngine;
 using System.Collections;
@@ -8,17 +8,17 @@ using System.Collections;
 [NodePath("Action/Math/Interpolation")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Linearly interpolate a float over time.")]
-[NodeDescription("Linearly interpolate a float over time.")]
+[NodeToolTip("Linearly interpolate a color over time.")]
+[NodeDescription("Linearly interpolate a color over time.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-[FriendlyName("Interpolate Float Linear")]
-public class uScriptAct_InterpolateFloatLinear : uScriptLogic
+[FriendlyName("Interpolate Color Linear")]
+public class uScriptAct_InterpolateColorLinear : uScriptLogic
 { 
-   private float m_Start;
-   private float m_End;
-   private float m_LastValue;
+   private Color m_Start;
+   private Color m_End;
+   private Color m_LastValue;
 
    private uScript_Lerper m_Lerper = new uScript_Lerper( );
 
@@ -28,13 +28,13 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
    public bool Finished      { get { return m_Lerper.AllowFinishedOutput; } }
    
    public void Begin(
-      [FriendlyName("Start Value")] float startValue, 
-      [FriendlyName("End Value")] float endValue, 
+      [FriendlyName("Start Value")] Color startValue, 
+      [FriendlyName("End Value")] Color endValue, 
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
       [FriendlyName("Times to Loop")] int loopCount, 
-      [FriendlyName("Output Value")] out float currentValue
+      [FriendlyName("Output Value")] out Color currentValue
    )
    {
       m_Lerper.Set( time, loopType, loopDelay, loopCount );
@@ -47,7 +47,7 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
    }
 
    [Driven]
-   public bool Driven(out float currentValue)
+   public bool Driven(out Color currentValue)
    {
       float t;
 
@@ -55,7 +55,7 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
 
       if ( isRunning )
       {
-         m_LastValue = Mathf.Lerp( m_Start, m_End, t );
+         m_LastValue = Color.Lerp( m_Start, m_End, t );
       }
 
       currentValue = m_LastValue;
@@ -64,13 +64,13 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
    }
 
    public void Stop(
-      [FriendlyName("Start Value")] float startValue, 
-      [FriendlyName("End Value")] float endValue, 
+      [FriendlyName("Start Value")] Color startValue, 
+      [FriendlyName("End Value")] Color endValue, 
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
       [FriendlyName("Times to Loop")] int loopCount, 
-      [FriendlyName("Output Value")] out float currentValue
+      [FriendlyName("Output Value")] out Color currentValue
    )
    {
       m_Lerper.Stop( );
@@ -79,13 +79,13 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
    }
 
    public void Resume(
-      [FriendlyName("Start Value")] float startValue, 
-      [FriendlyName("End Value")] float endValue, 
+      [FriendlyName("Start Value")] Color startValue, 
+      [FriendlyName("End Value")] Color endValue, 
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
       [FriendlyName("Times to Loop")] int loopCount, 
-      [FriendlyName("Output Value")] out float currentValue
+      [FriendlyName("Output Value")] out Color currentValue
    )
    {
       m_Lerper.Resume( );

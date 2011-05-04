@@ -48,6 +48,8 @@ public class uScriptAct_PlayAnimation : uScriptLogic
                // Needed to play in reverse with a negative speed
                currentTarget.animation[Animation].time = currentTarget.animation[Animation].length;
             }
+
+            currentTarget.animation[Animation].wrapMode = WrapMode.Once;
             currentTarget.animation.Play(Animation);
          }
       }

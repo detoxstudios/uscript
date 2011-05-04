@@ -218,6 +218,20 @@ namespace System.Windows.Forms
                {
                   val = UnityEditor.EditorGUILayout.Vector4Field( p.FriendlyName, (Vector4) val );
                }
+               else if ( val.GetType() == typeof(Quaternion) )
+               {
+                  Quaternion q = (Quaternion) val;
+                  Vector4 v4 = new Vector4( q.x, q.y, q.z, q.w );
+                 
+                  v4 = UnityEditor.EditorGUILayout.Vector4Field( p.FriendlyName, v4 );
+                  
+                  q.x = v4.x;
+                  q.y = v4.y;
+                  q.z = v4.z;
+                  q.w = v4.w;
+
+                  val = q;
+               }
                else if ( val.GetType() == typeof(UnityEngine.Color) )
                {
                   val = UnityEditor.EditorGUILayout.ColorField( p.FriendlyName, (UnityEngine.Color) val );
