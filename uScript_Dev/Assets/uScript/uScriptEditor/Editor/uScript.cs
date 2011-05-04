@@ -14,7 +14,7 @@ public class uScript : EditorWindow
 {
                                        //format is MAJOR.MINOR.YYMMDDa  
                                        //(where 'a' is incremented if we have more than 1 daily build we release)
-   public string    uScriptBuild       { get { return "0.1.110502a"; } }
+   public string    uScriptBuild       { get { return "0.1.110504a"; } }
    public string    RequiredUnityBuild { get { return  "3.3.0f4"; } }
    public DateTime  ExpireDate         { get { return new DateTime( 2011, 5, 16 ); } }
 
@@ -1371,7 +1371,7 @@ http://www.detoxstudios.com";
          {
             GUILayout.Label("Properties", uScriptStyles.panelTitle);
             GUILayout.FlexibleSpace();
-//            _newPropertyGrid = GUILayout.Toggle(_newPropertyGrid, "Toggle New Panel", EditorStyles.toolbarButton);
+            _newPropertyGrid = GUILayout.Toggle(_newPropertyGrid, "Toggle New Panel", EditorStyles.toolbarButton);
          }
          EditorGUILayout.EndHorizontal();
 
