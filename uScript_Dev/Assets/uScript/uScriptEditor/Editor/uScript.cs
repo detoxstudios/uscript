@@ -873,8 +873,8 @@ http://www.detoxstudios.com";
 
 //      Redraw();  // This is taking to much CPU time.
    }
-	
-	
+
+
    void DrawGUIPalette()
    {
       Rect r = EditorGUILayout.BeginVertical( uScriptStyles.panelBox, GUILayout.Width( _guiPanelPalette_Width ) );
@@ -1349,29 +1349,13 @@ http://www.detoxstudios.com";
 
 
 	// TEMP Variables for testing the new property grid methods
-   int _tmpInt1;
-   int _tmpInt2;
-   float _tmpFloat;
-   string _tmpString = string.Empty;
-   bool _tmpBool = true;
-//   bool tmpBool = true;
-   UnityEngine.Color _tmpColor;
-   Vector2 _tmpVector2;
-   Vector3 _tmpVector3;
-   Vector4 _tmpVector4;
-   Rect _tmpRect;
-
-   bool _tmpIntBool1;
-   bool _tmpIntBool2 = false;
-   bool _tmpIntBool3 = true;
-
    Rect _svRect;
 
-   KeyCode _enumKeyCode;
    KeyCode[] _arrayKeyCode;
    bool _arrayFoldoutBool;
 
    bool _newPropertyGrid = false;
+   Vector2 _scrollNewProperties;
    // END TEMP Variables
 
 
@@ -1391,77 +1375,11 @@ http://www.detoxstudios.com";
          }
          EditorGUILayout.EndHorizontal();
 
-         if (_newPropertyGrid)
+         _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
          {
-            GUIStyle vsb = new GUIStyle(GUI.skin.verticalScrollbar);
-            vsb.margin = new RectOffset();
-
-            GUIStyle hsb = new GUIStyle(GUI.skin.horizontalScrollbar);
-            hsb.margin = new RectOffset();
-
-            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, hsb, vsb);
-            {
-               uScriptGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
-               {
-                  if (uScriptGUI.BeginProperty("Node Name", "NODE12345"))
-                  {
-//                     _arrayKeyCode = uScriptGUI.ArrayFoldout<KeyCode>("KeyCode Array", _arrayKeyCode, ref _arrayFoldoutBool, ref tmpBool, false);
-
-                     _tmpInt1 = uScriptGUI.IntField("Int Label", _tmpInt1, ref _tmpIntBool1, false);
-                     _tmpInt1 = uScriptGUI.IntField("Int Label", _tmpInt1, ref _tmpIntBool2, true);
-                     _tmpInt2 = uScriptGUI.IntField("This is a really long label!", _tmpInt2, ref _tmpIntBool3, true);
-                     _tmpFloat = uScriptGUI.FloatField("Float Label", _tmpFloat, ref _tmpIntBool1, false);
-                     _enumKeyCode = (KeyCode)uScriptGUI.EnumField("Enum Label", _enumKeyCode, ref _tmpIntBool1, false);
-                     _tmpString = uScriptGUI.TextField("Text Label", _tmpString, ref _tmpIntBool1, false);
-                     _tmpBool = uScriptGUI.BoolField("Bool Label", _tmpBool, ref _tmpIntBool1, false);
-                     _tmpColor = uScriptGUI.ColorField("Color Label", _tmpColor, ref _tmpIntBool1, false);
-                  }
-                  uScriptGUI.EndProperty();
-
-                  if (uScriptGUI.BeginProperty("Node 02", "NODE02-ID"))
-                  {
-                     _tmpVector2 = uScriptGUI.Vector2Field("Vector2 Label", _tmpVector2, ref _tmpIntBool1, false);
-                     _tmpVector3 = uScriptGUI.Vector3Field("Vector3 Label", _tmpVector3, ref _tmpIntBool1, false);
-                     _tmpVector4 = uScriptGUI.Vector4Field("Vector4 Label", _tmpVector4, ref _tmpIntBool1, false);
-                     _tmpRect = uScriptGUI.RectField("Rect Label", _tmpRect, ref _tmpIntBool1, false);
-                  }
-                  uScriptGUI.EndProperty();
-
-
-                  //               EditorGUILayout.LabelField();
-                  //               EditorGUILayout.Separator();
-                  //               EditorGUILayout.Space();
-
-                  //               EditorGUILayout.TextArea();
-                  //               EditorGUILayout.Slider();
-                  //               EditorGUILayout.IntSlider();
-                  //               EditorGUILayout.MinMaxSlider();
-                  //               EditorGUILayout.Popup();
-                  //               EditorGUILayout.EnumPopup();
-                  //               EditorGUILayout.IntPopup();
-                  //               EditorGUILayout.TagField();
-                  //               EditorGUILayout.LayerField();
-                  //               EditorGUILayout.ObjectField();
-                  //               EditorGUILayout.CurveField();
-                  //               EditorGUILayout.PropertyField();
-               }
-               uScriptGUI.EndColumns();
-            }
-            EditorGUILayout.EndScrollView();
-
-            if (Event.current.type == EventType.Repaint)
-            {
-               _svRect = GUILayoutUtility.GetLastRect();
-            }
+            m_ScriptEditorCtrl.PropertyGrid.OnPaint();
          }
-         else
-         {
-            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
-            {
-               m_ScriptEditorCtrl.PropertyGrid.OnPaint();
-            }
-            EditorGUILayout.EndScrollView();
-         }
+         EditorGUILayout.EndScrollView();
       }
       EditorGUILayout.EndVertical();
 
@@ -1514,17 +1432,45 @@ http://www.detoxstudios.com";
          }
          EditorGUILayout.EndHorizontal();
 
-         _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
+         // New Properties panel
+         //
+         if (_newPropertyGrid)
          {
-            // prevent the help TextArea from getting focus
-            GUI.SetNextControlName("helpTextArea");
-            GUILayout.TextArea(helpDescription, uScriptStyles.referenceText);
-            if (GUI.GetNameOfFocusedControl() == "helpTextArea")
+            GUIStyle vsb = new GUIStyle(GUI.skin.verticalScrollbar);
+            vsb.margin = new RectOffset();
+
+            GUIStyle hsb = new GUIStyle(GUI.skin.horizontalScrollbar);
+            hsb.margin = new RectOffset();
+
+            _scrollNewProperties = EditorGUILayout.BeginScrollView(_scrollNewProperties, hsb, vsb);
             {
-                GUIUtility.keyboardControl = 0;
+               uScriptGUI.BeginColumns("Property", "Value", "Type", _scrollNewProperties, _svRect);
+               {
+                     m_ScriptEditorCtrl.PropertyGrid.OnPaintNew();
+               }
+               uScriptGUI.EndColumns();
+            }
+            EditorGUILayout.EndScrollView();
+
+            if (Event.current.type == EventType.Repaint)
+            {
+               _svRect = GUILayoutUtility.GetLastRect();
             }
          }
-         EditorGUILayout.EndScrollView ();
+         else
+         {
+            _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
+            {
+               // prevent the help TextArea from getting focus
+               GUI.SetNextControlName("helpTextArea");
+               GUILayout.TextArea(helpDescription, uScriptStyles.referenceText);
+               if (GUI.GetNameOfFocusedControl() == "helpTextArea")
+               {
+                  GUIUtility.keyboardControl = 0;
+               }
+            }
+            EditorGUILayout.EndScrollView ();
+         }
       }
       EditorGUILayout.EndVertical();
 

@@ -325,6 +325,99 @@ namespace System.Windows.Forms
             OnPropertyValueChanged( );
          }
       }
+
+      public void OnPaintNew( )
+      {
+         bool signalUpdate = false;
+
+         bool _tmpFieldEnabled = true;  // When the field is enabled, the socket must be hidden
+
+         foreach ( object selectedObject in SelectedObjects )
+         {
+            PropertyGridParameters parameters = selectedObject as PropertyGridParameters;
+            List<Parameter> updatedParameters = new List<Parameter>( );
+
+            if (parameters.Parameters.Length > 1)
+            {
+               if (uScriptGUI.BeginProperty(parameters.Description, "NODE12345"))
+               {
+                  foreach ( Parameter p in parameters.Parameters )
+                  {
+                     if ( false == p.Input )
+                     {
+                        updatedParameters.Add(  p );
+                        continue;
+                     }
+
+                     object val = p.DefaultAsObject;
+
+                     if ( val.GetType() == typeof(System.Boolean) )
+                     {
+                        val = uScriptGUI.BoolField(p.FriendlyName, (bool) val, ref _tmpFieldEnabled, false);
+                     }
+                     else if ( val.GetType() == typeof(System.Int32) )
+                     {
+                        val = uScriptGUI.IntField(p.FriendlyName, (int) val, ref _tmpFieldEnabled, false);
+                     }
+                     else if ( val.GetType() == typeof(System.Single) )
+                     {
+                        val = uScriptGUI.FloatField(p.FriendlyName, (float) val, ref _tmpFieldEnabled, false);
+                     }
+                     else if ( val.GetType() == typeof(Vector2) )
+                     {
+                        val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2) val, ref _tmpFieldEnabled, false);
+                     }
+                     else if ( val.GetType() == typeof(Vector3) )
+                     {
+                        val = uScriptGUI.Vector3Field(p.FriendlyName, (Vector3) val, ref _tmpFieldEnabled, false);
+                     }
+                     else if ( val.GetType() == typeof(Vector4) )
+                     {
+                        val = uScriptGUI.Vector4Field(p.FriendlyName, (Vector4) val, ref _tmpFieldEnabled, false);
+                     }
+                     else if ( val.GetType() == typeof(Quaternion) )
+                     {
+                        val = uScriptGUI.QuaternionField(p.FriendlyName, (Quaternion) val, ref _tmpFieldEnabled, false);
+                     }
+                     else if ( val.GetType() == typeof(UnityEngine.Color) )
+                     {
+                        val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color) val, ref _tmpFieldEnabled, false);
+                     }
+                     else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
+                     {
+                        val = uScriptGUI.EnumTextField(p.FriendlyName, (System.Enum) val, p.Default, ref _tmpFieldEnabled, false);
+                     }
+                     else if ( null != GetObjectFieldType(p.Type) )
+                     {
+                        val = uScriptGUI.ObjectTextField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref _tmpFieldEnabled, false);
+                     }
+                     else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "TextArea" )
+                     {
+                        val = uScriptGUI.TextArea(p.FriendlyName, p.Default, ref _tmpFieldEnabled, false);
+                     }
+                     else
+                     {
+                        val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref _tmpFieldEnabled, false);
+                     }
+
+                     Parameter cloned = p;
+                     cloned.DefaultAsObject = val;
+
+                     signalUpdate |= cloned.Default != p.Default;
+                     updatedParameters.Add( cloned );
+                  }
+
+                  parameters.Parameters = updatedParameters.ToArray( );
+               }
+               uScriptGUI.EndProperty();
+            }
+         }
+
+         if ( true == signalUpdate )
+         {
+            OnPropertyValueChanged( );
+         }
+      }
    }
 
    public class Form : Control

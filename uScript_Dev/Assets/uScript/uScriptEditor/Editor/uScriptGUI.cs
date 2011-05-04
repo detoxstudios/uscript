@@ -174,7 +174,7 @@ public static class uScriptGUI
       style.alignment = TextAnchor.MiddleLeft;
 
 
-      _foldoutExpanded[_propertyKey] = GUILayout.Toggle(_foldoutExpanded[_propertyKey], label + "_" + id, style);
+      _foldoutExpanded[_propertyKey] = GUILayout.Toggle(_foldoutExpanded[_propertyKey], label /* + "_" + id */, style);
 
       return _foldoutExpanded[_propertyKey];
    }
@@ -259,6 +259,18 @@ public static class uScriptGUI
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.TextField(value, GUILayout.Width(_columnValue.Width));
+
+      EndRow(value.GetType().ToString());
+      return value;
+   }
+
+
+   public static string TextArea(string label, string value, ref bool enabled, bool locked)
+   {
+      BeginRow(label, ref enabled, locked);
+
+      GUI.SetNextControlName(label);
+      value = EditorGUILayout.TextArea(value, GUILayout.Width(_columnValue.Width));
 
       EndRow(value.GetType().ToString());
       return value;
@@ -371,6 +383,23 @@ public static class uScriptGUI
    }
 
 
+   public static Quaternion QuaternionField(string label, Quaternion value, ref bool enabled, bool locked)
+   {
+      BeginRow(label, ref enabled, locked);
+
+      int spacing = 12; // 4 * 3
+      int w = (_columnValue.Width - spacing) / 4;
+      int p = (_columnValue.Width - spacing) % (w * 4);
+      value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
+      value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
+      value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w));
+      value.w = EditorGUILayout.FloatField(value.w, GUILayout.Width(w + p));
+
+      EndRow(value.GetType().ToString());
+      return value;
+   }
+
+
    public static System.Enum EnumField(string label, System.Enum value, ref bool enabled, bool locked)
    {
       BeginRow(label, ref enabled, locked);
@@ -387,6 +416,89 @@ public static class uScriptGUI
 
       EndRow(value.GetType().ToString());
       return value;
+   }
+
+
+   public static System.Enum EnumTextField(string label, System.Enum value, string textValue, ref bool enabled, bool locked)
+   {
+      EditorGUILayout.BeginVertical();
+      {
+         BeginRow(label, ref enabled, locked);
+
+         //first show the text field and get back the same (or changed value)
+         string userText = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
+         System.Enum newEnum;
+
+         //try and turn the text field value back into an enum, if it doesn't work
+         //then revert back to the original value
+         try { newEnum = (System.Enum) System.Enum.Parse(value.GetType(), userText); }
+         catch { newEnum = (System.Enum) value; }
+
+         EndRow(textValue.GetType().ToString());
+
+
+         BeginRow(string.Empty, ref enabled, true);
+
+         //send the new value to the enum popup and whatever it
+         //returns (in case the user modified it here) is what our final value is
+         value = EditorGUILayout.EnumPopup(newEnum, GUILayout.Width(_columnValue.Width));
+
+         EndRow(value.GetType().ToString());
+      }
+      EditorGUILayout.EndVertical();
+      return value;
+   }
+
+
+   public static string ObjectTextField(string label, UnityEngine.Object value, Type type, string textValue, ref bool enabled, bool locked)
+   {
+      EditorGUILayout.BeginVertical();
+      {
+         BeginRow(label, ref enabled, locked);
+
+         // game objects are held/treated as strings
+         // but we will custom convert them to actual game objects (if they exist)
+         // so we can use the game object browser
+         //
+         // first show the text field and get back the same (or changed value)
+         textValue = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
+
+         EndRow(textValue.GetType().ToString());
+
+
+         BeginRow(string.Empty, ref enabled, true);
+
+         // now try and update the object browser with an instance of the specified object
+         UnityEngine.Object []objects   = UnityEngine.Object.FindObjectsOfType(type);
+         UnityEngine.Object unityObject = null;
+
+         foreach ( UnityEngine.Object o in objects )
+         {
+            if ( o.name == textValue )
+            {
+               unityObject = o;
+               break;
+            }
+         }
+
+         // components should never be instances in the property grid
+         // we must refer to (and select) their parent game object
+         if ( true == typeof(Component).IsAssignableFrom(type) )
+         {
+            type = typeof(GameObject);
+            if ( null != unityObject ) unityObject = ((Component) unityObject).gameObject;
+         }
+
+         unityObject = EditorGUILayout.ObjectField( unityObject, type, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
+
+         // if that object (or the changed object) does exist, use it's name to update the property value
+         // if it doesn't exist then the 'val' will stay as what was entered into the TextField
+         if ( unityObject != null ) textValue = unityObject.name;
+
+         EndRow(type.ToString());
+      }
+      EditorGUILayout.EndVertical();
+      return textValue;
    }
 
 
@@ -606,7 +718,6 @@ public static class uScriptGUI
 //               EditorGUILayout.Separator();
 //               EditorGUILayout.Space();
 
-//   TextArea       Make a text area.
 //   Slider         Make a slider the user can drag to change a value between a min and a max.
 //   IntSlider      Make a slider the user can drag to change an integer value between a min and a max.
 //   MinMaxSlider   Make a special slider the user can use to specify a range between a min and a max.
