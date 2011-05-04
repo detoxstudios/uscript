@@ -16,73 +16,95 @@ using System.Collections;
 [FriendlyName("Move To Location")]
 public class uScriptAct_MoveToLocation : uScriptLogic
 {
+   public bool Out { get { return true; } }
 
-   private GameObject m_TargetObj = null;
    private GameObject[] m_TargetArray;
-   private bool m_ShouldUseLocal = false;
-   private Vector3 m_DestinationVector = new Vector3(0, 0, 0);
-   private Vector3 m_DestinationVectorLocal = new Vector3(0, 0, 0);
-   private bool m_UseLerp = false;
-   private float m_LerpSpeedModifier = 0.0F;
+   private Vector3      m_EndingLocation;
+   private Vector3[]    m_StartingLocations;
+   private bool         m_TreatAsOffset;
+   private float        m_TotalTime;
+   private float        m_CurrentTime;
 
-   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
-   public event uScriptEventHandler Out;
-
-
-   public void In(GameObject[] Target, Vector3 Location, [FriendlyName("As Offset")] bool AsOffset, [FriendlyName("Use Lerp")] bool UseLerp, [FriendlyName("Lerp Speed Modifier")] float LerpSpeedModifier)
+   public void In(
+      [FriendlyName("Targets")] GameObject[] targetArray, 
+      [FriendlyName("End Location")] Vector3 location, 
+      [FriendlyName("Use as Offset")] bool asOffset, 
+      [FriendlyName("Transition Time")] float totalTime
+   )
    {
-      if ( Out != null ) Out(this, new System.EventArgs() );
+      m_TotalTime   = totalTime;
+      m_CurrentTime = 0;
 
-      m_TargetArray = Target;
-
-      foreach (GameObject currentTarget in Target)
+      if ( 0 == m_TotalTime )
       {
-         if (currentTarget != null)
+         if ( true == asOffset )
          {
-            m_TargetObj = currentTarget;
-            m_ShouldUseLocal = AsOffset;
-            m_DestinationVector = Location;
-            m_DestinationVectorLocal = (currentTarget.transform.position + m_DestinationVector);
-            m_UseLerp = UseLerp;
-            m_LerpSpeedModifier = LerpSpeedModifier;
-
-            if (!m_UseLerp)
+            foreach ( GameObject target in targetArray )
             {
-               if (m_ShouldUseLocal)
-               {
-                  m_TargetObj.transform.position = m_DestinationVectorLocal;
-               }
-               else
-               {
-                  m_TargetObj.transform.position = m_DestinationVector;
-               }
-            }
+               if ( null == target ) continue;
 
+               target.transform.position = target.transform.position + location;
+            }
+         }
+         else
+         {
+            foreach ( GameObject target in targetArray )
+            {
+               if ( null == target ) continue;
+
+               target.transform.position = location;
+            }
          }
       }
+      else
+      {
+         m_TreatAsOffset     = asOffset;
+         m_TargetArray       = targetArray;
+         m_EndingLocation    = location;
+         m_StartingLocations = new Vector3[ m_TargetArray.Length ];
 
+         for ( int i = 0; i < m_TargetArray.Length; i++ )
+         {
+            GameObject target = m_TargetArray[ i ];
+            if ( null == target ) continue;
+
+            m_StartingLocations[ i ] = target.transform.position;
+         }
+      }
    }
 
    public override void Update()
    {
-      if (m_UseLerp)
+      if ( m_CurrentTime == m_TotalTime ) return;
+
+      m_CurrentTime += Time.deltaTime;
+      
+      if ( m_CurrentTime >= m_TotalTime )
       {
-         foreach (GameObject currentTarget in m_TargetArray)
+         m_CurrentTime = m_TotalTime;
+      }
+
+      float t = m_CurrentTime / m_TotalTime;
+
+      if ( true == m_TreatAsOffset )
+      {
+         for ( int i = 0; i < m_TargetArray.Length; i++ )
          {
-            if (currentTarget != null)
-            {
+            GameObject target = m_TargetArray[ i ];
+            if ( null == target ) return;
 
-               if (m_ShouldUseLocal)
-               {
-                  currentTarget.transform.position = Vector3.Lerp(currentTarget.transform.position, m_DestinationVectorLocal, Time.deltaTime * m_LerpSpeedModifier);
-               }
-               else
-               {
-                  currentTarget.transform.position = Vector3.Lerp(currentTarget.transform.position, m_DestinationVector, Time.deltaTime * m_LerpSpeedModifier);
-               }
-            }
+            target.transform.position = Vector3.Lerp( m_StartingLocations[ i ], m_EndingLocation + m_StartingLocations[ i ], t );
          }
+      }
+      else
+      {
+         for ( int i = 0; i < m_TargetArray.Length; i++ )
+         {
+            GameObject target = m_TargetArray[ i ];
+            if ( null == target ) return;
 
+            target.transform.position = Vector3.Lerp( m_StartingLocations[ i ], m_EndingLocation, t );
+         }
       }
    }
 
