@@ -34,7 +34,7 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Times to Loop")] int loopCount, 
+      [FriendlyName("Loop Count")] int loopCount, 
       [FriendlyName("Output Value")] out Quaternion currentValue
    )
    {
@@ -76,7 +76,7 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Times to Loop")] int loopCount, 
+      [FriendlyName("Loop Count")] int loopCount, 
       [FriendlyName("Output Value")] out Quaternion currentValue
    )
    {
@@ -91,7 +91,7 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Times to Loop")] int loopCount, 
+      [FriendlyName("Loop Count")] int loopCount, 
       [FriendlyName("Output Value")] out Quaternion currentValue
    )
    {

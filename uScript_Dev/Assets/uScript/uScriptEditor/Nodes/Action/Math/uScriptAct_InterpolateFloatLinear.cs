@@ -33,7 +33,7 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Times to Loop")] int loopCount, 
+      [FriendlyName("Loop Count")] int loopCount, 
       [FriendlyName("Output Value")] out float currentValue
    )
    {
@@ -69,7 +69,7 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Times to Loop")] int loopCount, 
+      [FriendlyName("Loop Count")] int loopCount, 
       [FriendlyName("Output Value")] out float currentValue
    )
    {
@@ -84,7 +84,7 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Times to Loop")] int loopCount, 
+      [FriendlyName("Loop Count")] int loopCount, 
       [FriendlyName("Output Value")] out float currentValue
    )
    {

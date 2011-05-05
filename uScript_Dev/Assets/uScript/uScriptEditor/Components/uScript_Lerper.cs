@@ -47,6 +47,17 @@ public class uScript_Lerper
       m_IsReversed = false;
       m_LoopType   = loopType;
       m_LoopCount  = loopCount;
+  
+      //if loop count is 0 don't run at all
+      if ( m_LoopIteration == m_LoopCount )
+      {
+         m_Running = false;
+      }
+      else
+      {
+         //otherwise start our first loop
+         ++m_LoopIteration;
+      }
    }
 
    public bool Run( out float currentTime )
