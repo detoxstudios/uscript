@@ -44,18 +44,5 @@ public class uScript_CustomEventVector4 : uScriptEvent
    void CustomEvent(uScriptCustomEvent.CustomEventData cEventData)
    {
       if ( OnCustomEventVector4 != null ) OnCustomEventVector4( this, new CustomEventVector4Args(cEventData.EventName, (Vector4)cEventData.EventData, cEventData.Sender) ); 
-   }	
-	
-#if UNITY_EDITOR
-	// uScript GUI Options
-	void OnDrawGizmos()
-	{
-		// @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
-		if ( this.name != uScriptRuntimeConfig.MasterObjectName )
-		{
-        	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
-		}
-    }
-#endif
-   
+   }	   
 }

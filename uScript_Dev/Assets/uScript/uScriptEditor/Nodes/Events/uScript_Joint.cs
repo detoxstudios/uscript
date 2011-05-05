@@ -35,17 +35,4 @@ public class uScript_Joint : uScriptEvent
    {
       if ( JointBreak != null ) JointBreak(this, new JointBreakEventArgs(force));
    }
-   
-#if UNITY_EDITOR
-   // uScript GUI Options
-   void OnDrawGizmos()
-   {
-      // @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
-      if ( this.name != uScriptRuntimeConfig.MasterObjectName )
-      {
-         Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
-      }
-   }
-#endif
-
 }

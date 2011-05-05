@@ -45,17 +45,4 @@ public class uScript_CustomEventInt : uScriptEvent
    {
       if ( OnCustomEventInt != null ) OnCustomEventInt( this, new CustomEventIntArgs(cEventData.EventName, (int)cEventData.EventData, cEventData.Sender) ); 
    }	
-	
-#if UNITY_EDITOR
-	// uScript GUI Options
-	void OnDrawGizmos()
-	{
-		// @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
-		if ( this.name != uScriptRuntimeConfig.MasterObjectName )
-		{
-        	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
-		}
-    }
-#endif
-   
 }

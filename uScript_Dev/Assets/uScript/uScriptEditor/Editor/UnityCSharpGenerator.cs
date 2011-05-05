@@ -769,10 +769,41 @@ namespace Detox.ScriptEditor
 
       private void DefineDrawGizmos( )
       {
+         Hashtable uniqueObjects = new Hashtable( );
+
          foreach ( EntityNode node in m_Script.EntityNodes )
          {
-            if ( "" != node.Instance.Default )
+            if ( node is LocalNode )
             {
+               LocalNode localNode = (LocalNode) node;
+               
+               if ( "UnityEngine.GameObject" == localNode.Value.Type && "" != localNode.Value.Default )
+               {
+                  uniqueObjects[ localNode.Value.Default ] = localNode.Value.Default;
+                  //AddCSharpLine( "gameObject = GameObject.Find( \"" + localNode.Value.Default + "\" ); " );
+                  //AddCSharpLine( "if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, \"uscript_gizmo_events.png\");" );
+               }
+            }
+            else
+            {
+               if ( null == node.Instance.Default || "" == node.Instance.Default ) continue;
+
+               uniqueObjects[ node.Instance.Default ] = node.Instance.Default;
+               //AddCSharpLine( "gameObject = GameObject.Find( \"" + node.Instance.Default + "\" ); " );
+               //AddCSharpLine( "if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, \"uscript_gizmo_events.png\");" );
+            }
+         }
+
+         if ( uniqueObjects.Keys.Count > 0 )
+         {
+            AddCSharpLine( "GameObject gameObject;" );
+            AddCSharpLine( "" );
+         
+            foreach ( string key in uniqueObjects.Keys )
+            {
+               AddCSharpLine( "gameObject = GameObject.Find( \"" + key + "\" ); " );
+               AddCSharpLine( "if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, \"uscript_gizmo_events.png\");" );
+               AddCSharpLine( "" );
             }
          }
       }

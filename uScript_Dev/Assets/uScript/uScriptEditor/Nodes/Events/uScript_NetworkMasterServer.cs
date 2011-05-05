@@ -33,17 +33,4 @@ public class uScript_NetworkMasterServer : uScriptEvent
    {
       if (OnEvent != null) OnEvent(this, new NetworkMasterServerEventArgs(mse));
    }
-
-#if UNITY_EDITOR
-   // uScript GUI Options
-   void OnDrawGizmos()
-   {
-      // @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
-      if (this.name != uScriptRuntimeConfig.MasterObjectName)
-      {
-         Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
-      }
-   }
-#endif
-
 }

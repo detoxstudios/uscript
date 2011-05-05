@@ -1135,14 +1135,6 @@ namespace Detox.ScriptEditor
          OnScriptModified();
 
          AddEventHandlers( );
-      
-         foreach ( LocalNode node in m_ScriptEditor.Locals )
-         {
-            if ( uScriptConfig.Variable.FriendlyName(node.Value.Type) == "GameObject" )
-            {
-               uScript.Instance.AttachVariableScript(node.Value.Default);
-            }
-         }
       }
 
       private void FlowchartNodesModified(object sender, FlowchartNodesModifiedEventArgs e)

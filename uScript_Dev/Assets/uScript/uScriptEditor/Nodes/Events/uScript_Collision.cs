@@ -67,17 +67,4 @@ public class uScript_Collision : uScriptEvent
    {
       if ( WhileInsideCollision != null ) WhileInsideCollision( this, new CollisionEventArgs(collision) ); 
    }
-	
-#if UNITY_EDITOR
-	// uScript GUI Options
-	void OnDrawGizmos()
-	{
-		// @TODO: would be nice if this would only show up if "UseGizmos" was true in uScriptConfig.
-		if ( this.name != uScriptRuntimeConfig.MasterObjectName )
-		{
-        	Gizmos.DrawIcon(transform.position, "uscript_gizmo_events.png");
-		}
-    }
-#endif
-
 }

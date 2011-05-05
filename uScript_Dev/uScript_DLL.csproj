@@ -53,7 +53,6 @@
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Lerper.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_MasterObject.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Runtime.cs" />
-    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Variable_Gizmo.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\AnimData.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\BinaryXml.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\CommentNode.cs" />

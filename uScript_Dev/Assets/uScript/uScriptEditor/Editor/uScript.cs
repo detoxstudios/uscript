@@ -2799,21 +2799,6 @@ http://www.detoxstudios.com";
       return AttachError.MissingComponent;
    }
 
-   public bool AttachVariableScript(string objectName)
-   {
-      GameObject gameObject = GameObject.Find( objectName );
-      if ( null == gameObject ) return false;
-
-      Component component = gameObject.GetComponent<uScript_Variable_Gizmo>( );
-
-      if ( null == component )
-      {
-         gameObject.AddComponent<uScript_Variable_Gizmo>( );
-      }
-
-      return true;
-   }
-
    private void CheckDragDropCanvas( )
    {
       foreach ( object o in DragAndDrop.objectReferences )
