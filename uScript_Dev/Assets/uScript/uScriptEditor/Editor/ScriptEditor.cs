@@ -176,8 +176,20 @@ namespace Detox.ScriptEditor
                   return new Quaternion(0, 0, 0, 0);
                }
             }
-            System.Type eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
-            if ( typeof(System.Enum).IsAssignableFrom(eType) )
+            if ( type == "String" )
+            {
+               return Default;
+            }
+            System.Type eType = uScript.Instance.GetType(this.Type);
+            if (eType == null)
+            {
+               eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
+               if (eType != null)
+               {
+                  uScript.Instance.AddType(eType);
+               }
+            }
+            if ( eType != null && typeof(System.Enum).IsAssignableFrom(eType) )
             {
                try
                {
@@ -189,6 +201,7 @@ namespace Detox.ScriptEditor
                }
             }
 
+            // should never get here - this is to satisfy the compiler ;)
             return Default;
          }
          set
@@ -289,7 +302,28 @@ namespace Detox.ScriptEditor
                }
                return;
             }
+            if ( type == "String" )
+            {
+               Default = value.ToString( );
+               return;
+            }
 
+            System.Type eType = uScript.Instance.GetType(this.Type);
+            if (eType == null)
+            {
+               eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
+               if (eType != null)
+               {
+                  uScript.Instance.AddType(eType);
+               }
+            }
+            if ( eType != null && typeof(System.Enum).IsAssignableFrom(eType) )
+            {
+               Default = value.ToString();
+               return;
+            }
+
+            // should never get here...
             Default = value.ToString( );
             return;
          }
