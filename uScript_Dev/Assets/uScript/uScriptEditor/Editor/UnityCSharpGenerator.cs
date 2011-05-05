@@ -529,7 +529,7 @@ namespace Detox.ScriptEditor
             try
             {
                string [] subString = stringValue.Split( ',' );
-               return "new Quaternion( " + subString[0] + ", " + subString[1] + ", " + subString[2] + ", " + subString[3] + " )";
+               return "new Quaternion( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
             }
             catch ( Exception ) { return "new Quaternion( )"; }
          }
@@ -538,7 +538,7 @@ namespace Detox.ScriptEditor
             try
             {
                string [] subString = stringValue.Split( ',' );
-               return "new Vector2( " + subString[0] + ", " + subString[1] + " )";
+               return "new Vector2( (float)" + subString[0] + ", (float)" + subString[1] + " )";
             }
             catch ( Exception ) { return "new Vector2( )"; }
          }
@@ -547,7 +547,7 @@ namespace Detox.ScriptEditor
             try
             {
                string [] subString = stringValue.Split( ',' );
-               return "new Vector3( " + subString[0] + ", " + subString[1] + ", " + subString[2] + " )";
+               return "new Vector3( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + " )";
             }
             catch ( Exception ) { return "new Vector3( )"; }
          }
@@ -556,7 +556,7 @@ namespace Detox.ScriptEditor
             try
             {
                string [] subString = stringValue.Split( ',' );
-               return "new Vector4( " + subString[0] + ", " + subString[1] + ", " + subString[2] + ", " + subString[3] + " )";
+               return "new Vector4( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
             }
             catch ( Exception ) { return "new Vector4( )"; }
          }
@@ -634,7 +634,7 @@ namespace Detox.ScriptEditor
 
                for ( int i = 0; i < elements.Length; i += 4 )
                {
-                  declaration += "new Quaternion(" + elements[i] + "," + elements[i+1] + "," + elements[i+2] + "," + elements[i+3] + "),";
+                  declaration += "new Quaternion((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + ",(float)" + elements[i+3] + "),";
                }
 
                declaration = declaration.Substring( 0, declaration.Length - 1 );
@@ -650,7 +650,7 @@ namespace Detox.ScriptEditor
 
                for ( int i = 0; i < elements.Length; i += 2 )
                {
-                  declaration += "new Vector2(" + elements[i] + "," + elements[i+1] + "),";
+                  declaration += "new Vector2((float)" + elements[i] + ",(float)" + elements[i+1] + "),";
                }
 
                declaration = declaration.Substring( 0, declaration.Length - 1 );
@@ -666,7 +666,7 @@ namespace Detox.ScriptEditor
 
                for ( int i = 0; i < elements.Length; i += 3 )
                {
-                  declaration += "new Vector3(" + elements[i] + "," + elements[i+1] + "," + elements[i+2] + "),";
+                  declaration += "new Vector3((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + "),";
                }
 
                declaration = declaration.Substring( 0, declaration.Length - 1 );
@@ -682,7 +682,7 @@ namespace Detox.ScriptEditor
 
                for ( int i = 0; i < elements.Length; i += 4 )
                {
-                  declaration += "new Vector4(" + elements[i] + "," + elements[i+1] + "," + elements[i+2] + "," + elements[i+3] + "),";
+                  declaration += "new Vector4((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + ",(float)" + elements[i+3] + "),";
                }
 
                declaration = declaration.Substring( 0, declaration.Length - 1 );
