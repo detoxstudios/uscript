@@ -961,12 +961,13 @@ namespace Detox.FlowChart
                (start.X + (end.X - start.X) * .75f), 
                (start.Y + (end.Y - start.Y) * .90f) ); 
 
+            // New socket links
             Handles.color = new UnityEngine.Color( selectedPen.Color.FR, selectedPen.Color.FG, selectedPen.Color.FB );
-            Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0), 
-                                new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0), 
+            Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0),
+                                new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0),
                                  Handles.color, uScriptConfig.lineTexture, selectedPen.Width );
-
-            UnityEngine.GUI.Box( new UnityEngine.Rect(end.X - uScriptConfig.PointerLineEnd.width / 2, end.Y - uScriptConfig.PointerLineEnd.height / 2, 
+            // The end of the new socket link
+            UnityEngine.GUI.Box( new UnityEngine.Rect(end.X - uScriptConfig.PointerLineEnd.width / 2, end.Y - uScriptConfig.PointerLineEnd.height / 2,
                                  uScriptConfig.PointerLineEnd.width, uScriptConfig.PointerLineEnd.height), 
                                  uScriptConfig.PointerLineEnd);
          }
@@ -1381,6 +1382,7 @@ namespace Detox.FlowChart
 
          Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
 
+         // Draw the node
          e.Graphics.FillRectangle(StyleName, new Rectangle(location.X, location.Y, Size.Width, Size.Height), Name);
 
          FlowChartCtrl flowChart = Parent as FlowChartCtrl;
@@ -1426,7 +1428,8 @@ namespace Detox.FlowChart
 
             //reget point incase the point render modified it
             point = m_AnchorPoints[ i ];
-            
+
+            // Sockets
             GUI.Box(new Rect(x + location.X - radius, y + location.Y - radius, diameter, diameter), "", uScriptConfig.Style.Get(point.StyleName));
 
             //return original style in case it was modified for rendering

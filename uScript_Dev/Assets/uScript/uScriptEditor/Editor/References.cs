@@ -1053,12 +1053,14 @@ namespace System.Drawing
    {
       public void DrawRectangle( Pen pen, int x, int y, int width, int height )
       {
+         // Band selections
          GUI.Box( new Rect(x, y, width, height), "", "textarea");
 		 // @TODO: Should add a selection box style as part of you uScript GUI.
       }
 
       public void FillRectangle( string styleName, Rectangle rectangle, string nodeName )
       {
+         // Nodes
          GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), nodeName, uScriptConfig.Style.Get(styleName));
       }
 
