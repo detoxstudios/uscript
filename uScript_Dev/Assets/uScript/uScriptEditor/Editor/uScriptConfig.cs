@@ -634,6 +634,13 @@ public partial class uScriptConfig
       }
    }
 
+   public static bool ShouldAutoPackage(Type type)
+   {
+      if ( type == typeof(AudioClip) ) return true;
+   
+      return false;
+   }
+
    public struct Paths
    {
       //uScriptEditor paths

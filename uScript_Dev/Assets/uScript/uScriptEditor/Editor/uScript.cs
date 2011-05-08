@@ -180,9 +180,6 @@ legal@detoxstudios.com
 http://www.detoxstudios.com";
    #endregion
 
-
-
-
    //
    // Editor Window Initialization
    //
@@ -332,6 +329,11 @@ http://www.detoxstudios.com";
          {
             uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_MasterObject));
+         }
+         if (null == uScriptMaster.GetComponent<uScript_Assets>())
+         {
+            uScriptDebug.Log("Adding Asset Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_Assets));
          }
 
          foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
@@ -700,7 +702,6 @@ http://www.detoxstudios.com";
             Event.current.Use( );
          }
       }
-
    }
    
    public void DrawPopups(bool contextActive)

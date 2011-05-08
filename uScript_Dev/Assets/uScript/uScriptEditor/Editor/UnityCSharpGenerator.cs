@@ -780,8 +780,6 @@ namespace Detox.ScriptEditor
                if ( "UnityEngine.GameObject" == localNode.Value.Type && "" != localNode.Value.Default )
                {
                   uniqueObjects[ localNode.Value.Default ] = localNode.Value.Default;
-                  //AddCSharpLine( "gameObject = GameObject.Find( \"" + localNode.Value.Default + "\" ); " );
-                  //AddCSharpLine( "if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, \"uscript_gizmo_events.png\");" );
                }
             }
             else
@@ -789,8 +787,6 @@ namespace Detox.ScriptEditor
                if ( null == node.Instance.Default || "" == node.Instance.Default ) continue;
 
                uniqueObjects[ node.Instance.Default ] = node.Instance.Default;
-               //AddCSharpLine( "gameObject = GameObject.Find( \"" + node.Instance.Default + "\" ); " );
-               //AddCSharpLine( "if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, \"uscript_gizmo_events.png\");" );
             }
          }
 
@@ -955,6 +951,72 @@ namespace Detox.ScriptEditor
 
       private void DefineInitialization( )
       {
+         AddCSharpLine( "#pragma warning disable 414" );
+
+         do
+         {
+            AddCSharpLine( "GameObject masterObject = GameObject.Find(\"" + uScriptRuntimeConfig.MasterObjectName + "\");" );
+            AddCSharpLine( "uScript_Assets assetComponent = null;" );
+
+            AddCSharpLine( "if ( null != masterObject ) assetComponent = masterObject.GetComponent<uScript_Assets>( );" );
+            
+            AddCSharpLine( "if ( null != assetComponent )" );
+            AddCSharpLine( "{" );
+            ++m_TabStack;
+
+               GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+               uScript_Assets assetComponent = null;
+            
+               if ( null != uScriptMaster ) assetComponent = uScriptMaster.GetComponent<uScript_Assets>( );                        
+               
+               if ( null != assetComponent )
+               {
+                  foreach ( EntityNode node in m_Script.EntityNodes )
+                  {
+                     foreach ( Parameter p in node.Parameters )
+                     {
+                        if ( p.Default == "" ) continue;
+                        
+                        Type type = uScript.Instance.GetType(p.Type);
+                        if ( null == type ) continue;
+
+                        if ( false == uScriptConfig.ShouldAutoPackage(type) ) continue;
+
+                        UnityEngine.Object asset = UnityEditor.AssetDatabase.LoadAssetAtPath( p.Default, type );
+
+                        if ( null != asset )
+                        {
+                           assetComponent.Add( p.Default, asset );
+                           
+                           AddCSharpLine( CSharpName(node, p.Name) + " = assetComponent.Get(\"" + p.Default + "\") as " + p.Type + ";" );
+                        }
+                        else
+                        {
+                           uScriptDebug.Log( p.Default + " could not be found and added to the package", uScriptDebug.Type.Error );
+                           continue;
+                        }
+                     }
+                  }
+               }
+               else
+               {
+                  uScriptDebug.Log( "uScript_Assets could not be found on the GameObject " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Error );
+               }
+
+            --m_TabStack;
+            AddCSharpLine( "}" );
+            AddCSharpLine( "else" );
+            AddCSharpLine( "{" );
+            ++m_TabStack;
+               AddCSharpLine( "uScriptDebug.Log( \"uScript_Assets component cannot be found on GameObject " + uScriptRuntimeConfig.MasterObjectName + "\", uScriptDebug.Type.Error);" );
+            --m_TabStack;
+            AddCSharpLine( "}" );
+         
+         } while ( false );
+
+         AddCSharpLine( "#pragma warning restore 414" );
+         AddCSharpLine( "" );
+
          //make sure all components we plan to reference
          //have been placed in their local variables
          AddCSharpLine( CSharpFillComponentsDeclaration( ) + ";" );
