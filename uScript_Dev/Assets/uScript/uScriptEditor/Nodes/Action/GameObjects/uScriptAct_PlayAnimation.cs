@@ -17,16 +17,28 @@ using System.Collections;
 [FriendlyName("Play Animation")]
 public class uScriptAct_PlayAnimation : uScriptLogic
 {
+   private GameObject m_GameObject = null;
+   private string     m_Animation  = null;
+
+   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
    public bool Out { get { return true; } }
-   //TODO: Have another output that fired when the animation is done.
+   
+   [FriendlyName("Finished")]
+   public event uScriptEventHandler Finished;
 
    public void In(GameObject[] Target, string Animation, [FriendlyName("Speed Factor")] float SpeedFactor, [FriendlyName("Stop Other Animation")] bool StopOtherAnimations)
    {
+      m_GameObject = null;
+
       foreach ( GameObject currentTarget in Target )
       {
          if (currentTarget != null)
          {
+            //only save one so we can ask about the animation state
+            //i don't need to save all of them in the array
+            m_GameObject = currentTarget;
+            m_Animation  = Animation;
 
             if (SpeedFactor == 0F)
             {
@@ -51,6 +63,19 @@ public class uScriptAct_PlayAnimation : uScriptLogic
 
             currentTarget.animation[Animation].wrapMode = WrapMode.Once;
             currentTarget.animation.Play(Animation);
+         }
+      }
+   }
+
+   public override void Update()
+   {
+      if ( null != m_GameObject )
+      {
+         if ( false == m_GameObject.animation.IsPlaying(m_Animation) )
+         {
+            m_GameObject = null;
+
+            if ( null != Finished ) Finished( this, new System.EventArgs( ) );
          }
       }
    }
