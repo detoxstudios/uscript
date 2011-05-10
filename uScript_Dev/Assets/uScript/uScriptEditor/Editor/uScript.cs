@@ -12,11 +12,12 @@ using System.Drawing;
 
 public class uScript : EditorWindow
 {
-                                       //format is MAJOR.MINOR.YYMMDDa  
-                                       //(where 'a' is incremented if we have more than 1 daily build we release)
-   public string    uScriptBuild       { get { return "0.1.110504a"; } }
-   public string    RequiredUnityBuild { get { return  "3.3.0f4"; } }
-   public DateTime  ExpireDate         { get { return new DateTime( 2011, 5, 16 ); } }
+                                           //format is MAJOR.MINOR.YYMMDDa  
+                                           //(where 'a' is incremented if we have more than 1 daily build we release)
+   public string    uScriptBuild           { get { return "0.2.110510a"; } }
+   public string    RequiredUnityBuild     { get { return  "3.3.0f4"; } }
+   public string    RequiredUnityBetaBuild { get { return "3.4.0b1"; } }
+   public DateTime  ExpireDate             { get { return new DateTime( 2011, 5, 23 ); } }
 
    private enum MouseRegion
    {
@@ -280,9 +281,12 @@ http://www.detoxstudios.com";
       {
          InitializeGUIButtons();
 
-         if ( Application.unityVersion != RequiredUnityBuild )
+         if (Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild)
          {
-            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error );
+         }
+         else
+         {
+            uScriptDebug.Log("This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
             return;
          }
 

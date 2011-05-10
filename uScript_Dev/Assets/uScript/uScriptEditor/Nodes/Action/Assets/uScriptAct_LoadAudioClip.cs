@@ -1,11 +1,11 @@
 // uScript Action Node
-// (C) 2010 Detox Studios LLC
-// Desc: Counts the amount of time that elapses between starting and stopping.
+// (C) 2011 Detox Studios LLC
+// Desc: Loads an AudioClip from your Resources directory.
 
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/Audio")]
+[NodePath("Action/Assets")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads an AudioClip")]
