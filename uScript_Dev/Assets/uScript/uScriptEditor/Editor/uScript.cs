@@ -2043,17 +2043,7 @@ http://www.detoxstudios.com";
                if (EditorUtility.DisplayDialog("Assign To Master Game Object", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No"))
                {
                   AssetDatabase.Refresh( );
-                  GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-                  if (uScriptMaster != null)
-                  {
-                     uScript_MasterObject component = (uScript_MasterObject)uScriptMaster.GetComponent(typeof(uScript_MasterObject));
-                     if (component != null)
-                     {
-#if UNITY_EDITOR
-                        component.AttachScriptToMaster(m_FullPath);
-#endif
-                     }
-                  }
+                  AttachToMasterGO();
                }
             }
    
@@ -2066,6 +2056,21 @@ http://www.detoxstudios.com";
       }
 
       return false;
+   }
+   
+   void AttachToMasterGO()
+   {
+      GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+      if (uScriptMaster != null)
+      {
+         uScript_MasterObject component = (uScript_MasterObject)uScriptMaster.GetComponent(typeof(uScript_MasterObject));
+         if (component != null)
+         {
+#if UNITY_EDITOR
+            component.AttachScriptToMaster(m_FullPath);
+#endif
+         }
+      }
    }
 
    void GatherDerivedTypes( Dictionary<Type, Type> uniqueNodes, string path, Type baseType )
