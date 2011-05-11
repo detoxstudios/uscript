@@ -178,6 +178,22 @@ Detox Studios LLC
 legal@detoxstudios.com
 http://www.detoxstudios.com";
    #endregion
+   
+   public bool IsAttached
+   {
+      get
+      {
+         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+         if (uScriptMaster != null && !String.IsNullOrEmpty(m_FullPath))
+         {
+            System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_FullPath);
+            bool isSafe = false;
+            string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
+            return uScriptMaster.GetComponent(safePath) != null;
+         }
+         return false;
+      }
+   }
 
    //
    // Editor Window Initialization
