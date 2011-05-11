@@ -215,9 +215,10 @@ public static class uScriptGUI
 
    static void EndRow(string type)
    {
+      type = uScriptConfig.Variable.FriendlyName(type).Replace("UnityEngine.", string.Empty);
       Vector2 v = _styleType.CalcSize(new GUIContent(type));
       _columnType.Width = Mathf.Max(_columnType.Width, (int)v.x);
-		
+
       GUI.enabled = true;
       GUILayout.Label(type, _styleType);
       EditorGUILayout.EndHorizontal();

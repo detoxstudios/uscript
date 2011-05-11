@@ -173,7 +173,7 @@ namespace System.Windows.Forms
          return null;
       }
 
-      public void OnPaint( )
+      public void OnPaint_Old( )
       {
          bool signalUpdate = false;
 
@@ -326,7 +326,7 @@ namespace System.Windows.Forms
          }
       }
 
-      public void OnPaintNew( )
+      public void OnPaint( )
       {
          bool signalUpdate = false;
 

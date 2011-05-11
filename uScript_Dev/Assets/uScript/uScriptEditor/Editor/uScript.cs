@@ -1377,7 +1377,7 @@ http://www.detoxstudios.com";
    KeyCode[] _arrayKeyCode;
    bool _arrayFoldoutBool;
 
-   bool _newPropertyGrid = false;
+   bool _oldPropertyGrid = false;
    Vector2 _scrollNewProperties;
    // END TEMP Variables
 
@@ -1394,15 +1394,37 @@ http://www.detoxstudios.com";
          {
             GUILayout.Label("Properties", uScriptStyles.panelTitle);
             GUILayout.FlexibleSpace();
-            _newPropertyGrid = GUILayout.Toggle(_newPropertyGrid, "Toggle New Panel", EditorStyles.toolbarButton);
+            _oldPropertyGrid = GUILayout.Toggle(_oldPropertyGrid, "Toggle Old Panel", EditorStyles.toolbarButton);
          }
          EditorGUILayout.EndHorizontal();
 
-         _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
+         // New Properties panel
+         //
+         if (_oldPropertyGrid)
          {
-            m_ScriptEditorCtrl.PropertyGrid.OnPaint();
+            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
+            {
+               m_ScriptEditorCtrl.PropertyGrid.OnPaint_Old();
+            }
+            EditorGUILayout.EndScrollView();
          }
-         EditorGUILayout.EndScrollView();
+         else
+         {
+            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, uScriptStyles.hScrollbar, uScriptStyles.vScrollbar);
+            {
+               uScriptGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
+               {
+                  m_ScriptEditorCtrl.PropertyGrid.OnPaint();
+               }
+               uScriptGUI.EndColumns();
+            }
+            EditorGUILayout.EndScrollView();
+
+            if (Event.current.type == EventType.Repaint)
+            {
+               _svRect = GUILayoutUtility.GetLastRect();
+            }
+         }
       }
       EditorGUILayout.EndVertical();
 
@@ -1455,39 +1477,17 @@ http://www.detoxstudios.com";
          }
          EditorGUILayout.EndHorizontal();
 
-         // New Properties panel
-         //
-         if (_newPropertyGrid)
+         _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
          {
-            _scrollNewProperties = EditorGUILayout.BeginScrollView(_scrollNewProperties, uScriptStyles.hScrollbar, uScriptStyles.vScrollbar);
+            // prevent the help TextArea from getting focus
+            GUI.SetNextControlName("helpTextArea");
+            GUILayout.TextArea(helpDescription, uScriptStyles.referenceText);
+            if (GUI.GetNameOfFocusedControl() == "helpTextArea")
             {
-               uScriptGUI.BeginColumns("Property", "Value", "Type", _scrollNewProperties, _svRect);
-               {
-                     m_ScriptEditorCtrl.PropertyGrid.OnPaintNew();
-               }
-               uScriptGUI.EndColumns();
-            }
-            EditorGUILayout.EndScrollView();
-
-            if (Event.current.type == EventType.Repaint)
-            {
-               _svRect = GUILayoutUtility.GetLastRect();
+               GUIUtility.keyboardControl = 0;
             }
          }
-         else
-         {
-            _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
-            {
-               // prevent the help TextArea from getting focus
-               GUI.SetNextControlName("helpTextArea");
-               GUILayout.TextArea(helpDescription, uScriptStyles.referenceText);
-               if (GUI.GetNameOfFocusedControl() == "helpTextArea")
-               {
-                  GUIUtility.keyboardControl = 0;
-               }
-            }
-            EditorGUILayout.EndScrollView ();
-         }
+         EditorGUILayout.EndScrollView ();
       }
       EditorGUILayout.EndVertical();
 
@@ -2484,9 +2484,9 @@ http://www.detoxstudios.com";
                      if ( typeof(EventArgs).IsAssignableFrom(methodParameter.ParameterType) )
                      {
                         entityEvent.EventArgs = methodParameter.ParameterType.ToString( ).Replace( "+", "." );
-                        
+
                         PropertyInfo []eventProperties = methodParameter.ParameterType.GetProperties( );
-                     
+
                         foreach ( PropertyInfo eventProperty in eventProperties )
                         {
                            Parameter output = new Parameter( );
@@ -2503,7 +2503,7 @@ http://www.detoxstudios.com";
                         }
                      }
                   }
-                  
+
                   //break after Invoke parameter, it's the only one we care about
                   break;
                }
