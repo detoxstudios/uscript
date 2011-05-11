@@ -1394,7 +1394,7 @@ http://www.detoxstudios.com";
          {
             GUILayout.Label("Properties", uScriptStyles.panelTitle);
             GUILayout.FlexibleSpace();
-            _oldPropertyGrid = GUILayout.Toggle(_oldPropertyGrid, "Toggle Old Panel", EditorStyles.toolbarButton);
+//            _oldPropertyGrid = GUILayout.Toggle(_oldPropertyGrid, "Toggle Old Panel", EditorStyles.toolbarButton);
          }
          EditorGUILayout.EndHorizontal();
 
