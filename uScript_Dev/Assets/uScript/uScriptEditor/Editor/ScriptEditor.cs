@@ -2008,6 +2008,15 @@ namespace Detox.ScriptEditor
                   return false;
                }
             }
+
+            if ( dest is EntityEvent || dest is EntityMethod )
+            {
+               if ( link.Destination.Anchor == dest.Instance.Name )
+               {
+                  reason = "External Nodes cannot connect directly to an instance plug, please add a GameObject variable as an intermediate step.";
+                  return false;
+               }
+            }
          }
          if ( dest is ExternalConnection )
          {

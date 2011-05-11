@@ -6,6 +6,14 @@ using System.Text;
 using UnityEngine;
 using UnityEditor;
 
+//KNOWN LIMITATIONS:
+//Externals cannot connect directly to instance plugs.  They must go through a variable node as an intermediate step
+   //This is because the ExternalInput function directly sets the variables they are linked to, but the code generation
+   //sees the Instance Socket as empty so it doesn't generate code to read it, it instead generates code for the external variable
+   //which is not defined (once again because external connections 'PUSH' the values to the variables they represent)
+   //parameters work because the parameter syncing code ignores externals and externals have already 'PUSHed' their
+   //values to the parameter's variable
+
 namespace Detox.ScriptEditor
 {
    //how it works with CSharp:
@@ -781,14 +789,21 @@ namespace Detox.ScriptEditor
                
                if ( "UnityEngine.GameObject" == localNode.Value.Type && "" != localNode.Value.Default )
                {
-                  uniqueObjects[ localNode.Value.Default ] = localNode.Value.Default;
+                  uniqueObjects[ localNode.Value.Default ] = "uscript_gizmo_variables.png";
                }
             }
             else
             {
                if ( null == node.Instance.Default || "" == node.Instance.Default ) continue;
 
-               uniqueObjects[ node.Instance.Default ] = node.Instance.Default;
+               if ( node is EntityEvent )
+               {
+                  uniqueObjects[ node.Instance.Default ] = "uscript_gizmo_events.png";
+               }
+               else if ( node is EntityMethod )
+               {
+                  uniqueObjects[ node.Instance.Default ] = "uscript_gizmo.png";
+               }
             }
          }
 
@@ -800,7 +815,7 @@ namespace Detox.ScriptEditor
             foreach ( string key in uniqueObjects.Keys )
             {
                AddCSharpLine( "gameObject = GameObject.Find( \"" + key + "\" ); " );
-               AddCSharpLine( "if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, \"uscript_gizmo_events.png\");" );
+               AddCSharpLine( "if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, \"" + uniqueObjects[key] + "\");" );
                AddCSharpLine( "" );
             }
          }
@@ -1102,13 +1117,13 @@ namespace Detox.ScriptEditor
             {
                if ( entityMethod.Instance.Default != "" )
                {
-                  FillComponent( entityMethod, entityMethod.Instance, false );
+                  FillComponent( entityMethod, entityMethod.Instance );
                }
 
                foreach ( Parameter p in entityMethod.Parameters )
                {
                   if ( false == p.Input ) continue;
-                  FillComponent( entityMethod, p, false  );
+                  FillComponent( entityMethod, p );
                }
             }
 
@@ -1116,7 +1131,7 @@ namespace Detox.ScriptEditor
             {
                if ( entityEvent.Instance.Default != "" )
                {
-                  FillComponent( entityEvent, entityEvent.Instance, false  );
+                  FillComponent( entityEvent, entityEvent.Instance );
                }
             }
 
@@ -1124,7 +1139,7 @@ namespace Detox.ScriptEditor
             {
                if ( entityProperty.Instance.Default != "" )
                {
-                  FillComponent( entityProperty, entityProperty.Instance, false  );
+                  FillComponent( entityProperty, entityProperty.Instance );
                }
             }
 
@@ -1133,20 +1148,20 @@ namespace Detox.ScriptEditor
                foreach ( Parameter p in logicNode.Parameters )
                {
                   if ( false == p.Input ) continue;
-                  FillComponent( logicNode, p, false  );
+                  FillComponent( logicNode, p );
                }
             }
 
             foreach ( LocalNode localNode in m_Script.UniqueLocals )
             {
-               FillComponent( localNode, localNode.Value, true );
+               FillComponent( localNode, localNode.Value );
             }
 
          --m_TabStack;
          AddCSharpLine( "}" );
       }
 
-      private void FillComponent(EntityNode node, Parameter parameter, bool isVariableConnection)
+      private void FillComponent(EntityNode node, Parameter parameter)
       {
          Type componentType  = typeof(UnityEngine.Component);
          Type gameObjectType = typeof(UnityEngine.GameObject);
@@ -1254,7 +1269,7 @@ namespace Detox.ScriptEditor
                
                   //only set up listeners if it's NOT a variable connecxtion
                   //otherwise they'll be set in the conditional below this
-                  if ( false == isVariableConnection )
+                  if ( false == node is LocalNode )
                   {
                      SetupEventListeners( CSharpName(node, parameter.Name), node, true );
                   }
@@ -1267,7 +1282,7 @@ namespace Detox.ScriptEditor
             //then we need to go a few steps further to see if its contents
             //have been modified at runtime.  if they have then
             //we need to register new event listeners
-            if ( true == isVariableConnection )
+            if ( true == node is LocalNode )
             {
                AddCSharpLine( "//if our game object reference was changed then we need to reset event listeners" );
                AddCSharpLine( "if ( " + PreviousName(node, parameter.Name) + " != " + CSharpName(node, parameter.Name) + " )" );
@@ -2648,6 +2663,9 @@ namespace Detox.ScriptEditor
       {
          AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
 
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+
          AddCSharpLine( "#pragma warning disable 219" );
          AddCSharpLine( "#pragma warning disable 168" );
 
@@ -2784,6 +2802,9 @@ namespace Detox.ScriptEditor
                }
             }
          }
+
+         AddCSharpLine( "}" );
+         --m_TabStack;
       }
    
       //go through and tell all the property linked to us to update their entity's values

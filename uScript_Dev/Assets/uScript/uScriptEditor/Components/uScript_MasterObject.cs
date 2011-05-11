@@ -17,5 +17,10 @@ public class uScript_MasterObject : MonoBehaviour
    {
       m_uScriptsToAttach.Add(fullPath);
    }
+
+   void OnDrawGizmos( )
+   {
+      Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_master.png");      
+   }
 #endif
 }
