@@ -37,7 +37,6 @@ public class uScript : EditorWindow
 
    Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
-
    static private uScript s_Instance = null;
    static public uScript Instance { get { if ( null == s_Instance ) Init( ); return s_Instance; } }
    private static bool isPro;
@@ -57,7 +56,6 @@ public class uScript : EditorWindow
    static private AppFrameworkData m_AppData = new AppFrameworkData();
    static private bool m_SettingsLoaded = false;
    private double m_RefreshTimestamp = -1.0;
-   private string m_AddToMaster = "";
 
    private int m_ContextX = 0;
    private int m_ContextY = 0;
@@ -428,16 +426,6 @@ http://www.detoxstudios.com";
       {
          m_ScriptEditorCtrl.Redo( );
          m_WantsRedo = false;
-      }
-
-      if (!String.IsNullOrEmpty(m_AddToMaster) && !EditorApplication.isCompiling)
-      {
-         // add the new uScript to the master object
-         System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_AddToMaster);
-         String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf("."));
-         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-         uScriptMaster.AddComponent(typeName);
-         m_AddToMaster = "";
       }
 
       OnMouseMove( );
@@ -2039,7 +2027,17 @@ http://www.detoxstudios.com";
                if (EditorUtility.DisplayDialog("Assign To Master Game Object", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No"))
                {
                   AssetDatabase.Refresh( );
-                  m_AddToMaster = m_FullPath;
+                  GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+                  if (uScriptMaster != null)
+                  {
+                     uScript_MasterObject component = (uScript_MasterObject)uScriptMaster.GetComponent(typeof(uScript_MasterObject));
+                     if (component != null)
+                     {
+#if UNITY_EDITOR
+                        component.AttachScriptToMaster(m_FullPath);
+#endif
+                     }
+                  }
                }
             }
    

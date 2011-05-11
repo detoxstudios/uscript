@@ -1,7 +1,21 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class uScript_MasterObject : MonoBehaviour
 {
-
+#if UNITY_EDITOR
+   private List<string> m_uScriptsToAttach = new List<string>();
+   
+   public string[] uScriptsToAttach
+   {
+      get { return m_uScriptsToAttach.ToArray(); }
+   }
+   
+   public void ClearAttachList() { m_uScriptsToAttach.Clear(); }
+   
+   public void AttachScriptToMaster(string fullPath)
+   {
+      m_uScriptsToAttach.Add(fullPath);
+   }
+#endif
 }

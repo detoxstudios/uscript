@@ -49,7 +49,7 @@ public class DetoxUtilities : EditorWindow
 		newBoxCollider.size = new Vector3(6f, 3f, 2f);
 		newBoxCollider.isTrigger = true;
 		new_Trigger.AddComponent(typeof(uScript_Triggers));
-		new_Trigger.transform.parent = GameObject.Find("Trigger_Setup").transform;
+		new_Trigger.transform.parent = GameObject.Find("Trigger").transform;
 		new_Trigger.transform.position = new Vector3(0, 1.5f, 8.5f);
 		
 		// Player GO:
