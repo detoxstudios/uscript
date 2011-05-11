@@ -34,6 +34,13 @@ public static class uScriptStyles
    private static GUIStyle _vDivider;
    public static GUIStyle vDivider { get { return _vDivider; } }
 
+   private static GUIStyle _vScrollbar;
+   public static GUIStyle vScrollbar { get { return _vScrollbar; } }
+
+   private static GUIStyle _hScrollbar;
+   public static GUIStyle hScrollbar { get { return _hScrollbar; } }
+
+
    public static void Init()
    {
 //      uScriptDebug.Log("Initalizing uScriptStyles", uScriptDebug.Type.Debug);
@@ -73,5 +80,11 @@ public static class uScriptStyles
       _vDivider.padding = new RectOffset(0, 0, 0, 0);
       _vDivider.border = new RectOffset(0, 0, 0, 0);
       _vDivider.normal.background = null;
+
+      _vScrollbar = new GUIStyle(GUI.skin.verticalScrollbar);
+      _vScrollbar.margin = new RectOffset();
+
+      _hScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar);
+      _hScrollbar.margin = new RectOffset();
    }
 }
