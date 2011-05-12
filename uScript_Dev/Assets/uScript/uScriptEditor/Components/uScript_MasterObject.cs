@@ -4,6 +4,9 @@ using System.Collections.Generic;
 public class uScript_MasterObject : MonoBehaviour
 {
 #if UNITY_EDITOR
+   public string Script = null;
+   public string ScriptName = null;
+
    private List<string> m_uScriptsToAttach = new List<string>();
    
    public string[] uScriptsToAttach

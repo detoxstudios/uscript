@@ -32,12 +32,6 @@ namespace Detox.ScriptEditor
 
       public string ScriptName { get { return m_ScriptEditor.Name; } }
 
-      public bool CanUndo { get { return m_ChangeStack.HasUndos; } }
-      public bool CanRedo { get { return m_ChangeStack.HasRedos; } }
-
-      public string UndoMessage { get { return m_ChangeStack.UndoMessage; } }
-      public string RedoMessage { get { return m_ChangeStack.RedoMessage; } }
-
       public bool CanCopy
       {
          get
@@ -61,7 +55,10 @@ namespace Detox.ScriptEditor
       public PropertyGrid PropertyGrid { get { return m_PropertyGrid; } }
 
       private ScriptEditor m_ScriptEditor = null;
-      public ScriptEditor ScriptEditor { get { return m_ScriptEditor; } }
+      public ScriptEditor ScriptEditor 
+      { 
+         get { return m_ScriptEditor; } 
+      }
 		
 	  public Detox.FlowChart.FlowChartCtrl FlowChart { get { return m_FlowChart; } }
 		
@@ -126,28 +123,6 @@ namespace Detox.ScriptEditor
          TabText = m_ScriptEditor.Name;
 
          RefreshScript( null, true, location );
-      }
-
-      private void UndoChange(object sender, ChangeStack.ChangeEventArgs args)
-      {
-         m_ScriptEditor = args.ChangedObject as ScriptEditor;
-         RefreshScript( null );
-      }
-
-      private void RedoChange(object sender, ChangeStack.ChangeEventArgs args)
-      {
-         m_ScriptEditor = args.ChangedObject as ScriptEditor;
-         RefreshScript( null );
-      }
-
-      public void Undo( )
-      {
-         m_ChangeStack.Undo( );
-      }
-
-      public void Redo( )
-      {
-         m_ChangeStack.Redo( );
       }
 
       public bool CanDragDropOnNode( object o )
@@ -567,16 +542,6 @@ namespace Detox.ScriptEditor
 
          if ( false == text.StartsWith("[SCRIPTEDITOR]") ) return null;
          return text.Substring( "[SCRIPTEDITOR]".Length );
-      }
-
-      private void m_MenuUndo_Click(object sender, EventArgs e)
-      {
-         Undo( );
-      }
-      
-      private void m_MenuRedo_Click(object sender, EventArgs e)
-      {
-         Redo( );
       }
 
       private void m_MenuCopy_Click(object sender, EventArgs e)
@@ -1305,9 +1270,6 @@ namespace Detox.ScriptEditor
          m_FlowChart.LinkCreated       -= FlowchartLinkCreated;
          m_FlowChart.PointRender       -= FlowchartPointRender;
 
-         m_ChangeStack.UndoChange -= UndoChange;
-         m_ChangeStack.RedoChange -= RedoChange;
-
          m_PropertyGrid.PropertyValueChanged -= new PropertyValueChangedEventHandler(m_PropertyGrid_PropertyValueChanged);
       }
 
@@ -1317,9 +1279,6 @@ namespace Detox.ScriptEditor
          m_FlowChart.SelectionModified += FlowchartSelectionModified;
          m_FlowChart.LinkCreated       += FlowchartLinkCreated;
          m_FlowChart.PointRender       += FlowchartPointRender;
-
-         m_ChangeStack.UndoChange += UndoChange;
-         m_ChangeStack.RedoChange += RedoChange;
 
          m_PropertyGrid.PropertyValueChanged += new PropertyValueChangedEventHandler(m_PropertyGrid_PropertyValueChanged);
       }
@@ -1367,8 +1326,6 @@ namespace Detox.ScriptEditor
          ToolStripMenuItem addMenu  = new ToolStripMenuItem();
          ToolStripMenuItem copyMenu = new ToolStripMenuItem();
          ToolStripMenuItem pasteMenu= new ToolStripMenuItem();
-         ToolStripMenuItem undoMenu = new ToolStripMenuItem();
-         ToolStripMenuItem redoMenu = new ToolStripMenuItem();
          ToolStripMenuItem upgradeNode = new ToolStripMenuItem();
 
          m_ContextMenuStrip.Items.Add( addMenu );
@@ -1383,31 +1340,6 @@ namespace Detox.ScriptEditor
 
          m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
          
-         if ( CanUndo )
-         {
-            undoMenu.Name = "m_UndoMenu";
-            undoMenu.Size = new System.Drawing.Size(152, 22);
-            undoMenu.Text = "&Undo " + m_ChangeStack.UndoMessage;
-            undoMenu.Click += new System.EventHandler(m_MenuUndo_Click);
-
-            m_ContextMenuStrip.Items.Add( undoMenu );
-         }
-
-         if ( CanRedo )
-         {
-            redoMenu.Name = "m_RedoMenu";
-            redoMenu.Size = new System.Drawing.Size(152, 22);
-            redoMenu.Text = "&Redo " + m_ChangeStack.RedoMessage;
-            redoMenu.Click += new System.EventHandler(m_MenuRedo_Click);
-
-            m_ContextMenuStrip.Items.Add( redoMenu );
-         }
-
-         if ( CanUndo || CanRedo )
-         {
-            m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
-         }
-
          if ( CanCopy )
          {
             copyMenu.Name = "m_Copy";
@@ -2144,30 +2076,6 @@ namespace Detox.ScriptEditor
 
    public class ChangeStack
    {
-      public class ChangeEventArgs : EventArgs
-      {
-         public Object ChangedObject;
-      
-         public ChangeEventArgs(object o)
-         {
-            ChangedObject = o;
-         }
-      }
-
-      public delegate void ChangeEventHandler(object sender, ChangeEventArgs e);
-
-      public event ChangeEventHandler UndoChange;
-      private void OnUndoChange(Object changedObject)
-      {
-         if (null != UndoChange) UndoChange(this, new ChangeEventArgs(changedObject));
-      }
-
-      public event ChangeEventHandler RedoChange;
-      private void OnRedoChange(Object changedObject)
-      {
-         if (null != RedoChange) RedoChange(this, new ChangeEventArgs(changedObject));
-      }
-
       public struct Change
       {
          public Object OldObject;
@@ -2182,84 +2090,9 @@ namespace Detox.ScriptEditor
          }
       }
 
-      private List<Change> m_Stack = new List<Change>( );
-
-      private int m_Undo = -1;
-      private int m_Redo = 0;
-
-      public bool HasUndos { get { return m_Undo > -1; } }
-      public bool HasRedos { get { return m_Redo < m_Stack.Count; } }
-   
-      public string UndoMessage 
-      { 
-         get 
-         { 
-            if ( false == HasUndos ) return "";
-            return m_Stack[ m_Undo ].Name;
-         }
-      }
-
-      public string RedoMessage 
-      { 
-         get 
-         { 
-            if ( false == HasRedos ) return "";
-            return m_Stack[ m_Redo ].Name;
-         }
-      }
-
-      private bool m_LockChanges = false;
-
       public void AddChange(Change change)
       {
-         if ( true == m_LockChanges ) return;
-
-         if ( m_Undo >= 0 )
-         {
-            //remove everything after us in the stack
-            //because this change starts a new branch
-            m_Stack.RemoveRange( m_Undo + 1, m_Stack.Count - (m_Undo + 1) );
-         }
-
-         m_Undo = m_Stack.Count( );
-
-         m_Stack.Add( change );
-
-         m_Redo = m_Stack.Count;
-      }
-
-      public void Undo( )
-      {
-         m_LockChanges = true;
-
-         if ( m_Undo > -1 && m_Undo < m_Stack.Count )
-         {
-            m_Redo = m_Undo;
-            
-            Change change = m_Stack[ m_Undo ];
-            --m_Undo;
-
-            OnUndoChange( change.OldObject );
-         }
-
-         m_LockChanges = false;
-      }
-
-      public void Redo( )
-      {
-         m_LockChanges = true;
-
-         if ( m_Redo > -1 && m_Redo < m_Stack.Count )
-         {
-            m_Undo = m_Redo;
-
-            Change change = m_Stack[ m_Redo ];
-            ++m_Redo;
-
-            OnRedoChange( change.NewObject );
-         }
-
-         m_LockChanges = false;
+         uScript.Instance.RegisterUndo( change.Name, ((ScriptEditor)change.NewObject) );
       }
    };
 

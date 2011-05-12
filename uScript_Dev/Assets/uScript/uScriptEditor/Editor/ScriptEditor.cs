@@ -2470,6 +2470,49 @@ namespace Detox.ScriptEditor
          return true;
       }
 
+      public string ToBase64( )
+      {
+         MemoryStream stream = new MemoryStream( );
+
+         if ( false == Write(stream) ) 
+         {
+            Status.Error( "Could not write script data to a memory stream" );
+            return null;
+         }
+
+         string base64 = Convert.ToBase64String( stream.GetBuffer( ) );
+
+         stream.Close( );
+
+         return base64;
+      }
+
+      public bool OpenFromBase64(string name, string base64)
+      {
+         try
+         {
+            string contents = base64;
+
+            byte[] binary = Convert.FromBase64String( contents );
+
+            MemoryStream stream = new MemoryStream( binary );
+            if ( false == Read(stream) ) 
+            {
+               Status.Error( "Failed to load " + name );
+               return false;
+            }
+
+            m_Name = name;
+
+            return true;
+         }
+         catch (Exception e)
+         {
+            Status.Error( "Failed to load " + name + ". Exception: " + e.Message );
+            return false;
+         }
+      }
+
       public bool Open(string fullPath)
       {
          StreamReader streamReader = null;
@@ -2487,18 +2530,7 @@ namespace Detox.ScriptEditor
             contents = contents.Substring( start.Length );
             contents = contents.Substring( 0, contents.Length - end.Length );
 
-            byte[] binary = Convert.FromBase64String( contents );
-
-            MemoryStream stream = new MemoryStream( binary );
-            if ( false == Read(stream) ) 
-            {
-               Status.Error( "Failed to load " + fullPath );
-               return false;
-            }
-
-            m_Name = Path.GetFileName(fullPath);
-
-            return true;
+            return OpenFromBase64( Path.GetFileName(fullPath), contents );
          }
          catch (Exception e)
          {
@@ -2519,15 +2551,7 @@ namespace Detox.ScriptEditor
 
       public bool Save(string binaryFile, string logicFile, string wrapperFile)
       {
-         MemoryStream stream = new MemoryStream( );
-
-         if ( false == Write(stream) ) 
-         {
-            Status.Error( "Could not write script data to a memory stream" );
-            return false;
-         }
-
-         string base64 = Convert.ToBase64String( stream.GetBuffer( ) );
+         string base64 = ToBase64( );
 
          StreamWriter streamWriter = null;
          

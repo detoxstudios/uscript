@@ -44,8 +44,6 @@ public class uScript : EditorWindow
    private ScriptEditorCtrl m_ScriptEditorCtrl = null;
    private bool m_MouseDown  = false;
    private bool m_Repainting = false;
-   private bool m_WantsUndo  = false;
-   private bool m_WantsRedo  = false;
    private bool m_WantsCopy  = false;
    private bool m_WantsPaste = false;
    private bool m_WantsClose = false;
@@ -123,6 +121,20 @@ public class uScript : EditorWindow
    //
    string _statusbarMessage;
 
+   private uScript_MasterObject MasterComponent
+   {
+      get
+      {
+         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+
+         if ( null != uScriptMaster ) 
+         {
+            return uScriptMaster.GetComponent<uScript_MasterObject>();
+         }
+
+         return null;
+      }
+   }
 
    //
    // Content Panel Variables
@@ -134,7 +146,7 @@ public class uScript : EditorWindow
    MouseEventArgs m_MouseMoveArgs = new MouseEventArgs( );
 
 
-
+   public string CurrentScript = null;
 
    #region EULA Variables
    private bool _EULAagreed = false;
@@ -275,6 +287,20 @@ http://www.detoxstudios.com";
       uScriptDebug.Log( e.Message, uScriptType );
    }
 
+   public void RegisterUndo(string name, ScriptEditor scriptEditor)
+   {
+      if ( null != MasterComponent )
+      {
+         //save the old one to the undo stack
+         UnityEditor.Undo.RegisterUndo( MasterComponent, name );
+
+         //register the new one with uscript and the master component
+         CurrentScript = scriptEditor.ToBase64( );      
+         MasterComponent.Script = uScript.Instance.CurrentScript;
+         MasterComponent.ScriptName = scriptEditor.Name;
+      }
+   }
+
    // Unity Methods
    //
    void Awake()
@@ -298,28 +324,42 @@ http://www.detoxstudios.com";
       
       // Initialization
       //
-      if (null == m_ScriptEditorCtrl)
+
+      //force a rebuild if undo was performed
+      bool forceRebuild = false;
+
+      if ( null != MasterComponent && CurrentScript != MasterComponent.Script )
+      {         
+         forceRebuild = true;
+      }
+      
+      if (null == m_ScriptEditorCtrl || true == forceRebuild)
       {
          InitializeGUIButtons();
 
-         if (Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild)
+         if ( null == m_ScriptEditorCtrl )
          {
-         }
-         else
-         {
-            uScriptDebug.Log("This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
-            return;
+            if (Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild)
+            {
+            }
+            else
+            {
+               uScriptDebug.Log("This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
+               return;
+            }
+
+            if ( DateTime.Now > ExpireDate )
+            {
+               uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") has expired.\n", uScriptDebug.Type.Error );
+               return;
+            }
+            else
+            {
+               uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message );
+            }
          }
 
-         if ( DateTime.Now > ExpireDate )
-         {
-            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") has expired.\n", uScriptDebug.Type.Error );
-            return;
-         }
-         else
-         {
-            uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message );
-         }
+         m_ScriptEditorCtrl = null;
 
          //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
          //we don't save the fully qualified type name which is required to return types of assemblies not loaded
@@ -330,16 +370,10 @@ http://www.detoxstudios.com";
             AddType(o.GetType());
          }
 
-         ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(), PopulateLogicTypes());
-
-         m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor);
-         m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
-
-         m_ScriptEditorCtrl.BuildContextMenu();
-
-         BuildPaletteMenu(null, null);
-
-         Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
+         foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
+         {
+            AddType(b.Type);
+         }
 
          GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
 
@@ -361,10 +395,34 @@ http://www.detoxstudios.com";
             uScriptMaster.AddComponent(typeof(uScript_Assets));
          }
 
-         foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
+         bool isRestored = false;
+
+         ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(), PopulateLogicTypes());
+
+         if ( null != MasterComponent.Script )
          {
-            AddType(b.Type);
+            isRestored = true;
+
+            scriptEditor.OpenFromBase64( MasterComponent.ScriptName, MasterComponent.Script );
+            CurrentScript = MasterComponent.Script;
          }
+
+   		Point loc = Point.Empty;
+		   if ( false == String.IsNullOrEmpty(m_CurrentCanvasPosition) )
+         {
+            loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), 
+                            Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
+         }
+         
+         m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor, loc );
+
+         m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
+
+         m_ScriptEditorCtrl.BuildContextMenu();
+
+         BuildPaletteMenu(null, null);
+
+         Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
          if (String.IsNullOrEmpty(m_FullPath))
          {
@@ -379,7 +437,7 @@ http://www.detoxstudios.com";
          //it seems to set any class references back to null
          //since the string isn't a reference it stays valid
          //so reopen our script
-         if ("" != m_FullPath)
+         if ("" != m_FullPath && false == isRestored )
          {
             OpenScript(m_FullPath);
             m_RefreshTimestamp = EditorApplication.timeSinceStartup;
@@ -439,16 +497,6 @@ http://www.detoxstudios.com";
       {
          m_ScriptEditorCtrl.PasteFromClipboard( Point.Empty );
          m_WantsPaste = false;
-      }
-      if ( true == m_WantsUndo )
-      {
-         m_ScriptEditorCtrl.Undo( );
-         m_WantsUndo = false;
-      }
-      if ( true == m_WantsRedo )
-      {
-         m_ScriptEditorCtrl.Redo( );
-         m_WantsRedo = false;
       }
 
       OnMouseMove( );
@@ -514,20 +562,6 @@ http://www.detoxstudios.com";
                      Event.current.Use( );
                   }
                }
-               else if ( Event.current.commandName == "Undo" )
-               {
-                  if ( m_ScriptEditorCtrl.CanUndo )
-                  {
-                     Event.current.Use( );
-                  }
-               }
-               else if ( Event.current.commandName == "Redo" )
-               {
-                  if ( m_ScriptEditorCtrl.CanRedo )
-                  {
-                     Event.current.Use( );
-                  }
-               }
                break;
             case EventType.ExecuteCommand:
                if ( Event.current.commandName == "Copy" )
@@ -537,14 +571,6 @@ http://www.detoxstudios.com";
                else if ( Event.current.commandName == "Paste" )
                {
                   m_WantsPaste = true;
-               }
-               else if ( Event.current.commandName == "Undo" )
-               {
-                  m_WantsUndo = true;
-               }
-               else if ( Event.current.commandName == "Redo" )
-               {
-                  m_WantsRedo = true;
                }
                break;
    
@@ -1937,6 +1963,11 @@ http://www.detoxstudios.com";
 		 BuildPaletteMenu(null, null);
 
          m_FullPath = fullPath;
+
+         if ( null != MasterComponent )
+         {
+            UnityEditor.Undo.ClearUndo( MasterComponent );
+         }
 
          uScript.SetSetting("uScript\\LastOpened", uScriptConfig.Paths.RelativePath(fullPath).Substring("Assets".Length));
       }
