@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using System.Collections;
 using UnityEditor;
@@ -37,3 +38,4 @@ class ImportGUITextures : AssetPostprocessor
    }
 
 }
+#endif
