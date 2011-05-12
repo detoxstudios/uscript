@@ -79,8 +79,7 @@ public class uScript : EditorWindow
    Rect _canvasRect;
    Vector2  _guiPanelPalette_ScrollPos;
 
-   Vector2  _guiContentScrollPos;
-   float    _canvasZoom = 1;
+   public Vector2  _guiContentScrollPos;
 
    Vector2  _guiPanelProperties_ScrollPos;
 
@@ -501,6 +500,9 @@ http://www.detoxstudios.com";
 
       OnMouseMove( );
    }
+
+
+
 
    void OnGUI()
    {
@@ -1271,14 +1273,9 @@ http://www.detoxstudios.com";
    {
       Rect rect = EditorGUILayout.BeginVertical();
       {
-         if ( rect.width != 0 && rect.height != 0 )
-         {
-            m_NodeWindowRect = rect;
-         }
-
          // Toolbar
-
-         Rect toolbarRect = EditorGUILayout.BeginHorizontal (EditorStyles.toolbar );
+         //
+         Rect toolbarRect = EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
 
          if (toolbarRect.width != 0 && toolbarRect.height != 0)
          {
@@ -1343,12 +1340,7 @@ http://www.detoxstudios.com";
 //               Button.Style = newStyle;
 //            }
 
-//            EditorGUILayout.Space();
-//            _canvasZoom = EditorGUILayout.Slider(_canvasZoom, 0.25f, 1.0f);
-//            if ( GUILayout.Button( "ToolbarButton3", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-//            {
-//               uScriptDebug.Log("ToolbarButton3");
-//            }
+            GUILayout.FlexibleSpace();
          }
          EditorGUILayout.EndHorizontal();
 
@@ -1357,6 +1349,11 @@ http://www.detoxstudios.com";
 
          // Canvas
          //
+         if ( rect.width != 0 && rect.height != 0 )
+         {
+            m_NodeWindowRect = rect;
+         }
+
          GUIStyle style = new GUIStyle();
          style.normal.background = uScriptConfig.canvasBackgroundTexture;
 
@@ -1364,9 +1361,6 @@ http://www.detoxstudios.com";
 
          _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptStyles.hScrollbar, uScriptStyles.vScrollbar, style, GUILayout.ExpandWidth(true));
          {
-            Matrix4x4 oldMatrix = GUI.matrix;
-            GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(Vector3.zero), new Vector3(_canvasZoom, _canvasZoom, 1));
-
             // Get the bounding area of all nodes on the canvas, plus 64px to
             // allow for 32px padding around the edges.  This will allow the
             // scrollbars to span the bounds accurately.
@@ -1376,17 +1370,15 @@ http://www.detoxstudios.com";
             //
             // When zoom is implemented, make sure the results are accurately scaled
             //
-            int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)_mouseRegionRect[MouseRegion.Canvas].width : 0);
-            int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)_mouseRegionRect[MouseRegion.Canvas].height-18 : 0);
-
-            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
+//            int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].width) : 0);
+//            int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].height-18) : 0);
+//
+//            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
 
             // Paint the graph (nodes, sockets, links, and comments)
             PaintEventArgs args = new PaintEventArgs();
             args.Graphics = new System.Drawing.Graphics();
             m_ScriptEditorCtrl.GuiPaint(args);
-
-            GUI.matrix = oldMatrix;
          }
          EditorGUILayout.EndScrollView();
 

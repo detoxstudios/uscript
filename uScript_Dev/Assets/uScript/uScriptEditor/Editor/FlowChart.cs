@@ -828,6 +828,12 @@ namespace Detox.FlowChart
 
       public override void OnPaint(PaintEventArgs e)
       {
+         // Abort if the NodeWindowRect hasn't been initialized yet
+         if (uScript.Instance.NodeWindowRect == new Rect())
+         {
+            return;
+         }
+
          if ( true == InMoveMode && m_StartMarquee == Point.Empty )
          {
             m_StartLinkNode = null;
@@ -858,71 +864,68 @@ namespace Detox.FlowChart
             m_MoveOffset = Point.Empty;
          }
 
-		 Rectangle visibleRect = new Rectangle(-Location.X, -Location.Y, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
+         // This is the viewport Rect
+         Rectangle visibleRect = new Rectangle(-Location.X, -Location.Y, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
 
-         //draw grid if ShowGrid == true
+         if ( uScriptConfig.Style.ShowGrid )
          {
-            if ( uScriptConfig.Style.ShowGrid )
+            float g;
+
+            int vertical   = (int) Math.Floor(uScriptConfig.Style.GridSizeVertical);
+            int horizontal = (int) Math.Floor(uScriptConfig.Style.GridSizeHorizontal);
+
+            float offsetX = Location.X % vertical;
+            float offsetY = Location.Y % horizontal;
+
+            offsetX += uScriptConfig.Style.GridSizeVertical   - vertical;
+            offsetY += uScriptConfig.Style.GridSizeHorizontal - horizontal;
+
+            Vector3 startGrid = new Vector3( offsetX, offsetY );
+            Vector3 endGrid   = new Vector3( uScript.Instance.NodeWindowRect.width, offsetY );
+
+            int gridMajorLineCount = uScriptConfig.Style.GridMajorLineSpacing;
+            for ( g = 0; g < uScript.Instance.NodeWindowRect.height; g += uScriptConfig.Style.GridSizeHorizontal )
             {
-               float g;
-               
-               int vertical   = (int) Math.Floor(uScriptConfig.Style.GridSizeVertical);
-               int horizontal = (int) Math.Floor(uScriptConfig.Style.GridSizeHorizontal);
-   
-               float offsetX = Location.X % vertical;
-               float offsetY = Location.Y % horizontal;
-   
-               offsetX += uScriptConfig.Style.GridSizeVertical   - vertical;
-               offsetY += uScriptConfig.Style.GridSizeHorizontal - horizontal;
-   
-               Vector3 startGrid = new Vector3( offsetX, offsetY );
-               Vector3 endGrid   = new Vector3( uScript.Instance.NodeWindowRect.width, offsetY );
-               
-               int gridMajorLineCount = uScriptConfig.Style.GridMajorLineSpacing;
-               for ( g = 0; g < uScript.Instance.NodeWindowRect.height; g += uScriptConfig.Style.GridSizeHorizontal )
+               if ( gridMajorLineCount == uScriptConfig.Style.GridMajorLineSpacing )
                {
-                  if ( gridMajorLineCount == uScriptConfig.Style.GridMajorLineSpacing )
-                  {
-                     Handles.color = uScriptConfig.Style.GridColorMajor;
-                     gridMajorLineCount = 0;
-                  }
-                  else
-                  {
-                     Handles.color = uScriptConfig.Style.GridColorMinor;
-                  }
-                  
-                  Handles.DrawLine( startGrid, endGrid );
-                  
-                  startGrid.y += uScriptConfig.Style.GridSizeHorizontal;
-                  endGrid.y += uScriptConfig.Style.GridSizeHorizontal;
-                  
-                  gridMajorLineCount++;
+                  Handles.color = uScriptConfig.Style.GridColorMajor;
+                  gridMajorLineCount = 0;
                }
-               
-               startGrid = new Vector3( offsetX, offsetY );
-               endGrid   = new Vector3( offsetX, uScript.Instance.NodeWindowRect.height );
-               
-               gridMajorLineCount = uScriptConfig.Style.GridMajorLineSpacing;
-               for ( g = 0; g < uScript.Instance.NodeWindowRect.width; g += uScriptConfig.Style.GridSizeVertical )
+               else
                {
-                  if ( gridMajorLineCount == uScriptConfig.Style.GridMajorLineSpacing )
-                  {
-                     Handles.color = uScriptConfig.Style.GridColorMajor;
-                     gridMajorLineCount = 0;
-                  }
-                  else
-                  {
-                     Handles.color = uScriptConfig.Style.GridColorMinor;
-                  }
-                  
-                  Handles.DrawLine( startGrid, endGrid );
-                  
-                  startGrid.x += uScriptConfig.Style.GridSizeVertical;
-                  endGrid.x += uScriptConfig.Style.GridSizeVertical;
-                  
-                  gridMajorLineCount++;
+                  Handles.color = uScriptConfig.Style.GridColorMinor;
                }
 
+               Handles.DrawLine( startGrid, endGrid );
+
+               startGrid.y += uScriptConfig.Style.GridSizeHorizontal;
+               endGrid.y += uScriptConfig.Style.GridSizeHorizontal;
+
+               gridMajorLineCount++;
+            }
+
+            startGrid = new Vector3( offsetX, offsetY );
+            endGrid   = new Vector3( offsetX, uScript.Instance.NodeWindowRect.height );
+
+            gridMajorLineCount = uScriptConfig.Style.GridMajorLineSpacing;
+            for ( g = 0; g < uScript.Instance.NodeWindowRect.width; g += uScriptConfig.Style.GridSizeVertical )
+            {
+               if ( gridMajorLineCount == uScriptConfig.Style.GridMajorLineSpacing )
+               {
+                  Handles.color = uScriptConfig.Style.GridColorMajor;
+                  gridMajorLineCount = 0;
+               }
+               else
+               {
+                  Handles.color = uScriptConfig.Style.GridColorMinor;
+               }
+
+               Handles.DrawLine( startGrid, endGrid );
+
+               startGrid.x += uScriptConfig.Style.GridSizeVertical;
+               endGrid.x += uScriptConfig.Style.GridSizeVertical;
+
+               gridMajorLineCount++;
             }
          }
 
