@@ -252,6 +252,7 @@ namespace Detox.ScriptEditor
                ++m_TabStack;
 
                   AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
+                  AddCSharpLine( "uScript.SetParent( this.gameObject );" );
 
                --m_TabStack;
                AddCSharpLine( "}" );
@@ -342,6 +343,14 @@ namespace Detox.ScriptEditor
                DefineSyncUnityHooks( );
                AddCSharpLine( "" );
                
+               AddCSharpLine( "public void SetParent(GameObject g)" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+                  AddCSharpLine( "parentGameObject = g;" );        
+                  AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
+               --m_TabStack;
+               AddCSharpLine( "}" );
+
                AddCSharpLine( "public void Awake()" );
                AddCSharpLine( "{" );
 
@@ -827,6 +836,8 @@ namespace Detox.ScriptEditor
       {
          AddCSharpLine( "#pragma warning disable 414" );
 
+         AddCSharpLine( "GameObject parentGameObject = null;" );
+
          AddCSharpLine( "//external output properties" );
          Plug []properties = FindExternalOutputProperties( );
          string []outputs  = FindExternalOutputs( );
@@ -1187,9 +1198,18 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )" );
                AddCSharpLine( "{" );
                ++m_TabStack;
-                  AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + values[i].Trim( ) + "\" ) as " + type + ";" );
+
+                  if ( values[i].Trim( ) == "Owner" )
+                  {
+                     AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = parentGameObject;" );
+                  }
+                  else
+                  {
+                     AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + values[i].Trim( ) + "\" ) as " + type + ";" );
+                  }
+
                   SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, true );
-                              
+         
                --m_TabStack;
                AddCSharpLine( "}" );
             }
@@ -1265,8 +1285,15 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + FormatType(parameter.Type) + ";" );
-               
+                  if ( parameter.Default == "Owner" )
+                  {
+                     AddCSharpLine( CSharpName(node, parameter.Name) + " = parentGameObject;" );
+                  }
+                  else
+                  {
+                     AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + FormatType(parameter.Type) + ";" );
+                  }
+
                   //only set up listeners if it's NOT a variable connecxtion
                   //otherwise they'll be set in the conditional below this
                   if ( false == node is LocalNode )
