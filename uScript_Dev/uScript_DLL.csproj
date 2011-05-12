@@ -50,10 +50,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Assets.cs" />
-    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Lerper.cs" />
-    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_MasterObject.cs" />
-    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Runtime.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\AnimData.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\BinaryXml.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\CommentNode.cs" />
@@ -84,6 +80,15 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptStyles.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptUtility.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="uScript_BaseDLL.csproj">
+      <Project>{BD28F23C-2EC1-4B74-AB69-1510EBD650EE}</Project>
+      <Name>uScript_BaseDLL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\uScript\uScriptEditor\Components\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	   Other similar extension points exist, see Microsoft.Common.targets.
@@ -93,6 +98,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) ..\..\..\..\uScript_Test\Assets\uScript</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetPath) ..\..\..\..\uScript_Test\Assets\uScript\uScriptEditor\Editor</PostBuildEvent>
   </PropertyGroup>
 </Project>
