@@ -201,7 +201,14 @@ http://www.detoxstudios.com";
    [UnityEditor.MenuItem ("Detox Tools/uScript Editor %u")]
    static void Init ()
    {
+      Size minSize = new Size(620, 550);
+
       s_Instance = (uScript) EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
+      if (s_Instance.position.width < minSize.Width
+          || s_Instance.position.height < minSize.Height)
+      {
+         s_Instance.position = new Rect(200, 200, minSize.Width, minSize.Height);
+      }
       s_Instance.wantsMouseMove = true;
 
       System.IO.Directory.CreateDirectory( uScriptConfig.Paths.RootFolder );
@@ -1324,9 +1331,12 @@ http://www.detoxstudios.com";
 
          // Canvas
          //
+         GUIStyle style = new GUIStyle();
+         style.normal.background = uScriptConfig.canvasBackgroundTexture;
+
          GUI.SetNextControlName ("MainView" );
 
-         _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptStyles.hScrollbar, uScriptStyles.vScrollbar, GUI.skin.scrollView, GUILayout.ExpandWidth(true));
+         _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptStyles.hScrollbar, uScriptStyles.vScrollbar, style, GUILayout.ExpandWidth(true));
          {
             Matrix4x4 oldMatrix = GUI.matrix;
             GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(Vector3.zero), new Vector3(_canvasZoom, _canvasZoom, 1));
@@ -1343,8 +1353,6 @@ http://www.detoxstudios.com";
             int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)_mouseRegionRect[MouseRegion.Canvas].width : 0);
             int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)_mouseRegionRect[MouseRegion.Canvas].height-18 : 0);
 
-            GUIStyle style = new GUIStyle();
-            style.normal.background = uScriptConfig.canvasBackgroundTexture;
             GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
 
             // Paint the graph (nodes, sockets, links, and comments)
