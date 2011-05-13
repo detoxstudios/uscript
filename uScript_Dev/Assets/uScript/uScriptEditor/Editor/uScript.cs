@@ -336,8 +336,6 @@ http://www.detoxstudios.com";
       
       if (null == m_ScriptEditorCtrl || true == forceRebuild)
       {
-         InitializeGUIButtons();
-
          if ( null == m_ScriptEditorCtrl )
          {
             if (Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild)
@@ -528,6 +526,8 @@ http://www.detoxstudios.com";
          {
             position = minSize;
          }
+
+         InitializeGUIButtons();
       }
 
       if (m_ScriptEditorCtrl == null)
