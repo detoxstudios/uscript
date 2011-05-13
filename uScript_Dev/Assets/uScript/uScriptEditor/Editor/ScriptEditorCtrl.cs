@@ -857,6 +857,35 @@ namespace Detox.ScriptEditor
             RefreshScript( null );
          }
       }
+      
+      public void SelectAllNodes()
+      {
+         foreach ( Node node in m_FlowChart.Nodes )
+         {
+            node.Selected = true;
+         }
+      }
+      
+      public void SelectAllLinks()
+      {
+         foreach ( Link link in m_FlowChart.Links )
+         {
+            link.Selected = true;
+         }
+      }
+
+      public void DeselectAll()
+      {
+         foreach ( Node node in m_FlowChart.Nodes )
+         {
+            node.Selected = false;
+         }
+
+         foreach ( Link link in m_FlowChart.Links )
+         {
+            link.Selected = false;
+         }
+      }
 
       public void DeleteSelectedNodes( )
       {

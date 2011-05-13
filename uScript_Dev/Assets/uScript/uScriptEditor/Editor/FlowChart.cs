@@ -93,6 +93,21 @@ namespace Detox.FlowChart
          }
       }
 
+      public Link [] Links
+      {
+         get
+         {
+            List<Link> links = new List<Link>( );
+
+            foreach ( Link link in m_Links )
+            {
+               links.Add( link );
+            }
+
+            return links.ToArray( );
+         }
+      }
+
       public Node GetNode( Guid guid )
       {
          return (Node) m_Nodes[ guid ];

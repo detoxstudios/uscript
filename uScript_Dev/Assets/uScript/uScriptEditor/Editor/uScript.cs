@@ -45,9 +45,11 @@ public class uScript : EditorWindow
    private bool m_MouseDown  = false;
    private bool m_Repainting = false;
    private bool m_WantsCopy  = false;
+   private bool m_WantsCut   = false;
    private bool m_WantsPaste = false;
    private bool m_WantsClose = false;
-
+   private bool m_WantsRedo  = false;
+   
    private string m_FullPath = "";
    private string m_CurrentCanvasPosition = "";
 
@@ -71,10 +73,12 @@ public class uScript : EditorWindow
 
    /* uScript GUI Window Panel Layout Variables */
 
+   bool     m_HidePanelMode = false;
    int      _guiPanelPalette_Width = 250;
    int      _guiPanelProperties_Height = 250;
    int      _guiPanelProperties_Width = 250;
    int      _guiPanelSequence_Width = 250;
+
 
    Rect _canvasRect;
    Vector2  _guiPanelPalette_ScrollPos;
@@ -492,10 +496,21 @@ http://www.detoxstudios.com";
          m_ScriptEditorCtrl.CopyToClipboard( );
          m_WantsCopy = false;
       }
+      if ( true == m_WantsCut )
+      {
+         m_ScriptEditorCtrl.CopyToClipboard( );
+         m_ScriptEditorCtrl.DeleteSelectedNodes( );
+         m_WantsCut = false;
+      }
       if ( true == m_WantsPaste )
       {
          m_ScriptEditorCtrl.PasteFromClipboard( Point.Empty );
          m_WantsPaste = false;
+      }
+      if ( true == m_WantsRedo )
+      {
+         SendEvent(EditorGUIUtility.CommandEvent("Redo"));
+         m_WantsRedo = false;
       }
 
       OnMouseMove( );
@@ -557,6 +572,13 @@ http://www.detoxstudios.com";
                      Event.current.Use( );
                   }
                }
+               else if ( Event.current.commandName == "Cut" )
+               {
+                  if ( m_ScriptEditorCtrl.CanCopy )
+                  {
+                     Event.current.Use( );
+                  }
+               }
                else if ( Event.current.commandName == "Paste" )
                {
                   if ( m_ScriptEditorCtrl.CanPaste )
@@ -564,15 +586,28 @@ http://www.detoxstudios.com";
                      Event.current.Use( );
                   }
                }
+               else if ( Event.current.commandName == "SelectAll" )
+               {
+                  Event.current.Use( );
+               }
                break;
             case EventType.ExecuteCommand:
                if ( Event.current.commandName == "Copy" )
                {
                   m_WantsCopy = true;
                }
+               else if ( Event.current.commandName == "Cut" )
+               {
+                  m_WantsCut = true;
+               }
                else if ( Event.current.commandName == "Paste" )
                {
                   m_WantsPaste = true;
+               }
+               else if ( Event.current.commandName == "SelectAll" )
+               {
+                  m_ScriptEditorCtrl.SelectAllNodes();
+                  m_ScriptEditorCtrl.SelectAllLinks();
                }
                break;
    
@@ -604,6 +639,42 @@ http://www.detoxstudios.com";
                      {
                         m_ScriptEditorCtrl.RefreshScript(null, true);
                      }
+                  }
+                  else if ( Event.current.keyCode == KeyCode.W && (modifierKeys & Keys.Control) != 0 )
+                  {
+                     // close the window
+                     m_WantsClose = true;
+                  }
+                  else if ( Event.current.keyCode == KeyCode.Z && (modifierKeys & Keys.Control) != 0 && (modifierKeys & Keys.Shift) != 0 )
+                  {
+                     // redo
+                     m_WantsRedo = true;
+                  }
+                  else if ( Event.current.keyCode == KeyCode.Space )
+                  {
+                     m_HidePanelMode = !m_HidePanelMode;
+                  
+                     if (m_HidePanelMode)
+                     {
+                        m_ScriptEditorCtrl.FlowChart.Location.X += _guiPanelPalette_Width + DIVIDER_WIDTH;
+                        m_ScriptEditorCtrl.RefreshScript(null, false);
+                     }
+                     else
+                     {
+                        m_ScriptEditorCtrl.FlowChart.Location.X -= _guiPanelPalette_Width + DIVIDER_WIDTH;
+                        m_ScriptEditorCtrl.RefreshScript(null, false);
+                     }
+                  }
+                  else if ( Event.current.keyCode == KeyCode.Escape )
+                  {
+                     if ( "MainView" == GUI.GetNameOfFocusedControl( ) )
+                     {
+                        m_ScriptEditorCtrl.DeselectAll();
+                     }
+                  }
+                  else if ( Event.current.keyCode == KeyCode.F1 )
+                  {
+                     Help.BrowseURL("http://www.uscript.net/wiki/");
                   }
                }
    
@@ -852,11 +923,14 @@ http://www.detoxstudios.com";
       }
 
       DrawGUITopAreas();
-      DrawGUIHorizontalDivider();
+      if (!m_HidePanelMode)
+      {
+         DrawGUIHorizontalDivider();
 
-      SetMouseRegion( MouseRegion.HandleCanvas );//, 1, -3, -1, 6 );
-
-      DrawGUIBottomAreas();
+         SetMouseRegion( MouseRegion.HandleCanvas );//, 1, -3, -1, 6 );
+  
+         DrawGUIBottomAreas();
+      }
       DrawGUIStatusbar();
    }
 
@@ -864,10 +938,13 @@ http://www.detoxstudios.com";
    {
       EditorGUILayout.BeginHorizontal();
       {
-         DrawGUIPalette();
-         DrawGUIVerticalDivider();
-
-         SetMouseRegion( MouseRegion.HandlePalette );//, -3, 1, 6, -4 );
+         if (!m_HidePanelMode)
+         {
+            DrawGUIPalette();
+            DrawGUIVerticalDivider();
+   
+            SetMouseRegion( MouseRegion.HandlePalette );//, -3, 1, 6, -4 );
+         }
 
          DrawGUIContent();
       }
