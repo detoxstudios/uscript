@@ -40,6 +40,7 @@ public class uScript : EditorWindow
    static private uScript s_Instance = null;
    static public uScript Instance { get { if ( null == s_Instance ) Init( ); return s_Instance; } }
    private static bool isPro;
+   bool _firstRun = true;
 
    private ScriptEditorCtrl m_ScriptEditorCtrl = null;
    private bool m_MouseDown  = false;
@@ -72,6 +73,7 @@ public class uScript : EditorWindow
    private const int DIVIDER_WIDTH = 4;
 
    /* uScript GUI Window Panel Layout Variables */
+
 
    bool     m_HidePanelMode = false;
    int      _guiPanelPalette_Width = 250;
@@ -216,14 +218,7 @@ http://www.detoxstudios.com";
    [UnityEditor.MenuItem ("Detox Tools/uScript Editor %u")]
    static void Init ()
    {
-      Size minSize = new Size(620, 550);
-
       s_Instance = (uScript) EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
-      if (s_Instance.position.width < minSize.Width
-          || s_Instance.position.height < minSize.Height)
-      {
-         s_Instance.position = new Rect(200, 200, minSize.Width, minSize.Height);
-      }
       s_Instance.wantsMouseMove = true;
 
       System.IO.Directory.CreateDirectory( uScriptConfig.Paths.RootFolder );
@@ -290,6 +285,7 @@ http://www.detoxstudios.com";
       uScriptDebug.Log( e.Message, uScriptType );
    }
 
+
    public void RegisterUndo(string name, ScriptEditor scriptEditor)
    {
       if ( null != MasterComponent )
@@ -304,6 +300,7 @@ http://www.detoxstudios.com";
       }
    }
 
+
    // Unity Methods
    //
    void Awake()
@@ -315,7 +312,8 @@ http://www.detoxstudios.com";
       
       _statusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
    }
-   
+
+
    void Update()
    {
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
@@ -521,7 +519,21 @@ http://www.detoxstudios.com";
 
    void OnGUI()
    {
-      if (m_ScriptEditorCtrl == null) return;
+      if (_firstRun)
+      {
+         _firstRun = false;
+
+         Rect minSize = new Rect(200, 200, 620, 550);
+         if (position.width < minSize.width || position.height < minSize.height)
+         {
+            position = minSize;
+         }
+      }
+
+      if (m_ScriptEditorCtrl == null)
+      {
+         return;
+      }
       
       if (!_EULAagreed)
       {
