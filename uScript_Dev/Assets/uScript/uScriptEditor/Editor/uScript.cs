@@ -636,6 +636,11 @@ http://www.detoxstudios.com";
                      OpenLogicNode( );
                   }
                }
+
+               // update the mouse move position whenever there's a click in case we were previously outside the window
+               m_MouseMoveArgs.X = (int)Event.current.mousePosition.x;
+               m_MouseMoveArgs.Y = (int)Event.current.mousePosition.y;
+
                m_MouseDown = true;
                break;
             case EventType.MouseDrag:
