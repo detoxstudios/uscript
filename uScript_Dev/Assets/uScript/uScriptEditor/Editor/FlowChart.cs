@@ -448,7 +448,7 @@ namespace Detox.FlowChart
       //the node, which will have the mouse coords in node space
       private void FlowChartCtrl_NodeMouseMove(object sender, MouseEventArgs e)
       {
-         if ( false == InMoveMode )
+         if ( false == InMoveMode && null == m_StartLinkNode )
          {
             if ( false == m_NodeMouseSizing )
             {
