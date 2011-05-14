@@ -49,7 +49,6 @@ public class uScript : EditorWindow
    private bool m_WantsCut   = false;
    private bool m_WantsPaste = false;
    private bool m_WantsClose = false;
-   private bool m_WantsRedo  = false;
    
    private string m_FullPath = "";
    private string m_CurrentCanvasPosition = "";
@@ -507,11 +506,6 @@ http://www.detoxstudios.com";
          m_ScriptEditorCtrl.PasteFromClipboard( Point.Empty );
          m_WantsPaste = false;
       }
-      if ( true == m_WantsRedo )
-      {
-         SendEvent(EditorGUIUtility.CommandEvent("Redo"));
-         m_WantsRedo = false;
-      }
 
       OnMouseMove( );
    }
@@ -660,11 +654,6 @@ http://www.detoxstudios.com";
                   {
                      // close the window
                      m_WantsClose = true;
-                  }
-                  else if ( Event.current.keyCode == KeyCode.Z && (modifierKeys & Keys.Control) != 0 && (modifierKeys & Keys.Shift) != 0 )
-                  {
-                     // redo
-                     m_WantsRedo = true;
                   }
                   else if ( Event.current.keyCode == KeyCode.Space )
                   {
@@ -2043,24 +2032,18 @@ http://www.detoxstudios.com";
 
       if ( true == scriptEditor.Open(fullPath) )
       {
-		 Point loc = Point.Empty;
-		 if (fullPath != m_FullPath) m_CurrentCanvasPosition = "";	// reset canvas position
-		 if (!String.IsNullOrEmpty(m_CurrentCanvasPosition)) loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
-         m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor, loc );
-         m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
-   			
-		   m_ScriptEditorCtrl.BuildContextMenu();
-		  BuildPaletteMenu(null, null);
+         UnityEditor.Undo.ClearUndo( MasterComponent );
+         
+         //force a change which will for a script rebuild in OnGui
+         //this keeps all the loading in the same place
+         MasterComponent.Script = scriptEditor.ToBase64( );
+         MasterComponent.ScriptName = scriptEditor.Name;
+       
+         CurrentScript = "";
+
+         if (fullPath != m_FullPath) m_CurrentCanvasPosition = "";
 
          m_FullPath = fullPath;
-
-         if ( null != MasterComponent )
-         {
-            UnityEditor.Undo.ClearUndo( MasterComponent );
-            
-            MasterComponent.Script = null;
-            MasterComponent.ScriptName = null;
-         }
 
          uScript.SetSetting("uScript\\LastOpened", uScriptConfig.Paths.RelativePath(fullPath).Substring("Assets".Length));
       }
