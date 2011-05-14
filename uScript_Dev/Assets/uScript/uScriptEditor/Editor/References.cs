@@ -769,8 +769,9 @@ namespace System.Windows.Forms
    {
       public int Buttons;
 
-      public const int Left  = 1 << 0;
-      public const int Right = 1 << 1;
+      public const int Left   = 1 << 0;
+      public const int Middle = 1 << 1;
+      public const int Right  = 1 << 2;
 
       public bool Contains(int button)
       {

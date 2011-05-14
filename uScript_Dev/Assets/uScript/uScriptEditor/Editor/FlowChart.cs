@@ -32,13 +32,15 @@ namespace Detox.FlowChart
 
       private Point m_MoveOffset = Point.Empty;
       private Point m_StartMoveLocation = Point.Empty;
+      private Point m_FCMouseDownPoint = Point.Empty;
+      private Point m_MouseDownPoint = Point.Empty;
 
       private bool InMoveMode 
       { 
          get 
          { 
-            return Control.MouseButtons == MouseButtons.Left && 
-                   Control.ModifierKeys == Keys.None &&
+            return ((Control.MouseButtons == MouseButtons.Left && Control.ModifierKeys == Keys.Alt) ||
+                    (Control.MouseButtons == MouseButtons.Middle)) &&
                    true == m_AllowPanning;
          } 
       }
@@ -311,30 +313,12 @@ namespace Detox.FlowChart
 
       private void FlowChartCtrl_MouseDown(object sender, MouseEventArgs e)
       {
-         if ( e.Button == MouseButtons.Left && Control.ModifierKeys.Contains(Keys.Alt) )
+         m_NodeMouseTracking = false;
+         if (( e.Button == MouseButtons.Left && Control.ModifierKeys.Contains(Keys.Alt)) || e.Button == MouseButtons.Middle )
          {
-            m_StartMarquee = new Point( e.X, e.Y );
-         }
-         else if ( true == Control.ModifierKeys.Contains(Keys.Shift) )
-         {
-            if ( false == m_NodeMouseSizing )
-            {
-               m_NodeMouseTracking = true;
-            }
-
-            if ( true == m_NodeMouseTracking )
-            {
-               foreach ( Node selectedNode in SelectedNodes )
-               {
-                  selectedNode.StartNodeMove( );
-               }
-            }
-         }
-         else
-         {
-            m_NodeMouseTracking = false;
             m_AllowPanning = true;
          }
+         m_FCMouseDownPoint = System.Windows.Forms.Cursor.Position;
       }
 
       private void FlowChartCtrl_NodeModified(object sender, EventArgs e)
@@ -354,76 +338,59 @@ namespace Detox.FlowChart
             //the mouse is relative to us which throws it off when
             //we move ourselves
             Point position = System.Windows.Forms.Cursor.Position;
+            m_MouseDownPoint = position;
             position = node.PointToClient( position );
 
             AnchorPoint anchorPoint = new AnchorPoint( );
             bool pointSourced = false; 
 
-            if ( true == Control.ModifierKeys.Contains(Keys.Shift) )
+            if ( true == node.PointInAnchorPoint(position, ref anchorPoint) )
             {
-               if ( false == m_NodeMouseSizing )
+               if ( true == anchorPoint.CanSource )
                {
-                  m_NodeMouseTracking = true;
-               }
+                  OnAnchorPointActivated( node, anchorPoint );
+                  Invalidate( );
 
-               if ( true == m_NodeMouseTracking )
-               {
-                  foreach ( Node selectedNode in SelectedNodes )
-                  {
-                     selectedNode.StartNodeMove( );
-                  }
+                  pointSourced = true;
                }
             }
-            else
-            {
-               if ( true == node.PointInAnchorPoint(position, ref anchorPoint) )
-               {
-                  if ( true == anchorPoint.CanSource )
-                  {
-                     OnAnchorPointActivated( node, anchorPoint );
-                     Invalidate( );
 
-                     pointSourced = true;
+            if ( false == pointSourced && false == m_NodeMouseTracking )
+            {
+               if ( true == node.CanResize )
+               {
+                  if ( position.X > node.Size.Width  - uScriptConfig.ResizeTexture.width &&
+                       position.Y > node.Size.Height - uScriptConfig.ResizeTexture.height )
+                  {
+                     m_NodeMouseSizing = true;
                   }
                }
 
-               if ( false == pointSourced )
+               if ( false == node.Selected )
                {
-                  if ( true == node.CanResize )
+                  if ( true == m_NodeMouseSizing )
                   {
-                     if ( position.X > node.Size.Width  - uScriptConfig.ResizeTexture.width &&
-                          position.Y > node.Size.Height - uScriptConfig.ResizeTexture.height )
-                     {
-                        m_NodeMouseSizing = true;
-                     }
+                     node.StartNodeResize( );
                   }
-
-                  if ( false == node.Selected )
+               }
+               else
+               {   
+                  if ( true == m_NodeMouseSizing )
                   {
-                     if ( true == m_NodeMouseSizing )
+                     foreach ( Node selectedNode in SelectedNodes )
                      {
-                        node.StartNodeResize( );
-                     }
-                  }
-                  else
-                  {   
-                     if ( true == m_NodeMouseSizing )
-                     {
-                        foreach ( Node selectedNode in SelectedNodes )
+                        //these are part of a selection group
+                        //so they didn't have to pass the initial resize hit test
+                        //which means we have no idea if they are authorized to resize or not
+                        if ( true == selectedNode.CanResize )
                         {
-                           //these are part of a selection group
-                           //so they didn't have to pass the initial resize hit test
-                           //which means we have no idea if they are authorized to resize or not
-                           if ( true == selectedNode.CanResize )
-                           {
-                              selectedNode.StartNodeResize( );
-                           }
+                           selectedNode.StartNodeResize( );
                         }
                      }
                   }
                }
             }
-         
+
             if ( false == pointSourced && false == m_NodeMouseSizing )
             {
                m_AllowPanning = true;
@@ -441,6 +408,18 @@ namespace Detox.FlowChart
       {
          if ( false == InMoveMode )
          {
+            if ( false == m_NodeMouseSizing )
+            {
+               if ( false == m_NodeMouseTracking )
+               {
+                  foreach ( Node selectedNode in SelectedNodes )
+                  {
+                     selectedNode.StartNodeMove( );
+                  }
+               }
+               m_NodeMouseTracking = true;
+            }
+
             if ( true == m_NodeMouseTracking )
             {
                foreach ( Node selectedNode in SelectedNodes )
@@ -478,8 +457,8 @@ namespace Detox.FlowChart
 
       private bool UserProbablyDidntMeanToMoveMouse( )
       {
-         int dx = m_StartMoveLocation.X - Location.X;
-         int dy = m_StartMoveLocation.Y - Location.Y;
+         int dx = m_FCMouseDownPoint.X - System.Windows.Forms.Cursor.Position.X;
+         int dy = m_FCMouseDownPoint.Y - System.Windows.Forms.Cursor.Position.Y;
 
          dx = Math.Abs(dx);
          dy = Math.Abs(dy);
@@ -518,59 +497,57 @@ namespace Detox.FlowChart
                }
             }
          }
-         else
+
+         //they let up the mouse without moving the canvas
+         //and they weren't marquee selecting
+         //so deselect everything
+         if ( Point.Empty == m_StartMarquee )
          {
-            //they let up the mouse without moving the canvas
-            //and they weren't marquee selecting
-            //so deselect everything
-            if ( Point.Empty == m_StartMarquee )
+            if ( true == UserProbablyDidntMeanToMoveMouse( ) || m_MouseDownPoint == System.Windows.Forms.Cursor.Position )
             {
-               if ( true == UserProbablyDidntMeanToMoveMouse( ) )
+               //if no control key, unselect the rest
+               if ( false == Control.ModifierKeys.Contains(Keys.Control) && m_MouseDownPoint == System.Windows.Forms.Cursor.Position )
                {
-                  //if no control key, unselect the rest
-                  if ( false == Control.ModifierKeys.Contains(Keys.Control) )
+                  foreach (Node node in SelectedNodes)
                   {
-                     foreach (Node node in SelectedNodes)
-                     {
-                        node.Selected = false;
-                     }
-
-                     foreach ( Link link in SelectedLinks )
-                     {
-                        link.Selected = false;
-                     }
+                     node.Selected = false;
                   }
 
-                  Point position = System.Windows.Forms.Cursor.Position;
-                  position = PointToClient( position );
-
-                  Node nodeSelected = sender as Node;
-
-                  foreach ( Link link in m_Links )
+                  foreach ( Link link in SelectedLinks )
                   {
-                     if ( nodeSelected.RenderDepth < LinkRenderDepth )
+                     link.Selected = false;
+                  }
+               }
+
+               Point position = System.Windows.Forms.Cursor.Position;
+               position = PointToClient( position );
+
+               Node nodeSelected = sender as Node;
+
+               foreach ( Link link in m_Links )
+               {
+                  if ( nodeSelected.RenderDepth < LinkRenderDepth )
+                  {
+                     if ( true == InLink(link, position) )
                      {
-                        if ( true == InLink(link, position) )
-                        {
-                           //change selection state
-                           //(if ctrl key was down it will toggle selection state)
-                           //(if ctrl key was up it will always have been unselected
-                           // because of the above code and so this will always select it)
-                           link.Selected = ! link.Selected;
-                           selectionSetChanged = true;
-                        }
+                        //change selection state
+                        //(if ctrl key was down it will toggle selection state)
+                        //(if ctrl key was up it will always have been unselected
+                        // because of the above code and so this will always select it)
+                        link.Selected = ! link.Selected;
+                        selectionSetChanged = true;
                      }
                   }
+               }
 
-                  if ( false == selectionSetChanged )
-                  {
-                     //change selection state
-                     //(if ctrl key was down it will toggle selection state)
-                     //(if ctrl key was up it will always have been unselected
-                     // because of the above code and so this will always select it)
-                     nodeSelected.Selected = ! nodeSelected.Selected;
-                     selectionSetChanged = true;
-                  }
+               if ( false == selectionSetChanged && m_MouseDownPoint == System.Windows.Forms.Cursor.Position )
+               {
+                  //change selection state
+                  //(if ctrl key was down it will toggle selection state)
+                  //(if ctrl key was up it will always have been unselected
+                  // because of the above code and so this will always select it)
+                  nodeSelected.Selected = ! nodeSelected.Selected;
+                  selectionSetChanged = true;
                }
             }
          }
@@ -766,7 +743,7 @@ namespace Detox.FlowChart
          position = this.PointToClient( position );
 
          //if no control key, unselect the rest
-         if ( false == Control.ModifierKeys.Contains(Keys.Control) )
+         if ( false == Control.ModifierKeys.Contains(Keys.Control) && false == Control.ModifierKeys.Contains(Keys.Shift) )
          {
             foreach (Node node in SelectedNodes)
             {
@@ -791,7 +768,14 @@ namespace Detox.FlowChart
          {
             if ( true == node.Bounds.IntersectsWith(rect) )
             {
-               node.Selected = true;
+               if (true == Control.ModifierKeys.Contains(Keys.Control))
+               {
+                  node.Selected = false;
+               }
+               else
+               {
+                  node.Selected = true;
+               }
             }
          }
 
@@ -799,7 +783,14 @@ namespace Detox.FlowChart
          {
             if ( LinkInRect(link, rect) )
             {
-               link.Selected = true;
+               if (true == Control.ModifierKeys.Contains(Keys.Control))
+               {
+                  link.Selected = false;
+               }
+               else
+               {
+                  link.Selected = true;
+               }
             }
          }
       }
@@ -812,6 +803,11 @@ namespace Detox.FlowChart
          }
          else
          {
+            if ( Point.Empty == m_StartMarquee && !UserProbablyDidntMeanToMoveMouse() )
+            {
+               m_StartMarquee = new Point(e.X, e.Y);
+            }
+            
             if ( null != m_StartLinkNode || Point.Empty != m_StartMarquee )
             {
                if ( Point.Empty != m_StartMarquee )

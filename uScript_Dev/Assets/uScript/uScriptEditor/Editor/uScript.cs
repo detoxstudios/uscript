@@ -738,7 +738,8 @@ http://www.detoxstudios.com";
                      int button = 0;
       
                      if ( Event.current.button == 0 ) button = MouseButtons.Left;
-                     else if ( Event.current.button == 2 ) button = MouseButtons.Right;
+                     else if ( Event.current.button == 1 ) button = MouseButtons.Right;
+                     else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
        
                      m_MouseDownArgs.Button = button;
                      m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _guiPanelPalette_Width);
@@ -772,7 +773,8 @@ http://www.detoxstudios.com";
                   int button = 0;
       
                   if ( Event.current.button == 0 ) button = MouseButtons.Left;
-                  else if ( Event.current.button == 2 ) button = MouseButtons.Right;
+                  else if ( Event.current.button == 1 ) button = MouseButtons.Right;
+                  else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
       
                   m_MouseUpArgs.Button = button;
                   m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelPalette_Width);
@@ -886,7 +888,8 @@ http://www.detoxstudios.com";
          int button = 0;
 
          if ( Event.current.button == 0 ) button = MouseButtons.Left;
-         else if ( Event.current.button == 2 ) button = MouseButtons.Right;
+         else if ( Event.current.button == 1 ) button = MouseButtons.Right;
+         else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
 
          m_MouseUpArgs.Button = button;
          m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelPalette_Width);
