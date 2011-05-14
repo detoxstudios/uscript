@@ -40,7 +40,7 @@ public class uScript : EditorWindow
    static private uScript s_Instance = null;
    static public uScript Instance { get { if ( null == s_Instance ) Init( ); return s_Instance; } }
    private static bool isPro;
-   bool _firstRun = true;
+   static bool _firstRun = true;
 
    private ScriptEditorCtrl m_ScriptEditorCtrl = null;
    private bool m_MouseDown  = false;
@@ -286,17 +286,21 @@ http://www.detoxstudios.com";
    }
 
 
-   public void RegisterUndo(string name, ScriptEditor scriptEditor)
+   public void RegisterUndo(string name, ScriptEditor oldScript, ScriptEditor newScript)
    {
       if ( null != MasterComponent )
       {
+         MasterComponent.Script = oldScript.ToBase64( );
+         MasterComponent.ScriptName = oldScript.Name;
+
          //save the old one to the undo stack
          UnityEditor.Undo.RegisterUndo( MasterComponent, name );
 
          //register the new one with uscript and the master component
-         CurrentScript = scriptEditor.ToBase64( );      
-         MasterComponent.Script = uScript.Instance.CurrentScript;
-         MasterComponent.ScriptName = scriptEditor.Name;
+         CurrentScript = newScript.ToBase64( );      
+
+         MasterComponent.Script = CurrentScript;
+         MasterComponent.ScriptName = newScript.Name;
       }
    }
 
@@ -330,7 +334,7 @@ http://www.detoxstudios.com";
       bool forceRebuild = false;
 
       if ( null != MasterComponent && CurrentScript != MasterComponent.Script )
-      {         
+      {
          forceRebuild = true;
       }
       
@@ -2044,15 +2048,18 @@ http://www.detoxstudios.com";
 		 if (!String.IsNullOrEmpty(m_CurrentCanvasPosition)) loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
          m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor, loc );
          m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
-			
-		 m_ScriptEditorCtrl.BuildContextMenu();
-		 BuildPaletteMenu(null, null);
+   			
+		   m_ScriptEditorCtrl.BuildContextMenu();
+		  BuildPaletteMenu(null, null);
 
          m_FullPath = fullPath;
 
          if ( null != MasterComponent )
          {
             UnityEditor.Undo.ClearUndo( MasterComponent );
+            
+            MasterComponent.Script = null;
+            MasterComponent.ScriptName = null;
          }
 
          uScript.SetSetting("uScript\\LastOpened", uScriptConfig.Paths.RelativePath(fullPath).Substring("Assets".Length));

@@ -2121,7 +2121,7 @@ namespace Detox.ScriptEditor
 
       public void AddChange(Change change)
       {
-         uScript.Instance.RegisterUndo( change.Name, ((ScriptEditor)change.NewObject) );
+         uScript.Instance.RegisterUndo( change.Name, ((ScriptEditor)change.OldObject), ((ScriptEditor)change.NewObject) );
       }
    };
 
