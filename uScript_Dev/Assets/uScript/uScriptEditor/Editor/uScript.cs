@@ -669,7 +669,7 @@ http://www.detoxstudios.com";
             case EventType.KeyUp:
                if ( "MainView" == GUI.GetNameOfFocusedControl( ) )
                {
-                  if ( Event.current.keyCode == KeyCode.Delete )
+                  if ( Event.current.keyCode == KeyCode.Delete || Event.current.keyCode == KeyCode.Backspace )
                   {
                      m_ScriptEditorCtrl.DeleteSelectedNodes( );
                   }
