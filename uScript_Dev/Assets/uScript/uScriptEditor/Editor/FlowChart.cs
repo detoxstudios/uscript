@@ -353,45 +353,45 @@ namespace Detox.FlowChart
                }
             }
 
-            foreach ( Link link in m_Links )
+            if ( false == pointSourced && false == m_NodeMouseTracking )
             {
-               if ( node.RenderDepth < LinkRenderDepth )
+               foreach ( Link link in m_Links )
                {
-                  if ( true == InLink(link, position) )
+                  if ( node.RenderDepth < LinkRenderDepth )
                   {
-                     //change selection state
-                     //(if ctrl key was down it will toggle selection state)
-                     //(if ctrl key was up it will always have been unselected
-                     // because of the above code and so this will always select it)
-                     if (!link.Selected)
+                     if ( true == InLink(link, position) )
                      {
-                        link.Selected = true;
-                        selectionSetChanged = true;
+                        //change selection state
+                        //(if ctrl key was down it will toggle selection state)
+                        //(if ctrl key was up it will always have been unselected
+                        // because of the above code and so this will always select it)
+                        if (!link.Selected)
+                        {
+                           link.Selected = true;
+                           selectionSetChanged = true;
+                        }
                      }
                   }
                }
-            }
-
-            if ( false == selectionSetChanged )
-            {
-               //change selection state
-               //(if ctrl key was down it will toggle selection state)
-               //(if ctrl key was up it will always have been unselected
-               // because of the above code and so this will always select it)
-               if (!node.Selected)
+   
+               if ( false == selectionSetChanged )
                {
-                  node.Selected = true;
-                  selectionSetChanged = true;
+                  //change selection state
+                  //(if ctrl key was down it will toggle selection state)
+                  //(if ctrl key was up it will always have been unselected
+                  // because of the above code and so this will always select it)
+                  if (!node.Selected)
+                  {
+                     node.Selected = true;
+                     selectionSetChanged = true;
+                  }
+                  else if ( Control.ModifierKeys.Contains(Keys.Shift) )
+                  {
+                     node.Selected = !node.Selected;
+                     selectionSetChanged = true;
+                  }
                }
-               else if ( Control.ModifierKeys.Contains(Keys.Shift) )
-               {
-                  node.Selected = !node.Selected;
-                  selectionSetChanged = true;
-               }
-            }
-
-            if ( false == pointSourced && false == m_NodeMouseTracking )
-            {
+   
                if ( true == node.CanResize )
                {
                   if ( position.X > node.Size.Width  - uScriptConfig.ResizeTexture.width &&
