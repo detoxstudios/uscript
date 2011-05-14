@@ -26,7 +26,7 @@ public class uScript : EditorWindow
       Palette,
       Properties,
       Reference,
-      Subsequences,
+      NestedScripts,
       HandleCanvas,
       HandlePalette,
       HandleProperties,
@@ -229,7 +229,7 @@ http://www.detoxstudios.com";
       System.IO.Directory.CreateDirectory( uScriptConfig.Paths.UserScripts );
       System.IO.Directory.CreateDirectory( uScriptConfig.Paths.UserNodes );
       System.IO.Directory.CreateDirectory( uScriptConfig.Paths.GeneratedScripts );
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.SubsequenceScripts );
+      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.NestedScripts );
 
       //System.IO.Directory.CreateDirectory( uScriptConfig.Paths.TutorialFiles );
    }
@@ -903,9 +903,9 @@ http://www.detoxstudios.com";
 
             string uscriptPath = uScriptConfig.Paths.UserScripts;
 
-            if ( logicNode.Type.StartsWith("SubSeq_") )
+            if ( logicNode.Type.EndsWith("_Nested.cs") )
             {
-               string script = uscriptPath + "/" + logicNode.Type.Substring( "SubSeq_".Length );
+               string script = uscriptPath + "/" + logicNode.Type.Substring( 0, logicNode.Type.LastIndexOf("_Nested") );
                script += ".uscript";
 
                if ( System.IO.File.Exists(script) )
@@ -970,7 +970,7 @@ http://www.detoxstudios.com";
 
          SetMouseRegion( MouseRegion.HandleReference );//, -3, 3, 6, -3 );
 
-         DrawGUISubsequences();
+         DrawGUINestedScripts();
       }
       EditorGUILayout.EndHorizontal();
    }
@@ -1344,7 +1344,7 @@ http://www.detoxstudios.com";
       relativePath = System.IO.Path.GetDirectoryName( relativePath );
       relativePath = relativePath.Replace( '\\', '/' );
 
-      string logicPath = relativePath + "/SubSeq_" + fileName + ".cs";
+      string logicPath = relativePath + "/" + fileName + "_Nested.cs";
       string wrapperPath = relativePath + "/" + fileName + ".cs";
 
       //uScriptDebug.Log( "refreshing " + logicPath );
@@ -1608,7 +1608,7 @@ http://www.detoxstudios.com";
    }
 
 
-   void DrawGUISubsequences()
+   void DrawGUINestedScripts()
    {
       EditorGUILayout.BeginVertical(uScriptStyles.panelBox, GUILayout.Width(_guiPanelSequence_Width));
       {
@@ -1651,7 +1651,7 @@ http://www.detoxstudios.com";
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion(MouseRegion.Subsequences );//, 3, 3, -2, -3);
+      SetMouseRegion(MouseRegion.NestedScripts );//, 3, 3, -2, -3);
    }
 
 
@@ -2105,14 +2105,14 @@ http://www.detoxstudios.com";
    private bool SaveScript( Detox.ScriptEditor.ScriptEditor script, string binaryPath )
    {
       System.IO.Directory.CreateDirectory( uScriptConfig.Paths.GeneratedScripts );
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.SubsequenceScripts );
+      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.NestedScripts );
 
       string wrapperPath = uScriptConfig.Paths.GeneratedScripts;
-      string logicPath   = uScriptConfig.Paths.SubsequenceScripts;
+      string logicPath   = uScriptConfig.Paths.NestedScripts;
 
       String fileName = System.IO.Path.GetFileNameWithoutExtension( binaryPath );
 
-      logicPath   += "/SubSeq_" + fileName + ".cs";
+      logicPath   += "/" + fileName + "_Nested.cs";
       wrapperPath += "/" + fileName + ".cs";
 
       return script.Save( binaryPath, logicPath, wrapperPath );
@@ -2235,7 +2235,7 @@ http://www.detoxstudios.com";
       Dictionary<Type, Type> uniqueNodes = new Dictionary<Type, Type>( );
 
       GatherDerivedTypes( uniqueNodes, uScriptConfig.Paths.UserNodes, typeof(uScriptLogic) );
-      GatherDerivedTypes( uniqueNodes, uScriptConfig.Paths.SubsequenceScripts, typeof(uScriptLogic) );
+      GatherDerivedTypes( uniqueNodes, uScriptConfig.Paths.NestedScripts, typeof(uScriptLogic) );
       GatherDerivedTypes( uniqueNodes, uScriptConfig.Paths.uScriptNodes, typeof(uScriptLogic) );
 
       MethodInfo []methods = typeof(uScriptLogic).GetMethods( );

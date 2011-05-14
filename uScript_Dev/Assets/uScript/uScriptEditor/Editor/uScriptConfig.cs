@@ -654,7 +654,7 @@ public partial class uScriptConfig
       public static string UserScripts       { get {return ProjectFiles     + "/uScripts";} }
       public static string UserNodes         { get {return ProjectFiles     + "/Nodes";} }
       public static string GeneratedScripts  { get {return UserScripts      + "/~GeneratedScripts";} }
-      public static string SubsequenceScripts{ get {return GeneratedScripts + "/SubSeq";} }
+      public static string NestedScripts     { get {return GeneratedScripts + "/Nested";} }
       public static string GuiPath           { get {return uScriptEditor    + "/Editor/_GUI"; } }
       public static string SkinPath          { get {return GuiPath          + "/uScriptDefault"; } } 
       //public static string TutorialFiles     { get {return RootFolder + "/TutorialFiles";} }

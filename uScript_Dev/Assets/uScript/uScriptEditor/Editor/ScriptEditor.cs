@@ -2048,7 +2048,7 @@ namespace Detox.ScriptEditor
                   if ( p.Output == false ) continue;
 
                   //don't allow parameter outputs of events to be exposed externally
-                  //it makes the subsequence node too confusing as to which are output parameters
+                  //it makes the nested script node too confusing as to which are output parameters
                   //and which are event output parameters
                   //plus it makes the code more complex to generate
                   if ( p.Name == link.Source.Anchor && 
