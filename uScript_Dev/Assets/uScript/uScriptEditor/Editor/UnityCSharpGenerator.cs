@@ -343,11 +343,10 @@ namespace Detox.ScriptEditor
                DefineSyncUnityHooks( );
                AddCSharpLine( "" );
                
-               AddCSharpLine( "public void SetParent(GameObject g)" );
+               AddCSharpLine( "public override void SetParent(GameObject g)" );
                AddCSharpLine( "{" );
                ++m_TabStack;
-                  AddCSharpLine( "parentGameObject = g;" );        
-                  AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
+                  DefineSetParent( );
                --m_TabStack;
                AddCSharpLine( "}" );
 
@@ -980,6 +979,18 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine( "#pragma warning restore 414" );
+      }
+
+      private void DefineSetParent( )
+      {
+         AddCSharpLine( "parentGameObject = g;" );        
+         AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
+         AddCSharpLine( "" );
+         
+         foreach ( LogicNode logic in m_Script.Logics )
+         {
+            AddCSharpLine( CSharpName(logic, logic.Type) + ".SetParent(g);" );
+         }
       }
 
       private void DefineInitialization( )
