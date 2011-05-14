@@ -355,41 +355,27 @@ namespace Detox.FlowChart
 
             if ( false == pointSourced && false == m_NodeMouseTracking )
             {
-               foreach ( Link link in m_Links )
+               //change selection state
+               if (!node.Selected && false == Control.ModifierKeys.Contains(Keys.Shift))
                {
-                  if ( node.RenderDepth < LinkRenderDepth )
+                  // deselect everything else
+                  foreach ( Link deselectedLink in Links )
                   {
-                     if ( true == InLink(link, position) )
-                     {
-                        //change selection state
-                        //(if ctrl key was down it will toggle selection state)
-                        //(if ctrl key was up it will always have been unselected
-                        // because of the above code and so this will always select it)
-                        if (!link.Selected)
-                        {
-                           link.Selected = true;
-                           selectionSetChanged = true;
-                        }
-                     }
+                     deselectedLink.Selected = false;
                   }
+
+                  foreach ( Node deselectedNode in Nodes )
+                  {
+                     deselectedNode.Selected = false;
+                  }
+                  
+                  node.Selected = true;
+                  selectionSetChanged = true;
                }
-   
-               if ( false == selectionSetChanged )
+               else if ( Control.ModifierKeys.Contains(Keys.Shift) )
                {
-                  //change selection state
-                  //(if ctrl key was down it will toggle selection state)
-                  //(if ctrl key was up it will always have been unselected
-                  // because of the above code and so this will always select it)
-                  if (!node.Selected)
-                  {
-                     node.Selected = true;
-                     selectionSetChanged = true;
-                  }
-                  else if ( Control.ModifierKeys.Contains(Keys.Shift) )
-                  {
-                     node.Selected = !node.Selected;
-                     selectionSetChanged = true;
-                  }
+                  node.Selected = !node.Selected;
+                  selectionSetChanged = true;
                }
    
                if ( true == node.CanResize )
@@ -662,8 +648,19 @@ namespace Detox.FlowChart
                   //(if ctrl key was down it will toggle selection state)
                   //(if ctrl key was up it will always have been unselected
                   // because of the above code and so this will always select it)
-                  if (!link.Selected)
+                  if (!link.Selected && false == Control.ModifierKeys.Contains(Keys.Shift))
                   {
+                     // deselect everything else
+                     foreach ( Link deselectedLink in Links )
+                     {
+                        deselectedLink.Selected = false;
+                     }
+   
+                     foreach ( Node deselectedNode in Nodes )
+                     {
+                        deselectedNode.Selected = false;
+                     }
+   
                      link.Selected = true;
                      selectionSetModified = true;
                   }
