@@ -33,7 +33,6 @@ namespace Detox.FlowChart
       private Point m_MoveOffset = Point.Empty;
       private Point m_StartMoveLocation = Point.Empty;
       private Point m_FCMouseDownPoint = Point.Empty;
-      private Point m_MouseDownPoint = Point.Empty;
 
       private bool InMoveMode 
       { 
@@ -337,7 +336,6 @@ namespace Detox.FlowChart
             //the mouse is relative to us which throws it off when
             //we move ourselves
             Point position = System.Windows.Forms.Cursor.Position;
-            m_MouseDownPoint = position;
             position = node.PointToClient( position );
 
             AnchorPoint anchorPoint = new AnchorPoint( );
@@ -664,49 +662,43 @@ namespace Detox.FlowChart
                   //(if ctrl key was down it will toggle selection state)
                   //(if ctrl key was up it will always have been unselected
                   // because of the above code and so this will always select it)
-                  link.Selected = ! link.Selected;
-                  selectionSetModified = true;
+                  if (!link.Selected)
+                  {
+                     link.Selected = true;
+                     selectionSetModified = true;
+                  }
+                  else if ( Control.ModifierKeys.Contains(Keys.Shift) )
+                  {
+                     link.Selected = !link.Selected;
+                     selectionSetModified = true;
+                  }
                   linkClicked = true;
                }
-			      else if ( false == Control.ModifierKeys.Contains(Keys.Shift) )
-			      {
-			         if ( link.Selected ) selectionSetModified = true;
-			         link.Selected = false;
-			      }
             }
 
             //they let up the mouse without moving the canvas
             //and they weren't marquee selecting
             //so deselect everything
-            if ( false == selectionSetModified && Point.Empty == m_StartMarquee )
+            if ( false == Control.ModifierKeys.Contains(Keys.Shift) )
             {
-               if ( true == UserProbablyDidntMeanToMoveMouse( ) )
+               if ( false == selectionSetModified && Point.Empty == m_StartMarquee && !linkClicked )
                {
-                  foreach ( Node node in SelectedNodes )
+                  if ( true == UserProbablyDidntMeanToMoveMouse( ) )
                   {
-                     node.Selected = false;
+                     foreach ( Node node in SelectedNodes )
+                     {
+                        node.Selected = false;
+                     }
+   
+                     foreach ( Link link in SelectedLinks )
+                     {
+                        link.Selected = false;
+                     }
+   
+                     selectionSetModified = true;
                   }
-
-                  foreach ( Link link in SelectedLinks )
-                  {
-                     link.Selected = false;
-                  }
-
-                  selectionSetModified = true;
                }
             }
-            else if ( false == Control.ModifierKeys.Contains(Keys.Shift) && (!linkClicked || true == selectionSetModified) )
-			   {
-               if ( true == UserProbablyDidntMeanToMoveMouse( ) )
-               {
-                  foreach ( Node node in SelectedNodes )
-                  {
-                     node.Selected = false;
-                  }
-
-                  selectionSetModified = true;
-               }
-			   }
          }
 
          m_StartLinkNode = null;
