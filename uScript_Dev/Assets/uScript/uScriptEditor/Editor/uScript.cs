@@ -742,7 +742,8 @@ http://www.detoxstudios.com";
                      else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
        
                      m_MouseDownArgs.Button = button;
-                     m_MouseDownArgs.X = (int)(Event.current.mousePosition.x - _guiPanelPalette_Width);
+                     m_MouseDownArgs.X = (int)(Event.current.mousePosition.x);
+                     if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
                      m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
                   }
       
@@ -777,7 +778,8 @@ http://www.detoxstudios.com";
                   else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
       
                   m_MouseUpArgs.Button = button;
-                  m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelPalette_Width);
+                  m_MouseUpArgs.X = (int)(Event.current.mousePosition.x);
+                  if (!m_HidePanelMode) m_MouseUpArgs.X -= _guiPanelPalette_Width;
                   m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
                
                   if (m_PressedKey == KeyCode.S)
@@ -892,7 +894,8 @@ http://www.detoxstudios.com";
          else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
 
          m_MouseUpArgs.Button = button;
-         m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelPalette_Width);
+         m_MouseUpArgs.X = (int)(Event.current.mousePosition.x);
+         if (!m_HidePanelMode) m_MouseUpArgs.X -= _guiPanelPalette_Width;
          m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
          m_MouseDownRegion = MouseRegion.Outside;
@@ -1969,7 +1972,7 @@ http://www.detoxstudios.com";
       lastMouseY = m_MouseMoveArgs.Y;
 
       // convert to main canvas space
-      m_MouseMoveArgs.X -= _guiPanelPalette_Width;
+      if (!m_HidePanelMode) m_MouseMoveArgs.X -= _guiPanelPalette_Width;
       m_MouseMoveArgs.Y -= (int)_canvasRect.yMin;
       
       System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
@@ -1981,10 +1984,10 @@ http://www.detoxstudios.com";
       }
 
       // convert back to screen
-      m_MouseMoveArgs.X += _guiPanelPalette_Width;
+      if (!m_HidePanelMode) m_MouseMoveArgs.X += _guiPanelPalette_Width;
       m_MouseMoveArgs.Y += (int)_canvasRect.yMin;
       
-      if (GUI.enabled)
+      if (GUI.enabled && !m_HidePanelMode)
       {
          // check for divider draggging
          foreach ( KeyValuePair<MouseRegion, Rect>kvp in _mouseRegionRect)
