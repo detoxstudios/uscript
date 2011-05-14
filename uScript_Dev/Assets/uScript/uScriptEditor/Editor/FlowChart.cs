@@ -887,21 +887,24 @@ namespace Detox.FlowChart
          // This is the viewport Rect
          Rectangle visibleRect = new Rectangle(-Location.X, -Location.Y, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
 
-         if ( uScriptConfig.Style.ShowGrid )
+         if ( (bool)uScript.GetSetting("uScript\\ShowGrid", true) == true )
          {
             float g;
-
-            int vertical   = (int) Math.Floor(uScriptConfig.Style.GridSizeVertical);
-            int horizontal = (int) Math.Floor(uScriptConfig.Style.GridSizeHorizontal);
+    
+            float gridSizeVertical   = (float)uScript.GetSetting("uScript\\GridSizeVertical", 20.0f);
+            float gridSizeHorizontal = (float)uScript.GetSetting("uScript\\GridSizeHorizontal", 20.0f);
+            int vertical   = (int) Math.Floor(gridSizeVertical);
+            int horizontal = (int) Math.Floor(gridSizeHorizontal);
 
             float offsetX = Location.X % vertical;
             float offsetY = Location.Y % horizontal;
+            int gridMajorLineSpacing = (int)uScript.GetSetting("uScript\\GridMajorLineSpacing", 4);
 
-            int majorGridPixelOffset = Location.Y % (horizontal * uScriptConfig.Style.GridMajorLineSpacing);
+            int majorGridPixelOffset = Location.Y % (horizontal * gridMajorLineSpacing);
             int majorGridSpacing = majorGridPixelOffset / horizontal;
 
-            offsetX += uScriptConfig.Style.GridSizeVertical   - vertical;
-            offsetY += uScriptConfig.Style.GridSizeHorizontal - horizontal;
+            offsetX += gridSizeVertical   - vertical;
+            offsetY += gridSizeHorizontal - horizontal;
 
             Vector3 startGrid = new Vector3( offsetX, offsetY );
             Vector3 endGrid   = new Vector3( uScript.Instance.NodeWindowRect.width, offsetY );
@@ -909,9 +912,9 @@ namespace Detox.FlowChart
             //finally flip it because our location we modded with will be negative
             int gridMajorLineCount = - majorGridSpacing;
 
-            for ( g = 0; g < uScript.Instance.NodeWindowRect.height; g += uScriptConfig.Style.GridSizeHorizontal )
+            for ( g = 0; g < uScript.Instance.NodeWindowRect.height; g += gridSizeHorizontal )
             {
-               if ( gridMajorLineCount == uScriptConfig.Style.GridMajorLineSpacing )
+               if ( gridMajorLineCount == gridMajorLineSpacing )
                {
                   Handles.color = uScriptConfig.Style.GridColorMajor;
                   gridMajorLineCount = 0;
@@ -923,8 +926,8 @@ namespace Detox.FlowChart
 
                Handles.DrawLine( startGrid, endGrid );
 
-               startGrid.y += uScriptConfig.Style.GridSizeHorizontal;
-               endGrid.y += uScriptConfig.Style.GridSizeHorizontal;
+               startGrid.y += gridSizeHorizontal;
+               endGrid.y += gridSizeHorizontal;
 
                gridMajorLineCount++;
             }
@@ -932,7 +935,7 @@ namespace Detox.FlowChart
             startGrid = new Vector3( offsetX, offsetY );
             endGrid   = new Vector3( offsetX, uScript.Instance.NodeWindowRect.height );
 
-            majorGridPixelOffset = Location.X % (vertical * uScriptConfig.Style.GridMajorLineSpacing);
+            majorGridPixelOffset = Location.X % (vertical * gridMajorLineSpacing);
             majorGridSpacing = majorGridPixelOffset / vertical;
 
             //finally flip it because our location we modded with will be negative
@@ -940,7 +943,7 @@ namespace Detox.FlowChart
 
             for ( g = 0; g < uScript.Instance.NodeWindowRect.width; g += uScriptConfig.Style.GridSizeVertical )
             {
-               if ( gridMajorLineCount == uScriptConfig.Style.GridMajorLineSpacing )
+               if ( gridMajorLineCount == gridMajorLineSpacing )
                {
                   Handles.color = uScriptConfig.Style.GridColorMajor;
                   gridMajorLineCount = 0;
@@ -952,8 +955,8 @@ namespace Detox.FlowChart
 
                Handles.DrawLine( startGrid, endGrid );
 
-               startGrid.x += uScriptConfig.Style.GridSizeVertical;
-               endGrid.x += uScriptConfig.Style.GridSizeVertical;
+               startGrid.x += gridSizeVertical;
+               endGrid.x += gridSizeVertical;
 
                gridMajorLineCount++;
             }

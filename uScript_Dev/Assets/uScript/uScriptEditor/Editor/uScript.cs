@@ -50,9 +50,12 @@ public class uScript : EditorWindow
    private bool m_WantsPaste = false;
    private bool m_WantsClose = false;
    
+   private String m_AddVariableNode = "";
+   private KeyCode m_PressedKey = KeyCode.None;
+   
    private string m_FullPath = "";
    private string m_CurrentCanvasPosition = "";
-
+   
    static private AppFrameworkData m_AppData = new AppFrameworkData();
    static private bool m_SettingsLoaded = false;
    private double m_RefreshTimestamp = -1.0;
@@ -506,6 +509,30 @@ http://www.detoxstudios.com";
          m_ScriptEditorCtrl.PasteFromClipboard( Point.Empty );
          m_WantsPaste = false;
       }
+      if (m_ScriptEditorCtrl != null && !String.IsNullOrEmpty(m_AddVariableNode))
+      {
+         if (m_AddVariableNode == "Comment")
+         {
+            m_ScriptEditorCtrl.ContextCursor = System.Windows.Forms.Cursor.Position;
+            m_ScriptEditorCtrl.AddVariableNode(new CommentNode(""));
+         }
+         else if (m_AddVariableNode == "External")
+         {
+            m_ScriptEditorCtrl.ContextCursor = new Point(System.Windows.Forms.Cursor.Position.X - 28, System.Windows.Forms.Cursor.Position.Y - 28);
+            m_ScriptEditorCtrl.AddVariableNode(new ExternalConnection(Guid.NewGuid()));
+         }
+         else if (m_AddVariableNode == "Log")
+         {
+            m_ScriptEditorCtrl.ContextCursor = new Point(System.Windows.Forms.Cursor.Position.X - 10, System.Windows.Forms.Cursor.Position.Y - 10);
+            m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode("uScriptAct_Log"));
+         }
+         else
+         {
+            m_ScriptEditorCtrl.ContextCursor = new Point(System.Windows.Forms.Cursor.Position.X - 28, System.Windows.Forms.Cursor.Position.Y - 28);
+            m_ScriptEditorCtrl.AddVariableNode(new LocalNode("", m_AddVariableNode, ""));
+         }
+         m_AddVariableNode = "";
+      }
 
       OnMouseMove( );
    }
@@ -634,6 +661,10 @@ http://www.detoxstudios.com";
             
             // key events
             case EventType.KeyDown:
+               if (Event.current.keyCode != KeyCode.None)
+               {
+                  m_PressedKey = Event.current.keyCode;
+               }
                break;
             case EventType.KeyUp:
                if ( "MainView" == GUI.GetNameOfFocusedControl( ) )
@@ -681,8 +712,15 @@ http://www.detoxstudios.com";
                   {
                      Help.BrowseURL("http://www.uscript.net/wiki/");
                   }
+                  else if ( Event.current.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0 )
+                  {
+                     bool showGrid = (bool)GetSetting("uScript\\ShowGrid", true);
+                     SetSetting("uScript\\ShowGrid", !showGrid);
+                  }
                }
    
+               m_PressedKey = KeyCode.None;
+
                //keep key events from going to the rest of unity
                Event.current.Use( );
                break;
@@ -739,7 +777,47 @@ http://www.detoxstudios.com";
                   m_MouseUpArgs.Button = button;
                   m_MouseUpArgs.X = (int)(Event.current.mousePosition.x - _guiPanelPalette_Width);
                   m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
-
+               
+                  if (m_PressedKey == KeyCode.S)
+                  {
+                     m_AddVariableNode = "System.String";
+                  }
+                  else if (m_PressedKey == KeyCode.V)
+                  {
+                     m_AddVariableNode = "UnityEngine.Vector3";
+                  }
+                  else if (m_PressedKey == KeyCode.I)
+                  {
+                     m_AddVariableNode = "System.Int32";
+                  }
+                  else if (m_PressedKey == KeyCode.F)
+                  {
+                     m_AddVariableNode = "System.Single";
+                  }
+                  else if (m_PressedKey == KeyCode.B)
+                  {
+                     m_AddVariableNode = "System.Boolean";
+                  }
+                  else if (m_PressedKey == KeyCode.G)
+                  {
+                     m_AddVariableNode = "UnityEngine.GameObject";
+                  }
+                  else if (m_PressedKey == KeyCode.O)
+                  {
+                     m_AddVariableNode = "UnityEngine.Object";
+                  }
+                  else if (m_PressedKey == KeyCode.C)
+                  {
+                     m_AddVariableNode = "Comment";
+                  }
+                  else if (m_PressedKey == KeyCode.E)
+                  {
+                     m_AddVariableNode = "External";
+                  }
+                  else if (m_PressedKey == KeyCode.L)
+                  {
+                     m_AddVariableNode = "Log";
+                  }
                }
                m_MouseDownRegion = MouseRegion.Outside;
                m_MouseDown = false;

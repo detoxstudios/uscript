@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -858,6 +858,49 @@ namespace Detox.ScriptEditor
          }
       }
       
+      public EntityNode GetLogicNode(String type)
+      {
+         foreach ( LogicNode node in m_ScriptEditor.LogicNodes )
+         {
+            if (node.Type == type) return node.Copy();
+         }
+         
+         return null;
+      }
+
+      public void AddVariableNode(EntityNode entityNode)
+      {
+         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+         
+         entityNode.Position = new Point( m_ContextCursor.X, m_ContextCursor.Y );
+         if ( "" != uScript.Instance.AutoAssignInstance(entityNode) )
+         {
+            Parameter instance = entityNode.Instance;
+            instance.Default = uScript.Instance.AutoAssignInstance(entityNode);
+            entityNode.Instance = instance;
+            
+            string nodeType = entityNode.Instance.Type;
+            
+            if ( entityNode is EntityMethod )
+            {
+               nodeType = ((EntityMethod)entityNode).ComponentType;
+            }
+            else if ( entityNode is EntityEvent )
+            {
+               nodeType = ((EntityEvent)entityNode).ComponentType;
+            }
+            
+            uScript.Instance.AttachEventScript(nodeType, entityNode.Instance.Default);
+         }
+         
+         m_ScriptEditor.AddNode( entityNode );
+         m_Dirty = true;
+
+         m_ChangeStack.AddChange( new ChangeStack.Change("Add", oldEditor, m_ScriptEditor.Copy( )) );
+
+         RefreshScript( null );
+      }
+
       public void SelectAllNodes()
       {
          foreach ( Node node in m_FlowChart.Nodes )
