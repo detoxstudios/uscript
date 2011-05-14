@@ -841,6 +841,30 @@ namespace Detox.FlowChart
          this.Focus( );
       }
 
+      private void MoveWithCursor( )
+      {
+         Point position = System.Windows.Forms.Cursor.Position;
+
+         if ( Point.Empty == m_MoveOffset )
+         {
+            m_MoveOffset        = System.Windows.Forms.Cursor.Position;
+            m_StartMoveLocation = Location;
+         }
+
+         position = new Point( position.X - m_MoveOffset.X, position.Y - m_MoveOffset.Y );
+         position = new Point( m_StartMoveLocation.X + position.X, m_StartMoveLocation.Y + position.Y );
+
+         //clamp top left
+         if ( position.X > 0 ) position.X = 0;
+         if ( position.Y > 0 ) position.Y = 0;
+
+         //clamp bottom right
+         if ( position.X + Bounds.Width  < Parent.Bounds.Right  ) position.X += Parent.Bounds.Right  - ( position.X + Bounds.Width); 
+         if ( position.Y + Bounds.Height < Parent.Bounds.Bottom ) position.Y += Parent.Bounds.Bottom - ( position.Y + Bounds.Height); 
+
+         Location = position;
+      }
+
       public override void OnPaint(PaintEventArgs e)
       {
          // Abort if the NodeWindowRect hasn't been initialized yet
@@ -853,26 +877,7 @@ namespace Detox.FlowChart
          {
             m_StartLinkNode = null;
 
-            Point position = System.Windows.Forms.Cursor.Position;
-
-            if ( Point.Empty == m_MoveOffset )
-            {
-               m_MoveOffset        = System.Windows.Forms.Cursor.Position;
-               m_StartMoveLocation = Location;
-            }
-
-            position = new Point( position.X - m_MoveOffset.X, position.Y - m_MoveOffset.Y );
-            position = new Point( m_StartMoveLocation.X + position.X, m_StartMoveLocation.Y + position.Y );
-
-            //clamp top left
-            if ( position.X > 0 ) position.X = 0;
-            if ( position.Y > 0 ) position.Y = 0;
-
-            //clamp bottom right
-            if ( position.X + Bounds.Width  < Parent.Bounds.Right  ) position.X += Parent.Bounds.Right  - ( position.X + Bounds.Width); 
-            if ( position.Y + Bounds.Height < Parent.Bounds.Bottom ) position.Y += Parent.Bounds.Bottom - ( position.Y + Bounds.Height); 
-
-            Location = position;
+            MoveWithCursor( );
          }
          else
          {
@@ -892,13 +897,18 @@ namespace Detox.FlowChart
             float offsetX = Location.X % vertical;
             float offsetY = Location.Y % horizontal;
 
+            int majorGridPixelOffset = Location.Y % (horizontal * uScriptConfig.Style.GridMajorLineSpacing);
+            int majorGridSpacing = majorGridPixelOffset / horizontal;
+
             offsetX += uScriptConfig.Style.GridSizeVertical   - vertical;
             offsetY += uScriptConfig.Style.GridSizeHorizontal - horizontal;
 
             Vector3 startGrid = new Vector3( offsetX, offsetY );
             Vector3 endGrid   = new Vector3( uScript.Instance.NodeWindowRect.width, offsetY );
 
-            int gridMajorLineCount = uScriptConfig.Style.GridMajorLineSpacing;
+            //finally flip it because our location we modded with will be negative
+            int gridMajorLineCount = - majorGridSpacing;
+
             for ( g = 0; g < uScript.Instance.NodeWindowRect.height; g += uScriptConfig.Style.GridSizeHorizontal )
             {
                if ( gridMajorLineCount == uScriptConfig.Style.GridMajorLineSpacing )
@@ -922,7 +932,12 @@ namespace Detox.FlowChart
             startGrid = new Vector3( offsetX, offsetY );
             endGrid   = new Vector3( offsetX, uScript.Instance.NodeWindowRect.height );
 
-            gridMajorLineCount = uScriptConfig.Style.GridMajorLineSpacing;
+            majorGridPixelOffset = Location.X % (vertical * uScriptConfig.Style.GridMajorLineSpacing);
+            majorGridSpacing = majorGridPixelOffset / vertical;
+
+            //finally flip it because our location we modded with will be negative
+            gridMajorLineCount = - majorGridSpacing;
+
             for ( g = 0; g < uScript.Instance.NodeWindowRect.width; g += uScriptConfig.Style.GridSizeVertical )
             {
                if ( gridMajorLineCount == uScriptConfig.Style.GridMajorLineSpacing )
