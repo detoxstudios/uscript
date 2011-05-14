@@ -328,7 +328,6 @@ namespace Detox.FlowChart
 
       private void FlowChartCtrl_NodeMouseDown(object sender, MouseEventArgs e)
       {
-
          if ( e.Button == MouseButtons.Left )
          {
             Node node = sender as Node;
@@ -506,7 +505,7 @@ namespace Detox.FlowChart
             if ( true == UserProbablyDidntMeanToMoveMouse( ) || m_MouseDownPoint == System.Windows.Forms.Cursor.Position )
             {
                //if no control key, unselect the rest
-               if ( false == Control.ModifierKeys.Contains(Keys.Control) && m_MouseDownPoint == System.Windows.Forms.Cursor.Position )
+               if ( false == Control.ModifierKeys.Contains(Keys.Shift) && m_MouseDownPoint == System.Windows.Forms.Cursor.Position )
                {
                   foreach (Node node in SelectedNodes)
                   {
@@ -685,7 +684,7 @@ namespace Detox.FlowChart
                   selectionSetModified = true;
                   linkClicked = true;
                }
-			      else if ( false == Control.ModifierKeys.Contains(Keys.Control) )
+			      else if ( false == Control.ModifierKeys.Contains(Keys.Shift) )
 			      {
 			         if ( link.Selected ) selectionSetModified = true;
 			         link.Selected = false;
@@ -712,7 +711,7 @@ namespace Detox.FlowChart
                   selectionSetModified = true;
                }
             }
-            else if ( false == Control.ModifierKeys.Contains(Keys.Control) && (!linkClicked || true == selectionSetModified) )
+            else if ( false == Control.ModifierKeys.Contains(Keys.Shift) && (!linkClicked || true == selectionSetModified) )
 			   {
                if ( true == UserProbablyDidntMeanToMoveMouse( ) )
                {
