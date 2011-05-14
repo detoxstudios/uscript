@@ -833,6 +833,47 @@ namespace Detox.FlowChart
          }
       }
 
+      private void MoveBoundaries( )
+      {
+         float maxMoveRate = 4.0f;
+         float moveStart   = 100.0f;
+
+         PointF location;
+
+         //cursor is already in NodeWindowRect space
+         //no need to subtract coordinates
+         location.X = System.Windows.Forms.Cursor.Position.X;
+         location.Y = System.Windows.Forms.Cursor.Position.Y;
+
+         float width  = uScript.Instance.NodeWindowRect.xMax - uScript.Instance.NodeWindowRect.xMin;
+         float height = uScript.Instance.NodeWindowRect.yMax - uScript.Instance.NodeWindowRect.yMin;
+
+         if ( location.X < moveStart )
+         {
+            float v = 1.0f - (location.X / moveStart);
+            Location.X += (int) (v * v * v * maxMoveRate);
+         }
+         else if ( location.X > width - moveStart )
+         {
+            float v = 1.0f - (width - location.X) / moveStart;
+            Location.X -= (int) (v * v * v * maxMoveRate);
+         }
+
+         if ( location.Y < moveStart )
+         {
+            float v = 1.0f - (location.Y / moveStart);
+            Location.Y += (int) (v * v * v * maxMoveRate);
+         }
+         else if( location.Y > height - moveStart )
+         {
+            float v = 1.0f - (height - location.Y) / moveStart;
+            Location.Y -= (int) (v * v * v * maxMoveRate);
+         }
+
+         //keeps it clamped
+         MoveWithCursor( );
+      }
+
       private void OnAnchorPointActivated(Node node, AnchorPoint anchorPoint)
       {
          m_StartLinkNode   = node;
@@ -882,6 +923,13 @@ namespace Detox.FlowChart
          else
          {
             m_MoveOffset = Point.Empty;
+
+            //even if not in move mode, if the mouse is down
+            //then force a move when they are near boundaries
+            if (  Control.MouseButtons == MouseButtons.Left )
+            {
+               MoveBoundaries( );
+            }
          }
 
          // This is the viewport Rect
