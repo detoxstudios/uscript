@@ -217,7 +217,7 @@ http://www.detoxstudios.com";
    //
    // Editor Window Initialization
    //
-   [UnityEditor.MenuItem ("Detox Tools/uScript Editor %u")]
+   [UnityEditor.MenuItem ("Tools/uScript Editor %u")]
    static void Init ()
    {
       s_Instance = (uScript) EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
