@@ -125,6 +125,11 @@ namespace Detox.ScriptEditor
          RefreshScript( null, true, location );
       }
 
+      public bool IsMoving( )
+      {
+         return m_FlowChart.IsMoving( );
+      }
+
       public bool CanDragDropOnNode( object o )
       {
          foreach ( Node node in m_FlowChart.Nodes )

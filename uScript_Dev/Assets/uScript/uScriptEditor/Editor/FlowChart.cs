@@ -49,6 +49,15 @@ namespace Detox.FlowChart
          InitializeComponent( );
       }
 
+      public bool IsMoving( )
+      {
+         if ( true == InMoveMode )          return true;
+         if ( true == m_NodeMouseTracking ) return true;
+         if ( true == m_NodeMouseSizing )   return true;
+      
+         return false;
+      }
+
       public Node [] SelectedNodes
       {
          get

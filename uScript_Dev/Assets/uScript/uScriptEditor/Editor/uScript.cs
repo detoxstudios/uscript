@@ -1611,7 +1611,10 @@ http://www.detoxstudios.com";
             {
                uScriptGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
                {
-                  m_ScriptEditorCtrl.PropertyGrid.OnPaint();
+                  if ( false == m_ScriptEditorCtrl.IsMoving( ) )
+                  {
+                     m_ScriptEditorCtrl.PropertyGrid.OnPaint();
+                  }
                }
                uScriptGUI.EndColumns();
             }
