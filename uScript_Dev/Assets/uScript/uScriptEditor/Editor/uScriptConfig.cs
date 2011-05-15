@@ -180,7 +180,7 @@ public class uScriptDefaultStyle : uScriptStyle
       element.border.bottom = 6;
       element.padding.left = 0;
       element.padding.right = 0;
-      element.padding.top = -12;
+      element.padding.top = -14;
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
@@ -197,7 +197,7 @@ public class uScriptDefaultStyle : uScriptStyle
       element.border.bottom = 6;
       element.padding.left = 0;
       element.padding.right = 0;
-      element.padding.top = -12;
+      element.padding.top = -14;
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
@@ -647,22 +647,30 @@ public partial class uScriptConfig
       //uScriptEditor paths
       public static string RootFolder        { get {return UnityEngine.Application.dataPath + "/uScript";} }
       public static string uScriptNodes      { get {return uScriptEditor + "/Nodes";} }
-      public static string ProjectFiles      { get {return RootFolder + "/ProjectFiles";} }
+      public static string ProjectFiles      { get { return UnityEngine.Application.dataPath + "/uScriptProjectFiles"; } }
       public static string uScriptEditor     { get {return RootFolder + "/uScriptEditor";} }
 
       //user paths
       public static string UserScripts       { get {return ProjectFiles     + "/uScripts";} }
       public static string UserNodes         { get {return ProjectFiles     + "/Nodes";} }
-      public static string GeneratedScripts  { get {return UserScripts      + "/~GeneratedScripts";} }
-      public static string NestedScripts     { get {return GeneratedScripts + "/Nested";} }
+      public static string GeneratedScripts  { get {return UserScripts      + "/_GeneratedScripts"; } }
+      public static string NestedScripts     { get {return GeneratedScripts; } }
       public static string GuiPath           { get {return uScriptEditor    + "/Editor/_GUI"; } }
-      public static string SkinPath          { get {return GuiPath          + "/uScriptDefault"; } } 
-      //public static string TutorialFiles     { get {return RootFolder + "/TutorialFiles";} }
+      public static string SkinPath          { get {return GuiPath          + "/uScriptDefault"; } }
+      public static string SettingsPath      { get {return ProjectFiles; } } 
+      //public static string TutorialFiles   { get {return RootFolder + "/TutorialFiles";} }
    
       public static string RelativePath(string absolutePath)
       {
          return absolutePath.Substring( UnityEngine.Application.dataPath.Length - "Assets".Length );
       }
+   }
+
+   public struct Files
+   {
+      //uScriptEditor paths
+      public static string SettingsFile { get { return "uScriptSettings.settings"; } }
+      
    }
 
    public static uScriptStyle Style = new uScriptDefaultStyle( );

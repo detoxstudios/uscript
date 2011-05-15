@@ -262,14 +262,14 @@ http://www.detoxstudios.com";
       m_SettingsLoaded = true;
 
       m_AppData.Set(key, value);
-      m_AppData.Save(uScriptConfig.Paths.RootFolder + "/uScript.settings");
+      m_AppData.Save(uScriptConfig.Paths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
    }
    
    static public void LoadSettings()
    {
-      if (System.IO.File.Exists(uScriptConfig.Paths.RootFolder + "/uScript.settings"))
+      if (System.IO.File.Exists(uScriptConfig.Paths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile))
       {
-         m_AppData.Load(uScriptConfig.Paths.RootFolder + "/uScript.settings");
+         m_AppData.Load(uScriptConfig.Paths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
       }
    }
 
@@ -1443,8 +1443,8 @@ http://www.detoxstudios.com";
       string logicPath = relativePath + "/" + fileName + "_Nested.cs";
       string wrapperPath = relativePath + "/" + fileName + ".cs";
 
-      //uScriptDebug.Log( "refreshing " + logicPath );
-      //uScriptDebug.Log( "refreshing " + wrapperPath );
+      uScriptDebug.Log( "refreshing " + logicPath );
+      uScriptDebug.Log( "refreshing " + wrapperPath );
 
       AssetDatabase.ImportAsset( logicPath, ImportAssetOptions.ForceUpdate );
       AssetDatabase.ImportAsset( wrapperPath, ImportAssetOptions.ForceUpdate );
