@@ -412,6 +412,7 @@ http://www.detoxstudios.com";
             CurrentScript = MasterComponent.Script;
          }
 
+
    		Point loc = Point.Empty;
 		   if ( false == String.IsNullOrEmpty(m_CurrentCanvasPosition) )
          {
@@ -2119,9 +2120,16 @@ http://www.detoxstudios.com";
 
       if ( true == scriptEditor.Open(fullPath) )
       {
+         if ( "" != scriptEditor.SceneName && scriptEditor.SceneName != System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene) )
+         {
+            EditorUtility.DisplayDialog("uScript Scene Warning", "This uScript file was attached to the uScript Master GameObject in scene " + scriptEditor.SceneName + ".  " +
+                                        "It may not be compatible with this scene.", "OK");
+         }
+
+
          UnityEditor.Undo.ClearUndo( MasterComponent );
          
-         //force a change which will for a script rebuild in OnGui
+         //force a change which will for a script rebuild in Update
          //this keeps all the loading in the same place
          MasterComponent.Script = scriptEditor.ToBase64( );
          MasterComponent.ScriptName = scriptEditor.Name;
@@ -2243,18 +2251,31 @@ http://www.detoxstudios.com";
             firstSave = true;
          }
 
+         bool pleaseAttachMe = false;
+         
+         //ask before they've saved so we know
+         //whether or not we have to save the scene name with the script
+         if (firstSave)
+         {
+            // ask the user if they want to assign this script to the master game object
+            pleaseAttachMe = pleaseAttachMe = EditorUtility.DisplayDialog("Assign To Master Game Object", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No");
+         }
+
+         //if they do want to attach to the master then set
+         //the scene name before we save
+         if ( true == pleaseAttachMe )
+         {
+            script.SceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
+         }
+
          if ( true == SaveScript(script, m_FullPath) )
          {
             m_ScriptEditorCtrl.IsDirty = false;
     
-            if (firstSave)
+            if (true == pleaseAttachMe)
             {
-               // ask the user if they want to assign this script to the master game object
-               if (EditorUtility.DisplayDialog("Assign To Master Game Object", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No"))
-               {
-                  AssetDatabase.Refresh( );
-                  AttachToMasterGO();
-               }
+               AssetDatabase.Refresh( );            
+               AttachToMasterGO();
             }
    
             return true;

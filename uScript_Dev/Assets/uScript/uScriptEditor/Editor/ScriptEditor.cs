@@ -1899,6 +1899,8 @@ namespace Detox.ScriptEditor
          get { return m_Name; } 
       }
 
+      public string SceneName = "";
+
       Hashtable m_Nodes = new Hashtable( );
       Hashtable m_DeprecatedNodes = new Hashtable( );
 
@@ -2512,7 +2514,8 @@ namespace Detox.ScriptEditor
             }
 
             data.NodeDatas = nodeDatas.ToArray( );
-         
+            data.SceneName = SceneName;
+
             return data;
          }
 
@@ -2568,6 +2571,8 @@ namespace Detox.ScriptEditor
                   m_Nodes.Add( node.Guid, node );
                }
             }
+
+            SceneName = value.SceneName;
          }
       }
 

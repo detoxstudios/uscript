@@ -11,6 +11,7 @@ namespace Detox.Data.ScriptEditor
    public class ScriptEditorData : ISerializable
    {
       private EntityNodeData []m_NodeDatas = null;
+      public string SceneName = "";
 
       static ScriptEditorData( )
       {
@@ -52,7 +53,7 @@ namespace Detox.Data.ScriptEditor
       }
 
 
-      public int Version { get { return 1; } }
+      public int Version { get { return 2; } }
 
       public void Load(ObjectSerializer serializer)
       {
@@ -67,11 +68,17 @@ namespace Detox.Data.ScriptEditor
          }
 
          m_NodeDatas = list.ToArray( );
+
+         if ( serializer.CurrentVersion > 1 )
+         {
+            SceneName = (string) serializer.LoadNamedObject( "SceneName" );
+         }
       }
 
       public void Save(ObjectSerializer serializer)
       {
          serializer.SaveNamedObjects( "NodeDatas", m_NodeDatas ); 
+         serializer.SaveNamedObject ( "SceneName", SceneName ); 
       }
    }
 
