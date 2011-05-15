@@ -854,7 +854,7 @@ namespace Detox.ScriptEditor
 
       public Parameter[] Parameters 
       { 
-         get { return new Parameter[0]; } 
+         get { return new Parameter[1] { Connection }; } 
          set { }
       }
       
@@ -2193,11 +2193,6 @@ namespace Detox.ScriptEditor
 
          Parameter destParam  = sourceParam;
          Parameter emptyParam = sourceParam;
-
-         if ( source is OwnerConnection )
-         {
-            sourceParam = ((OwnerConnection)source).Connection;
-         }
 
          foreach ( Parameter p in source.Parameters )
          {
