@@ -1740,7 +1740,7 @@ http://www.detoxstudios.com";
                         if ((EditorApplication.timeSinceStartup - clickTime) < doubleClickTime)
                         {
                            string path = FindFile(uScriptConfig.Paths.UserScripts, scriptName + ".uscript");
-                           Debug.Log("Load Path: " + path + "\n");
+
                            if ("" != path)
                            {
                               _openScriptToggle = false;
