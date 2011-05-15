@@ -2252,18 +2252,29 @@ http://www.detoxstudios.com";
          }
 
          bool pleaseAttachMe = false;
-         
+         bool currentlyAttached = false;
+
          //ask before they've saved so we know
          //whether or not we have to save the scene name with the script
          if (firstSave)
          {
             // ask the user if they want to assign this script to the master game object
-            pleaseAttachMe = pleaseAttachMe = EditorUtility.DisplayDialog("Assign To Master Game Object", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No");
+            pleaseAttachMe = EditorUtility.DisplayDialog("Assign To Master Game Object", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No");
+         }
+         else
+         {
+            GameObject master = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+
+            if ( null != master )
+            {
+               String typeName = System.IO.Path.GetFileNameWithoutExtension(m_FullPath);
+               currentlyAttached = null != master.GetComponent(typeName);
+            }
          }
 
          //if they do want to attach to the master then set
          //the scene name before we save
-         if ( true == pleaseAttachMe )
+         if ( true == pleaseAttachMe || true == currentlyAttached )
          {
             script.SceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
          }
