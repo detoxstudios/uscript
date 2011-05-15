@@ -668,8 +668,10 @@ public partial class uScriptConfig
 
    public struct Files
    {
-      //uScriptEditor paths
-      public static string SettingsFile { get { return "uScriptSettings.settings"; } }
+      //uScript files
+      public static string SettingsFile                { get { return "uScriptSettings.settings"; } }
+      public static string GeneratedComponentExtension { get { return "_Component"; } }
+      public static string GeneratedCodeExtension      { get { return ""; } }
       
    }
 

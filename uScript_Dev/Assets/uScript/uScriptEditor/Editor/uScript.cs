@@ -1000,9 +1000,9 @@ http://www.detoxstudios.com";
 
             string uscriptPath = uScriptConfig.Paths.UserScripts;
 
-            if ( logicNode.Type.EndsWith("_Nested.cs") )
+            if ( logicNode.Type.EndsWith( uScriptConfig.Files.GeneratedCodeExtension ) )
             {
-               string script = uscriptPath + "/" + logicNode.Type.Substring( 0, logicNode.Type.LastIndexOf("_Nested") );
+               string script = uscriptPath + "/" + logicNode.Type.Substring(0, logicNode.Type.LastIndexOf(uScriptConfig.Files.GeneratedCodeExtension));
                script += ".uscript";
 
                if ( System.IO.File.Exists(script) )
@@ -1440,8 +1440,8 @@ http://www.detoxstudios.com";
       relativePath = System.IO.Path.GetDirectoryName( relativePath );
       relativePath = relativePath.Replace( '\\', '/' );
 
-      string logicPath = relativePath + "/" + fileName + "_Nested.cs";
-      string wrapperPath = relativePath + "/" + fileName + ".cs";
+      string logicPath = relativePath + "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
+      string wrapperPath = relativePath + "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
 
       uScriptDebug.Log( "refreshing " + logicPath );
       uScriptDebug.Log( "refreshing " + wrapperPath );
@@ -2218,8 +2218,8 @@ http://www.detoxstudios.com";
 
       String fileName = System.IO.Path.GetFileNameWithoutExtension( binaryPath );
 
-      logicPath   += "/" + fileName + "_Nested.cs";
-      wrapperPath += "/" + fileName + ".cs";
+      logicPath   += "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
+      wrapperPath += "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
 
       return script.Save( binaryPath, logicPath, wrapperPath );
    }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Detox.ScriptEditor;
 
 #if UNITY_EDITOR
 
@@ -42,7 +43,9 @@ public class uScriptGOAttacher
             {
                // add the new uScript to the master object
                System.IO.FileInfo fileInfo = new System.IO.FileInfo(path);
-               String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf("."));
+               String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")) + uScriptConfig.Files.GeneratedComponentExtension;
+               Debug.Log("TYPENAME: " + typeName);
+
                s_Master.AddComponent(typeName);
             }
   
