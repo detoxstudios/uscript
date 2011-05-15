@@ -259,6 +259,29 @@ namespace Detox.Data.ScriptEditor
       }
    }
 
+   public class OwnerConnectionData : EntityNodeData
+   {
+      public override void Clone(EntityNodeData cloneFrom)
+      {
+         base.Clone( cloneFrom );
+
+         OwnerConnectionData data = cloneFrom as OwnerConnectionData;
+         if ( null == data ) return;
+      }
+
+      public new int Version { get { return 1; } }
+
+      public new void Load(ObjectSerializer serializer)
+      {
+         serializer.LoadBaseObject( this, typeof(EntityNodeData) );      
+      }
+
+      public new void Save(ObjectSerializer serializer)
+      {
+         serializer.SaveBaseObject( this, typeof(EntityNodeData) );
+      }
+   }
+   
    public class EntityMethodData : EntityNodeData
    {
       public Plug Input;

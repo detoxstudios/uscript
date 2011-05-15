@@ -40,6 +40,13 @@ namespace Detox.ScriptEditor
       }
    }
 
+   public partial class OwnerConnectionDisplayNode
+   {
+      public void InitializeComponent( )
+      {
+      }
+   }
+
    public partial class ResourceInstanceDisplayNode
    {
       public void InitializeComponent( )

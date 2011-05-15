@@ -52,12 +52,19 @@ namespace Detox.ScriptEditor
             
             foreach ( LinkNode link in instanceLinks )
             {
-               LocalNode node = (LocalNode) m_Script.GetNode( link.Source.Guid );
-
-               if ( node.Instance.Default != "" )
+               EntityNode node = m_Script.GetNode( link.Source.Guid );
+               
+               if ( node is LocalNode )
+               {
+                  if ( ((LocalNode)node).Instance.Default != "" )
+                  {
+                     includeNode = true;
+                     break;
+                  }
+               }
+               else if ( node is OwnerConnection )
                {
                   includeNode = true;
-                  break;
                }
             }
 
@@ -101,7 +108,7 @@ namespace Detox.ScriptEditor
             usedNodes[ link.Guid ] = true;
          }
 
-         //pruen any nodes which aren't linked
+         //prune any nodes which aren't linked
          foreach ( EntityNode entityNode in m_Script.EntityNodes )
          {
             if ( false == usedNodes.Contains(entityNode.Guid) )
@@ -903,6 +910,13 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine( "" );
+         AddCSharpLine( "//owner nodes" );
+         foreach ( OwnerConnection owner in m_Script.Owners )
+         {
+            AddCSharpLine( FormatType(owner.Connection.Type) + " " + CSharpName(owner) + " = null;" );
+         }
+
+         AddCSharpLine( "" );
          AddCSharpLine( "//logic nodes" );
 
          foreach ( LogicNode logic in m_Script.Logics )
@@ -1179,6 +1193,11 @@ namespace Detox.ScriptEditor
                FillComponent( localNode, localNode.Value );
             }
 
+            foreach ( OwnerConnection ownerNode in m_Script.Owners )
+            {
+               FillComponent( ownerNode, ownerNode.Connection );
+            }
+
          --m_TabStack;
          AddCSharpLine( "}" );
       }
@@ -1210,15 +1229,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  if ( values[i].Trim( ) == "Owner" )
-                  {
-                     AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = parentGameObject;" );
-                  }
-                  else
-                  {
-                     AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + values[i].Trim( ) + "\" ) as " + type + ";" );
-                  }
-
+                  AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + values[i].Trim( ) + "\" ) as " + type + ";" );
                   SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, true );
          
                --m_TabStack;
@@ -1290,20 +1301,23 @@ namespace Detox.ScriptEditor
          }
          else if ( true == gameObjectType.IsAssignableFrom(nodeType) )
          {
-            if ( parameter.Default != "" )
+            if ( true == node is OwnerConnection )
+            {
+               AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+                  AddCSharpLine( CSharpName(node, parameter.Name) + " = parentGameObject;" );
+                  SetupEventListeners( CSharpName(node, parameter.Name), node, true );
+               --m_TabStack;
+               AddCSharpLine( "}" );
+            }
+            else if ( parameter.Default != "" )
             {
                AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  if ( parameter.Default == "Owner" )
-                  {
-                     AddCSharpLine( CSharpName(node, parameter.Name) + " = parentGameObject;" );
-                  }
-                  else
-                  {
-                     AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + FormatType(parameter.Type) + ";" );
-                  }
+                  AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + FormatType(parameter.Type) + ";" );
 
                   //only set up listeners if it's NOT a variable connecxtion
                   //otherwise they'll be set in the conditional below this
@@ -1378,7 +1392,31 @@ namespace Detox.ScriptEditor
                      }
                   }
                }
+            }
+            else if ( node is OwnerConnection )
+            {
+               //if we are an owner node, see if there are any event listeners
+               //hooked up to us - if so then we need to get the matching component
+               //and register the listeners
+               OwnerConnection owner = (OwnerConnection) node;
 
+               foreach ( LinkNode link in m_Script.Links )
+               {
+                  if ( link.Source.Guid   == owner.Guid &&
+                       link.Source.Anchor == owner.Connection.Name )
+                  {
+                     EntityNode destNode = m_Script.GetNode( link.Destination.Guid );
+
+                     if ( destNode is EntityEvent )
+                     {
+                        EntityEvent eventNode = (EntityEvent) destNode;
+                        if ( link.Destination.Anchor == eventNode.Instance.Name )
+                        {
+                           SetupEvent( eventVariable, eventNode, setup ); 
+                        }
+                     }
+                  }
+               }
             }
 
          --m_TabStack;
@@ -2500,6 +2538,13 @@ namespace Detox.ScriptEditor
             LocalNode local = (LocalNode) entityNode;
 
             name = "local_" + local.Name.Default + "_" + local.Value.Type;
+            name = name.Replace( "[]", "Array" );
+         }
+         else if ( entityNode is OwnerConnection )
+         {
+            OwnerConnection owner = (OwnerConnection) entityNode;
+
+            name = "owner_" + owner.Connection.Name + "_" + guidId;
             name = name.Replace( "[]", "Array" );
          }
          else if ( entityNode is ExternalConnection )

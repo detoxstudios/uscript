@@ -215,5 +215,98 @@ namespace Detox.ScriptEditor
          }
       }
    }
+
+   public partial class OwnerConnectionDisplayNode : DisplayNode
+   {
+      override public int RenderDepth { get { return FlowChartCtrl.LinkRenderDepth + 1; } }
+
+      public  OwnerConnection OwnerConnection
+      { get { return (OwnerConnection) EntityNode; } }
+
+      public OwnerConnectionDisplayNode(OwnerConnection ownerConnection) : base(ownerConnection)
+      {
+         InitializeComponent();
+         AddEventHandlers( );
+
+         NodeStyle = "variable_default";
+                  
+         Location = new System.Drawing.Point( ownerConnection.Position.X, ownerConnection.Position.Y );
+
+         Name = "";
+
+         PrepareNode( );
+      }
+
+      private void PrepareNode( )
+      {
+         List<Socket> sockets = new List<Socket>( );
+         Socket socket;
+
+         socket = new Socket( );
+         socket.Alignment = Socket.Align.Center;
+         socket.InternalName = OwnerConnection.Connection.Name;
+         socket.FriendlyName = OwnerConnection.Connection.FriendlyName;
+         socket.Input  = OwnerConnection.Connection.Input;
+         socket.Output = OwnerConnection.Connection.Output;
+         socket.Type   = OwnerConnection.Connection.Type;
+         sockets.Add( socket );
+
+         socket = new Socket( );
+         socket.Alignment = Socket.Align.Center;
+         socket.InternalName = "Owner";
+         socket.FriendlyName = "Owner";
+         socket.Input  = false;
+         socket.Output = false;
+         socket.Type   = "";
+         sockets.Add( socket );
+
+         UpdateSockets( sockets.ToArray( ) );
+      }
+
+      protected override Size CalculateSize(Socket []sockets)
+      {
+         return new Size(57, 57);
+      }
+
+      protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
+      {
+         foreach ( Socket socket in sockets )
+         {
+            if ( socket.Input == true || socket.Output == true )
+            {
+               AnchorPoint point = new AnchorPoint( );
+               point.Name   = socket.InternalName;
+               point.X      = Size.Width / 2;
+               point.Y      = Size.Height / 2;
+
+               point.Width  = Size.Width;
+               point.Height = Size.Height;
+                  
+               point.Input  = socket.Input;
+               point.Output = socket.Output;
+               point.CanSource = false;
+               point.StyleName = "clear_socket";
+               points.Add( point );
+            }
+
+            if ( socket.Input == false && socket.Output == false )
+            {
+               SizeF size = Graphics.sMeasureString( FormatName(socket), "socket_text" );
+
+               TextPoint textPoint = new TextPoint( );
+
+               textPoint.Name = FormatName(socket);
+               textPoint.X = (Size.Width - uScriptConfig.Style.RightShadow - size.Width) / 2;
+               textPoint.Y = (Size.Height - uScriptConfig.Style.BottomShadow - size.Height) / 2;
+               textPoint.StyleName = "externalconnection_text";
+
+               if ( textPoint.X < 0 ) textPoint.X = 0;
+               if ( textPoint.Y < 0 ) textPoint.Y = 0;
+
+               textPoints.Add( textPoint );
+            }
+         }
+      }
+   }
 }
    

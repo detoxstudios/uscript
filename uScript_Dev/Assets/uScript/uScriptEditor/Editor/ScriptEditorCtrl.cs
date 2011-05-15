@@ -1127,6 +1127,25 @@ namespace Detox.ScriptEditor
             if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
          }
 
+         foreach ( OwnerConnection owner in m_ScriptEditor.Owners )
+         {
+            OwnerConnectionDisplayNode node = new OwnerConnectionDisplayNode( owner );
+
+            if ( m_ScriptEditor.IsDeprecated(owner) ) node.Deprecate( );
+
+            if ( guidsToSelect.Contains(node.Guid) )
+            {
+               node.Selected = true;
+            }
+         
+            m_FlowChart.AddNode( node );
+
+            if (node.Location.X < minX) minX = node.Location.X;
+            if (node.Location.X + node.Size.Width > maxX) maxX = node.Location.X;
+            if (node.Location.Y < minY) minY = node.Location.Y;
+            if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
+         }
+
          foreach ( LinkNode link in m_ScriptEditor.Links )
          {
             Detox.FlowChart.Link chartLink = new Detox.FlowChart.Link( );
@@ -1526,6 +1545,7 @@ namespace Detox.ScriptEditor
 
          ToolStripMenuItem comment  = new ToolStripMenuItem();
          ToolStripMenuItem external = new ToolStripMenuItem();
+         ToolStripMenuItem owner    = new ToolStripMenuItem();
 
          comment.Name = "m_AddComment";
          comment.Size = new System.Drawing.Size(152, 22);
@@ -1539,7 +1559,14 @@ namespace Detox.ScriptEditor
          external.Click += new System.EventHandler(m_MenuAddNode_Click);
          external.Tag  = new ExternalConnection( Guid.NewGuid( ) );
 
+         owner.Name = "m_AddExternal";
+         owner.Size = new System.Drawing.Size(152, 22);
+         owner.Text = "&Owner Connection";
+         owner.Click += new System.EventHandler(m_MenuAddNode_Click);
+         owner.Tag  = new OwnerConnection( Guid.NewGuid( ) );
+
          addMenu.DropDownItems.Add( comment );
+         addMenu.DropDownItems.Add( owner );
          addMenu.DropDownItems.Add( external );
       }
 

@@ -786,6 +786,119 @@ namespace Detox.ScriptEditor
       }
    }
 
+   public struct OwnerConnection : EntityNode
+   {
+      public EntityNode Copy( )
+      {
+         OwnerConnection connection = new OwnerConnection( );
+         connection.Connection     = Connection;
+         connection.Position       = Position;
+         connection.Guid           = Guid.NewGuid( );
+         connection.ShowComment    = ShowComment;
+         connection.Comment        = Comment;
+
+         return connection;
+      }
+   
+      public EntityNodeData NodeData
+      {
+         get
+         {
+            OwnerConnectionData nodeData = new OwnerConnectionData( );
+            nodeData.Position.X = Position.X;
+            nodeData.Position.Y = Position.Y;
+            nodeData.Guid       = Guid;
+            nodeData.ShowComment= ShowComment.ToParameterData( );
+            nodeData.Comment    = Comment.ToParameterData( );
+            return nodeData;
+         }
+      }
+
+      public override int GetHashCode()
+      {
+         return base.GetHashCode();
+      }
+
+      public override bool Equals(object obj)
+      {
+         if ( obj.GetType() != typeof(OwnerConnection) ) return false;
+
+         OwnerConnection node = (OwnerConnection) obj;
+
+         if ( Connection    != node.Connection    ) return false;
+         if ( Guid          != node.Guid )          return false;
+         if ( Position      != node.Position )      return false;
+         if ( false == ArrayUtil.ArraysAreEqual(Parameters, node.Parameters) ) return false;
+
+         return true;
+      }
+      
+      public Parameter Instance { get { return Parameter.Empty; } set {} }
+
+      private Parameter m_ShowComment;
+      private Parameter m_Comment;
+
+      public Parameter ShowComment 
+      {
+         get { return m_ShowComment; }
+         set { m_ShowComment = value; } 
+      }
+
+      public Parameter Comment 
+      {
+         get { return m_Comment; }
+         set { m_Comment = value; } 
+      }
+
+      public Parameter Connection;
+
+      public Parameter[] Parameters 
+      { 
+         get { return new Parameter[0]; } 
+         set { }
+      }
+      
+      private Point m_Position;
+      public Point Position { get { return m_Position; } set { m_Position = value; } }
+
+      private Guid m_Guid;
+      public Guid Guid
+      {
+         get { return m_Guid; }
+         set { m_Guid = value; }
+      }
+
+      public OwnerConnection( Guid guid )
+      {
+         m_Guid = guid;
+         m_Position = Point.Empty;
+      
+         m_ShowComment = new Parameter( );
+         m_ShowComment.Name    = "Output Comment";
+         m_ShowComment.FriendlyName = "Output Comment";
+         m_ShowComment.Default = "false";
+         m_ShowComment.Type    = "Bool";
+         m_ShowComment.Input   = true;
+         m_ShowComment.Output  = false;
+
+         m_Comment = new Parameter( );
+         m_Comment.Name    = "Comment";
+         m_Comment.FriendlyName = "Comment";
+         m_Comment.Default = "";
+         m_Comment.Type    = "String";
+         m_Comment.Input   = true;
+         m_Comment.Output  = false;
+
+         Connection = new Parameter( );
+         Connection.Name = "Connection";
+         Connection.FriendlyName = "Connection";
+         Connection.Default = "";
+         Connection.Input  = false;
+         Connection.Output = true;
+         Connection.Type   = typeof(UnityEngine.GameObject).ToString( );
+      }
+   }
+   
    public struct EntityMethod : EntityNode
    {
       public EntityNode Copy( )
@@ -1709,6 +1822,21 @@ namespace Detox.ScriptEditor
          }
       }
 
+      public OwnerConnection [] Owners
+      {
+         get 
+         {
+            List<OwnerConnection> owners = new List<OwnerConnection>( );
+            
+            foreach( EntityNode node in m_Nodes.Values )
+            {
+               if ( node is OwnerConnection ) owners.Add( (OwnerConnection) node );
+            }
+
+            return owners.ToArray( );
+         }
+      }
+
       public LocalNode [] Locals
       {
          get 
@@ -2066,6 +2194,11 @@ namespace Detox.ScriptEditor
          Parameter destParam  = sourceParam;
          Parameter emptyParam = sourceParam;
 
+         if ( source is OwnerConnection )
+         {
+            sourceParam = ((OwnerConnection)source).Connection;
+         }
+
          foreach ( Parameter p in source.Parameters )
          {
             if ( link.Source.Anchor == p.Name )
@@ -2141,6 +2274,12 @@ namespace Detox.ScriptEditor
             return false;
          }
 
+         if ( source is OwnerConnection && dest is ExternalConnection ) 
+         {
+            reason = "Owners and External Connections cannot be linked together";
+            return false;
+         }
+
          if ( source is ExternalConnection ) return true;
          
          if ( dest is ExternalConnection )
@@ -2170,6 +2309,9 @@ namespace Detox.ScriptEditor
          //source must be output and dest must be input
          if ( true != sourceParam.Output || true != destParam.Input ) 
          {
+            UnityEngine.Debug.Log( "source = " + sourceParam.Name );
+            UnityEngine.Debug.Log( "dest   = " + destParam.Input );
+
             reason = "The source link must allow an output and the destination must allow an input";
             return false;
          }
@@ -2416,6 +2558,10 @@ namespace Detox.ScriptEditor
                else if ( data is ExternalConnectionData )
                {
                   node = CreateExternalConnection( data as ExternalConnectionData );
+               }
+               else if ( data is OwnerConnectionData )
+               {
+                  node = CreateOwnerConnection( data as OwnerConnectionData );
                }
                else
                {
@@ -2843,6 +2989,18 @@ namespace Detox.ScriptEditor
          external.Comment    = new Parameter( data.Comment );
 
          return external;
+      }
+
+      private OwnerConnection CreateOwnerConnection( OwnerConnectionData data )
+      {
+         OwnerConnection owner = new OwnerConnection( data.Guid );
+
+         owner.Guid       = data.Guid;
+         owner.Position   = data.Position;
+         owner.ShowComment= new Parameter( data.ShowComment );
+         owner.Comment    = new Parameter( data.Comment );
+
+         return owner;
       }
 
       private LocalNode CreateLocalNode( LocalNodeData data )
