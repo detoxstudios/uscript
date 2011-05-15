@@ -31,8 +31,9 @@ namespace Detox.FlowChart
       private bool m_AllowPanning = false;
 
       private Point m_MoveOffset = Point.Empty;
-      private Point m_StartMoveLocation = Point.Empty;
-      private Point m_FCMouseDownPoint = Point.Empty;
+      private Point m_StartMoveLocation   = Point.Empty;
+      private Point m_FCMouseDownPoint    = Point.Empty;
+      private Point m_MoveBoundariesStart = Point.Empty;
 
       private bool InMoveMode 
       { 
@@ -327,6 +328,11 @@ namespace Detox.FlowChart
             m_AllowPanning = true;
          }
          m_FCMouseDownPoint = System.Windows.Forms.Cursor.Position;
+         
+         if ( e.Button == MouseButtons.Left )
+         {
+            m_MoveBoundariesStart = System.Windows.Forms.Cursor.Position;
+         }
       }
 
       private void FlowChartCtrl_NodeModified(object sender, EventArgs e)
@@ -338,6 +344,8 @@ namespace Detox.FlowChart
       {
          if ( e.Button == MouseButtons.Left )
          {
+            m_MoveBoundariesStart = System.Windows.Forms.Cursor.Position;
+
             Node node = sender as Node;
 
             //use the parent's position
@@ -812,8 +820,8 @@ namespace Detox.FlowChart
 
       private void MoveBoundaries( )
       {
-         float maxMoveRate = 4.0f;
-         float moveStart   = 100.0f;
+         const float maxMoveRate = 4.0f;
+         const float moveStart   = 100.0f;
 
          PointF location;
 
@@ -825,23 +833,23 @@ namespace Detox.FlowChart
          float width  = uScript.Instance.NodeWindowRect.xMax - uScript.Instance.NodeWindowRect.xMin;
          float height = uScript.Instance.NodeWindowRect.yMax - uScript.Instance.NodeWindowRect.yMin;
 
-         if ( location.X < moveStart )
+         if ( location.X < moveStart && location.X < m_MoveBoundariesStart.X )
          {
             float v = 1.0f - (location.X / moveStart);
             Location.X += (int) (v * v * v * maxMoveRate);
          }
-         else if ( location.X > width - moveStart )
+         else if ( location.X > width - moveStart && location.X > m_MoveBoundariesStart.X )
          {
             float v = 1.0f - (width - location.X) / moveStart;
             Location.X -= (int) (v * v * v * maxMoveRate);
          }
 
-         if ( location.Y < moveStart )
+         if ( location.Y < moveStart && location.Y < m_MoveBoundariesStart.Y )
          {
             float v = 1.0f - (location.Y / moveStart);
             Location.Y += (int) (v * v * v * maxMoveRate);
          }
-         else if( location.Y > height - moveStart )
+         else if( location.Y > height - moveStart && location.Y > m_MoveBoundariesStart.Y )
          {
             float v = 1.0f - (height - location.Y) / moveStart;
             Location.Y -= (int) (v * v * v * maxMoveRate);
