@@ -653,7 +653,7 @@ public partial class uScriptConfig
       //user paths
       public static string UserScripts       { get {return ProjectFiles     + "/uScripts";} }
       public static string UserNodes         { get {return ProjectFiles     + "/Nodes";} }
-      public static string GeneratedScripts  { get {return UserScripts      + "/_GeneratedScripts"; } }
+      public static string GeneratedScripts  { get {return UserScripts      + "/_GeneratedCode"; } }
       public static string NestedScripts     { get {return GeneratedScripts; } }
       public static string GuiPath           { get {return uScriptEditor    + "/Editor/_GUI"; } }
       public static string SkinPath          { get {return GuiPath          + "/uScriptDefault"; } }
