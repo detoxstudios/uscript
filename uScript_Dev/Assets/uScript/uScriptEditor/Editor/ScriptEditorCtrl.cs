@@ -60,8 +60,8 @@ namespace Detox.ScriptEditor
          get { return m_ScriptEditor; } 
       }
 		
-	  public Detox.FlowChart.FlowChartCtrl FlowChart { get { return m_FlowChart; } }
-		
+      public Detox.FlowChart.FlowChartCtrl FlowChart { get { return m_FlowChart; } }
+      
       public DisplayNode [] SelectedNodes
       {
          get
@@ -99,16 +99,16 @@ namespace Detox.ScriptEditor
 
       public ScriptEditorCtrl(ScriptEditor scriptEditor)
       {  
-	     Initialize(scriptEditor, Point.Empty);
-	  }
-
-	  public ScriptEditorCtrl(ScriptEditor scriptEditor, Point location)
+         Initialize(scriptEditor, Point.Empty);
+      }
+      
+      public ScriptEditorCtrl(ScriptEditor scriptEditor, Point location)
       {
-	     Initialize(scriptEditor, location);
-	  }
-		
-	  private void Initialize(ScriptEditor scriptEditor, Point location)
-	  {
+         Initialize(scriptEditor, location);
+      }
+      
+      private void Initialize(ScriptEditor scriptEditor, Point location)
+      {
          InitializeComponent();
                   
          m_ContextObject = null;
@@ -123,6 +123,126 @@ namespace Detox.ScriptEditor
          TabText = m_ScriptEditor.Name;
 
          RefreshScript( null, true, location );
+      }
+
+      public Node GetPrevNode(Node node) { return GetPrevNode(node, null); }
+      public Node GetPrevNode(Node node, Type filterType)
+      {
+         int i;
+         int retIndex = -1;
+         for (i = 0; i < m_FlowChart.Nodes.Length; i++)
+         {
+            if (node == m_FlowChart.Nodes[i] || (node == null && i == 0))
+            {
+               if (filterType != null)
+               {
+                  bool found = false;
+                  int index = i;
+                  if (node == null) index = -1;
+                  do
+                  {
+                     if (index == 0)
+                     {
+                        index = m_FlowChart.Nodes.Length - 1;
+                     }
+                     else
+                     {
+                        index--;
+                     }
+   
+                     if (m_FlowChart.Nodes[index].GetType().IsAssignableFrom(filterType))
+                     {
+                        retIndex = index;
+                        found = true;
+                     }
+                  } while (!found && index != i);
+               }
+               else
+               {
+                  if (i == 0)
+                  {
+                     retIndex = m_FlowChart.Nodes.Length - 1;
+                  }
+                  else
+                  {
+                     retIndex = i - 1;
+                  }
+               }
+                  
+               break;
+            }
+         }
+         
+         if (retIndex == -1)
+         {
+            return null;
+         }
+         return m_FlowChart.Nodes[retIndex];
+      }
+
+      public Node GetNextNode(Node node) { return GetNextNode(node, null); }
+      public Node GetNextNode(Node node, Type filterType)
+      {
+         int i;
+         int retIndex = -1;
+         for (i = 0; i < m_FlowChart.Nodes.Length; i++)
+         {
+            if (node == m_FlowChart.Nodes[i] || (node == null && i == 0))
+            {
+               if (filterType != null)
+               {
+                  bool found = false;
+                  int index = i;
+                  if (node == null) index = -1;
+                  do
+                  {
+                     if (index == m_FlowChart.Nodes.Length - 1)
+                     {
+                        index = 0;
+                     }
+                     else
+                     {
+                        index++;
+                     }
+   
+                     if (m_FlowChart.Nodes[index].GetType().IsAssignableFrom(filterType))
+                     {
+                        retIndex = index;
+                        found = true;
+                     }
+                  } while (!found && index != i);
+               }
+               else
+               {
+                  if (i == m_FlowChart.Nodes.Length - 1)
+                  {
+                     retIndex = 0;
+                  }
+                  else
+                  {
+                     retIndex = i + 1;
+                  }
+               }
+                  
+               break;
+            }
+         }
+         
+         if (retIndex == -1)
+         {
+            return null;
+         }
+         return m_FlowChart.Nodes[retIndex];
+      }
+      
+      public void CenterOnNode(Node node)
+      {
+         // center on the center for now - later, we'll calculate zoom amount, etc.
+         int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
+         int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
+         Point center = new Point(node.Bounds.Left + node.Bounds.Width / 2, node.Bounds.Top + node.Bounds.Height / 2);
+         m_FlowChart.Location = new Point(Math.Min(0, Math.Max(-4096, -center.X + halfWidth)), Math.Min(0, Math.Max(-4096, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
+         m_FlowChart.Invalidate();
       }
 
       public bool IsMoving( )

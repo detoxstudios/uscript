@@ -56,6 +56,8 @@ public class uScript : EditorWindow
    private string m_FullPath = "";
    private string m_CurrentCanvasPosition = "";
    
+   private Detox.FlowChart.Node m_FocusedNode = null;
+   
    static private AppFrameworkData m_AppData = new AppFrameworkData();
    static private bool m_SettingsLoaded = false;
    private double m_RefreshTimestamp = -1.0;
@@ -718,6 +720,16 @@ http://www.detoxstudios.com";
                      bool showGrid = (bool)GetSetting("uScript\\ShowGrid", true);
                      SetSetting("uScript\\ShowGrid", !showGrid);
                   }
+                  else if ( Event.current.keyCode == KeyCode.RightBracket )
+                  {
+                     m_FocusedNode = m_ScriptEditorCtrl.GetNextNode(m_FocusedNode, typeof(EntityEventDisplayNode));
+                     m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
+                  }
+                  else if ( Event.current.keyCode == KeyCode.LeftBracket )
+                  {
+                     m_FocusedNode = m_ScriptEditorCtrl.GetPrevNode(m_FocusedNode, typeof(EntityEventDisplayNode));
+                     m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
+                  }
                }
    
                m_PressedKey = KeyCode.None;
@@ -1237,7 +1249,6 @@ http://www.detoxstudios.com";
          }
       }
    }
-
 
    private void CollapsePaletteMenuItem(PaletteMenuItem paletteMenuItem)
    {
