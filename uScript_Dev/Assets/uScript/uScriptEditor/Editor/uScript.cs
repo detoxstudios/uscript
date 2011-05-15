@@ -62,6 +62,10 @@ public class uScript : EditorWindow
    static private bool m_SettingsLoaded = false;
    private double m_RefreshTimestamp = -1.0;
 
+   // Used for double-click hack in uScripts panel
+   private double clickTime;
+   private double doubleClickTime = 0.3;
+
    private int m_ContextX = 0;
    private int m_ContextY = 0;
    private ToolStripItem m_CurrentMenu = null;
@@ -1721,27 +1725,31 @@ http://www.detoxstudios.com";
 
          _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
          {
-            foreach (UnityEngine.Object o in GameObject.FindObjectsOfType(typeof(uScriptCode)))
+            foreach (string fileName in System.IO.Directory.GetFiles(uScriptConfig.Paths.GeneratedScripts))
             {
-               uScriptCode code = o as uScriptCode;
-
-               if (code.GetType().ToString() == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.Name))
+               if ( fileName.Contains(".cs") )
                {
-                  GUIStyle style = new GUIStyle(uScriptStyles.paletteButton);
-                  style.normal.background = style.active.background;
-                  GUILayout.Label(code.GetType().ToString(), style);
-               }
-               else
-               {
-                  GUIContent content = new GUIContent(code.GetType().ToString(), "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
-                  if (GUILayout.Button(content, uScriptStyles.paletteButton) && Event.current.clickCount == 2)
+                  if ( !fileName.Contains( uScriptConfig.Files.GeneratedComponentExtension ) )
                   {
-                     string path = FindFile(Application.dataPath, code.GetType().ToString() + ".uscript");
-                     if ("" != path)
+                     string scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
+
+                     GUIContent content = new GUIContent(scriptName, "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
+
+                     if (GUILayout.Button(content, uScriptStyles.paletteButton))
                      {
-                        _openScriptToggle = false;
-                        OpenScript(path);
+                        if ((EditorApplication.timeSinceStartup - clickTime) < doubleClickTime)
+                        {
+                           string path = FindFile(uScriptConfig.Paths.UserScripts, scriptName + ".uscript");
+                           Debug.Log("Load Path: " + path + "\n");
+                           if ("" != path)
+                           {
+                              _openScriptToggle = false;
+                              OpenScript(path);
+                           }
+                        }
+                        clickTime = EditorApplication.timeSinceStartup;
                      }
+
                   }
                }
             }
