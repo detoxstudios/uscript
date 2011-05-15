@@ -228,7 +228,7 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
-         NodeStyle = "variable_default";
+         NodeStyle = "variable_owner";
                   
          Location = new System.Drawing.Point( ownerConnection.Position.X, ownerConnection.Position.Y );
 
@@ -298,7 +298,7 @@ namespace Detox.ScriptEditor
                textPoint.Name = FormatName(socket);
                textPoint.X = (Size.Width - uScriptConfig.Style.RightShadow - size.Width) / 2;
                textPoint.Y = (Size.Height - uScriptConfig.Style.BottomShadow - size.Height) / 2;
-               textPoint.StyleName = "externalconnection_text";
+               textPoint.StyleName = "socket_text";
 
                if ( textPoint.X < 0 ) textPoint.X = 0;
                if ( textPoint.Y < 0 ) textPoint.Y = 0;
