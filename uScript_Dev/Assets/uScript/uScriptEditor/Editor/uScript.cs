@@ -727,12 +727,12 @@ http://www.detoxstudios.com";
                   else if ( Event.current.keyCode == KeyCode.RightBracket )
                   {
                      m_FocusedNode = m_ScriptEditorCtrl.GetNextNode(m_FocusedNode, typeof(EntityEventDisplayNode));
-                     m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
+                     if (m_FocusedNode != null) m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
                   }
                   else if ( Event.current.keyCode == KeyCode.LeftBracket )
                   {
                      m_FocusedNode = m_ScriptEditorCtrl.GetPrevNode(m_FocusedNode, typeof(EntityEventDisplayNode));
-                     m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
+                     if (m_FocusedNode != null) m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
                   }
                }
    

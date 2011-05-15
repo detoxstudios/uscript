@@ -138,7 +138,7 @@ namespace Detox.ScriptEditor
                {
                   bool found = false;
                   int index = i;
-                  if (node == null) index = -1;
+                  if (node == null) index = m_FlowChart.Nodes.Length;
                   do
                   {
                      if (index == 0)
@@ -150,7 +150,7 @@ namespace Detox.ScriptEditor
                         index--;
                      }
    
-                     if (m_FlowChart.Nodes[index].GetType().IsAssignableFrom(filterType))
+                     if (filterType.IsAssignableFrom(m_FlowChart.Nodes[index].GetType()))
                      {
                         retIndex = index;
                         found = true;
@@ -193,7 +193,7 @@ namespace Detox.ScriptEditor
                {
                   bool found = false;
                   int index = i;
-                  if (node == null) index = -1;
+                  if (node == null) index = 0;
                   do
                   {
                      if (index == m_FlowChart.Nodes.Length - 1)
@@ -205,7 +205,7 @@ namespace Detox.ScriptEditor
                         index++;
                      }
    
-                     if (m_FlowChart.Nodes[index].GetType().IsAssignableFrom(filterType))
+                     if (filterType.IsAssignableFrom(m_FlowChart.Nodes[index].GetType()))
                      {
                         retIndex = index;
                         found = true;
