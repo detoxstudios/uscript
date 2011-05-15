@@ -142,7 +142,7 @@ public static class uScriptGUI
 
       if (GUI.GetNameOfFocusedControl() != _focusedControl)
       {
-         Debug.Log("Control focus changed from '" + _focusedControl + "' to '" + GUI.GetNameOfFocusedControl() + "'\n");
+         uScriptDebug.Log("Control focus changed from '" + _focusedControl + "' to '" + GUI.GetNameOfFocusedControl() + "'\n", uScriptDebug.Type.Debug);
          _previousControl = _focusedControl;
          _focusedControl = GUI.GetNameOfFocusedControl();
       }
