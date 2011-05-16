@@ -2072,7 +2072,10 @@ http://www.detoxstudios.com";
       m_ScriptEditorCtrl.OnMouseUp( m_MouseUpArgs );
       
       m_CurrentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
-      SetSetting("uScript\\" + uScriptConfig.Paths.RelativePath(m_FullPath) + "\\CanvasPosition", m_CurrentCanvasPosition);
+      if (!String.IsNullOrEmpty(m_FullPath))
+      {
+         SetSetting("uScript\\" + uScriptConfig.Paths.RelativePath(m_FullPath) + "\\CanvasPosition", m_CurrentCanvasPosition);
+      }
       
       Control.MouseButtons.Buttons = 0;
    }
