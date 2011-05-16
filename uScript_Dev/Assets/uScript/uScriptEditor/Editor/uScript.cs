@@ -2292,7 +2292,7 @@ http://www.detoxstudios.com";
          if (firstSave)
          {
             // ask the user if they want to assign this script to the master game object
-            pleaseAttachMe = EditorUtility.DisplayDialog("Assign To Master Game Object", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No");
+            pleaseAttachMe = EditorUtility.DisplayDialog("Assign uScript To Master GameObject?", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No");
          }
          else
          {
