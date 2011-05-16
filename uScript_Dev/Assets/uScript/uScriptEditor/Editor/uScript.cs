@@ -1507,18 +1507,18 @@ http://www.detoxstudios.com";
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonSave, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                AssetDatabase.StartAssetEditing( );
-                  SaveScript( false );
+                  bool saved = SaveScript( false );
                AssetDatabase.StopAssetEditing( );
             
-               RefreshScript( );
+               if (saved) RefreshScript( );
             }
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonSaveAs, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                AssetDatabase.StartAssetEditing( );
-                  SaveScript( true );
+                  bool saved = SaveScript( true );
                AssetDatabase.StopAssetEditing( );
 
-               RefreshScript( );
+               if (saved) RefreshScript( );
             }
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
@@ -2259,27 +2259,28 @@ http://www.detoxstudios.com";
       //no file of this name or force us to ask for the name
       if ( "" == m_FullPath || true == forceNameRequest )
       {
-		 bool isSafe = false;
+         bool isSafe = false;
          string path = "Untitled.uScript";
-	     while ( !isSafe && path != "" )
-		 {
-	         path = EditorUtility.SaveFilePanel( "Save uScript As", uScriptConfig.Paths.UserScripts, script.Name, "uscript" );
-			 if ( path != "" )
-			 {
-			    System.IO.FileInfo fileInfo = new System.IO.FileInfo(path);
-			    string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
-			    if ( !isSafe )
-			    {
-			       // filename is not safe - tell the user they need to change it
-				   if (!EditorUtility.DisplayDialog("Invalid File Name", "Filename must be all alpha-numeric characters and must not start with a number. A suggested name for the one you entered is: " + safePath, "Try Again", "Cancel")) return false;
-			    }
-			 }
-		 }
-
+         while ( !isSafe && path != "" )
+         {
+            path = EditorUtility.SaveFilePanel( "Save uScript As", uScriptConfig.Paths.UserScripts, script.Name, "uscript" );
+            if ( path != "" )
+            {
+               System.IO.FileInfo fileInfo = new System.IO.FileInfo(path);
+               string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
+               if ( !isSafe )
+               {
+                  // filename is not safe - tell the user they need to change it
+                  if (!EditorUtility.DisplayDialog("Invalid File Name", "Filename must be all alpha-numeric characters and must not start with a number. A suggested name for the one you entered is: " + safePath, "Try Again", "Cancel")) return false;
+               }
+            }
+         }
+   
          //early exit, they must have changed their minds
          if ( "" == path ) return false;
 
          m_FullPath = path;
+         uScript.SetSetting("uScript\\LastOpened", uScriptConfig.Paths.RelativePath(m_FullPath).Substring("Assets".Length));
       }
 
       if ( "" != m_FullPath )
