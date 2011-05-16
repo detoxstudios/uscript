@@ -420,6 +420,14 @@ http://www.detoxstudios.com";
             CurrentScript = MasterComponent.Script;
          }
 
+         if (String.IsNullOrEmpty(m_FullPath))
+         {
+            String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
+            if (!String.IsNullOrEmpty(lastOpened))
+            {
+               m_FullPath = UnityEngine.Application.dataPath + lastOpened;
+            }
+         }
 
    		Point loc = Point.Empty;
          if ( !String.IsNullOrEmpty(m_FullPath) )
@@ -441,15 +449,6 @@ http://www.detoxstudios.com";
          BuildPaletteMenu(null, null);
 
          Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
-
-         if (String.IsNullOrEmpty(m_FullPath))
-         {
-            String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
-            if (!String.IsNullOrEmpty(lastOpened))
-            {
-               m_FullPath = UnityEngine.Application.dataPath + lastOpened;
-            }
-         }
 
          //when doing certain operations like 'play' in unity
          //it seems to set any class references back to null
@@ -495,6 +494,10 @@ http://www.detoxstudios.com";
          if (m_ScriptEditorCtrl != null)
          {
             m_ScriptEditorCtrl.RefreshScript(null, true);
+            if ( !String.IsNullOrEmpty(m_FullPath) )
+            {
+               m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.Paths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
+            }
             if (!String.IsNullOrEmpty(m_CurrentCanvasPosition))
             {
                Point loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
