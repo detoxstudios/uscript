@@ -35,7 +35,7 @@ public class uScriptGOAttacher
       }
 
       // process any waiting uScripts that need attaching
-      if (s_Component && !EditorApplication.isCompiling)
+      if (s_Component != null && !EditorApplication.isCompiling)
       {
          if (s_Component.uScriptsToAttach.Length > 0)
          {
