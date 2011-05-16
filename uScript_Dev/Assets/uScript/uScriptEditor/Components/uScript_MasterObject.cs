@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 public class uScript_MasterObject : MonoBehaviour
 {
+#if UNITY_EDITOR
    [HideInInspector]
    public string Script     = null;
 
    [HideInInspector]
    public string ScriptName = null;
 
-#if UNITY_EDITOR
    private List<string> m_uScriptsToAttach = new List<string>();
    
    public string[] uScriptsToAttach
