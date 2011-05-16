@@ -8,7 +8,7 @@ using UnityEditor;
 // _______________________________________________________________________________________
 //
 
-public static class uScriptStyles
+public static class uScriptGUIStyle
 {
    private static GUIStyle _paletteToolbarButton;
    public static GUIStyle paletteToolbarButton { get { return _paletteToolbarButton; } }
@@ -43,6 +43,12 @@ public static class uScriptStyles
 
    public static void Init()
    {
+      if (panelTitle != null)
+      {
+         // The styles have already been initialized
+         return;
+      }
+
 //      uScriptDebug.Log("Initalizing uScriptStyles", uScriptDebug.Type.Debug);
 
       _paletteToolbarButton = new GUIStyle(EditorStyles.toolbarButton);

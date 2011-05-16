@@ -44,10 +44,11 @@ public static class uScriptGUI
    static Dictionary<string, bool> _foldoutExpanded = new Dictionary<string, bool>();
    static Dictionary<string, object> _modifiedValue = new Dictionary<string, object>();
 
-   static public Dictionary<string,GUIStyle> Style = new Dictionary<string,GUIStyle>();
-
    static string _propertyKey = string.Empty;
    static int _propertyCount;
+
+
+
 
    public static void BeginColumns(string col1, string col2, string col3, Vector2 offset, Rect rect)
    {
