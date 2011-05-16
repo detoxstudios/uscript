@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7761F2C3-F719-A3C5-C99C-2D7E1B75A6F7}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -27,7 +27,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>Temp\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;UNITY_3_3_0;UNITY_3_3;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -77,8 +77,10 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptConfig.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUI.cs" />
-    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptStyles.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIContent.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIStyle.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptUtility.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="uScript_BaseDLL.csproj">
