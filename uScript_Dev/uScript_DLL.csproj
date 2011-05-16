@@ -81,7 +81,6 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIContent.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIStyle.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptUtility.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="uScript_BaseDLL.csproj">
@@ -91,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\uScript\uScriptEditor\Components\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
