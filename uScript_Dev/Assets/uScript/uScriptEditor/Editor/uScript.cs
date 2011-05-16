@@ -420,7 +420,11 @@ http://www.detoxstudios.com";
 
 
    		Point loc = Point.Empty;
-		   if ( false == String.IsNullOrEmpty(m_CurrentCanvasPosition) )
+         if ( !String.IsNullOrEmpty(m_FullPath) )
+         {
+            m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.Paths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
+         }
+         if ( false == String.IsNullOrEmpty(m_CurrentCanvasPosition) )
          {
             loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), 
                             Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
@@ -2059,6 +2063,7 @@ http://www.detoxstudios.com";
       m_ScriptEditorCtrl.OnMouseUp( m_MouseUpArgs );
       
       m_CurrentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
+      SetSetting("uScript\\" + uScriptConfig.Paths.RelativePath(m_FullPath) + "\\CanvasPosition", m_CurrentCanvasPosition);
       
       Control.MouseButtons.Buttons = 0;
    }
