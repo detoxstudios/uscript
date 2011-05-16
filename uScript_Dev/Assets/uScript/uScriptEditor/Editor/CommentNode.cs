@@ -49,6 +49,8 @@ namespace Detox.ScriptEditor
       protected override Size CalculateSize(Socket []sockets)
       {
          Size size = base.CalculateSize(sockets);
+         size.Width = Math.Max(80, size.Width);
+         size.Height = Math.Max(40, size.Height);
          
          CommentNode clone = Comment;
          Parameter p = clone.Size;

@@ -792,7 +792,7 @@ namespace Detox.FlowChart
          }
          else
          {
-            if ( Point.Empty == m_StartMarquee && !UserProbablyDidntMeanToMoveMouse() )
+            if ( e.Button == MouseButtons.Left && Point.Empty == m_StartMarquee && !UserProbablyDidntMeanToMoveMouse() )
             {
                m_StartMarquee = new Point(e.X, e.Y);
             }
