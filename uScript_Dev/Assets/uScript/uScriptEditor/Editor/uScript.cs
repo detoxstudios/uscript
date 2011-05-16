@@ -2304,7 +2304,7 @@ http://www.detoxstudios.com";
             if ( null != master )
             {
                String typeName = System.IO.Path.GetFileNameWithoutExtension(m_FullPath);
-               currentlyAttached = null != master.GetComponent(typeName);
+               currentlyAttached = null != master.GetComponent(typeName + uScriptConfig.Files.GeneratedComponentExtension);
             }
          }
 
