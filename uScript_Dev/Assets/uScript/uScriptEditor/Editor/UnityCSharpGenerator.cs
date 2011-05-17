@@ -2893,7 +2893,9 @@ namespace Detox.ScriptEditor
                   //check to see if any source nodes are local variables
                   if ( argNode is OwnerConnection )
                   {
+#pragma warning disable 219
                      OwnerConnection ownerNode = (OwnerConnection) argNode;
+#pragma warning restore 219
 
                      //make sure our input array is large enough to hold another value
                      AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length <= index)" );
