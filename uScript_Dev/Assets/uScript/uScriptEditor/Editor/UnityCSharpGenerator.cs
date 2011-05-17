@@ -30,10 +30,187 @@ namespace Detox.ScriptEditor
       private ScriptEditor m_Script = null;
 
       private void Preprocess( )
+      {         
+         CreateGlobalVariables( );
+         CreateExternalMediators( );
+         CreateBidirectionalLinks( );
+         PruneUnusedNodes( );
+      }
+
+      private void CreateExternalMediators( )
       {
-         //prune out unused nodes (nodes which have no links)
-         
-         //first prune out any nodes which dont' have valid instances
+         //go through external connections and add an intermediate local variable and connect 
+         //the external to that and have that source to all the destintations
+         foreach ( ExternalConnection external in m_Script.Externals )
+         {
+            LinkNode [] links = FindLinksBySource( external.Guid, external.Connection );
+
+            if ( links.Length >= 1 )
+            {
+               EntityNode node = m_Script.GetNode( links[0].Destination.Guid );
+
+               Parameter p = m_Script.FindNodeParameter( node, links[0].Destination.Anchor );
+               //if linked to an in/out socket then ignore
+               if ( p == Parameter.Empty ) continue;
+
+               LocalNode local = new LocalNode( Guid.NewGuid( ).ToString( ), p.Type, "" );               
+               m_Script.AddNode( local );
+
+               //reroute all the links to our local node
+               for (int i = 0; i < links.Length; i++)
+               {
+                  m_Script.RemoveNode( links[ i ] );
+
+                  links[ i ].Source.Guid   = local.Guid;
+                  links[ i ].Source.Anchor = local.Value.Name;
+               
+                  m_Script.AddNode( links[ i ] );
+               }
+
+               //and link our external to the new variable
+               LinkNode link = new LinkNode( external.Guid, external.Connection, local.Guid, local.Value.Name );
+               m_Script.AddNode( link );
+            }
+         }
+
+         //go through external connections and add an intermediate local variable and connect
+         //the external to that and have that as the source exposed to the other scripts
+         foreach ( ExternalConnection external in m_Script.Externals )
+         {
+            LinkNode [] links = FindLinksByDestination( external.Guid, external.Connection );
+
+            if ( links.Length >= 1 )
+            {
+               EntityNode node = m_Script.GetNode( links[0].Source.Guid );
+            
+               Parameter p = m_Script.FindNodeParameter( node, links[0].Source.Anchor );
+               //if linked to an in/out socket then ignore
+               if ( p == Parameter.Empty ) continue;
+
+               LocalNode local = new LocalNode( Guid.NewGuid( ).ToString( ), p.Type, "" );               
+               m_Script.AddNode( local );
+
+               //reroute all the links to our local node
+               for (int i = 0; i < links.Length; i++)
+               {
+                  m_Script.RemoveNode( links[ i ] );
+
+                  links[ i ].Destination.Guid   = local.Guid;
+                  links[ i ].Destination.Anchor = local.Value.Name;
+               
+                  m_Script.AddNode( links[ i ] );
+               }
+
+               //and link our external to the new variable
+               LinkNode link = new LinkNode( local.Guid, local.Value.Name, external.Guid, external.Connection );
+               m_Script.AddNode( link );
+            }
+         }
+      }
+
+      private void CreateBidirectionalLinks( )
+      {
+         List<LinkNode> newLinks = new List<LinkNode>( );
+
+         //go through all connections and make duplicate links going the other way
+         //if they can be bi-directional
+         foreach ( LinkNode link in m_Script.Links )
+         {
+            EntityNode source = m_Script.GetNode( link.Source.Guid );
+            EntityNode dest   = m_Script.GetNode( link.Destination.Guid );
+
+            Parameter sourceParam = Parameter.Empty, destParam = Parameter.Empty;
+
+            foreach ( Parameter p in source.Parameters )
+            {
+               if ( p.Name == link.Source.Anchor )
+               {
+                  sourceParam = p;
+                  break;
+               }
+            }
+
+            foreach ( Parameter p in dest.Parameters )
+            {
+               if ( p.Name == link.Destination.Anchor )
+               {
+                  destParam = p;
+                  break;
+               }
+            }
+
+            bool cloneLink = false;
+
+            if ( sourceParam != Parameter.Empty && destParam != Parameter.Empty )
+            {
+               if ( sourceParam.Input == true &&
+                    destParam.Output  == true )
+               {
+                  cloneLink = true;
+               }
+            }
+            else
+            {
+               if ( source is ExternalConnection && destParam != Parameter.Empty )
+               {
+                  if ( destParam.Output == true )
+                  {
+                     cloneLink = true;
+                  }
+               }
+               else if ( dest is ExternalConnection && sourceParam != Parameter.Empty )
+               {
+                  if ( sourceParam.Input == true )
+                  {
+                     cloneLink = true;
+                  }
+               }
+            }
+
+            if ( true == cloneLink )
+            {
+               LinkNode clone    = link;
+               clone.Guid        = Guid.NewGuid( );
+               clone.Source      = link.Destination;
+               clone.Destination = link.Source;
+
+               LinkNode outNode;
+               if ( false == FindLink(clone.Source.Guid, clone.Source.Anchor, clone.Destination.Guid, clone.Destination.Anchor, out outNode) )
+               {
+                  newLinks.Add( clone );
+               }
+            }
+         }
+
+         foreach ( LinkNode link in newLinks )
+         {
+            m_Script.AddNode( link );
+         }
+      }
+
+      private void CreateGlobalVariables( )
+      {
+         //find any local variables which have no name
+         //and give them their unique id as the name
+         //this way they are individual instances
+         LocalNode [] locals = m_Script.UniqueLocals;
+
+         foreach ( LocalNode local in locals )
+         {
+            if ( "" == local.Name.Default )
+            {
+               LocalNode unique = new LocalNode( "" + GetGuidId(local.Guid), local.Value.Type, local.Value.Default );
+               unique.Guid = local.Guid;
+
+               //replace existing local
+               m_Script.AddNode( unique );
+            }
+         }
+      }
+
+      private void PruneUnusedNodes( )
+      {         
+         //first prune out any nodes which don't have valid instances
          foreach ( EntityNode entityNode in m_Script.EntityNodes )
          {
             //if it doesn't need an instance, don't worry about finding one
@@ -115,100 +292,6 @@ namespace Detox.ScriptEditor
             {
                m_Script.RemoveNode( entityNode );
             }
-         }
-
-         //find any local variables which have no name
-         //and give them their unique id as the name
-         //this way they are individual instances
-         LocalNode [] locals = m_Script.UniqueLocals;
-
-         foreach ( LocalNode local in locals )
-         {
-            if ( "" == local.Name.Default )
-            {
-               LocalNode unique = new LocalNode( "" + GetGuidId(local.Guid), local.Value.Type, local.Value.Default );
-               unique.Guid = local.Guid;
-
-               //replace existing local
-               m_Script.AddNode( unique );
-            }
-         }
-
-         List<LinkNode> newLinks = new List<LinkNode>( );
-
-         //go through all connections and make duplicate links going the other way
-         //if they can be bi-directional
-         foreach ( LinkNode link in m_Script.Links )
-         {
-            EntityNode source = m_Script.GetNode( link.Source.Guid );
-            EntityNode dest   = m_Script.GetNode( link.Destination.Guid );
-
-            Parameter sourceParam = Parameter.Empty, destParam = Parameter.Empty;
-
-            foreach ( Parameter p in source.Parameters )
-            {
-               if ( p.Name == link.Source.Anchor )
-               {
-                  sourceParam = p;
-                  break;
-               }
-            }
-
-            foreach ( Parameter p in dest.Parameters )
-            {
-               if ( p.Name == link.Destination.Anchor )
-               {
-                  destParam = p;
-                  break;
-               }
-            }
-
-            bool cloneLink = false;
-
-            if ( sourceParam != Parameter.Empty && destParam != Parameter.Empty )
-            {
-               if ( sourceParam.Input == true &&
-                    destParam.Output  == true )
-               {
-                  cloneLink = true;
-               }
-            }
-            else
-            {
-               if ( source is ExternalConnection && destParam != Parameter.Empty )
-               {
-                  if ( destParam.Output == true )
-                  {
-                     cloneLink = true;
-                  }
-               }
-               else if ( dest is ExternalConnection && sourceParam != Parameter.Empty )
-               {
-                  if ( sourceParam.Input == true )
-                  {
-                     cloneLink = true;
-                  }
-               }
-            }
-
-            if ( true == cloneLink )
-            {
-               LinkNode clone    = link;
-               clone.Guid        = Guid.NewGuid( );
-               clone.Source      = link.Destination;
-               clone.Destination = link.Source;
-
-               LinkNode outNode;
-               if ( false == FindLink(clone.Source.Guid, clone.Source.Anchor, clone.Destination.Guid, clone.Destination.Anchor, out outNode) )
-               {
-                  newLinks.Add( clone );
-               }
-            }
-         }
-
-         foreach ( LinkNode link in newLinks )
-         {
-            m_Script.AddNode( link );
          }
       }
 
@@ -1485,7 +1568,7 @@ namespace Detox.ScriptEditor
          //define the function the event will call
          foreach ( ExternalConnection external in m_Script.Externals )
          {
-            DefineExternalInput ( external );
+            DefineExternalInput( external );
          }
 
          //then for every node linked to the event listener or logic listener
@@ -2812,6 +2895,23 @@ namespace Detox.ScriptEditor
                      }
                   }
 
+                  //check to see if any source nodes are local variables
+                  if ( argNode is OwnerConnection )
+                  {
+                     OwnerConnection ownerNode = (OwnerConnection) argNode;
+
+                     //make sure our input array is large enough to hold another value
+                     AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length <= index)" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                        AddCSharpLine( "System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);" );
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+
+                     //copy the source node value into the input parameter array
+                     AddCSharpLine( CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";" );
+                  }
+
                   //check to see if any source nodes are property nodes
                   else if ( argNode is EntityProperty )
                   {
@@ -2866,7 +2966,7 @@ namespace Detox.ScriptEditor
                   
                   //if any of those links is a local node
                   //we need to write the line for the property to refresh
-                  if ( argNode is LocalNode )
+                  if ( argNode is LocalNode || argNode is OwnerConnection )
                   {
                      AddCSharpLine( CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";" );
                   }
@@ -2886,8 +2986,8 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine( "}" );
          --m_TabStack;
+         AddCSharpLine( "}" );
       }
    
       //go through and tell all the property linked to us to update their entity's values

@@ -2092,6 +2092,18 @@ namespace Detox.ScriptEditor
          return true;
       }
 
+      public Parameter FindNodeParameter(EntityNode node, string parameterName)
+      {
+         foreach ( Parameter p in node.Parameters )
+         {
+            if ( p.Name == parameterName ) return p;
+         }
+
+         if ( node.Instance.Name == parameterName ) return node.Instance;
+
+         return Parameter.Empty;
+      }
+
       public bool VerifyLink( LinkNode link, out string reason )
       {
          reason = "";
@@ -2124,27 +2136,54 @@ namespace Detox.ScriptEditor
          {
             foreach ( LinkNode existingLinks in Links )
             {
-               //allow bi-directional external link
-               if ( existingLinks.Source.Guid == dest.Guid &&
-                    existingLinks.Destination.Guid == source.Guid )
+               if ( existingLinks.Source.Guid == source.Guid )
                {
-                  continue;
-               }
+                  //we already source out to another one
+                  //let's see if the dest types match
+                  EntityNode node = GetNode( existingLinks.Destination.Guid );
 
-               if ( existingLinks.Source.Guid == source.Guid ||
-                    existingLinks.Destination.Guid == source.Guid )
-               {
-                  reason = "Each External Node can only be connected to one Node";
-                  return false;
-               }
-            }
+                  Parameter existingParam = FindNodeParameter(node, existingLinks.Destination.Anchor);
+                  Parameter myParam       = FindNodeParameter(dest, link.Destination.Anchor);
 
-            if ( dest is EntityEvent || dest is EntityMethod )
-            {
-               if ( link.Destination.Anchor == dest.Instance.Name )
+                  if ( existingParam.Type != myParam.Type )
+                  {
+                     reason = "An External Node can't link to two different types";
+                     return false;
+                  }                  
+
+                  if ( Parameter.Empty == existingParam )
+                  {
+                     reason = "An External Node can't link to two different inputs";
+                     return false;
+                  }
+               }
+               else if (existingLinks.Destination.Guid == source.Guid )
                {
-                  reason = "External Nodes cannot connect directly to an instance plug, please add a GameObject variable as an intermediate step.";
-                  return false;
+                  //someone is linking to us so
+                  //see if their source matches our dest type
+                  EntityNode node = GetNode( existingLinks.Source.Guid );
+
+                  Parameter existingParam = FindNodeParameter(node, existingLinks.Source.Anchor);
+                  Parameter myParam       = FindNodeParameter(dest, link.Destination.Anchor);
+
+                  if ( Parameter.Empty == existingParam )
+                  {
+                     reason = "An External Node can't link to an input and an output";
+                     return false;
+                  }
+
+                  if ( existingParam.Type != myParam.Type )
+                  {
+                     reason = "An External Node can't link to two different types";
+                     return false;
+                  }
+
+                  //see if the source can also be an input (because we are being created as an input)
+                  if ( true != existingParam.Input )
+                  {
+                     reason = "An External Node can't link to multiple variables in which some are input/output and some are output only";
+                     return false;
+                  }
                }
             }
          }
@@ -2152,18 +2191,54 @@ namespace Detox.ScriptEditor
          {
             foreach ( LinkNode existingLinks in Links )
             {
-               //allow bi-directional external link
-               if ( existingLinks.Source.Guid == dest.Guid &&
-                    existingLinks.Destination.Guid == source.Guid )
+               if ( existingLinks.Source.Guid == dest.Guid )
                {
-                  continue;
-               }
+                  //someone is linking to us so
+                  //see if their dest matches our source type
+                  EntityNode node = GetNode( existingLinks.Destination.Guid );
 
-               if ( existingLinks.Source.Guid == dest.Guid ||
-                    existingLinks.Destination.Guid == dest.Guid )
+                  Parameter existingParam = FindNodeParameter(node,   existingLinks.Destination.Anchor);
+                  Parameter myParam       = FindNodeParameter(source, link.Source.Anchor);
+
+                  if ( Parameter.Empty == existingParam )
+                  {
+                     reason = "An External Node can't link to an input and an output";
+                     return false;
+                  }
+
+                  if ( existingParam.Type != myParam.Type )
+                  {
+                     reason = "An External Node can't link to two different types";
+                     return false;
+                  }
+
+                  //see if the destintation can also be an output (because we are being created as an output)
+                  if ( true != existingParam.Output )
+                  {
+                     reason = "An External Node can't link to multiple variables in which some are input/output and some are output only";
+                     return false;
+                  }
+               }
+               else if (existingLinks.Destination.Guid == dest.Guid )
                {
-                  reason = "Each External Node can only be connected to one Node";
-                  return false;
+                  //we already dest out to another one
+                  //let's see if the source types match
+                  EntityNode node = GetNode( existingLinks.Source.Guid );
+
+                  Parameter existingParam = FindNodeParameter(node,   existingLinks.Source.Anchor);
+                  Parameter myParam       = FindNodeParameter(source, link.Source.Anchor);
+
+                  if ( Parameter.Empty == existingParam )
+                  {
+                     reason = "An External Node can't link to two different outputs";
+                     return false;
+                  }
+
+                  if ( existingParam.Type != myParam.Type )
+                  {
+                     reason = "An External Node can't link to two different types";
+                     return false;
+                  }                  
                }
             }
 
