@@ -25,8 +25,8 @@ public class uScriptAct_PlaySound : uScriptLogic
 
    public void Play(
       [FriendlyName("Audio Clip")] AudioClip audioClip,
-      [FriendlyName("Target")] GameObject target, 
-      [FriendlyName("Volume")] float volume, 
+      [FriendlyName("Target")] GameObject target,
+      [FriendlyName("Volume"), DefaultValue(1f)] float volume, 
       [FriendlyName("Loop")] bool loop
    )
    {
