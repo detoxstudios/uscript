@@ -7,12 +7,7 @@ using UnityEngine;
 using UnityEditor;
 
 //KNOWN LIMITATIONS:
-//Externals cannot connect directly to instance plugs.  They must go through a variable node as an intermediate step
-   //This is because the ExternalInput function directly sets the variables they are linked to, but the code generation
-   //sees the Instance Socket as empty so it doesn't generate code to read it, it instead generates code for the external variable
-   //which is not defined (once again because external connections 'PUSH' the values to the variables they represent)
-   //parameters work because the parameter syncing code ignores externals and externals have already 'PUSHed' their
-   //values to the parameter's variable
+//Externals cannot multi connect to Inputs or Outputs
 
 namespace Detox.ScriptEditor
 {
