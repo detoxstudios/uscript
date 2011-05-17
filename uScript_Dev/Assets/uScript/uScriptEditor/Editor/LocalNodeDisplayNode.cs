@@ -191,7 +191,7 @@ namespace Detox.ScriptEditor
                   
                point.Input  = socket.Input;
                point.Output = socket.Output;
-               point.CanSource = true; // Allow drawing connection lones from variables/properties/external connections
+               point.CanSource = false;
                point.StyleName = "clear_socket";
                points.Add( point );
             }
@@ -278,7 +278,7 @@ namespace Detox.ScriptEditor
                point.Name   = socket.InternalName;
                point.X      = Size.Width / 2;
                point.Y      = Size.Height / 2;
-
+               
                point.Width  = Size.Width;
                point.Height = Size.Height;
                   
