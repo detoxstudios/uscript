@@ -2420,7 +2420,13 @@ namespace Detox.ScriptEditor
          }
 
          //allow link if the types are compatible somewhere in the derived chain
-         return destType.IsAssignableFrom( sourceType );
+         if ( false == destType.IsAssignableFrom(sourceType) )
+         {
+            reason = "Type " + destType + " cannot be assigned from " + sourceType;
+            return false;
+         }
+
+         return true;
       }
 
       public void AddNode(EntityNode node)

@@ -1670,7 +1670,6 @@ namespace Detox.ScriptEditor
 
          ToolStripMenuItem comment  = new ToolStripMenuItem();
          ToolStripMenuItem external = new ToolStripMenuItem();
-         ToolStripMenuItem owner    = new ToolStripMenuItem();
 
          comment.Name = "m_AddComment";
          comment.Size = new System.Drawing.Size(152, 22);
@@ -1684,14 +1683,7 @@ namespace Detox.ScriptEditor
          external.Click += new System.EventHandler(m_MenuAddNode_Click);
          external.Tag  = new ExternalConnection( Guid.NewGuid( ) );
 
-         owner.Name = "m_AddExternal";
-         owner.Size = new System.Drawing.Size(152, 22);
-         owner.Text = "&Owner Connection";
-         owner.Click += new System.EventHandler(m_MenuAddNode_Click);
-         owner.Tag  = new OwnerConnection( Guid.NewGuid( ) );
-
          addMenu.DropDownItems.Add( comment );
-         addMenu.DropDownItems.Add( owner );
          addMenu.DropDownItems.Add( external );
       }
 
@@ -1822,6 +1814,17 @@ namespace Detox.ScriptEditor
             friendlyMenu.Click += new System.EventHandler(m_MenuAddNode_Click);
          }
 
+         if ( null == typeHash )
+         {
+            string categoryName = "Variables";
+            string friendlyName = "Owner GameObject";
+
+            ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName );
+
+            friendlyMenu.Tag = new OwnerConnection( Guid.NewGuid( ) );
+            friendlyMenu.Click += new System.EventHandler(m_MenuAddNode_Click);
+         }
+         
          ReformatMenu( addMenu );
       }
 
