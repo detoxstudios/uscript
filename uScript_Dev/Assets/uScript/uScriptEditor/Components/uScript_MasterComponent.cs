@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class uScript_MasterObject : MonoBehaviour
+public class uScript_MasterComponent : MonoBehaviour
 {
 #if UNITY_EDITOR
    [HideInInspector]

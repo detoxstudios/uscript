@@ -133,18 +133,30 @@ public class uScript : EditorWindow
    //
    string _statusbarMessage;
 
-   private uScript_MasterObject MasterComponent
+   static GameObject s_Master = null;
+   static uScript_MasterComponent s_Component = null;
+   
+   public static GameObject MasterObject
    {
       get
       {
-         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+         if ( null != s_Master ) return s_Master;
 
-         if ( null != uScriptMaster ) 
-         {
-            return uScriptMaster.GetComponent<uScript_MasterObject>();
-         }
+         // only find the master object if we need to
+         s_Master = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+         return s_Master;
+      }
+   }
 
-         return null;
+   public static uScript_MasterComponent MasterComponent
+   {
+      get
+      {
+         if ( null != s_Component ) return s_Component;
+
+         // only get the master component if we need to
+         if ( null != MasterObject ) s_Component = MasterObject.GetComponent<uScript_MasterComponent>();
+         return s_Component;
       }
    }
 
@@ -207,13 +219,12 @@ http://www.detoxstudios.com";
    {
       get
       {
-         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-         if (uScriptMaster != null && !String.IsNullOrEmpty(m_FullPath))
+         if (MasterObject != null && !String.IsNullOrEmpty(m_FullPath))
          {
             System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_FullPath);
             bool isSafe = false;
             string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
-            return uScriptMaster.GetComponent(safePath) != null;
+            return MasterObject.GetComponent(safePath) != null;
          }
          return false;
       }
@@ -389,18 +400,18 @@ http://www.detoxstudios.com";
          }
 
          GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-
          if (null == uScriptMaster)
          {
             uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Debug);
 
             uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
             uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
+            s_Master = uScriptMaster;
          }
-         if (null == uScriptMaster.GetComponent<uScript_MasterObject>())
+         if (null == uScriptMaster.GetComponent<uScript_MasterComponent>())
          {
             uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_MasterObject));
+            s_Component = (uScript_MasterComponent)uScriptMaster.AddComponent(typeof(uScript_MasterComponent));
          }
          if (null == uScriptMaster.GetComponent<uScript_Assets>())
          {
@@ -1861,8 +1872,9 @@ http://www.detoxstudios.com";
    void DoAssetList(int windowID)
    {
       GUILayout.Label( "uScripts", EditorStyles.boldLabel );
-
-      foreach ( UnityEngine.Object o in GameObject.FindObjectsOfType(typeof(uScriptCode)) )
+  
+      UnityEngine.Object []objects = GameObject.FindObjectsOfType(typeof(uScriptCode));
+      foreach ( UnityEngine.Object o in objects )
       {
          uScriptCode code = o as uScriptCode;
 
@@ -2303,13 +2315,7 @@ http://www.detoxstudios.com";
          }
          else
          {
-            GameObject master = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-
-            if ( null != master )
-            {
-               String typeName = System.IO.Path.GetFileNameWithoutExtension(m_FullPath);
-               currentlyAttached = null != master.GetComponent(typeName + uScriptConfig.Files.GeneratedComponentExtension);
-            }
+            currentlyAttached = IsAttached;
          }
 
          //if they do want to attach to the master then set
@@ -2326,7 +2332,7 @@ http://www.detoxstudios.com";
             if (true == pleaseAttachMe)
             {
                AssetDatabase.Refresh( );            
-               AttachToMasterGO();
+               AttachToMasterGO(m_FullPath);
             }
    
             return true;
@@ -2340,19 +2346,11 @@ http://www.detoxstudios.com";
       return false;
    }
    
-   void AttachToMasterGO()
+   void AttachToMasterGO(String path)
    {
-      GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-      if (uScriptMaster != null)
-      {
-         uScript_MasterObject component = (uScript_MasterObject)uScriptMaster.GetComponent(typeof(uScript_MasterObject));
-         if (component != null)
-         {
 #if UNITY_EDITOR
-            component.AttachScriptToMaster(m_FullPath);
+      MasterComponent.AttachScriptToMaster(path);
 #endif
-         }
-      }
    }
 
    void GatherDerivedTypes( Dictionary<Type, Type> uniqueNodes, string path, Type baseType )
@@ -2988,10 +2986,9 @@ http://www.detoxstudios.com";
    {
       if ( null == component ) return null;
 
-      GameObject master = GameObject.Find( uScriptRuntimeConfig.MasterObjectName );
-      if ( null == master ) return null;
+      if ( null == MasterObject ) return null;
 
-      Component []eventScripts = master.GetComponents<uScriptEvent>( );
+      Component []eventScripts = MasterObject.GetComponents<uScriptEvent>( );
 
       foreach ( Component eventScript in eventScripts )
       {

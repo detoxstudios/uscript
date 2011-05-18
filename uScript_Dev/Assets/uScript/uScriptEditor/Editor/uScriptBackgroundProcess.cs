@@ -13,9 +13,6 @@ using Detox.ScriptEditor;
 [InitializeOnLoad]
 public class uScriptBackgroundProcess
 {
-   static GameObject s_Master = null;
-   static uScript_MasterObject s_Component = null;
-   
    static uScriptBackgroundProcess()
    {
       EditorApplication.update += Update;
@@ -24,42 +21,30 @@ public class uScriptBackgroundProcess
    static void Update ()
    {
       // cache the master object and component
-      if (s_Master == null)
-      {
-         s_Master = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-         
-         if (s_Master != null)
-         {
-            s_Component = (uScript_MasterObject)s_Master.GetComponent(typeof(uScript_MasterObject));
-         }
-      }
-      else if (s_Component == null)
-      {
-         s_Component = (uScript_MasterObject)s_Master.GetComponent(typeof(uScript_MasterObject));
-      }
+      if (uScript.MasterObject == null || uScript.MasterComponent == null) return;
 
       // process any waiting uScripts that need attaching
-      if (s_Component != null && !EditorApplication.isCompiling)
+      if (!EditorApplication.isCompiling)
       {
          AttachUScripts();
       }
    }
    
-   private void AttachUScripts()
+   private static void AttachUScripts()
    {
-      if (s_Component.uScriptsToAttach.Length > 0)
+      if (uScript.MasterComponent.uScriptsToAttach.Length > 0)
       {
-         foreach(string path in s_Component.uScriptsToAttach)
+         foreach(string path in uScript.MasterComponent.uScriptsToAttach)
          {
             // add the new uScript to the master object
             System.IO.FileInfo fileInfo = new System.IO.FileInfo(path);
             String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")) + uScriptConfig.Files.GeneratedComponentExtension;
             //Debug.Log("TYPENAME: " + typeName);
 
-            s_Master.AddComponent(typeName);
+            uScript.MasterObject.AddComponent(typeName);
          }
 
-         s_Component.ClearAttachList();
+         uScript.MasterComponent.ClearAttachList();
       }
    }
 }
