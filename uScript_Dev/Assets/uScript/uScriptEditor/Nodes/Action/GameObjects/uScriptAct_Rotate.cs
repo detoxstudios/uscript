@@ -26,7 +26,6 @@ public class uScriptAct_Rotate : uScriptLogic
    Vector3 m_VectorAxis;
    
    public bool Out { get { return true; } }
- 
    
    public void In(GameObject[] Target, float Degrees, string Axis, float Seconds, bool Loop)
    {
@@ -60,7 +59,6 @@ public class uScriptAct_Rotate : uScriptLogic
       m_Done = false;
    }
    
-   
    public override void Update()
    {
       if ( null == m_Target ) return;
@@ -91,8 +89,5 @@ public class uScriptAct_Rotate : uScriptLogic
       }
       
       m_Time += Time.deltaTime;
-      
    }
-   
-   
 }

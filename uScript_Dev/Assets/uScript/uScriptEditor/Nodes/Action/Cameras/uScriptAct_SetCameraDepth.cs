@@ -21,19 +21,17 @@ public class uScriptAct_SetCameraDepth : uScriptLogic
 
    public void In(GameObject Target, float Depth)
    {
-
-      	if ( Target != null)
-		{
+      if ( Target != null)
+      {
 			try
 			{
 				Component TargetCam = Target.GetComponent( "Camera" );				
 				TargetCam.camera.depth = Depth;
 			}
 			catch (System.Exception e)
-	        {
-	           uScriptDebug.Log( ( e.ToString()), uScriptDebug.Type.Error );
-	        }
+         {
+            uScriptDebug.Log( ( e.ToString()), uScriptDebug.Type.Error );
+         }
 		}
-
    }
 }

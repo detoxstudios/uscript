@@ -49,7 +49,7 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
       Quaternion spawnPointRotation = SpawnPoint.transform.rotation;
 
       // Build final ResourcePath string
-      if (ResourcePath != "")
+      if (!string.IsNullOrEmpty(ResourcePath))
       {
          // Make sure all the slashes are correct
          if (ResourcePath.Contains("\\"))
@@ -71,20 +71,18 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
          //prune Assets text if user added it
          if (ResourcePath.StartsWith("Assets") || ResourcePath.StartsWith("assets"))
          {
-            ResourcePath = ResourcePath.Remove(0, 6);
+            ResourcePath = ResourcePath.Remove(0, "Assets".Length);
          }
 
          //prune Resources text if user added it
          if (ResourcePath.StartsWith("Resources") || ResourcePath.StartsWith("resources"))
          {
-            ResourcePath = ResourcePath.Remove(0, 9);
+            ResourcePath = ResourcePath.Remove(0, "Resources".Length);
          }
-
-         
       }
 
       // Build final PrefabName string
-      if (PrefabName != "")
+      if (!string.IsNullOrEmpty(PrefabName))
       {
          // Make sure all the slashes are correct
          if (PrefabName.Contains("\\"))
@@ -106,7 +104,7 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
 
       // Build final fullPrefabPath
       string fullPrefabPath = "";
-      if (ResourcePath != "")
+      if (!string.IsNullOrEmpty(ResourcePath))
       {
          fullPrefabPath = ResourcePath + "/" + PrefabName;
       }
@@ -121,7 +119,7 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
       {
          GameObject spawnedPrefab = Instantiate(Resources.Load(fullPrefabPath), spawnPointPosition, spawnPointRotation) as GameObject;
 
-         if (SpawnedName != "")
+         if (!string.IsNullOrEmpty(SpawnedName))
          {
             spawnedPrefab.name = SpawnedName;
          }

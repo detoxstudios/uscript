@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sends a custom event with a int variable.
+// Desc: Sends a custom event with an int variable.
 
 using UnityEngine;
 using System.Collections;
@@ -9,8 +9,8 @@ using System.Collections.Generic;
 [NodePath("Action/Event/Custom Events")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Sends a custom event with a int variable.")]
-[NodeDescription("Sends a custom event with a int variable.")]
+[NodeToolTip("Sends a custom event with an int variable.")]
+[NodeDescription("Sends a custom event with an int variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

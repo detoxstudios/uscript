@@ -22,8 +22,6 @@ public class uScriptAct_AssignMaterialColor : uScriptLogic
 
    public void In(GameObject[] Target, [FriendlyName("Color")] Color MatColor, [FriendlyName("Material Channel")] int MatChannel)
    {
-      
-
       //Get the Material
       try
       {
@@ -36,11 +34,5 @@ public class uScriptAct_AssignMaterialColor : uScriptLogic
       {
          uScriptDebug.Log("(Node = Assign Material Color) Error output: " + e.ToString(), uScriptDebug.Type.Error);
       }
-
-
-
    }
-
-  
-
 }

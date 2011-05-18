@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Removes the specified Component from then target GameObject. Can optionally set a delay.
+// Desc: Removes the specified Component from the target GameObject. Can optionally set a delay.
 
 using UnityEngine;
 using System.Collections;
@@ -8,8 +8,8 @@ using System.Collections;
 [NodePath("Action/GameObjects")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Removes the specified Component from then target GameObject.")]
-[NodeDescription("Removes the specified Component from then target GameObject. Can optionally set a delay.")]
+[NodeToolTip("Removes the specified Component from the target GameObject.")]
+[NodeDescription("Removes the specified Component from the target GameObject. Can optionally set a delay.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -27,15 +27,16 @@ public class uScriptAct_DestroyComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-               if (currentTarget.GetComponent(currentComponentName))
+               Component component = currentTarget.GetComponent(currentComponentName);
+               if (component != null)
                {
                   if (DelayTime > 0F)
                   {
-                     Destroy(currentTarget.GetComponent(currentComponentName), DelayTime);
+                     Destroy(component, DelayTime);
                   }
                   else
                   {
-                     Destroy(currentTarget.GetComponent(currentComponentName));
+                     Destroy(component);
                   }
                }
                else

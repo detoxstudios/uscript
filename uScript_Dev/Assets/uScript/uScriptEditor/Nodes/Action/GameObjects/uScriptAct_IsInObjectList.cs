@@ -26,9 +26,20 @@ public class uScriptAct_IsInObjectList : uScriptLogic
    public bool NotInList { get { return !m_InList; } }
     
    [FriendlyName("Test If In List")]
-   public void TestIfInList([FriendlyName("GameObject")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList)
+   public void TestIfInList(GameObject[] Target, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList)
    {
       List<GameObject> list = new List<GameObject>(GameObjectList);
-      m_InList = list.Contains(GameObj);
+      
+      m_InList = false;
+      foreach(GameObject target in Target)
+      {
+         if (!list.Contains(target))
+         {
+            return;
+         }
+      }
+      
+      // if we get here, all items were in the list
+      m_InList = true;
    }
 }

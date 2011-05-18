@@ -1,7 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Play the specified animation on the target object. Animation must
-//       exist in the GameObject's AnimationClip.
+// Desc: Play the specified animation on the target object. Animation must exist in the GameObject's AnimationClip.
 
 using UnityEngine;
 using System.Collections;

@@ -21,14 +21,12 @@ public class uScriptAct_LookAt : uScriptLogic
 
    public void In(GameObject[] Target, object Focus)
    {
-
       if (Focus != null)
       {
          foreach (GameObject currentTarget in Target)
          {
             if (currentTarget != null)
             {
-
                if (typeof(GameObject) == Focus.GetType())
                {
                   GameObject tempGameObject = (GameObject)Focus;
@@ -39,10 +37,8 @@ public class uScriptAct_LookAt : uScriptLogic
                   Vector3 tempVector3 = (Vector3)Focus;
                   currentTarget.transform.LookAt(tempVector3);
                }
-
             }
          }
       }
-
    }
 }

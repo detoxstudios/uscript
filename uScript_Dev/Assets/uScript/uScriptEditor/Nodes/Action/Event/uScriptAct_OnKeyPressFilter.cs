@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Filters the OnKeyPress event to a specific key when the key is pressed down.
+// Desc: Filters the OnKeyPress event to a specific key when the key is pressed down, being held, or released.
 
 using UnityEngine;
 using System.Collections;
@@ -8,8 +8,8 @@ using System.Collections;
 [NodePath("Action/Event")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip( "Filters the On Key Press event to a specific key when the key is pressed down.")]
-[NodeDescription("Filters the On Key Press event to a specific key when the key is pressed down.")]
+[NodeToolTip( "Filters the On Key Press event to a specific key when the key is pressed down, being held, or released.")]
+[NodeDescription("Filters the On Key Press event to a specific key when the key is pressed down, being held, or released.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

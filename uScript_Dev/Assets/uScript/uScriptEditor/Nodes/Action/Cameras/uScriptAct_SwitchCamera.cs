@@ -21,56 +21,51 @@ public class uScriptAct_SwitchCamera : uScriptLogic
 
    public void In(GameObject Target, [FriendlyName("Enable AudioListener")] bool EnableAudioListener, [FriendlyName("Disable Other Cameras")] bool DisableOtherCameras)
    {
-
       if ( Target != null)
+      {
+			try
 			{
-		
-				try
-				{
-					Component TargetCam = Target.GetComponent( "Camera" );
-				
-					if ( DisableOtherCameras )
-					{
-						Camera[] cameraList = FindObjectsOfType(typeof(Camera)) as Camera[];
-						foreach (Camera tmpCamera in cameraList)
-						{
-							tmpCamera.enabled = false;
-						}
-					}
-					
-					TargetCam.camera.enabled = true;
-
-				}
-				catch (System.Exception e)
-		        {
-		           uScriptDebug.Log( ( e.ToString()), uScriptDebug.Type.Error );
-		        }
-			
-				if ( EnableAudioListener )
-				{
-					AudioListener targetListener;
-					targetListener = Target.GetComponent<AudioListener>();
-					
-					if ( targetListener != null)
-					{
-						try
-						{
-							AudioListener[] listenerList = FindObjectsOfType(typeof(AudioListener)) as AudioListener[];
-							foreach (AudioListener tmpListener in listenerList)
-							{
-								tmpListener.enabled = false;
-							}
-							
-							targetListener.enabled = true;						
-						}
-						catch (System.Exception e)
-						{
-							uScriptDebug.Log( ( e.ToString()), uScriptDebug.Type.Error );
-						}
-					}
-				}
-
-			}
-
+            Component TargetCam = Target.GetComponent( "Camera" );
+            
+            if ( DisableOtherCameras )
+            {
+               Camera[] cameraList = FindObjectsOfType(typeof(Camera)) as Camera[];
+               foreach (Camera tmpCamera in cameraList)
+               {
+                  tmpCamera.enabled = false;
+               }
+            }
+            
+            TargetCam.camera.enabled = true;
+         }
+         catch (System.Exception e)
+         {
+            uScriptDebug.Log( ( e.ToString()), uScriptDebug.Type.Error );
+         }
+         
+         if ( EnableAudioListener )
+         {
+            AudioListener targetListener;
+            targetListener = Target.GetComponent<AudioListener>();
+            
+            if ( targetListener != null)
+            {
+               try
+               {
+                  AudioListener[] listenerList = FindObjectsOfType(typeof(AudioListener)) as AudioListener[];
+                  foreach (AudioListener tmpListener in listenerList)
+                  {
+                     tmpListener.enabled = false;
+                  }
+                  
+                  targetListener.enabled = true;						
+               }
+               catch (System.Exception e)
+               {
+                  uScriptDebug.Log( ( e.ToString()), uScriptDebug.Type.Error );
+               }
+            }
+         }
+      }
    }
 }

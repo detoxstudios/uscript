@@ -21,7 +21,6 @@ public class uScriptAct_GetDistance : uScriptLogic
 
    public void In(GameObject A, GameObject B, out float Distance)
    {
-
       if (A != null && B != null)
       {
          Distance = Vector3.Distance(A.transform.position, B.transform.position);
@@ -30,6 +29,5 @@ public class uScriptAct_GetDistance : uScriptLogic
       {
          Distance = 0F;
       }
-
    }
 }

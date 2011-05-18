@@ -37,9 +37,7 @@ public class uScriptAct_AttachToGameObject : uScriptLogic
             {
                Attachment.transform.Rotate(RelativeRotation, Space.Self);
             }
-
          }
       }
-
    }
 }

@@ -22,8 +22,6 @@ public class uScriptAct_AssignMaterial : uScriptLogic
 
    public void In(GameObject[] Target, string materialName, string resourcePath, int MatChannel)
    {
-      
-
       //Get the Material
       try
       {
@@ -48,16 +46,13 @@ public class uScriptAct_AssignMaterial : uScriptLogic
          {
             uScriptDebug.Log("(Node = Assign Material) Could not assign the material to '" + tmpTarget.name + "'. Please verify you are assigning to a valid material channel.\nError output: " + e.ToString(), uScriptDebug.Type.Error);
          }
-
       }
-
    }
 
    string GetFullPath(string FileName, string ResourcePath)
    {
-
       // Build final ResourcePath string
-      if (ResourcePath != "")
+      if (!string.IsNullOrEmpty(ResourcePath))
       {
          // Make sure all the slashes are correct
          if (ResourcePath.Contains("\\"))
@@ -79,20 +74,18 @@ public class uScriptAct_AssignMaterial : uScriptLogic
          //prune Assets text if user added it
          if (ResourcePath.StartsWith("Assets") || ResourcePath.StartsWith("assets"))
          {
-            ResourcePath = ResourcePath.Remove(0, 6);
+            ResourcePath = ResourcePath.Remove(0, "Assets".Length);
          }
 
          //prune Resources text if user added it
          if (ResourcePath.StartsWith("Resources") || ResourcePath.StartsWith("resources"))
          {
-            ResourcePath = ResourcePath.Remove(0, 9);
+            ResourcePath = ResourcePath.Remove(0, "Resources".Length);
          }
-
-
       }
 
       // Build final PrefabName string
-      if (FileName != "")
+      if (!string.IsNullOrEmpty(FileName))
       {
          // Make sure all the slashes are correct
          if (FileName.Contains("\\"))
@@ -111,15 +104,13 @@ public class uScriptAct_AssignMaterial : uScriptLogic
             FileName = FileName.Remove(stringLength, 1);
          }
 
-
          FileName = System.IO.Path.GetFileNameWithoutExtension(FileName);
-
       }
 
       // Build final fullPath
       string fullPath = "";
 
-      if (ResourcePath != "")
+      if (!string.IsNullOrEmpty(ResourcePath))
       {
          fullPath = ResourcePath + "/" + FileName;
       }

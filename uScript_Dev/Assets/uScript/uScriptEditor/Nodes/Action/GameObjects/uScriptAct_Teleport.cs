@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Causes the targeted GameObject to be relocated to the destination GameObject.
+// Desc: Causes the targeted GameObject to be relocated to the destination GameObject. Optionally, can update the rotation to the destination's rotation as well.
 
 using UnityEngine;
 using System.Collections;
@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Causes the targeted GameObject to be relocated to the destination GameObject.")]
-[NodeDescription("Causes the targeted GameObject to be relocated to the destination GameObject.")]
+[NodeDescription("Causes the targeted GameObject to be relocated to the destination GameObject. Optionally, can update the rotation to the destination's rotation as well.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -25,7 +25,6 @@ public class uScriptAct_Teleport : uScriptLogic
       {
          if (currentTarget != null && Destination != null)
          {
-
             currentTarget.transform.position = Destination.transform.position;
 
             if (UpdateRotation)
@@ -34,6 +33,5 @@ public class uScriptAct_Teleport : uScriptLogic
             }
          }
       }
-
    }
 }

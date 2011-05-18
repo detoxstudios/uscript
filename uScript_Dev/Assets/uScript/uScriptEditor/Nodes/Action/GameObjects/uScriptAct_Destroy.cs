@@ -21,7 +21,6 @@ public class uScriptAct_Destroy : uScriptLogic
 
    public void In(GameObject[] Target, [FriendlyName("Delay")] float DelayTime)
    {
-
       if (DelayTime > 0F)
       {
          foreach (GameObject currentTarget in Target)
@@ -31,7 +30,6 @@ public class uScriptAct_Destroy : uScriptLogic
                Destroy(currentTarget, DelayTime);
             }
          }
-
       }
       else
       {
@@ -43,6 +41,5 @@ public class uScriptAct_Destroy : uScriptLogic
             }
          }
       }
-
    }
 }

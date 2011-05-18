@@ -23,7 +23,7 @@ public class uScriptAct_AttachScript : uScriptLogic
    {
       foreach ( string currentScript in ScriptName )
       {
-         if ( currentScript != "" )
+         if ( !string.IsNullOrEmpty(currentScript) )
          {
             string tempScript = currentScript;
 
@@ -58,6 +58,5 @@ public class uScriptAct_AttachScript : uScriptLogic
             }
          }
       }
-
    }
 }

@@ -21,24 +21,30 @@ public class uScriptAct_ModifyGameObjectList : uScriptLogic
    public bool Out { get { return true; } }
     
    [FriendlyName("Add To List")]
-   public void AddToList([FriendlyName("GameObject")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, [FriendlyName("List Count")] out int ListCount)
+   public void AddToList(GameObject[] Target, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, [FriendlyName("List Count")] out int ListCount)
    {
       List<GameObject> list = new List<GameObject>(GameObjectList);
       
-      list.Add(GameObj);
+      foreach(GameObject go in Target)
+      {
+         list.Add(go);
+      }
  
       GameObjectList = list.ToArray();
       ListCount = GameObjectList.Length;
    }
 
    [FriendlyName("Remove From List")]
-   public void RemoveFromList([FriendlyName("GameObject")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, [FriendlyName("List Count")] out int ListCount)
+   public void RemoveFromList(GameObject[] Target, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, [FriendlyName("List Count")] out int ListCount)
    {
       List<GameObject> list = new List<GameObject>(GameObjectList);
       
-      if (list.Contains(GameObj))
+      foreach(GameObject go in Target)
       {
-         list.Remove(GameObj);
+         if (list.Contains(go))
+         {
+            list.Remove(go);
+         }
       }
       
       GameObjectList = list.ToArray();
@@ -46,7 +52,7 @@ public class uScriptAct_ModifyGameObjectList : uScriptLogic
    }
 
    [FriendlyName("Empty List")]
-   public void EmptyList([FriendlyName("Game Object")] GameObject GameObj, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList,  [FriendlyName("List Count")] out int ListCount)
+   public void EmptyList(GameObject[] Target, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList,  [FriendlyName("List Count")] out int ListCount)
    {
       GameObjectList = new GameObject[] {};
       ListCount = 0;
