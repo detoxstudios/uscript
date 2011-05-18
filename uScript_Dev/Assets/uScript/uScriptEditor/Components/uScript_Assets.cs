@@ -1,6 +1,6 @@
-// uScript Action Node
+// uScript utilty class
 // (C) 2011 Detox Studios LLC
-// Desc: Linearly interpolate a float over time.
+// Desc: Manage/track a collection of assets.
 
 using UnityEngine;
 

@@ -1,6 +1,6 @@
-// uScript Action Node
+// uScript utility class
 // (C) 2011 Detox Studios LLC
-// Desc: Linearly interpolate a float over time.
+// Desc: Linearly interpolate a float from 0 to 1 over time.
 
 using UnityEngine;
 using System.Collections;

@@ -1,3 +1,6 @@
+// uScript utility file
+// (C) 2011 Detox Studios LLC
+// Desc: Contains classes referenced by uScript generated code which needs to be included in a dll to be linked with users' games.
 
 using System;
 using System.Collections;
