@@ -9,10 +9,11 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using Detox.FlowChart;
 
 public class uScript : EditorWindow
 {
-                                           //format is MAJOR.MINOR.YYMMDDa  
+                                           //format is MAJOR.MINOR.YYMMDDa
                                            //(where 'a' is incremented if we have more than 1 daily build we release)
    public string    uScriptBuild           { get { return "0.3.110517a"; } }
    public string    RequiredUnityBuild     { get { return  "3.3.0f4"; } }
@@ -767,29 +768,29 @@ http://www.detoxstudios.com";
                //keep key events from going to the rest of unity
                Event.current.Use( );
                break;
-      
+
             // mouse events
             case EventType.MouseDown:
                if ( false == m_MouseDown )
                {
                   GUI.FocusControl( "MainView" );
-      
+
                   if ( _canvasRect.Contains( Event.current.mousePosition ) )
                   {
                      m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
-      
+
                      int button = 0;
-      
+
                      if ( Event.current.button == 0 ) button = MouseButtons.Left;
                      else if ( Event.current.button == 1 ) button = MouseButtons.Right;
                      else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
-       
+
                      m_MouseDownArgs.Button = button;
                      m_MouseDownArgs.X = (int)(Event.current.mousePosition.x);
                      if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
                      m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
                   }
-      
+
                   if ( Event.current.clickCount == 2 )
                   {
                      OpenLogicNode( );
@@ -1129,6 +1130,7 @@ http://www.detoxstudios.com";
 //      Redraw();  // This is taking to much CPU time.
    }
 
+   private int _paletteMode = 0;
 
    void DrawGUIPalette()
    {
@@ -1138,80 +1140,236 @@ http://www.detoxstudios.com";
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
          {
-            GUILayout.Label("Nodes", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+            string[] options = new string[] { "Nodes Palette", "Graph Contents" };
 
-//            // Collapse hierarchy
-//            if ( GUILayout.Button( Button.Content( Button.ID.Collapse ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-//            {
-//               CollapsePaletteMenuItem(null);
-//            }
-//
-//            // Expand hierarchy
-//            if ( GUILayout.Button( Button.Content( Button.ID.Expand ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-//            {
-//               ExpandPaletteMenuItem(null);
-//            }
+            Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
 
-            // Toggle hierarchy foldouts
-            bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
-                                                   (_paletteFoldoutToggle ? uScriptGUIContent.toolbarButtonCollapse : uScriptGUIContent.toolbarButtonExpand),
-                                                   uScriptGUIStyle.paletteToolbarButton,
-                                                   GUILayout.ExpandWidth(false));
-            if (_paletteFoldoutToggle != newToggleState)
+            _paletteMode = EditorGUILayout.Popup(_paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
+
+//            GUILayout.Label("Nodes", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+
+            GUILayout.FlexibleSpace();
+
+            if (_paletteMode == 0)
             {
-               _paletteFoldoutToggle = newToggleState;
-               if (_paletteFoldoutToggle)
+               // Toggle hierarchy foldouts
+               bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
+                                                      (_paletteFoldoutToggle ? uScriptGUIContent.toolbarButtonCollapse : uScriptGUIContent.toolbarButtonExpand),
+                                                      uScriptGUIStyle.paletteToolbarButton,
+                                                      GUILayout.ExpandWidth(false));
+               if (_paletteFoldoutToggle != newToggleState)
                {
-                  ExpandPaletteMenuItem(null);
+                  _paletteFoldoutToggle = newToggleState;
+                  if (_paletteFoldoutToggle)
+                  {
+                     ExpandPaletteMenuItem(null);
+                  }
+                  else
+                  {
+                     CollapsePaletteMenuItem(null);
+                  }
                }
-               else
+   
+               GUI.SetNextControlName ("FilterSearch" );
+               string _filterText = uScriptGUI.ToolbarSearchField(_paletteFilterText, GUILayout.Width(100));
+//               string _filterText = GUILayout.TextField(_paletteFilterText, 10, "toolbarTextField", GUILayout.Width(80));
+               GUI.SetNextControlName ("" );
+               if (_filterText != _paletteFilterText)
                {
-                  CollapsePaletteMenuItem(null);
-               }
-            }
+                  // Drop focus if the user inserted a newline (hit enter)
+                  if (_filterText.Contains('\n'))
+                  {
+                     GUIUtility.keyboardControl = 0;
+                  }
 
-            GUI.SetNextControlName ("FilterSearch" );
-            string _filterText = uScriptGUI.ToolbarSearchField(_paletteFilterText, GUILayout.Width(100));
-//            string _filterText = GUILayout.TextField(_paletteFilterText, 10, "toolbarTextField", GUILayout.Width(80));
-            GUI.SetNextControlName ("" );
-            if (_filterText != _paletteFilterText)
+//                  // Only allow letters and digits
+//                  _filterText = new string(_filterText.Where(ch => char.IsLetterOrDigit(ch)).ToArray());
+
+                  // Trim leading whitespace
+                  _filterText = _filterText.TrimStart( new char[] { ' ' } );
+
+                  _paletteFilterText = _filterText;
+                  FilterPaletteMenuItems();
+               }
+
+//               // Clear the node text filter
+//               if ( GUILayout.Button( Button.Content( Button.ID.ClearFilter ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//               {
+//                  GUIUtility.keyboardControl = 0;
+//                  _paletteFilterText = String.Empty;
+//                  FilterPaletteMenuItems();
+//               }
+            }
+            else
             {
-               // Drop focus if the user inserted a newline (hit enter)
-               if (_filterText.Contains('\n'))
-               {
-                  GUIUtility.keyboardControl = 0;
-               }
-
-               // Only allow letters and digits
-//               _filterText = new string(_filterText.Where(ch => char.IsLetterOrDigit(ch)).ToArray());
-
-               // Trim leading whitespace
-               _filterText = _filterText.TrimStart( new char[] { ' ' } );
-
-               _paletteFilterText = _filterText;
-               FilterPaletteMenuItems();
+               // This is where the Graph Contents toolbar buttons will go
             }
-
-//            // Clear the node text filter
-//            if ( GUILayout.Button( Button.Content( Button.ID.ClearFilter ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-//            {
-//               GUIUtility.keyboardControl = 0;
-//               _paletteFilterText = String.Empty;
-//               FilterPaletteMenuItems();
-//            }
          }
          EditorGUILayout.EndHorizontal();
 
-         // Node list
-         //
-         _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
+
+         if (_paletteMode == 0)
          {
-            foreach (PaletteMenuItem item in _paletteMenuItems)
+            // Node list
+            //
+            _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
             {
-               DrawPaletteMenu(item);
+               foreach (PaletteMenuItem item in _paletteMenuItems)
+               {
+                  DrawPaletteMenu(item);
+               }
             }
+            EditorGUILayout.EndScrollView();
          }
-         EditorGUILayout.EndScrollView();
+         else
+         {
+            //
+            // Graph Contents list
+            //
+            // Every node in the graph should be listed here, categorized by type.
+            //
+
+            // Process all nodes and place them in the appropriate list
+            Dictionary<string, Dictionary<string, List<DisplayNode>>> categories = new Dictionary<string, Dictionary<string, List<DisplayNode>>>();
+
+            DisplayNode displayNode;
+            string category;
+            string name;
+            string comment;
+
+            categories.Add("Comments", new Dictionary<string, List<DisplayNode>>());
+            categories.Add("Actions", new Dictionary<string, List<DisplayNode>>());
+            categories.Add("Conditions", new Dictionary<string, List<DisplayNode>>());
+            categories.Add("Events", new Dictionary<string, List<DisplayNode>>());
+            categories.Add("Properties", new Dictionary<string, List<DisplayNode>>());
+            categories.Add("Variables", new Dictionary<string, List<DisplayNode>>());
+            categories.Add("Miscellaneous", new Dictionary<string, List<DisplayNode>>());
+
+            foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
+            {
+               displayNode = node as DisplayNode;
+               category = string.Empty;
+               name = string.Empty;
+
+               if (displayNode is EntityEventDisplayNode)
+               {
+                  category = "Events";
+                  name = ((EntityEventDisplayNode)displayNode).EntityEvent.FriendlyType;
+               }
+               else if (displayNode is LogicNodeDisplayNode)
+               {
+                  category = "Actions";
+                  name = ((LogicNodeDisplayNode)displayNode).LogicNode.FriendlyName;
+               }
+               else if (displayNode is LocalNodeDisplayNode)
+               {
+                  category = "Variables";
+                  name = ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Type; // get FriendlyName
+                  name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
+//                  name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
+               }
+               else if (displayNode is CommentDisplayNode)
+               {
+                  category = "Comments";
+                  name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
+               }
+               else
+               {
+                  category = "Miscellaneous";
+               }
+
+               // Validate strings
+               name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
+
+               if (categories[category].ContainsKey(name) == false)
+               {
+                  categories[category].Add(name, new List<DisplayNode>());
+               }
+
+               // Add the node to the list
+               categories[category][name].Add(displayNode);
+            }
+
+            _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
+            {
+               foreach (KeyValuePair<string, Dictionary<string, List<DisplayNode>>> kvpCategory in categories)
+               {
+                  if (kvpCategory.Value.Count > 0)
+                  {
+                     // The category contains at least one item to show
+
+                     // This is should be a folding menu item that contains more buttons
+                     GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
+                     tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (0 * 12), 0, 0, 0);
+
+                     bool tmpBool = true;
+                     tmpBool = GUILayout.Toggle(tmpBool, kvpCategory.Key, tmpStyle);
+                     if (tmpBool)
+                     {
+                        List<string> nodeList = kvpCategory.Value.Keys.ToList();
+                        nodeList.Sort();
+
+                        foreach (string s in nodeList)
+                        {
+                           List<DisplayNode> dnList = kvpCategory.Value[s];
+
+                           // Show each node
+                           foreach (DisplayNode dn in dnList)
+                           {
+                              // Get the name and comment strings
+                              name = string.Empty;
+                              comment = string.Empty;
+   
+                              if (dn is EntityEventDisplayNode)
+                              {
+                                 name = ((EntityEventDisplayNode)dn).EntityEvent.FriendlyType;
+                                 comment = ((EntityEventDisplayNode)dn).EntityEvent.Comment.Default;
+                              }
+                              else if (dn is LogicNodeDisplayNode)
+                              {
+                                 name = ((LogicNodeDisplayNode)dn).LogicNode.FriendlyName;
+                                 comment = ((LogicNodeDisplayNode)dn).LogicNode.Comment.Default;
+                              }
+                              else if (dn is LocalNodeDisplayNode)
+                              {
+                                 name = ((LocalNodeDisplayNode)dn).LocalNode.Value.Type; // get FriendlyName
+                                 name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
+                                 name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)dn).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)dn).LocalNode.Value.Default);
+                                 comment = ((LocalNodeDisplayNode)dn).LocalNode.Name.Default;
+                              }
+                              else if (dn is CommentDisplayNode)
+                              {
+                                 name = ((CommentDisplayNode)dn).Comment.TitleText.FriendlyName;
+                                 comment = ((CommentDisplayNode)dn).Comment.TitleText.Default;
+                              }
+   
+                              // Validate strings
+                              name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
+                              comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
+   
+                              if (GUILayout.Button( name + comment,
+                                            (dn.Selected ? EditorStyles.miniButton : GUI.skin.button) ) )
+                              {
+                                 // is the shift key modifier being used?
+                                 if (Event.current.modifiers != EventModifiers.Shift)
+                                 {
+                                    // clear all selected nodes first
+                                    foreach (DisplayNode d in m_ScriptEditorCtrl.FlowChart.Nodes)
+                                    {
+                                       d.Selected = false;
+                                    }
+                                 }
+                                 // toggle the clicked node
+                                 dn.Selected = !dn.Selected;
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+            EditorGUILayout.EndScrollView();
+         }
       }
       EditorGUILayout.EndVertical();
       
@@ -1222,6 +1380,10 @@ http://www.detoxstudios.com";
 
       SetMouseRegion( MouseRegion.Palette );//, 1, 1, -4, -4 );
    }
+
+
+
+
 
    void SetMouseRegion( MouseRegion region )
    {
@@ -1760,28 +1922,60 @@ http://www.detoxstudios.com";
                   {
                      string scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
 
-                     GUIContent content = new GUIContent(scriptName, "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
-
-                     if (GUILayout.Button(content, uScriptGUIStyle.paletteButton))
+                     if (scriptName == "XXXXX")
                      {
-                        if ((EditorApplication.timeSinceStartup - clickTime) < doubleClickTime)
-                        {
-                           string path = FindFile(uScriptConfig.Paths.UserScripts, scriptName + ".uscript");
-
-                           if ("" != path)
-                           {
-                              _openScriptToggle = false;
-                              OpenScript(path);
-                           }
-                        }
-                        clickTime = EditorApplication.timeSinceStartup;
+                        GUIStyle style = new GUIStyle(uScriptGUIStyle.paletteButton);
+                        style.normal.background = style.active.background;
+                        GUILayout.Label(scriptName + " (current)", style);
                      }
+                     else
+                     {
+                        GUIContent content = new GUIContent(scriptName, "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
+                        if (GUILayout.Button(content, uScriptGUIStyle.paletteButton))
+                        {
+                           if ((EditorApplication.timeSinceStartup - clickTime) < doubleClickTime)
+                           {
+                              string path = FindFile(uScriptConfig.Paths.UserScripts, scriptName + ".uscript");
 
+                              if ("" != path)
+                              {
+                                 _openScriptToggle = false;
+                                 OpenScript(path);
+                              }
+                           }
+                           clickTime = EditorApplication.timeSinceStartup;
+                        }
+                     }
                   }
                }
             }
          }
          EditorGUILayout.EndScrollView();
+
+
+
+//            foreach (UnityEngine.Object o in GameObject.FindObjectsOfType(typeof(uScriptCode)))
+//            {
+//               uScriptCode code = o as uScriptCode;
+//
+//               if (code.GetType().ToString() == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.Name))
+//               {
+//               }
+//               else
+//               {
+//                  GUIContent content = new GUIContent(code.GetType().ToString(), "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
+//                  if (GUILayout.Button(content, uScriptStyles.paletteButton) && Event.current.clickCount == 2)
+//                  {
+//                     string path = FindFile(Application.dataPath, code.GetType().ToString() + ".uscript");
+//                     if ("" != path)
+//                     {
+//                        _openScriptToggle = false;
+//                        OpenScript(path);
+//                     }
+//                  }
+//               }
+//            }
+//         }
       }
       EditorGUILayout.EndVertical();
 

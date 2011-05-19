@@ -25,6 +25,9 @@ public static class uScriptGUIStyle
    private static GUIStyle _panelTitle;
    public static GUIStyle panelTitle { get { return _panelTitle; } }
 
+   private static GUIStyle _panelTitleDropDown;
+   public static GUIStyle panelTitleDropDown { get { return _panelTitleDropDown; } }
+
    private static GUIStyle _referenceText;
    public static GUIStyle referenceText { get { return _referenceText; } }
 
@@ -70,6 +73,10 @@ public static class uScriptGUIStyle
 
       _panelTitle = new GUIStyle(EditorStyles.boldLabel);
       _panelTitle.margin = new RectOffset(4, 4, 0, 0);
+
+      _panelTitleDropDown = new GUIStyle(EditorStyles.toolbarDropDown);
+      _panelTitleDropDown.font = EditorStyles.boldLabel.font;
+      _panelTitleDropDown.padding = new RectOffset(6, 12, 1, 3);
 
       _referenceText = new GUIStyle(GUI.skin.label);
       _referenceText.wordWrap = true;
