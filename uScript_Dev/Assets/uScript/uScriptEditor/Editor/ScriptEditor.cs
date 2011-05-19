@@ -2129,9 +2129,6 @@ namespace Detox.ScriptEditor
          EntityNode source = (EntityNode) m_Nodes[ link.Source.Guid ];
          EntityNode dest   = (EntityNode) m_Nodes[ link.Destination.Guid ];
 
-         //only allow 1 bi-directional link to externals (technically that is 2 links)
-         //this keeps errors from happening in the code
-         //generation logic if there are duplicate names
          if ( source is ExternalConnection )
          {
             foreach ( LinkNode existingLinks in Links )

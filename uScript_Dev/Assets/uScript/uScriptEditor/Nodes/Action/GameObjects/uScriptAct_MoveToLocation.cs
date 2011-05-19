@@ -17,6 +17,7 @@ using System.Collections;
 public class uScriptAct_MoveToLocation : uScriptLogic
 {
    public bool Out { get { return true; } }
+   public event System.EventHandler Finished;
 
    private GameObject[] m_TargetArray;
    private Vector3      m_EndingLocation;
@@ -105,6 +106,12 @@ public class uScriptAct_MoveToLocation : uScriptLogic
 
             target.transform.position = Vector3.Lerp( m_StartingLocations[ i ], m_EndingLocation, t );
          }
+      }
+   
+
+      if ( m_CurrentTime == m_TotalTime )
+      {
+         if (Finished != null) Finished(this, new System.EventArgs());
       }
    }
 
