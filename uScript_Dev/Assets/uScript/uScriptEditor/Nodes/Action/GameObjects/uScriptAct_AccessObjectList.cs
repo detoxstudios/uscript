@@ -11,7 +11,7 @@ using System;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Access different elements in a GameObject List. Can access first, last, random or by index.")]
-[NodeDescription("Access different elements in a GameObject List. Can access first, last, random or by index.")]
+[NodeDescription("Access different elements in a GameObject List. Can access first, last, random or by index.\n \nGameObject List: The list of GameObjects to operate on.\nIndex: The desired index to select (only used for the At Index input).\nSelected GameObject (out): The GameObject selected by this node.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

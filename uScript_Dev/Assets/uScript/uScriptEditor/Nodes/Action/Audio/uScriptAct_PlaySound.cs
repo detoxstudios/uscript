@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Plays the specified AudioClip on the target GameObject.")]
-[NodeDescription("Plays the specified AudioClip on the target GameObject.")]
+[NodeDescription("Plays the specified AudioClip on the target GameObject.\n \nAudio Clip: The AudioClip to play.\nTarget: The GameObject to emit the sound from.\nVolume: The volume level (0.0-1.0) to play the audio clip at.\nLoop: Whether or not to loop the sound.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Switches to the Target GameObject's camera.")]
-[NodeDescription("Switches to the Target GameObject's camera. Can optionally enable that camera's AudioListener component.")]
+[NodeDescription("Switches to the Target GameObject's camera.\n \nTarget: The GameObject containing the camera to switch to.\nEnable AudioListener: Whether or not to enable that camera's AudioListener component.\nDisable Other Cameras: Whether or not to disable all other cameras.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

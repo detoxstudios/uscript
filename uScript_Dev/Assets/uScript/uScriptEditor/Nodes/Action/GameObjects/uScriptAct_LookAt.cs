@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Tells a GameObject to look at another GameObject transform or Vector3 position.")]
-[NodeDescription("Tells a GameObject (target) to look at another GameObject (focus) transform or Vector3 position.")]
+[NodeDescription("Tells a GameObject (target) to look at another GameObject (focus) transform or Vector3 position.\n \nTarget: The Target GameObject(s) whose look direction will be adjusted.\nFocus: The item to focus on - can be a Vector3 position or a GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

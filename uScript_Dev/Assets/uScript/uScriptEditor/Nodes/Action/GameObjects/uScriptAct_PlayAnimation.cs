@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Play the specified animation on the target object.")]
-[NodeDescription("Play the specified animation on the target object. Animation must exist in the GameObject's AnimationClip.")]
+[NodeDescription("Play the specified animation on the target object.\n \nTarget: The Target GameObject(s) to play the animation on.\nAnimation: The name of the animation to play. Animation must exist in the GameObject's AnimationClip.\nSpeed Factor: The speed at which to play the animation.\nStop Other Animation: Stop any currently playing animations before playing this one.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

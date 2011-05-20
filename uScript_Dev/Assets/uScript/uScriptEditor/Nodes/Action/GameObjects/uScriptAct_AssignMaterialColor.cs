@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Assigns the Material color of the target GameObject on the specifed material channel.")]
-[NodeDescription("Assigns the Material color of the target GameObject on the specifed material channel.")]
+[NodeDescription("Assigns the Material color of the target GameObject on the specifed material channel.\n \nTarget: The GameObject(s) to assign the material color to.\nColor: The material color to assign to the Target object(s).\nMaterial Channel: The material channel of the object to assign the material color to.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

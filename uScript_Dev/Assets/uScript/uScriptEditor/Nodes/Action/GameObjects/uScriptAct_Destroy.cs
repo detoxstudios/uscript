@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Destroys the target GameObject.")]
-[NodeDescription("Destroys the target GameObject. Can optionally set a delay.")]
+[NodeDescription("Destroys the target GameObject.\n \nTarget: The target GameObject(s) to destroy.\nDelay: The time to wait before destroying the target object(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sends a custom event with a String variable.")]
-[NodeDescription("Sends a custom event with a String variable.")]
+[NodeDescription("Sends a custom event with a String variable.\n \nEvent Name: The string-based event name.\nEvent Value: The value to pass in the event.\nEvent Sender: The GameObject responsible for sending the event.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Filters the On Key Press event to a specific key when the key is pressed down, being held, or released.")]
-[NodeDescription("Filters the On Key Press event to a specific key when the key is pressed down, being held, or released.")]
+[NodeDescription("Filters the On Key Press event to a specific key when the key is pressed down, being held, or released.\n \nKey Code: The key to listen for events from.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

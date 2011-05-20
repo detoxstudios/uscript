@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Causes the targeted GameObject to be relocated to the destination GameObject.")]
-[NodeDescription("Causes the targeted GameObject to be relocated to the destination GameObject. Optionally, can update the rotation to the destination's rotation as well.")]
+[NodeDescription("Causes the targeted GameObject to be relocated to the destination GameObject.\n \nTarget: The Target GameObject(s) to teleport.\nDestination: The destination GameObject to teleport to.\nUpdate Rotation: Whether or not to also update the rotation of the teleported GameObject to match the Destination's rotation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
