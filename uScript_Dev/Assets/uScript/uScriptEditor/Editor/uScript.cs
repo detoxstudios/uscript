@@ -103,6 +103,7 @@ public class uScript : EditorWindow
    private List<PaletteMenuItem> _paletteMenuItems;
    bool _paletteFoldoutToggle = false;
    String _paletteFilterText = string.Empty;
+   String _graphListFilterText = string.Empty;
 
    public class PaletteMenuItem : System.Windows.Forms.MenuItem
    {
@@ -1203,6 +1204,41 @@ http://www.detoxstudios.com";
             else
             {
                // This is where the Graph Contents toolbar buttons will go
+
+               // Toggle hierarchy foldouts
+//               bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
+//                                                      (_paletteFoldoutToggle ? uScriptGUIContent.toolbarButtonCollapse : uScriptGUIContent.toolbarButtonExpand),
+//                                                      uScriptGUIStyle.paletteToolbarButton,
+//                                                      GUILayout.ExpandWidth(false));
+//               if (_paletteFoldoutToggle != newToggleState)
+//               {
+//                  _paletteFoldoutToggle = newToggleState;
+//                  if (_paletteFoldoutToggle)
+//                  {
+//                     ExpandPaletteMenuItem(null);
+//                  }
+//                  else
+//                  {
+//                     CollapsePaletteMenuItem(null);
+//                  }
+//               }
+
+               GUI.SetNextControlName ("FilterSearch" );
+               string _filterText = uScriptGUI.ToolbarSearchField(_graphListFilterText, GUILayout.Width(100));
+               GUI.SetNextControlName ("" );
+               if (_filterText != _graphListFilterText)
+               {
+                  // Drop focus if the user inserted a newline (hit enter)
+                  if (_filterText.Contains('\n'))
+                  {
+                     GUIUtility.keyboardControl = 0;
+                  }
+
+                  // Trim leading whitespace
+                  _filterText = _filterText.TrimStart( new char[] { ' ' } );
+
+                  _graphListFilterText = _filterText;
+               }
             }
          }
          EditorGUILayout.EndHorizontal();
@@ -1250,28 +1286,33 @@ http://www.detoxstudios.com";
                displayNode = node as DisplayNode;
                category = string.Empty;
                name = string.Empty;
+               comment = string.Empty;
 
                if (displayNode is EntityEventDisplayNode)
                {
                   category = "Events";
                   name = ((EntityEventDisplayNode)displayNode).EntityEvent.FriendlyType;
+                  comment = ((EntityEventDisplayNode)displayNode).EntityEvent.Comment.Default;
                }
                else if (displayNode is LogicNodeDisplayNode)
                {
                   category = "Actions";
                   name = ((LogicNodeDisplayNode)displayNode).LogicNode.FriendlyName;
+                  comment = ((LogicNodeDisplayNode)displayNode).LogicNode.Comment.Default;
                }
                else if (displayNode is LocalNodeDisplayNode)
                {
                   category = "Variables";
                   name = ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Type; // get FriendlyName
                   name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
-//                  name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
+                  name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
+                  comment = ((LocalNodeDisplayNode)displayNode).LocalNode.Name.Default;
                }
                else if (displayNode is CommentDisplayNode)
                {
                   category = "Comments";
                   name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
+                  comment = ((CommentDisplayNode)displayNode).Comment.TitleText.Default;
                }
                else
                {
@@ -1280,14 +1321,20 @@ http://www.detoxstudios.com";
 
                // Validate strings
                name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
+               comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
 
-               if (categories[category].ContainsKey(name) == false)
+               string fullName = name + comment;
+
+               if (String.IsNullOrEmpty(_graphListFilterText) || fullName.ToLower().Contains(_graphListFilterText.ToLower()))
                {
-                  categories[category].Add(name, new List<DisplayNode>());
-               }
+                  if (categories[category].ContainsKey(name) == false)
+                  {
+                     categories[category].Add(name, new List<DisplayNode>());
+                  }
 
-               // Add the node to the list
-               categories[category][name].Add(displayNode);
+                  // Add the node to the list
+                  categories[category][name].Add(displayNode);
+               }
             }
 
             _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
