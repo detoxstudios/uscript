@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Adds two float variables together and returns the result.")]
-[NodeDescription("Adds two float variables together and returns the result.")]
+[NodeDescription("Adds two float variables together and returns the result.\n \nA: The first floating point addend. If more than one floating point variable is connected to A, they will be added together before being added to B.\nB: The second floating point addend.  If more than one floating point variable is connected to B, they will be added together before being added to A.\nResult (out): The floating point result of the addition operation.\nInt Result (out): The integer result of the addition operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -32,9 +32,8 @@ public class uScriptAct_AddFloat : uScriptLogic
          bTotals = bTotals + currentB;
       }
 
-      float m_Total = aTotals + bTotals;
-      FloatResult = m_Total;
-      IntResult = System.Convert.ToInt32(m_Total);
-
+      float total = aTotals + bTotals;
+      FloatResult = total;
+      IntResult = System.Convert.ToInt32(total);
    }
 }

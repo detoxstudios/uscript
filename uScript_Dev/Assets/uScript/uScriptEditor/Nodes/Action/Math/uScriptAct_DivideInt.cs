@@ -8,8 +8,8 @@ using System.Collections;
 [NodePath("Action/Math")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip( "Divides two integer variables together and returns the result.")]
-[NodeDescription("Divides two integer variables together and returns the result.")]
+[NodeToolTip( "Divides two integer variables and returns the result.")]
+[NodeDescription("Divides two integer variables and returns the result.\n \nA: The integer numerator.\nB: The integer denominator.\nResult (out): The integer result of the division operation.\nFloat Result (out): The floating point result of the division operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -20,10 +20,8 @@ public class uScriptAct_DivideInt : uScriptLogic
 
    public void In(int A, int B, [FriendlyName("Result")] out int IntResult, [FriendlyName("Float Result")] out float FloatResult)
    {
-
-      int m_Total = A / B;
-      IntResult = m_Total;
-      FloatResult = System.Convert.ToSingle(m_Total);
-
+      int total = A / B;
+      IntResult = total;
+      FloatResult = System.Convert.ToSingle(total);
    }
 }

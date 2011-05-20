@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the components of a Vector4 as floats.")]
-[NodeDescription("Gets the components of a Vector4 as floats.")]
+[NodeDescription("Gets the components of a Vector4 as floats.\n \n\n \nInput Vector3: The input vector to get components of.\nX: The x value of the Input Vector4.\nY: The y value of the Input Vector4.\nZ: The z value of the Input Vector4.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -22,11 +22,9 @@ public class uScriptAct_GetVector4Components : uScriptLogic
    // Do logic here
    public void In([FriendlyName("Input Vector4")] Vector4 InputVector4, out float X, out float Y, out float Z, out float W)
    {
-
       X = InputVector4.x;
       Y = InputVector4.y;
       Z = InputVector4.z;
       W = InputVector4.w;
-
    }
 }

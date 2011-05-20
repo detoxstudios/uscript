@@ -34,7 +34,6 @@ public class uScriptAct_PrintDebugText : uScriptLogic
       [FriendlyName("Edge Padding")] int EdgePadding
       )
    {
-
       m_Text = Text;
       m_Width = Screen.width - EdgePadding;
       m_Height = Screen.height - EdgePadding;
@@ -47,7 +46,6 @@ public class uScriptAct_PrintDebugText : uScriptLogic
       m_Style.normal.textColor = FontColor;
 
       m_DisplayText = true;
-
    }
 
    [FriendlyName("Hide Text")]
@@ -60,24 +58,17 @@ public class uScriptAct_PrintDebugText : uScriptLogic
       [FriendlyName("Edge Padding")] int EdgePadding
       )
    {
-
       m_DisplayText = false;
-
    }
 
    public override void OnGUI()
    {
-
       if (m_DisplayText)
       {
-
          float halfHeight = m_Height / 2;
          float halfWidth = m_Width / 2;
 
          GUI.Label(new Rect(Screen.width / 2 - halfWidth, Screen.height / 2 - halfHeight, m_Width, m_Height), m_Text, m_Style);
-
       }
-
    }
-
 }

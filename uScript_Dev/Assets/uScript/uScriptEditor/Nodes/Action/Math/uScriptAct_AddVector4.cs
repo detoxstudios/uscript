@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Adds two Vector4 variables together and returns the result.")]
-[NodeDescription("Adds two Vector4 variables together and returns the result.")]
+[NodeDescription("Adds two Vector4 variables together and returns the result.\n \nA: The first Vector4 addend.  If more than one Vector4 variable is connected to A, they will be added together before being added to B.\nB: The second Vector4 addend.  If more than one Vector4 variable is connected to B, they will be added together before being added to A.\nResult (out): The Vector4 result of the addition operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -20,7 +20,6 @@ public class uScriptAct_AddVector4 : uScriptLogic
 
    public void In(Vector4[] A, Vector4[] B, out Vector4 Result)
    {
-
       Vector4 aTotals = new Vector4(0, 0, 0, 0);
       Vector4 bTotals = new Vector4(0, 0, 0, 0);
 
@@ -34,6 +33,5 @@ public class uScriptAct_AddVector4 : uScriptLogic
       }
 
       Result = aTotals + bTotals;
-
    }
 }

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Converts a variable into another type.")]
-[NodeDescription("Converts a variable into another type.")]
+[NodeDescription("Converts a variable into another type.\n \nTarget: The Target variable to be converted.\nInt Value (out): The Target variable represented as an integer.\nFloat Value (out): The Target variable represented as a floating point value.\nString Value (out): The Target variable represented as a string.\nBoolean Value (out): The Target variable represented as a Boolean (true/false) value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -25,7 +25,6 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       [FriendlyName("Boolean Value")] out bool BooleanValue
       )
    {
-
       int tempIntValue = 0;
       float tempFloatValue = 0F;
       string tempStringValue = "";

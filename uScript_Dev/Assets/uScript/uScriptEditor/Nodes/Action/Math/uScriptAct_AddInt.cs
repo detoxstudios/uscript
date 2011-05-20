@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Adds two integer variables together and returns the result.")]
-[NodeDescription("Adds two integer variables together and returns the result.")]
+[NodeDescription("Adds two integer variables together and returns the result.\n \nA: The first integer addend.  If more than one integer variable is connected to A, they will be added together before being added to B.\nB: The second integer addend.  If more than one integer variable is connected to B, they will be added together before being added to A.\nResult (out): The integer result of the addition operation.\nFloat Result (out): The floating point result of the addition operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -20,7 +20,6 @@ public class uScriptAct_AddInt : uScriptLogic
 
    public void In(int[] A, int[] B, [FriendlyName("Result")] out int IntResult, [FriendlyName("Float Result")] out float FloatResult)
    {
-
       int aTotals = 0;
       int bTotals = 0;
 
@@ -33,9 +32,8 @@ public class uScriptAct_AddInt : uScriptLogic
          bTotals = bTotals + currentB;
       }
 
-      int m_Total = aTotals + bTotals;
-      IntResult = m_Total;
-      FloatResult = System.Convert.ToSingle(m_Total);
-
+      int total = aTotals + bTotals;
+      IntResult = total;
+      FloatResult = System.Convert.ToSingle(total);
    }
 }
