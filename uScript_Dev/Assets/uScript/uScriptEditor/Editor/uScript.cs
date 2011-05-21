@@ -1417,13 +1417,10 @@ http://www.detoxstudios.com";
                                  if (Event.current.modifiers != EventModifiers.Shift)
                                  {
                                     // clear all selected nodes first
-                                    foreach (DisplayNode d in m_ScriptEditorCtrl.FlowChart.Nodes)
-                                    {
-                                       d.Selected = false;
-                                    }
+                                    m_ScriptEditorCtrl.DeselectAll();
                                  }
                                  // toggle the clicked node
-                                 dn.Selected = !dn.Selected;
+                                 m_ScriptEditorCtrl.ToggleNode(dn.Guid);
                               }
                            }
                         }

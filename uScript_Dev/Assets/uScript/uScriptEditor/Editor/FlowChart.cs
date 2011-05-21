@@ -218,6 +218,20 @@ namespace Detox.FlowChart
          OnSelectionModified( );
       }
 
+      public void ToggleNodes(Guid []guids)
+      {
+         foreach ( Guid guid in guids )
+         {
+            if ( m_Nodes.Contains(guid) )
+            {
+               Node node = m_Nodes[ guid ] as Node;
+               node.Selected = !node.Selected;
+            }
+         }
+
+         OnSelectionModified( );
+      }
+
       public void DeselectAll( )
       {
          foreach ( Node node in Nodes )

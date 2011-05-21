@@ -298,6 +298,11 @@ namespace Detox.ScriptEditor
          m_FlowChart.SelectNodes(new Guid[] { guid });
       }
 
+      public void ToggleNode(Guid guid)
+      {
+         m_FlowChart.ToggleNodes(new Guid[] { guid });
+      }
+      
       public bool IsMoving( )
       {
          return m_FlowChart.IsMoving( );
