@@ -784,7 +784,7 @@ namespace Detox.ScriptEditor
          Name.Type    = "String";
          Name.Input   = true;
          Name.Output  = false;
-         Name.State   = Parameter.VisibleState.Visible;
+         Name.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
 
          m_ShowComment = new Parameter( );
          m_ShowComment.Name    = "Output Comment";
@@ -900,6 +900,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Type    = "Bool";
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
+         m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;;
 
          m_Comment = new Parameter( );
          m_Comment.Name    = "Comment";
@@ -908,11 +909,13 @@ namespace Detox.ScriptEditor
          m_Comment.Type    = "String";
          m_Comment.Input   = true;
          m_Comment.Output  = false;
+         m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;;
 
          Connection = new Parameter( );
          Connection.Name = "Connection";
          Connection.FriendlyName = "Connection";
          Connection.Default = "";
+         Connection.State  = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          Connection.Input  = false;
          Connection.Output = true;
          Connection.Type   = typeof(UnityEngine.GameObject).ToString( );
@@ -1607,7 +1610,7 @@ namespace Detox.ScriptEditor
       { 
          m_Instance.Name   = "Instance";
          m_Instance.FriendlyName = "Instance";
-         m_Instance.State  = Parameter.VisibleState.Visible;
+         m_Instance.State  = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Instance.Type   = entityType;
          m_Instance.Input  = true;
          m_Instance.Output = false;
@@ -1615,7 +1618,7 @@ namespace Detox.ScriptEditor
 
          m_Parameter = new Parameter( );
          m_Parameter.Name    = name;
-         m_Parameter.State   = Parameter.VisibleState.Visible;
+         m_Parameter.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Parameter.FriendlyName = friendlyName;
          m_Parameter.Input   = input;
          m_Parameter.Output  = output;
@@ -1717,14 +1720,14 @@ namespace Detox.ScriptEditor
       { 
          m_Value.Default = defaultValue;
          m_Value.FriendlyName = "Value";
-         m_Value.State   = Parameter.VisibleState.Visible;
+         m_Value.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Value.Input   = true;
          m_Value.Output  = true;
          m_Value.Name    = "Value";
          m_Value.Type    = type;
 
          m_Name.Default = name;
-         m_Name.State   = Parameter.VisibleState.Visible;
+         m_Name.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Name.Input   = true;
          m_Name.Output  = false;
          m_Name.Name    = "Name";
