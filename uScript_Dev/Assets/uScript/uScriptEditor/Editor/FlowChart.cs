@@ -203,6 +203,35 @@ namespace Detox.FlowChart
          }
          Controls.Insert( i, node );
       }
+      
+      public void SelectNodes(Guid []guids)
+      {
+         foreach ( Guid guid in guids )
+         {
+            if ( m_Nodes.Contains(guid) )
+            {
+               Node node = m_Nodes[ guid ] as Node;
+               node.Selected = true;
+            }
+         }
+
+         OnSelectionModified( );
+      }
+
+      public void DeselectAll( )
+      {
+         foreach ( Node node in Nodes )
+         {
+            node.Selected = false;
+         }
+
+         foreach ( Link link in Links )
+         {
+            link.Selected = false;
+         }
+
+         OnSelectionModified( );
+      }
 
       public void DeleteNode(Guid guid)
       {

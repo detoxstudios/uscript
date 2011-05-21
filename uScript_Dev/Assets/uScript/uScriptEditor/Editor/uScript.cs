@@ -171,6 +171,7 @@ public class uScript : EditorWindow
    MouseEventArgs m_MouseUpArgs   = null;
    MouseEventArgs m_MouseMoveArgs = new MouseEventArgs( );
 
+   public bool m_SelectAllNodes = false;
 
    public string CurrentScript = null;
 
@@ -343,6 +344,14 @@ http://www.detoxstudios.com";
 
    void Update()
    {
+      if ( true == m_SelectAllNodes )
+      {
+         m_ScriptEditorCtrl.SelectAllNodes();
+         m_ScriptEditorCtrl.SelectAllLinks();
+
+         m_SelectAllNodes = false;
+      }
+
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
 
       if (EditorApplication.playmodeStateChanged == null)
@@ -678,8 +687,7 @@ http://www.detoxstudios.com";
                }
                else if ( Event.current.commandName == "SelectAll" )
                {
-                  m_ScriptEditorCtrl.SelectAllNodes();
-                  m_ScriptEditorCtrl.SelectAllLinks();
+                  m_SelectAllNodes = true;
                }
                break;
    

@@ -293,6 +293,11 @@ namespace Detox.ScriptEditor
          m_FlowChart.Invalidate();
       }
 
+      public void SelectNode(Guid guid)
+      {
+         m_FlowChart.SelectNodes(new Guid[] { guid });
+      }
+
       public bool IsMoving( )
       {
          return m_FlowChart.IsMoving( );
@@ -1224,10 +1229,14 @@ namespace Detox.ScriptEditor
 
       public void SelectAllNodes()
       {
-         foreach ( Node node in m_FlowChart.Nodes )
+         List<Guid> guids = new List<Guid>( );
+
+         foreach ( EntityNode node in m_ScriptEditor.EntityNodes )
          {
-            node.Selected = true;
+            guids.Add( node.Guid );
          }
+
+         m_FlowChart.SelectNodes( guids.ToArray( ) );
       }
       
       public void SelectAllLinks()
@@ -1240,15 +1249,7 @@ namespace Detox.ScriptEditor
 
       public void DeselectAll()
       {
-         foreach ( Node node in m_FlowChart.Nodes )
-         {
-            node.Selected = false;
-         }
-
-         foreach ( Link link in m_FlowChart.Links )
-         {
-            link.Selected = false;
-         }
+         m_FlowChart.DeselectAll( );
       }
 
       public void DeleteSelectedNodes( )
