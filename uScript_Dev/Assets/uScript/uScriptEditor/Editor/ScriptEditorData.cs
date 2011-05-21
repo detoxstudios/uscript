@@ -84,6 +84,15 @@ namespace Detox.Data.ScriptEditor
 
    public struct Parameter 
    {
+      [Flags]
+      public enum VisibleState
+      {
+         Visible = 0x1,
+         Hidden  = 0x2,
+         Locked  = 0x4,
+      }
+
+      public VisibleState State;
       public string FriendlyName;
       public string Name;
       public string Default;
@@ -115,6 +124,7 @@ namespace Detox.Data.ScriptEditor
          ShowComment.Type         = "Bool";
          ShowComment.Input        = true;
          ShowComment.Output       = false;
+         ShowComment.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
 
          Comment = new Parameter( );
          Comment.FriendlyName = "Comment";
@@ -123,6 +133,7 @@ namespace Detox.Data.ScriptEditor
          Comment.Type         = "String";
          Comment.Input        = true;
          Comment.Output       = false;
+         Comment.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
       }
 
       public virtual void Clone(EntityNodeData cloneFrom)
@@ -155,6 +166,7 @@ namespace Detox.Data.ScriptEditor
             ShowComment.Type         = "Bool";
             ShowComment.Input        = true;
             ShowComment.Output       = false;
+            ShowComment.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
 
             Comment = new Parameter( );
             Comment.FriendlyName = "Comment";
@@ -163,6 +175,7 @@ namespace Detox.Data.ScriptEditor
             Comment.Type         = "String";
             Comment.Input        = true;
             Comment.Output       = false;
+            Comment.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          }
       }
 
@@ -255,6 +268,7 @@ namespace Detox.Data.ScriptEditor
             Name.Output  = false;
             Name.Type    = "String";
             Name.Default = "";
+            Name.State   = Parameter.VisibleState.Visible;
          }
       }
 
@@ -668,6 +682,7 @@ namespace Detox.Data.ScriptEditor
             Size.Input        = true;
             Size.Output       = false;
             Size.Default      = "0, 0";
+            Size.State        = Parameter.VisibleState.Visible;
          }
       }
 
@@ -714,6 +729,7 @@ namespace Detox.Data.ScriptEditor
             name.Output       = false;
             name.Name         = "Name";
             name.FriendlyName = "Name";
+            name.State        = Parameter.VisibleState.Visible;
             name.Type         = typeof(string).ToString( );
 
             Parameters = new Parameter[] { parameter, name };
@@ -734,7 +750,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterSerializer : ITypeSerializer
    {
-      public int Version { get { return 2; } }
+      public int Version { get { return 3; } }
       public string SerializableType { get { return typeof(Parameter).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -765,6 +781,15 @@ namespace Detox.Data.ScriptEditor
          parameter.Input   = reader.ReadBoolean( );
          parameter.Output  = reader.ReadBoolean( );
 
+         if ( serializer.CurrentVersion > 2 )
+         {
+            parameter.State = (Parameter.VisibleState) Enum.Parse(typeof(Parameter.VisibleState), reader.ReadString( ));
+         }
+         else
+         {
+            parameter.State = Parameter.VisibleState.Visible;
+         }
+
          reader.Close( );
 
          return parameter;
@@ -783,6 +808,7 @@ namespace Detox.Data.ScriptEditor
          writer.Write( value.Type );
          writer.Write( value.Input );
          writer.Write( value.Output );
+         writer.Write( value.State.ToString( ) );
 
          serializer.SetData( stream.ToArray( ) );
 
@@ -792,7 +818,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterArraySerializer : ITypeSerializer
    {
-      public int Version { get { return 2; } }
+      public int Version { get { return 3; } }
       public string SerializableType { get { return typeof(Parameter[]).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -826,6 +852,16 @@ namespace Detox.Data.ScriptEditor
             parameters[ i ].Type    = reader.ReadString( );
             parameters[ i ].Input   = reader.ReadBoolean( );
             parameters[ i ].Output  = reader.ReadBoolean( );
+
+            if ( serializer.CurrentVersion > 2 )
+            {
+               parameters[ i ].State = (Parameter.VisibleState) Enum.Parse(typeof(Parameter.VisibleState), reader.ReadString( ));
+            }
+            else
+            {
+               parameters[ i ].State = Parameter.VisibleState.Visible;
+            }
+
          }
 
          reader.Close( );
@@ -850,6 +886,7 @@ namespace Detox.Data.ScriptEditor
             writer.Write( p.Type );
             writer.Write( p.Input );
             writer.Write( p.Output );
+            writer.Write( p.State.ToString( ));
          }
 
          serializer.SetData( stream.ToArray() );

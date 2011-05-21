@@ -29,14 +29,17 @@ namespace Detox.ScriptEditor
 
          Socket socket;
 
-         socket = new Socket( );
-         socket.Alignment = Socket.Align.Bottom;
-         socket.InternalName = entityEvent.Instance.Name;
-         socket.FriendlyName = entityEvent.Instance.FriendlyName;
-         socket.Type = entityEvent.Instance.Type;
-         socket.Input  = true;
-         socket.Output = false;
-         sockets.Add( socket );
+         if ( true == entityEvent.Instance.IsVisible( ) )
+         {
+            socket = new Socket( );
+            socket.Alignment = Socket.Align.Bottom;
+            socket.InternalName = entityEvent.Instance.Name;
+            socket.FriendlyName = entityEvent.Instance.FriendlyName;
+            socket.Type = entityEvent.Instance.Type;
+            socket.Input  = true;
+            socket.Output = false;
+            sockets.Add( socket );
+         }
 
          foreach ( Parameter parameter in entityEvent.Parameters )
          {
@@ -45,7 +48,8 @@ namespace Detox.ScriptEditor
             //which means we should only be exposed in the property grid
             //not as a socket
             if ( true == parameter.Input ) continue;
-            
+            if ( true == parameter.IsHidden( ) ) continue;
+
             socket = new Socket( );
             socket.Alignment = Socket.Align.Bottom;
             socket.InternalName = parameter.Name;

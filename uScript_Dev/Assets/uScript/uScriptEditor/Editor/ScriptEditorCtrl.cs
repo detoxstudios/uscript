@@ -49,6 +49,54 @@ namespace Detox.ScriptEditor
          }
       }
 
+      public bool CanExpand
+      {
+         get
+         {
+            foreach ( Node node in m_FlowChart.SelectedNodes )
+            {
+               foreach ( Parameter p in ((DisplayNode)node).EntityNode.Parameters )
+               {
+                  if ( true == CanExpandParameter(p) )
+                  {
+                     return true;
+                  }
+               }
+
+               if ( true == CanExpandParameter(((DisplayNode)node).EntityNode.Instance) )
+               {
+                  return true;
+               }
+            }
+
+            return false;
+         }
+      }
+
+      public bool CanCollapse
+      {
+         get
+         {
+            foreach ( Node node in m_FlowChart.SelectedNodes )
+            {
+               foreach ( Parameter p in ((DisplayNode)node).EntityNode.Parameters )
+               {
+                  if ( true == CanCollapseParameter(node.Guid, p) )
+                  {
+                     return true;
+                  }
+               }
+
+               if ( true == CanCollapseParameter(node.Guid, ((DisplayNode)node).EntityNode.Instance) )
+               {
+                  return true;
+               }
+            }
+
+            return false;
+         }
+      }
+
       private ChangeStack m_ChangeStack = new ChangeStack( );
       
       private PropertyGrid m_PropertyGrid = null;
@@ -669,6 +717,134 @@ namespace Detox.ScriptEditor
          return text.Substring( "[SCRIPTEDITOR]".Length );
       }
 
+      private void ExpandNodes( Node [] nodes )
+      {
+         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+
+         if ( null == nodes ) nodes = m_FlowChart.Nodes;
+
+         foreach ( Node node in nodes )
+         {
+            EntityNode entityNode = ((DisplayNode)node).EntityNode;
+            List<Parameter> parameters = new List<Parameter>( );
+
+            foreach ( Parameter p in entityNode.Parameters )
+            {
+               if ( true == CanExpandParameter(p) )
+               {
+                  Parameter clone = p;
+                  clone.State &= ~Parameter.VisibleState.Hidden;
+                  clone.State |= Parameter.VisibleState.Visible;
+
+                  parameters.Add(clone);
+               }
+               else
+               {
+                  parameters.Add(p);
+               }
+            }
+
+            if ( true == CanExpandParameter(entityNode.Instance) )
+            {
+               Parameter clone = entityNode.Instance;
+               clone.State &= ~Parameter.VisibleState.Hidden;
+               clone.State |= Parameter.VisibleState.Visible;
+
+               entityNode.Instance = clone;
+            }
+
+            entityNode.Parameters = parameters.ToArray( );
+
+            m_ScriptEditor.AddNode( entityNode );
+         }
+
+         m_ChangeStack.AddChange( new ChangeStack.Change("Expand Nodes", oldEditor, m_ScriptEditor.Copy( )) );
+
+         RefreshScript( null );
+      }
+
+      private void CollapseNodes( Node [] nodes )
+      {
+         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+
+         if ( null == nodes ) nodes = m_FlowChart.Nodes;
+         
+         foreach ( Node node in nodes )
+         {
+            EntityNode entityNode = ((DisplayNode)node).EntityNode;
+
+            List<Parameter> parameters = new List<Parameter>( );
+
+            foreach ( Parameter p in entityNode.Parameters )
+            {
+               if ( true == CanCollapseParameter(node.Guid, p) )
+               {
+                  Parameter clone = p;
+                  clone.State &= ~Parameter.VisibleState.Visible;
+                  clone.State |= Parameter.VisibleState.Hidden;
+
+                  parameters.Add(clone);
+               }
+               else
+               {
+                  parameters.Add( p );
+               }
+            }
+
+            if ( true == CanCollapseParameter(node.Guid, entityNode.Instance) )
+            {
+               Parameter clone = entityNode.Instance;
+               clone.State &= ~Parameter.VisibleState.Visible;
+               clone.State |= Parameter.VisibleState.Hidden;
+
+               entityNode.Instance = clone;
+            }
+
+            entityNode.Parameters = parameters.ToArray( );
+
+            m_ScriptEditor.AddNode( entityNode );
+         }
+
+         m_ChangeStack.AddChange( new ChangeStack.Change("Collapse Nodes", oldEditor, m_ScriptEditor.Copy( )) );
+
+         RefreshScript( null );
+      }
+      
+      public bool CanCollapseParameter(Guid guid, Parameter p)
+      {
+         if ( true == p.IsVisible( ) && false == p.IsLocked( ) )
+         {
+            if ( true == p.Input )
+            {
+               if ( m_ScriptEditor.GetLinksByDestination(guid, p.Name).Length > 0 )
+               {
+                  return false;
+               }
+            }
+            if ( true == p.Output )
+            {
+               if ( m_ScriptEditor.GetLinksBySource(guid, p.Name).Length > 0 )
+               {
+                  return false;
+               }
+            }
+
+            return true;
+         }
+
+         return false;
+      }
+
+      public bool CanExpandParameter(Parameter p)
+      {
+         if ( true == p.IsHidden( ) && false == p.IsLocked( ) )
+         {
+            return true;
+         }
+
+         return false;
+      }
+
       private void m_MenuCopy_Click(object sender, EventArgs e)
       {
          CopyToClipboard( );
@@ -677,6 +853,26 @@ namespace Detox.ScriptEditor
       private void m_MenuPaste_Click(object sender, EventArgs e)
       {
          PasteFromClipboard( ContextCursor );
+      }
+
+      private void m_MenuExpand_Click(object sender, EventArgs e)
+      {
+         ExpandNodes( m_FlowChart.SelectedNodes );
+      }
+
+      private void m_MenuCollapse_Click(object sender, EventArgs e)
+      {
+         CollapseNodes( m_FlowChart.SelectedNodes );
+      }
+
+      private void m_MenuExpandAll_Click(object sender, EventArgs e)
+      {
+         ExpandNodes( null );
+      }
+
+      private void m_MenuCollapseAll_Click(object sender, EventArgs e)
+      {
+         CollapseNodes( null );
       }
 
       private void m_MenuAddLinkedVariable_Click(object sender, EventArgs e)
@@ -1366,7 +1562,7 @@ namespace Detox.ScriptEditor
             string name = node.Name;
             if ( ((DisplayNode)node).Deprecated ) name += " ***DEPRECATED, MUST BE REPLACED***";
 
-            PropertyGridParameters parameters = new PropertyGridParameters( name, entityNode ); 
+            PropertyGridParameters parameters = new PropertyGridParameters( name, entityNode, this ); 
             parameters.AddParameters( "Parameters", entityNode.Parameters );
             parameters.AddParameters( "Comment", new Parameter[] {entityNode.ShowComment, entityNode.Comment} );
             parameters.AddParameters( "Instance",new Parameter[] {entityNode.Instance} );
@@ -1539,10 +1735,14 @@ namespace Detox.ScriptEditor
 
          m_ContextMenuStrip.Items.Clear( );
 
-         ToolStripMenuItem addMenu  = new ToolStripMenuItem();
-         ToolStripMenuItem copyMenu = new ToolStripMenuItem();
-         ToolStripMenuItem pasteMenu= new ToolStripMenuItem();
-         ToolStripMenuItem upgradeNode = new ToolStripMenuItem();
+         ToolStripMenuItem addMenu      = new ToolStripMenuItem();
+         ToolStripMenuItem copyMenu     = new ToolStripMenuItem();
+         ToolStripMenuItem pasteMenu    = new ToolStripMenuItem();
+         ToolStripMenuItem upgradeNode  = new ToolStripMenuItem();
+         ToolStripMenuItem collapseMenu = new ToolStripMenuItem();
+         ToolStripMenuItem expandMenu   = new ToolStripMenuItem();
+         ToolStripMenuItem collapseAll  = new ToolStripMenuItem();
+         ToolStripMenuItem expandAll    = new ToolStripMenuItem();
 
          m_ContextMenuStrip.Items.Add( addMenu );
          
@@ -1580,6 +1780,48 @@ namespace Detox.ScriptEditor
          {
             m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
          }
+
+         if ( CanExpand )
+         {
+            expandMenu.Name = "m_ExpandMenu";
+            expandMenu.Size = new System.Drawing.Size(152, 22);
+            expandMenu.Text = "E&xpand Selection";
+            expandMenu.Click += new System.EventHandler(m_MenuExpand_Click);
+
+            m_ContextMenuStrip.Items.Add( expandMenu );
+         }
+
+         if ( CanCollapse )
+         {
+            collapseMenu.Name = "m_CollapseMenu";
+            collapseMenu.Size = new System.Drawing.Size(152, 22);
+            collapseMenu.Text = "Co&llapse Selection";
+            collapseMenu.Click += new System.EventHandler(m_MenuCollapse_Click);
+
+            m_ContextMenuStrip.Items.Add( collapseMenu );
+         }
+
+         if ( CanExpand || CanCollapse )
+         {
+            m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
+         }
+
+         expandAll.Name = "m_ExpandAllMenu";
+         expandAll.Size = new System.Drawing.Size(152, 22);
+         expandAll.Text = "Expand All";
+         expandAll.Click += new System.EventHandler(m_MenuExpandAll_Click);
+
+         m_ContextMenuStrip.Items.Add( expandAll );
+
+         collapseAll.Name = "m_CollapseAllMenu";
+         collapseAll.Size = new System.Drawing.Size(152, 22);
+         collapseAll.Text = "Collapse All";
+         collapseAll.Click += new System.EventHandler(m_MenuCollapseAll_Click);
+
+         m_ContextMenuStrip.Items.Add( collapseAll );
+         
+         m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
+
 
          addMenu.Name = "m_Add";
          addMenu.Size = new System.Drawing.Size(152, 22);
@@ -2325,10 +2567,16 @@ namespace Detox.ScriptEditor
 
    public class PropertyGridParameters
    {
-      public EntityNode EntityNode;
-      public string     Description;
+      public EntityNode       EntityNode;
+      public string           Description;
+      public ScriptEditorCtrl ScriptEditorCtrl;
 
-      public PropertyGridParameters( string description, EntityNode node ) { Description = description; EntityNode = node; }
+      public PropertyGridParameters( string description, EntityNode node, ScriptEditorCtrl scriptCtrl ) 
+      { 
+         Description      = description; 
+         EntityNode       = node; 
+         ScriptEditorCtrl = scriptCtrl;      
+      }
 
       public Parameter[] GetParameters( string key )
       {

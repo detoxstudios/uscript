@@ -2787,6 +2787,7 @@ http://www.detoxstudios.com";
                   variable.Output = false;
                }
 
+               variable.State  = FindSocketState(p.GetCustomAttributes(false));
                variable.Name   = p.Name;
                variable.Type   = p.ParameterType.ToString( ).Replace( "&", "" );
                variable.FriendlyName = FindFriendlyName( p.Name, p.GetCustomAttributes(false) );
@@ -2805,6 +2806,7 @@ http://www.detoxstudios.com";
                parameter.Input   = false;
                parameter.Output  = true;         
                parameter.Default = "";
+               parameter.State   = FindSocketState(m.GetCustomAttributes(false));
                parameter.FriendlyName = "Return Value";
 
                AddType( m.ReturnType );
@@ -2894,9 +2896,10 @@ http://www.detoxstudios.com";
          foreach ( ParameterInfo p in parameterInfos )
          {
             Parameter parameter = new Parameter( );
-            parameter.Name    = p.Name;
+            parameter.State     = FindSocketState(p.GetCustomAttributes(false));
+            parameter.Name      = p.Name;
+            parameter.Type      = p.ParameterType.ToString( ).Replace( "&", "" );
             parameter.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
-            parameter.Type    = p.ParameterType.ToString( ).Replace( "&", "" );
 
             if ( true == p.IsOut )
             {
@@ -2924,6 +2927,7 @@ http://www.detoxstudios.com";
          if ( m.ReturnType != typeof(void) )
          {
             Parameter parameter = new Parameter( );
+            parameter.State   = FindSocketState(m.GetCustomAttributes(false));
             parameter.Name    = "Return";
             parameter.Type    = m.ReturnType.ToString( ).Replace( "&", "" );
             parameter.Input   = false;
@@ -2960,13 +2964,14 @@ http://www.detoxstudios.com";
             {
                Parameter input = new Parameter( );
                
+               input.State    = FindSocketState(p.GetCustomAttributes(false));;
                input.Name     = p.Name;
-               input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
                input.Type    = p.PropertyType.ToString( ).Replace( "&", "" );
                input.Input   = true;
                input.Output  = false;
                input.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
-
+               input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
+               
                AddType( p.PropertyType );
             
                eventInputsOutpus.Add( input );
@@ -3003,6 +3008,7 @@ http://www.detoxstudios.com";
                         foreach ( PropertyInfo eventProperty in eventProperties )
                         {
                            Parameter output = new Parameter( );
+                           output.State   = FindSocketState(eventProperty.GetCustomAttributes(false));;
                            output.Name    = eventProperty.Name;
                            output.FriendlyName = FindFriendlyName(eventProperty.Name, eventProperty.GetCustomAttributes(false));
                            output.Type    = eventProperty.PropertyType.ToString( ).Replace( "&", "" );
@@ -3418,6 +3424,29 @@ http://www.detoxstudios.com";
       }
 
       return defaultValue;
+   }
+
+   public static Parameter.VisibleState FindSocketState(object [] attributes)
+   {
+      if ( null != attributes ) 
+      {
+         foreach ( object a in attributes )
+         {
+            if ( a is SocketState ) 
+            {
+               SocketState s = (SocketState) a;
+
+               Parameter.VisibleState state = Parameter.VisibleState.Visible;
+
+               if ( false == s.Visible ) state = Parameter.VisibleState.Hidden;
+               if ( true  == s.Locked ) state |= Parameter.VisibleState.Locked;
+
+               return state;
+            }
+         }
+      }
+
+      return Parameter.VisibleState.Visible;;
    }
 
    public static bool FindDrivenAttribute(object [] attributes)

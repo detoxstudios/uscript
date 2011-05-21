@@ -18,6 +18,19 @@ public class DefaultValue : Attribute
    public object Default;
 }
 
+[AttributeUsage(AttributeTargets.ReturnValue | AttributeTargets.Parameter)]
+public class SocketState : Attribute
+{
+   public bool Visible = false;
+   public bool Locked  = false;
+
+   public SocketState(bool visible, bool locked) 
+   {
+      Visible = visible;
+      Locked  = locked;
+   }
+}
+
 [AttributeUsage(AttributeTargets.All)]
 public class FriendlyName : Attribute
 {

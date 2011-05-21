@@ -64,14 +64,27 @@ namespace Detox.ScriptEditor
 
    public struct Parameter
    {
+      [Flags]
+      public enum VisibleState
+      {
+         Visible = 0x1,
+         Hidden  = 0x2,
+         Locked  = 0x4,
+      }
+
       public static Parameter Empty;
 
-      public string Name;
-      public string FriendlyName;
-      public string Default;
-      public string Type;
-      public bool   Input;
-      public bool   Output;
+      public VisibleState State;
+      public string       Name;
+      public string       FriendlyName;
+      public string       Default;
+      public string       Type;
+      public bool         Input;
+      public bool         Output;
+
+      public bool IsVisible( ) { return 0 != (State & VisibleState.Visible); }
+      public bool IsHidden( )  { return 0 != (State & VisibleState.Hidden); }
+      public bool IsLocked( )  { return 0 != (State & VisibleState.Locked); }
 
       public object DefaultAsObject
       {
@@ -348,6 +361,7 @@ namespace Detox.ScriptEditor
          if ( a.Name   != b.Name    ) return false; 
          if ( a.Type   != b.Type    ) return false; 
          if ( a.Default!= b.Default ) return false; 
+         if ( a.State  != b.State   ) return false;
          if ( a.FriendlyName != b.FriendlyName ) return false; 
          
          return true;
@@ -377,6 +391,7 @@ namespace Detox.ScriptEditor
          data.Default = Default;
          data.Name    = Name;
          data.Type    = Type;
+         data.State   = State != 0 ? (Detox.Data.ScriptEditor.Parameter.VisibleState) (int) State : Detox.Data.ScriptEditor.Parameter.VisibleState.Visible;
          data.FriendlyName = FriendlyName;
 
          return data;
@@ -389,6 +404,7 @@ namespace Detox.ScriptEditor
          Default = parameterData.Default;
          Name    = parameterData.Name;
          Type    = parameterData.Type;
+         State   = parameterData.State != 0 ? (Parameter.VisibleState) parameterData.State : Parameter.VisibleState.Visible;
          FriendlyName = parameterData.FriendlyName;
       }
    }
@@ -435,6 +451,7 @@ namespace Detox.ScriptEditor
                   clone.Output  = s.Output;
                   clone.Type    = s.Type;
                   clone.Name    = s.Name;
+                  clone.State   = s.State;
 
                   parameters.Add( clone );                  
                   found = true;
@@ -767,7 +784,8 @@ namespace Detox.ScriptEditor
          Name.Type    = "String";
          Name.Input   = true;
          Name.Output  = false;
-      
+         Name.State   = Parameter.VisibleState.Visible;
+
          m_ShowComment = new Parameter( );
          m_ShowComment.Name    = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
@@ -775,6 +793,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Type    = "Bool";
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
+         m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
 
          m_Comment = new Parameter( );
          m_Comment.Name    = "Comment";
@@ -783,6 +802,7 @@ namespace Detox.ScriptEditor
          m_Comment.Type    = "String";
          m_Comment.Input   = true;
          m_Comment.Output  = false;
+         m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
       }
    }
 
@@ -1002,10 +1022,11 @@ namespace Detox.ScriptEditor
          ComponentType = type;
 
          m_Instance.Default = "";
-         m_Instance.Type = typeof(UnityEngine.GameObject).ToString( );
-         m_Instance.Input = true;
+         m_Instance.Type   = typeof(UnityEngine.GameObject).ToString( );
+         m_Instance.Input  = true;
          m_Instance.Output = false;
-         m_Instance.Name = "Instance";
+         m_Instance.State  = Parameter.VisibleState.Visible;
+         m_Instance.Name   = "Instance";
          m_Instance.FriendlyName = "Instance";
          
          m_ShowComment = new Parameter( );
@@ -1013,6 +1034,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
          m_ShowComment.Type    = "Bool";
+         m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
 
@@ -1023,6 +1045,7 @@ namespace Detox.ScriptEditor
          m_Comment.Type    = "String";
          m_Comment.Input   = true;
          m_Comment.Output  = false;
+         m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
 
          m_Guid = Guid.NewGuid( );
 
@@ -1137,6 +1160,7 @@ namespace Detox.ScriptEditor
          m_Guid     = Guid.NewGuid( );
 
          m_TitleText = new Parameter( );
+         m_TitleText.State = Parameter.VisibleState.Visible;
          m_TitleText.Name = "Title";
          m_TitleText.FriendlyName = "Comment";
          m_TitleText.Default = "Comment";
@@ -1145,6 +1169,7 @@ namespace Detox.ScriptEditor
          m_TitleText.Output = false;
 
          m_TitleTextColor = new Parameter( );
+         m_TitleTextColor.State = Parameter.VisibleState.Visible;
          m_TitleTextColor.Name = "TitleColor";
          m_TitleTextColor.FriendlyName = "Title Color";
          m_TitleTextColor.Default = "50, 50, 127";
@@ -1153,6 +1178,7 @@ namespace Detox.ScriptEditor
          m_TitleTextColor.Output = false;
 
          m_BodyText = new Parameter( );
+         m_BodyText.State = Parameter.VisibleState.Visible;
          m_BodyText.Name = "Body";
          m_BodyText.FriendlyName = "Body";
          m_BodyText.Default = "";
@@ -1161,6 +1187,7 @@ namespace Detox.ScriptEditor
          m_BodyText.Output = false;
 
          m_BodyTextColor = new Parameter( );
+         m_BodyTextColor.State = Parameter.VisibleState.Visible;
          m_BodyTextColor.Name = "BodyColor";
          m_BodyTextColor.FriendlyName = "Body Color";
          m_BodyTextColor.Default = "50, 127, 50";
@@ -1169,6 +1196,7 @@ namespace Detox.ScriptEditor
          m_BodyTextColor.Output = false;
 
          m_NodeColor = new Parameter( );
+         m_NodeColor.State = Parameter.VisibleState.Visible;
          m_NodeColor.Name = "NodeColor";
          m_NodeColor.FriendlyName = "Node Color";
          m_NodeColor.Default = "127, 127, 127";
@@ -1177,6 +1205,7 @@ namespace Detox.ScriptEditor
          m_NodeColor.Output = false;
 
          m_Size.Name  = "Size";
+         m_Size.State = Parameter.VisibleState.Visible;
          m_Size.FriendlyName = "Size";
          m_Size.Type  = "Int[]";
          m_Size.Input = true;
@@ -1321,7 +1350,8 @@ namespace Detox.ScriptEditor
 
          ComponentType = type;
 
-         m_Instance.Name = "Instance";
+         m_Instance.Name  = "Instance";
+         m_Instance.State = Parameter.VisibleState.Visible;
          m_Instance.FriendlyName = "Instance";
          m_Instance.Type    = typeof(UnityEngine.GameObject).ToString( );
          m_Instance.Input   = true;
@@ -1334,6 +1364,7 @@ namespace Detox.ScriptEditor
          m_Parameters  = new Parameter[ 0 ];
 
          m_ShowComment = new Parameter( );
+         m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_ShowComment.Name    = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
@@ -1342,6 +1373,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Output  = false;
 
          m_Comment = new Parameter( );
+         m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Comment.Name    = "Comment";
          m_Comment.FriendlyName = "Comment";
          m_Comment.Default = "";
@@ -1482,6 +1514,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Type    = "Bool";
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
+         m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
 
          m_Comment = new Parameter( );
          m_Comment.Name    = "Comment";
@@ -1490,6 +1523,7 @@ namespace Detox.ScriptEditor
          m_Comment.Type    = "String";
          m_Comment.Input   = true;
          m_Comment.Output  = false;
+         m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
       }
    }
 
@@ -1573,6 +1607,7 @@ namespace Detox.ScriptEditor
       { 
          m_Instance.Name   = "Instance";
          m_Instance.FriendlyName = "Instance";
+         m_Instance.State  = Parameter.VisibleState.Visible;
          m_Instance.Type   = entityType;
          m_Instance.Input  = true;
          m_Instance.Output = false;
@@ -1580,6 +1615,7 @@ namespace Detox.ScriptEditor
 
          m_Parameter = new Parameter( );
          m_Parameter.Name    = name;
+         m_Parameter.State   = Parameter.VisibleState.Visible;
          m_Parameter.FriendlyName = friendlyName;
          m_Parameter.Input   = input;
          m_Parameter.Output  = output;
@@ -1681,12 +1717,14 @@ namespace Detox.ScriptEditor
       { 
          m_Value.Default = defaultValue;
          m_Value.FriendlyName = "Value";
+         m_Value.State   = Parameter.VisibleState.Visible;
          m_Value.Input   = true;
          m_Value.Output  = true;
          m_Value.Name    = "Value";
          m_Value.Type    = type;
 
          m_Name.Default = name;
+         m_Name.State   = Parameter.VisibleState.Visible;
          m_Name.Input   = true;
          m_Name.Output  = false;
          m_Name.Name    = "Name";
@@ -2530,6 +2568,36 @@ namespace Detox.ScriptEditor
 
             }
          }
+      }
+
+      public LinkNode []GetLinksByDestination(Guid destGuid, string destAnchor)
+      {
+         List<LinkNode> links = new List<LinkNode>( );
+
+         foreach ( LinkNode link in this.Links )
+         {
+            if ( link.Destination.Guid == destGuid && link.Destination.Anchor == destAnchor )
+            {
+               links.Add( link );
+            }
+         }
+
+         return links.ToArray( );
+      }
+
+      public LinkNode []GetLinksBySource(Guid sourceGuid, string sourceAnchor)
+      {
+         List<LinkNode> links = new List<LinkNode>( );
+
+         foreach ( LinkNode link in this.Links )
+         {
+            if ( link.Source.Guid == sourceGuid && link.Source.Anchor == sourceAnchor )
+            {
+               links.Add( link );
+            }
+         }
+
+         return links.ToArray( );
       }
 
       public EntityNode GetNode(Guid guid)

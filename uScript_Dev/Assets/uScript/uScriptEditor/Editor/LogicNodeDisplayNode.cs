@@ -64,6 +64,8 @@ namespace Detox.ScriptEditor
 
          foreach ( Parameter parameter in logicNode.Parameters )
          {
+            if ( true == parameter.IsHidden( ) ) continue;
+
             Socket socket = new Socket( );
             socket.Alignment = Socket.Align.Bottom;
             socket.InternalName = parameter.Name;

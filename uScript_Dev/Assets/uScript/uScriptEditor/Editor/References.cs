@@ -330,8 +330,6 @@ namespace System.Windows.Forms
       {
          bool signalUpdate = false;
 
-         bool _tmpFieldEnabled = true;  // When the field is enabled, the socket must be hidden
-
          foreach ( object selectedObject in SelectedObjects )
          {
             PropertyGridParameters parameters = selectedObject as PropertyGridParameters;
@@ -343,7 +341,7 @@ namespace System.Windows.Forms
                {
                   foreach ( Parameter p in parameters.Parameters )
                   {
-                     if ( false == p.Input )
+                     if ( p == Parameter.Empty ) 
                      {
                         updatedParameters.Add(  p );
                         continue;
@@ -351,59 +349,88 @@ namespace System.Windows.Forms
 
                      object val = p.DefaultAsObject;
 
+                     bool isVisible  = p.IsVisible( );
+                     bool isReadOnly = false == p.Input;
+                     bool toggleLock = true == p.IsLocked( );
+
+                     if ( false == toggleLock )
+                     {
+                        if ( false == parameters.ScriptEditorCtrl.CanCollapseParameter(parameters.EntityNode.Guid, p) &&
+                             false == parameters.ScriptEditorCtrl.CanExpandParameter(p) )
+                        {
+                           toggleLock = true;
+                        }
+                     }
+
                      if ( val.GetType() == typeof(System.Boolean) )
                      {
-                        val = uScriptGUI.BoolField(p.FriendlyName, (bool) val, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.BoolField(p.FriendlyName, (bool) val, ref isVisible, toggleLock, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(System.Int32) )
                      {
-                        val = uScriptGUI.IntField(p.FriendlyName, (int) val, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.IntField(p.FriendlyName, (int) val, ref isVisible, toggleLock, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(System.Single) )
                      {
-                        val = uScriptGUI.FloatField(p.FriendlyName, (float) val, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.FloatField(p.FriendlyName, (float) val, ref isVisible, toggleLock, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(Vector2) )
                      {
-                        val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2) val, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2) val, ref isVisible, toggleLock, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(Vector3) )
                      {
-                        val = uScriptGUI.Vector3Field(p.FriendlyName, (Vector3) val, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.Vector3Field(p.FriendlyName, (Vector3) val, ref isVisible, toggleLock, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(Vector4) )
                      {
-                        val = uScriptGUI.Vector4Field(p.FriendlyName, (Vector4) val, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.Vector4Field(p.FriendlyName, (Vector4) val, ref isVisible, toggleLock, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(Quaternion) )
                      {
-                        val = uScriptGUI.QuaternionField(p.FriendlyName, (Quaternion) val, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.QuaternionField(p.FriendlyName, (Quaternion) val, ref isVisible, toggleLock, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(UnityEngine.Color) )
                      {
-                        val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color) val, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color) val, ref isVisible, toggleLock, isReadOnly);
                      }
                      else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
                      {
-                        val = uScriptGUI.EnumTextField(p.FriendlyName, (System.Enum) val, p.Default, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.EnumTextField(p.FriendlyName, (System.Enum) val, p.Default, ref isVisible, toggleLock, isReadOnly);
                      }
                      else if ( null != GetObjectFieldType(p.Type) )
                      {
-                        val = uScriptGUI.ObjectTextField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.ObjectTextField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref isVisible, toggleLock, isReadOnly);
                      }
                      else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "TextArea" )
                      {
-                        val = uScriptGUI.TextArea(p.FriendlyName, p.Default, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.TextArea(p.FriendlyName, p.Default, ref isVisible, toggleLock, isReadOnly);
                      }
                      else
                      {
-                        val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref _tmpFieldEnabled, false);
+                        val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isVisible, toggleLock, isReadOnly);
                      }
 
                      Parameter cloned = p;
+                     
+                     //remove the old states
+                     cloned.State &= ~Parameter.VisibleState.Visible;
+                     cloned.State &= ~Parameter.VisibleState.Hidden;
+
+                     //add it back in if selected
+                     if ( true == isVisible )
+                     {
+                        cloned.State |= Parameter.VisibleState.Visible;
+                     }
+                     else
+                     {
+                        cloned.State |= Parameter.VisibleState.Hidden;
+                     }
+
                      cloned.DefaultAsObject = val;
 
                      signalUpdate |= cloned.Default != p.Default;
+                     signalUpdate |= cloned.State   != p.State;
                      updatedParameters.Add( cloned );
                   }
 

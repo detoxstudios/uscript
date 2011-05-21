@@ -188,29 +188,32 @@ public static class uScriptGUI
          Separator();
       }
    }
+   
 
-
-   static void BeginRow(string label, ref bool enabled, bool locked)
+   static void BeginRow(string label, ref bool enabled, bool locked, bool isReadOnly)
    {
       EditorGUILayout.BeginHorizontal();
       //GUILayout.Space(EditorGUI.indentLevel * 15);
-      if (enabled && locked)
+      if (locked && false == enabled)
       {
          GUILayout.Space(_columnEnabled.Width + 4);
       }
       else
       {
-         if (locked)
-         {
-            GUI.enabled = enabled;
-         }
+         //if (locked)
+         //{
+         //   GUI.enabled = enabled;
+         //}
+
+         GUI.enabled = false == locked;
          enabled = GUILayout.Toggle(enabled, string.Empty, _styleEnabled, GUILayout.Width(_columnEnabled.Width));
          GUI.enabled = true;
       }
       //EditorGUIUtility.LookLikeInspector();
       EditorGUIUtility.LookLikeControls(_columnLabel.Width);
       EditorGUILayout.PrefixLabel(label, _styleLabel);
-      GUI.enabled = enabled;
+      
+      GUI.enabled = false == isReadOnly;
    }
 
 
@@ -226,14 +229,14 @@ public static class uScriptGUI
    }
 
 
-   public static int IntField(string label, int value, ref bool enabled, bool locked)
+   public static int IntField(string label, int value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      return IntField(label, value, ref enabled, locked, int.MinValue, int.MaxValue);
+      return IntField(label, value, ref enabled, locked, isReadOnly, int.MinValue, int.MaxValue);
    }
 
-   public static int IntField(string label, int value, ref bool enabled, bool locked, int min, int max)
+   public static int IntField(string label, int value, ref bool enabled, bool locked, bool isReadOnly, int min, int max)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.IntField(value, GUILayout.Width(_columnValue.Width));
@@ -243,9 +246,9 @@ public static class uScriptGUI
    }
 
 
-   public static float FloatField(string label, float value, ref bool enabled, bool locked)
+   public static float FloatField(string label, float value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.FloatField(value, GUILayout.Width(_columnValue.Width));
@@ -255,9 +258,9 @@ public static class uScriptGUI
    }
 
 
-   public static string TextField(string label, string value, ref bool enabled, bool locked)
+   public static string TextField(string label, string value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.TextField(value, GUILayout.Width(_columnValue.Width));
@@ -267,9 +270,9 @@ public static class uScriptGUI
    }
 
 
-   public static string TextArea(string label, string value, ref bool enabled, bool locked)
+   public static string TextArea(string label, string value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.TextArea(value, GUILayout.Width(_columnValue.Width));
@@ -279,9 +282,9 @@ public static class uScriptGUI
    }
 
 
-   public static bool BoolField(string label, bool value, ref bool enabled, bool locked)
+   public static bool BoolField(string label, bool value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.Toggle(value, GUILayout.Width(_columnValue.Width));
@@ -291,9 +294,9 @@ public static class uScriptGUI
    }
 
 
-   public static UnityEngine.Color ColorField(string label, Color value, ref bool enabled, bool locked)
+   public static UnityEngine.Color ColorField(string label, Color value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.ColorField(value, GUILayout.Width(_columnValue.Width));
@@ -318,9 +321,9 @@ public static class uScriptGUI
    }
 
 
-   public static Vector2 Vector2Field(string label, Vector2 value, ref bool enabled, bool locked)
+   public static Vector2 Vector2Field(string label, Vector2 value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       int spacing = 4; // 4 * 1
       int w = (_columnValue.Width - spacing) / 2;
@@ -335,9 +338,9 @@ public static class uScriptGUI
    }
 
 
-   public static Vector3 Vector3Field(string label, Vector3 value, ref bool enabled, bool locked)
+   public static Vector3 Vector3Field(string label, Vector3 value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       int spacing = 8; // 4 * 2
       int w = (_columnValue.Width - spacing) / 3;
@@ -351,9 +354,9 @@ public static class uScriptGUI
    }
 
 
-   public static Vector4 Vector4Field(string label, Vector4 value, ref bool enabled, bool locked)
+   public static Vector4 Vector4Field(string label, Vector4 value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       int spacing = 12; // 4 * 3
       int w = (_columnValue.Width - spacing) / 4;
@@ -368,9 +371,9 @@ public static class uScriptGUI
    }
 
 
-   public static Rect RectField(string label, Rect value, ref bool enabled, bool locked)
+   public static Rect RectField(string label, Rect value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       int spacing = 12; // 4 * 3
       int w = (_columnValue.Width - spacing) / 4;
@@ -385,9 +388,9 @@ public static class uScriptGUI
    }
 
 
-   public static Quaternion QuaternionField(string label, Quaternion value, ref bool enabled, bool locked)
+   public static Quaternion QuaternionField(string label, Quaternion value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       int spacing = 12; // 4 * 3
       int w = (_columnValue.Width - spacing) / 4;
@@ -402,9 +405,9 @@ public static class uScriptGUI
    }
 
 
-   public static System.Enum EnumField(string label, System.Enum value, ref bool enabled, bool locked)
+   public static System.Enum EnumField(string label, System.Enum value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       //int spacing = 12; // 4 * 3
       //int w = (_columnValue.Width - spacing) / 4;
@@ -421,11 +424,11 @@ public static class uScriptGUI
    }
 
 
-   public static System.Enum EnumTextField(string label, System.Enum value, string textValue, ref bool enabled, bool locked)
+   public static System.Enum EnumTextField(string label, System.Enum value, string textValue, ref bool enabled, bool locked, bool isReadOnly)
    {
       EditorGUILayout.BeginVertical();
       {
-         BeginRow(label, ref enabled, locked);
+         BeginRow(label, ref enabled, locked, isReadOnly);
 
          //first show the text field and get back the same (or changed value)
          string userText = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
@@ -439,7 +442,7 @@ public static class uScriptGUI
          EndRow(textValue.GetType().ToString());
 
 
-         BeginRow(string.Empty, ref enabled, true);
+         BeginRow(string.Empty, ref enabled, true, isReadOnly);
 
          //send the new value to the enum popup and whatever it
          //returns (in case the user modified it here) is what our final value is
@@ -452,11 +455,11 @@ public static class uScriptGUI
    }
 
 
-   public static string ObjectTextField(string label, UnityEngine.Object value, Type type, string textValue, ref bool enabled, bool locked)
+   public static string ObjectTextField(string label, UnityEngine.Object value, Type type, string textValue, ref bool enabled, bool locked, bool isReadOnly)
    {
       EditorGUILayout.BeginVertical();
       {
-         BeginRow(label, ref enabled, locked);
+         BeginRow(label, ref enabled, locked, isReadOnly);
 
          // game objects are held/treated as strings
          // but we will custom convert them to actual game objects (if they exist)
@@ -468,7 +471,7 @@ public static class uScriptGUI
          EndRow(textValue.GetType().ToString());
 
 
-         BeginRow(string.Empty, ref enabled, true);
+         BeginRow(string.Empty, ref enabled, true, isReadOnly);
 
          // now try and update the object browser with an instance of the specified object
          UnityEngine.Object []objects   = UnityEngine.Object.FindObjectsOfType(type);
@@ -504,7 +507,7 @@ public static class uScriptGUI
    }
 
 
-   public static T[] ArrayFoldout<T>(string label, T[] array, ref bool foldout, ref bool enabled, bool locked)
+   public static T[] ArrayFoldout<T>(string label, T[] array, ref bool foldout, ref bool enabled, bool locked, bool isReadOnly)
    {
       T[] newArray = array;
       int arraySize;
@@ -551,7 +554,7 @@ public static class uScriptGUI
          {
             EditorGUI.indentLevel += 3;
 
-            BeginRow("Size", ref enabled, true);
+            BeginRow("Size", ref enabled, true, true);
 
 
 
@@ -631,7 +634,7 @@ public static class uScriptGUI
                   entry = array[i];
                }
                bool tmpBool = true;
-               newArray[i] = PropertyRow<T>("Element " + i, entry, ref tmpBool, true);
+               newArray[i] = PropertyRow<T>("Element " + i, entry, ref tmpBool, true, true);
             }
 
             EditorGUI.indentLevel -= 3;
@@ -665,9 +668,9 @@ public static class uScriptGUI
       return size;
    }
 
-   public static T PropertyRow<T>(string label, T value, ref bool enabled, bool locked)
+   public static T PropertyRow<T>(string label, T value, ref bool enabled, bool locked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked);
+      BeginRow(label, ref enabled, locked, isReadOnly);
 
       if (value is int)
       {

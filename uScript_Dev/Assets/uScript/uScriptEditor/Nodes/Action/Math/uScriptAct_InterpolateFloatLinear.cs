@@ -31,10 +31,10 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       [FriendlyName("Start Value")] float startValue, 
       [FriendlyName("End Value")] float endValue, 
       [FriendlyName("Time")] float time, 
-      [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
-      [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Loop Count")] int loopCount, 
-      [FriendlyName("Output Value")] out float currentValue
+      [FriendlyName("Loop Type")] [SocketState(false, false)] uScript_Lerper.LoopType loopType, 
+      [FriendlyName("Loop Delay")] [SocketState(false, false)] float loopDelay, 
+      [FriendlyName("Loop Count")] [SocketState(false, false)] int loopCount, 
+      [FriendlyName("Output Value")] [SocketState(true, true)] out float currentValue
    )
    {
       m_Lerper.Set( time, loopType, loopDelay, loopCount );
@@ -67,10 +67,10 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       [FriendlyName("Start Value")] float startValue, 
       [FriendlyName("End Value")] float endValue, 
       [FriendlyName("Time")] float time, 
-      [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
-      [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Loop Count")] int loopCount, 
-      [FriendlyName("Output Value")] out float currentValue
+      [FriendlyName("Loop Type")] [SocketState(false, false)] uScript_Lerper.LoopType loopType, 
+      [FriendlyName("Loop Delay")] [SocketState(false, false)] float loopDelay, 
+      [FriendlyName("Loop Count")] [SocketState(false, false)] int loopCount, 
+      [FriendlyName("Output Value")] [SocketState(true, true)] out float currentValue
    )
    {
       m_Lerper.Stop( );
@@ -82,10 +82,10 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       [FriendlyName("Start Value")] float startValue, 
       [FriendlyName("End Value")] float endValue, 
       [FriendlyName("Time")] float time, 
-      [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
-      [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Loop Count")] int loopCount, 
-      [FriendlyName("Output Value")] out float currentValue
+      [FriendlyName("Loop Type")] [SocketState(false, false)] uScript_Lerper.LoopType loopType, 
+      [FriendlyName("Loop Delay")] [SocketState(false, false)] float loopDelay, 
+      [FriendlyName("Loop Count")] [SocketState(false, false)] int loopCount, 
+      [FriendlyName("Output Value")] [SocketState(true, true)] out float currentValue
    )
    {
       m_Lerper.Resume( );
