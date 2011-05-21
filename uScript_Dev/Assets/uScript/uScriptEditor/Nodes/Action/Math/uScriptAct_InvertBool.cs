@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Inverse a boolean variable to its opposite value.")]
-[NodeDescription("Inverse a boolean variable to its opposite value. Example: 'true' becomes 'false'")]
+[NodeDescription("Inverse a boolean variable to its opposite value.\n \nTarget: Value to invert.\nValue (out): Inverted value (true -> false or false -> true).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -20,7 +20,6 @@ public class uScriptAct_InvertBool : uScriptLogic
 
    public void In(bool Target, out bool Value)
    {
-
       if (Target)
       {
          Value = false;
@@ -29,6 +28,5 @@ public class uScriptAct_InvertBool : uScriptLogic
       {
          Value = true;
       }
-
    }
 }

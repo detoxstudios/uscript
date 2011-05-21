@@ -103,7 +103,7 @@ public class uScript_Lerper
          }
 
          //done running? see if we should loop and restart
-         if ( false == m_Running && m_LoopIteration < m_LoopCount )
+         if ( false == m_Running && ( m_LoopIteration < m_LoopCount || m_LoopCount == -1) )
          {
             m_LoopRestartCountdown = m_LoopDelay;
 

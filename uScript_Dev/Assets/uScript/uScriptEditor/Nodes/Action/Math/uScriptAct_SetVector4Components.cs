@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a Vector4 to the defined X, Y, Z and W float component values.")]
-[NodeDescription("Sets a Vector4 to the defined X, Y, Z and W float component values.")]
+[NodeDescription("Sets a Vector4 to the defined X, Y, Z and W float component values.\n \nX: X value to use for the Output Vector.\nY: Y value to use for the Output Vector.\nZ: Z value to use for the Output Vector.\nW: W value to use for the Output Vector.\nOutput Vector4 (out): Vector4 variable built from the specified X, Y, Z, and W.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -22,7 +22,6 @@ public class uScriptAct_SetVector4Components : uScriptLogic
    // Do logic here
    public void In(float X, float Y, float Z, float W, [FriendlyName("Output Vector4")] out Vector4 OutputVector4)
    {
-      Vector4 tempVector4 = new Vector4(X, Y, Z, W);
-      OutputVector4 = tempVector4;
+      OutputVector4 = new Vector4(X, Y, Z, W);
    }
 }

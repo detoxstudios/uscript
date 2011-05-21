@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Mirrors the X, Y, Z and W of a Vector4.")]
-[NodeDescription("Mirrors the X, Y, Z and W of a Vector4.")]
+[NodeDescription("Mirrors the X, Y, Z and W of a Vector4.\n \nTarget: Value to invert.\nIgnore X: Whether or not to mirror the X component of the Target.\nIgnore Y: Whether or not to mirror the Y component of the Target.\nIgnore Z: Whether or not to mirror the Z component of the Target.\nIgnore W: Whether or not to mirror the W component of the Target.\nValue (out): Inverted value ([x, y, z, w] -> [-x, -y, -z, -w]).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -27,65 +27,30 @@ public class uScriptAct_InvertVector4 : uScriptLogic
       out Vector4 Value
       )
    {
-      float newX = Target.x;
-      float newY = Target.y;
-      float newZ = Target.z;
-      float newW = Target.w;
+      Value = new Vector4(Target.x, Target.y, Target.z, Target.w);
 
       // Mirror X axis
       if (!IgnoreX)
       {
-         if (newX > 0F)
-         {
-            newX = System.Math.Abs(newX) * (-1F);
-         }
-         else
-         {
-            newX = System.Math.Abs(newX);
-         }
+         Value.x = -Value.x;
       }
 
       // Mirror Y axis
       if (!IgnoreY)
       {
-         if (newY > 0F)
-         {
-            newY = System.Math.Abs(newY) * (-1F);
-         }
-         else
-         {
-            newY = System.Math.Abs(newY);
-         }
+         Value.y = -Value.y;
       }
 
       // Mirror Z axis
       if (!IgnoreZ)
       {
-         if (newZ > 0F)
-         {
-            newZ = System.Math.Abs(newZ) * (-1F);
-         }
-         else
-         {
-            newZ = System.Math.Abs(newZ);
-         }
+         Value.z = -Value.z;
       }
 
-      // Mirror W axis
+      // Mirror W
       if (!IgnoreW)
       {
-         if (newW > 0F)
-         {
-            newW = System.Math.Abs(newW) * (-1F);
-         }
-         else
-         {
-            newW = System.Math.Abs(newW);
-         }
+         Value.w = -Value.w;
       }
-
-      // Output the mirrored axis values into a new Vector3
-      Value = new Vector4(newX, newY, newZ, newW);
-
    }
 }

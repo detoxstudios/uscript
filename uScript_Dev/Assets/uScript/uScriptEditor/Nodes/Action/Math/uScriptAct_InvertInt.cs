@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Takes any non-zero target integer and outputs its inverse version.")]
-[NodeDescription("Takes any non-zero target integer and outputs its inverse version. Example: -2 becomes 2")]
+[NodeDescription("Takes any non-zero target integer and outputs its inverse version.\n \nTarget: Value to invert.\nValue (out): Inverted value (3 -> -3 or -1 -> 1).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -22,23 +22,11 @@ public class uScriptAct_InvertInt : uScriptLogic
    {
       if (Target != 0)
       {
-         int newInt;
-
-         if (Target > 0)
-         {
-            newInt = System.Math.Abs(Target) * (-1);
-         }
-         else
-         {
-            newInt = System.Math.Abs(Target);
-         }
-
-         Value = newInt;
+         Value = -Target;
       }
       else
       {
          Value = 0;
       }
-
    }
 }
