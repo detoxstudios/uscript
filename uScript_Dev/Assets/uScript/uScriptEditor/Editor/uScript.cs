@@ -1297,6 +1297,8 @@ http://www.detoxstudios.com";
             categories.Add("Variables", new Dictionary<string, List<DisplayNode>>());
             categories.Add("Miscellaneous", new Dictionary<string, List<DisplayNode>>());
 
+            // @TODO: clean up this code
+            
             foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
             {
                displayNode = node as DisplayNode;
