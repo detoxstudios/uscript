@@ -400,7 +400,7 @@ namespace Detox.FlowChart
             }
 
             if ( false == pointSourced && false == m_NodeMouseTracking )
-            {
+            {                  
                //change selection state
                if (!node.Selected && false == Control.ModifierKeys.Contains(Keys.Shift))
                {
@@ -480,6 +480,8 @@ namespace Detox.FlowChart
       //the node, which will have the mouse coords in node space
       private void FlowChartCtrl_NodeMouseMove(object sender, MouseEventArgs e)
       {
+         if ( e.Button != MouseButtons.Left ) return;
+
          if ( false == InMoveMode && null == m_StartLinkNode )
          {
             if ( false == m_NodeMouseSizing )
@@ -744,6 +746,7 @@ namespace Detox.FlowChart
             }
          }
 
+         m_NodeMouseTracking = false;
          m_StartLinkNode = null;
          m_StartMarquee  = Point.Empty;
 

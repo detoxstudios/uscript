@@ -494,7 +494,10 @@ http://www.detoxstudios.com";
       }
       m_WantsClose = false;
 
-      if ( false == contextActive )
+      //we can't ignore if the context menu is up
+      //because we need to send the mouse up
+      //after it has been activated
+      //if ( false == contextActive )
       {
          if ( null != m_MouseDownArgs )
          {
@@ -572,7 +575,10 @@ http://www.detoxstudios.com";
          m_AddVariableNode = "";
       }
 
-      OnMouseMove( );
+      if ( false == contextActive )
+      {
+         OnMouseMove( );
+      }
    }
 
 
@@ -899,8 +905,10 @@ http://www.detoxstudios.com";
       {
          if ( true == m_MouseDown )
          {
-            m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
+            m_MouseDownArgs = null;
+            m_MouseDown = false;
 
+            m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
             m_MouseUpArgs.Button = MouseButtons.Left;
             m_MouseUpArgs.X = (int) Event.current.mousePosition.x;
             m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
