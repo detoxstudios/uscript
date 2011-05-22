@@ -43,6 +43,6 @@ public class uScript_CustomEventGameObject : uScriptEvent
  
    void CustomEvent(uScriptCustomEvent.CustomEventData cEventData)
    {
-      if ( OnCustomEventGameObject != null ) OnCustomEventGameObject( this, new CustomEventGameObjectArgs(cEventData.EventName, (GameObject)cEventData.EventData, cEventData.Sender) ); 
+      if ( OnCustomEventGameObject != null && cEventData.EventData.GetType() == typeof(UnityEngine.GameObject) ) OnCustomEventGameObject( this, new CustomEventGameObjectArgs(cEventData.EventName, (GameObject)cEventData.EventData, cEventData.Sender) ); 
    }	
 }

@@ -43,6 +43,6 @@ public class uScript_CustomEventInt : uScriptEvent
  
    void CustomEvent(uScriptCustomEvent.CustomEventData cEventData)
    {
-      if ( OnCustomEventInt != null ) OnCustomEventInt( this, new CustomEventIntArgs(cEventData.EventName, (int)cEventData.EventData, cEventData.Sender) ); 
+      if ( OnCustomEventInt != null && cEventData.EventData.GetType() == typeof(System.Int32) ) OnCustomEventInt( this, new CustomEventIntArgs(cEventData.EventName, (int)cEventData.EventData, cEventData.Sender) ); 
    }	
 }
