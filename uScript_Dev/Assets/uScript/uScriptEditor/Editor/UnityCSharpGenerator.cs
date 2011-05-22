@@ -815,12 +815,18 @@ namespace Detox.ScriptEditor
             {
                declaration = "new UnityEngine.GameObject[] {";
 
+               string arguments = "";
+
                for ( int i = 0; i < elements.Length; i++ )
                {
-                  declaration += "null,";
+                  if ( "" == elements[i] ) continue;
+
+                  arguments += "null,";
                };
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( arguments.Length > 0 ) arguments.Substring( 0, arguments.Length - 1 );
+
+               declaration += arguments;
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new UnityEngine.GameObject[0]"; }
