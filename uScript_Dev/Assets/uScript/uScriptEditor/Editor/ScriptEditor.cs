@@ -453,6 +453,9 @@ namespace Detox.ScriptEditor
                   clone.Name    = s.Name;
                   clone.State   = s.State;
 
+                  //bring over new friendly name
+                  clone.FriendlyName = d.FriendlyName;
+
                   parameters.Add( clone );                  
                   found = true;
 

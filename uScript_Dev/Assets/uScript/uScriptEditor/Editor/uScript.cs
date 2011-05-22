@@ -1034,6 +1034,11 @@ http://www.detoxstudios.com";
          m_ScriptEditorCtrl = null;
       }
       Detox.Utility.Status.StatusUpdate -= new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
+
+      MasterComponent.Script = null;
+      MasterComponent.ScriptName = null;
+       
+      CurrentScript = null;
    }
 
    void OpenLogicNode( )
@@ -2441,7 +2446,7 @@ http://www.detoxstudios.com";
          MasterComponent.Script = scriptEditor.ToBase64( );
          MasterComponent.ScriptName = scriptEditor.Name;
        
-         CurrentScript = "";
+         CurrentScript = null;
 
          if (fullPath != m_FullPath) m_CurrentCanvasPosition = "";
 
