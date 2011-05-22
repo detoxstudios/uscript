@@ -25,11 +25,11 @@ public class uScriptAct_AddVector4 : uScriptLogic
 
       foreach (Vector4 currentA in A)
       {
-         aTotals = aTotals + currentA;
+         aTotals += currentA;
       }
       foreach (Vector4 currentB in B)
       {
-         bTotals = bTotals + currentB;
+         bTotals += currentB;
       }
 
       Result = aTotals + bTotals;

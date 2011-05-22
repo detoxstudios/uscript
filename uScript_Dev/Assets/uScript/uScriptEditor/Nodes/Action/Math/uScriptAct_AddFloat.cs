@@ -25,15 +25,14 @@ public class uScriptAct_AddFloat : uScriptLogic
 
       foreach (float currentA in A)
       {
-         aTotals = aTotals + currentA;
+         aTotals += currentA;
       }
       foreach (float currentB in B)
       {
-         bTotals = bTotals + currentB;
+         bTotals += currentB;
       }
 
-      float total = aTotals + bTotals;
-      FloatResult = total;
-      IntResult = System.Convert.ToInt32(total);
+      FloatResult = aTotals + bTotals;
+      IntResult = System.Convert.ToInt32(FloatResult);
    }
 }

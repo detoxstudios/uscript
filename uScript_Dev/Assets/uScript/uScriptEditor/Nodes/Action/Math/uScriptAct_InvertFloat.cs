@@ -20,13 +20,6 @@ public class uScriptAct_InvertFloat : uScriptLogic
 
    public void In(float Target, out float Value)
    {
-      if (Target != 0F)
-      {
-         Value = -Target;
-      }
-      else
-      {
-         Value = 0F;
-      }
+      Value = -Target;
    }
 }

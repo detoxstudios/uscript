@@ -20,13 +20,6 @@ public class uScriptAct_InvertBool : uScriptLogic
 
    public void In(bool Target, out bool Value)
    {
-      if (Target)
-      {
-         Value = false;
-      }
-      else
-      {
-         Value = true;
-      }
+      Value = !Target;
    }
 }

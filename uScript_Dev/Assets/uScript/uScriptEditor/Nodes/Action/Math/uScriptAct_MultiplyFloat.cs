@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Multiplies two float variables together and returns the result.")]
-[NodeDescription("Multiplies two float variables together and returns the result.\n \nA: First floating point number to multiply.\nB: Second floating point number to multiply.\nResult (out): Floating point result of the multiplication operation.\nInt Result (out): Integer result of the multiplication operation.")]
+[NodeDescription("Multiplies two float variables together and returns the result.\n \nA: First floating point number to multiply. If more than one floating point variable is connected to A, they will be multiplied together before being multiplied by B.\nB: Second floating point number to multiply. If more than one floating point variable is connected to B, they will be multiplied together before being multiplied by A.\nResult (out): Floating point result of the multiplication operation.\nInt Result (out): Integer result of the multiplication operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -18,10 +18,21 @@ public class uScriptAct_MultiplyFloat : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(float A, float B, [FriendlyName("Result")] out float FloatResult, [FriendlyName("Int Result")] out int IntResult)
+   public void In(float[] A, float[] B, [FriendlyName("Result")] out float FloatResult, [FriendlyName("Int Result")] out int IntResult)
    {
-      float m_Total = A * B;
-      FloatResult = m_Total;
-      IntResult = System.Convert.ToInt32(m_Total);
+      float aTotals = 0F;
+      float bTotals = 0F;
+
+      foreach (float currentA in A)
+      {
+         aTotals *= currentA;
+      }
+      foreach (float currentB in B)
+      {
+         bTotals *= currentB;
+      }
+
+      FloatResult = aTotals * bTotals;
+      IntResult = System.Convert.ToInt32(FloatResult);
    }
 }

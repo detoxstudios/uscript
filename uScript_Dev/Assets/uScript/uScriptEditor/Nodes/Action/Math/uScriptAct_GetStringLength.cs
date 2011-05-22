@@ -24,7 +24,7 @@ public class uScriptAct_GetStringLength : uScriptLogic
       float countFloat;
       string countString;
 
-      if (Target != "")
+      if (!string.IsNullOrEmpty(Target))
       {
          countInt = Target.Length;
          countFloat = System.Convert.ToSingle(Target.Length);

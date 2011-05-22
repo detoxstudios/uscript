@@ -20,13 +20,6 @@ public class uScriptAct_InvertInt : uScriptLogic
 
    public void In(int Target, out int Value)
    {
-      if (Target != 0)
-      {
-         Value = -Target;
-      }
-      else
-      {
-         Value = 0;
-      }
+      Value = -Target;
    }
 }
