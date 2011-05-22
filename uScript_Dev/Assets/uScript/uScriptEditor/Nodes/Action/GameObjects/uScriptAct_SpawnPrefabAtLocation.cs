@@ -9,11 +9,11 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Create an instance of a Prefab at the specified spawn point.")]
-[NodeDescription("Create (instantiate) an instance of a Prefab at the specified spawn point at runtime (must be in the Resources folder structure).\n \nPrefab Name: The name of the prefab to spawn.\nResource Path: The resource path to look in for the prefab.\nSpawn Point: The GameObject to spawn prefab(s) from.\nSpawned Name: The name given to newly spawned prefab(s).\nLocation Offset: The offset from the Spawn Point to spawn prefab(s) from.\nSpawned GameObject (out): The GameObject that gets spawned.\nSpawned InstanceID: The instance ID of the spawned GameObject.")]
+[NodeDescription("Create (instantiate) an instance of a Prefab at the specified Vector3 location at runtime (must be in the Resources folder structure).\n \nPrefab Name: The name of the prefab to spawn.\nResource Path: The resource path to look in for the prefab.\nLocation: The location to spawn prefab(s) from.\nSpawned Name: The name given to newly spawned prefab(s).\nLocation Offset: The offset from the Spawn Point to spawn prefab(s) from.\nSpawned GameObject (out): The GameObject that gets spawned.\nSpawned InstanceID: The instance ID of the spawned GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-[FriendlyName("Spawn Prefab")]
+[FriendlyName("Spawn Prefab At Location")]
 public class uScriptAct_SpawnPrefabAtLocation : uScriptLogic
 {
    // @TODO: Needed functionality includes:
@@ -36,8 +36,8 @@ public class uScriptAct_SpawnPrefabAtLocation : uScriptLogic
    public void In(
       [FriendlyName("Prefab Name")] string PrefabName,
       [FriendlyName("Resource Path")] string ResourcePath,
-      [FriendlyName("Spawn Point Position")] Vector3 SpawnPosition,
-      [FriendlyName("Spawn Point Rotation")] Quaternion SpawnRotation,
+      [FriendlyName("Spawn Position")] Vector3 SpawnPosition,
+      [FriendlyName("Spawn Rotation")] Quaternion SpawnRotation,
       [FriendlyName("Spawned Name")] string SpawnedName,
       [FriendlyName("Spawned GameObject")] out GameObject SpawnedGameObject,
       [FriendlyName("Spawned InstancedID")] out int SpawnedInstancedID
