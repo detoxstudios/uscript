@@ -9,37 +9,21 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the value of a Bool variable.")]
-[NodeDescription("Randomly sets the value of a Bool variable.")]
+[NodeDescription("Randomly sets the value of a Bool variable.\n \nSeed: Seed value for the random number generator.\nTarget Bool (out): The bool value that gets set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Set Random Bool")]
 public class uScriptAct_SetRandomBool : uScriptLogic
 {
-
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Seed")] int Seed,
-      [FriendlyName("Target Int")] out bool TargetBool)
+      [DefaultValue(0)] int Seed,
+      [FriendlyName("Target Bool")] out bool TargetBool)
    {
-      int RndInt;
-
       if (Seed > 0) { Random.seed = Seed; }
 
-      RndInt = Random.Range(0, 2);
-
-      Debug.Log(RndInt.ToString());
-
-      if (RndInt > 0)
-      {
-         TargetBool = true;
-      }
-      else
-      {
-         TargetBool = false;
-      }
-
+      TargetBool = Random.Range(0, 2) > 0;
    }
-
 }

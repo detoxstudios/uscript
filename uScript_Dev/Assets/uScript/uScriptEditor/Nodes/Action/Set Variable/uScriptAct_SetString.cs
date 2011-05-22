@@ -9,14 +9,13 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a string to the defined value.")]
-[NodeDescription("Sets a string to the defined value.")]
+[NodeDescription("Sets a string to the defined value.\n \nValue: The String variable to be set.\nTo Upper Case: If this is set to true, the string set will be all upper case.\nTo Lower Case: If this is set to true, the string set will be all lower case.\nTrim Whitespace: If this is set to true, the string's whitespace will be trimmed.\nTarget (out): The value that has been set for this variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Set String")]
 public class uScriptAct_SetString : uScriptLogic
 {
-
    public bool Out { get { return true; } }
 
    public void In(
@@ -27,23 +26,15 @@ public class uScriptAct_SetString : uScriptLogic
       out string Target
       )
    {
-
       string tempString = Value;
 
-      if (ToLowerCase || ToUpperCase)
+      if (ToLowerCase)
       {
-         if (ToLowerCase)
-         {
-            tempString = Value.ToLower();
-         }
-         if (ToUpperCase)
-         {
-            tempString = Value.ToUpper();
-         }
+         tempString = Value.ToLower();
       }
-      else
+      else if (ToUpperCase)
       {
-         tempString = Value;
+         tempString = Value.ToUpper();
       }
 
       if (TrimWhitespace)
@@ -52,6 +43,5 @@ public class uScriptAct_SetString : uScriptLogic
       }
 
       Target = tempString;
-
    }
 }

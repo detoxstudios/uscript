@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the value of a Vector4 variable using the value of another Vector4 variable.")]
-[NodeDescription("Sets the value of a Vector4 variable using the value of another Vector4 variable.")]
+[NodeDescription("Sets the value of a Vector4 variable using the value of another Vector4 variable.\n \nValue: The Vector4 variable to be set.\nTarget Vector4 (out): The value that has been set for this variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

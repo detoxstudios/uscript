@@ -9,14 +9,13 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the value of a Color variable.")]
-[NodeDescription("Randomly sets the value of a Color variable. Min/Max ovverrides allow you to change the range on a per-channel basis. Values should be 0 - 1. Currently, an Alpha Min and Max of both 0 will become 1 until default node properties are working.")]
+[NodeDescription("Randomly sets the value of a Color variable.\n \nR Min: Minimum allowable Red component value for the random color.\nR Max: Maximum allowable Red component value for the random color.\nG Min: Minimum allowable Green component value for the random color.\nG Max: Maximum allowable Green component value for the random color.\nB Min: Minimum allowable Blue component value for the random color.\nB Max: Maximum allowable Blue component value for the random color.\nA Min: Minimum allowable Alpha component value for the random color.\nA Max: Maximum allowable Alpha component value for the random color.\nSeed: Seed value for the random number generator.\nTarget Color (out): The random color that has been set.\n")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Set Random Color")]
 public class uScriptAct_SetRandomColor : uScriptLogic
 {
-
    public bool Out { get { return true; } }
 
    public void In(
@@ -26,8 +25,9 @@ public class uScriptAct_SetRandomColor : uScriptLogic
       [FriendlyName("G Max")] float GreenMax,
       [FriendlyName("B Min")] float BlueMin,
       [FriendlyName("B Max")] float BlueMax,
-      [FriendlyName("A Min")] float AlphaMin,
-      [FriendlyName("A Max")] float AlphaMax,
+      [FriendlyName("A Min"), DefaultValue(1.0f)] float AlphaMin,
+      [FriendlyName("A Max"), DefaultValue(1.0f)] float AlphaMax,
+      [DefaultValue(0)] int Seed,
       [FriendlyName("Target Color")] out Color TargetColor)
    {
       // Make sure values are in range, if not assign defaults that are
@@ -40,40 +40,22 @@ public class uScriptAct_SetRandomColor : uScriptLogic
       if (AlphaMin < 0f) { AlphaMin = 0f; }
       if (AlphaMax > 1f) { AlphaMax = 1f; }
 
-      float RedOut = ReturnRandomFloat(RedMin, RedMax);
-      float GreenOut = ReturnRandomFloat(GreenMin, GreenMax);
-      float BlueOut = ReturnRandomFloat(BlueMin, BlueMax);
-
-      // @TODO: This can go away once we have default propertys working (Alpha Min/Max would be set to 1 by default)
-      float AlphaOut;
-      if (0f != AlphaMin && 0f != AlphaMax)
-      {
-         AlphaOut = ReturnRandomFloat(AlphaMin, AlphaMax);
-      }
-      else
-      {
-         AlphaOut = 1f;
-      }
+      float RedOut = ReturnRandomFloat(RedMin, RedMax, Seed);
+      float GreenOut = ReturnRandomFloat(GreenMin, GreenMax, Seed);
+      float BlueOut = ReturnRandomFloat(BlueMin, BlueMax, Seed);
+      float AlphaOut = ReturnRandomFloat(AlphaMin, AlphaMax, Seed);
 
       TargetColor = new Color(RedOut, GreenOut, BlueOut, AlphaOut);
-
    }
 
-   private float ReturnRandomFloat(float Min, float Max)
+   private float ReturnRandomFloat(float min, float max, int seed)
    {
-      float RndFloat;
-
       // Make sure we don't have min > max (or other way around)
-      if ( Min > Max ) { Min = Max; }
-      if ( Max < Min ) { Max = Min; }
+      if ( min > max ) { min = max; }
+      if ( max < min ) { max = min; }
+      
+      if (seed > 0) Random.seed = seed;
 
-      RndFloat = Random.Range(Min, Max);
-
-      return RndFloat;
+      return Random.Range(min, max);
    }
-
-
-
-
-
 }
