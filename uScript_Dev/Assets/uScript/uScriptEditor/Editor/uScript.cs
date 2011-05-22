@@ -1369,6 +1369,8 @@ http://www.detoxstudios.com";
 
             _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
             {
+               GUIContent nodeButtonContent = new GUIContent(string.Empty, "Click to select node. Shift-click to toggle the selection.");
+
                foreach (KeyValuePair<string, Dictionary<string, List<DisplayNode>>> kvpCategory in categories)
                {
                   if (kvpCategory.Value.Count > 0)
@@ -1426,10 +1428,10 @@ http://www.detoxstudios.com";
 
                               GUILayout.BeginHorizontal();
                               {
-                                 GUIStyle style1 = new GUIStyle(EditorStyles.miniButtonLeft);
-                                 GUIStyle style2 = new GUIStyle(EditorStyles.miniButtonRight);
-
-                                 if (GUILayout.Button( name + comment, style1 ) )
+                                 nodeButtonContent.text = name + comment;
+                                 bool selected = dn.Selected;
+                                 selected = GUILayout.Toggle(selected, nodeButtonContent, uScriptGUIStyle.nodeButtonLeft);
+                                 if (selected != dn.Selected)
                                  {
                                     // is the shift key modifier being used?
                                     if (Event.current.modifiers != EventModifiers.Shift)
@@ -1440,7 +1442,8 @@ http://www.detoxstudios.com";
                                     // toggle the clicked node
                                     m_ScriptEditorCtrl.ToggleNode(dn.Guid);
                                  }
-                                 if (GUILayout.Button(">", style2, GUILayout.Width(20)))
+
+                                 if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
                                  {
                                     uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
                                  }

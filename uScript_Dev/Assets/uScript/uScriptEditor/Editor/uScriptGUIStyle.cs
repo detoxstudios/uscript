@@ -43,6 +43,15 @@ public static class uScriptGUIStyle
    private static GUIStyle _hScrollbar;
    public static GUIStyle hScrollbar { get { return _hScrollbar; } }
 
+   private static GUIStyle _nodeButtonLeft;
+   public static GUIStyle nodeButtonLeft { get { return _nodeButtonLeft; } }
+
+   private static GUIStyle _nodeButtonMiddle;
+   public static GUIStyle nodeButtonMiddle { get { return _nodeButtonMiddle; } }
+
+   private static GUIStyle _nodeButtonRight;
+   public static GUIStyle nodeButtonRight { get { return _nodeButtonRight; } }
+
 
    public static void Init()
    {
@@ -99,5 +108,13 @@ public static class uScriptGUIStyle
 
       _hScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar);
       _hScrollbar.margin = new RectOffset();
+
+      _nodeButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
+      _nodeButtonLeft.alignment = TextAnchor.MiddleLeft;
+
+      _nodeButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid);
+
+      _nodeButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
+      _nodeButtonRight.padding = new RectOffset(0, 0, 3, 4);
    }
 }

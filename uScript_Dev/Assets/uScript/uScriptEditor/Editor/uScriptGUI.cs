@@ -174,19 +174,11 @@ public static class uScriptGUI
          _foldoutExpanded[_propertyKey] = true;
       }
 
-//      GUIStyle style = new GUIStyle(EditorStyles.miniButton);
-      GUIStyle style = new GUIStyle(GUI.skin.button);
-      style.alignment = TextAnchor.MiddleLeft;
-
       GUILayout.BeginHorizontal();
       {
-         GUIStyle style1 = new GUIStyle(EditorStyles.miniButtonLeft);
-         GUIStyle style2 = new GUIStyle(EditorStyles.miniButtonRight);
-         _foldoutExpanded[_propertyKey] = GUILayout.Toggle(_foldoutExpanded[_propertyKey], label /* + "_" + id */, style1);
+         _foldoutExpanded[_propertyKey] = GUILayout.Toggle(_foldoutExpanded[_propertyKey], label /* + "_" + id */, uScriptGUIStyle.nodeButtonLeft);
 
-//         Rect rect = GUILayoutUtility.GetLastRect();
-
-         if (GUILayout.Button(">", style2, GUILayout.Width(20)))
+         if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
          {
             if (node == null)
             {

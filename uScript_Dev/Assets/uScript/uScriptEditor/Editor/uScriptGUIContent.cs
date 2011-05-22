@@ -22,7 +22,7 @@ public static class uScriptGUIContent
       }
    }
 
-   public enum ContentID { New, Open, Save, SaveAs, RebuildAll, RemoveGenerated, Collapse, Expand, OnlineReference }
+   public enum ContentID { New, Open, Save, SaveAs, RebuildAll, RemoveGenerated, Collapse, Expand, OnlineReference, MiniSearch }
    private static Dictionary<ContentID, GUIContent> _defaultGUIContent = new Dictionary<ContentID, GUIContent>();
    private static Dictionary<ContentID, GUIContent> _currentGUIContent = new Dictionary<ContentID, GUIContent>();
 
@@ -36,6 +36,7 @@ public static class uScriptGUIContent
    public static GUIContent toolbarButtonExpand          { get { return _currentGUIContent[ContentID.Expand]; } }
    public static GUIContent toolbarButtonOnlineReference { get { return _currentGUIContent[ContentID.OnlineReference]; } }
 
+   public static GUIContent listMiniSearch               { get { return _currentGUIContent[ContentID.MiniSearch]; } }
 
    public static void Init()
    {
@@ -56,6 +57,8 @@ public static class uScriptGUIContent
       Default(ContentID.Collapse,         "iconCollapse",         string.Empty,              "Collapse all node categories.");
       Default(ContentID.Expand,           "iconExpand",           string.Empty,              "Expand all node categories.");
       Default(ContentID.OnlineReference,  "iconOnlineReference",  "Online Reference",        "Open the online uScript reference in the default web browser.");
+
+      Default(ContentID.MiniSearch,       "iconMiniSearch",       string.Empty,              "Center the canvas on this node.");
    }
 
    private static void Default(ContentID id, string imageFilename, string text, string tooltip)
