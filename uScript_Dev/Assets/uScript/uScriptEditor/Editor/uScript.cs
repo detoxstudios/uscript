@@ -431,15 +431,16 @@ http://www.detoxstudios.com";
          }
 
          bool isRestored = false;
-
+         
          ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(), PopulateLogicTypes());
 
          if ( null != MasterComponent.Script )
          {
-            isRestored = true;
-
-            scriptEditor.OpenFromBase64( MasterComponent.ScriptName, MasterComponent.Script );
-            CurrentScript = MasterComponent.Script;
+            if ( true == scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script) )
+            {
+               isRestored = true;
+               CurrentScript = MasterComponent.Script;
+            }
          }
 
          if (String.IsNullOrEmpty(m_FullPath))
