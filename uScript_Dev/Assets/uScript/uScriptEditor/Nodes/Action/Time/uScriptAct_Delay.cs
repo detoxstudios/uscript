@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Delays execution of a script.")]
-[NodeDescription("Delays execution of a script but can also fire off an immediate response.")]
+[NodeDescription("Delays execution of a script but can also fire off an immediate response.\n \nDuration: Amount of time (in seconds) to delay.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_delay.html")]
 
@@ -33,8 +33,7 @@ public class uScriptAct_Delay : uScriptLogic
       m_TimeToTrigger = Duration;
    }
 
-   public void OnDestroy( )
-   {}
+   public void OnDestroy( ) {}
 
    public override void Update( )
    {

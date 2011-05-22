@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Toggles the active state of a component on the Target GameObjects.")]
-[NodeDescription("Toggles the active state of a component on the Target GameObjects. Ignores GameObjects missing the specified component.")]
+[NodeDescription("Toggles the active state of a component on the Target GameObjects. Ignores GameObjects missing the specified component.\n \nTarget: The Target GameObject(s) to toggle component state on.\nComponent Name: The name of the component to toggle.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -30,7 +30,6 @@ public class uScriptAct_ToggleComponent : uScriptLogic
    [FriendlyName("Turn On")]
    public void TurnOn( GameObject[] Target, [FriendlyName("Component Name")] string[] ComponentName )
    {
-
       foreach ( GameObject currentTarget in Target)
       {
          if (currentTarget != null)
@@ -46,13 +45,11 @@ public class uScriptAct_ToggleComponent : uScriptLogic
       }
 
       OnOut(this, new System.EventArgs());
-
    }
 
    [FriendlyName("Turn Off")]
    public void TurnOff(GameObject[] Target, [FriendlyName("Component Name")] string[] ComponentName)
    {
-
       foreach (GameObject currentTarget in Target)
       {
          if (currentTarget != null)
@@ -68,13 +65,11 @@ public class uScriptAct_ToggleComponent : uScriptLogic
       }
 
       OffOut(this, new System.EventArgs());
-
    }
 
    [FriendlyName("Toggle")]
    public void Toggle(GameObject[] Target, [FriendlyName("Component Name")] string[] ComponentName)
    {
-
       foreach (GameObject currentTarget in Target)
       {
          if (currentTarget != null)
@@ -83,7 +78,6 @@ public class uScriptAct_ToggleComponent : uScriptLogic
             {
                if (currentTarget.GetComponent(currentComponentName))
                {
-
                   if ( ((Behaviour)currentTarget.GetComponent(currentComponentName)).enabled )
                   {
                      ((Behaviour)currentTarget.GetComponent(currentComponentName)).enabled = false;
@@ -98,11 +92,5 @@ public class uScriptAct_ToggleComponent : uScriptLogic
       }
 
       ToggleOut(this, new System.EventArgs());
-
    }
-
-
-
-
-
 }

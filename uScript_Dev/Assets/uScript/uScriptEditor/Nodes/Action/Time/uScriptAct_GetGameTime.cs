@@ -9,14 +9,13 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the current time scale and delta time (fixed timestep) of the game.")]
-[NodeDescription("Gets the current time scale and delta time (fixed timestep) of the game.")]
+[NodeDescription("Gets the current time scale and delta time (fixed timestep) of the game.\n \nTime Scale (out): The current global time scale.\nFixed Timestep (out): The current global fixed timestep. \nMax Allowed Timestep (out): The current global allowed timestep.\n")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Get Game Time")]
 public class uScriptAct_GetGameTime : uScriptLogic
 {
-
    public bool Out { get { return true; } }
 
    public void In(

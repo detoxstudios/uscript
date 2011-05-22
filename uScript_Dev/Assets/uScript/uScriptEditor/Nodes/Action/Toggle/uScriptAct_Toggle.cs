@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Toggles the active state of a GameObject.")]
-[NodeDescription("Toggles the active state of a GameObject.")]
+[NodeDescription("Toggles the active state of a GameObject.\n \nTarget: The Target GameObject(s) to toggle state on.\nIgnore Children: Whether or not to also toggle the children of the Target GameObject(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -30,14 +30,12 @@ public class uScriptAct_Toggle : uScriptLogic
    [FriendlyName("Turn On")]
    public void TurnOn(GameObject[] Target, [FriendlyName("Ignore Children")] bool IgnoreChildren)
    {
-
       foreach ( GameObject currentTarget in Target)
       {
          if (currentTarget != null)
          {
             if (IgnoreChildren)
             {
-
                if (false == currentTarget.active)
                {
                   currentTarget.active = true;
@@ -53,23 +51,18 @@ public class uScriptAct_Toggle : uScriptLogic
          }
       }
 
-
       OnOut(this, new System.EventArgs());
-
-
    }
 
    [FriendlyName("Turn Off")]
    public void TurnOff(GameObject[] Target, [FriendlyName("Ignore Children")] bool IgnoreChildren)
    {
-
       foreach (GameObject currentTarget in Target)
       {
          if (currentTarget != null)
          {
             if (IgnoreChildren)
             {
-
                if (currentTarget.active)
                {
                   currentTarget.active = false;
@@ -86,20 +79,17 @@ public class uScriptAct_Toggle : uScriptLogic
       }
 
       OffOut(this, new System.EventArgs());
-
    }
 
    [FriendlyName("Toggle")]
    public void Toggle(GameObject[] Target, [FriendlyName("Ignore Children")] bool IgnoreChildren)
    {
-
       foreach (GameObject currentTarget in Target)
       {
          if (currentTarget != null)
          {
             if (IgnoreChildren)
             {
-
                if (currentTarget.active)
                {
                   currentTarget.active = false;
@@ -124,11 +114,5 @@ public class uScriptAct_Toggle : uScriptLogic
       }
 
       ToggleOut(this, new System.EventArgs());
-
    }
-
-
-
-
-
 }
