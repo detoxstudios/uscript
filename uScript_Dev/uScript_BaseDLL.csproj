@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Assets.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Lerper.cs" />
-    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_MasterObject.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_MasterComponent.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Components\uScript_Runtime.cs" />
   </ItemGroup>
   <ItemGroup>
