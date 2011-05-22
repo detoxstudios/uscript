@@ -76,6 +76,25 @@ public static class uScriptGUIStyle
       _paletteButton.margin = new RectOffset( 4, 4, 0, 0 );
       _paletteButton.active.textColor = UnityEngine.Color.white;
 
+      Debug.Log("BUTTON:"
+                + "\n\t name: \t\t\t\t" + _paletteButton.name
+                + "\n\t alignment: \t\t\t" + _paletteButton.alignment
+                + "\n\t border: \t\t\t\t" + _paletteButton.border
+                + "\n\t clipping: \t\t\t" + _paletteButton.clipping
+                + "\n\t contentOffset: \t" + _paletteButton.contentOffset
+                + "\n\t fixedHeight: \t\t" + _paletteButton.fixedHeight
+                + "\n\t font: \t\t\t\t\t" + _paletteButton.font
+                + "\n\t fontSize: \t\t\t" + _paletteButton.fontSize
+                + "\n\t imagePosition: \t" + _paletteButton.imagePosition
+                + "\n\t lineHeight: \t\t\t" + _paletteButton.lineHeight
+                + "\n\t margin: \t\t\t\t" + _paletteButton.margin
+                + "\n\t overflow: \t\t\t" + _paletteButton.overflow
+                + "\n\t padding: \t\t\t" + _paletteButton.padding
+                + "\n\t stretchHeight: \t" + _paletteButton.stretchHeight
+                + "\n\t stretchWidth: \t\t" + _paletteButton.stretchWidth
+                + "\n\t wordWrap: \t\t\t" + _paletteButton.wordWrap
+                );
+
       _panelBox = new GUIStyle(GUI.skin.box);
       _panelBox.padding = new RectOffset(1, 1, 1, 1);
       _panelBox.margin = new RectOffset(0, 0, 0, 0);
@@ -110,11 +129,26 @@ public static class uScriptGUIStyle
       _hScrollbar.margin = new RectOffset();
 
       _nodeButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
-      _nodeButtonLeft.alignment = TextAnchor.MiddleLeft;
+      _nodeButtonLeft.alignment = TextAnchor.UpperLeft;
+      _nodeButtonLeft.padding = new RectOffset( 4, 4, 2, 4 );
+      _nodeButtonLeft.margin = new RectOffset( 4, 0, 0, 0 );
+      _nodeButtonLeft.overflow = new RectOffset( 0, 0, 0, 2 );
+      _nodeButtonLeft.fontSize = 11;
 
       _nodeButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid);
+      _nodeButtonMiddle.alignment = TextAnchor.UpperCenter;
+      _nodeButtonMiddle.padding = new RectOffset( 0, 0, 2, 4 );
+      _nodeButtonMiddle.margin = new RectOffset( );
+      _nodeButtonMiddle.overflow = new RectOffset( 0, 0, 0, 2 );
+      _nodeButtonMiddle.fontSize = 11;
 
       _nodeButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
-      _nodeButtonRight.padding = new RectOffset(0, 0, 3, 4);
+      _nodeButtonRight.alignment = TextAnchor.UpperCenter;
+      _nodeButtonRight.fixedHeight = 19;
+      _nodeButtonRight.padding = new RectOffset( 0, 0, 2, 4 );
+      _nodeButtonRight.contentOffset = new Vector2(-1, 3);
+      _nodeButtonRight.margin = new RectOffset( 0, 4, 0, 0 );
+      _nodeButtonRight.overflow = new RectOffset( 0, 0, 0, 2 );
+      _nodeButtonRight.fontSize = 11;
    }
 }
