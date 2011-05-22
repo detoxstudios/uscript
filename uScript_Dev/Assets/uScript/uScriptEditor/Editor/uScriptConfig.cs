@@ -624,6 +624,7 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(UnityEngine.Vector3), "Vector3", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Vector4), "Vector4", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Quaternion), "Quaternion", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Rect), "Rect", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.GameObject), "GameObject", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.GameObject[]), "GameObject List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Camera), "Camera", "Variables" ),

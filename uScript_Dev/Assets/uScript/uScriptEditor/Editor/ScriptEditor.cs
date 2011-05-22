@@ -176,6 +176,19 @@ namespace Detox.ScriptEditor
                   return new Vector4(0, 0, 0, 0);
                }
             }
+            if ( type == "Rect" )
+            {
+               try
+               {
+                  string []values = Default.Split( ',' );
+                  return new Rect( Single.Parse(values[0]), values.Length > 1 ? Single.Parse(values[1]) : 0, 
+                                      values.Length > 2 ? Single.Parse(values[2]) : 0, values.Length > 3 ? Single.Parse(values[3]) : 0 );
+               }
+               catch 
+               {
+                  return new Rect(0, 0, 0, 0);
+               }
+            }
             if ( type == "Quaternion" )
             {
                try
@@ -282,6 +295,19 @@ namespace Detox.ScriptEditor
                {
                   Vector4 v = (Vector4) value;
                   Default = v.x + "," + v.y + "," + v.z + "," + v.w;
+               }
+               catch ( Exception )
+               {
+                  Default = "0,0,0,0";
+               }
+               return;
+            }
+            if ( type == "Rect" )
+            {
+               try
+               {
+                  Rect v = (Rect) value;
+                  Default = v.x + "," + v.y + "," + v.width + "," + v.height;
                }
                catch ( Exception )
                {

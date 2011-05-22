@@ -378,6 +378,10 @@ namespace System.Windows.Forms
                      {
                         val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2) val, ref isVisible, toggleLock, isReadOnly);
                      }
+                     else if ( val.GetType() == typeof(Rect) )
+                     {
+                        val = uScriptGUI.RectField(p.FriendlyName, (Rect) val, ref isVisible, toggleLock, isReadOnly);
+                     }
                      else if ( val.GetType() == typeof(Vector3) )
                      {
                         val = uScriptGUI.Vector3Field(p.FriendlyName, (Vector3) val, ref isVisible, toggleLock, isReadOnly);

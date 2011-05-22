@@ -663,6 +663,15 @@ namespace Detox.ScriptEditor
             }
             catch ( Exception ) { return "new Vector4( )"; }
          }
+         else if ( "UnityEngine.Rect" == type )
+         {
+            try
+            {
+               string [] subString = stringValue.Split( ',' );
+               return "new Rect( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
+            }
+            catch ( Exception ) { return "new Rect( )"; }
+         }
          else if ( "System.Single" == type )
          {
             if ( "" == stringValue )
@@ -792,6 +801,22 @@ namespace Detox.ScriptEditor
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new Vector4[0]"; }
+         }
+         else if ( "UnityEngine.Rect[]" == type )
+         {
+            try
+            {
+               declaration = "new Rect[] {";
+
+               for ( int i = 0; i < elements.Length; i += 4 )
+               {
+                  declaration += "new Rect((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + ",(float)" + elements[i+3] + "),";
+               }
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new Rect[0]"; }
          }
          else if ( "UnityEngine.Color[]" == type )
          {
