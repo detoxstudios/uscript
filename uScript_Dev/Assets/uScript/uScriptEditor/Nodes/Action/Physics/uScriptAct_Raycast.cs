@@ -85,7 +85,7 @@ public class uScriptAct_Raycast : uScriptLogic
             {
                tmpHitDistance = hit.distance;
                tmpHitLocation = hit.point;
-               tmpHitObject = hit.rigidbody.gameObject;
+               tmpHitObject = hit.collider.gameObject;
                tmpHitNormal = hit.normal;
                hitTrue = true;
             }
@@ -96,7 +96,7 @@ public class uScriptAct_Raycast : uScriptLogic
             {
                tmpHitDistance = hit.distance;
                tmpHitLocation = hit.point;
-               tmpHitObject = hit.rigidbody.gameObject;
+               tmpHitObject = hit.collider.gameObject;
                tmpHitNormal = hit.normal;
                hitTrue = true;
             }
