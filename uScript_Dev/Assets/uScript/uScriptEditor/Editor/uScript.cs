@@ -2523,7 +2523,14 @@ http://www.detoxstudios.com";
       logicPath   += "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
       wrapperPath += "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
 
-      return script.Save( binaryPath, logicPath, wrapperPath );
+      bool result = script.Save( binaryPath, logicPath, wrapperPath );
+   
+      if ( true == result )
+      {         
+         AttachEventScriptsToOwners(script);
+      }
+
+      return result;
    }
 
    public bool SaveScript(bool forceNameRequest)
@@ -2607,7 +2614,109 @@ http://www.detoxstudios.com";
 
       return false;
    }
+
+   void AttachEventScriptsToOwners(ScriptEditor script)
+   {
+      foreach ( EntityEvent entityEvent in script.Events )
+      {
+         LinkNode []links = script.GetLinksByDestination(entityEvent.Guid, entityEvent.Instance.Name);
+
+         if ( "" != entityEvent.Instance.Default )
+         {
+            AttachEventScriptToGameObject( GameObject.Find(entityEvent.Instance.Default), entityEvent.ComponentType);
+         }
+
+         foreach ( LinkNode link in links )
+         {
+            EntityNode node = script.GetNode(link.Source.Guid);
+            
+            //for each owner connected to an event instance
+            //add the required event component script
+            if ( node is OwnerConnection )
+            {
+               AttachEventScriptToGameObjects(script.Name, entityEvent.ComponentType);
+            }
+            else if ( node is LocalNode )
+            {
+               //for each gameobject used as an event instance
+               //add the required event component script
+               AttachEventScriptToGameObject( GameObject.Find(((LocalNode)node).Value.Default), entityEvent.ComponentType);
+            }
+         }
+      }
+   }
+
+   //go through all game objects and if they have the uscript attached to them
+   //then also attach the event component script
+   void AttachEventScriptToGameObjects(string scriptWhichMustExist, string componentTypeToAttach)
+   {
+      UnityEngine.Object []objects = FindObjectsOfType(typeof(GameObject));
    
+      foreach ( UnityEngine.Object o in objects )
+      {
+         GameObject gameObject = o as GameObject;
+
+         if ( null != gameObject.GetComponent(scriptWhichMustExist) )
+         {
+            AttachEventScriptToGameObject( o as GameObject, componentTypeToAttach );
+         }
+      }
+   }
+
+   //attach the event component script if it's not already on the game object
+   void AttachEventScriptToGameObject(GameObject gameObject, string componentTypeToAttach)
+   {
+      if ( null == gameObject ) return;
+
+      if ( null == gameObject.GetComponent(componentTypeToAttach) )
+      {
+         gameObject.AddComponent(componentTypeToAttach);
+      }
+
+      //print out a warning if the newly attached script still won't function
+      //because some other required component is missing
+      NodeComponentType requiredComponentType = FindNodeComponentType(GetType(componentTypeToAttach));
+      
+      bool componentWarning = true;
+
+      if ( null != requiredComponentType ) 
+      {
+         //go through all the components and see if the required one exists
+         Component [] components = gameObject.GetComponents<Component>( );
+
+         foreach ( Component c in components )
+         {
+            //yes for some reason unity is giving me null components
+            if ( null == c ) continue;
+
+            if ( requiredComponentType.ContainsType(c.GetType()) )
+            {
+               componentWarning = false;
+               break;
+            }
+         }
+      }
+      else
+      {
+         componentWarning = false;
+      }
+
+      if ( true == componentWarning )
+      {
+         string names = "";
+
+         foreach ( Type t in requiredComponentType.ComponentTypes )
+         {
+            names += t + ", ";
+         }
+
+         if ( names.Length >= 2 ) names = names.Substring( 0, names.Length - 2 );
+
+         Debug.LogWarning( componentTypeToAttach + " was attached to " + gameObject.name + 
+                           " but one of the following additional components is required for it to function properly " + names ); 
+      }
+   }
+
    void AttachToMasterGO(String path)
    {
 #if UNITY_EDITOR
@@ -3246,130 +3355,6 @@ http://www.detoxstudios.com";
       return "";
    }
 
-   //go through the master uscript and see if there
-   //is an attach script which works this component
-   //and if so return the script type so we can attach
-   //it to the parent game object
-   private Type FindMatchingScript(Component component)
-   {
-      if ( null == component ) return null;
-
-      if ( null == MasterObject ) return null;
-
-      Component []eventScripts = MasterObject.GetComponents<uScriptEvent>( );
-
-      foreach ( Component eventScript in eventScripts )
-      {
-         NodeComponentType requiredComponentType = FindNodeComponentType(eventScript.GetType());
-         if ( null == requiredComponentType ) return null;
-
-         if ( requiredComponentType.ContainsType(component.GetType()) )
-         {
-            return eventScript.GetType( );
-         }
-
-         //Type type = FindNodeComponentType(eventScript.GetType());
-         //if ( null == type ) return null;
-
-         //if ( type.IsAssignableFrom(component.GetType()) )
-         //{
-         //   return eventScript.GetType();
-         //}
-      }
-
-      return null;
-   }
-
-   //loop through all the components and see if we have any
-   //event scripts which match up with them.  if so
-   //then attach them to the parent game object
-   public void AttachEventScripts(string objectName)
-   {
-      GameObject gameObject = GameObject.Find( objectName );
-      if ( null == gameObject ) return;
-
-      Component [] components = gameObject.GetComponents<Component>( );
-
-      foreach ( Component c in components )
-      {
-         Type type = FindMatchingScript( c );
-         
-         if ( null != type )
-         {
-            if ( null == gameObject.GetComponent(type) )
-            {
-               gameObject.AddComponent( type );
-            }
-         }
-      }
-   }
-
-   //when adding an instance for an event script, asks the event script what 
-   //component needs to exist for it to work
-   //then go through all components and if the required component exists, allow the instance
-   //and attach the event script to the game object
-   public enum AttachError
-   {
-      None,
-      NotFound,
-      MissingComponent,
-   }
-
-   public AttachError AttachEventScript(string eventType, string objectName)
-   {
-      //what game object do we want to be the instance for our event script
-      GameObject gameObject = GameObject.Find( objectName );
-      if ( null == gameObject ) return AttachError.NotFound; //game object can't be found, let them proceed it might be created at runtime
-
-      //unity type of our event script
-      Type type = GetType(eventType);
-      if ( null == type ) return AttachError.NotFound; //type can't be found, just let them proceed
-
-      NodeComponentType requiredComponentType = FindNodeComponentType(type);
-      if ( null == requiredComponentType ) return AttachError.None; //no required component
-
-      //uScriptDebug.Log ("uScript.cs - GameObject = " + gameObject);
-      //uScriptDebug.Log ("uScript.cs - RequiredType = " + requiredComponentType);
-
-      //go through all the components and see if the required one exists
-      Component [] components = gameObject.GetComponents<Component>( );
-
-      foreach ( Component c in components )
-      {
-         //yes for some reason unity is giving me null components
-         if ( null == c ) continue;
-
-         //uScriptDebug.Log ("Checking component = " + c.GetType());
-
-         //if the required component exists then attach the script
-         if ( requiredComponentType.ContainsType(c.GetType()) )
-         {
-            //uScriptDebug.Log ("Is Assignable!");
-            
-            if ( null == gameObject.GetComponent(type) )
-            {
-               gameObject.AddComponent( type ); 
-            }
-
-            return AttachError.None;
-         }
-      }
-
-      string names = "";
-
-      foreach ( Type t in requiredComponentType.ComponentTypes )
-      {
-         names += t + ", ";
-      }
-
-      if ( names.Length >= 2 ) names = names.Substring( 0, names.Length - 2 );
-
-      uScriptDebug.Log( "Could not attach " + objectName + " to " + eventType + " because " + 
-                         objectName + " requires at one of the following components: " + names + ".", uScriptDebug.Type.Warning );
-
-      return AttachError.MissingComponent;
-   }
-
    private void CheckDragDropCanvas( )
    {
       foreach ( object o in DragAndDrop.objectReferences )
@@ -3412,17 +3397,6 @@ http://www.detoxstudios.com";
          {
             foreach ( object o in DragAndDrop.objectReferences )
             {
-               //we are going to perform a dragdrop, so before we do
-               //see if there are any event scripts which can be
-               //attached to this game object
-               if ( true == m_ScriptEditorCtrl.CanDragDropOnNode(o) )
-               {
-                  if ( o is GameObject )
-                  {
-                     AttachEventScripts( (o as GameObject).name );
-                  }
-               }
-
                if ( true == m_ScriptEditorCtrl.DoDragDrop(o) )
                {
                   DragAndDrop.AcceptDrag( );

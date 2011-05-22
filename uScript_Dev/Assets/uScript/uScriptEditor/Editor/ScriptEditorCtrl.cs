@@ -1010,19 +1010,6 @@ namespace Detox.ScriptEditor
                      Parameter instance = entityNode.Instance;
                      instance.Default = uScript.Instance.AutoAssignInstance(entityNode);
                      entityNode.Instance = instance;
-
-                     string type = entityNode.Instance.Type;
-
-                     if ( entityNode is EntityMethod )
-                     {
-                        type = ((EntityMethod)entityNode).ComponentType;
-                     }
-                     else if ( entityNode is EntityEvent )
-                     {
-                        type = ((EntityEvent)entityNode).ComponentType;
-                     }
-
-                     uScript.Instance.AttachEventScript(type, entityNode.Instance.Default);
                   }
                }
       
@@ -1046,19 +1033,6 @@ namespace Detox.ScriptEditor
                instance.Default = uScript.Instance.AutoAssignInstance(entityNode);
             
                entityNode.Instance = instance;
-         
-               string type = entityNode.Instance.Type;
-
-               if ( entityNode is EntityMethod )
-               {
-                  type = ((EntityMethod)entityNode).ComponentType;
-               }
-               else if ( entityNode is EntityEvent )
-               {
-                  type = ((EntityEvent)entityNode).ComponentType;
-               }
-
-               uScript.Instance.AttachEventScript(type, entityNode.Instance.Default);
             }
 
             m_ScriptEditor.AddNode( entityNode );
@@ -1209,19 +1183,6 @@ namespace Detox.ScriptEditor
             Parameter instance = entityNode.Instance;
             instance.Default = uScript.Instance.AutoAssignInstance(entityNode);
             entityNode.Instance = instance;
-            
-            string nodeType = entityNode.Instance.Type;
-            
-            if ( entityNode is EntityMethod )
-            {
-               nodeType = ((EntityMethod)entityNode).ComponentType;
-            }
-            else if ( entityNode is EntityEvent )
-            {
-               nodeType = ((EntityEvent)entityNode).ComponentType;
-            }
-            
-            uScript.Instance.AttachEventScript(nodeType, entityNode.Instance.Default);
          }
          
          m_ScriptEditor.AddNode( entityNode );
@@ -1596,24 +1557,6 @@ namespace Detox.ScriptEditor
             entityNode.ShowComment = p.GetParameters( "Comment" ) [ 0 ];
             entityNode.Comment     = p.GetParameters( "Comment" ) [ 1 ];
             entityNode.Instance    = p.GetParameters( "Instance" )[ 0 ];
-
-            //special case to add required scripts to gameobjects
-            if ( entityNode is EntityEvent )
-            {
-               uScript.AttachError error = uScript.Instance.AttachEventScript(((EntityEvent)entityNode).ComponentType, entityNode.Instance.Default);
-               if ( error == uScript.AttachError.MissingComponent )
-               {
-                  //couldn't attach an appropriate script for this game object
-                  //because it was missing a key component
-                  //so refresh the property grid
-                  Parameter instance = entityNode.Instance;
-                  instance.Default = "";
-
-                  entityNode.Instance = instance;
-
-                  FlowchartSelectionModified( null, null );
-               }
-            }
 
             m_ScriptEditor.AddNode( entityNode );
          }

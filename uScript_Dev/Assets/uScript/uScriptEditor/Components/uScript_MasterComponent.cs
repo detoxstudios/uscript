@@ -14,18 +14,19 @@ public class uScript_MasterComponent : MonoBehaviour
    [HideInInspector]
    public string ScriptName = null;
 
-   private List<string> m_uScriptsToAttach = new List<string>();
-   
+   [HideInInspector]
+   public string []m_uScriptsToAttach = new string[0];
    public string[] uScriptsToAttach
    {
-      get { return m_uScriptsToAttach.ToArray(); }
+      get { return m_uScriptsToAttach; }
    }
    
-   public void ClearAttachList() { m_uScriptsToAttach.Clear(); }
+   public void ClearAttachList() { m_uScriptsToAttach = new string[0]; }
    
    public void AttachScriptToMaster(string fullPath)
    {
-      m_uScriptsToAttach.Add(fullPath);
+      System.Array.Resize(ref m_uScriptsToAttach, m_uScriptsToAttach.Length + 1 );
+      m_uScriptsToAttach[ m_uScriptsToAttach.Length ] = fullPath;
    }
 
    void OnDrawGizmos( )

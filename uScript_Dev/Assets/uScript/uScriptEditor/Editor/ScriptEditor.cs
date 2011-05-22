@@ -2873,7 +2873,7 @@ namespace Detox.ScriptEditor
 
          try
          {
-            m_Name = Path.GetFileName( wrapperFile );
+            m_Name = Path.GetFileNameWithoutExtension( wrapperFile );
 
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
