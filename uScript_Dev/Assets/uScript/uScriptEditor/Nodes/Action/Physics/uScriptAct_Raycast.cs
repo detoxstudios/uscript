@@ -32,7 +32,7 @@ public class uScriptAct_Raycast : uScriptLogic
       bool validInputs = true;
       float tmpHitDistance = 0F;
       Vector3 tmpHitLocation = Vector3.zero;
-      Vector3 tmpHitNormal = new Vector(0, 1, 0);
+      Vector3 tmpHitNormal = new Vector3(0, 1, 0);
       GameObject tmpHitObject = null;
  
       if (typeof(GameObject) == Start.GetType() || typeof(Vector3) == Start.GetType())
