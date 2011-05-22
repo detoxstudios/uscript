@@ -76,7 +76,7 @@ public static class uScriptGUIStyle
       _paletteButton.margin = new RectOffset( 4, 4, 0, 0 );
       _paletteButton.active.textColor = UnityEngine.Color.white;
 
-      Debug.Log("BUTTON:"
+      /* Debug.Log("BUTTON:"
                 + "\n\t name: \t\t\t\t" + _paletteButton.name
                 + "\n\t alignment: \t\t\t" + _paletteButton.alignment
                 + "\n\t border: \t\t\t\t" + _paletteButton.border
@@ -93,7 +93,7 @@ public static class uScriptGUIStyle
                 + "\n\t stretchHeight: \t" + _paletteButton.stretchHeight
                 + "\n\t stretchWidth: \t\t" + _paletteButton.stretchWidth
                 + "\n\t wordWrap: \t\t\t" + _paletteButton.wordWrap
-                );
+                ); */
 
       _panelBox = new GUIStyle(GUI.skin.box);
       _panelBox.padding = new RectOffset(1, 1, 1, 1);
