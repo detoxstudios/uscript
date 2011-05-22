@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Isometric Character Controller.")]
-[NodeDescription("Simple character controller.  Character always moves along its forward vector and back along its back vector.")]
+[NodeDescription("Simple character controller.  Character always moves forward and backwards along its forward vector.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
