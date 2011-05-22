@@ -26,7 +26,7 @@ public class uScript_MasterComponent : MonoBehaviour
    public void AttachScriptToMaster(string fullPath)
    {
       System.Array.Resize(ref m_uScriptsToAttach, m_uScriptsToAttach.Length + 1 );
-      m_uScriptsToAttach[ m_uScriptsToAttach.Length ] = fullPath;
+      m_uScriptsToAttach[ m_uScriptsToAttach.Length - 1 ] = fullPath;
    }
 
    void OnDrawGizmos( )
