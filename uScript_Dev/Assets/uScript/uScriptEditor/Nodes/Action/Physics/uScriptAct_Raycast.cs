@@ -10,18 +10,15 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Performs a ray trace from the starting point to the end point. Returns any hit data.")]
-[NodeDescription("Performs a ray trace from the starting point to the end point, determines if anything was hit along the way, and fires the associated output link.")]
+[NodeDescription("Performs a ray trace from the starting point to the end point, determines if anything was hit along the way, and fires the associated output link.\n \nStart: The start point of the ray cast. Must be a GameObject or Vector3.\nEnd: The end point of the ray cast. Must be a GameObject or Vector3.\nLayer Mask: A Layer mask that is used to selectively ignore colliders when casting a ray.\nHit GameObject: The first GameObject that was hit by the raycast (if any).\nHit Distance: The distance along the ray that the hit occured (if any).\nHit Location: The position of the hit (if any).\nHit Normal: The surface normal of the hit (if any).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Raycast")]
 public class uScriptAct_Raycast : uScriptLogic
 {
-   // @TODO: I wish I could return the GameObject hit, but it looks like Unity (RaycastHit) doesn't provide that functionality (at least for static GOs).
-
    private Vector3 m_StartVector = Vector3.zero;
    private Vector3 m_EndVector = Vector3.zero;
-   private bool m_ValidInputs = true;
 
    private bool m_NotObstructed = false;
    private bool m_Obstructed = false;
@@ -29,15 +26,14 @@ public class uScriptAct_Raycast : uScriptLogic
    public bool NotObstructed { get { return m_NotObstructed; } }
    public bool Obstructed { get { return m_Obstructed; } }
 
-   public void In(object Start, object End, [FriendlyName("Layer Mask")] int LayerMask, [FriendlyName("Hit Distance")] out float HitDistance, [FriendlyName("Hit Location")] out Vector3 HitLocation)
+   public void In(object Start, object End, [FriendlyName("Layer Mask")] int LayerMask, [FriendlyName("Hit GameObject")] out GameObject HitObject, [FriendlyName("Hit Distance")] out float HitDistance, [FriendlyName("Hit Location")] out Vector3 HitLocation, [FriendlyName("Hit Normal")] out Vector3 HitNormal)
    {
-      m_NotObstructed = false;
-      m_Obstructed = false;
-      
-      bool m_HitTrue = false;
-
+      bool hitTrue = false;
+      bool validInputs = true;
       float tmpHitDistance = 0F;
       Vector3 tmpHitLocation = Vector3.zero;
+      Vector3 tmpHitNormal = new Vector(0, 1, 0);
+      GameObject tmpHitObject = null;
  
       if (typeof(GameObject) == Start.GetType() || typeof(Vector3) == Start.GetType())
       {
@@ -55,7 +51,7 @@ public class uScriptAct_Raycast : uScriptLogic
       else
       {
          uScriptDebug.Log("The Raycast node can only take a GameObject or Vector3 for the 'Start' input nub!", uScriptDebug.Type.Error);
-         m_ValidInputs = false;
+         validInputs = false;
       }
 
       if (typeof(GameObject) == End.GetType() || typeof(Vector3) == End.GetType())
@@ -74,13 +70,12 @@ public class uScriptAct_Raycast : uScriptLogic
       else
       {
          uScriptDebug.Log("The Raycast node can only take a GameObject or Vector3 for the 'End' input nub!", uScriptDebug.Type.Error);
-         m_ValidInputs = false;
+         validInputs = false;
       }
 
-      if (m_ValidInputs)
+      if (validInputs)
       {
          Vector3 finalDirection = (m_EndVector - m_StartVector).normalized;
-
          float castDistance = Vector3.Distance(m_StartVector, m_EndVector);
          RaycastHit hit;
 
@@ -90,7 +85,9 @@ public class uScriptAct_Raycast : uScriptLogic
             {
                tmpHitDistance = hit.distance;
                tmpHitLocation = hit.point;
-               m_HitTrue = true;
+               tmpHitObject = hit.rigidbody.gameObject;
+               tmpHitNormal = hit.normal;
+               hitTrue = true;
             }
          }
          else
@@ -99,25 +96,19 @@ public class uScriptAct_Raycast : uScriptLogic
             {
                tmpHitDistance = hit.distance;
                tmpHitLocation = hit.point;
-               m_HitTrue = true;
+               tmpHitObject = hit.rigidbody.gameObject;
+               tmpHitNormal = hit.normal;
+               hitTrue = true;
             }
          }
       }
 
-      if (m_HitTrue)
-      {
-         HitDistance = tmpHitDistance;
-         HitLocation = tmpHitLocation;
+      HitDistance = tmpHitDistance;
+      HitLocation = tmpHitLocation;
+      HitObject   = tmpHitObject;
+      HitNormal   = tmpHitNormal;
 
-         m_Obstructed = true;
-      }
-      else
-      {
-         HitDistance = tmpHitDistance;
-         HitLocation = tmpHitLocation;
-
-         m_NotObstructed = true;
-      }
-
+      m_Obstructed = hitTrue;
+      m_NotObstructed = !m_Obstructed;
    }
 }
