@@ -282,7 +282,12 @@ namespace Detox.ScriptEditor
          }
          return m_FlowChart.Nodes[retIndex];
       }
-      
+
+      public Node GetNode(Guid guid)
+      {
+         return m_FlowChart.GetNode(guid);
+      }
+
       public void CenterOnNode(Node node)
       {
          // center on the center for now - later, we'll calculate zoom amount, etc.

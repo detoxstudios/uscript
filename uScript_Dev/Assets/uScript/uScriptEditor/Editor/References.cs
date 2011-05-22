@@ -337,7 +337,7 @@ namespace System.Windows.Forms
 
             if (parameters.Parameters.Length > 1)
             {
-               if (uScriptGUI.BeginProperty(parameters.Description, "NODE12345"))
+               if (uScriptGUI.BeginProperty(parameters.Description, "NODE12345", uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid)))
                {
                   foreach ( Parameter p in parameters.Parameters )
                   {

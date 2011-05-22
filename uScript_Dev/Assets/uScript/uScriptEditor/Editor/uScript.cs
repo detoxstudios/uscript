@@ -162,6 +162,12 @@ public class uScript : EditorWindow
       }
    }
 
+   public ScriptEditorCtrl ScriptEditorCtrl
+   {
+      get { return m_ScriptEditorCtrl; }
+   }
+
+
    //
    // Content Panel Variables
    //
@@ -1417,19 +1423,29 @@ http://www.detoxstudios.com";
                               // Validate strings
                               name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
                               comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
-   
-                              if (GUILayout.Button( name + comment,
-                                            (dn.Selected ? EditorStyles.miniButton : GUI.skin.button) ) )
+
+                              GUILayout.BeginHorizontal();
                               {
-                                 // is the shift key modifier being used?
-                                 if (Event.current.modifiers != EventModifiers.Shift)
+                                 GUIStyle style1 = new GUIStyle(EditorStyles.miniButtonLeft);
+                                 GUIStyle style2 = new GUIStyle(EditorStyles.miniButtonRight);
+
+                                 if (GUILayout.Button( name + comment, style1 ) )
                                  {
-                                    // clear all selected nodes first
-                                    m_ScriptEditorCtrl.DeselectAll();
+                                    // is the shift key modifier being used?
+                                    if (Event.current.modifiers != EventModifiers.Shift)
+                                    {
+                                       // clear all selected nodes first
+                                       m_ScriptEditorCtrl.DeselectAll();
+                                    }
+                                    // toggle the clicked node
+                                    m_ScriptEditorCtrl.ToggleNode(dn.Guid);
                                  }
-                                 // toggle the clicked node
-                                 m_ScriptEditorCtrl.ToggleNode(dn.Guid);
+                                 if (GUILayout.Button(">", style2, GUILayout.Width(20)))
+                                 {
+                                    uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
+                                 }
                               }
+                              GUILayout.EndHorizontal();
                            }
                         }
                      }

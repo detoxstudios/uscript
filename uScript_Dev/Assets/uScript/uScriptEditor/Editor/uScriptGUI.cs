@@ -5,6 +5,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
+using Detox.ScriptEditor;
+using Detox.FlowChart;
+
+
 //
 // This file contains a collection of custom uScript GUI controls for use with uScriptEditor
 // _________________________________________________________________________________________
@@ -156,7 +160,7 @@ public static class uScriptGUI
    }
 
 
-   public static bool BeginProperty(string label, string id)
+   public static bool BeginProperty(string label, string id, Node node)
    {
       _propertyCount++;
 //      if (++_propertyCount > 1)
@@ -174,8 +178,27 @@ public static class uScriptGUI
       GUIStyle style = new GUIStyle(GUI.skin.button);
       style.alignment = TextAnchor.MiddleLeft;
 
+      GUILayout.BeginHorizontal();
+      {
+         GUIStyle style1 = new GUIStyle(EditorStyles.miniButtonLeft);
+         GUIStyle style2 = new GUIStyle(EditorStyles.miniButtonRight);
+         _foldoutExpanded[_propertyKey] = GUILayout.Toggle(_foldoutExpanded[_propertyKey], label /* + "_" + id */, style1);
 
-      _foldoutExpanded[_propertyKey] = GUILayout.Toggle(_foldoutExpanded[_propertyKey], label /* + "_" + id */, style);
+//         Rect rect = GUILayoutUtility.GetLastRect();
+
+         if (GUILayout.Button(">", style2, GUILayout.Width(20)))
+         {
+            if (node == null)
+            {
+               Debug.LogWarning("Would lke to center on node, but node is null!\n");
+            }
+            else
+            {
+               uScript.Instance.ScriptEditorCtrl.CenterOnNode(node);
+            }
+         }
+      }
+      GUILayout.EndHorizontal();
 
       return _foldoutExpanded[_propertyKey];
    }
