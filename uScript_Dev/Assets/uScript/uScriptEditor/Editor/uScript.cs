@@ -64,7 +64,7 @@ public class uScript : EditorWindow
 
    // Used for double-click hack in uScripts panel
    private double clickTime;
-   private double doubleClickTime = 0.3;
+//   private double doubleClickTime = 0.3;
 
    private int m_ContextX = 0;
    private int m_ContextY = 0;
@@ -2009,30 +2009,53 @@ http://www.detoxstudios.com";
                   {
                      string scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
 
-                     if (scriptName == "XXXXX")
-                     {
-                        GUIStyle style = new GUIStyle(uScriptGUIStyle.paletteButton);
-                        style.normal.background = style.active.background;
-                        GUILayout.Label(scriptName + " (current)", style);
-                     }
-                     else
-                     {
-                        GUIContent content = new GUIContent(scriptName, "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
-                        if (GUILayout.Button(content, uScriptGUIStyle.paletteButton))
-                        {
-                           if ((EditorApplication.timeSinceStartup - clickTime) < doubleClickTime)
-                           {
-                              string path = FindFile(uScriptConfig.Paths.UserScripts, scriptName + ".uscript");
+                     GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
+//                     GUIStyle errorStyle = new GUIStyle(EditorStyles.label);
+                     bool currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
 
-                              if ("" != path)
-                              {
-                                 _openScriptToggle = false;
-                                 OpenScript(path);
-                              }
+                     GUILayout.BeginHorizontal();
+                     {
+                        // uScript Label
+                        if (currentScript)
+                        {
+                           scriptStyle.fontStyle = FontStyle.Bold;
+                           scriptStyle.normal.textColor = (IsAttached ? UnityEngine.Color.white : UnityEngine.Color.red);
+                        }
+                        GUILayout.Label(scriptName, scriptStyle);
+
+                        GUILayout.FlexibleSpace();
+
+                        // Load or Reload
+                        GUIContent content = new GUIContent((currentScript ? "Reload" : "Load"), "Click to load this uScript.");
+                        if (GUILayout.Button(content, (currentScript ? EditorStyles.miniButton : EditorStyles.miniButtonLeft)))
+                        {
+                           string path = FindFile(uScriptConfig.Paths.UserScripts, scriptName + ".uscript");
+
+                           if ("" != path)
+                           {
+                              _openScriptToggle = false;
+                              OpenScript(path);
                            }
-                           clickTime = EditorApplication.timeSinceStartup;
+                        }
+
+                        // Insert as Nested uScript
+                        if (currentScript == false)
+                        {
+                           content = new GUIContent("Insert", "Click to add an instance of this uScript.");
+                           if (GUILayout.Button(content, EditorStyles.miniButtonRight))
+                           {
+                              Debug.LogWarning("An instance of the \""+ scriptName +"\" uScript should have been inserted into the graph.\n");
+                           }
                         }
                      }
+                     GUILayout.EndHorizontal();
+
+//                     if (currentScript && IsAttached == false)
+//                     {
+//                        errorStyle.normal.textColor = UnityEngine.Color.red;
+//                        errorStyle.wordWrap = true;
+//                        GUILayout.Label("This uScript is not attached to any GameObject in the scene.", errorStyle);
+//                     }
                   }
                }
             }
@@ -2497,7 +2520,7 @@ http://www.detoxstudios.com";
          RemoveGeneratedCode( subDirectory.FullName );
       }
    }
-   
+
    public void RebuildScripts( string path )
    {
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
