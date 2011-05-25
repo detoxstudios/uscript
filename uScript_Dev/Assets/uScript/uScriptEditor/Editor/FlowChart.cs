@@ -385,7 +385,7 @@ namespace Detox.FlowChart
 
       private void FlowChartCtrl_NodeMouseDown(object sender, MouseEventArgs e)
       {
-         if ( e.Button == MouseButtons.Left )
+         if ( e.Button == MouseButtons.Left && false == Control.ModifierKeys.Contains(Keys.Alt) )
          {
             m_MoveBoundariesStart = System.Windows.Forms.Cursor.Position;
 
@@ -488,61 +488,72 @@ namespace Detox.FlowChart
                Invalidate( );
             }
          }
+         else if (e.Button == MouseButtons.Middle || (e.Button == MouseButtons.Left && true == Control.ModifierKeys.Contains(Keys.Alt)))
+         {
+            // allow panning when clicking on a node
+            FlowChartCtrl_MouseDown(sender, e);
+         }
       }
 
       //called "NodeMouseMove" because it's a relayed message from
       //the node, which will have the mouse coords in node space
       private void FlowChartCtrl_NodeMouseMove(object sender, MouseEventArgs e)
       {
-         if ( e.Button != MouseButtons.Left ) return;
-
-         if ( false == InMoveMode && null == m_StartLinkNode )
+         if ( e.Button == MouseButtons.Left && false == Control.ModifierKeys.Contains(Keys.Alt) )
          {
-            if ( false == m_NodeMouseSizing )
+            if ( false == InMoveMode && null == m_StartLinkNode )
             {
-               if ( false == m_NodeMouseTracking )
+               if ( false == m_NodeMouseSizing )
+               {
+                  if ( false == m_NodeMouseTracking )
+                  {
+                     foreach ( Node selectedNode in SelectedNodes )
+                     {
+                        selectedNode.StartNodeMove( );
+                     }
+                  }
+                  m_NodeMouseTracking = true;
+               }
+   
+               if ( true == m_NodeMouseTracking )
                {
                   foreach ( Node selectedNode in SelectedNodes )
                   {
-                     selectedNode.StartNodeMove( );
+                     selectedNode.NodeMove( );
                   }
                }
-               m_NodeMouseTracking = true;
-            }
-
-            if ( true == m_NodeMouseTracking )
-            {
-               foreach ( Node selectedNode in SelectedNodes )
+               else if ( true == m_NodeMouseSizing )
                {
-                  selectedNode.NodeMove( );
-               }
-            }
-            else if ( true == m_NodeMouseSizing )
-            {
-               Node node = sender as Node;
-               
-               //see comments in NodeMouseDown for why we have this if/else
-               if ( false == node.Selected )
-               {
-                  node.NodeResize( );
-               }
-               else
-               {
-                  foreach ( Node selectedNode in SelectedNodes )
+                  Node node = sender as Node;
+                  
+                  //see comments in NodeMouseDown for why we have this if/else
+                  if ( false == node.Selected )
                   {
-                     //these are part of a selection group
-                     //so they didn't have to pass the initial resize hit test
-                     //which means we have no idea if they are authorized to resize or not
-                     if ( selectedNode.CanResize )
+                     node.NodeResize( );
+                  }
+                  else
+                  {
+                     foreach ( Node selectedNode in SelectedNodes )
                      {
-                        selectedNode.NodeResize( );
+                        //these are part of a selection group
+                        //so they didn't have to pass the initial resize hit test
+                        //which means we have no idea if they are authorized to resize or not
+                        if ( selectedNode.CanResize )
+                        {
+                           selectedNode.NodeResize( );
+                        }
                      }
                   }
                }
             }
+            
+            Invalidate( );
          }
-         
-         Invalidate( );
+         else if (e.Button == MouseButtons.Middle || (e.Button == MouseButtons.Left && true == Control.ModifierKeys.Contains(Keys.Alt)))
+         {
+            // allow panning when clicking on a node
+            FlowChartCtrl_MouseMove(sender, e);
+         }
       }
 
       private bool UserProbablyDidntMeanToMoveMouse( )
@@ -563,109 +574,115 @@ namespace Detox.FlowChart
       //the node, which will have the mouse coords in node space
       private void FlowChartCtrl_NodeMouseUp(object sender, MouseEventArgs e)
       {
-         if ( e.Button != MouseButtons.Left ) return;
-
-         List<Node> modifiedNodes = new List<Node>( );
-         Link createdLink = null;
-
-         //if we were moving the node
-         //simply finish moving it, don't unselect anything
-         if ( true == m_NodeMouseTracking || true == m_NodeMouseSizing  )
+         if ( e.Button == MouseButtons.Left && false == Control.ModifierKeys.Contains(Keys.Alt) )
          {
-            //see comments in NodeMouseDown for why we have this if/else
-            if ( false == ((Node)sender).Selected )
+            List<Node> modifiedNodes = new List<Node>( );
+            Link createdLink = null;
+   
+            //if we were moving the node
+            //simply finish moving it, don't unselect anything
+            if ( true == m_NodeMouseTracking || true == m_NodeMouseSizing  )
             {
-               modifiedNodes.Add( sender as Node );
-            }
-            else
-            {
-               foreach ( Node node in SelectedNodes )
+               //see comments in NodeMouseDown for why we have this if/else
+               if ( false == ((Node)sender).Selected )
                {
-                  modifiedNodes.Add( node );
+                  modifiedNodes.Add( sender as Node );
+               }
+               else
+               {
+                  foreach ( Node node in SelectedNodes )
+                  {
+                     modifiedNodes.Add( node );
+                  }
                }
             }
-         }
-
-         m_NodeMouseTracking = false;
-         m_NodeMouseSizing   = false;
-
-         if ( null != m_StartLinkNode )
-         {
-            Point position = System.Windows.Forms.Cursor.Position;
-
-            AnchorPoint hitPoint = new AnchorPoint( );
-
-            foreach ( Control c in Controls )
-            {
-               Node node = c as Node;
-
-               if ( null != node )
-               {
-                  Point localPosition = node.PointToClient( position );
-                  if ( true == node.PointInAnchorPoint(localPosition, ref hitPoint) )
-                  {
-                     if ( true == m_LinkStartAnchor.Output && true == hitPoint.Input ||
-                          true == m_LinkStartAnchor.Input  && true == hitPoint.Output )
-                     {
-                        AnchorPoint sourceAnchor, destAnchor;
-                        Node sourceNode, destNode;
-
-                        //default to start is output and dest is input
-                        if ( true == m_LinkStartAnchor.Output && true == hitPoint.Input )
-                        {
-                           sourceNode   = m_StartLinkNode;
-                           destNode     = node;
-                           sourceAnchor = m_LinkStartAnchor.Output ? m_LinkStartAnchor : hitPoint;
-                           destAnchor   = m_LinkStartAnchor.Output ? hitPoint : m_LinkStartAnchor;
-                        }
-                        else
-                        {
-                           sourceNode   = node;
-                           destNode     = m_StartLinkNode;
-                           sourceAnchor = hitPoint;
-                           destAnchor   = m_LinkStartAnchor;
-                        }
    
-                        bool exists = false;
-
-                        //make sure it doesn't already exist
-                        foreach ( Link existing in m_Links )
+            m_NodeMouseTracking = false;
+            m_NodeMouseSizing   = false;
+   
+            if ( null != m_StartLinkNode )
+            {
+               Point position = System.Windows.Forms.Cursor.Position;
+   
+               AnchorPoint hitPoint = new AnchorPoint( );
+   
+               foreach ( Control c in Controls )
+               {
+                  Node node = c as Node;
+   
+                  if ( null != node )
+                  {
+                     Point localPosition = node.PointToClient( position );
+                     if ( true == node.PointInAnchorPoint(localPosition, ref hitPoint) )
+                     {
+                        if ( true == m_LinkStartAnchor.Output && true == hitPoint.Input ||
+                             true == m_LinkStartAnchor.Input  && true == hitPoint.Output )
                         {
-                           if ( existing.Source.Node             == sourceNode &&
-                                existing.Source.Anchor.Name      == sourceAnchor.Name &&
-                                existing.Destination.Node        == destNode &&
-                                existing.Destination.Anchor.Name == destAnchor.Name )
+                           AnchorPoint sourceAnchor, destAnchor;
+                           Node sourceNode, destNode;
+   
+                           //default to start is output and dest is input
+                           if ( true == m_LinkStartAnchor.Output && true == hitPoint.Input )
                            {
-                              exists = true;
-                              break;
+                              sourceNode   = m_StartLinkNode;
+                              destNode     = node;
+                              sourceAnchor = m_LinkStartAnchor.Output ? m_LinkStartAnchor : hitPoint;
+                              destAnchor   = m_LinkStartAnchor.Output ? hitPoint : m_LinkStartAnchor;
                            }
+                           else
+                           {
+                              sourceNode   = node;
+                              destNode     = m_StartLinkNode;
+                              sourceAnchor = hitPoint;
+                              destAnchor   = m_LinkStartAnchor;
+                           }
+      
+                           bool exists = false;
+   
+                           //make sure it doesn't already exist
+                           foreach ( Link existing in m_Links )
+                           {
+                              if ( existing.Source.Node             == sourceNode &&
+                                   existing.Source.Anchor.Name      == sourceAnchor.Name &&
+                                   existing.Destination.Node        == destNode &&
+                                   existing.Destination.Anchor.Name == destAnchor.Name )
+                              {
+                                 exists = true;
+                                 break;
+                              }
+                           }
+   
+                           if ( false == exists )
+                           {
+                              Link link = new Link( sourceNode, sourceAnchor.Name, destNode, destAnchor.Name );
+                              m_Links.Add( link );
+   
+                              createdLink = link;
+                           }
+   
+                           break;
                         }
-
-                        if ( false == exists )
-                        {
-                           Link link = new Link( sourceNode, sourceAnchor.Name, destNode, destAnchor.Name );
-                           m_Links.Add( link );
-
-                           createdLink = link;
-                        }
-
-                        break;
                      }
                   }
                }
             }
+   
+            m_StartLinkNode = null;
+   
+            if ( null != createdLink )
+            {
+               OnLinkCreated( createdLink );
+            }
+   
+            OnNodesModified( modifiedNodes.ToArray( ) );
+   
+            Invalidate( );
          }
-
-         m_StartLinkNode = null;
-
-         if ( null != createdLink )
+         else if (e.Button == MouseButtons.Middle || (e.Button == MouseButtons.Left && true == Control.ModifierKeys.Contains(Keys.Alt)))
          {
-            OnLinkCreated( createdLink );
+            // allow panning when clicking on a node
+            FlowChartCtrl_MouseUp(sender, e);
          }
-
-         OnNodesModified( modifiedNodes.ToArray( ) );
-
-         Invalidate( );
       }
       
       private void FlowChartCtrl_MouseUp(object sender, MouseEventArgs e)
