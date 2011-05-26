@@ -378,7 +378,6 @@ http://www.detoxstudios.com";
       
       if (null == m_ScriptEditorCtrl || true == rebuildScript)
       {
-         Debug.Log("rebuild 1");
          if ( null == m_ScriptEditorCtrl )
          {
             if (Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild)
@@ -444,12 +443,8 @@ http://www.detoxstudios.com";
 
          if ( null != MasterComponent.Script )
          {
-            Debug.Log("rebuild 2");
-
             if ( true == scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script) )
             {
-               Debug.Log("rebuild 3");
-
                isRestored = true;
 
                //if we're restoring over an old script
@@ -501,13 +496,10 @@ http://www.detoxstudios.com";
          {
             OpenScript(m_FullPath);
             m_RefreshTimestamp = EditorApplication.timeSinceStartup;
-            Debug.Log("rebuild 4");
          }
          
          if ( true == isDirty )
          {
-            Debug.Log("rebuild 5");
-
             //force rebuilt from undo so mark as dirty
             m_ScriptEditorCtrl.IsDirty = true;
          }
