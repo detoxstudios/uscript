@@ -369,15 +369,16 @@ http://www.detoxstudios.com";
       //
 
       //force a rebuild if undo was performed
-      bool forceRebuild = false;
+      bool rebuildScript = false;
 
       if ( null != MasterComponent && CurrentScript != MasterComponent.Script )
       {
-         forceRebuild = true;
+         rebuildScript = true;
       }
       
-      if (null == m_ScriptEditorCtrl || true == forceRebuild)
+      if (null == m_ScriptEditorCtrl || true == rebuildScript)
       {
+         Debug.Log("rebuild 1");
          if ( null == m_ScriptEditorCtrl )
          {
             if (Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild)
@@ -437,14 +438,27 @@ http://www.detoxstudios.com";
          }
 
          bool isRestored = false;
+         bool isDirty    = false;
          
          ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(), PopulateLogicTypes());
 
          if ( null != MasterComponent.Script )
          {
+            Debug.Log("rebuild 2");
+
             if ( true == scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script) )
             {
+               Debug.Log("rebuild 3");
+
                isRestored = true;
+
+               //if we're restoring over an old script
+               //we need to flag us as dirty (because this was do to an undo/redo being triggered)
+               if ( null != CurrentScript )
+               {
+                  isDirty = true;
+               }
+
                CurrentScript = MasterComponent.Script;
             }
          }
@@ -487,7 +501,17 @@ http://www.detoxstudios.com";
          {
             OpenScript(m_FullPath);
             m_RefreshTimestamp = EditorApplication.timeSinceStartup;
+            Debug.Log("rebuild 4");
          }
+         
+         if ( true == isDirty )
+         {
+            Debug.Log("rebuild 5");
+
+            //force rebuilt from undo so mark as dirty
+            m_ScriptEditorCtrl.IsDirty = true;
+         }
+
 
          _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
          _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);

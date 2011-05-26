@@ -128,7 +128,7 @@ namespace Detox.ScriptEditor
       public bool IsDirty 
       { 
          get { return m_Dirty; } 
-         set { m_Dirty = false; }
+         set { m_Dirty = value; }
       }
 
       private bool m_Dirty = false;
