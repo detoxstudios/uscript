@@ -938,17 +938,17 @@ http://www.detoxstudios.com";
          }
       }
       
-      if (Event.current.type == EventType.Layout || Event.current.type == EventType.Repaint)
-      {
-         //
-         // All the GUI drawing code
-         //
-         DrawMainGUI();
-         DrawPopups(contextActive);
-      }
-      
+      //
+      // All the GUI drawing code
+      //
+      DrawMainGUI();
+
+      // where is the mouse?
       CalculateMouseRegion();
-      
+  
+      // do external windows/popups
+      DrawPopups(contextActive);
+  
       // the following code must be here because it needs to happen 
       // after we've figured out what region the mouse is in
       if (_mouseRegion == uScript.MouseRegion.Outside)
