@@ -938,11 +938,16 @@ http://www.detoxstudios.com";
          }
       }
       
-      //
-      // All the GUI drawing code
-      //
-      DrawMainGUI();
-      DrawPopups(contextActive);
+      if (Event.current.type == EventType.Layout || Event.current.type == EventType.Repaint)
+      {
+         //
+         // All the GUI drawing code
+         //
+         DrawMainGUI();
+         DrawPopups(contextActive);
+      }
+      
+      CalculateMouseRegion();
       
       // the following code must be here because it needs to happen 
       // after we've figured out what region the mouse is in
@@ -1511,10 +1516,17 @@ http://www.detoxstudios.com";
                   break;
             }
          }
-
-         if ( _mouseRegionRect[region].Contains( Event.current.mousePosition ) )
+      }
+   }
+   
+   void CalculateMouseRegion()
+   {
+      foreach( KeyValuePair<MouseRegion, Rect> kvp in _mouseRegionRect )
+      {
+         if ( kvp.Value.Contains( Event.current.mousePosition ) )
          {
-            _mouseRegion = region;
+            _mouseRegion = kvp.Key;
+            break;
             //EditorGUIUtility.DrawColorSwatch(_mouseRegionRect[region], UnityEngine.Color.cyan);
          }
       }
