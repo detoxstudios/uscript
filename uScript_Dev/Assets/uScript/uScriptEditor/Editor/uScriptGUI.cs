@@ -57,8 +57,8 @@ public static class uScriptGUI
    public static void BeginColumns(string col1, string col2, string col3, Vector2 offset, Rect rect)
    {
       _columnEnabled = new Column(string.Empty, 20);
-      _columnLabel = new Column(col1, 100);
-      _columnValue = new Column(col2, 100);
+      _columnLabel = new Column(col1, 140);
+      _columnValue = new Column(col2, 220);
       _columnType = new Column(col3, 0);
 
       _propertyCount = 0;
