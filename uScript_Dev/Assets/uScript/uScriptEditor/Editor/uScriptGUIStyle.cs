@@ -52,6 +52,8 @@ public static class uScriptGUIStyle
    private static GUIStyle _nodeButtonRight;
    public static GUIStyle nodeButtonRight { get { return _nodeButtonRight; } }
 
+   private static GUIStyle _contextMenu;
+   public static GUIStyle ContextMenu { get { return _contextMenu; } }
 
    public static void Init()
    {
@@ -150,5 +152,7 @@ public static class uScriptGUIStyle
       _nodeButtonRight.margin = new RectOffset( 0, 4, 0, 0 );
       _nodeButtonRight.overflow = new RectOffset( 0, 0, 0, 2 );
       _nodeButtonRight.fontSize = 11;
+
+      _contextMenu = new GUIStyle(EditorStyles.toolbarButton);
    }
 }

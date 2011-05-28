@@ -2232,11 +2232,11 @@ http://www.detoxstudios.com";
          {
             if ( item.Text == "<hr>" )
             {
-               GUILayout.HorizontalSlider( 0, 0, 0 );
+               GUILayout.Button( "", uScriptGUIStyle.hDivider );
             }
             else
             {
-               bool pressed = GUILayout.Button( item.Text.Replace("&", ""), EditorStyles.label );
+               bool pressed = GUILayout.Button( item.Text.Replace("&", ""), uScriptGUIStyle.ContextMenu );
 
                if ( true == pressed )
                {
@@ -2312,7 +2312,7 @@ http://www.detoxstudios.com";
 
       foreach ( ToolStripItem item in menuItem.DropDownItems.Items )
       {
-         bool pressed = GUILayout.Button( item.Text.Replace("&", ""), EditorStyles.label );
+         bool pressed = GUILayout.Button( item.Text.Replace("&", ""), uScriptGUIStyle.ContextMenu );
 
          if ( true == pressed )
          {

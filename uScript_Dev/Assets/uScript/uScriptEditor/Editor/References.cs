@@ -496,7 +496,7 @@ namespace System.Windows.Forms
 
    public class ToolStripSeparator : ToolStripItem
    {
-      public ToolStripSeparator() : base("")
+      public ToolStripSeparator() : base("<hr>")
       {}
    }
 
