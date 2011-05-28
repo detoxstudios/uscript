@@ -890,6 +890,35 @@ namespace Detox.ScriptEditor
          CollapseNodes( null );
       }
 
+      private void m_MenuSelectActive_Click(object sender, EventArgs e)
+      {
+         List<UnityEngine.GameObject> gameObjects = new List<UnityEngine.GameObject>( );
+
+         foreach ( DisplayNode node in SelectedNodes )
+         {
+            if ( node.EntityNode is LocalNode )
+            {
+               UnityEngine.GameObject gameObject = UnityEngine.GameObject.Find(((LocalNode)node.EntityNode).Value.Default);
+               if ( null != gameObject ) gameObjects.Add( gameObject );
+            }
+
+            if ( node.EntityNode is EntityEvent || node.EntityNode is EntityMethod )
+            {
+               UnityEngine.GameObject gameObject = UnityEngine.GameObject.Find(node.EntityNode.Instance.Default);
+               if ( null != gameObject ) gameObjects.Add( gameObject );
+            }
+         }
+
+         if ( gameObjects.Count > 0 )
+         {
+            //use the first one as the active one (i think this is where the camera is panned to)
+            UnityEditor.Selection.activeGameObject = gameObjects[0];
+         }
+
+         //but make sure everything is selected
+         UnityEditor.Selection.objects = gameObjects.ToArray( );
+      }
+   
       private void m_MenuAddLinkedVariable_Click(object sender, EventArgs e)
       {         
          MenuItem item = sender as MenuItem;
@@ -1697,6 +1726,7 @@ namespace Detox.ScriptEditor
          ToolStripMenuItem expandMenu   = new ToolStripMenuItem();
          ToolStripMenuItem collapseAll  = new ToolStripMenuItem();
          ToolStripMenuItem expandAll    = new ToolStripMenuItem();
+         ToolStripMenuItem selectActive = new ToolStripMenuItem();
 
          m_ContextMenuStrip.Items.Add( addMenu );
          
@@ -1851,7 +1881,51 @@ namespace Detox.ScriptEditor
                   m_ContextMenuStrip.Items.Add( objectList );
                   break;
                }
+            }
 
+            int allowSelectActive = 0;
+
+            foreach ( DisplayNode node in SelectedNodes )
+            {
+               if ( node.EntityNode is LocalNode )
+               {
+                  if ( null != UnityEngine.GameObject.Find(((LocalNode)node.EntityNode).Value.Default) )
+                  {
+                     ++allowSelectActive;
+                     if ( allowSelectActive > 1 ) break;
+                  }
+               }
+
+               if ( node.EntityNode is EntityEvent || node.EntityNode is EntityMethod )
+               {
+                  if ( null != UnityEngine.GameObject.Find(node.EntityNode.Instance.Default) )
+                  {
+                     ++allowSelectActive;
+                     if ( allowSelectActive > 1 ) break;
+                  }
+               }
+            }
+
+            if ( allowSelectActive > 0 )
+            {
+               selectActive.Name = "m_SelectActive";
+               selectActive.Size = new System.Drawing.Size(152, 22);
+               selectActive.Click += new System.EventHandler(m_MenuSelectActive_Click);
+
+               if ( 1 == allowSelectActive )
+               {
+                  selectActive.Text = "Select GameObject in Viewport";
+               }
+               else
+               {
+                  selectActive.Text = "Select GameObjects in Viewport";
+               }
+
+               m_ContextMenuStrip.Items.Add( selectActive );
+            }
+            
+            foreach ( DisplayNode node in SelectedNodes )
+            {
                if ( true == node.Deprecated )
                {
                   upgradeNode.Name = "m_UpgradeNode";
@@ -1860,6 +1934,7 @@ namespace Detox.ScriptEditor
                   upgradeNode.Click += new System.EventHandler(m_MenuUpgradeNode_Click);
 
                   m_ContextMenuStrip.Items.Add( upgradeNode );
+                  break;
                }
             }
          }
