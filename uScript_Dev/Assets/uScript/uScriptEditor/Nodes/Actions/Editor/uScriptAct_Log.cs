@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Misc")]
+[NodePath("Actions/Editor")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Outputs a string to the debug log.")]
