@@ -14,7 +14,7 @@ using System.Collections;
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Gate")]
-public class uScriptAct_Gate : uScriptLogic
+public class uScriptCon_Gate : uScriptLogic
 {
    private bool m_gateOpen = false;
 
