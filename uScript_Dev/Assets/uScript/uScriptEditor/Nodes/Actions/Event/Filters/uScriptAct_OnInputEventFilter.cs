@@ -14,20 +14,25 @@ using System.Collections;
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Input Events Filter")]
-public class uScriptAct_OnKeyPressFilter : uScriptLogic
+public class uScriptAct_OnInputEventFilter : uScriptLogic
 {
-   public bool m_KeyHeld = false;
-   public bool m_KeyDown = false;
-   public bool m_KeyUp   = false;
+   public bool m_InputHeld = false;
+   public bool m_InputDown = false;
+   public bool m_InputUp = false;
 
-   public bool KeyHeld  { get { return m_KeyHeld; } }
-   public bool KeyDown  { get { return m_KeyDown; } }
-   public bool KeyUp    { get { return m_KeyUp; } }
+   [FriendlyName("Input Held")]
+   public bool KeyHeld { get { return m_InputHeld; } }
+
+   [FriendlyName("Input Down")]
+   public bool KeyDown { get { return m_InputDown; } }
+
+   [FriendlyName("Input Up")]
+   public bool KeyUp { get { return m_InputUp; } }
 
    public void In([FriendlyName("Key Code")] UnityEngine.KeyCode KeyCode)
-   {  
-      m_KeyDown = UnityEngine.Input.GetKeyDown(KeyCode);
-      m_KeyHeld = UnityEngine.Input.GetKey    (KeyCode);
-      m_KeyUp   = UnityEngine.Input.GetKeyUp  (KeyCode);
+   {
+      m_InputDown = UnityEngine.Input.GetKeyDown(KeyCode);
+      m_InputHeld = UnityEngine.Input.GetKey(KeyCode);
+      m_InputUp = UnityEngine.Input.GetKeyUp(KeyCode);
    }
 }

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.3.110522b
+//uScript Generated Code - Build 0.4.110530a
 using UnityEngine;
 using System.Collections;
 
