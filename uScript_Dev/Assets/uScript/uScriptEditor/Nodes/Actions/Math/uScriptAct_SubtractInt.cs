@@ -18,7 +18,7 @@ public class uScriptAct_SubtractInt : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(int A, int B, [FriendlyName("Result")] out int IntResult, [FriendlyName("Float Result")] out float FloatResult)
+   public void In(int A, int B, [FriendlyName("Result")] out int IntResult, [FriendlyName("Float Result"), SocketState(false, false)] out float FloatResult)
    {
       IntResult = A - B;
       FloatResult = System.Convert.ToSingle(IntResult);

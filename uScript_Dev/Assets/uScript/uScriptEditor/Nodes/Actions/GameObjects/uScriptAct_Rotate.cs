@@ -27,7 +27,7 @@ public class uScriptAct_Rotate : uScriptLogic
    
    public bool Out { get { return true; } }
    
-   public void In(GameObject[] Target, float Degrees, string Axis, float Seconds, bool Loop)
+   public void In(GameObject[] Target, float Degrees, string Axis, float Seconds, [SocketState(false, false)] bool Loop)
    {
       m_Target = new GameObject[Target.Length];
       m_TargetTransforms = new Quaternion[Target.Length];

@@ -20,9 +20,9 @@ public class uScriptAct_InvertVector3 : uScriptLogic
 
    public void In(
       Vector3 Target,
-      [FriendlyName("Ignore X")] bool IgnoreX,
-      [FriendlyName("Ignore Y")] bool IgnoreY,
-      [FriendlyName("Ignore Z")]bool IgnoreZ,
+      [FriendlyName("Ignore X"), SocketState(false, false)] bool IgnoreX,
+      [FriendlyName("Ignore Y"), SocketState(false, false)] bool IgnoreY,
+      [FriendlyName("Ignore Z"), SocketState(false, false)]bool IgnoreZ,
       out Vector3 Value
       )
    {

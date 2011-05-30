@@ -30,10 +30,10 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
    public void Begin(
       [FriendlyName("Start Value")] float startValue, 
       [FriendlyName("End Value")] float endValue, 
-      [FriendlyName("Time")] float time, 
-      [FriendlyName("Loop Type")] [SocketState(false, false)] uScript_Lerper.LoopType loopType, 
-      [FriendlyName("Loop Delay")] [SocketState(false, false)] float loopDelay, 
-      [FriendlyName("Loop Count")] [SocketState(false, false)] int loopCount, 
+      [FriendlyName("Time")] float time,
+      [FriendlyName("Loop Type"), SocketState(false, false)] uScript_Lerper.LoopType loopType,
+      [FriendlyName("Loop Delay"), SocketState(false, false)] float loopDelay,
+      [FriendlyName("Loop Count"), SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] [SocketState(true, true)] out float currentValue
    )
    {

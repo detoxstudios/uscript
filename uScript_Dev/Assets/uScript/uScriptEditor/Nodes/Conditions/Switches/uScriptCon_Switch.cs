@@ -34,7 +34,11 @@ public class uScriptCon_Switch : uScriptLogic
    public event uScriptEventHandler Output6;
 
 
-   public void In(bool Loop, [FriendlyName("Max Output Used"), DefaultValue(6)] int MaxOutputUsed, [FriendlyName("Current Output")] out int CurrentOutput)
+   public void In(
+      bool Loop,
+      [FriendlyName("Max Output Used"), DefaultValue(6)] 
+      int MaxOutputUsed,
+      [FriendlyName("Current Output")] out int CurrentOutput)
    {
 
       // Check bounds on MaxOutputUsed

@@ -632,6 +632,7 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(UnityEngine.Ray), "Ray", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Camera[]), "Camera List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(uScript_Lerper.LoopType), "Loop Type", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Material), "Material", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Texture2D), "Texture2D", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.AnimationClip), "AnimationClip", "Variables" ),
          };
@@ -643,6 +644,8 @@ public partial class uScriptConfig
       if ( type == typeof(AudioClip) ) return true;
       if ( type == typeof(AnimationClip) ) return true;
       if (type == typeof(Texture2D)) return true;
+      if (type == typeof(Material)) return true;
+      //if (type == typeof(GameObject)) return true;
    
       return false;
    }

@@ -21,7 +21,7 @@ public class uScriptAct_SetRandomFloat : uScriptLogic
    public void In(
       [FriendlyName("Min")] float Min,
       [FriendlyName("Max")] float Max,
-      [FriendlyName("Seed"), DefaultValue(0)] int Seed,
+      [FriendlyName("Seed"), DefaultValue(0), SocketState(false, false)] int Seed,
       [FriendlyName("Target Float")] out float TargetFloat)
    {
       // Make sure we don't have min > max (or other way around)

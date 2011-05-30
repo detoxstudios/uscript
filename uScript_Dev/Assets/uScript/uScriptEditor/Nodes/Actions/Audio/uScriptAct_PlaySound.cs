@@ -26,7 +26,7 @@ public class uScriptAct_PlaySound : uScriptLogic
    public void Play(
       [FriendlyName("Audio Clip")] AudioClip audioClip,
       [FriendlyName("Target")] GameObject target,
-      [FriendlyName("Volume"), DefaultValue(1f)] float volume, 
+      [FriendlyName("Volume"), DefaultValue(1f), SocketState(false, false)] float volume, 
       [FriendlyName("Loop")] bool loop
    )
    {
@@ -47,7 +47,7 @@ public class uScriptAct_PlaySound : uScriptLogic
    public void Stop(
       [FriendlyName("Audio Clip")] AudioClip audioClip,
       [FriendlyName("Target")] GameObject target, 
-      [FriendlyName("Volume")] float volume, 
+      [FriendlyName("Volume"), DefaultValue(1f), SocketState(false, false)] float volume, 
       [FriendlyName("Loop")] bool loop
    )
    {

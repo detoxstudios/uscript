@@ -27,7 +27,7 @@ public class uScriptAct_SetRandomColor : uScriptLogic
       [FriendlyName("B Max")] float BlueMax,
       [FriendlyName("A Min"), DefaultValue(1.0f)] float AlphaMin,
       [FriendlyName("A Max"), DefaultValue(1.0f)] float AlphaMax,
-      [DefaultValue(0)] int Seed,
+      [DefaultValue(0), SocketState(false, false)] int Seed,
       [FriendlyName("Target Color")] out Color TargetColor)
    {
       // Make sure values are in range, if not assign defaults that are

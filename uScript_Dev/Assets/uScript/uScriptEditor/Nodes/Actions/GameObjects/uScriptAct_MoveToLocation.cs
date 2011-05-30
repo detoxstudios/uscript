@@ -27,9 +27,9 @@ public class uScriptAct_MoveToLocation : uScriptLogic
    private float        m_CurrentTime;
 
    public void In(
-      [FriendlyName("Targets")] GameObject[] targetArray, 
+      [FriendlyName("Target")] GameObject[] targetArray, 
       [FriendlyName("End Location")] Vector3 location, 
-      [FriendlyName("Use as Offset")] bool asOffset, 
+      [FriendlyName("Use as Offset"), SocketState(false, false)] bool asOffset, 
       [FriendlyName("Transition Time")] float totalTime
    )
    {

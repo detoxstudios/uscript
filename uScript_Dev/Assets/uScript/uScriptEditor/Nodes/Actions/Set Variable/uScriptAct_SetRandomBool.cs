@@ -19,7 +19,7 @@ public class uScriptAct_SetRandomBool : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [DefaultValue(0)] int Seed,
+      [DefaultValue(0), SocketState(false, false)] int Seed,
       [FriendlyName("Target Bool")] out bool TargetBool)
    {
       if (Seed > 0) { Random.seed = Seed; }

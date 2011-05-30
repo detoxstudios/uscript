@@ -19,7 +19,7 @@ public class uScript_Collision : uScriptEvent
    public class CollisionEventArgs : System.EventArgs
    {
       private Collision m_Collision;
-      
+
       [FriendlyName("Relative Velocity")]
       public Vector3 RelativeVelocity { get { return m_Collision.relativeVelocity; } }
 

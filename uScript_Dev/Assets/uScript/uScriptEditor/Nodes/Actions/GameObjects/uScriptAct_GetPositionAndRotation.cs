@@ -20,7 +20,12 @@ public class uScriptAct_GetPositionAndRotation : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(GameObject Target, [FriendlyName("Get Local")] bool GetLocal, out Vector3 Position, out Quaternion Rotation, [FriendlyName("Euler Angles")] out Vector3 EulerAngles)
+   public void In(
+      GameObject Target,
+      [FriendlyName("Get Local"), SocketState(false, false)] bool GetLocal,
+      out Vector3 Position,
+      out Quaternion Rotation,
+      [FriendlyName("Euler Angles"), SocketState(false, false)] out Vector3 EulerAngles)
    {
       if (GetLocal)
       {

@@ -40,7 +40,7 @@ public class uScriptAct_SpawnPrefabAtLocation : uScriptLogic
       [FriendlyName("Spawn Rotation")] Quaternion SpawnRotation,
       [FriendlyName("Spawned Name")] string SpawnedName,
       [FriendlyName("Spawned GameObject")] out GameObject SpawnedGameObject,
-      [FriendlyName("Spawned InstancedID")] out int SpawnedInstancedID
+      [FriendlyName("Spawned InstancedID"), SocketState(false, false)] out int SpawnedInstancedID
       )
    {
       //Get Spawn point location and rotation

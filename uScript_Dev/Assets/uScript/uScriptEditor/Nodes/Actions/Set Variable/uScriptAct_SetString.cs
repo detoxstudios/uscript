@@ -20,9 +20,9 @@ public class uScriptAct_SetString : uScriptLogic
 
    public void In(
       string Value,
-      [FriendlyName("To Upper Case")] bool ToUpperCase,
-      [FriendlyName("To Lower Case")] bool ToLowerCase,
-      [FriendlyName("Trim Whitespace")] bool TrimWhitespace,
+      [FriendlyName("To Upper Case"), SocketState(false, false)] bool ToUpperCase,
+      [FriendlyName("To Lower Case"), SocketState(false, false)] bool ToLowerCase,
+      [FriendlyName("Trim Whitespace"), SocketState(false, false)] bool TrimWhitespace,
       out string Target
       )
    {

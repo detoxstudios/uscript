@@ -26,7 +26,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    [FriendlyName("Finished")]
    public event uScriptEventHandler Finished;
 
-   public void In(GameObject[] Target, AnimationClip Animation, [FriendlyName("Speed Factor"), DefaultValue(1f)] float SpeedFactor, [FriendlyName("Stop Other Animation"), DefaultValue(true)] bool StopOtherAnimations)
+   public void In(GameObject[] Target, AnimationClip Animation, [FriendlyName("Speed Factor"), DefaultValue(1f), SocketState(false, false)] float SpeedFactor, [FriendlyName("Stop Other Animation"), DefaultValue(true), SocketState(false, false)] bool StopOtherAnimations)
    {
       m_GameObject = null;
 

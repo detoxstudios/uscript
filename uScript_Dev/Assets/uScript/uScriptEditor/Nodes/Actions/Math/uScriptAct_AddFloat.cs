@@ -18,7 +18,7 @@ public class uScriptAct_AddFloat : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(float[] A, float[] B, [FriendlyName("Result")] out float FloatResult, [FriendlyName("Int Result")] out int IntResult)
+   public void In(float[] A, float[] B, [FriendlyName("Result")] out float FloatResult, [FriendlyName("Int Result"), SocketState(false, false)] out int IntResult)
    {
       float aTotals = 0F;
       float bTotals = 0F;

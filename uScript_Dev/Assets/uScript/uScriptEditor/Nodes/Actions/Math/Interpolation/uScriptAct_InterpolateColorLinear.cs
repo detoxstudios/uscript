@@ -30,10 +30,10 @@ public class uScriptAct_InterpolateColorLinear : uScriptLogic
    public void Begin(
       [FriendlyName("Start Value")] Color startValue, 
       [FriendlyName("End Value")] Color endValue, 
-      [FriendlyName("Time")] float time, 
-      [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
-      [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Loop Count")]  int loopCount, 
+      [FriendlyName("Time")] float time,
+      [FriendlyName("Loop Type"), SocketState(false, false)] uScript_Lerper.LoopType loopType,
+      [FriendlyName("Loop Delay"), SocketState(false, false)] float loopDelay,
+      [FriendlyName("Loop Count"), SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] out Color currentValue
    )
    {

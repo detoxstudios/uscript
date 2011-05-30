@@ -28,7 +28,7 @@ public class uScriptAct_Toggle : uScriptLogic
    public bool Out { get { return true; } }
 
    [FriendlyName("Turn On")]
-   public void TurnOn(GameObject[] Target, [FriendlyName("Ignore Children")] bool IgnoreChildren)
+   public void TurnOn(GameObject[] Target, [FriendlyName("Ignore Children"), SocketState(false, false)] bool IgnoreChildren)
    {
       foreach ( GameObject currentTarget in Target)
       {

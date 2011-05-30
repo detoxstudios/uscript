@@ -27,11 +27,11 @@ public class uScriptAct_PrintText : uScriptLogic
    [FriendlyName("Show Text")]
    public void ShowLabel(
       string Text,
-      [FriendlyName("Font Size")] int FontSize,
-      [FriendlyName("Font Style")] UnityEngine.FontStyle FontStyle,
-      [FriendlyName("Color")] UnityEngine.Color FontColor,
-      [FriendlyName("Alignment")] UnityEngine.TextAnchor textAnchor,
-      [FriendlyName("Edge Padding")] int EdgePadding
+      [FriendlyName("Font Size"), DefaultValue(16), SocketState(false, false)] int FontSize,
+      [FriendlyName("Font Style"), SocketState(false, false)] UnityEngine.FontStyle FontStyle,
+      [FriendlyName("Color"), SocketState(false, false)] UnityEngine.Color FontColor,
+      [FriendlyName("Alignment"), SocketState(false, false)] UnityEngine.TextAnchor textAnchor,
+      [FriendlyName("Edge Padding"), DefaultValue(8), SocketState(false, false)] int EdgePadding
       )
    {
       m_Text = Text;
@@ -51,11 +51,11 @@ public class uScriptAct_PrintText : uScriptLogic
    [FriendlyName("Hide Text")]
    public void HideLabel(
       string Text,
-      [FriendlyName("Font Size")] int FontSize,
-      [FriendlyName("Font Style")] UnityEngine.FontStyle FontStyle,
-      [FriendlyName("Color")] UnityEngine.Color FontColor,
-      [FriendlyName("Alignment")] UnityEngine.TextAnchor textAnchor,
-      [FriendlyName("Edge Padding")] int EdgePadding
+      [FriendlyName("Font Size"), DefaultValue(16), SocketState(false, false)] int FontSize,
+      [FriendlyName("Font Style"), SocketState(false, false)] UnityEngine.FontStyle FontStyle,
+      [FriendlyName("Color"), SocketState(false, false)] UnityEngine.Color FontColor,
+      [FriendlyName("Alignment"), SocketState(false, false)] UnityEngine.TextAnchor textAnchor,
+      [FriendlyName("Edge Padding"), DefaultValue(8), SocketState(false, false)] int EdgePadding
       )
    {
       m_DisplayText = false;

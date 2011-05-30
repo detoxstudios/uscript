@@ -20,7 +20,7 @@ public class uScriptAct_AssignMaterialColor : uScriptLogic
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, [FriendlyName("Color")] Color MatColor, [FriendlyName("Material Channel")] int MatChannel)
+   public void In(GameObject[] Target, [FriendlyName("Color")] Color MatColor, [FriendlyName("Material Channel"), SocketState(false, false)] int MatChannel)
    {
       //Get the Material
       try

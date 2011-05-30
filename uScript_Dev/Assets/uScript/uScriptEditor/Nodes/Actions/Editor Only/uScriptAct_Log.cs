@@ -18,7 +18,7 @@ public class uScriptAct_Log : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(string Prefix, object[] Target, string Postfix)
+   public void In([SocketState(false, false)] string Prefix, object[] Target, [SocketState(false, false)] string Postfix)
    {
       if (string.IsNullOrEmpty(Prefix) && string.IsNullOrEmpty(Postfix))
       {

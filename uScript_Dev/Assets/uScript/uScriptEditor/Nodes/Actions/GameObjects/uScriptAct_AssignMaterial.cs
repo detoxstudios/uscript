@@ -16,22 +16,11 @@ using System.Collections;
 [FriendlyName("Assign Material")]
 public class uScriptAct_AssignMaterial : uScriptLogic
 {
-   private Material m_NewMaterial;
-
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, [FriendlyName("Material Name")]string materialName, [FriendlyName("Resource Path")]string resourcePath, [FriendlyName("Material Channel")]int MatChannel)
+   public void In(GameObject[] Target, [FriendlyName("Material")]Material materialName, [FriendlyName("Material Channel"), SocketState(false, false)]int MatChannel)
    {
-      //Get the Material
-      try
-      {
-         m_NewMaterial = Resources.Load(GetFullPath(materialName, resourcePath), typeof(Material)) as Material;
-      }
-      catch (System.Exception e)
-      {
-         uScriptDebug.Log("(Node = Assign Material) Could not load the specified material. Check your material name and path.\nError output: " + e.ToString(), uScriptDebug.Type.Error);
-      }
-
+      
       foreach (GameObject tmpTarget in Target)
       {
          try
@@ -39,7 +28,7 @@ public class uScriptAct_AssignMaterial : uScriptLogic
             // Get the materials on the Target
             Material[] tmpMaterials = tmpTarget.renderer.materials;
 
-            tmpMaterials[MatChannel] = m_NewMaterial;
+            tmpMaterials[MatChannel] = materialName;
             tmpTarget.renderer.materials = tmpMaterials;
          }
          catch (System.Exception e)
@@ -49,79 +38,31 @@ public class uScriptAct_AssignMaterial : uScriptLogic
       }
    }
 
-   string GetFullPath(string FileName, string ResourcePath)
+#if UNITY_EDITOR
+   public override Hashtable EditorDragDrop(object o)
    {
-      // Build final ResourcePath string
-      if (!string.IsNullOrEmpty(ResourcePath))
+      if (typeof(Material).IsAssignableFrom(o.GetType()))
       {
-         // Make sure all the slashes are correct
-         if (ResourcePath.Contains("\\"))
-         {
-            ResourcePath = ResourcePath.Replace("\\", "/");
-         }
+         Material ac = (Material)o;
 
-         // Prune any begining or ending slashes
-         if (ResourcePath.StartsWith("/") || ResourcePath.StartsWith(@"\"))
-         {
-            ResourcePath = ResourcePath.Remove(0, 1);
-         }
-         if (ResourcePath.EndsWith("/") || ResourcePath.EndsWith(@"\"))
-         {
-            int stringLength = ResourcePath.Length - 1;
-            ResourcePath = ResourcePath.Remove(stringLength, 1);
-         }
+         Hashtable hashtable = new Hashtable();
+         hashtable["Material"] = UnityEditor.AssetDatabase.GetAssetPath(ac.GetInstanceID());
 
-         //prune Assets text if user added it
-         if (ResourcePath.StartsWith("Assets") || ResourcePath.StartsWith("assets"))
-         {
-            ResourcePath = ResourcePath.Remove(0, "Assets".Length);
-         }
+         return hashtable;
+      }
+      if (typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()))
+      {
+         GameObject go = (GameObject)o;
 
-         //prune Resources text if user added it
-         if (ResourcePath.StartsWith("Resources") || ResourcePath.StartsWith("resources"))
-         {
-            ResourcePath = ResourcePath.Remove(0, "Resources".Length);
-         }
+         Hashtable hashtable = new Hashtable();
+         hashtable["Target"] = go.name;
+
+         return hashtable;
       }
 
-      // Build final PrefabName string
-      if (!string.IsNullOrEmpty(FileName))
-      {
-         // Make sure all the slashes are correct
-         if (FileName.Contains("\\"))
-         {
-            FileName = FileName.Replace("\\", "/");
-         }
-
-         // Prune any begining or ending slashes
-         if (FileName.StartsWith("/") || FileName.StartsWith(@"\"))
-         {
-            FileName = FileName.Remove(0, 1);
-         }
-         if (FileName.EndsWith("/") || FileName.EndsWith(@"\"))
-         {
-            int stringLength = FileName.Length - 1;
-            FileName = FileName.Remove(stringLength, 1);
-         }
-
-         FileName = System.IO.Path.GetFileNameWithoutExtension(FileName);
-      }
-
-      // Build final fullPath
-      string fullPath = "";
-
-      if (!string.IsNullOrEmpty(ResourcePath))
-      {
-         fullPath = ResourcePath + "/" + FileName;
-      }
-      else
-      {
-         // Must be in the root of Resources
-         fullPath = FileName;
-      }
-
-      return fullPath;
+      return null;
    }
+#endif
 
 
 }

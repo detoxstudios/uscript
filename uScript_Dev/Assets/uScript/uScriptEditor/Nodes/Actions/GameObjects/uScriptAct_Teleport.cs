@@ -19,7 +19,10 @@ public class uScriptAct_Teleport : uScriptLogic
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, GameObject Destination, [FriendlyName("Update Rotation")] bool UpdateRotation)
+   public void In(
+      GameObject[] Target,
+      GameObject Destination,
+      [FriendlyName("Update Rotation"), SocketState(false, false)] bool UpdateRotation)
    {
       foreach (GameObject currentTarget in Target)
       {

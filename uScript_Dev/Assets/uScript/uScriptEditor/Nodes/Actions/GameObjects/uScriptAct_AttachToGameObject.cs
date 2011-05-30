@@ -20,7 +20,14 @@ public class uScriptAct_AttachToGameObject : uScriptLogic
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject Target, GameObject Attachment, [FriendlyName("Use Relative Offset")] bool UseRelativeOffset, [FriendlyName("Relative Offset")] Vector3 RelativeOffset, [FriendlyName("Use Relative Rotation")] bool UseRelativeRotation, [FriendlyName("Relative Rotation")] Vector3 RelativeRotation)
+   public void In(
+      GameObject Target,
+      GameObject Attachment, 
+      [FriendlyName("Use Relative Offset"), SocketState(false, false)] bool UseRelativeOffset,
+      [FriendlyName("Relative Offset"), SocketState(false, false)] Vector3 RelativeOffset,
+      [FriendlyName("Use Relative Rotation"), SocketState(false, false)] bool UseRelativeRotation,
+      [FriendlyName("Relative Rotation"), SocketState(false, false)] Vector3 RelativeRotation
+      )
    {
       if (Attachment != null)
       {

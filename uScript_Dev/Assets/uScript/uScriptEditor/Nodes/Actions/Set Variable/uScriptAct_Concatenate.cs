@@ -18,7 +18,7 @@ public class uScriptAct_Concatenate : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(object[] A, object[] B, string Separator, out string Result)
+   public void In(object[] A, object[] B, [SocketState(false, false)] string Separator, out string Result)
    {
       string aTotal = A[0].ToString();
       string bTotal = B[0].ToString();

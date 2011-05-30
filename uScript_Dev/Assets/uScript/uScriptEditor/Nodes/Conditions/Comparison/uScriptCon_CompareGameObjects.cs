@@ -23,7 +23,7 @@ public class uScriptCon_CompareGameObjects : uScriptLogic
    public bool Same { get { return compareSame; } }
    public bool Different { get { return compareDifferent; } }
 
-   public void In(GameObject A, GameObject B, [FriendlyName("Compare By Tag")] bool CompareByTag)
+   public void In(GameObject A, GameObject B, [FriendlyName("Compare By Tag"), SocketState(false, false)] bool CompareByTag)
    {
 
       compareSame = false;

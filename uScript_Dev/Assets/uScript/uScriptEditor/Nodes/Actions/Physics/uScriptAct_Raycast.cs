@@ -26,7 +26,14 @@ public class uScriptAct_Raycast : uScriptLogic
    public bool NotObstructed { get { return m_NotObstructed; } }
    public bool Obstructed { get { return m_Obstructed; } }
 
-   public void In(object Start, object End, [FriendlyName("Layer Mask")] int LayerMask, [FriendlyName("Hit GameObject")] out GameObject HitObject, [FriendlyName("Hit Distance")] out float HitDistance, [FriendlyName("Hit Location")] out Vector3 HitLocation, [FriendlyName("Hit Normal")] out Vector3 HitNormal)
+   public void In(
+      object Start, object End,
+      [FriendlyName("Layer Mask"), SocketState(false, false)] int LayerMask,
+      [FriendlyName("Hit GameObject")] out GameObject HitObject,
+      [FriendlyName("Hit Distance")] out float HitDistance,
+      [FriendlyName("Hit Location")] out Vector3 HitLocation,
+      [FriendlyName("Hit Normal")] out Vector3 HitNormal
+      )
    {
       bool hitTrue = false;
       bool validInputs = true;

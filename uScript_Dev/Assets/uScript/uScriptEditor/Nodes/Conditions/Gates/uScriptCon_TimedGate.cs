@@ -23,7 +23,7 @@ public class uScriptCon_TimedGate : uScriptLogic
    public event uScriptEventHandler Out;
 
    public void In(
-      [FriendlyName("Closed Duration"), DefaultValue(0f)] float Duration
+      [FriendlyName("Closed Duration"), DefaultValue(1f)] float Duration
    )
    {
 
