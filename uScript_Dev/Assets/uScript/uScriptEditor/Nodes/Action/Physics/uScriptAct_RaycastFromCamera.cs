@@ -26,7 +26,7 @@ public class uScriptAct_RaycastFromCamera : uScriptLogic
       Camera Camera,
       [FriendlyName("X Pixel Offset"), SocketState(false, false)] int Offset_X,
       [FriendlyName("Y Pixel Offset"), SocketState(false, false)] int Offset_Y,
-      [FriendlyName("Distance"), DefaultValue(100f)] float Distance,
+      [FriendlyName("Distance"), SocketState(false, false), DefaultValue(100f)] float Distance,
       [FriendlyName("Layer Mask"), SocketState(false, false)] int LayerMask,
       [FriendlyName("Hit GameObject")] out GameObject HitObject,
       [FriendlyName("Hit Distance"), SocketState(false, false)] out float HitDistance,
