@@ -9,7 +9,7 @@ using System.Collections;
 [NodeComponentType(typeof(Collider), typeof(GUIElement))]
 
 [NodePath("Events/Input Events")]
-[FriendlyName("Mouse Events")]
+[FriendlyName("Mouse Cursor Events")]
 public class uScript_Mouse : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);

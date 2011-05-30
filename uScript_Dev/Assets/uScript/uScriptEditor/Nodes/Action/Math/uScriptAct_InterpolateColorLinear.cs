@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/Math/Interpolation")]
+[NodePath("Actions/Math/Interpolation")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Linearly interpolate a color over time.")]

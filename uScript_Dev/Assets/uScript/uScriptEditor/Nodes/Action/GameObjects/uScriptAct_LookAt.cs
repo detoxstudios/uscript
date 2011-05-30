@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/GameObjects")]
+[NodePath("Actions/GameObjects")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Tells a GameObject to look at another GameObject transform or Vector3 position.")]

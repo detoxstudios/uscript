@@ -6,7 +6,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/GameObjects")]
+[NodePath("Actions/GameObjects")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Attaches one GameObject to another, setting the Target as the parent of the Attachment.")]

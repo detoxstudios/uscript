@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/Time")]
+[NodePath("Actions/Time")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the current time scale and delta time (fixed timestep) of the game.")]

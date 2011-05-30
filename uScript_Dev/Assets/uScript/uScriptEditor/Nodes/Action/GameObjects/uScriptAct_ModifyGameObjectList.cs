@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[NodePath("Action/GameObjects")]
+[NodePath("Actions/GameObjects")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes GameObjects from a GameObject List. Can also empty the GameObject List.")]

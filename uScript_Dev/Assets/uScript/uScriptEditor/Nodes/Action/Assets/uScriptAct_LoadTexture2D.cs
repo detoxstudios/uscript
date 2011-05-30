@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Loads an AudioClip from your Resources directory.
+// Desc: Loads a Texture from your Resources directory.
 
 using UnityEngine;
 using System.Collections;
@@ -8,28 +8,30 @@ using System.Collections;
 [NodePath("Actions/Assets")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Loads an AudioClip")]
-[NodeDescription("Loads an AudioClip from your Resources directory.\n \nAudio Clip: The audio file to load. \nLoaded AudioClip (out): The AudioClip loaded from the specified file.")]
+[NodeToolTip("Loads an image file into a Texture2D")]
+[NodeDescription("Loads an image file into a Texture2D variable from your Resources directory.\n \nName: The texture file to load. \nLoaded Texture (out): The texture loaded from the specified file name.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-[FriendlyName("Load AudioClip")]
-public class uScriptAct_LoadAudioClip : uScriptLogic
+[FriendlyName("Load Texture2D")]
+public class uScriptAct_LoadTexture2D : uScriptLogic
 {
+   
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Audio Clip")]
-      string name, 
-      [FriendlyName("Loaded AudioClip")]
-      out AudioClip audioClip
+      [FriendlyName("Name")]
+      string name,
+      [FriendlyName("Loaded Texture2D")]
+      out Texture2D textureFile
    )
    {
-      audioClip = Resources.Load( name ) as AudioClip;
-    
-      if ( null == audioClip ) 
+
+      textureFile = Resources.Load(name) as Texture2D;
+
+      if (null == textureFile) 
       {
-         uScriptDebug.Log( "AudioClip " + name + " couldn't be loaded, are you sure it's in a Resources folder?", uScriptDebug.Type.Warning );
+         uScriptDebug.Log("Texture " + name + " couldn't be loaded, are you sure it's in a Resources folder?", uScriptDebug.Type.Warning);
       }
    }
 
@@ -37,9 +39,9 @@ public class uScriptAct_LoadAudioClip : uScriptLogic
 #if UNITY_EDITOR
    public override Hashtable EditorDragDrop( object o )
    {
-      if ( typeof(AudioClip).IsAssignableFrom(o.GetType()) )
+      if (typeof(Texture2D).IsAssignableFrom(o.GetType()))
       {
-         AudioClip ac = (AudioClip) o;
+         Texture2D ac = (Texture2D)o;
 
          string path = UnityEditor.AssetDatabase.GetAssetPath( ac.GetInstanceID( ) );
 

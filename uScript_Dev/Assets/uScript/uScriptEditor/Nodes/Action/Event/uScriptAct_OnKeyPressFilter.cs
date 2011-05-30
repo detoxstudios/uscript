@@ -5,15 +5,15 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/Event")]
+[NodePath("Actions/Events/Filters")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip( "Filters the On Key Press event to a specific key when the key is pressed down, being held, or released.")]
-[NodeDescription("Filters the On Key Press event to a specific key when the key is pressed down, being held, or released.\n \nKey Code: The key to listen for events from.")]
+[NodeToolTip( "Filters the On Input Event output from the Input Events node to a specific input (key, mouse, joystick) pressed down, held, or released.")]
+[NodeDescription("Filters the On Input Event output from the Input Events node to a specific input (key, mouse, joystick) pressed down, held, or released.\n \nKey Code: The key to listen for events from.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-[FriendlyName("Filter On Key Press")]
+[FriendlyName("Input Events Filter")]
 public class uScriptAct_OnKeyPressFilter : uScriptLogic
 {
    public bool m_KeyHeld = false;

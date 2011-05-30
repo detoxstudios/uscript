@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/GameObjects")]
+[NodePath("Actions/Animation")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Play the specified animation on the target object.")]
@@ -17,7 +17,7 @@ using System.Collections;
 public class uScriptAct_PlayAnimation : uScriptLogic
 {
    private GameObject m_GameObject = null;
-   private string     m_Animation  = null;
+   private AnimationClip m_Animation = null;
 
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
@@ -26,7 +26,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    [FriendlyName("Finished")]
    public event uScriptEventHandler Finished;
 
-   public void In(GameObject[] Target, string Animation, [FriendlyName("Speed Factor")] float SpeedFactor, [FriendlyName("Stop Other Animation")] bool StopOtherAnimations)
+   public void In(GameObject[] Target, AnimationClip Animation, [FriendlyName("Speed Factor"), DefaultValue(1f)] float SpeedFactor, [FriendlyName("Stop Other Animation"), DefaultValue(true)] bool StopOtherAnimations)
    {
       m_GameObject = null;
 
@@ -41,12 +41,12 @@ public class uScriptAct_PlayAnimation : uScriptLogic
 
             if (SpeedFactor == 0F)
             {
-               currentTarget.animation[Animation].speed = 1.0F;
+               currentTarget.animation[Animation.name].speed = 1.0F;
             }
             else
             {
-               
-               currentTarget.animation[Animation].speed = SpeedFactor;
+
+               currentTarget.animation[Animation.name].speed = SpeedFactor;
             }
 
             if (StopOtherAnimations)
@@ -57,11 +57,11 @@ public class uScriptAct_PlayAnimation : uScriptLogic
             if (SpeedFactor < 0)
             {
                // Needed to play in reverse with a negative speed
-               currentTarget.animation[Animation].time = currentTarget.animation[Animation].length;
+               currentTarget.animation[Animation.name].time = currentTarget.animation[Animation.name].length;
             }
 
-            currentTarget.animation[Animation].wrapMode = WrapMode.Once;
-            currentTarget.animation.Play(Animation);
+            currentTarget.animation[Animation.name].wrapMode = WrapMode.Once;
+            currentTarget.animation.Play(Animation.name);
          }
       }
    }
@@ -70,7 +70,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    {
       if ( null != m_GameObject )
       {
-         if ( false == m_GameObject.animation.IsPlaying(m_Animation) )
+         if ( false == m_GameObject.animation.IsPlaying(m_Animation.name) )
          {
             m_GameObject = null;
 
@@ -78,4 +78,34 @@ public class uScriptAct_PlayAnimation : uScriptLogic
          }
       }
    }
+
+
+#if UNITY_EDITOR
+   public override Hashtable EditorDragDrop(object o)
+   {
+      if (typeof(AnimationClip).IsAssignableFrom(o.GetType()))
+      {
+         AnimationClip ac = (AnimationClip)o;
+
+         Hashtable hashtable = new Hashtable();
+         hashtable["Animation"] = UnityEditor.AssetDatabase.GetAssetPath(ac.GetInstanceID());
+
+         return hashtable;
+      }
+      if (typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()))
+      {
+         GameObject go = (GameObject)o;
+
+         Hashtable hashtable = new Hashtable();
+         hashtable["Target"] = go.name;
+
+         return hashtable;
+      }
+
+      return null;
+   }
+#endif
+
+
+
 }

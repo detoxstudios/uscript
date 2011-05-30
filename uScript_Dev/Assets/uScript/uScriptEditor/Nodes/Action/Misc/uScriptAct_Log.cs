@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/Misc")]
+[NodePath("Actions/Misc")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Outputs a string to the debug log.")]
@@ -24,14 +24,14 @@ public class uScriptAct_Log : uScriptLogic
       {
          foreach (object currentTarget in Target)
          {
-            Debug.Log(currentTarget);
+            Debug.Log(currentTarget + "\n");
          }
       }
       else
       {
          foreach (object currentTarget in Target)
          {
-            Debug.Log((Prefix + currentTarget.ToString() + Postfix));
+            Debug.Log((Prefix + currentTarget.ToString() + Postfix + "\n"));
          }
       }
 

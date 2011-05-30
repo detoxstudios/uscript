@@ -1,7 +1,6 @@
 // uScript uScript_Input.cs
 // (C) 2010 Detox Studios LLC
-// Desc: uScript_Input contains all global events related to input. Assign this component to
-//       your master uScript GameObject (_uScripts by default).
+// Desc: uScript_Input contains all global events related to input. Assign this component to the master uScript GameObject.
 
 using UnityEngine;
 using System.Collections;
@@ -10,13 +9,18 @@ using System.Collections;
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Input Events")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Input Events fires out any time input is detected from the keyboard, mouse, or joystick.")]
+[NodeDescription("Input Events fires out any time input is detected from the keyboard, mouse, or joystick.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Input Events")]
 public class uScript_Input : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
-   [FriendlyName("On Key Event")]
+   [FriendlyName("On Input Event")]
    public event uScriptEventHandler KeyEvent;
 
    private bool m_AnyKeyWasDown = false;

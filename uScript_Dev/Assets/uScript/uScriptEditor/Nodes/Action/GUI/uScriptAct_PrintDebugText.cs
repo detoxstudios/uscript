@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/GUI")]
+[NodePath("Actions/GUI")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a label on the screen.")]
@@ -13,8 +13,8 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-[FriendlyName("Print Debug Text")]
-public class uScriptAct_PrintDebugText : uScriptLogic
+[FriendlyName("Print Text")]
+public class uScriptAct_PrintText : uScriptLogic
 {
    private string m_Text;
    private float m_Width;

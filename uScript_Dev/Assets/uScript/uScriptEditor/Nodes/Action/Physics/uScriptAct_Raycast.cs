@@ -6,7 +6,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/Physics")]
+[NodePath("Actions/Physics")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Performs a ray trace from the starting point to the end point. Returns any hit data.")]

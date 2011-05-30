@@ -7,7 +7,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Action/GameObjects")]
+[NodePath("Actions/GameObjects")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the position and rotation of a GameObject and outputs them as a Vector3.")]
