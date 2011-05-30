@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Misc")]
+[NodePath("Conditions/Gates")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Allows the signal to pass through to the Out link depending on the state of the gate.")]
