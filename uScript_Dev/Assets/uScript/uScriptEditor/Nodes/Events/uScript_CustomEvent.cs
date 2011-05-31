@@ -1,6 +1,6 @@
-// uScript uScript_Triggers.cs
+// uScript uScript_CustomEvent.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Assign this component to any GameObject that needs to receive a standard custom event.
+// Desc: Fires an event signal when Instance receives a standard custom event.
 
 using UnityEngine;
 using System.Collections;
@@ -10,6 +10,13 @@ using System.Collections;
 
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEvent")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Fires an event signal when Instance receives a standard custom event.")]
+[NodeDescription("Fires an event signal when Instance receives a standard custom event.\n \nSender: The GameObject that sent this event (if available).\nEvent Name: The name of the custom event.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
 [FriendlyName("Custom Event")]
 public class uScript_CustomEvent : uScriptEvent
 {

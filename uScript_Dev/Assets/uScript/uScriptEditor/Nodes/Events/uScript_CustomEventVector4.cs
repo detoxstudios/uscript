@@ -1,6 +1,6 @@
-// uScript uScript_Triggers.cs
+// uScript uScript_CustomEventVector4.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Assign this component to any GameObject being that needs to receive a custom event with a Vector4.
+// Desc: Fires an event signal when Instance receives a custom event with a Vector4.
 
 using UnityEngine;
 using System.Collections;
@@ -10,6 +10,13 @@ using System.Collections;
 
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEventVector4")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Fires an event signal when Instance receives a custom event with a Vector4.")]
+[NodeDescription("Fires an event signal when Instance receives a custom event with a Vector4.\n \nSender: The GameObject that sent this event (if available).\nEvent Name: The name of the custom event.\nEvent Data: The variable that was sent with this event.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
 [FriendlyName("Custom Event (Vector4)")]
 public class uScript_CustomEventVector4 : uScriptEvent
 {

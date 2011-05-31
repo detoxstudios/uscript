@@ -1,7 +1,6 @@
-// uScript uScript_Global.cs
+// uScript uScript_Mouse.cs
 // (C) 2010 Detox Studios LLC
-// Desc: uScript Global contains all project global related events. Assign this component to
-//       your master uScript GameObject (_uScripts by default).
+// Desc: Fires an event signal when the mouse enters, is over, exits, is pressed down, released, or dragged over Instance.
 
 using UnityEngine;
 using System.Collections;
@@ -9,6 +8,13 @@ using System.Collections;
 [NodeComponentType(typeof(Collider), typeof(GUIElement))]
 
 [NodePath("Events/Input Events")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Fires an event signal when the mouse enters, is over, exits, is pressed down, released, or dragged over Instance.")]
+[NodeDescription("Fires an event signal when the mouse enters, is over, exits, is pressed down, released, or dragged over Instance.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
 [FriendlyName("Mouse Cursor Events")]
 public class uScript_Mouse : uScriptEvent
 {

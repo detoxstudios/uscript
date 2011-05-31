@@ -1,6 +1,6 @@
-// uScript uScript_Triggers.cs
+// uScript uScript_CustomEventInt.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Assign this component to any GameObject being that needs to receive a custom event with an int.
+// Desc: Fires an event signal when Instance receives a custom event with a int.
 
 using UnityEngine;
 using System.Collections;
@@ -10,6 +10,13 @@ using System.Collections;
 
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEventInt")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Fires an event signal when Instance receives a custom event with a int.")]
+[NodeDescription("Fires an event signal when Instance receives a custom event with a int.\n \nSender: The GameObject that sent this event (if available).\nEvent Name: The name of the custom event.\nEvent Data: The variable that was sent with this event.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
 [FriendlyName("Custom Event (Int)")]
 public class uScript_CustomEventInt : uScriptEvent
 {

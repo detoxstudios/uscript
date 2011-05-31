@@ -1,7 +1,6 @@
-// uScript uScript_Global.cs
+// uScript uScript_GameObject.cs
 // (C) 2010 Detox Studios LLC
-// Desc: uScript Global contains all project global related events. Assign this component to
-//       your master uScript GameObject (_uScripts by default).
+// Desc: Fires an event signal when Instance is enabled, disabled or destroyed.
 
 using UnityEngine;
 using System.Collections;
@@ -9,6 +8,12 @@ using System.Collections;
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/GameObject Events")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Fires an event signal when Instance is enabled, disabled or destroyed.")]
+[NodeDescription("Fires an event signal when Instance is enabled, disabled or destroyed.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("GameObject Events")]
 public class uScript_GameObject : uScriptEvent

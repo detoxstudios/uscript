@@ -9,6 +9,7 @@ using System.Collections;
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Input Events")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Input Events fires out any time input is detected from the keyboard, mouse, or joystick.")]
 [NodeDescription("Input Events fires out any time input is detected from the keyboard, mouse, or joystick.")]

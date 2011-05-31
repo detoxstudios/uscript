@@ -1,7 +1,6 @@
-// uScript uScript_Input.cs
+// uScript uScript_ApplicationQuit.cs
 // (C) 2010 Detox Studios LLC
-// Desc: uScript_Input contains all global events related to input. Assign this component to
-//       your master uScript GameObject (_uScripts by default).
+// Desc: Fires an event signal when the application is going to quit.
 
 using UnityEngine;
 using System.Collections;
@@ -10,9 +9,14 @@ using System.Collections;
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Application Events")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Fires an event signal when the application is going to quit.")]
+[NodeDescription("Fires an event signal when the application is going to quit.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Application Quit")]
-
 public class uScript_ApplicationQuit : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
