@@ -13,7 +13,6 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-
 [FriendlyName("Print String List")]
 public class uScriptAct_PrintList : uScriptLogic
 {
