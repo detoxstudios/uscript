@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Moves a GameObject to a Vector3 Location.")]
-[NodeDescription("Moves a GameObject to a Vector3 Location.\n \nTargets: The Target GameObject(s) to be moved.\nEnd Location: The ending location to move the Targets to.\n Use as Offset: Whether or not to treat End Location as an offset, rather than an absolute position.\nTransition Time: Time to take to move from current position to desired position.")]
+[NodeDescription("Moves a GameObject to a Vector3 Location.\n \nTargets: The Target GameObject(s) to be moved.\nEnd Location: The ending location to move the Targets to.\nUse as Offset: Whether or not to treat End Location as an offset, rather than an absolute position.\nTransition Time: Time to take to move from current position to desired position.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

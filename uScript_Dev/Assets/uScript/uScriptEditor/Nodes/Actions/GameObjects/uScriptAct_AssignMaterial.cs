@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Assigns the specified Material to the GameObject.")]
-[NodeDescription("Assigns the specified Material (by name) to the GameObject on the specifed material channel.\n \nTarget: The GameObject(s) to assign the material to.\nMaterial Name: The filename of the material to assign.\nResource Path: The path to the material file.\nMaterial Channel: The material channel of the object to assign the material to.")]
+[NodeDescription("Assigns the specified Material (by name) to the GameObject on the specifed material channel.\n \nTarget: The GameObject(s) to assign the material to.\nMaterial: The filename of the material to assign.\nMaterial Channel: The material channel of the object to assign the material to.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

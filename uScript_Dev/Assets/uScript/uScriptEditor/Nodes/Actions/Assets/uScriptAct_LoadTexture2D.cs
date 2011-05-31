@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads an image file into a Texture2D")]
-[NodeDescription("Loads an image file into a Texture2D variable from your Resources directory.\n \nName: The texture file to load. \nLoaded Texture (out): The texture loaded from the specified file name.")]
+[NodeDescription("Loads an image file into a Texture2D variable from your Resources directory.\n \nName: The texture file to load. \nLoaded Texture2D (out): The texture loaded from the specified file name.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

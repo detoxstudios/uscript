@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if GameObjects are in a GameObject List.")]
-[NodeDescription("Checks to see if GameObjects are in a GameObject List.\n \nTarget: The target GameObject(s) to check for membership in the GameObject list.\nGameObject List: The list of GameObjects to check.")]
+[NodeDescription("Checks to see if GameObjects are in a GameObject List.\n \nTarget: The target GameObject(s) to check for membership in the GameObject list.\nGameObject List (in/out): The list of GameObjects to check.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
