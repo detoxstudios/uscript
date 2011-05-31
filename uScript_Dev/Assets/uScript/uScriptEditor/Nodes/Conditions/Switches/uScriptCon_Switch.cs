@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Allows the signal to pass through each output socket in order.")]
-[NodeDescription("Allows the signal to pass through each output socket in order.")]
+[NodeDescription("Allows the signal to pass through each output socket in order.\n \nMax Output Used: Highest valid output switch to use.\nCurrent Output (out): The output switch that last executed.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -33,17 +33,14 @@ public class uScriptCon_Switch : uScriptLogic
    [FriendlyName("Output 6")]
    public event uScriptEventHandler Output6;
 
-
    public void In(
       bool Loop,
       [FriendlyName("Max Output Used"), DefaultValue(6)] 
       int MaxOutputUsed,
       [FriendlyName("Current Output")] out int CurrentOutput)
    {
-
       // Check bounds on MaxOutputUsed
-      if ( MaxOutputUsed < 1 ) MaxOutputUsed = 1;
-      if ( MaxOutputUsed > 6 ) MaxOutputUsed = 6;
+      Mathf.Clamp(MaxOutputUsed, 1, 6);
 
       // Set correct output socket to true
       if (m_SwitchOpen)
@@ -69,6 +66,7 @@ public class uScriptCon_Switch : uScriptLogic
                   }
                }
                break;
+
             case 2:
                CurrentOutput = m_CurrentOutput;
                Output2(this, new System.EventArgs());
@@ -88,6 +86,7 @@ public class uScriptCon_Switch : uScriptLogic
                   }
                }
                break;
+
             case 3:
                CurrentOutput = m_CurrentOutput;
                Output3(this, new System.EventArgs());
@@ -107,6 +106,7 @@ public class uScriptCon_Switch : uScriptLogic
                   }
                }
                break;
+
             case 4:
                CurrentOutput = m_CurrentOutput;
                Output4(this, new System.EventArgs());
@@ -126,6 +126,7 @@ public class uScriptCon_Switch : uScriptLogic
                   }
                }
                break;
+
             case 5:
                CurrentOutput = m_CurrentOutput;
                Output5(this, new System.EventArgs());
@@ -145,6 +146,7 @@ public class uScriptCon_Switch : uScriptLogic
                   }
                }
                break;
+
             case 6:
                CurrentOutput = m_CurrentOutput;
                Output6(this, new System.EventArgs());
@@ -167,10 +169,7 @@ public class uScriptCon_Switch : uScriptLogic
       {
          CurrentOutput = m_CurrentOutput;
       }
-
-      }
-
-
+   }
 
    public void Reset(bool Loop, [FriendlyName("Max Output Used"), DefaultValue(6)] int MaxOutputUsed, [FriendlyName("Current Output")] out int CurrentOutput)
    {
@@ -178,5 +177,4 @@ public class uScriptCon_Switch : uScriptLogic
       CurrentOutput = 1;
       m_SwitchOpen = true;
    }
-
 }

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Prints out a list of string variables from a String list to the console.")]
-[NodeDescription("Prints out a list of string variables from a String list to the console.")]
+[NodeDescription("Prints out a list of string variables from a String list to the console.\n \nStrings: List of strings to print out, one line at a time.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -20,9 +20,9 @@ public class uScriptAct_PrintList : uScriptLogic
    public bool Out { get { return true; } }
 
    // Do logic here
-   public void In(string []strings)
+   public void In(string []Strings)
    {
-      foreach ( object s in strings )
+      foreach ( object s in Strings )
       {
          uScriptDebug.Log( "string = " + s );
       }

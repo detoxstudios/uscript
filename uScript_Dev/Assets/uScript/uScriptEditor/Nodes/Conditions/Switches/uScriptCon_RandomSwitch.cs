@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly picks an Output to fire the signal to.")]
-[NodeDescription("Randomly picks an Output to fire the signal to.")]
+[NodeDescription("Randomly picks an Output to fire the signal to.\n \nMax Output Used: Highest valid output switch to use.\nSeed: Random number generator seed value.\nCurrent Output (out): The output switch that was randomly chosen.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -33,17 +33,14 @@ public class uScriptCon_RandomSwitch : uScriptLogic
    [FriendlyName("Output 6")]
    public event uScriptEventHandler Output6;
 
-
    public void In(
       [FriendlyName("Max Output Used"), DefaultValue(6)] int MaxOutputUsed,
       [FriendlyName("Seed"), DefaultValue(0), SocketState(false, false)] int Seed,
       [FriendlyName("Current Output")] out int CurrentOutput
       )
    {
-
       // Check bounds on MaxOutputUsed
-      if ( MaxOutputUsed < 1 ) MaxOutputUsed = 1;
-      if ( MaxOutputUsed > 6 ) MaxOutputUsed = 6;
+      MaxOutputUsed = Mathf.Clamp(MaxOutputUsed, 1, 6);
 
       if (Seed > 0) { Random.seed = Seed; }
 
@@ -57,32 +54,31 @@ public class uScriptCon_RandomSwitch : uScriptLogic
             case 1:
                CurrentOutput = m_CurrentOutput;
                Output1(this, new System.EventArgs());
-               
                break;
+
             case 2:
                CurrentOutput = m_CurrentOutput;
                Output2(this, new System.EventArgs());
-               
                break;
+
             case 3:
                CurrentOutput = m_CurrentOutput;
                Output3(this, new System.EventArgs());
-               
                break;
+
             case 4:
                CurrentOutput = m_CurrentOutput;
                Output4(this, new System.EventArgs());
-               
                break;
+
             case 5:
                CurrentOutput = m_CurrentOutput;
                Output5(this, new System.EventArgs());
-               
                break;
+
             case 6:
                CurrentOutput = m_CurrentOutput;
                Output6(this, new System.EventArgs());
-               
                break;
 
             default:
@@ -94,7 +90,5 @@ public class uScriptCon_RandomSwitch : uScriptLogic
       {
          CurrentOutput = m_CurrentOutput;
       }
-
-      }
-
+   }
 }

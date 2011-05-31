@@ -16,14 +16,14 @@ using System.Collections;
 [FriendlyName("Gate")]
 public class uScriptCon_Gate : uScriptLogic
 {
-   private bool m_gateOpen = false;
+   private bool m_GateOpen = false;
 
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    public event uScriptEventHandler Out;
 
    public void In()
    {
-      if (m_gateOpen)
+      if (m_GateOpen)
       {
          if ( Out != null ) Out(this, new System.EventArgs( ));
       }
@@ -31,23 +31,16 @@ public class uScriptCon_Gate : uScriptLogic
 
    public void Open()
    {
-      m_gateOpen = true;
+      m_GateOpen = true;
    }
 
    public void Close()
    {
-      m_gateOpen = false;
+      m_GateOpen = false;
    }
 
    public void Toggle()
    {
-      if (m_gateOpen)
-      {
-         m_gateOpen = false;
-      }
-      else
-      {
-         m_gateOpen = true;
-      }
+      m_GateOpen = !m_GateOpen;
    }
 }

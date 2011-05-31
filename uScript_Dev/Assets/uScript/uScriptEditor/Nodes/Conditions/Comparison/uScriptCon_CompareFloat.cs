@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires the appropriate output link(s) depending on the comparison of the attached float variables.")]
-[NodeDescription("Fires the appropriate output link(s) depending on the comparison of the attached float variables.")]
+[NodeDescription("Fires the appropriate output link(s) depending on the comparison of the attached float variables.\n \nA: First float value to compare.\nB: Second float value to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -17,58 +17,58 @@ using System.Collections;
 public class uScriptCon_CompareFloat : uScriptLogic
 {
 
-   private bool greaterThan = false;
-   private bool greaterThanOrEqualTo = false;
-   private bool equalTo = false;
-   private bool lessThanOrEqualTo = false;
-   private bool lessThan = false;
+   private bool m_GreaterThan = false;
+   private bool m_GreaterThanOrEqualTo = false;
+   private bool m_EqualTo = false;
+   private bool m_LessThanOrEqualTo = false;
+   private bool m_LessThan = false;
 
    [FriendlyName("(Greater Than)   >")]
-   public bool GreaterThan { get { return greaterThan; } }
+   public bool GreaterThan { get { return m_GreaterThan; } }
 
    [FriendlyName("(Greater Than or Equal To) >=")]
-   public bool GreaterThanOrEqualTo { get { return greaterThanOrEqualTo; } }
+   public bool GreaterThanOrEqualTo { get { return m_GreaterThanOrEqualTo; } }
 
    [FriendlyName("(Equal To)   =")]
-   public bool EqualTo { get { return equalTo; } }
+   public bool EqualTo { get { return m_EqualTo; } }
 
    [FriendlyName("(Less Than or Equal To) <=")]
-   public bool LessThanOrEqualTo { get { return lessThanOrEqualTo; } }
+   public bool LessThanOrEqualTo { get { return m_LessThanOrEqualTo; } }
 
    [FriendlyName("(Less Than)   <")]
-   public bool LessThan { get { return lessThan; } }
+   public bool LessThan { get { return m_LessThan; } }
    
    public void In(float A, float B)
    {
-      greaterThan = false;
-      greaterThanOrEqualTo = false;
-      equalTo = false;
-      lessThanOrEqualTo = false;
-      lessThan = false;
+      m_GreaterThan = false;
+      m_GreaterThanOrEqualTo = false;
+      m_EqualTo = false;
+      m_LessThanOrEqualTo = false;
+      m_LessThan = false;
 
       if (A > B)
       {
-         greaterThan = true;
+         m_GreaterThan = true;
       }
 
       if (A >= B)
       {
-         greaterThanOrEqualTo = true;
+         m_GreaterThanOrEqualTo = true;
       }
 
       if (A == B)
       {
-         equalTo = true;
+         m_EqualTo = true;
       }
 
       if (A <= B)
       {
-         lessThanOrEqualTo = true;
+         m_LessThanOrEqualTo = true;
       }
 
       if (A < B)
       {
-         lessThan = true;
+         m_LessThan = true;
       }
            
    }

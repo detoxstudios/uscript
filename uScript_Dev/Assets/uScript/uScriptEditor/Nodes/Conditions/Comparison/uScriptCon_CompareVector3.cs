@@ -9,33 +9,20 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Compares two Vector3 variables and outputs accordingly.")]
-[NodeDescription("Compares two Vector3 variables and outputs accordingly.")]
+[NodeDescription("Compares two Vector3 variables and outputs accordingly.\n \nA: First Vector3 to compare.\nB: Second Vector3 to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Compare Vector3")]
 public class uScriptCon_CompareVector3 : uScriptLogic
 {
-   private bool compareSame = false;
-   private bool compareDifferent = false;
+   private bool m_CompareValue = false;
 
-   public bool Same { get { return compareSame; } }
-   public bool Different { get { return compareDifferent; } }
+   public bool Same { get { return m_CompareValue; } }
+   public bool Different { get { return !m_CompareValue; } }
 
    public void In(Vector3 A, Vector3 B)
    {
-      compareSame = false;
-      compareDifferent = false;
-
-      if (A == B)
-      {
-         compareSame = true;
-      }
-      else
-      {
-         compareDifferent = true;
-      }
-
+      m_CompareValue = A == B;
    }
-
 }

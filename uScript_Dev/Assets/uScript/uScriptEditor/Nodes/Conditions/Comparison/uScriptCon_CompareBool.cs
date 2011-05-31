@@ -9,33 +9,20 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires the appropriate output link depending on the comparison of the attached bool variable.")]
-[NodeDescription("Fires the appropriate output link depending on the comparison of the attached bool variable.")]
+[NodeDescription("Fires the appropriate output link depending on the comparison of the attached bool variable.\n \nBool: The boolean value to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Compare Bool")]
 public class uScriptCon_CompareBool : uScriptLogic
 {
-   private bool compareTrue = false;
-   private bool compareFalse = false;
+   private bool m_CompareValue = false;
 
-   public bool True { get { return compareTrue; } }
-   public bool False { get { return compareFalse; } }
+   public bool True { get { return m_CompareValue; } }
+   public bool False { get { return !m_CompareValue; } }
 
    public void In(bool Bool)
    {
-      compareTrue = false;
-      compareFalse = false;
-
-      if (Bool)
-      {
-         compareTrue = true;
-      }
-      else
-      {
-         compareFalse = true;
-      }
-      
+      m_CompareValue = Bool;
    }
-
 }
