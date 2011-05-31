@@ -441,7 +441,7 @@ http://www.detoxstudios.com";
          
          ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(), PopulateLogicTypes());
 
-         if ( null != MasterComponent.Script )
+         if ( !String.IsNullOrEmpty(MasterComponent.Script) )
          {
             if ( true == scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script) )
             {
@@ -2497,7 +2497,7 @@ http://www.detoxstudios.com";
 
    public void OpenScript(string fullPath)
    {
-      if ( false == AllowNewFile(true) ) return;
+      if ( false == AllowNewFile(true) || !System.IO.File.Exists(fullPath) ) return;
 
       Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes( ), PopulateLogicTypes( ) );
 
