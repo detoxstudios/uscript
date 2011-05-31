@@ -15,10 +15,10 @@ public class uScript : EditorWindow
 {
                                            //format is MAJOR.MINOR.YYMMDDa
                                            //(where 'a' is incremented if we have more than 1 daily build we release)
-   public string    uScriptBuild           { get { return "0.4.110530a"; } }
+   public string    uScriptBuild           { get { return "0.4.110530b"; } }
    public string    RequiredUnityBuild     { get { return  "3.3.0f4"; } }
    public string    RequiredUnityBetaBuild { get { return "3.4.0b2"; } }
-   public DateTime  ExpireDate             { get { return new DateTime( 2011, 6, 13 ); } }
+   public DateTime  ExpireDate             { get { return new DateTime( 2011, 6, 30 ); } }
 
    private enum MouseRegion
    {
