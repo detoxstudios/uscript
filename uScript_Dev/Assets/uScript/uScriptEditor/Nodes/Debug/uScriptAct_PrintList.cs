@@ -5,9 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-
-
-
 [NodePath("Debug")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
