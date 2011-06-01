@@ -2668,7 +2668,14 @@ http://www.detoxstudios.com";
          if ( true == SaveScript(script, m_FullPath) )
          {
             m_ScriptEditorCtrl.IsDirty = false;
-    
+
+            //for some reason these aren't up to date after a save
+            //it's like we're missing registering an undo somewhere
+            //so i'm forcing them here
+            MasterComponent.Script = script.ToBase64( );
+            MasterComponent.ScriptName = script.Name;
+            CurrentScript = MasterComponent.Script;
+
             if (true == pleaseAttachMe)
             {
                AssetDatabase.Refresh( );            
