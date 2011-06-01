@@ -1,7 +1,6 @@
-// uScript uScript_Input.cs
+// uScript uScript_NetworkClientConnection.cs
 // (C) 2010 Detox Studios LLC
-// Desc: uScript_Input contains all global events related to input. Assign this component to
-//       your master uScript GameObject (_uScripts by default).
+// Desc: Fires an event signal when the network client connects or disconnects from the server.
 
 using UnityEngine;
 using System.Collections;
@@ -9,6 +8,12 @@ using System.Collections;
 [NodeComponentType(typeof(Network))]
 
 [NodePath("Events/Network Events")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Fires an event signal when the network client connects or disconnects from the server.\n \nReason for Failure (out): What happened if there is a connection failure - can be 'Disconnected', 'Lost Connection', or 'Unknown'.")]
+[NodeDescription("Fires an event signal when the network client connects or disconnects from the server.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Network Client Connection")]
 public class uScript_NetworkClientConnection : uScriptEvent
