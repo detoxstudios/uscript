@@ -2030,7 +2030,7 @@ http://www.detoxstudios.com";
 
          _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
          {
-            foreach (string fileName in System.IO.Directory.GetFiles(uScriptConfig.Paths.GeneratedScripts))
+            /*foreach (string fileName in System.IO.Directory.GetFiles(uScriptConfig.Paths.GeneratedScripts))
             {
                if ( fileName.Contains(".cs") )
                {
@@ -2087,7 +2087,7 @@ http://www.detoxstudios.com";
 //                     }
                   }
                }
-            }
+            }*/
          }
          EditorGUILayout.EndScrollView();
 
