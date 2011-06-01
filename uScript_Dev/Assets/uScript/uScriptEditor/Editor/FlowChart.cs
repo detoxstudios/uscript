@@ -387,6 +387,41 @@ namespace Detox.FlowChart
       {
          if ( e.Button == MouseButtons.Left && false == Control.ModifierKeys.Contains(Keys.Alt) )
          {
+            Link clickedLink = null;
+            bool linkClicked = MouseOverLink(out clickedLink);
+            bool selectionSetModified = false;
+    
+            if (linkClicked && clickedLink != null)
+            {
+               //change selection state
+               //(if ctrl key was down it will toggle selection state)
+               //(if ctrl key was up it will always have been unselected
+               // because of the above code and so this will always select it)
+               if (!clickedLink.Selected && false == Control.ModifierKeys.Contains(Keys.Shift))
+               {
+                  // deselect everything else
+                  foreach ( Link deselectedLink in Links )
+                  {
+                     deselectedLink.Selected = false;
+                  }
+
+                  foreach ( Node deselectedNode in Nodes )
+                  {
+                     deselectedNode.Selected = false;
+                  }
+
+                  clickedLink.Selected = true;
+                  selectionSetModified = true;
+               }
+               else if ( Control.ModifierKeys.Contains(Keys.Shift) )
+               {
+                  clickedLink.Selected = !clickedLink.Selected;
+                  selectionSetModified = true;
+               }
+            }
+            
+            if (selectionSetModified) return;
+
             m_MoveBoundariesStart = System.Windows.Forms.Cursor.Position;
 
             Node node = sender as Node;
@@ -715,43 +750,38 @@ namespace Detox.FlowChart
          }
          else if ( Point.Empty == m_StartMarquee )
          {
-            Point position = System.Windows.Forms.Cursor.Position;
-            position = PointToClient( position );
-            bool linkClicked = false;
-
-            foreach ( Link link in m_Links )
+            Link clickedLink = null;
+            bool linkClicked = MouseOverLink(out clickedLink);
+    
+            if (linkClicked && clickedLink != null)
             {
-               if ( true == InLink(link, position) )
+               //change selection state
+               //(if ctrl key was down it will toggle selection state)
+               //(if ctrl key was up it will always have been unselected
+               // because of the above code and so this will always select it)
+               if (!clickedLink.Selected && false == Control.ModifierKeys.Contains(Keys.Shift))
                {
-                  //change selection state
-                  //(if ctrl key was down it will toggle selection state)
-                  //(if ctrl key was up it will always have been unselected
-                  // because of the above code and so this will always select it)
-                  if (!link.Selected && false == Control.ModifierKeys.Contains(Keys.Shift))
+                  // deselect everything else
+                  foreach ( Link deselectedLink in Links )
                   {
-                     // deselect everything else
-                     foreach ( Link deselectedLink in Links )
-                     {
-                        deselectedLink.Selected = false;
-                     }
-   
-                     foreach ( Node deselectedNode in Nodes )
-                     {
-                        deselectedNode.Selected = false;
-                     }
-   
-                     link.Selected = true;
-                     selectionSetModified = true;
+                     deselectedLink.Selected = false;
                   }
-                  else if ( Control.ModifierKeys.Contains(Keys.Shift) )
+
+                  foreach ( Node deselectedNode in Nodes )
                   {
-                     link.Selected = !link.Selected;
-                     selectionSetModified = true;
+                     deselectedNode.Selected = false;
                   }
-                  linkClicked = true;
+
+                  clickedLink.Selected = true;
+                  selectionSetModified = true;
+               }
+               else if ( Control.ModifierKeys.Contains(Keys.Shift) )
+               {
+                  clickedLink.Selected = !clickedLink.Selected;
+                  selectionSetModified = true;
                }
             }
-
+            
             //they let up the mouse without moving the canvas
             //and they weren't marquee selecting
             //so deselect everything
@@ -787,6 +817,23 @@ namespace Detox.FlowChart
          }
 
          Invalidate( );
+      }
+      
+      private bool MouseOverLink(out Link retLink)
+      {
+         Point position = PointToClient( System.Windows.Forms.Cursor.Position );
+         retLink = null;
+
+         foreach ( Link link in m_Links )
+         {
+            if ( true == InLink(link, position) )
+            {
+               retLink = link;
+               return true;
+            }
+         }
+
+         return false;
       }
 
       private void RunMarqueeSelect( )
