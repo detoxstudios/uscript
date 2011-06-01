@@ -322,7 +322,7 @@ namespace Detox.ScriptEditor
             DeclareNamespaces( );
             AddCSharpLine( "" );
 
-            AddCSharpLine( "public class " + System.IO.Path.GetFileNameWithoutExtension(script.Name) + " : uScriptCode" );
+            AddCSharpLine( "public class " + System.IO.Path.GetFileNameWithoutExtension(script.Name) + uScriptConfig.Files.GeneratedComponentExtension + " : uScriptCode" );
             AddCSharpLine( "{" );
             ++m_TabStack;
 

@@ -2881,6 +2881,8 @@ namespace Detox.ScriptEditor
          
          try
          {
+            m_Name = Path.GetFileNameWithoutExtension( binaryFile );
+
             streamWriter = File.CreateText( binaryFile );
             streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
             streamWriter.Close( );
@@ -2899,8 +2901,6 @@ namespace Detox.ScriptEditor
 
          try
          {
-            m_Name = Path.GetFileNameWithoutExtension( wrapperFile );
-
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
             streamWriter = File.CreateText( wrapperFile );

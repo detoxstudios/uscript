@@ -136,30 +136,26 @@ public class uScript : EditorWindow
    //
    string _statusbarMessage;
 
-   static GameObject s_Master = null;
-   static uScript_MasterComponent s_Component = null;
-   
+   //IMPORTANT - THIS CANNOT BE CACHED
+   //BECAUSE WE END UP WITH STALE VERSIONS AS THE UNITY UNDO STACK IS MODIFIED
    public static GameObject MasterObject
    {
       get
       {
-         if ( null != s_Master ) return s_Master;
-
-         // only find the master object if we need to
-         s_Master = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-         return s_Master;
+         return GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
       }
    }
 
+   //IMPORTANT - THIS CANNOT BE CACHED
+   //BECAUSE WE END UP WITH STALE VERSIONS AS THE UNITY UNDO STACK IS MODIFIED
    public static uScript_MasterComponent MasterComponent
    {
       get
       {
-         if ( null != s_Component ) return s_Component;
+         GameObject go = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+         if ( null == go ) return null;
 
-         // only get the master component if we need to
-         if ( null != MasterObject ) s_Component = MasterObject.GetComponent<uScript_MasterComponent>();
-         return s_Component;
+         return go.GetComponent<uScript_MasterComponent>();
       }
    }
 
@@ -424,12 +420,11 @@ http://www.detoxstudios.com";
 
             uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
             uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
-            s_Master = uScriptMaster;
          }
          if (null == uScriptMaster.GetComponent<uScript_MasterComponent>())
          {
             uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            s_Component = (uScript_MasterComponent)uScriptMaster.AddComponent(typeof(uScript_MasterComponent));
+            uScriptMaster.AddComponent(typeof(uScript_MasterComponent));
          }
          if (null == uScriptMaster.GetComponent<uScript_Assets>())
          {
@@ -450,7 +445,7 @@ http://www.detoxstudios.com";
 
                //if we're restoring over an old script
                //we need to flag us as dirty (because this was do to an undo/redo being triggered)
-               if ( null != CurrentScript )
+               if ( CurrentScript != MasterComponent.Script )
                {
                   isDirty = true;
                }
@@ -525,13 +520,11 @@ http://www.detoxstudios.com";
       {
          if ( null != m_MouseDownArgs )
          {
-            //uScriptDebug.Log( "mouse down" );
             OnMouseDown( );
             m_MouseDownArgs = null;
          }
          else if ( null != m_MouseUpArgs )
          {
-            //uScriptDebug.Log( "mouse up" );
             OnMouseUp( );
             m_MouseUpArgs = null;
          }
@@ -660,7 +653,6 @@ http://www.detoxstudios.com";
          Control.ModifierKeys.Pressed = modifierKeys;
 
          Event e = Event.current;
-         //Debug.Log(e.type);
          switch (e.type)
          {
             // command events
@@ -2447,11 +2439,11 @@ http://www.detoxstudios.com";
          
          if ( true == allowCancel )
          {
-            result = EditorUtility.DisplayDialogComplex( "Save File?", m_ScriptEditorCtrl.Name + " has been modified, would you like to save?", "Yes", "No", "Cancel" );
+            result = EditorUtility.DisplayDialogComplex( "Save File?", m_ScriptEditorCtrl.ScriptEditor.Name + " has been modified, would you like to save?", "Yes", "No", "Cancel" );
          }
          else
          {
-            bool yes = EditorUtility.DisplayDialog( "Save File?", m_ScriptEditorCtrl.Name + " has been modified, would you like to save?", "Yes", "No" );
+            bool yes = EditorUtility.DisplayDialog( "Save File?", m_ScriptEditorCtrl.ScriptEditor.Name + " has been modified, would you like to save?", "Yes", "No" );
             
             if ( true == yes ) result = 0;
             else result = 1;
@@ -2669,11 +2661,11 @@ http://www.detoxstudios.com";
          {
             m_ScriptEditorCtrl.IsDirty = false;
 
-            //for some reason these aren't up to date after a save
-            //it's like we're missing registering an undo somewhere
-            //so i'm forcing them here
+            //force a sync here just in case somehwere in code
+            //we missed a call to the change stack
             MasterComponent.Script = script.ToBase64( );
             MasterComponent.ScriptName = script.Name;
+
             CurrentScript = MasterComponent.Script;
 
             if (true == pleaseAttachMe)
