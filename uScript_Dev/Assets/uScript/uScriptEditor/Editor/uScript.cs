@@ -490,7 +490,7 @@ http://www.detoxstudios.com";
          //so reopen our script
          if ("" != m_FullPath && false == isRestored )
          {
-            OpenScript(m_FullPath);
+            if (!OpenScript(m_FullPath)) m_FullPath = "";
             m_RefreshTimestamp = EditorApplication.timeSinceStartup;
          }
          
@@ -2488,9 +2488,9 @@ http://www.detoxstudios.com";
       uScript.SetSetting("uScript\\LastOpened", "");
    }
 
-   public void OpenScript(string fullPath)
+   public bool OpenScript(string fullPath)
    {
-      if ( false == AllowNewFile(true) || !System.IO.File.Exists(fullPath) ) return;
+      if ( false == AllowNewFile(true) || !System.IO.File.Exists(fullPath) ) return false;
 
       Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes( ), PopulateLogicTypes( ) );
 
@@ -2521,7 +2521,10 @@ http://www.detoxstudios.com";
       else
       {
          uScriptDebug.Log( "An error occured opening " + fullPath, uScriptDebug.Type.Error );
+         return false;
       }
+      
+      return true;
    }
 
    public void RemoveGeneratedCode( string path )
