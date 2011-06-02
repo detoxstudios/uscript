@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Multiplies two float variables together and returns the result.
+// Desc: Scales a Vector3.
 
 using UnityEngine;
 using System.Collections;
@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Scales a Vector3.")]
-[NodeDescription("Scales a Vector3")]
+[NodeDescription("Scales a Vector3.\n \nVector: Vector to scale.\nScale: Amount to scale Vector by.\nVector Result: Scaled vector.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -18,7 +18,7 @@ public class uScriptAct_ScaleVector3 : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In([FriendlyName("Vector")] Vector3 v, [FriendlyName("Scale")] float s, [FriendlyName("Vector Resut")] out Vector3 result)
+   public void In([FriendlyName("Vector")] Vector3 v, [FriendlyName("Scale")] float s, [FriendlyName("Vector Result")] out Vector3 result)
    {
       result = v * s;
    }
