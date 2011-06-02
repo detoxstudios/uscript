@@ -387,8 +387,9 @@ namespace Detox.FlowChart
       {
          if ( e.Button == MouseButtons.Left && false == Control.ModifierKeys.Contains(Keys.Alt) )
          {
+            Node node = sender as Node;
             Link clickedLink = null;
-            bool linkClicked = MouseOverLink(out clickedLink);
+            bool linkClicked = node.RenderDepth < FlowChartCtrl.LinkRenderDepth ? MouseOverLink(out clickedLink) : false;
             bool selectionSetModified = false;
     
             if (linkClicked && clickedLink != null)
@@ -420,11 +421,7 @@ namespace Detox.FlowChart
                }
             }
             
-            if (selectionSetModified) return;
-
             m_MoveBoundariesStart = System.Windows.Forms.Cursor.Position;
-
-            Node node = sender as Node;
 
             //use the parent's position
             //for mouse coords, if we use our position
@@ -447,6 +444,8 @@ namespace Detox.FlowChart
                   pointSourced = true;
                }
             }
+            
+            if ( true == selectionSetModified && false == pointSourced ) return;
 
             if ( false == pointSourced && false == m_NodeMouseTracking )
             {                  
