@@ -1292,9 +1292,12 @@ http://www.detoxstudios.com";
             //
             _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
             {
-               foreach (PaletteMenuItem item in _paletteMenuItems)
+               if ( false == m_ScriptEditorCtrl.IsMoving( ) )
                {
-                  DrawPaletteMenu(item);
+                  foreach (PaletteMenuItem item in _paletteMenuItems)
+                  {
+                     DrawPaletteMenu(item);
+                  }
                }
             }
             EditorGUILayout.EndScrollView();
@@ -1383,86 +1386,89 @@ http://www.detoxstudios.com";
 
             _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
             {
-               GUIContent nodeButtonContent = new GUIContent(string.Empty, "Click to select node. Shift-click to toggle the selection.");
-
-               foreach (KeyValuePair<string, Dictionary<string, List<DisplayNode>>> kvpCategory in categories)
+               if ( false == m_ScriptEditorCtrl.IsMoving( ) )
                {
-                  if (kvpCategory.Value.Count > 0)
+                  GUIContent nodeButtonContent = new GUIContent(string.Empty, "Click to select node. Shift-click to toggle the selection.");
+   
+                  foreach (KeyValuePair<string, Dictionary<string, List<DisplayNode>>> kvpCategory in categories)
                   {
-                     // The category contains at least one item to show
-
-                     // This is should be a folding menu item that contains more buttons
-                     GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
-                     tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (0 * 12), 0, 0, 0);
-
-                     bool tmpBool = true;
-                     tmpBool = GUILayout.Toggle(tmpBool, kvpCategory.Key, tmpStyle);
-                     if (tmpBool)
+                     if (kvpCategory.Value.Count > 0)
                      {
-                        List<string> nodeList = kvpCategory.Value.Keys.ToList();
-                        nodeList.Sort();
-
-                        foreach (string s in nodeList)
+                        // The category contains at least one item to show
+   
+                        // This is should be a folding menu item that contains more buttons
+                        GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
+                        tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (0 * 12), 0, 0, 0);
+   
+                        bool tmpBool = true;
+                        tmpBool = GUILayout.Toggle(tmpBool, kvpCategory.Key, tmpStyle);
+                        if (tmpBool)
                         {
-                           List<DisplayNode> dnList = kvpCategory.Value[s];
-
-                           // Show each node
-                           foreach (DisplayNode dn in dnList)
+                           List<string> nodeList = kvpCategory.Value.Keys.ToList();
+                           nodeList.Sort();
+   
+                           foreach (string s in nodeList)
                            {
-                              // Get the name and comment strings
-                              name = string.Empty;
-                              comment = string.Empty;
+                              List<DisplayNode> dnList = kvpCategory.Value[s];
    
-                              if (dn is EntityEventDisplayNode)
+                              // Show each node
+                              foreach (DisplayNode dn in dnList)
                               {
-                                 name = ((EntityEventDisplayNode)dn).EntityEvent.FriendlyType;
-                                 comment = ((EntityEventDisplayNode)dn).EntityEvent.Comment.Default;
-                              }
-                              else if (dn is LogicNodeDisplayNode)
-                              {
-                                 name = ((LogicNodeDisplayNode)dn).LogicNode.FriendlyName;
-                                 comment = ((LogicNodeDisplayNode)dn).LogicNode.Comment.Default;
-                              }
-                              else if (dn is LocalNodeDisplayNode)
-                              {
-                                 name = ((LocalNodeDisplayNode)dn).LocalNode.Value.Type; // get FriendlyName
-                                 name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
-                                 name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)dn).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)dn).LocalNode.Value.Default);
-                                 comment = ((LocalNodeDisplayNode)dn).LocalNode.Name.Default;
-                              }
-                              else if (dn is CommentDisplayNode)
-                              {
-                                 name = ((CommentDisplayNode)dn).Comment.TitleText.FriendlyName;
-                                 comment = ((CommentDisplayNode)dn).Comment.TitleText.Default;
-                              }
-   
-                              // Validate strings
-                              name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
-                              comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
-
-                              GUILayout.BeginHorizontal();
-                              {
-                                 nodeButtonContent.text = name + comment;
-                                 bool selected = dn.Selected;
-                                 selected = GUILayout.Toggle(selected, nodeButtonContent, uScriptGUIStyle.nodeButtonLeft);
-                                 if (selected != dn.Selected)
+                                 // Get the name and comment strings
+                                 name = string.Empty;
+                                 comment = string.Empty;
+      
+                                 if (dn is EntityEventDisplayNode)
                                  {
-                                    // is the shift key modifier being used?
-                                    if (Event.current.modifiers != EventModifiers.Shift)
+                                    name = ((EntityEventDisplayNode)dn).EntityEvent.FriendlyType;
+                                    comment = ((EntityEventDisplayNode)dn).EntityEvent.Comment.Default;
+                                 }
+                                 else if (dn is LogicNodeDisplayNode)
+                                 {
+                                    name = ((LogicNodeDisplayNode)dn).LogicNode.FriendlyName;
+                                    comment = ((LogicNodeDisplayNode)dn).LogicNode.Comment.Default;
+                                 }
+                                 else if (dn is LocalNodeDisplayNode)
+                                 {
+                                    name = ((LocalNodeDisplayNode)dn).LocalNode.Value.Type; // get FriendlyName
+                                    name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
+                                    name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)dn).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)dn).LocalNode.Value.Default);
+                                    comment = ((LocalNodeDisplayNode)dn).LocalNode.Name.Default;
+                                 }
+                                 else if (dn is CommentDisplayNode)
+                                 {
+                                    name = ((CommentDisplayNode)dn).Comment.TitleText.FriendlyName;
+                                    comment = ((CommentDisplayNode)dn).Comment.TitleText.Default;
+                                 }
+      
+                                 // Validate strings
+                                 name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
+                                 comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
+   
+                                 GUILayout.BeginHorizontal();
+                                 {
+                                    nodeButtonContent.text = name + comment;
+                                    bool selected = dn.Selected;
+                                    selected = GUILayout.Toggle(selected, nodeButtonContent, uScriptGUIStyle.nodeButtonLeft);
+                                    if (selected != dn.Selected)
                                     {
-                                       // clear all selected nodes first
-                                       m_ScriptEditorCtrl.DeselectAll();
+                                       // is the shift key modifier being used?
+                                       if (Event.current.modifiers != EventModifiers.Shift)
+                                       {
+                                          // clear all selected nodes first
+                                          m_ScriptEditorCtrl.DeselectAll();
+                                       }
+                                       // toggle the clicked node
+                                       m_ScriptEditorCtrl.ToggleNode(dn.Guid);
                                     }
-                                    // toggle the clicked node
-                                    m_ScriptEditorCtrl.ToggleNode(dn.Guid);
+   
+                                    if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
+                                    {
+                                       uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
+                                    }
                                  }
-
-                                 if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
-                                 {
-                                    uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
-                                 }
+                                 GUILayout.EndHorizontal();
                               }
-                              GUILayout.EndHorizontal();
                            }
                         }
                      }
