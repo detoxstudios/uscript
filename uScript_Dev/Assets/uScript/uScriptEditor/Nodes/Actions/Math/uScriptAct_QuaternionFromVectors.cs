@@ -24,8 +24,36 @@ public class uScriptAct_QuaternionFromVectors : uScriptLogic
       [FriendlyName("Result Quaternion")] out Quaternion result
       )
    {
-      if (look == Vector3.zero) look = Vector3.forward;
-      if (up   == Vector3.zero) up   = Vector3.up;
+      if (look == Vector3.zero)
+      {
+         look = Vector3.forward;
+         
+         if (up != Vector3.zero)
+         {
+            // fix edge cases
+            if (look == up || look == -up) look = Vector3.right;
+
+            // need to re-calculate look and preserve up
+            Vector3 right = Vector3.Cross(look, up);
+            look = Vector3.Cross(up, right);
+         }
+      }
+
+      if (up == Vector3.zero)
+      {
+         up = Vector3.up;
+         
+         if (look != Vector3.zero)
+         {
+            // fix edge cases
+            if (look == up || look == -up) up = Vector3.forward;
+            
+            // need to re-calculate up and preserve look
+            Vector3 right = Vector3.Cross(look, up);
+            up = Vector3.Cross(right, look);
+         }
+      }
+         
          
       result = Quaternion.LookRotation(look, up);
    }
