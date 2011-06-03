@@ -3157,6 +3157,8 @@ http://www.detoxstudios.com";
 
       List<EntityEvent> entityEvents = new List<EntityEvent>( );
 
+      bool propertiesUsedForEvents = false;
+
       foreach ( EventInfo e in eventInfos )
       {
          if ( true == baseEvents.Contains(e.Name) ) continue;
@@ -3167,6 +3169,8 @@ http://www.detoxstudios.com";
          //because we can't set them via method parameters
          foreach ( PropertyInfo p in propertyInfos )
          {
+            propertiesUsedForEvents = true;
+
             if ( baseProperties.Contains(p.Name) ) continue;
 
             if ( p.GetSetMethod( ) != null )
@@ -3246,30 +3250,32 @@ http://www.detoxstudios.com";
 
       List<EntityProperty> entityProperties = new List<EntityProperty>( );
 
-      foreach ( PropertyInfo p in propertyInfos )
+      if ( false == propertiesUsedForEvents )
       {
-         if ( true == baseProperties.Contains(p.Name) ) continue;
+         foreach ( PropertyInfo p in propertyInfos )
+         {
+            if ( true == baseProperties.Contains(p.Name) ) continue;
 
-         bool isInput = p.GetSetMethod( ) != null;
-         bool isOutput= p.GetGetMethod( ) != null;
+            bool isInput = p.GetSetMethod( ) != null;
+            bool isOutput= p.GetGetMethod( ) != null;
 
-         EntityProperty property = new EntityProperty( p.Name, FindFriendlyName(p.Name, p.GetCustomAttributes(false)), type.ToString( ), p.PropertyType.ToString( ), isInput, isOutput );
-         entityProperties.Add( property );
+            EntityProperty property = new EntityProperty( p.Name, FindFriendlyName(p.Name, p.GetCustomAttributes(false)), type.ToString( ), p.PropertyType.ToString( ), isInput, isOutput );
+            entityProperties.Add( property );
 
-         AddType( p.PropertyType );
+            AddType( p.PropertyType );
+         }
+         
+         foreach ( FieldInfo f in fieldInfos )
+         {
+            if ( false == f.IsPublic ) continue;
+            if ( true  == f.IsStatic ) continue;   
+
+            EntityProperty property = new EntityProperty( f.Name, FindFriendlyName(f.Name, f.GetCustomAttributes(false)), type.ToString( ), f.FieldType.ToString( ), true, true );
+            entityProperties.Add( property );
+
+            AddType( f.FieldType );
+         }
       }
-      
-      foreach ( FieldInfo f in fieldInfos )
-      {
-         if ( false == f.IsPublic ) continue;
-         if ( true  == f.IsStatic ) continue;   
-
-         EntityProperty property = new EntityProperty( f.Name, FindFriendlyName(f.Name, f.GetCustomAttributes(false)), type.ToString( ), f.FieldType.ToString( ), true, true );
-         entityProperties.Add( property );
-
-         AddType( f.FieldType );
-      }
-
 
       entityDesc.Properties = entityProperties.ToArray( );
 
@@ -3381,6 +3387,9 @@ http://www.detoxstudios.com";
 
       foreach ( Type t in uniqueObjects.Values )
       {
+         if ( t == typeof(uScript_Assets) ) continue;
+         if ( t == typeof(uScript_MasterComponent) ) continue;
+
          Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
       }
 
