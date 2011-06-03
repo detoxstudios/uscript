@@ -779,8 +779,8 @@ http://www.detoxstudios.com";
                   }
                   else if ( Event.current.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0 )
                   {
-                     bool showGrid = (bool)GetSetting("uScript\\ShowGrid", true);
-                     SetSetting("uScript\\ShowGrid", !showGrid);
+                     Preferences.ShowGrid = ! Preferences.ShowGrid;
+                     Preferences.Save( );
                   }
                   else if ( Event.current.keyCode == KeyCode.RightBracket )
                   {
