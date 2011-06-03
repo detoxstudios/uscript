@@ -404,7 +404,8 @@ namespace System.Windows.Forms
                      }
                      else if ( null != GetObjectFieldType(p.Type) )
                      {
-                        val = uScriptGUI.ObjectTextField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref isVisible, toggleLock, isReadOnly);
+                        Type type = GetObjectFieldType(p.Type);
+                        val = uScriptGUI.ObjectTextField(p.FriendlyName, null, type, p.Default, ref isVisible, toggleLock, isReadOnly, uScriptConfig.ShouldAutoPackage(type));
                      }
                      else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "TextArea" )
                      {

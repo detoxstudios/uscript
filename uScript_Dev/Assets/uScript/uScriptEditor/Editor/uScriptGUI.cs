@@ -470,7 +470,7 @@ public static class uScriptGUI
    }
 
 
-   public static string ObjectTextField(string label, UnityEngine.Object value, Type type, string textValue, ref bool enabled, bool locked, bool isReadOnly)
+   public static string ObjectTextField(string label, UnityEngine.Object value, Type type, string textValue, ref bool enabled, bool locked, bool isReadOnly, bool needsFullPath)
    {
       EditorGUILayout.BeginVertical();
       {
@@ -513,7 +513,17 @@ public static class uScriptGUI
 
          // if that object (or the changed object) does exist, use it's name to update the property value
          // if it doesn't exist then the 'val' will stay as what was entered into the TextField
-         if ( unityObject != null ) textValue = unityObject.name;
+         if ( unityObject != null )
+         {
+            if ( true == needsFullPath )
+            {
+               textValue = AssetDatabase.GetAssetPath(unityObject);
+            }
+            else
+            {
+               textValue = unityObject.name;               
+            }
+         }
 
          EndRow(type.ToString());
       }
