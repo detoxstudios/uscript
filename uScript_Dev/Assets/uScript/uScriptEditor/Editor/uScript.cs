@@ -2273,10 +2273,15 @@ http://www.detoxstudios.com";
       EditorGUILayout.LabelField( "Grid Settings", "");
 
       //background grid size
+      int minGridSize = 8;
+      int maxGridSize = 100;
+      int minGridMajorSpacing = 1;
+      int maxGridMagicSpacing = 10;
+
       Preferences.ShowGrid             = EditorGUILayout.Toggle    ( "Show Grid", Preferences.ShowGrid );
-      Preferences.GridSizeVertical     = EditorGUILayout.FloatField( "Grid Size Vertical", Preferences.GridSizeVertical );
-      Preferences.GridSizeHorizontal   = EditorGUILayout.FloatField( "Grid Size Horizontal", Preferences.GridSizeHorizontal );
-      Preferences.GridMajorLineSpacing = EditorGUILayout.IntField  ( "Grid Major Line Spacing", Preferences.GridMajorLineSpacing );
+      Preferences.GridSizeVertical     = Math.Min(maxGridSize, Math.Max(minGridSize, EditorGUILayout.FloatField( "Grid Size Vertical", Preferences.GridSizeVertical) ) );
+      Preferences.GridSizeHorizontal   = Math.Min(maxGridSize, Math.Max(minGridSize, EditorGUILayout.FloatField( "Grid Size Horizontal", Preferences.GridSizeHorizontal) ) );
+      Preferences.GridMajorLineSpacing = Math.Min(maxGridMagicSpacing, Math.Max(minGridMajorSpacing, EditorGUILayout.IntField  ( "Grid Major Line Spacing", Preferences.GridMajorLineSpacing) ) );
       Preferences.GridColorMajor       = EditorGUILayout.ColorField( "Grid Color Major", Preferences.GridColorMajor );
       Preferences.GridColorMinor       = EditorGUILayout.ColorField( "Grid Color Minor", Preferences.GridColorMinor );
 
