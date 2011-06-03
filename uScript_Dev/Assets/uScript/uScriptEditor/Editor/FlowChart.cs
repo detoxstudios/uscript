@@ -177,6 +177,14 @@ namespace Detox.FlowChart
          if (null != LinkCreated) LinkCreated(this, new FlowchartLinkCreatedEventArgs(link));
       }
 
+      public delegate void FlowChartLocationChangedEventHandler(object sender, EventArgs e);
+      public event FlowChartLocationChangedEventHandler LocationChanged;
+
+      private void OnLocationChanged( )
+      {
+         if (null != LocationChanged) LocationChanged(this, new EventArgs());
+      }
+
       public void Clear( )
       {
          Controls.Clear( );
@@ -897,6 +905,7 @@ namespace Detox.FlowChart
       {
          if ( true == InMoveMode )
          {
+            OnLocationChanged( );
             Invalidate( );
          }
          else

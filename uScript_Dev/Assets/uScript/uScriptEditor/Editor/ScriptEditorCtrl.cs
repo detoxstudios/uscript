@@ -144,6 +144,8 @@ namespace Detox.ScriptEditor
             m_ContextCursor = m_FlowChart.PointToClient( m_ContextCursor );
          }
       }
+      
+      private bool m_CopiedFromThisLocation = false;
 
       public ScriptEditorCtrl(ScriptEditor scriptEditor)
       {  
@@ -638,7 +640,9 @@ namespace Detox.ScriptEditor
          string base64 = Convert.ToBase64String( stream.GetBuffer( ) );
          base64 = "[SCRIPTEDITOR]" + base64;
 
-         UnityEditor.EditorGUIUtility.systemCopyBuffer = base64; 
+         UnityEditor.EditorGUIUtility.systemCopyBuffer = base64;
+         
+         m_CopiedFromThisLocation = true;
 
          OnScriptModified( );
       }
@@ -659,19 +663,17 @@ namespace Detox.ScriptEditor
 
             Hashtable remappedGuid = new Hashtable( );
 				
-			Point basePoint = Point.Empty;
-			if (cursorPoint != Point.Empty)
-			{
-			   // if executed from the context menu, calculate a base point for this script chunk
-			   float left = float.MaxValue, top = float.MaxValue;
+			   // calculate a base point for this script chunk
+			   float left = float.MaxValue, top = float.MaxValue, right = float.MinValue, bottom = float.MinValue;
 			   foreach ( EntityNode entityNode in scriptEditor.EntityNodes )
 			   {
-                  if ( typeof(LinkNode).IsAssignableFrom(entityNode.GetType()) ) continue;
-			      if (entityNode.Position.X < left) left = entityNode.Position.X;
-			      if (entityNode.Position.Y < top)  top  = entityNode.Position.Y;
+               if ( typeof(LinkNode).IsAssignableFrom(entityNode.GetType()) ) continue;
+			      if (entityNode.Position.X < left)   left = entityNode.Position.X;
+			      if (entityNode.Position.Y < top)    top  = entityNode.Position.Y;
+               if (entityNode.Position.X > right)  right = entityNode.Position.X;
+               if (entityNode.Position.Y > bottom) bottom  = entityNode.Position.Y;
 			   }
-			   basePoint = new Point( (int)left, (int)top );
-			}
+            Rectangle baseRect = new Rectangle( (int)left, (int)top, (int)(right - left), (int)(bottom - top) );
 
             foreach ( EntityNode entityNode in scriptEditor.EntityNodes )
             {
@@ -685,15 +687,30 @@ namespace Detox.ScriptEditor
                //from a previous paste or existing node
                EntityNode clone = entityNode;
                clone.Guid = (Guid) remappedGuid[ entityNode.Guid ];
-			   if (basePoint == Point.Empty)
-			   {
-	              clone.Position = new Point( clone.Position.X + 10, clone.Position.Y + 10 );
-			   }
-			   else
-			   {
-				  Point diff = new Point( clone.Position.X - basePoint.X, clone.Position.Y - basePoint.Y );
-	              clone.Position = new Point( cursorPoint.X + diff.X, cursorPoint.Y + diff.Y );
-			   }
+   			   if (cursorPoint == Point.Empty)
+   			   {
+                  if (m_CopiedFromThisLocation)
+                  {
+                     // this paste was copied and then pasted without moving the graph or 
+                     // opening a new one, offset it from the original position
+                     clone.Position = new Point( clone.Position.X + 10, clone.Position.Y + 10 );
+                  }
+                  else
+                  {
+                     // this paste was copied from a location that may not be visible 
+                     // anymore or might be in another graph, paste to center of canvas
+                     int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
+                     int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
+                     Point centerView = new Point((int)(-m_FlowChart.Location.X + halfWidth), (int)(-m_FlowChart.Location.Y + halfHeight));
+                     Point diff = new Point( clone.Position.X - baseRect.X, clone.Position.Y - baseRect.Y );
+                     clone.Position = new Point( centerView.X - (int)(baseRect.Width / 2.0f) + diff.X, centerView.Y - (int)(baseRect.Height / 2.0f) + diff.Y);
+                  }
+   			   }
+   			   else
+   			   {
+                  Point diff = new Point( clone.Position.X - baseRect.X, clone.Position.Y - baseRect.Y );
+                  clone.Position = new Point( cursorPoint.X + diff.X, cursorPoint.Y + diff.Y );
+   			   }
                m_ScriptEditor.AddNode( clone );
                guidsToSelect.Add( clone.Guid );
                m_Dirty = true;
@@ -1658,12 +1675,18 @@ namespace Detox.ScriptEditor
          }
       }
 
+      private void FlowchartLocationChanged(object sender, EventArgs e)
+      {
+         m_CopiedFromThisLocation = false;
+      }
+      
       private void RemoveEventHandlers( )
       {
          m_FlowChart.NodesModified     -= FlowchartNodesModified;
          m_FlowChart.SelectionModified -= FlowchartSelectionModified;
          m_FlowChart.LinkCreated       -= FlowchartLinkCreated;
          m_FlowChart.PointRender       -= FlowchartPointRender;
+         m_FlowChart.LocationChanged   -= FlowchartLocationChanged;
 
          m_PropertyGrid.PropertyValueChanged -= new PropertyValueChangedEventHandler(m_PropertyGrid_PropertyValueChanged);
       }
@@ -1674,6 +1697,7 @@ namespace Detox.ScriptEditor
          m_FlowChart.SelectionModified += FlowchartSelectionModified;
          m_FlowChart.LinkCreated       += FlowchartLinkCreated;
          m_FlowChart.PointRender       += FlowchartPointRender;
+         m_FlowChart.LocationChanged   += FlowchartLocationChanged;
 
          m_PropertyGrid.PropertyValueChanged += new PropertyValueChangedEventHandler(m_PropertyGrid_PropertyValueChanged);
       }
