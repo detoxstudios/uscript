@@ -53,6 +53,7 @@ namespace Detox.Data
       public ObjectSerializer( )
       {
          AddTypeSerializer( new IntSerializer( ) );
+         AddTypeSerializer( new ColorSerializer( ) );
          AddTypeSerializer( new HashtableSerializer( ) );
          AddTypeSerializer( new StringSerializer( ) );
          AddTypeSerializer( new StringArraySerializer( ) );

@@ -1029,18 +1029,18 @@ namespace Detox.FlowChart
          // This is the viewport Rect
          Rectangle visibleRect = new Rectangle(-Location.X, -Location.Y, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
 
-         if ( (bool)uScript.GetSetting("uScript\\ShowGrid", true) == true )
+         if ( uScript.Preferences.ShowGrid == true )
          {
             float g;
     
-            float gridSizeVertical   = (float)uScript.GetSetting("uScript\\GridSizeVertical", 20.0f);
-            float gridSizeHorizontal = (float)uScript.GetSetting("uScript\\GridSizeHorizontal", 20.0f);
+            float gridSizeVertical   = uScript.Preferences.GridSizeVertical;
+            float gridSizeHorizontal = uScript.Preferences.GridSizeHorizontal;
             int vertical   = (int) Math.Floor(gridSizeVertical);
             int horizontal = (int) Math.Floor(gridSizeHorizontal);
 
             float offsetX = Location.X % vertical;
             float offsetY = Location.Y % horizontal;
-            int gridMajorLineSpacing = (int)uScript.GetSetting("uScript\\GridMajorLineSpacing", 4);
+            int gridMajorLineSpacing = (int)uScript.Preferences.GridMajorLineSpacing;
 
             int majorGridPixelOffset = Location.Y % (horizontal * gridMajorLineSpacing);
             int majorGridSpacing = majorGridPixelOffset / horizontal;
@@ -1058,12 +1058,12 @@ namespace Detox.FlowChart
             {
                if ( gridMajorLineCount == gridMajorLineSpacing )
                {
-                  Handles.color = uScriptConfig.Style.GridColorMajor;
+                  Handles.color = uScript.Preferences.GridColorMajor;
                   gridMajorLineCount = 0;
                }
                else
                {
-                  Handles.color = uScriptConfig.Style.GridColorMinor;
+                  Handles.color = uScript.Preferences.GridColorMinor;
                }
 
                Handles.DrawLine( startGrid, endGrid );
@@ -1083,16 +1083,16 @@ namespace Detox.FlowChart
             //finally flip it because our location we modded with will be negative
             gridMajorLineCount = - majorGridSpacing;
 
-            for ( g = 0; g < uScript.Instance.NodeWindowRect.width; g += uScriptConfig.Style.GridSizeVertical )
+            for ( g = 0; g < uScript.Instance.NodeWindowRect.width; g += uScript.Preferences.GridSizeVertical )
             {
                if ( gridMajorLineCount == gridMajorLineSpacing )
                {
-                  Handles.color = uScriptConfig.Style.GridColorMajor;
+                  Handles.color = uScript.Preferences.GridColorMajor;
                   gridMajorLineCount = 0;
                }
                else
                {
-                  Handles.color = uScriptConfig.Style.GridColorMinor;
+                  Handles.color = uScript.Preferences.GridColorMinor;
                }
 
                Handles.DrawLine( startGrid, endGrid );

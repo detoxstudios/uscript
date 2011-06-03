@@ -275,12 +275,12 @@ public class uScriptDefaultStyle : uScriptStyle
       elementSettings["externalconnection_selected"] = element;
 
 
-      string assetPath = uScriptConfig.Paths.SkinPath + "/elements";
+      string assetPath = uScriptConfig.ConstantPaths.SkinPath + "/elements";
 
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( assetPath );
       System.IO.FileInfo [] files = directory.GetFiles( "*.png" );
 
-      string relativePath = uScriptConfig.Paths.RelativePath(assetPath);
+      string relativePath = uScriptConfig.ConstantPaths.RelativePath(assetPath);
 
       foreach (System.IO.FileInfo file in files)
       {
@@ -641,32 +641,25 @@ public partial class uScriptConfig
 
    public static bool ShouldAutoPackage(Type type)
    {
-      if ( type == typeof(AudioClip) ) return true;
+      if ( type == typeof(AudioClip) )     return true;
       if ( type == typeof(AnimationClip) ) return true;
-      if (type == typeof(Texture2D)) return true;
-      if (type == typeof(Material)) return true;
+      if ( type == typeof(Texture2D))      return true;
+      if ( type == typeof(Material))       return true;
       //if (type == typeof(GameObject)) return true;
    
       return false;
    }
 
-   public struct Paths
+   //do not override in the preferences path, 
+   //these are accessed outside the scope of uScript.cs and out preferences file
+   public struct ConstantPaths
    {
-      //uScriptEditor paths
-      public static string RootFolder        { get {return UnityEngine.Application.dataPath + "/uScript";} }
+      public static string SettingsPath      { get {return UnityEngine.Application.dataPath + "/uScriptProjectFiles"; } } 
       public static string uScriptNodes      { get {return uScriptEditor + "/Nodes";} }
-      public static string ProjectFiles      { get { return UnityEngine.Application.dataPath + "/uScriptProjectFiles"; } }
+      public static string RootFolder        { get {return UnityEngine.Application.dataPath + "/uScript";} }
       public static string uScriptEditor     { get {return RootFolder + "/uScriptEditor";} }
-
-      //user paths
-      public static string UserScripts       { get {return ProjectFiles     + "/uScripts";} }
-      public static string UserNodes         { get {return ProjectFiles     + "/Nodes";} }
-      public static string GeneratedScripts  { get {return UserScripts      + "/_GeneratedCode"; } }
-      public static string NestedScripts     { get {return GeneratedScripts; } }
       public static string GuiPath           { get {return uScriptEditor    + "/Editor/_GUI"; } }
       public static string SkinPath          { get {return GuiPath          + "/uScriptDefault"; } }
-      public static string SettingsPath      { get {return ProjectFiles; } } 
-      //public static string TutorialFiles   { get {return RootFolder + "/TutorialFiles";} }
    
       public static string RelativePath(string absolutePath)
       {
@@ -684,10 +677,10 @@ public partial class uScriptConfig
    }
 
    public static uScriptStyle Style = new uScriptDefaultStyle( );
-   public static UnityEngine.Texture2D canvasBackgroundTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( Paths.RelativePath(Paths.SkinPath) + "/uscript_background.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-   public static UnityEngine.Texture2D lineTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( Paths.RelativePath(Paths.SkinPath) + "/icons/uscript_line.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-   public static UnityEngine.Texture2D PointerLineEnd = UnityEditor.AssetDatabase.LoadAssetAtPath( Paths.RelativePath(Paths.SkinPath) + "/icons/uscript_pointer_line_end.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-   public static UnityEngine.Texture2D ResizeTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( Paths.RelativePath(Paths.SkinPath) + "/icons/uscript_icon_resize_comment.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D canvasBackgroundTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_background.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D lineTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/icons/uscript_line.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D PointerLineEnd = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/icons/uscript_pointer_line_end.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D ResizeTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/icons/uscript_icon_resize_comment.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
    public static int   MinResizeX = 60;
    public static int   MinResizeY = 16;
    public static float bezierPenWidth = 1.25f;

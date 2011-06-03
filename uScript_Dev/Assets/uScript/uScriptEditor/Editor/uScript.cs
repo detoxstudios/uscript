@@ -1,4 +1,4 @@
-using UnityEngine;
+using UnityEngine;   
 using UnityEditor;
 using Detox.ScriptEditor;
 using Detox.Data.Tools;
@@ -59,6 +59,7 @@ public class uScript : EditorWindow
    
    private Detox.FlowChart.Node m_FocusedNode = null;
    
+   static public Preferences Preferences = new Preferences( );
    static private AppFrameworkData m_AppData = new AppFrameworkData();
    static private bool m_SettingsLoaded = false;
    private double m_RefreshTimestamp = -1.0;
@@ -175,6 +176,7 @@ public class uScript : EditorWindow
    MouseEventArgs m_MouseMoveArgs = new MouseEventArgs( );
 
    public bool m_SelectAllNodes = false;
+   public bool m_DoPreferences  = false;
 
    public string CurrentScript = null;
 
@@ -245,18 +247,17 @@ http://www.detoxstudios.com";
       s_Instance = (uScript) EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
       s_Instance.wantsMouseMove = true;
 
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.RootFolder );
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.uScriptNodes );
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.ProjectFiles );
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.uScriptEditor );
+      System.IO.Directory.CreateDirectory( uScriptConfig.ConstantPaths.RootFolder );
+      System.IO.Directory.CreateDirectory( uScriptConfig.ConstantPaths.uScriptNodes );
+      System.IO.Directory.CreateDirectory( uScriptConfig.ConstantPaths.uScriptEditor );
 
-      //user paths
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.UserScripts );
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.UserNodes );
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.GeneratedScripts );
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.NestedScripts );
+      System.IO.Directory.CreateDirectory( Preferences.ProjectFiles );
+      System.IO.Directory.CreateDirectory( Preferences.UserScripts );
+      System.IO.Directory.CreateDirectory( Preferences.UserNodes );
+      System.IO.Directory.CreateDirectory( Preferences.GeneratedScripts );
+      System.IO.Directory.CreateDirectory( Preferences.NestedScripts );
 
-      //System.IO.Directory.CreateDirectory( uScriptConfig.Paths.TutorialFiles );
+      //System.IO.Directory.CreateDirectory( Preferences.TutorialFiles );
    }
 
    static public object GetSetting(string key)
@@ -282,14 +283,14 @@ http://www.detoxstudios.com";
       m_SettingsLoaded = true;
 
       m_AppData.Set(key, value);
-      m_AppData.Save(uScriptConfig.Paths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
+      m_AppData.Save(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
    }
    
    static public void LoadSettings()
    {
-      if (System.IO.File.Exists(uScriptConfig.Paths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile))
+      if (System.IO.File.Exists(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile))
       {
-         m_AppData.Load(uScriptConfig.Paths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
+         m_AppData.Load(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
       }
    }
 
@@ -466,7 +467,7 @@ http://www.detoxstudios.com";
    		Point loc = Point.Empty;
          if ( !String.IsNullOrEmpty(m_FullPath) )
          {
-            m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.Paths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
+            m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
          }
          if ( false == String.IsNullOrEmpty(m_CurrentCanvasPosition) )
          {
@@ -538,7 +539,7 @@ http://www.detoxstudios.com";
             m_ScriptEditorCtrl.RefreshScript(null, true);
             if ( !String.IsNullOrEmpty(m_FullPath) )
             {
-               m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.Paths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
+               m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
             }
             if (!String.IsNullOrEmpty(m_CurrentCanvasPosition))
             {
@@ -632,7 +633,6 @@ http://www.detoxstudios.com";
          GUI.enabled = _EULAagreed;
       }
 
-
       // Set the default mouse region
       _mouseRegion = uScript.MouseRegion.Outside;
       
@@ -642,7 +642,7 @@ http://www.detoxstudios.com";
       bool lastMouseDown = m_MouseDown;
       
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
-      if ( false == contextActive )
+      if ( false == contextActive && false == m_DoPreferences)
       {
          int modifierKeys = 0;
 
@@ -1034,6 +1034,11 @@ http://www.detoxstudios.com";
             DrawAssetList();
          }
       }
+
+      if (m_DoPreferences)
+      {
+         DrawPreferences( );
+      }
       EndWindows( );
    }
 
@@ -1072,7 +1077,7 @@ http://www.detoxstudios.com";
          {
             LogicNode logicNode = (LogicNode) entityNode;
 
-            string uscriptPath = uScriptConfig.Paths.UserScripts;
+            string uscriptPath = Preferences.UserScripts;
 
             if ( logicNode.Type.EndsWith( uScriptConfig.Files.GeneratedCodeExtension ) )
             {
@@ -1092,7 +1097,7 @@ http://www.detoxstudios.com";
 
    void DrawMainGUI()
    {
-      uScriptGUIContent.Init();
+      uScriptGUIContent.Init(Preferences.UseGuiIcon, Preferences.UseGuiText);
       uScriptGUIStyle.Init();
 
       DrawGUITopAreas();
@@ -1782,7 +1787,7 @@ http://www.detoxstudios.com";
 
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonOpen, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
-               string path = EditorUtility.OpenFilePanel( "Open uScript", uScriptConfig.Paths.UserScripts, "uscript" );
+               string path = EditorUtility.OpenFilePanel( "Open uScript", Preferences.UserScripts, "uscript" );
                if ( path.Length > 0 )
                {
                   OpenScript( path );
@@ -1810,16 +1815,20 @@ http://www.detoxstudios.com";
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                AssetDatabase.StartAssetEditing( );
-                  RebuildScripts( uScriptConfig.Paths.UserScripts );
+                  RebuildScripts( Preferences.UserScripts );
                AssetDatabase.StopAssetEditing( );
                AssetDatabase.Refresh();
             }
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRemoveGenerated, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                AssetDatabase.StartAssetEditing( );
-                  RemoveGeneratedCode( uScriptConfig.Paths.GeneratedScripts );
+                  RemoveGeneratedCode( Preferences.GeneratedScripts );
                AssetDatabase.StopAssetEditing( );
                AssetDatabase.Refresh();
+            }
+            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            {
+               m_DoPreferences = true;
             }
             GUILayout.FlexibleSpace();
 
@@ -2028,7 +2037,7 @@ http://www.detoxstudios.com";
 
          _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
          {
-            /*foreach (string fileName in System.IO.Directory.GetFiles(uScriptConfig.Paths.GeneratedScripts))
+            /*foreach (string fileName in System.IO.Directory.GetFiles(Preferences.GeneratedScripts))
             {
                if ( fileName.Contains(".cs") )
                {
@@ -2056,7 +2065,7 @@ http://www.detoxstudios.com";
                         GUIContent content = new GUIContent((currentScript ? "Reload" : "Load"), "Click to load this uScript.");
                         if (GUILayout.Button(content, (currentScript ? EditorStyles.miniButton : EditorStyles.miniButtonLeft)))
                         {
-                           string path = FindFile(uScriptConfig.Paths.UserScripts, scriptName + ".uscript");
+                           string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
 
                            if ("" != path)
                            {
@@ -2174,11 +2183,20 @@ http://www.detoxstudios.com";
    }
 
 
-
+   
 
    void m_ScriptEditorCtrl_ScriptModified(object sender, EventArgs e)
    {
       Repaint( );
+   }
+
+   public void DrawPreferences( )
+   {
+      int w = 550;
+      int h = Math.Max(300, (int)position.height - 400);
+      Rect r = new Rect((position.width-w)/2, (position.height-h)/2, w, h);
+
+      GUI.Window(10001, r, DoPreferences, "Preferences");
    }
 
    public void DrawContextMenu( int x, int y )
@@ -2221,6 +2239,95 @@ http://www.detoxstudios.com";
             }
          }
       }
+   }
+
+   void DoPreferences(int windowID)
+   {
+      //project file location
+      EditorGUILayout.LabelField( "Project File Location", "" );
+
+      EditorGUILayout.BeginHorizontal();
+      
+         string path = uScriptConfig.ConstantPaths.RelativePath(Preferences.UserScripts);
+         if ( path.Length > 64 ) path = path.Substring( 0, 64 ) + "...";
+
+         bool pressed = GUILayout.Button( path, uScriptGUIStyle.ContextMenu );
+         if ( true == pressed ) 
+         {
+            path = EditorUtility.OpenFolderPanel( "uScript Project Files", Preferences.UserScripts, "" );
+            if ( "" != path ) Preferences.UserScripts = path;
+         }
+
+      EditorGUILayout.EndHorizontal( );
+
+      EditorGUILayout.Separator( );
+
+
+      //icon settings
+      EditorGUILayout.LabelField( "Icon Settings", "");
+
+      EditorGUILayout.BeginHorizontal();
+      
+         Preferences.UseGuiIcon = EditorGUILayout.Toggle( "Icon", Preferences.UseGuiIcon || false == Preferences.UseGuiText );
+         Preferences.UseGuiText = EditorGUILayout.Toggle( "Text", Preferences.UseGuiText || false == Preferences.UseGuiIcon );
+
+      EditorGUILayout.EndHorizontal( );
+
+      EditorGUILayout.Separator( );
+
+
+      //grid settings
+      EditorGUILayout.LabelField( "Grid Settings", "");
+
+      //background grid size
+      Preferences.ShowGrid             = EditorGUILayout.Toggle    ( "Show Grid", Preferences.ShowGrid );
+      Preferences.GridSizeVertical     = EditorGUILayout.FloatField( "Grid Size Vertical", Preferences.GridSizeVertical );
+      Preferences.GridSizeHorizontal   = EditorGUILayout.FloatField( "Grid Size Horizontal", Preferences.GridSizeHorizontal );
+      Preferences.GridMajorLineSpacing = EditorGUILayout.IntField  ( "Grid Major Line Spacing", Preferences.GridMajorLineSpacing );
+      Preferences.GridColorMajor       = EditorGUILayout.ColorField( "Grid Color Major", Preferences.GridColorMajor );
+      Preferences.GridColorMinor       = EditorGUILayout.ColorField( "Grid Color Minor", Preferences.GridColorMinor );
+
+      EditorGUILayout.Separator( );
+      EditorGUILayout.Separator( );
+
+      
+      //revert to default      
+      EditorGUILayout.BeginHorizontal();
+
+            pressed = GUILayout.Button( "Revert All Settings to Default Values", uScriptGUIStyle.ContextMenu );
+            if ( true == pressed ) 
+            {
+               Preferences.Revert( );
+            }
+
+      EditorGUILayout.EndHorizontal();
+
+      EditorGUILayout.Separator( );
+
+
+      //save or cancel
+      EditorGUILayout.BeginHorizontal();
+
+         pressed = GUILayout.Button( "Save", uScriptGUIStyle.ContextMenu );
+         if ( true == pressed ) 
+         {
+            Preferences.Save( );
+            uScriptGUIContent.SetStyle(Preferences.UseGuiIcon, Preferences.UseGuiText);
+
+            m_DoPreferences = false;
+         }
+
+         pressed = GUILayout.Button( "Cancel", uScriptGUIStyle.ContextMenu );
+         if ( true == pressed ) 
+         {
+            //cancel was pressed so revert to saved version
+            Preferences.Load( );
+            uScriptGUIContent.SetStyle(Preferences.UseGuiIcon, Preferences.UseGuiText);
+
+            m_DoPreferences = false;
+         }
+
+      EditorGUILayout.EndHorizontal();
    }
 
    void DoContextMenu(int windowID)
@@ -2420,7 +2527,7 @@ http://www.detoxstudios.com";
       m_CurrentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
       if (!String.IsNullOrEmpty(m_FullPath))
       {
-         SetSetting("uScript\\" + uScriptConfig.Paths.RelativePath(m_FullPath) + "\\CanvasPosition", m_CurrentCanvasPosition);
+         SetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", m_CurrentCanvasPosition);
       }
       
       Control.MouseButtons.Buttons = 0;
@@ -2522,7 +2629,7 @@ http://www.detoxstudios.com";
 
          m_FullPath = fullPath;
 
-         uScript.SetSetting("uScript\\LastOpened", uScriptConfig.Paths.RelativePath(fullPath).Substring("Assets".Length));
+         uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(fullPath).Substring("Assets".Length));
       }
       else
       {
@@ -2541,7 +2648,7 @@ http://www.detoxstudios.com";
 
       foreach ( System.IO.FileInfo file in files )
       {
-         string relativePath = uScriptConfig.Paths.RelativePath(file.FullName);
+         string relativePath = uScriptConfig.ConstantPaths.RelativePath(file.FullName);
          AssetDatabase.DeleteAsset( relativePath );
       }
 
@@ -2584,11 +2691,11 @@ http://www.detoxstudios.com";
 
    private bool SaveScript( Detox.ScriptEditor.ScriptEditor script, string binaryPath )
    {
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.GeneratedScripts );
-      System.IO.Directory.CreateDirectory( uScriptConfig.Paths.NestedScripts );
+      System.IO.Directory.CreateDirectory( Preferences.GeneratedScripts );
+      System.IO.Directory.CreateDirectory( Preferences.NestedScripts );
 
-      string wrapperPath = uScriptConfig.Paths.GeneratedScripts;
-      string logicPath   = uScriptConfig.Paths.NestedScripts;
+      string wrapperPath = Preferences.GeneratedScripts;
+      string logicPath   = Preferences.NestedScripts;
 
       String fileName = System.IO.Path.GetFileNameWithoutExtension( binaryPath );
 
@@ -2616,7 +2723,7 @@ http://www.detoxstudios.com";
          string path = "Untitled.uScript";
          while ( !isSafe && path != "" )
          {
-            path = EditorUtility.SaveFilePanel( "Save uScript As", uScriptConfig.Paths.UserScripts, script.Name, "uscript" );
+            path = EditorUtility.SaveFilePanel( "Save uScript As", Preferences.UserScripts, script.Name, "uscript" );
             if ( path != "" )
             {
                System.IO.FileInfo fileInfo = new System.IO.FileInfo(path);
@@ -2633,7 +2740,7 @@ http://www.detoxstudios.com";
          if ( "" == path ) return false;
 
          m_FullPath = path;
-         uScript.SetSetting("uScript\\LastOpened", uScriptConfig.Paths.RelativePath(m_FullPath).Substring("Assets".Length));
+         uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(m_FullPath).Substring("Assets".Length));
       }
 
       if ( "" != m_FullPath )
@@ -2841,9 +2948,10 @@ http://www.detoxstudios.com";
 
       Dictionary<Type, Type> uniqueNodes = new Dictionary<Type, Type>( );
 
-      GatherDerivedTypes( uniqueNodes, uScriptConfig.Paths.UserNodes, typeof(uScriptLogic) );
-      GatherDerivedTypes( uniqueNodes, uScriptConfig.Paths.NestedScripts, typeof(uScriptLogic) );
-      GatherDerivedTypes( uniqueNodes, uScriptConfig.Paths.uScriptNodes, typeof(uScriptLogic) );
+      GatherDerivedTypes( uniqueNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptLogic) );
+
+      GatherDerivedTypes( uniqueNodes, Preferences.UserNodes, typeof(uScriptLogic) );
+      GatherDerivedTypes( uniqueNodes, Preferences.NestedScripts, typeof(uScriptLogic) );
 
       MethodInfo []methods = typeof(uScriptLogic).GetMethods( );
 
@@ -3369,7 +3477,7 @@ http://www.detoxstudios.com";
       Dictionary<Type, Type> uniqueObjects = new Dictionary<Type, Type>( );
 
       Dictionary<Type, Type> eventNodes = new Dictionary<Type,Type>( );
-      GatherDerivedTypes( eventNodes, uScriptConfig.Paths.uScriptNodes, typeof(uScriptEvent) );
+      GatherDerivedTypes( eventNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptEvent) );
 
       foreach ( UnityEngine.Object o in allObjects )
       {
@@ -3802,5 +3910,143 @@ http://www.detoxstudios.com";
       }
 
       return null;
+   }
+}
+
+public class Preferences
+{
+   public string ProjectFiles 
+   { 
+      get { LoadIfRequired( ); return m_Preferences[ "ProjectFiles" ] as string; } 
+      set { LoadIfRequired( ); m_Preferences[ "ProjectFiles" ] = value; }       
+   }
+
+   public string UserScripts
+   { 
+      get { LoadIfRequired( ); return m_Preferences[ "UserScripts" ] as string; } 
+      set { LoadIfRequired( ); m_Preferences[ "UserScripts" ] = value; }       
+   }
+
+   public string UserNodes
+   { 
+      get { LoadIfRequired( ); return m_Preferences[ "UserNodes" ] as string; } 
+      set { LoadIfRequired( ); m_Preferences[ "UserNodes" ] = value; }       
+   }
+
+   public string GeneratedScripts
+   { 
+      get { LoadIfRequired( ); return m_Preferences[ "GeneratedScripts" ] as string; } 
+      set { LoadIfRequired( ); m_Preferences[ "GeneratedScripts" ] = value; }       
+   }
+
+   public string NestedScripts
+   { 
+      get { LoadIfRequired( ); return m_Preferences[ "NestedScripts" ] as string; } 
+      set { LoadIfRequired( ); m_Preferences[ "NestedScripts" ] = value; }       
+   }
+
+   public bool UseGuiIcon
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "UseGuiIcon" ]; } 
+      set { LoadIfRequired( ); m_Preferences[ "UseGuiIcon" ] = value; }       
+   }
+
+   public bool UseGuiText
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "UseGuiText" ]; } 
+      set { LoadIfRequired( ); m_Preferences[ "UseGuiText" ] = value; }       
+   }
+
+   public bool ShowGrid
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "ShowGrid" ]; } 
+      set { LoadIfRequired( ); m_Preferences[ "ShowGrid" ] = value; }       
+   }
+
+   public float GridSizeVertical
+   {
+      get { LoadIfRequired( ); return (float) m_Preferences[ "GridSizeVertical" ]; } 
+      set { LoadIfRequired( ); m_Preferences[ "GridSizeVertical" ] = value; }       
+   }
+
+   public float GridSizeHorizontal
+   {
+      get { LoadIfRequired( ); return (float) m_Preferences[ "GridSizeHorizontal" ]; } 
+      set { LoadIfRequired( ); m_Preferences[ "GridSizeHorizontal" ] = value; }       
+   }
+
+   public int GridMajorLineSpacing
+   {
+      get { LoadIfRequired( ); return (int) m_Preferences[ "GridMajorLineSpacing" ]; } 
+      set { LoadIfRequired( ); m_Preferences[ "GridMajorLineSpacing" ] = value; }       
+   }
+
+   public UnityEngine.Color GridColorMajor
+   {
+      get { LoadIfRequired( ); return (UnityEngine.Color) m_Preferences[ "GridColorMajor" ]; } 
+      set { LoadIfRequired( ); m_Preferences[ "GridColorMajor" ] = value; }       
+   }
+
+   public UnityEngine.Color GridColorMinor
+   {
+      get { LoadIfRequired( ); return (UnityEngine.Color) m_Preferences[ "GridColorMinor" ]; } 
+      set { LoadIfRequired( ); m_Preferences[ "GridColorMinor" ] = value; }       
+   }
+
+   private Hashtable m_Preferences = null;  
+
+   public void Revert( )
+   {
+      //clear out the hash table
+      //to force the defaults to load
+      m_Preferences.Clear( );
+
+      LoadDefaultsIfRequired( );
+   }
+   
+   public void Load( )
+   {
+      Hashtable preferences = uScript.GetSetting( "Preferences" ) as Hashtable;
+      
+      if ( null == preferences )
+      {
+         preferences = new Hashtable( );
+      }
+
+      m_Preferences = new Hashtable( preferences );
+
+      LoadDefaultsIfRequired( );
+   }
+
+   private void LoadDefaultsIfRequired( )
+   {
+      if ( null == m_Preferences[ "ProjectFiles" ] )         m_Preferences[ "ProjectFiles" ]         = UnityEngine.Application.dataPath + "/uScriptProjectFiles";
+      if ( null == m_Preferences[ "UserScripts" ] )          m_Preferences[ "UserScripts" ]          = ProjectFiles + "/uScripts";
+      if ( null == m_Preferences[ "UserNodes" ] )            m_Preferences[ "UserNodes" ]            = ProjectFiles + "/Nodes";
+      if ( null == m_Preferences[ "GeneratedScripts" ] )     m_Preferences[ "GeneratedScripts" ]     = UserScripts  + "/_GeneratedCode";
+      if ( null == m_Preferences[ "NestedScripts" ] )        m_Preferences[ "NestedScripts" ]        = GeneratedScripts;
+      if ( null == m_Preferences[ "UseGuiIcon" ] )           m_Preferences[ "UseGuiIcon" ]           = true;
+      if ( null == m_Preferences[ "UseGuiText" ] )           m_Preferences[ "UseGuiText" ]           = true;
+      if ( null == m_Preferences[ "ShowGrid" ] )             m_Preferences[ "ShowGrid" ]             = uScriptConfig.Style.ShowGrid;
+      if ( null == m_Preferences[ "GridSizeVertical" ] )     m_Preferences[ "GridSizeVertical" ]     = uScriptConfig.Style.GridSizeVertical;
+      if ( null == m_Preferences[ "GridSizeHorizontal" ] )   m_Preferences[ "GridSizeHorizontal" ]   = uScriptConfig.Style.GridSizeHorizontal;
+      if ( null == m_Preferences[ "GridMajorLineSpacing" ] ) m_Preferences[ "GridMajorLineSpacing" ] = uScriptConfig.Style.GridMajorLineSpacing;
+      if ( null == m_Preferences[ "GridColorMajor" ] )       m_Preferences[ "GridColorMajor" ]       = uScriptConfig.Style.GridColorMajor;
+      if ( null == m_Preferences[ "GridColorMinor" ] )       m_Preferences[ "GridColorMinor" ]       = uScriptConfig.Style.GridColorMinor;
+   }
+   
+   public void Save( )
+   {
+      LoadIfRequired( );
+
+      uScript.SetSetting( "Preferences", new Hashtable(m_Preferences) );
+   }
+   
+   private void LoadIfRequired( )
+   {
+      if ( null == m_Preferences )
+      {
+         Load( );
+      }
    }
 }

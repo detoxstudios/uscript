@@ -301,6 +301,43 @@ namespace Detox.Data
       }
    }
 
+   public class ColorSerializer : ITypeSerializer
+   {
+      public int Version { get { return 1; } }
+      public string SerializableType { get { return typeof(UnityEngine.Color).ToString( ); } }
+
+      public object Load(ObjectSerializer serializer)
+      {
+         UnityEngine.Color color;
+
+         object value;
+         
+         serializer.GetData( out value );
+         byte[] data = value as byte[];
+
+         color.r = BitConverter.ToSingle( data, 0 );
+         color.g = BitConverter.ToSingle( data, 4 );
+         color.b = BitConverter.ToSingle( data, 8 );
+         color.a = BitConverter.ToSingle( data, 12 );
+
+         return color;
+      }
+
+      public void Save(ObjectSerializer serializer, object data)
+      {
+         UnityEngine.Color color = (UnityEngine.Color) data;
+
+         byte[] array = new byte[ 4 * 4 ];
+         
+         BitConverter.GetBytes( color.r ).CopyTo( array, 0 );
+         BitConverter.GetBytes( color.g ).CopyTo( array, 4 );
+         BitConverter.GetBytes( color.b ).CopyTo( array, 8 );
+         BitConverter.GetBytes( color.a ).CopyTo( array, 12 );
+
+         serializer.SetData( array );
+      }
+   }
+
    public class Vector2Serializer : ITypeSerializer
    {
       public int Version { get { return 1; } }
