@@ -15,12 +15,16 @@ public static class uScriptGUIContent
       IconText,
       Text
    }
+
    private static ContentStyle _currentContentStyle = ContentStyle.IconText;
-   public static ContentStyle Style {
+   public static ContentStyle Style
+   {
       get { return _currentContentStyle; }
-      set {
-//         Debug.Log("Changing style from " + _currentStyle + " to " + value + "\n");
-         if (_currentContentStyle != value) {
+      set
+      {
+         if (_currentContentStyle != value)
+         {
+//            Debug.Log("Changing style from " + _currentContentStyle + " to " + value + "\n");
             _currentContentStyle = value;
             UpdateAll ();
          }
@@ -41,52 +45,78 @@ public static class uScriptGUIContent
       OnlineReference,
       MiniSearch
    }
+
    private static Dictionary<ContentID, GUIContent> _defaultGUIContent = new Dictionary<ContentID, GUIContent> ();
    private static Dictionary<ContentID, GUIContent> _currentGUIContent = new Dictionary<ContentID, GUIContent> ();
 
-   public static GUIContent toolbarButtonNew {
+   public static GUIContent toolbarButtonNew
+   {
       get { return _currentGUIContent[ContentID.New]; }
    }
-   public static GUIContent toolbarButtonOpen {
+
+   public static GUIContent toolbarButtonOpen
+   {
       get { return _currentGUIContent[ContentID.Open]; }
    }
-   public static GUIContent toolbarButtonSave {
+
+   public static GUIContent toolbarButtonSave
+   {
       get { return _currentGUIContent[ContentID.Save]; }
    }
-   public static GUIContent toolbarButtonSaveAs {
+
+   public static GUIContent toolbarButtonSaveAs
+   {
       get { return _currentGUIContent[ContentID.SaveAs]; }
    }
-   public static GUIContent toolbarButtonRebuildAll {
+
+   public static GUIContent toolbarButtonRebuildAll
+   {
       get { return _currentGUIContent[ContentID.RebuildAll]; }
    }
-   public static GUIContent toolbarButtonRemoveGenerated {
+
+   public static GUIContent toolbarButtonRemoveGenerated
+   {
       get { return _currentGUIContent[ContentID.RemoveGenerated]; }
    }
-   public static GUIContent toolbarButtonPreferences {
+
+   public static GUIContent toolbarButtonPreferences
+   {
       get { return _currentGUIContent[ContentID.Preferences]; }
    }
-   public static GUIContent toolbarButtonCollapse {
+
+   public static GUIContent toolbarButtonCollapse
+   {
       get { return _currentGUIContent[ContentID.Collapse]; }
    }
-   public static GUIContent toolbarButtonExpand {
+
+   public static GUIContent toolbarButtonExpand
+   {
       get { return _currentGUIContent[ContentID.Expand]; }
    }
-   public static GUIContent toolbarButtonOnlineReference {
+
+   public static GUIContent toolbarButtonOnlineReference
+   {
       get { return _currentGUIContent[ContentID.OnlineReference]; }
    }
 
-   public static GUIContent listMiniSearch {
+   public static GUIContent listMiniSearch
+   {
       get { return _currentGUIContent[ContentID.MiniSearch]; }
    }
 
-   public static void Init (bool useIcon, bool useText)
+   public static void Init (ContentStyle toolbarButtonStyle)
    {
-      if (_defaultGUIContent.Count > 0) {
+      if (_defaultGUIContent.Count > 0)
+      {
          // The content has already been initialized
          return;
       }
-      
-      SetStyle (useIcon, useText);
+
+      // Set the default toolbar button style variable directly, since the
+      // "Style" property also performs an Update() which won't work until
+      // the default buttons have been initialized.
+      //
+      _currentContentStyle = toolbarButtonStyle;
       
 //      uScriptDebug.Log("Initalizing uScriptGUIContent", uScriptDebug.Type.Debug);
       
@@ -113,18 +143,31 @@ public static class uScriptGUIContent
 
    private static void UpdateAll ()
    {
-      foreach (KeyValuePair<ContentID, GUIContent> entry in _currentGUIContent) {
-         Update (entry.Key);
+      // Store the keys locally before updating the dictionary contents
+      List<ContentID> keys = new List<ContentID>();
+      foreach (KeyValuePair<ContentID, GUIContent> kvp in _currentGUIContent)
+      {
+         keys.Add(kvp.Key);
+      }
+
+      foreach (ContentID key in keys)
+      {
+         Update(key);
       }
    }
 
    private static void Update (ContentID key)
    {
-      if ((_currentContentStyle == ContentStyle.Text && !string.IsNullOrEmpty (_defaultGUIContent[key].text)) || _currentGUIContent[key].image == null) {
+      if ((_currentContentStyle == ContentStyle.Text && !string.IsNullOrEmpty (_defaultGUIContent[key].text)) || _defaultGUIContent[key].image == null)
+      {
          _currentGUIContent[key] = new GUIContent (_defaultGUIContent[key].text, _defaultGUIContent[key].tooltip);
-      } else if (_currentContentStyle == ContentStyle.Icon || string.IsNullOrEmpty (_defaultGUIContent[key].text)) {
+      }
+      else if (_currentContentStyle == ContentStyle.Icon || string.IsNullOrEmpty (_defaultGUIContent[key].text))
+      {
          _currentGUIContent[key] = new GUIContent (_defaultGUIContent[key].image, _defaultGUIContent[key].tooltip);
-      } else {
+      }
+      else
+      {
          _currentGUIContent[key] = new GUIContent (_defaultGUIContent[key]);
       }
    }
@@ -134,16 +177,5 @@ public static class uScriptGUIContent
       GUIContent content = _currentGUIContent[id];
       content.tooltip = tooltip;
       _currentGUIContent[id] = content;
-   }
-
-   public static void SetStyle (bool useIcon, bool useText)
-   {
-      if (true == useIcon && true == useText) {
-         Style = uScriptGUIContent.ContentStyle.IconText;
-      } else if (true == useIcon) {
-         Style = uScriptGUIContent.ContentStyle.Icon;
-      } else {
-         Style = uScriptGUIContent.ContentStyle.Text;
-      }
    }
 }

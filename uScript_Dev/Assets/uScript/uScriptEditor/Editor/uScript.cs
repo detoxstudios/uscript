@@ -1097,7 +1097,7 @@ http://www.detoxstudios.com";
 
    void DrawMainGUI()
    {
-      uScriptGUIContent.Init(Preferences.UseGuiIcon, Preferences.UseGuiText);
+      uScriptGUIContent.Init((uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle);
       uScriptGUIStyle.Init();
 
       DrawGUITopAreas();
@@ -2263,15 +2263,8 @@ http://www.detoxstudios.com";
       EditorGUILayout.Separator( );
 
 
-      //icon settings
-      EditorGUILayout.LabelField( "Icon Settings", "");
-
-      EditorGUILayout.BeginHorizontal();
-      
-         Preferences.UseGuiIcon = EditorGUILayout.Toggle( "Icon", Preferences.UseGuiIcon || false == Preferences.UseGuiText );
-         Preferences.UseGuiText = EditorGUILayout.Toggle( "Text", Preferences.UseGuiText || false == Preferences.UseGuiIcon );
-
-      EditorGUILayout.EndHorizontal( );
+      // toolbar button style settings
+      Preferences.ToolbarButtonStyle = (int)(uScriptGUIContent.ContentStyle)EditorGUILayout.EnumPopup( "Toolbar Button Style", (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle);
 
       EditorGUILayout.Separator( );
 
@@ -2312,7 +2305,7 @@ http://www.detoxstudios.com";
          if ( true == pressed ) 
          {
             Preferences.Save( );
-            uScriptGUIContent.SetStyle(Preferences.UseGuiIcon, Preferences.UseGuiText);
+            uScriptGUIContent.Style = (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle;
 
             m_DoPreferences = false;
          }
@@ -2322,7 +2315,7 @@ http://www.detoxstudios.com";
          {
             //cancel was pressed so revert to saved version
             Preferences.Load( );
-            uScriptGUIContent.SetStyle(Preferences.UseGuiIcon, Preferences.UseGuiText);
+            uScriptGUIContent.Style = (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle;
 
             m_DoPreferences = false;
          }
@@ -3945,16 +3938,10 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "NestedScripts" ] = value; }       
    }
 
-   public bool UseGuiIcon
+   public int ToolbarButtonStyle
    {
-      get { LoadIfRequired( ); return (bool) m_Preferences[ "UseGuiIcon" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "UseGuiIcon" ] = value; }       
-   }
-
-   public bool UseGuiText
-   {
-      get { LoadIfRequired( ); return (bool) m_Preferences[ "UseGuiText" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "UseGuiText" ] = value; }       
+      get { LoadIfRequired( ); return (int) m_Preferences[ "ToolbarButtonStyle" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "ToolbarButtonStyle" ] = value; }
    }
 
    public bool ShowGrid
@@ -4025,8 +4012,7 @@ public class Preferences
       if ( null == m_Preferences[ "UserNodes" ] )            m_Preferences[ "UserNodes" ]            = ProjectFiles + "/Nodes";
       if ( null == m_Preferences[ "GeneratedScripts" ] )     m_Preferences[ "GeneratedScripts" ]     = UserScripts  + "/_GeneratedCode";
       if ( null == m_Preferences[ "NestedScripts" ] )        m_Preferences[ "NestedScripts" ]        = GeneratedScripts;
-      if ( null == m_Preferences[ "UseGuiIcon" ] )           m_Preferences[ "UseGuiIcon" ]           = true;
-      if ( null == m_Preferences[ "UseGuiText" ] )           m_Preferences[ "UseGuiText" ]           = true;
+      if ( null == m_Preferences[ "ToolbarButtonStyle" ] )   m_Preferences[ "ToolbarButtonStyle" ]   = 1;
       if ( null == m_Preferences[ "ShowGrid" ] )             m_Preferences[ "ShowGrid" ]             = uScriptConfig.Style.ShowGrid;
       if ( null == m_Preferences[ "GridSizeVertical" ] )     m_Preferences[ "GridSizeVertical" ]     = uScriptConfig.Style.GridSizeVertical;
       if ( null == m_Preferences[ "GridSizeHorizontal" ] )   m_Preferences[ "GridSizeHorizontal" ]   = uScriptConfig.Style.GridSizeHorizontal;
