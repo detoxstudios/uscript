@@ -9,116 +9,140 @@ using System.Collections.Generic;
 
 public static class uScriptGUIContent
 {
-   public enum ContentStyle { Icon, IconText, Text }
-   private static ContentStyle _currentContentStyle = ContentStyle.IconText;
-   public static ContentStyle Style
+   public enum ContentStyle
    {
+      Icon,
+      IconText,
+      Text
+   }
+   private static ContentStyle _currentContentStyle = ContentStyle.IconText;
+   public static ContentStyle Style {
       get { return _currentContentStyle; }
-      set
-      {
+      set {
 //         Debug.Log("Changing style from " + _currentStyle + " to " + value + "\n");
-         if ( _currentContentStyle != value )
-         {
+         if (_currentContentStyle != value) {
             _currentContentStyle = value;
-            UpdateAll();
+            UpdateAll ();
          }
       }
    }
 
-   public enum ContentID { New, Open, Save, SaveAs, RebuildAll, RemoveGenerated, Preferences, Collapse, Expand, OnlineReference, MiniSearch }
-   private static Dictionary<ContentID, GUIContent> _defaultGUIContent = new Dictionary<ContentID, GUIContent>();
-   private static Dictionary<ContentID, GUIContent> _currentGUIContent = new Dictionary<ContentID, GUIContent>();
-
-   public static GUIContent toolbarButtonNew             { get { return _currentGUIContent[ContentID.New]; } }
-   public static GUIContent toolbarButtonOpen            { get { return _currentGUIContent[ContentID.Open]; } }
-   public static GUIContent toolbarButtonSave            { get { return _currentGUIContent[ContentID.Save]; } }
-   public static GUIContent toolbarButtonSaveAs          { get { return _currentGUIContent[ContentID.SaveAs]; } }
-   public static GUIContent toolbarButtonRebuildAll      { get { return _currentGUIContent[ContentID.RebuildAll]; } }
-   public static GUIContent toolbarButtonRemoveGenerated { get { return _currentGUIContent[ContentID.RemoveGenerated]; } }
-   public static GUIContent toolbarButtonPreferences     { get { return _currentGUIContent[ContentID.Preferences]; } }
-   public static GUIContent toolbarButtonCollapse        { get { return _currentGUIContent[ContentID.Collapse]; } }
-   public static GUIContent toolbarButtonExpand          { get { return _currentGUIContent[ContentID.Expand]; } }
-   public static GUIContent toolbarButtonOnlineReference { get { return _currentGUIContent[ContentID.OnlineReference]; } }
-
-   public static GUIContent listMiniSearch               { get { return _currentGUIContent[ContentID.MiniSearch]; } }
-
-   public static void Init(bool useIcon, bool useText)
+   public enum ContentID
    {
-      if (_defaultGUIContent.Count > 0)
-      {
+      New,
+      Open,
+      Save,
+      SaveAs,
+      RebuildAll,
+      RemoveGenerated,
+      Preferences,
+      Collapse,
+      Expand,
+      OnlineReference,
+      MiniSearch
+   }
+   private static Dictionary<ContentID, GUIContent> _defaultGUIContent = new Dictionary<ContentID, GUIContent> ();
+   private static Dictionary<ContentID, GUIContent> _currentGUIContent = new Dictionary<ContentID, GUIContent> ();
+
+   public static GUIContent toolbarButtonNew {
+      get { return _currentGUIContent[ContentID.New]; }
+   }
+   public static GUIContent toolbarButtonOpen {
+      get { return _currentGUIContent[ContentID.Open]; }
+   }
+   public static GUIContent toolbarButtonSave {
+      get { return _currentGUIContent[ContentID.Save]; }
+   }
+   public static GUIContent toolbarButtonSaveAs {
+      get { return _currentGUIContent[ContentID.SaveAs]; }
+   }
+   public static GUIContent toolbarButtonRebuildAll {
+      get { return _currentGUIContent[ContentID.RebuildAll]; }
+   }
+   public static GUIContent toolbarButtonRemoveGenerated {
+      get { return _currentGUIContent[ContentID.RemoveGenerated]; }
+   }
+   public static GUIContent toolbarButtonPreferences {
+      get { return _currentGUIContent[ContentID.Preferences]; }
+   }
+   public static GUIContent toolbarButtonCollapse {
+      get { return _currentGUIContent[ContentID.Collapse]; }
+   }
+   public static GUIContent toolbarButtonExpand {
+      get { return _currentGUIContent[ContentID.Expand]; }
+   }
+   public static GUIContent toolbarButtonOnlineReference {
+      get { return _currentGUIContent[ContentID.OnlineReference]; }
+   }
+
+   public static GUIContent listMiniSearch {
+      get { return _currentGUIContent[ContentID.MiniSearch]; }
+   }
+
+   public static void Init (bool useIcon, bool useText)
+   {
+      if (_defaultGUIContent.Count > 0) {
          // The content has already been initialized
          return;
       }
-
-      SetStyle(useIcon, useText);
-
+      
+      SetStyle (useIcon, useText);
+      
 //      uScriptDebug.Log("Initalizing uScriptGUIContent", uScriptDebug.Type.Debug);
-
-      Default(ContentID.New,              "iconNew",              "New",                     "Create a new uScript. The active uScript will be closed automatically.");
-      Default(ContentID.Open,             "iconOpen",             "Open...",                 "Open a uScript using the file browser.");
-      Default(ContentID.Save,             "iconSave",             "Save",                    "Save the current uScript.");
-      Default(ContentID.SaveAs,           "iconSaveAs",           "Save As...",              "Save the current uScript using the file browser.");
-      Default(ContentID.RebuildAll,       "iconRebuildAll",       "Rebuild All uScripts",    "Rebuild all uScripts in the scene.");
-      Default(ContentID.RemoveGenerated,  "iconDeleteGenerated",  "Remove Generated Code",   "Removes all code generated by uScript.");
-      Default(ContentID.Preferences,      "iconOptions",           "Preferences",             "Opens the preferences.");
-      Default(ContentID.Collapse,         "iconCollapse",         string.Empty,              "Collapse all node categories.");
-      Default(ContentID.Expand,           "iconExpand",           string.Empty,              "Expand all node categories.");
-      Default(ContentID.OnlineReference,  "iconOnlineReference",  "Online Reference",        "Open the online uScript reference in the default web browser.");
-
-      Default(ContentID.MiniSearch,       "iconMiniSearch",       string.Empty,              "Center the canvas on this node.");
+      
+      Default (ContentID.New, "iconNew", "New", "Create a new uScript. The active uScript will be closed automatically.");
+      Default (ContentID.Open, "iconOpen", "Open...", "Open a uScript using the file browser.");
+      Default (ContentID.Save, "iconSave", "Save", "Save the current uScript.");
+      Default (ContentID.SaveAs, "iconSaveAs", "Save As...", "Save the current uScript using the file browser.");
+      Default (ContentID.RebuildAll, "iconRebuildAll", "Rebuild All uScripts", "Rebuild all uScripts in the scene.");
+      Default (ContentID.RemoveGenerated, "iconDeleteGenerated", "Remove Generated Code", "Removes all code generated by uScript.");
+      Default (ContentID.Preferences, "iconOptions", "Preferences", "Opens the preferences.");
+      Default (ContentID.Collapse, "iconCollapse", string.Empty, "Collapse all node categories.");
+      Default (ContentID.Expand, "iconExpand", string.Empty, "Expand all node categories.");
+      Default (ContentID.OnlineReference, "iconOnlineReference", "Online Reference", "Open the online uScript reference in the default web browser.");
+      
+      Default (ContentID.MiniSearch, "iconMiniSearch", string.Empty, "Center the canvas on this node.");
    }
 
-   private static void Default(ContentID id, string imageFilename, string text, string tooltip)
+   private static void Default (ContentID id, string imageFilename, string text, string tooltip)
    {
-      _defaultGUIContent.Add(id, new GUIContent(text, UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + imageFilename + ( uScript.isPro ? "_pro" : string.Empty) + ".png", typeof(UnityEngine.Texture)) as UnityEngine.Texture, tooltip));
-      _currentGUIContent.Add(id, new GUIContent(_defaultGUIContent[id]));
-      Update(id);
+      _defaultGUIContent.Add (id, new GUIContent (text, UnityEditor.AssetDatabase.LoadAssetAtPath ("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + imageFilename + (uScript.isPro ? "_pro" : string.Empty) + ".png", typeof(UnityEngine.Texture)) as UnityEngine.Texture, tooltip));
+      _currentGUIContent.Add (id, new GUIContent (_defaultGUIContent[id]));
+      Update (id);
    }
 
-   private static void UpdateAll()
+   private static void UpdateAll ()
    {
-      foreach(KeyValuePair<ContentID, GUIContent> entry in _currentGUIContent)
-      {
-         Update(entry.Key);
+      foreach (KeyValuePair<ContentID, GUIContent> entry in _currentGUIContent) {
+         Update (entry.Key);
       }
    }
 
-   private static void Update(ContentID key)
+   private static void Update (ContentID key)
    {
-      if ( (_currentContentStyle == ContentStyle.Text && !string.IsNullOrEmpty(_defaultGUIContent[key].text) )
-          || _currentGUIContent[key].image == null)
-      {
-         _currentGUIContent[key] = new GUIContent(_defaultGUIContent[key].text, _defaultGUIContent[key].tooltip);
-      }
-      else if (_currentContentStyle == ContentStyle.Icon || string.IsNullOrEmpty(_defaultGUIContent[key].text))
-      {
-         _currentGUIContent[key] = new GUIContent(_defaultGUIContent[key].image, _defaultGUIContent[key].tooltip);
-      }
-      else
-      {
-         _currentGUIContent[key] = new GUIContent(_defaultGUIContent[key]);
+      if ((_currentContentStyle == ContentStyle.Text && !string.IsNullOrEmpty (_defaultGUIContent[key].text)) || _currentGUIContent[key].image == null) {
+         _currentGUIContent[key] = new GUIContent (_defaultGUIContent[key].text, _defaultGUIContent[key].tooltip);
+      } else if (_currentContentStyle == ContentStyle.Icon || string.IsNullOrEmpty (_defaultGUIContent[key].text)) {
+         _currentGUIContent[key] = new GUIContent (_defaultGUIContent[key].image, _defaultGUIContent[key].tooltip);
+      } else {
+         _currentGUIContent[key] = new GUIContent (_defaultGUIContent[key]);
       }
    }
 
-   public static void ChangeTooltip(ContentID id, string tooltip)
+   public static void ChangeTooltip (ContentID id, string tooltip)
    {
       GUIContent content = _currentGUIContent[id];
       content.tooltip = tooltip;
       _currentGUIContent[id] = content;
    }
 
-   public static void SetStyle(bool useIcon, bool useText)
+   public static void SetStyle (bool useIcon, bool useText)
    {
-      if ( true == useIcon && true == useText )
-      {
+      if (true == useIcon && true == useText) {
          Style = uScriptGUIContent.ContentStyle.IconText;
-      }
-      else if ( true == useIcon )
-      {
+      } else if (true == useIcon) {
          Style = uScriptGUIContent.ContentStyle.Icon;
-      }
-      else
-      {
+      } else {
          Style = uScriptGUIContent.ContentStyle.Text;
       }
    }
