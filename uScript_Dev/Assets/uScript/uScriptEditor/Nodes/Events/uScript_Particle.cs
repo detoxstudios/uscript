@@ -1,6 +1,6 @@
-// uScript uScript_Triggers.cs
+// uScript uScript_Particle.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Assign this component to any GameObject being used as a trigger (IsTrigger is checked/true).
+// Desc: Fires an event signal when a particle collides with a GameObject.
 
 using UnityEngine;
 using System.Collections;
@@ -9,6 +9,12 @@ using System.Collections;
 [NodeComponentType(typeof(Collider))]
 
 [NodePath("Events/Particles")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Fires an event signal when a particle collides with a GameObject.\n \nInstigator: The GameObject that was collided with.")]
+[NodeDescription("Fires an event signal when a particle collides with a GameObject.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
 [FriendlyName("Particle Collision")]
 public class uScript_Particle : uScriptEvent

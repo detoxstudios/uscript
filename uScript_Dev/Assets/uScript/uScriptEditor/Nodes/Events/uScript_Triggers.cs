@@ -1,6 +1,6 @@
 // uScript uScript_Triggers.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Assign this component to any GameObject being used as a trigger (IsTrigger is checked/true).
+// Desc: Fires an event signal when a GameObject enters, exits, or stays in a trigger.
 
 using UnityEngine;
 using System.Collections;
@@ -10,6 +10,13 @@ using System.Collections;
 [NodeComponentType(typeof(Collider))]
 
 [NodePath("Events")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Fires an event signal when a GameObject enters, exits, or stays in a trigger.\n \nInstigator: The GameObject that interacted with the trigger (Instance).")]
+[NodeDescription("Fires an event signal when a GameObject enters, exits, or stays in a trigger.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
 [NodePropertiesPath("Properties/Triggers")]
 [FriendlyName("Trigger Events")]
 public class uScript_Triggers : uScriptEvent

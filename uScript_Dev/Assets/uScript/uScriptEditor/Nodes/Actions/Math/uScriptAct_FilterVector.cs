@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Takes any Vector3 or Vector4 and outputs a low-pass filtered version.")]
-[NodeDescription("Takes any Vector3 or Vector4 and outputs a low-pass filtered version.\n \nTarget: Value to filter.\nFilter Constant: Filter constant (default value = 0.1).\nValue (out): Filtered value.")]
+[NodeDescription("Takes any Vector3 or Vector4 and outputs a low-pass filtered version.\n \nTarget: Value to filter.\nFilter Constant: The strength of the filter (lower numbers mean more filtering, i.e. slower - default value = 0.1).\nValue (out): Filtered value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 

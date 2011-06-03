@@ -31,6 +31,9 @@ public class uScriptCon_CompareInt : uScriptLogic
    [FriendlyName("(Equal To)   =")]
    public bool EqualTo { get { return m_EqualTo; } }
 
+   [FriendlyName("(Not Equal To)  !=")]
+   public bool NotEqualTo { get { return !m_EqualTo; } }
+
    [FriendlyName("(Less Than or Equal To) <=")]
    public bool LessThanOrEqualTo { get { return m_LessThanOrEqualTo; } }
 
