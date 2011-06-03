@@ -18,7 +18,7 @@ public class DefaultValue : Attribute
    public object Default;
 }
 
-[AttributeUsage(AttributeTargets.ReturnValue | AttributeTargets.Parameter)]
+[AttributeUsage(AttributeTargets.ReturnValue | AttributeTargets.Parameter | AttributeTargets.Property)]
 public class SocketState : Attribute
 {
    public bool Visible = false;

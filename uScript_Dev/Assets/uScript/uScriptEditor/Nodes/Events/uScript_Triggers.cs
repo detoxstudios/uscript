@@ -21,6 +21,7 @@ public class uScript_Triggers : uScriptEvent
       private GameObject m_GameObject;
       
       [FriendlyName("Instigator")]
+      [SocketState(false, false)]
       public GameObject GameObject { get { return m_GameObject; } }
 
       public TriggerEventArgs(GameObject gameObject)
