@@ -1065,6 +1065,7 @@ http://www.detoxstudios.com";
       MasterComponent.ScriptName = null;
        
       CurrentScript = null;
+      m_SettingsLoaded = false;
    }
 
    void OpenLogicNode( )
