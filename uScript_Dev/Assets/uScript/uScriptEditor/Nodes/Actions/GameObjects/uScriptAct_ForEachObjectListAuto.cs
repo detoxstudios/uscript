@@ -73,24 +73,21 @@ public class uScriptAct_ForEachObjectListAuto : uScriptLogic
    public bool Driven(out GameObject go)
    {
       go = null;
-      if (!m_Done)
+      if (!m_Done && m_List != null)
       {
-         if (m_List != null)
+         if (m_CurrentIndex < m_List.Length)
          {
-            if (m_CurrentIndex < m_List.Length)
-            {
-               go = m_List[m_CurrentIndex];
-            }
-            m_CurrentIndex++;
-   
-            // done iterating
-            if (m_CurrentIndex > m_List.Length)
-            {
-               m_List = null;
-               m_Done = true;
-            }
+            go = m_List[m_CurrentIndex];
          }
-         
+         m_CurrentIndex++;
+
+         // done iterating
+         if (m_CurrentIndex > m_List.Length)
+         {
+            m_List = null;
+            m_Done = true;
+         }
+
          return true;
       }
 
