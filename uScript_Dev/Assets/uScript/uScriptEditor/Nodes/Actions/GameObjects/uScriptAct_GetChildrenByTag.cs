@@ -52,10 +52,7 @@ public class uScriptAct_GetChildrenByTag : uScriptLogic
       m_True = false;
       m_False = false;
       
-      bool foundChildren = false;
-      
       List<GameObject> list = new List<GameObject> ();
-      int totalChildren = 0;
       SearchType st = SearchMethod;
       
       if (null != Target)
@@ -69,8 +66,6 @@ public class uScriptAct_GetChildrenByTag : uScriptLogic
                {
                   GameObject childGO = child.gameObject;
                   list.Add (childGO);
-                  totalChildren++;
-                  foundChildren = true;
                }
                
             }
@@ -80,8 +75,6 @@ public class uScriptAct_GetChildrenByTag : uScriptLogic
                {
                   GameObject childGO = child.gameObject;
                   list.Add (childGO);
-                  totalChildren++;
-                  foundChildren = true;
                }
                
             }
@@ -91,17 +84,15 @@ public class uScriptAct_GetChildrenByTag : uScriptLogic
                {
                   GameObject childGO = child.gameObject;
                   list.Add (childGO);
-                  totalChildren++;
-                  foundChildren = true;
                }
             }
          }
 
          Children = list.ToArray ();
-         ChildrenCount = totalChildren;
+         ChildrenCount = list.Count;
 
       // Fire out the correct true/false out socket
-         if (foundChildren) {
+         if (list.Count > 0) {
             m_True = true;
          } else {
             m_False = true;
