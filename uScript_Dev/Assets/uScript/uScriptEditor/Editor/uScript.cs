@@ -1111,6 +1111,13 @@ http://www.detoxstudios.com";
          DrawGUIBottomAreas();
       }
       DrawGUIStatusbar();
+
+      // @TODO: This bool flag could be removed if the GUI is repainted after the canvas stops panning
+      if (_wasMoving)
+      {
+         _wasMoving = false;
+         Repaint();
+      }
    }
 
    void DrawGUITopAreas()
@@ -1179,7 +1186,8 @@ http://www.detoxstudios.com";
 //      Redraw();  // This is taking to much CPU time.
    }
 
-   private int _paletteMode = 0;
+
+
 
    void DrawGUIPalette()
    {
@@ -1292,107 +1300,118 @@ http://www.detoxstudios.com";
          EditorGUILayout.EndHorizontal();
 
 
-         if (_paletteMode == 0)
+         if (m_ScriptEditorCtrl.IsMoving())
          {
-            // Node list
-            //
-            _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
+            _wasMoving = true;
+
+            // Hide the panels while the canvas is moving
+            string message =
+               "The " + (_paletteMode == 0 ? "Node Palette" : "Graph Contents") + " panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
+
+            GUIStyle style = new GUIStyle(GUI.skin.label);
+            style.wordWrap = true;
+            style.padding = new RectOffset(16, 16, 16, 16);
+
+            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
+         }
+         else
+         {
+            if (_paletteMode == 0)
             {
-               if ( false == m_ScriptEditorCtrl.IsMoving( ) )
+               // Node list
+               //
+               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView( _guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true) );
                {
                   foreach (PaletteMenuItem item in _paletteMenuItems)
                   {
                      DrawPaletteMenu(item);
                   }
                }
+               EditorGUILayout.EndScrollView();
             }
-            EditorGUILayout.EndScrollView();
-         }
-         else
-         {
-            //
-            // Graph Contents list
-            //
-            // Every node in the graph should be listed here, categorized by type.
-            //
-
-            // Process all nodes and place them in the appropriate list
-            Dictionary<string, Dictionary<string, List<DisplayNode>>> categories = new Dictionary<string, Dictionary<string, List<DisplayNode>>>();
-
-            DisplayNode displayNode;
-            string category;
-            string name;
-            string comment;
-
-            categories.Add("Comments", new Dictionary<string, List<DisplayNode>>());
-            categories.Add("Actions", new Dictionary<string, List<DisplayNode>>());
-            categories.Add("Conditions", new Dictionary<string, List<DisplayNode>>());
-            categories.Add("Events", new Dictionary<string, List<DisplayNode>>());
-            categories.Add("Properties", new Dictionary<string, List<DisplayNode>>());
-            categories.Add("Variables", new Dictionary<string, List<DisplayNode>>());
-            categories.Add("Miscellaneous", new Dictionary<string, List<DisplayNode>>());
-
-            // @TODO: clean up this code
-            
-            foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
+            else
             {
-               displayNode = node as DisplayNode;
-               category = string.Empty;
-               name = string.Empty;
-               comment = string.Empty;
+               //
+               // Graph Contents list
+               //
+               // Every node in the graph should be listed here, categorized by type.
+               //
 
-               if (displayNode is EntityEventDisplayNode)
-               {
-                  category = "Events";
-                  name = ((EntityEventDisplayNode)displayNode).EntityEvent.FriendlyType;
-                  comment = ((EntityEventDisplayNode)displayNode).EntityEvent.Comment.Default;
-               }
-               else if (displayNode is LogicNodeDisplayNode)
-               {
-                  category = "Actions";
-                  name = ((LogicNodeDisplayNode)displayNode).LogicNode.FriendlyName;
-                  comment = ((LogicNodeDisplayNode)displayNode).LogicNode.Comment.Default;
-               }
-               else if (displayNode is LocalNodeDisplayNode)
-               {
-                  category = "Variables";
-                  name = ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Type; // get FriendlyName
-                  name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
-                  name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
-                  comment = ((LocalNodeDisplayNode)displayNode).LocalNode.Name.Default;
-               }
-               else if (displayNode is CommentDisplayNode)
-               {
-                  category = "Comments";
-                  name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
-                  comment = ((CommentDisplayNode)displayNode).Comment.TitleText.Default;
-               }
-               else
-               {
-                  category = "Miscellaneous";
-               }
+               // Process all nodes and place them in the appropriate list
+               Dictionary<string, Dictionary<string, List<DisplayNode>>> categories = new Dictionary<string, Dictionary<string, List<DisplayNode>>>();
 
-               // Validate strings
-               name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
-               comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
+               DisplayNode displayNode;
+               string category;
+               string name;
+               string comment;
 
-               string fullName = name + comment;
+               categories.Add("Comments", new Dictionary<string, List<DisplayNode>>());
+               categories.Add("Actions", new Dictionary<string, List<DisplayNode>>());
+               categories.Add("Conditions", new Dictionary<string, List<DisplayNode>>());
+               categories.Add("Events", new Dictionary<string, List<DisplayNode>>());
+               categories.Add("Properties", new Dictionary<string, List<DisplayNode>>());
+               categories.Add("Variables", new Dictionary<string, List<DisplayNode>>());
+               categories.Add("Miscellaneous", new Dictionary<string, List<DisplayNode>>());
 
-               if (String.IsNullOrEmpty(_graphListFilterText) || fullName.ToLower().Contains(_graphListFilterText.ToLower()))
+               // @TODO: clean up this code
+
+               foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
                {
-                  if (categories[category].ContainsKey(name) == false)
+                  displayNode = node as DisplayNode;
+                  category = string.Empty;
+                  name = string.Empty;
+                  comment = string.Empty;
+
+                  if (displayNode is EntityEventDisplayNode)
                   {
-                     categories[category].Add(name, new List<DisplayNode>());
+                     category = "Events";
+                     name = ((EntityEventDisplayNode)displayNode).EntityEvent.FriendlyType;
+                     comment = ((EntityEventDisplayNode)displayNode).EntityEvent.Comment.Default;
                   }
-
-                  // Add the node to the list
-                  categories[category][name].Add(displayNode);
+                  else if (displayNode is LogicNodeDisplayNode)
+                  {
+                     category = "Actions";
+                     name = ((LogicNodeDisplayNode)displayNode).LogicNode.FriendlyName;
+                     comment = ((LogicNodeDisplayNode)displayNode).LogicNode.Comment.Default;
+                  }
+                  else if (displayNode is LocalNodeDisplayNode)
+                  {
+                     category = "Variables";
+                     name = ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Type; // get FriendlyName
+                     name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
+                     name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
+                     comment = ((LocalNodeDisplayNode)displayNode).LocalNode.Name.Default;
+                  }
+                  else if (displayNode is CommentDisplayNode)
+                  {
+                     category = "Comments";
+                     name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
+                     comment = ((CommentDisplayNode)displayNode).Comment.TitleText.Default;
+                  }
+                  else
+                  {
+                     category = "Miscellaneous";
+                  }
+   
+                  // Validate strings
+                  name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
+                  comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
+   
+                  string fullName = name + comment;
+   
+                  if (String.IsNullOrEmpty(_graphListFilterText) || fullName.ToLower().Contains(_graphListFilterText.ToLower()))
+                  {
+                     if (categories[category].ContainsKey(name) == false)
+                     {
+                        categories[category].Add(name, new List<DisplayNode>());
+                     }
+   
+                     // Add the node to the list
+                     categories[category][name].Add(displayNode);
+                  }
                }
-            }
 
-            _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview", GUILayout.ExpandWidth(true) );
-            {
-               if ( false == m_ScriptEditorCtrl.IsMoving( ) )
+               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true) );
                {
                   GUIContent nodeButtonContent = new GUIContent(string.Empty, "Click to select node. Shift-click to toggle the selection.");
    
@@ -1480,8 +1499,8 @@ http://www.detoxstudios.com";
                      }
                   }
                }
+               EditorGUILayout.EndScrollView();
             }
-            EditorGUILayout.EndScrollView();
          }
       }
       EditorGUILayout.EndVertical();
@@ -1902,8 +1921,10 @@ http://www.detoxstudios.com";
    KeyCode[] _arrayKeyCode;
    bool _arrayFoldoutBool;
 
-   bool _oldPropertyGrid = false;
-   Vector2 _scrollNewProperties;
+   private int _paletteMode = 0;
+   bool _wasMoving = false;
+
+Vector2 _scrollNewProperties;
    // END TEMP Variables
 
 
@@ -1918,20 +1939,23 @@ http://www.detoxstudios.com";
          EditorGUILayout.BeginHorizontal( EditorStyles.toolbar );
          {
             GUILayout.Label("Properties", uScriptGUIStyle.panelTitle);
-            GUILayout.FlexibleSpace();
-//            _oldPropertyGrid = GUILayout.Toggle(_oldPropertyGrid, "Toggle Old Panel", EditorStyles.toolbarButton);
+//            GUILayout.FlexibleSpace();
          }
          EditorGUILayout.EndHorizontal();
 
-         // New Properties panel
-         //
-         if (_oldPropertyGrid)
+         if (m_ScriptEditorCtrl.IsMoving())
          {
-            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
-            {
-               m_ScriptEditorCtrl.PropertyGrid.OnPaint_Old();
-            }
-            EditorGUILayout.EndScrollView();
+            _wasMoving = true;
+
+            // Hide the panels while the canvas is moving
+            string message =
+               "The Properties panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
+
+            GUIStyle style = new GUIStyle(GUI.skin.label);
+            style.wordWrap = true;
+            style.padding = new RectOffset(16, 16, 16, 16);
+
+            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
          }
          else
          {
@@ -2006,7 +2030,7 @@ http://www.detoxstudios.com";
          }
          EditorGUILayout.EndHorizontal();
 
-         _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
+         _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
          {
             // prevent the help TextArea from getting focus
             GUI.SetNextControlName("helpTextArea");
@@ -2036,7 +2060,7 @@ http://www.detoxstudios.com";
          }
          EditorGUILayout.EndHorizontal();
 
-         _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, "horizontalScrollbar", "verticalScrollbar", "scrollview");
+         _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
          {
             /*foreach (string fileName in System.IO.Directory.GetFiles(Preferences.GeneratedScripts))
             {
