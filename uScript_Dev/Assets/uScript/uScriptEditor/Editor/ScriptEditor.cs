@@ -2103,6 +2103,9 @@ namespace Detox.ScriptEditor
             }
          }
 
+         //local nodes trigger no signals, so we can stop here
+         if ( node is LocalNode ) return true;
+
          foreach ( LinkNode sourceLink in Links )
          {
             if ( sourceLink.Destination.Guid == node.Guid )
