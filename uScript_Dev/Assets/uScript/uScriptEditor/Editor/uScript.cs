@@ -1679,7 +1679,7 @@ http://www.detoxstudios.com";
          else
          {
             paletteMenuItem.Name = contextMenuItem.Text.Replace("&", "");
-            paletteMenuItem.Tooltip = FindNodeToolTip( FindNodeType(contextMenuItem.Tag as EntityNode) );
+            paletteMenuItem.Tooltip = FindNodeToolTip( ScriptEditor.FindNodeType(contextMenuItem.Tag as EntityNode) );
             paletteMenuItem.Click = contextMenuItem.Click;
             paletteMenuItem.Tag   = contextMenuItem.Tag;
          }
@@ -1970,10 +1970,10 @@ http://www.detoxstudios.com";
 
          if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
          {
-            helpButtonURL = FindNodeHelp(FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
+            helpButtonURL = FindNodeHelp(ScriptEditor.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
             if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
             {
-               helpDescription = FindNodeDescription(FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
+               helpDescription = FindNodeDescription(ScriptEditor.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
                helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
             }
          }
@@ -3539,7 +3539,7 @@ http://www.detoxstudios.com";
 
    public string AutoAssignInstance(EntityNode entityNode)
    {
-      string type = uScript.FindNodeType(entityNode);
+      string type = ScriptEditor.FindNodeType(entityNode);
       if ( "" == type ) return "";
 
       if ( true == uScript.FindNodeAutoAssignMasterInstance(type) )
@@ -3729,20 +3729,48 @@ http://www.detoxstudios.com";
       return defaultCategory;
    }
 
-   public static string FindNodeType(EntityNode node)
+   public static bool IsNodeDeprecated(EntityNode node)
    {
-      if ( node is EntityEvent )
+      string type = ScriptEditor.FindNodeType(node);
+      if ( "" == type ) return false;
+
+      Type uscriptType = uScript.Instance.GetType(type);
+      if ( null == uscriptType ) return false;
+
+      object [] attributes = uscriptType.GetCustomAttributes(false);
+      if ( null == attributes ) return false;
+
+      foreach ( object a in attributes )
       {
-         EntityEvent entityEvent = (EntityEvent) node;         
-         return entityEvent.ComponentType;
-      }
-      else if ( node is LogicNode )
-      {
-         LogicNode logicNode = (LogicNode) node;         
-         return logicNode.Type;
+         if ( a is NodeDeprecated ) 
+         {
+            return true;
+         }
       }
 
-      return "";
+      return false;
+   }
+
+   public static Type GetNodeUpgradeType(EntityNode node)
+   {
+      string type = ScriptEditor.FindNodeType(node);
+      if ( "" == type ) return null;
+
+      Type uscriptType = uScript.Instance.GetType(type);
+      if ( null == uscriptType ) return null;
+
+      object [] attributes = uscriptType.GetCustomAttributes(false);
+      if ( null == attributes ) return null;
+
+      foreach ( object a in attributes )
+      {
+         if ( a is NodeDeprecated ) 
+         {
+            return ((NodeDeprecated)a).UpgradeType;
+         }
+      }
+
+      return null;
    }
 
    public static string FindNodeLicense(string type)

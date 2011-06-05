@@ -1974,14 +1974,6 @@ namespace Detox.ScriptEditor
       Hashtable m_Nodes = new Hashtable( );
       Hashtable m_DeprecatedNodes = new Hashtable( );
 
-      public void UpgradeNode( EntityNode node )
-      {
-         if ( m_DeprecatedNodes.Contains(node.Guid) )
-         {
-            m_DeprecatedNodes.Remove( node.Guid );
-         }
-      }
-
       public bool IsDeprecated( EntityNode node )
       {
          return m_DeprecatedNodes.Contains(node.Guid);
@@ -2037,12 +2029,13 @@ namespace Detox.ScriptEditor
 
                   typeHash[ node.Instance.Type ] = node.Instance.Type;
                }
-               foreach ( LogicNode node in LogicNodes )
+            }
+
+            foreach ( LogicNode node in LogicNodes )
+            {
+               foreach ( Parameter p in node.Parameters )
                {
-                  foreach ( Parameter p in node.Parameters )
-                  {
-                     typeHash[ p.Type ] = p.Type;
-                  }
+                  typeHash[ p.Type ] = p.Type;
                }
             }
 
@@ -2174,6 +2167,24 @@ namespace Detox.ScriptEditor
          return Parameter.Empty;
       }
 
+
+      public void VerifyAllLinks( )
+      {
+         //re-add the links
+         //to make sure all the node connections still exist
+         LinkNode []links = this.Links;
+
+         foreach ( LinkNode link in links )
+         {
+            RemoveNode( link );
+         }
+
+         foreach ( LinkNode link in links )
+         {
+            AddNode( link );
+         }
+      }
+      
       public bool VerifyLink( LinkNode link, out string reason )
       {
          reason = "";
@@ -2433,8 +2444,83 @@ namespace Detox.ScriptEditor
             return true;
          }
 
+         //Out socket (right side) connected to an In (left side)
          if ( sourceParam == emptyParam &&
-              destParam   == emptyParam ) return true;
+              destParam   == emptyParam )
+         {
+            bool sourceFound = false;
+
+            if ( source is EntityMethod )
+            {
+               if ( link.Source.Anchor == ((EntityMethod)source).Output.Name ) 
+               {
+                  sourceFound = true;
+               }
+            }
+            else if ( source is LogicNode )
+            {
+               LogicNode logic = (LogicNode) source;
+
+               foreach ( Plug output in logic.Outputs )
+               {
+                  if ( link.Source.Anchor == output.Name )
+                  {
+                     sourceFound = true;
+                     break;
+                  }
+               }
+            }
+            else if ( source is EntityEvent )
+            {
+               EntityEvent entityEvent = (EntityEvent) source;
+      
+               foreach ( Plug output in entityEvent.Outputs )
+               {
+                  if ( link.Source.Anchor == output.Name )
+                  {
+                     sourceFound = true;
+                     break;
+                  }
+               }
+            }
+
+            if ( false == sourceFound )
+            {
+               reason = "Output socket " + link.Source.Anchor + " is no longer available";
+               return false;
+            }
+
+            bool destFound = false;
+
+            if ( dest is EntityMethod )
+            {
+               if ( link.Destination.Anchor == ((EntityMethod)dest).Input.Name ) 
+               {
+                  destFound = true;
+               }
+            }
+            else if ( dest is LogicNode )
+            {
+               LogicNode logic = (LogicNode) dest;
+
+               foreach ( Plug input in logic.Inputs )
+               {
+                  if ( link.Destination.Anchor == input.Name )
+                  {
+                     destFound = true;
+                     break;
+                  }
+               }
+            }
+
+            if ( false == destFound )
+            {
+               reason = "Input socket " + link.Source.Anchor + " is no longer available";
+               return false;
+            }
+
+            return true;
+         }
          
          //don't let parameters hook directly to others without going throug a variable
          //this fixes some script generation errors when dealing with outputting and inputting arrays
@@ -2677,6 +2763,88 @@ namespace Detox.ScriptEditor
          }
       }
 
+      public void UpgradeNode( EntityNode oldNode )
+      {
+         if ( m_DeprecatedNodes.Contains(oldNode.Guid) )
+         {         
+            Type newType = uScript.GetNodeUpgradeType(oldNode);
+
+            if ( null != newType )
+            {
+               bool upgraded = false;
+               
+               foreach ( EntityDesc desc in EntityDescs )
+               {
+                  foreach ( EntityEvent eventNode in desc.Events )
+                  {
+                     if ( ScriptEditor.FindNodeType(eventNode) == newType.ToString( ) )
+                     {
+                        EntityEvent cloned = (EntityEvent) eventNode.Copy( );
+                        
+                        //copy everything compatible from the old node to the new node
+                        cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, oldNode.Parameters );
+                        cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
+                                                                                new Parameter[]{oldNode.Instance} )[ 0 ];
+
+                        if ( oldNode is EntityEvent )
+                        {
+                           cloned.EventArgs = ((EntityEvent)oldNode).EventArgs;
+                        }
+                        
+                        cloned.Guid        = oldNode.Guid;
+                        cloned.Position    = oldNode.Position;
+                        cloned.ShowComment = oldNode.ShowComment;
+                        cloned.Comment     = oldNode.Comment;         
+                     
+                        //guid matches the old one so this will replace the old node
+                        AddNode( cloned );
+                        VerifyAllLinks( );
+
+                        upgraded = true;
+                        break;
+                     }
+                  }
+               }
+
+               foreach ( LogicNode logicNode in LogicNodes )
+               {
+                  if ( ScriptEditor.FindNodeType(logicNode) == newType.ToString( ) )
+                  {
+                     LogicNode cloned = (LogicNode) logicNode.Copy( );
+
+                     //copy everything compatible from the old node to the new node
+                     cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, oldNode.Parameters);                  
+
+                     cloned.Guid       = oldNode.Guid;
+                     cloned.Position   = oldNode.Position;
+                     cloned.ShowComment= oldNode.ShowComment;
+                     cloned.Comment    = oldNode.Comment;
+
+                     //guid matches the old one so this will replace the old node
+                     AddNode( cloned );
+                     VerifyAllLinks( );
+
+                     upgraded = true;
+                     break;
+                  }
+               }
+
+               if ( true == upgraded )
+               {
+                  m_DeprecatedNodes.Remove( oldNode.Guid );
+               }
+               else
+               {
+                  Status.Error( "Node " + ScriptEditor.FindNodeType(oldNode) + " could not automatically upgraded" );
+               }
+            }
+            else
+            {
+               Status.Error( "Node " + ScriptEditor.FindNodeType(oldNode) + " had no registered upgradable type" );
+            }
+         }
+      }
+
       public ScriptEditorData ScriptEditorData
       {
          get 
@@ -2767,19 +2935,7 @@ namespace Detox.ScriptEditor
 
          ScriptEditorData = data as ScriptEditorData;
 
-         //re-add the links
-         //to make sure all the node connections still exist
-         LinkNode []links = this.Links;
-
-         foreach ( LinkNode link in links )
-         {
-            RemoveNode( link );
-         }
-
-         foreach ( LinkNode link in links )
-         {
-            AddNode( link );
-         }
+         VerifyAllLinks( );
 
          return true;
       }
@@ -2970,7 +3126,8 @@ namespace Detox.ScriptEditor
       private EntityEvent CreateEntityEvent( EntityEventData data )
       {
          EntityEvent cloned = new EntityEvent( data.Instance.Type, data.Instance.Type, ArrayUtil.ToPlugs(data.Outputs) );
-         bool exactMatch= false;
+         
+         bool exactMatch = false;
 
          foreach ( EntityDesc desc in m_EntityDescs )
          {
@@ -3001,7 +3158,7 @@ namespace Detox.ScriptEditor
          cloned.ShowComment = new Parameter( data.ShowComment );
          cloned.Comment     = new Parameter( data.Comment );         
       
-         if ( false == exactMatch )
+         if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
          {
             Status.Warning( "Matching EntityEvent " + data.Instance.Type + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
@@ -3063,7 +3220,7 @@ namespace Detox.ScriptEditor
          cloned.ShowComment = new Parameter( data.ShowComment );
          cloned.Comment     = new Parameter( data.Comment );
          
-         if ( false == exactMatch )
+         if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
          {
             Status.Warning( "Matching EntityMethod " + data.Instance.Type + " " + data.Input.Name + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
@@ -3108,7 +3265,7 @@ namespace Detox.ScriptEditor
          cloned.ShowComment = new Parameter( data.ShowComment );
          cloned.Comment     = new Parameter( data.Comment );
 
-         if ( false == exactMatch )
+         if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
          {
             Status.Warning( "Matching EntityProperty " + data.Instance.Name + " " + data.Parameter.Name + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
@@ -3146,7 +3303,7 @@ namespace Detox.ScriptEditor
          cloned.ShowComment= new Parameter( data.ShowComment );
          cloned.Comment    = new Parameter( data.Comment );
 
-         if ( false == exactMatch )
+         if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
          {
             Status.Warning( "Matching LogicNode " + data.Type + " could not be found" );
             m_DeprecatedNodes[ cloned.Guid ] = cloned;
@@ -3196,6 +3353,22 @@ namespace Detox.ScriptEditor
       private LinkNode CreateLinkNode( LinkNodeData data )
       {
          return new LinkNode( data );
+      }
+
+      public static string FindNodeType(EntityNode node)
+      {
+         if ( node is EntityEvent )
+         {
+            EntityEvent entityEvent = (EntityEvent) node;         
+            return entityEvent.ComponentType;
+         }
+         else if ( node is LogicNode )
+         {
+            LogicNode logicNode = (LogicNode) node;         
+            return logicNode.Type;
+         }
+
+         return "";
       }
    }
 }

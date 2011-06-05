@@ -327,7 +327,7 @@ namespace Detox.ScriptEditor
                  point.X <= node.Size.Width &&
                  point.Y <= node.Size.Height )
             {      
-               string type = uScript.FindNodeType(entityNode);
+               string type = ScriptEditor.FindNodeType(entityNode);
                Type t = uScript.Instance.GetAssemblyQualifiedType(type);
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
@@ -410,7 +410,7 @@ namespace Detox.ScriptEditor
                  point.X <= node.Size.Width &&
                  point.Y <= node.Size.Height )
             {
-               string type = uScript.FindNodeType(entityNode);
+               string type = ScriptEditor.FindNodeType(entityNode);
                Type t = uScript.Instance.GetAssemblyQualifiedType(type);
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
@@ -1097,10 +1097,14 @@ namespace Detox.ScriptEditor
 
       private void m_MenuUpgradeNode_Click(object sender, EventArgs e)
       {
+         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+
          foreach ( DisplayNode node in SelectedNodes )
          {
             m_ScriptEditor.UpgradeNode( node.EntityNode );
          }
+
+         m_ChangeStack.AddChange( new ChangeStack.Change("Upgrade Node", oldEditor, m_ScriptEditor.Copy( )) );
 
          RefreshScript( null );
       }

@@ -45,6 +45,20 @@ public class Driven : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Class)]
+public class NodeDeprecated : Attribute
+{
+   public Type UpgradeType = null;
+
+   public NodeDeprecated(Type upgradeToType)
+   {
+      UpgradeType = upgradeToType;
+   }
+
+   public NodeDeprecated( )
+   {}
+}
+
+[AttributeUsage(AttributeTargets.Class)]
 public class NodeComponentType : Attribute
 {
    public NodeComponentType(Type type) 
