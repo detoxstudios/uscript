@@ -1850,15 +1850,13 @@ http://www.detoxstudios.com";
             {
                m_DoPreferences = true;
             }
-            GUILayout.FlexibleSpace();
-
-//            Button.StyleID newStyle = (Button.StyleID)EditorGUILayout.EnumPopup(Button.Style);
-//            if (newStyle != Button.Style)
-//            {
-//               Button.Style = newStyle;
-//            }
 
             GUILayout.FlexibleSpace();
+
+            GUIStyle style2 = new GUIStyle(EditorStyles.boldLabel);
+            style2.padding = new RectOffset(16, 4, 2, 2);
+            style2.margin = new RectOffset();
+            GUILayout.Label(System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName), style2);
          }
          EditorGUILayout.EndHorizontal();
 
