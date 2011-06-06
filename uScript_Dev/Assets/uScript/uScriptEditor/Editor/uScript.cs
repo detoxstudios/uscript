@@ -625,6 +625,7 @@ http://www.detoxstudios.com";
          return;
       }
 
+      GUI.enabled = !m_DoPreferences;
 
       //
       // Show the EULA if the user hasn't yet agreed to it
@@ -634,6 +635,7 @@ http://www.detoxstudios.com";
          _EULAagreed = (bool) uScript.GetSetting( "EULA\\Agreed", false );
          GUI.enabled = _EULAagreed;
       }
+
 
       // Set the default mouse region
       _mouseRegion = uScript.MouseRegion.Outside;
@@ -1313,7 +1315,7 @@ http://www.detoxstudios.com";
          EditorGUILayout.EndHorizontal();
 
 
-         if (m_CanvasDragging)
+         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
          {
             _wasMoving = true;
 
@@ -1954,7 +1956,7 @@ Vector2 _scrollNewProperties;
          }
          EditorGUILayout.EndHorizontal();
 
-         if (m_CanvasDragging)
+         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
          {
             _wasMoving = true;
 
@@ -1974,10 +1976,7 @@ Vector2 _scrollNewProperties;
             {
                uScriptGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
                {
-                  if ( !m_CanvasDragging )
-                  {
-                     m_ScriptEditorCtrl.PropertyGrid.OnPaint();
-                  }
+                  m_ScriptEditorCtrl.PropertyGrid.OnPaint();
                }
                uScriptGUI.EndColumns();
             }
@@ -2226,13 +2225,29 @@ Vector2 _scrollNewProperties;
       Repaint( );
    }
 
+
+   Rect _windowRectPreferences;
+
    public void DrawPreferences( )
    {
-      int w = 550;
-      int h = Math.Max(300, (int)position.height - 400);
-      Rect r = new Rect((position.width-w)/2, (position.height-h)/2, w, h);
+      _windowRectPreferences.x = (position.width - _windowRectPreferences.width) / 2;
+      _windowRectPreferences.y = Math.Max(0, (position.height - _windowRectPreferences.height) / 2);
 
-      GUI.Window(10001, r, DoPreferences, "Preferences");
+      GUIStyle style3 = new GUIStyle(GUI.skin.window);
+      style3.padding = new RectOffset(16, 18, 19, 16);
+
+      _windowRectPreferences = GUILayout.Window(10001, _windowRectPreferences, DoPreferences, "Preferences", style3);
+
+//         _windowRectPreferences.width = 250;
+//      if (_windowRectPreferences == new Rect())
+//      {
+//         _windowRectPreferences.width = 550;
+//         int w = 550;
+//         int h = Math.Max(400, (int)position.height - 400);
+//         Rect r = new Rect((position.width-w)/2, (position.height-h)/2, w, h);
+//      }
+
+
    }
 
    public void DrawContextMenu( int x, int y )
@@ -2263,9 +2278,7 @@ Vector2 _scrollNewProperties;
       {
          uScriptCode code = o as uScriptCode;
 
-         bool pressed = GUILayout.Button( code.GetType().ToString(), EditorStyles.label );
-
-         if ( true == pressed )
+         if (GUILayout.Button(code.GetType().ToString(), EditorStyles.label))
          {
             string path = FindFile( Application.dataPath, code.GetType().ToString() + ".uscript" );
             if ( "" != path )
@@ -2279,34 +2292,41 @@ Vector2 _scrollNewProperties;
 
    void DoPreferences(int windowID)
    {
-      //project file location
-      EditorGUILayout.LabelField( "Project File Location", "" );
+      EditorGUIUtility.LookLikeControls(180, 50);
+      EditorGUI.indentLevel = 1;
 
-      EditorGUILayout.BeginHorizontal();
-      
-         string path = uScriptConfig.ConstantPaths.RelativePath(Preferences.UserScripts);
-         if ( path.Length > 64 ) path = path.Substring( 0, 64 ) + "...";
+      EditorGUILayout.Separator();
 
-         bool pressed = GUILayout.Button( path, uScriptGUIStyle.ContextMenu );
-         if ( true == pressed ) 
-         {
-            path = EditorUtility.OpenFolderPanel( "uScript Project Files", Preferences.UserScripts, "" );
-            if ( "" != path ) Preferences.UserScripts = path;
-         }
+      //
+      // Project Settings
+      //
+      GUILayout.Label("Project File Location", EditorStyles.boldLabel);
 
-      EditorGUILayout.EndHorizontal( );
+      string path = uScriptConfig.ConstantPaths.RelativePath(Preferences.UserScripts);
+      if ( path.Length > 64 ) path = path.Substring( 0, 64 ) + "...";
 
-      EditorGUILayout.Separator( );
-
-
-      // toolbar button style settings
-      Preferences.ToolbarButtonStyle = (int)(uScriptGUIContent.ContentStyle)EditorGUILayout.EnumPopup( "Toolbar Button Style", (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle);
+      if (GUILayout.Button( path, uScriptGUIStyle.ContextMenu))
+      {
+         path = EditorUtility.OpenFolderPanel( "uScript Project Files", Preferences.UserScripts, "" );
+         if ( "" != path ) Preferences.UserScripts = path;
+      }
 
       EditorGUILayout.Separator( );
 
+      //
+      // Panel Settings
+      //
+      GUILayout.Label( "Panel Settings", EditorStyles.boldLabel );
 
-      //grid settings
-      EditorGUILayout.LabelField( "Grid Settings", "");
+      Preferences.DrawPanelsOnUpdate   = EditorGUILayout.Toggle("Draw Panels During Update", Preferences.DrawPanelsOnUpdate);
+      Preferences.ToolbarButtonStyle   = (int)(uScriptGUIContent.ContentStyle)EditorGUILayout.EnumPopup( "Toolbar Button Style", (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle);
+
+      EditorGUILayout.Separator( );
+
+      //
+      // Grid Settings
+      //
+      GUILayout.Label( "Grid Settings", EditorStyles.boldLabel );
 
       //background grid size
       int minGridSize = 8;
@@ -2322,28 +2342,27 @@ Vector2 _scrollNewProperties;
       Preferences.GridColorMinor       = EditorGUILayout.ColorField( "Grid Color Minor", Preferences.GridColorMinor );
 
       EditorGUILayout.Separator( );
+      EditorGUILayout.Space();
       EditorGUILayout.Separator( );
 
       
-      //revert to default      
-      EditorGUILayout.BeginHorizontal();
-
-            pressed = GUILayout.Button( "Revert All Settings to Default Values", uScriptGUIStyle.ContextMenu );
-            if ( true == pressed ) 
-            {
-               Preferences.Revert( );
-            }
-
-      EditorGUILayout.EndHorizontal();
+      //revert to default
+      if (GUILayout.Button("Revert All Settings to Default Values"))
+      {
+         Preferences.Revert();
+      }
 
       EditorGUILayout.Separator( );
 
 
       //save or cancel
       EditorGUILayout.BeginHorizontal();
+      {
+         GUIStyle btnStyle = new GUIStyle(GUI.skin.button);
+         btnStyle.margin = new RectOffset(0, 0, 3, 3);
+         btnStyle.fixedWidth = 120;
 
-         pressed = GUILayout.Button( "Save", uScriptGUIStyle.ContextMenu );
-         if ( true == pressed ) 
+         if (GUILayout.Button("Save", btnStyle))
          {
             Preferences.Save( );
             uScriptGUIContent.Style = (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle;
@@ -2351,8 +2370,9 @@ Vector2 _scrollNewProperties;
             m_DoPreferences = false;
          }
 
-         pressed = GUILayout.Button( "Cancel", uScriptGUIStyle.ContextMenu );
-         if ( true == pressed ) 
+         GUILayout.Space(16);
+
+         if (GUILayout.Button("Cancel", btnStyle))
          {
             //cancel was pressed so revert to saved version
             Preferences.Load( );
@@ -2360,8 +2380,10 @@ Vector2 _scrollNewProperties;
 
             m_DoPreferences = false;
          }
-
+      }
       EditorGUILayout.EndHorizontal();
+
+      EditorGUI.indentLevel = 0;
    }
 
    void DoContextMenu(int windowID)
@@ -2376,9 +2398,7 @@ Vector2 _scrollNewProperties;
             }
             else
             {
-               bool pressed = GUILayout.Button( item.Text.Replace("&", ""), uScriptGUIStyle.ContextMenu );
-
-               if ( true == pressed )
+               if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.ContextMenu))
                {
                   m_CurrentMenu = item;
                   break;
@@ -2452,9 +2472,7 @@ Vector2 _scrollNewProperties;
 
       foreach ( ToolStripItem item in menuItem.DropDownItems.Items )
       {
-         bool pressed = GUILayout.Button( item.Text.Replace("&", ""), uScriptGUIStyle.ContextMenu );
-
-         if ( true == pressed )
+         if ( GUILayout.Button( item.Text.Replace("&", ""), uScriptGUIStyle.ContextMenu ) )
          {
             m_CurrentMenu = item;
             break;
@@ -4007,6 +4025,12 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "NestedScripts" ] = value; }       
    }
 
+   public bool DrawPanelsOnUpdate
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "DrawPanelsOnUpdate" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "DrawPanelsOnUpdate" ] = value; }
+   }
+
    public int ToolbarButtonStyle
    {
       get { LoadIfRequired( ); return (int) m_Preferences[ "ToolbarButtonStyle" ]; }
@@ -4081,6 +4105,7 @@ public class Preferences
       if ( null == m_Preferences[ "UserNodes" ] )            m_Preferences[ "UserNodes" ]            = ProjectFiles + "/Nodes";
       if ( null == m_Preferences[ "GeneratedScripts" ] )     m_Preferences[ "GeneratedScripts" ]     = UserScripts  + "/_GeneratedCode";
       if ( null == m_Preferences[ "NestedScripts" ] )        m_Preferences[ "NestedScripts" ]        = GeneratedScripts;
+      if ( null == m_Preferences[ "DrawPanelsOnUpdate" ] )   m_Preferences[ "DrawPanelsOnUpdate" ]   = false;
       if ( null == m_Preferences[ "ToolbarButtonStyle" ] )   m_Preferences[ "ToolbarButtonStyle" ]   = 1;
       if ( null == m_Preferences[ "ShowGrid" ] )             m_Preferences[ "ShowGrid" ]             = uScriptConfig.Style.ShowGrid;
       if ( null == m_Preferences[ "GridSizeVertical" ] )     m_Preferences[ "GridSizeVertical" ]     = uScriptConfig.Style.GridSizeVertical;
