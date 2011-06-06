@@ -2472,6 +2472,14 @@ namespace Detox.ScriptEditor
                      break;
                   }
                }
+               foreach ( Plug eventPlug in logic.Events )
+               {
+                  if ( link.Source.Anchor == eventPlug.Name )
+                  {
+                     sourceFound = true;
+                     break;
+                  }
+               }
             }
             else if ( source is EntityEvent )
             {
