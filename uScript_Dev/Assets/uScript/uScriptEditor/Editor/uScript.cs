@@ -50,6 +50,8 @@ public class uScript : EditorWindow
    private bool m_WantsCut   = false;
    private bool m_WantsPaste = false;
    private bool m_WantsClose = false;
+
+   private bool m_DoRebuildScripts = false;
    
    private String m_AddVariableNode = "";
    private KeyCode m_PressedKey = KeyCode.None;
@@ -1849,8 +1851,20 @@ http://www.detoxstudios.com";
             }
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
+               m_DoRebuildScripts = true;
+                
+               //first remove everything so we get rid of any compiler errors
+               //which allows the reflection to properly refresh
                AssetDatabase.StartAssetEditing( );
-                  RebuildScripts( Preferences.UserScripts );
+                  RemoveGeneratedCode( Preferences.GeneratedScripts );
+               AssetDatabase.StopAssetEditing( );
+               AssetDatabase.Refresh();
+
+               //now build any scripts which are used as nested nodes
+               //when these are done we will then build any scripts which references these
+               //see the m_DoRebuildScripts below
+               AssetDatabase.StartAssetEditing( );
+                  RebuildNestedScripts( Preferences.UserScripts );
                AssetDatabase.StopAssetEditing( );
                AssetDatabase.Refresh();
             }
@@ -1864,6 +1878,19 @@ http://www.detoxstudios.com";
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                m_DoPreferences = true;
+            }
+
+            //rebuild the rest of the scripts was requested
+            //but we have to wait until it's done recompiling the nested scripts
+            //or the proper reflection values won't come across
+            if ( true == m_DoRebuildScripts && false == EditorApplication.isCompiling )
+            {
+               AssetDatabase.StartAssetEditing( );
+                  RebuildScripts( Preferences.UserScripts );
+               AssetDatabase.StopAssetEditing( );
+               AssetDatabase.Refresh();
+
+               m_DoRebuildScripts = false;
             }
 
             GUILayout.FlexibleSpace();
@@ -2710,6 +2737,39 @@ Vector2 _scrollNewProperties;
       }
    }
 
+   public void RebuildNestedScripts( string path )
+   {
+      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
+
+      System.IO.FileInfo [] files = directory.GetFiles( );
+
+      foreach ( System.IO.FileInfo file in files )
+      {
+         if ( ".uscript" != file.Extension ) continue;
+
+         Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes( ), PopulateLogicTypes( ) );
+
+         if ( true == scriptEditor.Open(file.FullName) )
+         {
+            if ( scriptEditor.Externals.Length > 0 )
+            {
+               if ( true == SaveScript(scriptEditor, file.FullName) )
+               {
+                  uScriptDebug.Log( "Rebuilt " + file.FullName );
+               }
+               else
+               {
+                  uScriptDebug.Log( "Could not save " + file.FullName, uScriptDebug.Type.Error );
+               }
+            }
+         }
+      }
+
+      foreach ( System.IO.DirectoryInfo subDirectory in directory.GetDirectories( ) )
+      {
+         RebuildNestedScripts( subDirectory.FullName );
+      }
+   }
    public void RebuildScripts( string path )
    {
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
@@ -2724,13 +2784,16 @@ Vector2 _scrollNewProperties;
 
          if ( true == scriptEditor.Open(file.FullName) )
          {
-            if ( true == SaveScript(scriptEditor, file.FullName) )
+            if ( 0 == scriptEditor.Externals.Length )
             {
-               uScriptDebug.Log( "Rebuilt " + file.FullName );
-            }
-            else
-            {
-               uScriptDebug.Log( "Could not save " + file.FullName, uScriptDebug.Type.Error );
+               if ( true == SaveScript(scriptEditor, file.FullName) )
+               {
+                  uScriptDebug.Log( "Rebuilt " + file.FullName );
+               }
+               else
+               {
+                  uScriptDebug.Log( "Could not save " + file.FullName, uScriptDebug.Type.Error );
+               }
             }
          }
       }
