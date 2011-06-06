@@ -310,9 +310,9 @@ namespace Detox.ScriptEditor
          m_FlowChart.ToggleNodes(new Guid[] { guid });
       }
       
-      public bool IsMoving( )
+      public bool IsDragging( )
       {
-         return m_FlowChart.IsMoving( );
+         return m_FlowChart.IsDragging( );
       }
 
       public bool CanDragDropOnNode( object o )

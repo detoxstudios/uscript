@@ -67,7 +67,9 @@ public class uScript : EditorWindow
    // Used for double-click hack in uScripts panel
    private double clickTime;
 //   private double doubleClickTime = 0.3;
-
+ 
+   private bool m_CanvasDragging = false;
+   
    private int m_ContextX = 0;
    private int m_ContextY = 0;
    private ToolStripItem m_CurrentMenu = null;
@@ -840,6 +842,11 @@ http://www.detoxstudios.com";
                m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
                m_MouseMoveArgs.X = (int)Event.current.mousePosition.x;
                m_MouseMoveArgs.Y = (int)Event.current.mousePosition.y;
+               if (m_MouseDownRegion == uScript.MouseRegion.Canvas)
+               {
+                  // this is the switch to use to turn off panel rendering while panning/marquee selecting
+                  m_CanvasDragging = true;
+               }
                break;
             case EventType.MouseUp:
                if ( true == m_MouseDown )
@@ -941,6 +948,12 @@ http://www.detoxstudios.com";
   
       // do external windows/popups
       DrawPopups(contextActive);
+      
+      if (m_MouseDown == false)
+      {
+         // turn panel rendering back on
+         m_CanvasDragging = false;
+      }
   
       // the following code must be here because it needs to happen 
       // after we've figured out what region the mouse is in
@@ -1300,7 +1313,7 @@ http://www.detoxstudios.com";
          EditorGUILayout.EndHorizontal();
 
 
-         if (m_ScriptEditorCtrl.IsMoving())
+         if (m_CanvasDragging)
          {
             _wasMoving = true;
 
@@ -1941,7 +1954,7 @@ Vector2 _scrollNewProperties;
          }
          EditorGUILayout.EndHorizontal();
 
-         if (m_ScriptEditorCtrl.IsMoving())
+         if (m_CanvasDragging)
          {
             _wasMoving = true;
 
@@ -1961,7 +1974,7 @@ Vector2 _scrollNewProperties;
             {
                uScriptGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
                {
-                  if ( false == m_ScriptEditorCtrl.IsMoving( ) )
+                  if ( !m_CanvasDragging )
                   {
                      m_ScriptEditorCtrl.PropertyGrid.OnPaint();
                   }
