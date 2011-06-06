@@ -3400,8 +3400,10 @@ Vector2 _scrollNewProperties;
             {
                Parameter input = new Parameter( );
                
-               input.State    = FindSocketState(p.GetCustomAttributes(false));;
-               input.Name     = p.Name;
+               //inputs to events can never be connected because there is no source to trigger
+               //them and push in the value
+               input.State   = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
+               input.Name    = p.Name;
                input.Type    = p.PropertyType.ToString( ).Replace( "&", "" );
                input.Input   = true;
                input.Output  = false;
