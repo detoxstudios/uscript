@@ -1061,7 +1061,7 @@ http://www.detoxstudios.com";
 
    void OnPlaymodeStateChanged()
    {
-      if (EditorApplication.isPlayingOrWillChangePlaymode && true == m_ScriptEditorCtrl.IsDirty)
+      if (EditorApplication.isPlayingOrWillChangePlaymode && m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.IsDirty)
       {
          EditorUtility.DisplayDialog( "uScript Not Saved!", "uScript has detected that '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' has been changed, but not saved! You will not see any changes until you save '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' in the uScript Editor.", "OK" );
       }
