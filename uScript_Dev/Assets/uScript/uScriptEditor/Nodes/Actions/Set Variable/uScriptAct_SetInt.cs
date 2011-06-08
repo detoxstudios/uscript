@@ -18,7 +18,7 @@ public class uScriptAct_SetInt : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(int Value, out float Target)
+   public void In(int Value, out int Target)
    {
       Target = Value;
    }
