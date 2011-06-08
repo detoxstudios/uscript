@@ -1568,11 +1568,18 @@ http://www.detoxstudios.com";
       }
    }
    
+   bool HiddenRegion(MouseRegion region)
+   {
+      if (!m_HidePanelMode) return false;
+
+      return region != uScript.MouseRegion.Canvas && region != uScript.MouseRegion.Outside;
+   }
+   
    void CalculateMouseRegion()
    {
       foreach( KeyValuePair<MouseRegion, Rect> kvp in _mouseRegionRect )
       {
-         if ( kvp.Value.Contains( Event.current.mousePosition ) )
+         if ( kvp.Value.Contains( Event.current.mousePosition ) && !HiddenRegion(kvp.Key) )
          {
             _mouseRegion = kvp.Key;
             break;
