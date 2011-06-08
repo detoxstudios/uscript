@@ -480,9 +480,10 @@ namespace Detox.Data.ScriptEditor
    {
       public string Type;
       public string FriendlyName;
-      public Plug []Inputs;
-      public Plug []Outputs;
-      public Plug []Events;
+      public Plug   []Inputs;
+      public Plug   []Outputs;
+      public Plug   []Events;
+      public string []Drivens;
 
       public Parameter []Parameters;
 
@@ -499,9 +500,10 @@ namespace Detox.Data.ScriptEditor
          Outputs = data.Outputs;
          Parameters = data.Parameters;
          Events = data.Events;   
+         Drivens = data.Drivens;
       }
 
-      public new int Version { get { return 2; } }
+      public new int Version { get { return 3; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -559,12 +561,23 @@ namespace Detox.Data.ScriptEditor
             }
 
             Events = plugs.ToArray( );
+
+            Drivens = new string[0];
          }
          else
          {
             Inputs = (Plug[]) serializer.LoadNamedObject( "Inputs" ); 
             Outputs= (Plug[]) serializer.LoadNamedObject( "Outputs" ); 
             Events = (Plug[]) serializer.LoadNamedObject( "Events" ); 
+         
+            if ( serializer.CurrentVersion > 2 )
+            {
+               Drivens = (string[]) serializer.LoadNamedObject( "Drivens" );
+            }
+            else
+            {
+               Drivens = new string[0];
+            }
          }
 
          Parameters = (Parameter[]) serializer.LoadNamedObject( "Parameters" ); 
@@ -580,6 +593,7 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObject( "Outputs", Outputs );         
          serializer.SaveNamedObject( "Events", Events );         
          serializer.SaveNamedObject( "Parameters", Parameters );
+         serializer.SaveNamedObject( "Drivens", Drivens );
       }
    }
 

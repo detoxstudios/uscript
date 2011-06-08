@@ -19,10 +19,22 @@ namespace Detox.ScriptEditor
    //all the correct, and latest values, to that node directly before it is executed
    public class UnityCSharpGenerator
    {
+      public Parameter []ExternalParameters { get { return m_ExternalParameters.ToArray( ); } }
+      public Plug      []ExternalInputs     { get { return m_ExternalInputs.ToArray( ); } }
+      public Plug      []ExternalOutputs    { get { return m_ExternalOutputs.ToArray( ); } }
+      public Plug      []ExternalEvents     { get { return m_ExternalEvents.ToArray( ); } }
+      public string    []Drivens            { get { return m_Drivens.ToArray( ); } }
+
       private string       m_CSharpString;
       private int          m_TabStack;
       private Hashtable    m_GuidToId = new Hashtable( );
       private ScriptEditor m_Script = null;
+
+      List<Parameter> m_ExternalParameters = new List<Parameter>( );
+      List<Plug>      m_ExternalInputs     = new List<Plug>( );
+      List<Plug>      m_ExternalOutputs    = new List<Plug>( );
+      List<Plug>      m_ExternalEvents     = new List<Plug>( );
+      List<string>    m_Drivens            = new List<string>( );
 
       private void Preprocess( )
       {         
@@ -406,6 +418,12 @@ namespace Detox.ScriptEditor
          m_TabStack = 0;
 
          m_Script = null;
+
+         m_ExternalParameters = new List<Parameter>( );
+         m_ExternalInputs     = new List<Plug>( );
+         m_ExternalOutputs    = new List<Plug>( );
+         m_ExternalEvents     = new List<Plug>( );
+         m_Drivens            = new List<string>( );
 
          if ( null != script )
          {
@@ -963,6 +981,8 @@ namespace Detox.ScriptEditor
 
             AddCSharpLine( "[FriendlyName(\"" + properties[i].FriendlyName + "\")]" );
             AddCSharpLine( "public bool " + properties[i].Name + " { get { return " + outputs[i] + ";} }" );
+
+            m_ExternalOutputs.Add( properties[i] );
          }
          
 
@@ -977,6 +997,8 @@ namespace Detox.ScriptEditor
             {
                AddCSharpLine( "[FriendlyName(\"" + eventPlug.FriendlyName + "\")]" );
                AddCSharpLine( "public event uScriptEventHandler " + eventPlug.Name + ";" );
+
+               m_ExternalEvents.Add( eventPlug );
             }
          }
 
@@ -1822,6 +1844,8 @@ namespace Detox.ScriptEditor
 
       void DefineExternalDriven( LogicNode node, string driven, string args )
       {
+         m_Drivens.Add( CSharpExternalDriven(node, driven) );
+
          AddCSharpLine( "[Driven]" );
          AddCSharpLine( "public bool " + CSharpExternalDriven(node, driven) + "( " + args + " )" );
          AddCSharpLine( "{" );
@@ -1993,14 +2017,29 @@ namespace Detox.ScriptEditor
 
             if ( false == allowLink ) continue;
 
+            //only one set of external parameters per script            
+            //they match for every method signature
+            if ( 0 == m_ExternalParameters.Count )
+            {
+               foreach ( Parameter p in parameters )
+               {
+                  Parameter clone = p;
+                  clone.State = Parameter.VisibleState.Visible;
+                  m_ExternalParameters.Add( clone );
+               }
+            }
+
             DefineExternalInput( externalInput, node, relayLink.Destination, args );
          }
       }
 
       void DefineExternalInput( ExternalConnection externalInput, EntityNode node, LinkNode.Connection connection, string args )
       {
-         AddCSharpLine( "[FriendlyName(\"" + CSharpExternalInputDeclaration(externalInput.Name.Default, node, connection.Anchor).FriendlyName + "\")]" );
-         AddCSharpLine( "public void " + CSharpExternalInputDeclaration(externalInput.Name.Default, node, connection.Anchor).Name + "( " + args + " )" );
+         Plug inputPlug = CSharpExternalInputDeclaration(externalInput.Name.Default, node, connection.Anchor);
+         m_ExternalInputs.Add( inputPlug );
+
+         AddCSharpLine( "[FriendlyName(\"" + inputPlug.FriendlyName + "\")]" );
+         AddCSharpLine( "public void " + inputPlug.Name + "( " + args + " )" );
          AddCSharpLine( "{" );
 
          ++m_TabStack;

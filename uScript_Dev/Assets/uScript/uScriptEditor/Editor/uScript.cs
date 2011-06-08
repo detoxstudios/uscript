@@ -51,8 +51,6 @@ public class uScript : EditorWindow
    private bool m_WantsPaste = false;
    private bool m_WantsClose = false;
 
-   private bool m_DoRebuildScripts = false;
-   
    private String m_AddVariableNode = "";
    private KeyCode m_PressedKey = KeyCode.None;
    
@@ -440,12 +438,18 @@ http://www.detoxstudios.com";
          bool isRestored = false;
          bool isDirty    = false;
          
-         ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(), PopulateLogicTypes());
+         ScriptEditor scriptEditor = null;
 
          if ( !String.IsNullOrEmpty(MasterComponent.Script) )
          {
+            //open with no preexisting types which means it loads the data direct
+            //and we can figure out what required types we need
+            scriptEditor = new ScriptEditor("", null, null);
             if ( true == scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script) )
             {
+               scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes( scriptEditor.Types ), PopulateLogicTypes());
+               scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script) ;
+               
                isRestored = true;
 
                //if we're restoring over an old script
@@ -457,6 +461,10 @@ http://www.detoxstudios.com";
 
                CurrentScript = MasterComponent.Script;
             }
+         }
+         else
+         {
+            scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes( null ), PopulateLogicTypes());
          }
 
          if (String.IsNullOrEmpty(m_FullPath))
@@ -1851,8 +1859,6 @@ http://www.detoxstudios.com";
             }
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
-               m_DoRebuildScripts = true;
-                
                //first remove everything so we get rid of any compiler errors
                //which allows the reflection to properly refresh
                AssetDatabase.StartAssetEditing( );
@@ -1864,7 +1870,7 @@ http://www.detoxstudios.com";
                //when these are done we will then build any scripts which references these
                //see the m_DoRebuildScripts below
                AssetDatabase.StartAssetEditing( );
-                  RebuildNestedScripts( Preferences.UserScripts );
+                  RebuildScripts( Preferences.UserScripts );
                AssetDatabase.StopAssetEditing( );
                AssetDatabase.Refresh();
             }
@@ -1878,19 +1884,6 @@ http://www.detoxstudios.com";
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                m_DoPreferences = true;
-            }
-
-            //rebuild the rest of the scripts was requested
-            //but we have to wait until it's done recompiling the nested scripts
-            //or the proper reflection values won't come across
-            if ( true == m_DoRebuildScripts && false == EditorApplication.isCompiling )
-            {
-               AssetDatabase.StartAssetEditing( );
-                  RebuildScripts( Preferences.UserScripts );
-               AssetDatabase.StopAssetEditing( );
-               AssetDatabase.Refresh();
-
-               m_DoRebuildScripts = false;
             }
 
             GUILayout.FlexibleSpace();
@@ -2493,6 +2486,31 @@ Vector2 _scrollNewProperties;
       return "";
    }
 
+   private string[] FindAllFiles( string rootPath, string extension )
+   {
+      List<string> paths = new List<string>( );
+
+      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( rootPath );
+
+      System.IO.FileInfo [] files = directory.GetFiles( );
+
+      foreach ( System.IO.FileInfo file in files )
+      {
+         if ( file.Extension == extension )
+         {
+            paths.Add( file.FullName );
+         }
+      }
+
+      foreach ( System.IO.DirectoryInfo subDirectory in directory.GetDirectories( ) )
+      {
+         string []results = FindAllFiles( subDirectory.FullName, extension );
+         paths.AddRange( results );
+      }
+
+      return paths.ToArray( );
+   }
+
    private void DrawSubItems( ToolStripMenuItem menuItem )
    {
       if ( null == menuItem ) return;
@@ -2667,7 +2685,7 @@ Vector2 _scrollNewProperties;
    
    public void NewScript()
    {
-      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes( ), PopulateLogicTypes( ) );
+      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes(null), PopulateLogicTypes( ) );
 
       m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor );
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
@@ -2681,10 +2699,13 @@ Vector2 _scrollNewProperties;
    }
 
    public bool OpenScript(string fullPath)
-   {
+   { 
       if ( false == AllowNewFile(true) || !System.IO.File.Exists(fullPath) ) return false;
 
-      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes( ), PopulateLogicTypes( ) );
+      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", null, null );
+      scriptEditor.Open(fullPath);
+
+      scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes( ) );
 
       if ( true == scriptEditor.Open(fullPath) )
       {
@@ -2737,39 +2758,6 @@ Vector2 _scrollNewProperties;
       }
    }
 
-   public void RebuildNestedScripts( string path )
-   {
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
-
-      System.IO.FileInfo [] files = directory.GetFiles( );
-
-      foreach ( System.IO.FileInfo file in files )
-      {
-         if ( ".uscript" != file.Extension ) continue;
-
-         Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes( ), PopulateLogicTypes( ) );
-
-         if ( true == scriptEditor.Open(file.FullName) )
-         {
-            if ( scriptEditor.Externals.Length > 0 )
-            {
-               if ( true == SaveScript(scriptEditor, file.FullName) )
-               {
-                  uScriptDebug.Log( "Rebuilt " + file.FullName );
-               }
-               else
-               {
-                  uScriptDebug.Log( "Could not save " + file.FullName, uScriptDebug.Type.Error );
-               }
-            }
-         }
-      }
-
-      foreach ( System.IO.DirectoryInfo subDirectory in directory.GetDirectories( ) )
-      {
-         RebuildNestedScripts( subDirectory.FullName );
-      }
-   }
    public void RebuildScripts( string path )
    {
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
@@ -2780,20 +2768,20 @@ Vector2 _scrollNewProperties;
       {
          if ( ".uscript" != file.Extension ) continue;
 
-         Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes( ), PopulateLogicTypes( ) );
+         Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", null, null );
+         scriptEditor.Open(file.FullName);
+
+         scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes( ) );
 
          if ( true == scriptEditor.Open(file.FullName) )
          {
-            if ( 0 == scriptEditor.Externals.Length )
+            if ( true == SaveScript(scriptEditor, file.FullName) )
             {
-               if ( true == SaveScript(scriptEditor, file.FullName) )
-               {
-                  uScriptDebug.Log( "Rebuilt " + file.FullName );
-               }
-               else
-               {
-                  uScriptDebug.Log( "Could not save " + file.FullName, uScriptDebug.Type.Error );
-               }
+               uScriptDebug.Log( "Rebuilt " + file.FullName );
+            }
+            else
+            {
+               uScriptDebug.Log( "Could not save " + file.FullName, uScriptDebug.Type.Error );
             }
          }
       }
@@ -3277,7 +3265,56 @@ Vector2 _scrollNewProperties;
          logicNodes.Add( logicNode );
       }
 
-      return logicNodes.ToArray( );
+      return OverrideNestedScriptTypes( logicNodes.ToArray( ) );
+   }
+
+   RawScript [] GatherRawScripts( )
+   {
+      List<RawScript> rawScripts = new List<RawScript>( );
+
+      string []files = FindAllFiles( Preferences.UserScripts, ".uscript" );
+
+      foreach ( string file in files )
+      {
+         RawScript rawScript = new RawScript( );
+         if ( false == rawScript.Load(file) ) 
+         {
+            Detox.Utility.Status.Warning( "Could not load " + file + " to use for nested script parameters, reflection will be used instead" );
+            continue;
+         }
+
+         rawScripts.Add( rawScript );
+
+      }
+
+      return rawScripts.ToArray( );
+   }
+
+   private LogicNode [] OverrideNestedScriptTypes( LogicNode [] logicNodes )
+   {
+      Dictionary<string, LogicNode> returnNodes = new Dictionary<string, LogicNode>( );
+
+      RawScript [] rawScripts = GatherRawScripts( );
+
+      foreach ( LogicNode logicNode in logicNodes )
+      {
+         returnNodes[ logicNode.Type ] = logicNode;
+      }
+
+      foreach ( RawScript rawScript in rawScripts )
+      {
+         LogicNode logicNode = new LogicNode( rawScript.Type, rawScript.Type );
+         
+         logicNode.Parameters = rawScript.ExternalParameters;
+         logicNode.Inputs     = rawScript.ExternalInputs;
+         logicNode.Outputs    = rawScript.ExternalOutputs;
+         logicNode.Events     = rawScript.ExternalEvents;
+         logicNode.Drivens    = rawScript.Drivens;
+
+         returnNodes[ rawScript.Type ] = logicNode;
+      }
+
+      return returnNodes.Values.ToArray( );
    }
 
    private void Reflect(Type type, List<EntityDesc> entityDescs, Hashtable baseMethods, Hashtable baseEvents, Hashtable baseProperties )
@@ -3381,7 +3418,7 @@ Vector2 _scrollNewProperties;
       List<EntityEvent> entityEvents = new List<EntityEvent>( );
 
       bool propertiesUsedForEvents = false;
-
+         
       foreach ( EventInfo e in eventInfos )
       {
          if ( true == baseEvents.Contains(e.Name) ) continue;
@@ -3507,7 +3544,7 @@ Vector2 _scrollNewProperties;
       entityDescs.Add( entityDesc );
    }
 
-   private EntityDesc[] PopulateEntityTypes( )
+   private EntityDesc[] PopulateEntityTypes( string [] requiredTypes )
    {
       Hashtable baseMethods    = new Hashtable( );
       Hashtable baseEvents     = new Hashtable( );
@@ -3608,6 +3645,18 @@ Vector2 _scrollNewProperties;
       foreach ( Type t in eventNodes.Values )
       {
          uniqueObjects[ t ] = t;
+      }
+
+      if ( null != requiredTypes )
+      {
+         foreach ( string t in requiredTypes )
+         {
+            Type type = this.GetAssemblyQualifiedType( t );
+            if ( null != type ) 
+            {
+               uniqueObjects[ type ] = type;
+            }
+         }
       }
 
       foreach ( Type t in uniqueObjects.Values )

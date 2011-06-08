@@ -1090,6 +1090,23 @@ namespace Detox.ScriptEditor
          m_Position = Point.Empty; 
          m_Parameters = new Parameter[ 0 ];
       }
+
+      public EntityMethod(EntityMethodData data)       
+      { 
+         ComponentType = data.ComponentType;
+
+         m_Instance    = new Parameter( data.Instance );
+         m_ShowComment = new Parameter( data.ShowComment );
+         m_Comment     = new Parameter( data.Comment );
+
+         m_Guid = data.Guid;
+
+         Input  = new Plug( data.Input );
+         Output = new Plug( data.Output );
+
+         m_Position = data.Position; 
+         m_Parameters = ArrayUtil.ToParameters( data.Parameters );
+      }
    }
 
    public struct CommentNode : EntityNode
@@ -1415,6 +1432,24 @@ namespace Detox.ScriptEditor
 
          EventArgs = "System.EventArgs";
       }
+
+      public EntityEvent(EntityEventData data)
+      { 
+         Outputs = ArrayUtil.ToPlugs( data.Outputs );
+
+         FriendlyType  = data.Instance.Type;
+         ComponentType = data.Instance.Type;
+
+         m_Guid     = data.Guid; 
+         m_Position = data.Position; 
+
+         m_Instance    = new Parameter( data.Instance );
+         m_ShowComment = new Parameter( data.ShowComment );
+         m_Comment     = new Parameter( data.Comment );
+         m_Parameters  = ArrayUtil.ToParameters( data.Parameters );
+
+         EventArgs = data.EventArgs;
+      }
    }
 
    public struct LogicNode : EntityNode
@@ -1449,6 +1484,7 @@ namespace Detox.ScriptEditor
             nodeData.Inputs    = ArrayUtil.ToPlugDatas( Inputs );
             nodeData.Outputs   = ArrayUtil.ToPlugDatas( Outputs );
             nodeData.Events    = ArrayUtil.ToPlugDatas( Events );
+            nodeData.Drivens   = Drivens;
             nodeData.Guid      = Guid;
             nodeData.Comment     = Comment.ToParameterData( );
             nodeData.ShowComment = ShowComment.ToParameterData( );
@@ -1557,6 +1593,25 @@ namespace Detox.ScriptEditor
          m_Comment.Output  = false;
          m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
       }
+
+      public LogicNode(LogicNodeData data)       
+      { 
+         Type = data.Type; 
+         FriendlyName = data.FriendlyName;
+
+         m_Guid = data.Guid;
+
+         Drivens      = data.Drivens;
+         Inputs       = ArrayUtil.ToPlugs(data.Inputs);
+         Outputs      = ArrayUtil.ToPlugs(data.Outputs);
+         Events       = ArrayUtil.ToPlugs(data.Events);
+         m_Parameters = ArrayUtil.ToParameters(data.Parameters);
+
+         m_Position = data.Position; 
+
+         m_ShowComment = new Parameter(data.ShowComment);
+         m_Comment     = new Parameter(data.Comment);
+      }
    }
 
    public struct EntityProperty : EntityNode
@@ -1656,6 +1711,15 @@ namespace Detox.ScriptEditor
 
          m_Position = Point.Empty; 
          m_Guid     = Guid.NewGuid( ); 
+      }
+
+      public EntityProperty(EntityPropertyData data)
+      { 
+         m_Instance  = new Parameter( data.Instance );
+         m_Parameter = new Parameter( data.Parameter );
+
+         m_Position = data.Position; 
+         m_Guid     = data.Guid; 
       }
    }
 
@@ -1999,43 +2063,88 @@ namespace Detox.ScriptEditor
          get 
          { 
             Hashtable typeHash = new Hashtable( );
-
-            foreach ( EntityDesc desc in EntityDescs )
+            
+            if ( null != EntityDescs )
             {
-               foreach ( EntityEvent node in desc.Events )
+               foreach ( EntityDesc desc in EntityDescs )
                {
-                  foreach ( Parameter p in node.Parameters )
+                  foreach ( EntityEvent node in desc.Events )
                   {
-                     typeHash[ p.Type ] = p.Type;
-                  }
+                     foreach ( Parameter p in node.Parameters )
+                     {
+                        typeHash[ p.Type ] = p.Type;
+                     }
 
-                  typeHash[ node.Instance.Type ] = node.Instance.Type;
+                     typeHash[ node.Instance.Type ] = node.Instance.Type;
+                     typeHash[ node.ComponentType ] = node.ComponentType;
+                  }
+                  foreach ( EntityMethod node in desc.Methods )
+                  {
+                     foreach ( Parameter p in node.Parameters )
+                     {
+                        typeHash[ p.Type ] = p.Type;
+                     }
+
+                     typeHash[ node.Instance.Type ] = node.Instance.Type;
+                     typeHash[ node.ComponentType ] = node.ComponentType;
+                  }
+                  foreach ( EntityProperty node in desc.Properties )
+                  {
+                     foreach ( Parameter p in node.Parameters )
+                     {
+                        typeHash[ p.Type ] = p.Type;
+                     }
+
+                     typeHash[ node.Instance.Type ] = node.Instance.Type;
+                  }
                }
-               foreach ( EntityMethod node in desc.Methods )
+
+               foreach ( LogicNode node in LogicNodes )
                {
                   foreach ( Parameter p in node.Parameters )
                   {
                      typeHash[ p.Type ] = p.Type;
                   }
-
-                  typeHash[ node.Instance.Type ] = node.Instance.Type;
-               }
-               foreach ( EntityProperty node in desc.Properties )
-               {
-                  foreach ( Parameter p in node.Parameters )
-                  {
-                     typeHash[ p.Type ] = p.Type;
-                  }
-
-                  typeHash[ node.Instance.Type ] = node.Instance.Type;
                }
             }
-
-            foreach ( LogicNode node in LogicNodes )
+            else
             {
-               foreach ( Parameter p in node.Parameters )
+               foreach ( EntityEvent node in Events )
                {
-                  typeHash[ p.Type ] = p.Type;
+                  foreach ( Parameter p in node.Parameters )
+                  {
+                     typeHash[ p.Type ] = p.Type;
+                  }
+
+                  typeHash[ node.Instance.Type ] = node.Instance.Type;
+                  typeHash[ node.ComponentType ] = node.ComponentType;
+               }
+               foreach ( EntityMethod node in Methods )
+               {
+                  foreach ( Parameter p in node.Parameters )
+                  {
+                     typeHash[ p.Type ] = p.Type;
+                  }
+
+                  typeHash[ node.Instance.Type ] = node.Instance.Type;
+                  typeHash[ node.ComponentType ] = node.ComponentType;
+               }
+               foreach ( EntityProperty node in Properties )
+               {
+                  foreach ( Parameter p in node.Parameters )
+                  {
+                     typeHash[ p.Type ] = p.Type;
+                  }
+
+                  typeHash[ node.Instance.Type ] = node.Instance.Type;
+               }
+
+               foreach ( LogicNode node in Logics )
+               {
+                  foreach ( Parameter p in node.Parameters )
+                  {
+                     typeHash[ p.Type ] = p.Type;
+                  }
                }
             }
 
@@ -2779,6 +2888,7 @@ namespace Detox.ScriptEditor
          if ( m_DeprecatedNodes.Contains(oldNode.Guid) )
          {         
             Type newType = uScript.GetNodeUpgradeType(oldNode);
+            if ( null == newType ) newType = uScript.Instance.GetAssemblyQualifiedType(ScriptEditor.FindNodeType(oldNode));
 
             if ( null != newType )
             {
@@ -2851,7 +2961,16 @@ namespace Detox.ScriptEditor
             }
             else
             {
-               Status.Error( "Node " + ScriptEditor.FindNodeType(oldNode) + " had no registered upgradable type" );
+               //if deprecated attribute doesn't exist then the reflection values changed and the script hasn't been resaved
+               //we know the user acknowledged it - so now allow them to upgrade it
+               if ( false == uScript.IsNodeDeprecated(oldNode) )
+               {
+                  m_DeprecatedNodes.Remove( oldNode.Guid );
+               }
+               else
+               {
+                  Status.Error( "Node " + ScriptEditor.FindNodeType(oldNode) + " had no registered upgradable type" );
+               }
             }
          }
       }
@@ -3136,43 +3255,52 @@ namespace Detox.ScriptEditor
 
       private EntityEvent CreateEntityEvent( EntityEventData data )
       {
-         EntityEvent cloned = new EntityEvent( data.Instance.Type, data.Instance.Type, ArrayUtil.ToPlugs(data.Outputs) );
-         
-         bool exactMatch = false;
+         EntityEvent cloned;
 
-         foreach ( EntityDesc desc in m_EntityDescs )
+         if ( null == m_EntityDescs )
          {
-            foreach ( EntityEvent entityEvent in desc.Events )
-            {
-               if ( entityEvent.Instance.Type == data.Instance.Type &&
-                    entityEvent.ComponentType == data.ComponentType &&
-                    true == ArrayUtil.ArraysAreEqual(entityEvent.Outputs, ArrayUtil.ToPlugs(data.Outputs)) )
-               {
-                  cloned = entityEvent;
-                  
-                  if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), entityEvent.Parameters) )
-                  {
-                     exactMatch = true;
-                  }
+            cloned = new EntityEvent( data );
+         }
+         else
+         {
+            cloned = new EntityEvent( data.Instance.Type, data.Instance.Type, ArrayUtil.ToPlugs(data.Outputs) );
+            
+            bool exactMatch = false;
 
-                  cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );
-                  cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
-                                                                           ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Instance}) )[ 0 ];
-                  break;
+            foreach ( EntityDesc desc in m_EntityDescs )
+            {
+               foreach ( EntityEvent entityEvent in desc.Events )
+               {
+                  if ( entityEvent.Instance.Type == data.Instance.Type &&
+                       entityEvent.ComponentType == data.ComponentType &&
+                       true == ArrayUtil.ArraysAreEqual(entityEvent.Outputs, ArrayUtil.ToPlugs(data.Outputs)) )
+                  {
+                     cloned = entityEvent;
+                     
+                     if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), entityEvent.Parameters) )
+                     {
+                        exactMatch = true;
+                     }
+
+                     cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );
+                     cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
+                                                                              ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Instance}) )[ 0 ];
+                     break;
+                  }
                }
             }
-         }
 
-         cloned.EventArgs   = data.EventArgs;
-         cloned.Guid        = data.Guid;
-         cloned.Position    = data.Position;
-         cloned.ShowComment = new Parameter( data.ShowComment );
-         cloned.Comment     = new Parameter( data.Comment );         
-      
-         if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
-         {
-            Status.Warning( "Matching EntityEvent " + data.Instance.Type + " could not be found" );
-            m_DeprecatedNodes[ cloned.Guid ] = cloned;
+            cloned.EventArgs   = data.EventArgs;
+            cloned.Guid        = data.Guid;
+            cloned.Position    = data.Position;
+            cloned.ShowComment = new Parameter( data.ShowComment );
+            cloned.Comment     = new Parameter( data.Comment );         
+         
+            if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
+            {
+               //Status.Warning( "Matching EntityEvent " + data.ComponentType + " could not be found" );
+               m_DeprecatedNodes[ cloned.Guid ] = cloned;
+            }
          }
 
          return cloned;
@@ -3180,61 +3308,70 @@ namespace Detox.ScriptEditor
 
       private EntityMethod CreateEntityMethod( EntityMethodData data )
       {
-         EntityMethod cloned = new EntityMethod( data.Instance.Type, data.Input.Name, data.Input.FriendlyName );
-         bool exactMatch = false;
-
-         //entities might have overloaded methods so we need to go through all
-         //and if we don't find an exact match then just use the first potential one we come across
-         List<EntityMethod> potentialMatches = new List<EntityMethod>( );
-
-         foreach ( EntityDesc desc in m_EntityDescs )
+         EntityMethod cloned;
+         
+         if ( null == m_EntityDescs )
          {
-            foreach ( EntityMethod entityMethod in desc.Methods )
-            {
-               if ( entityMethod.ComponentType == data.ComponentType &&
-                    entityMethod.Instance.Type == data.Instance.Type &&
-                    entityMethod.Input.Name == data.Input.Name )
-               {
-                  cloned = entityMethod;
-                  
-                  if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), entityMethod.Parameters) )
-                  {
-                     exactMatch = true;
-                  }
-                  else
-                  {
-                     potentialMatches.Add(entityMethod);                     
-                     continue;
-                  }
+            cloned = new EntityMethod( data );
+         }
+         else
+         {
+            cloned = new EntityMethod( data.Instance.Type, data.Input.Name, data.Input.FriendlyName );
+            bool exactMatch = false;
 
+            //entities might have overloaded methods so we need to go through all
+            //and if we don't find an exact match then just use the first potential one we come across
+            List<EntityMethod> potentialMatches = new List<EntityMethod>( );
+
+            foreach ( EntityDesc desc in m_EntityDescs )
+            {
+               foreach ( EntityMethod entityMethod in desc.Methods )
+               {
+                  if ( entityMethod.ComponentType == data.ComponentType &&
+                       entityMethod.Instance.Type == data.Instance.Type &&
+                       entityMethod.Input.Name == data.Input.Name )
+                  {
+                     cloned = entityMethod;
+                     
+                     if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), entityMethod.Parameters) )
+                     {
+                        exactMatch = true;
+                     }
+                     else
+                     {
+                        potentialMatches.Add(entityMethod);                     
+                        continue;
+                     }
+
+                     cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );
+                     cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
+                                                                              ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Instance}) )[ 0 ];
+                     break;
+                  }
+               }
+            }
+
+
+            if ( false == exactMatch )
+            {
+               if ( potentialMatches.Count > 0 )
+               {
                   cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );
                   cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
                                                                            ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Instance}) )[ 0 ];
-                  break;
                }
             }
-         }
 
-
-         if ( false == exactMatch )
-         {
-            if ( potentialMatches.Count > 0 )
+            cloned.Guid        = data.Guid;
+            cloned.Position    = data.Position;
+            cloned.ShowComment = new Parameter( data.ShowComment );
+            cloned.Comment     = new Parameter( data.Comment );
+            
+            if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
             {
-               cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );
-               cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
-                                                                        ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Instance}) )[ 0 ];
+               //Status.Warning( "Matching EntityMethod " + data.ComponentType + " " + data.Input.Name + " could not be found" );
+               m_DeprecatedNodes[ cloned.Guid ] = cloned;
             }
-         }
-
-         cloned.Guid        = data.Guid;
-         cloned.Position    = data.Position;
-         cloned.ShowComment = new Parameter( data.ShowComment );
-         cloned.Comment     = new Parameter( data.Comment );
-         
-         if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
-         {
-            Status.Warning( "Matching EntityMethod " + data.Instance.Type + " " + data.Input.Name + " could not be found" );
-            m_DeprecatedNodes[ cloned.Guid ] = cloned;
          }
 
          return cloned;
@@ -3242,44 +3379,53 @@ namespace Detox.ScriptEditor
 
       private EntityProperty CreateEntityProperty( EntityPropertyData data )
       {
-         EntityProperty cloned = new EntityProperty( data.Parameter.Name, data.Parameter.FriendlyName, data.Instance.Type, 
-                                                     data.Parameter.Default, data.Parameter.Input, data.Parameter.Output );
-         bool exactMatch = false;
-
-         foreach ( EntityDesc desc in m_EntityDescs )
+         EntityProperty cloned;
+         
+         if ( null == m_EntityDescs )
          {
-            foreach ( EntityProperty entityProperty in desc.Properties )
+            cloned = new EntityProperty( data );
+         }
+         else
+         {
+            cloned = new EntityProperty( data.Parameter.Name, data.Parameter.FriendlyName, data.Instance.Type, 
+                                         data.Parameter.Default, data.Parameter.Input, data.Parameter.Output );
+            bool exactMatch = false;
+
+            foreach ( EntityDesc desc in m_EntityDescs )
             {
-               if ( entityProperty.Instance.Type == data.Instance.Type &&
-                    entityProperty.Parameter.Name == data.Parameter.Name )
+               foreach ( EntityProperty entityProperty in desc.Properties )
                {
-                  cloned = entityProperty;
-                  
-                  if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Parameter}), 
-                                                                 new Parameter[]{entityProperty.Parameter}) )
+                  if ( entityProperty.Instance.Type == data.Instance.Type &&
+                       entityProperty.Parameter.Name == data.Parameter.Name )
                   {
-                     exactMatch = true;
+                     cloned = entityProperty;
+                     
+                     if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Parameter}), 
+                                                                    new Parameter[]{entityProperty.Parameter}) )
+                     {
+                        exactMatch = true;
+                     }
+
+                     cloned.Parameter  = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Parameter}, 
+                                                                              ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Parameter}) )[ 0 ];
+                     cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
+                                                                              ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Instance}) )[ 0 ];
+
+                     break;
                   }
-
-                  cloned.Parameter  = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Parameter}, 
-                                                                           ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Parameter}) )[ 0 ];
-                  cloned.Instance   = ArrayUtil.CopyCompatibleParameters( new Parameter[]{cloned.Instance}, 
-                                                                           ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Instance}) )[ 0 ];
-
-                  break;
                }
             }
-         }
 
-         cloned.Guid        = data.Guid;
-         cloned.Position    = data.Position;
-         cloned.ShowComment = new Parameter( data.ShowComment );
-         cloned.Comment     = new Parameter( data.Comment );
+            cloned.Guid        = data.Guid;
+            cloned.Position    = data.Position;
+            cloned.ShowComment = new Parameter( data.ShowComment );
+            cloned.Comment     = new Parameter( data.Comment );
 
-         if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
-         {
-            Status.Warning( "Matching EntityProperty " + data.Instance.Name + " " + data.Parameter.Name + " could not be found" );
-            m_DeprecatedNodes[ cloned.Guid ] = cloned;
+            if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
+            {
+               //Status.Warning( "Matching EntityProperty " + data.Instance.Name + " " + data.Parameter.Name + " could not be found" );
+               m_DeprecatedNodes[ cloned.Guid ] = cloned;
+            }
          }
 
          return cloned;
@@ -3287,37 +3433,49 @@ namespace Detox.ScriptEditor
 
       private LogicNode CreateLogicNode( LogicNodeData data )
       {
-         LogicNode cloned = new LogicNode( data.Type, data.FriendlyName );
-         bool exactMatch = false;
+         LogicNode cloned;
 
-         foreach ( LogicNode node in m_LogicNodes )
+         //no reflection information so use
+         //everything straight from the data file
+         if ( null == m_LogicNodes )
          {
-            if ( node.Type == data.Type )
-            {
-               cloned = node;
-               
-               if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), node.Parameters) &&
-                    true == ArrayUtil.ArraysAreEqual(node.Inputs, ArrayUtil.ToPlugs(data.Inputs)) &&
-                    true == ArrayUtil.ArraysAreEqual(node.Outputs, ArrayUtil.ToPlugs(data.Outputs)) &&
-                    true == ArrayUtil.ArraysAreEqual(node.Events, ArrayUtil.ToPlugs(data.Events)) )
-               {
-                  exactMatch = true;
-               }
-
-               cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );                  
-               break;
-            }
+            cloned = new LogicNode( data );
          }
-
-         cloned.Guid       = data.Guid;
-         cloned.Position   = data.Position;
-         cloned.ShowComment= new Parameter( data.ShowComment );
-         cloned.Comment    = new Parameter( data.Comment );
-
-         if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
+         else
          {
-            Status.Warning( "Matching LogicNode " + data.Type + " could not be found" );
-            m_DeprecatedNodes[ cloned.Guid ] = cloned;
+            cloned = new LogicNode( data.Type, data.FriendlyName );
+
+            bool exactMatch = false;
+   
+            foreach ( LogicNode node in m_LogicNodes )
+            {
+               if ( node.Type == data.Type )
+               {
+                  cloned = node;
+                  
+                  if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), node.Parameters) &&
+                       true == ArrayUtil.ArraysAreEqual(node.Inputs, ArrayUtil.ToPlugs(data.Inputs)) &&
+                       true == ArrayUtil.ArraysAreEqual(node.Outputs, ArrayUtil.ToPlugs(data.Outputs)) &&
+                       true == ArrayUtil.ArraysAreEqual(node.Events, ArrayUtil.ToPlugs(data.Events)) )
+                  {
+                     exactMatch = true;
+                  }
+
+                  cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );                  
+                  break;
+               }
+            }
+
+            cloned.Guid       = data.Guid;
+            cloned.Position   = data.Position;
+            cloned.ShowComment= new Parameter( data.ShowComment );
+            cloned.Comment    = new Parameter( data.Comment );
+
+            if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
+            {
+               //Status.Warning( "Matching LogicNode " + data.Type + " could not be found" );
+               m_DeprecatedNodes[ cloned.Guid ] = cloned;
+            }
          }
 
          return cloned;
