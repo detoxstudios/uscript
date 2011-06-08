@@ -2021,10 +2021,19 @@ namespace Detox.ScriptEditor
             //they match for every method signature
             if ( 0 == m_ExternalParameters.Count )
             {
-               foreach ( Parameter p in parameters )
+               for ( int i = 0; i < parameters.Count; i++ )
                {
+                  Parameter p  = parameters[ i ];
+                  EntityNode n = nodes[ i ];
+                  ExternalConnection e = externals[ i ];
+               
+                  Plug plug = CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name);
+
                   Parameter clone = p;
+                  clone.FriendlyName = plug.FriendlyName;
+                  clone.Name  = plug.Name;
                   clone.State = Parameter.VisibleState.Visible;
+
                   m_ExternalParameters.Add( clone );
                }
             }
