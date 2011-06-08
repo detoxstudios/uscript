@@ -1,0 +1,31 @@
+// uScript Action Node
+// (C) 2010 Detox Studios LLC
+// Desc: Converts a quaternion into look and up vectors.
+
+using UnityEngine;
+using System.Collections;
+
+[NodePath("Actions/Math")]
+[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip( "Converts a quaternion into look and up vectors.")]
+[NodeDescription("Converts a quaternion into look and up vectors.\n \nResult Quaternion: The quaternion to get the look and up vectors from.\nForward Vector (out): The forward vector component of the quaternion.\nUp Vector (out): The up vector component of the quaternion.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+
+[FriendlyName("Vectors From Quaternion")]
+public class uScriptAct_VectorsFromQuaternion : uScriptLogic
+{
+   public bool Out { get { return true; } }
+
+   public void In(
+      [FriendlyName("Quaternion")] Quaternion quaternion,
+      [FriendlyName("Forward Vector")] out Vector3 forward,
+      [FriendlyName("Up Vector")] out Vector3 up
+      )
+   {
+      Matrix4x4 mat = Matrix4x4.TRS(Vector3.zero, quaternion, Vector3.one);
+      forward = (Vector3)mat.GetColumn(2);
+      up = (Vector3)mat.GetColumn(1);
+   }
+}
