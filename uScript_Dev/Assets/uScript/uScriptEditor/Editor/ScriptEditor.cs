@@ -458,29 +458,22 @@ namespace Detox.ScriptEditor
 
    class ArrayUtil
    {
-      static public Parameter[] CopyCompatibleParameters(Parameter []defaultParameters, Parameter []source)
+      static public Parameter[] CopyCompatibleParameters(Parameter []reflectedParameters, Parameter []savedParameters)
       {
          List<Parameter> parameters = new List<Parameter>( );
 
-         foreach ( Parameter d in defaultParameters )
+         foreach ( Parameter reflectedParameter in reflectedParameters )
          {
             bool found = false;
 
-            foreach ( Parameter s in source )
+            foreach ( Parameter savedParameter in savedParameters )
             {
-               if ( true == d.IsCompatibleWith(s) )
+               if ( true == reflectedParameter.IsCompatibleWith(savedParameter) )
                {
-                  Parameter clone = s;
+                  Parameter clone = reflectedParameter;
                   
-                  clone.Default = s.Default;
-                  clone.Input   = s.Input;
-                  clone.Output  = s.Output;
-                  clone.Type    = s.Type;
-                  clone.Name    = s.Name;
-                  clone.State   = s.State;
-
-                  //bring over new friendly name
-                  clone.FriendlyName = d.FriendlyName;
+                  clone.Default = savedParameter.Default;
+                  clone.State   = savedParameter.State;
 
                   parameters.Add( clone );                  
                   found = true;
@@ -493,7 +486,7 @@ namespace Detox.ScriptEditor
             //then use the blank one
             if ( false == found )
             {               
-               parameters.Add( d );
+               parameters.Add( reflectedParameter );
             }
          }
 

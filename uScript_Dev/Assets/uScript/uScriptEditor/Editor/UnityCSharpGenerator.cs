@@ -2827,7 +2827,15 @@ namespace Detox.ScriptEditor
          plug.Name = name + "_" + GetGuidId(node.Guid);
          plug.FriendlyName = plug.Name;
 
-         if ( "" != defaultName ) plug.FriendlyName = defaultName;
+         if ( "" != defaultName ) 
+         {
+            plug.FriendlyName = defaultName;
+            
+            //use friendlyname as external name
+            //so the name stays the same even if they reorder the nodes
+            //this prevents links from breaking in the parent scripts
+            plug.Name = MakeSyntaxSafe(plug.FriendlyName);
+         }
 
          return plug;
       }
@@ -2839,7 +2847,14 @@ namespace Detox.ScriptEditor
          plug.Name = name + "_" + GetGuidId(node.Guid);
          plug.FriendlyName = plug.Name;
 
-         if ( "" != defaultName ) plug.FriendlyName = defaultName;
+         if ( "" != defaultName ) 
+         {
+            plug.FriendlyName = defaultName;
+            //use friendlyname as external name
+            //so the name stays the same even if they reorder the nodes
+            //this prevents links from breaking in the parent scripts
+            plug.Name = MakeSyntaxSafe(plug.FriendlyName);
+         }
 
          return plug;
       }
@@ -2851,7 +2866,14 @@ namespace Detox.ScriptEditor
          plug.Name = "Link_" + name + "_" + GetGuidId(node.Guid);
          plug.FriendlyName = plug.Name;
 
-         if ( "" != defaultName ) plug.FriendlyName = defaultName;
+         if ( "" != defaultName ) 
+         {
+            plug.FriendlyName = defaultName;
+            //use friendlyname as external name
+            //so the name stays the same even if they reorder the nodes
+            //this prevents links from breaking in the parent scripts
+            plug.Name = MakeSyntaxSafe(plug.FriendlyName);
+         }
 
          return plug;
       }
@@ -2868,7 +2890,14 @@ namespace Detox.ScriptEditor
          plug.Name = "Event_" + name + "_" + GetGuidId(node.Guid);
          plug.FriendlyName = plug.Name;
 
-         if ( "" != defaultName ) plug.FriendlyName = defaultName;
+         if ( "" != defaultName ) 
+         {
+            plug.FriendlyName = defaultName;
+            //use friendlyname as external name
+            //so the name stays the same even if they reorder the nodes
+            //this prevents links from breaking in the parent scripts
+            plug.Name = MakeSyntaxSafe(plug.FriendlyName);
+         }
 
          return plug;
       }
