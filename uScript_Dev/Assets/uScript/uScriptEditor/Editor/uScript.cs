@@ -16,10 +16,11 @@ public class uScript : EditorWindow
                                                    //format is MAJOR.MINOR.YYMMDDa
                                                    //(where 'a' is incremented if we have more than 1 daily build we release)
    public string    uScriptBuild                   { get { return "0.4.110607a"; } }
-   public string    RequiredUnityBuild             { get { return  "3.3.0f4"; } }
+   public string    RequiredUnityBuild             { get { return "3.3.0f4"; } }
    public string    RequiredUnityBetaBuildPrevious { get { return "3.4.0b2"; } }
    public string    RequiredUnityBetaBuild         { get { return "3.4.0b3"; } }
    public DateTime  ExpireDate                     { get { return new DateTime( 2011, 6, 30 ); } }
+   public int       EULAVersion                    { get { return 20110608; } }
 
    private enum MouseRegion
    {
@@ -183,7 +184,7 @@ public class uScript : EditorWindow
    public string CurrentScript = null;
 
    #region EULA Variables
-   private bool _EULAagreed = false;
+   private int _EULAagreed = -1;
    private Vector2 _EULAscroll;
    private bool _EULAtoggle;
    private string _EULAtext = @"IMPORTANT, PLEASE READ CAREFULLY. THIS IS A LICENSE AGREEMENT
@@ -640,10 +641,10 @@ http://www.detoxstudios.com";
       //
       // Show the EULA if the user hasn't yet agreed to it
       //
-      if (!_EULAagreed)
+      if (_EULAagreed != EULAVersion)
       {
-         _EULAagreed = (bool) uScript.GetSetting( "EULA\\Agreed", false );
-         GUI.enabled = _EULAagreed;
+         _EULAagreed = (int) uScript.GetSetting( "EULA\\AgreedVersion", -1 );
+         GUI.enabled = _EULAagreed == EULAVersion;
       }
 
 
@@ -1026,11 +1027,11 @@ http://www.detoxstudios.com";
       GUI.enabled = true;
       BeginWindows();
 
-      if (!_EULAagreed)
+      if (_EULAagreed != EULAVersion)
       {
-         _EULAagreed = (bool) uScript.GetSetting( "EULA\\Agreed", false );
+         _EULAagreed = (int) uScript.GetSetting( "EULA\\AgreedVersion", -1 );
          
-         if (!_EULAagreed)
+         if (_EULAagreed != EULAVersion)
          {
             int w = 550;
             int h = Math.Max(300, (int)position.height - 400);
@@ -1040,7 +1041,7 @@ http://www.detoxstudios.com";
          }
       }
       
-      if (_EULAagreed)
+      if (_EULAagreed == EULAVersion)
       {
          if ( true == contextActive )
          {
@@ -2227,8 +2228,8 @@ Vector2 _scrollNewProperties;
          GUILayout.FlexibleSpace();
          if (GUILayout.Button("Accept", GUILayout.Width(100)))
          {
-            uScript.SetSetting( "EULA\\Agreed", true );
-            _EULAagreed = true;
+            uScript.SetSetting( "EULA\\AgreedVersion", EULAVersion );
+            _EULAagreed = EULAVersion;
          }
          
          GUI.enabled = true;
