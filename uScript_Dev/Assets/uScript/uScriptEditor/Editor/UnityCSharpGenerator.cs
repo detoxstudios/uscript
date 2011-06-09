@@ -1170,20 +1170,8 @@ namespace Detox.ScriptEditor
                         if ( null == type ) continue;
 
                         if ( false == uScriptConfig.ShouldAutoPackage(type) ) continue;
-
-                        UnityEngine.Object asset = UnityEditor.AssetDatabase.LoadAssetAtPath( p.Default, type );
-
-                        if ( null != asset )
-                        {
-                           assetComponent.Add( p.Default, asset );
                            
-                           AddCSharpLine( CSharpName(node, p.Name) + " = assetComponent.Get(\"" + p.Default + "\") as " + p.Type + ";" );
-                        }
-                        else
-                        {
-                           uScriptDebug.Log( p.Default + " could not be found and added to the package", uScriptDebug.Type.Error );
-                           continue;
-                        }
+                         AddCSharpLine( CSharpName(node, p.Name) + " = assetComponent.Get(\"" + p.Default + "\") as " + p.Type + ";" );
                      }
                   }
                }

@@ -422,13 +422,34 @@ namespace Detox.ScriptEditor
 
                   for ( int i = 0; i < parameters.Length; i++ )
                   {
+                     object asset = null;
+
                      if ( hash.Contains(parameters[i].FriendlyName) )
                      {
-                        parameters[i].Default = hash[ parameters[i].FriendlyName ].ToString();
+                        asset = hash[ parameters[i].FriendlyName ];
                      }
                      else if ( hash.Contains(parameters[i].Name) )
                      {
-                        parameters[i].Default = hash[ parameters[i].Name ].ToString();
+                        asset = hash[ parameters[i].Name ];
+                     }
+
+                     if ( null != asset )
+                     {
+                        string key = "";
+                        Type parameterType = uScript.Instance.GetType(parameters[i].Type);
+
+                        if ( uScriptConfig.ShouldAutoPackage(parameterType) )
+                        {
+                           //we have to package now because the returned parameter is just the string representation
+                           //and it won't always be able to reference back to the actual object
+                           key = uScript.PackageAsset( asset, parameterType );
+                        }
+                        else
+                        {
+                           key = asset as string;
+                        }
+                        
+                        parameters[i].DefaultAsObject = key;                  
                      }
                   }
 

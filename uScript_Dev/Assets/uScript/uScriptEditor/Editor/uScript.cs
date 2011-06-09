@@ -297,6 +297,38 @@ http://www.detoxstudios.com";
       }
    }
 
+   static public string PackageAsset(object asset, Type type)
+   {
+      GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+      uScript_Assets assetComponent = null;
+   
+      if ( null != uScriptMaster ) assetComponent = uScriptMaster.GetComponent<uScript_Assets>( );                        
+      
+      if ( null != assetComponent )
+      {
+         object assetInstance = asset;
+      
+         //if it was saved as a string - assume it's a path
+         if ( assetInstance is string )
+         {
+            assetInstance = UnityEditor.AssetDatabase.LoadAssetAtPath( assetInstance as string, type );
+         }
+
+         if ( assetInstance is UnityEngine.Object )
+         {
+            UnityEngine.Object objectInstance = assetInstance as UnityEngine.Object;
+
+            //append the name as part of the unique key - because some items (like fbx files) have multiple assets in them
+            string uniqueKey = uScriptConfig.GetAssetPackageKey( asset, type ); 
+            assetComponent.Add( uniqueKey, objectInstance );
+         
+            return uniqueKey;
+         }
+      }
+
+      return "";
+   }
+
    static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)
    {
       uScriptDebug.Type uScriptType = uScriptDebug.Type.Message;

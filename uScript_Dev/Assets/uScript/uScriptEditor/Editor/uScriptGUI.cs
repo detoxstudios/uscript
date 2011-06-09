@@ -470,7 +470,7 @@ public static class uScriptGUI
    }
 
 
-   public static string ObjectTextField(string label, UnityEngine.Object value, Type type, string textValue, ref bool enabled, bool locked, bool isReadOnly, bool needsFullPath)
+   public static string ObjectTextField(string label, UnityEngine.Object value, Type type, string textValue, ref bool enabled, bool locked, bool isReadOnly)
    {
       EditorGUILayout.BeginVertical();
       {
@@ -481,7 +481,22 @@ public static class uScriptGUI
          // so we can use the game object browser
          //
          // first show the text field and get back the same (or changed value)
-         textValue = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
+         if ( true == uScriptConfig.ShouldAutoPackage(type) )
+         {
+            string labelValue = textValue;
+         
+            int index = labelValue.LastIndexOf("/") + 1;
+            if ( index > 0 ) 
+            {
+               labelValue = labelValue.Substring( index, labelValue.Length - index );
+            }
+
+            EditorGUILayout.LabelField(labelValue, "", GUILayout.Width(_columnValue.Width));
+         }
+         else
+         {
+            textValue = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
+         }
 
          EndRow(textValue.GetType().ToString());
 
@@ -492,15 +507,31 @@ public static class uScriptGUI
          UnityEngine.Object []objects   = UnityEngine.Object.FindObjectsOfType(type);
          UnityEngine.Object unityObject = null;
 
-         foreach ( UnityEngine.Object o in objects )
+         if ( true == uScriptConfig.ShouldAutoPackage(type) )
          {
-            if ( o.name == textValue )
+            foreach ( UnityEngine.Object o in objects )
             {
-               unityObject = o;
-               break;
+               string key = uScriptConfig.GetAssetPackageKey(o, o.GetType());
+               
+               if ( key == textValue )
+               {
+                  unityObject = o;
+                  break;
+               }
             }
          }
-
+         else
+         {
+            foreach ( UnityEngine.Object o in objects )
+            {
+               if ( o.name == textValue )
+               {
+                  unityObject = o;
+                  break;
+               }
+            }
+         }
+ 
          // components should never be instances in the property grid
          // we must refer to (and select) their parent game object
          if ( true == typeof(Component).IsAssignableFrom(type) )
@@ -515,9 +546,11 @@ public static class uScriptGUI
          // if it doesn't exist then the 'val' will stay as what was entered into the TextField
          if ( unityObject != null )
          {
-            if ( true == needsFullPath )
+            if ( true == uScriptConfig.ShouldAutoPackage(type) )
             {
-               textValue = AssetDatabase.GetAssetPath(unityObject);
+               //we have to package now because the returned parameter is just the string representation
+               //and it won't always be able to reference back to the actual object
+               textValue = uScript.PackageAsset(unityObject, type);
             }
             else
             {

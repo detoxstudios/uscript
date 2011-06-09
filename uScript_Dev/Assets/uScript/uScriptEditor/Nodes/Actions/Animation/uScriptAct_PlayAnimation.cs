@@ -92,7 +92,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
          AnimationClip ac = (AnimationClip)o;
 
          Hashtable hashtable = new Hashtable();
-         hashtable["Animation"] = UnityEditor.AssetDatabase.GetAssetPath(ac.GetInstanceID());
+         hashtable["Animation"] = ac;
 
          return hashtable;
       }

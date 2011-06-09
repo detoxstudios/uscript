@@ -86,7 +86,7 @@ public class uScriptAct_PlaySound : uScriptLogic
          AudioClip ac = (AudioClip) o;
 
          Hashtable hashtable = new Hashtable( );
-         hashtable[ "Audio Clip" ] = UnityEditor.AssetDatabase.GetAssetPath( ac.GetInstanceID( ) );
+         hashtable[ "Audio Clip" ] = ac;
 
          return hashtable;
       }

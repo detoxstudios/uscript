@@ -6,10 +6,8 @@ using UnityEngine;
 
 public class uScript_Assets : MonoBehaviour
 {
-   [HideInInspector]
    public UnityEngine.Object [] Assets;
 
-   [HideInInspector]
    public string [] Keys;
 
    public void Add(string key, UnityEngine.Object o)
@@ -20,10 +18,21 @@ public class uScript_Assets : MonoBehaviour
          Keys   = new string[ 1 ];
       }
 
-      if ( null == Get(key) )
+      int i;
+
+      for ( i = 0; i < Keys.Length; i++ )
+      {
+         if ( Keys[i] == key ) 
+         {
+            Assets[ i ] = o;
+            break;
+         }
+      }
+
+      if ( i == Keys.Length )
       {
          System.Array.Resize( ref Assets, Assets.Length + 1 );
-         System.Array.Resize(  ref Keys, Keys.Length + 1 );
+         System.Array.Resize( ref Keys, Keys.Length + 1 );
 
          Assets[ Assets.Length - 1 ] = o;
          Keys[ Keys.Length - 1 ] = key;
@@ -34,7 +43,7 @@ public class uScript_Assets : MonoBehaviour
    {
       if ( null == Assets || null == Keys ) return null;
 
-      for (int i = 0; i < Keys.Length; i++ )
+      for ( int i = 0; i < Keys.Length; i++ )
       {
          if ( Keys[i] == key ) return Assets[ i ];
       }
