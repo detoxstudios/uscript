@@ -6,7 +6,10 @@ using UnityEngine;
 
 public class uScript_Assets : MonoBehaviour
 {
+   [HideInInspector]
    public UnityEngine.Object [] Assets;
+
+   [HideInInspector]
    public string [] Keys;
 
    public void Add(string key, UnityEngine.Object o)

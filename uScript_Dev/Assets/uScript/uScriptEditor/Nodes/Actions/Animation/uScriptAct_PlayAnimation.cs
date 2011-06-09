@@ -39,13 +39,17 @@ public class uScriptAct_PlayAnimation : uScriptLogic
             m_GameObject = currentTarget;
             m_Animation  = Animation;
 
+            if ( null == currentTarget.animation[Animation.name] )
+            {
+               currentTarget.animation.AddClip(Animation, Animation.name);
+            }
+
             if (SpeedFactor == 0F)
             {
                currentTarget.animation[Animation.name].speed = 1.0F;
             }
             else
             {
-
                currentTarget.animation[Animation.name].speed = SpeedFactor;
             }
 
