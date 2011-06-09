@@ -1211,7 +1211,7 @@ namespace Detox.ScriptEditor
          m_TitleText = new Parameter( );
          m_TitleText.State = Parameter.VisibleState.Visible;
          m_TitleText.Name = "Title";
-         m_TitleText.FriendlyName = "Comment";
+         m_TitleText.FriendlyName = "Title";
          m_TitleText.Default = "Comment";
          m_TitleText.Type = "String";
          m_TitleText.Input = true;

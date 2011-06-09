@@ -2068,10 +2068,31 @@ Vector2 _scrollNewProperties;
 
          if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
          {
-            helpButtonURL = FindNodeHelp(ScriptEditor.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
             if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
             {
-               helpDescription = FindNodeDescription(ScriptEditor.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
+               string nodeType = ScriptEditor.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
+               if (string.IsNullOrEmpty(nodeType))
+               {
+                  // other node types...
+                  if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is CommentNode)
+                  {
+                     nodeType = "CommentNode";
+                  }
+                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is ExternalConnection)
+                  {
+                     nodeType = "ExternalConnection";
+                  }
+                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is OwnerConnection)
+                  {
+                     nodeType = "OwnerConnection";
+                  }
+                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is LocalNode)
+                  {
+                     nodeType = "LocalNode";
+                  }
+               }
+               helpButtonURL = FindNodeHelp(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
+               helpDescription = FindNodeDescription(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
                helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
             }
          }
@@ -4047,8 +4068,56 @@ Vector2 _scrollNewProperties;
       return "";
    }
 
-   public static string FindNodeDescription(string type)
+   public static string FindNodeDescription(string type, DisplayNode node)
    {
+      // check non-logic, non-event types first...
+      // structs can't have attributes, so we have to specify this information here, explicitly
+      if (type == "CommentNode")
+      {
+         return "Use a comment box to comment or hint at what a particular block of uScript nodes does. Comment boxes can be resized so that they surround the nodes that they are referencing.\n \nTo resize a comment box, drag the bottom-right corner of the comment box or set its size properties explicitly in the Properties panel.\n \nTitle: The title or header for this comment box.\nBody: The actual comment text and information. Empty lines are supported.\nSize: The size of the comment box in pixels (width, height).";
+      }
+      else if (type == "ExternalConnection")
+      {
+         return "Use External Connections to create nested uScripts. An External Connection node will turn into a socket when the current uScript is used as a nested uScript inside another uScript. The type of socket it turns into will be determined by the type of socket it is connected to in this uScript.\n \nTo place this uScript in another uScript as a nested uScript, save it and then look for it under the Scene()->Logic menu of the node palette or 'Add' context menu.";
+      }
+      else if (type == "OwnerConnection")
+      {
+         return "Owner GameObject variables are a special kind of GameObject variable. They represent the GameObject that this uScript is attached to.";
+      }
+      else if (type == "LocalNode")
+      {
+         LocalNodeDisplayNode variable = node as LocalNodeDisplayNode;
+         string friendlyType = uScriptConfig.Variable.FriendlyName(variable.LocalNode.Value.Type);
+         
+         switch (friendlyType)
+         {
+            case "Bool":
+               return "A Boolean variable.\n \nValue can be True or False.";
+            case "Color":
+               return "A Color variable.\n \nValue is a color represented by an R,G,B triplet.";
+            case "Float":
+               return "A Floating point variable.\n \nValue is any real number (ex. 1.234, 5.0, -3.21).";
+            case "Int":
+               return "An Integer variable.\n \nValue is any whole number (ex. 1, 0, -3).";
+            case "Vector2":
+               return "A Vector2 variable.\n \nValue is a 2-dimensional point in space (x,y).";
+            case "Vector3":
+               return "A Vector3 variable.\n \nValue is a 3-dimensional point or direction in space (x,y,z).";
+            case "Vector4":
+               return "A Vector4 variable.\n \nValue is a 3-dimensional point or direction in space with a w-value (x,y,z,w).";
+            case "Rect":
+               return "A Rect variable.\n \nValue contains a 2-dimensional position (x,y) and an area (width, height).";
+            case "Quaternion":
+               return "A Quaternion variable.\n \nValue is quaternion representation of a rotation in space.";
+            case "GameObject":
+               return "A GameObject variable.\n \nValue is a GameObject in the scene. Note that if a GameObject is being used as a node's input parameter, it is set by name and when this is done, it must be unique in the scene.";
+            case "String":
+               return "A String variable.\n \nValue is text data.";
+            default:
+               return "Use variables to store data in your uScript.";
+         }
+      }
+
       Type uscriptType = uScript.Instance.GetType(type);
 
       if ( uscriptType != null )
@@ -4110,8 +4179,27 @@ Vector2 _scrollNewProperties;
       return "";
    }
 
-   public static string FindNodeHelp(string type)
+   public static string FindNodeHelp(string type, DisplayNode node)
    {
+      // check non-logic, non-event types first...
+      // structs can't have attributes, so we have to specify this information here, explicitly
+      if (type == "CommentNode")
+      {
+         return "http://uscript.net/manual/node_nodoc.html";
+      }
+      else if (type == "ExternalConnection")
+      {
+         return "http://uscript.net/manual/node_nodoc.html";
+      }
+      else if (type == "LocalNode")
+      {
+         return "http://uscript.net/manual/node_nodoc.html";
+      }
+      else if (type == "OwnerConnection")
+      {
+         return "http://uscript.net/manual/node_nodoc.html";
+      }
+
       Type uscriptType = uScript.Instance.GetType(type);
 
       if ( uscriptType != null )
