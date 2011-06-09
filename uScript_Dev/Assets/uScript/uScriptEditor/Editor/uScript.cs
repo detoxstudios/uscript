@@ -1091,7 +1091,11 @@ http://www.detoxstudios.com";
       MasterComponent.ScriptName = null;
        
       CurrentScript = null;
+      
+      // reset settings so they get re-loaded
       m_SettingsLoaded = false;
+      m_AppData = new AppFrameworkData();
+      Preferences = new Preferences();
    }
 
    void OpenLogicNode( )
