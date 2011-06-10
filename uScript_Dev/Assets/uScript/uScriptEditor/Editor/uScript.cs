@@ -1852,6 +1852,11 @@ http://www.detoxstudios.com";
    }
 
 
+   bool mapToggle = false;
+   float mapScale = 0.5f;
+   Vector2 mapScroll = Vector2.zero;
+
+
    void DrawGUIContent()
    {
       Rect rect = EditorGUILayout.BeginVertical();
@@ -1864,6 +1869,7 @@ http://www.detoxstudios.com";
          {
             m_NodeToolbarRect = toolbarRect;
          }
+
 
          {
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonNew, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
@@ -1932,6 +1938,15 @@ http://www.detoxstudios.com";
 
             GUILayout.FlexibleSpace();
 
+            mapToggle = GUILayout.Toggle(mapToggle, "Map", EditorStyles.toolbarButton);
+
+            if (mapToggle)
+            {
+               mapScale = GUILayout.HorizontalSlider(mapScale, 0.1f, 0.7f, GUILayout.Width(100));
+            }
+
+            GUILayout.FlexibleSpace();
+
             GUIStyle style2 = new GUIStyle(EditorStyles.boldLabel);
             style2.padding = new RectOffset(16, 4, 2, 2);
             style2.margin = new RectOffset();
@@ -1940,8 +1955,136 @@ http://www.detoxstudios.com";
          EditorGUILayout.EndHorizontal();
 
 
+         if (mapToggle)
+         {
+            Node node;
+            DisplayNode displayNode;
 
 
+            //
+            // Get the dimensions of the entire map at the specified scale
+            //
+            Rect mapBounds = new Rect();
+
+            // Start with the first ...
+            if (m_ScriptEditorCtrl.FlowChart.Nodes.Length > 0)
+            {
+               node = m_ScriptEditorCtrl.FlowChart.Nodes[0];
+               mapBounds = new Rect(node.Bounds.X, node.Bounds.Y, node.Bounds.Width, node.Bounds.Height);
+            }
+
+            // ... then loop through the remaining nodes ...
+            for (int i=1; i < m_ScriptEditorCtrl.FlowChart.Nodes.Length; i++)
+            {
+               mapBounds.x = Math.Min(mapBounds.x, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X);
+               mapBounds.y = Math.Min(mapBounds.y, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y);
+               mapBounds.width = Math.Max(mapBounds.width, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X
+                                                     + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Width);
+               mapBounds.height = Math.Max(mapBounds.height, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y
+                                                       + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Height);
+            }
+
+            // ... and finally, apply the scaling
+            mapBounds.x *= mapScale;
+            mapBounds.y *= mapScale;
+            mapBounds.width *= mapScale;
+            mapBounds.height *= mapScale;
+
+
+            //
+            // Set the size of the viewRect
+            //
+            Rect viewRect = new Rect();
+            viewRect.width = (mapBounds.width - mapBounds.x);
+            viewRect.height = (mapBounds.height - mapBounds.y);
+
+
+            mapScroll = GUI.BeginScrollView(_canvasRect, mapScroll, viewRect, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
+
+
+            // Temporary box that represents the bounding area
+            Rect mapSize = new Rect(0, 0, Math.Abs(mapBounds.width - mapBounds.x), Math.Abs(mapBounds.height - mapBounds.y));
+            mapSize.x = (mapSize.width < _canvasRect.width ? (_canvasRect.width - mapSize.width) * 0.5f : 0);
+            mapSize.y = (mapSize.height < _canvasRect.height ? (_canvasRect.height - mapSize.height) * 0.5f : 0);
+            GUIStyle tmpStyle = new GUIStyle(GUI.skin.box);
+            tmpStyle.margin = new RectOffset();
+            GUI.Box(mapSize, string.Empty, tmpStyle);
+
+//            Debug.Log("CanvasRect: " + _canvasRect + ", \tMapBounds: " + mapBounds + ",\tScale: " + mapScale + "\nViewRect: " + viewRect + ", \t\t\t\tViewOffset: " + viewOffset
+//                      + "\t\tmapSize: " + mapSize);
+
+            //
+            // Paint the nodes
+            //
+            foreach (Node n in m_ScriptEditorCtrl.FlowChart.Nodes)
+            {
+               displayNode = n as DisplayNode;
+
+               Rect nodeRect = new Rect(n.Bounds.X * mapScale + mapSize.x - mapBounds.x,
+                                        n.Bounds.Y * mapScale + mapSize.y - mapBounds.y,
+                                        n.Bounds.Width * mapScale,
+                                        n.Bounds.Height * mapScale );
+
+//               Debug.Log("\tViewOffset: " + viewOffset + ", \t\tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
+
+               GUI.Box(nodeRect, n.Name );
+
+
+//               category = string.Empty;
+//               name = string.Empty;
+//               comment = string.Empty;
+
+               if (displayNode is EntityEventDisplayNode)
+               {
+//                  category = "Events";
+//                  name = ((EntityEventDisplayNode)displayNode).EntityEvent.FriendlyType;
+//                  comment = ((EntityEventDisplayNode)displayNode).EntityEvent.Comment.Default;
+               }
+               else if (displayNode is LogicNodeDisplayNode)
+               {
+//                  category = "Actions";
+//                  name = ((LogicNodeDisplayNode)displayNode).LogicNode.FriendlyName;
+//                  comment = ((LogicNodeDisplayNode)displayNode).LogicNode.Comment.Default;
+               }
+               else if (displayNode is LocalNodeDisplayNode)
+               {
+//                  category = "Variables";
+//                  name = ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Type; // get FriendlyName
+//                  name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
+//                  name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
+//                  comment = ((LocalNodeDisplayNode)displayNode).LocalNode.Name.Default;
+               }
+               else if (displayNode is CommentDisplayNode)
+               {
+//                  category = "Comments";
+//                  name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
+//                  comment = ((CommentDisplayNode)displayNode).Comment.TitleText.Default;
+               }
+               else
+               {
+//                  category = "Miscellaneous";
+               }
+            }
+
+
+            foreach (Link l in m_ScriptEditorCtrl.FlowChart.Links)
+            {
+               Handles.color = UnityEngine.Color.black;
+
+               Vector3 start = new Vector3(mapSize.x - mapBounds.x + (l.Source.Node.Location.X + l.Source.Node.Size.Width) * mapScale,
+                                           mapSize.y - mapBounds.y + (l.Source.Node.Location.Y + l.Source.Anchor.Y) * mapScale,
+                                           0);
+               Vector3 end = new Vector3(mapSize.x - mapBounds.x + (l.Destination.Node.Location.X) * mapScale,
+                                         mapSize.y - mapBounds.y + (l.Destination.Node.Location.Y + l.Destination.Anchor.Y) * mapScale,
+                                         0);
+
+               Handles.DrawLine(start, end);
+            }
+
+            GUI.EndScrollView();
+         }
+         else
+         {
          // Canvas
          //
          if ( rect.width != 0 && rect.height != 0 )
@@ -1983,6 +2126,9 @@ http://www.detoxstudios.com";
          {
             _canvasRect = GUILayoutUtility.GetLastRect();
          }
+         }
+
+
       }
       EditorGUILayout.EndVertical();
 
