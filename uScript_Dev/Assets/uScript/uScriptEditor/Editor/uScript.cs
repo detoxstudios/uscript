@@ -13,9 +13,8 @@ using Detox.FlowChart;
 
 public class uScript : EditorWindow
 {
-                                                   //format is MAJOR.MINOR.YYMMDDa
-                                                   //(where 'a' is incremented if we have more than 1 daily build we release)
-   public string    uScriptBuild                   { get { return "0.5.110610i"; } }
+                                                   //format is MAJOR.MINOR.SVNCOMMITNUMBER
+   public string    uScriptBuild                   { get { return "0.4.763"; } }
    public string    RequiredUnityBuild             { get { return "3.3.0f4"; } }
    public string    RequiredUnityBetaBuildPrevious { get { return "3.4.0b3"; } }
    public string    RequiredUnityBetaBuild         { get { return "3.4.0b4"; } }
