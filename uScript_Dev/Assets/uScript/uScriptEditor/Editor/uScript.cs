@@ -13,8 +13,8 @@ using Detox.FlowChart;
 
 public class uScript : EditorWindow
 {
-                                                   //format is MAJOR.MINOR.SVNCOMMITNUMBER
-   public string    uScriptBuild                   { get { return "0.4.763"; } }
+                                                   //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
+   public string    uScriptBuild                   { get { return "0.4.0764"; } }
    public string    RequiredUnityBuild             { get { return "3.3.0f4"; } }
    public string    RequiredUnityBetaBuildPrevious { get { return "3.4.0b3"; } }
    public string    RequiredUnityBetaBuild         { get { return "3.4.0b4"; } }
