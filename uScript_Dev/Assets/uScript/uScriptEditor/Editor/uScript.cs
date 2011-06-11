@@ -17,8 +17,8 @@ public class uScript : EditorWindow
                                                    //(where 'a' is incremented if we have more than 1 daily build we release)
    public string    uScriptBuild                   { get { return "0.5.110610i"; } }
    public string    RequiredUnityBuild             { get { return "3.3.0f4"; } }
-   public string    RequiredUnityBetaBuildPrevious { get { return "3.4.0b2"; } }
-   public string    RequiredUnityBetaBuild         { get { return "3.4.0b3"; } }
+   public string    RequiredUnityBetaBuildPrevious { get { return "3.4.0b3"; } }
+   public string    RequiredUnityBetaBuild         { get { return "3.4.0b4"; } }
    public DateTime  ExpireDate                     { get { return new DateTime( 2011, 6, 30 ); } }
    public int       EULAVersion                    { get { return 20110608; } }
 
