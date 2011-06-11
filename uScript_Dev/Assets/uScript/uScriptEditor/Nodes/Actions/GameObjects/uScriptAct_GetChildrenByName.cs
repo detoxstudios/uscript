@@ -24,9 +24,8 @@ public class uScriptAct_GetChildrenByName : uScriptLogic
 	[FriendlyName("Children Found")]
 	public bool ChildrenFound { get { return m_True; } }
 
-	private bool m_False = false;
 	[FriendlyName("Children Not Found")]
-	public bool ChildrenNotFound { get { return m_False; } }
+	public bool ChildrenNotFound { get { return !m_True; } }
 
 	public enum SearchType
 	{
@@ -45,10 +44,8 @@ public class uScriptAct_GetChildrenByName : uScriptLogic
                    [FriendlyName("Children Count"), SocketState(false, false)] out int ChildrenCount
                    )
 	{
-		
 		m_Out = false;
 		m_True = false;
-		m_False = false;
 		
 		List<GameObject> list = new List<GameObject> ();
 		
@@ -61,15 +58,7 @@ public class uScriptAct_GetChildrenByName : uScriptLogic
          ChildrenCount = list.Count;
          
          // Fire out the correct out socket
-         if (list.Count > 0)
-         {
-            m_True = true;
-         }
-         else
-         {
-            m_False = true;
-         }
-
+         m_True = list.Count > 0;
 		}
 	    else
 		{
@@ -80,7 +69,6 @@ public class uScriptAct_GetChildrenByName : uScriptLogic
 		}
 
 		m_Out = true;
-		
 	}
  
    private GameObject[] GetChildren(bool recursive, GameObject Target, SearchType st, string Name)

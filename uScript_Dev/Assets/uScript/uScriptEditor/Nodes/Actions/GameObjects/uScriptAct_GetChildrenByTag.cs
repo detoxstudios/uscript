@@ -24,9 +24,8 @@ public class uScriptAct_GetChildrenByTag : uScriptLogic
    [FriendlyName("Children Found")]
    public bool ChildrenFound { get { return m_True; } }
 
-   private bool m_False = false;
    [FriendlyName("Children Not Found")]
-   public bool ChildrenNotFound { get { return m_False; } }
+   public bool ChildrenNotFound { get { return !m_True; } }
 
    public enum SearchType
    {
@@ -45,10 +44,8 @@ public class uScriptAct_GetChildrenByTag : uScriptLogic
                    [FriendlyName("Children Count"), SocketState(false, false)] out int ChildrenCount
                    )
    {
-      
       m_Out = false;
       m_True = false;
-      m_False = false;
       
       List<GameObject> list = new List<GameObject> ();
       
@@ -57,20 +54,15 @@ public class uScriptAct_GetChildrenByTag : uScriptLogic
 
          foreach (Transform child in Target.transform)
          {
-            list.AddRange(GetChildren(recursive, Target, SearchMethod, Tag));
+            list.AddRange(GetChildren(recursive, child.gameObject, SearchMethod, Tag));
          }
 
          Children = list.ToArray ();
          FirstChild = Children[0];
          ChildrenCount = list.Count;
 
-      // Fire out the correct true/false out socket
-         if (list.Count > 0) {
-            m_True = true;
-         } else {
-            m_False = true;
-         }
-
+         // Fire out the correct true/false out socket
+         m_True = list.Count > 0;
       }
       else
       {
@@ -81,7 +73,6 @@ public class uScriptAct_GetChildrenByTag : uScriptLogic
       }
 
       m_Out = true;
-      
    }
 
    private GameObject[] GetChildren(bool recursive, GameObject Target, SearchType st, string Tag)

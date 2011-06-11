@@ -24,9 +24,8 @@ public class uScriptAct_GetAllChildren : uScriptLogic
    [FriendlyName("Children Found")]
    public bool ChildrenFound { get { return m_True; } }
 
-   private bool m_False = false;
    [FriendlyName("Children Not Found")]
-   public bool ChildrenNotFound { get { return m_False; } }
+   public bool ChildrenNotFound { get { return !m_True; } }
 
    public void In (
                    [FriendlyName("Target")] GameObject Target,
@@ -35,18 +34,15 @@ public class uScriptAct_GetAllChildren : uScriptLogic
                    [FriendlyName("Children")] out GameObject[] Children,
                    [FriendlyName("Children Count"), SocketState(false, false)] out int ChildrenCount)
    {
-      
       m_Out = false;
       m_True = false;
-      m_False = false;
 
       List<GameObject> list = new List<GameObject> ();
       
       if (null != Target) {
-
          foreach (Transform child in Target.transform)
          {
-            list.AddRange(GetChildren(recursive, Target));
+            list.AddRange(GetChildren(recursive, child.gameObject));
          }
 
          Children = list.ToArray ();
@@ -54,15 +50,7 @@ public class uScriptAct_GetAllChildren : uScriptLogic
          ChildrenCount = list.Count;
 
          // Fire out the correct out socket
-         if (list.Count > 0)
-         {
-            m_True = true;
-         }
-         else
-         {
-            m_False = true;
-         }
-
+         m_True = list.Count > 0;
       }
       else
       {
@@ -73,7 +61,6 @@ public class uScriptAct_GetAllChildren : uScriptLogic
       }
       
       m_Out = true;
-      
    }
 
    private GameObject[] GetChildren(bool recursive, GameObject Target)
