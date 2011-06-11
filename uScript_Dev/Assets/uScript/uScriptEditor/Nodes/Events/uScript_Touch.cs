@@ -1,18 +1,17 @@
 // uScript uScript_Touch.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when a touch event(s) happens.
+// Desc: Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.
 
 using UnityEngine;
 using System.Collections;
 
 [NodeAutoAssignMasterInstance(true)]
-[NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Input Events")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Fires an event signal when a touch event(s) happens.")]
-[NodeDescription("Fires an event signal when a touch event(s) happens.\n \nTouches: Array of UnityEngine.Touch objects.")]
+[NodeToolTip("Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.")]
+[NodeDescription("Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.\n \nFinger ID (out): ID of this Touch event.\nPosition (out): 2D screen position where the Touch event occured.\nDelta Position (out): Change in position of the Touch event.\nDelta Time (out): Amount of time (in seconds) that has passed since the last state change.\nTap Count (out): iOS - how many times the user has tapped the screen without moving away from the original tap spot. Android - unsupported, this is always 1.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -23,23 +22,63 @@ public class uScript_Touch : uScriptEvent
   
    public class TouchEventArgs : System.EventArgs
    {
-      public Touch[] Touches { get { return m_Touches; } }
-      private Touch [] m_Touches;
+      private Touch m_Touch;
+      
+      [FriendlyName("Finger ID"), SocketState(false, false)]
+      public int FingerId { get { return m_Touch.fingerId; } }
      
-      public TouchEventArgs(Touch []touches)
+      public Vector2 Position { get { return m_Touch.position; } }
+     
+      [FriendlyName("Delta Position")]
+      public Vector2 DeltaPosition { get { return m_Touch.deltaPosition; } }
+
+      [FriendlyName("Delta Time"), SocketState(false, false)]
+      public float DeltaTime { get { return m_Touch.deltaTime; } }
+
+      [FriendlyName("Tap Count"), SocketState(false, false)]
+      public int TapCount { get { return m_Touch.tapCount; } }
+
+      public TouchEventArgs(Touch touch)
       {
-         m_Touches = touches;
+         m_Touch = touch;
       }
    }
 
-   [FriendlyName("On Touch Event")]
-   public event uScriptEventHandler OnTouches;
+   [FriendlyName("On Touch Began")]
+   public event uScriptEventHandler OnTouchBegan;
+   [FriendlyName("On Touch Moved")]
+   public event uScriptEventHandler OnTouchMoved;
+   [FriendlyName("On Touch Stationary")]
+   public event uScriptEventHandler OnTouchStationary;
+   [FriendlyName("On Touch Ended")]
+   public event uScriptEventHandler OnTouchEnded;
+   [FriendlyName("On Touch Canceled")]
+   public event uScriptEventHandler OnTouchCanceled;
 
    void Update()
    {
-      if ( Input.touchCount > 0 )
+      foreach (UnityEngine.Touch touch in Input.touches)
       {
-         if ( null != OnTouches ) OnTouches( this, new TouchEventArgs(Input.touches) );     
+         if (touch.phase == TouchPhase.Began)
+         {
+            if ( null != OnTouchBegan ) OnTouchBegan( this, new TouchEventArgs(touch) );     
+         }
+         else if (touch.phase == TouchPhase.Moved)
+         {
+            if ( null != OnTouchMoved ) OnTouchMoved( this, new TouchEventArgs(touch) );     
+         }
+         else if (touch.phase == TouchPhase.Stationary)
+         {
+            if ( null != OnTouchStationary ) OnTouchStationary( this, new TouchEventArgs(touch) );     
+         }
+         else if (touch.phase == TouchPhase.Ended)
+         {
+            if ( null != OnTouchEnded ) OnTouchEnded( this, new TouchEventArgs(touch) );     
+         }
+         else if (touch.phase == TouchPhase.Canceled)
+         {
+            if ( null != OnTouchCanceled ) OnTouchCanceled( this, new TouchEventArgs(touch) );     
+         }
       }
    }
 }
