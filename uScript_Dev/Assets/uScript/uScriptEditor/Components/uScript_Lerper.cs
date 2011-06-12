@@ -48,7 +48,7 @@ public class uScript_Lerper
       m_LoopType   = loopType;
       m_LoopCount  = loopCount;
 
-      //if LoopType is None, ignore lopoping completely and play once
+      //if LoopType is None, play once by default
       if (m_LoopType == LoopType.None)
       {
          m_LoopCount = 1;
