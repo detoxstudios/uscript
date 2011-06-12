@@ -22,17 +22,17 @@ public class uScript_DeviceOrientation : uScriptEvent
    
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
   
-   [FriendlyName("On Device Portrait")]
+   [FriendlyName("On Portrait")]
    public event uScriptEventHandler OnDevicePortrait;
-   [FriendlyName("On Device Portrait Upside-Down")]
+   [FriendlyName("On Portrait Upside-Down")]
    public event uScriptEventHandler OnDevicePortraitUpsideDown;
-   [FriendlyName("On Device Landscape Left")]
+   [FriendlyName("On Landscape Left")]
    public event uScriptEventHandler OnDeviceLandscapeLeft;
-   [FriendlyName("On Device Landscape Right")]
+   [FriendlyName("On Landscape Right")]
    public event uScriptEventHandler OnDeviceLandscapeRight;
-   [FriendlyName("On Device Face Up")]
+   [FriendlyName("On Face Up")]
    public event uScriptEventHandler OnDeviceFaceUp;
-   [FriendlyName("On Device Face Down")]
+   [FriendlyName("On Face Down")]
    public event uScriptEventHandler OnDeviceFaceDown;
 
    void Update()

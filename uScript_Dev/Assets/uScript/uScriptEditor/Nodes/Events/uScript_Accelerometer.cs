@@ -35,7 +35,7 @@ public class uScript_Accelerometer : uScriptEvent
       }
    }
 
-   [FriendlyName("On Acceleration Event")]
+   [FriendlyName("On Acceleration")]
    public event uScriptEventHandler OnAccelerationEvent;
 
    void Update()
