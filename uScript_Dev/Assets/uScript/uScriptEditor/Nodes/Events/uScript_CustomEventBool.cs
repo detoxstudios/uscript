@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/CustomEventBool")]
+[AddComponentMenu("uScript/Event Components/Custom Events/Custom Event (Bool)")]
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Custom Events")]

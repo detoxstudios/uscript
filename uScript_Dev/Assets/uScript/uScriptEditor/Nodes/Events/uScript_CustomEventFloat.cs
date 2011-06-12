@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/CustomEvents/CustomEventFloat")]
+[AddComponentMenu("uScript/Event Components/Custom Events/Custom Event (Float)")]
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Custom Events")]

@@ -5,6 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("uScript/Event Components/Network Events/Network Serialization")]
 [NodeComponentType(typeof(Network))]
 
 [NodePath("Events/Network Events")]

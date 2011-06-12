@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 
-[AddComponentMenu("uScript/Trigger")]
+[AddComponentMenu("uScript/Event Components/Trigger")]
 [NodeComponentType(typeof(Collider))]
 
 [NodePath("Events")]

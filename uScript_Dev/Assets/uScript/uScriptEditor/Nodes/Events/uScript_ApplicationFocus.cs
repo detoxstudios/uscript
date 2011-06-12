@@ -5,6 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("uScript/Event Components/Application Focus")]
 [NodeAutoAssignMasterInstance(true)]
 [NodeComponentType(typeof(Transform))]
 

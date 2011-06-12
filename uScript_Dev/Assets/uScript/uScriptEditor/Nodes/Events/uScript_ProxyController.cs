@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 
-[AddComponentMenu("uScript/Collision")]
+[AddComponentMenu("uScript/Event Components/Proxy Controller")]
 [NodeComponentType(typeof(CharacterController))]
 
 [NodePath("Events/Physics Events")]

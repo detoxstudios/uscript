@@ -5,6 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("uScript/Event Components/Device Orientation")]
 [NodeAutoAssignMasterInstance(true)]
 
 [NodePath("Events/Input Events")]

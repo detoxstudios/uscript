@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/CustomEvents/CustomEventColor")]
+[AddComponentMenu("uScript/Event Components/Custom Events/Custom Event (Color)")]
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Custom Events")]

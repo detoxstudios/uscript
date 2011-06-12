@@ -5,6 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("uScript/Event Components/Post Effect")]
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Renderer Events")]
