@@ -47,6 +47,12 @@ public class uScript_Lerper
       m_IsReversed = false;
       m_LoopType   = loopType;
       m_LoopCount  = loopCount;
+
+      //if LoopType is None, ignore lopoping completely and play once
+      if (m_LoopType == LoopType.None)
+      {
+         m_LoopCount = 1;
+      }
   
       //if loop count is 0 don't run at all
       if ( m_LoopIteration == m_LoopCount )
