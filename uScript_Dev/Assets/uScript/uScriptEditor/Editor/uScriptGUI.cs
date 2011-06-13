@@ -540,7 +540,11 @@ public static class uScriptGUI
             if ( null != unityObject ) unityObject = ((Component) unityObject).gameObject;
          }
 
+#if UNITY_3_3
          unityObject = EditorGUILayout.ObjectField( unityObject, type, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
+#elif UNITY_3_4
+         unityObject = EditorGUILayout.ObjectField( unityObject, type, true, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
+#endif
 
          // if that object (or the changed object) does exist, use it's name to update the property value
          // if it doesn't exist then the 'val' will stay as what was entered into the TextField
