@@ -721,7 +721,8 @@ public partial class uScriptConfig
    public static float bezierPenWidth = 1.25f;
    public static float bezierPenWidthSelected = 1.5f;
 
-   public static String[] StyleTypes = {
+   public static String[] VariableStyleTypes = 
+                                    {
                                        "variable_string",
                                        "variable_bool",
                                        "variable_float",
@@ -731,6 +732,18 @@ public partial class uScriptConfig
                                        "variable_gameobject",
                                        "variable_object",
                                        "variable_selected"
+                                    };
+   public static String[] PropertyStyleTypes = 
+                                    {
+                                       "property_string",
+                                       "property_bool",
+                                       "property_float",
+                                       "property_int",
+                                       "property_default",
+                                       "property_vector3",
+                                       "property_gameobject",
+                                       "property_object",
+                                       "property_selected"
                                     };
    public static UnityEngine.Color[] LineColors = 
                                     {

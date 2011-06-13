@@ -1229,14 +1229,14 @@ namespace Detox.FlowChart
 
                if (link.Source.Node != null || link.Destination.Node != null)
                {
-				  // check source node type first
+                  // check source node type first
                   styleName = link.Source.Node.StyleName;
-
+                  
                   if (!String.IsNullOrEmpty(styleName))
                   {
-                     for (int j = 0; j < uScriptConfig.StyleTypes.Length; j++)
+                     for (int j = 0; j < uScriptConfig.VariableStyleTypes.Length; j++)
                      {
-                        if (styleName == uScriptConfig.StyleTypes[j])
+                        if (styleName == uScriptConfig.VariableStyleTypes[j] || styleName == uScriptConfig.PropertyStyleTypes[j])
                         {
                            index = j;
                            break;
@@ -1244,23 +1244,23 @@ namespace Detox.FlowChart
                      }
                   }
 						
-				  if (index == -1)
-				  {
-				     // didn't find source node style, try the destination
+                  if (index == -1)
+                  {
+                     // didn't find source node style, try the destination
                      styleName = link.Destination.Node.StyleName;
-
+                     
                      if (!String.IsNullOrEmpty(styleName))
                      {
-                        for (int j = 0; j < uScriptConfig.StyleTypes.Length; j++)
+                        for (int j = 0; j < uScriptConfig.VariableStyleTypes.Length; j++)
                         {
-                           if (styleName == uScriptConfig.StyleTypes[j])
+                           if (styleName == uScriptConfig.VariableStyleTypes[j] || styleName == uScriptConfig.PropertyStyleTypes[j])
                            {
                               index = j;
                               break;
                            }
                         }
                      }
-				  }
+                  }
                }
 
                if (index != -1)
