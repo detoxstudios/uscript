@@ -1949,7 +1949,17 @@ http://www.detoxstudios.com";
             GUIStyle style2 = new GUIStyle(EditorStyles.boldLabel);
             style2.padding = new RectOffset(16, 4, 2, 2);
             style2.margin = new RectOffset();
-            GUILayout.Label(m_ScriptEditorCtrl.ScriptName.Substring(0, m_ScriptEditorCtrl.ScriptName.IndexOf(".")), style2);
+            if (m_ScriptEditorCtrl != null && !string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptName))
+            {
+               int dot = m_ScriptEditorCtrl.ScriptName.IndexOf(".");
+               string filename = m_ScriptEditorCtrl.ScriptName;
+               if (dot != -1)
+               {
+                  filename = m_ScriptEditorCtrl.ScriptName.Substring(0, m_ScriptEditorCtrl.ScriptName.IndexOf("."));
+               }
+               
+               GUILayout.Label(filename, style2);
+            }
          }
          EditorGUILayout.EndHorizontal();
 
