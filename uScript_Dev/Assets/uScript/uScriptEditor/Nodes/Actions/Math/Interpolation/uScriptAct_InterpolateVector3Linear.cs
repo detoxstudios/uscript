@@ -19,6 +19,7 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
    private Vector3 m_Start;
    private Vector3 m_End;
    private Vector3 m_LastValue;
+   private bool m_Began = false;
 
    private uScript_Lerper m_Lerper = new uScript_Lerper( );
 
@@ -42,6 +43,8 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
       m_Start      = startValue;
       m_LastValue  = startValue;
       m_End        = endValue;
+
+      m_Began      = true;
 
       currentValue = startValue;
    }
@@ -76,6 +79,10 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
       m_Lerper.Stop( );
 
       currentValue = m_LastValue;
+      if (!m_Began)
+      {
+         currentValue = startValue;
+      }
    }
 
    public void Resume(
@@ -91,5 +98,9 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
       m_Lerper.Resume( );
 
       currentValue = m_LastValue;
+      if (!m_Began)
+      {
+         currentValue = startValue;
+      }
    }
 }

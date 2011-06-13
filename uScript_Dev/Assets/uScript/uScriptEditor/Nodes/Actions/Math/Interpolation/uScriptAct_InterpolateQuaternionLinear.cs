@@ -20,6 +20,7 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
    private Vector4 m_End;
 
    private Quaternion m_LastValue;
+   private bool m_Began = false;
 
    private uScript_Lerper m_Lerper = new uScript_Lerper( );
 
@@ -44,6 +45,9 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       m_End        = new Vector4(endValue.x, endValue.y, endValue.z, endValue.w);
 
       m_LastValue  = startValue;
+  
+      m_Began      = true;
+
       currentValue = startValue;
    }
 
@@ -83,6 +87,10 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       m_Lerper.Stop( );
 
       currentValue = m_LastValue;
+      if (!m_Began)
+      {
+         currentValue = startValue;
+      }
    }
 
    public void Resume(
@@ -98,5 +106,9 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       m_Lerper.Resume( );
 
       currentValue = m_LastValue;
+      if (!m_Began)
+      {
+         currentValue = startValue;
+      }
    }
 }
