@@ -1,0 +1,3 @@
+uScript will detect any custom nodes or events you put in this location.
+
+See the SDK examples and tutorials to learn how ot make your own nodes.

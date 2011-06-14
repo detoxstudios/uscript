@@ -4116,7 +4116,7 @@ Vector2 _scrollNewProperties;
       return defaultCategory;
    }
 
-   public static bool IsNodeDeprecated(EntityNode node)
+   public static bool IsNodeTypeDeprecated(EntityNode node)
    {
       string type = ScriptEditor.FindNodeType(node);
       if ( "" == type ) return false;

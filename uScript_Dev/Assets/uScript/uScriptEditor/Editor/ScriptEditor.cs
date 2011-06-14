@@ -2031,7 +2031,7 @@ namespace Detox.ScriptEditor
       Hashtable m_Nodes = new Hashtable( );
       Hashtable m_DeprecatedNodes = new Hashtable( );
 
-      public bool IsDeprecated( EntityNode node )
+      public bool IsNodeInstanceDeprecated( EntityNode node )
       {
          return m_DeprecatedNodes.Contains(node.Guid);
       }
@@ -2956,7 +2956,7 @@ namespace Detox.ScriptEditor
             {
                //if deprecated attribute doesn't exist then the reflection values changed and the script hasn't been resaved
                //we know the user acknowledged it - so now allow them to upgrade it
-               if ( false == uScript.IsNodeDeprecated(oldNode) )
+               if ( false == uScript.IsNodeTypeDeprecated(oldNode) )
                {
                   m_DeprecatedNodes.Remove( oldNode.Guid );
                }
@@ -3289,7 +3289,7 @@ namespace Detox.ScriptEditor
             cloned.ShowComment = new Parameter( data.ShowComment );
             cloned.Comment     = new Parameter( data.Comment );         
          
-            if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
+            if ( false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
             {
                //Status.Warning( "Matching EntityEvent " + data.ComponentType + " could not be found" );
                m_DeprecatedNodes[ cloned.Guid ] = cloned;
@@ -3360,7 +3360,7 @@ namespace Detox.ScriptEditor
             cloned.ShowComment = new Parameter( data.ShowComment );
             cloned.Comment     = new Parameter( data.Comment );
             
-            if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
+            if ( false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
             {
                //Status.Warning( "Matching EntityMethod " + data.ComponentType + " " + data.Input.Name + " could not be found" );
                m_DeprecatedNodes[ cloned.Guid ] = cloned;
@@ -3414,7 +3414,7 @@ namespace Detox.ScriptEditor
             cloned.ShowComment = new Parameter( data.ShowComment );
             cloned.Comment     = new Parameter( data.Comment );
 
-            if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
+            if ( false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
             {
                //Status.Warning( "Matching EntityProperty " + data.Instance.Name + " " + data.Parameter.Name + " could not be found" );
                m_DeprecatedNodes[ cloned.Guid ] = cloned;
@@ -3464,7 +3464,7 @@ namespace Detox.ScriptEditor
             cloned.ShowComment= new Parameter( data.ShowComment );
             cloned.Comment    = new Parameter( data.Comment );
 
-            if ( false == exactMatch || uScript.IsNodeDeprecated(cloned) )
+            if ( false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
             {
                //Status.Warning( "Matching LogicNode " + data.Type + " could not be found" );
                m_DeprecatedNodes[ cloned.Guid ] = cloned;

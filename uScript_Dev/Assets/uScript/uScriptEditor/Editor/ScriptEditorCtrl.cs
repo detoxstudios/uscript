@@ -1362,7 +1362,7 @@ namespace Detox.ScriptEditor
          {
             CommentDisplayNode node = new CommentDisplayNode( commentNode );
             
-            if ( m_ScriptEditor.IsDeprecated(commentNode) ) node.Deprecate( );
+            if ( m_ScriptEditor.IsNodeInstanceDeprecated(commentNode) ) node.Deprecate( );
          
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -1381,7 +1381,7 @@ namespace Detox.ScriptEditor
          {
             EntityEventDisplayNode node = new EntityEventDisplayNode( entityEvent );
                      
-            if ( m_ScriptEditor.IsDeprecated(entityEvent) ) node.Deprecate( );
+            if ( m_ScriptEditor.IsNodeInstanceDeprecated(entityEvent) ) node.Deprecate( );
 
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -1400,7 +1400,7 @@ namespace Detox.ScriptEditor
          {
             EntityMethodDisplayNode node = new EntityMethodDisplayNode( entityMethod );
 
-            if ( m_ScriptEditor.IsDeprecated(entityMethod) ) node.Deprecate( );
+            if ( m_ScriptEditor.IsNodeInstanceDeprecated(entityMethod) ) node.Deprecate( );
 
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -1419,7 +1419,7 @@ namespace Detox.ScriptEditor
          {
             EntityPropertyDisplayNode node = new EntityPropertyDisplayNode( entityProperty );
 
-            if ( m_ScriptEditor.IsDeprecated(entityProperty) ) node.Deprecate( );
+            if ( m_ScriptEditor.IsNodeInstanceDeprecated(entityProperty) ) node.Deprecate( );
 
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -1438,7 +1438,7 @@ namespace Detox.ScriptEditor
          {
             LocalNodeDisplayNode node = new LocalNodeDisplayNode( localNode );
 
-            if ( m_ScriptEditor.IsDeprecated(localNode) ) node.Deprecate( );
+            if ( m_ScriptEditor.IsNodeInstanceDeprecated(localNode) ) node.Deprecate( );
 
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -1457,7 +1457,7 @@ namespace Detox.ScriptEditor
          {
             LogicNodeDisplayNode node = new LogicNodeDisplayNode( logicNode );
 
-            if ( m_ScriptEditor.IsDeprecated(logicNode) ) node.Deprecate( );
+            if ( m_ScriptEditor.IsNodeInstanceDeprecated(logicNode) ) node.Deprecate( );
 
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -1476,7 +1476,7 @@ namespace Detox.ScriptEditor
          {
             ExternalConnectionDisplayNode node = new ExternalConnectionDisplayNode( external );
 
-            if ( m_ScriptEditor.IsDeprecated(external) ) node.Deprecate( );
+            if ( m_ScriptEditor.IsNodeInstanceDeprecated(external) ) node.Deprecate( );
 
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -1495,7 +1495,7 @@ namespace Detox.ScriptEditor
          {
             OwnerConnectionDisplayNode node = new OwnerConnectionDisplayNode( owner );
 
-            if ( m_ScriptEditor.IsDeprecated(owner) ) node.Deprecate( );
+            if ( m_ScriptEditor.IsNodeInstanceDeprecated(owner) ) node.Deprecate( );
 
             if ( guidsToSelect.Contains(node.Guid) )
             {
@@ -2026,6 +2026,8 @@ namespace Detox.ScriptEditor
 
                foreach ( EntityEvent e in desc.Events )
                {
+                  if ( true == uScript.IsNodeTypeDeprecated(e) ) continue;
+
                   ToolStripItem item = friendlyMenu.DropDownItems.Add( e.FriendlyType );
                   item.Tag = e;
 
@@ -2044,6 +2046,8 @@ namespace Detox.ScriptEditor
 
                foreach ( EntityMethod e in desc.Methods )
                {
+                  if ( true == uScript.IsNodeTypeDeprecated(e) ) continue;
+
                   if ( false == signatures.Contains(e.Input.FriendlyName) ) 
                   {
                      signatures[ e.Input.FriendlyName ] = new List<EntityMethod>( );
@@ -2087,6 +2091,8 @@ namespace Detox.ScriptEditor
 
                foreach ( EntityProperty e in desc.Properties )
                {
+                  if ( true == uScript.IsNodeTypeDeprecated(e) ) continue;
+
                   ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName );
 
                   ToolStripItem item = friendlyMenu.DropDownItems.Add( e.Parameter.FriendlyName );
@@ -2099,6 +2105,8 @@ namespace Detox.ScriptEditor
 
          foreach ( LogicNode node in m_ScriptEditor.LogicNodes )
          {
+            if ( true == uScript.IsNodeTypeDeprecated(node) ) continue;
+
             //if we care about types, and this type isn't registered, ignore it
             if ( null != typeHash && false == typeHash.Contains(node.Type) ) continue;
 
