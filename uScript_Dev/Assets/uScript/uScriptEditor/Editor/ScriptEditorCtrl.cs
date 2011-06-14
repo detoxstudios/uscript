@@ -1877,7 +1877,8 @@ namespace Detox.ScriptEditor
             {
                bool allowLink = false;
 
-               if ( hitPoint.Name == entityNode.Instance.Name )
+               if ( hitPoint.Name == entityNode.Instance.Name &&
+                    hitPoint.CanSource )
                {
                   allowLink = true;
                }
@@ -1885,7 +1886,8 @@ namespace Detox.ScriptEditor
                {
                   foreach ( Parameter p in entityNode.Parameters )
                   {
-                     if ( p.Name == hitPoint.Name )
+                     if ( p.Name == hitPoint.Name &&
+                          hitPoint.CanSource )
                      {
                         allowLink = true;
                         break;
