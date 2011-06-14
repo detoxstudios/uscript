@@ -1244,10 +1244,16 @@ http://www.detoxstudios.com";
       }
       EditorGUILayout.EndHorizontal();
 
-//      Redraw();  // This is taking to much CPU time.
+
+      if (Event.current.type == EventType.Repaint)
+      {
+         _statusbarRect = GUILayoutUtility.GetLastRect();
+      }
+
+      //      Redraw();  // This is taking to much CPU time.
    }
 
-
+   Rect _statusbarRect = new Rect();
 
 
    void DrawGUIPalette()
@@ -1963,181 +1969,215 @@ http://www.detoxstudios.com";
          }
          EditorGUILayout.EndHorizontal();
 
-
-         if (mapToggle)
+         GUILayout.BeginVertical(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
          {
-            Node node;
-            DisplayNode displayNode;
-
-
-            //
-            // Get the dimensions of the entire map at the specified scale
-            //
-            Rect mapBounds = new Rect();
-
-            // Start with the first ...
-            if (m_ScriptEditorCtrl.FlowChart.Nodes.Length > 0)
+            if (mapToggle)
             {
-               node = m_ScriptEditorCtrl.FlowChart.Nodes[0];
-               mapBounds = new Rect(node.Bounds.X, node.Bounds.Y, node.Bounds.Width, node.Bounds.Height);
-            }
+               Node node;
+               DisplayNode displayNode;
+   
+   
+               //
+               // Get the dimensions of the entire map at the specified scale
+               //
+               Rect mapBounds = new Rect();
+   
+               // Start with the first ...
+               if (m_ScriptEditorCtrl.FlowChart.Nodes.Length > 0)
+               {
+                  node = m_ScriptEditorCtrl.FlowChart.Nodes[0];
+                  mapBounds = new Rect(node.Bounds.X, node.Bounds.Y, node.Bounds.Width, node.Bounds.Height);
+               }
+   
+               // ... then loop through the remaining nodes ...
+               for (int i=1; i < m_ScriptEditorCtrl.FlowChart.Nodes.Length; i++)
+               {
+                  mapBounds.x = Math.Min(mapBounds.x, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X);
+                  mapBounds.y = Math.Min(mapBounds.y, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y);
+                  mapBounds.width = Math.Max(mapBounds.width, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X
+                                                        + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Width);
+                  mapBounds.height = Math.Max(mapBounds.height, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y
+                                                          + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Height);
+               }
+   
+               // ... and finally, apply the scaling
+               mapBounds.x *= mapScale;
+               mapBounds.y *= mapScale;
+               mapBounds.width *= mapScale;
+               mapBounds.height *= mapScale;
+   
+   
+               //
+               // Set the size of the viewRect
+               //
+               Rect viewRect = new Rect();
+               viewRect.width = (mapBounds.width - mapBounds.x);
+               viewRect.height = (mapBounds.height - mapBounds.y);
+   
 
-            // ... then loop through the remaining nodes ...
-            for (int i=1; i < m_ScriptEditorCtrl.FlowChart.Nodes.Length; i++)
+               Rect mapRect = new Rect();
+
+               if (_mouseRegionRect.ContainsKey(MouseRegion.HandleCanvas))
+               {
+                  mapRect.x = _guiPanelPalette_Width + 3;
+                  mapRect.y = 17;
+                  mapRect.width = position.width - (_guiPanelPalette_Width + 3);
+                  mapRect.height = position.height - 18 - 2 - 17 - _guiPanelProperties_Height - 8;
+//                  Debug.Log(_mouseRegionRect[MouseRegion.HandleCanvas]);
+               }
+               //@SOLUS
+
+//               Debug.Log("_canvasRect: " + _canvasRect + "\t\tposition: " + position + "\n"
+//                         + "PaletteWidth: " + _guiPanelPalette_Width + ", PropertiesHeight: " + _guiPanelProperties_Height + ", StatusbarRect: " + _statusbarRect + ", mapRect: " + mapRect);
+
+
+
+
+               mapScroll = GUI.BeginScrollView(mapRect, mapScroll, viewRect, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
+
+
+               // Temporary box that represents the bounding area
+               Rect mapSize = new Rect(0, 0, Math.Abs(mapBounds.width - mapBounds.x), Math.Abs(mapBounds.height - mapBounds.y));
+               mapSize.x = (mapSize.width < mapRect.width ? (mapRect.width - mapSize.width) * 0.5f : 0);
+               mapSize.y = (mapSize.height < mapRect.height ? (mapRect.height - mapSize.height) * 0.5f : 0);
+               GUIStyle tmpStyle = new GUIStyle(GUI.skin.box);
+               tmpStyle.margin = new RectOffset();
+               GUI.Box(mapSize, string.Empty, tmpStyle);
+
+   //            Debug.Log("CanvasRect: " + mapRect + ", \tMapBounds: " + mapBounds + ",\tScale: " + mapScale + "\nViewRect: " + viewRect + ", \t\t\t\tViewOffset: " + viewOffset
+   //                      + "\t\tmapSize: " + mapSize);
+
+
+               Rect adjustedRect = new Rect(mapRect);
+               adjustedRect.x += mapScroll.x;
+               adjustedRect.y += mapScroll.y;
+
+
+
+               //
+               // Paint the nodes
+               //
+               foreach (Node n in m_ScriptEditorCtrl.FlowChart.Nodes)
+               {
+                  displayNode = n as DisplayNode;
+
+                  Rect nodeRect = new Rect(n.Bounds.X * mapScale + mapSize.x - mapBounds.x,
+                                           n.Bounds.Y * mapScale + mapSize.y - mapBounds.y,
+                                           n.Bounds.Width * mapScale,
+                                           n.Bounds.Height * mapScale );
+
+   //               Debug.Log("\tViewOffset: " + viewOffset + ", \t\tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
+
+
+//                  if (adjustedRect.Contains( new Vector2(nodeRect.x, nodeRect.y)))
+//                  {
+                     GUI.Box(nodeRect, n.Name );
+//                  }
+
+
+   //               category = string.Empty;
+   //               name = string.Empty;
+   //               comment = string.Empty;
+
+                  if (displayNode is EntityEventDisplayNode)
+                  {
+   //                  category = "Events";
+   //                  name = ((EntityEventDisplayNode)displayNode).EntityEvent.FriendlyType;
+   //                  comment = ((EntityEventDisplayNode)displayNode).EntityEvent.Comment.Default;
+                  }
+                  else if (displayNode is LogicNodeDisplayNode)
+                  {
+   //                  category = "Actions";
+   //                  name = ((LogicNodeDisplayNode)displayNode).LogicNode.FriendlyName;
+   //                  comment = ((LogicNodeDisplayNode)displayNode).LogicNode.Comment.Default;
+                  }
+                  else if (displayNode is LocalNodeDisplayNode)
+                  {
+   //                  category = "Variables";
+   //                  name = ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Type; // get FriendlyName
+   //                  name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
+   //                  name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
+   //                  comment = ((LocalNodeDisplayNode)displayNode).LocalNode.Name.Default;
+                  }
+                  else if (displayNode is CommentDisplayNode)
+                  {
+   //                  category = "Comments";
+   //                  name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
+   //                  comment = ((CommentDisplayNode)displayNode).Comment.TitleText.Default;
+                  }
+                  else
+                  {
+   //                  category = "Miscellaneous";
+                  }
+               }
+   
+
+               foreach (Link l in m_ScriptEditorCtrl.FlowChart.Links)
+               {
+                  Handles.color = UnityEngine.Color.black;
+   
+                  Vector3 start = new Vector3(mapSize.x - mapBounds.x + (l.Source.Node.Location.X + l.Source.Node.Size.Width) * mapScale,
+                                              mapSize.y - mapBounds.y + (l.Source.Node.Location.Y + l.Source.Anchor.Y) * mapScale,
+                                              0);
+                  Vector3 end = new Vector3(mapSize.x - mapBounds.x + (l.Destination.Node.Location.X) * mapScale,
+                                            mapSize.y - mapBounds.y + (l.Destination.Node.Location.Y + l.Destination.Anchor.Y) * mapScale,
+                                            0);
+
+//                  if (adjustedRect.Contains(start) || adjustedRect.Contains(end))
+//                  {
+                     Handles.DrawLine(start, end);
+//                  }
+               }
+   
+               GUI.EndScrollView();
+            }
+            else
             {
-               mapBounds.x = Math.Min(mapBounds.x, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X);
-               mapBounds.y = Math.Min(mapBounds.y, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y);
-               mapBounds.width = Math.Max(mapBounds.width, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X
-                                                     + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Width);
-               mapBounds.height = Math.Max(mapBounds.height, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y
-                                                       + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Height);
+               // Canvas
+               //
+               if ( rect.width != 0 && rect.height != 0 )
+               {
+                  m_NodeWindowRect = rect;
+               }
+   
+               GUIStyle style = new GUIStyle();
+               style.normal.background = uScriptConfig.canvasBackgroundTexture;
+   
+               GUI.SetNextControlName ("MainView" );
+   
+               _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, style, GUILayout.ExpandWidth(true));
+               {
+                  // Get the bounding area of all nodes on the canvas, plus 64px to
+                  // allow for 32px padding around the edges.  This will allow the
+                  // scrollbars to span the bounds accurately.
+                  //
+                  // For each dimension, use the larger of the bounding area and the
+                  // canvas mouseRegionRect.
+                  //
+                  // When zoom is implemented, make sure the results are accurately scaled
+                  //
+      //            int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].width) : 0);
+      //            int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].height-18) : 0);
+      //
+      //            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
+   
+                  // Paint the graph (nodes, sockets, links, and comments)
+                  PaintEventArgs args = new PaintEventArgs();
+                  args.Graphics = new System.Drawing.Graphics();
+                  m_ScriptEditorCtrl.GuiPaint(args);
+               }
+               EditorGUILayout.EndScrollView();
+   
+               GUI.SetNextControlName ("");
+
             }
-
-            // ... and finally, apply the scaling
-            mapBounds.x *= mapScale;
-            mapBounds.y *= mapScale;
-            mapBounds.width *= mapScale;
-            mapBounds.height *= mapScale;
-
-
-            //
-            // Set the size of the viewRect
-            //
-            Rect viewRect = new Rect();
-            viewRect.width = (mapBounds.width - mapBounds.x);
-            viewRect.height = (mapBounds.height - mapBounds.y);
-
-
-            mapScroll = GUI.BeginScrollView(_canvasRect, mapScroll, viewRect, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
-
-
-            // Temporary box that represents the bounding area
-            Rect mapSize = new Rect(0, 0, Math.Abs(mapBounds.width - mapBounds.x), Math.Abs(mapBounds.height - mapBounds.y));
-            mapSize.x = (mapSize.width < _canvasRect.width ? (_canvasRect.width - mapSize.width) * 0.5f : 0);
-            mapSize.y = (mapSize.height < _canvasRect.height ? (_canvasRect.height - mapSize.height) * 0.5f : 0);
-            GUIStyle tmpStyle = new GUIStyle(GUI.skin.box);
-            tmpStyle.margin = new RectOffset();
-            GUI.Box(mapSize, string.Empty, tmpStyle);
-
-//            Debug.Log("CanvasRect: " + _canvasRect + ", \tMapBounds: " + mapBounds + ",\tScale: " + mapScale + "\nViewRect: " + viewRect + ", \t\t\t\tViewOffset: " + viewOffset
-//                      + "\t\tmapSize: " + mapSize);
-
-            //
-            // Paint the nodes
-            //
-            foreach (Node n in m_ScriptEditorCtrl.FlowChart.Nodes)
-            {
-               displayNode = n as DisplayNode;
-
-               Rect nodeRect = new Rect(n.Bounds.X * mapScale + mapSize.x - mapBounds.x,
-                                        n.Bounds.Y * mapScale + mapSize.y - mapBounds.y,
-                                        n.Bounds.Width * mapScale,
-                                        n.Bounds.Height * mapScale );
-
-//               Debug.Log("\tViewOffset: " + viewOffset + ", \t\tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
-
-               GUI.Box(nodeRect, n.Name );
-
-
-//               category = string.Empty;
-//               name = string.Empty;
-//               comment = string.Empty;
-
-               if (displayNode is EntityEventDisplayNode)
-               {
-//                  category = "Events";
-//                  name = ((EntityEventDisplayNode)displayNode).EntityEvent.FriendlyType;
-//                  comment = ((EntityEventDisplayNode)displayNode).EntityEvent.Comment.Default;
-               }
-               else if (displayNode is LogicNodeDisplayNode)
-               {
-//                  category = "Actions";
-//                  name = ((LogicNodeDisplayNode)displayNode).LogicNode.FriendlyName;
-//                  comment = ((LogicNodeDisplayNode)displayNode).LogicNode.Comment.Default;
-               }
-               else if (displayNode is LocalNodeDisplayNode)
-               {
-//                  category = "Variables";
-//                  name = ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Type; // get FriendlyName
-//                  name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
-//                  name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
-//                  comment = ((LocalNodeDisplayNode)displayNode).LocalNode.Name.Default;
-               }
-               else if (displayNode is CommentDisplayNode)
-               {
-//                  category = "Comments";
-//                  name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
-//                  comment = ((CommentDisplayNode)displayNode).Comment.TitleText.Default;
-               }
-               else
-               {
-//                  category = "Miscellaneous";
-               }
-            }
-
-
-            foreach (Link l in m_ScriptEditorCtrl.FlowChart.Links)
-            {
-               Handles.color = UnityEngine.Color.black;
-
-               Vector3 start = new Vector3(mapSize.x - mapBounds.x + (l.Source.Node.Location.X + l.Source.Node.Size.Width) * mapScale,
-                                           mapSize.y - mapBounds.y + (l.Source.Node.Location.Y + l.Source.Anchor.Y) * mapScale,
-                                           0);
-               Vector3 end = new Vector3(mapSize.x - mapBounds.x + (l.Destination.Node.Location.X) * mapScale,
-                                         mapSize.y - mapBounds.y + (l.Destination.Node.Location.Y + l.Destination.Anchor.Y) * mapScale,
-                                         0);
-
-               Handles.DrawLine(start, end);
-            }
-
-            GUI.EndScrollView();
          }
-         else
-         {
-         // Canvas
-         //
-         if ( rect.width != 0 && rect.height != 0 )
-         {
-            m_NodeWindowRect = rect;
-         }
-
-         GUIStyle style = new GUIStyle();
-         style.normal.background = uScriptConfig.canvasBackgroundTexture;
-
-         GUI.SetNextControlName ("MainView" );
-
-         _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, style, GUILayout.ExpandWidth(true));
-         {
-            // Get the bounding area of all nodes on the canvas, plus 64px to
-            // allow for 32px padding around the edges.  This will allow the
-            // scrollbars to span the bounds accurately.
-            //
-            // For each dimension, use the larger of the bounding area and the
-            // canvas mouseRegionRect.
-            //
-            // When zoom is implemented, make sure the results are accurately scaled
-            //
-//            int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].width) : 0);
-//            int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].height-18) : 0);
-//
-//            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
-
-            // Paint the graph (nodes, sockets, links, and comments)
-            PaintEventArgs args = new PaintEventArgs();
-            args.Graphics = new System.Drawing.Graphics();
-            m_ScriptEditorCtrl.GuiPaint(args);
-         }
-         EditorGUILayout.EndScrollView();
-
-         GUI.SetNextControlName ("");
+         GUILayout.EndVertical();
 
          if (Event.current.type == EventType.Repaint)
          {
             _canvasRect = GUILayoutUtility.GetLastRect();
          }
-         }
-
-
       }
       EditorGUILayout.EndVertical();
 
@@ -2310,68 +2350,99 @@ Vector2 _scrollNewProperties;
          }
          EditorGUILayout.EndHorizontal();
 
-         _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
          {
-            /*foreach (string fileName in System.IO.Directory.GetFiles(Preferences.GeneratedScripts))
-            {
-               if ( fileName.Contains(".cs") )
-               {
-                  if ( !fileName.Contains( uScriptConfig.Files.GeneratedComponentExtension ) )
-                  {
-                     string scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
+            _wasMoving = true;
 
-                     GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
-//                     GUIStyle errorStyle = new GUIStyle(EditorStyles.label);
-                     bool currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
+            // Hide the panels while the canvas is moving
+            string message =
+               "The uScripts panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
 
-                     GUILayout.BeginHorizontal();
-                     {
-                        // uScript Label
-                        if (currentScript)
-                        {
-                           scriptStyle.fontStyle = FontStyle.Bold;
-                           scriptStyle.normal.textColor = (IsAttached ? UnityEngine.Color.white : UnityEngine.Color.red);
-                        }
-                        GUILayout.Label(scriptName, scriptStyle);
+            GUIStyle style = new GUIStyle(GUI.skin.label);
+            style.wordWrap = true;
+            style.padding = new RectOffset(16, 16, 16, 16);
 
-                        GUILayout.FlexibleSpace();
-
-                        // Load or Reload
-                        GUIContent content = new GUIContent((currentScript ? "Reload" : "Load"), "Click to load this uScript.");
-                        if (GUILayout.Button(content, (currentScript ? EditorStyles.miniButton : EditorStyles.miniButtonLeft)))
-                        {
-                           string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
-
-                           if ("" != path)
-                           {
-                              _openScriptToggle = false;
-                              OpenScript(path);
-                           }
-                        }
-
-                        // Insert as Nested uScript
-                        if (currentScript == false)
-                        {
-                           content = new GUIContent("Insert", "Click to add an instance of this uScript.");
-                           if (GUILayout.Button(content, EditorStyles.miniButtonRight))
-                           {
-                              Debug.LogWarning("An instance of the \""+ scriptName +"\" uScript should have been inserted into the graph.\n");
-                           }
-                        }
-                     }
-                     GUILayout.EndHorizontal();
-
-//                     if (currentScript && IsAttached == false)
-//                     {
-//                        errorStyle.normal.textColor = UnityEngine.Color.red;
-//                        errorStyle.wordWrap = true;
-//                        GUILayout.Label("This uScript is not attached to any GameObject in the scene.", errorStyle);
-//                     }
-                  }
-               }
-            }*/
+            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
          }
-         EditorGUILayout.EndScrollView();
+         else
+         {
+            _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+            {
+//               foreach (string fileName in System.IO.Directory.GetFiles(Preferences.GeneratedScripts))
+//               {
+//                  if ( fileName.Contains(".cs") )
+//                  {
+//                     if ( !fileName.Contains( uScriptConfig.Files.GeneratedComponentExtension ) )
+//                     {
+////                        if (m_ScriptEditorCtrl != null && !string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptName))
+////                        {
+////                           int dot = m_ScriptEditorCtrl.ScriptName.IndexOf(".");
+////                           string filename = m_ScriptEditorCtrl.ScriptName;
+////                           if (dot != -1)
+////                           {
+////                              filename = m_ScriptEditorCtrl.ScriptName.Substring(0, m_ScriptEditorCtrl.ScriptName.IndexOf("."));
+////                           }
+////
+////                           GUILayout.Label(filename, style2);
+////                        }
+//
+//
+//                        string scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
+//
+//                        GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
+//                        bool currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
+//
+//                        GUILayout.BeginHorizontal();
+//                        {
+//                           // uScript Label
+//                           if (currentScript)
+//                           {
+//                              scriptStyle.fontStyle = FontStyle.Bold;
+//                              scriptStyle.normal.textColor = (IsAttached ? UnityEngine.Color.white : UnityEngine.Color.red);
+//                           }
+//                           GUILayout.Label(scriptName, scriptStyle);
+//
+//                           GUILayout.FlexibleSpace();
+//
+//                           // Load or Reload
+//                           GUIContent content = new GUIContent((currentScript ? "Reload" : "Load"), "Click to load this uScript.");
+//                           if (GUILayout.Button(content, (currentScript ? EditorStyles.miniButton : EditorStyles.miniButtonLeft)))
+//                           {
+//                              string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
+//
+//                              if ("" != path)
+//                              {
+//                                 _openScriptToggle = false;
+//                                 OpenScript(path);
+//                              }
+//                           }
+//
+//                           // Insert as Nested uScript
+//                           if (currentScript == false)
+//                           {
+//                              content = new GUIContent("Insert", "Click to add an instance of this uScript.");
+//                              if (GUILayout.Button(content, EditorStyles.miniButtonRight))
+//                              {
+//                                 Debug.LogWarning("An instance of the \""+ scriptName +"\" uScript should have been inserted into the graph.\n");
+//                              }
+//                           }
+//                        }
+//                        GUILayout.EndHorizontal();
+//
+//   //                     if (currentScript && IsAttached == false)
+//   //                     {
+//   //                        errorStyle.normal.textColor = UnityEngine.Color.red;
+//   //                        errorStyle.wordWrap = true;
+//   //                        GUILayout.Label("This uScript is not attached to any GameObject in the scene.", errorStyle);
+//   //                     }
+//                     }
+//                  }
+//               }
+            }
+            EditorGUILayout.EndScrollView();
+         }
+
+
 
 
 
