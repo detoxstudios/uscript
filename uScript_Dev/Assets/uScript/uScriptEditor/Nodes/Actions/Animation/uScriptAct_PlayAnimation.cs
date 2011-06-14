@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Play the specified animation on the target object.")]
-[NodeDescription("Play the specified animation on the target object.\n \nTarget: The Target GameObject(s) to play the animation on.\nAnimation: The name of the animation to play. Animation must exist in the GameObject's AnimationClip.\nSpeed Factor: The speed at which to play the animation.\nStop Other Animation: Stop any currently playing animations before playing this one.")]
+[NodeDescription("Play the specified animation on the target object.\n \nTarget: The Target GameObject(s) to play the animation on.\nAnimation: The name of the animation to play. Animation must exist in the GameObject's AnimationClip.\nSpeed Factor: The speed at which to play the animation.\nWrap Mode: Specifies what should happen at the end of the animation.\nStop Other Animation: Stop any currently playing animations before playing this one.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
@@ -26,7 +26,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    [FriendlyName("Finished")]
    public event uScriptEventHandler Finished;
 
-   public void In(GameObject[] Target, AnimationClip Animation, [FriendlyName("Speed Factor"), DefaultValue(1f), SocketState(false, false)] float SpeedFactor, [FriendlyName("Stop Other Animation"), DefaultValue(true), SocketState(false, false)] bool StopOtherAnimations)
+   public void In(GameObject[] Target, AnimationClip Animation, [FriendlyName("Speed Factor"), DefaultValue(1f), SocketState(false, false)] float SpeedFactor, [FriendlyName("Wrap Mode"), SocketState(false, false)] WrapMode AnimWrapMode, [FriendlyName("Stop Other Animation"), DefaultValue(true), SocketState(false, false)] bool StopOtherAnimations)
    {
       m_GameObject = null;
 
@@ -64,7 +64,8 @@ public class uScriptAct_PlayAnimation : uScriptLogic
                currentTarget.animation[Animation.name].time = currentTarget.animation[Animation.name].length;
             }
 
-            currentTarget.animation[Animation.name].wrapMode = WrapMode.Once;
+
+            currentTarget.animation[Animation.name].wrapMode = AnimWrapMode;
             currentTarget.animation.Play(Animation.name);
          }
       }
