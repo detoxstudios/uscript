@@ -951,18 +951,22 @@ namespace Detox.ScriptEditor
 
          if ( uniqueObjects.Keys.Count > 0 )
          {
-            AddCSharpLine( "GameObject gameObject;" );
-            AddCSharpLine( "" );
-         
             foreach ( string key in uniqueObjects.Keys )
             {
+               //ignore master game object - this will render its own master gizmo
+               if ( key == uScriptRuntimeConfig.MasterObjectName ) continue;
+
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+               AddCSharpLine( "GameObject gameObject;" );
                AddCSharpLine( "gameObject = GameObject.Find( \"" + key + "\" ); " );
                AddCSharpLine( "if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, \"" + uniqueObjects[key] + "\");" );
-               AddCSharpLine( "" );
+               --m_TabStack;
+               AddCSharpLine( "}" );
             }
          }
       }
-
+      
       //declare all the members this file will use throughout the CSharp functions
       //all node inputs are represented by global variables
       private void DeclareMemberVariables( )
