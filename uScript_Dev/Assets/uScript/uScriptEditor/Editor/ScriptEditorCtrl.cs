@@ -1107,6 +1107,47 @@ namespace Detox.ScriptEditor
                entityNode.Instance = instance;
             }
 
+            //create a default unique name for the entity node
+            //leaving it blank will cause it to get new internal names
+            //based on its guid every time the script is loaded
+            //so links won't be maintained
+            if ( entityNode is ExternalConnection )
+            {
+               int i = 1;
+               bool uniqueName = false;
+
+               string name = "";
+               
+               while ( false == uniqueName )
+               {
+                  name = "External_" + i;
+
+                  uniqueName = true;
+                  
+                  if ( m_ScriptEditor.Externals.Length > 0 )
+                  {
+                     foreach ( ExternalConnection external in m_ScriptEditor.Externals )
+                     {
+                        if ( external.Name.Default == name )
+                        {
+                           uniqueName = false;
+                           break;
+                        }
+                     }
+                  }
+
+                  i++;
+               }
+
+               ExternalConnection clone = (ExternalConnection) entityNode;
+               Parameter clonedParameter = clone.Name;
+               clonedParameter.Default = name;
+
+               clone.Name = clonedParameter;
+               entityNode = clone;
+            }
+
+
             m_ScriptEditor.AddNode( entityNode );
             m_Dirty = true;
          }
