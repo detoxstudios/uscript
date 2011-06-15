@@ -637,12 +637,24 @@ http://www.detoxstudios.com";
          m_AddVariableNode = "";
       }
 
+      if ( _requestedCloseMap )
+      {
+         _requestedCloseMap = false;
+         mapToggle = false;
+
+         // Center the canvas on _requestCanvasLocation
+//         m_ScriptEditorCtrl.FlowChart.Location = new Point((int)_requestCanvasLocation.x, (int)_requestCanvasLocation.y);
+      }
+
       if ( false == contextActive )
       {
          OnMouseMove( );
       }
    }
 
+
+   bool _requestedCloseMap = false;
+//   Vector2 _requestCanvasLocation = Vector2.zero;
 
 
 
@@ -856,25 +868,43 @@ http://www.detoxstudios.com";
                {
                   GUI.FocusControl( "MainView" );
 
-                  if ( _canvasRect.Contains( Event.current.mousePosition ) )
+                  if ( mapToggle )
                   {
-                     m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
-
-                     int button = 0;
-
-                     if ( Event.current.button == 0 ) button = MouseButtons.Left;
-                     else if ( Event.current.button == 1 ) button = MouseButtons.Right;
-                     else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
-
-                     m_MouseDownArgs.Button = button;
-                     m_MouseDownArgs.X = (int)(Event.current.mousePosition.x);
-                     if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
-                     m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+                     if ( _canvasRect.Contains( Event.current.mousePosition ) )
+                     {
+                        _requestedCloseMap = true;
+                        Repaint();
+   
+                        // Enter the correct canvas position here using the current mapScale, scrollbar positions, etc.
+//                        _requestCanvasLocation = new Vector2((mapSize.x - mapBounds.x) - (Event.current.mousePosition.x + mapScroll.x) / mapScale,
+//                                                             (mapSize.y - mapBounds.y) - (Event.current.mousePosition.y + mapScroll.y) / mapScale);
+//  + mapSize.x - mapBounds.x
+//                        Debug.Log("MousePosition: " + Event.current.mousePosition + ", \t\tFlowChart.Location: " + _requestCanvasLocation + ", \t\tMapScale: " + mapScale + ", \t\tmapScroll: " + mapScroll
+//                               + "\nMapBounds: " + mapBounds + ", \t\tMapSize: + " + mapSize + "\n");
+                     }
                   }
-
-                  if ( Event.current.clickCount == 2 )
+                  else
                   {
-                     OpenLogicNode( );
+                     if ( _canvasRect.Contains( Event.current.mousePosition ) )
+                     {
+                        m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
+   
+                        int button = 0;
+   
+                        if ( Event.current.button == 0 ) button = MouseButtons.Left;
+                        else if ( Event.current.button == 1 ) button = MouseButtons.Right;
+                        else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
+   
+                        m_MouseDownArgs.Button = button;
+                        m_MouseDownArgs.X = (int)(Event.current.mousePosition.x);
+                        if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
+                        m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+                     }
+   
+                     if ( Event.current.clickCount == 2 )
+                     {
+                        OpenLogicNode( );
+                     }
                   }
                }
 
@@ -1944,7 +1974,7 @@ http://www.detoxstudios.com";
                m_DoPreferences = true;
             }
 
-            GUILayout.FlexibleSpace();
+            GUILayout.Space(20);
 
             mapToggle = GUILayout.Toggle(mapToggle, "Map", EditorStyles.toolbarButton);
 
@@ -1983,7 +2013,7 @@ http://www.detoxstudios.com";
                //
                // Get the dimensions of the entire map at the specified scale
                //
-               Rect mapBounds = new Rect();
+               mapBounds = new Rect();
    
                // Start with the first ...
                if (m_ScriptEditorCtrl.FlowChart.Nodes.Length > 0)
@@ -2040,7 +2070,7 @@ http://www.detoxstudios.com";
 
 
                // Temporary box that represents the bounding area
-               Rect mapSize = new Rect(0, 0, Math.Abs(mapBounds.width - mapBounds.x), Math.Abs(mapBounds.height - mapBounds.y));
+               mapSize = new Rect(0, 0, Math.Abs(mapBounds.width - mapBounds.x), Math.Abs(mapBounds.height - mapBounds.y));
                mapSize.x = (mapSize.width < mapRect.width ? (mapRect.width - mapSize.width) * 0.5f : 0);
                mapSize.y = (mapSize.height < mapRect.height ? (mapRect.height - mapSize.height) * 0.5f : 0);
                GUIStyle tmpStyle = new GUIStyle(GUI.skin.box);
@@ -2203,7 +2233,8 @@ http://www.detoxstudios.com";
       SetMouseRegion( MouseRegion.Canvas );//, 3, 1, -2, -4 );
    }
 
-
+   Rect mapSize = new Rect();
+   Rect mapBounds = new Rect();
 
 
 	// TEMP Variables for testing the new property grid methods
