@@ -733,6 +733,11 @@ namespace System.Drawing
       {
          return base.GetHashCode( );
       }
+
+      public override string ToString ()
+      {
+         return string.Format ("Point: (X:" + X + ", Y:" + Y + ")");
+      }
    }
 
    public struct PointF
