@@ -2053,6 +2053,22 @@ http://www.detoxstudios.com";
 
 
 
+               // Draw the canvas viewport rect
+               Rect viewportRect = new Rect(-m_ScriptEditorCtrl.FlowChart.Location.X * mapScale + mapSize.x - mapBounds.x,
+                                            -m_ScriptEditorCtrl.FlowChart.Location.Y * mapScale + mapSize.y - mapBounds.y,
+                                            mapRect.width * mapScale,
+                                            mapRect.height * mapScale);
+
+//               Debug.Log("viewportRect: " + viewportRect
+//                         + "\n\tLocation: " + m_ScriptEditorCtrl.FlowChart.Location
+//                         + "\n\tmapRect: " + mapRect
+//                         + "\n\tmapSize: " + mapSize
+//                         + "\n\tmapSize: " + mapSize
+//                         + "\n\tmapSize: " + mapSize
+//                         );
+               GUI.Box(viewportRect, string.Empty, tmpStyle);
+
+
                //
                // Paint the nodes
                //
@@ -2065,7 +2081,7 @@ http://www.detoxstudios.com";
                                            n.Bounds.Width * mapScale,
                                            n.Bounds.Height * mapScale );
 
-   //               Debug.Log("\tViewOffset: " + viewOffset + ", \t\tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
+//                  Debug.Log("\tNode -- Location: " + n.Location + ", \tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
 
 
 //                  if (adjustedRect.Contains( new Vector2(nodeRect.x, nodeRect.y)))
