@@ -872,7 +872,7 @@ http://www.detoxstudios.com";
                   {
                      if ( _canvasRect.Contains( Event.current.mousePosition ) )
                      {
-                        _requestedCloseMap = true;
+//                        _requestedCloseMap = true;
                         Repaint();
    
                         // Enter the correct canvas position here using the current mapScale, scrollbar positions, etc.
