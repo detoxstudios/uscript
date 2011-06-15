@@ -797,6 +797,10 @@ http://www.detoxstudios.com";
                      // close the window
                      m_WantsClose = true;
                   }
+                  else if ( Event.current.keyCode == KeyCode.M )
+                  {
+                     mapToggle = !mapToggle;
+                  }
                   else if ( Event.current.keyCode == KeyCode.Space )
                   {
                      m_HidePanelMode = !m_HidePanelMode;
