@@ -1247,14 +1247,13 @@ http://www.detoxstudios.com";
 
       if (Event.current.type == EventType.Repaint)
       {
-         _statusbarRect = GUILayoutUtility.GetLastRect();
+//         _statusbarRect = GUILayoutUtility.GetLastRect();
       }
 
       //      Redraw();  // This is taking to much CPU time.
    }
 
-   Rect _statusbarRect = new Rect();
-
+//   Rect _statusbarRect = new Rect();
 
    void DrawGUIPalette()
    {
