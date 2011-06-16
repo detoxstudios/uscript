@@ -1333,8 +1333,6 @@ namespace Detox.ScriptEditor
          if ( Position != node.Position ) return false;
          if ( Guid != node.Guid ) return false;
 
-         if ( FriendlyType != node.FriendlyType ) return false;
-
          if ( false == ArrayUtil.ArraysAreEqual(Outputs, node.Outputs) ) return false;
 
          if ( ShowComment != node.ShowComment ) return false;
@@ -1383,13 +1381,12 @@ namespace Detox.ScriptEditor
          set { m_Guid = value; }
       }
 
-      public EntityEvent(string type, string friendlyType, Plug [] outputs)
+      public EntityEvent(string componentType, string friendlyType, Plug [] outputs)
       { 
          Outputs = outputs;
 
-         FriendlyType = friendlyType;
-
-         ComponentType = type;
+         FriendlyType  = friendlyType;
+         ComponentType = componentType;
 
          m_Instance.Name  = "Instance";
          m_Instance.State = Parameter.VisibleState.Visible;
@@ -1429,8 +1426,8 @@ namespace Detox.ScriptEditor
       { 
          Outputs = ArrayUtil.ToPlugs( data.Outputs );
 
-         FriendlyType  = data.Instance.Type;
-         ComponentType = data.Instance.Type;
+         FriendlyType  = data.ComponentType;
+         ComponentType = data.ComponentType;
 
          m_Guid     = data.Guid; 
          m_Position = data.Position; 
@@ -3255,7 +3252,7 @@ namespace Detox.ScriptEditor
          }
          else
          {
-            cloned = new EntityEvent( data.Instance.Type, data.Instance.Type, ArrayUtil.ToPlugs(data.Outputs) );
+            cloned = new EntityEvent( data.ComponentType, data.ComponentType, ArrayUtil.ToPlugs(data.Outputs) );
             
             bool exactMatch = false;
 
