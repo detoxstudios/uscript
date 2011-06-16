@@ -725,6 +725,10 @@ namespace Detox.ScriptEditor
          {
             return "new UnityEngine.RaycastHit( )";
          }
+         else if ( "UnityEngine.NetworkPlayer" == type )
+         {
+            return "new UnityEngine.NetworkPlayer( )";
+         }
          else if ( type.Contains("[]") )
          {
             return FormatArrayValue( stringValue, type );
@@ -889,6 +893,22 @@ namespace Detox.ScriptEditor
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new UnityEngine.Component[0]"; }
+         }
+         else if ( "UnityEngine.NetworkPlayer[]" == type )
+         {
+            try
+            {
+               declaration = "new UnityEngine.NetworkPlayer[] {";
+
+               for ( int i = 0; i < elements.Length; i++ )
+               {
+                  declaration += "new UnityEngine.NetworkPlayer(),";
+               };
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new UnityEngine.NetworkPlayer[0]"; }
          }
          else
          {
