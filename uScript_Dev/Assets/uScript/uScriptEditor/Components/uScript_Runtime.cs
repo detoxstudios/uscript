@@ -251,4 +251,10 @@ public class uScriptCustomEvent
          }
       }   
    }
+
+   public static void SendCustomEventUp(string eventName, object eventData, GameObject eventSender)
+   {
+      CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
+      eventSender.SendMessageUpwards("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
+   }
 }
