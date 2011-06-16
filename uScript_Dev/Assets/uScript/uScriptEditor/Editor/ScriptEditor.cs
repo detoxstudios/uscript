@@ -51,7 +51,6 @@ namespace Detox.ScriptEditor
       public static bool operator == (Plug a, Plug b)
       {
          if ( a.Name != b.Name ) return false; 
-         if ( a.FriendlyName != b.FriendlyName ) return false; 
          
          return true;
       }

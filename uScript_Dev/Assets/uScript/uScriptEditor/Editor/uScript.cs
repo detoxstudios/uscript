@@ -3976,6 +3976,7 @@ Vector2 _scrollNewProperties;
 
       Dictionary<Type, Type> eventNodes = new Dictionary<Type,Type>( );
       GatherDerivedTypes( eventNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptEvent) );
+      GatherDerivedTypes( eventNodes, Preferences.UserNodes, typeof(uScriptEvent) );
 
       foreach ( UnityEngine.Object o in allObjects )
       {
