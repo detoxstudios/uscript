@@ -3150,7 +3150,10 @@ Vector2 _scrollNewProperties;
    
       if ( true == result )
       {         
-         AttachEventScriptsToOwners(script);
+         //we're attempting to just attach components at runtime
+         //but i'm leaving this function here just in case we want
+         //to call it to help performance by auto attaching the scripts before they run
+         //AttachEventScriptsToOwners(script);
       }
 
       return result;

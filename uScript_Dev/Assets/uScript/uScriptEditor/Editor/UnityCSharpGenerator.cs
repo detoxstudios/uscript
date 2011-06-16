@@ -1387,6 +1387,7 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );               
                   ++m_TabStack;
                      AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = gameObject.GetComponent<" + type + ">();" );
+                     AddMissingComponent( CSharpName(node, parameter.Name) + "[" + i + "]", "gameObject", type ); 
                      SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, true );
    
                   --m_TabStack;
@@ -1413,6 +1414,7 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );               
                   ++m_TabStack;
                      AddCSharpLine( CSharpName(node, parameter.Name) + " = gameObject.GetComponent<" + FormatType(parameter.Type) + ">();" );
+                     AddMissingComponent( CSharpName(node, parameter.Name), "gameObject", FormatType(parameter.Type) ); 
                      SetupEventListeners( CSharpName(node, parameter.Name), node, true );
                
                   --m_TabStack;
@@ -1563,6 +1565,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );
                   ++m_TabStack;
                      AddCSharpLine( eventNode.ComponentType + " component = " + eventVariable + ".GetComponent<" + eventNode.ComponentType + ">();" );
+                     AddMissingComponent( "component", eventVariable, eventNode.ComponentType ); 
+
                      AddCSharpLine( "if ( null != component )" );
                      AddCSharpLine( "{" );
                      ++m_TabStack;
@@ -1580,6 +1584,20 @@ namespace Detox.ScriptEditor
             AddEventListener( eventVariable, eventNode, setup );
          --m_TabStack;
          AddCSharpLine( "}" );
+      }
+
+      private void AddMissingComponent(string componentVariable, string gameObjectVariable, string componentType)
+      {
+         Type type = uScript.Instance.GetType(componentType);
+         if ( null != type && typeof(uScriptEvent).IsAssignableFrom(type) )
+         {
+            AddCSharpLine( "if ( null == " + componentVariable + " )" );
+            AddCSharpLine( "{" );
+            ++m_TabStack;                 
+               AddCSharpLine( componentVariable + " = " + gameObjectVariable + ".AddComponent<" + componentType + ">();" );
+            --m_TabStack;
+            AddCSharpLine( "}" );
+         }
       }
 
       private void DefineEvents( )
@@ -2783,6 +2801,7 @@ namespace Detox.ScriptEditor
          string operation = add ? " += " : " -= "; 
 
          AddCSharpLine( entityEvent.ComponentType + " component = " + eventVariable + ".GetComponent<" + entityEvent.ComponentType + ">();" );
+         AddMissingComponent( "component", eventVariable, entityEvent.ComponentType ); 
          AddCSharpLine( "if ( null != component )" );
          AddCSharpLine( "{" );
          ++m_TabStack;
