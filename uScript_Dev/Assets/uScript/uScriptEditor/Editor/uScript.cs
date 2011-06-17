@@ -80,8 +80,6 @@ public class uScript : EditorWindow
    Rect m_NodeToolbarRect;
    public Rect NodeToolbarRect { get { return m_NodeToolbarRect; } }
 
-   private Hashtable m_Types = new Hashtable();
- 
    private const int DIVIDER_WIDTH = 4;
 
    /* uScript GUI Window Panel Layout Variables */
@@ -456,20 +454,6 @@ http://www.detoxstudios.com";
 
          m_ScriptEditorCtrl = null;
 
-         //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
-         //we don't save the fully qualified type name which is required to return types of assemblies not loaded
-         List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(GameObject.FindObjectsOfType(typeof(UnityEngine.Object)));
-
-         foreach (UnityEngine.Object o in allObjects)
-         {
-            AddType(o.GetType());
-         }
-
-         foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
-         {
-            AddType(b.Type);
-         }
-
          GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
          if (null == uScriptMaster)
          {
@@ -487,6 +471,20 @@ http://www.detoxstudios.com";
          {
             uScriptDebug.Log("Adding Asset Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_Assets));
+         }
+
+         //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
+         //we don't save the fully qualified type name which is required to return types of assemblies not loaded
+         List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(GameObject.FindObjectsOfType(typeof(UnityEngine.Object)));
+
+         foreach (UnityEngine.Object o in allObjects)
+         {
+            MasterComponent.AddType(o.GetType());
+         }
+
+         foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
+         {
+            MasterComponent.AddType(b.Type);
          }
 
          bool isRestored = false;
@@ -2418,7 +2416,13 @@ Vector2 _scrollNewProperties;
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label("uScripts", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+            string currentUScript = "";
+            if (m_ScriptEditorCtrl != null)
+            {
+               currentUScript = " (" + System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName) + ")";
+            }
+
+            GUILayout.Label("uScripts" + currentUScript, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
          }
          EditorGUILayout.EndHorizontal();
 
@@ -2451,6 +2455,7 @@ Vector2 _scrollNewProperties;
                   GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
                   bool currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
                   bool attached = false;
+                  bool dirty = false;
 
                   GUILayout.BeginHorizontal();
                   {
@@ -2459,12 +2464,18 @@ Vector2 _scrollNewProperties;
                      {
                         scriptStyle.fontStyle = FontStyle.Bold;
                         attached = IsAttachedToMaster || IsAttached;
-						if (!attached)
-						{
-	                        scriptStyle.normal.textColor = UnityEngine.Color.red;
-						}
+                        if (!attached)
+                        {
+                           scriptStyle.normal.textColor = UnityEngine.Color.red;
+                        }
+                        dirty = m_ScriptEditorCtrl.IsDirty;
                      }
-                     GUILayout.Label(scriptName + " (" + uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName + ")", scriptStyle);
+                     string sceneName = "None";
+                     if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
+                     {
+                        sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
+                     }
+                     GUILayout.Label(scriptName + " (" + sceneName + ")" + (dirty ? "*" : ""), scriptStyle);
 
                      GUILayout.FlexibleSpace();
 
@@ -2764,36 +2775,6 @@ Vector2 _scrollNewProperties;
       {
          DrawSubItems( m_CurrentMenu as ToolStripMenuItem );
       }
-   }
-
-   public Type GetType(string typeName)
-   {
-      Type type = m_Types[ typeName ] as Type;
-
-      if ( null == type ) type = GetAssemblyQualifiedType( typeName );
-
-      return type;
-   }
-
-   public Type GetAssemblyQualifiedType(String typeName)
-   {
-      if ( null == typeName ) return null;
-
-      // try the basic version first
-      if ( Type.GetType(typeName) != null ) return Type.GetType(typeName);
-      
-      // not found, look through all the assemblies
-      foreach ( Assembly assembly in AppDomain.CurrentDomain.GetAssemblies() )
-      {
-         if ( Type.GetType(typeName + ", " + assembly.ToString()) != null ) return Type.GetType(typeName + ", " + assembly.ToString());
-      }
-      
-      return null;
-   }
-   
-   public void AddType(Type type)
-   {
-      m_Types[ type.ToString( ) ] = type;
    }
 
    private string FindFile( string path, string fileName )
@@ -3146,6 +3127,9 @@ Vector2 _scrollNewProperties;
          //but i'm leaving this function here just in case we want
          //to call it to help performance by auto attaching the scripts before they run
          //AttachEventScriptsToOwners(script);
+         
+         // refresh uScript panel file list
+         uScriptBackgroundProcess.ForceFileRefresh();
       }
 
       return result;
@@ -3300,7 +3284,7 @@ Vector2 _scrollNewProperties;
 
       //print out a warning if the newly attached script still won't function
       //because some other required component is missing
-      NodeComponentType requiredComponentType = FindNodeComponentType(GetType(componentTypeToAttach));
+      NodeComponentType requiredComponentType = FindNodeComponentType(MasterComponent.GetType(componentTypeToAttach));
       
       bool componentWarning = true;
 
@@ -3359,7 +3343,7 @@ Vector2 _scrollNewProperties;
       {
          if ( file.Name.StartsWith(".") || file.Name.StartsWith("_")  || !file.Name.EndsWith(".cs") ) continue;
 
-         Type type = uScript.Instance.GetAssemblyQualifiedType( System.IO.Path.GetFileNameWithoutExtension(file.Name) );
+         Type type = uScript.MasterComponent.GetAssemblyQualifiedType( System.IO.Path.GetFileNameWithoutExtension(file.Name) );
 
          if ( null != type )
          {
@@ -3440,7 +3424,7 @@ Vector2 _scrollNewProperties;
 
       foreach ( Type type in uniqueNodes.Values )
       {
-         AddType( type );
+         MasterComponent.AddType( type );
 
          LogicNode logicNode = new LogicNode( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)) );
          
@@ -3549,7 +3533,7 @@ Vector2 _scrollNewProperties;
                variable.FriendlyName = FindFriendlyName( p.Name, p.GetCustomAttributes(false) );
                variable.DefaultAsObject = FindDefaultValue( "", p.GetCustomAttributes(false) );
                
-               AddType( p.ParameterType );
+               MasterComponent.AddType( p.ParameterType );
 
                variables.Add( variable );
             }
@@ -3565,7 +3549,7 @@ Vector2 _scrollNewProperties;
                parameter.State   = FindSocketState(m.GetCustomAttributes(false));
                parameter.FriendlyName = "Return Value";
 
-               AddType( m.ReturnType );
+               MasterComponent.AddType( m.ReturnType );
                   
                variables.Add( parameter );
             }
@@ -3658,7 +3642,7 @@ Vector2 _scrollNewProperties;
       EntityDesc entityDesc = new EntityDesc( );
 
       entityDesc.Type = type.ToString( );
-      AddType( type );
+      MasterComponent.AddType( type );
 
       MethodInfo   []methodInfos   = type.GetMethods( );
       EventInfo    []eventInfos    = type.GetEvents( );
@@ -3724,7 +3708,7 @@ Vector2 _scrollNewProperties;
 
             parameter.DefaultAsObject = FindDefaultValue( "", p.GetCustomAttributes(false) );
 
-            AddType( p.ParameterType );
+            MasterComponent.AddType( p.ParameterType );
             
             parameters.Add( parameter );
          }
@@ -3740,7 +3724,7 @@ Vector2 _scrollNewProperties;
             parameter.Default = "";
             parameter.FriendlyName = "Return Value";
 
-            AddType( m.ReturnType );
+            MasterComponent.AddType( m.ReturnType );
                
             parameters.Add( parameter );
          }
@@ -3783,7 +3767,7 @@ Vector2 _scrollNewProperties;
                input.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
                input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
                
-               AddType( p.PropertyType );
+               MasterComponent.AddType( p.PropertyType );
             
                eventInputsOutpus.Add( input );
             }
@@ -3827,7 +3811,7 @@ Vector2 _scrollNewProperties;
                            output.Output  = true;
                            output.DefaultAsObject = FindDefaultValue( "", eventProperty.GetCustomAttributes(false) );
 
-                           AddType( eventProperty.PropertyType );
+                           MasterComponent.AddType( eventProperty.PropertyType );
 
                            eventInputsOutpus.Add( output );                           
                         }
@@ -3860,7 +3844,7 @@ Vector2 _scrollNewProperties;
             EntityProperty property = new EntityProperty( p.Name, FindFriendlyName(p.Name, p.GetCustomAttributes(false)), type.ToString( ), p.PropertyType.ToString( ), isInput, isOutput );
             entityProperties.Add( property );
 
-            AddType( p.PropertyType );
+            MasterComponent.AddType( p.PropertyType );
          }
          
          foreach ( FieldInfo f in fieldInfos )
@@ -3871,7 +3855,7 @@ Vector2 _scrollNewProperties;
             EntityProperty property = new EntityProperty( f.Name, FindFriendlyName(f.Name, f.GetCustomAttributes(false)), type.ToString( ), f.FieldType.ToString( ), true, true );
             entityProperties.Add( property );
 
-            AddType( f.FieldType );
+            MasterComponent.AddType( f.FieldType );
          }
       }
 
@@ -3988,7 +3972,7 @@ Vector2 _scrollNewProperties;
       {
          foreach ( string t in requiredTypes )
          {
-            Type type = this.GetAssemblyQualifiedType( t );
+            Type type = MasterComponent.GetAssemblyQualifiedType( t );
             if ( null != type ) 
             {
                uniqueObjects[ type ] = type;
@@ -4172,7 +4156,7 @@ Vector2 _scrollNewProperties;
 
    public static bool FindNodeAutoAssignMasterInstance(string type)
    {
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
       if ( uscriptType != null )
       {
@@ -4193,7 +4177,7 @@ Vector2 _scrollNewProperties;
 
    public static string FindNodePath(string defaultCategory, string type)
    {
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
       if ( uscriptType != null )
       {
@@ -4214,7 +4198,7 @@ Vector2 _scrollNewProperties;
 
    public static string FindNodePropertiesPath(string defaultCategory, string type)
    {
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
       if ( uscriptType != null )
       {
@@ -4238,7 +4222,7 @@ Vector2 _scrollNewProperties;
       string type = ScriptEditor.FindNodeType(node);
       if ( "" == type ) return false;
 
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
       if ( null == uscriptType ) return false;
 
       object [] attributes = uscriptType.GetCustomAttributes(false);
@@ -4260,7 +4244,7 @@ Vector2 _scrollNewProperties;
       string type = ScriptEditor.FindNodeType(node);
       if ( "" == type ) return null;
 
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
       if ( null == uscriptType ) return null;
 
       object [] attributes = uscriptType.GetCustomAttributes(false);
@@ -4279,7 +4263,7 @@ Vector2 _scrollNewProperties;
 
    public static string FindNodeLicense(string type)
    {
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
       if ( uscriptType != null )
       {
@@ -4300,7 +4284,7 @@ Vector2 _scrollNewProperties;
 
    public static string FindNodeCopyright(string type)
    {
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
       if ( uscriptType != null )
       {
@@ -4321,7 +4305,7 @@ Vector2 _scrollNewProperties;
 
    public static string FindNodeToolTip(string type)
    {
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
       if ( uscriptType != null )
       {
@@ -4390,7 +4374,7 @@ Vector2 _scrollNewProperties;
          }
       }
 
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
       if ( uscriptType != null )
       {
@@ -4411,7 +4395,7 @@ Vector2 _scrollNewProperties;
 
    public static string FindNodeAuthorName(string type)
    {
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
       if ( uscriptType != null )
       {
@@ -4432,7 +4416,7 @@ Vector2 _scrollNewProperties;
 
    public static string FindNodeAuthorURL(string type)
    {
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
       if ( uscriptType != null )
       {
@@ -4472,7 +4456,7 @@ Vector2 _scrollNewProperties;
          return "http://uscript.net/manual/node_nodoc.html";
       }
 
-      Type uscriptType = uScript.Instance.GetType(type);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
       if ( uscriptType != null )
       {

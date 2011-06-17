@@ -32,6 +32,7 @@ public class uScriptBackgroundProcess
    };
    
    private const float USCRIPT_PROCESS_TIME = 30.0f;
+   private const int   FILES_PER_TICK = 5;
    
    public static Dictionary<string, uScriptInfo> s_uScriptInfo = new Dictionary<string, uScriptInfo>();
    private static int s_CurrentKeyIndex = -1;
@@ -70,14 +71,14 @@ public class uScriptBackgroundProcess
          s_CurrentKeyIndex = 0;
       }
       
-      // any uScrupts left to process? Process them 10 at a time each tick
+      // any uScrupts left to process? Process them FILES_PER_TICK at a time each tick
       if (s_uScriptInfo.Count > 0 && s_CurrentKeyIndex < s_uScriptInfo.Count)
       {
          int i;
          List<string> keylist = new List<string>();
          keylist.AddRange(s_uScriptInfo.Keys);
          string[] keys = keylist.ToArray();
-         for (i = 0; i < 10 && s_CurrentKeyIndex < s_uScriptInfo.Count; i++, s_CurrentKeyIndex++)
+         for (i = 0; i < FILES_PER_TICK && s_CurrentKeyIndex < s_uScriptInfo.Count; i++, s_CurrentKeyIndex++)
          {
             uScriptInfo info = s_uScriptInfo[keys[s_CurrentKeyIndex]];
             Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", null, null );
@@ -85,6 +86,11 @@ public class uScriptBackgroundProcess
             s_uScriptInfo[keys[s_CurrentKeyIndex]] = new uScriptInfo(keys[s_CurrentKeyIndex], scriptEditor.SceneName);
          }
       }
+   }
+   
+   public static void ForceFileRefresh()
+   {
+      s_LastuScriptProcessTime = -USCRIPT_PROCESS_TIME - 1.0;
    }
    
    private static void AttachUScripts()
@@ -101,6 +107,7 @@ public class uScriptBackgroundProcess
             uScript.MasterObject.AddComponent(typeName);
          }
 
+         ForceFileRefresh();
          uScript.MasterComponent.ClearAttachList();
       }
    }

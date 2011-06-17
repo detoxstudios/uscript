@@ -328,7 +328,7 @@ namespace Detox.ScriptEditor
                  point.Y <= node.Size.Height )
             {      
                string type = ScriptEditor.FindNodeType(entityNode);
-               Type t = uScript.Instance.GetAssemblyQualifiedType(type);
+               Type t = uScript.MasterComponent.GetAssemblyQualifiedType(type);
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
@@ -367,7 +367,7 @@ namespace Detox.ScriptEditor
                   if ( null != destTypeString )
                   {
                      destTypeString = destTypeString.Replace( "[]", "" );
-                     Type destType = uScript.Instance.GetType(destTypeString);
+                     Type destType = uScript.MasterComponent.GetType(destTypeString);
 
                      //see if the game object being dragged
                      //has a component type we can use
@@ -411,7 +411,7 @@ namespace Detox.ScriptEditor
                  point.Y <= node.Size.Height )
             {
                string type = ScriptEditor.FindNodeType(entityNode);
-               Type t = uScript.Instance.GetAssemblyQualifiedType(type);
+               Type t = uScript.MasterComponent.GetAssemblyQualifiedType(type);
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
@@ -436,7 +436,7 @@ namespace Detox.ScriptEditor
                      if ( null != asset )
                      {
                         string key = "";
-                        Type parameterType = uScript.Instance.GetType(parameters[i].Type);
+                        Type parameterType = uScript.MasterComponent.GetType(parameters[i].Type);
 
                         if ( uScriptConfig.ShouldAutoPackage(parameterType) )
                         {
@@ -488,7 +488,7 @@ namespace Detox.ScriptEditor
                   {
                      bool isArray = destTypeString.Contains( "[]" );
                      destTypeString = destTypeString.Replace( "[]", "" );
-                     Type destType = uScript.Instance.GetType(destTypeString);
+                     Type destType = uScript.MasterComponent.GetType(destTypeString);
 
                      string name = null;
 

@@ -205,13 +205,13 @@ namespace Detox.ScriptEditor
             {
                return Default;
             }
-            System.Type eType = uScript.Instance.GetType(this.Type);
+            System.Type eType = uScript.MasterComponent.GetType(this.Type);
             if (eType == null)
             {
-               eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
+               eType = uScript.MasterComponent.GetAssemblyQualifiedType(this.Type);
                if (eType != null)
                {
-                  uScript.Instance.AddType(eType);
+                  uScript.MasterComponent.AddType(eType);
                }
             }
             if ( eType != null && typeof(System.Enum).IsAssignableFrom(eType) )
@@ -346,13 +346,13 @@ namespace Detox.ScriptEditor
                return;
             }
 
-            System.Type eType = uScript.Instance.GetType(this.Type);
+            System.Type eType = uScript.MasterComponent.GetType(this.Type);
             if (eType == null)
             {
-               eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
+               eType = uScript.MasterComponent.GetAssemblyQualifiedType(this.Type);
                if (eType != null)
                {
-                  uScript.Instance.AddType(eType);
+                  uScript.MasterComponent.AddType(eType);
                }
             }
             if ( eType != null && typeof(System.Enum).IsAssignableFrom(eType) )
@@ -2666,8 +2666,8 @@ namespace Detox.ScriptEditor
          }
 
          //query unity objects which might not be loaded yet so we can't just use Type.GetType
-         Type sourceType = uScript.Instance.GetType( sourceParam.Type );
-         Type destType   = uScript.Instance.GetType( destParam.Type );
+         Type sourceType = uScript.MasterComponent.GetType( sourceParam.Type );
+         Type destType   = uScript.MasterComponent.GetType( destParam.Type );
 
          if ( null == destType ) 
          {
@@ -2877,7 +2877,7 @@ namespace Detox.ScriptEditor
          if ( m_DeprecatedNodes.Contains(oldNode.Guid) )
          {         
             Type newType = uScript.GetNodeUpgradeType(oldNode);
-            if ( null == newType ) newType = uScript.Instance.GetAssemblyQualifiedType(ScriptEditor.FindNodeType(oldNode));
+            if ( null == newType ) newType = uScript.MasterComponent.GetAssemblyQualifiedType(ScriptEditor.FindNodeType(oldNode));
 
             if ( null != newType )
             {

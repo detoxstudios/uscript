@@ -165,7 +165,7 @@ namespace System.Windows.Forms
          //if it was just a single value
          stringType = stringType.Replace("[]", "");
          
-         Type type = uScript.Instance.GetType(stringType);
+         Type type = uScript.MasterComponent.GetType(stringType);
          if ( null == type ) return null;
 
          if ( typeof(UnityEngine.Object).IsAssignableFrom(type) ) return type;

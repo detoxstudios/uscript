@@ -3,6 +3,9 @@
 // Desc: The master uScript component. This class is also used as a data transport class between the uScript window and the uScriptBackgroundProcess.
 
 using UnityEngine;
+using System;
+using System.Reflection;
+using System.Collections;
 using System.Collections.Generic;
 
 public class uScript_MasterComponent : MonoBehaviour
@@ -21,6 +24,8 @@ public class uScript_MasterComponent : MonoBehaviour
       get { return m_uScriptsToAttach; }
    }
    
+   private Hashtable m_Types = new Hashtable();
+ 
    public void ClearAttachList() { m_uScriptsToAttach = new string[0]; }
    
    public void AttachScriptToMaster(string fullPath)
@@ -33,5 +38,36 @@ public class uScript_MasterComponent : MonoBehaviour
    {
       Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_master.png");      
    }
+
+   public Type GetType(string typeName)
+   {
+      Type type = m_Types[ typeName ] as Type;
+
+      if ( null == type ) type = GetAssemblyQualifiedType( typeName );
+
+      return type;
+   }
+
+   public Type GetAssemblyQualifiedType(String typeName)
+   {
+      if ( null == typeName ) return null;
+
+      // try the basic version first
+      if ( Type.GetType(typeName) != null ) return Type.GetType(typeName);
+      
+      // not found, look through all the assemblies
+      foreach ( Assembly assembly in AppDomain.CurrentDomain.GetAssemblies() )
+      {
+         if ( Type.GetType(typeName + ", " + assembly.ToString()) != null ) return Type.GetType(typeName + ", " + assembly.ToString());
+      }
+      
+      return null;
+   }
+   
+   public void AddType(Type type)
+   {
+      m_Types[ type.ToString( ) ] = type;
+   }
+
 #endif
 }
