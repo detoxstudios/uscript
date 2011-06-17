@@ -225,7 +225,7 @@ legal@detoxstudios.com
 http://www.detoxstudios.com";
    #endregion
    
-   public bool IsAttached
+   public bool IsAttachedToMaster
    {
       get
       {
@@ -234,7 +234,7 @@ http://www.detoxstudios.com";
             System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_FullPath);
             bool isSafe = false;
             string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
-            return MasterObject.GetComponent(safePath) != null;
+            return MasterObject.GetComponent(safePath+uScriptConfig.Files.GeneratedComponentExtension) != null;
          }
          return false;
       }
@@ -2418,106 +2418,75 @@ Vector2 _scrollNewProperties;
          {
             _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
             {
-//               foreach (string fileName in System.IO.Directory.GetFiles(Preferences.GeneratedScripts))
-//               {
-//                  if ( fileName.Contains(".cs") )
-//                  {
-//                     if ( !fileName.Contains( uScriptConfig.Files.GeneratedComponentExtension ) )
-//                     {
-////                        if (m_ScriptEditorCtrl != null && !string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptName))
-////                        {
-////                           int dot = m_ScriptEditorCtrl.ScriptName.IndexOf(".");
-////                           string filename = m_ScriptEditorCtrl.ScriptName;
-////                           if (dot != -1)
-////                           {
-////                              filename = m_ScriptEditorCtrl.ScriptName.Substring(0, m_ScriptEditorCtrl.ScriptName.IndexOf("."));
-////                           }
-////
-////                           GUILayout.Label(filename, style2);
-////                        }
-//
-//
-//                        string scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
-//
-//                        GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
-//                        bool currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
-//
-//                        GUILayout.BeginHorizontal();
-//                        {
-//                           // uScript Label
-//                           if (currentScript)
-//                           {
-//                              scriptStyle.fontStyle = FontStyle.Bold;
-//                              scriptStyle.normal.textColor = (IsAttached ? UnityEngine.Color.white : UnityEngine.Color.red);
-//                           }
-//                           GUILayout.Label(scriptName, scriptStyle);
-//
-//                           GUILayout.FlexibleSpace();
-//
-//                           // Load or Reload
-//                           GUIContent content = new GUIContent((currentScript ? "Reload" : "Load"), "Click to load this uScript.");
-//                           if (GUILayout.Button(content, (currentScript ? EditorStyles.miniButton : EditorStyles.miniButtonLeft)))
-//                           {
-//                              string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
-//
-//                              if ("" != path)
-//                              {
-//                                 _openScriptToggle = false;
-//                                 OpenScript(path);
-//                              }
-//                           }
-//
-//                           // Insert as Nested uScript
-//                           if (currentScript == false)
-//                           {
-//                              content = new GUIContent("Insert", "Click to add an instance of this uScript.");
-//                              if (GUILayout.Button(content, EditorStyles.miniButtonRight))
-//                              {
-//                                 Debug.LogWarning("An instance of the \""+ scriptName +"\" uScript should have been inserted into the graph.\n");
-//                              }
-//                           }
-//                        }
-//                        GUILayout.EndHorizontal();
-//
-//   //                     if (currentScript && IsAttached == false)
-//   //                     {
-//   //                        errorStyle.normal.textColor = UnityEngine.Color.red;
-//   //                        errorStyle.wordWrap = true;
-//   //                        GUILayout.Label("This uScript is not attached to any GameObject in the scene.", errorStyle);
-//   //                     }
-//                     }
-//                  }
-//               }
+               List<string> keylist = new List<string>();
+               keylist.AddRange(uScriptBackgroundProcess.s_uScriptInfo.Keys);
+               string[] keys = keylist.ToArray();
+               foreach (string fileName in keys)
+               {
+                  string scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
+                  string scriptFile = System.IO.Path.GetFileName(fileName).Replace(".cs", ".uscript");
+
+                  GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
+                  bool currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
+
+                  GUILayout.BeginHorizontal();
+                  {
+                     // uScript Label
+                     if (currentScript)
+                     {
+                        scriptStyle.fontStyle = FontStyle.Bold;
+                        scriptStyle.normal.textColor = (IsAttachedToMaster ? UnityEngine.Color.black : UnityEngine.Color.red);
+                     }
+                     else
+                     {
+                        scriptStyle.normal.textColor = UnityEngine.Color.black;
+                     }
+                     GUILayout.Label(scriptName + " (" + uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName + ")", scriptStyle);
+
+                     GUILayout.FlexibleSpace();
+
+                     // Load or Reload
+                     GUIContent content = new GUIContent((currentScript ? "Reload" : "Load"), "Click to load this uScript.");
+                     if (GUILayout.Button(content, (currentScript ? EditorStyles.miniButton : EditorStyles.miniButtonLeft)))
+                     {
+                        string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
+
+                        if ("" != path)
+                        {
+                           _openScriptToggle = false;
+                           OpenScript(path);
+                        }
+                     }
+
+                     // Insert as Nested uScript
+                     if (currentScript == false)
+                     {
+                        content = new GUIContent("Insert", "Click to add an instance of this uScript.");
+                        if (GUILayout.Button(content, EditorStyles.miniButtonRight))
+                        {
+                           if (m_ScriptEditorCtrl != null)
+                           {
+                              float canvasX = _mouseRegionRect[MouseRegion.Canvas].x;
+                              float canvasY = _mouseRegionRect[MouseRegion.Canvas].y;
+                              m_ScriptEditorCtrl.ContextCursor = new Point((int)(canvasX - _guiPanelPalette_Width + uScript.Instance.NodeWindowRect.width / 2.0f), (int)(canvasY + uScript.Instance.NodeWindowRect.height / 2.0f));
+                              m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode(scriptName));
+                           }
+                        }
+                     }
+                  }
+                  GUILayout.EndHorizontal();
+
+                  if (currentScript && IsAttachedToMaster == false)
+                  {
+                     GUIStyle errorStyle = new GUIStyle(GUI.skin.label);
+                     errorStyle.normal.textColor = UnityEngine.Color.red;
+                     errorStyle.wordWrap = true;
+                     GUILayout.Label("This uScript is not attached to any GameObject in the scene.", errorStyle);
+                  }
+               }
             }
             EditorGUILayout.EndScrollView();
          }
-
-
-
-
-
-//            foreach (UnityEngine.Object o in GameObject.FindObjectsOfType(typeof(uScriptCode)))
-//            {
-//               uScriptCode code = o as uScriptCode;
-//
-//               if (code.GetType().ToString() == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.Name))
-//               {
-//               }
-//               else
-//               {
-//                  GUIContent content = new GUIContent(code.GetType().ToString(), "Double-click to open this uScript. Drag this button onto the canvas to add an instance of this uScript.");
-//                  if (GUILayout.Button(content, uScriptStyles.paletteButton) && Event.current.clickCount == 2)
-//                  {
-//                     string path = FindFile(Application.dataPath, code.GetType().ToString() + ".uscript");
-//                     if ("" != path)
-//                     {
-//                        _openScriptToggle = false;
-//                        OpenScript(path);
-//                     }
-//                  }
-//               }
-//            }
-//         }
       }
       EditorGUILayout.EndVertical();
 
@@ -3210,7 +3179,7 @@ Vector2 _scrollNewProperties;
          }
          else
          {
-            currentlyAttached = IsAttached;
+            currentlyAttached = IsAttachedToMaster;
          }
 
          //if they do want to attach to the master then set
