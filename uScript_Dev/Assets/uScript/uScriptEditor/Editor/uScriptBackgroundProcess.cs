@@ -61,7 +61,7 @@ public class uScriptBackgroundProcess
 
          foreach (string fileName in System.IO.Directory.GetFiles(uScript.Preferences.UserScripts))
          {
-            if (fileName.Contains(".uscript"))
+            if (fileName.EndsWith(".uscript"))
             {
                s_uScriptInfo.Add(System.IO.Path.GetFileName(fileName), new uScriptInfo(fileName));
             }
