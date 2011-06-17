@@ -2459,11 +2459,10 @@ Vector2 _scrollNewProperties;
                      {
                         scriptStyle.fontStyle = FontStyle.Bold;
                         attached = IsAttachedToMaster || IsAttached;
-                        scriptStyle.normal.textColor = (attached ? UnityEngine.Color.black : UnityEngine.Color.red);
-                     }
-                     else
-                     {
-                        scriptStyle.normal.textColor = UnityEngine.Color.black;
+						if (!attached)
+						{
+	                        scriptStyle.normal.textColor = UnityEngine.Color.red;
+						}
                      }
                      GUILayout.Label(scriptName + " (" + uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName + ")", scriptStyle);
 
