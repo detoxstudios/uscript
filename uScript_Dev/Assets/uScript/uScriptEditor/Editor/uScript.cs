@@ -240,6 +240,28 @@ http://www.detoxstudios.com";
       }
    }
 
+   public bool IsAttached
+   {
+      get
+      {
+         if (!String.IsNullOrEmpty(m_FullPath))
+         {
+            System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_FullPath);
+            bool isSafe = false;
+            string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
+            string componentPath = safePath+uScriptConfig.Files.GeneratedComponentExtension;
+    
+            foreach (GameObject go in GameObject.FindObjectsOfType(typeof(GameObject)))
+            {
+               if (go.GetComponent(componentPath) != null) return true;
+            }
+            
+            return false;
+         }
+         return false;
+      }
+   }
+
    //
    // Editor Window Initialization
    //
@@ -2428,6 +2450,7 @@ Vector2 _scrollNewProperties;
 
                   GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
                   bool currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
+                  bool attached = false;
 
                   GUILayout.BeginHorizontal();
                   {
@@ -2435,7 +2458,8 @@ Vector2 _scrollNewProperties;
                      if (currentScript)
                      {
                         scriptStyle.fontStyle = FontStyle.Bold;
-                        scriptStyle.normal.textColor = (IsAttachedToMaster ? UnityEngine.Color.black : UnityEngine.Color.red);
+                        attached = IsAttachedToMaster || IsAttached;
+                        scriptStyle.normal.textColor = (attached ? UnityEngine.Color.black : UnityEngine.Color.red);
                      }
                      else
                      {
@@ -2476,7 +2500,7 @@ Vector2 _scrollNewProperties;
                   }
                   GUILayout.EndHorizontal();
 
-                  if (currentScript && IsAttachedToMaster == false)
+                  if (currentScript && !attached)
                   {
                      GUIStyle errorStyle = new GUIStyle(GUI.skin.label);
                      errorStyle.normal.textColor = UnityEngine.Color.red;

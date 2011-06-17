@@ -82,7 +82,7 @@ public class uScriptBackgroundProcess
             uScriptInfo info = s_uScriptInfo[keys[s_CurrentKeyIndex]];
             Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", null, null );
             scriptEditor.Open(info.m_FullPath);
-            s_uScriptInfo[keys[s_CurrentKeyIndex]] = new uScriptInfo(keys[s_CurrentKeyIndex], scriptEditor.SceneName, info.m_Status);
+            s_uScriptInfo[keys[s_CurrentKeyIndex]] = new uScriptInfo(keys[s_CurrentKeyIndex], scriptEditor.SceneName);
          }
       }
    }
