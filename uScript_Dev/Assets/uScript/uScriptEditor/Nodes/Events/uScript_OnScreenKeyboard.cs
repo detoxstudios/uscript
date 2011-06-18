@@ -19,15 +19,24 @@ using System.Collections;
 [FriendlyName("On-Screen Keyboard Events")]
 public class uScript_OnScreenKeyboard : uScriptEvent
 {
+#pragma warning disable 67
+#pragma warning disable 414
+
    private bool m_LastKeyboardOut = false;
+
    
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
+
    [FriendlyName("On Keyboard Slid Out")]
    public event uScriptEventHandler OnKeyboardSlidOut;
+   
+#pragma warning restore 414
+#pragma warning restore 67
 
    void Update()
    {
+#if UNITY_IPHONE
       if (!m_LastKeyboardOut)
       {
          if (iPhoneKeyboard.visible)
@@ -37,5 +46,6 @@ public class uScript_OnScreenKeyboard : uScriptEvent
       }
       
       m_LastKeyboardOut = iPhoneKeyboard.visible;
+#endif
    }
 }
