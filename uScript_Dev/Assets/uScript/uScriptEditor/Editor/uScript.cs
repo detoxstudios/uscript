@@ -189,6 +189,8 @@ public class uScript : EditorWindow
    public bool m_DoPreferences  = false;
 
    public string CurrentScript = null;
+   public string CurrentScriptName = "";
+   public string CurrentScene = "";
 
    #region EULA Variables
    private int _EULAagreed = -1;
@@ -386,7 +388,8 @@ http://www.detoxstudios.com";
          UnityEditor.Undo.RegisterUndo( MasterComponent, name );
 
          //register the new one with uscript and the master component
-         CurrentScript = newScript.ToBase64( );      
+         CurrentScript = newScript.ToBase64( );
+         CurrentScriptName = newScript.Name;
 
          MasterComponent.Script = CurrentScript;
          MasterComponent.ScriptName = newScript.Name;
@@ -429,6 +432,13 @@ http://www.detoxstudios.com";
       
       // Initialization
       //
+
+      if (EditorApplication.currentScene != CurrentScene)
+      {
+         MasterComponent.Script = CurrentScript;
+         MasterComponent.ScriptName = CurrentScriptName;
+      }
+      CurrentScene = EditorApplication.currentScene;
 
       //force a rebuild if undo was performed
       bool rebuildScript = false;
@@ -522,6 +532,7 @@ http://www.detoxstudios.com";
                }
 
                CurrentScript = MasterComponent.Script;
+               CurrentScriptName = MasterComponent.ScriptName;
             }
          }
          else
@@ -1186,6 +1197,7 @@ http://www.detoxstudios.com";
       MasterComponent.ScriptName = null;
        
       CurrentScript = null;
+      CurrentScriptName = null;
       
       // reset settings so they get re-loaded
       m_SettingsLoaded = false;
@@ -3048,6 +3060,7 @@ Vector2 _scrollNewProperties;
          MasterComponent.ScriptName = scriptEditor.Name;
        
          CurrentScript = null;
+         CurrentScriptName = null;
 
          if (fullPath != m_FullPath) m_CurrentCanvasPosition = "";
 
@@ -3216,6 +3229,7 @@ Vector2 _scrollNewProperties;
             MasterComponent.ScriptName = script.Name;
 
             CurrentScript = MasterComponent.Script;
+            CurrentScriptName = MasterComponent.ScriptName;
 
             if (true == pleaseAttachMe)
             {
