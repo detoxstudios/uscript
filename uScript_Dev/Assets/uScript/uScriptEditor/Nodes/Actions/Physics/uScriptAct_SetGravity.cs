@@ -19,7 +19,7 @@ public class uScriptAct_SetGravity : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In([FriendlyName("Force")] Vector3 Gravity)
+   public void In([FriendlyName("Gravity")] Vector3 Gravity)
    {
 		 Physics.gravity = Gravity;
       
