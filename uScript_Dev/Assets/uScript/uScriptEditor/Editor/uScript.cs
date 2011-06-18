@@ -153,10 +153,20 @@ public class uScript : EditorWindow
    {
       get
       {
-         GameObject go = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-         if ( null == go ) return null;
+         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+         if (null == uScriptMaster)
+         {
+            uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Debug);
 
-         return go.GetComponent<uScript_MasterComponent>();
+            uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
+            uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
+         }
+         if (null == uScriptMaster.GetComponent<uScript_MasterComponent>())
+         {
+            uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_MasterComponent));
+         }
+         return uScriptMaster.GetComponent<uScript_MasterComponent>();
       }
    }
 
