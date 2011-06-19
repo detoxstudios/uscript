@@ -14,8 +14,8 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://uscript.net/manual/node_nodoc.html")]
 
-[FriendlyName("Ignore Layer Collsion")]
-public class uScriptAct_IgnoreLayerCollsion : uScriptLogic
+[FriendlyName("Ignore Layer Collision")]
+public class uScriptAct_IgnoreLayerCollision : uScriptLogic
 {
    public bool Out { get { return true; } }
 
