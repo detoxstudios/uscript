@@ -2030,6 +2030,7 @@ http://www.detoxstudios.com";
 
          GUILayout.BeginVertical(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
          {
+
             if (mapToggle)
             {
                MiniMapDraw();
@@ -2124,9 +2125,8 @@ http://www.detoxstudios.com";
    {
       Node node;
       DisplayNode displayNode;
-      
-      
-      
+
+
       //
       // Get the dimensions of the entire map at the specified scale
       //
@@ -2178,7 +2178,7 @@ http://www.detoxstudios.com";
 //      Debug.Log("_canvasRect: " + _canvasRect + "\t\tposition: " + position + "\n"
 //                + "PaletteWidth: " + _guiPanelPalette_Width + ", PropertiesHeight: " + _guiPanelProperties_Height + ", StatusbarRect: " + _statusbarRect + ", mapRect: " + mapRect);
 
-
+      GUI.skin.scrollView.normal.background = uScriptConfig.canvasBackgroundTexture;
       mapScroll = GUI.BeginScrollView(mapRect, mapScroll, viewRect, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
 
 
@@ -2192,7 +2192,7 @@ http://www.detoxstudios.com";
       mapSize.y = (mapSize.height < mapRect.height ? (mapRect.height - mapSize.height) * 0.5f : 0);
       GUIStyle tmpStyle = new GUIStyle(GUI.skin.box);
       tmpStyle.margin = new RectOffset();
-      GUI.Box(mapSize, string.Empty, tmpStyle);
+      //GUI.Box(mapSize, string.Empty, tmpStyle);
 
 //      Debug.Log("CanvasRect: " + mapRect + ", \tMapBounds: " + mapBounds + ",\tScale: " + mapScale + "\nViewRect: " + viewRect + ", \t\t\t\tViewOffset: " + viewOffset
 //                + "\t\tmapSize: " + mapSize);
@@ -2204,8 +2204,12 @@ http://www.detoxstudios.com";
                                    mapRect.width * mapScale,
                                    mapRect.height * mapScale);
 
+      // Change the GUI color to tint the viewportRect
+      UnityEngine.Color normalColor = GUI.color;
+      GUI.color = UnityEngine.Color.green;
+      tmpStyle.normal.background = uScriptConfig.minimapScreenBorder;
       GUI.Box(viewportRect, string.Empty, tmpStyle);
-
+      GUI.color = normalColor;
 
       //
       // Paint the nodes
@@ -2222,24 +2226,42 @@ http://www.detoxstudios.com";
 //         Debug.Log("\tNode -- Location: " + n.Location + ", \tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
 
 
-         GUI.Box(nodeRect, n.Name );
+         
 
          // Style the node by type
+         GUIStyle tmpNodeStyle = new GUIStyle(GUI.skin.box);
+         UnityEngine.Color nodeTextGrey = new UnityEngine.Color(0.737f, 0.737f, 0.737f);
          if (displayNode is EntityEventDisplayNode)
          {
+            tmpNodeStyle.normal.background = uScriptConfig.nodeEventTexture;
+            tmpNodeStyle.normal.textColor = nodeTextGrey;
+            GUI.Box(nodeRect, n.Name, tmpNodeStyle);
          }
          else if (displayNode is LogicNodeDisplayNode)
          {
+            tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
+            tmpNodeStyle.normal.textColor = nodeTextGrey;
+            GUI.Box(nodeRect, n.Name, tmpNodeStyle);
          }
          else if (displayNode is LocalNodeDisplayNode)
          {
+            tmpNodeStyle.normal.background = uScriptConfig.nodeVariableTexture;
+            tmpNodeStyle.normal.textColor = nodeTextGrey;
+            GUI.Box(nodeRect, n.Name, tmpNodeStyle);
          }
          else if (displayNode is CommentDisplayNode)
          {
+            //tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
+            GUI.color = UnityEngine.Color.cyan;
+            GUI.Box(nodeRect, n.Name, tmpNodeStyle);
+            GUI.color = normalColor;
          }
          else
          {
+            tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
+            GUI.Box(nodeRect, n.Name, tmpNodeStyle);
          }
+
       }
    
 
@@ -2258,6 +2280,7 @@ http://www.detoxstudios.com";
       }
 
       GUI.EndScrollView();
+      GUI.skin.scrollView.normal.background = null;
    }
 
 

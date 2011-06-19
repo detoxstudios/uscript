@@ -710,9 +710,13 @@ public partial class uScriptConfig
       public static string GeneratedCodeExtension      { get { return ""; } }
       
    }
-
+   
    public static uScriptStyle Style = new uScriptDefaultStyle( );
    public static UnityEngine.Texture2D canvasBackgroundTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_background.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D nodeDefaultTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_node_default_color.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D nodeEventTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_node_event_color.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D nodeVariableTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_node_variable_color.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D minimapScreenBorder = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_minimap_screen_border.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
    public static UnityEngine.Texture2D lineTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/icons/uscript_line.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
    public static UnityEngine.Texture2D PointerLineEnd = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/icons/uscript_pointer_line_end.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
    public static UnityEngine.Texture2D ResizeTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/icons/uscript_icon_resize_comment.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
