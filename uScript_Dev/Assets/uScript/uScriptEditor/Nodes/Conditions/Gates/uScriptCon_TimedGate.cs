@@ -17,20 +17,32 @@ using System.Collections;
 public class uScriptCon_TimedGate : uScriptLogic
 {
    private bool m_GateOpen = true;
+   private bool m_TooSoon = false;
+
    private float m_TimeToTrigger;
 
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
+   [FriendlyName("Gate Open")]
    public event uScriptEventHandler Out;
+
+   [FriendlyName("Gate Closed")]
+   public bool TooSoon { get { return m_TooSoon; } }
 
    public void In(
       [FriendlyName("Closed Duration"), DefaultValue(1f)] float Duration
    )
    {
+      m_TooSoon = false;
+
       if (m_GateOpen)
       {
-         if ( Out != null ) Out(this, new System.EventArgs( ));
+         if (Out != null) Out(this, new System.EventArgs());
          m_GateOpen = false;
          m_TimeToTrigger = Duration;
+      }
+      else
+      {
+         m_TooSoon = true;
       }
    }
 
