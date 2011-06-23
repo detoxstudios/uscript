@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Assets\uScript\uScriptEditor\Editor\AnimData.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\BinaryXml.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\CodeValidator.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\CommentNode.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\EditableObject.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\EntityEventDisplayNode.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ObjectSerializer.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Partials.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Platform.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\Preferences.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\RawScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\References.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ScriptEditor.cs" />

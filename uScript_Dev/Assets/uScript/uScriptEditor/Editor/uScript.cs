@@ -55,6 +55,7 @@ public class uScript : EditorWindow
    
    private string m_FullPath = "";
    private string m_CurrentCanvasPosition = "";
+   private bool   m_ForceCodeValidation = false;
    
    private Detox.FlowChart.Node m_FocusedNode = null;
    
@@ -190,7 +191,6 @@ public class uScript : EditorWindow
    public string CurrentScript = null;
    public string CurrentScriptName = "";
    public string CurrentScene = "";
-
    #region EULA Variables
    private int _EULAagreed = -1;
    private Vector2 _EULAscroll;
@@ -403,6 +403,8 @@ http://www.detoxstudios.com";
       EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       
       _statusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
+   
+      m_ForceCodeValidation = true;
    }
 
 
@@ -414,6 +416,11 @@ http://www.detoxstudios.com";
 
    void Update()
    {
+      if ( true == CodeValidator.RequireRebuild(m_ForceCodeValidation) )
+      {
+         RebuildAllScripts( );
+      }
+      
       if ( true == m_SelectAllNodes )
       {
          m_ScriptEditorCtrl.SelectAllNodes();
@@ -1973,20 +1980,7 @@ http://www.detoxstudios.com";
             }
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
-               //first remove everything so we get rid of any compiler errors
-               //which allows the reflection to properly refresh
-               AssetDatabase.StartAssetEditing( );
-                  RemoveGeneratedCode( Preferences.GeneratedScripts );
-               AssetDatabase.StopAssetEditing( );
-               AssetDatabase.Refresh();
-
-               //now build any scripts which are used as nested nodes
-               //when these are done we will then build any scripts which references these
-               //see the m_DoRebuildScripts below
-               AssetDatabase.StartAssetEditing( );
-                  RebuildScripts( Preferences.UserScripts );
-               AssetDatabase.StopAssetEditing( );
-               AssetDatabase.Refresh();
+               RebuildAllScripts( );
             }
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRemoveGenerated, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
@@ -3119,6 +3113,24 @@ Vector2 _scrollNewProperties;
       }
    }
 
+   public void RebuildAllScripts( )
+   {
+      //first remove everything so we get rid of any compiler errors
+      //which allows the reflection to properly refresh
+      AssetDatabase.StartAssetEditing( );
+         RemoveGeneratedCode( Preferences.GeneratedScripts );
+      AssetDatabase.StopAssetEditing( );
+      AssetDatabase.Refresh();
+
+      //now build any scripts which are used as nested nodes
+      //when these are done we will then build any scripts which references these
+      //see the m_DoRebuildScripts below
+      AssetDatabase.StartAssetEditing( );
+         RebuildScripts( Preferences.UserScripts );
+      AssetDatabase.StopAssetEditing( );
+      AssetDatabase.Refresh();
+   }
+
    public void RebuildScripts( string path )
    {
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
@@ -3695,7 +3707,7 @@ Vector2 _scrollNewProperties;
       MethodInfo   []methodInfos   = type.GetMethods( );
       EventInfo    []eventInfos    = type.GetEvents( );
       PropertyInfo []propertyInfos = type.GetProperties( );
-      FieldInfo    []fieldInfos   = type.GetFields( );
+      FieldInfo    []fieldInfos    = type.GetFields( );
 
       List<EntityMethod> entityMethods = new List<EntityMethod>( );
 
@@ -4034,9 +4046,29 @@ Vector2 _scrollNewProperties;
          if ( t == typeof(uScript_MasterComponent) ) continue;
 
          Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
+
+         //foreach ( Type nestedType in t.GetNestedTypes( ) )
+         //{
+         //   Reflect( nestedType, entityDescs, baseMethods, baseEvents, baseProperties );
+         //}
       }
 
       Reflect( typeof(UnityEngine.RuntimePlatform), entityDescs, baseMethods, baseEvents, baseProperties );
+
+      //Dictionary<Type, Type> everythingElse = new Dictionary<Type, Type>( );
+
+      //foreach ( Type t in m_Types.Values )
+      //{
+      //   if ( false == uniqueObjects.Keys.Contains(t) )
+      //   {
+      //      everythingElse[ t ] = t;
+      //   }
+      //}
+
+      //foreach ( Type t in everythingElse.Values )
+      //{
+      //   Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
+      //}
 
       //consolidate like events so they appear on the same node
       EntityDesc [] descs = entityDescs.ToArray( );
@@ -4540,143 +4572,5 @@ Vector2 _scrollNewProperties;
       }
 
       return null;
-   }
-}
-
-public class Preferences
-{
-   public string ProjectFiles 
-   { 
-      get { LoadIfRequired( ); return m_Preferences[ "ProjectFiles" ] as string; } 
-      set { LoadIfRequired( ); m_Preferences[ "ProjectFiles" ] = value; }       
-   }
-
-   public string UserScripts
-   { 
-      get { LoadIfRequired( ); return m_Preferences[ "UserScripts" ] as string; } 
-      set { LoadIfRequired( ); m_Preferences[ "UserScripts" ] = value; }       
-   }
-
-   public string UserNodes
-   { 
-      get { LoadIfRequired( ); return m_Preferences[ "UserNodes" ] as string; } 
-      set { LoadIfRequired( ); m_Preferences[ "UserNodes" ] = value; }       
-   }
-
-   public string GeneratedScripts
-   { 
-      get { LoadIfRequired( ); return m_Preferences[ "GeneratedScripts" ] as string; } 
-      set { LoadIfRequired( ); m_Preferences[ "GeneratedScripts" ] = value; }       
-   }
-
-   public string NestedScripts
-   { 
-      get { LoadIfRequired( ); return m_Preferences[ "NestedScripts" ] as string; } 
-      set { LoadIfRequired( ); m_Preferences[ "NestedScripts" ] = value; }       
-   }
-
-   public bool DrawPanelsOnUpdate
-   {
-      get { LoadIfRequired( ); return (bool) m_Preferences[ "DrawPanelsOnUpdate" ]; }
-      set { LoadIfRequired( ); m_Preferences[ "DrawPanelsOnUpdate" ] = value; }
-   }
-
-   public int ToolbarButtonStyle
-   {
-      get { LoadIfRequired( ); return (int) m_Preferences[ "ToolbarButtonStyle" ]; }
-      set { LoadIfRequired( ); m_Preferences[ "ToolbarButtonStyle" ] = value; }
-   }
-
-   public bool ShowGrid
-   {
-      get { LoadIfRequired( ); return (bool) m_Preferences[ "ShowGrid" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "ShowGrid" ] = value; }       
-   }
-
-   public float GridSizeVertical
-   {
-      get { LoadIfRequired( ); return (float) m_Preferences[ "GridSizeVertical" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "GridSizeVertical" ] = value; }       
-   }
-
-   public float GridSizeHorizontal
-   {
-      get { LoadIfRequired( ); return (float) m_Preferences[ "GridSizeHorizontal" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "GridSizeHorizontal" ] = value; }       
-   }
-
-   public int GridMajorLineSpacing
-   {
-      get { LoadIfRequired( ); return (int) m_Preferences[ "GridMajorLineSpacing" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "GridMajorLineSpacing" ] = value; }       
-   }
-
-   public UnityEngine.Color GridColorMajor
-   {
-      get { LoadIfRequired( ); return (UnityEngine.Color) m_Preferences[ "GridColorMajor" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "GridColorMajor" ] = value; }       
-   }
-
-   public UnityEngine.Color GridColorMinor
-   {
-      get { LoadIfRequired( ); return (UnityEngine.Color) m_Preferences[ "GridColorMinor" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "GridColorMinor" ] = value; }       
-   }
-
-   private Hashtable m_Preferences = null;  
-
-   public void Revert( )
-   {
-      //clear out the hash table
-      //to force the defaults to load
-      m_Preferences.Clear( );
-
-      LoadDefaultsIfRequired( );
-   }
-   
-   public void Load( )
-   {
-      Hashtable preferences = uScript.GetSetting( "Preferences" ) as Hashtable;
-      
-      if ( null == preferences )
-      {
-         preferences = new Hashtable( );
-      }
-
-      m_Preferences = new Hashtable( preferences );
-
-      LoadDefaultsIfRequired( );
-   }
-
-   private void LoadDefaultsIfRequired( )
-   {
-      if ( null == m_Preferences[ "ProjectFiles" ] )         m_Preferences[ "ProjectFiles" ]         = UnityEngine.Application.dataPath + "/uScriptProjectFiles";
-      if ( null == m_Preferences[ "UserScripts" ] )          m_Preferences[ "UserScripts" ]          = ProjectFiles + "/uScripts";
-      if ( null == m_Preferences[ "UserNodes" ] )            m_Preferences[ "UserNodes" ]            = ProjectFiles + "/Nodes";
-      if ( null == m_Preferences[ "GeneratedScripts" ] )     m_Preferences[ "GeneratedScripts" ]     = UserScripts  + "/_GeneratedCode";
-      if ( null == m_Preferences[ "NestedScripts" ] )        m_Preferences[ "NestedScripts" ]        = GeneratedScripts;
-      if ( null == m_Preferences[ "DrawPanelsOnUpdate" ] )   m_Preferences[ "DrawPanelsOnUpdate" ]   = false;
-      if ( null == m_Preferences[ "ToolbarButtonStyle" ] )   m_Preferences[ "ToolbarButtonStyle" ]   = 1;
-      if ( null == m_Preferences[ "ShowGrid" ] )             m_Preferences[ "ShowGrid" ]             = uScriptConfig.Style.ShowGrid;
-      if ( null == m_Preferences[ "GridSizeVertical" ] )     m_Preferences[ "GridSizeVertical" ]     = uScriptConfig.Style.GridSizeVertical;
-      if ( null == m_Preferences[ "GridSizeHorizontal" ] )   m_Preferences[ "GridSizeHorizontal" ]   = uScriptConfig.Style.GridSizeHorizontal;
-      if ( null == m_Preferences[ "GridMajorLineSpacing" ] ) m_Preferences[ "GridMajorLineSpacing" ] = uScriptConfig.Style.GridMajorLineSpacing;
-      if ( null == m_Preferences[ "GridColorMajor" ] )       m_Preferences[ "GridColorMajor" ]       = uScriptConfig.Style.GridColorMajor;
-      if ( null == m_Preferences[ "GridColorMinor" ] )       m_Preferences[ "GridColorMinor" ]       = uScriptConfig.Style.GridColorMinor;
-   }
-   
-   public void Save( )
-   {
-      LoadIfRequired( );
-
-      uScript.SetSetting( "Preferences", new Hashtable(m_Preferences) );
-   }
-   
-   private void LoadIfRequired( )
-   {
-      if ( null == m_Preferences )
-      {
-         Load( );
-      }
    }
 }
