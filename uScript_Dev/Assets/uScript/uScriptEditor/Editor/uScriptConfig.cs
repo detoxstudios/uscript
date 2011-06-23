@@ -194,6 +194,23 @@ public class uScriptDefaultStyle : uScriptStyle
       element.fontStyle = FontStyle.Bold;
 	   element.fontSize = 0;
       elementSettings["comment"] = element;
+
+      element = new GUIStyle();
+      element.normal.textColor = Color.black;
+      element.border.left = 6;
+      element.border.right = 6;
+      element.border.top = 6;
+      element.border.bottom = 6;
+      element.padding.left = 0;
+      element.padding.right = 0;
+      element.padding.top = -14;
+      element.padding.bottom = 0;
+      element.fixedHeight = 0f;
+      element.fixedWidth = 0f;
+      element.alignment = TextAnchor.UpperLeft;
+      element.fontStyle = FontStyle.Bold;
+      element.fontSize = 0;
+      elementSettings["selectionbox"] = element;
 		
 	  element = new GUIStyle();
       element.normal.textColor = Color.black;
@@ -321,6 +338,10 @@ public class uScriptDefaultStyle : uScriptStyle
          else if (true == name.Contains("icon"))
          {
             key = "static";
+         }
+         else if (true == name.Contains("selectionbox"))
+         {
+            key = "selectionbox";
          }
          else if (true == name.Contains("comment") &&
                   false == name.Contains("selected"))

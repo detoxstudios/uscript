@@ -937,15 +937,30 @@ namespace System.Drawing
    {
       public void DrawRectangle( Pen pen, int x, int y, int width, int height )
       {
-         // Band selections
-         GUI.Box( new Rect(x, y, width, height), "", "textarea");
-		 // @TODO: Should add a selection box style as part of you uScript GUI.
+         // Box Selection
+         UnityEngine.Color NormalColor = GUI.color;
+         GUI.color = new UnityEngine.Color(1f, 1f, 0.753f, .5f);
+         //GUI.backgroundColor = UnityEngine.Color.white;
+         GUI.Box( new Rect(x, y, width, height), "", uScriptConfig.Style.Get("selectionbox"));
+         GUI.color = NormalColor;
       }
 
       public void FillRectangle( string styleName, Rectangle rectangle, string nodeName )
       {
-         // Nodes
-         GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), nodeName, uScriptConfig.Style.Get(styleName));
+         if (styleName.Contains("comment"))
+         {
+            // Comments
+            //UnityEngine.Color NormalColor = GUI.color;
+            //GUI.color = new UnityEngine.Color(.52f, .64f, 0.8f, 1f);
+            GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), nodeName, uScriptConfig.Style.Get(styleName));
+            //GUI.color = NormalColor;
+
+         }
+         else
+         {
+            // Nodes
+            GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), nodeName, uScriptConfig.Style.Get(styleName));
+         }
       }
 
       public void DrawLine( Pen pen, Point start, Point end )
