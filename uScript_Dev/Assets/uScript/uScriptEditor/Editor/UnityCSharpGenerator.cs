@@ -979,7 +979,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
                AddCSharpLine( "GameObject gameObject;" );
-               AddCSharpLine( "gameObject = GameObject.Find( \"" + key + "\" ); " );
+               AddCSharpLine( "gameObject = GameObject.Find( \"" + EscapeString(key) + "\" ); " );
                AddCSharpLine( "if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, \"" + uniqueObjects[key] + "\");" );
                --m_TabStack;
                AddCSharpLine( "}" );
@@ -1195,7 +1195,7 @@ namespace Detox.ScriptEditor
 
                         if ( false == uScriptConfig.ShouldAutoPackage(type) ) continue;
                            
-                         AddCSharpLine( CSharpName(node, p.Name) + " = assetComponent.Get(\"" + p.Default + "\") as " + p.Type + ";" );
+                         AddCSharpLine( CSharpName(node, p.Name) + " = assetComponent.Get(\"" + EscapeString(p.Default) + "\") as " + p.Type + ";" );
                      }
                   }
                }
@@ -1372,7 +1372,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + values[i].Trim( ) + "\" ) as " + type + ";" );
+                  AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + EscapeString(values[i].Trim( )) + "\" ) as " + type + ";" );
                   SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, true );
          
                --m_TabStack;
@@ -1401,7 +1401,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );               
                ++m_TabStack;
 
-                  AddCSharpLine( "gameObject = GameObject.Find( \"" + values[i].Trim( ) + "\" );" );
+                  AddCSharpLine( "gameObject = GameObject.Find( \"" + EscapeString(values[i].Trim( )) + "\" );" );
                   AddCSharpLine( "if ( null != " + "gameObject )" );
          
                   AddCSharpLine( "{" );               
@@ -1428,7 +1428,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( "GameObject gameObject = GameObject.Find( \"" + parameter.Default + "\" );" );
+                  AddCSharpLine( "GameObject gameObject = GameObject.Find( \"" + EscapeString(parameter.Default) + "\" );" );
                   AddCSharpLine( "if ( null != " + "gameObject )" );
             
                   AddCSharpLine( "{" );               
@@ -1462,7 +1462,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + parameter.Default + "\" ) as " + FormatType(parameter.Type) + ";" );
+                  AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + EscapeString(parameter.Default) + "\" ) as " + FormatType(parameter.Type) + ";" );
 
                   //only set up listeners if it's NOT a variable connecxtion
                   //otherwise they'll be set in the conditional below this
@@ -2759,6 +2759,11 @@ namespace Detox.ScriptEditor
          return type.Replace( "+", "." );
       }
 
+      public static string EscapeString(string s)
+      {
+         return s.Replace( "\\", "\\\\" );
+      }
+
       public static string MakeSyntaxSafe(string s)
       {
 	      bool isSafe;
@@ -3196,7 +3201,7 @@ namespace Detox.ScriptEditor
       {
          if ( "true" == node.ShowComment.Default )
          {
-            AddCSharpLine( "uScriptDebug.Log( \"[" + uScriptConfig.Variable.FriendlyName(node.GetType().ToString()) + "] " + node.Comment.Default + "\", uScriptDebug.Type.Message);" );
+            AddCSharpLine( "uScriptDebug.Log( \"[" + uScriptConfig.Variable.FriendlyName(node.GetType().ToString()) + "] " + EscapeString(node.Comment.Default) + "\", uScriptDebug.Type.Message);" );
          }
       }
    }
