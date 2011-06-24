@@ -996,7 +996,7 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "#pragma warning disable 414" );
 
          AddCSharpLine( "GameObject parentGameObject = null;" );
-         AddCSharpLine( "const int MaxRelayCallCount = " + MaxRelayCallCount + ";" );
+         AddCSharpLine( "const int MaxRelayCallCount = " + uScript.Preferences.MaximumNodeRecursionCount + ";" );
          AddCSharpLine( "int relayCallCount = 0;" );
 
          AddCSharpLine( "//external output properties" );
@@ -2601,7 +2601,8 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + ((EntityMethod)receiver).ComponentType + "\", uScriptDebug.Type.Error);" );
+                  AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + ((EntityMethod)receiver).ComponentType + ".  " +
+                                 "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
 
                --m_TabStack;
                AddCSharpLine( "}" );
@@ -2635,7 +2636,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );
                   ++m_TabStack;
 
-                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + entityEvent.FriendlyType + "\", uScriptDebug.Type.Error);" );
+                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + entityEvent.FriendlyType + ".  " +
+                                    "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
 
                   --m_TabStack;
                   AddCSharpLine( "}" );
@@ -2668,8 +2670,8 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + external.Name.Default + "\", uScriptDebug.Type.Error);" );
-
+                  AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + external.Name.Default + ".  " + 
+                                 "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
                --m_TabStack;
                AddCSharpLine( "}" );
                
@@ -2702,8 +2704,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );
                   ++m_TabStack;
 
-                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + "\", uScriptDebug.Type.Error);" );
-
+                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " + 
+                                    "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
                   --m_TabStack;
                   AddCSharpLine( "}" );
 
@@ -2733,8 +2735,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );
                   ++m_TabStack;
 
-                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + "\", uScriptDebug.Type.Error);" );
-
+                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " + 
+                                    "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
                   --m_TabStack;
                   AddCSharpLine( "}" );
 
@@ -2762,8 +2764,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );
                   ++m_TabStack;
 
-                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + "\", uScriptDebug.Type.Error);" );
-
+                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " + 
+                                    "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
                   --m_TabStack;
                   AddCSharpLine( "}" );
 

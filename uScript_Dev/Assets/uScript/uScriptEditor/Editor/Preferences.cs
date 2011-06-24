@@ -44,6 +44,12 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "ToolbarButtonStyle" ] = value; }
    }
 
+   public int MaximumNodeRecursionCount
+   {
+      get { LoadIfRequired( ); return (int) m_Preferences[ "MaximumNodeRecursionCount" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "MaximumNodeRecursionCount" ] = value; }
+   }
+
    public bool ShowGrid
    {
       get { LoadIfRequired( ); return (bool) m_Preferences[ "ShowGrid" ]; } 
@@ -120,6 +126,8 @@ public class Preferences
       if ( null == m_Preferences[ "GridMajorLineSpacing" ] ) m_Preferences[ "GridMajorLineSpacing" ] = uScriptConfig.Style.GridMajorLineSpacing;
       if ( null == m_Preferences[ "GridColorMajor" ] )       m_Preferences[ "GridColorMajor" ]       = uScriptConfig.Style.GridColorMajor;
       if ( null == m_Preferences[ "GridColorMinor" ] )       m_Preferences[ "GridColorMinor" ]       = uScriptConfig.Style.GridColorMinor;
+
+      if ( null == m_Preferences[ "MaximumNodeRecursionCount" ] )m_Preferences[ "MaximumNodeRecursionCount" ]= 1000;
    }
    
    public void Save( )

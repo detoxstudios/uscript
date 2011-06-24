@@ -2718,6 +2718,15 @@ Vector2 _scrollNewProperties;
       EditorGUILayout.Separator( );
 
       //
+      // Code Generation Settings
+      //
+      GUILayout.Label( "CodeGeneration", EditorStyles.boldLabel );
+
+      Preferences.MaximumNodeRecursionCount = (int) EditorGUILayout.IntField( "Maximum Node Recursion", Preferences.MaximumNodeRecursionCount);
+
+      EditorGUILayout.Separator( );
+
+      //
       // Panel Settings
       //
       GUILayout.Label( "Panel Settings", EditorStyles.boldLabel );
