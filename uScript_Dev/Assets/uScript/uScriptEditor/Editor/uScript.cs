@@ -1,4 +1,4 @@
-using UnityEngine;   
+using UnityEngine;
 using UnityEditor;
 using Detox.ScriptEditor;
 using Detox.Data.Tools;
@@ -13,30 +13,31 @@ using Detox.FlowChart;
 
 public class uScript : EditorWindow
 {
-                                           //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
+                                                   //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
    public string    uScriptBuild           { get { return "0.5.0856"; } }
    public string    RequiredUnityBuild     { get { return "3.3"; } }
    public string    RequiredUnityBetaBuild { get { return "3.4"; } }
    public DateTime  ExpireDate             { get { return new DateTime( 2011, 7, 18 ); } }
    public int       EULAVersion            { get { return 20110608; } }
 
-   private enum MouseRegion
-   {
-      Outside,
-      Canvas,
-      Palette,
-      Properties,
-      Reference,
-      NestedScripts,
-      HandleCanvas,
-      HandlePalette,
-      HandleProperties,
-      HandleReference
-   }
-   private MouseRegion _mouseRegion;
-   private MouseRegion m_MouseDownRegion = MouseRegion.Outside;
+//   public enum MouseRegion
+//   {
+//      Outside,
+//      Canvas,
+//      Palette,
+//      Properties,
+//      Reference,
+//      NestedScripts,
+//      HandleCanvas,
+//      HandleScripts,
+//      HandleContents,
+//      HandlePalette,
+//      HandleProperties
+//   }
+//   public MouseRegion _mouseRegion;
+   private uScriptGUI.Region m_MouseDownRegion = uScriptGUI.Region.Outside;
 
-   Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
+//   public Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
    static private uScript s_Instance = null;
    static public uScript Instance { get { if ( null == s_Instance ) Init( ); return s_Instance; } }
@@ -56,7 +57,7 @@ public class uScript : EditorWindow
    private string m_FullPath = "";
    private string m_CurrentCanvasPosition = "";
    private bool   m_ForceCodeValidation = false;
-   
+
    private Detox.FlowChart.Node m_FocusedNode = null;
    
    static public Preferences Preferences = new Preferences( );
@@ -68,74 +69,74 @@ public class uScript : EditorWindow
    private double clickTime;
 //   private double doubleClickTime = 0.3;
  
-   private bool m_CanvasDragging = false;
+   public bool m_CanvasDragging = false;
    
    private int m_ContextX = 0;
    private int m_ContextY = 0;
    private ToolStripItem m_CurrentMenu = null;
 
-   Rect m_NodeWindowRect;
+   public Rect m_NodeWindowRect;
    public Rect NodeWindowRect { get { return m_NodeWindowRect; } }
 
-   Rect m_NodeToolbarRect;
+   public Rect m_NodeToolbarRect;
    public Rect NodeToolbarRect { get { return m_NodeToolbarRect; } }
 
-   private const int DIVIDER_WIDTH = 4;
 
    /* uScript GUI Window Panel Layout Variables */
 
 
-   bool     m_HidePanelMode = false;
+//   int      _guiPanelScripts_Height = 200;
+//   int      _guiPanelContent_Height = 250;
    int      _guiPanelPalette_Width = 250;
-   int      _guiPanelProperties_Height = 250;
-   int      _guiPanelProperties_Width = 250;
-   int      _guiPanelSequence_Width = 250;
+
+//   int      _guiPanelProperties_Height = 250;
+//   int      _guiPanelProperties_Width = 250;
 
 
-   Rect _canvasRect;
-   Vector2  _guiPanelPalette_ScrollPos;
+   public Rect _canvasRect;
+//   Vector2  _guiPanelPalette_ScrollPos;
 
-   public Vector2  _guiContentScrollPos;
+//   public Vector2  _guiContentScrollPos;
 
-   Vector2  _guiPanelProperties_ScrollPos;
+//   Vector2  _guiPanelProperties_ScrollPos;
 
-   Vector2  _guiHelpScrollPos;
+//   Vector2  _guiHelpScrollPos;
 
    /* Palette Variables */
-   private List<PaletteMenuItem> _paletteMenuItems;
-   bool _paletteFoldoutToggle = false;
-   String _paletteFilterText = string.Empty;
-   String _graphListFilterText = string.Empty;
+//   private List<PaletteMenuItem> _paletteMenuItems;
+//   bool _paletteFoldoutToggle = false;
+//   String _paletteFilterText = string.Empty;
+//   String _graphListFilterText = string.Empty;
 
-   public class PaletteMenuItem : System.Windows.Forms.MenuItem
-   {
-      public String Name;
-      public String Tooltip;
-      public System.EventHandler Click;
-      public List<PaletteMenuItem> Items;
-      public bool Expanded;
-      public bool Hidden;
-      public int Indent;
-
-      public void OnClick()
-      {
-         if (Click != null)
-         {
-            Click(this, new EventArgs());
-         }
-      }
-   }
+//   public class PaletteMenuItem : System.Windows.Forms.MenuItem
+//   {
+//      public String Name;
+//      public String Tooltip;
+//      public System.EventHandler Click;
+//      public List<PaletteMenuItem> Items;
+//      public bool Expanded;
+//      public bool Hidden;
+//      public int Indent;
+//
+//      public void OnClick()
+//      {
+//         if (Click != null)
+//         {
+//            Click(this, new EventArgs());
+//         }
+//      }
+//   }
 
 
    //
    // Sub-Sequence variables
    //
-   Vector2 _guiPanelSequence_ScrollPos;
+//   Vector2 _guiPanelSequence_ScrollPos;
     
    //
    // Statusbar Variables
    //
-   string _statusbarMessage;
+//   string _statusbarMessage;
 
    //IMPORTANT - THIS CANNOT BE CACHED
    //BECAUSE WE END UP WITH STALE VERSIONS AS THE UNITY UNDO STACK IS MODIFIED
@@ -179,7 +180,7 @@ public class uScript : EditorWindow
    //
    // Content Panel Variables
    //
-   bool _openScriptToggle = false;
+//   bool _openScriptToggle = false;
 
    MouseEventArgs m_MouseDownArgs = null;
    MouseEventArgs m_MouseUpArgs   = null;
@@ -191,13 +192,14 @@ public class uScript : EditorWindow
    public string CurrentScript = null;
    public string CurrentScriptName = "";
    public string CurrentScene = "";
+
    #region EULA Variables
    private int _EULAagreed = -1;
    private Vector2 _EULAscroll;
    private bool _EULAtoggle;
    private string _EULAtext = @"IMPORTANT, PLEASE READ CAREFULLY. THIS IS A LICENSE AGREEMENT
 
-	This SOFTWARE PRODUCT is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. This SOFTWARE PRODUCT is licensed, not sold.
+   This SOFTWARE PRODUCT is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. This SOFTWARE PRODUCT is licensed, not sold.
 
 End User License Agreement
 
@@ -401,9 +403,9 @@ http://www.detoxstudios.com";
    void Awake()
    {
       EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
-      
-      _statusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
-   
+
+      uScriptGUI.StatusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
+
       m_ForceCodeValidation = true;
    }
 
@@ -420,7 +422,7 @@ http://www.detoxstudios.com";
       {
          RebuildAllScripts( );
       }
-      
+
       if ( true == m_SelectAllNodes )
       {
          m_ScriptEditorCtrl.SelectAllNodes();
@@ -556,7 +558,7 @@ http://www.detoxstudios.com";
             }
          }
 
-   		Point loc = Point.Empty;
+         Point loc = Point.Empty;
          if ( !String.IsNullOrEmpty(m_FullPath) )
          {
             m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
@@ -573,7 +575,9 @@ http://www.detoxstudios.com";
 
          m_ScriptEditorCtrl.BuildContextMenu();
 
-         BuildPaletteMenu(null, null);
+         // This could be null
+         // @FIXME - SOLUS
+         uScriptGUIPanelPalette.Instance.Update();
 
          Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
@@ -594,8 +598,8 @@ http://www.detoxstudios.com";
          }
 
 
-         _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
-         _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
+//         _guiPanelScripts_Height = (int)(uScript.Instance.position.height / 3);
+//         _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
       }
 
       if (m_WantsClose)
@@ -685,13 +689,13 @@ http://www.detoxstudios.com";
          m_AddVariableNode = "";
       }
 
-      if ( _requestedCloseMap )
+      if ( uScriptGUIPanelCanvas._requestedCloseMap )
       {
-         _requestedCloseMap = false;
-         mapToggle = false;
+         uScriptGUIPanelCanvas._requestedCloseMap = false;
+         uScriptGUIPanelCanvas.mapToggle = false;
 
          // Center the canvas on _requestCanvasLocation
-         m_ScriptEditorCtrl.CenterOnPoint( _requestCanvasLocation );
+         m_ScriptEditorCtrl.CenterOnPoint( uScriptGUIPanelCanvas._requestCanvasLocation );
       }
 
       if ( false == contextActive )
@@ -701,8 +705,6 @@ http://www.detoxstudios.com";
    }
 
 
-   bool _requestedCloseMap = false;
-   Point _requestCanvasLocation = Point.Empty;
 
 
 
@@ -740,7 +742,7 @@ http://www.detoxstudios.com";
 
 
       // Set the default mouse region
-      _mouseRegion = uScript.MouseRegion.Outside;
+      uScriptGUI.CurrentRegion = uScriptGUI.Region.Outside;
       
       // As little logic as possible should be performed here.  It is better
       // to use Update() to perform tasks once per tick.
@@ -764,9 +766,10 @@ http://www.detoxstudios.com";
             // command events
             case EventType.ContextClick:
                m_ScriptEditorCtrl.BuildContextMenu( );
-      
-               BuildPaletteMenu(null, null);
-      
+
+
+               uScriptGUIPanelPalette.Instance.Update();
+
                m_ContextX = (int) Event.current.mousePosition.x;
                m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
       
@@ -859,20 +862,20 @@ http://www.detoxstudios.com";
                   }
                   else if ( Event.current.keyCode == KeyCode.M )
                   {
-                     mapToggle = !mapToggle;
+                     uScriptGUIPanelCanvas.mapToggle = !uScriptGUIPanelCanvas.mapToggle;
                   }
                   else if ( Event.current.keyCode == KeyCode.Space )
                   {
-                     m_HidePanelMode = !m_HidePanelMode;
+                     uScriptGUI.PanelsHidden = !uScriptGUI.PanelsHidden;
                   
-                     if (m_HidePanelMode)
+                     if (uScriptGUI.PanelsHidden)
                      {
-                        m_ScriptEditorCtrl.FlowChart.Location.X += _guiPanelPalette_Width + DIVIDER_WIDTH;
+                        m_ScriptEditorCtrl.FlowChart.Location.X += _guiPanelPalette_Width + uScriptGUI.PanelDividerSize;
                         m_ScriptEditorCtrl.RefreshScript(null, false);
                      }
                      else
                      {
-                        m_ScriptEditorCtrl.FlowChart.Location.X -= _guiPanelPalette_Width + DIVIDER_WIDTH;
+                        m_ScriptEditorCtrl.FlowChart.Location.X -= _guiPanelPalette_Width + uScriptGUI.PanelDividerSize;
                         m_ScriptEditorCtrl.RefreshScript(null, false);
                      }
                   }
@@ -916,9 +919,9 @@ http://www.detoxstudios.com";
                {
                   GUI.FocusControl( "MainView" );
 
-                  if ( mapToggle )
+                  if ( uScriptGUIPanelCanvas.mapToggle )
                   {
-                     MiniMapClick();
+                     uScriptGUI.PanelCanvas.MiniMapClick();
                   }
                   else
                   {
@@ -934,7 +937,7 @@ http://www.detoxstudios.com";
    
                         m_MouseDownArgs.Button = button;
                         m_MouseDownArgs.X = (int)(Event.current.mousePosition.x);
-                        if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
+                        if (!uScriptGUI.PanelsHidden) m_MouseDownArgs.X -= _guiPanelPalette_Width;
                         m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
                      }
    
@@ -957,7 +960,7 @@ http://www.detoxstudios.com";
                m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
                m_MouseMoveArgs.X = (int)Event.current.mousePosition.x;
                m_MouseMoveArgs.Y = (int)Event.current.mousePosition.y;
-               if (m_MouseDownRegion == uScript.MouseRegion.Canvas)
+               if (m_MouseDownRegion == uScriptGUI.Region.Canvas)
                {
                   // this is the switch to use to turn off panel rendering while panning/marquee selecting
                   m_CanvasDragging = true;
@@ -976,7 +979,7 @@ http://www.detoxstudios.com";
       
                   m_MouseUpArgs.Button = button;
                   m_MouseUpArgs.X = (int)(Event.current.mousePosition.x);
-                  if (!m_HidePanelMode) m_MouseUpArgs.X -= _guiPanelPalette_Width;
+                  if (!uScriptGUI.PanelsHidden) m_MouseUpArgs.X -= _guiPanelPalette_Width;
                   m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
                
                   if (m_PressedKey == KeyCode.S)
@@ -1020,7 +1023,7 @@ http://www.detoxstudios.com";
                      m_AddVariableNode = "Log";
                   }
                }
-               m_MouseDownRegion = MouseRegion.Outside;
+               m_MouseDownRegion = uScriptGUI.Region.Outside;
                m_MouseDown = false;
                break;
             case EventType.ScrollWheel:
@@ -1056,11 +1059,12 @@ http://www.detoxstudios.com";
       //
       // All the GUI drawing code
       //
-      DrawMainGUI();
+      uScriptGUI.Draw();
+//      DrawMainGUI();
 
       // where is the mouse?
-      CalculateMouseRegion();
-  
+      uScriptGUI.CalculateMouseRegion();
+
       // do external windows/popups
       DrawPopups(contextActive);
       
@@ -1072,7 +1076,7 @@ http://www.detoxstudios.com";
   
       // the following code must be here because it needs to happen 
       // after we've figured out what region the mouse is in
-      if (_mouseRegion == uScript.MouseRegion.Outside)
+      if (uScriptGUI.CurrentRegion == uScriptGUI.Region.Outside)
       {
          // if the mouse is not over our window, don't look for mouse move events
          // fixes an exception when trying to close a dirty uscript
@@ -1088,12 +1092,12 @@ http://www.detoxstudios.com";
       if (lastMouseDown == false && m_MouseDown)
       {
          // mouse was pressed down this event, set the current region
-         m_MouseDownRegion = _mouseRegion;
+         m_MouseDownRegion = uScriptGUI.CurrentRegion;
       }
 
       // Do this after the event processing has taken place so that we 
       // know we don't have a duplicate mouse up event
-      if ( true == m_MouseDown && _mouseRegion == MouseRegion.Outside && m_MouseUpArgs == null )
+      if ( true == m_MouseDown && uScriptGUI.CurrentRegion == uScriptGUI.Region.Outside && m_MouseUpArgs == null )
       {
          m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
 
@@ -1105,16 +1109,16 @@ http://www.detoxstudios.com";
 
          m_MouseUpArgs.Button = button;
          m_MouseUpArgs.X = (int)(Event.current.mousePosition.x);
-         if (!m_HidePanelMode) m_MouseUpArgs.X -= _guiPanelPalette_Width;
+         if (!uScriptGUI.PanelsHidden) m_MouseUpArgs.X -= _guiPanelPalette_Width;
          m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
-         m_MouseDownRegion = MouseRegion.Outside;
+         m_MouseDownRegion = uScriptGUI.Region.Outside;
          m_MouseDown = false;
       }
       
       if (Event.current.type == EventType.DragPerform || Event.current.type == EventType.DragUpdated)
       {
-         if ( _mouseRegion == MouseRegion.Canvas )
+         if ( uScriptGUI.CurrentRegion == uScriptGUI.Region.Canvas )
          {
             CheckDragDropCanvas( );
             Event.current.Use( );
@@ -1157,10 +1161,10 @@ http://www.detoxstudios.com";
             }
          }
 
-         if (_openScriptToggle)
-         {
-            DrawAssetList();
-         }
+//         if (_openScriptToggle)
+//         {
+//            DrawAssetList();
+//         }
       }
 
       if (m_DoPreferences)
@@ -1228,178 +1232,200 @@ http://www.detoxstudios.com";
    }
 
 
+   // Maintain the "peferred" panel sizes, but automatically decrease the actual size
+   // if the windows is too small. Panels stack top to bottom and left to right.
+   //
+   // The bottom-most and right-most visible panels always have flexible sizes.
 
-   void DrawMainGUI()
-   {
-      uScriptGUIContent.Init((uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle);
-      uScriptGUIStyle.Init();
-
-      DrawGUITopAreas();
-      if (!m_HidePanelMode)
-      {
-         DrawGUIHorizontalDivider();
-
-         SetMouseRegion( MouseRegion.HandleCanvas );//, 1, -3, -1, 6 );
-  
-         DrawGUIBottomAreas();
-      }
-      DrawGUIStatusbar();
-
-      // @TODO: This bool flag could be removed if the GUI is repainted after the canvas stops panning
-      if (_wasMoving)
-      {
-         _wasMoving = false;
-         Repaint();
-      }
-   }
-
-   void DrawGUITopAreas()
-   {
-      EditorGUILayout.BeginHorizontal();
-      {
-         if (!m_HidePanelMode)
-         {
-            DrawGUIPalette();
-            DrawGUIVerticalDivider();
-   
-            SetMouseRegion( MouseRegion.HandlePalette );//, -3, 1, 6, -4 );
-         }
-
-         DrawGUIContent();
-      }
-      EditorGUILayout.EndHorizontal();
-   }
-
-   void DrawGUIBottomAreas()
-   {
-      EditorGUILayout.BeginHorizontal( GUILayout.Height( _guiPanelProperties_Height ) );
-      {
-         DrawGUIPropertyGrid();
-         DrawGUIVerticalDivider();
-
-         SetMouseRegion( MouseRegion.HandleProperties );//, -3, 3, 6, -3 );
-
-         DrawGUIHelp();
-         DrawGUIVerticalDivider();
-
-         SetMouseRegion( MouseRegion.HandleReference );//, -3, 3, 6, -3 );
-
-         DrawGUINestedScripts();
-      }
-      EditorGUILayout.EndHorizontal();
-   }
-
-   void DrawGUIHorizontalDivider()
-   {
-       GUILayout.Box("", uScriptGUIStyle.hDivider, GUILayout.Height(DIVIDER_WIDTH), GUILayout.ExpandWidth(true));
-   }
-
-   void DrawGUIVerticalDivider()
-   {
-       GUILayout.Box("", uScriptGUIStyle.vDivider, GUILayout.Width(DIVIDER_WIDTH), GUILayout.ExpandHeight(true));
-   }
-
-   void DrawGUIStatusbar()
-   {
-      if (GUI.tooltip != _statusbarMessage || Event.current.type == EventType.MouseMove)
-      {
-         _statusbarMessage = GUI.tooltip;
-      }
-
-      EditorGUILayout.BeginHorizontal();
-      {
-         GUILayout.Label( _statusbarMessage, GUILayout.ExpandWidth( true ) );
-         GUILayout.Label( (Event.current.modifiers != 0 ? Event.current.modifiers + " :: " : "")
-                           + (int)Event.current.mousePosition.x + ", "
-                           + (int)Event.current.mousePosition.y + " (" + _mouseRegion + ")",
-                           GUILayout.ExpandWidth( false ));
-      }
-      EditorGUILayout.EndHorizontal();
+//   void DrawMainGUI()
+//   {
+//      uScriptGUIContent.Init((uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle);
+//      uScriptGUIStyle.Init();
+//      uScriptGUI.InitPanels();
+//
+//      boxStyle = new GUIStyle();
+//      boxStyle.normal.background = GUI.skin.box.normal.background;
+//      boxStyle.border = GUI.skin.box.border;
+//
+//      GUIStyle container = new GUIStyle();
+//      container.margin = new RectOffset(1, 0, 1, 0);
+//
+//      if (!uScriptGUI.PanelsHidden)
+//      {
+//         EditorGUILayout.BeginHorizontal(container);
+//         {
+//            uScriptGUI.DrawGUIPanelContainerLeft();
+//            uScriptGUI.DrawGUIPanelContainerCenter();
+//            uScriptGUI.DrawPanelContainerRight();
+//         }
+//         EditorGUILayout.EndHorizontal();
+////         DrawGUIPanelContainerBottom();
+//      }
+//
+//      // Draw the statusbar
+//
+//
+//
+//
+////
+////      DrawGUITopAreas();
+////      if (!uScriptGUI.PanelsHidden)
+////      {
+////         DrawGUIHorizontalDivider();
+////
+////         SetMouseRegion( uScriptGUI.Region.HandleCanvas );//, 1, -3, -1, 6 );
+////
+////         DrawGUIBottomAreas();
+////      }
+////
+//
+//
+//      DrawGUIStatusbar();
+//
+//      // @TODO: This bool flag could be removed if the GUI is repainted after the canvas stops panning
+//      if (_wasMoving)
+//      {
+//         _wasMoving = false;
+//         Repaint();
+//      }
+//   }
 
 
-      if (Event.current.type == EventType.Repaint)
-      {
-//         _statusbarRect = GUILayoutUtility.GetLastRect();
-      }
 
-      //      Redraw();  // This is taking to much CPU time.
-   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//   void DrawGUITopAreas()
+//   {
+//      EditorGUILayout.BeginHorizontal();
+//      {
+//         if (!uScriptGUI.PanelsHidden)
+//         {
+//            Rect r = EditorGUILayout.BeginVertical(GUILayout.Width(_guiPanelPalette_Width));
+//            {
+////               DrawGUINestedScripts();
+//
+//               DrawGUIHorizontalDivider();
+//               SetMouseRegion( uScriptGUI.Region.HandleScripts );
+//
+////               DrawGUIGraphContents();
+////   
+////               DrawGUIHorizontalDivider();
+//
+////               DrawGUIPalette();
+//
+//               DrawGUIVerticalDivider();
+//
+//               SetMouseRegion( uScriptGUI.Region.HandlePalette );//, -3, 1, 6, -4 );
+//
+//            }
+//            EditorGUILayout.EndVertical();
+//
+//            if ((int)r.width != 0 && (int)r.width != _guiPanelPalette_Width)
+//            {
+//               _guiPanelPalette_Width = (int)r.width;
+//            }
+//         }
+//
+////         DrawGUIContent();
+//      }
+//      EditorGUILayout.EndHorizontal();
+//   }
+
+//   void DrawGUIBottomAreas()
+//   {
+//      EditorGUILayout.BeginHorizontal( GUILayout.Height( _guiPanelProperties_Height ) );
+//      {
+////         DrawGUIPropertyGrid();
+//         DrawGUIVerticalDivider();
+//
+//         SetMouseRegion( uScriptGUI.Region.HandleProperties );//, -3, 3, 6, -3 );
+//
+////         DrawGUIHelp();
+////         DrawGUIVerticalDivider();
+////
+////         SetMouseRegion( uScriptGUI.Region.HandleReference );//, -3, 3, 6, -3 );
+//      }
+//      EditorGUILayout.EndHorizontal();
+//   }
+
+//   void DrawGUIHorizontalDivider()
+//   {
+//       GUILayout.Box("", uScriptGUIStyle.hDivider, GUILayout.Height(DIVIDER_WIDTH), GUILayout.ExpandWidth(true));
+//   }
+//
+//   void DrawGUIVerticalDivider()
+//   {
+//       GUILayout.Box("", uScriptGUIStyle.vDivider, GUILayout.Width(DIVIDER_WIDTH), GUILayout.ExpandHeight(true));
+//   }
+//
+//   void DrawGUIStatusbar()
+//   {
+//      if (GUI.tooltip != _statusbarMessage || Event.current.type == EventType.MouseMove)
+//      {
+//         _statusbarMessage = GUI.tooltip;
+//      }
+//
+//      EditorGUILayout.BeginHorizontal();
+//      {
+//         GUILayout.Label( _statusbarMessage, GUILayout.ExpandWidth( true ) );
+//         GUILayout.Label( (Event.current.modifiers != 0 ? Event.current.modifiers + " :: " : "")
+//                           + (int)Event.current.mousePosition.x + ", "
+//                           + (int)Event.current.mousePosition.y + " (" + uScriptGUI.CurrentRegion + ")",
+//                           GUILayout.ExpandWidth( false ));
+//      }
+//      EditorGUILayout.EndHorizontal();
+//
+//
+//      if (Event.current.type == EventType.Repaint)
+//      {
+////         _statusbarRect = GUILayoutUtility.GetLastRect();
+//      }
+//
+//      //      Redraw();  // This is taking to much CPU time.
+//   }
 
 //   Rect _statusbarRect = new Rect();
 
-   void DrawGUIPalette()
-   {
-      Rect r = EditorGUILayout.BeginVertical( uScriptGUIStyle.panelBox, GUILayout.Width( _guiPanelPalette_Width ) );
-      {
-         // Toolbar
-         //
-         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
-         {
-            string[] options = new string[] { "Nodes Palette", "Graph Contents" };
-
-            Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
-
-            _paletteMode = EditorGUILayout.Popup(_paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
-
-//            GUILayout.Label("Nodes", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
-
-            GUILayout.FlexibleSpace();
-
-            if (_paletteMode == 0)
-            {
-               // Toggle hierarchy foldouts
-               bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
-                                                      (_paletteFoldoutToggle ? uScriptGUIContent.toolbarButtonCollapse : uScriptGUIContent.toolbarButtonExpand),
-                                                      uScriptGUIStyle.paletteToolbarButton,
-                                                      GUILayout.ExpandWidth(false));
-               if (_paletteFoldoutToggle != newToggleState)
-               {
-                  _paletteFoldoutToggle = newToggleState;
-                  if (_paletteFoldoutToggle)
-                  {
-                     ExpandPaletteMenuItem(null);
-                  }
-                  else
-                  {
-                     CollapsePaletteMenuItem(null);
-                  }
-               }
-   
-               GUI.SetNextControlName ("FilterSearch" );
-               string _filterText = uScriptGUI.ToolbarSearchField(_paletteFilterText, GUILayout.Width(100));
-//               string _filterText = GUILayout.TextField(_paletteFilterText, 10, "toolbarTextField", GUILayout.Width(80));
-               GUI.SetNextControlName ("" );
-               if (_filterText != _paletteFilterText)
-               {
-                  // Drop focus if the user inserted a newline (hit enter)
-                  if (_filterText.Contains('\n'))
-                  {
-                     GUIUtility.keyboardControl = 0;
-                  }
-
-//                  // Only allow letters and digits
-//                  _filterText = new string(_filterText.Where(ch => char.IsLetterOrDigit(ch)).ToArray());
-
-                  // Trim leading whitespace
-                  _filterText = _filterText.TrimStart( new char[] { ' ' } );
-
-                  _paletteFilterText = _filterText;
-                  FilterPaletteMenuItems();
-               }
-
-//               // Clear the node text filter
-//               if ( GUILayout.Button( Button.Content( Button.ID.ClearFilter ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-//               {
-//                  GUIUtility.keyboardControl = 0;
-//                  _paletteFilterText = String.Empty;
-//                  FilterPaletteMenuItems();
-//               }
-            }
-            else
-            {
-               // This is where the Graph Contents toolbar buttons will go
-
-               // Toggle hierarchy foldouts
+//   void DrawGUIPalette()
+//   {
+//      EditorGUILayout.BeginVertical( uScriptGUIStyle.panelBox );
+//      {
+//         // Toolbar
+//         //
+//         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
+//         {
+//            string[] options = new string[] { "Nodes Palette", "Graph Contents" };
+//
+//            Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
+//
+//            _paletteMode = EditorGUILayout.Popup(_paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
+//
+////            GUILayout.Label("Nodes", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+//
+//            GUILayout.FlexibleSpace();
+//
+//            if (_paletteMode == 0)
+//            {
+//               // Toggle hierarchy foldouts
 //               bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
 //                                                      (_paletteFoldoutToggle ? uScriptGUIContent.toolbarButtonCollapse : uScriptGUIContent.toolbarButtonExpand),
 //                                                      uScriptGUIStyle.paletteToolbarButton,
@@ -1416,499 +1442,547 @@ http://www.detoxstudios.com";
 //                     CollapsePaletteMenuItem(null);
 //                  }
 //               }
+//   
+//               GUI.SetNextControlName ("FilterSearch" );
+//               string _filterText = uScriptGUI.ToolbarSearchField(_paletteFilterText, GUILayout.Width(100));
+////               string _filterText = GUILayout.TextField(_paletteFilterText, 10, "toolbarTextField", GUILayout.Width(80));
+//               GUI.SetNextControlName ("" );
+//               if (_filterText != _paletteFilterText)
+//               {
+//                  // Drop focus if the user inserted a newline (hit enter)
+//                  if (_filterText.Contains('\n'))
+//                  {
+//                     GUIUtility.keyboardControl = 0;
+//                  }
+//
+////                  // Only allow letters and digits
+////                  _filterText = new string(_filterText.Where(ch => char.IsLetterOrDigit(ch)).ToArray());
+//
+//                  // Trim leading whitespace
+//                  _filterText = _filterText.TrimStart( new char[] { ' ' } );
+//
+//                  _paletteFilterText = _filterText;
+//                  FilterPaletteMenuItems();
+//               }
+//
+////               // Clear the node text filter
+////               if ( GUILayout.Button( Button.Content( Button.ID.ClearFilter ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+////               {
+////                  GUIUtility.keyboardControl = 0;
+////                  _paletteFilterText = String.Empty;
+////                  FilterPaletteMenuItems();
+////               }
+//            }
+//            else
+//            {
+//               // This is where the Graph Contents toolbar buttons will go
+//
+//               // Toggle hierarchy foldouts
+////               bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
+////                                                      (_paletteFoldoutToggle ? uScriptGUIContent.toolbarButtonCollapse : uScriptGUIContent.toolbarButtonExpand),
+////                                                      uScriptGUIStyle.paletteToolbarButton,
+////                                                      GUILayout.ExpandWidth(false));
+////               if (_paletteFoldoutToggle != newToggleState)
+////               {
+////                  _paletteFoldoutToggle = newToggleState;
+////                  if (_paletteFoldoutToggle)
+////                  {
+////                     ExpandPaletteMenuItem(null);
+////                  }
+////                  else
+////                  {
+////                     CollapsePaletteMenuItem(null);
+////                  }
+////               }
+//
+//               GUI.SetNextControlName ("FilterSearch" );
+//               string _filterText = uScriptGUI.ToolbarSearchField(_graphListFilterText, GUILayout.Width(100));
+//               GUI.SetNextControlName ("" );
+//               if (_filterText != _graphListFilterText)
+//               {
+//                  // Drop focus if the user inserted a newline (hit enter)
+//                  if (_filterText.Contains('\n'))
+//                  {
+//                     GUIUtility.keyboardControl = 0;
+//                  }
+//
+//                  // Trim leading whitespace
+//                  _filterText = _filterText.TrimStart( new char[] { ' ' } );
+//
+//                  _graphListFilterText = _filterText;
+//               }
+//            }
+//         }
+//         EditorGUILayout.EndHorizontal();
+//
+//
+//         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
+//         {
+//            _wasMoving = true;
+//
+//            // Hide the panels while the canvas is moving
+//            string message =
+//               "The " + (_paletteMode == 0 ? "Node Palette" : "Graph Contents") + " panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
+//
+//            GUIStyle style = new GUIStyle(GUI.skin.label);
+//            style.wordWrap = true;
+//            style.padding = new RectOffset(16, 16, 16, 16);
+//
+//            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
+//         }
+//         else
+//         {
+//            if (_paletteMode == 0)
+//            {
+//               // Node list
+//               //
+//               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView( _guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true) );
+//               {
+//                  foreach (PaletteMenuItem item in _paletteMenuItems)
+//                  {
+//                     DrawPaletteMenu(item);
+//                  }
+//               }
+//               EditorGUILayout.EndScrollView();
+//            }
+//            else
+//            {
+//               //
+//               // Graph Contents list
+//               //
+//               // Every node in the graph should be listed here, categorized by type.
+//               //
+//
+//               // Process all nodes and place them in the appropriate list
+//               Dictionary<string, Dictionary<string, List<DisplayNode>>> categories = new Dictionary<string, Dictionary<string, List<DisplayNode>>>();
+//
+//               DisplayNode displayNode;
+//               string category;
+//               string name;
+//               string comment;
+//
+//               categories.Add("Comments", new Dictionary<string, List<DisplayNode>>());
+//               categories.Add("Actions", new Dictionary<string, List<DisplayNode>>());
+//               categories.Add("Conditions", new Dictionary<string, List<DisplayNode>>());
+//               categories.Add("Events", new Dictionary<string, List<DisplayNode>>());
+//               categories.Add("Properties", new Dictionary<string, List<DisplayNode>>());
+//               categories.Add("Variables", new Dictionary<string, List<DisplayNode>>());
+//               categories.Add("Miscellaneous", new Dictionary<string, List<DisplayNode>>());
+//
+//               // @TODO: clean up this code
+//
+//               foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
+//               {
+//                  displayNode = node as DisplayNode;
+//                  category = string.Empty;
+//                  name = string.Empty;
+//                  comment = string.Empty;
+//
+//                  if (displayNode is EntityEventDisplayNode)
+//                  {
+//                     category = "Events";
+//                     name = ((EntityEventDisplayNode)displayNode).EntityEvent.FriendlyType;
+//                     comment = ((EntityEventDisplayNode)displayNode).EntityEvent.Comment.Default;
+//                  }
+//                  else if (displayNode is LogicNodeDisplayNode)
+//                  {
+//                     category = "Actions";
+//                     name = ((LogicNodeDisplayNode)displayNode).LogicNode.FriendlyName;
+//                     comment = ((LogicNodeDisplayNode)displayNode).LogicNode.Comment.Default;
+//                  }
+//                  else if (displayNode is LocalNodeDisplayNode)
+//                  {
+//                     category = "Variables";
+//                     name = ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Type; // get FriendlyName
+//                     name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
+//                     name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
+//                     comment = ((LocalNodeDisplayNode)displayNode).LocalNode.Name.Default;
+//                  }
+//                  else if (displayNode is CommentDisplayNode)
+//                  {
+//                     category = "Comments";
+//                     name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
+//                     comment = ((CommentDisplayNode)displayNode).Comment.TitleText.Default;
+//                  }
+//                  else
+//                  {
+//                     category = "Miscellaneous";
+//                  }
+//   
+//                  // Validate strings
+//                  name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
+//                  comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
+//   
+//                  string fullName = name + comment;
+//   
+//                  if (String.IsNullOrEmpty(_graphListFilterText) || fullName.ToLower().Contains(_graphListFilterText.ToLower()))
+//                  {
+//                     if (categories[category].ContainsKey(name) == false)
+//                     {
+//                        categories[category].Add(name, new List<DisplayNode>());
+//                     }
+//   
+//                     // Add the node to the list
+//                     categories[category][name].Add(displayNode);
+//                  }
+//               }
+//
+//               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true) );
+//               {
+//                  GUIContent nodeButtonContent = new GUIContent(string.Empty, "Click to select node. Shift-click to toggle the selection.");
+//   
+//                  foreach (KeyValuePair<string, Dictionary<string, List<DisplayNode>>> kvpCategory in categories)
+//                  {
+//                     if (kvpCategory.Value.Count > 0)
+//                     {
+//                        // The category contains at least one item to show
+//   
+//                        // This is should be a folding menu item that contains more buttons
+//                        GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
+//                        tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (0 * 12), 0, 0, 0);
+//   
+//                        bool tmpBool = true;
+//                        tmpBool = GUILayout.Toggle(tmpBool, kvpCategory.Key, tmpStyle);
+//                        if (tmpBool)
+//                        {
+//                           List<string> nodeList = kvpCategory.Value.Keys.ToList();
+//                           nodeList.Sort();
+//   
+//                           foreach (string s in nodeList)
+//                           {
+//                              List<DisplayNode> dnList = kvpCategory.Value[s];
+//   
+//                              // Show each node
+//                              foreach (DisplayNode dn in dnList)
+//                              {
+//                                 // Get the name and comment strings
+//                                 name = string.Empty;
+//                                 comment = string.Empty;
+//      
+//                                 if (dn is EntityEventDisplayNode)
+//                                 {
+//                                    name = ((EntityEventDisplayNode)dn).EntityEvent.FriendlyType;
+//                                    comment = ((EntityEventDisplayNode)dn).EntityEvent.Comment.Default;
+//                                 }
+//                                 else if (dn is LogicNodeDisplayNode)
+//                                 {
+//                                    name = ((LogicNodeDisplayNode)dn).LogicNode.FriendlyName;
+//                                    comment = ((LogicNodeDisplayNode)dn).LogicNode.Comment.Default;
+//                                 }
+//                                 else if (dn is LocalNodeDisplayNode)
+//                                 {
+//                                    name = ((LocalNodeDisplayNode)dn).LocalNode.Value.Type; // get FriendlyName
+//                                    name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
+//                                    name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)dn).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)dn).LocalNode.Value.Default);
+//                                    comment = ((LocalNodeDisplayNode)dn).LocalNode.Name.Default;
+//                                 }
+//                                 else if (dn is CommentDisplayNode)
+//                                 {
+//                                    name = ((CommentDisplayNode)dn).Comment.TitleText.FriendlyName;
+//                                    comment = ((CommentDisplayNode)dn).Comment.TitleText.Default;
+//                                 }
+//      
+//                                 // Validate strings
+//                                 name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
+//                                 comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
+//   
+//                                 GUILayout.BeginHorizontal();
+//                                 {
+//                                    nodeButtonContent.text = name + comment;
+//                                    bool selected = dn.Selected;
+//                                    selected = GUILayout.Toggle(selected, nodeButtonContent, uScriptGUIStyle.nodeButtonLeft);
+//                                    if (selected != dn.Selected)
+//                                    {
+//                                       // is the shift key modifier being used?
+//                                       if (Event.current.modifiers != EventModifiers.Shift)
+//                                       {
+//                                          // clear all selected nodes first
+//                                          m_ScriptEditorCtrl.DeselectAll();
+//                                       }
+//                                       // toggle the clicked node
+//                                       m_ScriptEditorCtrl.ToggleNode(dn.Guid);
+//                                    }
+//   
+//                                    if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
+//                                    {
+//                                       uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
+//                                    }
+//                                 }
+//                                 GUILayout.EndHorizontal();
+//                              }
+//                           }
+//                        }
+//                     }
+//                  }
+//               }
+//               EditorGUILayout.EndScrollView();
+//            }
+//         }
+//      }
+//      EditorGUILayout.EndVertical();
+//
+//      SetMouseRegion( uScriptGUI.Region.Palette );//, 1, 1, -4, -4 );
+//   }
 
-               GUI.SetNextControlName ("FilterSearch" );
-               string _filterText = uScriptGUI.ToolbarSearchField(_graphListFilterText, GUILayout.Width(100));
-               GUI.SetNextControlName ("" );
-               if (_filterText != _graphListFilterText)
-               {
-                  // Drop focus if the user inserted a newline (hit enter)
-                  if (_filterText.Contains('\n'))
-                  {
-                     GUIUtility.keyboardControl = 0;
-                  }
-
-                  // Trim leading whitespace
-                  _filterText = _filterText.TrimStart( new char[] { ' ' } );
-
-                  _graphListFilterText = _filterText;
-               }
-            }
-         }
-         EditorGUILayout.EndHorizontal();
 
 
-         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
-         {
-            _wasMoving = true;
 
-            // Hide the panels while the canvas is moving
-            string message =
-               "The " + (_paletteMode == 0 ? "Node Palette" : "Graph Contents") + " panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
 
-            GUIStyle style = new GUIStyle(GUI.skin.label);
-            style.wordWrap = true;
-            style.padding = new RectOffset(16, 16, 16, 16);
-
-            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
-         }
-         else
-         {
-            if (_paletteMode == 0)
-            {
-               // Node list
-               //
-               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView( _guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true) );
-               {
-                  foreach (PaletteMenuItem item in _paletteMenuItems)
-                  {
-                     DrawPaletteMenu(item);
-                  }
-               }
-               EditorGUILayout.EndScrollView();
-            }
-            else
-            {
-               //
-               // Graph Contents list
-               //
-               // Every node in the graph should be listed here, categorized by type.
-               //
-
-               // Process all nodes and place them in the appropriate list
-               Dictionary<string, Dictionary<string, List<DisplayNode>>> categories = new Dictionary<string, Dictionary<string, List<DisplayNode>>>();
-
-               DisplayNode displayNode;
-               string category;
-               string name;
-               string comment;
-
-               categories.Add("Comments", new Dictionary<string, List<DisplayNode>>());
-               categories.Add("Actions", new Dictionary<string, List<DisplayNode>>());
-               categories.Add("Conditions", new Dictionary<string, List<DisplayNode>>());
-               categories.Add("Events", new Dictionary<string, List<DisplayNode>>());
-               categories.Add("Properties", new Dictionary<string, List<DisplayNode>>());
-               categories.Add("Variables", new Dictionary<string, List<DisplayNode>>());
-               categories.Add("Miscellaneous", new Dictionary<string, List<DisplayNode>>());
-
-               // @TODO: clean up this code
-
-               foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
-               {
-                  displayNode = node as DisplayNode;
-                  category = string.Empty;
-                  name = string.Empty;
-                  comment = string.Empty;
-
-                  if (displayNode is EntityEventDisplayNode)
-                  {
-                     category = "Events";
-                     name = ((EntityEventDisplayNode)displayNode).EntityEvent.FriendlyType;
-                     comment = ((EntityEventDisplayNode)displayNode).EntityEvent.Comment.Default;
-                  }
-                  else if (displayNode is LogicNodeDisplayNode)
-                  {
-                     category = "Actions";
-                     name = ((LogicNodeDisplayNode)displayNode).LogicNode.FriendlyName;
-                     comment = ((LogicNodeDisplayNode)displayNode).LogicNode.Comment.Default;
-                  }
-                  else if (displayNode is LocalNodeDisplayNode)
-                  {
-                     category = "Variables";
-                     name = ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Type; // get FriendlyName
-                     name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
-                     name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
-                     comment = ((LocalNodeDisplayNode)displayNode).LocalNode.Name.Default;
-                  }
-                  else if (displayNode is CommentDisplayNode)
-                  {
-                     category = "Comments";
-                     name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
-                     comment = ((CommentDisplayNode)displayNode).Comment.TitleText.Default;
-                  }
-                  else
-                  {
-                     category = "Miscellaneous";
-                  }
+//   public void SetMouseRegion( MouseRegion region )
+//   {
+//      if (Event.current.type == EventType.Repaint)
+//      {
+//         _mouseRegionRect[region] = GUILayoutUtility.GetLastRect();
+//      }
+//
+//      if ( _mouseRegionRect.ContainsKey(region) )
+//      {
+//         if (GUI.enabled)
+//         {
+//            switch ( region )
+//            {
+//               case uScriptGUI.Region.HandleCanvas:
+//               case uScriptGUI.Region.HandleScripts:
+//               case uScriptGUI.Region.HandleContents:
+//                  EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeVertical);
+//                  break;
+//               case uScriptGUI.Region.HandlePalette:
+//               case uScriptGUI.Region.HandleProperties:
+//                  EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeHorizontal);
+//                  break;
+//            }
+//         }
+//      }
+//   }
    
-                  // Validate strings
-                  name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
-                  comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
-   
-                  string fullName = name + comment;
-   
-                  if (String.IsNullOrEmpty(_graphListFilterText) || fullName.ToLower().Contains(_graphListFilterText.ToLower()))
-                  {
-                     if (categories[category].ContainsKey(name) == false)
-                     {
-                        categories[category].Add(name, new List<DisplayNode>());
-                     }
-   
-                     // Add the node to the list
-                     categories[category][name].Add(displayNode);
-                  }
-               }
-
-               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true) );
-               {
-                  GUIContent nodeButtonContent = new GUIContent(string.Empty, "Click to select node. Shift-click to toggle the selection.");
-   
-                  foreach (KeyValuePair<string, Dictionary<string, List<DisplayNode>>> kvpCategory in categories)
-                  {
-                     if (kvpCategory.Value.Count > 0)
-                     {
-                        // The category contains at least one item to show
-   
-                        // This is should be a folding menu item that contains more buttons
-                        GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
-                        tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (0 * 12), 0, 0, 0);
-   
-                        bool tmpBool = true;
-                        tmpBool = GUILayout.Toggle(tmpBool, kvpCategory.Key, tmpStyle);
-                        if (tmpBool)
-                        {
-                           List<string> nodeList = kvpCategory.Value.Keys.ToList();
-                           nodeList.Sort();
-   
-                           foreach (string s in nodeList)
-                           {
-                              List<DisplayNode> dnList = kvpCategory.Value[s];
-   
-                              // Show each node
-                              foreach (DisplayNode dn in dnList)
-                              {
-                                 // Get the name and comment strings
-                                 name = string.Empty;
-                                 comment = string.Empty;
-      
-                                 if (dn is EntityEventDisplayNode)
-                                 {
-                                    name = ((EntityEventDisplayNode)dn).EntityEvent.FriendlyType;
-                                    comment = ((EntityEventDisplayNode)dn).EntityEvent.Comment.Default;
-                                 }
-                                 else if (dn is LogicNodeDisplayNode)
-                                 {
-                                    name = ((LogicNodeDisplayNode)dn).LogicNode.FriendlyName;
-                                    comment = ((LogicNodeDisplayNode)dn).LogicNode.Comment.Default;
-                                 }
-                                 else if (dn is LocalNodeDisplayNode)
-                                 {
-                                    name = ((LocalNodeDisplayNode)dn).LocalNode.Value.Type; // get FriendlyName
-                                    name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
-                                    name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)dn).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)dn).LocalNode.Value.Default);
-                                    comment = ((LocalNodeDisplayNode)dn).LocalNode.Name.Default;
-                                 }
-                                 else if (dn is CommentDisplayNode)
-                                 {
-                                    name = ((CommentDisplayNode)dn).Comment.TitleText.FriendlyName;
-                                    comment = ((CommentDisplayNode)dn).Comment.TitleText.Default;
-                                 }
-      
-                                 // Validate strings
-                                 name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
-                                 comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
-   
-                                 GUILayout.BeginHorizontal();
-                                 {
-                                    nodeButtonContent.text = name + comment;
-                                    bool selected = dn.Selected;
-                                    selected = GUILayout.Toggle(selected, nodeButtonContent, uScriptGUIStyle.nodeButtonLeft);
-                                    if (selected != dn.Selected)
-                                    {
-                                       // is the shift key modifier being used?
-                                       if (Event.current.modifiers != EventModifiers.Shift)
-                                       {
-                                          // clear all selected nodes first
-                                          m_ScriptEditorCtrl.DeselectAll();
-                                       }
-                                       // toggle the clicked node
-                                       m_ScriptEditorCtrl.ToggleNode(dn.Guid);
-                                    }
-   
-                                    if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
-                                    {
-                                       uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
-                                    }
-                                 }
-                                 GUILayout.EndHorizontal();
-                              }
-                           }
-                        }
-                     }
-                  }
-               }
-               EditorGUILayout.EndScrollView();
-            }
-         }
-      }
-      EditorGUILayout.EndVertical();
-      
-      if ((int)r.width != 0 && (int)r.width != _guiPanelPalette_Width)
-      {
-         _guiPanelPalette_Width = (int)r.width;
-      }
-
-      SetMouseRegion( MouseRegion.Palette );//, 1, 1, -4, -4 );
-   }
+//   bool HiddenRegion(MouseRegion region)
+//   {
+//      if (!uScriptGUI.PanelsHidden) return false;
+//
+//      return region != uScriptGUI.Region.Canvas && region != uScriptGUI.Region.Outside;
+//   }
+//   
+//   void CalculateMouseRegion()
+//   {
+//      foreach( KeyValuePair<Region, Rect> kvp in uScriptGUI.Regions )
+//      {
+//         if ( kvp.Value.Contains( Event.current.mousePosition ) && !HiddenRegion(kvp.Key) )
+//         {
+//            uScriptGUI.CurrentRegion = kvp.Key;
+//            break;
+//            //EditorGUIUtility.DrawColorSwatch(_mouseRegionRect[region], UnityEngine.Color.cyan);
+//         }
+//      }
+//   }
 
 
+//   private void ExpandPaletteMenuItem(PaletteMenuItem paletteMenuItem)
+//   {
+//      if (paletteMenuItem == null)
+//      {
+//         foreach (PaletteMenuItem item in _paletteMenuItems)
+//         {
+//            ExpandPaletteMenuItem(item);
+//         }
+//      }
+//      else if (paletteMenuItem.Items != null && paletteMenuItem.Items.Count > 0)
+//      {
+//         paletteMenuItem.Expanded = true;
+//         foreach (PaletteMenuItem item in paletteMenuItem.Items)
+//         {
+//            if (item == null)
+//            {
+//               uScriptDebug.Log(paletteMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
+//               return;
+//            }
+//            ExpandPaletteMenuItem(item);
+//         }
+//      }
+//   }
+//
+//   private void CollapsePaletteMenuItem(PaletteMenuItem paletteMenuItem)
+//   {
+//      if (paletteMenuItem == null)
+//      {
+//         foreach (PaletteMenuItem item in _paletteMenuItems)
+//         {
+//            CollapsePaletteMenuItem(item);
+//         }
+//      }
+//      else if (paletteMenuItem.Items != null && paletteMenuItem.Items.Count > 0)
+//      {
+//         paletteMenuItem.Expanded = false;
+//         foreach (PaletteMenuItem item in paletteMenuItem.Items)
+//         {
+//            if (item == null)
+//            {
+//               uScriptDebug.Log(paletteMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
+//               return;
+//            }
+//            CollapsePaletteMenuItem(item);
+//         }
+//      }
+//   }
+//
+//
+//   private void FilterPaletteMenuItems()
+//   {
+//      foreach (PaletteMenuItem item in _paletteMenuItems)
+//      {
+//         item.Hidden = FilterPaletteMenuItem(item, false);
+//      }
+//   }
+//
+//   private bool FilterPaletteMenuItem(PaletteMenuItem paletteMenuItem, bool shouldForceVisible)
+//   {
+//      // return TRUE if the parent or item should be hidden
+//      if (shouldForceVisible || paletteMenuItem.Name.ToLower().Contains(_paletteFilterText.ToLower()))
+//      {
+//         // filter matched, so this and all children should be visible
+//         if (paletteMenuItem.Items != null)
+//         {
+//            foreach (PaletteMenuItem item in paletteMenuItem.Items)
+//            {
+//                item.Hidden = FilterPaletteMenuItem(item, true);
+//            }
+//         }
+//         return false;
+//      }
+//      else if (paletteMenuItem.Items != null)
+//      {
+//         // check each child to see if this should be visible
+//         bool shouldHideParent = true;
+//         foreach (PaletteMenuItem item in paletteMenuItem.Items)
+//         {
+//            item.Hidden = FilterPaletteMenuItem(item, false);
+//            if (item.Hidden == false)
+//            {
+//               shouldHideParent = false;
+//            }
+//         }
+//
+//         return shouldHideParent;
+//      }
+//
+//      // has no children and wasn't a match
+//      return true;
+//   }
 
 
-
-   void SetMouseRegion( MouseRegion region )
-   {
-      if (Event.current.type == EventType.Repaint)
-      {
-         _mouseRegionRect[region] = GUILayoutUtility.GetLastRect();
-      }
-
-      if ( _mouseRegionRect.ContainsKey(region) )
-      {
-         if (GUI.enabled)
-         {
-            switch ( region )
-            {
-               case MouseRegion.HandleCanvas:
-                  EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeVertical);
-                  break;
-               case MouseRegion.HandlePalette:
-               case MouseRegion.HandleProperties:
-               case MouseRegion.HandleReference:
-                  EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeHorizontal);
-                  break;
-            }
-         }
-      }
-   }
-   
-   bool HiddenRegion(MouseRegion region)
-   {
-      if (!m_HidePanelMode) return false;
-
-      return region != uScript.MouseRegion.Canvas && region != uScript.MouseRegion.Outside;
-   }
-   
-   void CalculateMouseRegion()
-   {
-      foreach( KeyValuePair<MouseRegion, Rect> kvp in _mouseRegionRect )
-      {
-         if ( kvp.Value.Contains( Event.current.mousePosition ) && !HiddenRegion(kvp.Key) )
-         {
-            _mouseRegion = kvp.Key;
-            break;
-            //EditorGUIUtility.DrawColorSwatch(_mouseRegionRect[region], UnityEngine.Color.cyan);
-         }
-      }
-   }
-
-
-   private void ExpandPaletteMenuItem(PaletteMenuItem paletteMenuItem)
-   {
-      if (paletteMenuItem == null)
-      {
-         foreach (PaletteMenuItem item in _paletteMenuItems)
-         {
-            ExpandPaletteMenuItem(item);
-         }
-      }
-      else if (paletteMenuItem.Items != null && paletteMenuItem.Items.Count > 0)
-      {
-         paletteMenuItem.Expanded = true;
-         foreach (PaletteMenuItem item in paletteMenuItem.Items)
-         {
-            if (item == null)
-            {
-               uScriptDebug.Log(paletteMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
-               return;
-            }
-            ExpandPaletteMenuItem(item);
-         }
-      }
-   }
-
-   private void CollapsePaletteMenuItem(PaletteMenuItem paletteMenuItem)
-   {
-      if (paletteMenuItem == null)
-      {
-         foreach (PaletteMenuItem item in _paletteMenuItems)
-         {
-            CollapsePaletteMenuItem(item);
-         }
-      }
-      else if (paletteMenuItem.Items != null && paletteMenuItem.Items.Count > 0)
-      {
-         paletteMenuItem.Expanded = false;
-         foreach (PaletteMenuItem item in paletteMenuItem.Items)
-         {
-            if (item == null)
-            {
-               uScriptDebug.Log(paletteMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
-               return;
-            }
-            CollapsePaletteMenuItem(item);
-         }
-      }
-   }
-
-
-   private void FilterPaletteMenuItems()
-   {
-      foreach (PaletteMenuItem item in _paletteMenuItems)
-      {
-         item.Hidden = FilterPaletteMenuItem(item, false);
-      }
-   }
-
-   private bool FilterPaletteMenuItem(PaletteMenuItem paletteMenuItem, bool shouldForceVisible)
-   {
-      // return TRUE if the parent or item should be hidden
-      if (shouldForceVisible || paletteMenuItem.Name.ToLower().Contains(_paletteFilterText.ToLower()))
-      {
-         // filter matched, so this and all children should be visible
-         if (paletteMenuItem.Items != null)
-         {
-            foreach (PaletteMenuItem item in paletteMenuItem.Items)
-            {
-                item.Hidden = FilterPaletteMenuItem(item, true);
-            }
-         }
-         return false;
-      }
-      else if (paletteMenuItem.Items != null)
-      {
-         // check each child to see if this should be visible
-         bool shouldHideParent = true;
-         foreach (PaletteMenuItem item in paletteMenuItem.Items)
-         {
-            item.Hidden = FilterPaletteMenuItem(item, false);
-            if (item.Hidden == false)
-            {
-               shouldHideParent = false;
-            }
-         }
-
-         return shouldHideParent;
-      }
-
-      // has no children and wasn't a match
-      return true;
-   }
-
-
-   private void BuildPaletteMenu(ToolStripItem contextMenuItem, PaletteMenuItem paletteMenuItem)
-   {
-      if (contextMenuItem == null || paletteMenuItem == null)
-      {
-         //
-         // Create a new palette menu, destroying the old one
-         //
-         _paletteMenuItems = new List<PaletteMenuItem>();
-
-         foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
-         {
-            if ((item is ToolStripMenuItem) && (item.Text == "Add..."))
-            {
-               foreach (ToolStripItem subitem in ((ToolStripMenuItem)item).DropDownItems.Items)
-               {
-                  PaletteMenuItem paletteItem = new PaletteMenuItem();
-                  paletteItem.Indent = 0;
-
-                  BuildPaletteMenu(subitem, paletteItem);
-
-                  _paletteMenuItems.Add(paletteItem);
-               }
-            }
-         }
-      }
-      else if (!(contextMenuItem is ToolStripSeparator))
-      {
-         if ((contextMenuItem is ToolStripMenuItem) && ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items.Count > 0)
-         {
-            paletteMenuItem.Name = contextMenuItem.Text.Replace("...", "");
-            paletteMenuItem.Items = new List<PaletteMenuItem>();
-
-            foreach (ToolStripItem item in ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items)
-            {
-               PaletteMenuItem newItem = new PaletteMenuItem();
-               newItem.Indent = paletteMenuItem.Indent + 1;
-               if (item == null || newItem == null)
-               {
-                  uScriptDebug.Log("Trying to pass a null parameter to BuildPaletteMenu()!\n", uScriptDebug.Type.Error);
-                  return;
-               }
-               BuildPaletteMenu(item, newItem);
-               paletteMenuItem.Items.Add(newItem);
-            }
-         }
-         else
-         {
-            paletteMenuItem.Name = contextMenuItem.Text.Replace("&", "");
-            paletteMenuItem.Tooltip = FindNodeToolTip( ScriptEditor.FindNodeType(contextMenuItem.Tag as EntityNode) );
-            paletteMenuItem.Click = contextMenuItem.Click;
-            paletteMenuItem.Tag   = contextMenuItem.Tag;
-         }
-      }
-      else
-      {
-         uScriptDebug.Log("The contextMenuItem (" + contextMenuItem.Text + ") is a " + contextMenuItem.GetType() + " and is unhandled!\n", uScriptDebug.Type.Warning);
-      }
-   }
-
-   private void DrawPaletteMenu(PaletteMenuItem item)
-   {
-      if (item.Hidden)
-      {
-         return;
-      }
-
-      if (item.Items != null)
-      {
-         // This is should be a folding menu item that contains more buttons
-         GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
-         tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (item.Indent * 12), 0, 0, 0);
-
-         item.Expanded = GUILayout.Toggle(item.Expanded, item.Name, tmpStyle);
-         if (item.Expanded)
-         {
-            foreach (PaletteMenuItem subitem in item.Items)
-            {
-               DrawPaletteMenu(subitem);
-            }
-         }
-      }
-      else
-      {
-         // This is a simple menu item
-         GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteButton);
-         tmpStyle.margin = new RectOffset(tmpStyle.margin.left + 0 + (item.Indent * 12),
-                                       tmpStyle.margin.right,
-                                       tmpStyle.margin.top,
-                                       tmpStyle.margin.bottom);
-
-         if (GUILayout.Button(new GUIContent(item.Name, item.Tooltip), tmpStyle))
-         {
-            if (item.Click != null)
-            {
-               // Create the node on the canvas
-               int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
-               int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
-               Point center = new Point(halfWidth, halfHeight);
-               m_ScriptEditorCtrl.ContextCursor = center;
-               item.OnClick();
-               uScriptDebug.Log("Clicked '" + item.Name + "'\n", uScriptDebug.Type.Debug);
-            }
-            else
-            {
-               uScriptDebug.Log("Cannot execute menu item: " + item.Name + "\n", uScriptDebug.Type.Debug);
-            }
-         }
-      }
-   }
+//   private void BuildPaletteMenu(ToolStripItem contextMenuItem, PaletteMenuItem paletteMenuItem)
+//   {
+//      if (contextMenuItem == null || paletteMenuItem == null)
+//      {
+//         //
+//         // Create a new palette menu, destroying the old one
+//         //
+//         _paletteMenuItems = new List<PaletteMenuItem>();
+//
+//         foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
+//         {
+//            if ((item is ToolStripMenuItem) && (item.Text == "Add..."))
+//            {
+//               foreach (ToolStripItem subitem in ((ToolStripMenuItem)item).DropDownItems.Items)
+//               {
+//                  PaletteMenuItem paletteItem = new PaletteMenuItem();
+//                  paletteItem.Indent = 0;
+//
+//                  BuildPaletteMenu(subitem, paletteItem);
+//
+//                  _paletteMenuItems.Add(paletteItem);
+//               }
+//            }
+//         }
+//      }
+//      else if (!(contextMenuItem is ToolStripSeparator))
+//      {
+//         if ((contextMenuItem is ToolStripMenuItem) && ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items.Count > 0)
+//         {
+//            paletteMenuItem.Name = contextMenuItem.Text.Replace("...", "");
+//            paletteMenuItem.Items = new List<PaletteMenuItem>();
+//
+//            foreach (ToolStripItem item in ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items)
+//            {
+//               PaletteMenuItem newItem = new PaletteMenuItem();
+//               newItem.Indent = paletteMenuItem.Indent + 1;
+//               if (item == null || newItem == null)
+//               {
+//                  uScriptDebug.Log("Trying to pass a null parameter to BuildPaletteMenu()!\n", uScriptDebug.Type.Error);
+//                  return;
+//               }
+//               BuildPaletteMenu(item, newItem);
+//               paletteMenuItem.Items.Add(newItem);
+//            }
+//         }
+//         else
+//         {
+//            paletteMenuItem.Name = contextMenuItem.Text.Replace("&", "");
+//            paletteMenuItem.Tooltip = FindNodeToolTip( ScriptEditor.FindNodeType(contextMenuItem.Tag as EntityNode) );
+//            paletteMenuItem.Click = contextMenuItem.Click;
+//            paletteMenuItem.Tag   = contextMenuItem.Tag;
+//         }
+//      }
+//      else
+//      {
+//         uScriptDebug.Log("The contextMenuItem (" + contextMenuItem.Text + ") is a " + contextMenuItem.GetType() + " and is unhandled!\n", uScriptDebug.Type.Warning);
+//      }
+//   }
+//
+//   private void DrawPaletteMenu(PaletteMenuItem item)
+//   {
+//      if (item.Hidden)
+//      {
+//         return;
+//      }
+//
+//      if (item.Items != null)
+//      {
+//         // This is should be a folding menu item that contains more buttons
+//         GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
+//         tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (item.Indent * 12), 0, 0, 0);
+//
+//         item.Expanded = GUILayout.Toggle(item.Expanded, item.Name, tmpStyle);
+//         if (item.Expanded)
+//         {
+//            foreach (PaletteMenuItem subitem in item.Items)
+//            {
+//               DrawPaletteMenu(subitem);
+//            }
+//         }
+//      }
+//      else
+//      {
+//         // This is a simple menu item
+//         GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteButton);
+//         tmpStyle.margin = new RectOffset(tmpStyle.margin.left + 0 + (item.Indent * 12),
+//                                       tmpStyle.margin.right,
+//                                       tmpStyle.margin.top,
+//                                       tmpStyle.margin.bottom);
+//
+//         if (GUILayout.Button(new GUIContent(item.Name, item.Tooltip), tmpStyle))
+//         {
+//            if (item.Click != null)
+//            {
+//               // Create the node on the canvas
+//               int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
+//               int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
+//               Point center = new Point(halfWidth, halfHeight);
+//               m_ScriptEditorCtrl.ContextCursor = center;
+//               item.OnClick();
+//               uScriptDebug.Log("Clicked '" + item.Name + "'\n", uScriptDebug.Type.Debug);
+//            }
+//            else
+//            {
+//               uScriptDebug.Log("Cannot execute menu item: " + item.Name + "\n", uScriptDebug.Type.Debug);
+//            }
+//         }
+//      }
+//   }
 
 
 
 
-   void RefreshScript( )
+   public void RefreshScript( )
    {
       string relativePath = "Assets\\" + m_FullPath.Substring( UnityEngine.Application.dataPath.Length + 1 );
       String fileName = System.IO.Path.GetFileNameWithoutExtension( relativePath );
@@ -1928,644 +2002,622 @@ http://www.detoxstudios.com";
    }
 
 
-   void DrawGUIContent()
-   {
-      Rect rect = EditorGUILayout.BeginVertical();
-      {
-         // Toolbar
-         //
-         Rect toolbarRect = EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
-
-         if (toolbarRect.width != 0 && toolbarRect.height != 0)
-         {
-            m_NodeToolbarRect = toolbarRect;
-         }
-
-
-         {
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonNew, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               if (AllowNewFile(true))
-               {
-                  NewScript();
-               }
-            }
-
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonOpen, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               string path = EditorUtility.OpenFilePanel( "Open uScript", Preferences.UserScripts, "uscript" );
-               if ( path.Length > 0 )
-               {
-                  OpenScript( path );
-               }
-            }
-
-//            _openScriptToggle = GUILayout.Toggle(_openScriptToggle, "Open Active uScripts...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
-
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonSave, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               AssetDatabase.StartAssetEditing( );
-                  bool saved = SaveScript( false );
-               AssetDatabase.StopAssetEditing( );
-            
-               if (saved) RefreshScript( );
-            }
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonSaveAs, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               AssetDatabase.StartAssetEditing( );
-                  bool saved = SaveScript( true );
-               AssetDatabase.StopAssetEditing( );
-
-               if (saved) RefreshScript( );
-            }
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               RebuildAllScripts( );
-            }
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRemoveGenerated, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               AssetDatabase.StartAssetEditing( );
-                  RemoveGeneratedCode( Preferences.GeneratedScripts );
-               AssetDatabase.StopAssetEditing( );
-               AssetDatabase.Refresh();
-            }
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               m_DoPreferences = true;
-            }
-
-            GUILayout.Space(20);
-
-            mapToggle = GUILayout.Toggle(mapToggle, "Map", EditorStyles.toolbarButton);
-
-            if (mapToggle)
-            {
-               mapScale = GUILayout.HorizontalSlider(mapScale, 0.1f, 0.7f, GUILayout.Width(100));
-            }
-
-            GUILayout.FlexibleSpace();
-
-            GUIStyle style2 = new GUIStyle(EditorStyles.boldLabel);
-            style2.padding = new RectOffset(16, 4, 2, 2);
-            style2.margin = new RectOffset();
-            if (m_ScriptEditorCtrl != null && !string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptName))
-            {
-               int dot = m_ScriptEditorCtrl.ScriptName.IndexOf(".");
-               string filename = m_ScriptEditorCtrl.ScriptName;
-               if (dot != -1)
-               {
-                  filename = m_ScriptEditorCtrl.ScriptName.Substring(0, m_ScriptEditorCtrl.ScriptName.IndexOf("."));
-               }
-               
-               GUILayout.Label(filename, style2);
-            }
-         }
-         EditorGUILayout.EndHorizontal();
-
-         GUILayout.BeginVertical(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
-         {
-
-            if (mapToggle)
-            {
-               MiniMapDraw();
-            }
-            else
-            {
-               // Canvas
-               //
-               if ( rect.width != 0 && rect.height != 0 )
-               {
-                  m_NodeWindowRect = rect;
-               }
-   
-               GUIStyle style = new GUIStyle();
-               style.normal.background = uScriptConfig.canvasBackgroundTexture;
-   
-               GUI.SetNextControlName ("MainView" );
-   
-               _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, style, GUILayout.ExpandWidth(true));
-               {
-                  // Get the bounding area of all nodes on the canvas, plus 64px to
-                  // allow for 32px padding around the edges.  This will allow the
-                  // scrollbars to span the bounds accurately.
-                  //
-                  // For each dimension, use the larger of the bounding area and the
-                  // canvas mouseRegionRect.
-                  //
-                  // When zoom is implemented, make sure the results are accurately scaled
-                  //
-      //            int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].width) : 0);
-      //            int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].height-18) : 0);
-      //
-      //            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
-   
-                  // Paint the graph (nodes, sockets, links, and comments)
-                  PaintEventArgs args = new PaintEventArgs();
-                  args.Graphics = new System.Drawing.Graphics();
-                  m_ScriptEditorCtrl.GuiPaint(args);
-               }
-               EditorGUILayout.EndScrollView();
-   
-               GUI.SetNextControlName ("");
-
-            }
-         }
-         GUILayout.EndVertical();
-
-         if (Event.current.type == EventType.Repaint)
-         {
-            _canvasRect = GUILayoutUtility.GetLastRect();
-         }
-      }
-      EditorGUILayout.EndVertical();
-
-      SetMouseRegion( MouseRegion.Canvas );//, 3, 1, -2, -4 );
-   }
-
-   Rect mapSize = new Rect();
-   Rect mapBounds = new Rect();
-   Point mapMouse = new Point();
-
-   bool mapToggle = false;
-   float mapScale = 0.5f;
-   Vector2 mapScroll = Vector2.zero;
-
-
-   void MiniMapClick()
-   {
-      if ( _canvasRect.Contains( Event.current.mousePosition ) )
-      {
-         _requestedCloseMap = true;
-
-         // Enter the correct canvas position here using the current mapScale, scrollbar positions, etc.
-         _requestCanvasLocation = new Point( (int)((mapMouse.X - (mapSize.x - mapBounds.x)) / mapScale),
-                                             (int)((mapMouse.Y - (mapSize.y - mapBounds.y)) / mapScale)
-                                           );
-
-                     //  + mapSize.x - mapBounds.x
-//         Debug.Log( "RESULT: " + _requestCanvasLocation
-//                    + "\n\t ViewportCenter: " + screenBoundsCenter
-//                       + "\t\t\tMousePosition: " + mapMouse
-//                       + "\t\t\tDiff: " + screenClickOffsetX
-//                       + " (" + screenClickOffsetX / mapScale + ")"
+//   void DrawGUIContent()
+//   {
+//      Rect rect = EditorGUILayout.BeginVertical();
+//      {
+//         // Toolbar
+//         //
+//         Rect toolbarRect = EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
 //
-//                    + "\n\t\tMapScale: " + mapScale + ", \t\tmapScroll: " + mapScroll
-//                    + "\nMapBounds: " + mapBounds + ", \t\tMapSize: " + mapSize + "\n");
-      }
-   }
+//         if (toolbarRect.width != 0 && toolbarRect.height != 0)
+//         {
+//            m_NodeToolbarRect = toolbarRect;
+//         }
+//
+//
+//         {
+//            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonNew, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               if (AllowNewFile(true))
+//               {
+//                  NewScript();
+//               }
+//            }
+//
+//            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonOpen, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               string path = EditorUtility.OpenFilePanel( "Open uScript", Preferences.UserScripts, "uscript" );
+//               if ( path.Length > 0 )
+//               {
+//                  OpenScript( path );
+//               }
+//            }
+//
+////            _openScriptToggle = GUILayout.Toggle(_openScriptToggle, "Open Active uScripts...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
+//
+//            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonSave, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               AssetDatabase.StartAssetEditing( );
+//                  bool saved = SaveScript( false );
+//               AssetDatabase.StopAssetEditing( );
+//            
+//               if (saved) RefreshScript( );
+//            }
+//            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonSaveAs, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               AssetDatabase.StartAssetEditing( );
+//                  bool saved = SaveScript( true );
+//               AssetDatabase.StopAssetEditing( );
+//
+//               if (saved) RefreshScript( );
+//            }
+//            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               RebuildAllScripts( );
+//            }
+//            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRemoveGenerated, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               AssetDatabase.StartAssetEditing( );
+//                  RemoveGeneratedCode( Preferences.GeneratedScripts );
+//               AssetDatabase.StopAssetEditing( );
+//               AssetDatabase.Refresh();
+//            }
+//            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               m_DoPreferences = true;
+//            }
+//
+//            GUILayout.Space(20);
+//
+//            mapToggle = GUILayout.Toggle(mapToggle, "Map", EditorStyles.toolbarButton);
+//
+//            if (mapToggle)
+//            {
+//               mapScale = GUILayout.HorizontalSlider(mapScale, 0.1f, 0.7f, GUILayout.Width(100));
+//            }
+//
+//            GUILayout.FlexibleSpace();
+//
+//            GUIStyle style2 = new GUIStyle(EditorStyles.boldLabel);
+//            style2.padding = new RectOffset(16, 4, 2, 2);
+//            style2.margin = new RectOffset();
+//            if (m_ScriptEditorCtrl != null && !string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptName))
+//            {
+//               int dot = m_ScriptEditorCtrl.ScriptName.IndexOf(".");
+//               string filename = m_ScriptEditorCtrl.ScriptName;
+//               if (dot != -1)
+//               {
+//                  filename = m_ScriptEditorCtrl.ScriptName.Substring(0, m_ScriptEditorCtrl.ScriptName.IndexOf("."));
+//               }
+//               
+//               GUILayout.Label(filename, style2);
+//            }
+//         }
+//         EditorGUILayout.EndHorizontal();
+//
+//         GUILayout.BeginVertical(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+//         {
+//            if (mapToggle)
+//            {
+//               MiniMapDraw();
+//            }
+//            else
+//            {
+//               // Canvas
+//               //
+//               if ( rect.width != 0 && rect.height != 0 )
+//               {
+//                  m_NodeWindowRect = rect;
+//               }
+//   
+//               GUIStyle style = new GUIStyle();
+//               style.normal.background = uScriptConfig.canvasBackgroundTexture;
+//   
+//               GUI.SetNextControlName ("MainView" );
+//   
+//               _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, style, GUILayout.ExpandWidth(true));
+//               {
+//                  // Get the bounding area of all nodes on the canvas, plus 64px to
+//                  // allow for 32px padding around the edges.  This will allow the
+//                  // scrollbars to span the bounds accurately.
+//                  //
+//                  // For each dimension, use the larger of the bounding area and the
+//                  // canvas mouseRegionRect.
+//                  //
+//                  // When zoom is implemented, make sure the results are accurately scaled
+//                  //
+//      //            int canvasWidth = (_mouseRegionRect.ContainsKey(uScriptGUI.Region.Canvas) ? (int)(_mouseRegionRect[uScriptGUI.Region.Canvas].width) : 0);
+//      //            int canvasHeight = (_mouseRegionRect.ContainsKey(uScriptGUI.Region.Canvas) ? (int)(_mouseRegionRect[uScriptGUI.Region.Canvas].height-18) : 0);
+//      //
+//      //            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
+//   
+//                  // Paint the graph (nodes, sockets, links, and comments)
+//                  PaintEventArgs args = new PaintEventArgs();
+//                  args.Graphics = new System.Drawing.Graphics();
+//                  m_ScriptEditorCtrl.GuiPaint(args);
+//               }
+//               EditorGUILayout.EndScrollView();
+//   
+//               GUI.SetNextControlName ("");
+//
+//            }
+//         }
+//         GUILayout.EndVertical();
+//
+//         if (Event.current.type == EventType.Repaint)
+//         {
+//            _canvasRect = GUILayoutUtility.GetLastRect();
+//         }
+//      }
+//      EditorGUILayout.EndVertical();
+//
+//      SetMouseRegion( uScriptGUI.Region.Canvas );//, 3, 1, -2, -4 );
+//   }
+
+//   Rect mapSize = new Rect();
+//   Rect mapBounds = new Rect();
+//   Point mapMouse = new Point();
+//
+//   bool mapToggle = false;
+//   float mapScale = 0.5f;
+//   Vector2 mapScroll = Vector2.zero;
 
 
-   void MiniMapDraw()
-   {
-      Node node;
-      DisplayNode displayNode;
+//   void MiniMapClick()
+//   {
+//      if ( _canvasRect.Contains( Event.current.mousePosition ) )
+//      {
+//         _requestedCloseMap = true;
+//
+//         // Enter the correct canvas position here using the current mapScale, scrollbar positions, etc.
+//         _requestCanvasLocation = new Point( (int)((mapMouse.X - (mapSize.x - mapBounds.x)) / mapScale),
+//                                             (int)((mapMouse.Y - (mapSize.y - mapBounds.y)) / mapScale)
+//                                           );
+//
+//                     //  + mapSize.x - mapBounds.x
+////         Debug.Log( "RESULT: " + _requestCanvasLocation
+////                    + "\n\t ViewportCenter: " + screenBoundsCenter
+////                       + "\t\t\tMousePosition: " + mapMouse
+////                       + "\t\t\tDiff: " + screenClickOffsetX
+////                       + " (" + screenClickOffsetX / mapScale + ")"
+////
+////                    + "\n\t\tMapScale: " + mapScale + ", \t\tmapScroll: " + mapScroll
+////                    + "\nMapBounds: " + mapBounds + ", \t\tMapSize: " + mapSize + "\n");
+//      }
+//   }
 
 
-      //
-      // Get the dimensions of the entire map at the specified scale
-      //
-      mapBounds = new Rect();
-      
-      // Start with the first ...
-      if (m_ScriptEditorCtrl.FlowChart.Nodes.Length > 0)
-      {
-         node = m_ScriptEditorCtrl.FlowChart.Nodes[0];
-         mapBounds = new Rect(node.Bounds.X, node.Bounds.Y, node.Bounds.Width, node.Bounds.Height);
-      }
-      
-      // ... then loop through the remaining nodes ...
-      for (int i=1; i < m_ScriptEditorCtrl.FlowChart.Nodes.Length; i++)
-      {
-         mapBounds.x = Math.Min(mapBounds.x, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X);
-         mapBounds.y = Math.Min(mapBounds.y, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y);
-         mapBounds.width = Math.Max(mapBounds.width, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X
-                                               + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Width);
-         mapBounds.height = Math.Max(mapBounds.height, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y
-                                                 + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Height);
-      }
-      
-      // ... and finally, apply the scaling
-      mapBounds.x *= mapScale;
-      mapBounds.y *= mapScale;
-      mapBounds.width *= mapScale;
-      mapBounds.height *= mapScale;
-      
-      
-      //
-      // Set the size of the viewRect
-      //
-      Rect viewRect = new Rect();
-      viewRect.width = (mapBounds.width - mapBounds.x);
-      viewRect.height = (mapBounds.height - mapBounds.y);
-      
-      
-      Rect mapRect = new Rect();
-
-      if (_mouseRegionRect.ContainsKey(MouseRegion.HandleCanvas))
-      {
-         mapRect.x = _guiPanelPalette_Width + 3;
-         mapRect.y = 17;
-         mapRect.width = position.width - (_guiPanelPalette_Width + 3);
-         mapRect.height = position.height - 18 - 2 - 17 - _guiPanelProperties_Height - 8;
-      }
-
-//      Debug.Log("_canvasRect: " + _canvasRect + "\t\tposition: " + position + "\n"
-//                + "PaletteWidth: " + _guiPanelPalette_Width + ", PropertiesHeight: " + _guiPanelProperties_Height + ", StatusbarRect: " + _statusbarRect + ", mapRect: " + mapRect);
-
-      GUI.skin.scrollView.normal.background = uScriptConfig.canvasBackgroundTexture;
-      mapScroll = GUI.BeginScrollView(mapRect, mapScroll, viewRect, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
-
-
-      // Get the local mouse coordinates
-      mapMouse = new Point((int)Event.current.mousePosition.x, (int)Event.current.mousePosition.y);
-
-
-      // Temporary box that represents the bounding area
-      mapSize = new Rect(0, 0, Math.Abs(mapBounds.width - mapBounds.x), Math.Abs(mapBounds.height - mapBounds.y));
-      mapSize.x = (mapSize.width < mapRect.width ? (mapRect.width - mapSize.width) * 0.5f : 0);
-      mapSize.y = (mapSize.height < mapRect.height ? (mapRect.height - mapSize.height) * 0.5f : 0);
-      GUIStyle tmpStyle = new GUIStyle(GUI.skin.box);
-      tmpStyle.margin = new RectOffset();
-      //GUI.Box(mapSize, string.Empty, tmpStyle);
-
-//      Debug.Log("CanvasRect: " + mapRect + ", \tMapBounds: " + mapBounds + ",\tScale: " + mapScale + "\nViewRect: " + viewRect + ", \t\t\t\tViewOffset: " + viewOffset
-//                + "\t\tmapSize: " + mapSize);
-
-
-      // Draw the canvas viewport rect
-      Rect viewportRect = new Rect(-m_ScriptEditorCtrl.FlowChart.Location.X * mapScale + mapSize.x - mapBounds.x,
-                                   -m_ScriptEditorCtrl.FlowChart.Location.Y * mapScale + mapSize.y - mapBounds.y,
-                                   mapRect.width * mapScale,
-                                   mapRect.height * mapScale);
-
-      // Change the GUI color to tint the viewportRect
-      UnityEngine.Color normalColor = GUI.color;
-      GUI.color = UnityEngine.Color.green;
-      tmpStyle.normal.background = uScriptConfig.minimapScreenBorder;
-      GUI.Box(viewportRect, string.Empty, tmpStyle);
-      GUI.color = normalColor;
-
-      //
-      // Paint the nodes
-      //
-      foreach (Node n in m_ScriptEditorCtrl.FlowChart.Nodes)
-      {
-         displayNode = n as DisplayNode;
-
-         Rect nodeRect = new Rect(n.Bounds.X * mapScale + mapSize.x - mapBounds.x,
-                                  n.Bounds.Y * mapScale + mapSize.y - mapBounds.y,
-                                  n.Bounds.Width * mapScale,
-                                  n.Bounds.Height * mapScale );
-
-//         Debug.Log("\tNode -- Location: " + n.Location + ", \tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
-
-
-         
-
-         // Style the node by type
-         GUIStyle tmpNodeStyle = new GUIStyle(GUI.skin.box);
-         UnityEngine.Color nodeTextGrey = new UnityEngine.Color(0.737f, 0.737f, 0.737f);
-         if (displayNode is EntityEventDisplayNode)
-         {
-            tmpNodeStyle.normal.background = uScriptConfig.nodeEventTexture;
-            tmpNodeStyle.normal.textColor = nodeTextGrey;
-            GUI.Box(nodeRect, n.Name, tmpNodeStyle);
-         }
-         else if (displayNode is LogicNodeDisplayNode)
-         {
-            tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
-            tmpNodeStyle.normal.textColor = nodeTextGrey;
-            GUI.Box(nodeRect, n.Name, tmpNodeStyle);
-         }
-         else if (displayNode is LocalNodeDisplayNode)
-         {
-            tmpNodeStyle.normal.background = uScriptConfig.nodeVariableTexture;
-            tmpNodeStyle.normal.textColor = nodeTextGrey;
-            GUI.Box(nodeRect, n.Name, tmpNodeStyle);
-         }
-         else if (displayNode is CommentDisplayNode)
-         {
-            //tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
-            GUI.color = UnityEngine.Color.cyan;
-            GUI.Box(nodeRect, n.Name, tmpNodeStyle);
-            GUI.color = normalColor;
-         }
-         else
-         {
-            tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
-            GUI.Box(nodeRect, n.Name, tmpNodeStyle);
-         }
-
-      }
-   
-
-      foreach (Link l in m_ScriptEditorCtrl.FlowChart.Links)
-      {
-         Handles.color = UnityEngine.Color.black;
-
-         Vector3 start = new Vector3(mapSize.x - mapBounds.x + (l.Source.Node.Location.X + l.Source.Node.Size.Width) * mapScale,
-                                     mapSize.y - mapBounds.y + (l.Source.Node.Location.Y + l.Source.Anchor.Y) * mapScale,
-                                     0);
-         Vector3 end = new Vector3(mapSize.x - mapBounds.x + (l.Destination.Node.Location.X) * mapScale,
-                                   mapSize.y - mapBounds.y + (l.Destination.Node.Location.Y + l.Destination.Anchor.Y) * mapScale,
-                                   0);
-
-         Handles.DrawLine(start, end);
-      }
-
-      GUI.EndScrollView();
-      GUI.skin.scrollView.normal.background = null;
-   }
-
-
-
-
-
+//   void MiniMapDraw()
+//   {
+//      Node node;
+//      DisplayNode displayNode;
+//      
+//      
+//      
+//      //
+//      // Get the dimensions of the entire map at the specified scale
+//      //
+//      mapBounds = new Rect();
+//      
+//      // Start with the first ...
+//      if (m_ScriptEditorCtrl.FlowChart.Nodes.Length > 0)
+//      {
+//         node = m_ScriptEditorCtrl.FlowChart.Nodes[0];
+//         mapBounds = new Rect(node.Bounds.X, node.Bounds.Y, node.Bounds.Width, node.Bounds.Height);
+//      }
+//      
+//      // ... then loop through the remaining nodes ...
+//      for (int i=1; i < m_ScriptEditorCtrl.FlowChart.Nodes.Length; i++)
+//      {
+//         mapBounds.x = Math.Min(mapBounds.x, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X);
+//         mapBounds.y = Math.Min(mapBounds.y, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y);
+//         mapBounds.width = Math.Max(mapBounds.width, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X
+//                                               + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Width);
+//         mapBounds.height = Math.Max(mapBounds.height, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y
+//                                                 + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Height);
+//      }
+//      
+//      // ... and finally, apply the scaling
+//      mapBounds.x *= mapScale;
+//      mapBounds.y *= mapScale;
+//      mapBounds.width *= mapScale;
+//      mapBounds.height *= mapScale;
+//      
+//      
+//      //
+//      // Set the size of the viewRect
+//      //
+//      Rect viewRect = new Rect();
+//      viewRect.width = (mapBounds.width - mapBounds.x);
+//      viewRect.height = (mapBounds.height - mapBounds.y);
+//      
+//      
+//      Rect mapRect = new Rect();
+//
+//      if (_mouseRegionRect.ContainsKey(uScriptGUI.Region.HandleCanvas))
+//      {
+//         mapRect.x = _guiPanelPalette_Width + 3;
+//         mapRect.y = 17;
+//         mapRect.width = position.width - (_guiPanelPalette_Width + 3);
+//         mapRect.height = position.height - 18 - 2 - 17 - _guiPanelProperties_Height - 8;
+//      }
+//
+////      Debug.Log("_canvasRect: " + _canvasRect + "\t\tposition: " + position + "\n"
+////                + "PaletteWidth: " + _guiPanelPalette_Width + ", PropertiesHeight: " + _guiPanelProperties_Height + ", StatusbarRect: " + _statusbarRect + ", mapRect: " + mapRect);
+//
+//
+//      mapScroll = GUI.BeginScrollView(mapRect, mapScroll, viewRect, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
+//
+//
+//      // Get the local mouse coordinates
+//      mapMouse = new Point((int)Event.current.mousePosition.x, (int)Event.current.mousePosition.y);
+//
+//
+//      // Temporary box that represents the bounding area
+//      mapSize = new Rect(0, 0, Math.Abs(mapBounds.width - mapBounds.x), Math.Abs(mapBounds.height - mapBounds.y));
+//      mapSize.x = (mapSize.width < mapRect.width ? (mapRect.width - mapSize.width) * 0.5f : 0);
+//      mapSize.y = (mapSize.height < mapRect.height ? (mapRect.height - mapSize.height) * 0.5f : 0);
+//      GUIStyle tmpStyle = new GUIStyle(GUI.skin.box);
+//      tmpStyle.margin = new RectOffset();
+//      GUI.Box(mapSize, string.Empty, tmpStyle);
+//
+////      Debug.Log("CanvasRect: " + mapRect + ", \tMapBounds: " + mapBounds + ",\tScale: " + mapScale + "\nViewRect: " + viewRect + ", \t\t\t\tViewOffset: " + viewOffset
+////                + "\t\tmapSize: " + mapSize);
+//
+//
+//      // Draw the canvas viewport rect
+//      Rect viewportRect = new Rect(-m_ScriptEditorCtrl.FlowChart.Location.X * mapScale + mapSize.x - mapBounds.x,
+//                                   -m_ScriptEditorCtrl.FlowChart.Location.Y * mapScale + mapSize.y - mapBounds.y,
+//                                   mapRect.width * mapScale,
+//                                   mapRect.height * mapScale);
+//
+//      GUI.Box(viewportRect, string.Empty, tmpStyle);
+//
+//
+//      //
+//      // Paint the nodes
+//      //
+//      foreach (Node n in m_ScriptEditorCtrl.FlowChart.Nodes)
+//      {
+//         displayNode = n as DisplayNode;
+//
+//         Rect nodeRect = new Rect(n.Bounds.X * mapScale + mapSize.x - mapBounds.x,
+//                                  n.Bounds.Y * mapScale + mapSize.y - mapBounds.y,
+//                                  n.Bounds.Width * mapScale,
+//                                  n.Bounds.Height * mapScale );
+//
+////         Debug.Log("\tNode -- Location: " + n.Location + ", \tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
+//
+//
+//         GUI.Box(nodeRect, n.Name );
+//
+//         // Style the node by type
+//         if (displayNode is EntityEventDisplayNode)
+//         {
+//         }
+//         else if (displayNode is LogicNodeDisplayNode)
+//         {
+//         }
+//         else if (displayNode is LocalNodeDisplayNode)
+//         {
+//         }
+//         else if (displayNode is CommentDisplayNode)
+//         {
+//         }
+//         else
+//         {
+//         }
+//      }
+//   
+//
+//      foreach (Link l in m_ScriptEditorCtrl.FlowChart.Links)
+//      {
+//         Handles.color = UnityEngine.Color.black;
+//
+//         Vector3 start = new Vector3(mapSize.x - mapBounds.x + (l.Source.Node.Location.X + l.Source.Node.Size.Width) * mapScale,
+//                                     mapSize.y - mapBounds.y + (l.Source.Node.Location.Y + l.Source.Anchor.Y) * mapScale,
+//                                     0);
+//         Vector3 end = new Vector3(mapSize.x - mapBounds.x + (l.Destination.Node.Location.X) * mapScale,
+//                                   mapSize.y - mapBounds.y + (l.Destination.Node.Location.Y + l.Destination.Anchor.Y) * mapScale,
+//                                   0);
+//
+//         Handles.DrawLine(start, end);
+//      }
+//
+//      GUI.EndScrollView();
+//   }
 
 
 
 
 
-	// TEMP Variables for testing the new property grid methods
-   Rect _svRect;
 
-   KeyCode[] _arrayKeyCode;
-   bool _arrayFoldoutBool;
 
-   private int _paletteMode = 0;
-   bool _wasMoving = false;
 
-Vector2 _scrollNewProperties;
+
+
+   // TEMP Variables for testing the new property grid methods
+//   Rect _svRect;
+
+//   KeyCode[] _arrayKeyCode;
+//   bool _arrayFoldoutBool;
+
+//   private int _paletteMode = 0;
+//   bool _wasMoving = false;
+
+//Vector2 _scrollNewProperties;
    // END TEMP Variables
 
 
 
 
-   void DrawGUIPropertyGrid()
-   {
-      EditorGUILayout.BeginVertical( uScriptGUIStyle.panelBox, GUILayout.Width( _guiPanelProperties_Width ) );
-      {
-         // Toolbar
-         //
-         EditorGUILayout.BeginHorizontal( EditorStyles.toolbar );
-         {
-            GUILayout.Label("Properties", uScriptGUIStyle.panelTitle);
+//   void DrawGUIPropertyGrid()
+//   {
+//      EditorGUILayout.BeginVertical( uScriptGUIStyle.panelBox, GUILayout.Width( _guiPanelProperties_Width ) );
+//      {
+//         // Toolbar
+//         //
+//         EditorGUILayout.BeginHorizontal( EditorStyles.toolbar );
+//         {
+//            GUILayout.Label("Properties", uScriptGUIStyle.panelTitle);
+////            GUILayout.FlexibleSpace();
+//         }
+//         EditorGUILayout.EndHorizontal();
+//
+//         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
+//         {
+//            _wasMoving = true;
+//
+//            // Hide the panels while the canvas is moving
+//            string message =
+//               "The Properties panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
+//
+//            GUIStyle style = new GUIStyle(GUI.skin.label);
+//            style.wordWrap = true;
+//            style.padding = new RectOffset(16, 16, 16, 16);
+//
+//            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
+//         }
+//         else
+//         {
+//            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
+//            {
+//               uScriptGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
+//               {
+//                  m_ScriptEditorCtrl.PropertyGrid.OnPaint();
+//               }
+//               uScriptGUI.EndColumns();
+//            }
+//            EditorGUILayout.EndScrollView();
+//
+//            if (Event.current.type == EventType.Repaint)
+//            {
+//               _svRect = GUILayoutUtility.GetLastRect();
+//            }
+//         }
+//      }
+//      EditorGUILayout.EndVertical();
+//
+//      SetMouseRegion( uScriptGUI.Region.Properties );//, 1, 3, -4, -3 );
+//   }
+
+
+//   void DrawGUIHelp()
+//   {
+////      uScriptGUI.DrawPanel(uScriptGUI.PanelID.Bottom2);
+//      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+//      {
+//         string helpDescription     = "Select a node on the canvas to view usage and behavior information.";
+//         string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
+//         string helpButtonURL       = "http://www.uscript.net/wiki/";
+//
+//         if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
+//         {
+//            if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
+//            {
+//               string nodeType = ScriptEditor.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
+//               if (string.IsNullOrEmpty(nodeType))
+//               {
+//                  // other node types...
+//                  if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is CommentNode)
+//                  {
+//                     nodeType = "CommentNode";
+//                  }
+//                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is ExternalConnection)
+//                  {
+//                     nodeType = "ExternalConnection";
+//                  }
+//                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is OwnerConnection)
+//                  {
+//                     nodeType = "OwnerConnection";
+//                  }
+//                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is LocalNode)
+//                  {
+//                     nodeType = "LocalNode";
+//                  }
+//               }
+//               helpButtonURL = FindNodeHelp(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
+//               helpDescription = FindNodeDescription(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
+//               helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
+//            }
+//         }
+//         else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
+//         {
+//            helpDescription = "Help cannot be provided when multiple nodes are selected.";
+//         }
+//
+//         helpButtonTooltip += " (" + helpButtonURL + ")";
+//
+//         // Toolbar
+//         //
+//         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+//         {
+//            GUILayout.Label("Reference", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 //            GUILayout.FlexibleSpace();
-         }
-         EditorGUILayout.EndHorizontal();
-
-         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
-         {
-            _wasMoving = true;
-
-            // Hide the panels while the canvas is moving
-            string message =
-               "The Properties panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
-
-            GUIStyle style = new GUIStyle(GUI.skin.label);
-            style.wordWrap = true;
-            style.padding = new RectOffset(16, 16, 16, 16);
-
-            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
-         }
-         else
-         {
-            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
-            {
-               uScriptGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
-               {
-                  m_ScriptEditorCtrl.PropertyGrid.OnPaint();
-               }
-               uScriptGUI.EndColumns();
-            }
-            EditorGUILayout.EndScrollView();
-
-            if (Event.current.type == EventType.Repaint)
-            {
-               _svRect = GUILayoutUtility.GetLastRect();
-            }
-         }
-      }
-      EditorGUILayout.EndVertical();
-
-      SetMouseRegion( MouseRegion.Properties );//, 1, 3, -4, -3 );
-   }
-
-
-   void DrawGUIHelp()
-   {
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
-      {
-         string helpDescription     = "Select a node on the canvas to view usage and behavior information.";
-         string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
-         string helpButtonURL       = "http://www.uscript.net/wiki/";
-
-         if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
-         {
-            if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
-            {
-               string nodeType = ScriptEditor.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
-               if (string.IsNullOrEmpty(nodeType))
-               {
-                  // other node types...
-                  if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is CommentNode)
-                  {
-                     nodeType = "CommentNode";
-                  }
-                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is ExternalConnection)
-                  {
-                     nodeType = "ExternalConnection";
-                  }
-                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is OwnerConnection)
-                  {
-                     nodeType = "OwnerConnection";
-                  }
-                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is LocalNode)
-                  {
-                     nodeType = "LocalNode";
-                  }
-               }
-               helpButtonURL = FindNodeHelp(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
-               helpDescription = FindNodeDescription(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
-               helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
-            }
-         }
-         else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
-         {
-            helpDescription = "Help cannot be provided when multiple nodes are selected.";
-         }
-
-         helpButtonTooltip += " (" + helpButtonURL + ")";
-
-         // Toolbar
-         //
-         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
-         {
-            GUILayout.Label("Reference", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
-            GUILayout.FlexibleSpace();
-
-            if (helpButtonURL == string.Empty)
-            {
-               GUI.enabled = false;
-            }
-
-            uScriptGUIContent.ChangeTooltip(uScriptGUIContent.ContentID.OnlineReference, helpButtonTooltip);
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               Help.BrowseURL(helpButtonURL);
-            }
-
-            GUI.enabled = true;
-         }
-         EditorGUILayout.EndHorizontal();
-
-         _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
-         {
-            // prevent the help TextArea from getting focus
-            GUI.SetNextControlName("helpTextArea");
-            GUILayout.TextArea(helpDescription, uScriptGUIStyle.referenceText);
-            if (GUI.GetNameOfFocusedControl() == "helpTextArea")
-            {
-               GUIUtility.keyboardControl = 0;
-            }
-         }
-         EditorGUILayout.EndScrollView ();
-      }
-      EditorGUILayout.EndVertical();
-
-      SetMouseRegion( MouseRegion.Reference );//, 3, 3, -6, -3 );
-   }
-
-
-   void DrawGUINestedScripts()
-   {
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(_guiPanelSequence_Width));
-      {
-         // Toolbar
-         //
-         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
-         {
-            string currentUScript = "";
-            if (m_ScriptEditorCtrl != null)
-            {
-               currentUScript = " (" + System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName) + ")";
-            }
-
-            GUILayout.Label("uScripts" + currentUScript, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
-         }
-         EditorGUILayout.EndHorizontal();
-
-         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
-         {
-            _wasMoving = true;
-
-            // Hide the panels while the canvas is moving
-            string message =
-               "The uScripts panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
-
-            GUIStyle style = new GUIStyle(GUI.skin.label);
-            style.wordWrap = true;
-            style.padding = new RectOffset(16, 16, 16, 16);
-
-            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
-         }
-         else
-         {
-            _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
-            {
-//               GUILayout.Label("Canvas Location: \t\t\t" + m_ScriptEditorCtrl.FlowChart.Location);
 //
-//               Point center = m_ScriptEditorCtrl.FlowChart.Location;
-//               center.X = -center.X + (int)(uScript.Instance.NodeWindowRect.width * 0.5f);
-//               center.Y = -center.Y + (int)((uScript.Instance.NodeWindowRect.height - uScript.Instance.NodeToolbarRect.height) * 0.5f);
+//            if (helpButtonURL == string.Empty)
+//            {
+//               GUI.enabled = false;
+//            }
 //
-//               GUILayout.Label("Canvas Center Point: \t" + center);
-//               GUILayout.Label("Mouse Screen Position: \t" + mapMouse);
+//            uScriptGUIContent.ChangeTooltip(uScriptGUIContent.ContentID.OnlineReference, helpButtonTooltip);
+//            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+//            {
+//               Help.BrowseURL(helpButtonURL);
+//            }
 //
-//               Repaint();
+//            GUI.enabled = true;
+//         }
+//         EditorGUILayout.EndHorizontal();
+//
+//         _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+//         {
+//            // prevent the help TextArea from getting focus
+//            GUI.SetNextControlName("helpTextArea");
+//            GUILayout.TextArea(helpDescription, uScriptGUIStyle.referenceText);
+//            if (GUI.GetNameOfFocusedControl() == "helpTextArea")
+//            {
+//               GUIUtility.keyboardControl = 0;
+//            }
+//         }
+//         EditorGUILayout.EndScrollView ();
+//      }
+//      EditorGUILayout.EndVertical();
+//
+//      SetMouseRegion( uScriptGUI.Region.Reference );//, 3, 3, -6, -3 );
+//   }
 
-               List<string> keylist = new List<string>();
-               keylist.AddRange(uScriptBackgroundProcess.s_uScriptInfo.Keys);
-               string[] keys = keylist.ToArray();
-               foreach (string fileName in keys)
-               {
-                  string scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
-                  string scriptFile = System.IO.Path.GetFileName(fileName).Replace(".cs", ".uscript");
 
-                  GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
-                  bool currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
-                  bool attached = false;
-                  bool dirty = false;
-
-                  GUILayout.BeginHorizontal();
-                  {
-                     // uScript Label
-                     if (currentScript)
-                     {
-                        scriptStyle.fontStyle = FontStyle.Bold;
-                        attached = IsAttachedToMaster || IsAttached;
-                        if (!attached)
-                        {
-                           scriptStyle.normal.textColor = UnityEngine.Color.red;
-                        }
-                        dirty = m_ScriptEditorCtrl.IsDirty;
-                     }
-                     string sceneName = "None";
-                     if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
-                     {
-                        sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
-                     }
-                     GUILayout.Label(scriptName + " (" + sceneName + ")" + (dirty ? "*" : ""), scriptStyle);
-
-                     GUILayout.FlexibleSpace();
-
-                     // Load or Reload
-                     GUIContent content = new GUIContent((currentScript ? "Reload" : "Load"), "Click to load this uScript.");
-                     if (GUILayout.Button(content, (currentScript ? EditorStyles.miniButton : EditorStyles.miniButtonLeft)))
-                     {
-                        string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
-
-                        if ("" != path)
-                        {
-                           _openScriptToggle = false;
-                           OpenScript(path);
-                        }
-                     }
-
-                     // Insert as Nested uScript
-                     if (currentScript == false)
-                     {
-                        content = new GUIContent("Insert", "Click to add an instance of this uScript.");
-                        if (GUILayout.Button(content, EditorStyles.miniButtonRight))
-                        {
-                           if (m_ScriptEditorCtrl != null)
-                           {
-                              float canvasX = _mouseRegionRect[MouseRegion.Canvas].x;
-                              float canvasY = _mouseRegionRect[MouseRegion.Canvas].y;
-                              m_ScriptEditorCtrl.ContextCursor = new Point((int)(canvasX - _guiPanelPalette_Width + uScript.Instance.NodeWindowRect.width / 2.0f), (int)(canvasY + uScript.Instance.NodeWindowRect.height / 2.0f));
-                              m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode(scriptName));
-                           }
-                        }
-                     }
-                  }
-                  GUILayout.EndHorizontal();
-
-                  if (currentScript && !attached)
-                  {
-                     GUIStyle errorStyle = new GUIStyle(GUI.skin.label);
-                     errorStyle.normal.textColor = UnityEngine.Color.red;
-                     errorStyle.wordWrap = true;
-                     GUILayout.Label("This uScript is not attached to any GameObject in the scene.", errorStyle);
-                  }
-               }
-            }
-            EditorGUILayout.EndScrollView();
-         }
-      }
-      EditorGUILayout.EndVertical();
-
-      SetMouseRegion(MouseRegion.NestedScripts );//, 3, 3, -2, -3);
-   }
+//   void DrawGUINestedScripts()
+//   {
+//      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+//      {
+//         // Toolbar
+//         //
+//         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
+//         {
+//            string currentUScript = "";
+//            if (m_ScriptEditorCtrl != null)
+//            {
+//               currentUScript = " (" + System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName) + ")";
+//            }
+//
+//            GUILayout.Label("uScripts" + currentUScript, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+//         }
+//         EditorGUILayout.EndHorizontal();
+//
+//         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
+//         {
+//            _wasMoving = true;
+//
+//            // Hide the panels while the canvas is moving
+//            string message =
+//               "The uScripts panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
+//
+//            GUIStyle style = new GUIStyle(GUI.skin.label);
+//            style.wordWrap = true;
+//            style.padding = new RectOffset(16, 16, 16, 16);
+//
+//            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
+//         }
+//         else
+//         {
+//            _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+//            {
+////               GUILayout.Label("Canvas Location: \t\t\t" + m_ScriptEditorCtrl.FlowChart.Location);
+////
+////               Point center = m_ScriptEditorCtrl.FlowChart.Location;
+////               center.X = -center.X + (int)(uScript.Instance.NodeWindowRect.width * 0.5f);
+////               center.Y = -center.Y + (int)((uScript.Instance.NodeWindowRect.height - uScript.Instance.NodeToolbarRect.height) * 0.5f);
+////
+////               GUILayout.Label("Canvas Center Point: \t" + center);
+////               GUILayout.Label("Mouse Screen Position: \t" + mapMouse);
+////
+////               Repaint();
+//
+//               List<string> keylist = new List<string>();
+//               keylist.AddRange(uScriptBackgroundProcess.s_uScriptInfo.Keys);
+//               string[] keys = keylist.ToArray();
+//               foreach (string fileName in keys)
+//               {
+//                  string scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
+//                  string scriptFile = System.IO.Path.GetFileName(fileName).Replace(".cs", ".uscript");
+//
+//                  GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
+//                  bool currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
+//                  bool attached = false;
+//                  bool dirty = false;
+//
+//                  GUILayout.BeginHorizontal();
+//                  {
+//                     // uScript Label
+//                     if (currentScript)
+//                     {
+//                        scriptStyle.fontStyle = FontStyle.Bold;
+//                        attached = IsAttachedToMaster || IsAttached;
+//                        if (!attached)
+//                        {
+//                           scriptStyle.normal.textColor = UnityEngine.Color.red;
+//                        }
+//                        dirty = m_ScriptEditorCtrl.IsDirty;
+//                     }
+//                     string sceneName = "None";
+//                     if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
+//                     {
+//                        sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
+//                     }
+//                     GUILayout.Label(scriptName + " (" + sceneName + ")" + (dirty ? "*" : ""), scriptStyle);
+//
+//                     GUILayout.FlexibleSpace();
+//
+//                     // Load or Reload
+//                     GUIContent content = new GUIContent((currentScript ? "Reload" : "Load"), "Click to load this uScript.");
+//                     if (GUILayout.Button(content, (currentScript ? EditorStyles.miniButton : EditorStyles.miniButtonLeft)))
+//                     {
+//                        string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
+//
+//                        if ("" != path)
+//                        {
+////                           _openScriptToggle = false;
+//                           OpenScript(path);
+//                        }
+//                     }
+//
+//                     // Insert as Nested uScript
+//                     if (currentScript == false)
+//                     {
+//                        content = new GUIContent("Insert", "Click to add an instance of this uScript.");
+//                        if (GUILayout.Button(content, EditorStyles.miniButtonRight))
+//                        {
+//                           if (m_ScriptEditorCtrl != null)
+//                           {
+//                              float canvasX = _mouseRegionRect[uScriptGUI.Region.Canvas].x;
+//                              float canvasY = _mouseRegionRect[uScriptGUI.Region.Canvas].y;
+//                              m_ScriptEditorCtrl.ContextCursor = new Point((int)(canvasX - _guiPanelPalette_Width + uScript.Instance.NodeWindowRect.width / 2.0f), (int)(canvasY + uScript.Instance.NodeWindowRect.height / 2.0f));
+//                              m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode(scriptName));
+//                           }
+//                        }
+//                     }
+//                  }
+//                  GUILayout.EndHorizontal();
+//
+//                  if (currentScript && !attached)
+//                  {
+//                     GUIStyle errorStyle = new GUIStyle(GUI.skin.label);
+//                     errorStyle.normal.textColor = UnityEngine.Color.red;
+//                     errorStyle.wordWrap = true;
+//                     GUILayout.Label("This uScript is not attached to any GameObject in the scene.", errorStyle);
+//                  }
+//               }
+//            }
+//            EditorGUILayout.EndScrollView();
+//         }
+//      }
+//      EditorGUILayout.EndVertical();
+//
+//      SetMouseRegion(uScriptGUI.Region.NestedScripts );//, 3, 3, -2, -3);
+//   }
 
 
    void DoWindowEULA(int windowID)
@@ -2667,32 +2719,32 @@ Vector2 _scrollNewProperties;
       windowRect = GUILayout.Window(0, windowRect, DoContextMenu, "");
    }
 
-   public void DrawAssetList( )
-   {
-      Rect windowRect = new Rect( _canvasRect.xMin + 50, 50, 10, 10 );
-      windowRect = GUILayout.Window(10000, windowRect, DoAssetList, "");
-   }
+//   public void DrawAssetList( )
+//   {
+//      Rect windowRect = new Rect( _canvasRect.xMin + 50, 50, 10, 10 );
+//      windowRect = GUILayout.Window(10000, windowRect, DoAssetList, "");
+//   }
 
-   void DoAssetList(int windowID)
-   {
-      GUILayout.Label( "uScripts", EditorStyles.boldLabel );
-  
-      UnityEngine.Object []objects = GameObject.FindObjectsOfType(typeof(uScriptCode));
-      foreach ( UnityEngine.Object o in objects )
-      {
-         uScriptCode code = o as uScriptCode;
-
-         if (GUILayout.Button(code.GetType().ToString(), EditorStyles.label))
-         {
-            string path = FindFile( Application.dataPath, code.GetType().ToString() + ".uscript" );
-            if ( "" != path )
-            {
-                _openScriptToggle = false;
-               OpenScript( path );
-            }
-         }
-      }
-   }
+//   void DoAssetList(int windowID)
+//   {
+//      GUILayout.Label( "uScripts", EditorStyles.boldLabel );
+//
+//      UnityEngine.Object []objects = GameObject.FindObjectsOfType(typeof(uScriptCode));
+//      foreach ( UnityEngine.Object o in objects )
+//      {
+//         uScriptCode code = o as uScriptCode;
+//
+//         if (GUILayout.Button(code.GetType().ToString(), EditorStyles.label))
+//         {
+//            string path = FindFile( Application.dataPath, code.GetType().ToString() + ".uscript" );
+//            if ( "" != path )
+//            {
+//                _openScriptToggle = false;
+//               OpenScript( path );
+//            }
+//         }
+//      }
+//   }
 
    void DoPreferences(int windowID)
    {
@@ -2826,7 +2878,7 @@ Vector2 _scrollNewProperties;
       }
    }
 
-   private string FindFile( string path, string fileName )
+   public string FindFile( string path, string fileName )
    {
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
 
@@ -2921,57 +2973,54 @@ Vector2 _scrollNewProperties;
       lastMouseY = m_MouseMoveArgs.Y;
 
       // convert to main canvas space
-      if (!m_HidePanelMode) m_MouseMoveArgs.X -= _guiPanelPalette_Width;
+      if (!uScriptGUI.PanelsHidden) m_MouseMoveArgs.X -= _guiPanelPalette_Width;
       m_MouseMoveArgs.Y -= (int)_canvasRect.yMin;
       
       System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
 
-      if (_mouseRegion == MouseRegion.Canvas)
+      if (uScriptGUI.CurrentRegion == uScriptGUI.Region.Canvas)
       {
          m_ScriptEditorCtrl.OnMouseMove( m_MouseMoveArgs );
       }
 
       // convert back to screen
-      if (!m_HidePanelMode) m_MouseMoveArgs.X += _guiPanelPalette_Width;
+      if (!uScriptGUI.PanelsHidden) m_MouseMoveArgs.X += _guiPanelPalette_Width;
       m_MouseMoveArgs.Y += (int)_canvasRect.yMin;
       
-      if (GUI.enabled && !m_HidePanelMode)
+      if (GUI.enabled && !uScriptGUI.PanelsHidden)
       {
          // check for divider draggging
-         foreach ( KeyValuePair<MouseRegion, Rect>kvp in _mouseRegionRect)
+         foreach ( KeyValuePair<uScriptGUI.Region, Rect>kvp in uScriptGUI.Regions)
          {
-            MouseRegion region = kvp.Key;
-            switch ( region )
+            uScriptGUI.Region region = kvp.Key;
+
+            if (m_MouseDown && region == m_MouseDownRegion)
             {
-               case MouseRegion.HandleCanvas:
-                  if (m_MouseDown && region == m_MouseDownRegion)
-                  {
-                     _guiPanelProperties_Height -= deltaY;
-                     Repaint();
-                  }
-                  break;
-               case MouseRegion.HandlePalette:
-                  if (m_MouseDown && region == m_MouseDownRegion)
-                  {
-                     _guiPanelPalette_Width += deltaX;
-                     Repaint();
-                  }
-                  break;
-               case MouseRegion.HandleProperties:
-                  if (m_MouseDown && region == m_MouseDownRegion)
-                  {
-                     _guiPanelProperties_Width += deltaX;
-                     Repaint();
-                  }
-                  break;
-               case MouseRegion.HandleReference:
-                  if (m_MouseDown && region == m_MouseDownRegion)
-                  {
-                     _guiPanelSequence_Width -= deltaX;
-                     Repaint();
-                  }
-                  break;
+               switch ( region )
+               {
+                  case uScriptGUI.Region.HandleContainerBottom:   uScriptGUI.ContainerBottomHeight -= deltaY;     break;
+                  case uScriptGUI.Region.HandleContainerCenter:   uScriptGUI.ContainerCenterHeight -= deltaY;     break;
+                  case uScriptGUI.Region.HandleContainerLeft:     uScriptGUI.ContainerLeftWidth += deltaX;        break;
+                  case uScriptGUI.Region.HandleContainerRight:    uScriptGUI.ContainerRightWidth -= deltaX;       break;
+
+                  case uScriptGUI.Region.HandlePanelContent:
+                     uScriptGUIPanelContent.Instance.Size += (uScriptGUIPanelContent.Instance.PanelOrientation == uScriptGUI.FixedPanelSize.Horizontal ? deltaX : deltaY);
+                     break;
+                  case uScriptGUI.Region.HandlePanelPalette:
+                     uScriptGUIPanelPalette.Instance.Size += (uScriptGUIPanelPalette.Instance.PanelOrientation == uScriptGUI.FixedPanelSize.Horizontal ? deltaX : deltaY);
+                     break;
+                  case uScriptGUI.Region.HandlePanelProperty:
+                     uScriptGUIPanelProperty.Instance.Size += (uScriptGUIPanelProperty.Instance.PanelOrientation == uScriptGUI.FixedPanelSize.Horizontal ? deltaX : deltaY);
+                     break;
+                  case uScriptGUI.Region.HandlePanelReference:
+                     uScriptGUIPanelReference.Instance.Size += (uScriptGUIPanelReference.Instance.PanelOrientation == uScriptGUI.FixedPanelSize.Horizontal ? deltaX : deltaY);
+                     break;
+                  case uScriptGUI.Region.HandlePanelScript:
+                     uScriptGUIPanelScript.Instance.Size += (uScriptGUIPanelScript.Instance.PanelOrientation == uScriptGUI.FixedPanelSize.Horizontal ? deltaX : deltaY);
+                     break;
+               }
+               Repaint();
             }
          }
       }
@@ -3004,7 +3053,7 @@ Vector2 _scrollNewProperties;
       m_Repainting = false;
    }
 
-   private bool AllowNewFile(bool allowCancel)
+   public bool AllowNewFile(bool allowCancel)
    {
       if (m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.IsDirty)
       {
@@ -3054,8 +3103,8 @@ Vector2 _scrollNewProperties;
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
       
       m_ScriptEditorCtrl.BuildContextMenu();
-      BuildPaletteMenu(null, null);
-      
+      uScriptGUIPanelPalette.Instance.Update();
+
       m_FullPath = "";
       
       uScript.SetSetting("uScript\\LastOpened", "");
@@ -3716,7 +3765,7 @@ Vector2 _scrollNewProperties;
       MethodInfo   []methodInfos   = type.GetMethods( );
       EventInfo    []eventInfos    = type.GetEvents( );
       PropertyInfo []propertyInfos = type.GetProperties( );
-      FieldInfo    []fieldInfos    = type.GetFields( );
+      FieldInfo    []fieldInfos   = type.GetFields( );
 
       List<EntityMethod> entityMethods = new List<EntityMethod>( );
 
