@@ -26,19 +26,19 @@ public class uScript_Collision : uScriptEvent
    {
       private Collision m_Collision;
 
-      [FriendlyName("Relative Velocity")]
+      [FriendlyName("Relative Velocity"), SocketState(false, false)]
       public Vector3 RelativeVelocity { get { return m_Collision.relativeVelocity; } }
 
-      [FriendlyName("Rigid Body")]
+      [FriendlyName("Rigid Body"), SocketState(false, false)]
       public Rigidbody RigidBody { get { return m_Collision.rigidbody; } }
 
-      [FriendlyName("Collider")]
+      [FriendlyName("Collider"), SocketState(false, false)]
       public Collider Collider { get { return m_Collision.collider; } }
 
-      [FriendlyName("Transform")]
+      [FriendlyName("Transform"), SocketState(false, false)]
       public Transform Transform { get { return m_Collision.transform; } }
 
-      [FriendlyName("Contact Points")]
+      [FriendlyName("Contact Points"), SocketState(false, false)]
       public ContactPoint[] Contacts { get { return m_Collision.contacts; } }
 
       [FriendlyName("Instigator")]
