@@ -1227,8 +1227,8 @@ public static class uScriptGUI
       PanelCanvas = uScriptGUIPanelCanvas.Instance;
 
       PanelContainerLeft.Add(uScriptGUIPanelScript.Instance);
-      PanelContainerLeft.Add(uScriptGUIPanelContent.Instance);
       PanelContainerLeft.Add(uScriptGUIPanelPalette.Instance);
+      PanelContainerLeft.Add(uScriptGUIPanelContent.Instance);
 //      PanelContainerLeft.Add(uScriptGUIPanelProperties.Instance);
 //      PanelContainerCenter.Add(uScriptGUIPanelReference.Instance);
       PanelContainerCenter.Add(uScriptGUIPanelProperty.Instance);
