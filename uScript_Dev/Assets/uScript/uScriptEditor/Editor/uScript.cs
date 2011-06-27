@@ -887,7 +887,7 @@ http://www.detoxstudios.com";
                   }
                   else if ( Event.current.keyCode == KeyCode.F1 )
                   {
-                     Help.BrowseURL("http://www.uscript.net/wiki/");
+                     Help.BrowseURL("http://www.uscript.net/docs/index.php?title=Main_Page");
                   }
                   else if ( Event.current.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0 )
                   {

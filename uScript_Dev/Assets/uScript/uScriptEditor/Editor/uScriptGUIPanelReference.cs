@@ -61,7 +61,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       // Setup the strings for the button
       string helpDescription     = "Select a node on the canvas to view usage and behavior information.";
       string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
-      string helpButtonURL       = "http://www.uscript.net/wiki/";
+      string helpButtonURL       = "http://www.uscript.net/docs/index.php?title=Main_Page";
 
       if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
       {
