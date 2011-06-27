@@ -535,7 +535,7 @@ http://www.detoxstudios.com";
 
                //if we're restoring over an old script
                //we need to flag us as dirty (because this was do to an undo/redo being triggered)
-               if ( CurrentScript != MasterComponent.Script )
+               if ( CurrentScript != MasterComponent.Script && null != CurrentScript )
                {
                   isDirty = true;
                }
@@ -590,13 +590,12 @@ http://www.detoxstudios.com";
             if (!OpenScript(m_FullPath)) m_FullPath = "";
             m_RefreshTimestamp = EditorApplication.timeSinceStartup;
          }
-         
+
          if ( true == isDirty )
          {
             //force rebuilt from undo so mark as dirty
             m_ScriptEditorCtrl.IsDirty = true;
          }
-
 
 //         _guiPanelScripts_Height = (int)(uScript.Instance.position.height / 3);
 //         _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
