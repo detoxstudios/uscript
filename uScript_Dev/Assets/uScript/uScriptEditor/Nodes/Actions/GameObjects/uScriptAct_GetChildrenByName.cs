@@ -51,16 +51,17 @@ public class uScriptAct_GetChildrenByName : uScriptLogic
 		
 		if (null != Target)
 		{
-			list.AddRange(GetChildren(recursive, Target, SearchMethod, Name));
+         list.AddRange(GetChildren(recursive, Target, SearchMethod, Name));
 
-         Children = list.ToArray ();
-         FirstChild = Children[0];
          ChildrenCount = list.Count;
-         
+         Children = list.ToArray ();
+
          // Fire out the correct out socket
-         m_True = list.Count > 0;
+         m_True = ChildrenCount > 0;
+
+         m_True == true ? FirstChild = Children[0] : FirstChild = null;
 		}
-	    else
+      else
 		{
 			uScriptDebug.Log ("(Node - Get Children By Name): The specified Target GameObject could not be found (was null). Did you specify a valid GameObject?", uScriptDebug.Type.Warning);
 			Children = null;

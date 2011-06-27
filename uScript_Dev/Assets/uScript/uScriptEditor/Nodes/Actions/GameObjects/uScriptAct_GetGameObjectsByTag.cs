@@ -37,12 +37,12 @@ public class uScriptAct_GetGameObjectsByTag : uScriptLogic
       m_Out = false;
 
       GameObjects = GameObject.FindGameObjectsWithTag(Tag);
-      FirstGameObject = GameObjects[0];
       GameObjectCount = GameObjects.Length;
 
       // Fire out the correct true/false out socket
       m_True = GameObjectCount > 0;
 
+      m_True == true ? FirstGameObject = GameObjects[0] : FirstGameObject = null;
       m_Out = true;
    }
 }

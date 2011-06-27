@@ -45,12 +45,13 @@ public class uScriptAct_GetAllChildren : uScriptLogic
             list.AddRange(GetChildren(recursive, child.gameObject));
          }
 
-         Children = list.ToArray ();
-         FirstChild = Children[0];
          ChildrenCount = list.Count;
+         Children = list.ToArray ();
 
          // Fire out the correct out socket
-         m_True = list.Count > 0;
+         m_True = ChildrenCount > 0;
+
+         m_True == true ? FirstChild = Children[0] : FirstChild = null;
       }
       else
       {
