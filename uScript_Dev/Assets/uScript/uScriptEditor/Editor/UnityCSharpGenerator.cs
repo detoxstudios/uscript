@@ -2006,7 +2006,6 @@ namespace Detox.ScriptEditor
          for ( int i = 0; i < parameters.Count; i++ )
          {
             Parameter p  = parameters[ i ];
-            EntityNode n = nodes[ i ];
             ExternalConnection e = externals[ i ];
          
             if ( true == p.Input && false == p.Output )
@@ -2074,7 +2073,6 @@ namespace Detox.ScriptEditor
                for ( int i = 0; i < parameters.Count; i++ )
                {
                   Parameter p  = parameters[ i ];
-                  EntityNode n = nodes[ i ];
                   ExternalConnection e = externals[ i ];
                
                   Plug plug = CSharpExternalParameterDeclaration(e.Name.Default);
