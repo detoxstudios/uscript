@@ -386,7 +386,7 @@ http://www.detoxstudios.com";
          MasterComponent.ScriptName = oldScript.Name;
 
          //save the old one to the undo stack
-         UnityEditor.Undo.RegisterUndo( MasterComponent, name );
+         UnityEditor.Undo.RegisterUndo( MasterComponent, name + " (uScript)" );
 
          //register the new one with uscript and the master component
          CurrentScript = newScript.ToBase64( );
