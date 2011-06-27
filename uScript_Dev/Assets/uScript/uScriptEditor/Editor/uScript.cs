@@ -4578,19 +4578,19 @@ http://www.detoxstudios.com";
       // structs can't have attributes, so we have to specify this information here, explicitly
       if (type == "CommentNode")
       {
-         return "http://uscript.net/manual/node_nodoc.html";
+         return "http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Comment_Node";
       }
       else if (type == "ExternalConnection")
       {
-         return "http://uscript.net/manual/node_nodoc.html";
+         return "http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#External_Connection";
       }
       else if (type == "LocalNode")
       {
-         return "http://uscript.net/manual/node_nodoc.html";
+         return "http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Variable_Nodes";
       }
       else if (type == "OwnerConnection")
       {
-         return "http://uscript.net/manual/node_nodoc.html";
+         return "http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Owner_Variable";
       }
 
       Type uscriptType = uScript.MasterComponent.GetType(type);
