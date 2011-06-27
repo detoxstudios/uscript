@@ -17,37 +17,17 @@ using System.Collections;
 [FriendlyName("Output FPS")]
 public class uScriptAct_OutputFramesPerSecond : uScriptLogic
 {
-
-   private float m_UpdateInterval = 0.25f;
-   private float m_TimeRemaining = 0f;
-   private float m_FramesAccumulated = 0f; // FPS accumulated over the interval
-   private float m_FramesRendered = 0f; // Frames drawn over the interval
    private float m_FPS = 0f;
 
    public bool Out { get { return true; } }
 
    public void In([FriendlyName("FPS")] out float FPS)
    {
-
-      m_TimeRemaining = m_UpdateInterval;
       FPS = m_FPS;
-
    }
 
    public override void Update ()
    {
-      m_TimeRemaining -= Time.deltaTime;
-      m_FramesAccumulated += Time.timeScale/Time.deltaTime;
-      ++m_FramesRendered;
-    
-       // Interval ended - update GUI text and start new interval
-       if( m_TimeRemaining <= 0.0f )
-       {
-           m_FPS = m_FramesAccumulated / m_FramesRendered;
-           m_TimeRemaining = m_UpdateInterval;
-           m_FramesAccumulated = 0f;
-           m_FramesRendered = 0f;
-       }
-
+      m_FPS = 1.0f / Time.deltaTime;
    }
 }
