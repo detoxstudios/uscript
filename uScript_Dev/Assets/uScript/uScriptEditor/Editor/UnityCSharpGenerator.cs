@@ -6,9 +6,6 @@ using System.Text;
 using UnityEngine;
 using UnityEditor;
 
-//KNOWN LIMITATIONS:
-//Externals cannot multi connect to Inputs or Outputs
-
 namespace Detox.ScriptEditor
 {
    //how it works with CSharp:
@@ -1051,7 +1048,7 @@ namespace Detox.ScriptEditor
                   }
                }
 
-               //only one link per external allowed
+               //only one link allowed for each external, we will have a local variable as an intemediator
                break;
             }
          }
@@ -1722,7 +1719,7 @@ namespace Detox.ScriptEditor
 
                   if ( link.Source.Anchor == method.Output.Name )
                   {
-                     externalLinks.Add( CSharpExternalOutputDeclaration(method, method.Output.Name) );
+                     externalLinks.Add( CSharpExternalOutputDeclaration(external.Name.Default) );
                   }
                }
                else if ( node is LogicNode ) 
@@ -1733,13 +1730,16 @@ namespace Detox.ScriptEditor
                   {
                      if ( link.Source.Anchor == output.Name )
                      {
-                        externalLinks.Add( CSharpExternalOutputDeclaration(logic, output.Name) );
+                        externalLinks.Add( CSharpExternalOutputDeclaration(external.Name.Default) );
                      }
                   }
                }
             
-               //only one link permitted per external connection
-               break;
+               //only needs to be defined once, even if multiple nodes are connected to it
+               if ( externalLinks.Count > 0 )
+               {
+                  break;
+               }
             }
          }
 
@@ -1766,7 +1766,7 @@ namespace Detox.ScriptEditor
 
                   if ( link.Source.Anchor == method.Output.Name )
                   {
-                     externalLinks.Add( CSharpExternalOutputPropertyDeclaration(external.Name.Default, method, method.Output.Name) );
+                     externalLinks.Add( CSharpExternalOutputPropertyDeclaration(external.Name.Default) );
                   }
                }
                else if ( node is LogicNode ) 
@@ -1777,13 +1777,16 @@ namespace Detox.ScriptEditor
                   {
                      if ( link.Source.Anchor == output.Name )
                      {
-                        externalLinks.Add( CSharpExternalOutputPropertyDeclaration(external.Name.Default, logic, output.Name) );
+                        externalLinks.Add( CSharpExternalOutputPropertyDeclaration(external.Name.Default) );
                      }
                   }
                }
 
-               //only one link permitted per external connection
-               break;
+               //only needs to be defined once, even if multiple nodes are connected to it
+               if ( externalLinks.Count > 0 )
+               {
+                  break;
+               }
             }
          }
 
@@ -1812,7 +1815,7 @@ namespace Detox.ScriptEditor
                   {
                      if ( link.Source.Anchor == output.Name )
                      {
-                        externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default, entityEvent, output.Name) );
+                        externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default) );
                         break;
                      }
                   }
@@ -1825,14 +1828,17 @@ namespace Detox.ScriptEditor
                   {
                      if ( link.Source.Anchor == eventName.Name )
                      {
-                        externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name) );
+                        externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default) );
                         break;
                      }
                   }
                }
 
-               //only one link permitted per external connection
-               break;
+               //only needs to be defined once, even if multiple nodes are connected to it
+               if ( externalLinks.Count > 0 )
+               {
+                  break;
+               }
             }
          }
 
@@ -1860,11 +1866,11 @@ namespace Detox.ScriptEditor
                   //without a pulse in
                   if ( p.Name == link.Source.Anchor )
                   {
-                     args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(external.Name.Default, node, p.Name).Name + ", ";
+                     args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ", ";
                   }
                }
 
-               //only one link allowed for each external
+               //only needs to be defined once, even if multiple nodes are connected to it
                break;
             }
          }
@@ -1910,11 +1916,11 @@ namespace Detox.ScriptEditor
                         parameter.Type = p.Type;
                         SyncSlaveConnections(external, new Parameter[]{ parameter } );
 
-                        AddCSharpLine( CSharpExternalParameterDeclaration(external.Name.Default, parameterNode, p.Name).Name + " = " + CSharpName(external, p.Name) + ";" );
+                        AddCSharpLine( CSharpExternalParameterDeclaration(external.Name.Default).Name + " = " + CSharpName(external, p.Name) + ";" );
                      }
                   }
 
-                  //only one link allowed for each external
+                  //only one link allowed for each external, we will have a local variable as an intemediator
                   break;
                }
             }
@@ -1960,7 +1966,7 @@ namespace Detox.ScriptEditor
                   }
                }
             
-               //only one link allowed for each external
+               //only needs to be defined once, even if multiple nodes are connected to it
                break;
             }
          }
@@ -1990,7 +1996,7 @@ namespace Detox.ScriptEditor
                   }
                }
 
-               //only one link allowed for each external
+               //only one link allowed for each external, we will have a local variable as an intemediator
                break;
             }
          }
@@ -2005,24 +2011,26 @@ namespace Detox.ScriptEditor
          
             if ( true == p.Input && false == p.Output )
             {
-               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).FriendlyName + "\")] ";
-               args += FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).Name + ", ";
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default).FriendlyName + "\")] ";
+               args += FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default).Name + ", ";
             }
             else if ( true == p.Input && true == p.Output )
             {
-               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).FriendlyName + "\")] ";
-               args += "ref " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).Name + ", ";
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default).FriendlyName + "\")] ";
+               args += "ref " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default).Name + ", ";
             }
             else if ( false == p.Input && true == p.Output )
             {
-               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).FriendlyName + "\")] ";
-               args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name).Name + ", ";
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default).FriendlyName + "\")] ";
+               args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default).Name + ", ";
             }
          }
  
          if ( args != "" ) args = args.Substring( 0, args.Length - 2 );
          
          LinkNode []relays = FindLinksBySource( externalInput.Guid, externalInput.Connection );
+         
+         List<LinkNode.Connection> allowedRelays = new List<LinkNode.Connection>( );
          
          foreach ( LinkNode relayLink in relays )
          {
@@ -2054,7 +2062,10 @@ namespace Detox.ScriptEditor
                }
             }
 
-            if ( false == allowLink ) continue;
+            if ( true == allowLink )
+            {
+               allowedRelays.Add( relayLink.Destination );
+            }
 
             //only one set of external parameters per script            
             //they match for every method signature
@@ -2066,7 +2077,7 @@ namespace Detox.ScriptEditor
                   EntityNode n = nodes[ i ];
                   ExternalConnection e = externals[ i ];
                
-                  Plug plug = CSharpExternalParameterDeclaration(e.Name.Default, n, p.Name);
+                  Plug plug = CSharpExternalParameterDeclaration(e.Name.Default);
 
                   Parameter clone = p;
                   clone.FriendlyName = plug.FriendlyName;
@@ -2076,14 +2087,17 @@ namespace Detox.ScriptEditor
                   m_ExternalParameters.Add( clone );
                }
             }
-
-            DefineExternalInput( externalInput, node, relayLink.Destination, args );
+         }
+         
+         if ( allowedRelays.Count > 0 )
+         {
+            DefineExternalInput( externalInput, allowedRelays.ToArray( ), args );
          }
       }
 
-      void DefineExternalInput( ExternalConnection externalInput, EntityNode node, LinkNode.Connection connection, string args )
+      void DefineExternalInput( ExternalConnection externalInput, LinkNode.Connection []connections, string args )
       {
-         Plug inputPlug = CSharpExternalInputDeclaration(externalInput.Name.Default, node, connection.Anchor);
+         Plug inputPlug = CSharpExternalInputDeclaration(externalInput.Name.Default);
          m_ExternalInputs.Add( inputPlug );
 
          AddCSharpLine( "[FriendlyName(\"" + inputPlug.FriendlyName + "\")]" );
@@ -2118,11 +2132,11 @@ namespace Detox.ScriptEditor
                {
                   if ( p.Name == link.Destination.Anchor )
                   {
-                     AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default, parameterNode, p.Name).Name + ";" );
+                     AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
                   }
                }
 
-               //only one link allowed for each external
+               //only one link allowed for each external, we will have a local variable as an intemediator
                break;
             }
 
@@ -2133,8 +2147,11 @@ namespace Detox.ScriptEditor
             RefreshSetProperties( external, new Parameter[] {parameter} );
          }
 
-         AddCSharpLine( CSharpRelay(node, connection.Anchor) + "( );" );
-
+         foreach ( LinkNode.Connection connection in connections )
+         {
+            EntityNode node = m_Script.GetNode( connection.Guid );
+            AddCSharpLine( CSharpRelay(node, connection.Anchor) + "( );" );
+         }
 
          //transfer our member variables to the output args
          foreach ( ExternalConnection external in m_Script.Externals )
@@ -2156,11 +2173,11 @@ namespace Detox.ScriptEditor
                      parameter.Type = p.Type;
                      SyncSlaveConnections(external, new Parameter[]{ parameter } );
 
-                     AddCSharpLine( CSharpExternalParameterDeclaration(external.Name.Default, parameterNode, p.Name).Name + " = " + CSharpName(external, p.Name) + ";" );
+                     AddCSharpLine( CSharpExternalParameterDeclaration(external.Name.Default).Name + " = " + CSharpName(external, p.Name) + ";" );
                   }
                }
 
-               //only one link allowed for each external
+               //only one link allowed for each external, we will have a local variable as an intemediator
                break;
             }
          }
@@ -2205,10 +2222,10 @@ namespace Detox.ScriptEditor
                {
                   if ( link.Source.Anchor == output.Name )
                   {
-                     AddCSharpLine( "if ( " + CSharpExternalEventDeclaration(external.Name.Default, entityEvent, output.Name).Name + " != null )" );
+                     AddCSharpLine( "if ( " + CSharpExternalEventDeclaration(external.Name.Default).Name + " != null )" );
                      AddCSharpLine( "{" );
                      ++m_TabStack;
-                        AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default, entityEvent, output.Name).Name + "( this, new System.EventArgs());" );
+                        AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default).Name + "( this, new System.EventArgs());" );
                      --m_TabStack;
                      AddCSharpLine( "}" );
                      break;
@@ -2221,7 +2238,7 @@ namespace Detox.ScriptEditor
 
                if ( link.Source.Anchor == entityMethod.Output.Name )
                {
-                  AddCSharpLine( CSharpExternalOutputDeclaration(entityMethod, entityMethod.Output.Name) + " = true;" );
+                  AddCSharpLine( CSharpExternalOutputDeclaration(external.Name.Default) + " = true;" );
                }
             }
             else if ( node is LogicNode ) 
@@ -2232,10 +2249,10 @@ namespace Detox.ScriptEditor
                {
                   if ( link.Source.Anchor == eventName.Name )
                   {
-                     AddCSharpLine( "if ( " + CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name).Name + " != null )" );
+                     AddCSharpLine( "if ( " + CSharpExternalEventDeclaration(external.Name.Default).Name + " != null )" );
                      AddCSharpLine( "{" );
                      ++m_TabStack;
-                        AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default, logic, eventName.Name).Name + "( this, new System.EventArgs());" );
+                        AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default).Name + "( this, new System.EventArgs());" );
                      --m_TabStack;
                      AddCSharpLine( "}" );
                      break;
@@ -2246,14 +2263,14 @@ namespace Detox.ScriptEditor
                {
                   if ( link.Source.Anchor == output.Name )
                   {
-                     AddCSharpLine( CSharpExternalOutputDeclaration(logic, output.Name) + " = true;" );
+                     AddCSharpLine( CSharpExternalOutputDeclaration(external.Name.Default) + " = true;" );
                      break;
                   }
                }
             }
 
-            //only one link permitted per external connection
-            break;
+            //only needs to set once, even if multiple nodes are connected to it
+            //break;
          }
       }
 
@@ -2976,84 +2993,60 @@ namespace Detox.ScriptEditor
          return name + "_" + GetGuidId(node.Guid);
       }
 
-      private Plug CSharpExternalInputDeclaration(string defaultName, EntityNode node, string name)
+      private Plug CSharpExternalInputDeclaration(string defaultName)
       {
          Plug plug;
 
-         plug.Name = name + "_" + GetGuidId(node.Guid);
-         plug.FriendlyName = plug.Name;
-
-         if ( "" != defaultName ) 
-         {
-            plug.FriendlyName = defaultName;
-            
-            //use friendlyname as external name
-            //so the name stays the same even if they reorder the nodes
-            //this prevents links from breaking in the parent scripts
-            plug.Name = MakeSyntaxSafe(plug.FriendlyName);
-         }
+         plug.FriendlyName = defaultName;
+         
+         //use friendlyname as external name
+         //so the name stays the same even if they reorder the nodes
+         //this prevents links from breaking in the parent scripts
+         plug.Name = MakeSyntaxSafe(plug.FriendlyName);
 
          return plug;
       }
 
-      private Plug CSharpExternalParameterDeclaration(string defaultName, EntityNode node, string name)
+      private Plug CSharpExternalParameterDeclaration(string defaultName)
       {
          Plug plug;
 
-         plug.Name = name + "_" + GetGuidId(node.Guid);
-         plug.FriendlyName = plug.Name;
-
-         if ( "" != defaultName ) 
-         {
-            plug.FriendlyName = defaultName;
-            //use friendlyname as external name
-            //so the name stays the same even if they reorder the nodes
-            //this prevents links from breaking in the parent scripts
-            plug.Name = MakeSyntaxSafe(plug.FriendlyName);
-         }
+         plug.FriendlyName = defaultName;
+         //use friendlyname as external name
+         //so the name stays the same even if they reorder the nodes
+         //this prevents links from breaking in the parent scripts
+         plug.Name = MakeSyntaxSafe(plug.FriendlyName);
 
          return plug;
       }
 
-      private Plug CSharpExternalOutputPropertyDeclaration(string defaultName, EntityNode node, string name)
+      private Plug CSharpExternalOutputPropertyDeclaration(string defaultName)
       {
          Plug plug;
 
-         plug.Name = "Link_" + name + "_" + GetGuidId(node.Guid);
-         plug.FriendlyName = plug.Name;
-
-         if ( "" != defaultName ) 
-         {
-            plug.FriendlyName = defaultName;
-            //use friendlyname as external name
-            //so the name stays the same even if they reorder the nodes
-            //this prevents links from breaking in the parent scripts
-            plug.Name = MakeSyntaxSafe(plug.FriendlyName);
-         }
+         plug.FriendlyName = defaultName;
+         //use friendlyname as external name
+         //so the name stays the same even if they reorder the nodes
+         //this prevents links from breaking in the parent scripts
+         plug.Name = MakeSyntaxSafe(plug.FriendlyName);
 
          return plug;
       }
    
-      private string CSharpExternalOutputDeclaration(EntityNode node, string name)
+      private string CSharpExternalOutputDeclaration(string defaultName)
       {
-         return "output_Link_" + name + "_" + GetGuidId(node.Guid);
+         return "output_Link_" + defaultName;
       }
 
-      private Plug CSharpExternalEventDeclaration(string defaultName, EntityNode node, string name)
+      private Plug CSharpExternalEventDeclaration(string defaultName)
       {
          Plug plug;
 
-         plug.Name = "Event_" + name + "_" + GetGuidId(node.Guid);
-         plug.FriendlyName = plug.Name;
-
-         if ( "" != defaultName ) 
-         {
-            plug.FriendlyName = defaultName;
-            //use friendlyname as external name
-            //so the name stays the same even if they reorder the nodes
-            //this prevents links from breaking in the parent scripts
-            plug.Name = MakeSyntaxSafe(plug.FriendlyName);
-         }
+         plug.FriendlyName = defaultName;
+         //use friendlyname as external name
+         //so the name stays the same even if they reorder the nodes
+         //this prevents links from breaking in the parent scripts
+         plug.Name = MakeSyntaxSafe(plug.FriendlyName);
 
          return plug;
       }

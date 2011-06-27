@@ -2268,6 +2268,25 @@ namespace Detox.ScriptEditor
          return Parameter.Empty;
       }
 
+      public bool IsSourceLinkEvent(LinkNode link)
+      {
+         EntityNode node = GetNode( link.Source.Guid );
+         
+         if ( node is EntityEvent )  return true;
+         if ( node is EntityMethod ) return false;
+
+         if ( node is LogicNode )
+         {
+            LogicNode logic = (LogicNode) node;
+            
+            foreach ( Plug p in logic.Events )
+            {
+               if ( p.Name == link.Source.Anchor ) return true;
+            }
+         }
+
+         return false;
+      }
 
       public void VerifyAllLinks( )
       {
@@ -2329,12 +2348,6 @@ namespace Detox.ScriptEditor
                      reason = "An External Node can't link to two different types";
                      return false;
                   }                  
-
-                  if ( Parameter.Empty == existingParam )
-                  {
-                     reason = "An External Node can't link to two different inputs";
-                     return false;
-                  }
                }
                else if (existingLinks.Destination.Guid == source.Guid )
                {
@@ -2409,8 +2422,14 @@ namespace Detox.ScriptEditor
 
                   if ( Parameter.Empty == existingParam )
                   {
-                     reason = "An External Node can't link to two different outputs";
-                     return false;
+                     bool isEventA = IsSourceLinkEvent(existingLinks);
+                     bool isEventB = IsSourceLinkEvent(link);
+
+                     if ( isEventA != isEventB )
+                     {
+                        reason = "An External Node can't link to an event output and an immediate output";
+                        return false;
+                     }
                   }
 
                   if ( existingParam.Type != myParam.Type )
