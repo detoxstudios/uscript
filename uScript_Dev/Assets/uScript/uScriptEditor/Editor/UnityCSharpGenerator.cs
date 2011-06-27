@@ -645,7 +645,7 @@ namespace Detox.ScriptEditor
          }
          else if ( "System.String" == type )
          {
-            return "\"" + stringValue.Replace( "\"", "\\\"") + "\"";
+            return "\"" + EscapeString(stringValue) + "\"";
          }
          else if ( "UnityEngine.Quaternion" == type )
          {
@@ -924,7 +924,7 @@ namespace Detox.ScriptEditor
                {
                   if ( true == formatString )
                   {
-                     declaration += "\"" + element.Trim().Replace( "\"", "\\\"" ) + "\"" + ",";
+                     declaration += "\"" + EscapeString(element) + "\"" + ",";
                   }
                   else
                   {
@@ -2864,7 +2864,12 @@ namespace Detox.ScriptEditor
 
       public static string EscapeString(string s)
       {
-         return s.Replace( "\\", "\\\\" );
+         //escape backslashes
+         s = s.Replace( "\\", "\\\\" );
+         //escape quotes
+         s = s.Replace( "\"", "\\\"");
+      
+         return s;
       }
 
       public static string MakeSyntaxSafe(string s)
