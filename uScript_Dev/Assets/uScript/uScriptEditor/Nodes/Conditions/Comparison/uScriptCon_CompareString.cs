@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Compares two string variables and outputs accordingly.")]
 [NodeDescription("Compares two string variables and outputs accordingly.\n \nA: First string to compare.\nB: Second string to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Compare String")]
 public class uScriptCon_CompareString : uScriptLogic

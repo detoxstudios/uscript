@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip( "Converts a variable into another type.")]
 [NodeDescription("Converts a variable into another type.\n \nTarget: The Target variable to be converted.\nInt Value (out): The Target variable represented as an integer.\nFloat Value (out): The Target variable represented as a floating point value.\nString Value (out): The Target variable represented as a string.\nBoolean Value (out): The Target variable represented as a Boolean (true/false) value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Convert Variable")]
 public class uScriptAct_ConvertVariable : uScriptLogic

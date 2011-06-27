@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Manually pick an Output to fire the signal to.")]
 [NodeDescription("Manually pick an Output to fire the signal to. Providing an Output To Use number smaller than 1 caps to 1 and larger than 6 caps to 6.\n \nOutput To Use: The output switch to use.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Manual Switch")]
 public class uScriptCon_ManualSwitch : uScriptLogic

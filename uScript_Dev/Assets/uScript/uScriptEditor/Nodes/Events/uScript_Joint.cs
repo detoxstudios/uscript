@@ -14,7 +14,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when one of Instance's joints breaks.")]
 [NodeDescription("Fires an event signal when one of Instance's joints breaks.\n \nBreak Force: The magnitude of the force that caused the joint break.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Joint Break")]
 public class uScript_Joint : uScriptEvent

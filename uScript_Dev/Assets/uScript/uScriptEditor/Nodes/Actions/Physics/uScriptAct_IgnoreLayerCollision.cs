@@ -12,7 +12,7 @@ using System.Collections;
 [NodeToolTip("Tells the collision detection system ignore all collisions between any GameObject in Layer A and any GameObject in Layer B.")]
 [NodeDescription("Tells the collision detection system ignore all collisions between any GameObject in Layer A and any GameObject in Layer B.\n\nLayer A: The first layer.\nLayer B: The second layer.\nIgnore: True = Ignore collisions between the layers, False = Enable collisions between the layers.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Ignore Layer Collision")]
 public class uScriptAct_IgnoreLayerCollision : uScriptLogic

@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip( "Sets the active AudioListener to the one on the specified GameObject.")]
 [NodeDescription("Sets the active AudioListener to the one on the specified GameObject.\n \nTarget: The GameObject to use as the new AudioListener.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Set Active Audio Listener")]
 public class uScriptAct_SetActiveAudioListener : uScriptLogic

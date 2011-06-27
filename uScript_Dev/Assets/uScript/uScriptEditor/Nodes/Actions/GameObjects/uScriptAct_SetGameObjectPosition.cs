@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets the position (Vector3) of a GameObject as world coordinates.")]
 [NodeDescription("Sets the position (Vector3) of a GameObject as world coordinates.\n \nTarget: The Target GameObject(s) to set the position of.\nPosition: The position to set the Target GameObjects to. Optionally can set position as offest from the target's current position.\nAs Offset: Whether or not to use Position as an offset from the Target GameObjects' position(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Set Position")]
 public class uScriptAct_SetGameObjectPosition : uScriptLogic

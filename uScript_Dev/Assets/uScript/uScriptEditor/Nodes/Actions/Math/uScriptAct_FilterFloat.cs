@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Takes any float and outputs a low-pass filtered version.")]
 [NodeDescription("Takes any float and outputs a low-pass filtered version.\n \nTarget: Value to filter.\nFilter Constant: The strength of the filter (lower numbers mean more filtering, i.e. slower - default value = 0.1).\nValue (out): Filtered value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Filter Float")]
 public class uScriptAct_FilterFloat : uScriptLogic

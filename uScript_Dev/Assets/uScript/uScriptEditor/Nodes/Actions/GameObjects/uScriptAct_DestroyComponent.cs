@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Removes the specified Component from the target GameObject.")]
 [NodeDescription("Removes the specified Component from the target GameObject.\n \nTarget: The target GameObject(s) to destroy the components of.\nComponent Name: The name of the component to destroy from all target GameObject(s).\nDelay: The time to wait before destroying the target component(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Destroy Component")]
 public class uScriptAct_DestroyComponent : uScriptLogic

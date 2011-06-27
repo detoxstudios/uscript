@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Prints out a list of string variables from a String list to the console.")]
 [NodeDescription("Prints out a list of string variables from a String list to the console.\n \nStrings: List of strings to print out, one line at a time.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Print String List")]
 public class uScriptAct_PrintList : uScriptLogic

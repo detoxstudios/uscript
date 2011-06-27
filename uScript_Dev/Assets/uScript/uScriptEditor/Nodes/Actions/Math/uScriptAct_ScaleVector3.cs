@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Scales a Vector3.")]
 [NodeDescription("Scales a Vector3.\n \nVector: Vector to scale.\nScale: Amount to scale Vector by.\nVector Result: Scaled vector.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Scale Vector3")]
 public class uScriptAct_ScaleVector3 : uScriptLogic

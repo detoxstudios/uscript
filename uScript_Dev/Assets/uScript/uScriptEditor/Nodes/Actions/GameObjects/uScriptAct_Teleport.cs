@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Causes the targeted GameObject to be relocated to the destination GameObject.")]
 [NodeDescription("Causes the targeted GameObject to be relocated to the destination GameObject.\n \nTarget: The Target GameObject(s) to teleport.\nDestination: The destination GameObject to teleport to.\nUpdate Rotation: Whether or not to also update the rotation of the teleported GameObject to match the Destination's rotation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Teleport")]
 public class uScriptAct_Teleport : uScriptLogic

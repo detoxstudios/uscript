@@ -12,7 +12,7 @@ using System.Collections;
 [NodeToolTip("Outputs the current frames per second.")]
 [NodeDescription("Outputs the current frames per second.\n\nFPS: Returns the current frames per second.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Output FPS")]
 public class uScriptAct_OutputFramesPerSecond : uScriptLogic

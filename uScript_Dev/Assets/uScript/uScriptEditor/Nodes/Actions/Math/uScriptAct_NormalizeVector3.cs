@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Normalizes the vector.")]
 [NodeDescription("Normalizes the vector. A normalized vector keeps the same direction but its length is 1.0. If the vector is too small to be normalized a zero vector will be returned instead.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Normalize Vector3")]
 public class uScriptAct_NormalizeVector3 : uScriptLogic

@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Randomly picks an Output to fire the signal to.")]
 [NodeDescription("Randomly picks an Output to fire the signal to.\n \nMax Output Used: Highest valid output switch to use.\nSeed: Random number generator seed value.\nCurrent Output (out): The output switch that was randomly chosen.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Random Switch")]
 public class uScriptCon_RandomSwitch : uScriptLogic

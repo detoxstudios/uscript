@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Toggles the active state of a GameObject.")]
 [NodeDescription("Toggles the active state of a GameObject.\n \nTarget: The Target GameObject(s) to toggle state on.\nIgnore Children: Whether or not to also toggle the children of the Target GameObject(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Toggle")]
 public class uScriptAct_Toggle : uScriptLogic

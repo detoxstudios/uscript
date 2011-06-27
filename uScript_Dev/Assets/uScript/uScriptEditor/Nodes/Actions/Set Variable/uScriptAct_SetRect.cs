@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets the value of a Rect variable using the value of another Rect variable.")]
 [NodeDescription("Sets the value of a Rect variable using the value of another Rect variable.\n \nValue: The Rect variable to be set.\nTarget Rect (out): The value that has been set for this variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Set Rect")]
 public class uScriptAct_SetRect : uScriptLogic

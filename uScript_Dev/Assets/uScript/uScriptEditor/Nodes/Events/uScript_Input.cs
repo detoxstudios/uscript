@@ -15,7 +15,7 @@ using System.Collections;
 [NodeToolTip("Input Events fires out any time input is detected from the keyboard, mouse, or joystick.")]
 [NodeDescription("Input Events fires out any time input is detected from the keyboard, mouse, or joystick.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Input Events")]
 public class uScript_Input : uScriptEvent

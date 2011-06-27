@@ -15,7 +15,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when uScript starts.")]
 [NodeDescription("Fires an event signal when uScript starts.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("uScript Events")]
 public class uScript_Global : uScriptEvent

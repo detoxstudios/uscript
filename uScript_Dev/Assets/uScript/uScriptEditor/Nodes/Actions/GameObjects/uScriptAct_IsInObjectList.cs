@@ -12,7 +12,7 @@ using System.Collections.Generic;
 [NodeToolTip("Checks to see if GameObjects are in a GameObject List.")]
 [NodeDescription("Checks to see if GameObjects are in a GameObject List.\n \nTarget: The target GameObject(s) to check for membership in the GameObject list.\nGameObject List (in/out): The list of GameObjects to check.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Is In GameObject List")]
 public class uScriptAct_IsInObjectList : uScriptLogic

@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Subtracts two Vector4 variables and returns the result.")]
 [NodeDescription("Subtracts two Vector4 variables and returns the result.\n \nA: The Vector4 to subtract from. If more than one Vector4 variable is connected to A, they will be subtracted from (0, 0, 0, 0) before B is subtracted from them.\nB: The Vector4 to subtract from A. If more than one Vector4 variable is connected to B, they will be subtracted from (0, 0, 0, 0) before being subtracted from A.\nResult (out): The Vector4 result of the subtraction operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Subtract Vector4")]
 public class uScriptAct_SubtractVector4 : uScriptLogic

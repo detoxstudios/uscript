@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Randomly sets the value of a Vector3 variable.")]
 [NodeDescription("Randomly sets the value of a Vector3 variable.\n \nMin(X/Y/Z): Minimum allowable float value.\nMax(X/Y/Z): Maximum allowable float value.\nSeed: Seed value for the random number generator.\nTarget Vector3 (out): The Vector3 variable that gets set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Set Random Vector3")]
 public class uScriptAct_SetRandomVector3 : uScriptLogic

@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Play the specified animation on the target object.")]
 [NodeDescription("Play the specified animation on the target object.\n \nTarget: The Target GameObject(s) to play the animation on.\nAnimation: The name of the animation to play. Animation must exist in the GameObject's AnimationClip.\nSpeed Factor: The speed at which to play the animation.\nWrap Mode: Specifies what should happen at the end of the animation.\nStop Other Animation: Stop any currently playing animations before playing this one.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Play Animation")]
 public class uScriptAct_PlayAnimation : uScriptLogic

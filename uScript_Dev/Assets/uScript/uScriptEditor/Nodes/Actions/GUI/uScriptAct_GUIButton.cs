@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Shows a GUIButton on the screen and allows responses when clicked and hovered in/out.")]
 [NodeDescription("Shows a GUIButton on the screen and allows responses when clicked and hovered in/out.\n \nText: The text you want to display on the button. \nPosition: The position and size of the button.\nTexture: The background image to use for the button.\nTool Tip: The tool tip to display when the button is being hovered over.\nGUI Style: The name of a custom GUI style to use when displaying this button.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("GUI Button")]
 public class uScriptAct_GUIButton : uScriptLogic

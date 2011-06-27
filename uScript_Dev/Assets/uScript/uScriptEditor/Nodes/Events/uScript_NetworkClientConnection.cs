@@ -14,7 +14,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when the network client connects or disconnects from the server.\n \nReason for Failure (out): What happened if there is a connection failure - can be 'Disconnected', 'Lost Connection', or 'Unknown'.")]
 [NodeDescription("Fires an event signal when the network client connects or disconnects from the server.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Network Client Connection")]
 public class uScript_NetworkClientConnection : uScriptEvent

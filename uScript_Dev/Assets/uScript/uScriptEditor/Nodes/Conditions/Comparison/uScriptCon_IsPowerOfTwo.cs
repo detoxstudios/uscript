@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Determines if the target Int is a power of two number.")]
 [NodeDescription("Determines if the target Int is a power of two number.\n\nTarget: The target Int variable to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Is Power of Two")]
 public class uScriptCon_IsPowerOfTwo : uScriptLogic

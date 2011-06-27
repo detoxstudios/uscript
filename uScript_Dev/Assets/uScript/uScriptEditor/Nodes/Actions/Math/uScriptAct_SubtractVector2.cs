@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Subtracts two Vector2 variables and returns the result.")]
 [NodeDescription("Subtracts two Vector2 variables and returns the result.\n \nA: The Vector2 to subtract from.\nB: The Vector2 to subtract from A.\nResult (out): The Vector2 result of the subtraction operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Subtract Vector2")]
 public class uScriptAct_SubtractVector2 : uScriptLogic

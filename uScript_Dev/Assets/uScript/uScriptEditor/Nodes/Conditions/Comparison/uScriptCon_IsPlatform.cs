@@ -12,7 +12,7 @@ using System.Collections.Generic;
 [NodeToolTip("Outputs true if the current platform is one of the attached platform variables.")]
 [NodeDescription("Outputs true if the current platform is one of the attached platform variables.\n \nValid Platforms: All UnityEngine.RuntimePlaform variables attached will considerd to be valid platforms.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Is Platform")]
 public class uScriptCon_IsPlatform : uScriptLogic

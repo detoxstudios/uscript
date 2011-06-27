@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets a Vector4 to the defined X, Y, Z and W float component values.")]
 [NodeDescription("Sets a Vector4 to the defined X, Y, Z and W float component values.\n \nX: X value to use for the Output Vector.\nY: Y value to use for the Output Vector.\nZ: Z value to use for the Output Vector.\nW: W value to use for the Output Vector.\nOutput Vector4 (out): Vector4 variable built from the specified X, Y, Z, and W.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Set Vector4 Components")]
 public class uScriptAct_SetVector4Components : uScriptLogic

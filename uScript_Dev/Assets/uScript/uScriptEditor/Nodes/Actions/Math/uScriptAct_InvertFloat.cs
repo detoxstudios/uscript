@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Takes any non-zero target float and outputs its inverse version.")]
 [NodeDescription("Takes any non-zero float integer and outputs its inverse version.\n \nTarget: Value to invert.\nValue (out): Inverted value (3.25 -> -3.25 or -1.0 -> 1.0).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Invert Float")]
 public class uScriptAct_InvertFloat : uScriptLogic

@@ -12,7 +12,7 @@ using System.Collections;
 [NodeToolTip("Attaches one GameObject to another, setting the Target as the parent of the Attachment.")]
 [NodeDescription("Attaches one GameObject to another, setting the Target as the parent of the Attachment.\n \nTarget: GameObject to attach to.\nAttachment: GameObject to attach to the Target.\nUse Relative Offset: Whether or not to use the relative offset.\nRelative Offset: The relative offset to use.\nUse Relative Rotation: Whether or not to use the relative rotation.\nRelative Rotation: The relative rotation to use.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Attach To GameObject")]
 public class uScriptAct_AttachToGameObject : uScriptLogic

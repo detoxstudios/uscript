@@ -13,7 +13,7 @@ using System;
 [NodeToolTip("Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).")]
 [NodeDescription("Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).\n \nGameObject List: The list of GameObjects to iterate over.\nCurrent GameObject (out): The GameObject for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("For Each GameObject In List")]
 public class uScriptAct_ForEachObjectList : uScriptLogic

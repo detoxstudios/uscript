@@ -15,7 +15,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when the application is going to quit.")]
 [NodeDescription("Fires an event signal when the application is going to quit.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Application Quit")]
 public class uScript_ApplicationQuit : uScriptEvent

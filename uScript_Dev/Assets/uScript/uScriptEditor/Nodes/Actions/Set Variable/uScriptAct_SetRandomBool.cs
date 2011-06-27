@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Randomly sets the value of a Bool variable.")]
 [NodeDescription("Randomly sets the value of a Bool variable.\n \nSeed: Seed value for the random number generator.\nTarget Bool (out): The bool value that gets set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Set Random Bool")]
 public class uScriptAct_SetRandomBool : uScriptLogic

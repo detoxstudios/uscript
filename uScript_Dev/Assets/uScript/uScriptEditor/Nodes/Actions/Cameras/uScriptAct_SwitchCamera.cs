@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Switches to the Target GameObject's camera.")]
 [NodeDescription("Switches to the Target GameObject's camera.\n \nTarget: The GameObject containing the camera to switch to.\nEnable AudioListener: Whether or not to enable that camera's AudioListener component (if it has one).\nDisable Other Cameras: Whether or not to disable all other cameras.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_nodoc.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [NodeDeprecated(typeof(uScriptAct_SwitchCameras))]
 
