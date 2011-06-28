@@ -134,7 +134,7 @@ namespace Detox.FlowChart
          this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
          this.DoubleBuffered = true;
          this.Name = "FlowChartCtrl";
-         this.Size = new System.Drawing.Size(4096, 4096);
+         this.Size = new System.Drawing.Size(0, 0);
          this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseMove);
          this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseDown);
          this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseUp);
@@ -142,7 +142,7 @@ namespace Detox.FlowChart
 
          int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
          int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
-         this.Location = new Point(-2048 + halfWidth, -2048 + halfHeight);
+         this.Location = new Point(0, 0);
 
       }
 
