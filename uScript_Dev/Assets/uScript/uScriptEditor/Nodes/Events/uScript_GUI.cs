@@ -13,7 +13,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires GUI-related events.")]
-[NodeDescription("Fires GUI-related events.")]
+[NodeDescription("Fires GUI-related events.\n \nGUI Changed: Whether or not one of the GUI controls currently displayed had its content data changed. NOTE: This is not control-specific, it is global.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
