@@ -900,7 +900,15 @@ public static class uScriptGUI
             DrawPanelContainerRight();
          }
          EditorGUILayout.EndHorizontal();
-//         DrawPanelContainerBottom();
+         DrawPanelContainerBottom();
+      }
+      else
+      {
+         EditorGUILayout.BeginHorizontal(container);
+         {
+            PanelCanvas.Draw();
+         }
+         EditorGUILayout.EndHorizontal();
       }
 
       DrawStatusbar();
@@ -919,8 +927,8 @@ public static class uScriptGUI
 
       if (containerCount > 0)
       {
-//         Rect r = EditorGUILayout.BeginVertical(panelStyle, GUILayout.Width(ContainerLeftWidth), GUILayout.ExpandHeight(true));
-         /*Rect r =*/ EditorGUILayout.BeginVertical(panelStyle, GUILayout.Width(ContainerLeftWidth), GUILayout.Height(uScript.Instance.position.height - 23));
+         EditorGUILayout.BeginVertical(panelStyle, GUILayout.Width(ContainerLeftWidth), GUILayout.ExpandHeight(true));
+//         Rect r = EditorGUILayout.BeginVertical(panelStyle, GUILayout.Width(ContainerLeftWidth), GUILayout.Height(uScript.Instance.position.height - 23));
          {
             PanelContainerLeft[0].Draw();
 
@@ -933,11 +941,6 @@ public static class uScriptGUI
          }
          EditorGUILayout.EndVertical();
 
-//         if (Event.current.type == EventType.Repaint)
-//         {
-//            Debug.Log("ContainerLeft: " + r.ToString() + ", EditorPosition: " + uScript.Instance.position.ToString() + "\n");
-//         }
-
          DrawVerticalDivider(Region.HandleContainerLeft);
       }
    }
@@ -946,9 +949,7 @@ public static class uScriptGUI
    {
       EditorGUILayout.BeginVertical(panelStyle, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
       {
-//         DrawPanel(PanelID.Canvas);
          PanelCanvas.Draw();
-//         DrawGUIContent();
 
          int containerCount = PanelContainerCenter.Count;
 
@@ -990,6 +991,32 @@ public static class uScriptGUI
 
                PanelContainerRight[i].Draw();
             }
+         }
+         EditorGUILayout.EndVertical();
+      }
+   }
+
+   private static void DrawPanelContainerBottom()
+   {
+      int containerCount = PanelContainerBottom.Count;
+
+      if (containerCount > 0)
+      {
+         EditorGUILayout.BeginVertical(panelStyle, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+         {
+            DrawHorizontalDivider(Region.HandleContainerBottom);
+
+            EditorGUILayout.BeginHorizontal(new GUIStyle(), GUILayout.ExpandWidth(true), GUILayout.Height(ContainerBottomHeight));
+            {
+               PanelContainerBottom[0].Draw();
+
+               for (int i=1; i < containerCount; i++)
+               {
+                  DrawVerticalDivider(PanelContainerBottom[i-1].Region);
+                  PanelContainerBottom[i].Draw();
+               }
+            }
+            EditorGUILayout.EndHorizontal();
          }
          EditorGUILayout.EndVertical();
       }
@@ -1163,10 +1190,104 @@ public static class uScriptGUI
 
    public enum FixedPanelSize { None, Horizontal, Vertical }
 
-   public static int ContainerBottomHeight = 250;
-   public static int ContainerCenterHeight = 250;
-   public static int ContainerLeftWidth = 250;
-   public static int ContainerRightWidth = 250;
+   public static int _containerBottomHeight;
+   public static int _containerCenterHeight;
+   public static int _containerLeftWidth;
+   public static int _containerRightWidth;
+
+   public static int ContainerBottomHeight
+   {
+      get
+      {
+         if (PanelContainerBottom.Count == 0)
+         {
+            return 0;
+         }
+
+         // the minimum height should be equal to the greatest min height of its panels
+         // the maximum height should be half of the editor height
+         return Math.Min(_containerBottomHeight,
+                         Math.Max(30,
+                                  (int)(uScript.Instance.position.height / 2)
+                                 )
+                        );
+      }
+
+      set
+      {
+         // set the desired height
+         // if the size is less than the minimum, use the minimum
+         // if the size is increased, adjust the size of the other containers
+
+
+
+
+         _containerBottomHeight = Math.Min(value,
+                                           Math.Max(30,
+                                                    (int)(uScript.Instance.position.height / 2)
+                                                   )
+                                          );
+
+
+
+
+      }
+   }
+
+   public static int ContainerCenterHeight
+   {
+      get
+      {
+         if (PanelContainerCenter.Count == 0)
+         {
+            return 0;
+         }
+
+         return _containerCenterHeight;
+      }
+
+      set
+      {
+         _containerCenterHeight = value;
+      }
+   }
+
+   public static int ContainerLeftWidth
+   {
+      get
+      {
+         if (PanelContainerLeft.Count == 0)
+         {
+            return 0;
+         }
+
+         return _containerLeftWidth;
+      }
+
+      set
+      {
+         _containerLeftWidth = value;
+      }
+   }
+
+   public static int ContainerRightWidth
+   {
+      get
+      {
+         if (PanelContainerRight.Count == 0)
+         {
+            return 0;
+         }
+
+         return _containerRightWidth;
+      }
+
+      set
+      {
+         _containerRightWidth = value;
+      }
+   }
+
 
    private static bool _panelsInitialized = false;
 
@@ -1206,6 +1327,10 @@ public static class uScriptGUI
       _panelsInitialized = true;
 
 
+      ContainerBottomHeight = 250;
+      ContainerCenterHeight = 250;
+      ContainerLeftWidth = 250;
+      ContainerRightWidth = 250;
 
 
 
@@ -1233,6 +1358,12 @@ public static class uScriptGUI
 //      PanelContainerCenter.Add(uScriptGUIPanelReference.Instance);
       PanelContainerCenter.Add(uScriptGUIPanelProperty.Instance);
       PanelContainerCenter.Add(uScriptGUIPanelReference.Instance);
+
+//      PanelContainerLeft.Add(uScriptGUIPanelScript.Instance);
+//      PanelContainerLeft.Add(uScriptGUIPanelPalette.Instance);
+//      PanelContainerRight.Add(uScriptGUIPanelContent.Instance);
+//      PanelContainerCenter.Add(uScriptGUIPanelProperty.Instance);
+//      PanelContainerBottom.Add(uScriptGUIPanelReference.Instance);
 
 
       // Set the panel size options

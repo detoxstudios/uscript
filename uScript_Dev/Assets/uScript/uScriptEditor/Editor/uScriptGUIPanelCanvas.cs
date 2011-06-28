@@ -84,7 +84,7 @@ public sealed class uScriptGUIPanelCanvas : uScriptGUIPanel
       m_ScriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
 //      m_CanvasDragging = uScriptInstance.m_CanvasDragging;
 
-      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
       {
          // Toolbar
          //
@@ -254,6 +254,8 @@ public sealed class uScriptGUIPanelCanvas : uScriptGUIPanel
 
       uScriptGUI.DefineRegion(uScriptGUI.Region.Canvas);
 //      uScriptInstance.SetMouseRegion( uScript.MouseRegion.Canvas );//, 3, 1, -2, -4 );
+
+      _rect = rect;
    }
 
 
