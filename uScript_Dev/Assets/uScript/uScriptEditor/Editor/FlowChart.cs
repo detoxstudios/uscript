@@ -140,10 +140,7 @@ namespace Detox.FlowChart
          this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseUp);
          this.ResumeLayout(false);
 
-         int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
-         int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
          this.Location = new Point(0, 0);
-
       }
 
       public delegate void FlowChartNodesModifiedEventHandler(object sender, FlowchartNodesModifiedEventArgs e);

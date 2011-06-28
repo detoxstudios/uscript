@@ -42,7 +42,7 @@ public class uScriptAct_GetGameObjectsByTag : uScriptLogic
       // Fire out the correct true/false out socket
       m_True = GameObjectCount > 0;
 
-      m_True == true ? FirstGameObject = GameObjects[0] : FirstGameObject = null;
+      if (m_True) FirstGameObject = GameObjects[0]; else FirstGameObject = null;
       m_Out = true;
    }
 }

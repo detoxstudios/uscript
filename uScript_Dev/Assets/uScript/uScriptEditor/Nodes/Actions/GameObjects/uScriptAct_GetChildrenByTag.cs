@@ -63,7 +63,7 @@ public class uScriptAct_GetChildrenByTag : uScriptLogic
          // Fire out the correct out socket
          m_True = ChildrenCount > 0;
 
-         m_True == true ? FirstChild = Children[0] : FirstChild = null;
+         if (m_True) FirstChild = Children[0]; else FirstChild = null;
       }
       else
       {
