@@ -1,6 +1,6 @@
 // uScript uScript_Update.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when various global events (OnGUI, Update, LateUpdate, and FixedUpdate) take place.
+// Desc: Fires an event signal when various global events (Update, LateUpdate, and FixedUpdate) take place.
 
 using UnityEngine;
 using System.Collections;
@@ -12,8 +12,8 @@ using System.Collections;
 [NodePath("Events/Game Events")]
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Fires an event signal when various global events (OnGUI, Update, LateUpdate, and FixedUpdate) take place.")]
-[NodeDescription("Fires an event signal when various global events (OnGUI, Update, LateUpdate, and FixedUpdate) take place.")]
+[NodeToolTip("Fires an event signal when various global events (Update, LateUpdate, and FixedUpdate) take place.")]
+[NodeDescription("Fires an event signal when various global events (Update, LateUpdate, and FixedUpdate) take place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
@@ -22,9 +22,6 @@ public class uScript_Update : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
-   [FriendlyName("On GUI")]
-   public event uScriptEventHandler OnGui;
-   
    [FriendlyName("On Update")]
    public event uScriptEventHandler OnUpdate;
    
@@ -33,11 +30,6 @@ public class uScript_Update : uScriptEvent
 
    [FriendlyName("On FixedUpdate")]
    public event uScriptEventHandler OnFixedUpdate;
-
-   void OnGUI()
-   {
-      if ( OnGui != null ) OnGui(this, new System.EventArgs());
-   }
 
    void Update()
    {
