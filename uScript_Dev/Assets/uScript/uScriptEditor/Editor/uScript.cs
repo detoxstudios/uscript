@@ -4064,7 +4064,7 @@ http://uscript.net
       }
 
       List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>( FindObjectsOfType(typeof(UnityEngine.Object)) );
-      Dictionary<Type, Type> uniqueObjects = new Dictionary<Type, Type>( );
+      Dictionary<string, Type> uniqueObjects = new Dictionary<string, Type>( );
 
       Dictionary<Type, Type> eventNodes = new Dictionary<Type,Type>( );
       GatherDerivedTypes( eventNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptEvent) );
@@ -4076,22 +4076,25 @@ http://uscript.net
          if ( typeof(uScriptCode).IsAssignableFrom(o.GetType()) ) continue;
          if ( typeof(uScriptLogic).IsAssignableFrom(o.GetType()) ) continue;
 
-         uniqueObjects[ o.GetType() ] = o.GetType();
+         uniqueObjects[ o.GetType().ToString( ) ] = o.GetType();
       }
 
       foreach ( Type t in eventNodes.Values )
       {
-         uniqueObjects[ t ] = t;
+         uniqueObjects[ t.ToString( ) ] = t;
       }
 
       if ( null != requiredTypes )
       {
          foreach ( string t in requiredTypes )
          {
-            Type type = MasterComponent.GetAssemblyQualifiedType( t );
+            if ( true == uniqueObjects.ContainsKey(t) ) continue;
+
+            Type type = uScript.MasterComponent.GetType(t);
+
             if ( null != type ) 
             {
-               uniqueObjects[ type ] = type;
+               uniqueObjects[ t ] = type;
             }
          }
       }
@@ -4102,29 +4105,9 @@ http://uscript.net
          if ( t == typeof(uScript_MasterComponent) ) continue;
 
          Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
-
-         //foreach ( Type nestedType in t.GetNestedTypes( ) )
-         //{
-         //   Reflect( nestedType, entityDescs, baseMethods, baseEvents, baseProperties );
-         //}
       }
 
       Reflect( typeof(UnityEngine.RuntimePlatform), entityDescs, baseMethods, baseEvents, baseProperties );
-
-      //Dictionary<Type, Type> everythingElse = new Dictionary<Type, Type>( );
-
-      //foreach ( Type t in m_Types.Values )
-      //{
-      //   if ( false == uniqueObjects.Keys.Contains(t) )
-      //   {
-      //      everythingElse[ t ] = t;
-      //   }
-      //}
-
-      //foreach ( Type t in everythingElse.Values )
-      //{
-      //   Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
-      //}
 
       //consolidate like events so they appear on the same node
       EntityDesc [] descs = entityDescs.ToArray( );
