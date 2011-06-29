@@ -21,11 +21,13 @@ public class uScriptAct_GUITexture : uScriptLogic
    public void In(
       Rect Position,
       Texture2D Texture,
+      [FriendlyName("Control Name"), DefaultValue(""), SocketState(false, false)] string ControlName,
       [FriendlyName("Scale Mode")] ScaleMode scaleMode,
       [FriendlyName("Alpha Blend"), DefaultValue(true), SocketState(false, false)] bool alphaBlend,
       [FriendlyName("Image Aspect"), DefaultValue(1.0f), SocketState(false, false)] float aspect
       )
    {
+      if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);            
       GUI.DrawTexture(Position, Texture, scaleMode, alphaBlend, aspect);
    }
 }

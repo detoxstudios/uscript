@@ -25,13 +25,18 @@ public class uScript_GUI : uScriptEvent
    public class GUIEventArgs : System.EventArgs
    {
       private bool m_GUIChanged;
+      private string m_FocusedControl;
 
       [FriendlyName("GUI Changed")]
       public bool GUIChanged { get { return m_GUIChanged; } }
 
-      public GUIEventArgs(bool guiChanged)
+      [FriendlyName("Focused Control")]
+      public string FocusedControl { get { return m_FocusedControl; } }
+
+      public GUIEventArgs(bool guiChanged, string focusedControl)
       {
          m_GUIChanged = guiChanged;
+         m_FocusedControl = focusedControl;
       }
    }
 
@@ -40,6 +45,6 @@ public class uScript_GUI : uScriptEvent
    
    void OnGUI()
    {
-      if ( OnGui != null ) OnGui(this, new GUIEventArgs(GUI.changed));
+      if ( OnGui != null ) OnGui(this, new GUIEventArgs(GUI.changed, GUI.GetNameOfFocusedControl()));
    }
 }

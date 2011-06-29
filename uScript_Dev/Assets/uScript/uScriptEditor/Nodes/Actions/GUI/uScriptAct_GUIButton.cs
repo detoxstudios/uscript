@@ -38,6 +38,7 @@ public class uScriptAct_GUIButton : uScriptLogic
       string Text,
       Rect Position,
       Texture2D Texture,
+      [FriendlyName("Control Name"), DefaultValue(""), SocketState(false, false)] string ControlName,
       [FriendlyName("Tool Tip"), DefaultValue(""), SocketState(false, false)] string ToolTip,
       [FriendlyName("GUI Style"), DefaultValue(""), SocketState(false, false)] string guiStyle
       )
@@ -46,6 +47,8 @@ public class uScriptAct_GUIButton : uScriptLogic
       {
          GUIContent content = new GUIContent(Text, Texture, ToolTip);
          bool buttonDown = false;
+         
+         if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);            
    
          if (string.IsNullOrEmpty(guiStyle))
          {
