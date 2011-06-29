@@ -78,7 +78,7 @@ namespace Detox.ScriptEditor
    public partial class ScriptEditorCtrl 
    {
       public ContextMenuStrip ContextMenu { get { return m_ContextMenuStrip; } }
-
+      
       private ContextMenuStrip m_ContextMenuStrip = new ContextMenuStrip( );
       private Detox.FlowChart.FlowChartCtrl m_FlowChart = new Detox.FlowChart.FlowChartCtrl( );
    
@@ -88,7 +88,8 @@ namespace Detox.ScriptEditor
 
          //why so big?  because it's simply virtual coordinates to handle scrolling and we
          //want them to be able to scroll as much as they need
-         m_FlowChart.Size = new System.Drawing.Size( System.Int32.MaxValue, System.Int32.MaxValue );
+         m_FlowChart.Size     = new System.Drawing.Size( System.Int32.MaxValue, System.Int32.MaxValue );
+         m_FlowChart.Location = new System.Drawing.Point(-System.Int32.MaxValue / 2, -System.Int32.MaxValue / 2);
 
          Controls.Add( m_FlowChart );
 
