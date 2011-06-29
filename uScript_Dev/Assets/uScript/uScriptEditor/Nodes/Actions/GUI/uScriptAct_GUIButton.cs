@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a GUIButton on the screen and allows responses when held down, released, and clicked.")]
-[NodeDescription("Shows a GUIButton on the screen and allows responses when held down, released, and clicked..\n \nText: The text you want to display on the button. \nPosition: The position and size of the button.\nTexture: The background image to use for the button.\nTool Tip: The tool tip to display when the button is being hovered over.\nGUI Style: The name of a custom GUI style to use when displaying this button.")]
+[NodeDescription("Shows a GUIButton on the screen and allows responses when held down, released, and clicked..\n \nText: The text you want to display on the button. \nPosition: The position and size of the button.\nTexture: The background image to use for the button.\nControl Name: Name to give to this texture GUI control.\nTool Tip: The tool tip to display when the button is being hovered over.\nGUI Style: The name of a custom GUI style to use when displaying this button.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
