@@ -18,6 +18,31 @@ namespace Detox.ScriptEditor
 
       override public int RenderDepth { get { return FlowChartCtrl.LinkRenderDepth + 1; } }
 
+      public string DisplayName
+      {
+         get
+         {
+            string name = "";
+
+            name = EntityProperty.Instance.Default;
+            if ( "" == name ) name = "(" + uScriptConfig.Variable.FriendlyName(EntityProperty.Instance.Type) + ")";
+
+            name += "\n";
+            name += EntityProperty.Parameter.FriendlyName;
+
+            return name;
+         }
+      }
+
+      public string DisplayValue
+      {
+         get
+         {
+            return EntityProperty.Parameter.Default;
+         }
+      }
+
+
       public EntityPropertyDisplayNode(EntityProperty entityProperty)
          : base(entityProperty)
       {
@@ -26,15 +51,6 @@ namespace Detox.ScriptEditor
 
          Location = new System.Drawing.Point( entityProperty.Position.X, entityProperty.Position.Y );
          Name = "";
-
-         string name = "";
-
-         name = entityProperty.Instance.Default;
-         if ( "" == name ) name = "(" + uScriptConfig.Variable.FriendlyName(entityProperty.Instance.Type) + ")";
-
-         name += "\n";
-         name += entityProperty.Parameter.FriendlyName + "\n";
-         name += entityProperty.Parameter.Default + "\n";
 
          NodeStyle = "property_" + uScriptConfig.Variable.FriendlyStyleName(entityProperty.Parameter.Type);
 
@@ -52,8 +68,8 @@ namespace Detox.ScriptEditor
 
          socket = new Socket( );
          socket.Alignment = Socket.Align.Center;
-         socket.InternalName = name;
-         socket.FriendlyName = name;
+         socket.InternalName = DisplayName + "\n" + DisplayValue + "\n";
+         socket.FriendlyName = DisplayName + "\n" + DisplayValue + "\n";
          socket.Input  = false;
          socket.Output = false;
          socket.Type   = "";

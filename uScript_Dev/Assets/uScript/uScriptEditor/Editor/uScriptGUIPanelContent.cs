@@ -175,6 +175,24 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
                   name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
                   comment = ((CommentDisplayNode)displayNode).Comment.TitleText.Default;
                }
+               else if (displayNode is EntityPropertyDisplayNode)
+               {
+                  category = "Properties";
+                  name = ((EntityPropertyDisplayNode)displayNode).DisplayName.Replace( "\n", "  " ) + ": " + ((EntityPropertyDisplayNode)displayNode).DisplayValue;
+                  comment = ((EntityPropertyDisplayNode)displayNode).EntityProperty.Comment.Default;
+               }
+               else if (displayNode is OwnerConnectionDisplayNode)
+               {
+                  category = "Variables";
+                  name = "Owner";
+                  comment = ((OwnerConnectionDisplayNode)displayNode).OwnerConnection.Comment.Default;
+               }
+               else if (displayNode is ExternalConnectionDisplayNode)
+               {
+                  category = "Miscellaneous";
+                  name = ((ExternalConnectionDisplayNode)displayNode).ExternalConnection.Name.Default;
+                  comment = ((ExternalConnectionDisplayNode)displayNode).ExternalConnection.Comment.Default;
+               }
                else
                {
                   category = "Miscellaneous";
@@ -251,6 +269,23 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
                               {
                                  name = ((CommentDisplayNode)dn).Comment.TitleText.FriendlyName;
                                  comment = ((CommentDisplayNode)dn).Comment.TitleText.Default;
+                              }
+                              else if (dn is EntityPropertyDisplayNode)
+                              {
+                                 name = ((EntityPropertyDisplayNode)dn).DisplayName.Replace( "\n", "  " ) + ": " + ((EntityPropertyDisplayNode)dn).DisplayValue;
+                                 comment = ((EntityPropertyDisplayNode)dn).EntityProperty.Comment.Default;
+                              }
+                              else if (dn is OwnerConnectionDisplayNode)
+                              {
+                                 category = "Variables";
+                                 name = "Owner";
+                                 comment = ((OwnerConnectionDisplayNode)dn).OwnerConnection.Comment.Default;
+                              }
+                              else if (dn is ExternalConnectionDisplayNode)
+                              {
+                                 category = "Miscellaneous";
+                                 name = ((ExternalConnectionDisplayNode)dn).ExternalConnection.Name.Default;
+                                 comment = ((ExternalConnectionDisplayNode)dn).ExternalConnection.Comment.Default;
                               }
 
                               // Validate strings
