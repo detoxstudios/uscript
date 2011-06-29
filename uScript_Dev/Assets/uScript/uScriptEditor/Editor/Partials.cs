@@ -86,10 +86,12 @@ namespace Detox.ScriptEditor
       {
          m_FlowChart.Parent = this;
 
+         int maxValue = System.UInt16.MaxValue;
+
          //why so big?  because it's simply virtual coordinates to handle scrolling and we
          //want them to be able to scroll as much as they need
-         m_FlowChart.Size     = new System.Drawing.Size( System.Int32.MaxValue, System.Int32.MaxValue );
-         m_FlowChart.Location = new System.Drawing.Point(-System.Int32.MaxValue / 2, -System.Int32.MaxValue / 2);
+         m_FlowChart.Size     = new System.Drawing.Size( maxValue, maxValue );
+         m_FlowChart.Location = new System.Drawing.Point(-maxValue / 2, -maxValue / 2);
 
          Controls.Add( m_FlowChart );
 
