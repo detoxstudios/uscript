@@ -726,8 +726,8 @@ namespace Detox.FlowChart
       }
       
       private void FlowChartCtrl_MouseUp(object sender, MouseEventArgs e)
-      {
-         if ( e.Button != MouseButtons.Left ) return;
+      {      
+         if ( e.Button != MouseButtons.Left && e.Button != MouseButtons.Middle ) return;
 
          bool selectionSetModified = false;
 
