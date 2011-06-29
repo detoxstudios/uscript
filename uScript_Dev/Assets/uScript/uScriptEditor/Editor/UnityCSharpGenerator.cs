@@ -333,6 +333,7 @@ namespace Detox.ScriptEditor
             DeclareNamespaces( );
             AddCSharpLine( "" );
 
+            AddCSharpLine( "[AddComponentMenu(\"uScript/Graphs/" + logicClassName + "\")]" );
             AddCSharpLine( "public class " + System.IO.Path.GetFileNameWithoutExtension(script.Name) + uScriptConfig.Files.GeneratedComponentExtension + " : uScriptCode" );
             AddCSharpLine( "{" );
             ++m_TabStack;
