@@ -87,9 +87,9 @@ public class uScriptDebugInspector : EditorWindow
          {
             EditorGUI.indentLevel++;
             EditorGUILayout.LabelField("Event", Event.current.mousePosition.x + ",\t" + Event.current.mousePosition.y + " (" + Event.current.delta + ")");
-            EditorGUILayout.LabelField("MouseMoveArgs X, Y (Button)", u.m_MouseMoveArgs.X + ",\t" + u.m_MouseMoveArgs.Y + " (" + u.m_MouseMoveArgs.Button + ")");
-            EditorGUILayout.LabelField("lastMouseX, Y", uScript.lastMouseX + ",\t" + uScript.lastMouseY);
-            EditorGUILayout.LabelField("deltaX, Y", uScript.deltaX + ",\t" + uScript.deltaY);
+//            EditorGUILayout.LabelField("MouseMoveArgs X, Y (Button)", u.m_MouseMoveArgs.X + ",\t" + u.m_MouseMoveArgs.Y + " (" + u.m_MouseMoveArgs.Button + ")");
+//            EditorGUILayout.LabelField("lastMouseX, Y", uScript.lastMouseX + ",\t" + uScript.lastMouseY);
+//            EditorGUILayout.LabelField("deltaX, Y", uScript.deltaX + ",\t" + uScript.deltaY);
             EditorGUI.indentLevel--;
          }
 
@@ -157,7 +157,7 @@ public class uScriptDebugInspector : EditorWindow
    {
       EditorGUI.indentLevel++;
       EditorGUILayout.LabelField("Size", panel.Size + " (" + panel.PanelOrientation + ")");
-      EditorGUILayout.LabelField("Rect", panel.Rect.x + ",\t" + panel.Rect.y + ",\t" + panel.Rect.width + ",\t" + panel.Rect.height);
+//      EditorGUILayout.LabelField("Rect", panel.Rect.x + ",\t" + panel.Rect.y + ",\t" + panel.Rect.width + ",\t" + panel.Rect.height);
       EditorGUI.indentLevel--;
    }
 }
