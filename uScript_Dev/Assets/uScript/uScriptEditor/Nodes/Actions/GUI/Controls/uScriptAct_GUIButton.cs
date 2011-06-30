@@ -43,22 +43,22 @@ public class uScriptAct_GUIButton : uScriptLogic
       [FriendlyName("GUI Style"), DefaultValue(""), SocketState(false, false)] string guiStyle
       )
    {
+      GUIContent content = new GUIContent(Text, Texture, ToolTip);
+      bool buttonDown = false;
+      
+      if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);            
+
+      if (string.IsNullOrEmpty(guiStyle))
+      {
+         buttonDown = GUI.RepeatButton(Position, content);
+      }
+      else
+      {
+         buttonDown = GUI.RepeatButton(Position, content, GUI.skin.GetStyle(guiStyle));
+      }
+         
       if (Event.current.type == EventType.Repaint || Event.current.isMouse)
       {
-         GUIContent content = new GUIContent(Text, Texture, ToolTip);
-         bool buttonDown = false;
-         
-         if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);            
-   
-         if (string.IsNullOrEmpty(guiStyle))
-         {
-            buttonDown = GUI.RepeatButton(Position, content);
-         }
-         else
-         {
-            buttonDown = GUI.RepeatButton(Position, content, GUI.skin.GetStyle(guiStyle));
-         }
-         
          // down event
          if (!m_ButtonDown && buttonDown && OnButtonDown != null) OnButtonDown( this, new System.EventArgs() );
      
