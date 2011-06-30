@@ -22,7 +22,7 @@ public class uScriptAct_CountTime : uScriptLogic
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    public event uScriptEventHandler Out;
 
-   public void Start()
+   public void In()
    {
       m_TimerStarted = true;
       if ( Out != null ) Out(this, new System.EventArgs());

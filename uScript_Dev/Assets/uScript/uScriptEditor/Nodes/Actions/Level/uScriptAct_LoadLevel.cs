@@ -51,6 +51,8 @@ public class uScriptAct_LoadLevel : uScriptLogic
          {
             Application.LoadLevelAdditive(name);
          }
+
+         if ( null != Loaded ) Loaded( this, System.EventArgs.Empty );
       }
       else
       {

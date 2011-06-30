@@ -3,12 +3,20 @@
 // Desc: Manage/track a collection of assets.
 
 using UnityEngine;
+using System.Collections.Generic;
 
 public class uScript_Assets : MonoBehaviour
 {
+   public static uScript_Assets LatestAssets = null;
+
    public UnityEngine.Object [] Assets;
 
    public string [] Keys;
+
+   public void Awake( )
+   {
+      LatestAssets = this;
+   }
 
    public void Add(string key, UnityEngine.Object o)
    {  
@@ -39,7 +47,7 @@ public class uScript_Assets : MonoBehaviour
       }
    }
 
-   public UnityEngine.Object Get(string key)
+   public UnityEngine.Object Find(string key)
    {
       if ( null == Assets || null == Keys ) return null;
 

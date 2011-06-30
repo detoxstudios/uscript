@@ -354,6 +354,15 @@ namespace Detox.ScriptEditor
                --m_TabStack;
                AddCSharpLine( "}" );
             
+               AddCSharpLine( "void Start( )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+            
+                  AddCSharpLine( "uScript.Start( );" );
+            
+               --m_TabStack;
+               AddCSharpLine( "}" );
+
                AddCSharpLine( "void Update( )" );
                AddCSharpLine( "{" );
                ++m_TabStack;
@@ -457,12 +466,22 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
 
                ++m_TabStack;
-                  DefineInitialization( );
+                  DefineAwakeInitialization( );
                --m_TabStack;
 
                AddCSharpLine( "}" );
                AddCSharpLine( "" );
                
+               AddCSharpLine( "public override void Start()" );
+               AddCSharpLine( "{" );
+
+               ++m_TabStack;
+                  DefineStartInitialization( );
+               --m_TabStack;
+
+               AddCSharpLine( "}" );
+               AddCSharpLine( "" );
+
                AddCSharpLine( "public override void Update()" );
                AddCSharpLine( "{" );
 
@@ -1155,7 +1174,6 @@ namespace Detox.ScriptEditor
       private void DefineSetParent( )
       {
          AddCSharpLine( "parentGameObject = g;" );        
-         AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
          AddCSharpLine( "" );
          
          foreach ( LogicNode logic in m_Script.Logics )
@@ -1164,60 +1182,23 @@ namespace Detox.ScriptEditor
          }
       }
 
-      private void DefineInitialization( )
+      private void DefineStartInitialization( )
       {
-         AddCSharpLine( "#pragma warning disable 414" );
-
-         do
+         foreach ( EntityNode node in m_Script.EntityNodes )
          {
-            AddCSharpLine( "GameObject masterObject = GameObject.Find(\"" + uScriptRuntimeConfig.MasterObjectName + "\");" );
-            AddCSharpLine( "uScript_Assets assetComponent = null;" );
-
-            AddCSharpLine( "if ( null != masterObject ) assetComponent = masterObject.GetComponent<uScript_Assets>( );" );
-            
-            AddCSharpLine( "if ( null != assetComponent )" );
-            AddCSharpLine( "{" );
-            ++m_TabStack;
-
-               GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-               uScript_Assets assetComponent = null;
-            
-               if ( null != uScriptMaster ) assetComponent = uScriptMaster.GetComponent<uScript_Assets>( );                        
+            foreach ( Parameter p in node.Parameters )
+            {
+               if ( p.Default == "" ) continue;
                
-               if ( null != assetComponent )
-               {
-                  foreach ( EntityNode node in m_Script.EntityNodes )
-                  {
-                     foreach ( Parameter p in node.Parameters )
-                     {
-                        if ( p.Default == "" ) continue;
-                        
-                        Type type = uScript.MasterComponent.GetType(p.Type);
-                        if ( null == type ) continue;
+               Type type = uScript.MasterComponent.GetType(p.Type);
+               if ( null == type ) continue;
 
-                        if ( false == uScriptConfig.ShouldAutoPackage(type) ) continue;
-                           
-                         AddCSharpLine( CSharpName(node, p.Name) + " = assetComponent.Get(\"" + EscapeString(p.Default) + "\") as " + p.Type + ";" );
-                     }
-                  }
-               }
-               else
-               {
-                  uScriptDebug.Log( "uScript_Assets could not be found on the GameObject " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Error );
-               }
+               if ( false == uScriptConfig.ShouldAutoPackage(type) ) continue;
+                  
+                AddCSharpLine( CSharpName(node, p.Name) + " = uScript_Assets.LatestAssets.Find(\"" + EscapeString(p.Default) + "\") as " + p.Type + ";" );
+            }
+         }
 
-            --m_TabStack;
-            AddCSharpLine( "}" );
-            AddCSharpLine( "else" );
-            AddCSharpLine( "{" );
-            ++m_TabStack;
-               AddCSharpLine( "uScriptDebug.Log( \"uScript_Assets component cannot be found on GameObject " + uScriptRuntimeConfig.MasterObjectName + "\", uScriptDebug.Type.Error);" );
-            --m_TabStack;
-            AddCSharpLine( "}" );
-         
-         } while ( false );
-
-         AddCSharpLine( "#pragma warning restore 414" );
          AddCSharpLine( "" );
 
          //make sure all components we plan to reference
@@ -1225,6 +1206,15 @@ namespace Detox.ScriptEditor
          AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
          AddCSharpLine( "" );
 
+         //for each logic node, create an script specific instance
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
+            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Start( );" );
+         }
+      }
+      
+      private void DefineAwakeInitialization( )
+      {         
          //for each logic node, create an script specific instance
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
@@ -1379,7 +1369,14 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + EscapeString(values[i].Trim( )) + "\" ) as " + type + ";" );
+                  if ( uScriptRuntimeConfig.MasterObjectName == EscapeString(values[i].Trim( )) )
+                  {
+                     AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = uScript_MasterComponent.LatestMaster;" );
+                  }
+                  else
+                  {
+                     AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + EscapeString(values[i].Trim( )) + "\" ) as " + type + ";" );                     
+                  }
                   SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, true );
          
                --m_TabStack;
@@ -1408,7 +1405,15 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );               
                ++m_TabStack;
 
-                  AddCSharpLine( "gameObject = GameObject.Find( \"" + EscapeString(values[i].Trim( )) + "\" );" );
+                  if ( uScriptRuntimeConfig.MasterObjectName == EscapeString(values[i].Trim( )) )
+                  {
+                     AddCSharpLine( "gameObject = uScript_MasterComponent.LatestMaster;" );
+                  }
+                  else
+                  {
+                     AddCSharpLine( "gameObject = GameObject.Find( \"" + EscapeString(values[i].Trim( )) + "\" );" );
+                  }
+               
                   AddCSharpLine( "if ( null != " + "gameObject )" );
          
                   AddCSharpLine( "{" );               
@@ -1435,7 +1440,15 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( "GameObject gameObject = GameObject.Find( \"" + EscapeString(parameter.Default) + "\" );" );
+                  if ( uScriptRuntimeConfig.MasterObjectName == EscapeString(parameter.Default) )
+                  {
+                     AddCSharpLine( "GameObject gameObject = uScript_MasterComponent.LatestMaster;" );
+                  }
+                  else
+                  {
+                     AddCSharpLine( "GameObject gameObject = GameObject.Find( \"" + EscapeString(parameter.Default) + "\" );" );
+                  }
+
                   AddCSharpLine( "if ( null != " + "gameObject )" );
             
                   AddCSharpLine( "{" );               
@@ -1469,7 +1482,14 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + EscapeString(parameter.Default) + "\" ) as " + FormatType(parameter.Type) + ";" );
+                  if ( uScriptRuntimeConfig.MasterObjectName == EscapeString(parameter.Default) )
+                  {
+                     AddCSharpLine( CSharpName(node, parameter.Name) + " = uScript_MasterComponent.LatestMaster;" );
+                  }
+                  else
+                  {
+                     AddCSharpLine( CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + EscapeString(parameter.Default) + "\" ) as " + FormatType(parameter.Type) + ";" );
+                  }
 
                   //only set up listeners if it's NOT a variable connecxtion
                   //otherwise they'll be set in the conditional below this

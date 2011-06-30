@@ -10,6 +10,15 @@ using System.Collections.Generic;
 
 public class uScript_MasterComponent : MonoBehaviour
 {
+   //keep track of the latest master so uScripts loading
+   //will know which master loaded with them for their scene infomration
+   public static GameObject LatestMaster = null;
+
+   public void Awake( )
+   {
+      LatestMaster = gameObject;
+   }
+
 #if UNITY_EDITOR
    [HideInInspector]
    public string Script     = null;

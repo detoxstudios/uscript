@@ -3139,7 +3139,7 @@ http://uscript.net
          if ( "" != scriptEditor.SceneName && scriptEditor.SceneName != System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene) )
          {
             EditorUtility.DisplayDialog("uScript Scene Warning", "This uScript file was attached to the uScript Master GameObject in scene " + scriptEditor.SceneName + ".  " +
-                                        "It may not be compatible with this scene.", "OK");
+                                        "It may not be compatible with this scene or run correctly if edited while this scene is open.", "OK");
          }
 
 

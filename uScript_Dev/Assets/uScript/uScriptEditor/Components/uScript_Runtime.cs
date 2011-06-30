@@ -159,6 +159,7 @@ public class uScriptEvent : MonoBehaviour
 public class uScriptLogic : ScriptableObject
 {
    public virtual void SetParent( GameObject parent ) {}
+   public virtual void Start( )      {}
    public virtual void Update( )     {}
    public virtual void LateUpdate( ) {}
    public virtual void FixedUpdate( ){}
