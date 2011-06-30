@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/Global")]
 [NodeAutoAssignMasterInstance(true)]
 [NodeComponentType(typeof(Transform))]
 

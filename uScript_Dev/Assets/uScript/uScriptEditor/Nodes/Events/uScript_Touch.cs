@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/Touch")]
 [NodeAutoAssignMasterInstance(true)]
 
 [NodePath("Events/Input Events")]

@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/Visibility")]
 [NodeComponentType(typeof(Renderer))]
 
 [NodePath("Events/GameObject Events")]

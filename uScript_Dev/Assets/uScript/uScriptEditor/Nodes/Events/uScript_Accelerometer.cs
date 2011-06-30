@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/Accelerometer")]
 [NodeAutoAssignMasterInstance(true)]
 
 [NodePath("Events/Input Events")]

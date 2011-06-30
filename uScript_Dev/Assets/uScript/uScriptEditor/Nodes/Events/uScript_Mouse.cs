@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/Mouse")]
 [NodeComponentType(typeof(Collider), typeof(GUIElement))]
 
 [NodePath("Events/Input Events")]

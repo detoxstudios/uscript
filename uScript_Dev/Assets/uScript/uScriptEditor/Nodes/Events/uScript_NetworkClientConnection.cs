@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/Network Events/Network Client Connection")]
 [NodeComponentType(typeof(Network))]
 
 [NodePath("Events/Network Events")]

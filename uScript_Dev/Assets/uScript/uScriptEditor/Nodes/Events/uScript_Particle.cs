@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/Particles")]
 [NodeComponentType(typeof(Collider))]
 
 [NodePath("Events/Particles")]

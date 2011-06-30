@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/Joint")]
 [NodeComponentType(typeof(Joint))]
 
 [NodePath("Events/Physics Events")]

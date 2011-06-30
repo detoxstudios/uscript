@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/GameObject")]
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/GameObject Events")]

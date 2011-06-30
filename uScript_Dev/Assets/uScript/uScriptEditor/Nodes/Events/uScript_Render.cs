@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/Render")]
 [NodeComponentType(typeof(Renderer))]
 
 [NodePath("Events/Renderer Events")]

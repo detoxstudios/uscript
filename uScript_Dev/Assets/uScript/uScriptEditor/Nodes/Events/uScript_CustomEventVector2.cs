@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Event Components/Custom Events/Custom Event (Vector2)")]
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Custom Events")]

@@ -5,8 +5,6 @@
 using UnityEngine;
 using System.Collections;
 
-
-[AddComponentMenu("uScript/Event Components/Collision")]
 [NodeComponentType(typeof(Collider), typeof(Rigidbody))]
 
 [NodePath("Events/Physics Events")]
