@@ -2464,7 +2464,14 @@ Vector2 _scrollNewProperties;
             string currentUScript = "";
             if (m_ScriptEditorCtrl != null)
             {
-               currentUScript = " (" + System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName) + ")";
+               if (string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptName))
+               {
+                  currentUScript = " (New)";
+               }
+               else
+               {
+                  currentUScript = " (" + System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName) + ")";
+               }
             }
 
             GUILayout.Label("uScripts" + currentUScript, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
@@ -2516,22 +2523,29 @@ Vector2 _scrollNewProperties;
                   GUILayout.BeginHorizontal();
                   {
                      // uScript Label
+                     string sceneName = "None";
+                     if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
+                     {
+                        sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
+                     }
                      if (currentScript)
                      {
                         scriptStyle.fontStyle = FontStyle.Bold;
-                        attached = IsAttachedToMaster || IsAttached;
+                        attached = sceneName == System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
                         if (!attached)
                         {
                            scriptStyle.normal.textColor = UnityEngine.Color.red;
                         }
                         dirty = m_ScriptEditorCtrl.IsDirty;
                      }
-                     string sceneName = "None";
-                     if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
+                     if (sceneName == "None")
                      {
-                        sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
+                        GUILayout.Label(scriptName + (dirty ? "*" : ""), scriptStyle);
                      }
-                     GUILayout.Label(scriptName + " (" + sceneName + ")" + (dirty ? "*" : ""), scriptStyle);
+                     else
+                     {
+                        GUILayout.Label(scriptName + " (" + sceneName + ")" + (dirty ? "*" : ""), scriptStyle);
+                     }
 
                      GUILayout.FlexibleSpace();
 
@@ -2571,7 +2585,7 @@ Vector2 _scrollNewProperties;
                      GUIStyle errorStyle = new GUIStyle(GUI.skin.label);
                      errorStyle.normal.textColor = UnityEngine.Color.red;
                      errorStyle.wordWrap = true;
-                     GUILayout.Label("This uScript is not attached to any GameObject in the scene.", errorStyle);
+                     GUILayout.Label("The Unity Scene this uScript uses is not loaded in Unity or it has not been saved yet. Work may be lost if you save!", errorStyle);
                   }
                }
             }
