@@ -3549,7 +3549,10 @@ http://uscript.net
 
       List<LogicNode> logicNodes = new List<LogicNode>( );
 
-      foreach ( Type type in uniqueNodes.Values )
+      List<Type> types = new List<Type>( uniqueNodes.Values );
+      types.Sort(TypeSorter);
+
+      foreach ( Type type in types )
       {
          MasterComponent.AddType( type );
 
@@ -3991,6 +3994,11 @@ http://uscript.net
       entityDescs.Add( entityDesc );
    }
 
+   private static int TypeSorter(Type t1, Type t2)
+   {
+      return String.Compare( uScriptConfig.Variable.FriendlyName(t1.ToString()), uScriptConfig.Variable.FriendlyName(t2.ToString())); 
+   }
+
    private EntityDesc[] PopulateEntityTypes( string [] requiredTypes )
    {
       Hashtable baseMethods    = new Hashtable( );
@@ -4102,15 +4110,21 @@ http://uscript.net
             if ( true == uniqueObjects.ContainsKey(t) ) continue;
 
             Type type = uScript.MasterComponent.GetType(t);
-
+            
             if ( null != type ) 
             {
-               uniqueObjects[ t ] = type;
+               if ( typeof(UnityEngine.Object).IsAssignableFrom(type) )
+               {
+                  uniqueObjects[ t ] = type;
+               }
             }
          }
       }
 
-      foreach ( Type t in uniqueObjects.Values )
+      List<Type> types = new List<Type>( uniqueObjects.Values );
+      types.Sort(TypeSorter);
+      
+      foreach ( Type t in types )
       {
          if ( t == typeof(uScript_Assets) ) continue;
          if ( t == typeof(uScript_MasterComponent) ) continue;

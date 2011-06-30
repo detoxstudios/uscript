@@ -1910,6 +1910,24 @@ namespace Detox.ScriptEditor
          addMenu.Size = new System.Drawing.Size(152, 22);
          addMenu.Text = "Add";
 
+         ToolStripMenuItem comment  = new ToolStripMenuItem();
+         ToolStripMenuItem external = new ToolStripMenuItem();
+
+         comment.Name = "m_AddComment";
+         comment.Size = new System.Drawing.Size(152, 22);
+         comment.Text = "Comment";
+         comment.Click += new System.EventHandler(m_MenuAddNode_Click);
+         comment.Tag  = new CommentNode( "" );
+
+         external.Name = "m_AddExternal";
+         external.Size = new System.Drawing.Size(152, 22);
+         external.Text = "External Connection";
+         external.Click += new System.EventHandler(m_MenuAddNode_Click);
+         external.Tag  = new ExternalConnection( Guid.NewGuid( ) );
+
+         addMenu.DropDownItems.Add( comment );
+         addMenu.DropDownItems.Add( external );
+
          BuildAddMenu( addMenu, null );
 
          //see if we can create an automatic link for the user
@@ -2039,24 +2057,6 @@ namespace Detox.ScriptEditor
                }
             }
          }
-
-         ToolStripMenuItem comment  = new ToolStripMenuItem();
-         ToolStripMenuItem external = new ToolStripMenuItem();
-
-         comment.Name = "m_AddComment";
-         comment.Size = new System.Drawing.Size(152, 22);
-         comment.Text = "&Comment";
-         comment.Click += new System.EventHandler(m_MenuAddNode_Click);
-         comment.Tag  = new CommentNode( "" );
-
-         external.Name = "m_AddExternal";
-         external.Size = new System.Drawing.Size(152, 22);
-         external.Text = "&External Connection";
-         external.Click += new System.EventHandler(m_MenuAddNode_Click);
-         external.Tag  = new ExternalConnection( Guid.NewGuid( ) );
-
-         addMenu.DropDownItems.Add( comment );
-         addMenu.DropDownItems.Add( external );
       }
 
       private void BuildAddMenu(ToolStripMenuItem addMenu, Hashtable typeHash)
@@ -2208,6 +2208,11 @@ namespace Detox.ScriptEditor
          ReformatMenu( addMenu );
       }
 
+      private static int MenuSorter(ToolStripItem t1, ToolStripItem t2)
+      {
+         return String.Compare( t1.Text, t2.Text ); 
+      }
+
       private void ReformatMenu(ToolStripMenuItem item)
       {
          if ( null == item ) return;
@@ -2216,6 +2221,8 @@ namespace Detox.ScriptEditor
          {
             item.Text += "...";
          }
+
+         item.DropDownItems.Items.Sort( MenuSorter );
 
          foreach ( ToolStripItem subItem in item.DropDownItems.Items )
          {

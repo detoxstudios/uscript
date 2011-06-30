@@ -79,13 +79,13 @@ public sealed class uScriptGUIPanelContent : uScriptGUIPanel
          _categories = new Dictionary<string, Dictionary<string, List<NodeInfo>>>();
 
          // Create the Categories in the order they should appear in the list
-         _categories.Add("Comments", new Dictionary<string, List<NodeInfo>>());
          _categories.Add("Actions", new Dictionary<string, List<NodeInfo>>());
+         _categories.Add("Comments", new Dictionary<string, List<NodeInfo>>());
          _categories.Add("Conditions", new Dictionary<string, List<NodeInfo>>());
          _categories.Add("Events", new Dictionary<string, List<NodeInfo>>());
+         _categories.Add("Miscellaneous", new Dictionary<string, List<NodeInfo>>());
          _categories.Add("Properties", new Dictionary<string, List<NodeInfo>>());
          _categories.Add("Variables", new Dictionary<string, List<NodeInfo>>());
-         _categories.Add("Miscellaneous", new Dictionary<string, List<NodeInfo>>());
       }
       else
       {
