@@ -2,12 +2,11 @@
 // (C) 2010 Detox Studios LLC
 // Desc: uScript's configuration file. Edit settings here to configure the uScript visual scripting tool.
 
-//#define ENABLE_DEBUG_LOG
+#define ENABLE_DEBUG_LOG
 // Public beta reminders:
 // 1. Disable above define(s)
-// 2. Comment out mini-map button in uScript.cs (search for "Map")
-// 3. Increment build number
-// 4. Optionally increase end date
+// 2. Increment build number
+// 3. Optionally increase end date
 
 
 using System;
