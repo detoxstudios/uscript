@@ -293,8 +293,8 @@ namespace Detox.ScriptEditor
       public void CenterOnPoint(Point point)
       {
          // center the canvas viewport on the specified point
-         point.X = Math.Min(0, Math.Max(-System.Int16.MaxValue, -point.X + (int)(uScript.Instance.NodeWindowRect.width * 0.5f)));
-         point.Y = Math.Min(0, Math.Max(-System.Int16.MaxValue, -point.Y + (int)(uScript.Instance.NodeWindowRect.height * 0.5f) - (int)uScript.Instance.NodeToolbarRect.height));
+         point.X = Math.Min(0, Math.Max(-System.UInt16.MaxValue, -point.X + (int)(uScript.Instance.NodeWindowRect.width * 0.5f)));
+         point.Y = Math.Min(0, Math.Max(-System.UInt16.MaxValue, -point.Y + (int)(uScript.Instance.NodeWindowRect.height * 0.5f) - (int)uScript.Instance.NodeToolbarRect.height));
          m_FlowChart.Location = point;
          m_FlowChart.Invalidate();
       }
@@ -305,8 +305,8 @@ namespace Detox.ScriptEditor
          int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
          int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
          Point center = new Point(node.Bounds.Left + node.Bounds.Width / 2, node.Bounds.Top + node.Bounds.Height / 2);
-         m_FlowChart.Location = new Point( Math.Min(0, Math.Max(-System.Int16.MaxValue, -center.X + halfWidth)),
-                                           Math.Min(0, Math.Max(-System.Int16.MaxValue, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
+         m_FlowChart.Location = new Point( Math.Min(0, Math.Max(-System.UInt16.MaxValue, -center.X + halfWidth)),
+                                           Math.Min(0, Math.Max(-System.UInt16.MaxValue, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
          m_FlowChart.Invalidate();
       }
 
@@ -1596,7 +1596,7 @@ namespace Detox.ScriptEditor
                int halfWidth = (int)(uScript.Instance.NodeWindowRect.width / 2.0f);
                int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
                Point center = new Point((int)(minX + (maxX - minX) / 2.0f), (int)(minY + (maxY - minY) / 2.0f));
-               m_FlowChart.Location = new Point(Math.Min(0, Math.Max(-System.Int16.MaxValue, -center.X + halfWidth)), Math.Min(0, Math.Max(-System.Int16.MaxValue, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
+               m_FlowChart.Location = new Point(Math.Min(0, Math.Max(-System.UInt16.MaxValue, -center.X + halfWidth)), Math.Min(0, Math.Max(-System.UInt16.MaxValue, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
                m_FlowChart.Invalidate();
             }
          }
