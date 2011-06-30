@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uScript_DLL", "uScript_DLL.csproj", "{7761F2C3-F719-A3C5-C99C-2D7E1B75A6F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uScript_BaseDLL", "uScript_BaseDLL.csproj", "{BD28F23C-2EC1-4B74-AB69-1510EBD650EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uScriptRuntime_DLL", "uScriptRuntime_DLL.csproj", "{BD28F23C-2EC1-4B74-AB69-1510EBD650EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
