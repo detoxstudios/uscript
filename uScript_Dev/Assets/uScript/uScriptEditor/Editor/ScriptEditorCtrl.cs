@@ -1911,10 +1911,6 @@ namespace Detox.ScriptEditor
          addMenu.Text = "Add";
 
 
-         BuildAddMenu( addMenu, null );
-
-         //add after the add menu is built so they aren't
-         //included in the sorting
          ToolStripMenuItem comment  = new ToolStripMenuItem();
          ToolStripMenuItem external = new ToolStripMenuItem();
 
@@ -1932,6 +1928,8 @@ namespace Detox.ScriptEditor
 
          addMenu.DropDownItems.Add( comment );
          addMenu.DropDownItems.Add( external );
+
+         BuildAddMenu( addMenu, null );
 
          //see if we can create an automatic link for the user
          foreach ( Node node in m_FlowChart.Nodes )
@@ -2213,7 +2211,19 @@ namespace Detox.ScriptEditor
 
       private static int MenuSorter(ToolStripItem t1, ToolStripItem t2)
       {
-         return String.Compare( t1.Text, t2.Text ); 
+         bool subItems1 = t1.Text[ t1.Text.Length - 1 ] == '.';
+         bool subItems2 = t2.Text[ t2.Text.Length - 1 ] == '.';
+
+         if ( subItems1 == subItems2 )
+         {
+            return String.Compare( t1.Text, t2.Text ); 
+         }
+
+         //sub items for 1 so this comes second
+         if ( true == subItems1 ) return -1;
+
+         //sub items for 2 so this comes second
+         return 1;
       }
 
       private void ReformatMenu(ToolStripMenuItem item)
@@ -2225,12 +2235,12 @@ namespace Detox.ScriptEditor
             item.Text += "...";
          }
 
-         item.DropDownItems.Items.Sort( MenuSorter );
-
          foreach ( ToolStripItem subItem in item.DropDownItems.Items )
          {
             ReformatMenu( subItem as ToolStripMenuItem );
          }
+
+         item.DropDownItems.Items.Sort( MenuSorter );
       }
 
       private string BuildSignature(EntityNode node)

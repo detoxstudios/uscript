@@ -29,6 +29,86 @@ namespace Detox.Data
       }
    }
 
+   public class AnimationCurveSerializer : ITypeSerializer
+   {
+      public int Version { get { return 1; } }
+      public string SerializableType { get { return typeof(UnityEngine.AnimationCurve).ToString( ); } }
+
+      public object Load(ObjectSerializer serializer)
+      {
+         UnityEngine.AnimationCurve curve = new UnityEngine.AnimationCurve( );
+
+         curve.keys        = (UnityEngine.Keyframe[]) serializer.LoadNamedObject( "Keys" );
+         curve.preWrapMode = (UnityEngine.WrapMode)   serializer.LoadNamedObject( "PreWrapMode" );
+         curve.postWrapMode= (UnityEngine.WrapMode)   serializer.LoadNamedObject( "PostWrapMode" );
+      
+         return curve;
+      }
+
+      public void Save(ObjectSerializer serializer, object data)
+      {
+         UnityEngine.AnimationCurve curve = (UnityEngine.AnimationCurve) data;
+
+         serializer.SaveNamedObject( "Keys",         curve.keys );
+         serializer.SaveNamedObject( "PreWrapMode",  curve.preWrapMode );
+         serializer.SaveNamedObject( "PostWrapMode", curve.postWrapMode );
+      }
+   }
+
+   public class KeyframeArraySerializer : ITypeSerializer
+   {
+      public int Version { get { return 1; } }
+      public string SerializableType { get { return typeof(UnityEngine.Keyframe[]).ToString( ); } }
+
+      public object Load(ObjectSerializer serializer)
+      {
+         object value;
+
+         serializer.GetData( out value );
+         byte [] data = value as byte[];
+      
+         MemoryStream stream = new MemoryStream( data );
+         BinaryReader reader = new BinaryReader( stream );
+
+         int i, count = reader.ReadInt32( );
+
+         UnityEngine.Keyframe []keyframes = new UnityEngine.Keyframe[ count ];
+
+         for ( i = 0; i < count; i++ )
+         {
+            keyframes[ i ].time      = reader.ReadSingle( );
+            keyframes[ i ].value     = reader.ReadSingle( );
+            keyframes[ i ].inTangent = reader.ReadSingle( );
+            keyframes[ i ].outTangent= reader.ReadSingle( );
+         }
+
+         reader.Close( );
+         return keyframes;
+      }
+
+      public void Save(ObjectSerializer serializer, object data)
+      {
+         UnityEngine.Keyframe []keyframes = (UnityEngine.Keyframe[]) data;
+
+         MemoryStream stream = new MemoryStream( );
+         BinaryWriter writer = new BinaryWriter( stream );
+
+         writer.Write( (int) keyframes.Length );
+
+         foreach (UnityEngine.Keyframe keyframe in keyframes)
+         {
+            writer.Write( keyframe.time );
+            writer.Write( keyframe.value );
+            writer.Write( keyframe.inTangent );
+            writer.Write( keyframe.outTangent );
+         }
+
+         serializer.SetData( stream.ToArray() );
+
+         writer.Close( );
+      }
+   }
+
    public class SystemIdSerializer : ITypeSerializer
    {
       public int Version { get { return 1; } }
