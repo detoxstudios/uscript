@@ -144,11 +144,12 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                         {
                            if (m_ScriptEditorCtrl != null)
                            {
-                              Debug.Log("FIX THIS\n");
-//                              float canvasX = _mouseRegionRect[MouseRegion.Canvas].x;
-//                              float canvasY = _mouseRegionRect[MouseRegion.Canvas].y;
-//                              m_ScriptEditorCtrl.ContextCursor = new Point((int)(canvasX - _guiPanelPalette_Width + uScript.Instance.NodeWindowRect.width / 2.0f), (int)(canvasY + uScript.Instance.NodeWindowRect.height / 2.0f));
-//                              m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode(scriptName));
+//                              Debug.Log("FIX THIS\n");
+                              //float canvasX = _mouseRegionRect[MouseRegion.Canvas].x;
+                              //float canvasY = _mouseRegionRect[MouseRegion.Canvas].y;
+                              //m_ScriptEditorCtrl.ContextCursor = new Point((int)(canvasX - _guiPanelPalette_Width + uScript.Instance.NodeWindowRect.width / 2.0f), (int)(canvasY + uScript.Instance.NodeWindowRect.height / 2.0f));
+                              m_ScriptEditorCtrl.ContextCursor = new Point((int) (uScript.Instance.NodeWindowRect.width / 2), (int) (uScript.Instance.NodeWindowRect.height / 2));                              
+                              m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode(scriptName));
                            }
                         }
                      }
