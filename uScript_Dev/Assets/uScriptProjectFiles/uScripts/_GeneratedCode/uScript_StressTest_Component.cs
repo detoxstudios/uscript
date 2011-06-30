@@ -1,7 +1,8 @@
-//uScript Generated Code - Build 0.4.110530a
+//uScript Generated Code - Build 0.6.0905
 using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("uScript/Graphs/uScript_StressTest")]
 public class uScript_StressTest_Component : uScriptCode
 {
    #pragma warning disable 414
@@ -12,6 +13,10 @@ public class uScript_StressTest_Component : uScriptCode
    {
       uScript = ScriptableObject.CreateInstance(typeof(uScript_StressTest)) as uScript_StressTest;
       uScript.SetParent( this.gameObject );
+   }
+   void Start( )
+   {
+      uScript.Start( );
    }
    void Update( )
    {
@@ -32,11 +37,6 @@ public class uScript_StressTest_Component : uScriptCode
    #if UNITY_EDITOR
       void OnDrawGizmos( )
       {
-         GameObject gameObject;
-         
-         gameObject = GameObject.Find( "_uScript" ); 
-         if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_events.png");
-         
       }
    #endif
 }
