@@ -51,6 +51,8 @@ public class uScript : EditorWindow
    private bool m_WantsPaste = false;
    private bool m_WantsClose = false;
 
+   private bool m_RebuildWhenReady = false;
+
    private String m_AddVariableNode = "";
    private KeyCode m_PressedKey = KeyCode.None;
    
@@ -420,6 +422,21 @@ http://uscript.net
       if ( true == CodeValidator.RequireRebuild(m_ForceCodeValidation) )
       {
          RebuildAllScripts( );
+      }
+
+      //rebuild was requested but we have to wait until the editor
+      //is done compiling so it properly reflects everything
+      if ( true == m_RebuildWhenReady && false == EditorApplication.isCompiling )
+      {         
+         //now build any scripts which are used as nested nodes
+         //when these are done we will then build any scripts which references these
+         //see the m_DoRebuildScripts below
+         AssetDatabase.StartAssetEditing( );
+            RebuildScripts( Preferences.UserScripts );
+         AssetDatabase.StopAssetEditing( );
+         AssetDatabase.Refresh();
+
+         m_RebuildWhenReady = false;
       }
 
       if ( true == m_SelectAllNodes )
@@ -3178,13 +3195,7 @@ http://uscript.net
       AssetDatabase.StopAssetEditing( );
       AssetDatabase.Refresh();
 
-      //now build any scripts which are used as nested nodes
-      //when these are done we will then build any scripts which references these
-      //see the m_DoRebuildScripts below
-      AssetDatabase.StartAssetEditing( );
-         RebuildScripts( Preferences.UserScripts );
-      AssetDatabase.StopAssetEditing( );
-      AssetDatabase.Refresh();
+      m_RebuildWhenReady = true;
    }
 
    public void RebuildScripts( string path )
