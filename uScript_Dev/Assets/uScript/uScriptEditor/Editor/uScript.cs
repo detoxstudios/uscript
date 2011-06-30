@@ -14,7 +14,7 @@ using Detox.FlowChart;
 public class uScript : EditorWindow
 {
                                            //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string    uScriptBuild           { get { return "0.6.0936(RC1)"; } }
+   public string    uScriptBuild           { get { return "0.6.0937(RC1)"; } }
    public string    RequiredUnityBuild     { get { return "3.3"; } }
    public string    RequiredUnityBetaBuild { get { return "3.4"; } }
    public DateTime  ExpireDate             { get { return new DateTime( 2011, 7, 18 ); } }
@@ -2378,7 +2378,7 @@ Vector2 _scrollNewProperties;
       {
          string helpDescription     = "Select a node on the canvas to view usage and behavior information.";
          string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
-         string helpButtonURL       = "http://www.uscript.net/wiki/";
+         string helpButtonURL       = "http://www.uscript.net/docs/";
 
          if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
          {
