@@ -794,44 +794,44 @@ http://uscript.net
             case EventType.ValidateCommand:
                if ( Event.current.commandName == "Copy" )
                {
-                  if ( m_ScriptEditorCtrl.CanCopy )
+                  if ( m_ScriptEditorCtrl.CanCopy && "MainView" == GUI.GetNameOfFocusedControl( ) )
                   {
                      Event.current.Use( );
                   }
                }
                else if ( Event.current.commandName == "Cut" )
                {
-                  if ( m_ScriptEditorCtrl.CanCopy )
+                  if ( m_ScriptEditorCtrl.CanCopy && "MainView" == GUI.GetNameOfFocusedControl( )  )
                   {
                      Event.current.Use( );
                   }
                }
-               else if ( Event.current.commandName == "Paste" )
+               else if ( Event.current.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl( )  )
                {
                   if ( m_ScriptEditorCtrl.CanPaste )
                   {
                      Event.current.Use( );
                   }
                }
-               else if ( Event.current.commandName == "SelectAll" )
+               else if ( Event.current.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl( )  )
                {
                   Event.current.Use( );
                }
                break;
             case EventType.ExecuteCommand:
-               if ( Event.current.commandName == "Copy" )
+               if ( Event.current.commandName == "Copy" && "MainView" == GUI.GetNameOfFocusedControl( )  )
                {
                   m_WantsCopy = true;
                }
-               else if ( Event.current.commandName == "Cut" )
+               else if ( Event.current.commandName == "Cut" && "MainView" == GUI.GetNameOfFocusedControl( )  )
                {
                   m_WantsCut = true;
                }
-               else if ( Event.current.commandName == "Paste" )
+               else if ( Event.current.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl( )  )
                {
                   m_WantsPaste = true;
                }
-               else if ( Event.current.commandName == "SelectAll" )
+               else if ( Event.current.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl( )  )
                {
                   m_SelectAllNodes = true;
                }
