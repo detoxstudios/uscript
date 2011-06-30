@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Randomly sets the value of a Color variable.")]
 [NodeDescription("Randomly sets the value of a Color variable.\n \nR Min: Minimum allowable Red component value for the random color.\nR Max: Maximum allowable Red component value for the random color.\nG Min: Minimum allowable Green component value for the random color.\nG Max: Maximum allowable Green component value for the random color.\nB Min: Minimum allowable Blue component value for the random color.\nB Max: Maximum allowable Blue component value for the random color.\nA Min: Minimum allowable Alpha component value for the random color.\nA Max: Maximum allowable Alpha component value for the random color.\nSeed: Seed value for the random number generator.\nTarget Color (out): The random color that has been set.\n")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Random_Color")]
 
 [FriendlyName("Set Random Color")]
 public class uScriptAct_SetRandomColor : uScriptLogic

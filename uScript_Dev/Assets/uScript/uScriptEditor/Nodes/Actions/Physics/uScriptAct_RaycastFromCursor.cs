@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Cast a ray from the Mouse Cursor into the scene.")]
 [NodeDescription("Cast a ray from the Mouse Cursor into the scene, determines if anything was hit along the way, and fires the associated output link.\n\nCamera: The Camera GameObject to cast the ray from. \nDistance: How far out to cast the ray. \nLayer Mask: A Layer mask that is used to selectively ignore colliders when casting a ray.\nHit GameObject: The first GameObject that was hit by the raycast (if any).\nHit Distance: The distance along the ray that the hit occured (if any).\nHit Location: The position of the hit (if any).\nHit Normal: The surface normal of the hit (if any).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Raycast_From_Mouse_Cursor")]
 
 [FriendlyName("Raycast From Mouse Cursor")]
 public class uScriptAct_RaycastFromCursor : uScriptLogic

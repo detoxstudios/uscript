@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when a post-effect is rendered.\n \nSource Texture: The source texture used in the post-effect.\nDestination Texture: The destination texture used in the post-effect.")]
 [NodeDescription("Fires an event signal when a post-effect is rendered.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Post_Effect_Events")]
 
 [FriendlyName("Post Effect Events")]
 public class uScript_PostEffect : uScriptEvent

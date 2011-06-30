@@ -12,7 +12,7 @@ using System.Collections;
 [NodeToolTip("Returns True or False if collisions are being ignored between Layer A and Layer B.")]
 [NodeDescription("Returns True or False if collisions are being ignored between Layer A and Layer B.\n\nLayer A: The first layer.\nLayer B: The second layer.\nResult: True = collisions are being ignored between the layers, False = collisions are NOT being ignored between the layers.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Check_Layer_Collision")]
 
 [FriendlyName("Check Layer Collision")]
 public class uScriptAct_CheckLayerCollision : uScriptLogic

@@ -14,7 +14,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when Instance receives a custom event with a Vector2.")]
 [NodeDescription("Fires an event signal when Instance receives a custom event with a Vector2.\n \nSender: The GameObject that sent this event (if available).\nEvent Name: The name of the custom event.\nEvent Data: The variable that was sent with this event.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Custom_Event_.28Vector2.29")]
 
 [FriendlyName("Custom Event (Vector2)")]
 public class uScript_CustomEventVector2 : uScriptEvent

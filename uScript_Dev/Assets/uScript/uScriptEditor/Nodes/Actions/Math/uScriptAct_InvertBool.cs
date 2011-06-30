@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Inverse a boolean variable to its opposite value.")]
 [NodeDescription("Inverse a boolean variable to its opposite value.\n \nTarget: Value to invert.\nValue (out): Inverted value (true -> false or false -> true).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Invert_Bool")]
 
 [FriendlyName("Invert Bool")]
 public class uScriptAct_InvertBool : uScriptLogic

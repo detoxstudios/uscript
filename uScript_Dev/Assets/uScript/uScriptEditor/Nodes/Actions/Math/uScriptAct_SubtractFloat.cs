@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Subtracts two float variables and returns the result.")]
 [NodeDescription("Subtracts two float variables and returns the result.\n \nA: The floating point number to subtract from.\nB: The floating point number to subtract from A.\nResult (out): The floating point result of the subtraction operation.\nInt Result (out): The integer result of the subtraction operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Subtract_Float")]
 
 [FriendlyName("Subtract Float")]
 public class uScriptAct_SubtractFloat : uScriptLogic

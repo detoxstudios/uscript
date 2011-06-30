@@ -12,7 +12,7 @@ using System.Collections;
 [NodeToolTip("Applies an Add Torque to the specified GameObject.")]
 [NodeDescription("Applies an Add Torque to the specified GameObject. Target must have a Rigid Body Component in order to recieve a force\n \nTarget: GameObject to apply the force to.\nForce: The force to apply to the Target. The force is a Vector3, so it defines both the direction and magnitude of the force.\nScale: A scale to multiply to the force (force x scale).\nUse ForceMode: The force being applied will use the object's mass.\nForceMode Type: Specifies the ForceMode to use if Use ForceMode is set to true.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Add_Torque")]
 
 [FriendlyName("Add Torque")]
 public class uScriptAct_AddTorque : uScriptLogic

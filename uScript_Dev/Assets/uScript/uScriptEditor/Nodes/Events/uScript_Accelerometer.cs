@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when an accelerometer event happens.")]
 [NodeDescription("Fires an event signal when an accelerometer event happens.\n \nAcceleration (out): The accelerometer value of this event.\nDelta Time (out): Amount of time (in seconds) that has passed since the last acceleraton measurement.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Accelerometer_Events")]
 
 [FriendlyName("Accelerometer Events")]
 public class uScript_Accelerometer : uScriptEvent

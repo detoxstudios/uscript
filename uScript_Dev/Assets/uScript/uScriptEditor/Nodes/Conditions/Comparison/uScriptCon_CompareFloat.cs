@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Fires the appropriate output link(s) depending on the comparison of the attached float variables.")]
 [NodeDescription("Fires the appropriate output link(s) depending on the comparison of the attached float variables.\n \nA: First float value to compare.\nB: Second float value to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Compare_Float")]
 
 [FriendlyName("Compare Float")]
 public class uScriptCon_CompareFloat : uScriptLogic

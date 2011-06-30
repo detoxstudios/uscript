@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Gets the scale of a GameObject as both a Vector3 and X, Y and Z float variables.")]
 [NodeDescription("Gets the scale of a GameObject as both a Vector3 and X, Y and Z float variables.\n \nTarget: The Target GameObject you wish to get the scale of.\nScale: Returns the scale as a Vector3(X, Y, Z).\nX: Returns the X axis scale as a float.\nY: Returns the Y axis scale as a float.\nZ: Returns the Z axis scale as a float.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Scale")]
 
 [FriendlyName("Get Scale")]
 public class uScriptAct_GetGameObjectScale : uScriptLogic

@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Switches from 'From Camera' to 'To Camera'.")]
 [NodeDescription("Disables the 'From' GameObject camera and enables the 'To' GameObject camera. Good for switching from one main camera to another.\n\n\tFrom: The GameObject containing the camera to switch from.\n\n\tTo: The GameObject containing the camera to switch to.\n\n\tEnable AudioListener: Whether or not to enable the 'To' camera's AudioListener component (if it has one).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Switch_Cameras")]
 
 [FriendlyName("Switch Cameras")]
 public class uScriptAct_SwitchCameras : uScriptLogic

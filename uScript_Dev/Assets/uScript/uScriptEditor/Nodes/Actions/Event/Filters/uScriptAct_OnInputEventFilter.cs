@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip( "Filters the On Input Event output from the Input Events node to a specific input (key, mouse, joystick) pressed down, held, or released.")]
 [NodeDescription("Filters the On Input Event output from the Input Events node to a specific input (key, mouse, joystick) pressed down, held, or released.\n \nKey Code: The key to listen for events from.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Input_Events_Filter")]
 
 [FriendlyName("Input Events Filter")]
 public class uScriptAct_OnInputEventFilter : uScriptLogic

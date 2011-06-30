@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets the current enabled state the GUI.")]
 [NodeDescription("Sets the current enabled state the GUI.\n \nEnabled: Whether or not the current GUI should use the enabled state.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Set_Enabled_State")]
 
 [FriendlyName("GUI Set Enabled State")]
 public class uScriptAct_GUISetEnabledState : uScriptLogic

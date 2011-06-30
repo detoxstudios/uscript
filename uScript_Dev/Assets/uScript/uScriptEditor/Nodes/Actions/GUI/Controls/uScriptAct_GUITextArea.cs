@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Shows a GUITextArea on the screen and allows getting/setting of its string contents and repsonses to changed event.")]
 [NodeDescription("Shows a GUITextArea on the screen and allows getting/setting of its string contents and repsonses to changed event.\n \nValue (in/out): The value of this text area.\nPosition: The position and size of the text area.\nMax Length: The maximum allowable string length for this text area.\nControl Name: Name to give to this text area GUI control.\nGUI Style: The name of a custom GUI style to use when displaying this text aera.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Text_Area")]
 
 [FriendlyName("GUI Text Area")]
 public class uScriptAct_GUITextArea : uScriptLogic

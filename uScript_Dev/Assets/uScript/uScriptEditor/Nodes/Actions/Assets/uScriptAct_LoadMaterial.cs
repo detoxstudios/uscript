@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Loads an image file into a Texture2D")]
 [NodeDescription("Loads an image file into a Texture2D variable from your Resources directory.\n \nName: The texture file to load. \nLoaded Material (out): The material loaded from the specified file name.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_Material")]
 
 [FriendlyName("Load Material")]
 public class uScriptAct_LoadMaterial : uScriptLogic

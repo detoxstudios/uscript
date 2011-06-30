@@ -14,7 +14,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when various global events (Update, LateUpdate, and FixedUpdate) take place.")]
 [NodeDescription("Fires an event signal when various global events (Update, LateUpdate, and FixedUpdate) take place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Global_Update")]
 
 [FriendlyName("Global Update")]
 public class uScript_Update : uScriptEvent

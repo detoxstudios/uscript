@@ -13,7 +13,7 @@ using System.Collections;
                  "Unload Others: Whether or not to destroy the other objects in the scene.\n" + 
                  "Block Until Loaded: Halt execution of the game until the level has loaded.  (Requires Unity Pro if set to false).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_Level")]
 
 [FriendlyName("Load Level")]
 public class uScriptAct_LoadLevel : uScriptLogic

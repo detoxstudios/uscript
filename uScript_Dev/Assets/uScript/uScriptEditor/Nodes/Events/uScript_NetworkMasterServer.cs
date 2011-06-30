@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when a master server event takes place.\n \nMaster Server Event (out): Describes status messages from the master server.")]
 [NodeDescription("Fires an event signal when a master server event takes place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Network_Master_Server")]
 
 [FriendlyName("Network Master Server")]
 public class uScript_NetworkMasterServer : uScriptEvent

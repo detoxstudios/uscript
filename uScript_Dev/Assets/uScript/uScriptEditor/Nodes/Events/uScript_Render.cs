@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when various render events (Pre Cull, Pre Render, Post Render, Render Object, and Will Render Object) take place.")]
 [NodeDescription("Fires an event signal when various render events (Pre Cull, Pre Render, Post Render, Render Object, and Will Render Object) take place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Render_Events")]
 
 [FriendlyName("Render Events")]
 public class uScript_Render : uScriptEvent

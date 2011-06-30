@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.")]
 [NodeDescription("Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.\n \nFinger ID (out): ID of this Touch event.\nPosition (out): 2D screen position where the Touch event occured.\nDelta Position (out): Change in position of the Touch event.\nDelta Time (out): Amount of time (in seconds) that has passed since the last state change.\nTap Count (out): iOS - how many times the user has tapped the screen without moving away from the original tap spot. Android - unsupported, this is always 1.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Touch_Events")]
 
 [FriendlyName("Touch Events")]
 public class uScript_Touch : uScriptEvent

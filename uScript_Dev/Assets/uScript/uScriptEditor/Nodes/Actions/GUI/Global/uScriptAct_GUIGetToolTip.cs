@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Gets the tooltip of the control that is currently being hovered over with the cursor.")]
 [NodeDescription("Gets the tooltip of the control that is currently being hovered over with the cursor.\n \nTool Tip (out): The tooltip of the control that is currently being hovered over with the cursor.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Get_Tool_Tip")]
 
 [FriendlyName("GUI Get Tool Tip")]
 public class uScriptAct_GUIGetToolTip : uScriptLogic

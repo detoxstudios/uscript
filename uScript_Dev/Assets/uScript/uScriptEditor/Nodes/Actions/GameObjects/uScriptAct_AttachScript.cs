@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Attaches a script component to a GameObject.")]
 [NodeDescription("Attaches a script component to a GameObject.\n \nTarget: The GameObject(s) to attach the script to.\nScript Name: The name of the script to attach to the specified object(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Attach_Script")]
 
 [FriendlyName("Attach Script")]
 public class uScriptAct_AttachScript : uScriptLogic

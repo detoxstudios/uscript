@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Multiplies two integer variables together and returns the result.")]
 [NodeDescription("Multiplies two integer variables together and returns the result.\n \nA: First integer to multiply. If more than one integer variable is connected to A, they will be multiplied together before being multiplied B.\nB: Second integer to multiply. If more than one integer variable is connected to B, they will be multiplied together before being multiplied A.\nResult (out): Integer result of the multiplication operation.\nFloat Result (out): Floating point result of the multiplication operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Multiply_Int")]
 
 [FriendlyName("Multiply Int")]
 public class uScriptAct_MultiplyInt : uScriptLogic

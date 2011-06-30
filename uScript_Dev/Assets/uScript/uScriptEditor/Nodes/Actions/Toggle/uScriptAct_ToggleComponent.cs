@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Toggles the active state of a component on the Target GameObjects.")]
 [NodeDescription("Toggles the active state of a component on the Target GameObjects. Ignores GameObjects missing the specified component.\n \nTarget: The Target GameObject(s) to toggle component state on.\nComponent Name: The name of the component to toggle.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Toggle_Component")]
 
 [FriendlyName("Toggle Component")]
 public class uScriptAct_ToggleComponent : uScriptLogic

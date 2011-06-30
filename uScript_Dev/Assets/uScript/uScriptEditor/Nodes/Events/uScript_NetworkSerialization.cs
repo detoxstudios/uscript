@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when network serialization takes place.\n \nBitStream: The serialized data.\nNetwork Message Info (out): Contains information about the network serialization.")]
 [NodeDescription("Fires an event signal when network serialization takes place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Network_Serialization")]
 
 [FriendlyName("Network Serialization")]
 public class uScript_NetworkSerialization : uScriptEvent

@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Gets the current tint color for the GUI.")]
 [NodeDescription("Gets the current tint color for the GUI.\n \nColor (out): The current color that the GUI is tinted with.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Get_Color")]
 
 [FriendlyName("GUI Get Color")]
 public class uScriptAct_GUIGetColor : uScriptLogic

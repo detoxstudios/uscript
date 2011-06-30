@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when the screen orientation of a device happens. Supported events: Device Portrait, Device Portrait Upside-Down, Device Landscape Left, Device Landscape Right, Device Face Up, Device Face Down.")]
 [NodeDescription("Fires an event signal when the screen orientation of a device happens. Supported events: Device Portrait, Device Portrait Upside-Down, Device Landscape Left, Device Landscape Right, Device Face Up, Device Face Down.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Device_Orientation_Events")]
 
 [FriendlyName("Device Orientation Events")]
 public class uScript_DeviceOrientation : uScriptEvent

@@ -14,7 +14,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when Instance receives a standard custom event.")]
 [NodeDescription("Fires an event signal when Instance receives a standard custom event.\n \nSender: The GameObject that sent this event (if available).\nEvent Name: The name of the custom event.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Custom_Event")]
 
 [FriendlyName("Custom Event")]
 public class uScript_CustomEvent : uScriptEvent

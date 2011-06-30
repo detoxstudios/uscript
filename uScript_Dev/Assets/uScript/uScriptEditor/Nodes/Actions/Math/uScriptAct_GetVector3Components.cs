@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Gets the components of a Vector3 as floats.")]
 [NodeDescription("Gets the components of a Vector3 as floats.\n \nInput Vector3: The input vector to get components of.\nX: The x value of the Input Vector3.\nY: The y value of the Input Vector3.\nZ: The z value of the Input Vector3.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Vector3_Components")]
 
 [FriendlyName("Get Vector3 Components")]
 public class uScriptAct_GetVector3Components : uScriptLogic

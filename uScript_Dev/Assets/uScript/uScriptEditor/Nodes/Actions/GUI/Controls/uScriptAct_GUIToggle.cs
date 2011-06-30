@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Shows a GUIToggle on the screen and allows responses when changed.")]
 [NodeDescription("Shows a GUIToggle on the screen and allows responses when changed.\n \nValue (in/out): The value of this toggle.\nText: The text you want to display with the toggle. \nPosition: The position and size of the toggle.\nTexture: The background image to use for the toggle.\nControl Name: Name to give to this toggle GUI control.\nTool Tip: The tool tip to display when the toggle is being hovered over.\nGUI Style: The name of a custom GUI style to use when displaying this toggle.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Toggle")]
 
 [FriendlyName("GUI Toggle")]
 public class uScriptAct_GUIToggle : uScriptLogic

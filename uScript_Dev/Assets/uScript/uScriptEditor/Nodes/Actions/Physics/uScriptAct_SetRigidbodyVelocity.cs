@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets the velocity of a GameObject's Rigidbody as a Vector3.")]
 [NodeDescription("Sets the velocity of a GameObject's Rigidbody as a Vector3.\n \nTarget: GameObject(s) to set the velocity of.\nVelocity: The velocity to give to the rigidbody component attached to the Target GameObject(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Rigidbody_Velocity")]
 
 [FriendlyName("Set Rigidbody Velocity")]
 public class uScriptAct_SetRigidbodyVelocity : uScriptLogic

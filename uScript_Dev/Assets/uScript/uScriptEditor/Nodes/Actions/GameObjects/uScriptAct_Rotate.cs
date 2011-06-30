@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Rotates the target GameObject by a number of degrees over X seconds.")]
 [NodeDescription("Rotates the target GameObject by a number of degrees over X seconds.\n \nTarget: The Target GameObject(s) to rotate.\nDegrees: The number of degrees to rotate.\nAxis: The axis to rotate around.\nSeconds: The number of seconds to complete the full rotation.\nLoop: Whether or not to loop the rotation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Rotate")]
 
 [FriendlyName("Rotate")]
 public class uScriptAct_Rotate : uScriptLogic

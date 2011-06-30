@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets a boolean to the defined value.")]
 [NodeDescription("Sets a boolean to the defined value.\n \nTarget (out): The value that has been set for this variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Bool")]
 
 [FriendlyName("Set Bool")]
 public class uScriptAct_SetBool : uScriptLogic

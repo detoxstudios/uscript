@@ -12,7 +12,7 @@ using System.Collections;
 [NodeToolTip("Compares the unique InstanceID of the attached GameObject variables and outputs accordingly.")]
 [NodeDescription("Compares the unique InstanceID of the attached GameObject variables and outputs accordingly. Optionally you can compare by a GameObject's tag.\n \nA: The first GameObject to compare.\nB: The seconds GameObject to compare.\nCompare By Tag: Whether or not to compare the GameObjects' tags instead of the objects themselves.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Compare_GameObjects")]
 
 [FriendlyName("Compare GameObjects")]
 public class uScriptCon_CompareGameObjects : uScriptLogic

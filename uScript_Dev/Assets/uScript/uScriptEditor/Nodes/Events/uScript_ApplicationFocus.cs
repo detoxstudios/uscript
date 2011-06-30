@@ -14,7 +14,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when the application's focus state changes.")]
 [NodeDescription("Fires an event signal when the application's focus state changes.\n \nHas Focus: Whether the application gained or lost focus.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Application_Focus")]
 
 [FriendlyName("Application Focus")]
 public class uScript_ApplicationFocus : uScriptEvent

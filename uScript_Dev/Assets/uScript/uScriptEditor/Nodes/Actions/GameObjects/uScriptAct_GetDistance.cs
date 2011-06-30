@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Returns the distance between two GameObjects as a float.")]
 [NodeDescription("Returns the distance between two GameObjects as a float.\n \nA: The first GameObject.\nB: The second GameObject.\nDistance (out): The distance between GameObjects A and B.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Distance")]
 
 [FriendlyName("Get Distance")]
 public class uScriptAct_GetDistance : uScriptLogic

@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip( "Divides two integer variables and returns the result.")]
 [NodeDescription("Divides two integer variables and returns the result.\n \nA: The integer numerator.\nB: The integer denominator.\nResult (out): The integer result of the division operation.\nFloat Result (out): The floating point result of the division operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Divide_Int")]
 
 [FriendlyName("Divide Int")]
 public class uScriptAct_DivideInt : uScriptLogic

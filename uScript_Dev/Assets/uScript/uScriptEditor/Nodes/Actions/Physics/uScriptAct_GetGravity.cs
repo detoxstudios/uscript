@@ -12,7 +12,7 @@ using System.Collections;
 [NodeToolTip("Gets the current gravity as a Vector3.")]
 [NodeDescription("Gets the current gravity as a Vector3.\n\nGravity: Returns the current gravity value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Gravity")]
 
 [FriendlyName("Get Gravity")]
 public class uScriptAct_GetGravity : uScriptLogic

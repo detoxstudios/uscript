@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when a GameObject enters, exits, or stays in a trigger.\n \nInstigator: The GameObject that interacted with the trigger (Instance).")]
 [NodeDescription("Fires an event signal when a GameObject enters, exits, or stays in a trigger.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Trigger_Events")]
 
 [NodePropertiesPath("Properties/Triggers")]
 [FriendlyName("Trigger Events")]

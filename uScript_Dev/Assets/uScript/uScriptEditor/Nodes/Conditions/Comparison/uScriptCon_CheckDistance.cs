@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Checks the distance of two GameObjects against a specified distance.")]
 [NodeDescription("Checks the distance of two GameObjects against a specified distance and fires the appropriate output.\n \nA: First GameObject to compare distance between.\nB: Second GameObject to compare distance between.\nDistance: Distance to compare the distance between A and B with.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Check_Distance")]
 
 [FriendlyName("Check Distance")]
 public class uScriptCon_CheckDistance : uScriptLogic

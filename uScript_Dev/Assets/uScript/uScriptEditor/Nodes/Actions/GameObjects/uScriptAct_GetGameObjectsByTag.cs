@@ -12,7 +12,7 @@ using System.Collections.Generic;
 [NodeToolTip("Returns the GameObjects in the scene with the specified tag.")]
 [NodeDescription("Returns the GameObjects in the scene with the specified tag. The \"Found\" output socket will be triggered if at least one child GameObject matching the tag is found, otherwise the \"Not Found\" output socket will be triggered.\n\nVariable Sockets:\n\tTag (In): The tag name of the GameObjects you are looking for.\n\tFirst GameObject (Out): The first GameObject in the list of GameObjects.\n\tGameObjects (Out): Assigns found GameObjects to the attached variable\n\tGameObject Count (Out): Sets the total number of GameObjects found to the attached variable\n\nOutput Sockets:\n\tOut: The standard output socket (always fired).\n\tFound: Fired once if at least one GameObject is found.\n\tNot Found: Fired once if no GameObject is found.\n")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_GameObjects_By_Tag")]
 
 [FriendlyName("Get GameObjects By Tag")]
 public class uScriptAct_GetGameObjectsByTag : uScriptLogic

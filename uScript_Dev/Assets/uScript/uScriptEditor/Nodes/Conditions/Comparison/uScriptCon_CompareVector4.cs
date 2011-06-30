@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Compares two Vector4 variables and outputs accordingly.")]
 [NodeDescription("Compares two Vector4 variables and outputs accordingly.\n \nA: First Vector4 to compare.\nB: Second Vector4 to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Compare_Vector4")]
 
 [FriendlyName("Compare Vector4")]
 public class uScriptCon_CompareVector4 : uScriptLogic

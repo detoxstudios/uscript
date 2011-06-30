@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Create the inverse of characters in a string.")]
 [NodeDescription("Create the inverse of characters in a string.\n \nTarget: Value to invert.\nValue (out): Inverted value ('ABCDE123' -> '321EDCBA').")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Invert_String")]
 
 [FriendlyName("Invert String")]
 public class uScriptAct_InvertString : uScriptLogic

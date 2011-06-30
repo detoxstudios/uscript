@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets a Vector2 to the defined X and Y float component values.")]
 [NodeDescription("Sets a Vector2 to the defined X and Y float component values.\n \nX: X value to use for the Output Vector.\nY: Y value to use for the Output Vector.\nOutput Vector2 (out): Vector2 variable built from the specified X and Y.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Vector2_Components")]
 
 [FriendlyName("Set Vector2 Components")]
 public class uScriptAct_SetVector2Components : uScriptLogic

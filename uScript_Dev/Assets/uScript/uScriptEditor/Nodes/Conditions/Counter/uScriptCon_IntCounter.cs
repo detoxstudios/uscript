@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Increments the first attached integer variable and then performs a comparison with the second attached integer variable and fires the appropriate output link based on that comparison.")]
 [NodeDescription("Increments the first attached integer variable and then performs a comparison with the second attached integer variable and fires the appropriate output link based on that comparison.\n \nA: Variable to increment.\nB: Variable to compare with incremented variable.\nCurrent Value: Value of A after increment has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Int_Counter")]
 
 [FriendlyName("Int Counter")]
 public class uScriptCon_IntCounter : uScriptLogic

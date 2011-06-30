@@ -14,7 +14,7 @@ using System.Collections;
 [NodeToolTip("Fires GUI-related events.")]
 [NodeDescription("Fires GUI-related events.\n \nGUI Changed: Whether or not one of the GUI controls currently displayed had its content data changed. NOTE: This is not control-specific, it is global.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Events")]
 
 [FriendlyName("GUI Events")]
 public class uScript_GUI : uScriptEvent

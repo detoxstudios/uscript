@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets the value of a Vector2 variable using the value of another Vector2 variable.")]
 [NodeDescription("Sets the value of a Vector2 variable using the value of another Vector2 variable.\n \nValue: The Vector2 variable to be set.\nTarget Vector2 (out): The value that has been set for this variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Vector2")]
 
 [FriendlyName("Set Vector2")]
 public class uScriptAct_SetVector2 : uScriptLogic

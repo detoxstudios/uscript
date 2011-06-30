@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Mirrors the X and Y of a Vector2.")]
 [NodeDescription("Mirrors the X and Y of a Vector2.\n \nTarget: Value to invert.\nIgnore X: Whether or not to mirror the X component of the Target.\nIgnore Y: Whether or not to mirror the Y component of the Target.\nValue (out): Inverted value ([x, y] -> [-x, -y]).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Invert_Vector2")]
 
 [FriendlyName("Invert Vector2")]
 public class uScriptAct_InvertVector2 : uScriptLogic

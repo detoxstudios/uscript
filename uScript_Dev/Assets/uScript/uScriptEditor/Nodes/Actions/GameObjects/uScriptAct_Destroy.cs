@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Destroys the target GameObject.")]
 [NodeDescription("Destroys the target GameObject.\n \nTarget: The target GameObject(s) to destroy.\nDelay: The time to wait before destroying the target object(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Destroy")]
 
 [FriendlyName("Destroy")]
 public class uScriptAct_Destroy : uScriptLogic

@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Assigns the Material color of the target GameObject on the specifed material channel.")]
 [NodeDescription("Assigns the Material color of the target GameObject on the specifed material channel.\n \nTarget: The GameObject(s) to assign the material color to.\nColor: The material color to assign to the Target object(s).\nMaterial Channel: The material channel of the object to assign the material color to.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Assign_Material_Color")]
 
 [FriendlyName("Assign Material Color")]
 public class uScriptAct_AssignMaterialColor : uScriptLogic

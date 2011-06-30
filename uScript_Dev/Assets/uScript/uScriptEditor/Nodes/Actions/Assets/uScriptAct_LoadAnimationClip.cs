@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Loads an AnimationClip")]
 [NodeDescription("Loads an AnimationClip from your Resources directory.\n \nAnimation Clip: The audio file to load. \nLoaded AnimationClip (out): The AnimationClip loaded from the specified file.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_AnimationClip")]
 
 [FriendlyName("Load AnimationClip")]
 public class uScriptAct_LoadAnimationClip : uScriptLogic

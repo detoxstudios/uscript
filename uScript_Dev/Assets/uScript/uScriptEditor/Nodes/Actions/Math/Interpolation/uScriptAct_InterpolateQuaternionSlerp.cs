@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Spherical Linear Interpolation of a Quaternion over time.")]
 [NodeDescription("Spherical Linear Interpolation of a Quaternion over time.\n \nStart Value: Starting value to interpolate from.\nEnd Value: Ending value to interpolate to.\nTime: Time to take to complete the interpolation (in seconds).\nLoop Type: The type of looping to use (available values are None, Repeat, and PingPong).\nLoop Delay: Time delay (in seconds) between loops.\nLoop Count: Number of times to loop. For infinite looping, use -1 or connect the out socket of this node to its own in and use any positive value.\nOutput Value (out): Current interpolated value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Interpolate_Quaternion_Slerp")]
 
 [FriendlyName("Interpolate Quaternion Slerp")]
 public class uScriptAct_InterpolateQuaternionSlerp : uScriptLogic

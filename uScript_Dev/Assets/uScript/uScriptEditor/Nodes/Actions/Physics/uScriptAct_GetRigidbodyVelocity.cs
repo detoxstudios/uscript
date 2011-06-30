@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Gets the velocity of a GameObject's Rigidbody as a Vector3.")]
 [NodeDescription("Gets the velocity of a GameObject's Rigidbody as a Vector3. If Target does not have a rigidbody component, will return Vector3.zero.\n \nTarget: GameObject to get the velocity of.\nVelocity (out): The velocity of the rigidbody component attached to Target.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Rigidbody_Velocity")]
 
 [FriendlyName("Get Rigidbody Velocity")]
 public class uScriptAct_GetRigidbodyVelocity : uScriptLogic

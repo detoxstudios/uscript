@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Returns the distance between two Vector4 locations as a float.")]
 [NodeDescription("Returns the distance between two Vector4 locations as a float.\n \nA: The first Vector4.\nB: The second Vector4.\nDistance (out): The distance between the A and B vectors.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Vector4_Distance")]
 
 [FriendlyName("Get Vector4 Distance")]
 public class uScriptAct_GetVector4Distance : uScriptLogic

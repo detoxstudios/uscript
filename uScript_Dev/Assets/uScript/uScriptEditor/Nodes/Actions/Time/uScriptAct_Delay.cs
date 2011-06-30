@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip( "Delays execution of a script.")]
 [NodeDescription("Delays execution of a script but can also fire off an immediate response.\n \nDuration: Amount of time (in seconds) to delay.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://uscript.net/manual/node_delay.html")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Delay")]
 
 [FriendlyName("Delay")]
 public class uScriptAct_Delay : uScriptLogic

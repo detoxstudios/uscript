@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when various GameObject visibility events (Became Visible, Became Invisible) take place.")]
 [NodeDescription("Fires an event signal when various GameObject visibility events (Became Visible, Became Invisible) take place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Visibility_Events")]
 
 [FriendlyName("Visibility Events")]
 public class uScript_Visibility : uScriptEvent

@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets the Target GameObject's camera's depth to the specified float value.")]
 [NodeDescription("Sets the Target GameObject's camera's depth to the specified float value.\n \nTarget: The GameObject whose camera to set the depth of.\nDepth: The new depth of the specified GameObject's camera.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Camera_Depth")]
 
 [FriendlyName("Set Camera Depth")]
 public class uScriptAct_SetCameraDepth : uScriptLogic

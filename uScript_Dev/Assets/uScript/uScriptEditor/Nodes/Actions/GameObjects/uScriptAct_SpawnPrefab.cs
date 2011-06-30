@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Create an instance of a Prefab at the specified spawn point.")]
 [NodeDescription("Create (instantiate) an instance of a Prefab at the specified spawn point GameObject at runtime (must be in the Resources folder structure).\n \nPrefab Name: The name of the prefab to spawn.\nResource Path: The resource path to look in for the prefab.\nSpawn Point: The GameObject to spawn prefab(s) from.\nSpawned Name: The name given to newly spawned prefab(s).\nLocation Offset: The offset from the Spawn Point to spawn prefab(s) from.\nSpawned GameObject (out): The GameObject that gets spawned.\nSpawned InstanceID: The instance ID of the spawned GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Spawn_Prefab")]
 
 [FriendlyName("Spawn Prefab")]
 public class uScriptAct_SpawnPrefab : uScriptLogic

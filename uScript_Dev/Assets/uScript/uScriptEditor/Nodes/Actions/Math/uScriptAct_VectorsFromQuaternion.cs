@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip( "Converts a quaternion into forward and up vectors.")]
 [NodeDescription("Converts a quaternion into forward and up vectors.\n \nResult Quaternion: The quaternion to get the forward and up vectors from.\nForward Vector (out): The forward vector component of the quaternion.\nUp Vector (out): The up vector component of the quaternion.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Vectors_From_Quaternion")]
 
 [FriendlyName("Vectors From Quaternion")]
 public class uScriptAct_VectorsFromQuaternion : uScriptLogic

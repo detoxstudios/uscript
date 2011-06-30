@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Gets the current time scale and delta time (fixed timestep) of the game.")]
 [NodeDescription("Gets the current time scale and delta time (fixed timestep) of the game.\n \nTime Scale (out): The current global time scale.\nFixed Timestep (out): The current global fixed timestep. \nMax Allowed Timestep (out): The current global allowed timestep.\n")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Game_Time")]
 
 [FriendlyName("Get Game Time")]
 public class uScriptAct_GetGameTime : uScriptLogic

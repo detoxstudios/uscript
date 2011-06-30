@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets the value of a Color variable using the value of another Color variable.")]
 [NodeDescription("Sets the value of a Color variable using the value of another Color variable.\n \nValue: The Color variable to be set.\nTarget Color (out): The value that has been set for this variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Color")]
 
 [FriendlyName("Set Color")]
 public class uScriptAct_SetColor : uScriptLogic

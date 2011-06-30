@@ -13,7 +13,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when a particle collides with a GameObject.\n \nInstigator: The GameObject that was collided with.")]
 [NodeDescription("Fires an event signal when a particle collides with a GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Particle_Collision")]
 
 [FriendlyName("Particle Collision")]
 public class uScript_Particle : uScriptEvent

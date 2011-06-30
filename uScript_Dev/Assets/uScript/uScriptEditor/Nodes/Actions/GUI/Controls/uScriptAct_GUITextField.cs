@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Shows a GUITextField on the screen and allows getting/setting of its string contents and repsonses to changed event.")]
 [NodeDescription("Shows a GUITextField on the screen and allows getting/setting of its string contents and repsonses to changed event.\n \nValue (in/out): The value of this text field.\nPosition: The position and size of the text field.\nMax Length: The maximum allowable string length for this text field.\nControl Name: Name to give to this text field GUI control.\nGUI Style: The name of a custom GUI style to use when displaying this text field.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Text_Field")]
 
 [FriendlyName("GUI Text Field")]
 public class uScriptAct_GUITextField : uScriptLogic

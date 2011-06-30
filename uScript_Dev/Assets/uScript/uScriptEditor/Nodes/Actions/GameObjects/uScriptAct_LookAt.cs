@@ -15,7 +15,7 @@ using System.Collections;
                   "Seconds: The amount of time (in seconds) it takes to complete the look.  Use 0 for an instantaneous look.\n")]
 
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Look_At")]
 
 [FriendlyName("Look At")]
 public class uScriptAct_LookAt : uScriptLogic

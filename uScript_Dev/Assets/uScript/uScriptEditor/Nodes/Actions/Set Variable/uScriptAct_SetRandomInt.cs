@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Randomly sets the value of a Int variable.")]
 [NodeDescription("Randomly sets the value of a Int variable.\n \nMin: Minimum allowable integer value.\nMax: Maximum allowable integer value.\nSeed: Seed value for the random number generator.\nTarget Integer (out): The integer value that gets set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Random_Int")]
 
 [FriendlyName("Set Random Int")]
 public class uScriptAct_SetRandomInt : uScriptLogic

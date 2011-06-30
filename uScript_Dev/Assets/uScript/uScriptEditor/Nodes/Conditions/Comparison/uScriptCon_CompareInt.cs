@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Fires the appropriate output link(s) depending on the comparison of the attached integer variables.")]
 [NodeDescription("Fires the appropriate output link(s) depending on the comparison of the attached integer variables.\n \nA: First integer to compare.\nB: Second integer to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Compare_Int")]
 
 [FriendlyName("Compare Int")]
 public class uScriptCon_CompareInt : uScriptLogic

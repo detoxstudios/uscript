@@ -14,7 +14,7 @@ using System.Collections;
 [NodeToolTip("Fires an event signal when a level is finished loading.")]
 [NodeDescription("Fires an event signal when a level is finished loading.\n \nLevel Index: The index of the level that was loaded.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Level_Load")]
 
 [FriendlyName("Level Load")]
 public class uScript_Level : uScriptEvent

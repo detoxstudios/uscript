@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Returns the number of characters in a string as a float, integer, and string.")]
 [NodeDescription("Returns the number of characters in a string as a float, integer, and string.\n \nTarget: The Target string to get the length of.\nInt Value (out): The length of the Target string, expressed as an integer.\nFloat Value (out): The length of the Target string, expressed as a floating point number.\nString Value (out): The length of the Target string, expressed as a string.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_String_Length")]
 
 [FriendlyName("Get String Length")]
 public class uScriptAct_GetStringLength : uScriptLogic

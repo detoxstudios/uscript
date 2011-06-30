@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets the current content tint color for the GUI.")]
 [NodeDescription("Sets the current content tint color for the GUI. NOTE: This color selection only lasts for the current frame or until another color is set.\n \nColor: The color to tint the GUI content objects with.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Set_Content_Color")]
 
 [FriendlyName("GUI Set Content Color")]
 public class uScriptAct_GUISetContentColor : uScriptLogic
