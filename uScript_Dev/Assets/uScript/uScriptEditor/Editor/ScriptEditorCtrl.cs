@@ -1910,6 +1910,11 @@ namespace Detox.ScriptEditor
          addMenu.Size = new System.Drawing.Size(152, 22);
          addMenu.Text = "Add";
 
+
+         BuildAddMenu( addMenu, null );
+
+         //add after the add menu is built so they aren't
+         //included in the sorting
          ToolStripMenuItem comment  = new ToolStripMenuItem();
          ToolStripMenuItem external = new ToolStripMenuItem();
 
@@ -1927,8 +1932,6 @@ namespace Detox.ScriptEditor
 
          addMenu.DropDownItems.Add( comment );
          addMenu.DropDownItems.Add( external );
-
-         BuildAddMenu( addMenu, null );
 
          //see if we can create an automatic link for the user
          foreach ( Node node in m_FlowChart.Nodes )
