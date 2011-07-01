@@ -14,11 +14,11 @@ using Detox.FlowChart;
 public class uScript : EditorWindow
 {
                                            //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string    uScriptBuild           { get { return "0.6.0937(RC1)"; } }
+   public string    uScriptBuild           { get { return "0.9.0944"; } }
    public string    RequiredUnityBuild     { get { return "3.3"; } }
    public string    RequiredUnityBetaBuild { get { return "3.4"; } }
    public DateTime  ExpireDate             { get { return new DateTime( 2011, 7, 18 ); } }
-   public int       EULAVersion            { get { return 20110630; } }
+   public int       EULAVersion            { get { return 20110701; } }
 
    private enum MouseRegion
    {
