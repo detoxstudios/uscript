@@ -229,7 +229,7 @@ This End User License Agreement (""EULA"") is a legal agreement between you (eit
 
 11. Indemnification By You.  If you distribute the Software in violation of this Agreement, you agree to indemnify, hold harmless and defend Detox Studios LLC and its suppliers from and against any claims or lawsuits, including attorney's fees that arise or result from the use or distribution of the Software in violation of this Agreement.
 
-12. Termination of Use. You agree to not use the SOFTWARE PRODUCT beyond its calendar end date as specified in the Unity console window. You may update your beta evaluation software if one is publiclly provided by Detox Studios LLC. If no new beta evaluation build are provided, you must stop using the SOFTWARE PRODUCT until a full license is purchased.
+12. Termination of Use. You agree to not use the SOFTWARE PRODUCT beyond its calendar end date as specified in the Unity console window. You may update your beta evaluation software if one is publicly provided by Detox Studios LLC. If no new beta evaluation build are provided, you must stop using the SOFTWARE PRODUCT until a full license is purchased.
 
 Detox Studios LLC
 info@detoxstudios.com
