@@ -1630,7 +1630,11 @@ http://uscript.net
    
                                  GUILayout.BeginHorizontal();
                                  {
-                                    nodeButtonContent.text = name + comment;
+                                    if (Event.current.type == EventType.Repaint)
+                                    {
+                                       nodeButtonContent.text = name + comment;
+                                    }
+
                                     bool selected = dn.Selected;
                                     selected = GUILayout.Toggle(selected, nodeButtonContent, uScriptGUIStyle.nodeButtonLeft);
                                     if (selected != dn.Selected)
