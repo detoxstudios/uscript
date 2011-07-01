@@ -2803,13 +2803,13 @@ Vector2 _scrollNewProperties;
 
 
       //save or cancel
-      EditorGUILayout.BeginHorizontal();
+      //EditorGUILayout.BeginHorizontal();
       {
-         GUIStyle btnStyle = new GUIStyle(GUI.skin.button);
-         btnStyle.margin = new RectOffset(0, 0, 3, 3);
-         btnStyle.fixedWidth = 120;
+         //GUIStyle btnStyle = new GUIStyle(GUI.skin.button);
+         //btnStyle.margin = new RectOffset(0, 0, 3, 3);
+         //btnStyle.fixedWidth = 120;
 
-         if (GUILayout.Button("Save", btnStyle))
+         if (GUILayout.Button("Save"/*, btnStyle*/))
          {
             Preferences.Save( );
             uScriptGUIContent.Style = (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle;
@@ -2817,9 +2817,9 @@ Vector2 _scrollNewProperties;
             m_DoPreferences = false;
          }
 
-         GUILayout.Space(16);
+         //GUILayout.Space(16);
 
-         if (GUILayout.Button("Cancel", btnStyle))
+         if (GUILayout.Button("Cancel"/*, btnStyle*/))
          {
             //cancel was pressed so revert to saved version
             Preferences.Load( );
@@ -2828,7 +2828,7 @@ Vector2 _scrollNewProperties;
             m_DoPreferences = false;
          }
       }
-      EditorGUILayout.EndHorizontal();
+      //EditorGUILayout.EndHorizontal();
 
       EditorGUI.indentLevel = 0;
    }
