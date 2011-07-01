@@ -1,4 +1,4 @@
-using UnityEngine;   
+using UnityEngine;
 using UnityEditor;
 using Detox.ScriptEditor;
 using Detox.Data.Tools;
@@ -13,12 +13,12 @@ using Detox.FlowChart;
 
 public class uScript : EditorWindow
 {
-                                           //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string    uScriptBuild           { get { return "0.9.0944"; } }
-   public string    RequiredUnityBuild     { get { return "3.3"; } }
-   public string    RequiredUnityBetaBuild { get { return "3.4"; } }
-   public DateTime  ExpireDate             { get { return new DateTime( 2011, 7, 18 ); } }
-   public int       EULAVersion            { get { return 20110701; } }
+   //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
+   public string uScriptBuild { get { return "0.9.0947"; } }
+   public string RequiredUnityBuild { get { return "3.3"; } }
+   public string RequiredUnityBetaBuild { get { return "3.4"; } }
+   public DateTime ExpireDate { get { return new DateTime(2011, 7, 18); } }
+   public int EULAVersion { get { return 20110701; } }
 
    private enum MouseRegion
    {
@@ -39,14 +39,14 @@ public class uScript : EditorWindow
    Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
    static private uScript s_Instance = null;
-   static public uScript Instance { get { if ( null == s_Instance ) Init( ); return s_Instance; } }
+   static public uScript Instance { get { if (null == s_Instance) Init(); return s_Instance; } }
    bool _firstRun = true;
 
    private ScriptEditorCtrl m_ScriptEditorCtrl = null;
-   private bool m_MouseDown  = false;
+   private bool m_MouseDown = false;
    private bool m_Repainting = false;
-   private bool m_WantsCopy  = false;
-   private bool m_WantsCut   = false;
+   private bool m_WantsCopy = false;
+   private bool m_WantsCut = false;
    private bool m_WantsPaste = false;
    private bool m_WantsClose = false;
 
@@ -54,24 +54,24 @@ public class uScript : EditorWindow
 
    private String m_AddVariableNode = "";
    private KeyCode m_PressedKey = KeyCode.None;
-   
+
    private string m_FullPath = "";
    private string m_CurrentCanvasPosition = "";
-   private bool   m_ForceCodeValidation = false;
-   
+   private bool m_ForceCodeValidation = false;
+
    private Detox.FlowChart.Node m_FocusedNode = null;
-   
-   static public Preferences Preferences = new Preferences( );
+
+   static public Preferences Preferences = new Preferences();
    static private AppFrameworkData m_AppData = new AppFrameworkData();
    static private bool m_SettingsLoaded = false;
    private double m_RefreshTimestamp = -1.0;
 
    // Used for double-click hack in uScripts panel
    private double clickTime;
-//   private double doubleClickTime = 0.3;
- 
+   //   private double doubleClickTime = 0.3;
+
    private bool m_CanvasDragging = false;
-   
+
    private int m_ContextX = 0;
    private int m_ContextY = 0;
    private ToolStripItem m_CurrentMenu = null;
@@ -87,21 +87,21 @@ public class uScript : EditorWindow
    /* uScript GUI Window Panel Layout Variables */
 
 
-   bool     m_HidePanelMode = false;
-   int      _guiPanelPalette_Width = 250;
-   int      _guiPanelProperties_Height = 250;
-   int      _guiPanelProperties_Width = 250;
-   int      _guiPanelSequence_Width = 250;
+   bool m_HidePanelMode = false;
+   int _guiPanelPalette_Width = 250;
+   int _guiPanelProperties_Height = 250;
+   int _guiPanelProperties_Width = 250;
+   int _guiPanelSequence_Width = 250;
 
 
    Rect _canvasRect;
-   Vector2  _guiPanelPalette_ScrollPos;
+   Vector2 _guiPanelPalette_ScrollPos;
 
-   public Vector2  _guiContentScrollPos;
+   public Vector2 _guiContentScrollPos;
 
-   Vector2  _guiPanelProperties_ScrollPos;
+   Vector2 _guiPanelProperties_ScrollPos;
 
-   Vector2  _guiHelpScrollPos;
+   Vector2 _guiHelpScrollPos;
 
    /* Palette Variables */
    private List<PaletteMenuItem> _paletteMenuItems;
@@ -133,7 +133,7 @@ public class uScript : EditorWindow
    // Sub-Sequence variables
    //
    Vector2 _guiPanelSequence_ScrollPos;
-    
+
    //
    // Statusbar Variables
    //
@@ -184,11 +184,11 @@ public class uScript : EditorWindow
    bool _openScriptToggle = false;
 
    MouseEventArgs m_MouseDownArgs = null;
-   MouseEventArgs m_MouseUpArgs   = null;
-   MouseEventArgs m_MouseMoveArgs = new MouseEventArgs( );
+   MouseEventArgs m_MouseUpArgs = null;
+   MouseEventArgs m_MouseMoveArgs = new MouseEventArgs();
 
    public bool m_SelectAllNodes = false;
-   public bool m_DoPreferences  = false;
+   public bool m_DoPreferences = false;
 
    public string CurrentScript = null;
    public string CurrentScriptName = "";
@@ -238,7 +238,7 @@ http://uscript.net
 
 (06/30/2011)";
    #endregion
-   
+
    public bool IsAttachedToMaster
    {
       get
@@ -248,7 +248,7 @@ http://uscript.net
             System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_FullPath);
             bool isSafe = false;
             string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
-            return MasterObject.GetComponent(safePath+uScriptConfig.Files.GeneratedComponentExtension) != null;
+            return MasterObject.GetComponent(safePath + uScriptConfig.Files.GeneratedComponentExtension) != null;
          }
          return false;
       }
@@ -263,13 +263,13 @@ http://uscript.net
             System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_FullPath);
             bool isSafe = false;
             string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
-            string componentPath = safePath+uScriptConfig.Files.GeneratedComponentExtension;
-    
+            string componentPath = safePath + uScriptConfig.Files.GeneratedComponentExtension;
+
             foreach (GameObject go in GameObject.FindObjectsOfType(typeof(GameObject)))
             {
                if (go.GetComponent(componentPath) != null) return true;
             }
-            
+
             return false;
          }
          return false;
@@ -279,21 +279,21 @@ http://uscript.net
    //
    // Editor Window Initialization
    //
-   [UnityEditor.MenuItem ("Tools/Detox Studios/uScript Editor %u")]
-   static void Init ()
+   [UnityEditor.MenuItem("Tools/Detox Studios/uScript Editor %u")]
+   static void Init()
    {
-      s_Instance = (uScript) EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
+      s_Instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
       s_Instance.wantsMouseMove = true;
 
-      System.IO.Directory.CreateDirectory( uScriptConfig.ConstantPaths.RootFolder );
-      System.IO.Directory.CreateDirectory( uScriptConfig.ConstantPaths.uScriptNodes );
-      System.IO.Directory.CreateDirectory( uScriptConfig.ConstantPaths.uScriptEditor );
+      System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.RootFolder);
+      System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.uScriptNodes);
+      System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.uScriptEditor);
 
-      System.IO.Directory.CreateDirectory( Preferences.ProjectFiles );
-      System.IO.Directory.CreateDirectory( Preferences.UserScripts );
-      System.IO.Directory.CreateDirectory( Preferences.UserNodes );
-      System.IO.Directory.CreateDirectory( Preferences.GeneratedScripts );
-      System.IO.Directory.CreateDirectory( Preferences.NestedScripts );
+      System.IO.Directory.CreateDirectory(Preferences.ProjectFiles);
+      System.IO.Directory.CreateDirectory(Preferences.UserScripts);
+      System.IO.Directory.CreateDirectory(Preferences.UserNodes);
+      System.IO.Directory.CreateDirectory(Preferences.GeneratedScripts);
+      System.IO.Directory.CreateDirectory(Preferences.NestedScripts);
 
       //System.IO.Directory.CreateDirectory( Preferences.TutorialFiles );
    }
@@ -323,7 +323,7 @@ http://uscript.net
       m_AppData.Set(key, value);
       m_AppData.Save(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
    }
-   
+
    static public void LoadSettings()
    {
       if (System.IO.File.Exists(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile))
@@ -336,27 +336,27 @@ http://uscript.net
    {
       GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
       uScript_Assets assetComponent = null;
-   
-      if ( null != uScriptMaster ) assetComponent = uScriptMaster.GetComponent<uScript_Assets>( );                        
-      
-      if ( null != assetComponent )
+
+      if (null != uScriptMaster) assetComponent = uScriptMaster.GetComponent<uScript_Assets>();
+
+      if (null != assetComponent)
       {
          object assetInstance = asset;
-      
+
          //if it was saved as a string - assume it's a path
-         if ( assetInstance is string )
+         if (assetInstance is string)
          {
-            assetInstance = UnityEditor.AssetDatabase.LoadAssetAtPath( assetInstance as string, type );
+            assetInstance = UnityEditor.AssetDatabase.LoadAssetAtPath(assetInstance as string, type);
          }
 
-         if ( assetInstance is UnityEngine.Object )
+         if (assetInstance is UnityEngine.Object)
          {
             UnityEngine.Object objectInstance = assetInstance as UnityEngine.Object;
 
             //append the name as part of the unique key - because some items (like fbx files) have multiple assets in them
-            string uniqueKey = uScriptConfig.GetAssetPackageKey( asset, type ); 
-            assetComponent.Add( uniqueKey, objectInstance );
-         
+            string uniqueKey = uScriptConfig.GetAssetPackageKey(asset, type);
+            assetComponent.Add(uniqueKey, objectInstance);
+
             return uniqueKey;
          }
       }
@@ -368,31 +368,31 @@ http://uscript.net
    {
       uScriptDebug.Type uScriptType = uScriptDebug.Type.Message;
 
-      if ( e.LogType == Detox.Utility.LogType.Error )
+      if (e.LogType == Detox.Utility.LogType.Error)
       {
          uScriptType = uScriptDebug.Type.Error;
       }
-      if ( e.LogType == Detox.Utility.LogType.Warning )
+      if (e.LogType == Detox.Utility.LogType.Warning)
       {
          uScriptType = uScriptDebug.Type.Warning;
       }
 
-      uScriptDebug.Log( e.Message, uScriptType );
+      uScriptDebug.Log(e.Message, uScriptType);
    }
 
 
    public void RegisterUndo(string name, ScriptEditor oldScript, ScriptEditor newScript)
    {
-      if ( null != MasterComponent )
+      if (null != MasterComponent)
       {
-         MasterComponent.Script = oldScript.ToBase64( );
+         MasterComponent.Script = oldScript.ToBase64();
          MasterComponent.ScriptName = oldScript.Name;
 
          //save the old one to the undo stack
-         UnityEditor.Undo.RegisterUndo( MasterComponent, name + " (uScript)" );
+         UnityEditor.Undo.RegisterUndo(MasterComponent, name + " (uScript)");
 
          //register the new one with uscript and the master component
-         CurrentScript = newScript.ToBase64( );
+         CurrentScript = newScript.ToBase64();
          CurrentScriptName = newScript.Name;
 
          MasterComponent.Script = CurrentScript;
@@ -406,9 +406,9 @@ http://uscript.net
    void Awake()
    {
       EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
-      
+
       _statusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
-   
+
       m_ForceCodeValidation = true;
    }
 
@@ -421,27 +421,27 @@ http://uscript.net
 
    void Update()
    {
-      if ( true == CodeValidator.RequireRebuild(m_ForceCodeValidation) )
+      if (true == CodeValidator.RequireRebuild(m_ForceCodeValidation))
       {
-         RebuildAllScripts( );
+         RebuildAllScripts();
       }
-      
+
       //rebuild was requested but we have to wait until the editor
       //is done compiling so it properly reflects everything
-      if ( true == m_RebuildWhenReady && false == EditorApplication.isCompiling )
-      {         
+      if (true == m_RebuildWhenReady && false == EditorApplication.isCompiling)
+      {
          //now build any scripts which are used as nested nodes
          //when these are done we will then build any scripts which references these
          //see the m_DoRebuildScripts below
-         AssetDatabase.StartAssetEditing( );
-            RebuildScripts( Preferences.UserScripts );
-         AssetDatabase.StopAssetEditing( );
+         AssetDatabase.StartAssetEditing();
+         RebuildScripts(Preferences.UserScripts);
+         AssetDatabase.StopAssetEditing();
          AssetDatabase.Refresh();
 
          m_RebuildWhenReady = false;
       }
 
-      if ( true == m_SelectAllNodes )
+      if (true == m_SelectAllNodes)
       {
          m_ScriptEditorCtrl.SelectAllNodes();
          m_ScriptEditorCtrl.SelectAllLinks();
@@ -455,7 +455,7 @@ http://uscript.net
       {
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
-      
+
       // Initialization
       //
 
@@ -469,14 +469,14 @@ http://uscript.net
       //force a rebuild if undo was performed
       bool rebuildScript = false;
 
-      if ( null != MasterComponent && CurrentScript != MasterComponent.Script )
+      if (null != MasterComponent && CurrentScript != MasterComponent.Script)
       {
          rebuildScript = true;
       }
-      
+
       if (null == m_ScriptEditorCtrl || true == rebuildScript)
       {
-         if ( null == m_ScriptEditorCtrl )
+         if (null == m_ScriptEditorCtrl)
          {
             //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
             if (Application.unityVersion.Contains(RequiredUnityBuild) || Application.unityVersion.Contains(RequiredUnityBetaBuild))
@@ -488,14 +488,14 @@ http://uscript.net
                return;
             }
 
-            if ( DateTime.Now > ExpireDate )
+            if (DateTime.Now > ExpireDate)
             {
-               uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") has expired.\n", uScriptDebug.Type.Error );
+               uScriptDebug.Log("This uScript build (" + uScriptBuild + ") has expired.\n", uScriptDebug.Type.Error);
                return;
             }
             else
             {
-               uScriptDebug.Log( "This uScript build (" + uScriptBuild + ") will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message );
+               uScriptDebug.Log("This uScript build (" + uScriptBuild + ") will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
             }
          }
 
@@ -529,31 +529,31 @@ http://uscript.net
             MasterComponent.AddType(o.GetType());
          }
 
-         foreach ( uScriptConfigBlock b in uScriptConfig.Variables )
+         foreach (uScriptConfigBlock b in uScriptConfig.Variables)
          {
             MasterComponent.AddType(b.Type);
          }
 
          bool isRestored = false;
-         bool isDirty    = false;
-         
+         bool isDirty = false;
+
          ScriptEditor scriptEditor = null;
 
-         if ( !String.IsNullOrEmpty(MasterComponent.Script) )
+         if (!String.IsNullOrEmpty(MasterComponent.Script))
          {
             //open with no preexisting types which means it loads the data direct
             //and we can figure out what required types we need
             scriptEditor = new ScriptEditor("", null, null);
-            if ( true == scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script) )
+            if (true == scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script))
             {
-               scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes( scriptEditor.Types ), PopulateLogicTypes());
-               scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script) ;
-               
+               scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
+               scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script);
+
                isRestored = true;
 
                //if we're restoring over an old script
                //we need to flag us as dirty (because this was do to an undo/redo being triggered)
-               if ( CurrentScript != MasterComponent.Script && null != CurrentScript )
+               if (CurrentScript != MasterComponent.Script && null != CurrentScript)
                {
                   isDirty = true;
                }
@@ -564,7 +564,7 @@ http://uscript.net
          }
          else
          {
-            scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes( null ), PopulateLogicTypes());
+            scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
          }
 
          if (String.IsNullOrEmpty(m_FullPath))
@@ -576,18 +576,18 @@ http://uscript.net
             }
          }
 
-   		Point loc = Point.Empty;
-         if ( !String.IsNullOrEmpty(m_FullPath) )
+         Point loc = Point.Empty;
+         if (!String.IsNullOrEmpty(m_FullPath))
          {
             m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
          }
-         if ( false == String.IsNullOrEmpty(m_CurrentCanvasPosition) )
+         if (false == String.IsNullOrEmpty(m_CurrentCanvasPosition))
          {
-            loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), 
+            loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))),
                             Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
          }
-         
-         m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor, loc );
+
+         m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor, loc);
 
          m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 
@@ -601,13 +601,13 @@ http://uscript.net
          //it seems to set any class references back to null
          //since the string isn't a reference it stays valid
          //so reopen our script
-         if ("" != m_FullPath && false == isRestored )
+         if ("" != m_FullPath && false == isRestored)
          {
             if (!OpenScript(m_FullPath)) m_FullPath = "";
             m_RefreshTimestamp = EditorApplication.timeSinceStartup;
          }
-         
-         if ( true == isDirty )
+
+         if (true == isDirty)
          {
             //force rebuilt from undo so mark as dirty
             m_ScriptEditorCtrl.IsDirty = true;
@@ -631,14 +631,14 @@ http://uscript.net
       //after it has been activated
       //if ( false == contextActive )
       {
-         if ( null != m_MouseDownArgs )
+         if (null != m_MouseDownArgs)
          {
-            OnMouseDown( );
+            OnMouseDown();
             m_MouseDownArgs = null;
          }
-         else if ( null != m_MouseUpArgs )
+         else if (null != m_MouseUpArgs)
          {
-            OnMouseUp( );
+            OnMouseUp();
             m_MouseUpArgs = null;
          }
       }
@@ -649,7 +649,7 @@ http://uscript.net
          if (m_ScriptEditorCtrl != null)
          {
             m_ScriptEditorCtrl.RefreshScript(null, true);
-            if ( !String.IsNullOrEmpty(m_FullPath) )
+            if (!String.IsNullOrEmpty(m_FullPath))
             {
                m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
             }
@@ -663,21 +663,21 @@ http://uscript.net
          }
          m_RefreshTimestamp = -1.0;
       }
-      
-      if ( true == m_WantsCopy )
+
+      if (true == m_WantsCopy)
       {
-         m_ScriptEditorCtrl.CopyToClipboard( );
+         m_ScriptEditorCtrl.CopyToClipboard();
          m_WantsCopy = false;
       }
-      if ( true == m_WantsCut )
+      if (true == m_WantsCut)
       {
-         m_ScriptEditorCtrl.CopyToClipboard( );
-         m_ScriptEditorCtrl.DeleteSelectedNodes( );
+         m_ScriptEditorCtrl.CopyToClipboard();
+         m_ScriptEditorCtrl.DeleteSelectedNodes();
          m_WantsCut = false;
       }
-      if ( true == m_WantsPaste )
+      if (true == m_WantsPaste)
       {
-         m_ScriptEditorCtrl.PasteFromClipboard( Point.Empty );
+         m_ScriptEditorCtrl.PasteFromClipboard(Point.Empty);
          m_WantsPaste = false;
       }
       if (m_ScriptEditorCtrl != null && !String.IsNullOrEmpty(m_AddVariableNode))
@@ -705,18 +705,18 @@ http://uscript.net
          m_AddVariableNode = "";
       }
 
-      if ( _requestedCloseMap )
+      if (_requestedCloseMap)
       {
          _requestedCloseMap = false;
          mapToggle = false;
 
          // Center the canvas on _requestCanvasLocation
-         m_ScriptEditorCtrl.CenterOnPoint( _requestCanvasLocation );
+         m_ScriptEditorCtrl.CenterOnPoint(_requestCanvasLocation);
       }
 
-      if ( false == contextActive )
+      if (false == contextActive)
       {
-         OnMouseMove( );
+         OnMouseMove();
       }
    }
 
@@ -754,28 +754,28 @@ http://uscript.net
       //
       if (_EULAagreed != EULAVersion)
       {
-         _EULAagreed = (int) uScript.GetSetting( "EULA\\AgreedVersion", -1 );
+         _EULAagreed = (int)uScript.GetSetting("EULA\\AgreedVersion", -1);
          GUI.enabled = _EULAagreed == EULAVersion;
       }
 
 
       // Set the default mouse region
       _mouseRegion = uScript.MouseRegion.Outside;
-      
+
       // As little logic as possible should be performed here.  It is better
       // to use Update() to perform tasks once per tick.
 
       bool lastMouseDown = m_MouseDown;
-      
+
       bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
-      if ( false == contextActive && false == m_DoPreferences)
+      if (false == contextActive && false == m_DoPreferences)
       {
          int modifierKeys = 0;
 
-         if ( Event.current.alt )     modifierKeys |= Keys.Alt;
-         if ( Event.current.shift )   modifierKeys |= Keys.Shift;
-         if ( Event.current.control || Event.current.command ) modifierKeys |= Keys.Control;
-         
+         if (Event.current.alt) modifierKeys |= Keys.Alt;
+         if (Event.current.shift) modifierKeys |= Keys.Shift;
+         if (Event.current.control || Event.current.command) modifierKeys |= Keys.Control;
+
          Control.ModifierKeys.Pressed = modifierKeys;
 
          Event e = Event.current;
@@ -783,62 +783,62 @@ http://uscript.net
          {
             // command events
             case EventType.ContextClick:
-               m_ScriptEditorCtrl.BuildContextMenu( );
-      
+               m_ScriptEditorCtrl.BuildContextMenu();
+
                BuildPaletteMenu(null, null);
-      
-               m_ContextX = (int) Event.current.mousePosition.x;
+
+               m_ContextX = (int)Event.current.mousePosition.x;
                m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
-      
+
                //refresh screen so context menu shows up
-               Repaint( );
+               Repaint();
                break;
             case EventType.ValidateCommand:
-               if ( Event.current.commandName == "Copy" )
+               if (Event.current.commandName == "Copy")
                {
-                  if ( m_ScriptEditorCtrl.CanCopy && "MainView" == GUI.GetNameOfFocusedControl( ) )
+                  if (m_ScriptEditorCtrl.CanCopy && "MainView" == GUI.GetNameOfFocusedControl())
                   {
-                     Event.current.Use( );
+                     Event.current.Use();
                   }
                }
-               else if ( Event.current.commandName == "Cut" )
+               else if (Event.current.commandName == "Cut")
                {
-                  if ( m_ScriptEditorCtrl.CanCopy && "MainView" == GUI.GetNameOfFocusedControl( )  )
+                  if (m_ScriptEditorCtrl.CanCopy && "MainView" == GUI.GetNameOfFocusedControl())
                   {
-                     Event.current.Use( );
+                     Event.current.Use();
                   }
                }
-               else if ( Event.current.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl( )  )
+               else if (Event.current.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl())
                {
-                  if ( m_ScriptEditorCtrl.CanPaste )
+                  if (m_ScriptEditorCtrl.CanPaste)
                   {
-                     Event.current.Use( );
+                     Event.current.Use();
                   }
                }
-               else if ( Event.current.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl( )  )
+               else if (Event.current.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl())
                {
-                  Event.current.Use( );
+                  Event.current.Use();
                }
                break;
             case EventType.ExecuteCommand:
-               if ( Event.current.commandName == "Copy" && "MainView" == GUI.GetNameOfFocusedControl( )  )
+               if (Event.current.commandName == "Copy" && "MainView" == GUI.GetNameOfFocusedControl())
                {
                   m_WantsCopy = true;
                }
-               else if ( Event.current.commandName == "Cut" && "MainView" == GUI.GetNameOfFocusedControl( )  )
+               else if (Event.current.commandName == "Cut" && "MainView" == GUI.GetNameOfFocusedControl())
                {
                   m_WantsCut = true;
                }
-               else if ( Event.current.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl( )  )
+               else if (Event.current.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl())
                {
                   m_WantsPaste = true;
                }
-               else if ( Event.current.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl( )  )
+               else if (Event.current.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl())
                {
                   m_SelectAllNodes = true;
                }
                break;
-   
+
             // drag events
             case EventType.DragExited:
                break;
@@ -849,7 +849,7 @@ http://uscript.net
                m_MouseMoveArgs.X = (int)Event.current.mousePosition.x;
                m_MouseMoveArgs.Y = (int)Event.current.mousePosition.y;
                break;
-            
+
             // key events
             case EventType.KeyDown:
                if (Event.current.keyCode != KeyCode.None)
@@ -858,13 +858,13 @@ http://uscript.net
                }
                break;
             case EventType.KeyUp:
-               if ( "MainView" == GUI.GetNameOfFocusedControl( ) )
+               if ("MainView" == GUI.GetNameOfFocusedControl())
                {
-                  if ( Event.current.keyCode == KeyCode.Delete || Event.current.keyCode == KeyCode.Backspace )
+                  if (Event.current.keyCode == KeyCode.Delete || Event.current.keyCode == KeyCode.Backspace)
                   {
-                     m_ScriptEditorCtrl.DeleteSelectedNodes( );
+                     m_ScriptEditorCtrl.DeleteSelectedNodes();
                   }
-                  else if ( Event.current.keyCode == KeyCode.Home || (Event.current.keyCode == KeyCode.H && (modifierKeys & Keys.Control) != 0) )
+                  else if (Event.current.keyCode == KeyCode.Home || (Event.current.keyCode == KeyCode.H && (modifierKeys & Keys.Control) != 0))
                   {
                      // re-center the graph
                      if (m_ScriptEditorCtrl != null)
@@ -872,19 +872,19 @@ http://uscript.net
                         m_ScriptEditorCtrl.RefreshScript(null, true);
                      }
                   }
-                  else if ( Event.current.keyCode == KeyCode.W && (modifierKeys & Keys.Control) != 0 )
+                  else if (Event.current.keyCode == KeyCode.W && (modifierKeys & Keys.Control) != 0)
                   {
                      // close the window
                      m_WantsClose = true;
                   }
-                  else if ( Event.current.keyCode == KeyCode.M )
+                  else if (Event.current.keyCode == KeyCode.M)
                   {
                      mapToggle = !mapToggle;
                   }
-                  else if ( Event.current.keyCode == KeyCode.Space )
+                  else if (Event.current.keyCode == KeyCode.Space)
                   {
                      m_HidePanelMode = !m_HidePanelMode;
-                  
+
                      if (m_HidePanelMode)
                      {
                         m_ScriptEditorCtrl.FlowChart.Location.X += _guiPanelPalette_Width + DIVIDER_WIDTH;
@@ -896,71 +896,71 @@ http://uscript.net
                         m_ScriptEditorCtrl.RefreshScript(null, false);
                      }
                   }
-                  else if ( Event.current.keyCode == KeyCode.Escape )
+                  else if (Event.current.keyCode == KeyCode.Escape)
                   {
-                     if ( "MainView" == GUI.GetNameOfFocusedControl( ) )
+                     if ("MainView" == GUI.GetNameOfFocusedControl())
                      {
                         m_ScriptEditorCtrl.DeselectAll();
                      }
                   }
-                  else if ( Event.current.keyCode == KeyCode.F1 )
+                  else if (Event.current.keyCode == KeyCode.F1)
                   {
                      Help.BrowseURL("http://www.uscript.net/docs/index.php?title=Main_Page");
                   }
-                  else if ( Event.current.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0 )
+                  else if (Event.current.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0)
                   {
-                     Preferences.ShowGrid = ! Preferences.ShowGrid;
-                     Preferences.Save( );
+                     Preferences.ShowGrid = !Preferences.ShowGrid;
+                     Preferences.Save();
                   }
-                  else if ( Event.current.keyCode == KeyCode.RightBracket )
+                  else if (Event.current.keyCode == KeyCode.RightBracket)
                   {
                      m_FocusedNode = m_ScriptEditorCtrl.GetNextNode(m_FocusedNode, typeof(EntityEventDisplayNode));
                      if (m_FocusedNode != null) m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
                   }
-                  else if ( Event.current.keyCode == KeyCode.LeftBracket )
+                  else if (Event.current.keyCode == KeyCode.LeftBracket)
                   {
                      m_FocusedNode = m_ScriptEditorCtrl.GetPrevNode(m_FocusedNode, typeof(EntityEventDisplayNode));
                      if (m_FocusedNode != null) m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
                   }
                }
-   
+
                m_PressedKey = KeyCode.None;
 
                //keep key events from going to the rest of unity
-               Event.current.Use( );
+               Event.current.Use();
                break;
 
             // mouse events
             case EventType.MouseDown:
-               if ( false == m_MouseDown )
+               if (false == m_MouseDown)
                {
-                  GUI.FocusControl( "MainView" );
+                  GUI.FocusControl("MainView");
 
-                  if ( mapToggle )
+                  if (mapToggle)
                   {
                      MiniMapClick();
                   }
                   else
                   {
-                     if ( _canvasRect.Contains( Event.current.mousePosition ) )
+                     if (_canvasRect.Contains(Event.current.mousePosition))
                      {
                         m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
-   
+
                         int button = 0;
-   
-                        if ( Event.current.button == 0 ) button = MouseButtons.Left;
-                        else if ( Event.current.button == 1 ) button = MouseButtons.Right;
-                        else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
-   
+
+                        if (Event.current.button == 0) button = MouseButtons.Left;
+                        else if (Event.current.button == 1) button = MouseButtons.Right;
+                        else if (Event.current.button == 2) button = MouseButtons.Middle;
+
                         m_MouseDownArgs.Button = button;
                         m_MouseDownArgs.X = (int)(Event.current.mousePosition.x);
                         if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
                         m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
                      }
-   
-                     if ( Event.current.clickCount == 2 )
+
+                     if (Event.current.clickCount == 2)
                      {
-                        OpenLogicNode( );
+                        OpenLogicNode();
                      }
                   }
                }
@@ -984,21 +984,21 @@ http://uscript.net
                }
                break;
             case EventType.MouseUp:
-               if ( true == m_MouseDown )
+               if (true == m_MouseDown)
                {
-                  m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
-      
+                  m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs();
+
                   int button = 0;
-      
-                  if ( Event.current.button == 0 ) button = MouseButtons.Left;
-                  else if ( Event.current.button == 1 ) button = MouseButtons.Right;
-                  else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
-      
+
+                  if (Event.current.button == 0) button = MouseButtons.Left;
+                  else if (Event.current.button == 1) button = MouseButtons.Right;
+                  else if (Event.current.button == 2) button = MouseButtons.Middle;
+
                   m_MouseUpArgs.Button = button;
                   m_MouseUpArgs.X = (int)(Event.current.mousePosition.x);
                   if (!m_HidePanelMode) m_MouseUpArgs.X -= _guiPanelPalette_Width;
                   m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
-               
+
                   if (m_PressedKey == KeyCode.S)
                   {
                      m_AddVariableNode = "System.String";
@@ -1045,13 +1045,13 @@ http://uscript.net
                break;
             case EventType.ScrollWheel:
                break;
-      
+
             // paint/layout events
             case EventType.Layout:
                break;
             case EventType.Repaint:
                break;
-      
+
             // ignore these events
             case EventType.Ignore:
             case EventType.Used:
@@ -1061,18 +1061,18 @@ http://uscript.net
       }
       else
       {
-         if ( true == m_MouseDown )
+         if (true == m_MouseDown)
          {
             m_MouseDownArgs = null;
             m_MouseDown = false;
 
-            m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
+            m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs();
             m_MouseUpArgs.Button = MouseButtons.Left;
-            m_MouseUpArgs.X = (int) Event.current.mousePosition.x;
+            m_MouseUpArgs.X = (int)Event.current.mousePosition.x;
             m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
          }
       }
-      
+
       //
       // All the GUI drawing code
       //
@@ -1080,16 +1080,16 @@ http://uscript.net
 
       // where is the mouse?
       CalculateMouseRegion();
-  
+
       // do external windows/popups
       DrawPopups(contextActive);
-      
+
       if (m_MouseDown == false)
       {
          // turn panel rendering back on
          m_CanvasDragging = false;
       }
-  
+
       // the following code must be here because it needs to happen 
       // after we've figured out what region the mouse is in
       if (_mouseRegion == uScript.MouseRegion.Outside)
@@ -1113,15 +1113,15 @@ http://uscript.net
 
       // Do this after the event processing has taken place so that we 
       // know we don't have a duplicate mouse up event
-      if ( true == m_MouseDown && _mouseRegion == MouseRegion.Outside && m_MouseUpArgs == null )
+      if (true == m_MouseDown && _mouseRegion == MouseRegion.Outside && m_MouseUpArgs == null)
       {
-         m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs( );
+         m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs();
 
          int button = 0;
 
-         if ( Event.current.button == 0 ) button = MouseButtons.Left;
-         else if ( Event.current.button == 1 ) button = MouseButtons.Right;
-         else if ( Event.current.button == 2 ) button = MouseButtons.Middle;
+         if (Event.current.button == 0) button = MouseButtons.Left;
+         else if (Event.current.button == 1) button = MouseButtons.Right;
+         else if (Event.current.button == 2) button = MouseButtons.Middle;
 
          m_MouseUpArgs.Button = button;
          m_MouseUpArgs.X = (int)(Event.current.mousePosition.x);
@@ -1131,13 +1131,13 @@ http://uscript.net
          m_MouseDownRegion = MouseRegion.Outside;
          m_MouseDown = false;
       }
-      
+
       if (Event.current.type == EventType.DragPerform || Event.current.type == EventType.DragUpdated)
       {
-         if ( _mouseRegion == MouseRegion.Canvas )
+         if (_mouseRegion == MouseRegion.Canvas)
          {
-            CheckDragDropCanvas( );
-            Event.current.Use( );
+            CheckDragDropCanvas();
+            Event.current.Use();
          }
       }
    }
@@ -1151,25 +1151,25 @@ http://uscript.net
 
       if (_EULAagreed != EULAVersion)
       {
-         _EULAagreed = (int) uScript.GetSetting( "EULA\\AgreedVersion", -1 );
-         
+         _EULAagreed = (int)uScript.GetSetting("EULA\\AgreedVersion", -1);
+
          if (_EULAagreed != EULAVersion)
          {
             int w = 550;
             int h = Math.Max(300, (int)position.height - 400);
-            Rect r = new Rect((position.width-w)/2, (position.height-h)/2, w, h);
-            
+            Rect r = new Rect((position.width - w) / 2, (position.height - h) / 2, w, h);
+
             GUI.Window(110, r, DoWindowEULA, "End User License Agreement");
          }
       }
-      
+
       if (_EULAagreed == EULAVersion)
       {
-         if ( true == contextActive )
+         if (true == contextActive)
          {
-            DrawContextMenu( m_ContextX, m_ContextY );
+            DrawContextMenu(m_ContextX, m_ContextY);
 
-            if ( Event.current.type == EventType.MouseDown )
+            if (Event.current.type == EventType.MouseDown)
             {
                m_ContextX = 0;
                m_ContextY = 0;
@@ -1185,19 +1185,19 @@ http://uscript.net
 
       if (m_DoPreferences)
       {
-         DrawPreferences( );
+         DrawPreferences();
       }
-      EndWindows( );
+      EndWindows();
    }
 
    void OnPlaymodeStateChanged()
    {
       if (EditorApplication.isPlayingOrWillChangePlaymode && m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.IsDirty)
       {
-         EditorUtility.DisplayDialog( "uScript Not Saved!", "uScript has detected that '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' has been changed, but not saved! You will not see any changes until you save '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' in the uScript Editor.", "OK" );
+         EditorUtility.DisplayDialog("uScript Not Saved!", "uScript has detected that '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' has been changed, but not saved! You will not see any changes until you save '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' in the uScript Editor.", "OK");
       }
    }
-   
+
    void OnDestroy()
    {
       AllowNewFile(false);
@@ -1211,36 +1211,36 @@ http://uscript.net
 
       MasterComponent.Script = null;
       MasterComponent.ScriptName = null;
-       
+
       CurrentScript = null;
       CurrentScriptName = null;
-      
+
       // reset settings so they get re-loaded
       m_SettingsLoaded = false;
       m_AppData = new AppFrameworkData();
       Preferences = new Preferences();
    }
 
-   void OpenLogicNode( )
+   void OpenLogicNode()
    {
-      if ( m_ScriptEditorCtrl.SelectedNodes.Length == 1 )
+      if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
       {
          EntityNode entityNode = m_ScriptEditorCtrl.SelectedNodes[0].EntityNode;
 
-         if ( entityNode is LogicNode )
+         if (entityNode is LogicNode)
          {
-            LogicNode logicNode = (LogicNode) entityNode;
+            LogicNode logicNode = (LogicNode)entityNode;
 
             string uscriptPath = Preferences.UserScripts;
 
-            if ( logicNode.Type.EndsWith( uScriptConfig.Files.GeneratedCodeExtension ) )
+            if (logicNode.Type.EndsWith(uScriptConfig.Files.GeneratedCodeExtension))
             {
                string script = uscriptPath + "/" + logicNode.Type.Substring(0, logicNode.Type.LastIndexOf(uScriptConfig.Files.GeneratedCodeExtension));
                script += ".uscript";
 
-               if ( System.IO.File.Exists(script) )
+               if (System.IO.File.Exists(script))
                {
-                  OpenScript( script );
+                  OpenScript(script);
                }
             }
          }
@@ -1259,8 +1259,8 @@ http://uscript.net
       {
          DrawGUIHorizontalDivider();
 
-         SetMouseRegion( MouseRegion.HandleCanvas );//, 1, -3, -1, 6 );
-  
+         SetMouseRegion(MouseRegion.HandleCanvas);//, 1, -3, -1, 6 );
+
          DrawGUIBottomAreas();
       }
       DrawGUIStatusbar();
@@ -1281,8 +1281,8 @@ http://uscript.net
          {
             DrawGUIPalette();
             DrawGUIVerticalDivider();
-   
-            SetMouseRegion( MouseRegion.HandlePalette );//, -3, 1, 6, -4 );
+
+            SetMouseRegion(MouseRegion.HandlePalette);//, -3, 1, 6, -4 );
          }
 
          DrawGUIContent();
@@ -1292,17 +1292,17 @@ http://uscript.net
 
    void DrawGUIBottomAreas()
    {
-      EditorGUILayout.BeginHorizontal( GUILayout.Height( _guiPanelProperties_Height ) );
+      EditorGUILayout.BeginHorizontal(GUILayout.Height(_guiPanelProperties_Height));
       {
          DrawGUIPropertyGrid();
          DrawGUIVerticalDivider();
 
-         SetMouseRegion( MouseRegion.HandleProperties );//, -3, 3, 6, -3 );
+         SetMouseRegion(MouseRegion.HandleProperties);//, -3, 3, 6, -3 );
 
          DrawGUIHelp();
          DrawGUIVerticalDivider();
 
-         SetMouseRegion( MouseRegion.HandleReference );//, -3, 3, 6, -3 );
+         SetMouseRegion(MouseRegion.HandleReference);//, -3, 3, 6, -3 );
 
          DrawGUINestedScripts();
       }
@@ -1311,12 +1311,12 @@ http://uscript.net
 
    void DrawGUIHorizontalDivider()
    {
-       GUILayout.Box("", uScriptGUIStyle.hDivider, GUILayout.Height(DIVIDER_WIDTH), GUILayout.ExpandWidth(true));
+      GUILayout.Box("", uScriptGUIStyle.hDivider, GUILayout.Height(DIVIDER_WIDTH), GUILayout.ExpandWidth(true));
    }
 
    void DrawGUIVerticalDivider()
    {
-       GUILayout.Box("", uScriptGUIStyle.vDivider, GUILayout.Width(DIVIDER_WIDTH), GUILayout.ExpandHeight(true));
+      GUILayout.Box("", uScriptGUIStyle.vDivider, GUILayout.Width(DIVIDER_WIDTH), GUILayout.ExpandHeight(true));
    }
 
    void DrawGUIStatusbar()
@@ -1328,28 +1328,28 @@ http://uscript.net
 
       EditorGUILayout.BeginHorizontal();
       {
-         GUILayout.Label( _statusbarMessage, GUILayout.ExpandWidth( true ) );
-         GUILayout.Label( (Event.current.modifiers != 0 ? Event.current.modifiers + " :: " : "")
+         GUILayout.Label(_statusbarMessage, GUILayout.ExpandWidth(true));
+         GUILayout.Label((Event.current.modifiers != 0 ? Event.current.modifiers + " :: " : "")
                            + (int)Event.current.mousePosition.x + ", "
                            + (int)Event.current.mousePosition.y + " (" + _mouseRegion + ")",
-                           GUILayout.ExpandWidth( false ));
+                           GUILayout.ExpandWidth(false));
       }
       EditorGUILayout.EndHorizontal();
 
 
       if (Event.current.type == EventType.Repaint)
       {
-//         _statusbarRect = GUILayoutUtility.GetLastRect();
+         //         _statusbarRect = GUILayoutUtility.GetLastRect();
       }
 
       //      Redraw();  // This is taking to much CPU time.
    }
 
-//   Rect _statusbarRect = new Rect();
+   //   Rect _statusbarRect = new Rect();
 
    void DrawGUIPalette()
    {
-      Rect r = EditorGUILayout.BeginVertical( uScriptGUIStyle.panelBox, GUILayout.Width( _guiPanelPalette_Width ) );
+      Rect r = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(_guiPanelPalette_Width));
       {
          // Toolbar
          //
@@ -1361,7 +1361,7 @@ http://uscript.net
 
             _paletteMode = EditorGUILayout.Popup(_paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
 
-//            GUILayout.Label("Nodes", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+            //            GUILayout.Label("Nodes", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 
             GUILayout.FlexibleSpace();
 
@@ -1384,11 +1384,11 @@ http://uscript.net
                      CollapsePaletteMenuItem(null);
                   }
                }
-   
-               GUI.SetNextControlName ("FilterSearch" );
+
+               GUI.SetNextControlName("FilterSearch");
                string _filterText = uScriptGUI.ToolbarSearchField(_paletteFilterText, GUILayout.Width(100));
-//               string _filterText = GUILayout.TextField(_paletteFilterText, 10, "toolbarTextField", GUILayout.Width(80));
-               GUI.SetNextControlName ("" );
+               //               string _filterText = GUILayout.TextField(_paletteFilterText, 10, "toolbarTextField", GUILayout.Width(80));
+               GUI.SetNextControlName("");
                if (_filterText != _paletteFilterText)
                {
                   // Drop focus if the user inserted a newline (hit enter)
@@ -1397,49 +1397,49 @@ http://uscript.net
                      GUIUtility.keyboardControl = 0;
                   }
 
-//                  // Only allow letters and digits
-//                  _filterText = new string(_filterText.Where(ch => char.IsLetterOrDigit(ch)).ToArray());
+                  //                  // Only allow letters and digits
+                  //                  _filterText = new string(_filterText.Where(ch => char.IsLetterOrDigit(ch)).ToArray());
 
                   // Trim leading whitespace
-                  _filterText = _filterText.TrimStart( new char[] { ' ' } );
+                  _filterText = _filterText.TrimStart(new char[] { ' ' });
 
                   _paletteFilterText = _filterText;
                   FilterPaletteMenuItems();
                }
 
-//               // Clear the node text filter
-//               if ( GUILayout.Button( Button.Content( Button.ID.ClearFilter ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-//               {
-//                  GUIUtility.keyboardControl = 0;
-//                  _paletteFilterText = String.Empty;
-//                  FilterPaletteMenuItems();
-//               }
+               //               // Clear the node text filter
+               //               if ( GUILayout.Button( Button.Content( Button.ID.ClearFilter ), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+               //               {
+               //                  GUIUtility.keyboardControl = 0;
+               //                  _paletteFilterText = String.Empty;
+               //                  FilterPaletteMenuItems();
+               //               }
             }
             else
             {
                // This is where the Graph Contents toolbar buttons will go
 
                // Toggle hierarchy foldouts
-//               bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
-//                                                      (_paletteFoldoutToggle ? uScriptGUIContent.toolbarButtonCollapse : uScriptGUIContent.toolbarButtonExpand),
-//                                                      uScriptGUIStyle.paletteToolbarButton,
-//                                                      GUILayout.ExpandWidth(false));
-//               if (_paletteFoldoutToggle != newToggleState)
-//               {
-//                  _paletteFoldoutToggle = newToggleState;
-//                  if (_paletteFoldoutToggle)
-//                  {
-//                     ExpandPaletteMenuItem(null);
-//                  }
-//                  else
-//                  {
-//                     CollapsePaletteMenuItem(null);
-//                  }
-//               }
+               //               bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
+               //                                                      (_paletteFoldoutToggle ? uScriptGUIContent.toolbarButtonCollapse : uScriptGUIContent.toolbarButtonExpand),
+               //                                                      uScriptGUIStyle.paletteToolbarButton,
+               //                                                      GUILayout.ExpandWidth(false));
+               //               if (_paletteFoldoutToggle != newToggleState)
+               //               {
+               //                  _paletteFoldoutToggle = newToggleState;
+               //                  if (_paletteFoldoutToggle)
+               //                  {
+               //                     ExpandPaletteMenuItem(null);
+               //                  }
+               //                  else
+               //                  {
+               //                     CollapsePaletteMenuItem(null);
+               //                  }
+               //               }
 
-               GUI.SetNextControlName ("FilterSearch" );
+               GUI.SetNextControlName("FilterSearch");
                string _filterText = uScriptGUI.ToolbarSearchField(_graphListFilterText, GUILayout.Width(100));
-               GUI.SetNextControlName ("" );
+               GUI.SetNextControlName("");
                if (_filterText != _graphListFilterText)
                {
                   // Drop focus if the user inserted a newline (hit enter)
@@ -1449,7 +1449,7 @@ http://uscript.net
                   }
 
                   // Trim leading whitespace
-                  _filterText = _filterText.TrimStart( new char[] { ' ' } );
+                  _filterText = _filterText.TrimStart(new char[] { ' ' });
 
                   _graphListFilterText = _filterText;
                }
@@ -1478,7 +1478,7 @@ http://uscript.net
             {
                // Node list
                //
-               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView( _guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true) );
+               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
                {
                   foreach (PaletteMenuItem item in _paletteMenuItems)
                   {
@@ -1550,57 +1550,57 @@ http://uscript.net
                   {
                      category = "Miscellaneous";
                   }
-   
+
                   // Validate strings
                   name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
                   comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
-   
+
                   string fullName = name + comment;
-   
+
                   if (String.IsNullOrEmpty(_graphListFilterText) || fullName.ToLower().Contains(_graphListFilterText.ToLower()))
                   {
                      if (categories[category].ContainsKey(name) == false)
                      {
                         categories[category].Add(name, new List<DisplayNode>());
                      }
-   
+
                      // Add the node to the list
                      categories[category][name].Add(displayNode);
                   }
                }
 
-               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView ( _guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true) );
+               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
                {
                   GUIContent nodeButtonContent = new GUIContent(string.Empty, "Click to select node. Shift-click to toggle the selection.");
-   
+
                   foreach (KeyValuePair<string, Dictionary<string, List<DisplayNode>>> kvpCategory in categories)
                   {
                      if (kvpCategory.Value.Count > 0)
                      {
                         // The category contains at least one item to show
-   
+
                         // This is should be a folding menu item that contains more buttons
                         GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
                         tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (0 * 12), 0, 0, 0);
-   
+
                         bool tmpBool = true;
                         tmpBool = GUILayout.Toggle(tmpBool, kvpCategory.Key, tmpStyle);
                         if (tmpBool)
                         {
                            List<string> nodeList = kvpCategory.Value.Keys.ToList();
                            nodeList.Sort();
-   
+
                            foreach (string s in nodeList)
                            {
                               List<DisplayNode> dnList = kvpCategory.Value[s];
-   
+
                               // Show each node
                               foreach (DisplayNode dn in dnList)
                               {
                                  // Get the name and comment strings
                                  name = string.Empty;
                                  comment = string.Empty;
-      
+
                                  if (dn is EntityEventDisplayNode)
                                  {
                                     name = ((EntityEventDisplayNode)dn).EntityEvent.FriendlyType;
@@ -1623,11 +1623,11 @@ http://uscript.net
                                     name = ((CommentDisplayNode)dn).Comment.TitleText.FriendlyName;
                                     comment = ((CommentDisplayNode)dn).Comment.TitleText.Default;
                                  }
-      
+
                                  // Validate strings
                                  name = (String.IsNullOrEmpty(name) ? "UNKNOWN" : name);
                                  comment = (String.IsNullOrEmpty(comment) ? string.Empty : " (" + comment + ")");
-   
+
                                  GUILayout.BeginHorizontal();
                                  {
                                     if (Event.current.type == EventType.Repaint)
@@ -1648,7 +1648,7 @@ http://uscript.net
                                        // toggle the clicked node
                                        m_ScriptEditorCtrl.ToggleNode(dn.Guid);
                                     }
-   
+
                                     if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
                                     {
                                        uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
@@ -1666,57 +1666,57 @@ http://uscript.net
          }
       }
       EditorGUILayout.EndVertical();
-      
+
       if ((int)r.width != 0 && (int)r.width != _guiPanelPalette_Width)
       {
          _guiPanelPalette_Width = (int)r.width;
       }
 
-      SetMouseRegion( MouseRegion.Palette );//, 1, 1, -4, -4 );
+      SetMouseRegion(MouseRegion.Palette);//, 1, 1, -4, -4 );
    }
 
 
 
 
 
-   void SetMouseRegion( MouseRegion region )
+   void SetMouseRegion(MouseRegion region)
    {
       if (Event.current.type == EventType.Repaint)
       {
          _mouseRegionRect[region] = GUILayoutUtility.GetLastRect();
       }
 
-      if ( _mouseRegionRect.ContainsKey(region) )
+      if (_mouseRegionRect.ContainsKey(region))
       {
          if (GUI.enabled)
          {
-            switch ( region )
+            switch (region)
             {
                case MouseRegion.HandleCanvas:
-                  EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeVertical);
+                  EditorGUIUtility.AddCursorRect(_mouseRegionRect[region], MouseCursor.ResizeVertical);
                   break;
                case MouseRegion.HandlePalette:
                case MouseRegion.HandleProperties:
                case MouseRegion.HandleReference:
-                  EditorGUIUtility.AddCursorRect( _mouseRegionRect[region], MouseCursor.ResizeHorizontal);
+                  EditorGUIUtility.AddCursorRect(_mouseRegionRect[region], MouseCursor.ResizeHorizontal);
                   break;
             }
          }
       }
    }
-   
+
    bool HiddenRegion(MouseRegion region)
    {
       if (!m_HidePanelMode) return false;
 
       return region != uScript.MouseRegion.Canvas && region != uScript.MouseRegion.Outside;
    }
-   
+
    void CalculateMouseRegion()
    {
-      foreach( KeyValuePair<MouseRegion, Rect> kvp in _mouseRegionRect )
+      foreach (KeyValuePair<MouseRegion, Rect> kvp in _mouseRegionRect)
       {
-         if ( kvp.Value.Contains( Event.current.mousePosition ) && !HiddenRegion(kvp.Key) )
+         if (kvp.Value.Contains(Event.current.mousePosition) && !HiddenRegion(kvp.Key))
          {
             _mouseRegion = kvp.Key;
             break;
@@ -1793,7 +1793,7 @@ http://uscript.net
          {
             foreach (PaletteMenuItem item in paletteMenuItem.Items)
             {
-                item.Hidden = FilterPaletteMenuItem(item, true);
+               item.Hidden = FilterPaletteMenuItem(item, true);
             }
          }
          return false;
@@ -1867,9 +1867,9 @@ http://uscript.net
          else
          {
             paletteMenuItem.Name = contextMenuItem.Text.Replace("&", "");
-            paletteMenuItem.Tooltip = FindNodeToolTip( ScriptEditor.FindNodeType(contextMenuItem.Tag as EntityNode) );
+            paletteMenuItem.Tooltip = FindNodeToolTip(ScriptEditor.FindNodeType(contextMenuItem.Tag as EntityNode));
             paletteMenuItem.Click = contextMenuItem.Click;
-            paletteMenuItem.Tag   = contextMenuItem.Tag;
+            paletteMenuItem.Tag = contextMenuItem.Tag;
          }
       }
       else
@@ -1932,23 +1932,23 @@ http://uscript.net
 
 
 
-   void RefreshScript( )
+   void RefreshScript()
    {
-      string relativePath = "Assets\\" + m_FullPath.Substring( UnityEngine.Application.dataPath.Length + 1 );
-      String fileName = System.IO.Path.GetFileNameWithoutExtension( relativePath );
+      string relativePath = "Assets\\" + m_FullPath.Substring(UnityEngine.Application.dataPath.Length + 1);
+      String fileName = System.IO.Path.GetFileNameWithoutExtension(relativePath);
 
-      relativePath = System.IO.Path.GetDirectoryName( relativePath );
-      relativePath = relativePath.Replace( '\\', '/' );
+      relativePath = System.IO.Path.GetDirectoryName(relativePath);
+      relativePath = relativePath.Replace('\\', '/');
 
       string logicPath = relativePath + "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
       string wrapperPath = relativePath + "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
 
-      uScriptDebug.Log( "refreshing " + logicPath );
-      uScriptDebug.Log( "refreshing " + wrapperPath );
+      uScriptDebug.Log("refreshing " + logicPath);
+      uScriptDebug.Log("refreshing " + wrapperPath);
 
-      AssetDatabase.ImportAsset( logicPath, ImportAssetOptions.ForceUpdate );
-      AssetDatabase.ImportAsset( wrapperPath, ImportAssetOptions.ForceUpdate );
-      AssetDatabase.Refresh( );
+      AssetDatabase.ImportAsset(logicPath, ImportAssetOptions.ForceUpdate);
+      AssetDatabase.ImportAsset(wrapperPath, ImportAssetOptions.ForceUpdate);
+      AssetDatabase.Refresh();
    }
 
 
@@ -1967,7 +1967,7 @@ http://uscript.net
 
 
          {
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonNew, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonNew, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                if (AllowNewFile(true))
                {
@@ -1975,45 +1975,45 @@ http://uscript.net
                }
             }
 
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonOpen, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonOpen, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               string path = EditorUtility.OpenFilePanel( "Open uScript", Preferences.UserScripts, "uscript" );
-               if ( path.Length > 0 )
+               string path = EditorUtility.OpenFilePanel("Open uScript", Preferences.UserScripts, "uscript");
+               if (path.Length > 0)
                {
-                  OpenScript( path );
+                  OpenScript(path);
                }
             }
 
-//            _openScriptToggle = GUILayout.Toggle(_openScriptToggle, "Open Active uScripts...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
+            //            _openScriptToggle = GUILayout.Toggle(_openScriptToggle, "Open Active uScripts...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
 
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonSave, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonSave, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               AssetDatabase.StartAssetEditing( );
-                  bool saved = SaveScript( false );
-               AssetDatabase.StopAssetEditing( );
-            
-               if (saved) RefreshScript( );
-            }
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonSaveAs, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
-            {
-               AssetDatabase.StartAssetEditing( );
-                  bool saved = SaveScript( true );
-               AssetDatabase.StopAssetEditing( );
+               AssetDatabase.StartAssetEditing();
+               bool saved = SaveScript(false);
+               AssetDatabase.StopAssetEditing();
 
-               if (saved) RefreshScript( );
+               if (saved) RefreshScript();
             }
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonSaveAs, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               RebuildAllScripts( );
+               AssetDatabase.StartAssetEditing();
+               bool saved = SaveScript(true);
+               AssetDatabase.StopAssetEditing();
+
+               if (saved) RefreshScript();
             }
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonRemoveGenerated, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               AssetDatabase.StartAssetEditing( );
-                  RemoveGeneratedCode( Preferences.GeneratedScripts );
-               AssetDatabase.StopAssetEditing( );
+               RebuildAllScripts();
+            }
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonRemoveGenerated, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            {
+               AssetDatabase.StartAssetEditing();
+               RemoveGeneratedCode(Preferences.GeneratedScripts);
+               AssetDatabase.StopAssetEditing();
                AssetDatabase.Refresh();
             }
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                m_DoPreferences = true;
             }
@@ -2040,7 +2040,7 @@ http://uscript.net
                {
                   filename = m_ScriptEditorCtrl.ScriptName.Substring(0, m_ScriptEditorCtrl.ScriptName.IndexOf("."));
                }
-               
+
                GUILayout.Label(filename, style2);
             }
          }
@@ -2057,16 +2057,16 @@ http://uscript.net
             {
                // Canvas
                //
-               if ( rect.width != 0 && rect.height != 0 )
+               if (rect.width != 0 && rect.height != 0)
                {
                   m_NodeWindowRect = rect;
                }
-   
+
                GUIStyle style = new GUIStyle();
                style.normal.background = uScriptConfig.canvasBackgroundTexture;
-   
-               GUI.SetNextControlName ("MainView" );
-   
+
+               GUI.SetNextControlName("MainView");
+
                _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, style, GUILayout.ExpandWidth(true));
                {
                   // Get the bounding area of all nodes on the canvas, plus 64px to
@@ -2078,19 +2078,19 @@ http://uscript.net
                   //
                   // When zoom is implemented, make sure the results are accurately scaled
                   //
-      //            int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].width) : 0);
-      //            int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].height-18) : 0);
-      //
-      //            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
-   
+                  //            int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].width) : 0);
+                  //            int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].height-18) : 0);
+                  //
+                  //            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
+
                   // Paint the graph (nodes, sockets, links, and comments)
                   PaintEventArgs args = new PaintEventArgs();
                   args.Graphics = new System.Drawing.Graphics();
                   m_ScriptEditorCtrl.GuiPaint(args);
                }
                EditorGUILayout.EndScrollView();
-   
-               GUI.SetNextControlName ("");
+
+               GUI.SetNextControlName("");
 
             }
          }
@@ -2103,7 +2103,7 @@ http://uscript.net
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion( MouseRegion.Canvas );//, 3, 1, -2, -4 );
+      SetMouseRegion(MouseRegion.Canvas);//, 3, 1, -2, -4 );
    }
 
    Rect mapSize = new Rect();
@@ -2117,24 +2117,24 @@ http://uscript.net
 
    void MiniMapClick()
    {
-      if ( _canvasRect.Contains( Event.current.mousePosition ) )
+      if (_canvasRect.Contains(Event.current.mousePosition))
       {
          _requestedCloseMap = true;
 
          // Enter the correct canvas position here using the current mapScale, scrollbar positions, etc.
-         _requestCanvasLocation = new Point( (int)((mapMouse.X - (mapSize.x - mapBounds.x)) / mapScale),
+         _requestCanvasLocation = new Point((int)((mapMouse.X - (mapSize.x - mapBounds.x)) / mapScale),
                                              (int)((mapMouse.Y - (mapSize.y - mapBounds.y)) / mapScale)
                                            );
 
-                     //  + mapSize.x - mapBounds.x
-//         Debug.Log( "RESULT: " + _requestCanvasLocation
-//                    + "\n\t ViewportCenter: " + screenBoundsCenter
-//                       + "\t\t\tMousePosition: " + mapMouse
-//                       + "\t\t\tDiff: " + screenClickOffsetX
-//                       + " (" + screenClickOffsetX / mapScale + ")"
-//
-//                    + "\n\t\tMapScale: " + mapScale + ", \t\tmapScroll: " + mapScroll
-//                    + "\nMapBounds: " + mapBounds + ", \t\tMapSize: " + mapSize + "\n");
+         //  + mapSize.x - mapBounds.x
+         //         Debug.Log( "RESULT: " + _requestCanvasLocation
+         //                    + "\n\t ViewportCenter: " + screenBoundsCenter
+         //                       + "\t\t\tMousePosition: " + mapMouse
+         //                       + "\t\t\tDiff: " + screenClickOffsetX
+         //                       + " (" + screenClickOffsetX / mapScale + ")"
+         //
+         //                    + "\n\t\tMapScale: " + mapScale + ", \t\tmapScroll: " + mapScroll
+         //                    + "\nMapBounds: " + mapBounds + ", \t\tMapSize: " + mapSize + "\n");
       }
    }
 
@@ -2149,16 +2149,16 @@ http://uscript.net
       // Get the dimensions of the entire map at the specified scale
       //
       mapBounds = new Rect();
-      
+
       // Start with the first ...
       if (m_ScriptEditorCtrl.FlowChart.Nodes.Length > 0)
       {
          node = m_ScriptEditorCtrl.FlowChart.Nodes[0];
          mapBounds = new Rect(node.Bounds.X, node.Bounds.Y, node.Bounds.Width, node.Bounds.Height);
       }
-      
+
       // ... then loop through the remaining nodes ...
-      for (int i=1; i < m_ScriptEditorCtrl.FlowChart.Nodes.Length; i++)
+      for (int i = 1; i < m_ScriptEditorCtrl.FlowChart.Nodes.Length; i++)
       {
          mapBounds.x = Math.Min(mapBounds.x, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X);
          mapBounds.y = Math.Min(mapBounds.y, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y);
@@ -2167,22 +2167,22 @@ http://uscript.net
          mapBounds.height = Math.Max(mapBounds.height, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y
                                                  + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Height);
       }
-      
+
       // ... and finally, apply the scaling
       mapBounds.x *= mapScale;
       mapBounds.y *= mapScale;
       mapBounds.width *= mapScale;
       mapBounds.height *= mapScale;
-      
-      
+
+
       //
       // Set the size of the viewRect
       //
       Rect viewRect = new Rect();
       viewRect.width = (mapBounds.width - mapBounds.x);
       viewRect.height = (mapBounds.height - mapBounds.y);
-      
-      
+
+
       Rect mapRect = new Rect();
 
       if (_mouseRegionRect.ContainsKey(MouseRegion.HandleCanvas))
@@ -2193,8 +2193,8 @@ http://uscript.net
          mapRect.height = position.height - 18 - 2 - 17 - _guiPanelProperties_Height - 8;
       }
 
-//      Debug.Log("_canvasRect: " + _canvasRect + "\t\tposition: " + position + "\n"
-//                + "PaletteWidth: " + _guiPanelPalette_Width + ", PropertiesHeight: " + _guiPanelProperties_Height + ", StatusbarRect: " + _statusbarRect + ", mapRect: " + mapRect);
+      //      Debug.Log("_canvasRect: " + _canvasRect + "\t\tposition: " + position + "\n"
+      //                + "PaletteWidth: " + _guiPanelPalette_Width + ", PropertiesHeight: " + _guiPanelProperties_Height + ", StatusbarRect: " + _statusbarRect + ", mapRect: " + mapRect);
 
       GUI.skin.scrollView.normal.background = uScriptConfig.canvasBackgroundTexture;
       mapScroll = GUI.BeginScrollView(mapRect, mapScroll, viewRect, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
@@ -2212,8 +2212,8 @@ http://uscript.net
       tmpStyle.margin = new RectOffset();
       //GUI.Box(mapSize, string.Empty, tmpStyle);
 
-//      Debug.Log("CanvasRect: " + mapRect + ", \tMapBounds: " + mapBounds + ",\tScale: " + mapScale + "\nViewRect: " + viewRect + ", \t\t\t\tViewOffset: " + viewOffset
-//                + "\t\tmapSize: " + mapSize);
+      //      Debug.Log("CanvasRect: " + mapRect + ", \tMapBounds: " + mapBounds + ",\tScale: " + mapScale + "\nViewRect: " + viewRect + ", \t\t\t\tViewOffset: " + viewOffset
+      //                + "\t\tmapSize: " + mapSize);
 
 
       // Draw the canvas viewport rect
@@ -2239,12 +2239,12 @@ http://uscript.net
          Rect nodeRect = new Rect(n.Bounds.X * mapScale + mapSize.x - mapBounds.x,
                                   n.Bounds.Y * mapScale + mapSize.y - mapBounds.y,
                                   n.Bounds.Width * mapScale,
-                                  n.Bounds.Height * mapScale );
+                                  n.Bounds.Height * mapScale);
 
-//         Debug.Log("\tNode -- Location: " + n.Location + ", \tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
+         //         Debug.Log("\tNode -- Location: " + n.Location + ", \tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
 
 
-         
+
 
          // Style the node by type
          GUIStyle tmpNodeStyle = new GUIStyle(GUI.skin.box);
@@ -2281,7 +2281,7 @@ http://uscript.net
          }
 
       }
-   
+
 
       foreach (Link l in m_ScriptEditorCtrl.FlowChart.Links)
       {
@@ -2310,7 +2310,7 @@ http://uscript.net
 
 
 
-	// TEMP Variables for testing the new property grid methods
+   // TEMP Variables for testing the new property grid methods
    Rect _svRect;
 
    KeyCode[] _arrayKeyCode;
@@ -2319,7 +2319,7 @@ http://uscript.net
    private int _paletteMode = 0;
    bool _wasMoving = false;
 
-Vector2 _scrollNewProperties;
+   Vector2 _scrollNewProperties;
    // END TEMP Variables
 
 
@@ -2327,14 +2327,14 @@ Vector2 _scrollNewProperties;
 
    void DrawGUIPropertyGrid()
    {
-      EditorGUILayout.BeginVertical( uScriptGUIStyle.panelBox, GUILayout.Width( _guiPanelProperties_Width ) );
+      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(_guiPanelProperties_Width));
       {
          // Toolbar
          //
-         EditorGUILayout.BeginHorizontal( EditorStyles.toolbar );
+         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
             GUILayout.Label("Properties", uScriptGUIStyle.panelTitle);
-//            GUILayout.FlexibleSpace();
+            //            GUILayout.FlexibleSpace();
          }
          EditorGUILayout.EndHorizontal();
 
@@ -2372,7 +2372,7 @@ Vector2 _scrollNewProperties;
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion( MouseRegion.Properties );//, 1, 3, -4, -3 );
+      SetMouseRegion(MouseRegion.Properties);//, 1, 3, -4, -3 );
    }
 
 
@@ -2380,9 +2380,9 @@ Vector2 _scrollNewProperties;
    {
       EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
       {
-         string helpDescription     = "Select a node on the canvas to view usage and behavior information.";
-         string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
-         string helpButtonURL       = "http://www.uscript.net/docs/";
+         string helpDescription = "Select a node on the canvas to view usage and behavior information.";
+         string helpButtonTooltip = "Open the online uScript reference in the default web browser.";
+         string helpButtonURL = "http://www.uscript.net/docs/";
 
          if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
          {
@@ -2434,7 +2434,7 @@ Vector2 _scrollNewProperties;
             }
 
             uScriptGUIContent.ChangeTooltip(uScriptGUIContent.ContentID.OnlineReference, helpButtonTooltip);
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                Help.BrowseURL(helpButtonURL);
             }
@@ -2453,11 +2453,11 @@ Vector2 _scrollNewProperties;
                GUIUtility.keyboardControl = 0;
             }
          }
-         EditorGUILayout.EndScrollView ();
+         EditorGUILayout.EndScrollView();
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion( MouseRegion.Reference );//, 3, 3, -6, -3 );
+      SetMouseRegion(MouseRegion.Reference);//, 3, 3, -6, -3 );
    }
 
 
@@ -2504,16 +2504,16 @@ Vector2 _scrollNewProperties;
          {
             _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
             {
-//               GUILayout.Label("Canvas Location: \t\t\t" + m_ScriptEditorCtrl.FlowChart.Location);
-//
-//               Point center = m_ScriptEditorCtrl.FlowChart.Location;
-//               center.X = -center.X + (int)(uScript.Instance.NodeWindowRect.width * 0.5f);
-//               center.Y = -center.Y + (int)((uScript.Instance.NodeWindowRect.height - uScript.Instance.NodeToolbarRect.height) * 0.5f);
-//
-//               GUILayout.Label("Canvas Center Point: \t" + center);
-//               GUILayout.Label("Mouse Screen Position: \t" + mapMouse);
-//
-//               Repaint();
+               //               GUILayout.Label("Canvas Location: \t\t\t" + m_ScriptEditorCtrl.FlowChart.Location);
+               //
+               //               Point center = m_ScriptEditorCtrl.FlowChart.Location;
+               //               center.X = -center.X + (int)(uScript.Instance.NodeWindowRect.width * 0.5f);
+               //               center.Y = -center.Y + (int)((uScript.Instance.NodeWindowRect.height - uScript.Instance.NodeToolbarRect.height) * 0.5f);
+               //
+               //               GUILayout.Label("Canvas Center Point: \t" + center);
+               //               GUILayout.Label("Mouse Screen Position: \t" + mapMouse);
+               //
+               //               Repaint();
 
                List<string> keylist = new List<string>();
                keylist.AddRange(uScriptBackgroundProcess.s_uScriptInfo.Keys);
@@ -2602,7 +2602,7 @@ Vector2 _scrollNewProperties;
       }
       EditorGUILayout.EndVertical();
 
-      SetMouseRegion(MouseRegion.NestedScripts );//, 3, 3, -2, -3);
+      SetMouseRegion(MouseRegion.NestedScripts);//, 3, 3, -2, -3);
    }
 
 
@@ -2642,10 +2642,10 @@ Vector2 _scrollNewProperties;
          GUILayout.FlexibleSpace();
          if (GUILayout.Button("Accept", GUILayout.Width(100)))
          {
-            uScript.SetSetting( "EULA\\AgreedVersion", EULAVersion );
+            uScript.SetSetting("EULA\\AgreedVersion", EULAVersion);
             _EULAagreed = EULAVersion;
          }
-         
+
          GUI.enabled = true;
 
          GUILayout.FlexibleSpace();
@@ -2660,17 +2660,17 @@ Vector2 _scrollNewProperties;
    }
 
 
-   
+
 
    void m_ScriptEditorCtrl_ScriptModified(object sender, EventArgs e)
    {
-      Repaint( );
+      Repaint();
    }
 
 
    Rect _windowRectPreferences;
 
-   public void DrawPreferences( )
+   public void DrawPreferences()
    {
       _windowRectPreferences.x = (position.width - _windowRectPreferences.width) / 2;
       _windowRectPreferences.y = Math.Max(0, (position.height - _windowRectPreferences.height) / 2);
@@ -2680,53 +2680,53 @@ Vector2 _scrollNewProperties;
 
       _windowRectPreferences = GUILayout.Window(10001, _windowRectPreferences, DoPreferences, "Preferences", style3);
 
-//         _windowRectPreferences.width = 250;
-//      if (_windowRectPreferences == new Rect())
-//      {
-//         _windowRectPreferences.width = 550;
-//         int w = 550;
-//         int h = Math.Max(400, (int)position.height - 400);
-//         Rect r = new Rect((position.width-w)/2, (position.height-h)/2, w, h);
-//      }
+      //         _windowRectPreferences.width = 250;
+      //      if (_windowRectPreferences == new Rect())
+      //      {
+      //         _windowRectPreferences.width = 550;
+      //         int w = 550;
+      //         int h = Math.Max(400, (int)position.height - 400);
+      //         Rect r = new Rect((position.width-w)/2, (position.height-h)/2, w, h);
+      //      }
 
 
    }
 
-   public void DrawContextMenu( int x, int y )
+   public void DrawContextMenu(int x, int y)
    {
-      List<string> options = new List<string>( );
+      List<string> options = new List<string>();
 
-      foreach ( ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items )
+      foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
       {
-         options.Add( item.Text );
+         options.Add(item.Text);
       }
 
-      Rect windowRect = new Rect( x, y, 10, 10 );
+      Rect windowRect = new Rect(x, y, 10, 10);
       windowRect = GUILayout.Window(0, windowRect, DoContextMenu, "");
    }
 
-   public void DrawAssetList( )
+   public void DrawAssetList()
    {
-      Rect windowRect = new Rect( _canvasRect.xMin + 50, 50, 10, 10 );
+      Rect windowRect = new Rect(_canvasRect.xMin + 50, 50, 10, 10);
       windowRect = GUILayout.Window(10000, windowRect, DoAssetList, "");
    }
 
    void DoAssetList(int windowID)
    {
-      GUILayout.Label( "uScripts", EditorStyles.boldLabel );
-  
-      UnityEngine.Object []objects = GameObject.FindObjectsOfType(typeof(uScriptCode));
-      foreach ( UnityEngine.Object o in objects )
+      GUILayout.Label("uScripts", EditorStyles.boldLabel);
+
+      UnityEngine.Object[] objects = GameObject.FindObjectsOfType(typeof(uScriptCode));
+      foreach (UnityEngine.Object o in objects)
       {
          uScriptCode code = o as uScriptCode;
 
          if (GUILayout.Button(code.GetType().ToString(), EditorStyles.label))
          {
-            string path = FindFile( Application.dataPath, code.GetType().ToString() + ".uscript" );
-            if ( "" != path )
+            string path = FindFile(Application.dataPath, code.GetType().ToString() + ".uscript");
+            if ("" != path)
             {
-                _openScriptToggle = false;
-               OpenScript( path );
+               _openScriptToggle = false;
+               OpenScript(path);
             }
          }
       }
@@ -2745,39 +2745,39 @@ Vector2 _scrollNewProperties;
       GUILayout.Label("Project File Location", EditorStyles.boldLabel);
 
       string path = uScriptConfig.ConstantPaths.RelativePath(Preferences.UserScripts);
-      if ( path.Length > 64 ) path = path.Substring( 0, 64 ) + "...";
+      if (path.Length > 64) path = path.Substring(0, 64) + "...";
 
-      if (GUILayout.Button( path, uScriptGUIStyle.ContextMenu))
+      if (GUILayout.Button(path, uScriptGUIStyle.ContextMenu))
       {
-         path = EditorUtility.OpenFolderPanel( "uScript Project Files", Preferences.UserScripts, "" );
-         if ( "" != path ) Preferences.UserScripts = path;
+         path = EditorUtility.OpenFolderPanel("uScript Project Files", Preferences.UserScripts, "");
+         if ("" != path) Preferences.UserScripts = path;
       }
 
-      EditorGUILayout.Separator( );
+      EditorGUILayout.Separator();
 
       //
       // Code Generation Settings
       //
-      GUILayout.Label( "CodeGeneration", EditorStyles.boldLabel );
+      GUILayout.Label("CodeGeneration", EditorStyles.boldLabel);
 
-      Preferences.MaximumNodeRecursionCount = (int) EditorGUILayout.IntField( "Maximum Node Recursion", Preferences.MaximumNodeRecursionCount);
+      Preferences.MaximumNodeRecursionCount = (int)EditorGUILayout.IntField("Maximum Node Recursion", Preferences.MaximumNodeRecursionCount);
 
-      EditorGUILayout.Separator( );
+      EditorGUILayout.Separator();
 
       //
       // Panel Settings
       //
-      GUILayout.Label( "Panel Settings", EditorStyles.boldLabel );
+      GUILayout.Label("Panel Settings", EditorStyles.boldLabel);
 
-      Preferences.DrawPanelsOnUpdate   = EditorGUILayout.Toggle("Draw Panels During Update", Preferences.DrawPanelsOnUpdate);
-      Preferences.ToolbarButtonStyle   = (int)(uScriptGUIContent.ContentStyle)EditorGUILayout.EnumPopup( "Toolbar Button Style", (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle);
+      Preferences.DrawPanelsOnUpdate = EditorGUILayout.Toggle("Draw Panels During Update", Preferences.DrawPanelsOnUpdate);
+      Preferences.ToolbarButtonStyle = (int)(uScriptGUIContent.ContentStyle)EditorGUILayout.EnumPopup("Toolbar Button Style", (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle);
 
-      EditorGUILayout.Separator( );
+      EditorGUILayout.Separator();
 
       //
       // Grid Settings
       //
-      GUILayout.Label( "Grid Settings", EditorStyles.boldLabel );
+      GUILayout.Label("Grid Settings", EditorStyles.boldLabel);
 
       //background grid size
       int minGridSize = 8;
@@ -2785,25 +2785,25 @@ Vector2 _scrollNewProperties;
       int minGridMajorSpacing = 1;
       int maxGridMagicSpacing = 10;
 
-      Preferences.ShowGrid             = EditorGUILayout.Toggle    ( "Show Grid", Preferences.ShowGrid );
-      Preferences.GridSizeVertical     = Math.Min(maxGridSize, Math.Max(minGridSize, EditorGUILayout.FloatField( "Grid Size Vertical", Preferences.GridSizeVertical) ) );
-      Preferences.GridSizeHorizontal   = Math.Min(maxGridSize, Math.Max(minGridSize, EditorGUILayout.FloatField( "Grid Size Horizontal", Preferences.GridSizeHorizontal) ) );
-      Preferences.GridMajorLineSpacing = Math.Min(maxGridMagicSpacing, Math.Max(minGridMajorSpacing, EditorGUILayout.IntField  ( "Grid Major Line Spacing", Preferences.GridMajorLineSpacing) ) );
-      Preferences.GridColorMajor       = EditorGUILayout.ColorField( "Grid Color Major", Preferences.GridColorMajor );
-      Preferences.GridColorMinor       = EditorGUILayout.ColorField( "Grid Color Minor", Preferences.GridColorMinor );
+      Preferences.ShowGrid = EditorGUILayout.Toggle("Show Grid", Preferences.ShowGrid);
+      Preferences.GridSizeVertical = Math.Min(maxGridSize, Math.Max(minGridSize, EditorGUILayout.FloatField("Grid Size Vertical", Preferences.GridSizeVertical)));
+      Preferences.GridSizeHorizontal = Math.Min(maxGridSize, Math.Max(minGridSize, EditorGUILayout.FloatField("Grid Size Horizontal", Preferences.GridSizeHorizontal)));
+      Preferences.GridMajorLineSpacing = Math.Min(maxGridMagicSpacing, Math.Max(minGridMajorSpacing, EditorGUILayout.IntField("Grid Major Line Spacing", Preferences.GridMajorLineSpacing)));
+      Preferences.GridColorMajor = EditorGUILayout.ColorField("Grid Color Major", Preferences.GridColorMajor);
+      Preferences.GridColorMinor = EditorGUILayout.ColorField("Grid Color Minor", Preferences.GridColorMinor);
 
-      EditorGUILayout.Separator( );
+      EditorGUILayout.Separator();
       EditorGUILayout.Space();
-      EditorGUILayout.Separator( );
+      EditorGUILayout.Separator();
 
-      
+
       //revert to default
       if (GUILayout.Button("Revert All Settings to Default Values"))
       {
          Preferences.Revert();
       }
 
-      EditorGUILayout.Separator( );
+      EditorGUILayout.Separator();
 
 
       //save or cancel
@@ -2815,7 +2815,7 @@ Vector2 _scrollNewProperties;
 
          if (GUILayout.Button("Save"/*, btnStyle*/))
          {
-            Preferences.Save( );
+            Preferences.Save();
             uScriptGUIContent.Style = (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle;
 
             m_DoPreferences = false;
@@ -2826,7 +2826,7 @@ Vector2 _scrollNewProperties;
          if (GUILayout.Button("Cancel"/*, btnStyle*/))
          {
             //cancel was pressed so revert to saved version
-            Preferences.Load( );
+            Preferences.Load();
             uScriptGUIContent.Style = (uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle;
 
             m_DoPreferences = false;
@@ -2839,13 +2839,13 @@ Vector2 _scrollNewProperties;
 
    void DoContextMenu(int windowID)
    {
-      if ( null == m_CurrentMenu )
+      if (null == m_CurrentMenu)
       {
-         foreach ( ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items )
+         foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
          {
-            if ( item.Text == "<hr>" )
+            if (item.Text == "<hr>")
             {
-               GUILayout.Button( "", uScriptGUIStyle.hDivider );
+               GUILayout.Button("", uScriptGUIStyle.hDivider);
             }
             else
             {
@@ -2858,74 +2858,74 @@ Vector2 _scrollNewProperties;
          }
       }
 
-      if ( null != m_CurrentMenu )
+      if (null != m_CurrentMenu)
       {
-         DrawSubItems( m_CurrentMenu as ToolStripMenuItem );
+         DrawSubItems(m_CurrentMenu as ToolStripMenuItem);
       }
    }
 
-   private string FindFile( string path, string fileName )
+   private string FindFile(string path, string fileName)
    {
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
+      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
 
-      System.IO.FileInfo [] files = directory.GetFiles( );
+      System.IO.FileInfo[] files = directory.GetFiles();
 
-      foreach ( System.IO.FileInfo file in files )
+      foreach (System.IO.FileInfo file in files)
       {
-         if ( file.Name == fileName )
+         if (file.Name == fileName)
          {
             return file.FullName;
          }
       }
 
-      foreach ( System.IO.DirectoryInfo subDirectory in directory.GetDirectories( ) )
+      foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
       {
-         string result = FindFile( subDirectory.FullName, fileName );
-         if ( result != "" ) return result;
+         string result = FindFile(subDirectory.FullName, fileName);
+         if (result != "") return result;
       }
 
       return "";
    }
 
-   private string[] FindAllFiles( string rootPath, string extension )
+   private string[] FindAllFiles(string rootPath, string extension)
    {
-      List<string> paths = new List<string>( );
+      List<string> paths = new List<string>();
 
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( rootPath );
+      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(rootPath);
 
-      System.IO.FileInfo [] files = directory.GetFiles( );
+      System.IO.FileInfo[] files = directory.GetFiles();
 
-      foreach ( System.IO.FileInfo file in files )
+      foreach (System.IO.FileInfo file in files)
       {
-         if ( file.Extension == extension )
+         if (file.Extension == extension)
          {
-            paths.Add( file.FullName );
+            paths.Add(file.FullName);
          }
       }
 
-      foreach ( System.IO.DirectoryInfo subDirectory in directory.GetDirectories( ) )
+      foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
       {
-         string []results = FindAllFiles( subDirectory.FullName, extension );
-         paths.AddRange( results );
+         string[] results = FindAllFiles(subDirectory.FullName, extension);
+         paths.AddRange(results);
       }
 
-      return paths.ToArray( );
+      return paths.ToArray();
    }
 
-   private void DrawSubItems( ToolStripMenuItem menuItem )
+   private void DrawSubItems(ToolStripMenuItem menuItem)
    {
-      if ( null == menuItem ) return;
+      if (null == menuItem) return;
 
-      foreach ( ToolStripItem item in menuItem.DropDownItems.Items )
+      foreach (ToolStripItem item in menuItem.DropDownItems.Items)
       {
-         if ( GUILayout.Button( item.Text.Replace("&", ""), uScriptGUIStyle.ContextMenu ) )
+         if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.ContextMenu))
          {
             m_CurrentMenu = item;
             break;
          }
       }
 
-      if ( null != m_CurrentMenu && null != m_CurrentMenu.Click )
+      if (null != m_CurrentMenu && null != m_CurrentMenu.Click)
       {
          ToolStripItem item = m_CurrentMenu;
 
@@ -2933,24 +2933,24 @@ Vector2 _scrollNewProperties;
          m_ContextY = 0;
          m_CurrentMenu = null;
 
-         item.OnClick( );
+         item.OnClick();
       }
    }
 
-   public void OnMouseDown( )
+   public void OnMouseDown()
    {
       Control.MouseButtons.Buttons = m_MouseDownArgs.Button;
 
       System.Windows.Forms.Cursor.Position.X = m_MouseDownArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseDownArgs.Y;
 
-      m_ScriptEditorCtrl.OnMouseDown( m_MouseDownArgs );
+      m_ScriptEditorCtrl.OnMouseDown(m_MouseDownArgs);
    }
- 
+
    static int lastMouseX = 0;
    static int lastMouseY = 0;
-   
-   public void OnMouseMove( )
+
+   public void OnMouseMove()
    {
       // calculate delta for handle dragging
       int deltaX = m_MouseMoveArgs.X - lastMouseX;
@@ -2961,26 +2961,26 @@ Vector2 _scrollNewProperties;
       // convert to main canvas space
       if (!m_HidePanelMode) m_MouseMoveArgs.X -= _guiPanelPalette_Width;
       m_MouseMoveArgs.Y -= (int)_canvasRect.yMin;
-      
+
       System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
 
       if (_mouseRegion == MouseRegion.Canvas)
       {
-         m_ScriptEditorCtrl.OnMouseMove( m_MouseMoveArgs );
+         m_ScriptEditorCtrl.OnMouseMove(m_MouseMoveArgs);
       }
 
       // convert back to screen
       if (!m_HidePanelMode) m_MouseMoveArgs.X += _guiPanelPalette_Width;
       m_MouseMoveArgs.Y += (int)_canvasRect.yMin;
-      
+
       if (GUI.enabled && !m_HidePanelMode)
       {
          // check for divider draggging
-         foreach ( KeyValuePair<MouseRegion, Rect>kvp in _mouseRegionRect)
+         foreach (KeyValuePair<MouseRegion, Rect> kvp in _mouseRegionRect)
          {
             MouseRegion region = kvp.Key;
-            switch ( region )
+            switch (region)
             {
                case MouseRegion.HandleCanvas:
                   if (m_MouseDown && region == m_MouseDownRegion)
@@ -3015,29 +3015,29 @@ Vector2 _scrollNewProperties;
       }
    }
 
-   public void OnMouseUp( )
+   public void OnMouseUp()
    {
       System.Windows.Forms.Cursor.Position.X = m_MouseUpArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseUpArgs.Y;
-      
-      m_ScriptEditorCtrl.OnMouseUp( m_MouseUpArgs );
-      
+
+      m_ScriptEditorCtrl.OnMouseUp(m_MouseUpArgs);
+
       m_CurrentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
       if (!String.IsNullOrEmpty(m_FullPath))
       {
          SetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", m_CurrentCanvasPosition);
       }
-      
+
       Control.MouseButtons.Buttons = 0;
    }
- 
-   public void Redraw( )
+
+   public void Redraw()
    {
-      if ( true == m_Repainting )  return;
+      if (true == m_Repainting) return;
 
       m_Repainting = true;
 
-      Repaint( );
+      Repaint();
 
       m_Repainting = false;
    }
@@ -3047,83 +3047,83 @@ Vector2 _scrollNewProperties;
       if (m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.IsDirty)
       {
          int result;
-         
-         if ( true == allowCancel )
+
+         if (true == allowCancel)
          {
-            result = EditorUtility.DisplayDialogComplex( "Save File?", m_ScriptEditorCtrl.ScriptEditor.Name + " has been modified, would you like to save?", "Yes", "No", "Cancel" );
+            result = EditorUtility.DisplayDialogComplex("Save File?", m_ScriptEditorCtrl.ScriptEditor.Name + " has been modified, would you like to save?", "Yes", "No", "Cancel");
          }
          else
          {
-            bool yes = EditorUtility.DisplayDialog( "Save File?", m_ScriptEditorCtrl.ScriptEditor.Name + " has been modified, would you like to save?", "Yes", "No" );
-            
-            if ( true == yes ) result = 0;
+            bool yes = EditorUtility.DisplayDialog("Save File?", m_ScriptEditorCtrl.ScriptEditor.Name + " has been modified, would you like to save?", "Yes", "No");
+
+            if (true == yes) result = 0;
             else result = 1;
          }
 
-         if ( 0 == result )
+         if (0 == result)
          {
             bool scriptSaved;
 
-            AssetDatabase.StartAssetEditing( );
+            AssetDatabase.StartAssetEditing();
 
-               scriptSaved = SaveScript( false );
-               
-            AssetDatabase.StopAssetEditing( );
+            scriptSaved = SaveScript(false);
+
+            AssetDatabase.StopAssetEditing();
 
             return scriptSaved;
          }
 
          //user did not want to clean file
-         else if ( 1 == result ) return true;
+         else if (1 == result) return true;
 
          //file was not cleaned
-         else if ( 2 == result ) return false;
+         else if (2 == result) return false;
       }
 
       //file was not dirty
       return true;
    }
-   
+
    public void NewScript()
    {
-      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes(null), PopulateLogicTypes( ) );
+      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor("", PopulateEntityTypes(null), PopulateLogicTypes());
 
-      m_ScriptEditorCtrl = new ScriptEditorCtrl( scriptEditor );
+      m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor);
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
-      
+
       m_ScriptEditorCtrl.BuildContextMenu();
       BuildPaletteMenu(null, null);
-      
+
       m_FullPath = "";
-      
+
       uScript.SetSetting("uScript\\LastOpened", "");
    }
 
    public bool OpenScript(string fullPath)
-   { 
-      if ( false == AllowNewFile(true) || !System.IO.File.Exists(fullPath) ) return false;
+   {
+      if (false == AllowNewFile(true) || !System.IO.File.Exists(fullPath)) return false;
 
-      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", null, null );
+      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor("", null, null);
       scriptEditor.Open(fullPath);
 
-      scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes( ) );
+      scriptEditor = new Detox.ScriptEditor.ScriptEditor("", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
 
-      if ( true == scriptEditor.Open(fullPath) )
+      if (true == scriptEditor.Open(fullPath))
       {
-         if ( "" != scriptEditor.SceneName && scriptEditor.SceneName != System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene) )
+         if ("" != scriptEditor.SceneName && scriptEditor.SceneName != System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene))
          {
             EditorUtility.DisplayDialog("uScript Scene Warning", "This uScript file was attached to the uScript Master GameObject in scene " + scriptEditor.SceneName + ".  " +
                                         "It may not be compatible with this scene or run correctly if edited while this scene is open.", "OK");
          }
 
 
-         UnityEditor.Undo.ClearUndo( MasterComponent );
-         
+         UnityEditor.Undo.ClearUndo(MasterComponent);
+
          //force a change which will for a script rebuild in Update
          //this keeps all the loading in the same place
-         MasterComponent.Script = scriptEditor.ToBase64( );
+         MasterComponent.Script = scriptEditor.ToBase64();
          MasterComponent.ScriptName = scriptEditor.Name;
-       
+
          CurrentScript = null;
          CurrentScriptName = null;
 
@@ -3135,99 +3135,99 @@ Vector2 _scrollNewProperties;
       }
       else
       {
-         uScriptDebug.Log( "An error occured opening " + fullPath, uScriptDebug.Type.Error );
+         uScriptDebug.Log("An error occured opening " + fullPath, uScriptDebug.Type.Error);
          return false;
       }
-      
+
       return true;
    }
 
-   public void RemoveGeneratedCode( string path )
+   public void RemoveGeneratedCode(string path)
    {
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
+      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
 
-      System.IO.FileInfo [] files = directory.GetFiles( );
+      System.IO.FileInfo[] files = directory.GetFiles();
 
-      foreach ( System.IO.FileInfo file in files )
+      foreach (System.IO.FileInfo file in files)
       {
          string relativePath = uScriptConfig.ConstantPaths.RelativePath(file.FullName);
-         AssetDatabase.DeleteAsset( relativePath );
+         AssetDatabase.DeleteAsset(relativePath);
       }
 
-      foreach ( System.IO.DirectoryInfo subDirectory in directory.GetDirectories( ) )
+      foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
       {
-         RemoveGeneratedCode( subDirectory.FullName );
+         RemoveGeneratedCode(subDirectory.FullName);
       }
    }
 
-   public void RebuildAllScripts( )
+   public void RebuildAllScripts()
    {
       //first remove everything so we get rid of any compiler errors
       //which allows the reflection to properly refresh
-      AssetDatabase.StartAssetEditing( );
-         RemoveGeneratedCode( Preferences.GeneratedScripts );
-      AssetDatabase.StopAssetEditing( );
+      AssetDatabase.StartAssetEditing();
+      RemoveGeneratedCode(Preferences.GeneratedScripts);
+      AssetDatabase.StopAssetEditing();
       AssetDatabase.Refresh();
 
       m_RebuildWhenReady = true;
-      }
+   }
 
-   public void RebuildScripts( string path )
+   public void RebuildScripts(string path)
    {
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
+      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
 
-      System.IO.FileInfo [] files = directory.GetFiles( );
+      System.IO.FileInfo[] files = directory.GetFiles();
 
-      foreach ( System.IO.FileInfo file in files )
+      foreach (System.IO.FileInfo file in files)
       {
-         if ( ".uscript" != file.Extension ) continue;
+         if (".uscript" != file.Extension) continue;
 
-         Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", null, null );
+         Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor("", null, null);
          scriptEditor.Open(file.FullName);
 
-         scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes( ) );
+         scriptEditor = new Detox.ScriptEditor.ScriptEditor("", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
 
-         if ( true == scriptEditor.Open(file.FullName) )
+         if (true == scriptEditor.Open(file.FullName))
          {
-            if ( true == SaveScript(scriptEditor, file.FullName) )
+            if (true == SaveScript(scriptEditor, file.FullName))
             {
-               uScriptDebug.Log( "Rebuilt " + file.FullName );
+               uScriptDebug.Log("Rebuilt " + file.FullName);
             }
             else
             {
-               uScriptDebug.Log( "Could not save " + file.FullName, uScriptDebug.Type.Error );
+               uScriptDebug.Log("Could not save " + file.FullName, uScriptDebug.Type.Error);
             }
          }
       }
 
-      foreach ( System.IO.DirectoryInfo subDirectory in directory.GetDirectories( ) )
+      foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
       {
-         RebuildScripts( subDirectory.FullName );
+         RebuildScripts(subDirectory.FullName);
       }
    }
 
-   private bool SaveScript( Detox.ScriptEditor.ScriptEditor script, string binaryPath )
+   private bool SaveScript(Detox.ScriptEditor.ScriptEditor script, string binaryPath)
    {
-      System.IO.Directory.CreateDirectory( Preferences.GeneratedScripts );
-      System.IO.Directory.CreateDirectory( Preferences.NestedScripts );
+      System.IO.Directory.CreateDirectory(Preferences.GeneratedScripts);
+      System.IO.Directory.CreateDirectory(Preferences.NestedScripts);
 
       string wrapperPath = Preferences.GeneratedScripts;
-      string logicPath   = Preferences.NestedScripts;
+      string logicPath = Preferences.NestedScripts;
 
-      String fileName = System.IO.Path.GetFileNameWithoutExtension( binaryPath );
+      String fileName = System.IO.Path.GetFileNameWithoutExtension(binaryPath);
 
-      logicPath   += "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
+      logicPath += "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
       wrapperPath += "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
 
-      bool result = script.Save( binaryPath, logicPath, wrapperPath );
-   
-      if ( true == result )
-      {         
+      bool result = script.Save(binaryPath, logicPath, wrapperPath);
+
+      if (true == result)
+      {
          //we're attempting to just attach components at runtime
          //but i'm leaving this function here just in case we want
          //to call it to help performance by auto attaching the scripts before they run
          //AttachEventScriptsToOwners(script);
-         
+
          // refresh uScript panel file list
          uScriptBackgroundProcess.ForceFileRefresh();
       }
@@ -3240,33 +3240,33 @@ Vector2 _scrollNewProperties;
       Detox.ScriptEditor.ScriptEditor script = m_ScriptEditorCtrl.ScriptEditor;
 
       //no file of this name or force us to ask for the name
-      if ( "" == m_FullPath || true == forceNameRequest )
+      if ("" == m_FullPath || true == forceNameRequest)
       {
          bool isSafe = false;
          string path = "Untitled.uScript";
-         while ( !isSafe && path != "" )
+         while (!isSafe && path != "")
          {
-            path = EditorUtility.SaveFilePanel( "Save uScript As", Preferences.UserScripts, script.Name, "uscript" );
-            if ( path != "" )
+            path = EditorUtility.SaveFilePanel("Save uScript As", Preferences.UserScripts, script.Name, "uscript");
+            if (path != "")
             {
                System.IO.FileInfo fileInfo = new System.IO.FileInfo(path);
                string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
-               if ( !isSafe )
+               if (!isSafe)
                {
                   // filename is not safe - tell the user they need to change it
                   if (!EditorUtility.DisplayDialog("Invalid File Name", "Filename must be all alpha-numeric characters and must not start with a number. A suggested name for the one you entered is: " + safePath, "Try Again", "Cancel")) return false;
                }
             }
          }
-   
+
          //early exit, they must have changed their minds
-         if ( "" == path ) return false;
+         if ("" == path) return false;
 
          m_FullPath = path;
          uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(m_FullPath).Substring("Assets".Length));
       }
 
-      if ( "" != m_FullPath )
+      if ("" != m_FullPath)
       {
          bool firstSave = false;
          if (!System.IO.File.Exists(m_FullPath))
@@ -3291,18 +3291,18 @@ Vector2 _scrollNewProperties;
 
          //if they do want to attach to the master then set
          //the scene name before we save
-         if ( true == pleaseAttachMe || true == currentlyAttached )
+         if (true == pleaseAttachMe || true == currentlyAttached)
          {
             script.SceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
          }
 
-         if ( true == SaveScript(script, m_FullPath) )
+         if (true == SaveScript(script, m_FullPath))
          {
             m_ScriptEditorCtrl.IsDirty = false;
 
             //force a sync here just in case somehwere in code
             //we missed a call to the change stack
-            MasterComponent.Script = script.ToBase64( );
+            MasterComponent.Script = script.ToBase64();
             MasterComponent.ScriptName = script.Name;
 
             CurrentScript = MasterComponent.Script;
@@ -3310,15 +3310,15 @@ Vector2 _scrollNewProperties;
 
             if (true == pleaseAttachMe)
             {
-               AssetDatabase.Refresh( );            
+               AssetDatabase.Refresh();
                AttachToMasterGO(m_FullPath);
             }
-   
+
             return true;
          }
          else
          {
-            uScriptDebug.Log( "there was an error saving " + m_FullPath, uScriptDebug.Type.Error );
+            uScriptDebug.Log("there was an error saving " + m_FullPath, uScriptDebug.Type.Error);
          }
       }
 
@@ -3327,30 +3327,30 @@ Vector2 _scrollNewProperties;
 
    void AttachEventScriptsToOwners(ScriptEditor script)
    {
-      foreach ( EntityEvent entityEvent in script.Events )
+      foreach (EntityEvent entityEvent in script.Events)
       {
-         LinkNode []links = script.GetLinksByDestination(entityEvent.Guid, entityEvent.Instance.Name);
+         LinkNode[] links = script.GetLinksByDestination(entityEvent.Guid, entityEvent.Instance.Name);
 
-         if ( "" != entityEvent.Instance.Default )
+         if ("" != entityEvent.Instance.Default)
          {
-            AttachEventScriptToGameObject( GameObject.Find(entityEvent.Instance.Default), entityEvent.ComponentType);
+            AttachEventScriptToGameObject(GameObject.Find(entityEvent.Instance.Default), entityEvent.ComponentType);
          }
 
-         foreach ( LinkNode link in links )
+         foreach (LinkNode link in links)
          {
             EntityNode node = script.GetNode(link.Source.Guid);
-            
+
             //for each owner connected to an event instance
             //add the required event component script
-            if ( node is OwnerConnection )
+            if (node is OwnerConnection)
             {
                AttachEventScriptToGameObjects(script.Name, entityEvent.ComponentType);
             }
-            else if ( node is LocalNode )
+            else if (node is LocalNode)
             {
                //for each gameobject used as an event instance
                //add the required event component script
-               AttachEventScriptToGameObject( GameObject.Find(((LocalNode)node).Value.Default), entityEvent.ComponentType);
+               AttachEventScriptToGameObject(GameObject.Find(((LocalNode)node).Value.Default), entityEvent.ComponentType);
             }
          }
       }
@@ -3360,15 +3360,15 @@ Vector2 _scrollNewProperties;
    //then also attach the event component script
    void AttachEventScriptToGameObjects(string scriptWhichMustExist, string componentTypeToAttach)
    {
-      UnityEngine.Object []objects = FindObjectsOfType(typeof(GameObject));
-   
-      foreach ( UnityEngine.Object o in objects )
+      UnityEngine.Object[] objects = FindObjectsOfType(typeof(GameObject));
+
+      foreach (UnityEngine.Object o in objects)
       {
          GameObject gameObject = o as GameObject;
 
-         if ( null != gameObject.GetComponent(scriptWhichMustExist) )
+         if (null != gameObject.GetComponent(scriptWhichMustExist))
          {
-            AttachEventScriptToGameObject( o as GameObject, componentTypeToAttach );
+            AttachEventScriptToGameObject(o as GameObject, componentTypeToAttach);
          }
       }
    }
@@ -3376,9 +3376,9 @@ Vector2 _scrollNewProperties;
    //attach the event component script if it's not already on the game object
    void AttachEventScriptToGameObject(GameObject gameObject, string componentTypeToAttach)
    {
-      if ( null == gameObject ) return;
+      if (null == gameObject) return;
 
-      if ( null == gameObject.GetComponent(componentTypeToAttach) )
+      if (null == gameObject.GetComponent(componentTypeToAttach))
       {
          gameObject.AddComponent(componentTypeToAttach);
       }
@@ -3386,20 +3386,20 @@ Vector2 _scrollNewProperties;
       //print out a warning if the newly attached script still won't function
       //because some other required component is missing
       NodeComponentType requiredComponentType = FindNodeComponentType(MasterComponent.GetType(componentTypeToAttach));
-      
+
       bool componentWarning = true;
 
-      if ( null != requiredComponentType ) 
+      if (null != requiredComponentType)
       {
          //go through all the components and see if the required one exists
-         Component [] components = gameObject.GetComponents<Component>( );
+         Component[] components = gameObject.GetComponents<Component>();
 
-         foreach ( Component c in components )
+         foreach (Component c in components)
          {
             //yes for some reason unity is giving me null components
-            if ( null == c ) continue;
+            if (null == c) continue;
 
-            if ( requiredComponentType.ContainsType(c.GetType()) )
+            if (requiredComponentType.ContainsType(c.GetType()))
             {
                componentWarning = false;
                break;
@@ -3411,19 +3411,19 @@ Vector2 _scrollNewProperties;
          componentWarning = false;
       }
 
-      if ( true == componentWarning )
+      if (true == componentWarning)
       {
          string names = "";
 
-         foreach ( Type t in requiredComponentType.ComponentTypes )
+         foreach (Type t in requiredComponentType.ComponentTypes)
          {
             names += t + ", ";
          }
 
-         if ( names.Length >= 2 ) names = names.Substring( 0, names.Length - 2 );
+         if (names.Length >= 2) names = names.Substring(0, names.Length - 2);
 
-         Debug.LogWarning( componentTypeToAttach + " was attached to " + gameObject.name + 
-                           " but one of the following additional components is required for it to function properly " + names ); 
+         Debug.LogWarning(componentTypeToAttach + " was attached to " + gameObject.name +
+                           " but one of the following additional components is required for it to function properly " + names);
       }
    }
 
@@ -3434,490 +3434,490 @@ Vector2 _scrollNewProperties;
 #endif
    }
 
-   void GatherDerivedTypes( Dictionary<Type, Type> uniqueNodes, string path, Type baseType )
+   void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType)
    {
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( path );
+      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
 
-      System.IO.FileInfo [] files = directory.GetFiles( );
+      System.IO.FileInfo[] files = directory.GetFiles();
 
-      foreach ( System.IO.FileInfo file in files )
+      foreach (System.IO.FileInfo file in files)
       {
-         if ( file.Name.StartsWith(".") || file.Name.StartsWith("_")  || !file.Name.EndsWith(".cs") ) continue;
+         if (file.Name.StartsWith(".") || file.Name.StartsWith("_") || !file.Name.EndsWith(".cs")) continue;
 
-         Type type = uScript.MasterComponent.GetAssemblyQualifiedType( System.IO.Path.GetFileNameWithoutExtension(file.Name) );
+         Type type = uScript.MasterComponent.GetAssemblyQualifiedType(System.IO.Path.GetFileNameWithoutExtension(file.Name));
 
-         if ( null != type )
+         if (null != type)
          {
-            if ( false == uniqueNodes.ContainsKey(type) &&
-                 baseType.IsAssignableFrom(type) )
+            if (false == uniqueNodes.ContainsKey(type) &&
+                 baseType.IsAssignableFrom(type))
             {
-               uniqueNodes[ type ] = type;
+               uniqueNodes[type] = type;
             }
          }
       }
 
-      foreach ( System.IO.DirectoryInfo subDirectory in directory.GetDirectories( ) )
+      foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
       {
-         if ( subDirectory.Name.StartsWith(".") || subDirectory.Name.StartsWith("_") ) continue;
+         if (subDirectory.Name.StartsWith(".") || subDirectory.Name.StartsWith("_")) continue;
 
-         GatherDerivedTypes( uniqueNodes, subDirectory.FullName, baseType );
+         GatherDerivedTypes(uniqueNodes, subDirectory.FullName, baseType);
       }
    }
 
-   private LogicNode[] PopulateLogicTypes( )
+   private LogicNode[] PopulateLogicTypes()
    {
-      Hashtable baseMethods    = new Hashtable( );
-      Hashtable baseEvents     = new Hashtable( );
-      Hashtable baseProperties = new Hashtable( );
+      Hashtable baseMethods = new Hashtable();
+      Hashtable baseEvents = new Hashtable();
+      Hashtable baseProperties = new Hashtable();
 
-      Dictionary<Type, Type> uniqueNodes = new Dictionary<Type, Type>( );
+      Dictionary<Type, Type> uniqueNodes = new Dictionary<Type, Type>();
 
-      GatherDerivedTypes( uniqueNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptLogic) );
+      GatherDerivedTypes(uniqueNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptLogic));
 
-      GatherDerivedTypes( uniqueNodes, Preferences.UserNodes, typeof(uScriptLogic) );
-      GatherDerivedTypes( uniqueNodes, Preferences.NestedScripts, typeof(uScriptLogic) );
+      GatherDerivedTypes(uniqueNodes, Preferences.UserNodes, typeof(uScriptLogic));
+      GatherDerivedTypes(uniqueNodes, Preferences.NestedScripts, typeof(uScriptLogic));
 
-      MethodInfo []methods = typeof(uScriptLogic).GetMethods( );
+      MethodInfo[] methods = typeof(uScriptLogic).GetMethods();
 
-      foreach ( MethodInfo m in methods )
+      foreach (MethodInfo m in methods)
       {
-         if ( true == m.IsPublic )
+         if (true == m.IsPublic)
          {
-            baseMethods[ m.Name ] = m.Name;
+            baseMethods[m.Name] = m.Name;
          }
       }
 
-      methods = typeof(ScriptableObject).GetMethods( );
+      methods = typeof(ScriptableObject).GetMethods();
 
-      foreach ( MethodInfo m in methods )
+      foreach (MethodInfo m in methods)
       {
-         if ( true == m.IsPublic )
+         if (true == m.IsPublic)
          {
-            baseMethods[ m.Name ] = m.Name;
+            baseMethods[m.Name] = m.Name;
          }
       }
 
       //i think these are legacy uScript support and can go away
       //but i want to wait until we're inbetween builds to risk it
-      baseMethods[ "OnDestroy" ] = "OnDestroy";
-      baseMethods[ "OnDisable" ] = "OnDisable";
-      baseMethods[ "OnEnable" ]  = "OnEnable";
-      
+      baseMethods["OnDestroy"] = "OnDestroy";
+      baseMethods["OnDisable"] = "OnDisable";
+      baseMethods["OnEnable"] = "OnEnable";
+
       //this function is added to nested uscripts by the code generator
       //and we don't want to expose it to the user
-      baseMethods[ "Awake" ] = "Awake";
+      baseMethods["Awake"] = "Awake";
 
-      EventInfo []events = typeof(uScriptLogic).GetEvents( );
+      EventInfo[] events = typeof(uScriptLogic).GetEvents();
 
-      foreach ( EventInfo e in events )
+      foreach (EventInfo e in events)
       {
-         baseEvents[ e.Name ] = e.Name;
+         baseEvents[e.Name] = e.Name;
       }
 
-      PropertyInfo []properties = typeof(uScriptLogic).GetProperties( );
+      PropertyInfo[] properties = typeof(uScriptLogic).GetProperties();
 
-      foreach ( PropertyInfo p in properties )
+      foreach (PropertyInfo p in properties)
       {
-         baseProperties[ p.Name ] = p.Name;
+         baseProperties[p.Name] = p.Name;
       }
 
-      List<LogicNode> logicNodes = new List<LogicNode>( );
+      List<LogicNode> logicNodes = new List<LogicNode>();
 
-      List<Type> types = new List<Type>( uniqueNodes.Values );
+      List<Type> types = new List<Type>(uniqueNodes.Values);
       types.Sort(TypeSorter);
 
-      foreach ( Type type in types )
+      foreach (Type type in types)
       {
-         MasterComponent.AddType( type );
+         MasterComponent.AddType(type);
 
-         LogicNode logicNode = new LogicNode( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)) );
-         
-         List<Plug>  inputs   = new List<Plug>( );
-         List<string> drivens = new List<string>( );
+         LogicNode logicNode = new LogicNode(type.ToString(), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)));
 
-         Hashtable accessorMethods = new Hashtable( );
+         List<Plug> inputs = new List<Plug>();
+         List<string> drivens = new List<string>();
 
-         foreach ( PropertyInfo p in type.GetProperties( ) )
+         Hashtable accessorMethods = new Hashtable();
+
+         foreach (PropertyInfo p in type.GetProperties())
          {
-            if ( p.GetGetMethod( ) != null )
+            if (p.GetGetMethod() != null)
             {
-               accessorMethods[ p.GetGetMethod( ).Name ] = true;
+               accessorMethods[p.GetGetMethod().Name] = true;
             }
 
-            if ( p.GetSetMethod( ) != null )
+            if (p.GetSetMethod() != null)
             {
-               accessorMethods[ p.GetSetMethod( ).Name ] = true;
+               accessorMethods[p.GetSetMethod().Name] = true;
             }
          }
 
-         foreach ( EventInfo e in type.GetEvents( ) )
+         foreach (EventInfo e in type.GetEvents())
          {
-            if ( e.GetAddMethod( ) != null )
+            if (e.GetAddMethod() != null)
             {
-               accessorMethods[ e.GetAddMethod( ).Name ] = true;
+               accessorMethods[e.GetAddMethod().Name] = true;
             }
 
-            if ( e.GetRaiseMethod( ) != null )
+            if (e.GetRaiseMethod() != null)
             {
-               accessorMethods[ e.GetRaiseMethod( ).Name ] = true;
+               accessorMethods[e.GetRaiseMethod().Name] = true;
             }
 
-            if ( e.GetRemoveMethod( ) != null )
+            if (e.GetRemoveMethod() != null)
             {
-               accessorMethods[ e.GetRemoveMethod( ).Name ] = true;
+               accessorMethods[e.GetRemoveMethod().Name] = true;
             }
          }
 
-         List<Plug> logicEvents = new List<Plug>( );
+         List<Plug> logicEvents = new List<Plug>();
 
-         foreach ( EventInfo e in type.GetEvents( ) )
+         foreach (EventInfo e in type.GetEvents())
          {
             Plug p;
             p.Name = e.Name;
-            p.FriendlyName = FindFriendlyName( p.Name, e.GetCustomAttributes(false) ); 
+            p.FriendlyName = FindFriendlyName(p.Name, e.GetCustomAttributes(false));
 
-            logicEvents.Add( p );
+            logicEvents.Add(p);
          }
 
-         logicNode.Events = logicEvents.ToArray( );
+         logicNode.Events = logicEvents.ToArray();
 
 
-         methods = type.GetMethods( );
+         methods = type.GetMethods();
 
-         foreach ( MethodInfo m in methods )
+         foreach (MethodInfo m in methods)
          {
-            if ( true  == accessorMethods.Contains(m.Name) ) continue;
-            if ( true  == baseMethods.Contains(m.Name) ) continue;
+            if (true == accessorMethods.Contains(m.Name)) continue;
+            if (true == baseMethods.Contains(m.Name)) continue;
 
-            if ( false == m.IsPublic ) continue;
-            if ( true  == m.IsStatic ) continue;
-            
-            bool driven = FindDrivenAttribute( m.GetCustomAttributes(false) );
+            if (false == m.IsPublic) continue;
+            if (true == m.IsStatic) continue;
+
+            bool driven = FindDrivenAttribute(m.GetCustomAttributes(false));
 
             //driven functions are called automatically by the code generation
             //and need no other information parsed 
             //(they use the same parameters as the rest of the functions in the node)
-            if ( true == driven ) 
+            if (true == driven)
             {
-               if ( m.ReturnParameter.ParameterType == typeof(bool) )
+               if (m.ReturnParameter.ParameterType == typeof(bool))
                {
-                  drivens.Add( m.Name );
+                  drivens.Add(m.Name);
                }
 
                continue;
             }
 
-            ParameterInfo [] parameters = m.GetParameters( );
+            ParameterInfo[] parameters = m.GetParameters();
 
-            List<Parameter> variables = new List<Parameter>( );
+            List<Parameter> variables = new List<Parameter>();
 
-            foreach ( ParameterInfo p in parameters )
+            foreach (ParameterInfo p in parameters)
             {
-               Parameter variable = new Parameter( );
+               Parameter variable = new Parameter();
 
-               if ( true == p.IsOut )
+               if (true == p.IsOut)
                {
-                  variable.Input  = false;
+                  variable.Input = false;
                   variable.Output = true;
                }
-               else if ( p.ParameterType.IsByRef )
+               else if (p.ParameterType.IsByRef)
                {
-                  variable.Input  = true;
+                  variable.Input = true;
                   variable.Output = true;
                }
                else
                {
-                  variable.Input  = true;
+                  variable.Input = true;
                   variable.Output = false;
                }
 
-               variable.State  = FindSocketState(p.GetCustomAttributes(false));
-               variable.Name   = p.Name;
-               variable.Type   = p.ParameterType.ToString( ).Replace( "&", "" );
-               variable.FriendlyName = FindFriendlyName( p.Name, p.GetCustomAttributes(false) );
-               variable.DefaultAsObject = FindDefaultValue( "", p.GetCustomAttributes(false) );
-               
-               MasterComponent.AddType( p.ParameterType );
+               variable.State = FindSocketState(p.GetCustomAttributes(false));
+               variable.Name = p.Name;
+               variable.Type = p.ParameterType.ToString().Replace("&", "");
+               variable.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
+               variable.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
-               variables.Add( variable );
+               MasterComponent.AddType(p.ParameterType);
+
+               variables.Add(variable);
             }
 
-            if ( m.ReturnType != typeof(void) )
+            if (m.ReturnType != typeof(void))
             {
-               Parameter parameter = new Parameter( );
-               parameter.Name    = "Return";
-               parameter.Type    = m.ReturnType.ToString( ).Replace( "&", "" );
-               parameter.Input   = false;
-               parameter.Output  = true;         
+               Parameter parameter = new Parameter();
+               parameter.Name = "Return";
+               parameter.Type = m.ReturnType.ToString().Replace("&", "");
+               parameter.Input = false;
+               parameter.Output = true;
                parameter.Default = "";
-               parameter.State   = FindSocketState(m.GetCustomAttributes(false));
+               parameter.State = FindSocketState(m.GetCustomAttributes(false));
                parameter.FriendlyName = "Return Value";
 
-               MasterComponent.AddType( m.ReturnType );
-                  
-               variables.Add( parameter );
+               MasterComponent.AddType(m.ReturnType);
+
+               variables.Add(parameter);
             }
 
             Plug plug;
             plug.Name = m.Name;
-            plug.FriendlyName = FindFriendlyName( m.Name, m.GetCustomAttributes(false) );
-            inputs.Add( plug );
+            plug.FriendlyName = FindFriendlyName(m.Name, m.GetCustomAttributes(false));
+            inputs.Add(plug);
 
             //variables just set once here because
             //they must be the same for every logic node function
-            logicNode.Parameters = variables.ToArray( );
+            logicNode.Parameters = variables.ToArray();
          }
 
-         logicNode.Inputs  = inputs.ToArray( );
-         logicNode.Drivens = drivens.ToArray( );
+         logicNode.Inputs = inputs.ToArray();
+         logicNode.Drivens = drivens.ToArray();
 
-         List<Plug> outputs = new List<Plug>( );
+         List<Plug> outputs = new List<Plug>();
 
-         foreach ( PropertyInfo property in type.GetProperties( ) )
+         foreach (PropertyInfo property in type.GetProperties())
          {
-            if ( null != property.GetSetMethod( ) ) continue;
-            if ( null == property.GetGetMethod( ) ) continue;
+            if (null != property.GetSetMethod()) continue;
+            if (null == property.GetGetMethod()) continue;
 
             Plug plug;
             plug.Name = property.Name;
-            plug.FriendlyName = FindFriendlyName( plug.Name, property.GetCustomAttributes(false) );
-            outputs.Add( plug );
+            plug.FriendlyName = FindFriendlyName(plug.Name, property.GetCustomAttributes(false));
+            outputs.Add(plug);
          }
 
-         logicNode.Outputs = outputs.ToArray( );
+         logicNode.Outputs = outputs.ToArray();
 
-         logicNodes.Add( logicNode );
+         logicNodes.Add(logicNode);
       }
 
-      return OverrideNestedScriptTypes( logicNodes.ToArray( ) );
+      return OverrideNestedScriptTypes(logicNodes.ToArray());
    }
 
-   RawScript [] GatherRawScripts( )
+   RawScript[] GatherRawScripts()
    {
-      List<RawScript> rawScripts = new List<RawScript>( );
+      List<RawScript> rawScripts = new List<RawScript>();
 
-      string []files = FindAllFiles( Preferences.UserScripts, ".uscript" );
+      string[] files = FindAllFiles(Preferences.UserScripts, ".uscript");
 
-      foreach ( string file in files )
+      foreach (string file in files)
       {
-         RawScript rawScript = new RawScript( );
-         if ( false == rawScript.Load(file) ) 
+         RawScript rawScript = new RawScript();
+         if (false == rawScript.Load(file))
          {
-            Detox.Utility.Status.Warning( "Could not load " + file + " to use for nested script parameters, reflection will be used instead" );
+            Detox.Utility.Status.Warning("Could not load " + file + " to use for nested script parameters, reflection will be used instead");
             continue;
          }
 
-         rawScripts.Add( rawScript );
+         rawScripts.Add(rawScript);
 
       }
 
-      return rawScripts.ToArray( );
+      return rawScripts.ToArray();
    }
 
-   private LogicNode [] OverrideNestedScriptTypes( LogicNode [] logicNodes )
+   private LogicNode[] OverrideNestedScriptTypes(LogicNode[] logicNodes)
    {
-      Dictionary<string, LogicNode> returnNodes = new Dictionary<string, LogicNode>( );
+      Dictionary<string, LogicNode> returnNodes = new Dictionary<string, LogicNode>();
 
-      RawScript [] rawScripts = GatherRawScripts( );
+      RawScript[] rawScripts = GatherRawScripts();
 
-      foreach ( LogicNode logicNode in logicNodes )
+      foreach (LogicNode logicNode in logicNodes)
       {
-         returnNodes[ logicNode.Type ] = logicNode;
+         returnNodes[logicNode.Type] = logicNode;
       }
 
-      foreach ( RawScript rawScript in rawScripts )
+      foreach (RawScript rawScript in rawScripts)
       {
-         LogicNode logicNode = new LogicNode( rawScript.Type, rawScript.Type );
-         
+         LogicNode logicNode = new LogicNode(rawScript.Type, rawScript.Type);
+
          logicNode.Parameters = rawScript.ExternalParameters;
-         logicNode.Inputs     = rawScript.ExternalInputs;
-         logicNode.Outputs    = rawScript.ExternalOutputs;
-         logicNode.Events     = rawScript.ExternalEvents;
-         logicNode.Drivens    = rawScript.Drivens;
+         logicNode.Inputs = rawScript.ExternalInputs;
+         logicNode.Outputs = rawScript.ExternalOutputs;
+         logicNode.Events = rawScript.ExternalEvents;
+         logicNode.Drivens = rawScript.Drivens;
 
-         returnNodes[ rawScript.Type ] = logicNode;
+         returnNodes[rawScript.Type] = logicNode;
       }
 
-      return returnNodes.Values.ToArray( );
+      return returnNodes.Values.ToArray();
    }
 
-   private void Reflect(Type type, List<EntityDesc> entityDescs, Hashtable baseMethods, Hashtable baseEvents, Hashtable baseProperties )
+   private void Reflect(Type type, List<EntityDesc> entityDescs, Hashtable baseMethods, Hashtable baseEvents, Hashtable baseProperties)
    {
-      EntityDesc entityDesc = new EntityDesc( );
+      EntityDesc entityDesc = new EntityDesc();
 
-      entityDesc.Type = type.ToString( );
-      MasterComponent.AddType( type );
+      entityDesc.Type = type.ToString();
+      MasterComponent.AddType(type);
 
-      MethodInfo   []methodInfos   = type.GetMethods( );
-      EventInfo    []eventInfos    = type.GetEvents( );
-      PropertyInfo []propertyInfos = type.GetProperties( );
-      FieldInfo    []fieldInfos    = type.GetFields( );
+      MethodInfo[] methodInfos = type.GetMethods();
+      EventInfo[] eventInfos = type.GetEvents();
+      PropertyInfo[] propertyInfos = type.GetProperties();
+      FieldInfo[] fieldInfos = type.GetFields();
 
-      List<EntityMethod> entityMethods = new List<EntityMethod>( );
+      List<EntityMethod> entityMethods = new List<EntityMethod>();
 
-      Hashtable accessorMethods = new Hashtable( );
+      Hashtable accessorMethods = new Hashtable();
 
-      foreach ( PropertyInfo p in propertyInfos )
+      foreach (PropertyInfo p in propertyInfos)
       {
-         if ( p.GetGetMethod( ) != null )
+         if (p.GetGetMethod() != null)
          {
-            accessorMethods[ p.GetGetMethod( ).Name ]  = true;
+            accessorMethods[p.GetGetMethod().Name] = true;
          }
 
-         if ( p.GetSetMethod( ) != null )
+         if (p.GetSetMethod() != null)
          {
-            accessorMethods[ p.GetSetMethod( ).Name ] = true;
+            accessorMethods[p.GetSetMethod().Name] = true;
          }
       }
 
-      foreach ( MethodInfo m in methodInfos )
+      foreach (MethodInfo m in methodInfos)
       {
-         if ( accessorMethods.Contains(m.Name) ) continue;
-         if ( m.IsStatic ) continue;
+         if (accessorMethods.Contains(m.Name)) continue;
+         if (m.IsStatic) continue;
 
          //don't expose our event methods to the user
-         if ( typeof(uScriptEvent).IsAssignableFrom(type) ) continue;
+         if (typeof(uScriptEvent).IsAssignableFrom(type)) continue;
 
-         if ( false == m.IsPublic ) continue;
-         if ( true  == baseMethods.Contains(m.Name) ) continue;
+         if (false == m.IsPublic) continue;
+         if (true == baseMethods.Contains(m.Name)) continue;
 
-         ParameterInfo [] parameterInfos = m.GetParameters( );
+         ParameterInfo[] parameterInfos = m.GetParameters();
 
-         EntityMethod entityMethod = new EntityMethod( type.ToString( ), m.Name, FindFriendlyName(m.Name, m.GetCustomAttributes(false)) );
-         List<Parameter> parameters = new List<Parameter>( );
+         EntityMethod entityMethod = new EntityMethod(type.ToString(), m.Name, FindFriendlyName(m.Name, m.GetCustomAttributes(false)));
+         List<Parameter> parameters = new List<Parameter>();
 
-         foreach ( ParameterInfo p in parameterInfos )
+         foreach (ParameterInfo p in parameterInfos)
          {
-            Parameter parameter = new Parameter( );
-            parameter.State     = FindSocketState(p.GetCustomAttributes(false));
-            parameter.Name      = p.Name;
-            parameter.Type      = p.ParameterType.ToString( ).Replace( "&", "" );
+            Parameter parameter = new Parameter();
+            parameter.State = FindSocketState(p.GetCustomAttributes(false));
+            parameter.Name = p.Name;
+            parameter.Type = p.ParameterType.ToString().Replace("&", "");
             parameter.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
 
-            if ( true == p.IsOut )
+            if (true == p.IsOut)
             {
-               parameter.Input  = false;
+               parameter.Input = false;
                parameter.Output = true;
             }
-            else if ( p.ParameterType.IsByRef )
+            else if (p.ParameterType.IsByRef)
             {
-               parameter.Input  = true;
+               parameter.Input = true;
                parameter.Output = true;
             }
             else
             {
-               parameter.Input  = true;
+               parameter.Input = true;
                parameter.Output = false;
             }
 
-            parameter.DefaultAsObject = FindDefaultValue( "", p.GetCustomAttributes(false) );
+            parameter.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
-            MasterComponent.AddType( p.ParameterType );
-            
-            parameters.Add( parameter );
+            MasterComponent.AddType(p.ParameterType);
+
+            parameters.Add(parameter);
          }
 
-         if ( m.ReturnType != typeof(void) )
+         if (m.ReturnType != typeof(void))
          {
-            Parameter parameter = new Parameter( );
-            parameter.State   = FindSocketState(m.GetCustomAttributes(false));
-            parameter.Name    = "Return";
-            parameter.Type    = m.ReturnType.ToString( ).Replace( "&", "" );
-            parameter.Input   = false;
-            parameter.Output  = true;         
+            Parameter parameter = new Parameter();
+            parameter.State = FindSocketState(m.GetCustomAttributes(false));
+            parameter.Name = "Return";
+            parameter.Type = m.ReturnType.ToString().Replace("&", "");
+            parameter.Input = false;
+            parameter.Output = true;
             parameter.Default = "";
             parameter.FriendlyName = "Return Value";
 
-            MasterComponent.AddType( m.ReturnType );
-               
-            parameters.Add( parameter );
+            MasterComponent.AddType(m.ReturnType);
+
+            parameters.Add(parameter);
          }
 
-         entityMethod.Parameters = parameters.ToArray( );
-         entityMethods.Add( entityMethod );
+         entityMethod.Parameters = parameters.ToArray();
+         entityMethods.Add(entityMethod);
       }
 
-      entityDesc.Methods = entityMethods.ToArray( );
+      entityDesc.Methods = entityMethods.ToArray();
 
-      List<EntityEvent> entityEvents = new List<EntityEvent>( );
+      List<EntityEvent> entityEvents = new List<EntityEvent>();
 
       bool propertiesUsedForEvents = false;
-         
-      foreach ( EventInfo e in eventInfos )
-      {
-         if ( true == baseEvents.Contains(e.Name) ) continue;
 
-         List<Parameter> eventInputsOutpus = new List<Parameter>( );
+      foreach (EventInfo e in eventInfos)
+      {
+         if (true == baseEvents.Contains(e.Name)) continue;
+
+         List<Parameter> eventInputsOutpus = new List<Parameter>();
 
          //look for any set properties which will exist on the event
          //because we can't set them via method parameters
-         foreach ( PropertyInfo p in propertyInfos )
+         foreach (PropertyInfo p in propertyInfos)
          {
             propertiesUsedForEvents = true;
 
-            if ( baseProperties.Contains(p.Name) ) continue;
+            if (baseProperties.Contains(p.Name)) continue;
 
-            if ( p.GetSetMethod( ) != null )
+            if (p.GetSetMethod() != null)
             {
-               Parameter input = new Parameter( );
-               
+               Parameter input = new Parameter();
+
                //inputs to events can never be connected because there is no source to trigger
                //them and push in the value
-               input.State   = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
-               input.Name    = p.Name;
-               input.Type    = p.PropertyType.ToString( ).Replace( "&", "" );
-               input.Input   = true;
-               input.Output  = false;
+               input.State = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
+               input.Name = p.Name;
+               input.Type = p.PropertyType.ToString().Replace("&", "");
+               input.Input = true;
+               input.Output = false;
                input.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
                input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
-               
-               MasterComponent.AddType( p.PropertyType );
-            
-               eventInputsOutpus.Add( input );
+
+               MasterComponent.AddType(p.PropertyType);
+
+               eventInputsOutpus.Add(input);
             }
          }
 
-         Plug []outputPlug = new Plug[ 1 ];
+         Plug[] outputPlug = new Plug[1];
 
-         outputPlug[ 0 ].Name = e.Name;
-         outputPlug[ 0 ].FriendlyName = FindFriendlyName(e.Name, e.GetCustomAttributes(false));
+         outputPlug[0].Name = e.Name;
+         outputPlug[0].FriendlyName = FindFriendlyName(e.Name, e.GetCustomAttributes(false));
 
-         EntityEvent entityEvent = new EntityEvent( type.ToString( ), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)), outputPlug );
+         EntityEvent entityEvent = new EntityEvent(type.ToString(), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)), outputPlug);
 
-         ParameterInfo [] eventParameters = e.GetAddMethod( ).GetParameters( );
+         ParameterInfo[] eventParameters = e.GetAddMethod().GetParameters();
 
-         foreach ( ParameterInfo eventParameter in eventParameters )
+         foreach (ParameterInfo eventParameter in eventParameters)
          {
-            MethodInfo [] eventHandlerMethods = eventParameter.ParameterType.GetMethods( );
+            MethodInfo[] eventHandlerMethods = eventParameter.ParameterType.GetMethods();
 
-            foreach ( MethodInfo eventHandlerMethod in eventHandlerMethods )
+            foreach (MethodInfo eventHandlerMethod in eventHandlerMethods)
             {
-               if ( eventHandlerMethod.Name == "Invoke" )
+               if (eventHandlerMethod.Name == "Invoke")
                {
-                  ParameterInfo [] methodParameters = eventHandlerMethod.GetParameters( );
+                  ParameterInfo[] methodParameters = eventHandlerMethod.GetParameters();
 
-                  foreach ( ParameterInfo methodParameter in methodParameters )
+                  foreach (ParameterInfo methodParameter in methodParameters)
                   {
-                     if ( typeof(EventArgs).IsAssignableFrom(methodParameter.ParameterType) )
+                     if (typeof(EventArgs).IsAssignableFrom(methodParameter.ParameterType))
                      {
-                        entityEvent.EventArgs = methodParameter.ParameterType.ToString( ).Replace( "+", "." );
+                        entityEvent.EventArgs = methodParameter.ParameterType.ToString().Replace("+", ".");
 
-                        PropertyInfo []eventProperties = methodParameter.ParameterType.GetProperties( );
+                        PropertyInfo[] eventProperties = methodParameter.ParameterType.GetProperties();
 
-                        foreach ( PropertyInfo eventProperty in eventProperties )
+                        foreach (PropertyInfo eventProperty in eventProperties)
                         {
-                           Parameter output = new Parameter( );
-                           output.State   = FindSocketState(eventProperty.GetCustomAttributes(false));;
-                           output.Name    = eventProperty.Name;
+                           Parameter output = new Parameter();
+                           output.State = FindSocketState(eventProperty.GetCustomAttributes(false)); ;
+                           output.Name = eventProperty.Name;
                            output.FriendlyName = FindFriendlyName(eventProperty.Name, eventProperty.GetCustomAttributes(false));
-                           output.Type    = eventProperty.PropertyType.ToString( ).Replace( "&", "" );
-                           output.Input   = false;
-                           output.Output  = true;
-                           output.DefaultAsObject = FindDefaultValue( "", eventProperty.GetCustomAttributes(false) );
+                           output.Type = eventProperty.PropertyType.ToString().Replace("&", "");
+                           output.Input = false;
+                           output.Output = true;
+                           output.DefaultAsObject = FindDefaultValue("", eventProperty.GetCustomAttributes(false));
 
-                           MasterComponent.AddType( eventProperty.PropertyType );
+                           MasterComponent.AddType(eventProperty.PropertyType);
 
-                           eventInputsOutpus.Add( output );                           
+                           eventInputsOutpus.Add(output);
                         }
                      }
                   }
@@ -3928,202 +3928,202 @@ Vector2 _scrollNewProperties;
             }
          }
 
-         entityEvent.Parameters = eventInputsOutpus.ToArray( );
-         entityEvents.Add( entityEvent );
+         entityEvent.Parameters = eventInputsOutpus.ToArray();
+         entityEvents.Add(entityEvent);
       }
 
-      entityDesc.Events = entityEvents.ToArray( );
+      entityDesc.Events = entityEvents.ToArray();
 
-      List<EntityProperty> entityProperties = new List<EntityProperty>( );
+      List<EntityProperty> entityProperties = new List<EntityProperty>();
 
-      if ( false == propertiesUsedForEvents )
+      if (false == propertiesUsedForEvents)
       {
-         foreach ( PropertyInfo p in propertyInfos )
+         foreach (PropertyInfo p in propertyInfos)
          {
-            if ( true == baseProperties.Contains(p.Name) ) continue;
+            if (true == baseProperties.Contains(p.Name)) continue;
 
-            bool isInput = p.GetSetMethod( ) != null;
-            bool isOutput= p.GetGetMethod( ) != null;
+            bool isInput = p.GetSetMethod() != null;
+            bool isOutput = p.GetGetMethod() != null;
 
-            EntityProperty property = new EntityProperty( p.Name, FindFriendlyName(p.Name, p.GetCustomAttributes(false)), type.ToString( ), p.PropertyType.ToString( ), isInput, isOutput );
-            entityProperties.Add( property );
+            EntityProperty property = new EntityProperty(p.Name, FindFriendlyName(p.Name, p.GetCustomAttributes(false)), type.ToString(), p.PropertyType.ToString(), isInput, isOutput);
+            entityProperties.Add(property);
 
-            MasterComponent.AddType( p.PropertyType );
+            MasterComponent.AddType(p.PropertyType);
          }
-         
-         foreach ( FieldInfo f in fieldInfos )
+
+         foreach (FieldInfo f in fieldInfos)
          {
-            if ( false == f.IsPublic ) continue;
-            if ( true  == f.IsStatic ) continue;   
+            if (false == f.IsPublic) continue;
+            if (true == f.IsStatic) continue;
 
-            EntityProperty property = new EntityProperty( f.Name, FindFriendlyName(f.Name, f.GetCustomAttributes(false)), type.ToString( ), f.FieldType.ToString( ), true, true );
-            entityProperties.Add( property );
+            EntityProperty property = new EntityProperty(f.Name, FindFriendlyName(f.Name, f.GetCustomAttributes(false)), type.ToString(), f.FieldType.ToString(), true, true);
+            entityProperties.Add(property);
 
-            MasterComponent.AddType( f.FieldType );
+            MasterComponent.AddType(f.FieldType);
          }
       }
 
-      entityDesc.Properties = entityProperties.ToArray( );
+      entityDesc.Properties = entityProperties.ToArray();
 
-      entityDescs.Add( entityDesc );
+      entityDescs.Add(entityDesc);
    }
 
    private static int TypeSorter(Type t1, Type t2)
    {
-      return String.Compare( uScriptConfig.Variable.FriendlyName(t1.ToString()), uScriptConfig.Variable.FriendlyName(t2.ToString())); 
+      return String.Compare(uScriptConfig.Variable.FriendlyName(t1.ToString()), uScriptConfig.Variable.FriendlyName(t2.ToString()));
    }
 
-   private EntityDesc[] PopulateEntityTypes( string [] requiredTypes )
+   private EntityDesc[] PopulateEntityTypes(string[] requiredTypes)
    {
-      Hashtable baseMethods    = new Hashtable( );
-      Hashtable baseEvents     = new Hashtable( );
-      Hashtable baseProperties = new Hashtable( );
+      Hashtable baseMethods = new Hashtable();
+      Hashtable baseEvents = new Hashtable();
+      Hashtable baseProperties = new Hashtable();
 
-      List<EntityDesc> entityDescs = new List<EntityDesc>( );
+      List<EntityDesc> entityDescs = new List<EntityDesc>();
 
-      foreach ( MethodInfo m in typeof(UnityEngine.Behaviour).GetMethods( ) )
+      foreach (MethodInfo m in typeof(UnityEngine.Behaviour).GetMethods())
       {
-         baseMethods[ m.Name ] = m.Name;
+         baseMethods[m.Name] = m.Name;
       }
 
-      foreach ( EventInfo e in typeof(UnityEngine.Behaviour).GetEvents( ) )
+      foreach (EventInfo e in typeof(UnityEngine.Behaviour).GetEvents())
       {
-         baseEvents[ e.Name ] = e.Name;
+         baseEvents[e.Name] = e.Name;
       }
 
-      foreach ( PropertyInfo p in typeof(UnityEngine.Behaviour).GetProperties( ) )
+      foreach (PropertyInfo p in typeof(UnityEngine.Behaviour).GetProperties())
       {
-         baseProperties[ p.Name ] = p.Name;
+         baseProperties[p.Name] = p.Name;
       }
 
-      foreach ( MethodInfo m in typeof(UnityEngine.MonoBehaviour).GetMethods( ) )
+      foreach (MethodInfo m in typeof(UnityEngine.MonoBehaviour).GetMethods())
       {
-         baseMethods[ m.Name ] = m.Name;
+         baseMethods[m.Name] = m.Name;
       }
 
-      foreach ( EventInfo e in typeof(UnityEngine.MonoBehaviour).GetEvents( ) )
+      foreach (EventInfo e in typeof(UnityEngine.MonoBehaviour).GetEvents())
       {
-         baseEvents[ e.Name ] = e.Name;
+         baseEvents[e.Name] = e.Name;
       }
 
-      foreach ( PropertyInfo p in typeof(UnityEngine.MonoBehaviour).GetProperties( ) )
+      foreach (PropertyInfo p in typeof(UnityEngine.MonoBehaviour).GetProperties())
       {
-         baseProperties[ p.Name ] = p.Name;
+         baseProperties[p.Name] = p.Name;
       }
 
-      foreach ( MethodInfo m in typeof(UnityEngine.Object).GetMethods( ) )
+      foreach (MethodInfo m in typeof(UnityEngine.Object).GetMethods())
       {
-         baseMethods[ m.Name ] = m.Name;
+         baseMethods[m.Name] = m.Name;
       }
 
-      foreach ( EventInfo e in typeof(UnityEngine.Object).GetEvents( ) )
+      foreach (EventInfo e in typeof(UnityEngine.Object).GetEvents())
       {
-         baseEvents[ e.Name ] = e.Name;
+         baseEvents[e.Name] = e.Name;
       }
 
-      foreach ( PropertyInfo p in typeof(UnityEngine.Object).GetProperties( ) )
+      foreach (PropertyInfo p in typeof(UnityEngine.Object).GetProperties())
       {
-         baseProperties[ p.Name ] = p.Name;
+         baseProperties[p.Name] = p.Name;
       }
 
-      foreach ( MethodInfo m in typeof(UnityEngine.GameObject).GetMethods( ) )
+      foreach (MethodInfo m in typeof(UnityEngine.GameObject).GetMethods())
       {
-         baseMethods[ m.Name ] = m.Name;
+         baseMethods[m.Name] = m.Name;
       }
 
-      foreach ( EventInfo e in typeof(UnityEngine.GameObject).GetEvents( ) )
+      foreach (EventInfo e in typeof(UnityEngine.GameObject).GetEvents())
       {
-         baseEvents[ e.Name ] = e.Name;
+         baseEvents[e.Name] = e.Name;
       }
 
-      foreach ( PropertyInfo p in typeof(UnityEngine.GameObject).GetProperties( ) )
+      foreach (PropertyInfo p in typeof(UnityEngine.GameObject).GetProperties())
       {
-         baseProperties[ p.Name ] = p.Name;
+         baseProperties[p.Name] = p.Name;
       }
 
-      foreach ( MethodInfo m in typeof(UnityEngine.Component).GetMethods( ) )
+      foreach (MethodInfo m in typeof(UnityEngine.Component).GetMethods())
       {
-         baseMethods[ m.Name ] = m.Name;
+         baseMethods[m.Name] = m.Name;
       }
 
-      foreach ( EventInfo e in typeof(UnityEngine.Component).GetEvents( ) )
+      foreach (EventInfo e in typeof(UnityEngine.Component).GetEvents())
       {
-         baseEvents[ e.Name ] = e.Name;
+         baseEvents[e.Name] = e.Name;
       }
 
-      foreach ( PropertyInfo p in typeof(UnityEngine.Component).GetProperties( ) )
+      foreach (PropertyInfo p in typeof(UnityEngine.Component).GetProperties())
       {
-         baseProperties[ p.Name ] = p.Name;
+         baseProperties[p.Name] = p.Name;
       }
 
-      List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>( FindObjectsOfType(typeof(UnityEngine.Object)) );
-      Dictionary<string, Type> uniqueObjects = new Dictionary<string, Type>( );
+      List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(FindObjectsOfType(typeof(UnityEngine.Object)));
+      Dictionary<string, Type> uniqueObjects = new Dictionary<string, Type>();
 
-      Dictionary<Type, Type> eventNodes = new Dictionary<Type,Type>( );
-      GatherDerivedTypes( eventNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptEvent) );
-      GatherDerivedTypes( eventNodes, Preferences.UserNodes, typeof(uScriptEvent) );
+      Dictionary<Type, Type> eventNodes = new Dictionary<Type, Type>();
+      GatherDerivedTypes(eventNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptEvent));
+      GatherDerivedTypes(eventNodes, Preferences.UserNodes, typeof(uScriptEvent));
 
-      foreach ( UnityEngine.Object o in allObjects )
+      foreach (UnityEngine.Object o in allObjects)
       {
          //ignore our uscripts, they are handled separately
-         if ( typeof(uScriptCode).IsAssignableFrom(o.GetType()) ) continue;
-         if ( typeof(uScriptLogic).IsAssignableFrom(o.GetType()) ) continue;
+         if (typeof(uScriptCode).IsAssignableFrom(o.GetType())) continue;
+         if (typeof(uScriptLogic).IsAssignableFrom(o.GetType())) continue;
 
-         uniqueObjects[ o.GetType().ToString( ) ] = o.GetType();
+         uniqueObjects[o.GetType().ToString()] = o.GetType();
       }
 
-      foreach ( Type t in eventNodes.Values )
+      foreach (Type t in eventNodes.Values)
       {
-         uniqueObjects[ t.ToString( ) ] = t;
+         uniqueObjects[t.ToString()] = t;
       }
 
-      if ( null != requiredTypes )
+      if (null != requiredTypes)
       {
-         foreach ( string t in requiredTypes )
+         foreach (string t in requiredTypes)
          {
-            if ( true == uniqueObjects.ContainsKey(t) ) continue;
+            if (true == uniqueObjects.ContainsKey(t)) continue;
 
             Type type = uScript.MasterComponent.GetType(t);
 
-            if ( null != type ) 
+            if (null != type)
             {
-               if ( typeof(UnityEngine.Object).IsAssignableFrom(type) )
+               if (typeof(UnityEngine.Object).IsAssignableFrom(type))
                {
-                  uniqueObjects[ t ] = type;
+                  uniqueObjects[t] = type;
                }
             }
          }
       }
 
-      List<Type> types = new List<Type>( uniqueObjects.Values );
+      List<Type> types = new List<Type>(uniqueObjects.Values);
       types.Sort(TypeSorter);
-      
-      foreach ( Type t in types )
-      {
-         if ( t == typeof(uScript_Assets) ) continue;
-         if ( t == typeof(uScript_MasterComponent) ) continue;
 
-         Reflect( t, entityDescs, baseMethods, baseEvents, baseProperties );
+      foreach (Type t in types)
+      {
+         if (t == typeof(uScript_Assets)) continue;
+         if (t == typeof(uScript_MasterComponent)) continue;
+
+         Reflect(t, entityDescs, baseMethods, baseEvents, baseProperties);
       }
 
-      Reflect( typeof(UnityEngine.RuntimePlatform), entityDescs, baseMethods, baseEvents, baseProperties );
+      Reflect(typeof(UnityEngine.RuntimePlatform), entityDescs, baseMethods, baseEvents, baseProperties);
 
       //consolidate like events so they appear on the same node
-      EntityDesc [] descs = entityDescs.ToArray( );
-      for ( int i = 0; i < descs.Length; i++ )
+      EntityDesc[] descs = entityDescs.ToArray();
+      for (int i = 0; i < descs.Length; i++)
       {
-         EntityDesc desc = descs[ i ];
+         EntityDesc desc = descs[i];
 
          //one or less event? no need to consolidate
-         if ( desc.Events.Length <= 1 ) continue;
+         if (desc.Events.Length <= 1) continue;
 
-         Parameter [] parameters = desc.Events[0].Parameters;
-         
+         Parameter[] parameters = desc.Events[0].Parameters;
+
          int c;
 
-         for ( c = 1; c < desc.Events.Length; c++ )
+         for (c = 1; c < desc.Events.Length; c++)
          {
-            if ( false == ArrayUtil.ArraysAreEqual(parameters, desc.Events[c].Parameters) )
+            if (false == ArrayUtil.ArraysAreEqual(parameters, desc.Events[c].Parameters))
             {
                break;
             }
@@ -4131,12 +4131,12 @@ Vector2 _scrollNewProperties;
 
          //all parameters were matching because
          //we never had to break the for loop early
-         if ( c == desc.Events.Length )
+         if (c == desc.Events.Length)
          {
             EntityEvent entityEvent = EntityEvent.Consolidator(desc.Events);
-            desc.Events = new EntityEvent[] {entityEvent};
+            desc.Events = new EntityEvent[] { entityEvent };
 
-            descs[ i ] = desc;
+            descs[i] = desc;
          }
       }
 
@@ -4146,9 +4146,9 @@ Vector2 _scrollNewProperties;
    public string AutoAssignInstance(EntityNode entityNode)
    {
       string type = ScriptEditor.FindNodeType(entityNode);
-      if ( "" == type ) return "";
+      if ("" == type) return "";
 
-      if ( true == uScript.FindNodeAutoAssignMasterInstance(type) )
+      if (true == uScript.FindNodeAutoAssignMasterInstance(type))
       {
          return uScriptRuntimeConfig.MasterObjectName;
       }
@@ -4156,64 +4156,64 @@ Vector2 _scrollNewProperties;
       return "";
    }
 
-   private void CheckDragDropCanvas( )
+   private void CheckDragDropCanvas()
    {
-      foreach ( object o in DragAndDrop.objectReferences )
+      foreach (object o in DragAndDrop.objectReferences)
       {
-         if ( false == (o is UnityEngine.Object) ) continue;
+         if (false == (o is UnityEngine.Object)) continue;
 
-         if ( (m_ScriptEditorCtrl.CanDragDropOnNode(o) && DragAndDrop.objectReferences.Length == 1) || m_ScriptEditorCtrl.CanDragDropContextMenu(o) )
+         if ((m_ScriptEditorCtrl.CanDragDropOnNode(o) && DragAndDrop.objectReferences.Length == 1) || m_ScriptEditorCtrl.CanDragDropContextMenu(o))
          {
             DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
          }
       }
 
-      if ( Event.current.type == EventType.DragPerform )
+      if (Event.current.type == EventType.DragPerform)
       {
          // if all objects in the drag are droppable via context menu
          // create a new game object variable for each one
          bool canDropAll = true;
-         foreach ( object o in DragAndDrop.objectReferences )
+         foreach (object o in DragAndDrop.objectReferences)
          {
-            if ( !m_ScriptEditorCtrl.CanDragDropOnNode(o) && m_ScriptEditorCtrl.CanDragDropContextMenu(o) )
+            if (!m_ScriptEditorCtrl.CanDragDropOnNode(o) && m_ScriptEditorCtrl.CanDragDropContextMenu(o))
             {
                continue;
             }
-            
+
             canDropAll = false;
             break;
          }
-         
+
          if (canDropAll)
          {
-            if (m_ScriptEditorCtrl.DoDragDropContextMenu( DragAndDrop.objectReferences ))
+            if (m_ScriptEditorCtrl.DoDragDropContextMenu(DragAndDrop.objectReferences))
             {
-               m_ContextX = (int) Event.current.mousePosition.x;
+               m_ContextX = (int)Event.current.mousePosition.x;
                m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
 
-               DragAndDrop.AcceptDrag( );
+               DragAndDrop.AcceptDrag();
             }
          }
          else
          {
-            foreach ( object o in DragAndDrop.objectReferences )
+            foreach (object o in DragAndDrop.objectReferences)
             {
-               if ( true == m_ScriptEditorCtrl.DoDragDrop(o) )
+               if (true == m_ScriptEditorCtrl.DoDragDrop(o))
                {
-                  DragAndDrop.AcceptDrag( );
+                  DragAndDrop.AcceptDrag();
                }
             }
          }
       }
    }
-   
-   public static object FindDefaultValue(string defaultValue, object [] attributes)
-   {
-      if ( null == attributes ) return defaultValue;
 
-      foreach ( object a in attributes )
+   public static object FindDefaultValue(string defaultValue, object[] attributes)
+   {
+      if (null == attributes) return defaultValue;
+
+      foreach (object a in attributes)
       {
-         if ( a is DefaultValue ) 
+         if (a is DefaultValue)
          {
             return ((DefaultValue)a).Default;
          }
@@ -4222,48 +4222,48 @@ Vector2 _scrollNewProperties;
       return defaultValue;
    }
 
-   public static Parameter.VisibleState FindSocketState(object [] attributes)
+   public static Parameter.VisibleState FindSocketState(object[] attributes)
    {
-      if ( null != attributes ) 
+      if (null != attributes)
       {
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is SocketState ) 
+            if (a is SocketState)
             {
-               SocketState s = (SocketState) a;
+               SocketState s = (SocketState)a;
 
                Parameter.VisibleState state = Parameter.VisibleState.Visible;
 
-               if ( false == s.Visible ) state = Parameter.VisibleState.Hidden;
-               if ( true  == s.Locked ) state |= Parameter.VisibleState.Locked;
+               if (false == s.Visible) state = Parameter.VisibleState.Hidden;
+               if (true == s.Locked) state |= Parameter.VisibleState.Locked;
 
                return state;
             }
          }
       }
 
-      return Parameter.VisibleState.Visible;;
+      return Parameter.VisibleState.Visible; ;
    }
 
-   public static bool FindDrivenAttribute(object [] attributes)
+   public static bool FindDrivenAttribute(object[] attributes)
    {
-      if ( null == attributes ) return false;
+      if (null == attributes) return false;
 
-      foreach ( object a in attributes )
+      foreach (object a in attributes)
       {
-         if ( a is Driven ) return true;
+         if (a is Driven) return true;
       }
 
       return false;
    }
 
-   public static string FindFriendlyName(string defaultName, object [] attributes)
+   public static string FindFriendlyName(string defaultName, object[] attributes)
    {
-      if ( null == attributes ) return defaultName;
+      if (null == attributes) return defaultName;
 
-      foreach ( object a in attributes )
+      foreach (object a in attributes)
       {
-         if ( a is FriendlyName ) 
+         if (a is FriendlyName)
          {
             return ((FriendlyName)a).Name;
          }
@@ -4276,14 +4276,14 @@ Vector2 _scrollNewProperties;
    {
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      if ( uscriptType != null )
+      if (uscriptType != null)
       {
-         object [] attributes = uscriptType.GetCustomAttributes(false);
-         if ( null == attributes ) return false;
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return false;
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodeAutoAssignMasterInstance ) 
+            if (a is NodeAutoAssignMasterInstance)
             {
                return ((NodeAutoAssignMasterInstance)a).Value;
             }
@@ -4297,14 +4297,14 @@ Vector2 _scrollNewProperties;
    {
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      if ( uscriptType != null )
+      if (uscriptType != null)
       {
-         object [] attributes = uscriptType.GetCustomAttributes(false);
-         if ( null == attributes ) return "";
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return "";
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodePath ) 
+            if (a is NodePath)
             {
                return ((NodePath)a).Value;
             }
@@ -4318,14 +4318,14 @@ Vector2 _scrollNewProperties;
    {
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      if ( uscriptType != null )
+      if (uscriptType != null)
       {
-         object [] attributes = uscriptType.GetCustomAttributes(false);
-         if ( null == attributes ) return "";
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return "";
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodePropertiesPath ) 
+            if (a is NodePropertiesPath)
             {
                return ((NodePropertiesPath)a).Value;
             }
@@ -4338,17 +4338,17 @@ Vector2 _scrollNewProperties;
    public static bool IsNodeTypeDeprecated(EntityNode node)
    {
       string type = ScriptEditor.FindNodeType(node);
-      if ( "" == type ) return false;
+      if ("" == type) return false;
 
       Type uscriptType = uScript.MasterComponent.GetType(type);
-      if ( null == uscriptType ) return false;
+      if (null == uscriptType) return false;
 
-      object [] attributes = uscriptType.GetCustomAttributes(false);
-      if ( null == attributes ) return false;
+      object[] attributes = uscriptType.GetCustomAttributes(false);
+      if (null == attributes) return false;
 
-      foreach ( object a in attributes )
+      foreach (object a in attributes)
       {
-         if ( a is NodeDeprecated ) 
+         if (a is NodeDeprecated)
          {
             return true;
          }
@@ -4360,17 +4360,17 @@ Vector2 _scrollNewProperties;
    public static Type GetNodeUpgradeType(EntityNode node)
    {
       string type = ScriptEditor.FindNodeType(node);
-      if ( "" == type ) return null;
+      if ("" == type) return null;
 
       Type uscriptType = uScript.MasterComponent.GetType(type);
-      if ( null == uscriptType ) return null;
+      if (null == uscriptType) return null;
 
-      object [] attributes = uscriptType.GetCustomAttributes(false);
-      if ( null == attributes ) return null;
+      object[] attributes = uscriptType.GetCustomAttributes(false);
+      if (null == attributes) return null;
 
-      foreach ( object a in attributes )
+      foreach (object a in attributes)
       {
-         if ( a is NodeDeprecated ) 
+         if (a is NodeDeprecated)
          {
             return ((NodeDeprecated)a).UpgradeType;
          }
@@ -4383,14 +4383,14 @@ Vector2 _scrollNewProperties;
    {
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      if ( uscriptType != null )
+      if (uscriptType != null)
       {
-         object [] attributes = uscriptType.GetCustomAttributes(false);
-         if ( null == attributes ) return "";
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return "";
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodeLicense ) 
+            if (a is NodeLicense)
             {
                return ((NodeLicense)a).Value;
             }
@@ -4404,14 +4404,14 @@ Vector2 _scrollNewProperties;
    {
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      if ( uscriptType != null )
+      if (uscriptType != null)
       {
-         object [] attributes = uscriptType.GetCustomAttributes(false);
-         if ( null == attributes ) return "";
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return "";
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodeCopyright ) 
+            if (a is NodeCopyright)
             {
                return ((NodeCopyright)a).Value;
             }
@@ -4425,14 +4425,14 @@ Vector2 _scrollNewProperties;
    {
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      if ( uscriptType != null )
+      if (uscriptType != null)
       {
-         object [] attributes = uscriptType.GetCustomAttributes(false);
-         if ( null == attributes ) return "";
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return "";
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodeToolTip ) 
+            if (a is NodeToolTip)
             {
                return ((NodeToolTip)a).Value;
             }
@@ -4462,7 +4462,7 @@ Vector2 _scrollNewProperties;
       {
          LocalNodeDisplayNode variable = node as LocalNodeDisplayNode;
          string friendlyType = uScriptConfig.Variable.FriendlyName(variable.LocalNode.Value.Type);
-         
+
          switch (friendlyType)
          {
             case "Bool":
@@ -4494,14 +4494,14 @@ Vector2 _scrollNewProperties;
 
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      if ( uscriptType != null )
+      if (uscriptType != null)
       {
-         object [] attributes = uscriptType.GetCustomAttributes(false);
-         if ( null == attributes ) return "";
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return "";
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodeDescription ) 
+            if (a is NodeDescription)
             {
                return ((NodeDescription)a).Value;
             }
@@ -4515,14 +4515,14 @@ Vector2 _scrollNewProperties;
    {
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      if ( uscriptType != null )
+      if (uscriptType != null)
       {
-         object [] attributes = uscriptType.GetCustomAttributes(false);
-         if ( null == attributes ) return "";
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return "";
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodeAuthor ) 
+            if (a is NodeAuthor)
             {
                return ((NodeAuthor)a).Value;
             }
@@ -4536,14 +4536,14 @@ Vector2 _scrollNewProperties;
    {
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      if ( uscriptType != null )
+      if (uscriptType != null)
       {
-         object [] attributes = uscriptType.GetCustomAttributes(false);
-         if ( null == attributes ) return "";
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return "";
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodeAuthor ) 
+            if (a is NodeAuthor)
             {
                return ((NodeAuthor)a).URL;
             }
@@ -4576,14 +4576,14 @@ Vector2 _scrollNewProperties;
 
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      if ( uscriptType != null )
+      if (uscriptType != null)
       {
-         object [] attributes = uscriptType.GetCustomAttributes(false);
-         if ( null == attributes ) return "";
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return "";
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodeHelp ) 
+            if (a is NodeHelp)
             {
                return ((NodeHelp)a).Value;
             }
@@ -4595,14 +4595,14 @@ Vector2 _scrollNewProperties;
 
    public static NodeComponentType FindNodeComponentType(Type type)
    {
-      if ( type != null )
+      if (type != null)
       {
-         object [] attributes = type.GetCustomAttributes(false);
-         if ( null == attributes ) return null;
+         object[] attributes = type.GetCustomAttributes(false);
+         if (null == attributes) return null;
 
-         foreach ( object a in attributes )
+         foreach (object a in attributes)
          {
-            if ( a is NodeComponentType ) 
+            if (a is NodeComponentType)
             {
                return ((NodeComponentType)a);
             }
