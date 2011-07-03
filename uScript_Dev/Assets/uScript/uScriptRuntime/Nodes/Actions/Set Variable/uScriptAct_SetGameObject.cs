@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the value of a GameObject variable using the value of another GameOject variable.")]
-[NodeDescription("Sets the value of a GameObject variable using the value of another GameOject variable.\n \nValue: The GameObject variable to be set.\nTarget GameObject (out): The value that has been set for this variable.")]
+[NodeDescription("Sets the value of a GameObject variable using the value of another GameOject variable.\n \nValue: The variable you wish to use to set the target's value.\nTarget (out): The Target variable you wish to set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_GameObject")]
 
@@ -18,7 +18,7 @@ public class uScriptAct_SetGameObject : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(GameObject Value, [FriendlyName("Target GameObject")] out GameObject TargetGameObject)
+   public void In(GameObject Value, [FriendlyName("Target")] out GameObject TargetGameObject)
    {
       // @TODO: I'm worried this won't assign the correct object.
       // uScript might need to be using InstanceIDs instead of by the name?

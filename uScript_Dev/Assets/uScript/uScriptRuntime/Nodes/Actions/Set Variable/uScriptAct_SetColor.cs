@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the value of a Color variable using the value of another Color variable.")]
-[NodeDescription("Sets the value of a Color variable using the value of another Color variable.\n \nValue: The Color variable to be set.\nTarget Color (out): The value that has been set for this variable.")]
+[NodeDescription("Sets the value of a Color variable using the value of another Color variable.\n \nValue: The variable you wish to use to set the target's value.\nTarget (out): The Target variable you wish to set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Color")]
 
@@ -18,7 +18,7 @@ public class uScriptAct_SetColor : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(Color Value, [FriendlyName("Target Color")] out Color TargetColor)
+   public void In(Color Value, [FriendlyName("Target")] out Color TargetColor)
    {
       TargetColor = Value;
    }

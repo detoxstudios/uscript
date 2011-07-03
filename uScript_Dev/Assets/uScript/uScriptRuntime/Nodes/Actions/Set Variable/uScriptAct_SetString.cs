@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a string to the defined value.")]
-[NodeDescription("Sets a string to the defined value.\n \nValue: The String variable to be set.\nTo Upper Case: If this is set to true, the string set will be all upper case.\nTo Lower Case: If this is set to true, the string set will be all lower case.\nTrim Whitespace: If this is set to true, the string's whitespace will be trimmed.\nTarget (out): The value that has been set for this variable.")]
+[NodeDescription("Sets a string to the defined value.\n \nValue: The variable you wish to use to set the target's value.\nTo Upper Case: If this is set to true, the string set will be all upper case.\nTo Lower Case: If this is set to true, the string set will be all lower case.\nTrim Whitespace: If this is set to true, the string's whitespace will be trimmed.\nTarget (out): The Target variable you wish to set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_String")]
 
