@@ -49,6 +49,6 @@ public class uScript_CustomEventObject : uScriptEvent
  
    void CustomEvent(uScriptCustomEvent.CustomEventData cEventData)
    {
-      if ( OnCustomEventObject != null && typeof(UnityEngine.Object).IsAssignableFrom(cEventData.EventData.GetType()) ) OnCustomEventObject( this, new CustomEventObjectArgs(cEventData.EventName, (Object)cEventData.EventData, cEventData.Sender) ); 
+      if ( OnCustomEventObject != null && cEventData.EventData != null && typeof(UnityEngine.Object).IsAssignableFrom(cEventData.EventData.GetType()) ) OnCustomEventObject( this, new CustomEventObjectArgs(cEventData.EventName, (Object)cEventData.EventData, cEventData.Sender) ); 
    }	
 }

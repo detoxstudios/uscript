@@ -49,6 +49,6 @@ public class uScript_CustomEventVector3 : uScriptEvent
  
    void CustomEvent(uScriptCustomEvent.CustomEventData cEventData)
    {
-      if ( OnCustomEventVector3 != null && cEventData.EventData.GetType() == typeof(UnityEngine.Vector3) ) OnCustomEventVector3( this, new CustomEventVector3Args(cEventData.EventName, (Vector3)cEventData.EventData, cEventData.Sender) ); 
+      if ( OnCustomEventVector3 != null && cEventData.EventData != null && cEventData.EventData.GetType() == typeof(UnityEngine.Vector3) ) OnCustomEventVector3( this, new CustomEventVector3Args(cEventData.EventName, (Vector3)cEventData.EventData, cEventData.Sender) ); 
    }	
 }

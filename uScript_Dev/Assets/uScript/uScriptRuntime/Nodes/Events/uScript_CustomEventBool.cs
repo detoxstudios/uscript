@@ -49,6 +49,6 @@ public class uScript_CustomEventBool : uScriptEvent
  
    void CustomEvent(uScriptCustomEvent.CustomEventData cEventData)
    {
-      if ( OnCustomEventBool != null && cEventData.EventData.GetType() == typeof(System.Boolean) ) OnCustomEventBool( this, new CustomEventBoolArgs(cEventData.EventName, (bool)cEventData.EventData, cEventData.Sender) ); 
+      if ( OnCustomEventBool != null && cEventData.EventData != null && cEventData.EventData.GetType() == typeof(System.Boolean) ) OnCustomEventBool( this, new CustomEventBoolArgs(cEventData.EventName, (bool)cEventData.EventData, cEventData.Sender) ); 
    }	
 }

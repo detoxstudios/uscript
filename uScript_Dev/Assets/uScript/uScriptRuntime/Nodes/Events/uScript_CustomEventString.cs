@@ -49,6 +49,6 @@ public class uScript_CustomEventString : uScriptEvent
  
    void CustomEvent(uScriptCustomEvent.CustomEventData cEventData)
    {
-      if ( OnCustomEventString != null && cEventData.EventData.GetType() == typeof(System.String) ) OnCustomEventString( this, new CustomEventStringArgs(cEventData.EventName, (string)cEventData.EventData, cEventData.Sender) ); 
+      if ( OnCustomEventString != null && cEventData.EventData != null && cEventData.EventData.GetType() == typeof(System.String) ) OnCustomEventString( this, new CustomEventStringArgs(cEventData.EventName, (string)cEventData.EventData, cEventData.Sender) ); 
    }	
 }
