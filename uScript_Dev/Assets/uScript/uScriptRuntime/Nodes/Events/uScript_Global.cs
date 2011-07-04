@@ -21,7 +21,7 @@ public class uScript_Global : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    
-   [FriendlyName("On uScript Start")]
+   [FriendlyName("On Graph Start")]
    public event uScriptEventHandler uScriptStart;
 
    private bool m_Sent = false;
