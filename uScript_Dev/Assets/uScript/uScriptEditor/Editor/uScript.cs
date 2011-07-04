@@ -14,7 +14,8 @@ using Detox.FlowChart;
 public class uScript : EditorWindow
 {
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string uScriptBuild { get { return "0.9.0948"; } }
+   public string uScriptBuild { get { return "0.9.0965"; } }
+   static string BetaVersion { get { return "Beta 2"; } }
    public string RequiredUnityBuild { get { return "3.3"; } }
    public string RequiredUnityBetaBuild { get { return "3.4"; } }
    public DateTime ExpireDate { get { return new DateTime(2011, 7, 18); } }
@@ -282,7 +283,7 @@ http://uscript.net
    [UnityEditor.MenuItem("Tools/Detox Studios/uScript Editor %u")]
    static void Init()
    {
-      s_Instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
+      s_Instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor ");
       s_Instance.wantsMouseMove = true;
 
       System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.RootFolder);
@@ -484,18 +485,18 @@ http://uscript.net
             }
             else
             {
-               uScriptDebug.Log("This uScript build (" + uScriptBuild + ") will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
+               uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
                return;
             }
 
             if (DateTime.Now > ExpireDate)
             {
-               uScriptDebug.Log("This uScript build (" + uScriptBuild + ") has expired.\n", uScriptDebug.Type.Error);
+               uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "has expired.\n", uScriptDebug.Type.Error);
                return;
             }
             else
             {
-               uScriptDebug.Log("This uScript build (" + uScriptBuild + ") will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
+               uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
             }
          }
 
