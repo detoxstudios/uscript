@@ -76,8 +76,13 @@ public class uScriptAct_Rotate : uScriptLogic
          m_Done = true;
       }
       
-      float t = m_Time / m_Seconds;
+      float t = 1.0f;
       
+      // Prevent div by 0
+      if (m_Seconds != 0.0f)
+      {
+         t = m_Time / m_Seconds;
+      }      
       float degrees = m_Degrees * t;
       
       foreach (GameObject obj in m_Target)
