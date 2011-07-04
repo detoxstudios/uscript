@@ -92,7 +92,11 @@ public class uScript_Lerper
       //to time..this way we can fully output each value and then
       //prepare the time for our next tick whether we start
       //pingpong, loop, etc... 
-      currentTime = m_CurrentTime / m_TotalTime;         
+      currentTime = 1.0f;
+      if (m_TotalTime != 0.0f)
+      {
+         currentTime = m_CurrentTime / m_TotalTime;         
+      }
 
       //either we're still running or the loop restart countdown hit 0
       //and we've been restarted
