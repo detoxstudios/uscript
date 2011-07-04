@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the value of a Float variable.")]
-[NodeDescription("Randomly sets the value of a Float variable.\n \nMin: Minimum allowable float value.\nMax: Maximum allowable float value.\nSeed: Seed value for the random number generator.\nTarget Float (out): The float value that gets set.")]
+[NodeDescription("Randomly sets the value of a Float variable.\n \nMin: Minimum allowable float value.\nMax: Maximum allowable float value.\nSeed: Optional. Seed value for the random number generator. Using a specific seed value will generate the same random number each time. A value of zero (the default) will generate random numbers each time.\nTarget Float (out): The float value that gets set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Random_Float")]
 
@@ -28,7 +28,14 @@ public class uScriptAct_SetRandomFloat : uScriptLogic
       if (Min > Max) { Min = Max; }
       if (Max < Min) { Max = Min; }
 
-      if (Seed > 0) { Random.seed = Seed; }
+      if ( 0 != Seed )
+	  {
+	     Random.seed = Seed;
+	  }
+	  else if ( Seed == 0 )
+	  {
+	     Random.seed = System.Environment.TickCount;
+	  }
       
       TargetFloat = Random.Range(Min, Max);
    }

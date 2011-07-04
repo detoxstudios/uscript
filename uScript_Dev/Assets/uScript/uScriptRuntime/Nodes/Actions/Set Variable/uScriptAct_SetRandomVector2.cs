@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the value of a Vector2 variable.")]
-[NodeDescription("Randomly sets the value of a Vector2 variable.\n \nMin(X/Y): Minimum allowable float value.\nMax(X/Y): Maximum allowable float value.\nSeed: Seed value for the random number generator.\nTarget Vector2 (out): The Vector2 variable that gets set.")]
+[NodeDescription("Randomly sets the value of a Vector2 variable.\n \nMin(X/Y): Minimum allowable float value.\nMax(X/Y): Maximum allowable float value.\nSeed: Optional. Seed value for the random number generator. Using a specific seed value will generate the same random number each time. A value of zero (the default) will generate random numbers each time.\nTarget Vector2 (out): The Vector2 variable that gets set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Random_Vector2")]
 
@@ -32,7 +32,14 @@ public class uScriptAct_SetRandomVector2 : uScriptLogic
       if (MinY > MaxY) { MinY = MaxY; }
       if (MaxY < MinY) { MaxY = MinY; }
 
-      if (Seed > 0) { Random.seed = Seed; }
+      if ( 0 != Seed )
+	  {
+	     Random.seed = Seed;
+	  }
+	  else if ( Seed == 0 )
+	  {
+	     Random.seed = System.Environment.TickCount;
+	  }
 
       float finalX = Random.Range(MinX, MaxX);
       float finalY = Random.Range(MinY, MaxY);

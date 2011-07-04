@@ -9,7 +9,7 @@ using System.Collections;
 [NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the value of a Color variable.")]
-[NodeDescription("Randomly sets the value of a Color variable.\n \nR Min: Minimum allowable Red component value for the random color.\nR Max: Maximum allowable Red component value for the random color.\nG Min: Minimum allowable Green component value for the random color.\nG Max: Maximum allowable Green component value for the random color.\nB Min: Minimum allowable Blue component value for the random color.\nB Max: Maximum allowable Blue component value for the random color.\nA Min: Minimum allowable Alpha component value for the random color.\nA Max: Maximum allowable Alpha component value for the random color.\nSeed: Seed value for the random number generator.\nTarget Color (out): The random color that has been set.\n")]
+[NodeDescription("Randomly sets the value of a Color variable.\n \nR Min: Minimum allowable Red component value for the random color.\nR Max: Maximum allowable Red component value for the random color.\nG Min: Minimum allowable Green component value for the random color.\nG Max: Maximum allowable Green component value for the random color.\nB Min: Minimum allowable Blue component value for the random color.\nB Max: Maximum allowable Blue component value for the random color.\nA Min: Minimum allowable Alpha component value for the random color.\nA Max: Maximum allowable Alpha component value for the random color.\nSeed: Optional. Seed value for the random number generator. Using a specific seed value will generate the same random number each time. A value of zero (the default) will generate random numbers each time.\nTarget Color (out): The random color that has been set.\n")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Random_Color")]
 
@@ -54,7 +54,14 @@ public class uScriptAct_SetRandomColor : uScriptLogic
       if ( min > max ) { min = max; }
       if ( max < min ) { max = min; }
       
-      if (seed > 0) Random.seed = seed;
+      if ( 0 != seed )
+	  {
+	     Random.seed = seed;
+	  }
+	  else if ( seed == 0 )
+	  {
+	     Random.seed = System.Environment.TickCount;
+	  }
 
       return Random.Range(min, max);
    }
