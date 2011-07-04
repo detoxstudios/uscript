@@ -4449,7 +4449,7 @@ http://uscript.net
       // structs can't have attributes, so we have to specify this information here, explicitly
       if (type == "CommentNode")
       {
-         return "Use a comment box to comment or hint at what a particular block of uScript nodes does. Comment boxes can be resized so that they surround the nodes that they are referencing.\n \nTo resize a comment box, drag the bottom-right corner of the comment box or set its size properties explicitly in the Properties panel.\n \nTitle: The title or header for this comment box.\nBody: The actual comment text and information. Empty lines are supported.\nSize: The size of the comment box in pixels (width, height).";
+         return "Use a comment box to comment or hint at what a particular block of uScript nodes does. Comment boxes can be resized so that they surround the nodes that they are referencing.\n \nTo resize a comment box, drag the bottom-right corner of the comment box or set its width/height properties explicitly in the Properties panel.\n \nTitle: The title or header for this comment box.\nBody: The actual comment text and information. Empty lines are supported.\nWidth: The width of the comment box in pixels.\nHeight: The height of the comment box in pixels.";
       }
       else if (type == "ExternalConnection")
       {

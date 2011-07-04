@@ -1623,10 +1623,13 @@ namespace Detox.ScriptEditor
                {
                   CommentNode clone = (CommentNode) entityNode;
                   
-                  Parameter size = clone.Size;
+                  Parameter width = clone.Width;
+                  Parameter height = clone.Height;
 
-                  size.DefaultAsObject = node.Size.Width + "," + node.Size.Height;
-                  clone.Size = size;
+                  width.DefaultAsObject = node.Size.Width;
+                  height.DefaultAsObject = node.Size.Height;
+                  clone.Width = width;
+                  clone.Height = height;
 
                   entityNode = clone;
                }

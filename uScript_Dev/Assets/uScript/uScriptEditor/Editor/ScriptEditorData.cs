@@ -639,7 +639,8 @@ namespace Detox.Data.ScriptEditor
       public Parameter BodyText;
       public Parameter BodyTextColor;
       public Parameter NodeColor;         
-      public Parameter Size;
+      public Parameter Width;
+      public Parameter Height;
 
       public CommentNodeData( )
       {
@@ -657,10 +658,11 @@ namespace Detox.Data.ScriptEditor
          BodyText = data.BodyText;
          BodyTextColor = data.BodyTextColor;
          NodeColor = data.NodeColor;
-         Size = data.Size;
+         Width = data.Width;
+         Height = data.Height;
       }
 
-      public new int Version { get { return 3; } }
+      public new int Version { get { return 4; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -683,20 +685,53 @@ namespace Detox.Data.ScriptEditor
             NodeColor      = (Parameter) serializer.LoadNamedObject( "NodeColor" );
          }
 
-         if ( serializer.CurrentVersion > 1 )
+         if ( serializer.CurrentVersion > 3 )
          {
-            Size = (Parameter) serializer.LoadNamedObject( "Size" );
+            Width = (Parameter) serializer.LoadNamedObject( "Width" );
+            Height = (Parameter) serializer.LoadNamedObject( "Height" );
+         }
+         else if ( serializer.CurrentVersion > 1 )
+         {
+            Parameter size = (Parameter) serializer.LoadNamedObject( "Size" );
+            string []intArray = size.Default.Split( ',' );
+
+            Width = new Parameter( );
+            Width.Name    = "Width";
+            Width.FriendlyName = "Width";
+            Width.Type         = "Int";
+            Width.Input        = true;
+            Width.Output       = false;
+            Width.Default      = intArray[0];
+            Width.State        = Parameter.VisibleState.Visible;
+
+            Height = new Parameter( );
+            Height.Name    = "Height";
+            Height.FriendlyName = "Height";
+            Height.Type         = "Int";
+            Height.Input        = true;
+            Height.Output       = false;
+            Height.Default      = intArray.Length > 1 ? intArray[1] : "0";
+            Height.State        = Parameter.VisibleState.Visible;
          }
          else
          {
-            Size = new Parameter( );
-            Size.Name    = "Size";
-            Size.FriendlyName = "Size";
-            Size.Type         = "Int[]";
-            Size.Input        = true;
-            Size.Output       = false;
-            Size.Default      = "0, 0";
-            Size.State        = Parameter.VisibleState.Visible;
+            Width = new Parameter( );
+            Width.Name    = "Width";
+            Width.FriendlyName = "Width";
+            Width.Type         = "Int";
+            Width.Input        = true;
+            Width.Output       = false;
+            Width.Default      = "0";
+            Width.State        = Parameter.VisibleState.Visible;
+
+            Height = new Parameter( );
+            Height.Name    = "Height";
+            Height.FriendlyName = "Height";
+            Height.Type         = "Int";
+            Height.Input        = true;
+            Height.Output       = false;
+            Height.Default      = "0";
+            Height.State        = Parameter.VisibleState.Visible;
          }
       }
 
@@ -709,7 +744,8 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObject( "TitleText",      TitleText );
          serializer.SaveNamedObject( "TitleTextColor", TitleTextColor );
          serializer.SaveNamedObject( "NodeColor",      NodeColor );
-         serializer.SaveNamedObject( "Size",           Size );
+         serializer.SaveNamedObject( "Width",          Width );
+         serializer.SaveNamedObject( "Height",         Height );
       }
    }
 

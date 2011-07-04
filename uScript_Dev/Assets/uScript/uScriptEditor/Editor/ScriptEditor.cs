@@ -1123,7 +1123,8 @@ namespace Detox.ScriptEditor
             nodeData.TitleText      = TitleText.ToParameterData( );
             nodeData.TitleTextColor = TitleTextColor.ToParameterData( );
             nodeData.NodeColor      = NodeColor.ToParameterData( );
-            nodeData.Size       = Size.ToParameterData( );
+            nodeData.Width      = Width.ToParameterData( );
+            nodeData.Height     = Height.ToParameterData( );
             nodeData.Position.X = Position.X;
             nodeData.Position.Y = Position.Y;
             nodeData.Guid       = Guid;
@@ -1169,12 +1170,13 @@ namespace Detox.ScriptEditor
       private Parameter m_TitleText;
       private Parameter m_TitleTextColor;
       private Parameter m_NodeColor;
-      private Parameter m_Size;
+      private Parameter m_Width;
+      private Parameter m_Height;
 
       public Parameter[] Parameters 
       { 
-         get { return new Parameter[] { m_TitleText, m_TitleTextColor, m_BodyText, m_BodyTextColor, m_NodeColor, m_Size}; } 
-         set { m_TitleText = value[ 0 ]; m_TitleTextColor = value[ 1 ]; m_BodyText = value[ 2 ]; m_BodyTextColor = value[ 3 ]; m_NodeColor = value[ 4 ]; m_Size = value[ 5 ]; } 
+         get { return new Parameter[] { m_TitleText, m_BodyText, m_Width, m_Height}; } 
+         set { m_TitleText = value[ 0 ]; m_BodyText = value[ 1 ]; m_Width = value[ 2 ]; m_Height = value[ 3 ]; } 
       }
       
       public Parameter BodyText       { get { return m_BodyText; } set { m_BodyText = value; } }
@@ -1183,7 +1185,8 @@ namespace Detox.ScriptEditor
       public Parameter TitleTextColor { get { return m_TitleTextColor; } set { m_TitleTextColor = value; } }
       public Parameter NodeColor      { get { return m_NodeColor; } set { m_NodeColor= value; } }
 
-      public Parameter Size { get { return m_Size; } set { m_Size = value; } }
+      public Parameter Width { get { return m_Width; } set { m_Width = value; } }
+      public Parameter Height { get { return m_Height; } set { m_Height = value; } }
 
       private Point m_Position;
       public Point Position { get { return m_Position; } set { m_Position = value; } }
@@ -1245,13 +1248,21 @@ namespace Detox.ScriptEditor
          m_NodeColor.Input = true;
          m_NodeColor.Output = false;
 
-         m_Size.Name  = "Size";
-         m_Size.State = Parameter.VisibleState.Visible;
-         m_Size.FriendlyName = "Size";
-         m_Size.Type  = "Int[]";
-         m_Size.Input = true;
-         m_Size.Output= false;
-         m_Size.Default = "0, 0";
+         m_Width.Name  = "Width";
+         m_Width.State = Parameter.VisibleState.Visible;
+         m_Width.FriendlyName = "Width";
+         m_Width.Type  = "Int";
+         m_Width.Input = true;
+         m_Width.Output= false;
+         m_Width.Default = "0";
+
+         m_Height.Name  = "Height";
+         m_Height.State = Parameter.VisibleState.Visible;
+         m_Height.FriendlyName = "Height";
+         m_Height.Type  = "Int";
+         m_Height.Input = true;
+         m_Height.Output= false;
+         m_Height.Default = "0";
       }
    }
 
@@ -3250,7 +3261,8 @@ namespace Detox.ScriptEditor
          CommentNode local = new CommentNode( "" );
          local.Guid        = data.Guid;
          local.Position    = data.Position;
-         local.Size        = new Parameter( data.Size );
+         local.Width       = new Parameter( data.Width );
+         local.Height      = new Parameter( data.Height );
          local.ShowComment = new Parameter( data.ShowComment );
          local.Comment     = new Parameter( data.Comment );
          local.BodyText    = new Parameter( data.BodyText );
