@@ -3774,7 +3774,6 @@ http://uscript.net
       foreach (MethodInfo m in methodInfos)
       {
          if (accessorMethods.Contains(m.Name)) continue;
-         if (m.IsStatic) continue;
 
          //don't expose our event methods to the user
          if (typeof(uScriptEvent).IsAssignableFrom(type)) continue;
@@ -3834,6 +3833,7 @@ http://uscript.net
             parameters.Add(parameter);
          }
 
+         entityMethod.IsStatic   = m.IsStatic;
          entityMethod.Parameters = parameters.ToArray();
          entityMethods.Add(entityMethod);
       }
@@ -3885,6 +3885,8 @@ http://uscript.net
 
          EntityEvent entityEvent = new EntityEvent(type.ToString(), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)), outputPlug);
 
+         entityEvent.IsStatic = e.GetAddMethod().IsStatic;
+
          ParameterInfo[] eventParameters = e.GetAddMethod().GetParameters();
 
          foreach (ParameterInfo eventParameter in eventParameters)
@@ -3929,6 +3931,7 @@ http://uscript.net
             }
          }
 
+         
          entityEvent.Parameters = eventInputsOutpus.ToArray();
          entityEvents.Add(entityEvent);
       }
@@ -3947,6 +3950,16 @@ http://uscript.net
             bool isOutput = p.GetGetMethod() != null;
 
             EntityProperty property = new EntityProperty(p.Name, FindFriendlyName(p.Name, p.GetCustomAttributes(false)), type.ToString(), p.PropertyType.ToString(), isInput, isOutput);
+            
+            if ( true == isInput )
+            {
+               property.IsStatic = p.GetSetMethod().IsStatic;
+            }
+            else if ( true == isOutput )
+            {
+               property.IsStatic = p.GetGetMethod().IsStatic;
+            }
+
             entityProperties.Add(property);
 
             MasterComponent.AddType(p.PropertyType);
@@ -3958,6 +3971,7 @@ http://uscript.net
             if (true == f.IsStatic) continue;
 
             EntityProperty property = new EntityProperty(f.Name, FindFriendlyName(f.Name, f.GetCustomAttributes(false)), type.ToString(), f.FieldType.ToString(), true, true);
+            property.IsStatic = f.IsStatic;
             entityProperties.Add(property);
 
             MasterComponent.AddType(f.FieldType);
@@ -4124,6 +4138,11 @@ http://uscript.net
 
          for (c = 1; c < desc.Events.Length; c++)
          {
+            if (desc.Events[0].IsStatic != desc.Events[c].IsStatic)
+            {
+               break;
+            }
+
             if (false == ArrayUtil.ArraysAreEqual(parameters, desc.Events[c].Parameters))
             {
                break;

@@ -443,6 +443,7 @@ namespace Detox.ScriptEditor
       Parameter ShowComment { get; set; }
       Parameter Comment { get; set; }
       Parameter Instance { get; set; }
+      bool IsStatic { get; }
 
       EntityNode Copy( );
    }
@@ -631,6 +632,8 @@ namespace Detox.ScriptEditor
          return true;
       }
 
+      public bool IsStatic { get { return false; } }
+
       public Parameter Instance { get { return Parameter.Empty; } set {} }
       public Parameter[] Parameters { get { return new Parameter[ 0 ]; } set { } }
 
@@ -785,6 +788,8 @@ namespace Detox.ScriptEditor
       private Point m_Position;
       public Point Position { get { return m_Position; } set { m_Position = value; } }
 
+      public bool IsStatic { get { return false; } }
+
       private Guid m_Guid;
       public Guid Guid
       {
@@ -893,6 +898,8 @@ namespace Detox.ScriptEditor
 
       public Parameter Connection;
 
+      public bool IsStatic { get { return false; } }
+
       public Parameter[] Parameters 
       { 
          get { return new Parameter[1] { Connection }; } 
@@ -953,6 +960,7 @@ namespace Detox.ScriptEditor
          method.Input     = Input;
          method.Output    = Output;
          method.Position  = Position;
+         method.IsStatic  = IsStatic;
          method.Guid      = Guid.NewGuid( );
          method.ComponentType = ComponentType;
          return method;
@@ -995,6 +1003,7 @@ namespace Detox.ScriptEditor
          if ( Input  != node.Input ) return false;
          if ( Output != node.Output ) return false;
          if ( Guid   != node.Guid ) return false;
+         if ( IsStatic != node.IsStatic ) return false;
          if ( Position != node.Position ) return false;
          if ( Comment != node.Comment ) return false;
          if ( ShowComment != node.ShowComment ) return false;
@@ -1015,6 +1024,18 @@ namespace Detox.ScriptEditor
          get { return m_Comment; }
          set { m_Comment = value; } 
       }
+
+      private bool m_IsStatic;
+      public bool IsStatic
+      {
+         get { return m_IsStatic; }
+         set
+         {
+            m_IsStatic = value;
+            m_Instance.Input = false == value;
+         }
+      }
+
 
       public Plug Input;
       public Plug Output;
@@ -1079,8 +1100,9 @@ namespace Detox.ScriptEditor
          Output.Name = "Output";
          Output.FriendlyName = "Output";
 
-         m_Position = Point.Empty; 
+         m_Position   = Point.Empty; 
          m_Parameters = new Parameter[ 0 ];
+         m_IsStatic   = false;
       }
 
       public EntityMethod(EntityMethodData data)       
@@ -1096,8 +1118,9 @@ namespace Detox.ScriptEditor
          Input  = new Plug( data.Input );
          Output = new Plug( data.Output );
 
-         m_Position = data.Position; 
+         m_Position   = data.Position; 
          m_Parameters = ArrayUtil.ToParameters( data.Parameters );
+         m_IsStatic   = false;
       }
    }
 
@@ -1172,6 +1195,8 @@ namespace Detox.ScriptEditor
       private Parameter m_NodeColor;
       private Parameter m_Width;
       private Parameter m_Height;
+
+      public bool IsStatic { get { return false; } }
 
       public Parameter[] Parameters 
       { 
@@ -1302,6 +1327,7 @@ namespace Detox.ScriptEditor
          entityEvent.Guid          = Guid.NewGuid( );
          entityEvent.Comment       = Comment;
          entityEvent.ShowComment   = ShowComment;
+         entityEvent.IsStatic      = IsStatic;
       
          return entityEvent;
       }
@@ -1349,6 +1375,8 @@ namespace Detox.ScriptEditor
          if ( ShowComment != node.ShowComment ) return false;
          if ( Comment != node.Comment ) return false;
 
+         if ( IsStatic != node.IsStatic ) return false;
+
          if ( ComponentType != node.ComponentType ) return false;
 
          return true;
@@ -1382,6 +1410,17 @@ namespace Detox.ScriptEditor
 
       private Point m_Position;
       public Point Position { get { return m_Position; } set { m_Position = value; } }
+
+      private bool m_IsStatic;
+      public bool IsStatic
+      {
+         get { return m_IsStatic; }
+         set
+         {
+            m_IsStatic = value;
+            m_Instance.Input = false == value;
+         }
+      }
 
       public string ComponentType;
 
@@ -1431,6 +1470,7 @@ namespace Detox.ScriptEditor
          m_Comment.Output  = false;
 
          EventArgs = "System.EventArgs";
+         m_IsStatic= false;
       }
 
       public EntityEvent(EntityEventData data)
@@ -1449,6 +1489,7 @@ namespace Detox.ScriptEditor
          m_Parameters  = ArrayUtil.ToParameters( data.Parameters );
 
          EventArgs = data.EventArgs;
+         m_IsStatic= false;
       }
    }
 
@@ -1528,6 +1569,8 @@ namespace Detox.ScriptEditor
       public Plug    []Outputs;
       public Plug    []Events;
       public string  []Drivens;
+
+      public bool IsStatic { get { return false; } }
 
       private Parameter m_ShowComment;
       private Parameter m_Comment;
@@ -1623,7 +1666,7 @@ namespace Detox.ScriptEditor
          entityProperty.Parameter = Parameter;
          entityProperty.Position  = Position;
          entityProperty.Guid      = Guid.NewGuid( );
-      
+         entityProperty.IsStatic  = IsStatic;
          return entityProperty;
       }
 
@@ -1656,6 +1699,7 @@ namespace Detox.ScriptEditor
          if ( Instance != node.Instance ) return false;
          if ( Parameter!= node.Parameter ) return false;
          if ( Position != node.Position ) return false;
+         if ( IsStatic != node.IsStatic ) return false;
          if ( Guid != node.Guid ) return false;
 
          return true;
@@ -1682,6 +1726,17 @@ namespace Detox.ScriptEditor
 
       private Point m_Position;
       public Point Position { get { return m_Position; } set { m_Position = value; } }
+
+      private bool m_IsStatic;
+      public bool IsStatic
+      {
+         get { return m_IsStatic; }
+         set
+         {
+            m_IsStatic = value;
+            m_Instance.Input = false == value;
+         }
+      }
 
       private Guid m_Guid;
       public Guid Guid
@@ -1711,6 +1766,7 @@ namespace Detox.ScriptEditor
 
          m_Position = Point.Empty; 
          m_Guid     = Guid.NewGuid( ); 
+         m_IsStatic = false;
       }
 
       public EntityProperty(EntityPropertyData data)
@@ -1720,6 +1776,7 @@ namespace Detox.ScriptEditor
 
          m_Position = data.Position; 
          m_Guid     = data.Guid; 
+         m_IsStatic = false;
       }
    }
 
@@ -1771,6 +1828,8 @@ namespace Detox.ScriptEditor
       public Parameter Instance { get { return Parameter.Empty; } set {} }
 
       public Parameter[] Parameters { get { return new Parameter[] {m_Name, m_Value}; } set { m_Name = value[0]; m_Value = value[1];} }
+
+      public bool IsStatic { get { return false; } }
 
       private Parameter m_Name;
       private Parameter m_Value;

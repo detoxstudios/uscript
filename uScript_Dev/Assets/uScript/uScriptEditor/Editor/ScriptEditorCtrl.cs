@@ -353,7 +353,7 @@ namespace Detox.ScriptEditor
                {   
                   string destTypeString = null;
 
-                  if ( entityNode.Instance != Parameter.Empty )
+                  if ( entityNode.Instance != Parameter.Empty && entityNode.Instance.Input == true )
                   {
                      if ( entityNode is EntityMethod )
                      {
@@ -473,7 +473,7 @@ namespace Detox.ScriptEditor
                {
                   string destTypeString = null;
 
-                  if ( entityNode.Instance != Parameter.Empty )
+                  if ( entityNode.Instance != Parameter.Empty && entityNode.Instance.Input == true )
                   {
                      if ( entityNode is EntityMethod )
                      {
@@ -522,7 +522,7 @@ namespace Detox.ScriptEditor
 
                      if ( null != name )
                      {
-                        if ( entityNode.Instance != Parameter.Empty )
+                        if ( entityNode.Instance != Parameter.Empty && entityNode.Instance.Input == true )
                         {
                            Parameter instance = entityNode.Instance;
                            instance.Default = ((UnityEngine.Object)o).name;
@@ -1068,7 +1068,7 @@ namespace Detox.ScriptEditor
       
                if ( null != contextObject && typeof(UnityEngine.Object).IsAssignableFrom(contextObject.GetType()) )
                {
-                  if ( entityNode.Instance != Parameter.Empty )
+                  if ( entityNode.Instance != Parameter.Empty && entityNode.Instance.Input == true )
                   {
                      Parameter instance = entityNode.Instance;
                      instance.Default = ((UnityEngine.Object)contextObject).name;
@@ -2076,16 +2076,49 @@ namespace Detox.ScriptEditor
             {   
                string categoryName = uScript.FindNodePath(sceneMenu + "/Events", desc.Type);
 
-               ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName );
+               ToolStripMenuItem friendlyMenu = GetMenu( addMenu, categoryName );
+
+               Hashtable signatures = new Hashtable( );
 
                foreach ( EntityEvent e in desc.Events )
                {
                   if ( true == uScript.IsNodeTypeDeprecated(e) ) continue;
 
-                  ToolStripItem item = friendlyMenu.DropDownItems.Add( e.FriendlyType );
-                  item.Tag = e;
+                  //guaranteed always at least one output from the reflection code
+                  if ( false == signatures.Contains(e.FriendlyType) ) 
+                  {
+                     signatures[ e.FriendlyType ] = new List<EntityEvent>( );
+                  }
 
-                  item.Click += new System.EventHandler(m_MenuAddNode_Click);
+                  List<EntityEvent> eventList = signatures[ e.FriendlyType ] as List<EntityEvent>;
+
+                  eventList.Add( e );
+               }
+
+               foreach ( Object o in signatures.Values )
+               {
+                  List<EntityEvent> events = o as List<EntityEvent>;
+
+                  if ( events.Count > 1 )
+                  {
+                     ToolStripMenuItem subMenu = new ToolStripMenuItem( events[0].FriendlyType );
+                     friendlyMenu.DropDownItems.Add( subMenu );
+
+                     foreach ( EntityEvent m in events )
+                     {
+                        ToolStripItem item = subMenu.DropDownItems.Add( m.FriendlyType + BuildSignature(m)  );
+                        item.Tag = m;
+
+                        item.Click += new System.EventHandler(m_MenuAddNode_Click);
+                     }
+                  }
+                  else
+                  {
+                     ToolStripItem item = friendlyMenu.DropDownItems.Add( events[0].FriendlyType + BuildSignature(events[0]) );
+                     item.Tag = events[0];
+
+                     item.Click += new System.EventHandler(m_MenuAddNode_Click);
+                  }
                }
             }
 
@@ -2248,37 +2281,47 @@ namespace Detox.ScriptEditor
 
       private string BuildSignature(EntityNode node)
       {
-         if ( 0 == node.Parameters.Length ) return "";
-
-         string sig = "(";
-         
-         foreach ( Parameter p in node.Parameters )
+         if ( node is EntityMethod )
          {
-            sig += "[";
-            if ( true == p.Input && true == p.Output )
+            if ( 0 == node.Parameters.Length ) return "";
+
+            string sig = "(";
+            
+            foreach ( Parameter p in node.Parameters )
             {
-               sig += "in/out";
-            }
-            else if ( true == p.Input )
-            {
-               sig += "in";
-            }
-            else if ( true == p.Output )
-            {
-               sig += "out";
+               sig += "[";
+               if ( true == p.Input && true == p.Output )
+               {
+                  sig += "in/out";
+               }
+               else if ( true == p.Input )
+               {
+                  sig += "in";
+               }
+               else if ( true == p.Output )
+               {
+                  sig += "out";
+               }
+
+               sig += "]" + p.Name + ", ";
             }
 
-            sig += "]" + p.Name + ", ";
+            if ( node.Parameters.Length > 0 )
+            {
+               sig = sig.Substring( 0, sig.Length - 2 );
+            }
+
+            sig += ")";
+
+            return sig;
          }
-
-         if ( node.Parameters.Length > 0 )
+         else if ( node is EntityEvent )
          {
-            sig = sig.Substring( 0, sig.Length - 2 );
+            //guaranteed from reflection code to have at least one output
+            return "(" + ((EntityEvent)node).Outputs[0].FriendlyName + ")";
          }
-
-         sig += ")";
       
-         return sig;
+         return "";
       }
    }
 

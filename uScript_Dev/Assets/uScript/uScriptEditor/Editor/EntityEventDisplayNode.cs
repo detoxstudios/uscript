@@ -29,7 +29,7 @@ namespace Detox.ScriptEditor
 
          Socket socket;
 
-         if ( true == entityEvent.Instance.IsVisible( ) )
+         if ( true == entityEvent.Instance.IsVisible( ) && false == entityEvent.IsStatic )
          {
             socket = new Socket( );
             socket.Alignment = Socket.Align.Bottom;

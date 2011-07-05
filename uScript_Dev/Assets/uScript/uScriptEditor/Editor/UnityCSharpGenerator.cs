@@ -227,7 +227,10 @@ namespace Detox.ScriptEditor
 
             //an instance set in the property grid?
             if ( entityNode.Instance.Default != "" ) continue;
-      
+
+            //include static nodes which don't need an instance
+            if ( true == entityNode.IsStatic ) continue;
+
             bool includeNode = false;
 
             //how about an instance linked to it?
@@ -566,51 +569,10 @@ namespace Detox.ScriptEditor
 
          foreach ( EntityProperty entityProperty in m_Script.Properties )
          {
-            if ( entityProperty.Instance.Default != "" )
+            if ( false == entityProperty.IsStatic )
             {
-               if ( true == entityProperty.Parameter.Output )
+               if ( entityProperty.Instance.Default != "" )
                {
-                  //as stated above, cretae a function which 
-                  //gets the property from the entity and sets the corresponding CSharp variable
-                  AddCSharpLine( FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-                     AddCSharpLine( "return " + CSharpName(entityProperty, entityProperty.Instance.Name) + "." + entityProperty.Parameter.Name + ";" );               
-                  --m_TabStack;
-
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "" );
-               }
-
-               if ( true == entityProperty.Parameter.Input )
-               {
-                  //as stated above, create a function which sets the entity's property to the
-                  //corresponding CSharp variable's value
-                  AddCSharpLine( "void " + CSharpRefreshSetPropertyDeclaration( entityProperty ) + "( )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-                     AddCSharpLine( CSharpName(entityProperty, entityProperty.Instance.Name) + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
-                  --m_TabStack;
-                  AddCSharpLine( "}" );               
-                  AddCSharpLine( "" );
-               }
-            }
-            else
-            {
-               //only one instance allowed because we have no way to return multiple values (if > 1 instances were hooked up, who's would we return on get?)
-               
-               //get links attached to this property
-               LinkNode []instanceLinks = FindLinksByDestination( entityProperty.Guid, entityProperty.Instance.Name );
-
-               if ( instanceLinks.Length == 0 )
-               {
-                  instanceLinks = FindLinksBySource( entityProperty.Guid, entityProperty.Instance.Name );
-               }
-
-               foreach ( LinkNode instanceLink in instanceLinks )
-               {
-                  EntityNode entityNode = m_Script.GetNode( instanceLink.Source.Guid );
-
                   if ( true == entityProperty.Parameter.Output )
                   {
                      //as stated above, cretae a function which 
@@ -618,7 +580,7 @@ namespace Detox.ScriptEditor
                      AddCSharpLine( FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
                      AddCSharpLine( "{" );
                      ++m_TabStack;
-                        AddCSharpLine( "return " + CSharpName(entityNode) + "." + entityProperty.Parameter.Name + ";" );               
+                        AddCSharpLine( "return " + CSharpName(entityProperty, entityProperty.Instance.Name) + "." + entityProperty.Parameter.Name + ";" );               
                      --m_TabStack;
 
                      AddCSharpLine( "}" );
@@ -632,14 +594,87 @@ namespace Detox.ScriptEditor
                      AddCSharpLine( "void " + CSharpRefreshSetPropertyDeclaration( entityProperty ) + "( )" );
                      AddCSharpLine( "{" );
                      ++m_TabStack;
-                        AddCSharpLine( CSharpName(entityNode) + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
+                        AddCSharpLine( CSharpName(entityProperty, entityProperty.Instance.Name) + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
                      --m_TabStack;
                      AddCSharpLine( "}" );               
                      AddCSharpLine( "" );
                   }
+               }
+               else
+               {
+                  //only one instance allowed because we have no way to return multiple values (if > 1 instances were hooked up, who's would we return on get?)
+                  
+                  //get links attached to this property
+                  LinkNode []instanceLinks = FindLinksByDestination( entityProperty.Guid, entityProperty.Instance.Name );
 
-                  //only one instance allowed
-                  break;
+                  if ( instanceLinks.Length == 0 )
+                  {
+                     instanceLinks = FindLinksBySource( entityProperty.Guid, entityProperty.Instance.Name );
+                  }
+
+                  foreach ( LinkNode instanceLink in instanceLinks )
+                  {
+                     EntityNode entityNode = m_Script.GetNode( instanceLink.Source.Guid );
+
+                     if ( true == entityProperty.Parameter.Output )
+                     {
+                        //as stated above, cretae a function which 
+                        //gets the property from the entity and sets the corresponding CSharp variable
+                        AddCSharpLine( FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
+                        AddCSharpLine( "{" );
+                        ++m_TabStack;
+                           AddCSharpLine( "return " + CSharpName(entityNode) + "." + entityProperty.Parameter.Name + ";" );               
+                        --m_TabStack;
+
+                        AddCSharpLine( "}" );
+                        AddCSharpLine( "" );
+                     }
+
+                     if ( true == entityProperty.Parameter.Input )
+                     {
+                        //as stated above, create a function which sets the entity's property to the
+                        //corresponding CSharp variable's value
+                        AddCSharpLine( "void " + CSharpRefreshSetPropertyDeclaration( entityProperty ) + "( )" );
+                        AddCSharpLine( "{" );
+                        ++m_TabStack;
+                           AddCSharpLine( CSharpName(entityNode) + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
+                        --m_TabStack;
+                        AddCSharpLine( "}" );               
+                        AddCSharpLine( "" );
+                     }
+
+                     //only one instance allowed
+                     break;
+                  }
+               }
+            }
+            else //it is static
+            {
+               if ( true == entityProperty.Parameter.Output )
+               {
+                  //as stated above, cretae a function which 
+                  //gets the property from the entity and sets the corresponding CSharp variable
+                  AddCSharpLine( FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     AddCSharpLine( "return " + entityProperty.Instance.Type + "." + entityProperty.Parameter.Name + ";" );               
+                  --m_TabStack;
+
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "" );
+               }
+
+               if ( true == entityProperty.Parameter.Input )
+               {
+                  //as stated above, create a function which sets the entity's property to the
+                  //corresponding CSharp variable's value
+                  AddCSharpLine( "void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "( )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     AddCSharpLine( entityProperty.Instance.Type + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
+                  --m_TabStack;
+                  AddCSharpLine( "}" );               
+                  AddCSharpLine( "" );
                }
             }
          }
@@ -1292,9 +1327,12 @@ namespace Detox.ScriptEditor
             //which we haven't filled out yet
             foreach ( EntityMethod entityMethod in m_Script.Methods )
             {
-               if ( entityMethod.Instance.Default != "" )
+               if ( false == entityMethod.IsStatic )
                {
-                  FillComponent( entityMethod, entityMethod.Instance );
+                  if ( entityMethod.Instance.Default != "" )
+                  {
+                     FillComponent( entityMethod, entityMethod.Instance );
+                  }
                }
 
                foreach ( Parameter p in entityMethod.Parameters )
@@ -1306,17 +1344,27 @@ namespace Detox.ScriptEditor
 
             foreach ( EntityEvent entityEvent in m_Script.Events )
             {
-               if ( entityEvent.Instance.Default != "" )
+               if ( false == entityEvent.IsStatic )
                {
-                  FillComponent( entityEvent, entityEvent.Instance );
+                  if ( entityEvent.Instance.Default != "" )
+                  {
+                     FillComponent( entityEvent, entityEvent.Instance );
+                  }
+               }
+               else
+               {
+                  SetupEvent( null, entityEvent, true );
                }
             }
 
             foreach ( EntityProperty entityProperty in m_Script.Properties )
             {
-               if ( entityProperty.Instance.Default != "" )
+               if ( false == entityProperty.IsStatic )
                {
-                  FillComponent( entityProperty, entityProperty.Instance );
+                  if ( entityProperty.Instance.Default != "" )
+                  {
+                     FillComponent( entityProperty, entityProperty.Instance );
+                  }
                }
             }
 
@@ -1610,19 +1658,26 @@ namespace Detox.ScriptEditor
             {
                if ( p.Input == true )
                {
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-                     AddCSharpLine( eventNode.ComponentType + " component = " + eventVariable + ".GetComponent<" + eventNode.ComponentType + ">();" );
-                     AddMissingComponent( "component", eventVariable, eventNode.ComponentType ); 
-
-                     AddCSharpLine( "if ( null != component )" );
+                  if ( true == eventNode.IsStatic )
+                  {
+                     AddCSharpLine( eventNode.ComponentType + "." + p.Name + " = " + CSharpName(eventNode, p.Name) + ";" );
+                  }
+                  else
+                  {
                      AddCSharpLine( "{" );
                      ++m_TabStack;
-                        AddCSharpLine( "component." + p.Name + " = " + CSharpName(eventNode, p.Name) + ";" );
+                        AddCSharpLine( eventNode.ComponentType + " component = " + eventVariable + ".GetComponent<" + eventNode.ComponentType + ">();" );
+                        AddMissingComponent( "component", eventVariable, eventNode.ComponentType ); 
+
+                        AddCSharpLine( "if ( null != component )" );
+                        AddCSharpLine( "{" );
+                        ++m_TabStack;
+                           AddCSharpLine( "component." + p.Name + " = " + CSharpName(eventNode, p.Name) + ";" );
+                        --m_TabStack;
+                        AddCSharpLine( "}" );
                      --m_TabStack;
                      AddCSharpLine( "}" );
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
+                  }
                }
             }
          }
@@ -2359,75 +2414,89 @@ namespace Detox.ScriptEditor
          if ( args != "" ) args = args.Substring( 0, args.Length - 2 );
 
 
-         LinkNode []instanceLinks = FindLinksByDestination( receiver.Guid, receiver.Instance.Name );
-
-         AddCSharpLine( receiver.ComponentType + " component;" );
-
-         foreach ( LinkNode link in instanceLinks )
+         if ( false == receiver.IsStatic )
          {
-            EntityNode node = m_Script.GetNode( link.Source.Guid );
+            AddCSharpLine( receiver.ComponentType + " component;" );
+   
+            LinkNode []instanceLinks = FindLinksByDestination( receiver.Guid, receiver.Instance.Name );
 
-            if ( returnParam != Parameter.Empty )
+            foreach ( LinkNode link in instanceLinks )
             {
-               AddCSharpLine( "component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();" );
-               AddCSharpLine( "if ( null != component )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
+               EntityNode node = m_Script.GetNode( link.Source.Guid );
 
-                  AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");" );                     
+               if ( returnParam != Parameter.Empty )
+               {
+                  AddCSharpLine( "component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();" );
+                  AddCSharpLine( "if ( null != component )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
 
-               --m_TabStack;
-               AddCSharpLine( "}" );
+                     AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");" );                     
 
-               //only one instance link supported because of the return parameter - this should be enforced
-               //in the editor - this is just for a sanity check
-               break;
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+
+                  //only one instance link supported because of the return parameter - this should be enforced
+                  //in the editor - this is just for a sanity check
+                  break;
+               }
+               else
+               {
+                  AddCSharpLine( "component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();" );
+                  AddCSharpLine( "if ( null != component )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+
+                     AddCSharpLine( "component." + receiver.Input.Name + "(" + args + ");" );            
+
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
             }
-            else
+
+            //only one instance because of the return parameter
+            if ( receiver.Instance.Default != "" )
             {
-               AddCSharpLine( "component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();" );
-               AddCSharpLine( "if ( null != component )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
+               if ( returnParam != Parameter.Empty )
+               {
+                  //only one instance supported because of the return parameter - this should be enforced
+                  //in the editor - this is just for a sanity check
+                  if ( instanceLinks.Length == 0 )
+                  {
+                     AddCSharpLine( "component = " + CSharpName(receiver, receiver.Instance.Name) + ".GetComponent<" + receiver.ComponentType + ">();" );
+                     AddCSharpLine( "if ( null != component )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
 
-                  AddCSharpLine( "component." + receiver.Input.Name + "(" + args + ");" );            
+                        AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");" );            
 
-               --m_TabStack;
-               AddCSharpLine( "}" );
-            }
-         }
-
-         //only one instance because of the return parameter
-         if ( receiver.Instance.Default != "" )
-         {
-            if ( returnParam != Parameter.Empty )
-            {
-               //only one instance supported because of the return parameter - this should be enforced
-               //in the editor - this is just for a sanity check
-               if ( instanceLinks.Length == 0 )
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  }
+               }
+               else
                {
                   AddCSharpLine( "component = " + CSharpName(receiver, receiver.Instance.Name) + ".GetComponent<" + receiver.ComponentType + ">();" );
                   AddCSharpLine( "if ( null != component )" );
                   AddCSharpLine( "{" );
                   ++m_TabStack;
 
-                     AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");" );            
+                     AddCSharpLine( "component." + receiver.Input.Name + "(" + args + ");" );            
 
                   --m_TabStack;
                   AddCSharpLine( "}" );
                }
             }
+         }
+         else //static static receiver
+         {
+            if ( returnParam != Parameter.Empty )
+            {
+               AddCSharpLine( CSharpName(receiver, returnParam.Name) + " = " + receiver.ComponentType + "." + receiver.Input.Name + "(" + args + ");" );            
+            }
             else
             {
-               AddCSharpLine( "component = " + CSharpName(receiver, receiver.Instance.Name) + ".GetComponent<" + receiver.ComponentType + ">();" );
-               AddCSharpLine( "if ( null != component )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-
-                  AddCSharpLine( "component." + receiver.Input.Name + "(" + args + ");" );            
-
-               --m_TabStack;
-               AddCSharpLine( "}" );
+               AddCSharpLine( receiver.ComponentType + "." + receiver.Input.Name + "(" + args + ");" );            
             }
          }
 
@@ -2970,19 +3039,29 @@ namespace Detox.ScriptEditor
       {
          string operation = add ? " += " : " -= "; 
 
-         AddCSharpLine( entityEvent.ComponentType + " component = " + eventVariable + ".GetComponent<" + entityEvent.ComponentType + ">();" );
-         AddMissingComponent( "component", eventVariable, entityEvent.ComponentType ); 
-         AddCSharpLine( "if ( null != component )" );
-         AddCSharpLine( "{" );
-         ++m_TabStack;
-         
+         if ( true == entityEvent.IsStatic )
+         {
             foreach ( Plug output in entityEvent.Outputs )
             {
-               AddCSharpLine( "component." + output.Name + operation + CSharpEventDeclaration(entityEvent, output.Name) + ";" );            
+               AddCSharpLine( entityEvent.ComponentType + "." + output.Name + operation + CSharpEventDeclaration(entityEvent, output.Name) + ";" );            
             }
+         }
+         else
+         {
+            AddCSharpLine( entityEvent.ComponentType + " component = " + eventVariable + ".GetComponent<" + entityEvent.ComponentType + ">();" );
+            AddMissingComponent( "component", eventVariable, entityEvent.ComponentType ); 
+            AddCSharpLine( "if ( null != component )" );
+            AddCSharpLine( "{" );
+            ++m_TabStack;
+            
+               foreach ( Plug output in entityEvent.Outputs )
+               {
+                  AddCSharpLine( "component." + output.Name + operation + CSharpEventDeclaration(entityEvent, output.Name) + ";" );            
+               }
 
-         --m_TabStack;
-         AddCSharpLine( "}" );
+            --m_TabStack;
+            AddCSharpLine( "}" );
+         }
       }
 
       //register event listener function with an entity

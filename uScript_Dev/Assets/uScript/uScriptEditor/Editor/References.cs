@@ -188,7 +188,7 @@ namespace System.Windows.Forms
                {
                   foreach ( Parameter p in parameters.Parameters )
                   {
-                     if ( p == Parameter.Empty ) 
+                     if ( p == Parameter.Empty || (false == p.Input && false == p.Output) ) 
                      {
                         updatedParameters.Add(  p );
                         continue;
