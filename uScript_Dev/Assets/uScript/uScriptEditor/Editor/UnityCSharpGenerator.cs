@@ -933,7 +933,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               bool formatString = ( type == "System.String[]" || type == "System.Object[]" );
+               bool   formatString = ( type == "System.String[]" || type == "System.Object[]" );
+               string cast = ( type == "System.Single[]" ) ? "(float)" : "";
                
                declaration = "new " + type + " {";
 
@@ -945,7 +946,7 @@ namespace Detox.ScriptEditor
                   }
                   else
                   {
-                     declaration += element.Trim() + ",";
+                     declaration += cast + element.Trim() + ",";
                   }
                }
 

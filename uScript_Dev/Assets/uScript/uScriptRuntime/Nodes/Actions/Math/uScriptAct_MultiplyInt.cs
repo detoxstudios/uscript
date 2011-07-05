@@ -20,8 +20,8 @@ public class uScriptAct_MultiplyInt : uScriptLogic
 
    public void In(int[] A, int[] B, [FriendlyName("Result")] out int IntResult, [FriendlyName("Float Result"), SocketState(false, false)] out float FloatResult)
    {
-      int aTotals = 0;
-      int bTotals = 0;
+      int aTotals = 1;
+      int bTotals = 1;
 
       foreach (int currentA in A)
       {
