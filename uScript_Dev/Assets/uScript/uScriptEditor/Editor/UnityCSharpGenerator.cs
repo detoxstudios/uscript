@@ -38,80 +38,8 @@ namespace Detox.ScriptEditor
       private void Preprocess( )
       {         
          CreateGlobalVariables( );
-         CreateExternalMediators( );
          CreateBidirectionalLinks( );
          PruneUnusedNodes( );
-      }
-
-      private void CreateExternalMediators( )
-      {
-         //go through external connections and add an intermediate local variable and connect 
-         //the external to that and have that source to all the destintations
-         foreach ( ExternalConnection external in m_Script.Externals )
-         {
-            LinkNode [] links = FindLinksBySource( external.Guid, external.Connection );
-
-            if ( links.Length >= 1 )
-            {
-               EntityNode node = m_Script.GetNode( links[0].Destination.Guid );
-
-               Parameter p = m_Script.FindNodeParameter( node, links[0].Destination.Anchor );
-               //if linked to an in/out socket then ignore
-               if ( p == Parameter.Empty ) continue;
-
-               LocalNode local = new LocalNode( Guid.NewGuid( ).ToString( ), p.Type, "" );               
-               m_Script.AddNode( local );
-
-               //reroute all the links to our local node
-               for (int i = 0; i < links.Length; i++)
-               {
-                  m_Script.RemoveNode( links[ i ] );
-
-                  links[ i ].Source.Guid   = local.Guid;
-                  links[ i ].Source.Anchor = local.Value.Name;
-               
-                  m_Script.AddNode( links[ i ] );
-               }
-
-               //and link our external to the new variable
-               LinkNode link = new LinkNode( external.Guid, external.Connection, local.Guid, local.Value.Name );
-               m_Script.AddNode( link );
-            }
-         }
-
-         //go through external connections and add an intermediate local variable and connect
-         //the external to that and have that as the source exposed to the other scripts
-         foreach ( ExternalConnection external in m_Script.Externals )
-         {
-            LinkNode [] links = FindLinksByDestination( external.Guid, external.Connection );
-
-            if ( links.Length >= 1 )
-            {
-               EntityNode node = m_Script.GetNode( links[0].Source.Guid );
-            
-               Parameter p = m_Script.FindNodeParameter( node, links[0].Source.Anchor );
-               //if linked to an in/out socket then ignore
-               if ( p == Parameter.Empty ) continue;
-
-               LocalNode local = new LocalNode( Guid.NewGuid( ).ToString( ), p.Type, "" );               
-               m_Script.AddNode( local );
-
-               //reroute all the links to our local node
-               for (int i = 0; i < links.Length; i++)
-               {
-                  m_Script.RemoveNode( links[ i ] );
-
-                  links[ i ].Destination.Guid   = local.Guid;
-                  links[ i ].Destination.Anchor = local.Value.Name;
-               
-                  m_Script.AddNode( links[ i ] );
-               }
-
-               //and link our external to the new variable
-               LinkNode link = new LinkNode( local.Guid, local.Value.Name, external.Guid, external.Connection );
-               m_Script.AddNode( link );
-            }
-         }
       }
 
       private void CreateBidirectionalLinks( )
@@ -1104,7 +1032,7 @@ namespace Detox.ScriptEditor
                   }
                }
 
-               //only one link allowed for each external, we will have a local variable as an intemediator
+               //only one link allowed for each external parameter output
                break;
             }
          }
@@ -1997,7 +1925,7 @@ namespace Detox.ScriptEditor
                      }
                   }
 
-                  //only one link allowed for each external, we will have a local variable as an intemediator
+                  //only one link allowed for each external parameter output
                   break;
                }
             }
@@ -2073,7 +2001,7 @@ namespace Detox.ScriptEditor
                   }
                }
 
-               //only one link allowed for each external, we will have a local variable as an intemediator
+               //only one link allowed for each external parameter output
                break;
             }
          }
@@ -2210,9 +2138,6 @@ namespace Detox.ScriptEditor
                      AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
                   }
                }
-
-               //only one link allowed for each external, we will have a local variable as an intemediator
-               break;
             }
 
             //external connections don't have a parameter
@@ -2252,7 +2177,7 @@ namespace Detox.ScriptEditor
                   }
                }
 
-               //only one link allowed for each external, we will have a local variable as an intemediator
+               //only one link allowed for each external parameter out
                break;
             }
          }

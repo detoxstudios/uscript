@@ -2439,13 +2439,6 @@ namespace Detox.ScriptEditor
                      reason = "An External Node can't link to two different types";
                      return false;
                   }
-
-                  //see if the source can also be an input (because we are being created as an input)
-                  if ( true != existingParam.Input )
-                  {
-                     reason = "An External Node can't link to multiple variables in which some are input/output and some are output only";
-                     return false;
-                  }
                }
             }
          }
@@ -2462,22 +2455,27 @@ namespace Detox.ScriptEditor
                   Parameter existingParam = FindNodeParameter(node,   existingLinks.Destination.Anchor);
                   Parameter myParam       = FindNodeParameter(source, link.Source.Anchor);
 
-                  if ( Parameter.Empty == existingParam )
+                  //if the existing link is an Input we can't allow that
+                  //because we are an Output or an out parameter
+                  if ( existingParam == Parameter.Empty )
                   {
-                     reason = "An External Node can't link to an input and an output";
+                     reason = "An External Node can't link to an Input and a output parameter or an Output";
                      return false;
                   }
 
+                  //if we are an Output we can't be allowed because
+                  //there is already some source connected to us
+                  if ( myParam == Parameter.Empty )
+                  {
+                     reason = "An External Node can't link to an Output and an input parameter or an Input";
+                     return false;
+                  }
+
+                  //ok we know they're both parameters, and we know we are an output
+                  //and this is an input, this is allowed as long as the types match
                   if ( existingParam.Type != myParam.Type )
                   {
                      reason = "An External Node can't link to two different types";
-                     return false;
-                  }
-
-                  //see if the destintation can also be an output (because we are being created as an output)
-                  if ( true != existingParam.Output )
-                  {
-                     reason = "An External Node can't link to multiple variables in which some are input/output and some are output only";
                      return false;
                   }
                }
@@ -2500,13 +2498,26 @@ namespace Detox.ScriptEditor
                         reason = "An External Node can't link to an event output and an immediate output";
                         return false;
                      }
+                     else if ( Parameter.Empty != myParam )
+                     {
+                        reason = "An External Node can't link to an output and a parameter";
+                        return false;
+                     }
                   }
-
-                  if ( existingParam.Type != myParam.Type )
+                  else
                   {
-                     reason = "An External Node can't link to two different types";
-                     return false;
-                  }                  
+                     //we know the existing link is a parameter
+                     if ( Parameter.Empty == myParam )
+                     {
+                        reason = "An External Node can't link to an output and a parameter";
+                        return false;
+                     }
+                     else
+                     {
+                        reason = "An External Output Parameter Node cannot link from multiple outputs.";
+                        return false;
+                     }
+                  }                 
                }
             }
 

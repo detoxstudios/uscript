@@ -16,8 +16,7 @@ using System.Collections;
 [FriendlyName("Play Sound")]
 public class uScriptAct_PlaySound : uScriptLogic
 {
-   private AudioSource m_AudioSource;
-   private AudioClip m_AudioClip;
+   private AudioSource []m_AudioSources;
 
    public bool Out { get { return true; } }
 
@@ -25,57 +24,68 @@ public class uScriptAct_PlaySound : uScriptLogic
 
    public void Play(
       [FriendlyName("Audio Clip")] AudioClip audioClip,
-      [FriendlyName("Target")] GameObject target,
+      [FriendlyName("Target")] GameObject []target,
       [FriendlyName("Volume"), DefaultValue(1f), SocketState(false, false)] float volume, 
       [FriendlyName("Loop")] bool loop
    )
    {
-       m_AudioClip = audioClip;
+      m_AudioSources = null;
 
-      if ( null != m_AudioClip && null != target )
+      if ( target.Length > 0 && null != audioClip )
       {
-         m_AudioSource = target.AddComponent<AudioSource>( );
-         m_AudioSource.clip = m_AudioClip;
-         m_AudioSource.volume = volume;
-         m_AudioSource.loop = loop;
+         m_AudioSources = new AudioSource[ target.Length ];
 
-         m_AudioSource.Play();
+         for ( int i = 0; i < target.Length; i++ )
+         {
+            m_AudioSources[ i ]       = target[ i ].AddComponent<AudioSource>( );
+            m_AudioSources[ i ].clip  = audioClip;
+            m_AudioSources[ i ].volume= volume;
+            m_AudioSources[ i ].loop  = loop;
 
+            m_AudioSources[ i ].Play();
+         }
       }
    }
 
    public void Stop(
       [FriendlyName("Audio Clip")] AudioClip audioClip,
-      [FriendlyName("Target")] GameObject target, 
+      [FriendlyName("Target")] GameObject []target,
       [FriendlyName("Volume"), DefaultValue(1f), SocketState(false, false)] float volume, 
       [FriendlyName("Loop")] bool loop
    )
    {
-      if (null != m_AudioSource)
+      foreach ( AudioSource a in m_AudioSources )
       {
-         m_AudioSource.Stop();
+         a.Stop( );
       }
-
    }
 
    public override void Update()
    {
       // Called every tick
-      if (m_AudioSource != null)
+      if ( null == m_AudioSources ) return;
+
+      int i;
+
+      for ( i = 0; i < m_AudioSources.Length; i++ )
       {
-         if (m_AudioSource.isPlaying == false)
-         {
-            if (Finished != null)
-            {
-               Finished(this, new System.EventArgs());
-            }
-
-
-            Destroy(m_AudioSource);
-         }
-
+         if ( true == m_AudioSources[ i ].isPlaying ) break;
       }
 
+      if ( i == m_AudioSources.Length )
+      {
+         if (Finished != null)
+         {
+            Finished(this, new System.EventArgs());
+         }
+
+         for ( i = 0; i < m_AudioSources.Length; i++ )
+         {
+            Destroy( m_AudioSources[i] );
+         }
+
+         m_AudioSources = null;
+      }
    }
 
 #if UNITY_EDITOR
