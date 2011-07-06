@@ -1731,8 +1731,19 @@ namespace Detox.ScriptEditor
          //see if the point rendering is the potential destination connection
          if ( e.Connecting && null != m_FlowChart.LinkStartNode )
          {
-            LinkNode linkNode = new LinkNode( m_FlowChart.LinkStartNode.Guid, m_FlowChart.LinkStartAnchor.Name, 
-                                              node.Guid, e.Point.Name );
+            LinkNode linkNode;
+
+            if ( true == m_FlowChart.LinkStartAnchor.Output && true == e.Point.Input )
+            {
+               linkNode = new LinkNode( m_FlowChart.LinkStartNode.Guid, m_FlowChart.LinkStartAnchor.Name, 
+                                        node.Guid, e.Point.Name );
+            }
+            else
+            {
+               linkNode = new LinkNode( node.Guid, e.Point.Name,
+                                       m_FlowChart.LinkStartNode.Guid, m_FlowChart.LinkStartAnchor.Name );
+            }
+
 
             //if it's allowed to connect then update the style
             string reason;

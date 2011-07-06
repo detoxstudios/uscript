@@ -2246,7 +2246,7 @@ namespace Detox.ScriptEditor
          m_LogicNodes  = nodes;
       }
 
-      public bool FailOnEvent( LinkNode link )
+      public bool FailOnEvent( LinkNode link, Guid startingGuid, string startingAnchor )
       {
          //if node can't be found we won't need to fail on the backtrace
          if ( false == m_Nodes.Contains(link.Source.Guid) ) return true;
@@ -2278,15 +2278,19 @@ namespace Detox.ScriptEditor
          {
             if ( sourceLink.Destination.Guid == node.Guid )
             {
-               bool result = FailOnEvent( sourceLink );            
-               if ( false == result ) return false;
+               if ( sourceLink.Destination.Guid   != startingGuid &&
+                    sourceLink.Destination.Anchor != startingAnchor )
+               {
+                  bool result = FailOnEvent( sourceLink, startingGuid, startingAnchor );            
+                  if ( false == result ) return false;
+               }
             }
          }
 
          return true;
       }
 
-      public bool BacktraceExternalOutput( LinkNode link )
+      public bool BacktraceExternalOutput(LinkNode link)
       {
          //if node can't be found we won't need to fail on the backtrace
          if ( false == m_Nodes.Contains(link.Source.Guid) ) return true;
@@ -2317,7 +2321,7 @@ namespace Detox.ScriptEditor
             {
                if ( sourceLink.Destination.Guid == node.Guid )
                {
-                  bool result = FailOnEvent( sourceLink );            
+                  bool result = FailOnEvent( sourceLink, link.Source.Guid, link.Source.Anchor );            
                   if ( false == result ) return false;
                }
             }
