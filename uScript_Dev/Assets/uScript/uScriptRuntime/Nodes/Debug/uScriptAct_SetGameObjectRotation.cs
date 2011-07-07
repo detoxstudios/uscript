@@ -16,7 +16,6 @@ using System.Collections;
 [FriendlyName("Set Rotation")]
 public class uScriptAct_SetGameObjectRotation : uScriptLogic
 {
-
    public bool Out { get { return true; } }
 
    public void In(
@@ -31,81 +30,61 @@ public class uScriptAct_SetGameObjectRotation : uScriptLogic
 	               [FriendlyName("As Offset"), SocketState(false, false)] bool AsOffset
 	               )
    {
-		
-
-		
 		foreach (GameObject currentTarget in Target)
-		{
-			
-			
-			if (AsOffset)
-			{
-				// Added the anlges to the existing rotation of the GameObject.
-				if (CoordinateSystem == Space.World)
-				{
-					if (!IgnoreX)
-					{
-					}
-					if (!IgnoreY)
-					{
-					}
-					if (!IgnoreZ)
-					{
-					}
+		{			
+         Vector3 euler = Vector3.zero;         
 
-				}
-				else
-				{
-					if (!IgnoreX)
-					{
-					}
-					if (!IgnoreY)
-					{
-					}
-					if (!IgnoreZ)
-					{
-					}
+         if ( true == AsOffset )
+         {
+            //if it's an offset we will concatentate our rotation
+            //which means only fill in the axis they want to rotate on
+		      if ( false == IgnoreX ) euler.x = XDegrees;
+            if ( false == IgnoreY ) euler.y = YDegrees;
+		      if ( false == IgnoreZ ) euler.z = ZDegrees;
+         }
+         else
+         {
+            //if it's not an offset then we want to start with
+            //their current rotation and override only the new
+            //specified parameters
+            euler = currentTarget.transform.rotation.eulerAngles;
+		      
+            if ( false == IgnoreX ) euler.x = XDegrees;
+            if ( false == IgnoreY ) euler.y = YDegrees;
+		      if ( false == IgnoreZ ) euler.z = ZDegrees;
+         }
 
-				}
-				
-			}
-			else
-			{
-				// Overrite the GameObjects rotation angles with the new ones
-				if (CoordinateSystem == Space.World)
-				{
-					if (!IgnoreX)
-					{
-					}
-					if (!IgnoreY)
-					{
-					}
-					if (!IgnoreZ)
-					{
-					}
+         Quaternion eq;
+         
+         if ( CoordinateSystem == Space.World )
+         {
+            eq = Quaternion.Euler( euler );
+         }
+         else
+         {
+            //unity applies eulers as x then y then z
+            //so i'm attempting to do the same through quaternions based on the object's local angle axis
+            Quaternion qx = Quaternion.AngleAxis( euler.x, currentTarget.transform.right );
+            Quaternion qy = Quaternion.AngleAxis( euler.y, currentTarget.transform.up );
+            Quaternion qz = Quaternion.AngleAxis( euler.z, currentTarget.transform.forward );
+         
+            //quaternion multiplication is reversed A rotation followed by B rotation is B*A
+            //so I was x followed by y followed by z
+            //q = y * x  (x followed by y)
+            //q = z * q  (xy followed by z)
+            eq = qy * qx;
+            eq = qz * eq;
+         }
 
-				}
-				else
-				{
-					if (!IgnoreX)
-					{
-					}
-					if (!IgnoreY)
-					{
-					}
-					if (!IgnoreZ)
-					{
-					}
-
-				}
-				
-			}
-			
-		}
-		
-		
-		// Take the final information and update the currentTarget's rotation.
-		
-
+         if (true == AsOffset) 
+         {   
+            //existing rotation followed by new rotation
+            currentTarget.transform.rotation = eq * currentTarget.transform.rotation;
+         }
+         else
+         {
+            currentTarget.transform.rotation = eq;
+         }
+      }
    }
 }
