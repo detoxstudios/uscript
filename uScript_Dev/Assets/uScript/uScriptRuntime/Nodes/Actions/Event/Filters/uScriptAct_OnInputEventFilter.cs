@@ -29,10 +29,17 @@ public class uScriptAct_OnInputEventFilter : uScriptLogic
    [FriendlyName("Input Up")]
    public bool KeyUp { get { return m_InputUp; } }
 
-   public void In([FriendlyName("Key Code")] UnityEngine.KeyCode KeyCode)
-   {
-      m_InputDown = UnityEngine.Input.GetKeyDown(KeyCode);
-      m_InputHeld = UnityEngine.Input.GetKey(KeyCode);
-      m_InputUp = UnityEngine.Input.GetKeyUp(KeyCode);
+   public void In([FriendlyName("Key Code")] UnityEngine.KeyCode[] KeyCodes) 
+   { 
+      m_InputHeld = false;
+      m_InputDown = false;
+      m_InputUp   = false;
+
+      foreach (KeyCode code in KeyCodes) 
+      { 
+         m_InputDown |= UnityEngine.Input.GetKeyDown(code); 
+         m_InputHeld |= UnityEngine.Input.GetKey(code); 
+         m_InputUp   |= UnityEngine.Input.GetKeyUp(code); 
+      } 
    }
 }
