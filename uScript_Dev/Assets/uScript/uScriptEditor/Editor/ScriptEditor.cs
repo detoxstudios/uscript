@@ -1132,6 +1132,12 @@ namespace Detox.ScriptEditor
          commentNode.Parameters = Parameters;
          commentNode.Position   = Position;
          commentNode.Guid       = Guid.NewGuid( );
+
+         //copy parameters not currently supported
+         //so they maintain valid values
+         commentNode.NodeColor      = NodeColor;
+         commentNode.TitleTextColor = TitleTextColor;
+         commentNode.BodyTextColor  = BodyTextColor;
  
          return commentNode;
       }
