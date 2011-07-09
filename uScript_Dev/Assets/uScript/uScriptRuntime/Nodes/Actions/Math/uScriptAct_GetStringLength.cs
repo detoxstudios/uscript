@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns the number of characters in a string as a float, integer, and string.")]
 [NodeDescription("Returns the number of characters in a string as a float, integer, and string.\n \nTarget: The Target string to get the length of.\nInt Value (out): The length of the Target string, expressed as an integer.\nFloat Value (out): The length of the Target string, expressed as a floating point number.\nString Value (out): The length of the Target string, expressed as a string.")]

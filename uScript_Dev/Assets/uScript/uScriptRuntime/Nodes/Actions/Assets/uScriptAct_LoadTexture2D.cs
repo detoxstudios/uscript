@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Assets")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads an image file into a Texture2D")]
 [NodeDescription("Loads an image file into a Texture2D variable from your Resources directory.\n \nName: The texture file to load. \nLoaded Texture2D (out): The texture loaded from the specified file name.")]

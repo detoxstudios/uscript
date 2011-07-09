@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Debug")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Prints out a list of string variables from a String list to the console.")]
 [NodeDescription("Prints out a list of string variables from a String list to the console.\n \nStrings: List of strings to print out, one line at a time.")]

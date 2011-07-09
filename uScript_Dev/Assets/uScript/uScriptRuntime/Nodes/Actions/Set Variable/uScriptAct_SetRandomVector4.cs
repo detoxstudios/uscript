@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Set Variable")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the value of a Vector4 variable.")]
 [NodeDescription("Randomly sets the value of a Vector4 variable.\n \nMin(X/Y/Z/W): Minimum allowable float value.\nMax(X/Y/Z/W): Maximum allowable float value.\nSeed: Optional. Seed value for the random number generator. Using a specific seed value will generate the same random number each time. A value of zero (the default) will generate random numbers each time.\nTarget Vector4 (out): The Vector4 variable that gets set.")]

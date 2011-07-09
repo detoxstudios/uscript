@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Joint))]
 
 [NodePath("Events/Physics Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when one of Instance's joints breaks.")]
 [NodeDescription("Fires an event signal when one of Instance's joints breaks.\n \nBreak Force: The magnitude of the force that caused the joint break.")]

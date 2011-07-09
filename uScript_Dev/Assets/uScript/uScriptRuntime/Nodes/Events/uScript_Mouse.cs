@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Collider), typeof(GUIElement))]
 
 [NodePath("Events/Input Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when the mouse enters, is over, exits, is pressed down, released, or dragged over Instance.")]
 [NodeDescription("Fires an event signal when the mouse enters, is over, exits, is pressed down, released, or dragged over Instance.")]

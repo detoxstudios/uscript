@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Set Variable")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a Rect to the defined Left, Top, Width and Height float component values.")]
 [NodeDescription("Sets a Rect to the defined Left, Top, Width and Height float component values.\n \nLeft (in): Left value to use for the Output Rect.\nTop (in): Top value to use for the Output Rect.\nWidth (in): Width value to use for the Output Rect.\nHeight (in): Height value to use for the Output Rect.\nOutput Rect (out): Rect variable built from the specified Left, Top, Width, and Height.")]

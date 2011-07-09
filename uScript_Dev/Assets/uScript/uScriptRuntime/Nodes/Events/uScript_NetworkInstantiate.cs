@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Network))]
 
 [NodePath("Events/Network Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when the network is instantiated.\n \nNetwork Message Info (out): Contains information about the network that has been instantiated.")]
 [NodeDescription("Fires an event signal when the network is instantiated.")]

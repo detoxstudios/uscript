@@ -9,7 +9,7 @@ using System.Collections;
 
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEvent")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when Instance receives a standard custom event.")]
 [NodeDescription("Fires an event signal when Instance receives a standard custom event.\n \nSender: The GameObject that sent this event (if available).\nEvent Name: The name of the custom event.")]

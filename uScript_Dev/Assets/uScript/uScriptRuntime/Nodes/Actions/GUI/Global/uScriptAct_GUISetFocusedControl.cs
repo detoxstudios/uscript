@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GUI/Global")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the current focused control.")]
 [NodeDescription("Sets the current focused control.\n \nControl Name: The name of the control to give focus to.")]

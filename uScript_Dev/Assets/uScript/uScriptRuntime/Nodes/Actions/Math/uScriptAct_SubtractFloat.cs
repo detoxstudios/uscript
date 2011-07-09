@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Subtracts two float variables and returns the result.")]
 [NodeDescription("Subtracts two float variables and returns the result.\n \nA: The floating point number to subtract from.\nB: The floating point number to subtract from A.\nResult (out): The floating point result of the subtraction operation.\nInt Result (out): The integer result of the subtraction operation.")]

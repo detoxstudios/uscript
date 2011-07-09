@@ -8,7 +8,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Counter")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Increments the first attached float variable and then performs a comparison with the second attached float variable and fires the appropriate output link based on that comparison.")]
 [NodeDescription("Increments the first attached float variable and then performs a comparison with the second attached float variable and fires the appropriate output link based on that comparison.\n \nA: Variable to increment.\nB: Variable to compare with incremented variable.\nCurrent Value: Value of A after increment has taken place.")]

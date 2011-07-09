@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Collider))]
 
 [NodePath("Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a GameObject enters, exits, or stays in a trigger.\n \nInstigator: The GameObject that interacted with the trigger (Instance).")]
 [NodeDescription("Fires an event signal when a GameObject enters, exits, or stays in a trigger.")]

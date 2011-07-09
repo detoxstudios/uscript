@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Physics")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the velocity of a GameObject's Rigidbody as a Vector3.")]
 [NodeDescription("Sets the velocity of a GameObject's Rigidbody as a Vector3.\n \nTarget: GameObject(s) to set the velocity of.\nVelocity: The velocity to give to the rigidbody component attached to the Target GameObject(s).")]

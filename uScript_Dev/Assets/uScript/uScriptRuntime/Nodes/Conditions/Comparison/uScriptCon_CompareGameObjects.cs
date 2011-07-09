@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Comparison")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Compares the unique InstanceID of the attached GameObject variables and outputs accordingly.")]
 [NodeDescription("Compares the unique InstanceID of the attached GameObject variables and outputs accordingly. Optionally you can compare by a GameObject's tag.\n \nA: The first GameObject to compare.\nB: The seconds GameObject to compare.\nCompare By Tag: Whether or not to compare the GameObjects' tags instead of the objects themselves.")]

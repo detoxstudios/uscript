@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Switches")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Manually pick an Output to fire the signal to.")]
 [NodeDescription("Manually pick an Output to fire the signal to. Providing an Output To Use number smaller than 1 caps to 1 and larger than 6 caps to 6.\n \nOutput To Use: The output switch to use.")]

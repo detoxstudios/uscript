@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Removes the specified Component from the target GameObject.")]
 [NodeDescription("Removes the specified Component from the target GameObject.\n \nTarget: The target GameObject(s) to destroy the components of.\nComponent Name: The name of the component to destroy from all target GameObject(s).\nDelay: The time to wait before destroying the target component(s).")]

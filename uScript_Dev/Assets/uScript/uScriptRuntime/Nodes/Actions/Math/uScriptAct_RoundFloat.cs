@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Rounds the Target float and returns the result.")]
 [NodeDescription("Rounds the Target float to the nearest whole number and returns the result.\n \nTarget: The float to round.\nResult (out): The floating point result of the rounding operation.\nInt Result (out): The integer result of the rounding operation.")]

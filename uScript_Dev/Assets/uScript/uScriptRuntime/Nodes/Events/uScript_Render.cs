@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Renderer))]
 
 [NodePath("Events/Renderer Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when various render events (Pre Cull, Pre Render, Post Render, Render Object, and Will Render Object) take place.")]
 [NodeDescription("Fires an event signal when various render events (Pre Cull, Pre Render, Post Render, Render Object, and Will Render Object) take place.")]

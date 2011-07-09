@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GUI")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a label on the screen.")]
 [NodeDescription("Shows a label on the screen.\n \nText: The text you want to display. \nFont Size: The size of the font.\nFont Style: The font style (Normal,Bold, Italic, BoldAndItalic).\nColor: The color of the font.\nAlignment: The position of the text on the screen.\nEdge Padding: The number of pixels tp offset the text from the edge of the screen.")]

@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Attaches one GameObject to another, setting the Target as the parent of the Attachment.")]
 [NodeDescription("Attaches one GameObject to another, setting the Target as the parent of the Attachment.\n \nTarget: GameObject to attach to.\nAttachment: GameObject to attach to the Target.\nUse Relative Offset: Whether or not to use the relative offset.\nRelative Offset: The relative offset to use.\nUse Relative Rotation: Whether or not to use the relative rotation.\nRelative Rotation: The relative rotation to use.")]

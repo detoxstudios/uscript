@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Level")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads a level.")]
 [NodeDescription("Loads a level.\n \nLevel Name: The level to load (make sure it's been added to Unity through File->Build Settings...).\n" +

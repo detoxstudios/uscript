@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Assets")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads an AnimationClip")]
 [NodeDescription("Loads an AnimationClip from your Resources directory.\n \nAnimation Clip: The audio file to load. \nLoaded AnimationClip (out): The AnimationClip loaded from the specified file.")]

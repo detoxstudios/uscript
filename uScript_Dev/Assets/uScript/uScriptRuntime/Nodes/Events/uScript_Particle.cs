@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Collider))]
 
 [NodePath("Events/Particles")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a particle collides with a GameObject.\n \nInstigator: The GameObject that was collided with.")]
 [NodeDescription("Fires an event signal when a particle collides with a GameObject.")]

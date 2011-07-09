@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Network))]
 
 [NodePath("Events/Network Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a master server event takes place.\n \nMaster Server Event (out): Describes status messages from the master server.")]
 [NodeDescription("Fires an event signal when a master server event takes place.")]

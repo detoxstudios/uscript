@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Physics")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Cast a ray from the Camera out to the center of the screen.")]
 [NodeDescription("Cast a ray from the Camera out to the center of the screen, determines if anything was hit along the way, and fires the associated output link.\n\nCamera: The Camera GameObject to cast the ray from. \nX Pixel Offset: The number of pixels (positive or negative value) to offset the ray from the center of the screen on X (width). Capped to the screen pixel width min/max. \nY Pixel Offset: The number of pixels (positive or negative value) to offset the ray from the center of the screen on Y (height). Capped to the screen pixel height min/max. \nDistance: How far out to cast the ray. \nLayer Mask: A Layer mask that is used to selectively ignore colliders when casting a ray.\nHit GameObject: The first GameObject that was hit by the raycast (if any).\nHit Distance: The distance along the ray that the hit occured (if any).\nHit Location: The position of the hit (if any).\nHit Normal: The surface normal of the hit (if any).")]

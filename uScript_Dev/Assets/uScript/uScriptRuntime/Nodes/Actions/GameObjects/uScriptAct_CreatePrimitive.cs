@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Creates a GameObject with a primitive mesh renderer and appropriate collider.")]
 [NodeDescription("Creates a GameObject with a primitive mesh renderer and appropriate collider.\n \nName: The name of the new GameObject.\nPrimitive: The type of primitive mesh for the GameObject.\nLocation: The location to place the new GameObject.")]

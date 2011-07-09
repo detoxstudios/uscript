@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Screen")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Creates a Rect in the center of the screen based on screen size information.")]
 [NodeDescription("Creates a Rect in the center of the screen based on screen size information.\n\nRect Width (in): The width of the Rect in pixels you wish to make. Can not be less than 2 or greater than the screen width (will be automatically capped if you specify a value outside this range).\nRect Height (in): The height of the Rect in pixels you wish to make. Can not be less than 2 or greater than the screen height (will be automatically capped if you specify a value outside this range).\nOutput Rect (out): The new Rect.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the components of a Rect as floats.")]
 [NodeDescription("Gets the components of a Rect as floats.\n \n\n \nInput Rect (in): The input Rect to get components of.\nLeft (out): The Left value of the Input Rect.\nTop (out): The Top value of the Input Rect.\nWidth (out): The Width value of the Input Rect.\nHeight (out): The Height value of the Input Rect.")]

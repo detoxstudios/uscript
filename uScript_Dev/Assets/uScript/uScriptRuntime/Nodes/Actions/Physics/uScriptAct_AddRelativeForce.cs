@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Physics")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Applies an Add Relative Force to the specified GameObject.")]
 [NodeDescription("Applies an Add Relative Force to the specified GameObject. Target must have a Rigid Body Component in order to recieve a force\n \nTarget: GameObject to apply the force to.\nForce: The force to apply to the Target. The force is a Vector3, so it defines both the direction and magnitude of the force.\nScale: A scale to multiply to the force (force x scale).\nUse ForceMode: The force being applied will use the object's mass.\nForceMode Type: Specifies the ForceMode to use if Use ForceMode is set to true.")]

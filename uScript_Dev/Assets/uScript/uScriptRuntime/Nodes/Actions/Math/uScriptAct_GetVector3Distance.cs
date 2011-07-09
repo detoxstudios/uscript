@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns the distance between two Vector3 locations as a float.")]
 [NodeDescription("Returns the distance between two Vector3 locations as a float.\n \nA: The first Vector3.\nB: The second Vector3.\nDistance (out): The distance between the A and B vectors.")]

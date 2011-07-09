@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Camera")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Switches to the Target GameObject's camera.")]
 [NodeDescription("Switches to the Target GameObject's camera.\n \nTarget: The GameObject containing the camera to switch to.\nEnable AudioListener: Whether or not to enable that camera's AudioListener component (if it has one).\nDisable Other Cameras: Whether or not to disable all other cameras.")]

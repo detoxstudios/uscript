@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Network))]
 
 [NodePath("Events/Network Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when the network client connects or disconnects from the server.\n \nReason for Failure (out): What happened if there is a connection failure - can be 'Disconnected', 'Lost Connection', or 'Unknown'.")]
 [NodeDescription("Fires an event signal when the network client connects or disconnects from the server.")]

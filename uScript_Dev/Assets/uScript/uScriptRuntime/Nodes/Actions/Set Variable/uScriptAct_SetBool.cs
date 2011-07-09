@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Set Variable")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a boolean to the defined value.")]
 [NodeDescription("Sets a boolean to the defined value.\n \nTarget (out): The value that has been set for this variable.")]

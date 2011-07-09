@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the position (Vector3) of a GameObject as world coordinates.")]
 [NodeDescription("Sets the position (Vector3) of a GameObject as world coordinates.\n \nTarget: The Target GameObject(s) to set the position of.\nPosition: The position to set the Target GameObjects to. Optionally can set position as offest from the target's current position.\nAs Offset: Whether or not to use Position as an offset from the Target GameObjects' position(s).")]

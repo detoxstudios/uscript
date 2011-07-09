@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [NodePath("Actions/Events/Custom Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sends a custom event with a Color variable.")]
 [NodeDescription("Sends a custom event with a Color variable.\n \nEvent Name: The string-based event name.\nBraodcast To All: Whether or not to broadcast this event to all GameObjects. If false (which is the default), this event will only be sent to the ancestors of Event Sender (or the owner of this uScript).\nEvent Sender: The GameObject responsible for sending the event. If not specified, the sender will be the owner of this uScript.")]

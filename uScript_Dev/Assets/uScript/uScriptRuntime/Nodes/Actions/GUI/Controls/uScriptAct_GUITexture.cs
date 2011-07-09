@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GUI/Controls")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a GUITexture on the screen.")]
 [NodeDescription("Shows a GUITexture on the screen.\n \nPosition: The position and size of the texture.\nTexture: The background image to use for the texture.\nControl Name: Name to give to this texture GUI control.\nScale Mode: The scale mode to use when drawing the texture.\nAlpha Blend: Whether or not to enable alpha blending when drawing the texture (default is true).\nImage Aspect: Aspect ratio to use for the source image. If 0 (default), the aspect ratio from the image is used. Otherwise, pass width/height.")]

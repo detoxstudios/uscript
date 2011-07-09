@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Screen")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the current size informaiton for the screen.")]
 [NodeDescription("Gets the current size informaiton for the screen.\n\nWidth (Out): Returns the width of the screen size in pixels.\nHeight (Out): Returns the height of the screen size in pixels.\nScreen Rect (Out): Returns the screen size as a Rect variable.\nScreen Center (Out): The center of the screen as a Vector2.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Time")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Counts the amount of time that elapses between starting and stopping.")]
 [NodeDescription("Counts the amount of time that elapses between starting and stopping.")]

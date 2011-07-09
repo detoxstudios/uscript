@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Converts a variable into another type.")]
 [NodeDescription("Converts a variable into another type.\n \nTarget: The Target variable to be converted.\nInt Value (out): The Target variable represented as an integer.\nFloat Value (out): The Target variable represented as a floating point value.\nString Value (out): The Target variable represented as a string.\nBoolean Value (out): The Target variable represented as a Boolean (true/false) value.")]

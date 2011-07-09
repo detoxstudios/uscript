@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Physics")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Performs a ray trace from the starting point to the end point. Returns any hit data.")]
 [NodeDescription("Performs a ray trace from the starting point to the end point, determines if anything was hit along the way, and fires the associated output link.\n \nStart: The start point of the ray cast. Must be a GameObject or Vector3.\nEnd: The end point of the ray cast. Must be a GameObject or Vector3.\nLayer Mask: A Layer mask that is used to selectively ignore colliders when casting a ray.\nHit GameObject: The first GameObject that was hit by the raycast (if any).\nHit Distance: The distance along the ray that the hit occured (if any).\nHit Location: The position of the hit (if any).\nHit Normal: The surface normal of the hit (if any).")]

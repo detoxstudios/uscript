@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Isometric Character Controller.")]
 [NodeDescription("Simple character controller.  Character always moves forward and backwards along its forward vector.\n \nTarget: The character to control.\nTranslation Units Per Second: How many units to move per second when the forward/backward keys are pressed.\nRotation Units Per Second: How many units to rotate per second when the left/right keys are pressed.\nFilter Translation: Whether or not to filter the object's translation.\nTranslation Filter Constant: The strength of the translation filter (lower numbers mean more filtering, i.e. slower).\nFilter Rotation: Whether or not to filter the object's rotation.\nRotation Filter Constant: The strength of the rotation filter (lower numbers mean more filtering, i.e. slower).")]

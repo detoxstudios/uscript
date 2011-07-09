@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Switches")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Allows the signal to pass through each output socket in order.")]
 [NodeDescription("Allows the signal to pass through each output socket in order.\n \nMax Output Used: Highest valid output switch to use.\nCurrent Output (out): The output switch that last executed.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Toggle")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Toggles the active state of a component on the Target GameObjects.")]
 [NodeDescription("Toggles the active state of a component on the Target GameObjects. Ignores GameObjects missing the specified component.\n \nTarget: The Target GameObject(s) to toggle component state on.\nComponent Name: The name of the component to toggle.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Converts a forward and up vector into a quaternion.")]
 [NodeDescription("Converts a forward and up vector into a quaternion.\n \nForward Vector: The forward vector component of the quaternion.\nUp Vector: The up vector component of the quaternion.\nResult Quaternion (out): The quaternion calculated using the forward and up vectors passed in.")]

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Game Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when various global events (Update, LateUpdate, and FixedUpdate) take place.")]
 [NodeDescription("Fires an event signal when various global events (Update, LateUpdate, and FixedUpdate) take place.")]

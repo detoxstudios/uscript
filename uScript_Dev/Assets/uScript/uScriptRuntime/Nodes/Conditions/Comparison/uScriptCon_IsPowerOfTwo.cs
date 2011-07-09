@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Comparison")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Determines if the target Int is a power of two number.")]
 [NodeDescription("Determines if the target Int is a power of two number.\n\nTarget: The target Int variable to compare.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Editor Only")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Outputs a string to the debug log.")]
 [NodeDescription("Outputs a string to the debug log.\n \nPrefix: String to print ahead of each attached Target object.\nTarget: Objects to be printed to the console. If multiple are attached, they will all be printed 1 per line as Prefix + Target + Postfix.\nPostfix: String to print after each attached Target object.")]

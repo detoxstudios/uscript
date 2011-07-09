@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Takes any Vector3 or Vector4 and outputs a low-pass filtered version.")]
 [NodeDescription("Takes any Vector3 or Vector4 and outputs a low-pass filtered version.\n \nTarget: Value to filter.\nFilter Constant: The strength of the filter (lower numbers mean more filtering, i.e. slower - default value = 0.1).\nValue (out): Filtered value.")]

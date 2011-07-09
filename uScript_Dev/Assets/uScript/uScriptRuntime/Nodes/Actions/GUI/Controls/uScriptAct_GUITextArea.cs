@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GUI/Controls")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a GUITextArea on the screen and allows getting/setting of its string contents and repsonses to changed event.")]
 [NodeDescription("Shows a GUITextArea on the screen and allows getting/setting of its string contents and repsonses to changed event.\n \nValue (in/out): The value of this text area.\nPosition: The position and size of the text area.\nMax Length: The maximum allowable string length for this text area.\nControl Name: Name to give to this text area GUI control.\nGUI Style: The name of a custom GUI style to use when displaying this text aera.")]

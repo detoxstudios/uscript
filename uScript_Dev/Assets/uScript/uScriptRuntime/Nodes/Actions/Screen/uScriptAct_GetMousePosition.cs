@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Screen")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the position of the mouse.")]
 [NodeDescription("Gets the position of the mouse.\n\nPosition(Out): Returns the position of the mouse.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Comparison")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if a GameObject has the specified tag(s).")]
 [NodeDescription("Checks to see if a GameObject has the specified tag(s).\n \nGameObject: The GameObject to check.\nTag: The tag to check for. Can attach multiple to check for multiple tags.")]

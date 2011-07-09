@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Physics")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the velocity of a GameObject's Rigidbody as a Vector3.")]
 [NodeDescription("Gets the velocity of a GameObject's Rigidbody as a Vector3. If Target does not have a rigidbody component, will return Vector3.zero.\n \nTarget: GameObject to get the velocity of.\nVelocity (out): The velocity of the rigidbody component attached to Target.")]

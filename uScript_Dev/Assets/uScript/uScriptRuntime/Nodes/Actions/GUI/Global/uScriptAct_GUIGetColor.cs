@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GUI/Global")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the current tint color for the GUI.")]
 [NodeDescription("Gets the current tint color for the GUI.\n \nColor (out): The current color that the GUI is tinted with.")]

@@ -8,7 +8,7 @@ using System.Collections;
 [NodeAutoAssignMasterInstance(true)]
 
 [NodePath("Events/Input Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when an accelerometer event happens.")]
 [NodeDescription("Fires an event signal when an accelerometer event happens.\n \nAcceleration (out): The accelerometer value of this event.\nDelta Time (out): Amount of time (in seconds) that has passed since the last acceleraton measurement.")]

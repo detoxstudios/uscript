@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Set Variable")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a Vector4 to the defined X, Y, Z and W float component values.")]
 [NodeDescription("Sets a Vector4 to the defined X, Y, Z and W float component values.\n \nX: X value to use for the Output Vector.\nY: Y value to use for the Output Vector.\nZ: Z value to use for the Output Vector.\nW: W value to use for the Output Vector.\nOutput Vector4 (out): Vector4 variable built from the specified X, Y, Z, and W.")]

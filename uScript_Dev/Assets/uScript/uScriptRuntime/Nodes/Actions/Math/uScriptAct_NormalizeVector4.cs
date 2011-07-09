@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Normalizes the vector.")]
 [NodeDescription("Normalizes the vector. A normalized vector keeps the same direction but its length is 1.0. If the vector is too small to be normalized a zero vector will be returned instead.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Comparison")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires the appropriate output link(s) depending on the comparison of the attached float variables.")]
 [NodeDescription("Fires the appropriate output link(s) depending on the comparison of the attached float variables.\n \nA: First float value to compare.\nB: Second float value to compare.")]

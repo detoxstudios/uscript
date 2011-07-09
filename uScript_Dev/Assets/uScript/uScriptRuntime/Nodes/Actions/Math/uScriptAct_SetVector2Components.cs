@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Set Variable")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a Vector2 to the defined X and Y float component values.")]
 [NodeDescription("Sets a Vector2 to the defined X and Y float component values.\n \nX: X value to use for the Output Vector.\nY: Y value to use for the Output Vector.\nOutput Vector2 (out): Vector2 variable built from the specified X and Y.")]

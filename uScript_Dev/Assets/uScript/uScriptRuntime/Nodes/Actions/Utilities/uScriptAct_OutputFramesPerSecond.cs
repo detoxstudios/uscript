@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Utilities")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Outputs the current frames per second.")]
 [NodeDescription("Outputs the current frames per second.\n\nFPS: Returns the current frames per second.")]

@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Transform))]
 
 [NodePath("Events/Renderer Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a post-effect is rendered.\n \nSource Texture: The source texture used in the post-effect.\nDestination Texture: The destination texture used in the post-effect.")]
 [NodeDescription("Fires an event signal when a post-effect is rendered.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Rotates the target GameObject by a number of degrees over X seconds.")]
 [NodeDescription("Rotates the target GameObject by a number of degrees over X seconds.\n \nTarget: The Target GameObject(s) to rotate.\nDegrees: The number of degrees to rotate.\nAxis: The axis to rotate around.\nSeconds: The number of seconds to complete the full rotation.\nLoop: Whether or not to loop the rotation.")]

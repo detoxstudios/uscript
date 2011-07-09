@@ -8,7 +8,7 @@ using System.Collections;
 [NodeAutoAssignMasterInstance(true)]
 
 [NodePath("Events/Input Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when the screen orientation of a device happens. Supported events: Device Portrait, Device Portrait Upside-Down, Device Landscape Left, Device Landscape Right, Device Face Up, Device Face Down.")]
 [NodeDescription("Fires an event signal when the screen orientation of a device happens. Supported events: Device Portrait, Device Portrait Upside-Down, Device Landscape Left, Device Landscape Right, Device Face Up, Device Face Down.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GUI/Global")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the current enabled state the GUI.")]
 [NodeDescription("Sets the current enabled state the GUI.\n \nEnabled: Whether or not the current GUI should use the enabled state.")]

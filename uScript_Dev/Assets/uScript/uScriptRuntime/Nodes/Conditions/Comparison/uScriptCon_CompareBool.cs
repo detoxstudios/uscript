@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Comparison")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires the appropriate output link depending on the comparison of the attached bool variable.")]
 [NodeDescription("Fires the appropriate output link depending on the comparison of the attached bool variable.\n \nBool: The boolean value to compare.")]

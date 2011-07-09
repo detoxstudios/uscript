@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GUI/Global")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the current content tint color for the GUI.")]
 [NodeDescription("Sets the current content tint color for the GUI. NOTE: This color selection only lasts for the current frame or until another color is set.\n \nColor: The color to tint the GUI content objects with.")]

@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Physics")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns True or False if collisions are being ignored between Layer A and Layer B.")]
 [NodeDescription("Returns True or False if collisions are being ignored between Layer A and Layer B.\n\nLayer A: The first layer.\nLayer B: The second layer.\nResult: True = collisions are being ignored between the layers, False = collisions are NOT being ignored between the layers.")]

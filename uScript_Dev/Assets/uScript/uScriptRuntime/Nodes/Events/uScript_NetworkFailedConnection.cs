@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Network))]
 
 [NodePath("Events/Network Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when the network client fails to connect to the server.\n \nConnection Error (out): The UnityEngine.NetworkConnectionError result.")]
 [NodeDescription("Fires an event signal when the network client fails to connect to the server.")]

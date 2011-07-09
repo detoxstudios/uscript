@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(CharacterController))]
 
 [NodePath("Events/Physics Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a CharacterController collides with an object.\n \nCharacter Controller: The controller that hit Collider.\nCollider: The collider that was hit by Character Controller.\nRigid Body: The rigidbody that was hit by Character Controller.\nInstigator: The GameObject that was hit by Character Controller.\nTransform: The transform that was hit by Character Controller.\nPoint: The impact point in world space.\nNormal: The normal of the surface we collided with in world space.\nMove Direction: Approximately the direction from the center of the capsule to the point we touch.\nMove Length: How far the character has travelled until it hit the collider.\n")]
 [NodeDescription("Fires an event signal when a CharacterController collides with an object.")]

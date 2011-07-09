@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Adds two Vector4 variables together and returns the result.")]
 [NodeDescription("Adds two Vector4 variables together and returns the result.\n \nA: The first Vector4 addend.  If more than one Vector4 variable is connected to A, they will be added together before being added to B.\nB: The second Vector4 addend.  If more than one Vector4 variable is connected to B, they will be added together before being added to A.\nResult (out): The Vector4 result of the addition operation.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the rotation in degrees (float) of a GameObject in local or world coordinates.")]
 [NodeDescription("Sets the rotation in degrees (float) of a GameObject in local or world coordinates. Optionally can set rotation as offest from the target's current rotation.")]

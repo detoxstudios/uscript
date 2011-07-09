@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the world coordinates euler angle rotation of a GameObject.")]
 [NodeDescription("Sets the world coordinates euler angle rotation of a GameObject by specifing the X, Y, and Z axis in degrees.\n \nTarget: The Target GameObject(s) to set Euler Angles for.\nX Axis: The X Axis Euler angle to set.\nPreserve X Axis: Whether or not to preserve the current X Axis Euler angle.\nY Axis: The Y Axis Euler angle to set.\nPreserve Y Axis: Whether or not to preserve the current Y Axis Euler angle.\nZ Axis: The Z Axis Euler angle to set.\nPreserve Z Axis: Whether or not to preserve the current Z Axis Euler angle.")]

@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Physics")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the current gravity as a Vector3.")]
 [NodeDescription("Gets the current gravity as a Vector3.\n\nGravity: Returns the current gravity value.")]

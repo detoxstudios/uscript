@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Network))]
 
 [NodePath("Events/Network Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when network serialization takes place.\n \nBitStream: The serialized data.\nNetwork Message Info (out): Contains information about the network serialization.")]
 [NodeDescription("Fires an event signal when network serialization takes place.")]

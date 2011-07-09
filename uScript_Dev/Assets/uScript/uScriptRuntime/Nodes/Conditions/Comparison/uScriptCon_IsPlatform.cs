@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [NodePath("Conditions/Comparison")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Outputs true if the current platform is one of the attached platform variables.")]
 [NodeDescription("Outputs true if the current platform is one of the attached platform variables.\n \nValid Platforms: All UnityEngine.RuntimePlaform variables attached will considerd to be valid platforms.")]

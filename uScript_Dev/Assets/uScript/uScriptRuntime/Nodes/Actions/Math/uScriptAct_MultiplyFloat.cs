@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Multiplies two float variables together and returns the result.")]
 [NodeDescription("Multiplies two float variables together and returns the result.\n \nA: First floating point number to multiply. If more than one floating point variable is connected to A, they will be multiplied together before being multiplied by B.\nB: Second floating point number to multiply. If more than one floating point variable is connected to B, they will be multiplied together before being multiplied by A.\nResult (out): Floating point result of the multiplication operation.\nInt Result (out): Integer result of the multiplication operation.")]

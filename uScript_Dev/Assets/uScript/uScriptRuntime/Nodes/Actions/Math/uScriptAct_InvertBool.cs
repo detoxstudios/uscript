@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Inverse a boolean variable to its opposite value.")]
 [NodeDescription("Inverse a boolean variable to its opposite value.\n \nTarget: Value to invert.\nValue (out): Inverted value (true -> false or false -> true).")]

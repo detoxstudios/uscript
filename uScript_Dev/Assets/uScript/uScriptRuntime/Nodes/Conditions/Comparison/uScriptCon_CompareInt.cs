@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Comparison")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires the appropriate output link(s) depending on the comparison of the attached integer variables.")]
 [NodeDescription("Fires the appropriate output link(s) depending on the comparison of the attached integer variables.\n \nA: First integer to compare.\nB: Second integer to compare.")]

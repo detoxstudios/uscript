@@ -7,7 +7,7 @@ using System.Collections;
 using System.IO;
 
 [NodePath("Actions/Utilities")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Captures a screenshot as a PNG file.")]
 [NodeDescription("Captures a screenshot as a PNG file. If the file already exists, it will be overwritten. If no path is defined or a bad path is provided, the screenshot will be placed in the root folder of the project. Note: This node will not function when run from the web player or a Dashboard widget.\n\nFile Name: The name of the file. You do not need to provide the extension.\nPath: The path where you wish to save the screenshot file to.")]

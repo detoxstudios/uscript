@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Physics")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Tells the collision detection system ignore all collisions between any GameObject in Layer A and any GameObject in Layer B.")]
 [NodeDescription("Tells the collision detection system ignore all collisions between any GameObject in Layer A and any GameObject in Layer B.\n\nLayer A: The first layer.\nLayer B: The second layer.\nIgnore: True = Ignore collisions between the layers, False = Enable collisions between the layers.")]

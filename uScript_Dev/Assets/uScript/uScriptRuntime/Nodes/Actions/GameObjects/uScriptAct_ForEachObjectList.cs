@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).")]
 [NodeDescription("Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).\n \nGameObject List: The list of GameObjects to iterate over.\nCurrent GameObject (out): The GameObject for the current loop iteration.")]

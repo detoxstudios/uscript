@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Subtracts two Vector3 variables and returns the result.")]
 [NodeDescription("Subtracts two Vector3 variables and returns the result.\n \nA: The Vector3 to subtract from.\nB: The Vector3 to subtract from A.\nResult (out): The Vector3 result of the subtraction operation.")]

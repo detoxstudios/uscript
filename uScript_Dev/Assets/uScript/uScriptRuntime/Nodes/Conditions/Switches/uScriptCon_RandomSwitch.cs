@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Switches")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly picks an Output to fire the signal to.")]
 [NodeDescription("Randomly picks an Output to fire the signal to.\n \nMax Output Used: Highest valid output switch to use.\nSeed: Random number generator seed value.\nCurrent Output (out): The output switch that was randomly chosen.")]

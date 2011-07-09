@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Conditions/Comparison")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Compares two string variables and outputs accordingly.")]
 [NodeDescription("Compares two string variables and outputs accordingly.\n \nA: First string to compare.\nB: Second string to compare.")]

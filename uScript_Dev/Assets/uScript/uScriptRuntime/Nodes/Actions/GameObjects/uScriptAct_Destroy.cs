@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Destroys the target GameObject.")]
 [NodeDescription("Destroys the target GameObject.\n \nTarget: The target GameObject(s) to destroy.\nDelay: The time to wait before destroying the target object(s).")]

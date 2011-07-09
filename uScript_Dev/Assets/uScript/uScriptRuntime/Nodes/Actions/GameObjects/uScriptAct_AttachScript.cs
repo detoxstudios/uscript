@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Attaches a script component to a GameObject.")]
 [NodeDescription("Attaches a script component to a GameObject.\n \nTarget: The GameObject(s) to attach the script to.\nScript Name: The name of the script to attach to the specified object(s).")]

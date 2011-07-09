@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the scale of a GameObject as both a Vector3 and X, Y and Z float variables.")]
 [NodeDescription("Gets the scale of a GameObject as both a Vector3 and X, Y and Z float variables.\n \nTarget: The Target GameObject you wish to get the scale of.\nScale: Returns the scale as a Vector3(X, Y, Z).\nX: Returns the X axis scale as a float.\nY: Returns the Y axis scale as a float.\nZ: Returns the Z axis scale as a float.")]

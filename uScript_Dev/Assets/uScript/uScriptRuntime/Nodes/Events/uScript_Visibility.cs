@@ -8,7 +8,7 @@ using System.Collections;
 [NodeComponentType(typeof(Renderer))]
 
 [NodePath("Events/GameObject Events")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when various GameObject visibility events (Became Visible, Became Invisible) take place.")]
 [NodeDescription("Fires an event signal when various GameObject visibility events (Became Visible, Became Invisible) take place.")]

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the components of a Vector3 as floats.")]
 [NodeDescription("Gets the components of a Vector3 as floats.\n \nInput Vector3: The input vector to get components of.\nX: The x value of the Input Vector3.\nY: The y value of the Input Vector3.\nZ: The z value of the Input Vector3.")]

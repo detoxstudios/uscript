@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Math")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Divides two integer variables and returns the result.")]
 [NodeDescription("Divides two integer variables and returns the result.\n \nA: The integer numerator.\nB: The integer denominator.\nResult (out): The integer result of the division operation.\nFloat Result (out): The floating point result of the division operation.")]

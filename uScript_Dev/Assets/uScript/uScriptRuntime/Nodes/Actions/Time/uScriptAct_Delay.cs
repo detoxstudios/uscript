@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Time")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Delays execution of a script.")]
 [NodeDescription("Delays execution of a script but can also fire off an immediate response.\n \nDuration: Amount of time (in seconds) to delay.")]

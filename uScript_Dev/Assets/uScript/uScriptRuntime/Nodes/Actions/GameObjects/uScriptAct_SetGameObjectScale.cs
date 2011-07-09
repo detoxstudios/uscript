@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GameObjects")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the scale of a GameObject.")]
 [NodeDescription("Sets the scale of a GameObject.\n \nTarget: The Target GameObject(s) to set the position of.\nScale: The new X, Y and Z scale as a Vector3(X, Y, Z)")]

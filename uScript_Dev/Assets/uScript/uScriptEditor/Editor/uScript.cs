@@ -4399,7 +4399,7 @@ http://uscript.net
       return null;
    }
 
-   public static string FindNodeLicense(string type)
+   /*public static string FindNodeLicense(string type)
    {
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
@@ -4418,7 +4418,7 @@ http://uscript.net
       }
 
       return "";
-   }
+   }*/
 
    public static string FindNodeCopyright(string type)
    {

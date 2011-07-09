@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/GUI/Global")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the tooltip of the control that is currently being hovered over with the cursor.")]
 [NodeDescription("Gets the tooltip of the control that is currently being hovered over with the cursor.\n \nTool Tip (out): The tooltip of the control that is currently being hovered over with the cursor.")]
