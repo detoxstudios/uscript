@@ -2125,7 +2125,7 @@ namespace Detox.ScriptEditor
                   }
                   else
                   {
-                     ToolStripItem item = friendlyMenu.DropDownItems.Add( events[0].FriendlyType + BuildSignature(events[0]) );
+                     ToolStripItem item = friendlyMenu.DropDownItems.Add( events[0].FriendlyType );
                      item.Tag = events[0];
 
                      item.Click += new System.EventHandler(m_MenuAddNode_Click);
@@ -2175,7 +2175,7 @@ namespace Detox.ScriptEditor
                   }
                   else
                   {
-                     ToolStripItem item = friendlyMenu.DropDownItems.Add( methods[ 0 ].Input.FriendlyName + BuildSignature(methods[0]) );
+                     ToolStripItem item = friendlyMenu.DropDownItems.Add( methods[ 0 ].Input.FriendlyName );
                      item.Tag = methods[0];
 
                      item.Click += new System.EventHandler(m_MenuAddNode_Click);
