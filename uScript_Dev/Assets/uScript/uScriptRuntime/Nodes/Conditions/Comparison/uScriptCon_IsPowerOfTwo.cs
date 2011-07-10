@@ -16,6 +16,7 @@ using System.Collections;
 [FriendlyName("Is Power of Two")]
 public class uScriptCon_IsPowerOfTwo : uScriptLogic
 {
+
    private bool m_IsPOT = false;
 
    [FriendlyName("True")]
@@ -26,6 +27,13 @@ public class uScriptCon_IsPowerOfTwo : uScriptLogic
     
    public void In(int Target)
    {
+
+#if (!UNITY_3_0 && !UNITY_3_1)
       m_IsPOT = Mathf.IsPowerOfTwo(Target);
+#else
+      uScriptDebug.Log("The 'Is Power Of Two' action node will only work with Unity version 3.2.0 and higher! It will always report false in older versions.", uScriptDebug.Type.Warning);
+#endif
+
    }
+
 }

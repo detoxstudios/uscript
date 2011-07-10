@@ -21,6 +21,8 @@ public class uScript_OnScreenKeyboard : uScriptEvent
 #pragma warning disable 67
 #pragma warning disable 414
 
+   private bool showLog = true;
+
    private bool m_LastKeyboardOut = false;
 
    
@@ -45,6 +47,12 @@ public class uScript_OnScreenKeyboard : uScriptEvent
       }
       
       m_LastKeyboardOut = iPhoneKeyboard.visible;
+#else
+      if (showLog)
+      {
+         uScriptDebug.Log("The 'On-Screen Keyboard Events' node will only work with iOS devices!", uScriptDebug.Type.Warning);
+         showLog = false;
+      }
 #endif
    }
 }
