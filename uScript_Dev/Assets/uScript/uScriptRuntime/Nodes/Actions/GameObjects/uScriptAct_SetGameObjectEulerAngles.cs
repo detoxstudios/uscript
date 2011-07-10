@@ -11,7 +11,7 @@ using System.Collections;
 [NodeToolTip("Sets the world coordinates euler angle rotation of a GameObject.")]
 [NodeDescription("Sets the world coordinates euler angle rotation of a GameObject by specifing the X, Y, and Z axis in degrees.\n \nTarget: The Target GameObject(s) to set Euler Angles for.\nX Axis: The X Axis Euler angle to set.\nPreserve X Axis: Whether or not to preserve the current X Axis Euler angle.\nY Axis: The Y Axis Euler angle to set.\nPreserve Y Axis: Whether or not to preserve the current Y Axis Euler angle.\nZ Axis: The Z Axis Euler angle to set.\nPreserve Z Axis: Whether or not to preserve the current Z Axis Euler angle.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Rotation")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Set Rotation")]
 public class uScriptAct_SetGameObjectEulerAngles : uScriptLogic
@@ -19,7 +19,14 @@ public class uScriptAct_SetGameObjectEulerAngles : uScriptLogic
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, [FriendlyName("X Axis")] float X_Axis, [FriendlyName("Preserve X Axis")] bool PreserveX_Axis, [FriendlyName("Y Axis")] float Y_Axis, [FriendlyName("Preserve Y Axis")] bool PreserveY_Axis, [FriendlyName("Z Axis")] float Z_Axis, [FriendlyName("Preserve Z Axis")] bool PreserveZ_Axis)
+   public void In(
+      GameObject[] Target, 
+      [FriendlyName("X Axis")] float X_Axis,
+      [FriendlyName("Preserve X Axis"), SocketState(false, false)] bool PreserveX_Axis, 
+      [FriendlyName("Y Axis")] float Y_Axis,
+      [FriendlyName("Preserve Y Axis"), SocketState(false, false)] bool PreserveY_Axis,
+      [FriendlyName("Z Axis")] float Z_Axis,
+      [FriendlyName("Preserve Z Axis"), SocketState(false, false)] bool PreserveZ_Axis)
    {
       if (!PreserveX_Axis)
       {

@@ -34,7 +34,7 @@ public class uScriptCon_RandomSwitch : uScriptLogic
    public event uScriptEventHandler Output6;
 
    public void In(
-      [FriendlyName("Max Output Used"), DefaultValue(6)] int MaxOutputUsed,
+      [FriendlyName("Max Output Used"), DefaultValue(6), SocketState(false, false)] int MaxOutputUsed,
       [FriendlyName("Seed"), DefaultValue(0), SocketState(false, false)] int Seed,
       [FriendlyName("Current Output")] out int CurrentOutput
       )

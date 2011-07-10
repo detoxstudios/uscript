@@ -22,7 +22,12 @@ public class uScriptAct_SendCustomEventString : uScriptLogic
    public bool Out { get { return true; } }
     
    [FriendlyName("Send Custom Event")]
-   public void SendCustomEvent([FriendlyName("Event Name")] string EventName, [FriendlyName("Event Value")] string EventValue, [FriendlyName("Broadcast To All"), DefaultValue(false)] bool Broadcast, [FriendlyName("Event Sender"), SocketState(false, false)] GameObject EventSender)
+   public void SendCustomEvent(
+      [FriendlyName("Event Name")] string EventName, 
+      [FriendlyName("Event Value")] string EventValue,
+      [FriendlyName("Broadcast To All"), DefaultValue(false), SocketState(false, false)] bool Broadcast,
+      [FriendlyName("Event Sender"), SocketState(false, false)] GameObject EventSender
+      )
    {
       GameObject sender = m_Parent;
       if (EventSender != null) sender = EventSender;

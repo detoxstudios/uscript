@@ -35,10 +35,10 @@ public class uScriptAct_SpawnPrefabAtLocation : uScriptLogic
 
    public void In(
       [FriendlyName("Prefab Name")] string PrefabName,
-      [FriendlyName("Resource Path")] string ResourcePath,
+      [FriendlyName("Resource Path"), SocketState(false, false)] string ResourcePath,
       [FriendlyName("Spawn Position")] Vector3 SpawnPosition,
-      [FriendlyName("Spawn Rotation")] Quaternion SpawnRotation,
-      [FriendlyName("Spawned Name")] string SpawnedName,
+      [FriendlyName("Spawn Rotation"), SocketState(false, false)] Quaternion SpawnRotation,
+      [FriendlyName("Spawned Name"), SocketState(false, false)] string SpawnedName,
       [FriendlyName("Spawned GameObject")] out GameObject SpawnedGameObject,
       [FriendlyName("Spawned InstancedID"), SocketState(false, false)] out int SpawnedInstancedID
       )

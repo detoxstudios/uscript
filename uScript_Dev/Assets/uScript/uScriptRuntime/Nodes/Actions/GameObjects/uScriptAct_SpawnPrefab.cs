@@ -35,7 +35,7 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
 
    public void In(
       [FriendlyName("Prefab Name")] string PrefabName,
-      [FriendlyName("Resource Path")] string ResourcePath,
+      [FriendlyName("Resource Path"), SocketState(false, false)] string ResourcePath,
       [FriendlyName("Spawn Point")] GameObject SpawnPoint,
       [FriendlyName("Spawned Name")] string SpawnedName,
       [FriendlyName("Location Offset"), SocketState(false, false)] Vector3 LocationOffset,

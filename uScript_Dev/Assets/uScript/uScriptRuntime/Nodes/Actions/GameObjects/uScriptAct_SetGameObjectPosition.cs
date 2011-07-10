@@ -19,7 +19,7 @@ public class uScriptAct_SetGameObjectPosition : uScriptLogic
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, Vector3 Position, [FriendlyName("As Offset")] bool AsOffset)
+   public void In(GameObject[] Target, Vector3 Position, [FriendlyName("As Offset"), SocketState(false, false)] bool AsOffset)
    {
       foreach ( GameObject currentTarget in Target )
       {

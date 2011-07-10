@@ -19,7 +19,13 @@ public class uScriptAct_GetGameObjectScale : uScriptLogic
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject Target, out Vector3 Scale, out float X, out float Y, out float Z)
+   public void In(
+      GameObject Target,
+      out Vector3 Scale,
+      out float X, 
+      out float Y,
+      out float Z
+      )
    {
 
       if ( Target != null )

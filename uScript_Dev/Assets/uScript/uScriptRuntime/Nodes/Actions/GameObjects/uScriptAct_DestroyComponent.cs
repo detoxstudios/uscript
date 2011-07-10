@@ -19,7 +19,7 @@ public class uScriptAct_DestroyComponent : uScriptLogic
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, [FriendlyName("Component Name")] string[] ComponentName, [FriendlyName("Delay")]float DelayTime)
+   public void In(GameObject[] Target, [FriendlyName("Component Name")] string[] ComponentName, [FriendlyName("Delay"), SocketState(false, false)]float DelayTime)
    {
       foreach ( GameObject currentTarget in Target )
       {

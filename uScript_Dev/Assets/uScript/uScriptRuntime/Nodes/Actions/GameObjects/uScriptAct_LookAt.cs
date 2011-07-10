@@ -34,7 +34,11 @@ public class uScriptAct_LookAt : uScriptLogic
    private GameObject   m_Focus;
    private Vector3      m_FocusPosition;
 
-   public void In(GameObject[] Target, object Focus, [FriendlyName("Seconds")] float time)
+   public void In(
+      GameObject[] Target, 
+      object Focus,
+      [FriendlyName("Seconds")] float time
+      )
    {
       if (Focus != null)
       {

@@ -9,7 +9,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a label on the screen.")]
-[NodeDescription("Shows a label on the screen.\n \nText: The text you want to display. \nFont Size: The size of the font.\nFont Style: The font style (Normal,Bold, Italic, BoldAndItalic).\nColor: The color of the font.\nAlignment: The position of the text on the screen.\nEdge Padding: The number of pixels tp offset the text from the edge of the screen.")]
+[NodeDescription("Shows a label on the screen. This node does NOT need to be hooked up to an OnGUI Events node.\n \nText: The text you want to display. \nFont Size: The size of the font.\nFont Style: The font style (Normal,Bold, Italic, BoldAndItalic).\nColor: The color of the font.\nAlignment: The position of the text on the screen.\nEdge Padding: The number of pixels tp offset the text from the edge of the screen.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Print_Text")]
 

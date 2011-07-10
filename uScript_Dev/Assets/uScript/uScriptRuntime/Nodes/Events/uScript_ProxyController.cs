@@ -23,32 +23,32 @@ public class uScript_ProxyController : uScriptEvent
    public class ProxyControllerCollisionEventArgs : System.EventArgs
    {
       private ControllerColliderHit m_Hit;
-      
-      [FriendlyName("Character Controller")]
-      public CharacterController Controller { get { return m_Hit.controller; } }
-
-      [FriendlyName("Collider")]
-      public Collider Collider { get { return m_Hit.collider; } }
-
-      [FriendlyName("Rigid Body")]
-      public Rigidbody RigidBody { get { return m_Hit.rigidbody; } }
 
       [FriendlyName("Instigator")]
       public GameObject GameObject { get { return m_Hit.gameObject; } }
 
-      [FriendlyName("Transform")]
+      [FriendlyName("Character Controller"), SocketState(false, false)]
+      public CharacterController Controller { get { return m_Hit.controller; } }
+
+      [FriendlyName("Collider"), SocketState(false, false)]
+      public Collider Collider { get { return m_Hit.collider; } }
+
+      [FriendlyName("Rigid Body"), SocketState(false, false)]
+      public Rigidbody RigidBody { get { return m_Hit.rigidbody; } }
+
+      [FriendlyName("Transform"), SocketState(false, false)]
       public Transform Transform { get { return m_Hit.transform; } }
 
-      [FriendlyName("Point")]
+      [FriendlyName("Point"), SocketState(false, false)]
       public Vector3 Point { get { return m_Hit.point; } }
 
-      [FriendlyName("Normal")]
+      [FriendlyName("Normal"), SocketState(false, false)]
       public Vector3 Normal { get { return m_Hit.normal; } }
 
-      [FriendlyName("Move Direction")]
+      [FriendlyName("Move Direction"), SocketState(false, false)]
       public Vector3 MoveDirection { get { return m_Hit.moveDirection; } }
 
-      [FriendlyName("Move Length")]
+      [FriendlyName("Move Length"), SocketState(false, false)]
       public float MoveLength{ get { return m_Hit.moveLength; } }
 
       public ProxyControllerCollisionEventArgs(ControllerColliderHit hit)

@@ -35,8 +35,7 @@ public class uScriptCon_Switch : uScriptLogic
 
    public void In(
       bool Loop,
-      [FriendlyName("Max Output Used"), DefaultValue(6)] 
-      int MaxOutputUsed,
+      [FriendlyName("Max Output Used"), DefaultValue(6), SocketState(false, false)] int MaxOutputUsed,
       [FriendlyName("Current Output")] out int CurrentOutput)
    {
       // Check bounds on MaxOutputUsed

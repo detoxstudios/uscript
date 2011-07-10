@@ -19,7 +19,7 @@ public class uScriptAct_Destroy : uScriptLogic
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, [FriendlyName("Delay")] float DelayTime)
+   public void In(GameObject[] Target, [FriendlyName("Delay"), SocketState(false, false)] float DelayTime)
    {
       if (DelayTime > 0F)
       {

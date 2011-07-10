@@ -21,7 +21,10 @@ public class uScriptAct_SwitchCamera : uScriptLogic
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject Target, [FriendlyName("Enable AudioListener")] bool EnableAudioListener, [FriendlyName("Disable Other Cameras"), SocketState(false, false)] bool DisableOtherCameras)
+   public void In(
+      GameObject Target,
+      [FriendlyName("Enable AudioListener"), SocketState(false, false)] bool EnableAudioListener,
+      [FriendlyName("Disable Other Cameras"), SocketState(false, false)] bool DisableOtherCameras)
    {
       if ( Target != null)
       {

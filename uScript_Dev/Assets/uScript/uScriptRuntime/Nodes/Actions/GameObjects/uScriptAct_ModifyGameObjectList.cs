@@ -21,7 +21,11 @@ public class uScriptAct_ModifyGameObjectList : uScriptLogic
    public bool Out { get { return true; } }
     
    [FriendlyName("Add To List")]
-   public void AddToList(GameObject[] Target, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, [FriendlyName("List Count")] out int ListCount)
+   public void AddToList
+      (GameObject[] Target, 
+      [FriendlyName("GameObject List")] ref GameObject[] GameObjectList,
+      [FriendlyName("List Count")] out int ListCount
+      )
    {
       List<GameObject> list = new List<GameObject>(GameObjectList);
       
@@ -35,7 +39,11 @@ public class uScriptAct_ModifyGameObjectList : uScriptLogic
    }
 
    [FriendlyName("Remove From List")]
-   public void RemoveFromList(GameObject[] Target, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, [FriendlyName("List Count")] out int ListCount)
+   public void RemoveFromList(
+      GameObject[] Target, 
+      [FriendlyName("GameObject List")] ref GameObject[] GameObjectList,
+      [FriendlyName("List Count")] out int ListCount
+      )
    {
       List<GameObject> list = new List<GameObject>(GameObjectList);
       
@@ -52,7 +60,11 @@ public class uScriptAct_ModifyGameObjectList : uScriptLogic
    }
 
    [FriendlyName("Empty List")]
-   public void EmptyList(GameObject[] Target, [FriendlyName("GameObject List")] ref GameObject[] GameObjectList,  [FriendlyName("List Count")] out int ListCount)
+   public void EmptyList(
+      GameObject[] Target,
+      [FriendlyName("GameObject List")] ref GameObject[] GameObjectList, 
+      [FriendlyName("List Count")] out int ListCount
+      )
    {
       GameObjectList = new GameObject[] {};
       ListCount = 0;
