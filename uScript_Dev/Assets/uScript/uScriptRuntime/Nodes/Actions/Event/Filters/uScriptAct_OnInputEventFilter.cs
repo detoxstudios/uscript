@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [NodePath("Actions/Events/Filters")]
-[NodeLicense("http://www.detoxstudios.com/legal/eula.html")]
+
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Filters the On Input Event output from the Input Events node to a specific input (key, mouse, joystick) pressed down, held, or released.")]
 [NodeDescription("Filters the On Input Event output from the Input Events node to a specific input (key, mouse, joystick) pressed down, held, or released.\n \nKey Code: The key to listen for events from.")]
