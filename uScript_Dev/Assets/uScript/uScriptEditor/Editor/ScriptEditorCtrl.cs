@@ -363,6 +363,10 @@ namespace Detox.ScriptEditor
                      {
                         destTypeString = ((EntityEvent)entityNode).ComponentType;
                      }
+                     else if ( entityNode is EntityProperty )
+                     {
+                        destTypeString = ((EntityProperty)entityNode).ComponentType;
+                     }
                      else
                      {
                         destTypeString = entityNode.Instance.Type;
@@ -482,6 +486,10 @@ namespace Detox.ScriptEditor
                      else if ( entityNode is EntityEvent )
                      {
                         destTypeString = ((EntityEvent)entityNode).ComponentType;
+                     }
+                     else if ( entityNode is EntityProperty )
+                     {
+                        destTypeString = ((EntityProperty)entityNode).ComponentType;
                      }
                      else
                      {

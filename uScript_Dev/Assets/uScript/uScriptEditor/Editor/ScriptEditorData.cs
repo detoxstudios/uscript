@@ -601,6 +601,7 @@ namespace Detox.Data.ScriptEditor
    {
       public Parameter Instance;
       public Parameter Parameter;
+      public string    ComponentType;
 
       public override void Clone(EntityNodeData cloneFrom)
       {
@@ -609,11 +610,12 @@ namespace Detox.Data.ScriptEditor
          EntityPropertyData data = cloneFrom as EntityPropertyData;
          if ( null == data ) return;
 
-         Instance  = data.Instance;
-         Parameter = data.Parameter; 
+         Instance      = data.Instance;
+         Parameter     = data.Parameter; 
+         ComponentType = data.ComponentType;
       }
 
-      public new int Version { get { return 1; } }
+      public new int Version { get { return 2; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -621,6 +623,16 @@ namespace Detox.Data.ScriptEditor
       
          Instance  = (Parameter) serializer.LoadNamedObject( "Instance" );
          Parameter = (Parameter) serializer.LoadNamedObject( "Parameter" );
+      
+         if ( serializer.CurrentVersion > 1 )
+         {
+            ComponentType = (string) serializer.LoadNamedObject( "ComponentType" );
+         }
+         else
+         {
+            ComponentType = Instance.Type;
+            Instance.Type = typeof(UnityEngine.GameObject).ToString( );
+         }
       }
 
       public new void Save(ObjectSerializer serializer)
@@ -629,6 +641,7 @@ namespace Detox.Data.ScriptEditor
 
          serializer.SaveNamedObject( "Instance", Instance );
          serializer.SaveNamedObject( "Parameter", Parameter );
+         serializer.SaveNamedObject( "ComponentType", ComponentType );
       }
    }
 

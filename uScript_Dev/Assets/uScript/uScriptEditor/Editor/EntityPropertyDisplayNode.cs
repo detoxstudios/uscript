@@ -25,7 +25,7 @@ namespace Detox.ScriptEditor
             string name = "";
 
             name = EntityProperty.Instance.Default;
-            if ( "" == name ) name = "(" + uScriptConfig.Variable.FriendlyName(EntityProperty.Instance.Type) + ")";
+            if ( "" == name ) name = "(" + uScriptConfig.Variable.FriendlyName(EntityProperty.ComponentType) + ")";
 
             name += "\n";
             name += EntityProperty.Parameter.FriendlyName;
@@ -56,6 +56,18 @@ namespace Detox.ScriptEditor
 
          List<Socket> sockets = new List<Socket>( );
          Socket socket;
+
+         if ( true == entityProperty.Instance.IsVisible( ) && false == entityProperty.IsStatic )
+         {
+            socket = new Socket( );
+            socket.Alignment = Socket.Align.Bottom;
+            socket.InternalName = entityProperty.Instance.Name;
+            socket.FriendlyName = entityProperty.Instance.FriendlyName;
+            socket.Type = entityProperty.Instance.Type;
+            socket.Input  = true;
+            socket.Output = false;
+            sockets.Add( socket );
+         }
 
          socket = new Socket( );
          socket.Alignment = Socket.Align.Center;

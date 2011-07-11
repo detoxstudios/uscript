@@ -1062,9 +1062,9 @@ namespace Detox.ScriptEditor
 
       public string ComponentType;
 
-      public EntityMethod(string type, string name, string friendlyName)       
+      public EntityMethod(string componentType, string name, string friendlyName)       
       { 
-         ComponentType = type;
+         ComponentType = componentType;
 
          m_Instance.Default = "";
          m_Instance.Type   = typeof(UnityEngine.GameObject).ToString( );
@@ -1668,11 +1668,12 @@ namespace Detox.ScriptEditor
       public EntityNode Copy( )
       {
          EntityProperty entityProperty = new EntityProperty( );
-         entityProperty.Instance  = Instance;
-         entityProperty.Parameter = Parameter;
-         entityProperty.Position  = Position;
-         entityProperty.Guid      = Guid.NewGuid( );
-         entityProperty.IsStatic  = IsStatic;
+         entityProperty.ComponentType = ComponentType;
+         entityProperty.Instance      = Instance;
+         entityProperty.Parameter     = Parameter;
+         entityProperty.Position      = Position;
+         entityProperty.Guid          = Guid.NewGuid( );
+         entityProperty.IsStatic      = IsStatic;
          return entityProperty;
       }
 
@@ -1681,8 +1682,9 @@ namespace Detox.ScriptEditor
          get
          {
             EntityPropertyData nodeData = new EntityPropertyData( );
-            nodeData.Instance  = Instance.ToParameterData( );
-            nodeData.Parameter = Parameter.ToParameterData( );
+            nodeData.Instance      = Instance.ToParameterData( );
+            nodeData.Parameter     = Parameter.ToParameterData( );
+            nodeData.ComponentType = ComponentType;
             nodeData.Position.X= Position.X;
             nodeData.Position.Y= Position.Y;
             nodeData.Guid      = Guid;
@@ -1702,11 +1704,12 @@ namespace Detox.ScriptEditor
 
          EntityProperty node = (EntityProperty) obj;
 
-         if ( Instance != node.Instance ) return false;
-         if ( Parameter!= node.Parameter ) return false;
-         if ( Position != node.Position ) return false;
-         if ( IsStatic != node.IsStatic ) return false;
-         if ( Guid != node.Guid ) return false;
+         if ( Instance      != node.Instance ) return false;
+         if ( ComponentType != node.ComponentType ) return false;
+         if ( Parameter     != node.Parameter ) return false;
+         if ( Position      != node.Position ) return false;
+         if ( IsStatic      != node.IsStatic ) return false;
+         if ( Guid          != node.Guid ) return false;
 
          return true;
       }
@@ -1722,6 +1725,8 @@ namespace Detox.ScriptEditor
          get { return Parameter.Empty; }
          set { ; } 
       }
+
+      public string ComponentType;
 
       private Parameter m_Parameter;
       public Parameter[] Parameters { get { return new Parameter[] { m_Parameter }; } set { m_Parameter = value[ 0 ]; } }
@@ -1751,12 +1756,14 @@ namespace Detox.ScriptEditor
          set { m_Guid = value; }
       }
 
-      public EntityProperty(string name, string friendlyName, string entityType, string valueType, bool input, bool output)
+      public EntityProperty(string name, string friendlyName, string componentType, string valueType, bool input, bool output)
       { 
+         ComponentType = componentType;
+
          m_Instance.Name   = "Instance";
          m_Instance.FriendlyName = "Instance";
-         m_Instance.State  = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
-         m_Instance.Type   = entityType;
+         m_Instance.State  = Parameter.VisibleState.Visible;
+         m_Instance.Type   = typeof(UnityEngine.GameObject).ToString( );
          m_Instance.Input  = true;
          m_Instance.Output = false;
          m_Instance.Default= "";
@@ -1779,10 +1786,12 @@ namespace Detox.ScriptEditor
       { 
          m_Instance  = new Parameter( data.Instance );
          m_Parameter = new Parameter( data.Parameter );
-
-         m_Position = data.Position; 
-         m_Guid     = data.Guid; 
-         m_IsStatic = false;
+         
+         ComponentType = data.ComponentType;
+         
+         m_Position      = data.Position; 
+         m_Guid          = data.Guid; 
+         m_IsStatic      = false;
       }
    }
 
@@ -2161,6 +2170,7 @@ namespace Detox.ScriptEditor
                      }
 
                      typeHash[ node.Instance.Type ] = node.Instance.Type;
+                     typeHash[ node.ComponentType ] = node.ComponentType;
                   }
                }
 
@@ -2202,6 +2212,7 @@ namespace Detox.ScriptEditor
                   }
 
                   typeHash[ node.Instance.Type ] = node.Instance.Type;
+                  typeHash[ node.ComponentType ] = node.ComponentType;
                }
 
                foreach ( LogicNode node in Logics )
@@ -2582,6 +2593,26 @@ namespace Detox.ScriptEditor
             else if ( dest is EntityProperty )
             {
                destParam = ((EntityProperty)dest).Instance;
+
+               if ( "" != destParam.Default )
+               {
+                  reason = "There is already an Instance specified in the Property Panel.  Only one Instance can exist because the property can return values, " +
+                           "with multiple Instances we would not know which Instance's value to return.";
+                  return false;
+               }
+
+               //fail if something is already linked to our instance socket
+               //only one is allowed because properties can return information
+               foreach ( LinkNode existingLink in Links )
+               {
+                  if ( existingLink.Destination.Guid   == link.Destination.Guid &&
+                       existingLink.Destination.Anchor == link.Destination.Anchor ) 
+                  {
+                     reason = "Only one link can be connected per Instance socket because the property can return values, " +
+                              "with multiple Instances we would not know which Instance's value to return.";
+                     return false;
+                  }
+               }
             }
 
             if ( dest is EntityMethod )
@@ -3416,7 +3447,7 @@ namespace Detox.ScriptEditor
          }
          else
          {
-            cloned = new EntityMethod( data.Instance.Type, data.Input.Name, data.Input.FriendlyName );
+            cloned = new EntityMethod( data.ComponentType, data.Input.Name, data.Input.FriendlyName );
             bool exactMatch = false;
 
             //entities might have overloaded methods so we need to go through all
@@ -3487,7 +3518,7 @@ namespace Detox.ScriptEditor
          }
          else
          {
-            cloned = new EntityProperty( data.Parameter.Name, data.Parameter.FriendlyName, data.Instance.Type, 
+            cloned = new EntityProperty( data.Parameter.Name, data.Parameter.FriendlyName, data.ComponentType, 
                                          data.Parameter.Default, data.Parameter.Input, data.Parameter.Output );
             bool exactMatch = false;
 
@@ -3495,8 +3526,9 @@ namespace Detox.ScriptEditor
             {
                foreach ( EntityProperty entityProperty in desc.Properties )
                {
-                  if ( entityProperty.Instance.Type == data.Instance.Type &&
-                       entityProperty.Parameter.Name == data.Parameter.Name )
+                  if ( entityProperty.Instance.Type  == data.Instance.Type  &&
+                       entityProperty.Parameter.Name == data.Parameter.Name &&
+                       entityProperty.ComponentType  == data.ComponentType )
                   {
                      cloned = entityProperty;
                      
@@ -3635,6 +3667,16 @@ namespace Detox.ScriptEditor
          {
             LogicNode logicNode = (LogicNode) node;         
             return logicNode.Type;
+         }
+         else if ( node is EntityProperty )
+         {
+            EntityProperty entityProperty = (EntityProperty) node;         
+            return entityProperty.ComponentType;
+         }
+         else if ( node is EntityMethod )
+         {
+            EntityMethod entityMethod = (EntityMethod) node;         
+            return entityMethod.ComponentType;
          }
 
          return "";
