@@ -196,70 +196,70 @@ namespace System.Windows.Forms
 
                      object val = p.DefaultAsObject;
 
-                     bool isVisible  = p.IsVisible( );
+                     bool isSocketExposed  = p.IsVisible( );
                      bool isReadOnly = false == p.Input;
-                     bool toggleLock = true == p.IsLocked( );
+                     bool isLocked = true == p.IsLocked( );
 
-                     if ( false == toggleLock )
+                     if ( false == isLocked )
                      {
                         if ( false == parameters.ScriptEditorCtrl.CanCollapseParameter(parameters.EntityNode.Guid, p) &&
                              false == parameters.ScriptEditorCtrl.CanExpandParameter(p) )
                         {
-                           toggleLock = true;
+                           isLocked = true;
                         }
                      }
 
                      if ( val.GetType() == typeof(System.Boolean) )
                      {
-                        val = uScriptGUI.BoolField(p.FriendlyName, (bool) val, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.BoolField(p.FriendlyName, (bool) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(System.Int32) )
                      {
-                        val = uScriptGUI.IntField(p.FriendlyName, (int) val, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.IntField(p.FriendlyName, (int) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(System.Single) )
                      {
-                        val = uScriptGUI.FloatField(p.FriendlyName, (float) val, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.FloatField(p.FriendlyName, (float) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(Vector2) )
                      {
-                        val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2) val, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(Rect) )
                      {
-                        val = uScriptGUI.RectField(p.FriendlyName, (Rect) val, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.RectField(p.FriendlyName, (Rect) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(Vector3) )
                      {
-                        val = uScriptGUI.Vector3Field(p.FriendlyName, (Vector3) val, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.Vector3Field(p.FriendlyName, (Vector3) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(Vector4) )
                      {
-                        val = uScriptGUI.Vector4Field(p.FriendlyName, (Vector4) val, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.Vector4Field(p.FriendlyName, (Vector4) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(Quaternion) )
                      {
-                        val = uScriptGUI.QuaternionField(p.FriendlyName, (Quaternion) val, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.QuaternionField(p.FriendlyName, (Quaternion) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( val.GetType() == typeof(UnityEngine.Color) )
                      {
-                        val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color) val, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
                      {
-                        val = uScriptGUI.EnumTextField(p.FriendlyName, (System.Enum) val, p.Default, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.EnumTextField(p.FriendlyName, (System.Enum) val, p.Default, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( null != GetObjectFieldType(p.Type) )
                      {
-                        val = uScriptGUI.ObjectTextField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.ObjectTextField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "TextArea" )
                      {
-                        val = uScriptGUI.TextArea(p.FriendlyName, p.Default, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.TextArea(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else
                      {
-                        val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isVisible, toggleLock, isReadOnly);
+                        val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
                      }
 
                      Parameter cloned = p;
@@ -269,7 +269,7 @@ namespace System.Windows.Forms
                      cloned.State &= ~Parameter.VisibleState.Hidden;
 
                      //add it back in if selected
-                     if ( true == isVisible )
+                     if ( true == isSocketExposed )
                      {
                         cloned.State |= Parameter.VisibleState.Visible;
                      }

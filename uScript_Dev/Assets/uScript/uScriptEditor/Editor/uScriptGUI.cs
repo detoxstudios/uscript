@@ -205,38 +205,38 @@ public static class uScriptGUI
    }
    
 
-   static void BeginRow(string label, ref bool enabled, bool locked, bool isReadOnly)
+   static void BeginRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       EditorGUILayout.BeginHorizontal();
       //GUILayout.Space(EditorGUI.indentLevel * 15);
-      if (locked && false == enabled)
+      if (isSocketExposed == false && isLocked)
       {
          GUILayout.Space(_columnEnabled.Width + 4);
       }
       else
       {
-         //if (locked)
-         //{
-         //   GUI.enabled = enabled;
-         //}
-
-         GUI.enabled = false == locked;
-         enabled = GUILayout.Toggle(enabled, string.Empty, _styleEnabled, GUILayout.Width(_columnEnabled.Width));
+         GUI.enabled = false == isLocked;
+         isSocketExposed = !GUILayout.Toggle(!isSocketExposed, string.Empty, _styleEnabled, GUILayout.Width(_columnEnabled.Width));
          GUI.enabled = true;
       }
       //EditorGUIUtility.LookLikeInspector();
       EditorGUIUtility.LookLikeControls(_columnLabel.Width);
       EditorGUILayout.PrefixLabel(label, _styleLabel);
       
-      GUI.enabled = false == isReadOnly;
+      GUI.enabled = false == isReadOnly && isSocketExposed == false;
    }
 
 
-   static void EndRow(string type)
+   static void EndRow(string type, bool isReadOnly)
    {
       type = uScriptConfig.Variable.FriendlyName(type).Replace("UnityEngine.", string.Empty);
       Vector2 v = _styleType.CalcSize(new GUIContent(type));
       _columnType.Width = Mathf.Max(_columnType.Width, (int)v.x);
+
+      if (isReadOnly)
+      {
+         type += " (read-only)";
+      }
 
       GUI.enabled = true;
       GUILayout.Label(type, _styleType);
@@ -244,79 +244,79 @@ public static class uScriptGUI
    }
 
 
-   public static int IntField(string label, int value, ref bool enabled, bool locked, bool isReadOnly)
+   public static int IntField(string label, int value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      return IntField(label, value, ref enabled, locked, isReadOnly, int.MinValue, int.MaxValue);
+      return IntField(label, value, ref isSocketExposed, isLocked, isReadOnly, int.MinValue, int.MaxValue);
    }
 
-   public static int IntField(string label, int value, ref bool enabled, bool locked, bool isReadOnly, int min, int max)
+   public static int IntField(string label, int value, ref bool isSocketExposed, bool isLocked, bool isReadOnly, int min, int max)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.IntField(value, GUILayout.Width(_columnValue.Width));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static float FloatField(string label, float value, ref bool enabled, bool locked, bool isReadOnly)
+   public static float FloatField(string label, float value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.FloatField(value, GUILayout.Width(_columnValue.Width));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static string TextField(string label, string value, ref bool enabled, bool locked, bool isReadOnly)
+   public static string TextField(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.TextField(value, GUILayout.Width(_columnValue.Width));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static string TextArea(string label, string value, ref bool enabled, bool locked, bool isReadOnly)
+   public static string TextArea(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.TextArea(value, GUILayout.Width(_columnValue.Width));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static bool BoolField(string label, bool value, ref bool enabled, bool locked, bool isReadOnly)
+   public static bool BoolField(string label, bool value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.Toggle(value, GUILayout.Width(_columnValue.Width));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static UnityEngine.Color ColorField(string label, Color value, ref bool enabled, bool locked, bool isReadOnly)
+   public static UnityEngine.Color ColorField(string label, Color value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       GUI.SetNextControlName(label);
       value = EditorGUILayout.ColorField(value, GUILayout.Width(_columnValue.Width));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
 
 //      Vector4 v = value;
 //      int r = (int)(255 * v.x);
@@ -336,9 +336,9 @@ public static class uScriptGUI
    }
 
 
-   public static Vector2 Vector2Field(string label, Vector2 value, ref bool enabled, bool locked, bool isReadOnly)
+   public static Vector2 Vector2Field(string label, Vector2 value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       int spacing = 4; // 4 * 1
       int w = (_columnValue.Width - spacing) / 2;
@@ -348,14 +348,14 @@ public static class uScriptGUI
       GUI.SetNextControlName(label + ".y");
       value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w + p));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static Vector3 Vector3Field(string label, Vector3 value, ref bool enabled, bool locked, bool isReadOnly)
+   public static Vector3 Vector3Field(string label, Vector3 value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       int spacing = 8; // 4 * 2
       int w = (_columnValue.Width - spacing) / 3;
@@ -364,14 +364,14 @@ public static class uScriptGUI
       value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
       value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w + p));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static Vector4 Vector4Field(string label, Vector4 value, ref bool enabled, bool locked, bool isReadOnly)
+   public static Vector4 Vector4Field(string label, Vector4 value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       int spacing = 12; // 4 * 3
       int w = (_columnValue.Width - spacing) / 4;
@@ -381,14 +381,14 @@ public static class uScriptGUI
       value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w));
       value.w = EditorGUILayout.FloatField(value.w, GUILayout.Width(w + p));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static Rect RectField(string label, Rect value, ref bool enabled, bool locked, bool isReadOnly)
+   public static Rect RectField(string label, Rect value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       int spacing = 12; // 4 * 3
       int w = (_columnValue.Width - spacing) / 4;
@@ -398,14 +398,14 @@ public static class uScriptGUI
       value.width = EditorGUILayout.FloatField(value.width, GUILayout.Width(w));
       value.height = EditorGUILayout.FloatField(value.height, GUILayout.Width(w + p));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static Quaternion QuaternionField(string label, Quaternion value, ref bool enabled, bool locked, bool isReadOnly)
+   public static Quaternion QuaternionField(string label, Quaternion value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       int spacing = 12; // 4 * 3
       int w = (_columnValue.Width - spacing) / 4;
@@ -415,14 +415,14 @@ public static class uScriptGUI
       value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w));
       value.w = EditorGUILayout.FloatField(value.w, GUILayout.Width(w + p));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static System.Enum EnumField(string label, System.Enum value, ref bool enabled, bool locked, bool isReadOnly)
+   public static System.Enum EnumField(string label, System.Enum value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       //int spacing = 12; // 4 * 3
       //int w = (_columnValue.Width - spacing) / 4;
@@ -434,16 +434,16 @@ public static class uScriptGUI
 
       value = EditorGUILayout.EnumPopup(value, GUILayout.Width(_columnValue.Width));
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
 
-   public static System.Enum EnumTextField(string label, System.Enum value, string textValue, ref bool enabled, bool locked, bool isReadOnly)
+   public static System.Enum EnumTextField(string label, System.Enum value, string textValue, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       EditorGUILayout.BeginVertical();
       {
-         BeginRow(label, ref enabled, locked, isReadOnly);
+         BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
          //first show the text field and get back the same (or changed value)
          string userText = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
@@ -454,27 +454,27 @@ public static class uScriptGUI
          try { newEnum = (System.Enum) System.Enum.Parse(value.GetType(), userText); }
          catch { newEnum = (System.Enum) value; }
 
-         EndRow(textValue.GetType().ToString());
+         EndRow(textValue.GetType().ToString(), isReadOnly);
 
 
-         BeginRow(string.Empty, ref enabled, true, isReadOnly);
+         BeginRow(string.Empty, ref isSocketExposed, true, isReadOnly);
 
          //send the new value to the enum popup and whatever it
          //returns (in case the user modified it here) is what our final value is
          value = EditorGUILayout.EnumPopup(newEnum, GUILayout.Width(_columnValue.Width));
 
-         EndRow(value.GetType().ToString());
+         EndRow(value.GetType().ToString(), isReadOnly);
       }
       EditorGUILayout.EndVertical();
       return value;
    }
 
 
-   public static string ObjectTextField(string label, UnityEngine.Object value, Type type, string textValue, ref bool enabled, bool locked, bool isReadOnly)
+   public static string ObjectTextField(string label, UnityEngine.Object value, Type type, string textValue, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       EditorGUILayout.BeginVertical();
       {
-         BeginRow(label, ref enabled, locked, isReadOnly);
+         BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
          // game objects are held/treated as strings
          // but we will custom convert them to actual game objects (if they exist)
@@ -498,10 +498,10 @@ public static class uScriptGUI
             textValue = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
          }
 
-         EndRow(textValue.GetType().ToString());
+         EndRow(textValue.GetType().ToString(), isReadOnly);
 
 
-         BeginRow(string.Empty, ref enabled, true, isReadOnly);
+         BeginRow(string.Empty, ref isSocketExposed, true, isReadOnly);
 
          // now try and update the object browser with an instance of the specified object
          UnityEngine.Object []objects   = UnityEngine.Object.FindObjectsOfType(type);
@@ -562,14 +562,14 @@ public static class uScriptGUI
             }
          }
 
-         EndRow(type.ToString());
+         EndRow(type.ToString(), isReadOnly);
       }
       EditorGUILayout.EndVertical();
       return textValue;
    }
 
 
-   public static T[] ArrayFoldout<T>(string label, T[] array, ref bool foldout, ref bool enabled, bool locked, bool isReadOnly)
+   public static T[] ArrayFoldout<T>(string label, T[] array, ref bool foldout, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       T[] newArray = array;
       int arraySize;
@@ -616,7 +616,7 @@ public static class uScriptGUI
          {
             EditorGUI.indentLevel += 3;
 
-            BeginRow("Size", ref enabled, true, true);
+            BeginRow("Size", ref isSocketExposed, true, true);
 
 
 
@@ -681,7 +681,7 @@ public static class uScriptGUI
             v = _styleType.CalcSize(new GUIContent(arraySize.GetType().ToString()));
             _columnType.Width = Mathf.Max(_columnType.Width, (int)v.x);
 
-            EndRow(arraySize.GetType().ToString());
+            EndRow(arraySize.GetType().ToString(), isReadOnly);
 
 
 
@@ -730,9 +730,9 @@ public static class uScriptGUI
       return size;
    }
 
-   public static T PropertyRow<T>(string label, T value, ref bool enabled, bool locked, bool isReadOnly)
+   public static T PropertyRow<T>(string label, T value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref enabled, locked, isReadOnly);
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (value is int)
       {
@@ -757,7 +757,7 @@ public static class uScriptGUI
          //throw System.ArgumentException("Unhandled type: " + value.GetType().ToString());
       }
 
-      EndRow(value.GetType().ToString());
+      EndRow(value.GetType().ToString(), isReadOnly);
       return value;
    }
 
