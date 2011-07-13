@@ -216,33 +216,37 @@ public static class uScriptGUI
       else
       {
          GUI.enabled = false == isLocked;
-         isSocketExposed = !GUILayout.Toggle(!isSocketExposed, string.Empty, _styleEnabled, GUILayout.Width(_columnEnabled.Width));
+         isSocketExposed = GUILayout.Toggle(isSocketExposed, string.Empty, _styleEnabled, GUILayout.Width(_columnEnabled.Width));
          GUI.enabled = true;
       }
       //EditorGUIUtility.LookLikeInspector();
       EditorGUIUtility.LookLikeControls(_columnLabel.Width);
       EditorGUILayout.PrefixLabel(label, _styleLabel);
       
-      GUI.enabled = false == isReadOnly && isSocketExposed == false;
+      GUI.enabled = (! isReadOnly) && (! isSocketExposed || ! isLocked);
    }
 
 
-   static void EndRow(string type, bool isReadOnly)
+   static void EndRow(string type)
    {
       type = uScriptConfig.Variable.FriendlyName(type).Replace("UnityEngine.", string.Empty);
       Vector2 v = _styleType.CalcSize(new GUIContent(type));
       _columnType.Width = Mathf.Max(_columnType.Width, (int)v.x);
-
-      if (isReadOnly)
-      {
-         type += " (read-only)";
-      }
 
       GUI.enabled = true;
       GUILayout.Label(type, _styleType);
       EditorGUILayout.EndHorizontal();
    }
 
+   private static bool IsFieldUsable(bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      if ((isSocketExposed && isLocked) || isReadOnly)
+      {
+         EditorGUILayout.TextField(isReadOnly ? "(read-only)" : "(socket used)", GUILayout.Width(_columnValue.Width));
+         return false;
+      }
+      return true;
+   }
 
    public static int IntField(string label, int value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
@@ -253,10 +257,13 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      GUI.SetNextControlName(label);
-      value = EditorGUILayout.IntField(value, GUILayout.Width(_columnValue.Width));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         GUI.SetNextControlName(label);
+         value = EditorGUILayout.IntField(value, GUILayout.Width(_columnValue.Width));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString());
       return value;
    }
 
@@ -265,10 +272,13 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      GUI.SetNextControlName(label);
-      value = EditorGUILayout.FloatField(value, GUILayout.Width(_columnValue.Width));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         GUI.SetNextControlName(label);
+         value = EditorGUILayout.FloatField(value, GUILayout.Width(_columnValue.Width));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString());
       return value;
    }
 
@@ -277,10 +287,13 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      GUI.SetNextControlName(label);
-      value = EditorGUILayout.TextField(value, GUILayout.Width(_columnValue.Width));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         GUI.SetNextControlName(label);
+         value = EditorGUILayout.TextField(value, GUILayout.Width(_columnValue.Width));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString());
       return value;
    }
 
@@ -289,10 +302,13 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      GUI.SetNextControlName(label);
-      value = EditorGUILayout.TextArea(value, GUILayout.Width(_columnValue.Width));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         GUI.SetNextControlName(label);
+         value = EditorGUILayout.TextArea(value, GUILayout.Width(_columnValue.Width));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString());
       return value;
    }
 
@@ -301,10 +317,13 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      GUI.SetNextControlName(label);
-      value = EditorGUILayout.Toggle(value, GUILayout.Width(_columnValue.Width));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         GUI.SetNextControlName(label);
+         value = EditorGUILayout.Toggle(value, GUILayout.Width(_columnValue.Width));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString());
       return value;
    }
 
@@ -313,10 +332,13 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      GUI.SetNextControlName(label);
-      value = EditorGUILayout.ColorField(value, GUILayout.Width(_columnValue.Width));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         GUI.SetNextControlName(label);
+         value = EditorGUILayout.ColorField(value, GUILayout.Width(_columnValue.Width));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString());
 
 //      Vector4 v = value;
 //      int r = (int)(255 * v.x);
@@ -340,15 +362,19 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      int spacing = 4; // 4 * 1
-      int w = (_columnValue.Width - spacing) / 2;
-      int p = (_columnValue.Width - spacing) % (w * 2);
-      GUI.SetNextControlName(label + ".x");
-      value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-      GUI.SetNextControlName(label + ".y");
-      value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w + p));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         int spacing = 4; // 4 * 1
+         int w = (_columnValue.Width - spacing) / 2;
+         int p = (_columnValue.Width - spacing) % (w * 2);
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+         GUI.SetNextControlName(label + ".x");
+         value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
+         GUI.SetNextControlName(label + ".y");
+         value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w + p));
+      }
+
+      EndRow(value.GetType().ToString() + " [X, Y]");
       return value;
    }
 
@@ -357,14 +383,17 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      int spacing = 8; // 4 * 2
-      int w = (_columnValue.Width - spacing) / 3;
-      int p = (_columnValue.Width - spacing) % (w * 3);
-      value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-      value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
-      value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w + p));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         int spacing = 8; // 4 * 2
+         int w = (_columnValue.Width - spacing) / 3;
+         int p = (_columnValue.Width - spacing) % (w * 3);
+         value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
+         value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w + p));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString() + " [X, Y, Z]");
       return value;
    }
 
@@ -373,15 +402,18 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      int spacing = 12; // 4 * 3
-      int w = (_columnValue.Width - spacing) / 4;
-      int p = (_columnValue.Width - spacing) % (w * 4);
-      value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-      value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
-      value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w));
-      value.w = EditorGUILayout.FloatField(value.w, GUILayout.Width(w + p));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         int spacing = 12; // 4 * 3
+         int w = (_columnValue.Width - spacing) / 4;
+         int p = (_columnValue.Width - spacing) % (w * 4);
+         value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
+         value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w));
+         value.w = EditorGUILayout.FloatField(value.w, GUILayout.Width(w + p));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString() + " [X, Y, Z, W]");
       return value;
    }
 
@@ -390,15 +422,18 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      int spacing = 12; // 4 * 3
-      int w = (_columnValue.Width - spacing) / 4;
-      int p = (_columnValue.Width - spacing) % (w * 4);
-      value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-      value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
-      value.width = EditorGUILayout.FloatField(value.width, GUILayout.Width(w));
-      value.height = EditorGUILayout.FloatField(value.height, GUILayout.Width(w + p));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         int spacing = 12; // 4 * 3
+         int w = (_columnValue.Width - spacing) / 4;
+         int p = (_columnValue.Width - spacing) % (w * 4);
+         value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
+         value.width = EditorGUILayout.FloatField(value.width, GUILayout.Width(w));
+         value.height = EditorGUILayout.FloatField(value.height, GUILayout.Width(w + p));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString() + " [X, Y, W, H]");
       return value;
    }
 
@@ -407,15 +442,18 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      int spacing = 12; // 4 * 3
-      int w = (_columnValue.Width - spacing) / 4;
-      int p = (_columnValue.Width - spacing) % (w * 4);
-      value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-      value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
-      value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w));
-      value.w = EditorGUILayout.FloatField(value.w, GUILayout.Width(w + p));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         int spacing = 12; // 4 * 3
+         int w = (_columnValue.Width - spacing) / 4;
+         int p = (_columnValue.Width - spacing) % (w * 4);
+         value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
+         value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w));
+         value.w = EditorGUILayout.FloatField(value.w, GUILayout.Width(w + p));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString() + " [X, Y, Z, W]");
       return value;
    }
 
@@ -424,17 +462,20 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      //int spacing = 12; // 4 * 3
-      //int w = (_columnValue.Width - spacing) / 4;
-      //int p = (_columnValue.Width - spacing) % (w * 4);
-      //value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-      //value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
-      //value.width = EditorGUILayout.FloatField(value.width, GUILayout.Width(w));
-      //value.height = EditorGUILayout.FloatField(value.height, GUILayout.Width(w + p));
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         //int spacing = 12; // 4 * 3
+         //int w = (_columnValue.Width - spacing) / 4;
+         //int p = (_columnValue.Width - spacing) % (w * 4);
+         //value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
+         //value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
+         //value.width = EditorGUILayout.FloatField(value.width, GUILayout.Width(w));
+         //value.height = EditorGUILayout.FloatField(value.height, GUILayout.Width(w + p));
 
-      value = EditorGUILayout.EnumPopup(value, GUILayout.Width(_columnValue.Width));
+         value = EditorGUILayout.EnumPopup(value, GUILayout.Width(_columnValue.Width));
+      }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString());
       return value;
    }
 
@@ -445,25 +486,29 @@ public static class uScriptGUI
       {
          BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-         //first show the text field and get back the same (or changed value)
-         string userText = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
-         System.Enum newEnum;
+         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         {
+            //first show the text field and get back the same (or changed value)
+            string userText = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
+            System.Enum newEnum;
 
-         //try and turn the text field value back into an enum, if it doesn't work
-         //then revert back to the original value
-         try { newEnum = (System.Enum) System.Enum.Parse(value.GetType(), userText); }
-         catch { newEnum = (System.Enum) value; }
+            //try and turn the text field value back into an enum, if it doesn't work
+            //then revert back to the original value
+            try { newEnum = (System.Enum) System.Enum.Parse(value.GetType(), userText); }
+            catch { newEnum = (System.Enum) value; }
 
-         EndRow(textValue.GetType().ToString(), isReadOnly);
+            EndRow(textValue.GetType().ToString());
 
+            bool tmpBool = false;
 
-         BeginRow(string.Empty, ref isSocketExposed, true, isReadOnly);
+            BeginRow(string.Empty, ref tmpBool, true, isReadOnly);
 
-         //send the new value to the enum popup and whatever it
-         //returns (in case the user modified it here) is what our final value is
-         value = EditorGUILayout.EnumPopup(newEnum, GUILayout.Width(_columnValue.Width));
+            //send the new value to the enum popup and whatever it
+            //returns (in case the user modified it here) is what our final value is
+            value = EditorGUILayout.EnumPopup(newEnum, GUILayout.Width(_columnValue.Width));
+         }
 
-         EndRow(value.GetType().ToString(), isReadOnly);
+         EndRow(value.GetType().ToString());
       }
       EditorGUILayout.EndVertical();
       return value;
@@ -476,93 +521,98 @@ public static class uScriptGUI
       {
          BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-         // game objects are held/treated as strings
-         // but we will custom convert them to actual game objects (if they exist)
-         // so we can use the game object browser
-         //
-         // first show the text field and get back the same (or changed value)
-         if ( true == uScriptConfig.ShouldAutoPackage(type) )
+         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
-            string labelValue = textValue;
-         
-            int index = labelValue.LastIndexOf("/") + 1;
-            if ( index > 0 ) 
-            {
-               labelValue = labelValue.Substring( index, labelValue.Length - index );
-            }
-
-            EditorGUILayout.LabelField(labelValue, "", GUILayout.Width(_columnValue.Width));
-         }
-         else
-         {
-            textValue = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
-         }
-
-         EndRow(textValue.GetType().ToString(), isReadOnly);
-
-
-         BeginRow(string.Empty, ref isSocketExposed, true, isReadOnly);
-
-         // now try and update the object browser with an instance of the specified object
-         UnityEngine.Object []objects   = UnityEngine.Object.FindObjectsOfType(type);
-         UnityEngine.Object unityObject = null;
-
-         if ( true == uScriptConfig.ShouldAutoPackage(type) )
-         {
-            foreach ( UnityEngine.Object o in objects )
-            {
-               string key = uScriptConfig.GetAssetPackageKey(o, o.GetType());
-               
-               if ( key == textValue )
-               {
-                  unityObject = o;
-                  break;
-               }
-            }
-         }
-         else
-         {
-            foreach ( UnityEngine.Object o in objects )
-            {
-               if ( o.name == textValue )
-               {
-                  unityObject = o;
-                  break;
-               }
-            }
-         }
- 
-         // components should never be instances in the property grid
-         // we must refer to (and select) their parent game object
-         if ( true == typeof(Component).IsAssignableFrom(type) )
-         {
-            type = typeof(GameObject);
-            if ( null != unityObject ) unityObject = ((Component) unityObject).gameObject;
-         }
-
-#if UNITY_3_3
-         unityObject = EditorGUILayout.ObjectField( unityObject, type, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
-#elif UNITY_3_4
-         unityObject = EditorGUILayout.ObjectField( unityObject, type, true, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
-#endif
-
-         // if that object (or the changed object) does exist, use it's name to update the property value
-         // if it doesn't exist then the 'val' will stay as what was entered into the TextField
-         if ( unityObject != null )
-         {
+            // game objects are held/treated as strings
+            // but we will custom convert them to actual game objects (if they exist)
+            // so we can use the game object browser
+            //
+            // first show the text field and get back the same (or changed value)
             if ( true == uScriptConfig.ShouldAutoPackage(type) )
             {
-               //we have to package now because the returned parameter is just the string representation
-               //and it won't always be able to reference back to the actual object
-               textValue = uScript.PackageAsset(unityObject, type);
+               string labelValue = textValue;
+            
+               int index = labelValue.LastIndexOf("/") + 1;
+               if ( index > 0 ) 
+               {
+                  labelValue = labelValue.Substring( index, labelValue.Length - index );
+               }
+   
+               EditorGUILayout.LabelField(labelValue, "", GUILayout.Width(_columnValue.Width));
             }
             else
             {
-               textValue = unityObject.name;               
+               textValue = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
+            }
+   
+            EndRow(textValue.GetType().ToString());
+
+
+            bool tmpBool = false;
+
+            BeginRow(string.Empty, ref tmpBool, true, isReadOnly);
+   
+            // now try and update the object browser with an instance of the specified object
+            UnityEngine.Object []objects   = UnityEngine.Object.FindObjectsOfType(type);
+            UnityEngine.Object unityObject = null;
+   
+            if ( true == uScriptConfig.ShouldAutoPackage(type) )
+            {
+               foreach ( UnityEngine.Object o in objects )
+               {
+                  string key = uScriptConfig.GetAssetPackageKey(o, o.GetType());
+                  
+                  if ( key == textValue )
+                  {
+                     unityObject = o;
+                     break;
+                  }
+               }
+            }
+            else
+            {
+               foreach ( UnityEngine.Object o in objects )
+               {
+                  if ( o.name == textValue )
+                  {
+                     unityObject = o;
+                     break;
+                  }
+               }
+            }
+    
+            // components should never be instances in the property grid
+            // we must refer to (and select) their parent game object
+            if ( true == typeof(Component).IsAssignableFrom(type) )
+            {
+               type = typeof(GameObject);
+               if ( null != unityObject ) unityObject = ((Component) unityObject).gameObject;
+            }
+   
+   #if UNITY_3_3
+            unityObject = EditorGUILayout.ObjectField( unityObject, type, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
+   #elif UNITY_3_4
+            unityObject = EditorGUILayout.ObjectField( unityObject, type, true, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
+   #endif
+   
+            // if that object (or the changed object) does exist, use it's name to update the property value
+            // if it doesn't exist then the 'val' will stay as what was entered into the TextField
+            if ( unityObject != null )
+            {
+               if ( true == uScriptConfig.ShouldAutoPackage(type) )
+               {
+                  //we have to package now because the returned parameter is just the string representation
+                  //and it won't always be able to reference back to the actual object
+                  textValue = uScript.PackageAsset(unityObject, type);
+               }
+               else
+               {
+                  textValue = unityObject.name;               
+               }
             }
          }
 
-         EndRow(type.ToString(), isReadOnly);
+         EndRow(type.ToString());
       }
       EditorGUILayout.EndVertical();
       return textValue;
@@ -681,7 +731,7 @@ public static class uScriptGUI
             v = _styleType.CalcSize(new GUIContent(arraySize.GetType().ToString()));
             _columnType.Width = Mathf.Max(_columnType.Width, (int)v.x);
 
-            EndRow(arraySize.GetType().ToString(), isReadOnly);
+            EndRow(arraySize.GetType().ToString());
 
 
 
@@ -757,7 +807,7 @@ public static class uScriptGUI
          //throw System.ArgumentException("Unhandled type: " + value.GetType().ToString());
       }
 
-      EndRow(value.GetType().ToString(), isReadOnly);
+      EndRow(value.GetType().ToString());
       return value;
    }
 
