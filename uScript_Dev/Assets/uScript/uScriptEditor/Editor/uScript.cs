@@ -1350,6 +1350,12 @@ http://uscript.net
 
    //   Rect _statusbarRect = new Rect();
 
+
+
+
+   Dictionary<string, bool> _foldoutsGraphContent = new Dictionary<string, bool>();
+
+
    void DrawGUIPalette()
    {
       Rect r = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(_guiPanelPalette_Width));
@@ -1497,6 +1503,15 @@ http://uscript.net
                categories.Add("Variables", new Dictionary<string, List<DisplayNode>>());
                categories.Add("Miscellaneous", new Dictionary<string, List<DisplayNode>>());
 
+               if (_foldoutsGraphContent.Count == 0)
+               {
+                  foreach (KeyValuePair<string, Dictionary<string, List<DisplayNode>>> kvpCategory in categories)
+                  {
+                     // Default each foldout to "expanded"
+                     _foldoutsGraphContent.Add(kvpCategory.Key, true);
+                  }
+               }
+
                // @TODO: clean up this code
 
                foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
@@ -1571,9 +1586,8 @@ http://uscript.net
                         GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
                         tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (0 * 12), 0, 0, 0);
 
-                        bool tmpBool = true;
-                        tmpBool = GUILayout.Toggle(tmpBool, kvpCategory.Key, tmpStyle);
-                        if (tmpBool)
+                        _foldoutsGraphContent[kvpCategory.Key] = GUILayout.Toggle(_foldoutsGraphContent[kvpCategory.Key], kvpCategory.Key, tmpStyle);
+                        if (_foldoutsGraphContent[kvpCategory.Key])
                         {
                            List<string> nodeList = kvpCategory.Value.Keys.ToList();
                            nodeList.Sort();
@@ -1623,6 +1637,10 @@ http://uscript.net
                                        nodeButtonContent.text = name + comment;
                                     }
 
+//                                    UnityEngine.Color tmpColor = GUI.color;
+//                                    Debug.Log(tmpColor.ToString());
+//                                    GUI.color = new UnityEngine.Color(1f, 0.5f, 1f, tmpColor.a);
+
                                     bool selected = dn.Selected;
                                     selected = GUILayout.Toggle(selected, nodeButtonContent, uScriptGUIStyle.nodeButtonLeft);
                                     if (selected != dn.Selected)
@@ -1641,6 +1659,8 @@ http://uscript.net
                                     {
                                        uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
                                     }
+
+//                                    GUI.color = tmpColor;
                                  }
                                  GUILayout.EndHorizontal();
                               }
