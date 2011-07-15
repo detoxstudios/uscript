@@ -1175,7 +1175,7 @@ namespace Detox.ScriptEditor
          RefreshScript( null );
       }
 
-      private void m_MenuUpgradeNode_Click(object sender, EventArgs e)
+      public void m_MenuUpgradeNode_Click(object sender, EventArgs e)
       {
          ScriptEditor oldEditor = m_ScriptEditor.Copy( );
 

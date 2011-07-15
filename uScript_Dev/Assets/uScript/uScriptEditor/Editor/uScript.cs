@@ -1637,9 +1637,15 @@ http://uscript.net
                                        nodeButtonContent.text = name + comment;
                                     }
 
-//                                    UnityEngine.Color tmpColor = GUI.color;
-//                                    Debug.Log(tmpColor.ToString());
-//                                    GUI.color = new UnityEngine.Color(1f, 0.5f, 1f, tmpColor.a);
+
+                                    UnityEngine.Color tmpColor = GUI.color;
+                                    UnityEngine.Color textColor = uScriptGUIStyle.nodeButtonLeft.normal.textColor;
+
+                                    if (IsNodeTypeDeprecated(dn.EntityNode) || m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(dn.EntityNode))
+                                    {
+                                       GUI.color = new UnityEngine.Color(1, 0.5f, 1, 1);
+                                       uScriptGUIStyle.nodeButtonLeft.normal.textColor = UnityEngine.Color.white;
+                                    }
 
                                     bool selected = dn.Selected;
                                     selected = GUILayout.Toggle(selected, nodeButtonContent, uScriptGUIStyle.nodeButtonLeft);
@@ -1655,12 +1661,32 @@ http://uscript.net
                                        m_ScriptEditorCtrl.ToggleNode(dn.Guid);
                                     }
 
+
+                                    GUI.color = tmpColor;
+                                    uScriptGUIStyle.nodeButtonLeft.normal.textColor = textColor;
+
+
+                                    if (IsNodeTypeDeprecated(dn.EntityNode) == false && m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(dn.EntityNode))
+                                    {
+                                       if (GUILayout.Button(uScriptGUIContent.listMiniUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+                                       {
+                                          System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
+                                          if (Click != null)
+                                          {
+                                             // clear all selected nodes first
+                                             m_ScriptEditorCtrl.DeselectAll();
+                                             // toggle the clicked node
+                                             m_ScriptEditorCtrl.ToggleNode(dn.Guid);
+                                             Click(this, new EventArgs());
+                                          }
+                                       }
+                                    }
+
                                     if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
                                     {
                                        uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
                                     }
 
-//                                    GUI.color = tmpColor;
                                  }
                                  GUILayout.EndHorizontal();
                               }

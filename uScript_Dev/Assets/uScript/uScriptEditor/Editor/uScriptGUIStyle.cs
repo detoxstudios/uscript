@@ -138,20 +138,22 @@ public static class uScriptGUIStyle
       _nodeButtonLeft.fontSize = 11;
 
       _nodeButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid);
-      _nodeButtonMiddle.alignment = TextAnchor.UpperCenter;
+      _nodeButtonMiddle.alignment = TextAnchor.MiddleCenter;
       _nodeButtonMiddle.padding = new RectOffset( 0, 0, 2, 4 );
-      _nodeButtonMiddle.margin = new RectOffset( );
+      _nodeButtonMiddle.margin = new RectOffset( 0, 0, 0, 0 );
       _nodeButtonMiddle.overflow = new RectOffset( 0, 0, 0, 2 );
       _nodeButtonMiddle.fontSize = 11;
+      _nodeButtonMiddle.fixedHeight = 18;
+      _nodeButtonMiddle.contentOffset = new Vector2(0, 1);
 
       _nodeButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
       _nodeButtonRight.alignment = TextAnchor.UpperCenter;
-      _nodeButtonRight.fixedHeight = 19;
       _nodeButtonRight.padding = new RectOffset( 0, 0, 2, 4 );
-      _nodeButtonRight.contentOffset = new Vector2(-1, 3);
       _nodeButtonRight.margin = new RectOffset( 0, 4, 0, 0 );
       _nodeButtonRight.overflow = new RectOffset( 0, 0, 0, 2 );
       _nodeButtonRight.fontSize = 11;
+      _nodeButtonRight.fixedHeight = 19;
+      _nodeButtonRight.contentOffset = new Vector2(-1, 1);
 
       _contextMenu = new GUIStyle(EditorStyles.toolbarButton);
    }

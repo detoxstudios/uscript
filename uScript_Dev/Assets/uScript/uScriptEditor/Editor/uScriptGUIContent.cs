@@ -43,7 +43,9 @@ public static class uScriptGUIContent
       Collapse,
       Expand,
       OnlineReference,
-      MiniSearch
+      MiniSearch,
+      MiniToggle,
+      MiniUpgrade
    }
 
    private static Dictionary<ContentID, GUIContent> _defaultGUIContent = new Dictionary<ContentID, GUIContent> ();
@@ -104,6 +106,16 @@ public static class uScriptGUIContent
       get { return _currentGUIContent[ContentID.MiniSearch]; }
    }
 
+   public static GUIContent listMiniToggle
+   {
+      get { return _currentGUIContent[ContentID.MiniToggle]; }
+   }
+
+   public static GUIContent listMiniUpgrade
+   {
+      get { return _currentGUIContent[ContentID.MiniUpgrade]; }
+   }
+
    public static void Init (ContentStyle toolbarButtonStyle)
    {
       if (_defaultGUIContent.Count > 0)
@@ -132,6 +144,8 @@ public static class uScriptGUIContent
       Default (ContentID.OnlineReference, "iconOnlineReference", "Online Reference", "Open the online uScript reference in the default web browser.");
       
       Default (ContentID.MiniSearch, "iconMiniSearch", string.Empty, "Center the canvas on this node.");
+      Default (ContentID.MiniToggle, "iconMiniToggle", string.Empty, "Toggle socket visibility on this node (Show All or Hide Unused).");
+      Default (ContentID.MiniUpgrade, "iconMiniUpgrade", string.Empty, "Upgrade this deprecated node.");
    }
 
    private static void Default (ContentID id, string imageFilename, string text, string tooltip)
