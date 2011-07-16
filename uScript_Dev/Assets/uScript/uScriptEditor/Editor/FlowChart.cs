@@ -1223,6 +1223,7 @@ namespace Detox.FlowChart
                string styleName = "";
                float lineWidth = pen.Width;
                Handles.color = new UnityEngine.Color(pen.Color.FR, pen.Color.FG, pen.Color.FB);
+               bool oneNodeIsVariable = false;
 
                if (link.Source.Node != null || link.Destination.Node != null)
                {
@@ -1231,6 +1232,7 @@ namespace Detox.FlowChart
                   
                   if (!String.IsNullOrEmpty(styleName))
                   {
+                     oneNodeIsVariable = styleName.Contains("variable") || styleName.Contains("property");
                      for (int j = 0; j < uScriptConfig.VariableStyleTypes.Length; j++)
                      {
                         if (styleName == uScriptConfig.VariableStyleTypes[j] || styleName == uScriptConfig.PropertyStyleTypes[j])
@@ -1248,6 +1250,7 @@ namespace Detox.FlowChart
                      
                      if (!String.IsNullOrEmpty(styleName))
                      {
+                        oneNodeIsVariable = oneNodeIsVariable || styleName.Contains("variable") || styleName.Contains("property");
                         for (int j = 0; j < uScriptConfig.VariableStyleTypes.Length; j++)
                         {
                            if (styleName == uScriptConfig.VariableStyleTypes[j] || styleName == uScriptConfig.PropertyStyleTypes[j])
@@ -1264,6 +1267,11 @@ namespace Detox.FlowChart
                {
                   Handles.color = uScriptConfig.LineColors[index];
                   lineWidth = uScriptConfig.LineWidths[index];
+               }
+               else if (oneNodeIsVariable)
+               {
+                  Handles.color = uScriptConfig.LineColors[0];
+                  lineWidth = uScriptConfig.LineWidths[0];
                }
 
                Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0), 
