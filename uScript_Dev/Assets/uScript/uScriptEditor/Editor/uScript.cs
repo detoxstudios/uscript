@@ -884,7 +884,7 @@ http://uscript.net
                   {
                      mapToggle = !mapToggle;
                   }
-                  else if (Event.current.keyCode == KeyCode.Space)
+                  else if (Event.current.keyCode == KeyCode.BackQuote)
                   {
                      m_HidePanelMode = !m_HidePanelMode;
 
