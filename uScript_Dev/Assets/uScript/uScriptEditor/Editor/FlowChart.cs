@@ -1227,7 +1227,7 @@ namespace Detox.FlowChart
                if (link.Source.Node != null || link.Destination.Node != null)
                {
                   // check source node type first
-                  styleName = link.Source.Node.StyleName;
+                  styleName = link.Source.Node.UnselectedStyleName;
                   
                   if (!String.IsNullOrEmpty(styleName))
                   {
@@ -1244,7 +1244,7 @@ namespace Detox.FlowChart
                   if (index == -1)
                   {
                      // didn't find source node style, try the destination
-                     styleName = link.Destination.Node.StyleName;
+                     styleName = link.Destination.Node.UnselectedStyleName;
                      
                      if (!String.IsNullOrEmpty(styleName))
                      {
@@ -1410,6 +1410,7 @@ namespace Detox.FlowChart
    public abstract class Node : UserControl
    {
       public string StyleName = "";
+      public string UnselectedStyleName = "";
 
       // render all nodes below link lines by default
       virtual public int RenderDepth { get { return FlowChartCtrl.LinkRenderDepth - 1; } }

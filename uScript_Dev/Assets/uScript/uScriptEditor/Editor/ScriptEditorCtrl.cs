@@ -2623,6 +2623,7 @@ namespace Detox.ScriptEditor
       
       protected void UpdateStyleName()
       {
+         UnselectedStyleName = NodeStyle;
          if ( false == Selected ) StyleName = NodeStyle;
          else 
          {
