@@ -748,11 +748,11 @@ public partial class uScriptConfig
 
    public static String[] VariableStyleTypes = 
                                     {
+                                       "variable_default",
                                        "variable_string",
                                        "variable_bool",
                                        "variable_float",
                                        "variable_int",
-                                       "variable_default",
                                        "variable_vector3",
                                        "variable_gameobject",
                                        "variable_object",
@@ -760,11 +760,11 @@ public partial class uScriptConfig
                                     };
    public static String[] PropertyStyleTypes = 
                                     {
+                                       "property_default",
                                        "property_string",
                                        "property_bool",
                                        "property_float",
                                        "property_int",
-                                       "property_default",
                                        "property_vector3",
                                        "property_gameobject",
                                        "property_object",
@@ -772,11 +772,11 @@ public partial class uScriptConfig
                                     };
    public static UnityEngine.Color[] LineColors = 
                                     {
+                                       new UnityEngine.Color(255.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f),
                                        new UnityEngine.Color(109.0f/255.0f, 224.0f/255.0f, 120.0f/255.0f),
                                        new UnityEngine.Color(255.0f/255.0f, 58.0f/255.0f, 58.0f/255.0f),
                                        new UnityEngine.Color(72.0f/255.0f, 115.0f/255.0f, 255.0f/255.0f),
                                        new UnityEngine.Color(0.0f/255.0f, 222.0f/255.0f, 255.0f/255.0f),
-                                       new UnityEngine.Color(255.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f),
                                        new UnityEngine.Color(243.0f/255.0f, 204.0f/255.0f, 110.0f/255.0f),
                                        new UnityEngine.Color(200.0f/255.0f, 100.0f/255.0f, 255.0f/255.0f),
                                        new UnityEngine.Color(247.0f/255.0f, 194.0f/255.0f, 255.0f/255.0f),
