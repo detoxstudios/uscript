@@ -230,6 +230,13 @@ public class uScriptDebug : MonoBehaviour
 
 public class uScriptCustomEvent
 {
+   public enum SendGroup
+   {
+      Parents,
+      Children,
+      All
+   }
+   
    public class CustomEventData
    {
       public CustomEventData() {}
@@ -257,5 +264,11 @@ public class uScriptCustomEvent
    {
       CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
       eventSender.SendMessageUpwards("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
+   }
+
+   public static void SendCustomEventDown(string eventName, object eventData, GameObject eventSender)
+   {
+      CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
+      eventSender.BroadcastMessage("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
    }
 }
