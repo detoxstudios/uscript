@@ -601,7 +601,7 @@ namespace Detox.ScriptEditor
          }
 
          // are we a game object?
-         return typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType());
+         return typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) && ((UnityEngine.GameObject)o).active;
       }
       
       public bool DoDragDropContextMenu( object[] objects )
