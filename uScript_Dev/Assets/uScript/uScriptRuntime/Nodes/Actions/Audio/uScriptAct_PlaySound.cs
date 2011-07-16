@@ -69,7 +69,7 @@ public class uScriptAct_PlaySound : uScriptLogic
 
       for ( i = 0; i < m_AudioSources.Length; i++ )
       {
-         if ( true == m_AudioSources[ i ].isPlaying ) break;
+         if ( m_AudioSources[ i ] != null && true == m_AudioSources[ i ].isPlaying ) break;
       }
 
       if ( i == m_AudioSources.Length )
