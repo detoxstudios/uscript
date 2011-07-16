@@ -21,7 +21,7 @@ public class uScript : EditorWindow
    public DateTime ExpireDate { get { return new DateTime(2011, 7, 25); } }
    public int EULAVersion { get { return 20110701; } }
 
-   private enum MouseRegion
+   public enum MouseRegion
    {
       Outside,
       Canvas,
@@ -71,7 +71,7 @@ public class uScript : EditorWindow
    private double clickTime;
    //   private double doubleClickTime = 0.3;
 
-   private bool m_CanvasDragging = false;
+   public bool m_CanvasDragging = false;
 
    private int m_ContextX = 0;
    private int m_ContextY = 0;
@@ -1256,6 +1256,7 @@ http://uscript.net
    {
       uScriptGUIContent.Init((uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle);
       uScriptGUIStyle.Init();
+      uScriptGUI.InitPanels();
 
       DrawGUITopAreas();
       if (!m_HidePanelMode)
@@ -1302,7 +1303,9 @@ http://uscript.net
 
          SetMouseRegion(MouseRegion.HandleProperties);//, -3, 3, 6, -3 );
 
-         DrawGUIHelp();
+         uScriptGUIPanelReference.Instance.Draw();
+//         DrawGUIHelp();
+
          DrawGUIVerticalDivider();
 
          SetMouseRegion(MouseRegion.HandleReference);//, -3, 3, 6, -3 );
@@ -1720,7 +1723,7 @@ http://uscript.net
 
 
 
-   void SetMouseRegion(MouseRegion region)
+   public void SetMouseRegion(MouseRegion region)
    {
       if (Event.current.type == EventType.Repaint)
       {
@@ -2419,89 +2422,91 @@ http://uscript.net
    }
 
 
-   void DrawGUIHelp()
-   {
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
-      {
-         string helpDescription = "Select a node on the canvas to view usage and behavior information.";
-         string helpButtonTooltip = "Open the online uScript reference in the default web browser.";
-         string helpButtonURL = "http://www.uscript.net/docs/";
-
-         if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
-         {
-            if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
-            {
-               string nodeType = ScriptEditor.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
-               if (string.IsNullOrEmpty(nodeType))
-               {
-                  // other node types...
-                  if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is CommentNode)
-                  {
-                     nodeType = "CommentNode";
-                  }
-                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is ExternalConnection)
-                  {
-                     nodeType = "ExternalConnection";
-                  }
-                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is OwnerConnection)
-                  {
-                     nodeType = "OwnerConnection";
-                  }
-                  else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is LocalNode)
-                  {
-                     nodeType = "LocalNode";
-                  }
-               }
-               helpButtonURL = FindNodeHelp(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
-               helpDescription = FindNodeDescription(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
-               helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
-            }
-         }
-         else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
-         {
-            helpDescription = "Help cannot be provided when multiple nodes are selected.";
-         }
-
-         helpButtonTooltip += " (" + helpButtonURL + ")";
-
-         // Toolbar
-         //
-         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
-         {
-            GUILayout.Label("Reference", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
-            GUILayout.FlexibleSpace();
-
-            if (helpButtonURL == string.Empty)
-            {
-               GUI.enabled = false;
-            }
-
-            uScriptGUIContent.ChangeTooltip(uScriptGUIContent.ContentID.OnlineReference, helpButtonTooltip);
-            if (GUILayout.Button(uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
-            {
-               Help.BrowseURL(helpButtonURL);
-            }
-
-            GUI.enabled = true;
-         }
-         EditorGUILayout.EndHorizontal();
-
-         _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
-         {
-            // prevent the help TextArea from getting focus
-            GUI.SetNextControlName("helpTextArea");
-            GUILayout.TextArea(helpDescription, uScriptGUIStyle.referenceText);
-            if (GUI.GetNameOfFocusedControl() == "helpTextArea")
-            {
-               GUIUtility.keyboardControl = 0;
-            }
-         }
-         EditorGUILayout.EndScrollView();
-      }
-      EditorGUILayout.EndVertical();
-
-      SetMouseRegion(MouseRegion.Reference);//, 3, 3, -6, -3 );
-   }
+//   void DrawGUIHelp()
+//   {
+//      // Setup the strings for the button
+//      string helpDescription     = "Select a node on the canvas to view usage and behavior information.";
+//      string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
+//      string helpButtonURL       = "http://www.uscript.net/docs/";
+//
+//      if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
+//      {
+//         if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
+//         {
+//            string nodeType = ScriptEditor.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
+//            if (string.IsNullOrEmpty(nodeType))
+//            {
+//               // other node types...
+//               if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is CommentNode)
+//               {
+//                  nodeType = "CommentNode";
+//               }
+//               else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is ExternalConnection)
+//               {
+//                  nodeType = "ExternalConnection";
+//               }
+//               else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is OwnerConnection)
+//               {
+//                  nodeType = "OwnerConnection";
+//               }
+//               else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is LocalNode)
+//               {
+//                  nodeType = "LocalNode";
+//               }
+//            }
+//            helpButtonURL = FindNodeHelp(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
+//            helpDescription = FindNodeDescription(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
+//            helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
+//         }
+//      }
+//      else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
+//      {
+//         helpDescription = "Help cannot be provided when multiple nodes are selected.";
+//      }
+//
+//      helpButtonTooltip += " (" + helpButtonURL + ")";
+//
+//      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+//      {
+//
+//         // Toolbar
+//         //
+//         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+//         {
+//            GUILayout.Label("Reference", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+//            GUILayout.FlexibleSpace();
+//
+//            if (helpButtonURL == string.Empty)
+//            {
+//               GUI.enabled = false;
+//            }
+//
+//            uScriptGUIContent.ChangeTooltip(uScriptGUIContent.ContentID.OnlineReference, helpButtonTooltip);
+//            if (GUILayout.Button(uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+//            {
+//               Help.BrowseURL(helpButtonURL);
+//            }
+//
+//            GUI.enabled = true;
+//         }
+//         EditorGUILayout.EndHorizontal();
+//
+//         _guiHelpScrollPos = EditorGUILayout.BeginScrollView(_guiHelpScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+//         {
+//            // prevent the help TextArea from getting focus
+//            GUI.SetNextControlName("helpTextArea");
+//            GUILayout.TextArea(helpDescription, uScriptGUIStyle.referenceText);
+//            if (GUI.GetNameOfFocusedControl() == "helpTextArea")
+//            {
+//               GUIUtility.keyboardControl = 0;
+//            }
+//         }
+//         EditorGUILayout.EndScrollView();
+//      }
+//      EditorGUILayout.EndVertical();
+//
+//      SetMouseRegion(MouseRegion.Reference);//, 3, 3, -6, -3 );
+//   }
 
 
    String _panelScriptFilterText = string.Empty;
@@ -2649,15 +2654,15 @@ http://uscript.net
             }
             GUILayout.EndHorizontal();
 
-            GUILayout.Label("Current Scene: " + sceneName);
-
-            if (!attached)
-            {
-               GUIStyle errorStyle = new GUIStyle(GUI.skin.label);
-               errorStyle.normal.textColor = UnityEngine.Color.red;
-               errorStyle.wordWrap = true;
-               GUILayout.Label("The Unity Scene this uScript uses is not loaded in Unity or it has not been saved yet. Work may be lost if you save!", errorStyle);
-            }
+//            GUILayout.Label("Current Scene: " + sceneName);
+//
+//            if (!attached)
+//            {
+//               GUIStyle errorStyle = new GUIStyle(GUI.skin.label);
+//               errorStyle.normal.textColor = UnityEngine.Color.red;
+//               errorStyle.wordWrap = true;
+//               GUILayout.Label("The Unity Scene this uScript uses is not loaded in Unity or it has not been saved yet. Work may be lost if you save!", errorStyle);
+//            }
 
 
             //
