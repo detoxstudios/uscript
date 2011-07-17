@@ -1157,9 +1157,8 @@ namespace Detox.FlowChart
                                  uScriptConfig.PointerLineEnd);
          }
 
-         // render pre-link nodes
          int i;
-
+         // render unselected pre-link nodes
          for (i = 0; i < Controls.Count; i++)
          {
             Node node = Controls[i] as Node;
@@ -1170,7 +1169,25 @@ namespace Detox.FlowChart
                   break;
                }
 					
-               if (node.IsVisible(visibleRect))
+               if (!node.Selected && node.IsVisible(visibleRect))
+               {
+                  node.OnPaint(e);
+               }
+            }
+         }
+
+         // render selected pre-link nodes
+         for (i = 0; i < Controls.Count; i++)
+         {
+            Node node = Controls[i] as Node;
+            if (node != null)
+            {
+               if (node.RenderDepth >= LinkRenderDepth)
+               {
+                  break;
+               }
+               
+               if (node.Selected && node.IsVisible(visibleRect))
                {
                   node.OnPaint(e);
                }
