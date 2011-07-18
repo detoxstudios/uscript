@@ -5,6 +5,8 @@
 using UnityEngine;
 using System.Collections;
 
+[NodeDeprecated(typeof(uScriptAct_SetComponentsVector4))]
+
 [NodePath("Actions/Set Variable")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]

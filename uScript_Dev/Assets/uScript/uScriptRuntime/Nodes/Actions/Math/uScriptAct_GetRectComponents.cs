@@ -5,6 +5,8 @@
 using UnityEngine;
 using System.Collections;
 
+[NodeDeprecated(typeof(uScriptAct_GetComponentsRect))]
+
 [NodePath("Actions/Math")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
