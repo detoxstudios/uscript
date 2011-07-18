@@ -36,9 +36,17 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-               if (currentTarget.GetComponent(currentComponentName))
+               Component comp = currentTarget.GetComponent(currentComponentName);
+               if (comp != null)
                {
-                  ((Behaviour)currentTarget.GetComponent(currentComponentName)).enabled = true;
+                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
+                  {
+                     ((Behaviour)comp).enabled = true;
+                  }
+                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
+                  {
+                     ((ParticleEmitter)comp).enabled = true;
+                  }
                }
             }
          }
@@ -56,9 +64,17 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-               if (currentTarget.GetComponent(currentComponentName))
+               Component comp = currentTarget.GetComponent(currentComponentName);
+               if (comp != null)
                {
-                  ((Behaviour)currentTarget.GetComponent(currentComponentName)).enabled = false;
+                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
+                  {
+                     ((Behaviour)comp).enabled = false;
+                  }
+                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
+                  {
+                     ((ParticleEmitter)comp).enabled = false;
+                  }
                }
             }
          }
@@ -76,15 +92,30 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-               if (currentTarget.GetComponent(currentComponentName))
+               Component comp = currentTarget.GetComponent(currentComponentName);
+               if (comp != null)
                {
-                  if ( ((Behaviour)currentTarget.GetComponent(currentComponentName)).enabled )
+                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
                   {
-                     ((Behaviour)currentTarget.GetComponent(currentComponentName)).enabled = false;
+                     if ( ((Behaviour)comp).enabled )
+                     {
+                        ((Behaviour)comp).enabled = false;
+                     }
+                     else
+                     {
+                        ((Behaviour)comp).enabled = true;
+                     }
                   }
-                  else
+                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
                   {
-                     ((Behaviour)currentTarget.GetComponent(currentComponentName)).enabled = true;
+                     if ( ((ParticleEmitter)comp).enabled )
+                     {
+                        ((ParticleEmitter)comp).enabled = false;
+                     }
+                     else
+                     {
+                        ((ParticleEmitter)comp).enabled = true;
+                     }
                   }
                }
             }
