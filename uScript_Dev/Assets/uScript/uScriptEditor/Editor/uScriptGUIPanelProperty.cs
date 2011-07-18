@@ -38,8 +38,8 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
    public void Init()
    {
       _name = "Properties";
-      _size = 500;
-      _region = uScriptGUI.Region.Property;
+//      _size = 500;
+//      _region = uScriptGUI.Region.Property;
    }
 
    public void Update()
@@ -58,25 +58,19 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
       // Local references to uScript
       uScript uScriptInstance = uScript.Instance;
       ScriptEditorCtrl m_ScriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
-      bool m_CanvasDragging = uScriptInstance.m_CanvasDragging;
 
-
-
-
-
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, _options);
+//      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, _options);
+      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptInstance._guiPanelProperties_Width));
       {
          // Toolbar
          //
-         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
+         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
             GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
-//            GUILayout.FlexibleSpace();
          }
          EditorGUILayout.EndHorizontal();
 
-
-         if (m_CanvasDragging && uScript.Preferences.DrawPanelsOnUpdate == false)
+         if (uScriptInstance.m_CanvasDragging && uScript.Preferences.DrawPanelsOnUpdate == false)
          {
             DrawHiddenNotification();
          }
@@ -84,7 +78,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
          {
             // Node list
             //
-            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
+            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
             {
                uScriptGUI.BeginColumns("Property", "Value", "Type", _scrollviewOffset, _svRect);
                {
@@ -102,8 +96,8 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
       }
       EditorGUILayout.EndVertical();
 
-      uScriptGUI.DefineRegion(uScriptGUI.Region.Property);
-//      uScriptInstance.SetMouseRegion( uScript.MouseRegion.Properties );//, 1, 3, -4, -3 );
+//      uScriptGUI.DefineRegion(uScriptGUI.Region.Property);
+      uScriptInstance.SetMouseRegion(uScript.MouseRegion.Properties);
    }
 
 }

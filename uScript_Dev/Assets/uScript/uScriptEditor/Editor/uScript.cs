@@ -91,7 +91,7 @@ public class uScript : EditorWindow
    bool m_HidePanelMode = false;
    public int _guiPanelPalette_Width = 250;
    int _guiPanelProperties_Height = 250;
-   int _guiPanelProperties_Width = 250;
+   public int _guiPanelProperties_Width = 250;
    public int _guiPanelSequence_Width = 250;
 
 
@@ -1298,16 +1298,16 @@ http://uscript.net
    {
       EditorGUILayout.BeginHorizontal(GUILayout.Height(_guiPanelProperties_Height));
       {
-         DrawGUIPropertyGrid();
-         DrawGUIVerticalDivider();
+         uScriptGUIPanelProperty.Instance.Draw();
+//         DrawGUIPropertyGrid();
 
+         DrawGUIVerticalDivider();
          SetMouseRegion(MouseRegion.HandleProperties);//, -3, 3, 6, -3 );
 
          uScriptGUIPanelReference.Instance.Draw();
 //         DrawGUIHelp();
 
          DrawGUIVerticalDivider();
-
          SetMouseRegion(MouseRegion.HandleReference);//, -3, 3, 6, -3 );
 
          uScriptGUIPanelScript.Instance.Draw();
@@ -2372,55 +2372,55 @@ http://uscript.net
 
 
 
-   void DrawGUIPropertyGrid()
-   {
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(_guiPanelProperties_Width));
-      {
-         // Toolbar
-         //
-         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
-         {
-            GUILayout.Label("Properties", uScriptGUIStyle.panelTitle);
-            //            GUILayout.FlexibleSpace();
-         }
-         EditorGUILayout.EndHorizontal();
-
-         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
-         {
-            _wasMoving = true;
-
-            // Hide the panels while the canvas is moving
-            string message =
-               "The Properties panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
-
-            GUIStyle style = new GUIStyle(GUI.skin.label);
-            style.wordWrap = true;
-            style.padding = new RectOffset(16, 16, 16, 16);
-
-            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
-         }
-         else
-         {
-            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
-            {
-               uScriptGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
-               {
-                  m_ScriptEditorCtrl.PropertyGrid.OnPaint();
-               }
-               uScriptGUI.EndColumns();
-            }
-            EditorGUILayout.EndScrollView();
-
-            if (Event.current.type == EventType.Repaint)
-            {
-               _svRect = GUILayoutUtility.GetLastRect();
-            }
-         }
-      }
-      EditorGUILayout.EndVertical();
-
-      SetMouseRegion(MouseRegion.Properties);//, 1, 3, -4, -3 );
-   }
+//   void DrawGUIPropertyGrid()
+//   {
+//      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(_guiPanelProperties_Width));
+//      {
+//         // Toolbar
+//         //
+//         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+//         {
+//            GUILayout.Label("Properties", uScriptGUIStyle.panelTitle);
+//            //            GUILayout.FlexibleSpace();
+//         }
+//         EditorGUILayout.EndHorizontal();
+//
+//         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
+//         {
+//            _wasMoving = true;
+//
+//            // Hide the panels while the canvas is moving
+//            string message =
+//               "The Properties panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
+//
+//            GUIStyle style = new GUIStyle(GUI.skin.label);
+//            style.wordWrap = true;
+//            style.padding = new RectOffset(16, 16, 16, 16);
+//
+//            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
+//         }
+//         else
+//         {
+//            _guiPanelProperties_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelProperties_ScrollPos, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
+//            {
+//               uScriptGUI.BeginColumns("Property", "Value", "Type", _guiPanelProperties_ScrollPos, _svRect);
+//               {
+//                  m_ScriptEditorCtrl.PropertyGrid.OnPaint();
+//               }
+//               uScriptGUI.EndColumns();
+//            }
+//            EditorGUILayout.EndScrollView();
+//
+//            if (Event.current.type == EventType.Repaint)
+//            {
+//               _svRect = GUILayoutUtility.GetLastRect();
+//            }
+//         }
+//      }
+//      EditorGUILayout.EndVertical();
+//
+//      SetMouseRegion(MouseRegion.Properties);//, 1, 3, -4, -3 );
+//   }
 
 
 //   void DrawGUIHelp()
