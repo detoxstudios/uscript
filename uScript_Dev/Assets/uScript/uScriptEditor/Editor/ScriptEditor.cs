@@ -108,8 +108,8 @@ namespace Detox.ScriptEditor
             {
                try
                {
-                  string []values = Default.Split( ',' );
-                  return new UnityEngine.Color( Single.Parse(values[0]), values.Length > 1 ? Single.Parse(values[1]) : 0, values.Length > 2 ? Single.Parse(values[2]) : 0 );
+                  string[] values = Default.Split( ',' );
+                  return new UnityEngine.Color( Single.Parse(values[0]), values.Length > 1 ? Single.Parse(values[1]) : 0, values.Length > 2 ? Single.Parse(values[2]) : 0, values.Length > 3 ? Single.Parse(values[3]) : 1 );
                }
                catch 
                {
@@ -332,7 +332,7 @@ namespace Detox.ScriptEditor
                try
                {
                   UnityEngine.Color v = (UnityEngine.Color) value;
-                  Default = v.r + "," + v.g + "," + v.b;
+                  Default = v.r + "," + v.g + "," + v.b + "," + v.a;
                }
                catch ( Exception )
                {
