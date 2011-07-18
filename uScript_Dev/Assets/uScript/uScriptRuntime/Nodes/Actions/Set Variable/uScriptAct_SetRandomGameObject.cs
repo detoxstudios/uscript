@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Set Variable")]
+[NodePath("Actions/Variables")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the value of a GameObject variable from a set of choices.")]
