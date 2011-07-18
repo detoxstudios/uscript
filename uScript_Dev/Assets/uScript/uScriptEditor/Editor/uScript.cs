@@ -37,7 +37,7 @@ public class uScript : EditorWindow
    private MouseRegion _mouseRegion;
    private MouseRegion m_MouseDownRegion = MouseRegion.Outside;
 
-   Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
+   public Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
    static private uScript s_Instance = null;
    static public uScript Instance { get { if (null == s_Instance) Init(); return s_Instance; } }
@@ -89,10 +89,10 @@ public class uScript : EditorWindow
 
 
    bool m_HidePanelMode = false;
-   int _guiPanelPalette_Width = 250;
+   public int _guiPanelPalette_Width = 250;
    int _guiPanelProperties_Height = 250;
    int _guiPanelProperties_Width = 250;
-   int _guiPanelSequence_Width = 250;
+   public int _guiPanelSequence_Width = 250;
 
 
    Rect _canvasRect;
@@ -182,7 +182,7 @@ public class uScript : EditorWindow
    //
    // Content Panel Variables
    //
-   bool _openScriptToggle = false;
+   public bool _openScriptToggle = false;
 
    MouseEventArgs m_MouseDownArgs = null;
    MouseEventArgs m_MouseUpArgs = null;
@@ -1310,7 +1310,8 @@ http://uscript.net
 
          SetMouseRegion(MouseRegion.HandleReference);//, -3, 3, 6, -3 );
 
-         DrawGUINestedScripts();
+         uScriptGUIPanelScript.Instance.Draw();
+//         DrawGUINestedScripts();
       }
       EditorGUILayout.EndHorizontal();
    }
@@ -1978,7 +1979,7 @@ http://uscript.net
 
 
 
-   void RefreshScript()
+   public void RefreshScript()
    {
       string relativePath = "Assets\\" + m_FullPath.Substring(UnityEngine.Application.dataPath.Length + 1);
       String fileName = System.IO.Path.GetFileNameWithoutExtension(relativePath);
@@ -2509,267 +2510,267 @@ http://uscript.net
 //   }
 
 
-   String _panelScriptFilterText = string.Empty;
-
-   void DrawGUINestedScripts()
-   {
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(_guiPanelSequence_Width));
-      {
-         // Toolbar
-         //
-         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
-         {
-            GUILayout.Label("uScripts", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
-
-            GUILayout.FlexibleSpace();
-
-            GUI.SetNextControlName ("ScriptFilterSearch" );
-            string _filterText = uScriptGUI.ToolbarSearchField(_panelScriptFilterText, GUILayout.Width(100));
-            GUI.SetNextControlName ("" );
-            if (_filterText != _panelScriptFilterText)
-            {
-               // Drop focus if the user inserted a newline (hit enter)
-               if (_filterText.Contains('\n'))
-               {
-                  GUIUtility.keyboardControl = 0;
-               }
-
-               // Trim leading whitespace
-               _filterText = _filterText.TrimStart( new char[] { ' ' } );
-
-               _panelScriptFilterText = _filterText;
-            }
-         }
-         EditorGUILayout.EndHorizontal();
-
-         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
-         {
-            _wasMoving = true;
-
-            // Hide the panels while the canvas is moving
-            string message =
-               "The uScripts panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
-
-            GUIStyle style = new GUIStyle(GUI.skin.label);
-            style.wordWrap = true;
-            style.padding = new RectOffset(16, 16, 16, 16);
-
-            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
-         }
-         else
-         {
-            // Update the panel in the following manner:
-            //
-            //    Display the current active script first
-            //    List the scene the script is associated with
-            //    List error messages
-            //
-            //    Display some type of separator
-            //
-            //    Display all other scripts in the project (except the active script)
-            //    Filter the list
-            //    Support foldout containers eventually
-
-
-            GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
-
-            GUIContent contentInsert = new GUIContent("Insert", "Click to add an instance of this uScript.");
-            GUIContent contentLoad = new GUIContent("Load", "Click to load this uScript.");
-            GUIContent contentReload = new GUIContent("Reload", "Click to reload this uScript.");
-            GUIContent contentSave = new GUIContent("Save", "Click to save the current uScript.");
-
-            string sceneName = string.Empty;
-
-            string scriptName = string.Empty;
-            string scriptFile = string.Empty;
-
-            bool currentScript = false;
-            bool attached = false;
-            bool dirty = false;
-
-
-            //
-            // Current script
-            //
-            GUILayout.BeginHorizontal();
-            {
-               scriptName = System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName);
-               scriptFile = System.IO.Path.GetFileName(m_ScriptEditorCtrl.ScriptName).Replace(".cs", ".uscript");
-
-               currentScript = true;
-               bool hasScriptName = String.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptName) == false;
-
-
-               // uScript Label
-               sceneName = "None";
-               if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(scriptFile))
-               {
-                  if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
-                  {
-                     sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
-                  }
-               }
-
-               scriptStyle.fontStyle = FontStyle.Bold;
-               attached = sceneName == System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
-               if (!attached)
-               {
-                  scriptStyle.normal.textColor = UnityEngine.Color.red;
-               }
-               dirty = m_ScriptEditorCtrl.IsDirty;
-
-               GUILayout.Label( (String.IsNullOrEmpty(scriptName) ? "(new)" : scriptName) + (dirty ? " *" : ""), scriptStyle);
-
-               GUILayout.FlexibleSpace();
-
-               // Reload
-               if (hasScriptName)
-               {
-                  if (GUILayout.Button(contentReload, EditorStyles.miniButtonLeft))
-                  {
-                     string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
-
-                     if ("" != path)
-                     {
-                        _openScriptToggle = false;
-                        OpenScript(path);
-                     }
-                  }
-               }
-
-               if (GUILayout.Button(contentSave, hasScriptName ? EditorStyles.miniButtonRight : EditorStyles.miniButton))
-               {
-                  bool saved = false;
-                  AssetDatabase.StartAssetEditing();
-                  {
-                     saved = SaveScript(false);
-                  }
-                  AssetDatabase.StopAssetEditing();
-
-                  if (saved)
-                  {
-                     RefreshScript();
-                  }
-               }
-            }
-            GUILayout.EndHorizontal();
-
-//            GUILayout.Label("Current Scene: " + sceneName);
+//   String _panelScriptFilterText = string.Empty;
 //
-//            if (!attached)
+//   void DrawGUINestedScripts()
+//   {
+//      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(_guiPanelSequence_Width));
+//      {
+//         // Toolbar
+//         //
+//         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+//         {
+//            GUILayout.Label("uScripts", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+//
+//            GUILayout.FlexibleSpace();
+//
+//            GUI.SetNextControlName ("ScriptFilterSearch" );
+//            string _filterText = uScriptGUI.ToolbarSearchField(_panelScriptFilterText, GUILayout.Width(100));
+//            GUI.SetNextControlName ("" );
+//            if (_filterText != _panelScriptFilterText)
 //            {
-//               GUIStyle errorStyle = new GUIStyle(GUI.skin.label);
-//               errorStyle.normal.textColor = UnityEngine.Color.red;
-//               errorStyle.wordWrap = true;
-//               GUILayout.Label("The Unity Scene this uScript uses is not loaded in Unity or it has not been saved yet. Work may be lost if you save!", errorStyle);
+//               // Drop focus if the user inserted a newline (hit enter)
+//               if (_filterText.Contains('\n'))
+//               {
+//                  GUIUtility.keyboardControl = 0;
+//               }
+//
+//               // Trim leading whitespace
+//               _filterText = _filterText.TrimStart( new char[] { ' ' } );
+//
+//               _panelScriptFilterText = _filterText;
 //            }
-
-
-            //
-            // Spacer
-            //
-            GUILayout.BeginHorizontal(GUI.skin.box, GUILayout.ExpandWidth(true));
-            {
-            }
-            GUILayout.EndHorizontal();
-
-
-            _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
-            {
-               //
-               // Filtered script list
-               //
-               List<string> keylist = new List<string>();
-               keylist.AddRange(uScriptBackgroundProcess.s_uScriptInfo.Keys);
-               string[] keys = keylist.ToArray();
-
-               int filterMatches = 0;
-
-               foreach (string fileName in keys)
-               {
-                  scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
-                  scriptFile = System.IO.Path.GetFileName(fileName).Replace(".cs", ".uscript");
-
-                  currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
-                  attached = false;
-                  dirty = false;
-
-                  scriptStyle = new GUIStyle(EditorStyles.label);
-
-                  if (currentScript == false
-                      && (String.IsNullOrEmpty(_panelScriptFilterText)
-                          || scriptName.ToLower().Contains(_panelScriptFilterText.ToLower())
-                          )
-                      )
-                  {
-                     filterMatches++;
-
-                     GUILayout.BeginHorizontal();
-                     {
-                        // uScript Label
-                        sceneName = "None";
-                        if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
-                        {
-                           sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
-                        }
-
-                        if (Event.current.type == EventType.Layout)
-                        {
-                           scriptName = string.Empty;
-                        }
-
-
-                        if (sceneName == "None")
-                        {
-                           GUILayout.Label(scriptName, scriptStyle, GUILayout.ExpandWidth(true));
-                        }
-                        else
-                        {
-                           GUILayout.Label(scriptName + " (" + sceneName + ")", scriptStyle, GUILayout.ExpandWidth(true));
-                        }
-
-                        // Load
-                        if (GUILayout.Button(contentLoad, EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
-                        {
-                           string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
-
-                           if ("" != path)
-                           {
-                              _openScriptToggle = false;
-                              OpenScript(path);
-                           }
-                        }
-
-                        // Insert as Nested uScript
-                        if (GUILayout.Button(contentInsert, EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false)))
-                        {
-                           if (m_ScriptEditorCtrl != null)
-                           {
-                              float canvasX = _mouseRegionRect[MouseRegion.Canvas].x;
-                              float canvasY = _mouseRegionRect[MouseRegion.Canvas].y;
-                              m_ScriptEditorCtrl.ContextCursor = new Point((int)(canvasX - _guiPanelPalette_Width + uScript.Instance.NodeWindowRect.width / 2.0f), (int)(canvasY + uScript.Instance.NodeWindowRect.height / 2.0f));
-                              m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode(scriptName));
-                           }
-                        }
-                     }
-                     GUILayout.EndHorizontal();
-                  }
-               }
-
-               if (filterMatches == 0)
-               {
-                  GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
-                  style.alignment = TextAnchor.MiddleCenter;
-                  GUILayout.Label("The search found no matches!", style);
-               }
-            }
-            EditorGUILayout.EndScrollView();
-         }
-      }
-      EditorGUILayout.EndVertical();
-
-      SetMouseRegion(MouseRegion.NestedScripts);//, 3, 3, -2, -3);
-   }
+//         }
+//         EditorGUILayout.EndHorizontal();
+//
+//         if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
+//         {
+//            _wasMoving = true;
+//
+//            // Hide the panels while the canvas is moving
+//            string message =
+//               "The uScripts panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
+//
+//            GUIStyle style = new GUIStyle(GUI.skin.label);
+//            style.wordWrap = true;
+//            style.padding = new RectOffset(16, 16, 16, 16);
+//
+//            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
+//         }
+//         else
+//         {
+//            // Update the panel in the following manner:
+//            //
+//            //    Display the current active script first
+//            //    List the scene the script is associated with
+//            //    List error messages
+//            //
+//            //    Display some type of separator
+//            //
+//            //    Display all other scripts in the project (except the active script)
+//            //    Filter the list
+//            //    Support foldout containers eventually
+//
+//
+//            GUIStyle scriptStyle = new GUIStyle(EditorStyles.label);
+//
+//            GUIContent contentInsert = new GUIContent("Insert", "Click to add an instance of this uScript.");
+//            GUIContent contentLoad = new GUIContent("Load", "Click to load this uScript.");
+//            GUIContent contentReload = new GUIContent("Reload", "Click to reload this uScript.");
+//            GUIContent contentSave = new GUIContent("Save", "Click to save the current uScript.");
+//
+//            string sceneName = string.Empty;
+//
+//            string scriptName = string.Empty;
+//            string scriptFile = string.Empty;
+//
+//            bool currentScript = false;
+//            bool attached = false;
+//            bool dirty = false;
+//
+//
+//            //
+//            // Current script
+//            //
+//            GUILayout.BeginHorizontal();
+//            {
+//               scriptName = System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName);
+//               scriptFile = System.IO.Path.GetFileName(m_ScriptEditorCtrl.ScriptName).Replace(".cs", ".uscript");
+//
+//               currentScript = true;
+//               bool hasScriptName = String.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptName) == false;
+//
+//
+//               // uScript Label
+//               sceneName = "None";
+//               if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(scriptFile))
+//               {
+//                  if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
+//                  {
+//                     sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
+//                  }
+//               }
+//
+//               scriptStyle.fontStyle = FontStyle.Bold;
+//               attached = sceneName == System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
+//               if (!attached)
+//               {
+//                  scriptStyle.normal.textColor = UnityEngine.Color.red;
+//               }
+//               dirty = m_ScriptEditorCtrl.IsDirty;
+//
+//               GUILayout.Label( (String.IsNullOrEmpty(scriptName) ? "(new)" : scriptName) + (dirty ? " *" : ""), scriptStyle);
+//
+//               GUILayout.FlexibleSpace();
+//
+//               // Reload
+//               if (hasScriptName)
+//               {
+//                  if (GUILayout.Button(contentReload, EditorStyles.miniButtonLeft))
+//                  {
+//                     string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
+//
+//                     if ("" != path)
+//                     {
+//                        _openScriptToggle = false;
+//                        OpenScript(path);
+//                     }
+//                  }
+//               }
+//
+//               if (GUILayout.Button(contentSave, hasScriptName ? EditorStyles.miniButtonRight : EditorStyles.miniButton))
+//               {
+//                  bool saved = false;
+//                  AssetDatabase.StartAssetEditing();
+//                  {
+//                     saved = SaveScript(false);
+//                  }
+//                  AssetDatabase.StopAssetEditing();
+//
+//                  if (saved)
+//                  {
+//                     RefreshScript();
+//                  }
+//               }
+//            }
+//            GUILayout.EndHorizontal();
+//
+////            GUILayout.Label("Current Scene: " + sceneName);
+////
+////            if (!attached)
+////            {
+////               GUIStyle errorStyle = new GUIStyle(GUI.skin.label);
+////               errorStyle.normal.textColor = UnityEngine.Color.red;
+////               errorStyle.wordWrap = true;
+////               GUILayout.Label("The Unity Scene this uScript uses is not loaded in Unity or it has not been saved yet. Work may be lost if you save!", errorStyle);
+////            }
+//
+//
+//            //
+//            // Spacer
+//            //
+//            GUILayout.BeginHorizontal(GUI.skin.box, GUILayout.ExpandWidth(true));
+//            {
+//            }
+//            GUILayout.EndHorizontal();
+//
+//
+//            _guiPanelSequence_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelSequence_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+//            {
+//               //
+//               // Filtered script list
+//               //
+//               List<string> keylist = new List<string>();
+//               keylist.AddRange(uScriptBackgroundProcess.s_uScriptInfo.Keys);
+//               string[] keys = keylist.ToArray();
+//
+//               int filterMatches = 0;
+//
+//               foreach (string fileName in keys)
+//               {
+//                  scriptName = System.IO.Path.GetFileNameWithoutExtension(fileName);
+//                  scriptFile = System.IO.Path.GetFileName(fileName).Replace(".cs", ".uscript");
+//
+//                  currentScript = (scriptName == System.IO.Path.GetFileNameWithoutExtension(m_ScriptEditorCtrl.ScriptName));
+//                  attached = false;
+//                  dirty = false;
+//
+//                  scriptStyle = new GUIStyle(EditorStyles.label);
+//
+//                  if (currentScript == false
+//                      && (String.IsNullOrEmpty(_panelScriptFilterText)
+//                          || scriptName.ToLower().Contains(_panelScriptFilterText.ToLower())
+//                          )
+//                      )
+//                  {
+//                     filterMatches++;
+//
+//                     GUILayout.BeginHorizontal();
+//                     {
+//                        // uScript Label
+//                        sceneName = "None";
+//                        if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
+//                        {
+//                           sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
+//                        }
+//
+//                        if (Event.current.type == EventType.Layout)
+//                        {
+//                           scriptName = string.Empty;
+//                        }
+//
+//
+//                        if (sceneName == "None")
+//                        {
+//                           GUILayout.Label(scriptName, scriptStyle, GUILayout.ExpandWidth(true));
+//                        }
+//                        else
+//                        {
+//                           GUILayout.Label(scriptName + " (" + sceneName + ")", scriptStyle, GUILayout.ExpandWidth(true));
+//                        }
+//
+//                        // Load
+//                        if (GUILayout.Button(contentLoad, EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
+//                        {
+//                           string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
+//
+//                           if ("" != path)
+//                           {
+//                              _openScriptToggle = false;
+//                              OpenScript(path);
+//                           }
+//                        }
+//
+//                        // Insert as Nested uScript
+//                        if (GUILayout.Button(contentInsert, EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false)))
+//                        {
+//                           if (m_ScriptEditorCtrl != null)
+//                           {
+//                              float canvasX = _mouseRegionRect[MouseRegion.Canvas].x;
+//                              float canvasY = _mouseRegionRect[MouseRegion.Canvas].y;
+//                              m_ScriptEditorCtrl.ContextCursor = new Point((int)(canvasX - _guiPanelPalette_Width + uScript.Instance.NodeWindowRect.width / 2.0f), (int)(canvasY + uScript.Instance.NodeWindowRect.height / 2.0f));
+//                              m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode(scriptName));
+//                           }
+//                        }
+//                     }
+//                     GUILayout.EndHorizontal();
+//                  }
+//               }
+//
+//               if (filterMatches == 0)
+//               {
+//                  GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
+//                  style.alignment = TextAnchor.MiddleCenter;
+//                  GUILayout.Label("The search found no matches!", style);
+//               }
+//            }
+//            EditorGUILayout.EndScrollView();
+//         }
+//      }
+//      EditorGUILayout.EndVertical();
+//
+//      SetMouseRegion(MouseRegion.NestedScripts);//, 3, 3, -2, -3);
+//   }
 
 
    void DoWindowEULA(int windowID)
@@ -3030,7 +3031,7 @@ http://uscript.net
       }
    }
 
-   private string FindFile(string path, string fileName)
+   public string FindFile(string path, string fileName)
    {
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
 
