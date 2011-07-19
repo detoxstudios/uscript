@@ -177,6 +177,11 @@ namespace System.Windows.Forms
       {
          bool signalUpdate = false;
 
+         if (SelectedObjects.Length == 0)
+         {
+            uScriptGUI.ResetFoldouts();
+         }
+
          foreach ( object selectedObject in SelectedObjects )
          {
             PropertyGridParameters parameters = selectedObject as PropertyGridParameters;
@@ -184,7 +189,7 @@ namespace System.Windows.Forms
 
             if (parameters.Parameters.Length > 1)
             {
-               if (uScriptGUI.BeginProperty(parameters.Description, "NODE12345", uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid)))
+               if (uScriptGUI.BeginProperty(parameters.Description, uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid)))
                {
                   foreach ( Parameter p in parameters.Parameters )
                   {

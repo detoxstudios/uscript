@@ -52,7 +52,10 @@ public static class uScriptGUI
    static int _propertyCount;
 
 
-
+   public static void ResetFoldouts()
+   {
+      _foldoutExpanded.Clear();
+   }
 
    public static void BeginColumns(string col1, string col2, string col3, Vector2 offset, Rect rect)
    {
@@ -160,15 +163,10 @@ public static class uScriptGUI
    }
 
 
-   public static bool BeginProperty(string label, string id, Node node)
+   public static bool BeginProperty(string label, Node node)
    {
       _propertyCount++;
-//      if (++_propertyCount > 1)
-//      {
-//         Separator();
-//      }
-//
-      _propertyKey = label + "_" + id;
+      _propertyKey = node.Guid.ToString();
       if (false == _foldoutExpanded.ContainsKey(_propertyKey))
       {
          _foldoutExpanded[_propertyKey] = true;
@@ -176,7 +174,7 @@ public static class uScriptGUI
 
       GUILayout.BeginHorizontal();
       {
-         _foldoutExpanded[_propertyKey] = GUILayout.Toggle(_foldoutExpanded[_propertyKey], label /* + "_" + id */, uScriptGUIStyle.nodeButtonLeft);
+         _foldoutExpanded[_propertyKey] = GUILayout.Toggle(_foldoutExpanded[_propertyKey], label, uScriptGUIStyle.nodeButtonLeft);
 
          if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
          {
