@@ -1545,6 +1545,12 @@ http://uscript.net
                      name = name + " (" + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default) + ")";
                      comment = ((LocalNodeDisplayNode)displayNode).LocalNode.Name.Default;
                   }
+                  else if (displayNode is OwnerConnectionDisplayNode)
+                  {
+                     category = "Variables";
+                     name = "Owner GameObject";
+//                     comment = ((OwnerConnectionDisplayNode)displayNode).OwnerConnection.Instance.FriendlyName;
+                  }
                   else if (displayNode is CommentDisplayNode)
                   {
                      category = "Comments";
@@ -1629,6 +1635,12 @@ http://uscript.net
                                     name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
                                     name = name + " (" + (name == "String" ? "\"" + ((LocalNodeDisplayNode)dn).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)dn).LocalNode.Value.Default) + ")";
                                     comment = ((LocalNodeDisplayNode)dn).LocalNode.Name.Default;
+                                 }
+                                 else if (dn is OwnerConnectionDisplayNode)
+                                 {
+                                    category = "Variables";
+                                    name = "Owner GameObject";
+//                                    comment = ((OwnerConnectionDisplayNode)dn).OwnerConnection.Instance.FriendlyName;
                                  }
                                  else if (dn is CommentDisplayNode)
                                  {

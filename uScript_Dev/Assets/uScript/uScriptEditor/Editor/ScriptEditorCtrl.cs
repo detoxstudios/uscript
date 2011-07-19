@@ -1664,6 +1664,22 @@ namespace Detox.ScriptEditor
             EntityNode entityNode = ((DisplayNode)node).EntityNode;
 
             string name = node.Name;
+
+            if (node is EntityPropertyDisplayNode)
+            {
+//               name = ((EntityPropertyDisplayNode)node).DisplayName.Replace("\n", ": ");
+               name = "Instance Property";
+            }
+            else if (node is LocalNodeDisplayNode)
+            {
+               name = ((LocalNodeDisplayNode)node).LocalNode.Value.Type; // get FriendlyName
+               name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
+            }
+            else if (node is OwnerConnectionDisplayNode)
+            {
+               name = "Owner GameObject";
+            }
+
             if ( ((DisplayNode)node).Deprecated ) name += " ***DEPRECATED, MUST BE REPLACED***";
 
             PropertyGridParameters parameters = new PropertyGridParameters( name, entityNode, this ); 
