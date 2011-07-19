@@ -71,7 +71,8 @@ public class uScript : EditorWindow
    private double clickTime;
    //   private double doubleClickTime = 0.3;
 
-   public bool m_CanvasDragging = false;
+   private bool m_CanvasDragging = false;
+   public bool wasCanvasDragged = false;
 
    private int m_ContextX = 0;
    private int m_ContextY = 0;
@@ -422,6 +423,23 @@ http://uscript.net
 
    void Update()
    {
+      // Because Unity has an awesome GUI system, the mouse dragging is detected
+      // after EventType.Layout has occurred. If any GUILayout calls are made in
+      // a conditional block that references m_CanvasDragging, there may be
+      // Exceptions generated in Unity.  The only way to get around that is to
+      // have the expression reference a variable that is modified outside of
+      // OnGUI(), such as in Update().
+      //
+      // In general, it is a bad idea to have any conditional expressions exist
+      // inside OnGUI that references variables that are set in OnGUI, especially
+      // if GUILayout calls are made in the conditional block. They work in most
+      // cases, such as the test for GUILayout Button clicks, but strange issues
+      // can occur with some combinations of statements, conditional expressions,
+      // and user input behaviors.
+      //
+      wasCanvasDragged = m_CanvasDragging;
+
+
       if (true == CodeValidator.RequireRebuild(m_ForceCodeValidation))
       {
          RebuildAllScripts();

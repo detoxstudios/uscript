@@ -126,7 +126,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          EditorGUILayout.EndHorizontal();
 
 
-         if (uScriptInstance.m_CanvasDragging && uScript.Preferences.DrawPanelsOnUpdate == false)
+         if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
          {
             DrawHiddenNotification();
          }

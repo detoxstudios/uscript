@@ -185,7 +185,11 @@ public abstract class uScriptGUIPanel
       style.wordWrap = true;
       style.padding = new RectOffset(16, 16, 16, 16);
 
-      GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
+      EditorGUILayout.BeginScrollView(Vector2.zero, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+      {
+         GUILayout.Label(message, style);
+      }
+      EditorGUILayout.EndScrollView();
    }
 
 //   protected void SetPanelOptions(uScriptGUI.FixedPanelSize orientation)
