@@ -1542,7 +1542,7 @@ http://uscript.net
                      category = "Variables";
                      name = ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Type; // get FriendlyName
                      name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
-                     name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default);
+                     name = name + " (" + (name == "String" ? "\"" + ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)displayNode).LocalNode.Value.Default) + ")";
                      comment = ((LocalNodeDisplayNode)displayNode).LocalNode.Name.Default;
                   }
                   else if (displayNode is CommentDisplayNode)
@@ -1550,6 +1550,12 @@ http://uscript.net
                      category = "Comments";
                      name = ((CommentDisplayNode)displayNode).Comment.TitleText.FriendlyName;
                      comment = ((CommentDisplayNode)displayNode).Comment.TitleText.Default;
+                  }
+                  else if (displayNode is EntityPropertyDisplayNode)
+                  {
+                     category = "Properties";
+                     name = ((EntityPropertyDisplayNode)displayNode).DisplayName.Replace("\n", ": ");
+                     comment = ((EntityPropertyDisplayNode)displayNode).DisplayValue;
                   }
                   else
                   {
@@ -1621,13 +1627,19 @@ http://uscript.net
                                  {
                                     name = ((LocalNodeDisplayNode)dn).LocalNode.Value.Type; // get FriendlyName
                                     name = uScriptConfig.Variable.FriendlyName(name).Replace("UnityEngine.", string.Empty);
-                                    name = name + ": " + (name == "String" ? "\"" + ((LocalNodeDisplayNode)dn).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)dn).LocalNode.Value.Default);
+                                    name = name + " (" + (name == "String" ? "\"" + ((LocalNodeDisplayNode)dn).LocalNode.Value.Default + "\"" : ((LocalNodeDisplayNode)dn).LocalNode.Value.Default) + ")";
                                     comment = ((LocalNodeDisplayNode)dn).LocalNode.Name.Default;
                                  }
                                  else if (dn is CommentDisplayNode)
                                  {
                                     name = ((CommentDisplayNode)dn).Comment.TitleText.FriendlyName;
                                     comment = ((CommentDisplayNode)dn).Comment.TitleText.Default;
+                                 }
+                                 else if (dn is EntityPropertyDisplayNode)
+                                 {
+                                    category = "Properties";
+                                    name = ((EntityPropertyDisplayNode)dn).DisplayName.Replace("\n", ": ");
+                                    comment = ((EntityPropertyDisplayNode)dn).DisplayValue;
                                  }
 
                                  // Validate strings
