@@ -165,6 +165,8 @@ public static class uScriptGUI
 
    public static bool BeginProperty(string label, Node node)
    {
+      ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
+
       _propertyCount++;
       _propertyKey = node.Guid.ToString();
       if (false == _foldoutExpanded.ContainsKey(_propertyKey))
@@ -174,18 +176,58 @@ public static class uScriptGUI
 
       GUILayout.BeginHorizontal();
       {
+         //
+         // Foldout
+         //
+         UnityEngine.Color tmpColor = GUI.color;
+         UnityEngine.Color textColor = uScriptGUIStyle.nodeButtonLeft.normal.textColor;
+
+         if (uScript.IsNodeTypeDeprecated(((DisplayNode)node).EntityNode) || m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(((DisplayNode)node).EntityNode))
+         {
+            GUI.color = new UnityEngine.Color(1, 0.5f, 1, 1);
+            uScriptGUIStyle.nodeButtonLeft.normal.textColor = UnityEngine.Color.white;
+//            label += "\t\t--- DEPRECATED: UPDATED OR REPLACE ---";
+//            label += "\t\t--- DEPRECATED ---";
+         }
+
          _foldoutExpanded[_propertyKey] = GUILayout.Toggle(_foldoutExpanded[_propertyKey], label, uScriptGUIStyle.nodeButtonLeft);
 
+         GUI.color = tmpColor;
+         uScriptGUIStyle.nodeButtonLeft.normal.textColor = textColor;
+
+         //
+         // Deprecation button
+         //
+         if (uScript.IsNodeTypeDeprecated(((DisplayNode)node).EntityNode) == false && m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(((DisplayNode)node).EntityNode))
+         {
+            if (GUILayout.Button(uScriptGUIContent.listMiniUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+            {
+               System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
+               if (Click != null)
+               {
+                  // clear all selected nodes first
+                  m_ScriptEditorCtrl.DeselectAll();
+                  // toggle the clicked node
+                  m_ScriptEditorCtrl.ToggleNode(node.Guid);
+                  Click(null, new EventArgs());
+               }
+            }
+         }
+
+//         //
+//         // Toggle Sockets button
+//         //
+//         if (GUILayout.Button(uScriptGUIContent.listMiniToggle, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+//         {
+////            m_ScriptEditorCtrl.ToggleNodeSockets(node);
+//         }
+
+         //
+         // Search button
+         //
          if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
          {
-            if (node == null)
-            {
-               Debug.LogWarning("Would lke to center on node, but node is null!\n");
-            }
-            else
-            {
-               uScript.Instance.ScriptEditorCtrl.CenterOnNode(node);
-            }
+            m_ScriptEditorCtrl.CenterOnNode(node);
          }
       }
       GUILayout.EndHorizontal();

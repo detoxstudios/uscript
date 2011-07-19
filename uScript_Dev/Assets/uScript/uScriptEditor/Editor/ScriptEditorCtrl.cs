@@ -1680,8 +1680,6 @@ namespace Detox.ScriptEditor
                name = "Owner GameObject";
             }
 
-            if ( ((DisplayNode)node).Deprecated ) name += " ***DEPRECATED, MUST BE REPLACED***";
-
             PropertyGridParameters parameters = new PropertyGridParameters( name, entityNode, this ); 
             parameters.AddParameters( "Parameters", entityNode.Parameters );
             parameters.AddParameters( "Comment", new Parameter[] {entityNode.ShowComment, entityNode.Comment} );

@@ -137,6 +137,19 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 //            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
             _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
             {
+               if ((m_ScriptEditorCtrl.SelectedNodes.Length == 1) && (m_ScriptEditorCtrl.SelectedNodes[0] != null))
+               {
+                  if (uScript.IsNodeTypeDeprecated(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode) || m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode))
+                  {
+                     GUIStyle style = new GUIStyle(GUI.skin.box);
+                     style.normal.textColor = EditorStyles.boldLabel.normal.textColor;
+                     style.font = EditorStyles.boldLabel.font;
+                     style.wordWrap = true;
+                     style.stretchWidth = true;
+                     GUILayout.Box("SELECTED NODE IS DEPRECATED: UPDATE OR REPLACE", style);
+                  }
+               }
+
                // prevent the help TextArea from getting focus
                GUI.SetNextControlName("helpTextArea");
                GUILayout.TextArea(helpDescription, uScriptGUIStyle.referenceText);
