@@ -132,6 +132,16 @@ namespace Detox.ScriptEditor
          PrepareNode( );
       }
 
+      public override bool Selected 
+      {
+         set 
+         { 
+            base.Selected = value;
+            PrepareNode( );
+            Invalidate( );
+         }
+      }
+
       private void PrepareNode( )
       {
          string name = "(External)";
@@ -172,7 +182,20 @@ namespace Detox.ScriptEditor
 
       protected override Size CalculateSize(Socket []sockets)
       {
-         return new Size(61, 59);
+         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded ) return new Size(61, 59);
+
+         Size size = base.CalculateSize(sockets);
+         if (size.Width < 61) size.Width = 61;
+
+         size.Height = 59;
+
+         return size;
+      }
+
+      //overridden so we can expand if we are selected
+      public override void OnPaint( PaintEventArgs e )
+      {
+         base.OnPaint( e );
       }
 
       protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
