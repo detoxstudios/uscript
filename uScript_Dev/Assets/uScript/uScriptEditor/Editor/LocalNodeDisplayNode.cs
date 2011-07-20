@@ -56,7 +56,7 @@ namespace Detox.ScriptEditor
             value = LocalNode.Value.Default;
          }
 
-         if ( false == Selected && !uScript.Preferences.KeepVariablesExpanded )
+         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded )
          {
             if ( value.Length > 3 )
             {
@@ -92,7 +92,7 @@ namespace Detox.ScriptEditor
 
       protected override Size CalculateSize(Socket []sockets)
       {
-         if ( false == Selected && !uScript.Preferences.KeepVariablesExpanded ) return new Size(57, 57);
+         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded ) return new Size(57, 57);
 
          Size size = base.CalculateSize(sockets);
          if (size.Width < 57) size.Width = 57;
@@ -138,7 +138,7 @@ namespace Detox.ScriptEditor
 
          if ( "" != ExternalConnection.Name.Default ) name = ExternalConnection.Name.Default;
 
-         if (false == Selected && !uScript.Preferences.KeepVariablesExpanded)
+         if ((false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded)
          {
             if (name.Length > 3)
             {

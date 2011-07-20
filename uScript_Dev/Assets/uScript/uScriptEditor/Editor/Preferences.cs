@@ -2,6 +2,13 @@ using System.Collections;
 
 public class Preferences
 {
+   public enum VariableExpansionType
+   {
+      AlwaysExpanded,
+      AlwaysCollapsed,
+      Dynamic
+   }
+   
    public string ProjectFiles 
    { 
       get { LoadIfRequired( ); return m_Preferences[ "ProjectFiles" ] as string; } 
@@ -86,10 +93,10 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "GridColorMinor" ] = value; }       
    }
 
-   public bool KeepVariablesExpanded
+   public VariableExpansionType VariableExpansion
    {
-      get { LoadIfRequired( ); return (bool) m_Preferences[ "KeepVariablesExpanded" ]; }
-      set { LoadIfRequired( ); m_Preferences[ "KeepVariablesExpanded" ] = value; }
+      get { LoadIfRequired( ); return (VariableExpansionType) m_Preferences[ "VariableExpansion" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "VariableExpansion" ] = value; }
    }
 
    private Hashtable m_Preferences = null;  
@@ -132,7 +139,7 @@ public class Preferences
       if ( null == m_Preferences[ "GridMajorLineSpacing" ] ) m_Preferences[ "GridMajorLineSpacing" ] = uScriptConfig.Style.GridMajorLineSpacing;
       if ( null == m_Preferences[ "GridColorMajor" ] )       m_Preferences[ "GridColorMajor" ]       = uScriptConfig.Style.GridColorMajor;
       if ( null == m_Preferences[ "GridColorMinor" ] )       m_Preferences[ "GridColorMinor" ]       = uScriptConfig.Style.GridColorMinor;
-      if ( null == m_Preferences[ "KeepVariablesExpanded" ] )m_Preferences[ "KeepVariablesExpanded" ]= false;
+      if ( null == m_Preferences[ "VariableExpansion" ] )    m_Preferences[ "VariableExpansion" ]    = VariableExpansionType.Dynamic;
 
       if ( null == m_Preferences[ "MaximumNodeRecursionCount" ] )m_Preferences[ "MaximumNodeRecursionCount" ]= 1000;
    }

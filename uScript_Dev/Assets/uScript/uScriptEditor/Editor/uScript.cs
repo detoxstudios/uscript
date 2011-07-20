@@ -2877,7 +2877,7 @@ http://uscript.net
    }
 
 
-   Rect _windowRectPreferences;
+   Rect _windowRectPreferences = new Rect(0.0f, 0.0f, 300.0f, 0.0f);
 
    public void DrawPreferences()
    {
@@ -3008,7 +3008,7 @@ http://uscript.net
       //
       GUILayout.Label("Miscellaneous Settings", EditorStyles.boldLabel);
 
-      Preferences.KeepVariablesExpanded = EditorGUILayout.Toggle("Keep Variables Epanded", Preferences.KeepVariablesExpanded);
+      Preferences.VariableExpansion = (Preferences.VariableExpansionType)EditorGUILayout.EnumPopup("Variable Expansion Type", Preferences.VariableExpansion);
 
       EditorGUILayout.Separator();
       EditorGUILayout.Space();
