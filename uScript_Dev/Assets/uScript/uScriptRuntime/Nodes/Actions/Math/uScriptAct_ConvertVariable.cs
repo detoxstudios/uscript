@@ -175,6 +175,27 @@ public class uScriptAct_ConvertVariable : uScriptLogic
             tempStringValue = tmpTarget.ToString();
          }
       }
+		
+	  // Convert from Bool
+      if (typeof(bool) == Target.GetType())
+      {
+         bool tmpTarget = (bool)Target;
+
+         if (tmpTarget == true)
+         {
+            tempIntValue = 1;
+            tempFloatValue = 1F;
+            tempBooleanValue = true;
+            tempStringValue = "True";
+         }
+         else
+         {
+            tempIntValue = 0;
+            tempFloatValue = 0F;
+            tempBooleanValue = false;
+            tempStringValue = "False";
+         }
+      }
 
       // Output results
       IntValue = tempIntValue;

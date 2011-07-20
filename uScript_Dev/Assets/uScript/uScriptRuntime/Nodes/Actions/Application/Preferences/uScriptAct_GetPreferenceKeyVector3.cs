@@ -23,23 +23,36 @@ public class uScriptAct_GetPreferenceKeyVector3 : uScriptLogic
       [FriendlyName("Default Value")] Vector3 DefaultValue,
       [FriendlyName("Value")] out Vector3 Value)
    {
-      // Get X component
-      string KeyName_X = KeyName + "_uSV3C_X";
-      float DefaultValue_X = DefaultValue.x;
-      float Value_X = PlayerPrefs.GetFloat(KeyName_X, DefaultValue_X);
+      string stringValue = PlayerPrefs.GetString(KeyName);
+		string[] values = stringValue.Split('|');
+		
+	    if (values.Length != 3)
+		{
+			uScriptDebug.Log("The specified Preference Key was not found or not of type Vector3!", uScriptDebug.Type.Warning );
+			
+			// Return empty Vector3
+			Value = DefaultValue;
+		}
+		else
+		{
+		   float Value_X = 0F;
+		   float Value_Y = 0F;
+		   float Value_Z = 0F;
+		
+		   int counter = 0;
+		   foreach (string componentValue in values)
+		   {
+		      if (counter == 0) { Value_X = float.Parse(componentValue); }
+		      if (counter == 1) { Value_Y = float.Parse(componentValue); }
+		      if (counter == 2) { Value_Z = float.Parse(componentValue); }
+				
+			  counter++;
+		   }
 
-      // Get Y component
-      string KeyName_Y = KeyName + "_uSV3C_Y";
-      float DefaultValue_Y = DefaultValue.y;
-      float Value_Y = PlayerPrefs.GetFloat(KeyName_Y, DefaultValue_Y);
-
-      // Get Z component
-      string KeyName_Z = KeyName + "_uSV3C_Z";
-      float DefaultValue_Z = DefaultValue.z;
-      float Value_Z = PlayerPrefs.GetFloat(KeyName_Z, DefaultValue_Z);
-
-      // Return the Vector3 from all the components;
-      Value = new Vector3(Value_X, Value_Y, Value_Z);
+           // Return the Vector3
+           Value = new Vector3(Value_X, Value_Y, Value_Z);
+			
+		}
 
    }
 }

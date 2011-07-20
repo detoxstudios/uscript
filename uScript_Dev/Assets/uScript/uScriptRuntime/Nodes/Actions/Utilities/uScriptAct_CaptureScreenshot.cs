@@ -10,19 +10,23 @@ using System.IO;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Captures a screenshot as a PNG file.")]
-[NodeDescription("Captures a screenshot as a PNG file. If the file already exists, it will be overwritten. If no path is defined or a bad path is provided, the screenshot will be placed in the root folder of the project. Note: This node will not function when run from the web player or a Dashboard widget.\n\nFile Name: The name of the file. You do not need to provide the extension.\nPath: The path where you wish to save the screenshot file to.")]
+[NodeDescription("Captures a screenshot as a PNG file. If the file already exists, it will be overwritten. If no path is defined or a bad path is provided, the screenshot will be placed in the root folder of the project. Note: This node will not function when run from the web player or a Dashboard widget.\n\nFile Name: The name of the file. You do not need to provide the extension.\nPath: The path where you wish to save the screenshot file to.\nRelative To Data Folder: Applies the project's root data folder path to the begining of the specified path (the same location as your project's Assets folder).\nAppend Number: If true, this will append an incrementing number in the format of \"_#####\" to the end of the file name.\nFile Saved: Outputs the full path and filename of the saved screenshot.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Capture_Screenshot")]
 
 [FriendlyName("Capture Screenshot")]
 public class uScriptAct_CaptureScreenshot : uScriptLogic
 {
+	int m_NumberCount = 0;
+	
    public bool Out { get { return true; } }
 
    public void In(
       [FriendlyName("File Name")] string FileName, 
       string Path,
-      [FriendlyName("Relative To Data Folder"), DefaultValue(true), SocketState(false, false)] bool RelativeToDataFolder
+      [FriendlyName("Relative To Data Folder"), DefaultValue(true), SocketState(false, false)] bool RelativeToDataFolder,
+	  [FriendlyName("Append Number"), DefaultValue(false), SocketState(false, false)] bool AppendNumber,
+	  [FriendlyName("File Saved"), DefaultValue(false), SocketState(false, false)] out string FileSaved
       )
    {
       //Remove any slashes from the filename.
@@ -60,15 +64,39 @@ public class uScriptAct_CaptureScreenshot : uScriptLogic
          }
          else
          {
-            Path = FileName + ".png";
+            Path = FileName;
          }
       }
       else
       {
-         Path = FileName + ".png";
+         Path = FileName;
       }
+		
+		if(AppendNumber)
+		{	m_NumberCount++;
+			
+			string numberBuffer = "";
+			if (m_NumberCount < 10) { numberBuffer = "0000"; }
+			if (m_NumberCount > 9 && m_NumberCount < 100) { numberBuffer = "000"; }
+			if (m_NumberCount > 99 && m_NumberCount < 1000) { numberBuffer = "00"; }
+			if (m_NumberCount > 999 && m_NumberCount < 10000) { numberBuffer = "0"; }
+			if (m_NumberCount > 9999 && m_NumberCount < 100000) { numberBuffer = ""; }
+			if (m_NumberCount > 100000) { numberBuffer = "0000"; m_NumberCount = 0; }
+			
+			Path = Path + "_" + numberBuffer + m_NumberCount.ToString();
+			
+		}
+		else
+		{
+			// Reset the picture count
+			m_NumberCount = 0;
+		}
+		
+	  Path = Path + ".png";
 
       Application.CaptureScreenshot(Path);
+	  
+	  FileSaved = Path;
 
    }
 

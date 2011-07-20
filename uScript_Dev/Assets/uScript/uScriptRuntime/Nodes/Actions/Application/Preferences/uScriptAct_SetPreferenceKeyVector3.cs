@@ -28,17 +28,9 @@ public class uScriptAct_SetPreferenceKeyVector3 : uScriptLogic
       float Value_Y = Value.y;
       float Value_Z = Value.z;
       
-      // Set X component
-      string KeyName_X = KeyName + "_uSV3C_X";
-      PlayerPrefs.SetFloat(KeyName_X, Value_X);
-
-      // Set Y component
-      string KeyName_Y = KeyName + "_uSV3C_Y";
-      PlayerPrefs.SetFloat(KeyName_Y, Value_Y);
-
-      // Set Z component
-      string KeyName_Z = KeyName + "_uSV3C_Z";
-      PlayerPrefs.SetFloat(KeyName_Z, Value_Z);
+      string stringValue = Value_X.ToString() + "|" + Value_Y.ToString() + "|" + Value_Z.ToString();
+		
+	  PlayerPrefs.SetString(KeyName, stringValue);
 
    }
 }

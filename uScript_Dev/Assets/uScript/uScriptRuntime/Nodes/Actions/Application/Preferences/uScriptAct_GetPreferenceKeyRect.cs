@@ -23,28 +23,40 @@ public class uScriptAct_GetPreferenceKeyRect : uScriptLogic
       [FriendlyName("Default Value")] Rect DefaultValue,
       [FriendlyName("Value")] out Rect Value)
    {
-      // Get X component
-      string KeyName_X = KeyName + "_uSRC_X";
-      float DefaultValue_X = DefaultValue.xMin;
-      float Value_X = PlayerPrefs.GetFloat(KeyName_X, DefaultValue_X);
+		
+		string stringValue = PlayerPrefs.GetString(KeyName);
+		string[] values = stringValue.Split('|');
+		
+	    if (values.Length != 4)
+		{
+			uScriptDebug.Log("The specified Preference Key was not found or not of type Rect!", uScriptDebug.Type.Warning );
+			
+			// Return empty Rect
+			Value = DefaultValue;
+		}
+		else
+		{
+		   float Value_X = 0F;
+		   float Value_Y = 0F;
+		   float Value_Z = 0F;
+		   float Value_W = 0F;
+		
+		   int counter = 0;
+		   foreach (string componentValue in values)
+		   {
+		      if (counter == 0) { Value_X = float.Parse(componentValue); }
+		      if (counter == 1) { Value_Y = float.Parse(componentValue); }
+		      if (counter == 2) { Value_Z = float.Parse(componentValue); }
+		      if (counter == 3) { Value_W = float.Parse(componentValue); }
+				
+			  counter++;
+		   }
 
-      // Get Y component
-      string KeyName_Y = KeyName + "_uSRC_Y";
-      float DefaultValue_Y = DefaultValue.yMin;
-      float Value_Y = PlayerPrefs.GetFloat(KeyName_Y, DefaultValue_Y);
+           // Return the Rect
+           Value = new Rect(Value_X, Value_Y, Value_Z, Value_W);
+			
+		}
 
-      // Get Z component
-      string KeyName_Z = KeyName + "_uSRC_Z";
-      float DefaultValue_Z = DefaultValue.width;
-      float Value_Z = PlayerPrefs.GetFloat(KeyName_Z, DefaultValue_Z);
-
-      // Get W component
-      string KeyName_W = KeyName + "_uSRC_W";
-      float DefaultValue_W = DefaultValue.height;
-      float Value_W = PlayerPrefs.GetFloat(KeyName_W, DefaultValue_W);
-
-      // Return the Vector4 from all the components;
-      Value = new Rect(Value_X, Value_Y, Value_Z, Value_W);
 
    }
 }

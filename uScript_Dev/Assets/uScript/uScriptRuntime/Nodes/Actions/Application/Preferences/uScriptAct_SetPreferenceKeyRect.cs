@@ -29,21 +29,9 @@ public class uScriptAct_SetPreferenceKeyRect : uScriptLogic
       float Value_Z = Value.width;
       float Value_W = Value.height;
       
-      // Set X component
-      string KeyName_X = KeyName + "_uSRC_X";
-      PlayerPrefs.SetFloat(KeyName_X, Value_X);
-
-      // Set Y component
-      string KeyName_Y = KeyName + "_uSRC_Y";
-      PlayerPrefs.SetFloat(KeyName_Y, Value_Y);
-
-      // Set Z component
-      string KeyName_Z = KeyName + "_uSRC_Z";
-      PlayerPrefs.SetFloat(KeyName_Z, Value_Z);
-
-      // Set W component
-      string KeyName_W = KeyName + "_uSRC_Z";
-      PlayerPrefs.SetFloat(KeyName_W, Value_W);
+	  string stringValue = Value_X.ToString() + "|" + Value_Y.ToString() + "|" + Value_Z.ToString() + "|" + Value_W.ToString();
+		
+	  PlayerPrefs.SetString(KeyName, stringValue);
 
    }
 }

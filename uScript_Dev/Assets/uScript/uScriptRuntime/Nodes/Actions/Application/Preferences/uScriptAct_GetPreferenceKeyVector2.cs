@@ -23,18 +23,34 @@ public class uScriptAct_GetPreferenceKeyVector2 : uScriptLogic
       [FriendlyName("Default Value")] Vector2 DefaultValue,
       [FriendlyName("Value")] out Vector2 Value)
    {
-      // Get X component
-      string KeyName_X = KeyName + "_uSV2C_X";
-      float DefaultValue_X = DefaultValue.x;
-      float Value_X = PlayerPrefs.GetFloat(KeyName_X, DefaultValue_X);
+      string stringValue = PlayerPrefs.GetString(KeyName);
+		string[] values = stringValue.Split('|');
+		
+	    if (values.Length != 2)
+		{
+			uScriptDebug.Log("The specified Preference Key was not found or not of type Vector2!", uScriptDebug.Type.Warning );
+			
+			// Return empty Vector2
+			Value = DefaultValue;
+		}
+		else
+		{
+		   float Value_X = 0F;
+		   float Value_Y = 0F;
+		
+		   int counter = 0;
+		   foreach (string componentValue in values)
+		   {
+		      if (counter == 0) { Value_X = float.Parse(componentValue); }
+		      if (counter == 1) { Value_Y = float.Parse(componentValue); }
+				
+			  counter++;
+		   }
 
-      // Get Y component
-      string KeyName_Y = KeyName + "_uSV2C_Y";
-      float DefaultValue_Y = DefaultValue.y;
-      float Value_Y = PlayerPrefs.GetFloat(KeyName_Y, DefaultValue_Y);
-
-      // Return the Vector2 from all the components;
-      Value = new Vector2(Value_X, Value_Y);
+           // Return the Vector2
+           Value = new Vector2(Value_X, Value_Y);
+			
+		}
 
    }
 }
