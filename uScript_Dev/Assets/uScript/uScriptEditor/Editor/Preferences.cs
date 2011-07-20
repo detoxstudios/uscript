@@ -86,6 +86,12 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "GridColorMinor" ] = value; }       
    }
 
+   public bool KeepVariablesExpanded
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "KeepVariablesExpanded" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "KeepVariablesExpanded" ] = value; }
+   }
+
    private Hashtable m_Preferences = null;  
 
    public void Revert( )
@@ -126,6 +132,7 @@ public class Preferences
       if ( null == m_Preferences[ "GridMajorLineSpacing" ] ) m_Preferences[ "GridMajorLineSpacing" ] = uScriptConfig.Style.GridMajorLineSpacing;
       if ( null == m_Preferences[ "GridColorMajor" ] )       m_Preferences[ "GridColorMajor" ]       = uScriptConfig.Style.GridColorMajor;
       if ( null == m_Preferences[ "GridColorMinor" ] )       m_Preferences[ "GridColorMinor" ]       = uScriptConfig.Style.GridColorMinor;
+      if ( null == m_Preferences[ "KeepVariablesExpanded" ] )m_Preferences[ "KeepVariablesExpanded" ]= false;
 
       if ( null == m_Preferences[ "MaximumNodeRecursionCount" ] )m_Preferences[ "MaximumNodeRecursionCount" ]= 1000;
    }

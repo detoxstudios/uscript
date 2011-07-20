@@ -3002,6 +3002,15 @@ http://uscript.net
       Preferences.GridColorMinor = EditorGUILayout.ColorField("Grid Color Minor", Preferences.GridColorMinor);
 
       EditorGUILayout.Separator();
+
+      //
+      // Misc Settings
+      //
+      GUILayout.Label("Miscellaneous Settings", EditorStyles.boldLabel);
+
+      Preferences.KeepVariablesExpanded = EditorGUILayout.Toggle("Keep Variables Epanded", Preferences.KeepVariablesExpanded);
+
+      EditorGUILayout.Separator();
       EditorGUILayout.Space();
       EditorGUILayout.Separator();
 
