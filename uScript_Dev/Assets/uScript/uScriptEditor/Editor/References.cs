@@ -226,6 +226,10 @@ namespace System.Windows.Forms
                      {
                         val = uScriptGUI.FloatField(p.FriendlyName, (float) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
+                     else if ( val.GetType() == typeof(System.Double) )
+                     {
+                        val = (double) uScriptGUI.FloatField(p.FriendlyName, (float) val, ref isSocketExposed, isLocked, isReadOnly);
+                     }
                      else if ( val.GetType() == typeof(Vector2) )
                      {
                         val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2) val, ref isSocketExposed, isLocked, isReadOnly);

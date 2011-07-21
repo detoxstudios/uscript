@@ -490,9 +490,21 @@ http://uscript.net
       //force a rebuild if undo was performed
       bool rebuildScript = false;
 
-      if (null != MasterComponent && CurrentScript != MasterComponent.Script)
+      if (null != MasterComponent && CurrentScript != MasterComponent.Script )
       {
-         rebuildScript = true;
+         //it's possible these will not equal, which means a different script is being undone then the one loaded
+         //in that case it would clobber the current script with a different one.  Here is how it could happen:
+         //1. User is editing script A and presses play
+         //2. User loads script B
+         //3. User edits script B
+         //4. User presses stop.
+         //This causes unity to revert everything to the state right before 'play' was pressed
+         //which includes the object we keep on the master component - so now our object
+         //is different then the current script, but it wasn't due to a user undo action
+         if ( null == CurrentScriptName || CurrentScriptName == MasterComponent.ScriptName )
+         {
+            rebuildScript = true;
+         }
       }
 
       if (null == m_ScriptEditorCtrl || true == rebuildScript)
@@ -570,6 +582,11 @@ http://uscript.net
                scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
                scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script);
 
+               //I think I can put restored true only if current script is not null
+               //if it is null and we're here then we're coming back from a unity crash
+               //and we don't really have the file loaded (which means we would be restoring the
+               //last version cached by unity and not what's latest in our file)
+               //I'll be looking at this now so please don't remove this comment
                isRestored = true;
 
                //if we're restoring over an old script

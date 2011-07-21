@@ -2612,6 +2612,12 @@ namespace Detox.ScriptEditor
             else if ( dest is EntityEvent )
             {
                destParam = ((EntityEvent)dest).Instance;
+            
+               if ( source is ExternalConnection )
+               {
+                  reason = "An External Connection can't be used as the Instance for an event";
+                  return false;
+               }
             }
             else if ( dest is EntityProperty )
             {

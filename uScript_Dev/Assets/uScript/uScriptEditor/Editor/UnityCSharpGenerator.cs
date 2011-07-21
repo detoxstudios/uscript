@@ -706,6 +706,15 @@ namespace Detox.ScriptEditor
 
             return "(float) " + stringValue;
          }
+         else if ( "System.Double" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "(double) 0";
+            }
+
+            return "(double) " + stringValue;
+         }
          else if ( "System.Int32" == type )
          {
             if ( "" == stringValue )
@@ -922,8 +931,11 @@ namespace Detox.ScriptEditor
             try
             {
                bool   formatString = ( type == "System.String[]" || type == "System.Object[]" );
-               string cast = ( type == "System.Single[]" ) ? "(float)" : "";
+               string cast = "";
                
+               if ( "System.Single[]" == type ) cast = "(float)";
+               else if ( "System.Double[]" == type ) cast = "(double)";
+
                declaration = "new " + type + " {";
 
                foreach ( string element in elements )
