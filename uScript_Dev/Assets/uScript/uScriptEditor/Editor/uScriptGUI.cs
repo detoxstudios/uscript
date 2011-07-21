@@ -52,6 +52,21 @@ public static class uScriptGUI
    static int _propertyCount;
 
 
+
+   //
+   // Enables and disables the GUI. Call this instead of GUI.enabled
+   // when the state needs to change during OnGUI, especially during
+   // the uScriptGUI custom control calls.
+   //
+   public static bool enabled
+   {
+      get { return GUI.enabled; }
+      set
+      {
+         GUI.enabled = (value ? !uScript.Instance.m_DoPreferences : false);
+      }
+   }
+
    public static void ResetFoldouts()
    {
       _foldoutExpanded.Clear();
@@ -255,15 +270,15 @@ public static class uScriptGUI
       }
       else
       {
-         GUI.enabled = false == isLocked;
+         uScriptGUI.enabled = false == isLocked;
          isSocketExposed = GUILayout.Toggle(isSocketExposed, string.Empty, _styleEnabled, GUILayout.Width(_columnEnabled.Width));
-         GUI.enabled = true;
+         uScriptGUI.enabled = true;
       }
       //EditorGUIUtility.LookLikeInspector();
       EditorGUIUtility.LookLikeControls(_columnLabel.Width);
       EditorGUILayout.PrefixLabel(label, _styleLabel);
       
-      GUI.enabled = (! isReadOnly) && (! isSocketExposed || ! isLocked);
+      uScriptGUI.enabled = (! isReadOnly) && (! isSocketExposed || ! isLocked);
    }
 
 
@@ -273,7 +288,7 @@ public static class uScriptGUI
       Vector2 v = _styleType.CalcSize(new GUIContent(type));
       _columnType.Width = Mathf.Max(_columnType.Width, (int)v.x);
 
-      GUI.enabled = true;
+      uScriptGUI.enabled = true;
       GUILayout.Label(type, _styleType);
       EditorGUILayout.EndHorizontal();
    }
@@ -694,7 +709,7 @@ public static class uScriptGUI
          v = _styleType.CalcSize(new GUIContent(type));
          _columnType.Width = Mathf.Max(_columnType.Width, (int)v.x);
 
-         GUI.enabled = true;
+         uScriptGUI.enabled = true;
          GUILayout.Label(type, _styleType);
       }
       EditorGUILayout.EndHorizontal();

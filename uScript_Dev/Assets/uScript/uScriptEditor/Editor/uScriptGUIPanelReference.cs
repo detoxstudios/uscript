@@ -112,7 +112,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
             if (helpButtonURL == string.Empty)
             {
-               GUI.enabled = false;
+               uScriptGUI.enabled = false;
             }
 
             uScriptGUIContent.ChangeTooltip(uScriptGUIContent.ContentID.OnlineReference, helpButtonTooltip);
@@ -121,7 +121,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                Help.BrowseURL(helpButtonURL);
             }
 
-            GUI.enabled = true;
+            uScriptGUI.enabled = true;
          }
          EditorGUILayout.EndHorizontal();
 
@@ -203,12 +203,12 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
 
 //            // disable the button if there is no target URL
-//            GUI.enabled = (helpButtonURL != string.Empty);
+//            uScriptGUI.enabled = (helpButtonURL != string.Empty);
 //            if (GUI.Button(toolbarButton, uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton))
 //            {
 //               Help.BrowseURL(helpButtonURL);
 //            }
-//            GUI.enabled = true;
+//            uScriptGUI.enabled = true;
          }
          GUI.EndGroup();
 
