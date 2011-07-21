@@ -125,6 +125,11 @@ namespace Detox.ScriptEditor
          }
       }
 
+      public bool CodeIsStale
+      {
+         get { return m_ScriptEditor.GeneratedCodeIsStale; }
+      }
+
       public bool IsDirty 
       { 
          get { return m_Dirty; } 
@@ -173,6 +178,76 @@ namespace Detox.ScriptEditor
          TabText = m_ScriptEditor.Name;
 
          RefreshScript( null, true, location );
+      }
+
+      public void UpdateObjectReferences( )
+      {
+         EntityNode []nodes = m_ScriptEditor.EntityNodes;
+
+         foreach ( EntityNode node in nodes )
+         {
+            if ( node is LinkNode ) continue;
+
+            Parameter p = node.Instance;
+            
+            if ( p != Parameter.Empty )
+            {
+               Type type = uScript.MasterComponent.GetType( p.Type.Replace("[]", "") );
+
+               if ( typeof(UnityEngine.GameObject).IsAssignableFrom(type) )
+               {
+                  string name = p.Default;
+
+                  //if we have a reference, look up the latest name
+                  if ( p.ReferenceGuid != null )
+                  {
+                     p.Default = uScript.MasterComponent.GetGameObject( name, p.ReferenceGuid );
+                  }
+
+                  //name hasn't changed which means 1 of 3 things...
+                  //1 - the name hasn't changed, so it's fine if we update the guid to the same guid
+                  //2 - the reference guid was never valid so this will force a valid reference
+                  //3 - the reference guid is no longer valid and this will clear it
+                  if ( name == p.Default )
+                  {
+                     //if we didn't have a reference, see if one is now available
+                     p.ReferenceGuid = uScript.MasterComponent.GetGameObjectGuid( name );
+                  }
+               }
+
+               node.Instance = p;
+            }
+
+            List<Parameter> parameters = new List<Parameter>( );
+
+            foreach ( Parameter parameter in node.Parameters )
+            {
+               p = parameter;
+
+               Type type = uScript.MasterComponent.GetType( p.Type.Replace("[]", "") );
+
+               if ( typeof(UnityEngine.GameObject).IsAssignableFrom(type) )
+               {
+                  //if we have a reference, look up the latest name
+                  if ( p.ReferenceGuid != null )
+                  {
+                     p.Default = uScript.MasterComponent.GetGameObject( p.Default, p.ReferenceGuid );
+                  }
+                  else
+                  {
+                     //if we didn't have a reference, see if one is now available
+                     p.ReferenceGuid = uScript.MasterComponent.GetGameObjectGuid( p.Default );
+                  }
+               }
+
+               parameters.Add( p );
+            }
+
+            //restore node parameters
+            node.Parameters = parameters.ToArray( );
+         
+            m_ScriptEditor.AddNode( node );
+         }
       }
 
       public Node GetPrevNode(Node node) { return GetPrevNode(node, null); }
@@ -1417,9 +1492,11 @@ namespace Detox.ScriptEditor
          m_FlowChart.SuspendLayout( );
          m_FlowChart.Clear( );
 
+         UpdateObjectReferences( );
+         
          foreach ( CommentNode commentNode in m_ScriptEditor.Comments )
          {
-            CommentDisplayNode node = new CommentDisplayNode( commentNode );
+            CommentDisplayNode node = new CommentDisplayNode( commentNode, this );
             
             if ( m_ScriptEditor.IsNodeInstanceDeprecated(commentNode) ) node.Deprecate( );
          
@@ -1438,7 +1515,7 @@ namespace Detox.ScriptEditor
 
          foreach ( EntityEvent entityEvent in m_ScriptEditor.Events )
          {
-            EntityEventDisplayNode node = new EntityEventDisplayNode( entityEvent );
+            EntityEventDisplayNode node = new EntityEventDisplayNode( entityEvent, this );
                      
             if ( m_ScriptEditor.IsNodeInstanceDeprecated(entityEvent) ) node.Deprecate( );
 
@@ -1457,7 +1534,7 @@ namespace Detox.ScriptEditor
 
          foreach ( EntityMethod entityMethod in m_ScriptEditor.Methods )
          {
-            EntityMethodDisplayNode node = new EntityMethodDisplayNode( entityMethod );
+            EntityMethodDisplayNode node = new EntityMethodDisplayNode( entityMethod, this );
 
             if ( m_ScriptEditor.IsNodeInstanceDeprecated(entityMethod) ) node.Deprecate( );
 
@@ -1476,7 +1553,7 @@ namespace Detox.ScriptEditor
 
          foreach ( EntityProperty entityProperty in m_ScriptEditor.Properties )
          {
-            EntityPropertyDisplayNode node = new EntityPropertyDisplayNode( entityProperty );
+            EntityPropertyDisplayNode node = new EntityPropertyDisplayNode( entityProperty, this );
 
             if ( m_ScriptEditor.IsNodeInstanceDeprecated(entityProperty) ) node.Deprecate( );
 
@@ -1495,7 +1572,7 @@ namespace Detox.ScriptEditor
 
          foreach ( LocalNode localNode in m_ScriptEditor.Locals )
          {
-            LocalNodeDisplayNode node = new LocalNodeDisplayNode( localNode );
+            LocalNodeDisplayNode node = new LocalNodeDisplayNode( localNode, this );
 
             if ( m_ScriptEditor.IsNodeInstanceDeprecated(localNode) ) node.Deprecate( );
 
@@ -1514,7 +1591,7 @@ namespace Detox.ScriptEditor
 
          foreach ( LogicNode logicNode in m_ScriptEditor.Logics )
          {
-            LogicNodeDisplayNode node = new LogicNodeDisplayNode( logicNode );
+            LogicNodeDisplayNode node = new LogicNodeDisplayNode( logicNode, this );
 
             if ( m_ScriptEditor.IsNodeInstanceDeprecated(logicNode) ) node.Deprecate( );
 
@@ -1533,7 +1610,7 @@ namespace Detox.ScriptEditor
 
          foreach ( ExternalConnection external in m_ScriptEditor.Externals )
          {
-            ExternalConnectionDisplayNode node = new ExternalConnectionDisplayNode( external );
+            ExternalConnectionDisplayNode node = new ExternalConnectionDisplayNode( external, this );
 
             if ( m_ScriptEditor.IsNodeInstanceDeprecated(external) ) node.Deprecate( );
 
@@ -1552,7 +1629,7 @@ namespace Detox.ScriptEditor
 
          foreach ( OwnerConnection owner in m_ScriptEditor.Owners )
          {
-            OwnerConnectionDisplayNode node = new OwnerConnectionDisplayNode( owner );
+            OwnerConnectionDisplayNode node = new OwnerConnectionDisplayNode( owner, this );
 
             if ( m_ScriptEditor.IsNodeInstanceDeprecated(owner) ) node.Deprecate( );
 
@@ -2373,10 +2450,12 @@ namespace Detox.ScriptEditor
          public string InternalName;
          public string FriendlyName;
          public string Type;
+         public string DefaultValue;
          public Align  Alignment;
       }
 
       protected string NodeStyle = "node_default";
+      protected ScriptEditorCtrl m_Ctrl = null;
 
       override public bool Selected 
       {
@@ -2419,9 +2498,10 @@ namespace Detox.ScriptEditor
          UpdateStyleName(); 
       }
 
-      public DisplayNode(EntityNode entityNode)
+      public DisplayNode(EntityNode entityNode, ScriptEditorCtrl ctrl)
       {
          m_EntityNode = entityNode;
+         m_Ctrl       = ctrl;
          
          UpdateStyleName();
       }
@@ -2577,6 +2657,20 @@ namespace Detox.ScriptEditor
                textPoint.StyleName = "socket_text";
                textPoints.Add( textPoint );
             
+               if ( null != socket.DefaultValue )
+               {
+                  string text = socket.DefaultValue;
+                  if ( text.Length > 9 ) text = text.Substring( 0, 6 ) + "...";
+
+                  SizeF valueLength = Graphics.sMeasureString( text, "socket_text" );
+
+                  textPoint.Name = text;
+                  textPoint.X =  x + xOffset + ((textLength.Width - valueLength.Width) / 2);
+                  textPoint.Y = (yStart - uScriptConfig.Style.PointSize - textLength.Height + uScriptConfig.Style.BottomSocketLabelGap) - valueLength.Height;
+                  textPoint.StyleName = "socket_text";
+                  textPoints.Add( textPoint );              
+               }
+
                x += (xStep + textLength.Width);
             }
          }

@@ -285,6 +285,13 @@ namespace System.Windows.Forms
 
                      cloned.DefaultAsObject = val;
 
+                     //they changed the value - the reference guid
+                     //must be rebuilt
+                     if ( cloned.Default != p.Default )
+                     {
+                        cloned.ReferenceGuid = "";
+                     }
+
                      signalUpdate |= cloned.Default != p.Default;
                      signalUpdate |= cloned.State   != p.State;
                      updatedParameters.Add( cloned );

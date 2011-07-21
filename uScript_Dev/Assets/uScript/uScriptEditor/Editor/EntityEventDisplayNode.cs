@@ -16,7 +16,7 @@ namespace Detox.ScriptEditor
       public  EntityEvent EntityEvent
       { get { return (EntityEvent) EntityNode; } }
 
-      public EntityEventDisplayNode(EntityEvent entityEvent) : base(entityEvent)
+      public EntityEventDisplayNode(EntityEvent entityEvent, ScriptEditorCtrl ctrl) : base(entityEvent, ctrl)
       {
          InitializeComponent();
          AddEventHandlers( );

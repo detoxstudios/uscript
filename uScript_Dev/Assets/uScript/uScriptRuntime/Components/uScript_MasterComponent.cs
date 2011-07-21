@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 
+[ExecuteInEditMode]
 public class uScript_MasterComponent : MonoBehaviour
 {
    //keep track of the latest master so uScripts loading
@@ -16,10 +17,101 @@ public class uScript_MasterComponent : MonoBehaviour
 
    public void Awake( )
    {
-      LatestMaster = gameObject;
+      LatestMaster = this.gameObject;
+
+#if UNITY_EDITOR
+      GameObject []gameObjects = (GameObject[]) GameObject.FindObjectsOfType( typeof(GameObject) );
+
+      PruneGameObjects( );
+
+      //build up our cache
+      foreach ( GameObject gameObject in gameObjects )
+      {
+         CacheGameObject( gameObject );
+      }
+#endif
    }
 
 #if UNITY_EDITOR
+   private string CacheGameObject( GameObject gameObject )
+   {
+      int i;
+
+      //do we know about it already? if so return the guid
+      for ( i = 0; i < GameObjects.Length; i++ )
+      {
+         if ( GameObjects[ i ] == gameObject ) return GameObjectGuids[ i ];
+      }
+
+      //do we not know about it but it exists? 
+      //then create a new guid for it
+      Array.Resize( ref GameObjects, GameObjects.Length + 1 );
+      Array.Resize( ref GameObjectGuids, GameObjectGuids.Length + 1 );
+   
+      GameObjects[ i ] = gameObject;
+      GameObjectGuids[ i ] = Guid.NewGuid( ).ToString( );
+   
+      return GameObjectGuids[ i ];
+   }
+
+   private void PruneGameObjects( )
+   {
+      for ( int i = 0; i < GameObjects.Length; i++ )
+      {
+         if ( null == GameObjects[ i ] )
+         {
+            GameObjects    [ i ] = GameObjects    [ GameObjects.Length - 1 ];
+            GameObjectGuids[ i ] = GameObjectGuids[ GameObjects.Length - 1 ];
+
+            Array.Resize( ref GameObjects,     GameObjects.Length - 1 );
+            Array.Resize( ref GameObjectGuids, GameObjectGuids.Length - 1 );
+         }
+      }
+   }
+
+   public string GetGameObject( string oldName, string referenceGuid )
+   {
+      //do we know about it already? if so return the guid
+      for ( int i = 0; i < GameObjects.Length; i++ )
+      {
+         if ( null == GameObjects[ i ] ) continue;
+
+         if ( GameObjectGuids[ i ] == referenceGuid ) return GameObjects[ i ].name;
+      }
+
+      //doesn't exist so return the old name
+      return oldName;
+   }
+
+   public string GetGameObjectGuid( string name )
+   {
+      //do we know about it already? if so return the guid
+      for ( int i = 0; i < GameObjects.Length; i++ )
+      {
+         if ( null == GameObjects[ i ] ) continue;
+
+         if ( GameObjects[ i ].name == name ) return GameObjectGuids[ i ];
+      }
+
+      //do we not know about it but it exists? 
+      //then create a new guid for it
+      GameObject gameObject = GameObject.Find( name );
+
+      if ( null != gameObject )
+      {
+         return CacheGameObject( gameObject );      
+      }
+
+      //doesn't exist so return nothing
+      return "";
+   }
+
+   [HideInInspector]
+   public GameObject [] GameObjects = new GameObject[0];
+
+   [HideInInspector]
+   public string [] GameObjectGuids = new string[0];
+
    [HideInInspector]
    public string Script     = null;
 

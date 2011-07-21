@@ -43,8 +43,8 @@ namespace Detox.ScriptEditor
       }
 
 
-      public EntityPropertyDisplayNode(EntityProperty entityProperty)
-         : base(entityProperty)
+      public EntityPropertyDisplayNode(EntityProperty entityProperty, ScriptEditorCtrl ctrl)
+         : base(entityProperty, ctrl)
       {
          InitializeComponent();
          AddEventHandlers( );

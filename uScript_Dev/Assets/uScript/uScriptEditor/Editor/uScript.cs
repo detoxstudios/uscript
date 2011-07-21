@@ -1217,6 +1217,10 @@ http://uscript.net
       {
          EditorUtility.DisplayDialog("uScript Not Saved!", "uScript has detected that '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' has been changed, but not saved! You will not see any changes until you save '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' in the uScript Editor.", "OK");
       }
+      else if (EditorApplication.isPlayingOrWillChangePlaymode && m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.CodeIsStale )
+      {
+         EditorUtility.DisplayDialog("uScript Not Saved!", "uScript has detected that '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' was quick saved but the code has not been generated! You will not see any changes until you save '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' in the uScript Editor.", "OK");
+      }
    }
 
    void OnDestroy()
@@ -2074,7 +2078,6 @@ http://uscript.net
             }
 
             //            _openScriptToggle = GUILayout.Toggle(_openScriptToggle, "Open Active uScripts...", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
-
             if (GUILayout.Button(uScriptGUIContent.toolbarButtonSave, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                AssetDatabase.StartAssetEditing();
@@ -2090,6 +2093,10 @@ http://uscript.net
                AssetDatabase.StopAssetEditing();
 
                if (saved) RefreshScript();
+            }
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonQuickSave, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            {
+               SaveScript(false, false);
             }
             if (GUILayout.Button(uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
@@ -3407,7 +3414,7 @@ http://uscript.net
 
          if (true == scriptEditor.Open(file.FullName))
          {
-            if (true == SaveScript(scriptEditor, file.FullName))
+            if (true == SaveScript(scriptEditor, file.FullName, true))
             {
                uScriptDebug.Log("Rebuilt " + file.FullName);
             }
@@ -3424,36 +3431,69 @@ http://uscript.net
       }
    }
 
-   private bool SaveScript(Detox.ScriptEditor.ScriptEditor script, string binaryPath)
+   private string GetGeneratedScriptPath(string binaryPath)
    {
       System.IO.Directory.CreateDirectory(Preferences.GeneratedScripts);
-      System.IO.Directory.CreateDirectory(Preferences.NestedScripts);
 
       string wrapperPath = Preferences.GeneratedScripts;
+
+      String fileName = System.IO.Path.GetFileNameWithoutExtension(binaryPath);
+
+      wrapperPath += "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
+   
+      return wrapperPath;
+   }
+
+   private string GetNestedScriptPath(string binaryPath)
+   {
+      System.IO.Directory.CreateDirectory(Preferences.NestedScripts);
+
       string logicPath = Preferences.NestedScripts;
 
       String fileName = System.IO.Path.GetFileNameWithoutExtension(binaryPath);
 
       logicPath += "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
-      wrapperPath += "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
 
-      bool result = script.Save(binaryPath, logicPath, wrapperPath);
+      return logicPath;
+   }
 
-      if (true == result)
+   private bool SaveScript(Detox.ScriptEditor.ScriptEditor script, string binaryPath, bool generateCode)
+   {
+      bool result;
+
+      if ( true == generateCode )
       {
-         //we're attempting to just attach components at runtime
-         //but i'm leaving this function here just in case we want
-         //to call it to help performance by auto attaching the scripts before they run
-         //AttachEventScriptsToOwners(script);
+         string wrapperPath = GetGeneratedScriptPath(binaryPath);
+         string logicPath   = GetNestedScriptPath(binaryPath);
 
-         // refresh uScript panel file list
-         uScriptBackgroundProcess.ForceFileRefresh();
+         result = script.Save(binaryPath, logicPath, wrapperPath);
+
+         if (true == result)
+         {
+            //we're attempting to just attach components at runtime
+            //but i'm leaving this function here just in case we want
+            //to call it to help performance by auto attaching the scripts before they run
+            //AttachEventScriptsToOwners(script);
+
+            // refresh uScript panel file list
+            uScriptBackgroundProcess.ForceFileRefresh();
+         }
+
+      }
+      else
+      {
+         result = script.Save(binaryPath);
       }
 
       return result;
    }
 
    public bool SaveScript(bool forceNameRequest)
+   {
+      return SaveScript(forceNameRequest, true);
+   }
+
+   public bool SaveScript(bool forceNameRequest, bool generateCode)
    {
       Detox.ScriptEditor.ScriptEditor script = m_ScriptEditorCtrl.ScriptEditor;
 
@@ -3487,7 +3527,11 @@ http://uscript.net
       if ("" != m_FullPath)
       {
          bool firstSave = false;
-         if (!System.IO.File.Exists(m_FullPath))
+         string componentPath = GetGeneratedScriptPath(m_FullPath);
+
+         //only attach if they're generating code and it's never been generated before
+         //they could have saved without generating code by using quick save
+         if (false == System.IO.File.Exists(componentPath) && true == generateCode)
          {
             firstSave = true;
          }
@@ -3514,7 +3558,7 @@ http://uscript.net
             script.SceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
          }
 
-         if (true == SaveScript(script, m_FullPath))
+         if (true == SaveScript(script, m_FullPath, generateCode))
          {
             m_ScriptEditorCtrl.IsDirty = false;
 

@@ -19,7 +19,7 @@ namespace Detox.ScriptEditor
 
       override public int RenderDepth { get { return 0; } }
 
-      public CommentDisplayNode(CommentNode comment) : base(comment)
+      public CommentDisplayNode(CommentNode comment, ScriptEditorCtrl ctrl) : base(comment, ctrl)
       {
          InitializeComponent();
          AddEventHandlers( );

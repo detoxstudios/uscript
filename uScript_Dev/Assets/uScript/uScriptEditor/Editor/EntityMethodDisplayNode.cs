@@ -16,7 +16,7 @@ namespace Detox.ScriptEditor
       public  EntityMethod EntityMethod
       { get { return (EntityMethod) EntityNode; } }
 
-      public EntityMethodDisplayNode(EntityMethod entityMethod) : base(entityMethod)
+      public EntityMethodDisplayNode(EntityMethod entityMethod, ScriptEditorCtrl ctrl) : base(entityMethod, ctrl)
       {
          InitializeComponent();
          AddEventHandlers( );
@@ -51,6 +51,18 @@ namespace Detox.ScriptEditor
             socket.Input = parameter.Input;
             socket.Type = parameter.Type;
             socket.Output = parameter.Output;
+
+            if ( true == socket.Input && null != m_Ctrl )
+            {
+               //if it can be expanded or collapsed that means
+               //there is nothing attached to it so we can render the default value
+               if ( true == m_Ctrl.CanExpandParameter(parameter) ||
+                    true == m_Ctrl.CanCollapseParameter(Guid, parameter) )
+               {
+                  socket.DefaultValue = parameter.Default;
+               }
+            }
+
             sockets.Add( socket );
          }
 

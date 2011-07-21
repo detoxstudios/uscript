@@ -16,7 +16,7 @@ namespace Detox.ScriptEditor
       public  LogicNode LogicNode
       { get { return (LogicNode) EntityNode; } }
 
-      public LogicNodeDisplayNode(LogicNode logicNode) : base(logicNode)
+      public LogicNodeDisplayNode(LogicNode logicNode, ScriptEditorCtrl ctrl) : base(logicNode, ctrl)
       {
          InitializeComponent();
          AddEventHandlers( );
@@ -73,6 +73,18 @@ namespace Detox.ScriptEditor
             socket.Input = parameter.Input;
             socket.Output = parameter.Output;
             socket.Type = parameter.Type;
+
+            if ( true == socket.Input && null != m_Ctrl )
+            {
+               //if it can be expanded or collapsed that means
+               //there is nothing attached to it so we can render the default value
+               if ( true == m_Ctrl.CanExpandParameter(parameter) ||
+                    true == m_Ctrl.CanCollapseParameter(Guid, parameter) )
+               {
+                  socket.DefaultValue = parameter.Default;
+               }
+            }
+
             sockets.Add( socket );
          }
 

@@ -12,6 +12,7 @@ namespace Detox.Data.ScriptEditor
    {
       private EntityNodeData []m_NodeDatas = null;
       public string SceneName = "";
+      public bool GeneratedCodeIsStale = false;
 
       static ScriptEditorData( )
       {
@@ -53,7 +54,7 @@ namespace Detox.Data.ScriptEditor
       }
 
 
-      public int Version { get { return 2; } }
+      public int Version { get { return 3; } }
 
       public void Load(ObjectSerializer serializer)
       {
@@ -73,12 +74,18 @@ namespace Detox.Data.ScriptEditor
          {
             SceneName = (string) serializer.LoadNamedObject( "SceneName" );
          }
+
+         if ( serializer.CurrentVersion > 2 )
+         {
+            GeneratedCodeIsStale = (bool) serializer.LoadNamedObject( "GeneratedCodeIsStale" );
+         }
       }
 
       public void Save(ObjectSerializer serializer)
       {
          serializer.SaveNamedObjects( "NodeDatas", m_NodeDatas ); 
          serializer.SaveNamedObject ( "SceneName", SceneName ); 
+         serializer.SaveNamedObject ( "GeneratedCodeIsStale", GeneratedCodeIsStale );
       }
    }
 
@@ -97,6 +104,7 @@ namespace Detox.Data.ScriptEditor
       public string Name;
       public string Default;
       public string Type;
+      public string ReferenceGuid;
       public bool   Input;
       public bool   Output;
    }
@@ -813,7 +821,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterSerializer : ITypeSerializer
    {
-      public int Version { get { return 3; } }
+      public int Version { get { return 4; } }
       public string SerializableType { get { return typeof(Parameter).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -853,6 +861,15 @@ namespace Detox.Data.ScriptEditor
             parameter.State = Parameter.VisibleState.Visible;
          }
 
+         if ( serializer.CurrentVersion > 3 )
+         {
+            parameter.ReferenceGuid = reader.ReadString( );
+         }
+         else
+         {
+            parameter.ReferenceGuid = "";
+         }
+
          reader.Close( );
 
          return parameter;
@@ -872,7 +889,7 @@ namespace Detox.Data.ScriptEditor
          writer.Write( value.Input );
          writer.Write( value.Output );
          writer.Write( value.State.ToString( ) );
-
+         writer.Write( value.ReferenceGuid != null ? value.ReferenceGuid : "" );
          serializer.SetData( stream.ToArray( ) );
 
          writer.Close( );
@@ -881,7 +898,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterArraySerializer : ITypeSerializer
    {
-      public int Version { get { return 3; } }
+      public int Version { get { return 4; } }
       public string SerializableType { get { return typeof(Parameter[]).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -925,6 +942,15 @@ namespace Detox.Data.ScriptEditor
                parameters[ i ].State = Parameter.VisibleState.Visible;
             }
 
+            if ( serializer.CurrentVersion > 3 )
+            {
+               parameters[ i ].ReferenceGuid = reader.ReadString( );
+            }
+            else
+            {
+               parameters[ i ].ReferenceGuid = "";
+            }
+
          }
 
          reader.Close( );
@@ -950,6 +976,7 @@ namespace Detox.Data.ScriptEditor
             writer.Write( p.Input );
             writer.Write( p.Output );
             writer.Write( p.State.ToString( ));
+            writer.Write( p.ReferenceGuid != null ? p.ReferenceGuid : "" );
          }
 
          serializer.SetData( stream.ToArray() );

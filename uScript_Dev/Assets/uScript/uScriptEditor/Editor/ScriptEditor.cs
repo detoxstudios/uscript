@@ -78,6 +78,7 @@ namespace Detox.ScriptEditor
       public string       FriendlyName;
       public string       Default;
       public string       Type;
+      public string       ReferenceGuid;
       public bool         Input;
       public bool         Output;
 
@@ -387,7 +388,8 @@ namespace Detox.ScriptEditor
          if ( a.Type   != b.Type    ) return false; 
          if ( a.Default!= b.Default ) return false; 
          if ( a.State  != b.State   ) return false;
-         if ( a.FriendlyName != b.FriendlyName ) return false; 
+         if ( a.ReferenceGuid != b.ReferenceGuid ) return false;
+         if ( a.FriendlyName != b.FriendlyName )   return false; 
          
          return true;
       }
@@ -417,7 +419,8 @@ namespace Detox.ScriptEditor
          data.Name    = Name;
          data.Type    = Type;
          data.State   = State != 0 ? (Detox.Data.ScriptEditor.Parameter.VisibleState) (int) State : Detox.Data.ScriptEditor.Parameter.VisibleState.Visible;
-         data.FriendlyName = FriendlyName;
+         data.ReferenceGuid = ReferenceGuid;
+         data.FriendlyName  = FriendlyName;
 
          return data;
       }
@@ -430,7 +433,8 @@ namespace Detox.ScriptEditor
          Name    = parameterData.Name;
          Type    = parameterData.Type;
          State   = parameterData.State != 0 ? (Parameter.VisibleState) parameterData.State : Parameter.VisibleState.Visible;
-         FriendlyName = parameterData.FriendlyName;
+         ReferenceGuid = parameterData.ReferenceGuid;
+         FriendlyName  = parameterData.FriendlyName;
       }
    }
    public interface EntityNode
@@ -472,8 +476,9 @@ namespace Detox.ScriptEditor
                {
                   Parameter clone = reflectedParameter;
                   
-                  clone.Default = savedParameter.Default;
-                  clone.State   = savedParameter.State;
+                  clone.Default       = savedParameter.Default;
+                  clone.State         = savedParameter.State;
+                  clone.ReferenceGuid = savedParameter.ReferenceGuid;
 
                   parameters.Add( clone );                  
                   found = true;
@@ -1067,6 +1072,7 @@ namespace Detox.ScriptEditor
          ComponentType = componentType;
 
          m_Instance.Default = "";
+         m_Instance.ReferenceGuid = "";
          m_Instance.Type   = typeof(UnityEngine.GameObject).ToString( );
          m_Instance.Input  = true;
          m_Instance.Output = false;
@@ -1075,6 +1081,7 @@ namespace Detox.ScriptEditor
          m_Instance.FriendlyName = "Instance";
          
          m_ShowComment = new Parameter( );
+         m_ShowComment.ReferenceGuid = "";
          m_ShowComment.Name    = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
@@ -1084,6 +1091,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Output  = false;
 
          m_Comment = new Parameter( );
+         m_Comment.ReferenceGuid = "";
          m_Comment.Name    = "Comment";
          m_Comment.FriendlyName = "Comment";
          m_Comment.Default = "";
@@ -1283,11 +1291,13 @@ namespace Detox.ScriptEditor
          m_Width.State = Parameter.VisibleState.Visible;
          m_Width.FriendlyName = "Width";
          m_Width.Type  = "Int";
+         m_Width.ReferenceGuid = "";
          m_Width.Input = true;
          m_Width.Output= false;
          m_Width.Default = "0";
 
          m_Height.Name  = "Height";
+         m_Height.ReferenceGuid = "";
          m_Height.State = Parameter.VisibleState.Visible;
          m_Height.FriendlyName = "Height";
          m_Height.Type  = "Int";
@@ -1445,6 +1455,7 @@ namespace Detox.ScriptEditor
          ComponentType = componentType;
 
          m_Instance.Name  = "Instance";
+         m_Instance.ReferenceGuid = "";
          m_Instance.State = Parameter.VisibleState.Visible;
          m_Instance.FriendlyName = "Instance";
          m_Instance.Type    = typeof(UnityEngine.GameObject).ToString( );
@@ -1761,8 +1772,9 @@ namespace Detox.ScriptEditor
          ComponentType = componentType;
 
          m_Instance.Name   = "Instance";
+         m_Instance.ReferenceGuid = "";
          m_Instance.FriendlyName = "Instance";
-         m_Instance.State  = Parameter.VisibleState.Visible;
+         m_Instance.State  = Parameter.VisibleState.Hidden;
          m_Instance.Type   = typeof(UnityEngine.GameObject).ToString( );
          m_Instance.Input  = true;
          m_Instance.Output = false;
@@ -1886,6 +1898,7 @@ namespace Detox.ScriptEditor
       public LocalNode(string name, string type, string defaultValue)
       { 
          m_Value.Default = defaultValue;
+         m_Value.ReferenceGuid = "";
          m_Value.FriendlyName = "Value";
          m_Value.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Value.Input   = true;
@@ -1894,6 +1907,7 @@ namespace Detox.ScriptEditor
          m_Value.Type    = type;
 
          m_Name.Default = name;
+         m_Name.ReferenceGuid = "";
          m_Name.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Name.Input   = true;
          m_Name.Output  = false;
@@ -1908,6 +1922,8 @@ namespace Detox.ScriptEditor
 
    public class ScriptEditor
    {
+      private bool m_GeneratedCodeIsStale = false;
+
       private string m_Name  = "";
 
       public EntityNode [] EntityNodes
@@ -2100,6 +2116,11 @@ namespace Detox.ScriptEditor
 
             return links.ToArray( );
          }
+      }
+
+      public bool GeneratedCodeIsStale
+      {
+         get { return m_GeneratedCodeIsStale; }
       }
 
       public string Name 
@@ -2403,6 +2424,7 @@ namespace Detox.ScriptEditor
          if ( false == m_Nodes.Contains(link.Source.Guid) ||
               false == m_Nodes.Contains(link.Destination.Guid) ) 
          {
+            reason = "Node cannot be found";
             return false;
          }
 
@@ -2414,6 +2436,7 @@ namespace Detox.ScriptEditor
                  existingLink.Destination.Guid   == link.Destination.Guid &&
                  existingLink.Destination.Anchor == link.Destination.Anchor ) 
             {
+               reason = "Link already exists";
                return false;
             }
          }
@@ -3121,6 +3144,7 @@ namespace Detox.ScriptEditor
 
             data.NodeDatas = nodeDatas.ToArray( );
             data.SceneName = SceneName;
+            data.GeneratedCodeIsStale = GeneratedCodeIsStale;
 
             return data;
          }
@@ -3177,6 +3201,8 @@ namespace Detox.ScriptEditor
                   m_Nodes.Add( node.Guid, node );
                }
             }
+
+            m_GeneratedCodeIsStale = value.GeneratedCodeIsStale;
 
             SceneName = value.SceneName;
          }
@@ -3289,6 +3315,33 @@ namespace Detox.ScriptEditor
          return script;
       }
 
+      public bool Save(string binaryFile)
+      {
+         string base64 = ToBase64( );
+
+         StreamWriter streamWriter = null;
+         
+         try
+         {
+            m_Name = Path.GetFileNameWithoutExtension( binaryFile );
+
+            streamWriter = File.CreateText( binaryFile );
+            streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
+            streamWriter.Close( );
+         }
+         catch (Exception e)
+         {
+            if ( null != streamWriter ) streamWriter.Close( );
+
+            Status.Error( "Failed to write to " + binaryFile + ". Exception: " + e.Message );
+            return false;
+         }
+
+         m_GeneratedCodeIsStale = true;
+
+         return true;
+      }
+
       public bool Save(string binaryFile, string logicFile, string wrapperFile)
       {
          string base64 = ToBase64( );
@@ -3348,6 +3401,8 @@ namespace Detox.ScriptEditor
             Status.Error( "Failed to write to " + logicFile + ". Exception: " + e.Message );
             return false;
          }
+
+         m_GeneratedCodeIsStale = false;
 
          return true;
       }

@@ -9,7 +9,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads an AnimationClip")]
-[NodeDescription("Loads an AnimationClip from your Resources directory.\n \nAnimation Clip: The audio file to load. \nLoaded AnimationClip (out): The AnimationClip loaded from the specified file.")]
+[NodeDescription("Loads an AnimationClip from your Resources directory.\n \nAnimation Clip: The animation file to load. \nLoaded AnimationClip (out): The AnimationClip loaded from the specified file.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_AnimationClip")]
 

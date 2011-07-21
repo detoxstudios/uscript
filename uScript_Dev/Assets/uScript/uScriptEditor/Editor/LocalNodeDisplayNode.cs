@@ -18,8 +18,8 @@ namespace Detox.ScriptEditor
 
       override public int RenderDepth { get { return FlowChartCtrl.LinkRenderDepth + 1; } }
 
-      public LocalNodeDisplayNode(LocalNode localNode)
-         : base(localNode)
+      public LocalNodeDisplayNode(LocalNode localNode, ScriptEditorCtrl ctrl)
+         : base(localNode, ctrl)
       {
          InitializeComponent();
          AddEventHandlers( );
@@ -118,7 +118,7 @@ namespace Detox.ScriptEditor
       public  ExternalConnection ExternalConnection
       { get { return (ExternalConnection) EntityNode; } }
 
-      public ExternalConnectionDisplayNode(ExternalConnection externalConnection) : base(externalConnection)
+      public ExternalConnectionDisplayNode(ExternalConnection externalConnection, ScriptEditorCtrl ctrl) : base(externalConnection, ctrl)
       {
          InitializeComponent();
          AddEventHandlers( );
@@ -246,7 +246,7 @@ namespace Detox.ScriptEditor
       public  OwnerConnection OwnerConnection
       { get { return (OwnerConnection) EntityNode; } }
 
-      public OwnerConnectionDisplayNode(OwnerConnection ownerConnection) : base(ownerConnection)
+      public OwnerConnectionDisplayNode(OwnerConnection ownerConnection, ScriptEditorCtrl ctrl) : base(ownerConnection, ctrl)
       {
          InitializeComponent();
          AddEventHandlers( );
