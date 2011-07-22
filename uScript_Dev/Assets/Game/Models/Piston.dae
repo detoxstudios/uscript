@@ -1,0 +1,999 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+    <asset>
+        <contributor>
+            <authoring_tool>modo 501 [Build 43413], Mac OS X 10.7.0 (10.7.0)</authoring_tool>
+            <comments>
+                Plug-in: [Build 43413];
+                Use Absolute Path: No;
+                Merge Reference Items: No;
+                Save Hidden Items: Yes;
+                Save Cameras: Yes;
+                Save Lights: Yes;
+                Save Locators: Yes;
+                Save Triangles as Triangles: No;
+                Bake Matrices: No;
+                Save Vertex Normals: Yes;
+                Save UV Texture Coordinates: Yes;
+                Save Vertex Colors: Yes;
+                Save Vertex Weights: Yes;
+                Save Animation: Yes;
+                Sample Animation: No;
+                Sample Animation Start: 0;
+                Sample Animation End: 120;
+                Save modo Profile: Yes;
+                Save Maya Profile: Yes;
+                Save 3ds Max Profile: Yes;
+                Formatted Arrays: Yes;
+            </comments>
+            <source_data>file:///Users/sblinn/DetoxStudios/Development/Unity/uScript_Dev/Assets_Src/Models/Piston.lxo</source_data>
+        </contributor>
+        <created>2011-07-22T07:04:07Z</created>
+        <modified>2011-07-22T07:04:07Z</modified>
+        <up_axis>Y_UP</up_axis>
+    </asset>
+    <library_animations>
+        <animation id="Geometry-Piston_Position.X">
+            <source id="Geometry-Piston_Position.X-input">
+                <float_array id="Geometry-Piston_Position.X-input-array" count="2">
+                    0
+                    1.25
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.X-input-array" stride="1">
+                        <param name="TIME" type="float" />
+                    </accessor>
+                </technique_common>
+                <technique profile="modo401">
+                    <pre_infinity>CONSTANT</pre_infinity>
+                    <post_infinity>CONSTANT</post_infinity>
+                </technique>
+                <technique profile="MAYA">
+                    <pre_infinity>CONSTANT</pre_infinity>
+                    <post_infinity>CONSTANT</post_infinity>
+                </technique>
+            </source>
+            <source id="Geometry-Piston_Position.X-output">
+                <float_array id="Geometry-Piston_Position.X-output-array" count="2">
+                    0
+                    0
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.X-output-array" stride="1">
+                        <param name="X" type="float" />
+                    </accessor>
+                </technique_common>
+            </source>
+            <source id="Geometry-Piston_Position.X-intangents">
+                <float_array id="Geometry-Piston_Position.X-intangents-array" count="4">
+                    0 0
+                    0.833333 0
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.X-intangents-array" stride="2">
+                        <param name="X" type="float" />
+                        <param name="Y" type="float" />
+                    </accessor>
+                </technique_common>
+                <technique profile="modo401">
+                    <float_array id="Geometry-Piston_Position.X-intangents-modo401-array" count="4">
+                        0 0
+                        0 0.416667
+                    </float_array>
+                    <accessor source="#Geometry-Piston_Position.X-intangents-modo401-array" stride="2" count="2">
+                        <param name="slope" type="float" />
+                        <param name="weight" type="float" />
+                    </accessor>
+                </technique>
+            </source>
+            <source id="Geometry-Piston_Position.X-outtangents">
+                <float_array id="Geometry-Piston_Position.X-outtangents-array" count="4">
+                    0 0
+                    1.66667 0
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.X-outtangents-array" stride="2">
+                        <param name="X" type="float" />
+                        <param name="Y" type="float" />
+                    </accessor>
+                </technique_common>
+                <technique profile="modo401">
+                    <float_array id="Geometry-Piston_Position.X-outtangents-modo401-array" count="4">
+                        0 0
+                        0 0.416667
+                    </float_array>
+                    <accessor source="#Geometry-Piston_Position.X-outtangents-modo401-array" stride="2" count="2">
+                        <param name="slope" type="float" />
+                        <param name="weight" type="float" />
+                    </accessor>
+                </technique>
+            </source>
+            <source id="Geometry-Piston_Position.X-interpolations">
+                <Name_array id="Geometry-Piston_Position.X-interpolations-array" count="2">
+                    BEZIER
+                    BEZIER
+                </Name_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.X-interpolations-array" stride="1">
+                        <param name="INTERPOLATION" type="Name" />
+                    </accessor>
+                </technique_common>
+            </source>
+            <sampler id="Geometry-Piston_Position.X-sampler">
+                <input semantic="INPUT" source="#Geometry-Piston_Position.X-input" />
+                <input semantic="OUTPUT" source="#Geometry-Piston_Position.X-output" />
+                <input semantic="INTERPOLATION" source="#Geometry-Piston_Position.X-interpolations" />
+                <input semantic="IN_TANGENT" source="#Geometry-Piston_Position.X-intangents" />
+                <input semantic="OUT_TANGENT" source="#Geometry-Piston_Position.X-outtangents" />
+            </sampler>
+            <channel source="#Geometry-Piston_Position.X-sampler" target="Geometry-PistonNode/Position.X" />
+        </animation>
+        <animation id="Geometry-Piston_Position.Y">
+            <source id="Geometry-Piston_Position.Y-input">
+                <float_array id="Geometry-Piston_Position.Y-input-array" count="2">
+                    0
+                    1.25
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.Y-input-array" stride="1">
+                        <param name="TIME" type="float" />
+                    </accessor>
+                </technique_common>
+                <technique profile="modo401">
+                    <pre_infinity>CONSTANT</pre_infinity>
+                    <post_infinity>CONSTANT</post_infinity>
+                </technique>
+                <technique profile="MAYA">
+                    <pre_infinity>CONSTANT</pre_infinity>
+                    <post_infinity>CONSTANT</post_infinity>
+                </technique>
+            </source>
+            <source id="Geometry-Piston_Position.Y-output">
+                <float_array id="Geometry-Piston_Position.Y-output-array" count="2">
+                    0
+                    1
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.Y-output-array" stride="1">
+                        <param name="Y" type="float" />
+                    </accessor>
+                </technique_common>
+            </source>
+            <source id="Geometry-Piston_Position.Y-intangents">
+                <float_array id="Geometry-Piston_Position.Y-intangents-array" count="4">
+                    0 0
+                    0.833333 1
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.Y-intangents-array" stride="2">
+                        <param name="X" type="float" />
+                        <param name="Y" type="float" />
+                    </accessor>
+                </technique_common>
+                <technique profile="modo401">
+                    <float_array id="Geometry-Piston_Position.Y-intangents-modo401-array" count="4">
+                        0 0
+                        0 0.416667
+                    </float_array>
+                    <accessor source="#Geometry-Piston_Position.Y-intangents-modo401-array" stride="2" count="2">
+                        <param name="slope" type="float" />
+                        <param name="weight" type="float" />
+                    </accessor>
+                </technique>
+            </source>
+            <source id="Geometry-Piston_Position.Y-outtangents">
+                <float_array id="Geometry-Piston_Position.Y-outtangents-array" count="4">
+                    0 0
+                    1.66667 1
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.Y-outtangents-array" stride="2">
+                        <param name="X" type="float" />
+                        <param name="Y" type="float" />
+                    </accessor>
+                </technique_common>
+                <technique profile="modo401">
+                    <float_array id="Geometry-Piston_Position.Y-outtangents-modo401-array" count="4">
+                        0 0
+                        0 0.416667
+                    </float_array>
+                    <accessor source="#Geometry-Piston_Position.Y-outtangents-modo401-array" stride="2" count="2">
+                        <param name="slope" type="float" />
+                        <param name="weight" type="float" />
+                    </accessor>
+                </technique>
+            </source>
+            <source id="Geometry-Piston_Position.Y-interpolations">
+                <Name_array id="Geometry-Piston_Position.Y-interpolations-array" count="2">
+                    BEZIER
+                    BEZIER
+                </Name_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.Y-interpolations-array" stride="1">
+                        <param name="INTERPOLATION" type="Name" />
+                    </accessor>
+                </technique_common>
+            </source>
+            <sampler id="Geometry-Piston_Position.Y-sampler">
+                <input semantic="INPUT" source="#Geometry-Piston_Position.Y-input" />
+                <input semantic="OUTPUT" source="#Geometry-Piston_Position.Y-output" />
+                <input semantic="INTERPOLATION" source="#Geometry-Piston_Position.Y-interpolations" />
+                <input semantic="IN_TANGENT" source="#Geometry-Piston_Position.Y-intangents" />
+                <input semantic="OUT_TANGENT" source="#Geometry-Piston_Position.Y-outtangents" />
+            </sampler>
+            <channel source="#Geometry-Piston_Position.Y-sampler" target="Geometry-PistonNode/Position.Y" />
+        </animation>
+        <animation id="Geometry-Piston_Position.Z">
+            <source id="Geometry-Piston_Position.Z-input">
+                <float_array id="Geometry-Piston_Position.Z-input-array" count="2">
+                    0
+                    1.25
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.Z-input-array" stride="1">
+                        <param name="TIME" type="float" />
+                    </accessor>
+                </technique_common>
+                <technique profile="modo401">
+                    <pre_infinity>CONSTANT</pre_infinity>
+                    <post_infinity>CONSTANT</post_infinity>
+                </technique>
+                <technique profile="MAYA">
+                    <pre_infinity>CONSTANT</pre_infinity>
+                    <post_infinity>CONSTANT</post_infinity>
+                </technique>
+            </source>
+            <source id="Geometry-Piston_Position.Z-output">
+                <float_array id="Geometry-Piston_Position.Z-output-array" count="2">
+                    0
+                    0
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.Z-output-array" stride="1">
+                        <param name="Z" type="float" />
+                    </accessor>
+                </technique_common>
+            </source>
+            <source id="Geometry-Piston_Position.Z-intangents">
+                <float_array id="Geometry-Piston_Position.Z-intangents-array" count="4">
+                    0 0
+                    0.833333 0
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.Z-intangents-array" stride="2">
+                        <param name="X" type="float" />
+                        <param name="Y" type="float" />
+                    </accessor>
+                </technique_common>
+                <technique profile="modo401">
+                    <float_array id="Geometry-Piston_Position.Z-intangents-modo401-array" count="4">
+                        0 0
+                        0 0.416667
+                    </float_array>
+                    <accessor source="#Geometry-Piston_Position.Z-intangents-modo401-array" stride="2" count="2">
+                        <param name="slope" type="float" />
+                        <param name="weight" type="float" />
+                    </accessor>
+                </technique>
+            </source>
+            <source id="Geometry-Piston_Position.Z-outtangents">
+                <float_array id="Geometry-Piston_Position.Z-outtangents-array" count="4">
+                    0 0
+                    1.66667 0
+                </float_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.Z-outtangents-array" stride="2">
+                        <param name="X" type="float" />
+                        <param name="Y" type="float" />
+                    </accessor>
+                </technique_common>
+                <technique profile="modo401">
+                    <float_array id="Geometry-Piston_Position.Z-outtangents-modo401-array" count="4">
+                        0 0
+                        0 0.416667
+                    </float_array>
+                    <accessor source="#Geometry-Piston_Position.Z-outtangents-modo401-array" stride="2" count="2">
+                        <param name="slope" type="float" />
+                        <param name="weight" type="float" />
+                    </accessor>
+                </technique>
+            </source>
+            <source id="Geometry-Piston_Position.Z-interpolations">
+                <Name_array id="Geometry-Piston_Position.Z-interpolations-array" count="2">
+                    BEZIER
+                    BEZIER
+                </Name_array>
+                <technique_common>
+                    <accessor count="2" source="#Geometry-Piston_Position.Z-interpolations-array" stride="1">
+                        <param name="INTERPOLATION" type="Name" />
+                    </accessor>
+                </technique_common>
+            </source>
+            <sampler id="Geometry-Piston_Position.Z-sampler">
+                <input semantic="INPUT" source="#Geometry-Piston_Position.Z-input" />
+                <input semantic="OUTPUT" source="#Geometry-Piston_Position.Z-output" />
+                <input semantic="INTERPOLATION" source="#Geometry-Piston_Position.Z-interpolations" />
+                <input semantic="IN_TANGENT" source="#Geometry-Piston_Position.Z-intangents" />
+                <input semantic="OUT_TANGENT" source="#Geometry-Piston_Position.Z-outtangents" />
+            </sampler>
+            <channel source="#Geometry-Piston_Position.Z-sampler" target="Geometry-PistonNode/Position.Z" />
+        </animation>
+    </library_animations>
+    <library_materials>
+        <material id="Material-Default" name="Default">
+            <instance_effect url="#Effect-Default" />
+        </material>
+    </library_materials>
+    <library_effects>
+        <effect id="Effect-Default" name="Default">
+            <profile_COMMON>
+                <technique sid="common">
+                    <phong>
+                        <diffuse>
+                            <color sid="diffuse_effect_rgb">0.8 0.8 0.8 1</color>
+                        </diffuse>
+                        <specular>
+                            <color sid="specular_effect_rgb">0.2 0.2 0.2 1</color>
+                        </specular>
+                    </phong>
+                </technique>
+            </profile_COMMON>
+        </effect>
+    </library_effects>
+    <library_geometries>
+        <geometry id="Geometry-Case" name="Case">
+            <mesh>
+                <source id="Geometry-Case-positions" name="positions">
+                    <float_array id="Geometry-Case-positions-array" count="288">
+                        0 -1.19209e-08 -0.4
+                        -0.153073 -1.19209e-08 -0.369552
+                        -0.282843 -1.19209e-08 -0.282843
+                        -0.369552 -1.19209e-08 -0.153073
+                        -0.4 -1.19209e-08 0
+                        -0.369552 -1.19209e-08 0.153073
+                        -0.282843 -1.19209e-08 0.282843
+                        -0.153073 -1.19209e-08 0.369552
+                        0 -1.19209e-08 0.4
+                        0.153073 -1.19209e-08 0.369552
+                        0.282843 -1.19209e-08 0.282843
+                        0.369552 -1.19209e-08 0.153073
+                        0.4 -1.19209e-08 0
+                        0.369552 -1.19209e-08 -0.153073
+                        0.282843 -1.19209e-08 -0.282843
+                        0.153073 -1.19209e-08 -0.369552
+                        0 1.6 -0.4
+                        -0.153073 1.6 -0.369552
+                        -0.282843 1.6 -0.282843
+                        -0.369552 1.6 -0.153073
+                        -0.4 1.6 0
+                        -0.369552 1.6 0.153073
+                        -0.282843 1.6 0.282843
+                        -0.153073 1.6 0.369552
+                        0 1.6 0.4
+                        0.153073 1.6 0.369552
+                        0.282843 1.6 0.282843
+                        0.369552 1.6 0.153073
+                        0.4 1.6 0
+                        0.369552 1.6 -0.153073
+                        0.282843 1.6 -0.282843
+                        0.153073 1.6 -0.369552
+                        0 1.64 -0.359216
+                        -0.137466 1.64 -0.331873
+                        -0.254004 1.64 -0.254004
+                        -0.331873 1.64 -0.137466
+                        -0.359216 1.64 0
+                        -0.331873 1.64 0.137466
+                        -0.254004 1.64 0.254004
+                        -0.137466 1.64 0.331873
+                        0 1.64 0.359216
+                        0.137466 1.64 0.331873
+                        0.254004 1.64 0.254004
+                        0.331873 1.64 0.137466
+                        0.359216 1.64 0
+                        0.331873 1.64 -0.137466
+                        0.254004 1.64 -0.254004
+                        0.137466 1.64 -0.331873
+                        0 1.64 -0.298041
+                        -0.114055 1.64 -0.275354
+                        -0.210747 1.64 -0.210747
+                        -0.275354 1.64 -0.114055
+                        -0.298041 1.64 0
+                        -0.275354 1.64 0.114055
+                        -0.210747 1.64 0.210747
+                        -0.114055 1.64 0.275354
+                        0 1.64 0.298041
+                        0.114055 1.64 0.275354
+                        0.210747 1.64 0.210747
+                        0.275354 1.64 0.114055
+                        0.298041 1.64 0
+                        0.275354 1.64 -0.114055
+                        0.210747 1.64 -0.210747
+                        0.114055 1.64 -0.275354
+                        0 0.24 -0.298041
+                        -0.114055 0.24 -0.275354
+                        -0.210747 0.24 -0.210747
+                        -0.275354 0.24 -0.114055
+                        -0.298041 0.24 0
+                        -0.275354 0.24 0.114055
+                        -0.210747 0.24 0.210747
+                        -0.114055 0.24 0.275354
+                        0 0.24 0.298041
+                        0.114055 0.24 0.275354
+                        0.210747 0.24 0.210747
+                        0.275354 0.24 0.114055
+                        0.298041 0.24 0
+                        0.275354 0.24 -0.114055
+                        0.210747 0.24 -0.210747
+                        0.114055 0.24 -0.275354
+                        0 0.14 -0.298041
+                        -0.114055 0.14 -0.275354
+                        -0.210747 0.14 -0.210747
+                        -0.275354 0.14 -0.114055
+                        -0.298041 0.14 0
+                        -0.275354 0.14 0.114055
+                        -0.210747 0.14 0.210747
+                        -0.114055 0.14 0.275354
+                        0 0.14 0.298041
+                        0.114055 0.14 0.275354
+                        0.210747 0.14 0.210747
+                        0.275354 0.14 0.114055
+                        0.298041 0.14 0
+                        0.275354 0.14 -0.114055
+                        0.210747 0.14 -0.210747
+                        0.114055 0.14 -0.275354
+                    </float_array>
+                    <technique_common>
+                        <accessor count="96" source="#Geometry-Case-positions-array" stride="3">
+                            <param name="X" type="float" />
+                            <param name="Y" type="float" />
+                            <param name="Z" type="float" />
+                        </accessor>
+                    </technique_common>
+                </source>
+                <source id="Geometry-Case-normals" name="normals">
+                    <float_array id="Geometry-Case-normals-array" count="126">
+                        0 -1 0
+                        0 0 -1
+                        -0.382684 0 -0.92388
+                        -0.707107 0 -0.707107
+                        -0.92388 0 -0.382684
+                        -1 0 0
+                        -0.92388 0 0.382684
+                        -0.707107 0 0.707107
+                        -0.382684 0 0.92388
+                        0 0 1
+                        0.382684 0 0.92388
+                        0.707107 0 0.707107
+                        0.92388 0 0.382684
+                        1 0 0
+                        0.92388 0 -0.382684
+                        0.707107 0 -0.707107
+                        0.382684 0 -0.92388
+                        0.700214 0.713933 7.5225e-09
+                        0.646914 0.713933 -0.26796
+                        0.495126 0.713933 -0.495126
+                        0.26796 0.713933 -0.646914
+                        7.5225e-09 0.713933 -0.700214
+                        -0.26796 0.713933 -0.646914
+                        -0.495126 0.713933 -0.495126
+                        -0.646914 0.713933 -0.26796
+                        -0.700214 0.713933 -7.5225e-09
+                        -0.646914 0.713933 0.26796
+                        -0.495126 0.713933 0.495126
+                        -0.26796 0.713933 0.646914
+                        -7.5225e-09 0.713933 0.700214
+                        0.26796 0.713933 0.646914
+                        0.495126 0.713933 0.495126
+                        0.646914 0.713933 0.26796
+                        0 1 0
+                        0.923879 0 0.382684
+                        0.923879 0 -0.382684
+                        0.382684 0 -0.923879
+                        -0.382684 0 -0.923879
+                        -0.923879 0 -0.382684
+                        -0.923879 0 0.382684
+                        -0.382684 0 0.923879
+                        0.382684 0 0.923879
+                    </float_array>
+                    <technique_common>
+                        <accessor count="42" source="#Geometry-Case-normals-array" stride="3">
+                            <param name="X" type="float" />
+                            <param name="Y" type="float" />
+                            <param name="Z" type="float" />
+                        </accessor>
+                    </technique_common>
+                </source>
+                <source id="Geometry-Case-Texture" name="Texture">
+                    <float_array id="Geometry-Case-Texture-array" count="196">
+                        0.995196 0.798773
+                        0.995196 0.701227
+                        0.957867 0.611107
+                        0.888893 0.542133
+                        0.798773 0.504804
+                        0.701227 0.504804
+                        0.611107 0.542133
+                        0.542133 0.611107
+                        0.504804 0.701227
+                        0.504804 0.798773
+                        0.542133 0.888893
+                        0.611107 0.957867
+                        0.701227 0.995196
+                        0.798773 0.995196
+                        0.888893 0.957867
+                        0.957867 0.888893
+                        0 0.5
+                        0 0
+                        0.0625 0
+                        0.0625 0.5
+                        0.125 0
+                        0.125 0.5
+                        0.1875 0
+                        0.1875 0.5
+                        0.25 0
+                        0.25 0.5
+                        0.3125 0
+                        0.3125 0.5
+                        0.375 0
+                        0.375 0.5
+                        0.4375 0
+                        0.4375 0.5
+                        0.5 0
+                        0.5 0.5
+                        0.5625 0
+                        0.5625 0.5
+                        0.625 0
+                        0.625 0.5
+                        0.6875 0
+                        0.6875 0.5
+                        0.75 0
+                        0.75 0.5
+                        0.8125 0
+                        0.8125 0.5
+                        0.875 0
+                        0.875 0.5
+                        0.9375 0
+                        0.9375 0.5
+                        1 0
+                        1 0.5
+                        0.298773 0.504804
+                        0.388893 0.542133
+                        0.375003 0.562919
+                        0.293895 0.529323
+                        0.457867 0.611107
+                        0.437081 0.624997
+                        0.495196 0.701227
+                        0.470677 0.706105
+                        0.495196 0.798773
+                        0.470677 0.793895
+                        0.457867 0.888893
+                        0.437081 0.875003
+                        0.388893 0.957867
+                        0.375003 0.937081
+                        0.298773 0.995196
+                        0.293895 0.970677
+                        0.201227 0.995196
+                        0.206105 0.970677
+                        0.111107 0.957867
+                        0.124997 0.937081
+                        0.0421326 0.888893
+                        0.0629193 0.875003
+                        0.00480368 0.798773
+                        0.0293233 0.793895
+                        0.00480368 0.701227
+                        0.0293233 0.706105
+                        0.0421326 0.611107
+                        0.0629194 0.624997
+                        0.111107 0.542133
+                        0.124997 0.562919
+                        0.201227 0.504804
+                        0.206105 0.529323
+                        0.066183 0.786563
+                        0.0941675 0.854124
+                        0.066183 0.713437
+                        0.0941675 0.645876
+                        0.145876 0.594167
+                        0.213437 0.566183
+                        0.286563 0.566183
+                        0.354124 0.594167
+                        0.405833 0.645876
+                        0.433817 0.713437
+                        0.433817 0.786563
+                        0.405833 0.854124
+                        0.354124 0.905832
+                        0.286563 0.933817
+                        0.213437 0.933817
+                        0.145876 0.905832
+                    </float_array>
+                    <technique_common>
+                        <accessor count="98" source="#Geometry-Case-Texture-array" stride="2">
+                            <param name="S" type="float" />
+                            <param name="T" type="float" />
+                        </accessor>
+                    </technique_common>
+                </source>
+                <vertices id="Geometry-Case-vertices">
+                    <input semantic="POSITION" source="#Geometry-Case-positions" />
+                </vertices>
+                <polylist count="82" material="Material-Default">
+                    <input semantic="VERTEX" source="#Geometry-Case-vertices" offset="0" />
+                    <input semantic="NORMAL" source="#Geometry-Case-normals" offset="1" />
+                    <input semantic="TEXCOORD" source="#Geometry-Case-Texture" offset="2" set="0" />
+                    <vcount>16 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 16</vcount>
+                    <p>0 0 0 15 0 1 14 0 2 13 0 3 12 0 4 11 0 5 10 0 6 9 0 7 8 0 8 7 0 9 6 0 10 5 0 11 4 0 12 3 0 13 2 0 14 1 0 15 16 1 16 0 1 17 1 2 18 17 2 19 17 2 19 1 2 18 2 3 20 18 3 21 18 3 21 2 3 20 3 4 22 19 4 23 19 4 23 3 4 22 4 5 24 20 5 25 20 5 25 4 5 24 5 6 26 21 6 27 21 6 27 5 6 26 6 7 28 22 7 29 22 7 29 6 7 28 7 8 30 23 8 31 23 8 31 7 8 30 8 9 32 24 9 33 24 9 33 8 9 32 9 10 34 25 10 35 25 10 35 9 10 34 10 11 36 26 11 37 26 11 37 10 11 36 11 12 38 27 12 39 27 12 39 11 12 38 12 13 40 28 13 41 28 13 41 12 13 40 13 14 42 29 14 43 29 14 43 13 14 42 14 15 44 30 15 45 30 15 45 14 15 44 15 16 46 31 16 47 31 16 47 15 16 46 0 1 48 16 1 49 28 17 50 29 18 51 45 18 52 44 17 53 29 18 51 30 19 54 46 19 55 45 18 52 30 19 54 31 20 56 47 20 57 46 19 55 31 20 56 16 21 58 32 21 59 47 20 57 16 21 58 17 22 60 33 22 61 32 21 59 17 22 60 18 23 62 34 23 63 33 22 61 18 23 62 19 24 64 35 24 65 34 23 63 19 24 64 20 25 66 36 25 67 35 24 65 20 25 66 21 26 68 37 26 69 36 25 67 21 26 68 22 27 70 38 27 71 37 26 69 22 27 70 23 28 72 39 28 73 38 27 71 23 28 72 24 29 74 40 29 75 39 28 73 24 29 74 25 30 76 41 30 77 40 29 75 25 30 76 26 31 78 42 31 79 41 30 77 26 31 78 27 32 80 43 32 81 42 31 79 27 32 80 28 17 50 44 17 53 43 32 81 38 33 71 39 33 73 55 33 82 54 33 83 39 33 73 40 33 75 56 33 84 55 33 82 40 33 75 41 33 77 57 33 85 56 33 84 41 33 77 42 33 79 58 33 86 57 33 85 42 33 79 43 33 81 59 33 87 58 33 86 43 33 81 44 33 53 60 33 88 59 33 87 44 33 53 45 33 52 61 33 89 60 33 88 45 33 52 46 33 55 62 33 90 61 33 89 46 33 55 47 33 57 63 33 91 62 33 90 47 33 57 32 33 59 48 33 92 63 33 91 32 33 59 33 33 61 49 33 93 48 33 92 33 33 61 34 33 63 50 33 94 49 33 93 34 33 63 35 33 65 51 33 95 50 33 94 35 33 65 36 33 67 52 33 96 51 33 95 36 33 67 37 33 69 53 33 97 52 33 96 37 33 69 38 33 71 54 33 83 53 33 97 51 34 95 52 13 96 68 13 96 67 34 95 52 13 96 53 35 97 69 35 97 68 13 96 53 35 97 54 15 83 70 15 83 69 35 97 54 15 83 55 36 82 71 36 82 70 15 83 55 36 82 56 1 84 72 1 84 71 36 82 56 1 84 57 37 85 73 37 85 72 1 84 57 37 85 58 3 86 74 3 86 73 37 85 58 3 86 59 38 87 75 38 87 74 3 86 59 38 87 60 5 88 76 5 88 75 38 87 60 5 88 61 39 89 77 39 89 76 5 88 61 39 89 62 7 90 78 7 90 77 39 89 62 7 90 63 40 91 79 40 91 78 7 90 63 40 91 48 9 92 64 9 92 79 40 91 48 9 92 49 41 93 65 41 93 64 9 92 49 41 93 50 11 94 66 11 94 65 41 93 50 11 94 51 34 95 67 34 95 66 11 94 78 7 90 79 40 91 95 40 91 94 7 90 79 40 91 64 9 92 80 9 92 95 40 91 64 9 92 65 41 93 81 41 93 80 9 92 65 41 93 66 11 94 82 11 94 81 41 93 66 11 94 67 34 95 83 34 95 82 11 94 67 34 95 68 13 96 84 13 96 83 34 95 68 13 96 69 35 97 85 35 97 84 13 96 69 35 97 70 15 83 86 15 83 85 35 97 70 15 83 71 36 82 87 36 82 86 15 83 71 36 82 72 1 84 88 1 84 87 36 82 72 1 84 73 37 85 89 37 85 88 1 84 73 37 85 74 3 86 90 3 86 89 37 85 74 3 86 75 38 87 91 38 87 90 3 86 75 38 87 76 5 88 92 5 88 91 38 87 76 5 88 77 39 89 93 39 89 92 5 88 77 39 89 78 7 90 94 7 90 93 39 89 80 33 92 81 33 93 82 33 94 83 33 95 84 33 96 85 33 97 86 33 83 87 33 82 88 33 84 89 33 85 90 33 86 91 33 87 92 33 88 93 33 89 94 33 90 95 33 91</p>
+                </polylist>
+                <extra>
+                    <technique profile="modo401">
+                        <param sid="render" name="Render" type="Name">default</param>
+                        <param sid="dissolve" name="Dissolve" type="float">0</param>
+                        <param sid="curves" name="Render_Curves" type="bool">false</param>
+                        <param sid="radius" name="Curve_Radius" type="float">0.05</param>
+                    </technique>
+                </extra>
+            </mesh>
+        </geometry>
+        <geometry id="Geometry-Piston" name="Piston">
+            <mesh>
+                <source id="Geometry-Piston-positions" name="positions">
+                    <float_array id="Geometry-Piston-positions-array" count="144">
+                        0 0.1 -0.3
+                        -0.114805 0.1 -0.277164
+                        -0.212132 0.1 -0.212132
+                        -0.277164 0.1 -0.114805
+                        -0.3 0.1 0
+                        -0.277164 0.1 0.114805
+                        -0.212132 0.1 0.212132
+                        -0.114805 0.1 0.277164
+                        0 0.1 0.3
+                        0.114805 0.1 0.277164
+                        0.212132 0.1 0.212132
+                        0.277164 0.1 0.114805
+                        0.3 0.1 0
+                        0.277164 0.1 -0.114805
+                        0.212132 0.1 -0.212132
+                        0.114805 0.1 -0.277164
+                        0 1.8 -0.3
+                        -0.114805 1.8 -0.277164
+                        -0.212132 1.8 -0.212132
+                        -0.277164 1.8 -0.114805
+                        -0.3 1.8 0
+                        -0.277164 1.8 0.114805
+                        -0.212132 1.8 0.212132
+                        -0.114805 1.8 0.277164
+                        0 1.8 0.3
+                        0.114805 1.8 0.277164
+                        0.212132 1.8 0.212132
+                        0.277164 1.8 0.114805
+                        0.3 1.8 0
+                        0.277164 1.8 -0.114805
+                        0.212132 1.8 -0.212132
+                        0.114805 1.8 -0.277164
+                        0 1.82 -0.279608
+                        -0.107001 1.82 -0.258324
+                        -0.197713 1.82 -0.197713
+                        -0.258324 1.82 -0.107001
+                        -0.279608 1.82 0
+                        -0.258324 1.82 0.107001
+                        -0.197713 1.82 0.197713
+                        -0.107001 1.82 0.258324
+                        0 1.82 0.279608
+                        0.107001 1.82 0.258324
+                        0.197713 1.82 0.197713
+                        0.258324 1.82 0.107001
+                        0.279608 1.82 0
+                        0.258324 1.82 -0.107001
+                        0.197713 1.82 -0.197713
+                        0.107001 1.82 -0.258324
+                    </float_array>
+                    <technique_common>
+                        <accessor count="48" source="#Geometry-Piston-positions-array" stride="3">
+                            <param name="X" type="float" />
+                            <param name="Y" type="float" />
+                            <param name="Z" type="float" />
+                        </accessor>
+                    </technique_common>
+                </source>
+                <source id="Geometry-Piston-normals" name="normals">
+                    <float_array id="Geometry-Piston-normals-array" count="102">
+                        0 -1 0
+                        0 0 -1
+                        -0.382683 0 -0.92388
+                        -0.707107 0 -0.707107
+                        -0.92388 0 -0.382683
+                        -1 0 0
+                        -0.92388 0 0.382683
+                        -0.707107 0 0.707107
+                        -0.382683 0 0.92388
+                        0 0 1
+                        0.382683 0 0.92388
+                        0.707107 0 0.707107
+                        0.92388 0 0.382683
+                        1 0 0
+                        0.92388 0 -0.382683
+                        0.707107 0 -0.707107
+                        0.382683 0 -0.92388
+                        0.495126 0.713933 -0.495126
+                        0.26796 0.713933 -0.646913
+                        -2.25675e-08 0.713933 -0.700214
+                        -0.26796 0.713933 -0.646913
+                        -0.495126 0.713933 -0.495126
+                        -0.646913 0.713933 -0.26796
+                        -0.700214 0.713933 2.25675e-08
+                        -0.646913 0.713933 0.26796
+                        -0.495126 0.713933 0.495126
+                        -0.26796 0.713933 0.646913
+                        2.25675e-08 0.713933 0.700214
+                        0.26796 0.713933 0.646913
+                        0.495126 0.713933 0.495126
+                        0.646913 0.713933 0.26796
+                        0.700214 0.713933 -2.25675e-08
+                        0.646913 0.713933 -0.26796
+                        0 1 0
+                    </float_array>
+                    <technique_common>
+                        <accessor count="34" source="#Geometry-Piston-normals-array" stride="3">
+                            <param name="X" type="float" />
+                            <param name="Y" type="float" />
+                            <param name="Z" type="float" />
+                        </accessor>
+                    </technique_common>
+                </source>
+                <source id="Geometry-Piston-Texture" name="Texture">
+                    <float_array id="Geometry-Piston-Texture-array" count="164">
+                        0.995196 0.798773
+                        0.995196 0.701227
+                        0.957867 0.611107
+                        0.888893 0.542133
+                        0.798773 0.504804
+                        0.701227 0.504804
+                        0.611107 0.542133
+                        0.542133 0.611107
+                        0.504804 0.701227
+                        0.504804 0.798773
+                        0.542133 0.888893
+                        0.611107 0.957867
+                        0.701227 0.995196
+                        0.798773 0.995196
+                        0.888893 0.957867
+                        0.957867 0.888893
+                        0 0.5
+                        0 0
+                        0.0625 0
+                        0.0625 0.5
+                        0.125 0
+                        0.125 0.5
+                        0.1875 0
+                        0.1875 0.5
+                        0.25 0
+                        0.25 0.5
+                        0.3125 0
+                        0.3125 0.5
+                        0.375 0
+                        0.375 0.5
+                        0.4375 0
+                        0.4375 0.5
+                        0.5 0
+                        0.5 0.5
+                        0.5625 0
+                        0.5625 0.5
+                        0.625 0
+                        0.625 0.5
+                        0.6875 0
+                        0.6875 0.5
+                        0.75 0
+                        0.75 0.5
+                        0.8125 0
+                        0.8125 0.5
+                        0.875 0
+                        0.875 0.5
+                        0.9375 0
+                        0.9375 0.5
+                        1 0
+                        1 0.5
+                        0.457867 0.611107
+                        0.495196 0.701227
+                        0.47885 0.704479
+                        0.44401 0.620367
+                        0.495196 0.798773
+                        0.47885 0.795521
+                        0.457867 0.888893
+                        0.44401 0.879633
+                        0.388893 0.957867
+                        0.379633 0.94401
+                        0.298773 0.995196
+                        0.295521 0.97885
+                        0.201227 0.995196
+                        0.204479 0.97885
+                        0.111107 0.957867
+                        0.120367 0.94401
+                        0.0421326 0.888893
+                        0.0559904 0.879633
+                        0.00480368 0.798773
+                        0.0211501 0.795521
+                        0.00480368 0.701227
+                        0.0211501 0.704479
+                        0.0421326 0.611107
+                        0.0559904 0.620367
+                        0.111107 0.542133
+                        0.120367 0.55599
+                        0.201227 0.504804
+                        0.204479 0.52115
+                        0.298773 0.504804
+                        0.295521 0.52115
+                        0.388893 0.542133
+                        0.379633 0.55599
+                    </float_array>
+                    <technique_common>
+                        <accessor count="82" source="#Geometry-Piston-Texture-array" stride="2">
+                            <param name="S" type="float" />
+                            <param name="T" type="float" />
+                        </accessor>
+                    </technique_common>
+                </source>
+                <vertices id="Geometry-Piston-vertices">
+                    <input semantic="POSITION" source="#Geometry-Piston-positions" />
+                </vertices>
+                <polylist count="34" material="Material-Default">
+                    <input semantic="VERTEX" source="#Geometry-Piston-vertices" offset="0" />
+                    <input semantic="NORMAL" source="#Geometry-Piston-normals" offset="1" />
+                    <input semantic="TEXCOORD" source="#Geometry-Piston-Texture" offset="2" set="0" />
+                    <vcount>16 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 16</vcount>
+                    <p>0 0 0 15 0 1 14 0 2 13 0 3 12 0 4 11 0 5 10 0 6 9 0 7 8 0 8 7 0 9 6 0 10 5 0 11 4 0 12 3 0 13 2 0 14 1 0 15 16 1 16 0 1 17 1 2 18 17 2 19 17 2 19 1 2 18 2 3 20 18 3 21 18 3 21 2 3 20 3 4 22 19 4 23 19 4 23 3 4 22 4 5 24 20 5 25 20 5 25 4 5 24 5 6 26 21 6 27 21 6 27 5 6 26 6 7 28 22 7 29 22 7 29 6 7 28 7 8 30 23 8 31 23 8 31 7 8 30 8 9 32 24 9 33 24 9 33 8 9 32 9 10 34 25 10 35 25 10 35 9 10 34 10 11 36 26 11 37 26 11 37 10 11 36 11 12 38 27 12 39 27 12 39 11 12 38 12 13 40 28 13 41 28 13 41 12 13 40 13 14 42 29 14 43 29 14 43 13 14 42 14 15 44 30 15 45 30 15 45 14 15 44 15 16 46 31 16 47 31 16 47 15 16 46 0 1 48 16 1 49 30 17 50 31 18 51 47 18 52 46 17 53 31 18 51 16 19 54 32 19 55 47 18 52 16 19 54 17 20 56 33 20 57 32 19 55 17 20 56 18 21 58 34 21 59 33 20 57 18 21 58 19 22 60 35 22 61 34 21 59 19 22 60 20 23 62 36 23 63 35 22 61 20 23 62 21 24 64 37 24 65 36 23 63 21 24 64 22 25 66 38 25 67 37 24 65 22 25 66 23 26 68 39 26 69 38 25 67 23 26 68 24 27 70 40 27 71 39 26 69 24 27 70 25 28 72 41 28 73 40 27 71 25 28 72 26 29 74 42 29 75 41 28 73 26 29 74 27 30 76 43 30 77 42 29 75 27 30 76 28 31 78 44 31 79 43 30 77 28 31 78 29 32 80 45 32 81 44 31 79 29 32 80 30 17 50 46 17 53 45 32 81 32 33 55 33 33 57 34 33 59 35 33 61 36 33 63 37 33 65 38 33 67 39 33 69 40 33 71 41 33 73 42 33 75 43 33 77 44 33 79 45 33 81 46 33 53 47 33 52</p>
+                </polylist>
+                <extra>
+                    <technique profile="modo401">
+                        <param sid="render" name="Render" type="Name">default</param>
+                        <param sid="dissolve" name="Dissolve" type="float">0</param>
+                        <param sid="curves" name="Render_Curves" type="bool">false</param>
+                        <param sid="radius" name="Curve_Radius" type="float">0.05</param>
+                    </technique>
+                </extra>
+            </mesh>
+        </geometry>
+    </library_geometries>
+    <library_lights>
+        <light id="Light-Render" name="Render">
+            <technique_common>
+                <ambient>
+                    <color sid="ambient_light_rgb">0.05 0.05 0.05</color>
+                </ambient>
+            </technique_common>
+        </light>
+    </library_lights>
+    <library_nodes id="shader_tree" name="Shader_Tree">
+        <node sid="shader_tree_render" name="Render">
+            <extra>
+                <technique profile="modo401">
+                    <param sid="first" name="Frame_Range_First" type="int">1</param>
+                    <param sid="last" name="Frame_Range_Last" type="int">120</param>
+                    <param sid="dpi" name="Frame_DPI" type="float">300</param>
+                    <param sid="resUnit" name="Resolution_Unit" type="Name">pixels</param>
+                    <param sid="pAspect" name="Frame_Pixel_Aspect_Ratio" type="float">1</param>
+                    <param sid="bucketX" name="Bucket_Width" type="int">32</param>
+                    <param sid="bucketY" name="Bucket_Height" type="int">32</param>
+                    <param sid="bktOrder" name="Bucket_Order" type="Name">hilbert</param>
+                    <param sid="bktSkip" name="Skip_Existing_Buckets" type="bool">false</param>
+                    <param sid="region" name="Render_Region" type="bool">false</param>
+                    <param sid="regX0" name="Render_Region_Left" type="float">0</param>
+                    <param sid="regX1" name="Render_Region_Right" type="float">1</param>
+                    <param sid="regY0" name="Render_Region_Top" type="float">0</param>
+                    <param sid="regY1" name="Render_Region_Bottom" type="float">1</param>
+                    <param sid="aa" name="Render_Antialiasing" type="Name">s8</param>
+                    <param sid="aaFilter" name="Render_Antialiasing_Filter" type="Name">gaussian</param>
+                    <param sid="fineRate" name="Refinement_Shading_Rate" type="float">0.25</param>
+                    <param sid="fineThresh" name="Refinement_Threshold" type="float">0.1</param>
+                    <param sid="bktRefine" name="Refine_Bucket_Borders" type="bool">false</param>
+                    <param sid="dof" name="Render_Depth_of_Field" type="bool">false</param>
+                    <param sid="mBlur" name="Render_Motion_Blur" type="bool">false</param>
+                    <param sid="stereo" name="Render_Stereoscopic" type="bool">false</param>
+                    <param sid="rayShadow" name="Ray_Tracing_Shadows" type="bool">true</param>
+                    <param sid="reflDepth" name="Reflection_Depth" type="int">8</param>
+                    <param sid="refrDepth" name="Refraction_Depth" type="int">8</param>
+                    <param sid="rayThresh" name="Ray_Threshold" type="float">0.001</param>
+                    <param sid="subdAdapt" name="Adaptive_Subdivision" type="bool">false</param>
+                    <param sid="subdRate" name="Subdivision_Rate" type="float">10</param>
+                    <param sid="dispEnable" name="Micropoly_Displacement" type="bool">true</param>
+                    <param sid="dispRate" name="Displacement_Rate" type="float">1</param>
+                    <param sid="dispRatio" name="Displacement_Ratio" type="float">4</param>
+                    <param sid="edgeMin" name="Minimum_Edge_Length" type="float">0.0001</param>
+                    <param sid="dispSmooth" name="Smooth_Positions" type="bool">true</param>
+                    <param sid="ambRad" name="Ambient_Intensity" type="float">0.05</param>
+                    <param sid="ambColor" name="Ambient_Color" type="color">1 1 1</param>
+                    <param sid="globEnable" name="Enable_Indirect_Illumination" type="bool">false</param>
+                    <param sid="globScope" name="Indirect_Illumination_Scope" type="Name">all</param>
+                    <param sid="globRays" name="Indirect_Rays" type="int">64</param>
+                    <param sid="globLimit" name="Indirect_Bounces" type="int">1</param>
+                    <param sid="globRange" name="Indirect_Range" type="float">0</param>
+                    <param sid="globSubs" name="Subsurface_Scattering" type="int">0</param>
+                    <param sid="globVols" name="Volumetrics_Affect_Indirect" type="bool">false</param>
+                    <param sid="irrCache" name="Enable_Irradiance_Caching" type="bool">true</param>
+                    <param sid="irrRays" name="Irradiance_Rays" type="int">256</param>
+                    <param sid="globSuper" name="Indirect_Supersampling" type="bool">true</param>
+                    <param sid="irrRate" name="Irradiance_Rate" type="float">2.5</param>
+                    <param sid="irrRatio" name="Irradiance_Ratio" type="float">6</param>
+                    <param sid="irrVals" name="Interpolation_Values" type="int">1</param>
+                    <param sid="irrGrads" name="Irradiance_Gradients" type="Name">both</param>
+                    <param sid="irrWalk" name="Walkthrough_Mode" type="bool">false</param>
+                    <param sid="irrLEnable" name="Load_Irradiance_before_Render" type="bool">false</param>
+                    <param sid="irrLName" name="Load_Irradiance_File" type="Name"></param>
+                    <param sid="irrSEnable" name="Save_Irradiance_after_Render" type="bool">false</param>
+                    <param sid="irrSName" name="Save_Irradiance_File" type="Name"></param>
+                    <param sid="causEnable" name="Enable_Direct_Caustics" type="bool">false</param>
+                    <param sid="causTotal" name="Caustics_Total_Photons" type="int">100000</param>
+                    <param sid="causLocal" name="Caustics_Local_Photons" type="int">32</param>
+                    <param sid="globCaus" name="Indirect_Caustics" type="Name">refraction</param>
+                </technique>
+            </extra>
+        </node>
+        <node sid="shader_tree_environment" name="Environment">
+            <extra>
+                <technique profile="modo401">
+                    <param sid="radiance" name="Environment_Intensity" type="float">1</param>
+                    <param sid="visCam" name="Environment_Visible_to_Camera" type="bool">true</param>
+                    <param sid="visInd" name="Environment_Visible_to_Indirect_Rays" type="bool">true</param>
+                    <param sid="visRefl" name="Environment_Visible_to_Reflection_Rays" type="bool">true</param>
+                    <param sid="visRefr" name="Environment_Visible_to_Refraction_Rays" type="bool">true</param>
+                </technique>
+            </extra>
+        </node>
+    </library_nodes>
+    <library_visual_scenes>
+        <visual_scene id="DefaultScene">
+            <node id="RenderNode" name="Render" type="NODE">
+                <instance_light url="#Light-Render" />
+            </node>
+            <node id="Geometry-CaseNode" name="Case" type="NODE">
+                <instance_geometry url="#Geometry-Case">
+                    <bind_material>
+                        <technique_common>
+                            <instance_material symbol="Material-Default" target="#Material-Default" />
+                        </technique_common>
+                    </bind_material>
+                </instance_geometry>
+            </node>
+            <node id="Geometry-PistonNode" name="Piston" type="NODE">
+                <translate sid="Position">0 0 0</translate>
+                <instance_geometry url="#Geometry-Piston">
+                    <bind_material>
+                        <technique_common>
+                            <instance_material symbol="Material-Default" target="#Material-Default" />
+                        </technique_common>
+                    </bind_material>
+                </instance_geometry>
+            </node>
+            <extra>
+                <technique profile="modo401">
+                    <param sid="fps" name="Scene_FPS" type="float">24</param>
+                    <param sid="sceneS" name="Scene_Start_Time" type="float">0</param>
+                    <param sid="sceneE" name="Scene_End_Time" type="float">5</param>
+                    <param sid="currentS" name="Scene_Current_Start_Time" type="float">0</param>
+                    <param sid="currentE" name="Scene_Current_End_Time" type="float">5</param>
+                    <param sid="timeSys" name="Scene_Time_System" type="Name">frames</param>
+                </technique>
+            </extra>
+            <extra>
+                <technique profile="MAX3D">
+                    <frame_rate>24</frame_rate>
+                </technique>
+            </extra>
+            <extra>
+                <technique profile="MAYA">
+                    <start_time>0</start_time>
+                    <end_time>5</end_time>
+                </technique>
+            </extra>
+            <extra>
+                <technique profile="OKINO" />
+            </extra>
+            <extra>
+                <technique profile="XSI">
+                    <SI_Scene>
+                        <frame_rate>24</frame_rate>
+                    </SI_Scene>
+                </technique>
+            </extra>
+        </visual_scene>
+    </library_visual_scenes>
+    <scene>
+        <instance_visual_scene url="#DefaultScene" />
+    </scene>
+</COLLADA>
