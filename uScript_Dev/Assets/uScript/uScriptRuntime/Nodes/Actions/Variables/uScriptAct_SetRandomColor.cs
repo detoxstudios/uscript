@@ -19,15 +19,14 @@ public class uScriptAct_SetRandomColor : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("R Min")] float RedMin,
-      [FriendlyName("R Max")] float RedMax,
-      [FriendlyName("G Min")] float GreenMin,
-      [FriendlyName("G Max")] float GreenMax,
-      [FriendlyName("B Min")] float BlueMin,
-      [FriendlyName("B Max")] float BlueMax,
-      [FriendlyName("A Min"), DefaultValue(1.0f)] float AlphaMin,
-      [FriendlyName("A Max"), DefaultValue(1.0f)] float AlphaMax,
-      [DefaultValue(0), SocketState(false, false)] int Seed,
+      [FriendlyName("R Min"), SocketState(false, false)] float RedMin,
+      [FriendlyName("R Max"), DefaultValue(1.0f), SocketState(false, false)] float RedMax,
+      [FriendlyName("G Min"), SocketState(false, false)] float GreenMin,
+      [FriendlyName("G Max"), DefaultValue(1.0f), SocketState(false, false)] float GreenMax,
+      [FriendlyName("B Min"), SocketState(false, false)] float BlueMin,
+      [FriendlyName("B Max"), DefaultValue(1.0f), SocketState(false, false)] float BlueMax,
+      [FriendlyName("A Min"), DefaultValue(1.0f), SocketState(false, false)] float AlphaMin,
+      [FriendlyName("A Max"), DefaultValue(1.0f), SocketState(false, false)] float AlphaMax,
       [FriendlyName("Target Color")] out Color TargetColor)
    {
       // Make sure values are in range, if not assign defaults that are
@@ -40,28 +39,19 @@ public class uScriptAct_SetRandomColor : uScriptLogic
       if (AlphaMin < 0f) { AlphaMin = 0f; }
       if (AlphaMax > 1f) { AlphaMax = 1f; }
 
-      float RedOut = ReturnRandomFloat(RedMin, RedMax, Seed);
-      float GreenOut = ReturnRandomFloat(GreenMin, GreenMax, Seed);
-      float BlueOut = ReturnRandomFloat(BlueMin, BlueMax, Seed);
-      float AlphaOut = ReturnRandomFloat(AlphaMin, AlphaMax, Seed);
+      float RedOut = ReturnRandomFloat(RedMin, RedMax);
+      float GreenOut = ReturnRandomFloat(GreenMin, GreenMax);
+      float BlueOut = ReturnRandomFloat(BlueMin, BlueMax);
+      float AlphaOut = ReturnRandomFloat(AlphaMin, AlphaMax);
 
       TargetColor = new Color(RedOut, GreenOut, BlueOut, AlphaOut);
    }
 
-   private float ReturnRandomFloat(float min, float max, int seed)
+   private float ReturnRandomFloat(float min, float max)
    {
       // Make sure we don't have min > max (or other way around)
       if ( min > max ) { min = max; }
       if ( max < min ) { max = min; }
-      
-      if ( 0 != seed )
-	  {
-	     Random.seed = seed;
-	  }
-	  else if ( seed == 0 )
-	  {
-	     Random.seed = System.Environment.TickCount;
-	  }
 
       return Random.Range(min, max);
    }

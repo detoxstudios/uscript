@@ -19,17 +19,8 @@ public class uScriptAct_SetRandomBool : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [DefaultValue(0), SocketState(false, false)] int Seed,
       [FriendlyName("Target Bool")] out bool TargetBool)
    {
-      if ( 0 != Seed )
-	  {
-	     Random.seed = Seed;
-	  }
-	  else if ( Seed == 0 )
-	  {
-	     Random.seed = System.Environment.TickCount;
-	  }
 
       TargetBool = Random.Range(0, 2) > 0;
    }

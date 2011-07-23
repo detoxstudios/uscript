@@ -19,23 +19,13 @@ public class uScriptAct_SetRandomInt : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Min")] int Min,
-      [FriendlyName("Max")] int Max,
-      [FriendlyName("Seed"), DefaultValue(0), SocketState(false, false)] int Seed,
+      [FriendlyName("Min"), SocketState(false, false)] int Min,
+      [FriendlyName("Max"), SocketState(false, false)] int Max,
       [FriendlyName("Target Int")] out int TargetInt)
    {
       // Make sure we don't have min > max (or other way around)
       if (Min > Max) { Min = Max; }
       if (Max < Min) { Max = Min; }
-
-      if ( 0 != Seed )
-	  {
-	     Random.seed = Seed;
-	  }
-	  else if ( Seed == 0 )
-	  {
-	     Random.seed = System.Environment.TickCount;
-	  }
 
       TargetInt = Random.Range(Min, Max);
    }

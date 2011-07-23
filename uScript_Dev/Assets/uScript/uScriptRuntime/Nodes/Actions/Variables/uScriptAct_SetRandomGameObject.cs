@@ -20,22 +20,12 @@ public class uScriptAct_SetRandomGameObject : uScriptLogic
 
    public void In(
       [FriendlyName("GameObjects")] GameObject[] ObjectSet,
-      [FriendlyName("Seed"), DefaultValue(0), SocketState(false, false)] int Seed,
       [FriendlyName("Target GameObject")] out GameObject TargetGameObject)
    {
       if (ObjectSet == null)
       {
          TargetGameObject = null;
          return;
-      }
-      
-      if ( 0 != Seed )
-      {
-         Random.seed = Seed;
-      }
-      else if ( Seed == 0 )
-      {
-         Random.seed = System.Environment.TickCount;
       }
 
       int index = Random.Range(0, ObjectSet.Length);

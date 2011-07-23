@@ -19,11 +19,10 @@ public class uScriptAct_SetRandomVector2 : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Min X"), DefaultValue(0f)] float MinX,
-      [FriendlyName("Max X"), DefaultValue(1f)] float MaxX,
-      [FriendlyName("Min Y"), DefaultValue(0f)] float MinY,
-      [FriendlyName("Max Y"), DefaultValue(1f)] float MaxY,
-      [FriendlyName("Seed"), DefaultValue(0), SocketState(false, false)] int Seed,
+      [FriendlyName("Min X"), DefaultValue(0f), SocketState(false, false)] float MinX,
+      [FriendlyName("Max X"), DefaultValue(1f), SocketState(false, false)] float MaxX,
+      [FriendlyName("Min Y"), DefaultValue(0f), SocketState(false, false)] float MinY,
+      [FriendlyName("Max Y"), DefaultValue(1f), SocketState(false, false)] float MaxY,
       [FriendlyName("Target Vector2")] out Vector3 TargetVector2)
    {
       // Make sure we don't have min > max (or other way around)
@@ -31,15 +30,6 @@ public class uScriptAct_SetRandomVector2 : uScriptLogic
       if (MaxX < MinX) { MaxX = MinX; }
       if (MinY > MaxY) { MinY = MaxY; }
       if (MaxY < MinY) { MaxY = MinY; }
-
-      if ( 0 != Seed )
-	  {
-	     Random.seed = Seed;
-	  }
-	  else if ( Seed == 0 )
-	  {
-	     Random.seed = System.Environment.TickCount;
-	  }
 
       float finalX = Random.Range(MinX, MaxX);
       float finalY = Random.Range(MinY, MaxY);

@@ -19,13 +19,12 @@ public class uScriptAct_SetRandomVector3 : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Min X"), DefaultValue(0f)] float MinX,
-      [FriendlyName("Max X"), DefaultValue(1f)] float MaxX,
-      [FriendlyName("Min Y"), DefaultValue(0f)] float MinY,
-      [FriendlyName("Max Y"), DefaultValue(1f)] float MaxY,
-      [FriendlyName("Min Z"), DefaultValue(0f)] float MinZ,
-      [FriendlyName("Max Z"), DefaultValue(1f)] float MaxZ,
-      [FriendlyName("Seed"), DefaultValue(0), SocketState(false, false)] int Seed,
+      [FriendlyName("Min X"), DefaultValue(0f), SocketState(false, false)] float MinX,
+      [FriendlyName("Max X"), DefaultValue(1f), SocketState(false, false)] float MaxX,
+      [FriendlyName("Min Y"), DefaultValue(0f), SocketState(false, false)] float MinY,
+      [FriendlyName("Max Y"), DefaultValue(1f), SocketState(false, false)] float MaxY,
+      [FriendlyName("Min Z"), DefaultValue(0f), SocketState(false, false)] float MinZ,
+      [FriendlyName("Max Z"), DefaultValue(1f), SocketState(false, false)] float MaxZ,
       [FriendlyName("Target Vector3")] out Vector3 TargetVector3)
    {
       // Make sure we don't have min > max (or other way around)
@@ -35,15 +34,6 @@ public class uScriptAct_SetRandomVector3 : uScriptLogic
       if (MaxY < MinY) { MaxY = MinY; }
       if (MinZ > MaxZ) { MinZ = MaxZ; }
       if (MaxZ < MinZ) { MaxZ = MinZ; }
-
-      if ( 0 != Seed )
-	  {
-	     Random.seed = Seed;
-	  }
-	  else if ( Seed == 0 )
-	  {
-	     Random.seed = System.Environment.TickCount;
-	  }
 		
       float finalX = Random.Range(MinX, MaxX);
       float finalY = Random.Range(MinY, MaxY);

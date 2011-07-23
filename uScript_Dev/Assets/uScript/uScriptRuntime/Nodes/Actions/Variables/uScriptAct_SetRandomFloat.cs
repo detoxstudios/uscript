@@ -19,23 +19,13 @@ public class uScriptAct_SetRandomFloat : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Min")] float Min,
-      [FriendlyName("Max")] float Max,
-      [FriendlyName("Seed"), DefaultValue(0), SocketState(false, false)] int Seed,
+      [FriendlyName("Min"), SocketState(false, false)] float Min,
+      [FriendlyName("Max"), SocketState(false, false)] float Max,
       [FriendlyName("Target Float")] out float TargetFloat)
    {
       // Make sure we don't have min > max (or other way around)
       if (Min > Max) { Min = Max; }
       if (Max < Min) { Max = Min; }
-
-      if ( 0 != Seed )
-	  {
-	     Random.seed = Seed;
-	  }
-	  else if ( Seed == 0 )
-	  {
-	     Random.seed = System.Environment.TickCount;
-	  }
       
       TargetFloat = Random.Range(Min, Max);
    }

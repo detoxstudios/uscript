@@ -19,15 +19,14 @@ public class uScriptAct_SetRandomVector4 : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Min X"), DefaultValue(0f)] float MinX,
-      [FriendlyName("Max X"), DefaultValue(1f)] float MaxX,
-      [FriendlyName("Min Y"), DefaultValue(0f)] float MinY,
-      [FriendlyName("Max Y"), DefaultValue(1f)] float MaxY,
-      [FriendlyName("Min Z"), DefaultValue(0f)] float MinZ,
-      [FriendlyName("Max Z"), DefaultValue(1f)] float MaxZ,
-      [FriendlyName("Min Z"), DefaultValue(0f)] float MinW,
-      [FriendlyName("Max Z"), DefaultValue(1f)] float MaxW,
-      [FriendlyName("Seed"), DefaultValue(0), SocketState(false, false)] int Seed,
+      [FriendlyName("Min X"), DefaultValue(0f), SocketState(false, false)] float MinX,
+      [FriendlyName("Max X"), DefaultValue(1f), SocketState(false, false)] float MaxX,
+      [FriendlyName("Min Y"), DefaultValue(0f), SocketState(false, false)] float MinY,
+      [FriendlyName("Max Y"), DefaultValue(1f), SocketState(false, false)] float MaxY,
+      [FriendlyName("Min Z"), DefaultValue(0f), SocketState(false, false)] float MinZ,
+      [FriendlyName("Max Z"), DefaultValue(1f), SocketState(false, false)] float MaxZ,
+      [FriendlyName("Min Z"), DefaultValue(0f), SocketState(false, false)] float MinW,
+      [FriendlyName("Max Z"), DefaultValue(1f), SocketState(false, false)] float MaxW,
       [FriendlyName("Target Vector4")] out Vector4 TargetVector4)
    {
       // Make sure we don't have min > max (or other way around)
@@ -39,15 +38,6 @@ public class uScriptAct_SetRandomVector4 : uScriptLogic
       if (MaxZ < MinZ) { MaxZ = MinZ; }
       if (MinW > MaxW) { MinW = MaxW; }
       if (MaxW < MinW) { MaxW = MinW; }
-
-      if ( 0 != Seed )
-	  {
-	     Random.seed = Seed;
-	  }
-	  else if ( Seed == 0 )
-	  {
-	     Random.seed = System.Environment.TickCount;
-	  }
 
       float finalX = Random.Range(MinX, MaxX);
       float finalY = Random.Range(MinY, MaxY);
