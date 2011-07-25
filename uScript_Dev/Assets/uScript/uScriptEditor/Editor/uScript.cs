@@ -608,7 +608,8 @@ http://uscript.net
          if (String.IsNullOrEmpty(m_FullPath))
          {
             String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
-            if (!String.IsNullOrEmpty(lastOpened))
+            String lastScene  = (String)uScript.GetSetting("uScript\\LastScene", "");
+            if (!String.IsNullOrEmpty(lastOpened) && lastScene == UnityEditor.EditorApplication.currentScene)
             {
                m_FullPath = UnityEngine.Application.dataPath + lastOpened;
             }
@@ -3339,6 +3340,7 @@ http://uscript.net
       m_FullPath = "";
 
       uScript.SetSetting("uScript\\LastOpened", "");
+      uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
    }
 
    public bool OpenScript(string fullPath)
@@ -3374,6 +3376,7 @@ http://uscript.net
          m_FullPath = fullPath;
 
          uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(fullPath).Substring("Assets".Length));
+         uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
       }
       else
       {
@@ -3539,6 +3542,7 @@ http://uscript.net
 
          m_FullPath = path;
          uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(m_FullPath).Substring("Assets".Length));
+         uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
       }
 
       if ("" != m_FullPath)
