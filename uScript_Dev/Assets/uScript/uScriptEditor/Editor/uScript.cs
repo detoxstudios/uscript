@@ -14,11 +14,12 @@ using Detox.FlowChart;
 public class uScript : EditorWindow
 {
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string uScriptBuild { get { return "0.9.1028"; } }
-   static string BetaVersion { get { return "Beta 6"; } }
-   public string RequiredUnityBuild { get { return "3.3"; } }
-   public string RequiredUnityBetaBuild { get { return "3.4"; } }
-   public DateTime ExpireDate { get { return new DateTime(2011, 8, 1); } }
+   public string uScriptBuild { get { return "0.9.1051"; } }
+   static string BetaVersion { get { return "Beta 7"; } }
+   public string LastUnityBuild { get { return "3.3"; } }
+   public string CurrentUnityBuild { get { return "3.4"; } }
+   public string BetaUnityBuild { get { return "3.5"; } }
+   public DateTime ExpireDate { get { return new DateTime(2011, 8, 15); } }
    public int EULAVersion { get { return 20110701; } }
 
    public enum MouseRegion
@@ -512,7 +513,7 @@ http://uscript.net
          if (null == m_ScriptEditorCtrl)
          {
             //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
-            if (Application.unityVersion.Contains(RequiredUnityBuild) || Application.unityVersion.Contains(RequiredUnityBetaBuild))
+            if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild) || Application.unityVersion.Contains(BetaUnityaBuild))
             {
             }
             else
