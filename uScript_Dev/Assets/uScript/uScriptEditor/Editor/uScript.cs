@@ -939,8 +939,18 @@ http://uscript.net
                if (_canvasRect.Contains(e.mousePosition))
                {
                   // Use the new context menu in Unity 3.4 and higher
-                  if (Application.unityVersion.Contains("3.4") || Application.unityVersion.Contains("3.5"))
-                  {
+
+#if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3)
+                     m_ScriptEditorCtrl.BuildContextMenu();
+
+//                     BuildPaletteMenu(null, null);
+
+                     m_ContextX = (int)e.mousePosition.x;
+                     m_ContextY = (int)(e.mousePosition.y - _canvasRect.yMin);
+
+                     //refresh screen so context menu shows up
+                     Repaint();
+#else
                      m_ScriptEditorCtrl.BuildContextMenu();
 
                      BuildCanvasContextMenu(null, null);
@@ -955,19 +965,8 @@ http://uscript.net
 //                        m_MouseDownRegion = MouseRegion.Reference;
 //                        m_MouseDown = false;
 //                     }
-                  }
-                  else
-                  {
-                     m_ScriptEditorCtrl.BuildContextMenu();
+#endif
 
-//                     BuildPaletteMenu(null, null);
-
-                     m_ContextX = (int)e.mousePosition.x;
-                     m_ContextY = (int)(e.mousePosition.y - _canvasRect.yMin);
-
-                     //refresh screen so context menu shows up
-                     Repaint();
-                  }
                }
                break;
 
