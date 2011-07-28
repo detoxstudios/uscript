@@ -1942,65 +1942,7 @@ namespace Detox.ScriptEditor
 
          m_ContextMenuStrip.Items.Add( addMenu );
          
-         if ( m_FlowChart.SelectedNodes.Length > 0 || m_FlowChart.SelectedLinks.Length > 0 )
-         {
-            ToolStripMenuItem delete = new ToolStripMenuItem( "Delete Selected" );
-            delete.Click += new System.EventHandler(m_MenuDeleteNode_Click);
-
-            m_ContextMenuStrip.Items.Add( delete );
-         }
-
          m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
-         
-         if ( CanCopy )
-         {
-            copyMenu.Name = "m_Copy";
-            copyMenu.Size = new System.Drawing.Size(152, 22);
-            copyMenu.Text = "Copy";
-            copyMenu.Click += new System.EventHandler(m_MenuCopy_Click);
-
-            m_ContextMenuStrip.Items.Add( copyMenu );
-         }
-         
-         if ( CanPaste )
-         {
-            pasteMenu.Name = "m_Paste";
-            pasteMenu.Size = new System.Drawing.Size(152, 22);
-            pasteMenu.Text = "Paste";
-            pasteMenu.Click += new System.EventHandler(m_MenuPaste_Click);
-
-            m_ContextMenuStrip.Items.Add( pasteMenu );
-         }
-
-         if ( CanCopy || CanPaste )
-         {
-            m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
-         }
-
-         if ( CanExpand )
-         {
-            expandMenu.Name = "m_ExpandMenu";
-            expandMenu.Size = new System.Drawing.Size(152, 22);
-            expandMenu.Text = "E&xpand Selection";
-            expandMenu.Click += new System.EventHandler(m_MenuExpand_Click);
-
-            m_ContextMenuStrip.Items.Add( expandMenu );
-         }
-
-         if ( CanCollapse )
-         {
-            collapseMenu.Name = "m_CollapseMenu";
-            collapseMenu.Size = new System.Drawing.Size(152, 22);
-            collapseMenu.Text = "Co&llapse Selection";
-            collapseMenu.Click += new System.EventHandler(m_MenuCollapse_Click);
-
-            m_ContextMenuStrip.Items.Add( collapseMenu );
-         }
-
-         if ( CanExpand || CanCollapse )
-         {
-            m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
-         }
 
          expandAll.Name = "m_ExpandAllMenu";
          expandAll.Size = new System.Drawing.Size(152, 22);
@@ -2015,8 +1957,68 @@ namespace Detox.ScriptEditor
          collapseAll.Click += new System.EventHandler(m_MenuCollapseAll_Click);
 
          m_ContextMenuStrip.Items.Add( collapseAll );
-         
-         m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
+
+         if ( CanExpand || CanCollapse )
+         {
+            m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
+
+            if ( CanExpand )
+            {
+               expandMenu.Name = "m_ExpandMenu";
+               expandMenu.Size = new System.Drawing.Size(152, 22);
+               expandMenu.Text = "E&xpand Selection";
+               expandMenu.Click += new System.EventHandler(m_MenuExpand_Click);
+
+               m_ContextMenuStrip.Items.Add( expandMenu );
+            }
+
+            if ( CanCollapse )
+            {
+               collapseMenu.Name = "m_CollapseMenu";
+               collapseMenu.Size = new System.Drawing.Size(152, 22);
+               collapseMenu.Text = "Co&llapse Selection";
+               collapseMenu.Click += new System.EventHandler(m_MenuCollapse_Click);
+
+               m_ContextMenuStrip.Items.Add( collapseMenu );
+            }
+         }
+
+         if ( CanCopy || CanPaste )
+         {
+            m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
+
+            if ( CanCopy )
+            {
+               copyMenu.Name = "m_Copy";
+               copyMenu.Size = new System.Drawing.Size(152, 22);
+               copyMenu.Text = "Copy";
+               copyMenu.Click += new System.EventHandler(m_MenuCopy_Click);
+
+               m_ContextMenuStrip.Items.Add( copyMenu );
+            }
+
+            if ( CanPaste )
+            {
+               pasteMenu.Name = "m_Paste";
+               pasteMenu.Size = new System.Drawing.Size(152, 22);
+               pasteMenu.Text = "Paste";
+               pasteMenu.Click += new System.EventHandler(m_MenuPaste_Click);
+
+               m_ContextMenuStrip.Items.Add( pasteMenu );
+            }
+         }
+
+         if ( m_FlowChart.SelectedNodes.Length > 0 || m_FlowChart.SelectedLinks.Length > 0 )
+         {
+            m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
+
+            ToolStripMenuItem delete = new ToolStripMenuItem( "Delete Selected" );
+            delete.Click += new System.EventHandler(m_MenuDeleteNode_Click);
+
+            m_ContextMenuStrip.Items.Add( delete );
+         }
+
+
 
 
          addMenu.Name = "m_Add";
