@@ -766,6 +766,113 @@ http://uscript.net
 
 
 
+
+   //
+   // Canvas Context Menu
+   //
+   GenericMenu _canvasContextMenu = new GenericMenu();
+
+   private void BuildCanvasContextMenu(ToolStripItem contextMenuItem, string path)
+   {
+      GUIContent content;
+
+      if (contextMenuItem == null || string.IsNullOrEmpty(path))
+      {
+         //
+         // Create a new context menu, destroying the old one
+         //
+         _canvasContextMenu = new GenericMenu();
+
+         foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
+         {
+            if (item is ToolStripMenuItem)
+            {
+               ToolStripMenuItem menuItem = item as ToolStripMenuItem;
+
+               if (menuItem.DropDownItems.Items.Count > 0)
+               {
+                  // This is the parent of a submenu
+                  foreach (ToolStripItem subitem in menuItem.DropDownItems.Items)
+                  {
+                     BuildCanvasContextMenu(subitem, item.Text.Replace("...", string.Empty) + "/");
+                  }
+               }
+               else
+               {
+                  // This is a menu item
+                  content = new GUIContent(item.Text.Replace("&", string.Empty),
+                                           FindNodeToolTip(ScriptEditor.FindNodeType(item.Tag as EntityNode)));
+
+                  _canvasContextMenu.AddItem(content, false, ContextMenuCallback, item);
+               }
+            }
+            else
+            {
+               if (item.Text == "<hr>")
+               {
+                  // This is a separator
+                  _canvasContextMenu.AddSeparator("");
+               }
+            }
+
+//            // We can support disabled items, but the ScriptEditorCtrl doesn't at the moment
+//            _canvasContextMenu.AddDisabledItem(new GUIContent("DisabledItem"));
+         }
+      }
+      else if (!(contextMenuItem is ToolStripSeparator))
+      {
+         if ((contextMenuItem is ToolStripMenuItem) && ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items.Count > 0)
+         {
+            // There are sub items
+            string parent = contextMenuItem.Text.Replace("...", string.Empty);
+
+            foreach (ToolStripItem item in ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items)
+            {
+               BuildCanvasContextMenu(item, path + parent + "/");
+            }
+         }
+         else
+         {
+            content = new GUIContent(path + contextMenuItem.Text.Replace("&", string.Empty),
+                                     FindNodeToolTip(ScriptEditor.FindNodeType(contextMenuItem.Tag as EntityNode)));
+
+            _canvasContextMenu.AddItem(content, false, ContextMenuCallback, contextMenuItem);
+         }
+      }
+      else
+      {
+         uScriptDebug.Log("The contextMenuItem (" + contextMenuItem.Text + ") is a " + contextMenuItem.GetType() + " and is unhandled!\n", uScriptDebug.Type.Warning);
+      }
+   }
+
+
+   private void ContextMenuCallback(object obj)
+   {
+      ToolStripItem item = obj as ToolStripItem;
+
+      if (item == null)
+      {
+         Debug.LogError("The context menu callback received an invalid data\n");
+      }
+      else
+      {
+         if (item.Click != null)
+         {
+            item.Click(item, new EventArgs());
+         }
+         else
+         {
+            Debug.Log("Context menu selection had no event handler.\n");
+         }
+      }
+   }
+
+
+
+
+
+
+
    void OnGUI()
    {
       //
@@ -819,61 +926,92 @@ http://uscript.net
          Control.ModifierKeys.Pressed = modifierKeys;
 
          Event e = Event.current;
+
          switch (e.type)
          {
             // command events
+
             case EventType.ContextClick:
-               m_ScriptEditorCtrl.BuildContextMenu();
+               //
+               // Display the canvas context menu only when the
+               // mouse is over the canvas when the event occurs
+               //
+               if (_canvasRect.Contains(e.mousePosition))
+               {
+                  // Use the new context menu in Unity 3.4 and higher
+                  if (Application.unityVersion.Contains("3.4") || Application.unityVersion.Contains("3.5"))
+                  {
+                     m_ScriptEditorCtrl.BuildContextMenu();
 
-               BuildPaletteMenu(null, null);
+                     BuildCanvasContextMenu(null, null);
 
-               m_ContextX = (int)Event.current.mousePosition.x;
-               m_ContextY = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+                     _canvasContextMenu.ShowAsContext();
 
-               //refresh screen so context menu shows up
-               Repaint();
+                     e.Use();
+
+                     // stupid hack to prevent the "canvasDragging" behavior
+//                     if (m_MouseDown)
+//                     {
+//                        m_MouseDownRegion = MouseRegion.Reference;
+//                        m_MouseDown = false;
+//                     }
+                  }
+                  else
+                  {
+                     m_ScriptEditorCtrl.BuildContextMenu();
+
+//                     BuildPaletteMenu(null, null);
+
+                     m_ContextX = (int)e.mousePosition.x;
+                     m_ContextY = (int)(e.mousePosition.y - _canvasRect.yMin);
+
+                     //refresh screen so context menu shows up
+                     Repaint();
+                  }
+               }
                break;
+
             case EventType.ValidateCommand:
-               if (Event.current.commandName == "Copy")
+               if (e.commandName == "Copy")
                {
                   if (m_ScriptEditorCtrl.CanCopy && "MainView" == GUI.GetNameOfFocusedControl())
                   {
-                     Event.current.Use();
+                     e.Use();
                   }
                }
-               else if (Event.current.commandName == "Cut")
+               else if (e.commandName == "Cut")
                {
                   if (m_ScriptEditorCtrl.CanCopy && "MainView" == GUI.GetNameOfFocusedControl())
                   {
-                     Event.current.Use();
+                     e.Use();
                   }
                }
-               else if (Event.current.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl())
+               else if (e.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl())
                {
                   if (m_ScriptEditorCtrl.CanPaste)
                   {
-                     Event.current.Use();
+                     e.Use();
                   }
                }
-               else if (Event.current.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl())
+               else if (e.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl())
                {
-                  Event.current.Use();
+                  e.Use();
                }
                break;
             case EventType.ExecuteCommand:
-               if (Event.current.commandName == "Copy" && "MainView" == GUI.GetNameOfFocusedControl())
+               if (e.commandName == "Copy" && "MainView" == GUI.GetNameOfFocusedControl())
                {
                   m_WantsCopy = true;
                }
-               else if (Event.current.commandName == "Cut" && "MainView" == GUI.GetNameOfFocusedControl())
+               else if (e.commandName == "Cut" && "MainView" == GUI.GetNameOfFocusedControl())
                {
                   m_WantsCut = true;
                }
-               else if (Event.current.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl())
+               else if (e.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl())
                {
                   m_WantsPaste = true;
                }
-               else if (Event.current.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl())
+               else if (e.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl())
                {
                   m_SelectAllNodes = true;
                }
@@ -886,25 +1024,25 @@ http://uscript.net
             case EventType.DragUpdated:
                // update mouse position
                m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
-               m_MouseMoveArgs.X = (int)Event.current.mousePosition.x;
-               m_MouseMoveArgs.Y = (int)Event.current.mousePosition.y;
+               m_MouseMoveArgs.X = (int)e.mousePosition.x;
+               m_MouseMoveArgs.Y = (int)e.mousePosition.y;
                break;
 
             // key events
             case EventType.KeyDown:
-               if (Event.current.keyCode != KeyCode.None)
+               if (e.keyCode != KeyCode.None)
                {
-                  m_PressedKey = Event.current.keyCode;
+                  m_PressedKey = e.keyCode;
                }
                break;
             case EventType.KeyUp:
                if ("MainView" == GUI.GetNameOfFocusedControl())
                {
-                  if (Event.current.keyCode == KeyCode.Delete || Event.current.keyCode == KeyCode.Backspace)
+                  if (e.keyCode == KeyCode.Delete || e.keyCode == KeyCode.Backspace)
                   {
                      m_ScriptEditorCtrl.DeleteSelectedNodes();
                   }
-                  else if (Event.current.keyCode == KeyCode.Home || (Event.current.keyCode == KeyCode.H && (modifierKeys & Keys.Control) != 0))
+                  else if (e.keyCode == KeyCode.Home || (e.keyCode == KeyCode.H && (modifierKeys & Keys.Control) != 0))
                   {
                      // re-center the graph
                      if (m_ScriptEditorCtrl != null)
@@ -912,16 +1050,16 @@ http://uscript.net
                         m_ScriptEditorCtrl.RefreshScript(null, true);
                      }
                   }
-                  else if (Event.current.keyCode == KeyCode.W && (modifierKeys & Keys.Control) != 0)
+                  else if (e.keyCode == KeyCode.W && (modifierKeys & Keys.Control) != 0)
                   {
                      // close the window
                      m_WantsClose = true;
                   }
-                  else if (Event.current.keyCode == KeyCode.M)
+                  else if (e.keyCode == KeyCode.M)
                   {
                      mapToggle = !mapToggle;
                   }
-                  else if (Event.current.keyCode == KeyCode.BackQuote)
+                  else if (e.keyCode == KeyCode.BackQuote)
                   {
                      m_HidePanelMode = !m_HidePanelMode;
 
@@ -936,28 +1074,28 @@ http://uscript.net
                         m_ScriptEditorCtrl.RefreshScript(null, false);
                      }
                   }
-                  else if (Event.current.keyCode == KeyCode.Escape)
+                  else if (e.keyCode == KeyCode.Escape)
                   {
                      if ("MainView" == GUI.GetNameOfFocusedControl())
                      {
                         m_ScriptEditorCtrl.DeselectAll();
                      }
                   }
-                  else if (Event.current.keyCode == KeyCode.F1)
+                  else if (e.keyCode == KeyCode.F1)
                   {
                      Help.BrowseURL("http://www.uscript.net/docs/index.php?title=Main_Page");
                   }
-                  else if (Event.current.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0)
+                  else if (e.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0)
                   {
                      Preferences.ShowGrid = !Preferences.ShowGrid;
                      Preferences.Save();
                   }
-                  else if (Event.current.keyCode == KeyCode.RightBracket)
+                  else if (e.keyCode == KeyCode.RightBracket)
                   {
                      m_FocusedNode = m_ScriptEditorCtrl.GetNextNode(m_FocusedNode, typeof(EntityEventDisplayNode));
                      if (m_FocusedNode != null) m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
                   }
-                  else if (Event.current.keyCode == KeyCode.LeftBracket)
+                  else if (e.keyCode == KeyCode.LeftBracket)
                   {
                      m_FocusedNode = m_ScriptEditorCtrl.GetPrevNode(m_FocusedNode, typeof(EntityEventDisplayNode));
                      if (m_FocusedNode != null) m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
@@ -967,7 +1105,7 @@ http://uscript.net
                m_PressedKey = KeyCode.None;
 
                //keep key events from going to the rest of unity
-               Event.current.Use();
+               e.Use();
                break;
 
             // mouse events
@@ -982,23 +1120,23 @@ http://uscript.net
                   }
                   else
                   {
-                     if (_canvasRect.Contains(Event.current.mousePosition))
+                     if (_canvasRect.Contains(e.mousePosition))
                      {
                         m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
 
                         int button = 0;
 
-                        if (Event.current.button == 0) button = MouseButtons.Left;
-                        else if (Event.current.button == 1) button = MouseButtons.Right;
-                        else if (Event.current.button == 2) button = MouseButtons.Middle;
+                        if (e.button == 0) button = MouseButtons.Left;
+                        else if (e.button == 1) button = MouseButtons.Right;
+                        else if (e.button == 2) button = MouseButtons.Middle;
 
                         m_MouseDownArgs.Button = button;
-                        m_MouseDownArgs.X = (int)(Event.current.mousePosition.x);
+                        m_MouseDownArgs.X = (int)(e.mousePosition.x);
                         if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
-                        m_MouseDownArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+                        m_MouseDownArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
                      }
 
-                     if (Event.current.clickCount == 2)
+                     if (e.clickCount == 2)
                      {
                         OpenLogicNode();
                      }
@@ -1006,8 +1144,8 @@ http://uscript.net
                }
 
                // update the mouse move position whenever there's a click in case we were previously outside the window
-               m_MouseMoveArgs.X = (int)Event.current.mousePosition.x;
-               m_MouseMoveArgs.Y = (int)Event.current.mousePosition.y;
+               m_MouseMoveArgs.X = (int)e.mousePosition.x;
+               m_MouseMoveArgs.Y = (int)e.mousePosition.y;
 
                m_MouseDown = true;
                break;
@@ -1015,8 +1153,8 @@ http://uscript.net
             case EventType.MouseMove:
                // update mouse position
                m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
-               m_MouseMoveArgs.X = (int)Event.current.mousePosition.x;
-               m_MouseMoveArgs.Y = (int)Event.current.mousePosition.y;
+               m_MouseMoveArgs.X = (int)e.mousePosition.x;
+               m_MouseMoveArgs.Y = (int)e.mousePosition.y;
                if (m_MouseDownRegion == uScript.MouseRegion.Canvas)
                {
                   // this is the switch to use to turn off panel rendering while panning/marquee selecting
@@ -1030,14 +1168,14 @@ http://uscript.net
 
                   int button = 0;
 
-                  if (Event.current.button == 0) button = MouseButtons.Left;
-                  else if (Event.current.button == 1) button = MouseButtons.Right;
-                  else if (Event.current.button == 2) button = MouseButtons.Middle;
+                  if (e.button == 0) button = MouseButtons.Left;
+                  else if (e.button == 1) button = MouseButtons.Right;
+                  else if (e.button == 2) button = MouseButtons.Middle;
 
                   m_MouseUpArgs.Button = button;
-                  m_MouseUpArgs.X = (int)(Event.current.mousePosition.x);
+                  m_MouseUpArgs.X = (int)(e.mousePosition.x);
                   if (!m_HidePanelMode) m_MouseUpArgs.X -= _guiPanelPalette_Width;
-                  m_MouseUpArgs.Y = (int)(Event.current.mousePosition.y - _canvasRect.yMin);
+                  m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
                   if (m_PressedKey == KeyCode.S)
                   {
@@ -2929,12 +3067,12 @@ http://uscript.net
 
    public void DrawContextMenu(int x, int y)
    {
-      List<string> options = new List<string>();
-
-      foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
-      {
-         options.Add(item.Text);
-      }
+//      List<string> options = new List<string>();
+//
+//      foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
+//      {
+//         options.Add(item.Text);
+//      }
 
       Rect windowRect = new Rect(x, y, 10, 10);
       windowRect = GUILayout.Window(0, windowRect, DoContextMenu, "");
