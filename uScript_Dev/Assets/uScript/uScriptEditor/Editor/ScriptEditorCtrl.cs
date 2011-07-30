@@ -696,25 +696,27 @@ namespace Detox.ScriptEditor
          foreach (object obj in objects )
          {
             UnityEngine.GameObject gameObject = obj as UnityEngine.GameObject;
-            
+
             foreach ( UnityEngine.Component component in gameObject.GetComponents(typeof(UnityEngine.Component)) )
             {
                typeHash[ component.GetType().ToString() ] = true;
+//               UnityEngine.Debug.Log("Loop INSIDE: " + component.GetType().ToString() + "\n");
             }
 
             typeHash[ gameObject.GetType().ToString() ] = true;
+//            UnityEngine.Debug.Log("Loop AFTER: " + gameObject.GetType().ToString() + "\n");
          }
-   
-         string type         = typeof(UnityEngine.GameObject).ToString();
-         string friendlyName = uScriptConfig.Variable.FriendlyName(type);
 
-         ToolStripMenuItem friendlyMenu = null;
-         
-         friendlyMenu        = GetMenu(addMenu, "Place " + friendlyName + " Variable");
-         friendlyMenu.Tag    = new LocalNode( "", type, "" );
-         
-         //add a separator
-         friendlyMenu = GetMenu(addMenu, "<hr>");
+//         string type         = typeof(UnityEngine.GameObject).ToString();
+//         string friendlyName = uScriptConfig.Variable.FriendlyName(type);
+//
+//         ToolStripMenuItem friendlyMenu = null;
+//
+//         friendlyMenu        = GetMenu(addMenu, "Place Variable: " + friendlyName + " (???)");
+//         friendlyMenu.Tag    = new LocalNode( "", type, "" );
+//
+//         //add a separator
+//         friendlyMenu = GetMenu(addMenu, "<hr>");
 
          BuildAddMenu( addMenu, typeHash );
 
@@ -2177,11 +2179,16 @@ namespace Detox.ScriptEditor
 
       private void BuildAddMenu(ToolStripMenuItem addMenu, Hashtable typeHash)
       {
-         string sceneMenu = "Scene (" + System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene) + ")";
+         string sceneMenu = (typeHash == null
+                             ? "Scene (" + System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene) + ")"
+                             : "Place <other>");
 
+         //
+         // Submenu items: Events
+         //
          foreach ( EntityDesc desc in m_ScriptEditor.EntityDescs )
          {
-               //if we care about types, and this type isn't registered, ignore it
+            //if we care about types, and this type isn't registered, ignore it
             if ( null != typeHash && false == typeHash.Contains(desc.Type) ) continue;
 
             if ( desc.Events.Length > 0 )
@@ -2234,6 +2241,9 @@ namespace Detox.ScriptEditor
                }
             }
 
+            //
+            // Submenu items: Actions
+            //
             if ( desc.Methods.Length > 0 )
             {
                string categoryName = uScript.FindNodePath(sceneMenu + "/Actions", desc.Type);
@@ -2284,6 +2294,9 @@ namespace Detox.ScriptEditor
                }
             }
 
+            //
+            // Submenu items: Properties
+            //
             if ( desc.Properties.Length > 0 )
             {
                string categoryName = uScript.FindNodePropertiesPath(sceneMenu + "/Properties/" + desc.Type, desc.Type);
@@ -2318,15 +2331,29 @@ namespace Detox.ScriptEditor
             friendlyMenu.Click += new System.EventHandler(m_MenuAddNode_Click);
          }
 
+         //
+         // Variables
+         //
          foreach ( string type in m_ScriptEditor.Types )
          {
             //if we care about types, and this type isn't registered, ignore it
             if ( null != typeHash && false == typeHash.Contains(type) ) continue;
 
-            string categoryName = uScriptConfig.Variable.Category(type);
-            if ("" == categoryName) categoryName = sceneMenu + "/Variables";
-
             string friendlyName = uScriptConfig.Variable.FriendlyName(type);
+
+            string categoryName = uScriptConfig.Variable.Category(type);
+
+//            UnityEngine.Debug.Log("CategoryName BEFORE: " + categoryName + "/" + friendlyName + "\n");
+            if ("" == categoryName)
+            {
+               categoryName = sceneMenu + "/Variables";
+            }
+            else if (typeHash != null)
+            {
+               categoryName = string.Empty;
+            }
+
+//            UnityEngine.Debug.Log("CategoryName AFTER: " + categoryName + "/" + friendlyName + "\n");
 
             ToolStripMenuItem friendlyMenu = null;
             
@@ -2336,7 +2363,15 @@ namespace Detox.ScriptEditor
             }
             else
             {
-               friendlyMenu = GetMenu(addMenu, "Place " + friendlyName + " Variable");
+               if (categoryName == string.Empty)
+               {
+                  friendlyMenu = GetMenu(addMenu, "Place Variable: " + friendlyName.Replace("UnityEngine.", string.Empty));
+               }
+               else
+               {
+                  friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName.Replace("UnityEngine.", string.Empty));
+//                  friendlyMenu = GetMenu(addMenu, "Place Variable: " + friendlyName.Replace("UnityEngine.", string.Empty));
+               }
             }
 
             friendlyMenu.Tag = new LocalNode( "", type, "" );
