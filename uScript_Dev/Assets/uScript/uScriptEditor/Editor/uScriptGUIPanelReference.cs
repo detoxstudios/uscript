@@ -108,7 +108,6 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
             GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
-            GUILayout.FlexibleSpace();
 
             if (helpButtonURL == string.Empty)
             {
@@ -122,6 +121,11 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
             }
 
             uScriptGUI.enabled = true;
+
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonOnlineForum, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            {
+               Help.BrowseURL("http://uscript.net/forum");
+            }
          }
          EditorGUILayout.EndHorizontal();
 

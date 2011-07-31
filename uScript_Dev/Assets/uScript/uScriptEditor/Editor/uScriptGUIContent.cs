@@ -43,6 +43,7 @@ public static class uScriptGUIContent
       Preferences,
       Collapse,
       Expand,
+      OnlineForum,
       OnlineReference,
       MiniSearch,
       MiniToggle,
@@ -102,6 +103,11 @@ public static class uScriptGUIContent
       get { return _currentGUIContent[ContentID.Expand]; }
    }
 
+   public static GUIContent toolbarButtonOnlineForum
+   {
+      get { return _currentGUIContent[ContentID.OnlineForum]; }
+   }
+
    public static GUIContent toolbarButtonOnlineReference
    {
       get { return _currentGUIContent[ContentID.OnlineReference]; }
@@ -148,6 +154,7 @@ public static class uScriptGUIContent
       Default (ContentID.Preferences, "iconOptions", "Preferences", "Opens the preferences.");
       Default (ContentID.Collapse, "iconCollapse", string.Empty, "Collapse all node categories.");
       Default (ContentID.Expand, "iconExpand", string.Empty, "Expand all node categories.");
+      Default (ContentID.OnlineForum, string.Empty, "Forum", "Open the online forum in the default web browser.");
       Default (ContentID.OnlineReference, "iconOnlineReference", "Online Reference", "Open the online uScript reference in the default web browser.");
       
       Default (ContentID.MiniSearch, "iconMiniSearch", string.Empty, "Center the canvas on this node.");
