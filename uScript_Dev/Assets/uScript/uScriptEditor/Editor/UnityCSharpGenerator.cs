@@ -729,7 +729,7 @@ namespace Detox.ScriptEditor
             try
             {
                string [] subString = stringValue.Split( ',' );
-               return "new UnityEngine.Color( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + " )";
+               return "new UnityEngine.Color( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
             }
             catch ( Exception ) { return "UnityEngine.Color.black"; }
          }
@@ -864,7 +864,7 @@ namespace Detox.ScriptEditor
 
                for ( int i = 0; i < elements.Length; i += 3 )
                {
-                  declaration += "new UnityEngine.Color((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + "),";
+                  declaration += "new UnityEngine.Color((float)" + elements[i] + ", (float)" + elements[i+1] + ", (float)" + elements[i+2] + ", (float)" + elements[i+3] + "),";
                }
 
                declaration = declaration.Substring( 0, declaration.Length - 1 );
