@@ -2703,7 +2703,7 @@ namespace Detox.ScriptEditor
 
                   textPoint.Name = text;
                   textPoint.X =  x + xOffset + ((textLength.Width - valueLength.Width) / 2);
-                  textPoint.Y = (yStart - uScriptConfig.Style.PointSize - textLength.Height + uScriptConfig.Style.BottomSocketLabelGap) - valueLength.Height;
+                  textPoint.Y = Size.Height + valueLength.Height / 2;
                   textPoint.StyleName = "socket_text";
                   textPoints.Add( textPoint );              
                }
