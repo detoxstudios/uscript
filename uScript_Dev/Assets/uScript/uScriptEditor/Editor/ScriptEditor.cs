@@ -3042,6 +3042,50 @@ namespace Detox.ScriptEditor
          }
       }
 
+      public bool CanUpgradeNode( EntityNode oldNode )
+      {
+         bool canUpgrade = false;
+         if ( m_DeprecatedNodes.Contains(oldNode.Guid) )
+         {         
+            Type newType = uScript.GetNodeUpgradeType(oldNode);
+            if ( null == newType ) newType = uScript.MasterComponent.GetAssemblyQualifiedType(ScriptEditor.FindNodeType(oldNode));
+
+            if ( null != newType )
+            {               
+               foreach ( EntityDesc desc in EntityDescs )
+               {
+                  foreach ( EntityEvent eventNode in desc.Events )
+                  {
+                     if ( ScriptEditor.FindNodeType(eventNode) == newType.ToString( ) )
+                     {
+                        canUpgrade = true;
+                        break;
+                     }
+                  }
+               }
+
+               foreach ( LogicNode logicNode in LogicNodes )
+               {
+                  if ( ScriptEditor.FindNodeType(logicNode) == newType.ToString( ) )
+                  {
+                     canUpgrade = true;
+                     break;
+                  }
+               }
+            }
+            else
+            {
+               //if deprecated attribute exists then we can upgrade to a brand new type
+               if ( true == uScript.IsNodeTypeDeprecated(oldNode) )
+               {
+                  canUpgrade = true;
+               }
+            }
+         }
+
+         return canUpgrade;
+      }
+      
       public void UpgradeNode( EntityNode oldNode )
       {
          if ( m_DeprecatedNodes.Contains(oldNode.Guid) )

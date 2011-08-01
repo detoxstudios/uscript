@@ -1258,10 +1258,36 @@ namespace Detox.ScriptEditor
 
          foreach ( DisplayNode node in SelectedNodes )
          {
-            m_ScriptEditor.UpgradeNode( node.EntityNode );
+            if ( true == node.Deprecated )
+            {
+               if ( true == m_ScriptEditor.CanUpgradeNode(node.EntityNode) )
+               {
+                  m_ScriptEditor.UpgradeNode( node.EntityNode );
+               }
+            }
          }
 
          m_ChangeStack.AddChange( new ChangeStack.Change("Upgrade Node", oldEditor, m_ScriptEditor.Copy( )) );
+
+         RefreshScript( null );
+      }
+
+      public void m_MenuDeleteMissingNode_Click(object sender, EventArgs e)
+      {
+         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+
+         foreach ( DisplayNode node in SelectedNodes )
+         {
+            if ( true == node.Deprecated )
+            {
+               if ( false == m_ScriptEditor.CanUpgradeNode(node.EntityNode) )
+               {
+                  m_ScriptEditor.RemoveNode( node.EntityNode );
+               }
+            }
+         }
+
+         m_ChangeStack.AddChange( new ChangeStack.Change("Delete Missing Node", oldEditor, m_ScriptEditor.Copy( )) );
 
          RefreshScript( null );
       }
@@ -1935,12 +1961,14 @@ namespace Detox.ScriptEditor
          ToolStripMenuItem addMenu      = new ToolStripMenuItem();
          ToolStripMenuItem copyMenu     = new ToolStripMenuItem();
          ToolStripMenuItem pasteMenu    = new ToolStripMenuItem();
-         ToolStripMenuItem upgradeNode  = new ToolStripMenuItem();
          ToolStripMenuItem collapseMenu = new ToolStripMenuItem();
          ToolStripMenuItem expandMenu   = new ToolStripMenuItem();
          ToolStripMenuItem collapseAll  = new ToolStripMenuItem();
          ToolStripMenuItem expandAll    = new ToolStripMenuItem();
          ToolStripMenuItem selectActive = new ToolStripMenuItem();
+
+         ToolStripMenuItem upgradeNode       = new ToolStripMenuItem();
+         ToolStripMenuItem deleteMissingNode = new ToolStripMenuItem();
 
          m_ContextMenuStrip.Items.Add( addMenu );
          
@@ -2161,18 +2189,68 @@ namespace Detox.ScriptEditor
                m_ContextMenuStrip.Items.Add( selectActive );
             }
             
+            int canUpgrade = 0;
+
             foreach ( DisplayNode node in SelectedNodes )
             {
                if ( true == node.Deprecated )
                {
-                  upgradeNode.Name = "m_UpgradeNode";
-                  upgradeNode.Size = new System.Drawing.Size(152, 22);
-                  upgradeNode.Text = "Upgrade Node";
-                  upgradeNode.Click += new System.EventHandler(m_MenuUpgradeNode_Click);
-
-                  m_ContextMenuStrip.Items.Add( upgradeNode );
-                  break;
+                  if ( true == m_ScriptEditor.CanUpgradeNode(node.EntityNode) )
+                  {
+                     canUpgrade++;
+                     if ( canUpgrade > 1 ) break;
+                  }
                }
+            }
+
+            if ( canUpgrade > 0 )
+            {
+               upgradeNode.Name = "m_UpgradeNode";
+               upgradeNode.Size = new System.Drawing.Size(152, 22);
+               upgradeNode.Click += new System.EventHandler(m_MenuUpgradeNode_Click);
+
+               if ( canUpgrade > 1 )
+               {
+                  upgradeNode.Text = "Upgrade Nodes";
+               }
+               else
+               {
+                  upgradeNode.Text = "Upgrade Node";
+               }
+
+               m_ContextMenuStrip.Items.Add( upgradeNode );
+            }
+
+            int canDeleteMissing = 0;
+
+            foreach ( DisplayNode node in SelectedNodes )
+            {
+               if ( true == node.Deprecated )
+               {
+                  if ( false == m_ScriptEditor.CanUpgradeNode(node.EntityNode) )
+                  {
+                     canDeleteMissing++;
+                     if ( canDeleteMissing > 1 ) break;
+                  }
+               }
+            }
+
+            if ( canDeleteMissing > 0 )
+            {
+               deleteMissingNode.Name = "m_DeleteMissingNode";
+               deleteMissingNode.Size = new System.Drawing.Size(152, 22);
+               deleteMissingNode.Click += new System.EventHandler(m_MenuDeleteMissingNode_Click);
+
+               if ( canDeleteMissing > 1 )
+               {
+                  deleteMissingNode.Text = "Delete Missing Nodes";
+               }
+               else
+               {
+                  deleteMissingNode.Text = "Delete Missing Node";
+               }
+
+               m_ContextMenuStrip.Items.Add( deleteMissingNode );
             }
          }
       }
