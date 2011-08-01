@@ -1653,10 +1653,10 @@ namespace Detox.FlowChart
             float y = TextPoints[i].Y / 100.0f * Size.Height;
 
             //trapperm...
-            //we do Size.Height + 25 because we want some text to be able to hang off of the
+            //we do Size.Height + 14 because we want some text to be able to hang off of the
             //bottom of the node.  In a perfect world we would require a rect in the TextPoint struct
             //but I think that is too big of a chance for Retail Beta
-            GUI.Label( new Rect(x + location.X, y + location.Y, Size.Width - x, (Size.Height + 25) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
+            GUI.Label( new Rect(x + location.X, y + location.Y, Size.Width - x, (Size.Height + 14) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
          }
 
          if ( CanResize )

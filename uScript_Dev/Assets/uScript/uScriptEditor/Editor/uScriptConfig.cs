@@ -91,7 +91,8 @@ public partial class uScriptConfig
 public abstract class uScriptStyle
 {
    public abstract GUIStyle Get(string name);
-
+	
+   public abstract int SocketValueTextVerticalOffset { get; }		
    public abstract int BottomSocketLabelGapSize { get; }
    public abstract int BottomSocketBorderAdjustmentPad { get; }
    public abstract int SideSocketToBottomSocketPad { get; }
@@ -264,7 +265,7 @@ public class uScriptDefaultStyle : uScriptStyle
 
       element = new GUIStyle();
       element.normal.textColor = Color.black;
-      element.border.left = 17;
+      element.border.left = 26;
       element.border.right = 34;
       element.border.top = 26;
       element.border.bottom = 32;
@@ -281,7 +282,7 @@ public class uScriptDefaultStyle : uScriptStyle
 
       element = new GUIStyle();
       element.normal.textColor = Color.black;
-      element.border.left = 17;
+      element.border.left = 26;
       element.border.right = 34;
       element.border.top = 26;
       element.border.bottom = 32;
@@ -471,6 +472,23 @@ public class uScriptDefaultStyle : uScriptStyle
       element.fontStyle = FontStyle.Normal;
       element.fontSize = 0;
       m_Styles["title_comment"] = element;
+		
+	  element = new GUIStyle();
+      element.normal.textColor = new UnityEngine.Color(0.15f, 0.15f, 0.15f, 1f);//Color.black;
+      element.border.left = 6;
+      element.border.right = 6;
+      element.border.top = 6;
+      element.border.bottom = 6;
+      element.padding.left = 0;
+      element.padding.right = 0;
+      element.padding.top = -14;
+      element.padding.bottom = 0;
+      element.fixedHeight = 0f;
+      element.fixedWidth = 0f;
+      element.alignment = TextAnchor.UpperLeft;
+      element.fontStyle = FontStyle.Italic;
+      element.fontSize = 0;
+      m_Styles["value_text"] = element;
       
       element = new GUIStyle();
       element.wordWrap = true;
@@ -572,7 +590,10 @@ public class uScriptDefaultStyle : uScriptStyle
          return m_Styles[ "variable_default" ];
 	  }
    }
-
+	
+   //how many pixels between the variable socket and the value text (vertical)
+   public override int SocketValueTextVerticalOffset { get { return 10; } }
+	
    //how many pixels between variable socket labels (horizontal)
    public override int BottomSocketLabelGapSize { get { return 4; } }
 	

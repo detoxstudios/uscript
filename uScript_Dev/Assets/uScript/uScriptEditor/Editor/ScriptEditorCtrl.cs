@@ -2693,7 +2693,8 @@ namespace Detox.ScriptEditor
                textPoint.Y = (yStart - uScriptConfig.Style.PointSize - textLength.Height + uScriptConfig.Style.BottomSocketLabelGap);
                textPoint.StyleName = "socket_text";
                textPoints.Add( textPoint );
-            
+					
+               // Draw the socket value label under the socket
                if ( null != socket.DefaultValue )
                {
                   string text = socket.DefaultValue;
@@ -2703,8 +2704,8 @@ namespace Detox.ScriptEditor
 
                   textPoint.Name = text;
                   textPoint.X =  x + xOffset + ((textLength.Width - valueLength.Width) / 2);
-                  textPoint.Y = Size.Height + valueLength.Height / 2;
-                  textPoint.StyleName = "socket_text";
+                  textPoint.Y = Size.Height + uScriptConfig.Style.SocketValueTextVerticalOffset + valueLength.Height / 2;
+                  textPoint.StyleName = "value_text";
                   textPoints.Add( textPoint );              
                }
 
