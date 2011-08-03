@@ -215,18 +215,37 @@ public static class uScriptGUI
          //
          if (uScript.IsNodeTypeDeprecated(((DisplayNode)node).EntityNode) == false && m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(((DisplayNode)node).EntityNode))
          {
-            if (GUILayout.Button(uScriptGUIContent.listMiniUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+            if ( true == m_ScriptEditorCtrl.ScriptEditor.CanUpgradeNode(((DisplayNode)node).EntityNode) )
             {
-               System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
-               if (Click != null)
+               if (GUILayout.Button(uScriptGUIContent.listMiniUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
                {
-                  // clear all selected nodes first
-                  m_ScriptEditorCtrl.DeselectAll();
-                  // toggle the clicked node
-                  m_ScriptEditorCtrl.ToggleNode(node.Guid);
-                  Click(null, new EventArgs());
+                  System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
+                  if (Click != null)
+                  {
+                     // clear all selected nodes first
+                     m_ScriptEditorCtrl.DeselectAll();
+                     // toggle the clicked node
+                     m_ScriptEditorCtrl.ToggleNode(node.Guid);
+                     Click(null, new EventArgs());
+                  }
                }
             }
+            else
+            {
+               if (GUILayout.Button(uScriptGUIContent.listMiniDeleteMissing, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+               {
+                  System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
+                  if (Click != null)
+                  {
+                     // clear all selected nodes first
+                     m_ScriptEditorCtrl.DeselectAll();
+                     // toggle the clicked node
+                     m_ScriptEditorCtrl.ToggleNode(node.Guid);
+                     Click(null, new EventArgs());
+                  }
+               }
+            }
+
          }
 
 //         //

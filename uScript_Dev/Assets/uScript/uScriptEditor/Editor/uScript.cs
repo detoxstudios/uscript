@@ -1881,16 +1881,34 @@ http://uscript.net
 
                                     if (IsNodeTypeDeprecated(dn.EntityNode) == false && m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(dn.EntityNode))
                                     {
-                                       if (GUILayout.Button(uScriptGUIContent.listMiniUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+                                       if ( true == m_ScriptEditorCtrl.ScriptEditor.CanUpgradeNode(dn.EntityNode) )
                                        {
-                                          System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
-                                          if (Click != null)
+                                          if (GUILayout.Button(uScriptGUIContent.listMiniUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
                                           {
-                                             // clear all selected nodes first
-                                             m_ScriptEditorCtrl.DeselectAll();
-                                             // toggle the clicked node
-                                             m_ScriptEditorCtrl.ToggleNode(dn.Guid);
-                                             Click(this, new EventArgs());
+                                             System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
+                                             if (Click != null)
+                                             {
+                                                // clear all selected nodes first
+                                                m_ScriptEditorCtrl.DeselectAll();
+                                                // toggle the clicked node
+                                                m_ScriptEditorCtrl.ToggleNode(dn.Guid);
+                                                Click(this, new EventArgs());
+                                             }
+                                          }
+                                       }
+                                       else
+                                       {
+                                          if (GUILayout.Button(uScriptGUIContent.listMiniDeleteMissing, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+                                          {
+                                             System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
+                                             if (Click != null)
+                                             {
+                                                // clear all selected nodes first
+                                                m_ScriptEditorCtrl.DeselectAll();
+                                                // toggle the clicked node
+                                                m_ScriptEditorCtrl.ToggleNode(dn.Guid);
+                                                Click(this, new EventArgs());
+                                             }
                                           }
                                        }
                                     }
