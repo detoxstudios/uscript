@@ -554,6 +554,33 @@ public static class uScriptGUI
    }
 
 
+   public static string ChoiceField(string label, string value, string[] choices, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         int menuIndex = 0;
+         for (int i = 0; i < choices.Length; i++)
+         {
+            if (choices[i] == value)
+            {
+               menuIndex = i;
+            }
+         }
+         
+         //send the new value to the popup and whatever it
+         //returns (in case the user modified it here) is what our final value is
+         menuIndex = EditorGUILayout.Popup(menuIndex, choices, GUILayout.Width(_columnValue.Width));
+         value = choices[menuIndex];
+      }
+
+      EndRow(value.GetType().ToString());
+
+      return value;
+   }
+
+
    public static System.Enum EnumTextField(string label, System.Enum value, string textValue, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       EditorGUILayout.BeginVertical();

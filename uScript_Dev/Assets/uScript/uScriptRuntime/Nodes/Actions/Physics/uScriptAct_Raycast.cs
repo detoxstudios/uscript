@@ -28,7 +28,10 @@ public class uScriptAct_Raycast : uScriptLogic
 
    public void In(
       object Start, object End,
-      [FriendlyName("Layer Mask"), SocketState(false, false)] int LayerMask,
+      [FriendlyName("Layer Mask"), SocketState(false, false)] LayerMask layerMask,
+// TODO: Uncomment when array support is added
+//      [FriendlyName("Layer Masks"), SocketState(false, false)] LayerMask[] layerMasks,
+      [FriendlyName("Include Masked Layers"), DefaultValue(true), SocketState(false, false)] bool include,
       [FriendlyName("Hit GameObject")] out GameObject HitObject,
       [FriendlyName("Hit Distance")] out float HitDistance,
       [FriendlyName("Hit Location")] out Vector3 HitLocation,
@@ -41,6 +44,8 @@ public class uScriptAct_Raycast : uScriptLogic
       Vector3 tmpHitLocation = Vector3.zero;
       Vector3 tmpHitNormal = new Vector3(0, 1, 0);
       GameObject tmpHitObject = null;
+      // TODO: Remove the following line when array support is added
+      LayerMask[] layerMasks = new LayerMask[] { layerMask };
  
       if (typeof(GameObject) == Start.GetType() || typeof(Vector3) == Start.GetType())
       {
@@ -85,28 +90,21 @@ public class uScriptAct_Raycast : uScriptLogic
          Vector3 finalDirection = (m_EndVector - m_StartVector).normalized;
          float castDistance = Vector3.Distance(m_StartVector, m_EndVector);
          RaycastHit hit;
-
-         if (LayerMask <= 0)
+         int bitmask = 0;
+         
+         foreach (LayerMask mask in layerMasks)
          {
-            if (Physics.Raycast(m_StartVector, finalDirection, out hit, castDistance))
-            {
-               tmpHitDistance = hit.distance;
-               tmpHitLocation = hit.point;
-               tmpHitObject = hit.collider.gameObject;
-               tmpHitNormal = hit.normal;
-               hitTrue = true;
-            }
+            bitmask |= 1 << mask;
          }
-         else
+         if (!include) bitmask = ~bitmask;
+
+         if (Physics.Raycast(m_StartVector, finalDirection, out hit, castDistance, bitmask))
          {
-            if (Physics.Raycast(m_StartVector, finalDirection, out hit, castDistance, LayerMask))
-            {
-               tmpHitDistance = hit.distance;
-               tmpHitLocation = hit.point;
-               tmpHitObject = hit.collider.gameObject;
-               tmpHitNormal = hit.normal;
-               hitTrue = true;
-            }
+            tmpHitDistance = hit.distance;
+            tmpHitLocation = hit.point;
+            tmpHitObject = hit.collider.gameObject;
+            tmpHitNormal = hit.normal;
+            hitTrue = true;
          }
       }
 

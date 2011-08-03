@@ -19,16 +19,11 @@ public class uScriptAct_CheckLayerCollision : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In([FriendlyName("Layer A")] int LayerA, [FriendlyName("Layer B")] int LayerB, out bool Result)
+   public void In([FriendlyName("Layer A")] LayerMask LayerA, [FriendlyName("Layer B")] LayerMask LayerB, out bool Result)
    {
-      if (LayerA < 0) { LayerA = 0; }
-      if (LayerA > 31) { LayerA = 31; }
-      if (LayerB < 0) { LayerB = 0; }
-      if (LayerB > 31) { LayerB = 31; }
-
       if (LayerA != LayerB)
       {
-         Result = Physics.GetIgnoreLayerCollision(LayerA, LayerB);
+         Result = Physics.GetIgnoreLayerCollision(1 >> LayerA, 1 >> LayerB);
       }
       else
       {

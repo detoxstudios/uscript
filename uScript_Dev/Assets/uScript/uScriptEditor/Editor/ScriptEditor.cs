@@ -202,6 +202,17 @@ namespace Detox.ScriptEditor
                   return new Quaternion(0, 0, 0, 0);
                }
             }
+            if ( type == "UnityEngine.LayerMask" )
+            {
+               try
+               {
+                  return (UnityEngine.LayerMask)Int32.Parse(Default);
+               }
+               catch
+               {
+                  return (UnityEngine.LayerMask)0;
+               }
+            }
             if ( type == "String" )
             {
                return Default;

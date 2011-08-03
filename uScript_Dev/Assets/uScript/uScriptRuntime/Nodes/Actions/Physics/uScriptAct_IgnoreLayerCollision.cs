@@ -19,16 +19,11 @@ public class uScriptAct_IgnoreLayerCollision : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In([FriendlyName("Layer A")] int LayerA, [FriendlyName("Layer B")] int LayerB, [DefaultValue(true), SocketState(false, false)] bool Ignore)
+   public void In([FriendlyName("Layer A")] LayerMask LayerA, [FriendlyName("Layer B")] LayerMask LayerB, [DefaultValue(true), SocketState(false, false)] bool Ignore)
    {
-      if (LayerA < 0) { LayerA = 0; }
-      if (LayerA > 31) { LayerA = 31; }
-      if (LayerB < 0) { LayerB = 0; }
-      if (LayerB > 31) { LayerB = 31; }
-
       if (LayerA != LayerB)
       {
-         Physics.IgnoreLayerCollision(LayerA, LayerB, Ignore);
+         Physics.IgnoreLayerCollision(1 << LayerA, 1 << LayerB, Ignore);
       }
    }
 }

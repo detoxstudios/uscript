@@ -745,6 +745,15 @@ namespace Detox.ScriptEditor
          {
             return "new UnityEngine.NetworkPlayer( )";
          }
+         else if ( "UnityEngine.LayerMask" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "0";
+            }
+
+            return stringValue;
+         }
          else if ( type.Contains("[]") )
          {
             return FormatArrayValue( stringValue, type );

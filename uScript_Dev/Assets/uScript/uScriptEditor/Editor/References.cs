@@ -254,6 +254,33 @@ namespace System.Windows.Forms
                      {
                         val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color) val, ref isSocketExposed, isLocked, isReadOnly);
                      }
+                     else if ( typeof(UnityEngine.LayerMask).IsAssignableFrom(val.GetType()) )
+                     {
+                        UnityEngine.LayerMask mask = (UnityEngine.LayerMask)val;
+                        string layerValue = UnityEngine.LayerMask.LayerToName(mask);
+               
+                        // build layer list
+                        List<string> layerList = new List<string>();
+                        for (int i = 0; i < 32; i++)
+                        {
+                           if (!string.IsNullOrEmpty(UnityEngine.LayerMask.LayerToName(i)))
+                           {
+                              layerList.Add(UnityEngine.LayerMask.LayerToName(i));
+                           }
+                        }
+                        
+                        string returnedName = uScriptGUI.ChoiceField(p.FriendlyName, layerValue, layerList.ToArray(), ref isSocketExposed, isLocked, isReadOnly);
+                        
+                        for (int i = 0; i < 32; i++)
+                        {
+                           string name = UnityEngine.LayerMask.LayerToName(i);
+                           if (!string.IsNullOrEmpty(name) && returnedName == name)
+                           {
+                              val = UnityEngine.LayerMask.NameToLayer(returnedName);
+                              break;
+                           }
+                        }
+                     }
                      else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
                      {
                         val = uScriptGUI.EnumTextField(p.FriendlyName, (System.Enum) val, p.Default, ref isSocketExposed, isLocked, isReadOnly);

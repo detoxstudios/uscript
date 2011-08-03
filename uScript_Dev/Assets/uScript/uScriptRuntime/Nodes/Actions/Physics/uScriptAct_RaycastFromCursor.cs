@@ -25,7 +25,10 @@ public class uScriptAct_RaycastFromCursor : uScriptLogic
    public void In(
       Camera Camera,
       [FriendlyName("Distance"), SocketState(false, false), DefaultValue(100f)] float Distance,
-      [FriendlyName("Layer Mask"), SocketState(false, false)] int LayerMask,
+      [FriendlyName("Layer Mask"), SocketState(false, false)] LayerMask layerMask,
+// TODO: Uncomment when array support is added
+//      [FriendlyName("Layer Masks"), SocketState(false, false)] LayerMask[] layerMasks,
+      [FriendlyName("Include Masked Layers"), DefaultValue(true), SocketState(false, false)] bool include,
       [FriendlyName("Hit GameObject")] out GameObject HitObject,
       [FriendlyName("Hit Distance"), SocketState(false, false)] out float HitDistance,
       [FriendlyName("Hit Location")] out Vector3 HitLocation,
@@ -37,34 +40,29 @@ public class uScriptAct_RaycastFromCursor : uScriptLogic
       Vector3 tmpHitLocation = Vector3.zero;
       Vector3 tmpHitNormal = new Vector3(0, 1, 0);
       GameObject tmpHitObject = null;
+      // TODO: Remove the following line when array support is added
+      LayerMask[] layerMasks = new LayerMask[] { layerMask };
 
       Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
 
       if (Distance <= 0) Distance = Mathf.Infinity;
       float castDistance = Distance;
       RaycastHit hit;
-
-      if (LayerMask <= 0)
+      int bitmask = 0;
+      
+      foreach (LayerMask mask in layerMasks)
       {
-         if (Physics.Raycast(ray.origin, ray.direction, out hit, castDistance))
-         {
-            tmpHitDistance = hit.distance;
-            tmpHitLocation = hit.point;
-            tmpHitObject = hit.collider.gameObject;
-            tmpHitNormal = hit.normal;
-            hitTrue = true;
-         }
+         bitmask |= 1 << mask;
       }
-      else
+      if (!include) bitmask = ~bitmask;
+
+      if (Physics.Raycast(ray.origin, ray.direction, out hit, castDistance, bitmask))
       {
-         if (Physics.Raycast(ray.origin, ray.direction, out hit, castDistance, LayerMask))
-         {
-            tmpHitDistance = hit.distance;
-            tmpHitLocation = hit.point;
-            tmpHitObject = hit.collider.gameObject;
-            tmpHitNormal = hit.normal;
-            hitTrue = true;
-         }
+         tmpHitDistance = hit.distance;
+         tmpHitLocation = hit.point;
+         tmpHitObject = hit.collider.gameObject;
+         tmpHitNormal = hit.normal;
+         hitTrue = true;
       }
       
       HitDistance = tmpHitDistance;
