@@ -10,7 +10,16 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Performs a ray trace from the starting point to the end point. Returns any hit data.")]
-[NodeDescription("Performs a ray trace from the starting point to the end point, determines if anything was hit along the way, and fires the associated output link.\n \nStart: The start point of the ray cast. Must be a GameObject or Vector3.\nEnd: The end point of the ray cast. Must be a GameObject or Vector3.\nLayer Mask: A Layer mask that is used to selectively ignore colliders when casting a ray.\nHit GameObject: The first GameObject that was hit by the raycast (if any).\nHit Distance: The distance along the ray that the hit occured (if any).\nHit Location: The position of the hit (if any).\nHit Normal: The surface normal of the hit (if any).")]
+[NodeDescription("Performs a ray trace from the starting point to the end point, determines if anything was hit along the way, and fires the associated output link.\n \n" +
+                  "Start: The start point of the ray cast. Must be a GameObject or Vector3.\n" +
+                  "End: The end point of the ray cast. Must be a GameObject or Vector3.\n" +
+                  "Layer Mask: A Layer mask that is used to selectively ignore colliders when casting a ray.\n" +
+                  "Include Masked Layers: If true the ray will test against the masked layers, if false it will test against all layers excluding the masked layers.\n" +
+                  "Show Ray: If true the ray will be displayed as a line in the Scene view.\n" +
+                  "Hit GameObject: The first GameObject that was hit by the raycast (if any).\n" +
+                  "Hit Distance: The distance along the ray that the hit occured (if any).\n" +
+                  "Hit Location: The position of the hit (if any).\n" +
+                  "Hit Normal: The surface normal of the hit (if any).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Raycast")]
 
@@ -32,6 +41,7 @@ public class uScriptAct_Raycast : uScriptLogic
 // TODO: Uncomment when array support is added
 //      [FriendlyName("Layer Masks"), SocketState(false, false)] LayerMask[] layerMasks,
       [FriendlyName("Include Masked Layers"), DefaultValue(true), SocketState(false, false)] bool include,
+      [FriendlyName("Show Ray"), SocketState(false, false)] bool showRay,
       [FriendlyName("Hit GameObject")] out GameObject HitObject,
       [FriendlyName("Hit Distance")] out float HitDistance,
       [FriendlyName("Hit Location")] out Vector3 HitLocation,
@@ -98,6 +108,10 @@ public class uScriptAct_Raycast : uScriptLogic
          }
          if (!include) bitmask = ~bitmask;
 
+         if (true == showRay)
+         {
+            Debug.DrawLine(m_StartVector, m_StartVector + (finalDirection * castDistance));
+         }
          if (Physics.Raycast(m_StartVector, finalDirection, out hit, castDistance, bitmask))
          {
             tmpHitDistance = hit.distance;

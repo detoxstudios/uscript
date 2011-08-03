@@ -15,6 +15,8 @@ Cast a ray from the specified screen location (in pxiels) out into the scene, de
 \nPosition: The X and Y position (in pixels) to raycast from. Acceptable values are from the screen's minimum X and Y (0,0) to the maximum current X and Y screen resolution values (values outside this range will be capped).
 \nDistance: How far out to cast the ray.
 \nLayer Mask: A Layer mask that is used to selectively ignore colliders when casting a ray.
+\nInclude Masked Layers: If true the ray will test against the masked layers, if false it will test against all layers excluding the masked layers.
+\nShow Ray: If true the ray will be displayed as a line in the Scene view.
 \nHit GameObject: The first GameObject that was hit by the raycast (if any).
 \nHit Distance: The distance along the ray that the hit occured (if any).
 \nHit Location: The position of the hit (if any).
@@ -40,6 +42,7 @@ public class uScriptAct_RaycastFromScreenPoint : uScriptLogic
 // TODO: Uncomment when array support is added
 //      [FriendlyName("Layer Masks"), SocketState(false, false)] LayerMask[] layerMasks,
       [FriendlyName("Include Masked Layers"), DefaultValue(true), SocketState(false, false)] bool include,
+      [FriendlyName("Show Ray"), SocketState(false, false)] bool showRay,
       [FriendlyName("Hit GameObject")] out GameObject HitObject,
       [FriendlyName("Hit Distance"), SocketState(false, false)] out float HitDistance,
       [FriendlyName("Hit Location")] out Vector3 HitLocation,
@@ -67,6 +70,10 @@ public class uScriptAct_RaycastFromScreenPoint : uScriptLogic
       }
       if (!include) bitmask = ~bitmask;
 
+      if (true == showRay)
+      {
+         Debug.DrawLine(ray.origin, ray.origin + (ray.direction * castDistance));
+      }
       if (Physics.Raycast(ray.origin, ray.direction, out hit, castDistance, bitmask))
       {
          tmpHitDistance = hit.distance;
