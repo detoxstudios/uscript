@@ -678,7 +678,11 @@ public static class uScriptGUI
    {
       T[] newArray = array;
       int arraySize;
+      string type;
       Vector2 v;
+
+
+
 
       if (_modifiedValue.ContainsKey(label))
       {
@@ -690,22 +694,56 @@ public static class uScriptGUI
          _modifiedValue.Add(label, arraySize);
       }
 
+
+
+
+      //
+      // The Foldout row
+      //
       EditorGUILayout.BeginHorizontal();
       {
-         GUILayout.Space(_columnEnabled.Width + 4);
-         foldout = GUILayout.Toggle(foldout, label, EditorStyles.foldout);
-
-         if (foldout)
+         // Display the socket toggle
+         if (isSocketExposed == false && isLocked)
          {
-            GUILayout.Space(_columnValue.Width + 4);
+            GUILayout.Space(_columnEnabled.Width + 4);
          }
          else
          {
-            GUILayout.Label("(" + arraySize + " item" + (arraySize==1 ? string.Empty : "s") + ")", _styleLabel, GUILayout.Width(_columnValue.Width));
+            uScriptGUI.enabled = false == isLocked;
+            isSocketExposed = GUILayout.Toggle(isSocketExposed, string.Empty, _styleEnabled, GUILayout.Width(_columnEnabled.Width));
+            uScriptGUI.enabled = true;
          }
-//         GUILayout.Label(array.GetType().ToString(), GUILayout.ExpandWidth(true));
 
-         string type = array.GetType().ToString();
+         // Display the foldout
+         EditorGUIUtility.LookLikeControls(_columnLabel.Width);
+
+         if (isSocketExposed && isLocked || isReadOnly)
+         {
+            EditorGUILayout.PrefixLabel(label, _styleLabel);
+         }
+         else
+         {
+            foldout = GUILayout.Toggle(foldout, label, EditorStyles.foldout, GUILayout.Width(_columnLabel.Width - 3));
+         }
+
+         uScriptGUI.enabled = (! isReadOnly) && (! isSocketExposed || ! isLocked);
+
+         // Display the array info, readonly, socketUsed, or an empty area
+         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         {
+            if (foldout)
+            {
+               GUILayout.Space(_columnValue.Width + 4);
+            }
+            else
+            {
+               GUILayout.Label("(" + arraySize + " item" + (arraySize==1 ? string.Empty : "s") + ")", _styleLabel, GUILayout.Width(_columnValue.Width));
+            }
+
+         }
+
+         // Display the type column
+         type = array.GetType().ToString().Replace("UnityEngine.", string.Empty);
          v = _styleType.CalcSize(new GUIContent(type));
          _columnType.Width = Mathf.Max(_columnType.Width, (int)v.x);
 
@@ -714,20 +752,18 @@ public static class uScriptGUI
       }
       EditorGUILayout.EndHorizontal();
 
-
+      //
+      // The array size
+      //
       EditorGUILayout.BeginVertical();
       {
          if (foldout)
          {
+            bool hideSocket = false;
+
             EditorGUI.indentLevel += 3;
 
-            BeginRow("Size", ref isSocketExposed, true, true);
-
-
-
-
-
-
+            BeginRow("Size", ref hideSocket, true, false);
 
             GUI.SetNextControlName(label+"_ArraySize");
             arraySize = EditorGUILayout.IntField(arraySize, GUILayout.Width(_columnValue.Width));
@@ -749,8 +785,6 @@ public static class uScriptGUI
                {
                   Debug.Log("=============== '"+Event.current.keyCode.ToString()+"' was pressed\n");
                }
-
-
             }
 
 //            if (_focusedControl != GUI.GetNameOfFocusedControl())
@@ -777,22 +811,12 @@ public static class uScriptGUI
                _modifiedValue[label] = arraySize;
             }
 
-
-
-
-
-
-
-            v = _styleType.CalcSize(new GUIContent(arraySize.GetType().ToString()));
-            _columnType.Width = Mathf.Max(_columnType.Width, (int)v.x);
-
+            // Display the type column
             EndRow(arraySize.GetType().ToString());
 
-
-
-
-
-
+            //
+            // The elements
+            //
             for (int i = 0; i < newArray.Length; i++)
             {
                T entry = default(T);
@@ -800,26 +824,11 @@ public static class uScriptGUI
                {
                   entry = array[i];
                }
-               bool tmpBool = true;
-               newArray[i] = PropertyRow<T>("Element " + i, entry, ref tmpBool, true, true);
+               newArray[i] = PropertyRow<T>("Element " + i, entry, ref hideSocket, true, false);
             }
 
             EditorGUI.indentLevel -= 3;
          }
-
-
-
-
-         ////EditorGUIUtility.LookLikeControls();
-
-
-         //   EditorGUILayout.Space();
-         //   EditorGUILayout.BeginVertical();
-
-         //   EditorGUILayout.EndVertical();
-
-
-
       }
       EditorGUILayout.EndVertical();
 
@@ -839,30 +848,119 @@ public static class uScriptGUI
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
+      object t = value;
+      string typeFormat = string.Empty;
+
       if (value is int)
       {
+         t = EditorGUILayout.IntField((int)t, GUILayout.Width(_columnValue.Width));
       }
       else if (value is float)
       {
+         t = EditorGUILayout.FloatField((float)t, GUILayout.Width(_columnValue.Width));
       }
       else if (value is string)
       {
+         t = EditorGUILayout.TextField((string)t, GUILayout.Width(_columnValue.Width));
       }
       else if (value is bool)
       {
+         t = EditorGUILayout.Toggle((bool)t, GUILayout.Width(_columnValue.Width));
       }
       else if (value is System.Enum)
       {
-         object t = value;
          t = EditorGUILayout.EnumPopup((System.Enum)t, GUILayout.Width(_columnValue.Width));
-         value = (T)t;
+      }
+      else if (value is Color)
+      {
+         t = EditorGUILayout.ColorField((Color)t, GUILayout.Width(_columnValue.Width));
+      }
+      else if (value is Vector2)
+      {
+         Vector2 val = (Vector2)t;
+
+         int spacing = 4; // 4 * 1
+         int w = (_columnValue.Width - spacing) / 2;
+         int p = (_columnValue.Width - spacing) % (w * 2);
+
+         val.x = EditorGUILayout.FloatField(val.x, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, GUILayout.Width(w + p));
+         typeFormat = " [X, Y]";
+
+         t = val;
+      }
+      else if (value is Vector3)
+      {
+         Vector3 val = (Vector3)t;
+
+         int spacing = 8; // 4 * 2
+         int w = (_columnValue.Width - spacing) / 3;
+         int p = (_columnValue.Width - spacing) % (w * 3);
+         val.x = EditorGUILayout.FloatField(val.x, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, GUILayout.Width(w));
+         val.z = EditorGUILayout.FloatField(val.z, GUILayout.Width(w + p));
+         typeFormat = " [X, Y, Z]";
+
+         t = val;
+      }
+      else if (value is Vector4)
+      {
+         Vector4 val = (Vector4)t;
+
+         int spacing = 12; // 4 * 3
+         int w = (_columnValue.Width - spacing) / 4;
+         int p = (_columnValue.Width - spacing) % (w * 4);
+         val.x = EditorGUILayout.FloatField(val.x, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, GUILayout.Width(w));
+         val.z = EditorGUILayout.FloatField(val.z, GUILayout.Width(w));
+         val.w = EditorGUILayout.FloatField(val.w, GUILayout.Width(w + p));
+         typeFormat = " [X, Y, Z, W]";
+
+         t = val;
+      }
+      else if (value is Rect)
+      {
+         Rect val = (Rect)t;
+
+         int spacing = 12; // 4 * 3
+         int w = (_columnValue.Width - spacing) / 4;
+         int p = (_columnValue.Width - spacing) % (w * 4);
+         val.x = EditorGUILayout.FloatField(val.x, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, GUILayout.Width(w));
+         val.width = EditorGUILayout.FloatField(val.width, GUILayout.Width(w));
+         val.height = EditorGUILayout.FloatField(val.height, GUILayout.Width(w + p));
+         typeFormat = " [X, Y, W, H]";
+
+         t = val;
+      }
+      else if (value is Quaternion)
+      {
+         Quaternion val = (Quaternion)t;
+
+         int spacing = 12; // 4 * 3
+         int w = (_columnValue.Width - spacing) / 4;
+         int p = (_columnValue.Width - spacing) % (w * 4);
+         val.x = EditorGUILayout.FloatField(val.x, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, GUILayout.Width(w));
+         val.z = EditorGUILayout.FloatField(val.z, GUILayout.Width(w));
+         val.w = EditorGUILayout.FloatField(val.w, GUILayout.Width(w + p));
+         typeFormat = " [X, Y, Z, W]";
+
+         t = val;
+      }
+      else if (value is UnityEngine.Object)
+      {
+         Debug.LogWarning("Arrays of Object[] are not handled yet!\n");
       }
       else
       {
+         Debug.LogWarning("Unhandled array type!\n");
          //throw System.ArgumentException("Unhandled type: " + value.GetType().ToString());
       }
 
-      EndRow(value.GetType().ToString());
+      value = (T)t;
+
+      EndRow(value.GetType().ToString() + typeFormat);
       return value;
    }
 
