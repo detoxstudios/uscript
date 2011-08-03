@@ -48,7 +48,7 @@ public static class uScriptGUIContent
       MiniSearch,
       MiniToggle,
       MiniUpgrade,
-      MiniDeleteMissing,
+      MiniDelete,
    }
 
    private static Dictionary<ContentID, GUIContent> _defaultGUIContent = new Dictionary<ContentID, GUIContent> ();
@@ -131,7 +131,7 @@ public static class uScriptGUIContent
 
    public static GUIContent listMiniDeleteMissing
    {
-      get { return _currentGUIContent[ContentID.MiniDeleteMissing]; }
+      get { return _currentGUIContent[ContentID.MiniDelete]; }
    }
 
    public static void Init (ContentStyle toolbarButtonStyle)
@@ -166,7 +166,7 @@ public static class uScriptGUIContent
       Default (ContentID.MiniSearch, "iconMiniSearch", string.Empty, "Center the canvas on this node.");
       Default (ContentID.MiniToggle, "iconMiniToggle", string.Empty, "Toggle socket visibility on this node (Show All or Hide Unused).");
       Default (ContentID.MiniUpgrade, "iconMiniUpgrade", string.Empty, "Upgrade this deprecated node.");
-      Default (ContentID.MiniDeleteMissing, "iconMiniDeleteMissing", string.Empty, "Delete this missing node.");
+      Default (ContentID.MiniDelete, "iconMiniDelete", string.Empty, "Delete this missing node.");
    }
 
    private static void Default (ContentID id, string imageFilename, string text, string tooltip)
