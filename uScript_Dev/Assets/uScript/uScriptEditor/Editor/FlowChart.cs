@@ -1169,7 +1169,7 @@ namespace Detox.FlowChart
                   break;
                }
 					
-               if (!node.Selected && node.IsVisible(visibleRect))
+               if ((!node.Selected || node.StyleName.Contains("comment")) && node.IsVisible(visibleRect))
                {
                   node.OnPaint(e);
                }
@@ -1187,7 +1187,7 @@ namespace Detox.FlowChart
                   break;
                }
                
-               if (node.Selected && node.IsVisible(visibleRect))
+               if ((node.Selected && !node.StyleName.Contains("comment")) && node.IsVisible(visibleRect))
                {
                   node.OnPaint(e);
                }
@@ -1320,7 +1320,7 @@ namespace Detox.FlowChart
             Node node = Controls[i] as Node;
             if (node != null)
             {
-               if (node.Selected)
+               if (node.Selected && node.StyleName.Contains("comment"))
                {
                   if (node.IsVisible(visibleRect))
                   {
