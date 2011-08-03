@@ -1320,7 +1320,7 @@ namespace Detox.FlowChart
             Node node = Controls[i] as Node;
             if (node != null)
             {
-               if (node.Selected && node.StyleName.Contains("comment"))
+               if (node.Selected && !node.StyleName.Contains("comment"))
                {
                   if (node.IsVisible(visibleRect))
                   {
