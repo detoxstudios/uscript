@@ -868,11 +868,6 @@ http://uscript.net
    }
 
 
-
-
-
-
-
    void OnGUI()
    {
       //
@@ -886,6 +881,11 @@ http://uscript.net
          if (position.width < minSize.width || position.height < minSize.height)
          {
             position = minSize;
+         }
+
+         if (Preferences.ShowAtStartup)
+         {
+            WelcomeWindow.Init();
          }
       }
 

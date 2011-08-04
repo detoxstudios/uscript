@@ -1,10 +1,9 @@
 using UnityEditor;
 using UnityEngine;
-using System.Collections;
 
 public class PreferenceWindow : EditorWindow
 {
-   const int _labelWidth = 180;
+   const int _labelWidth = 200;
    const int _valueWidth = 110;
 
    const int _minGridSize = 8;
@@ -134,34 +133,34 @@ public class PreferenceWindow : EditorWindow
 
          string path = uScriptConfig.ConstantPaths.RelativePath(_preferences.UserScripts);
          if (path.Length > 64) path = path.Substring(0, 64) + "...";
-   
+
          if (GUILayout.Button(path, uScriptGUIStyle.ContextMenu))
          {
             path = EditorUtility.OpenFolderPanel("uScript Project Files", _preferences.UserScripts, "");
             if ("" != path) _preferences.UserScripts = path;
          }
-   
+
          EditorGUILayout.Separator();
-   
+
          //
          // Code Generation Settings
          //
          GUILayout.Label("CodeGeneration", EditorStyles.boldLabel);
-   
+
          _preferences.MaximumNodeRecursionCount = (int)EditorGUILayout.IntField("Maximum Node Recursion", _preferences.MaximumNodeRecursionCount);
-   
+
          EditorGUILayout.Separator();
-   
+
          //
          // Panel Settings
          //
          GUILayout.Label("Panel Settings", EditorStyles.boldLabel);
-   
+
          _preferences.DrawPanelsOnUpdate = EditorGUILayout.Toggle("Draw Panels During Update", _preferences.DrawPanelsOnUpdate);
          _preferences.ToolbarButtonStyle = (int)(uScriptGUIContent.ContentStyle)EditorGUILayout.EnumPopup("Toolbar Button Style", (uScriptGUIContent.ContentStyle)_preferences.ToolbarButtonStyle);
-   
+
          EditorGUILayout.Separator();
-   
+
          //
          // Grid Settings
          //
@@ -173,21 +172,22 @@ public class PreferenceWindow : EditorWindow
          _preferences.GridMajorLineSpacing = Mathf.Min(_maxGridMagicSpacing, Mathf.Max(_minGridMajorSpacing, EditorGUILayout.IntField("Grid Major Line Spacing", _preferences.GridMajorLineSpacing)));
          _preferences.GridColorMajor = EditorGUILayout.ColorField("Grid Color Major", _preferences.GridColorMajor);
          _preferences.GridColorMinor = EditorGUILayout.ColorField("Grid Color Minor", _preferences.GridColorMinor);
-   
+
          EditorGUILayout.Separator();
-   
+
          //
          // Misc Settings
          //
          GUILayout.Label("Miscellaneous Settings", EditorStyles.boldLabel);
-   
+
          _preferences.VariableExpansion = (Preferences.VariableExpansionType)EditorGUILayout.EnumPopup("Variable Expansion Mode", _preferences.VariableExpansion);
-   
+         _preferences.ShowAtStartup = EditorGUILayout.Toggle("Show Welcome Window at Startup", _preferences.ShowAtStartup);
+
          EditorGUILayout.Separator();
          EditorGUILayout.Space();
          EditorGUILayout.Separator();
-   
-   
+
+
          //revert to default
          if (GUILayout.Button("Revert All Settings to Default Values"))
          {
@@ -214,7 +214,7 @@ public class PreferenceWindow : EditorWindow
             }
          }
          EditorGUILayout.EndHorizontal();
-   
+
          EditorGUI.indentLevel = 0;
       }
       EditorGUILayout.EndVertical();

@@ -99,6 +99,12 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "VariableExpansion" ] = value; }
    }
 
+   public bool ShowAtStartup
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "ShowAtStartup" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "ShowAtStartup" ] = value; }
+   }
+
    private Hashtable m_Preferences = null;  
 
    public void Revert( )
@@ -140,6 +146,7 @@ public class Preferences
       if ( null == m_Preferences[ "GridColorMajor" ] )       m_Preferences[ "GridColorMajor" ]       = uScriptConfig.Style.GridColorMajor;
       if ( null == m_Preferences[ "GridColorMinor" ] )       m_Preferences[ "GridColorMinor" ]       = uScriptConfig.Style.GridColorMinor;
       if ( null == m_Preferences[ "VariableExpansion" ] )    m_Preferences[ "VariableExpansion" ]    = VariableExpansionType.Dynamic;
+      if ( null == m_Preferences[ "ShowAtStartup" ] )        m_Preferences[ "ShowAtStartup" ]        = true;
 
       if ( null == m_Preferences[ "MaximumNodeRecursionCount" ] )m_Preferences[ "MaximumNodeRecursionCount" ]= 1000;
    }
