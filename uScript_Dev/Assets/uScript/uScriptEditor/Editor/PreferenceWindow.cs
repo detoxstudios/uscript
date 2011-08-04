@@ -85,17 +85,38 @@ public class PreferenceWindow : EditorWindow
 
    void OnGUI()
    {
-      if (_firstRun && _position != new Rect())
+      if (_firstRun)
       {
          _firstRun = false;
 
          // Force the window to a position relative to the uScript window
-         this.position = new Rect(uScript.Instance.position.x + 50, uScript.Instance.position.y + 50, 0, 0);
-
-         // Set the min and max window dimensions to prevent resizing
-         window.minSize = new Vector2(_position.width + _padding.left + _padding.right, _position.height + _padding.top + _padding.bottom);
-         window.maxSize = window.minSize;
+         base.position = new Rect(uScript.Instance.position.x + 50, uScript.Instance.position.y + 50, 0, 0);
       }
+
+      if (_position != new Rect())
+      {
+         // Set the min and max window dimensions to prevent resizing
+         base.minSize = new Vector2(_position.width + _padding.left + _padding.right, _position.height + _padding.top + _padding.bottom);
+         base.maxSize = base.minSize;
+      }
+
+//      if (_position != new Rect() && base.position.width != s_WantSize.x || base.position.height != s_WantSize.y)
+//      if (_position != new Rect())
+//      {
+//         Rect position = base.position;
+//         position.width = _position.x;
+//         position.height = _position.y;
+//         base.position = position;
+//         base.minSize = new Vector2(_position.width + _padding.left + _padding.right, _position.height + _padding.top + _padding.bottom);
+//         base.maxSize = base.minSize;
+//      }
+
+
+
+
+
+
+
 
       // Get the Preferences
       _preferences = uScript.Preferences;
