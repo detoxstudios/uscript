@@ -3775,6 +3775,24 @@ namespace Detox.ScriptEditor
 
       private LocalNode CreateLocalNode( LocalNodeData data )
       {
+         //TRAPZZ CODE - FORCEABLY CHANGE ANIMATIONCLIPS TO STRINGS
+         //REMOVE THIS WHEN WE'RE SURE EVERYONE HAS MIGRATED
+         for ( int i = 0; i < data.Parameters.Length; i++ )
+         {
+            Detox.Data.ScriptEditor.Parameter p = data.Parameters[ i ];
+
+            if ( p.Type == "UnityEngine.AnimationClip" )
+            {
+               p.Type = "System.String";
+               
+               int index = p.Default.LastIndexOf( '/' );
+               if ( index >= 0 && index < p.Default.Length ) p.Default =  p.Default.Substring( index + 1 );
+         
+               data.Parameters[ i ] = p;
+            }
+         }
+         //END TRAPZZ CODE
+
          LocalNode local  = new LocalNode( );
          local.Guid       = data.Guid;
          local.Position   = data.Position;
