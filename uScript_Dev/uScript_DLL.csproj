@@ -67,6 +67,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Partials.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Platform.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Preferences.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\PreferenceWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\RawScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\References.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ScriptEditor.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIStyle.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptUtility.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\WelcomeWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="uScriptRuntime_DLL.csproj">
