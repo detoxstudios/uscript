@@ -17,7 +17,7 @@ using System.Collections;
 public class uScriptAct_PlayAnimation : uScriptLogic
 {
    private GameObject m_GameObject = null;
-   private AnimationClip m_Animation = null;
+   private string m_Animation = null;
 
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
@@ -27,7 +27,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    public event uScriptEventHandler Finished;
 
    public void In(
-      GameObject[] Target, AnimationClip Animation,
+      GameObject[] Target, string Animation,
       [FriendlyName("Speed Factor"), DefaultValue(1f), SocketState(false, false)] float SpeedFactor, 
       [FriendlyName("Wrap Mode"), SocketState(false, false)] WrapMode AnimWrapMode,
       [FriendlyName("Stop Other Animation"), DefaultValue(true), SocketState(false, false)] bool StopOtherAnimations)
@@ -43,18 +43,13 @@ public class uScriptAct_PlayAnimation : uScriptLogic
             m_GameObject = currentTarget;
             m_Animation  = Animation;
 
-            if ( null == currentTarget.animation[Animation.name] )
-            {
-               currentTarget.animation.AddClip(Animation, Animation.name);
-            }
-
             if (SpeedFactor == 0F)
             {
-               currentTarget.animation[Animation.name].speed = 1.0F;
+               currentTarget.animation[Animation].speed = 1.0F;
             }
             else
             {
-               currentTarget.animation[Animation.name].speed = SpeedFactor;
+               currentTarget.animation[Animation].speed = SpeedFactor;
             }
 
             if (StopOtherAnimations)
@@ -65,12 +60,12 @@ public class uScriptAct_PlayAnimation : uScriptLogic
             if (SpeedFactor < 0)
             {
                // Needed to play in reverse with a negative speed
-               currentTarget.animation[Animation.name].time = currentTarget.animation[Animation.name].length;
+               currentTarget.animation[Animation].time = currentTarget.animation[Animation].length;
             }
 
 
-            currentTarget.animation[Animation.name].wrapMode = AnimWrapMode;
-            currentTarget.animation.Play(Animation.name);
+            currentTarget.animation[Animation].wrapMode = AnimWrapMode;
+            currentTarget.animation.Play(Animation);
          }
       }
    }
@@ -79,7 +74,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    {
       if ( null != m_GameObject )
       {
-         if ( false == m_GameObject.animation.IsPlaying(m_Animation.name) )
+         if ( false == m_GameObject.animation.IsPlaying(m_Animation) )
          {
             m_GameObject = null;
 
@@ -97,7 +92,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
          AnimationClip ac = (AnimationClip)o;
 
          Hashtable hashtable = new Hashtable();
-         hashtable["Animation"] = ac;
+         hashtable["Animation"] = ac.name;
 
          return hashtable;
       }
