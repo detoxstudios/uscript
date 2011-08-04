@@ -19,25 +19,43 @@ public class uScriptCon_Switch : uScriptLogic
    private int m_CurrentOutput = 1;
    private bool m_SwitchOpen = true;
 
-   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
+   private bool m_Output1 = false;
+   private bool m_Output2 = false;
+   private bool m_Output3 = false;
+   private bool m_Output4 = false;
+   private bool m_Output5 = false;
+   private bool m_Output6 = false;
+
    [FriendlyName("Output 1")]
-   public event uScriptEventHandler Output1;
+   public bool Output1 { get { return m_Output1; } }
+
    [FriendlyName("Output 2")]
-   public event uScriptEventHandler Output2;
+   public bool Output2 { get { return m_Output2; } }
+
    [FriendlyName("Output 3")]
-   public event uScriptEventHandler Output3;
+   public bool Output3 { get { return m_Output3; } }
+
    [FriendlyName("Output 4")]
-   public event uScriptEventHandler Output4;
+   public bool Output4 { get { return m_Output4; } }
+
    [FriendlyName("Output 5")]
-   public event uScriptEventHandler Output5;
+   public bool Output5 { get { return m_Output5; } }
+
    [FriendlyName("Output 6")]
-   public event uScriptEventHandler Output6;
+   public bool Output6 { get { return m_Output6; } }
 
    public void In(
       bool Loop,
       [FriendlyName("Max Output Used"), DefaultValue(6), SocketState(false, false)] int MaxOutputUsed,
       [FriendlyName("Current Output")] out int CurrentOutput)
    {
+      m_Output1 = false;
+      m_Output2 = false;
+      m_Output3 = false;
+      m_Output4 = false;
+      m_Output5 = false;
+      m_Output6 = false;
+
       // Check bounds on MaxOutputUsed
       Mathf.Clamp(MaxOutputUsed, 1, 6);
 
@@ -48,7 +66,7 @@ public class uScriptCon_Switch : uScriptLogic
          {
             case 1:
                CurrentOutput = m_CurrentOutput;
-               Output1(this, new System.EventArgs());
+               m_Output1 = true;
                if (m_CurrentOutput < MaxOutputUsed)
                {
                   m_CurrentOutput = 2;
@@ -68,7 +86,7 @@ public class uScriptCon_Switch : uScriptLogic
 
             case 2:
                CurrentOutput = m_CurrentOutput;
-               Output2(this, new System.EventArgs());
+               m_Output2 = true;
                if (m_CurrentOutput < MaxOutputUsed)
                {
                   m_CurrentOutput = 3;
@@ -88,7 +106,7 @@ public class uScriptCon_Switch : uScriptLogic
 
             case 3:
                CurrentOutput = m_CurrentOutput;
-               Output3(this, new System.EventArgs());
+               m_Output3 = true;
                if (m_CurrentOutput < MaxOutputUsed)
                {
                   m_CurrentOutput = 4;
@@ -108,7 +126,7 @@ public class uScriptCon_Switch : uScriptLogic
 
             case 4:
                CurrentOutput = m_CurrentOutput;
-               Output4(this, new System.EventArgs());
+               m_Output4 = true;
                if (m_CurrentOutput < MaxOutputUsed)
                {
                   m_CurrentOutput = 5;
@@ -128,7 +146,7 @@ public class uScriptCon_Switch : uScriptLogic
 
             case 5:
                CurrentOutput = m_CurrentOutput;
-               Output5(this, new System.EventArgs());
+               m_Output5 = true;
                if (m_CurrentOutput < MaxOutputUsed)
                {
                   m_CurrentOutput = 6;
@@ -148,7 +166,7 @@ public class uScriptCon_Switch : uScriptLogic
 
             case 6:
                CurrentOutput = m_CurrentOutput;
-               Output6(this, new System.EventArgs());
+               m_Output6 = true;
                if (Loop)
                {
                   m_CurrentOutput = 1;
@@ -172,6 +190,13 @@ public class uScriptCon_Switch : uScriptLogic
 
    public void Reset(bool Loop, [FriendlyName("Max Output Used"), DefaultValue(6)] int MaxOutputUsed, [FriendlyName("Current Output")] out int CurrentOutput)
    {
+      m_Output1 = false;
+      m_Output2 = false;
+      m_Output3 = false;
+      m_Output4 = false;
+      m_Output5 = false;
+      m_Output6 = false;
+
       m_CurrentOutput = 1;
       CurrentOutput = 1;
       m_SwitchOpen = true;
