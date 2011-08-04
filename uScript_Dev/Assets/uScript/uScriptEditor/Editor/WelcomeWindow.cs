@@ -23,7 +23,7 @@ public class WelcomeWindow : EditorWindow
    {
       public Item Header = new Item( "iconWelcomeLogo",
                                      "Welcome To uScript",
-                                     "As you dive into uScript, may we suggest a few hints to get you off to a good start?",
+                                     "We've worked hard to get this into your hands, and we cannot wait to see the wonderful things you create with it!",
                                      string.Empty);
 
       public Item QuickStart = new Item( "iconWelcomeQuickstart",
