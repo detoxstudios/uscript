@@ -91,15 +91,6 @@ public class uScriptAct_PlaySound : uScriptLogic
 #if UNITY_EDITOR
    public override Hashtable EditorDragDrop( object o )
    {
-      if ( typeof(AudioClip).IsAssignableFrom(o.GetType()) )
-      {
-         AudioClip ac = (AudioClip) o;
-
-         Hashtable hashtable = new Hashtable( );
-         hashtable[ "Audio Clip" ] = ac;
-
-         return hashtable;
-      }
       if ( typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) )
       {
          GameObject go = (GameObject) o;

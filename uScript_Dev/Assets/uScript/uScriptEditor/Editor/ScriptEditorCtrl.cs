@@ -527,13 +527,13 @@ namespace Detox.ScriptEditor
                         string key = "";
                         Type parameterType = uScript.MasterComponent.GetType(parameters[i].Type);
 
-                        if ( uScriptConfig.ShouldAutoPackage(parameterType) )
-                        {
-                           //we have to package now because the returned parameter is just the string representation
-                           //and it won't always be able to reference back to the actual object
-                           key = uScript.PackageAsset( asset, parameterType );
-                        }
-                        else
+                        //if ( uScriptConfig.ShouldAutoPackage(parameterType) )
+                        //{
+                        //   //we have to package now because the returned parameter is just the string representation
+                        //   //and it won't always be able to reference back to the actual object
+                        //   key = uScript.PackageAsset( asset, parameterType );
+                        //}
+                        //else
                         {
                            key = asset as string;
                         }

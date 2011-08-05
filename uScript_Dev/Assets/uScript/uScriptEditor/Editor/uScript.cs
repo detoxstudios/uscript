@@ -335,37 +335,37 @@ http://uscript.net
       }
    }
 
-   static public string PackageAsset(object asset, Type type)
-   {
-      GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-      uScript_Assets assetComponent = null;
+   //static public string PackageAsset(object asset, Type type)
+   //{
+   //   GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+   //   uScript_Assets assetComponent = null;
 
-      if (null != uScriptMaster) assetComponent = uScriptMaster.GetComponent<uScript_Assets>();
+   //   if (null != uScriptMaster) assetComponent = uScriptMaster.GetComponent<uScript_Assets>();
 
-      if (null != assetComponent)
-      {
-         object assetInstance = asset;
+   //   if (null != assetComponent)
+   //   {
+   //      object assetInstance = asset;
 
-         //if it was saved as a string - assume it's a path
-         if (assetInstance is string)
-         {
-            assetInstance = UnityEditor.AssetDatabase.LoadAssetAtPath(assetInstance as string, type);
-         }
+   //      //if it was saved as a string - assume it's a path
+   //      if (assetInstance is string)
+   //      {
+   //         assetInstance = UnityEditor.AssetDatabase.LoadAssetAtPath(assetInstance as string, type);
+   //      }
 
-         if (assetInstance is UnityEngine.Object)
-         {
-            UnityEngine.Object objectInstance = assetInstance as UnityEngine.Object;
+   //      if (assetInstance is UnityEngine.Object)
+   //      {
+   //         UnityEngine.Object objectInstance = assetInstance as UnityEngine.Object;
 
-            //append the name as part of the unique key - because some items (like fbx files) have multiple assets in them
-            string uniqueKey = uScriptConfig.GetAssetPackageKey(asset, type);
-            assetComponent.Add(uniqueKey, objectInstance);
+   //         //append the name as part of the unique key - because some items (like fbx files) have multiple assets in them
+   //         string uniqueKey = uScriptConfig.GetAssetPackageKey(asset, type);
+   //         assetComponent.Add(uniqueKey, objectInstance);
 
-            return uniqueKey;
-         }
-      }
+   //         return uniqueKey;
+   //      }
+   //   }
 
-      return "";
-   }
+   //   return "";
+   //}
 
    static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)
    {
@@ -548,11 +548,11 @@ http://uscript.net
             uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_MasterComponent));
          }
-         if (null == uScriptMaster.GetComponent<uScript_Assets>())
-         {
-            uScriptDebug.Log("Adding Asset Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_Assets));
-         }
+         //if (null == uScriptMaster.GetComponent<uScript_Assets>())
+         //{
+         //   uScriptDebug.Log("Adding Asset Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+         //   uScriptMaster.AddComponent(typeof(uScript_Assets));
+         //}
 
          //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
          //we don't save the fully qualified type name which is required to return types of assemblies not loaded
