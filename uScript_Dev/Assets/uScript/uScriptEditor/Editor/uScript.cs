@@ -3013,6 +3013,23 @@ http://uscript.net
       return true;
    }
 
+   public void StubComponentFile(string path)
+   {
+      try
+      {
+         System.IO.StreamWriter stream = new System.IO.StreamWriter( path );
+         stream.WriteLine( "using UnityEngine;" );
+         stream.WriteLine( "public class " + System.IO.Path.GetFileNameWithoutExtension(path) + " : uScriptCode" );
+         stream.WriteLine( "{}" );
+
+         stream.Close( );
+      }
+      catch ( Exception e )
+      {
+         uScriptDebug.Log("An error occured stubbing component file " + path + "(" + e.Message + ")", uScriptDebug.Type.Error);
+      }
+   }
+
    public void RemoveGeneratedCode(string path)
    {
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
@@ -3022,7 +3039,15 @@ http://uscript.net
       foreach (System.IO.FileInfo file in files)
       {
          string relativePath = uScriptConfig.ConstantPaths.RelativePath(file.FullName);
-         AssetDatabase.DeleteAsset(relativePath);
+
+         if (file.FullName.EndsWith(uScriptConfig.Files.GeneratedComponentExtension + ".cs"))
+         {
+            StubComponentFile(relativePath);
+         }
+         else
+         {
+            AssetDatabase.DeleteAsset(relativePath);
+         }
       }
 
       foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
