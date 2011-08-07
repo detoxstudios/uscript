@@ -36,18 +36,27 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-               Component comp = currentTarget.GetComponent(currentComponentName);
-               if (comp != null)
-               {
-                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
-                  {
-                     ((Behaviour)comp).enabled = true;
-                  }
-                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
-                  {
-                     ((ParticleEmitter)comp).enabled = true;
-                  }
-               }
+					if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+					{
+						currentTarget.renderer.enabled = true;
+					}
+					else
+					{
+					   Component comp = currentTarget.GetComponent(currentComponentName);
+		               if (comp != null)
+		               {
+		                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
+		                  {
+		                     ((Behaviour)comp).enabled = true;
+		                  }
+		                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
+		                  {
+		                     ((ParticleEmitter)comp).enabled = true;
+		                  }
+		               }
+						
+					}
+               
             }
          }
       }
@@ -64,18 +73,27 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-               Component comp = currentTarget.GetComponent(currentComponentName);
-               if (comp != null)
-               {
-                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
-                  {
-                     ((Behaviour)comp).enabled = false;
-                  }
-                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
-                  {
-                     ((ParticleEmitter)comp).enabled = false;
-                  }
-               }
+					if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+					{
+						currentTarget.renderer.enabled = false;
+					}
+					else
+					{
+					   Component comp = currentTarget.GetComponent(currentComponentName);
+		               if (comp != null)
+		               {
+		                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
+		                  {
+		                     ((Behaviour)comp).enabled = false;
+		                  }
+		                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
+		                  {
+		                     ((ParticleEmitter)comp).enabled = false;
+		                  }
+		               }
+						
+					}
+               
             }
          }
       }
@@ -92,32 +110,48 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-               Component comp = currentTarget.GetComponent(currentComponentName);
-               if (comp != null)
-               {
-                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
-                  {
-                     if ( ((Behaviour)comp).enabled )
-                     {
-                        ((Behaviour)comp).enabled = false;
-                     }
-                     else
-                     {
-                        ((Behaviour)comp).enabled = true;
-                     }
-                  }
-                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
-                  {
-                     if ( ((ParticleEmitter)comp).enabled )
-                     {
-                        ((ParticleEmitter)comp).enabled = false;
-                     }
-                     else
-                     {
-                        ((ParticleEmitter)comp).enabled = true;
-                     }
-                  }
-               }
+					if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+					{
+						if (currentTarget.renderer.enabled)
+						{
+							currentTarget.renderer.enabled = false;
+						}
+						else
+						{
+							currentTarget.renderer.enabled = true;
+						}
+						
+					}
+					else
+					{
+					   Component comp = currentTarget.GetComponent(currentComponentName);
+		               if (comp != null)
+		               {
+		                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
+		                  {
+		                     if ( ((Behaviour)comp).enabled )
+		                     {
+		                        ((Behaviour)comp).enabled = false;
+		                     }
+		                     else
+		                     {
+		                        ((Behaviour)comp).enabled = true;
+		                     }
+		                  }
+		                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
+		                  {
+		                     if ( ((ParticleEmitter)comp).enabled )
+		                     {
+		                        ((ParticleEmitter)comp).enabled = false;
+		                     }
+		                     else
+		                     {
+		                        ((ParticleEmitter)comp).enabled = true;
+		                     }
+		                  }
+		               }
+					}
+               
             }
          }
       }
