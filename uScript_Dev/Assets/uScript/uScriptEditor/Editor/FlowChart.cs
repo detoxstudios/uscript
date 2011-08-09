@@ -35,7 +35,7 @@ namespace Detox.FlowChart
       private Point m_FCMouseDownPoint    = Point.Empty;
       private Point m_MoveBoundariesStart = Point.Empty;
 
-      private bool InMoveMode 
+      public bool InMoveMode 
       { 
          get 
          { 
@@ -815,6 +815,7 @@ namespace Detox.FlowChart
          m_NodeMouseTracking = false;
          m_StartLinkNode = null;
          m_StartMarquee  = Point.Empty;
+         m_MoveOffset = Point.Empty;
 
          if ( true == selectionSetModified )
          {
@@ -983,7 +984,7 @@ namespace Detox.FlowChart
          this.Focus( );
       }
 
-      private void MoveWithCursor( )
+      public void MoveWithCursor( float movementScale )
       {
          Point position = System.Windows.Forms.Cursor.Position;
 
@@ -993,7 +994,7 @@ namespace Detox.FlowChart
             m_StartMoveLocation = Location;
          }
 
-         position = new Point( position.X - m_MoveOffset.X, position.Y - m_MoveOffset.Y );
+         position = new Point( (int) (movementScale * (position.X - m_MoveOffset.X)), (int) (movementScale * (position.Y - m_MoveOffset.Y)) );
          position = new Point( m_StartMoveLocation.X + position.X, m_StartMoveLocation.Y + position.Y );
 
          //clamp top left
@@ -1005,6 +1006,11 @@ namespace Detox.FlowChart
          if ( position.Y + Bounds.Height < Parent.Bounds.Bottom ) position.Y += Parent.Bounds.Bottom - ( position.Y + Bounds.Height); 
 
          Location = position;
+      }
+
+      private void MoveWithCursor( )
+      {
+         MoveWithCursor( 1.0f );
       }
 
       public override void OnPaint(PaintEventArgs e)

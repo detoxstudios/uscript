@@ -54,6 +54,8 @@ public class uScript : EditorWindow
 
    private bool m_RebuildWhenReady = false;
 
+   private float m_MapScale = 1.0f;
+
    private String m_AddVariableNode = "";
    private KeyCode m_PressedKey = KeyCode.None;
 
@@ -748,7 +750,6 @@ http://uscript.net
       if (_requestedCloseMap)
       {
          _requestedCloseMap = false;
-         mapToggle = false;
 
          // Center the canvas on _requestCanvasLocation
          m_ScriptEditorCtrl.CenterOnPoint(_requestCanvasLocation);
@@ -1054,10 +1055,6 @@ http://uscript.net
                      // close the window
                      m_WantsClose = true;
                   }
-                  else if (e.keyCode == KeyCode.M)
-                  {
-                     mapToggle = !mapToggle;
-                  }
                   else if (e.keyCode == KeyCode.BackQuote)
                   {
                      m_HidePanelMode = !m_HidePanelMode;
@@ -1120,32 +1117,25 @@ http://uscript.net
                {
                   GUI.FocusControl("MainView");
 
-                  if (mapToggle)
+                  if (_canvasRect.Contains(e.mousePosition))
                   {
-                     MiniMapClick();
+                     m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
+
+                     int button = 0;
+
+                     if (e.button == 0) button = MouseButtons.Left;
+                     else if (e.button == 1) button = MouseButtons.Right;
+                     else if (e.button == 2) button = MouseButtons.Middle;
+
+                     m_MouseDownArgs.Button = button;
+                     m_MouseDownArgs.X = (int)(e.mousePosition.x);
+                     if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
+                     m_MouseDownArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
                   }
-                  else
+
+                  if (e.clickCount == 2)
                   {
-                     if (_canvasRect.Contains(e.mousePosition))
-                     {
-                        m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
-
-                        int button = 0;
-
-                        if (e.button == 0) button = MouseButtons.Left;
-                        else if (e.button == 1) button = MouseButtons.Right;
-                        else if (e.button == 2) button = MouseButtons.Middle;
-
-                        m_MouseDownArgs.Button = button;
-                        m_MouseDownArgs.X = (int)(e.mousePosition.x);
-                        if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
-                        m_MouseDownArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
-                     }
-
-                     if (e.clickCount == 2)
-                     {
-                        OpenLogicNode();
-                     }
+                     OpenLogicNode();
                   }
                }
 
@@ -1228,8 +1218,14 @@ http://uscript.net
                m_MouseDown = false;
                break;
             case EventType.ScrollWheel:
-               mapScale = Mathf.Clamp(mapScale - Mathf.Clamp(e.delta.y * 0.01f, -1, 1), 0.1f, 1.0f);
-//               Debug.Log("SCROLLWHEEL: " + e.delta + "\n");
+               float newScale = Mathf.Clamp(m_MapScale - Mathf.Clamp(e.delta.y * 0.01f, -1, 1), 0.1f, 1.0f);
+               
+               //make sure we stop on 1.0 before going lower or higher
+               if ( m_MapScale < 1 && newScale > 1 ) newScale = 1;
+               if ( m_MapScale > 1 && newScale < 1 ) newScale = 1;
+
+               m_MapScale = newScale;
+            //               Debug.Log("SCROLLWHEEL: " + e.delta + "\n");
 
                break;
 
@@ -2297,13 +2293,6 @@ http://uscript.net
 
             GUILayout.Space(20);
 
-            mapToggle = GUILayout.Toggle(mapToggle, "Map", EditorStyles.toolbarButton);
-
-            if (mapToggle)
-            {
-               mapScale = GUILayout.HorizontalSlider(mapScale, 0.1f, 0.7f, GUILayout.Width(100));
-            }
-
             GUILayout.FlexibleSpace();
 
             GUIStyle style2 = new GUIStyle(EditorStyles.boldLabel);
@@ -2326,25 +2315,25 @@ http://uscript.net
          GUILayout.BeginVertical(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
          {
 
-            if (mapToggle)
+            // Canvas
+            //
+            if (rect.width != 0 && rect.height != 0)
             {
-               MiniMapDraw();
+               m_NodeWindowRect = rect;
             }
-            else
+
+            GUIStyle style = new GUIStyle();
+            style.normal.background = uScriptConfig.canvasBackgroundTexture;
+
+            GUI.SetNextControlName("MainView");
+
+            _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, style, GUILayout.ExpandWidth(true));
             {
-               // Canvas
-               //
-               if (rect.width != 0 && rect.height != 0)
+               if (m_MapScale != 1.0f)
                {
-                  m_NodeWindowRect = rect;
+                  MiniMapDraw();
                }
-
-               GUIStyle style = new GUIStyle();
-               style.normal.background = uScriptConfig.canvasBackgroundTexture;
-
-               GUI.SetNextControlName("MainView");
-
-               _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, style, GUILayout.ExpandWidth(true));
+               else
                {
                   // Get the bounding area of all nodes on the canvas, plus 64px to
                   // allow for 32px padding around the edges.  This will allow the
@@ -2365,11 +2354,10 @@ http://uscript.net
                   args.Graphics = new System.Drawing.Graphics();
                   m_ScriptEditorCtrl.GuiPaint(args);
                }
-               EditorGUILayout.EndScrollView();
-
-               GUI.SetNextControlName("");
-
             }
+            EditorGUILayout.EndScrollView();
+
+            GUI.SetNextControlName("");
          }
          GUILayout.EndVertical();
 
@@ -2383,145 +2371,108 @@ http://uscript.net
       SetMouseRegion(MouseRegion.Canvas);//, 3, 1, -2, -4 );
    }
 
-   Rect mapSize = new Rect();
-   Rect mapBounds = new Rect();
-   Point mapMouse = new Point();
-
-   bool mapToggle = false;
-   float mapScale = 0.5f;
-   Vector2 mapScroll = Vector2.zero;
-
-
-   void MiniMapClick()
-   {
-      if (_canvasRect.Contains(Event.current.mousePosition))
-      {
-         _requestedCloseMap = true;
-
-         // Enter the correct canvas position here using the current mapScale, scrollbar positions, etc.
-         _requestCanvasLocation = new Point((int)((mapMouse.X - (mapSize.x - mapBounds.x)) / mapScale),
-                                             (int)((mapMouse.Y - (mapSize.y - mapBounds.y)) / mapScale)
-                                           );
-
-         //  + mapSize.x - mapBounds.x
-         //         Debug.Log( "RESULT: " + _requestCanvasLocation
-         //                    + "\n\t ViewportCenter: " + screenBoundsCenter
-         //                       + "\t\t\tMousePosition: " + mapMouse
-         //                       + "\t\t\tDiff: " + screenClickOffsetX
-         //                       + " (" + screenClickOffsetX / mapScale + ")"
-         //
-         //                    + "\n\t\tMapScale: " + mapScale + ", \t\tmapScroll: " + mapScroll
-         //                    + "\nMapBounds: " + mapBounds + ", \t\tMapSize: " + mapSize + "\n");
-      }
-   }
-
-
    void MiniMapDraw()
-   {
-      Node node;
-      DisplayNode displayNode;
-
-
-      //
-      // Get the dimensions of the entire map at the specified scale
-      //
-      mapBounds = new Rect();
-
-      // Start with the first ...
-      if (m_ScriptEditorCtrl.FlowChart.Nodes.Length > 0)
+   {     
+      //force panning if applicable
+      if ( true == m_ScriptEditorCtrl.FlowChart.InMoveMode )
       {
-         node = m_ScriptEditorCtrl.FlowChart.Nodes[0];
-         mapBounds = new Rect(node.Bounds.X, node.Bounds.Y, node.Bounds.Width, node.Bounds.Height);
+         m_ScriptEditorCtrl.FlowChart.MoveWithCursor( 1.0f / m_MapScale );
       }
 
-      // ... then loop through the remaining nodes ...
-      for (int i = 1; i < m_ScriptEditorCtrl.FlowChart.Nodes.Length; i++)
-      {
-         mapBounds.x = Math.Min(mapBounds.x, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X);
-         mapBounds.y = Math.Min(mapBounds.y, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y);
-         mapBounds.width = Math.Max(mapBounds.width, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.X
-                                               + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Width);
-         mapBounds.height = Math.Max(mapBounds.height, m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Y
-                                                 + m_ScriptEditorCtrl.FlowChart.Nodes[i].Bounds.Height);
-      }
-
-      // ... and finally, apply the scaling
-      mapBounds.x *= mapScale;
-      mapBounds.y *= mapScale;
-      mapBounds.width *= mapScale;
-      mapBounds.height *= mapScale;
-
-
-      //
-      // Set the size of the viewRect
-      //
-      Rect viewRect = new Rect();
-      viewRect.width = (mapBounds.width - mapBounds.x);
-      viewRect.height = (mapBounds.height - mapBounds.y);
-
-
-      Rect mapRect = new Rect();
-
-      if (_mouseRegionRect.ContainsKey(MouseRegion.HandleCanvas))
-      {
-         mapRect.x = _guiPanelPalette_Width + 3;
-         mapRect.y = 17;
-         mapRect.width = position.width - (_guiPanelPalette_Width + 3);
-         mapRect.height = position.height - 18 - 2 - 17 - _guiPanelProperties_Height - 8;
-      }
-
-      //      Debug.Log("_canvasRect: " + _canvasRect + "\t\tposition: " + position + "\n"
-      //                + "PaletteWidth: " + _guiPanelPalette_Width + ", PropertiesHeight: " + _guiPanelProperties_Height + ", StatusbarRect: " + _statusbarRect + ", mapRect: " + mapRect);
-
-      GUI.skin.scrollView.normal.background = uScriptConfig.canvasBackgroundTexture;
-      mapScroll = GUI.BeginScrollView(mapRect, mapScroll, viewRect, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
-
-
-      // Get the local mouse coordinates
-      mapMouse = new Point((int)Event.current.mousePosition.x, (int)Event.current.mousePosition.y);
-
-
-      // Temporary box that represents the bounding area
-      mapSize = new Rect(0, 0, Math.Abs(mapBounds.width - mapBounds.x), Math.Abs(mapBounds.height - mapBounds.y));
-      mapSize.x = (mapSize.width < mapRect.width ? (mapRect.width - mapSize.width) * 0.5f : 0);
-      mapSize.y = (mapSize.height < mapRect.height ? (mapRect.height - mapSize.height) * 0.5f : 0);
-      GUIStyle tmpStyle = new GUIStyle(GUI.skin.box);
-      tmpStyle.margin = new RectOffset();
-      //GUI.Box(mapSize, string.Empty, tmpStyle);
-
-      //      Debug.Log("CanvasRect: " + mapRect + ", \tMapBounds: " + mapBounds + ",\tScale: " + mapScale + "\nViewRect: " + viewRect + ", \t\t\t\tViewOffset: " + viewOffset
-      //                + "\t\tmapSize: " + mapSize);
-
-
-      // Draw the canvas viewport rect
-      Rect viewportRect = new Rect(-m_ScriptEditorCtrl.FlowChart.Location.X * mapScale + mapSize.x - mapBounds.x,
-                                   -m_ScriptEditorCtrl.FlowChart.Location.Y * mapScale + mapSize.y - mapBounds.y,
-                                   mapRect.width * mapScale,
-                                   mapRect.height * mapScale);
-
-      // Change the GUI color to tint the viewportRect
       UnityEngine.Color normalColor = GUI.color;
-      GUI.color = UnityEngine.Color.green;
-      tmpStyle.normal.background = uScriptConfig.minimapScreenBorder;
-      GUI.Box(viewportRect, string.Empty, tmpStyle);
-      GUI.color = normalColor;
 
       //
       // Paint the nodes
       //
+      float mapLeft = m_ScriptEditorCtrl.FlowChart.Location.X;
+      float mapTop  = m_ScriptEditorCtrl.FlowChart.Location.Y;
+
+      foreach (Link link in m_ScriptEditorCtrl.FlowChart.Links)
+      {
+         Handles.color = UnityEngine.Color.black;
+   
+         Node n = link.Source.Node;
+
+         float x = n.Location.X + mapLeft;
+         float y = n.Location.Y + mapTop;
+
+         //center around 0 in our window rect
+         x = x - m_NodeWindowRect.width  / 2;
+         y = y - m_NodeWindowRect.height / 2;
+
+         //scale our coords
+         x = x * m_MapScale;
+         y = y * m_MapScale;
+
+         //move back into canvas space
+         x = x + m_NodeWindowRect.width  / 2;
+         y = y + m_NodeWindowRect.height / 2;
+
+         x = x + (link.Source.Anchor.X / 100.0f) * (n.Size.Width  * m_MapScale);
+         y = y + (link.Source.Anchor.Y / 100.0f) * (n.Size.Height * m_MapScale);
+
+         Vector3 start = new Vector3( x, y, 0 );
+
+   
+         n = link.Destination.Node;
+
+         x = n.Location.X + mapLeft;
+         y = n.Location.Y + mapTop;
+
+         //center around 0 in our window rect
+         x = x - m_NodeWindowRect.width  / 2;
+         y = y - m_NodeWindowRect.height / 2;
+
+         //scale our coords
+         x = x * m_MapScale;
+         y = y * m_MapScale;
+
+         //move back into canvas space
+         x = x + m_NodeWindowRect.width  / 2;
+         y = y + m_NodeWindowRect.height / 2;
+
+         x = x + (link.Destination.Anchor.X / 100.0f) * (n.Size.Width  * m_MapScale);
+         y = y + (link.Destination.Anchor.Y / 100.0f) * (n.Size.Height * m_MapScale);
+
+         Vector3 end = new Vector3( x, y, 0 );
+
+         Handles.DrawLine(start, end);
+      }
+      
       foreach (Node n in m_ScriptEditorCtrl.FlowChart.Nodes)
       {
-         displayNode = n as DisplayNode;
+         DisplayNode displayNode = n as DisplayNode;
 
-         Rect nodeRect = new Rect(n.Bounds.X * mapScale + mapSize.x - mapBounds.x,
-                                  n.Bounds.Y * mapScale + mapSize.y - mapBounds.y,
-                                  n.Bounds.Width * mapScale,
-                                  n.Bounds.Height * mapScale);
+         float x = n.Location.X + mapLeft;
+         float y = n.Location.Y + mapTop;
 
-         //         Debug.Log("\tNode -- Location: " + n.Location + ", \tRect: " + nodeRect + ", \t\t" + n.Name + "\n");
+         //center around 0 in our window rect
+         x = x - m_NodeWindowRect.width  / 2;
+         y = y - m_NodeWindowRect.height / 2;
+
+         //scale our coords
+         x = x * m_MapScale;
+         y = y * m_MapScale;
+
+         //move back into canvas space
+         x = x + m_NodeWindowRect.width  / 2;
+         y = y + m_NodeWindowRect.height / 2;
+
+         Rect nodeRect = new Rect(x,
+                                  y,
+                                  n.Size.Width  * m_MapScale,
+                                  n.Size.Height * m_MapScale);
 
 
-
+         //cull offscreen nodes
+         if ( nodeRect.xMax < 0 ||
+              nodeRect.xMin > m_NodeWindowRect.width ||
+              nodeRect.yMax < 0 ||
+              nodeRect.yMin > m_NodeWindowRect.height 
+            )
+         {
+            continue;
+         }
 
          // Style the node by type
          GUIStyle tmpNodeStyle = new GUIStyle(GUI.skin.box);
@@ -2556,35 +2507,8 @@ http://uscript.net
             tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
             GUI.Box(nodeRect, n.Name, tmpNodeStyle);
          }
-
       }
-
-
-      foreach (Link l in m_ScriptEditorCtrl.FlowChart.Links)
-      {
-         Handles.color = UnityEngine.Color.black;
-
-         Vector3 start = new Vector3(mapSize.x - mapBounds.x + (l.Source.Node.Location.X + l.Source.Node.Size.Width) * mapScale,
-                                     mapSize.y - mapBounds.y + (l.Source.Node.Location.Y + l.Source.Anchor.Y) * mapScale,
-                                     0);
-         Vector3 end = new Vector3(mapSize.x - mapBounds.x + (l.Destination.Node.Location.X) * mapScale,
-                                   mapSize.y - mapBounds.y + (l.Destination.Node.Location.Y + l.Destination.Anchor.Y) * mapScale,
-                                   0);
-
-         Handles.DrawLine(start, end);
-      }
-
-      GUI.EndScrollView();
-      GUI.skin.scrollView.normal.background = null;
    }
-
-
-
-
-
-
-
-
 
 
    // TEMP Variables for testing the new property grid methods
