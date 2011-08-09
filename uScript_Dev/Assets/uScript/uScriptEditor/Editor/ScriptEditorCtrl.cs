@@ -525,7 +525,7 @@ namespace Detox.ScriptEditor
                      if ( null != asset )
                      {
                         string key = "";
-                        Type parameterType = uScript.MasterComponent.GetType(parameters[i].Type);
+                        //Type parameterType = uScript.MasterComponent.GetType(parameters[i].Type);
 
                         //if ( uScriptConfig.ShouldAutoPackage(parameterType) )
                         //{
