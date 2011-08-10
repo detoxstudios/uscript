@@ -1096,12 +1096,17 @@ http://uscript.net
                      m_FocusedNode = m_ScriptEditorCtrl.GetPrevNode(m_FocusedNode, typeof(EntityEventDisplayNode));
                      if (m_FocusedNode != null) m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
                   }
+                  else if (e.keyCode == KeyCode.Alpha0)
+                  {
+                     m_MapScale = 1;
+                  }
                   else if (e.keyCode == KeyCode.Minus)
                   {
-
+                     m_MapScale = Mathf.Max(m_MapScale - 0.1f, 0.1f);
                   }
                   else if (e.keyCode == KeyCode.Equals)
                   {
+                     m_MapScale = Mathf.Min(m_MapScale + 0.1f, 1.0f);
                   }
                }
 
