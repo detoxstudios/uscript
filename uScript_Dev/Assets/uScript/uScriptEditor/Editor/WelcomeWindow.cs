@@ -147,6 +147,8 @@ public class WelcomeWindow : EditorWindow
          _styleItemLabel.fontSize = EditorStyles.boldLabel.fontSize;
          _styleItemLabel.fontStyle = FontStyle.Bold;
          _styleItemLabel.margin = new RectOffset(4, 4, 0, 4);
+
+         window.Focus();
       }
 
       if (_position != new Rect())
