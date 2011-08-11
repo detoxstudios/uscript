@@ -148,7 +148,7 @@ public class WelcomeWindow : EditorWindow
          _styleItemLabel.margin = new RectOffset(4, 4, 0, 4);
 
          #if UNITY_EDITOR && UNITY_STANDALONE_WIN
-         Debug.Log("===== Editor in Windows");
+         //Debug.Log("===== Editor in Windows");
          window.Focus();
          #endif
       }
