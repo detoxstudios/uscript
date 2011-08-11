@@ -907,6 +907,10 @@ http://uscript.net
       }
 
 
+
+
+
+
       // Set the default mouse region
       _mouseRegion = uScript.MouseRegion.Outside;
 
@@ -1223,15 +1227,17 @@ http://uscript.net
                m_MouseDown = false;
                break;
             case EventType.ScrollWheel:
-               float newScale = Mathf.Clamp(m_MapScale - Mathf.Clamp(e.delta.y * 0.01f, -1, 1), 0.1f, 1.0f);
-               
-               //make sure we stop on 1.0 before going lower or higher
-               if ( m_MapScale < 1 && newScale > 1 ) newScale = 1;
-               if ( m_MapScale > 1 && newScale < 1 ) newScale = 1;
-
-               m_MapScale = newScale;
-            //               Debug.Log("SCROLLWHEEL: " + e.delta + "\n");
-
+               if (_canvasRect.Contains(e.mousePosition))
+               {
+                  float newScale = Mathf.Clamp(m_MapScale - Mathf.Clamp(e.delta.y * 0.01f, -1, 1), 0.1f, 1.0f);
+                  
+                  //make sure we stop on 1.0 before going lower or higher
+                  if ( m_MapScale < 1 && newScale > 1 ) newScale = 1;
+                  if ( m_MapScale > 1 && newScale < 1 ) newScale = 1;
+   
+                  m_MapScale = newScale;
+//                  Debug.Log("SCROLLWHEEL: " + e.delta + "\n");
+               }
                break;
 
             // paint/layout events
