@@ -1939,16 +1939,9 @@ namespace Detox.ScriptEditor
 
       public EntityNode [] EntityNodes
       {
-         get 
+         get
          {
-            List<EntityNode> nodes = new List<EntityNode>( );
-            
-            foreach( EntityNode node in m_Nodes.Values )
-            {
-               nodes.Add( node );
-            }
-
-            return nodes.ToArray( );
+            return m_Nodes.Nodes;
          }
       }
 
@@ -1958,7 +1951,7 @@ namespace Detox.ScriptEditor
          {
             List<EntityNode> nodes = new List<EntityNode>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_DeprecatedNodes.Values )
             {
                nodes.Add( node );
             }
@@ -1973,7 +1966,7 @@ namespace Detox.ScriptEditor
          {
             List<CommentNode> comments = new List<CommentNode>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_Nodes.Nodes )
             {
                if ( node is CommentNode ) comments.Add( (CommentNode) node );
             }
@@ -1988,7 +1981,7 @@ namespace Detox.ScriptEditor
          {
             List<EntityEvent> events = new List<EntityEvent>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_Nodes.Nodes )
             {
                if ( node is EntityEvent ) events.Add( (EntityEvent) node );
             }
@@ -2003,7 +1996,7 @@ namespace Detox.ScriptEditor
          {
             List<EntityMethod> methods = new List<EntityMethod>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_Nodes.Nodes )
             {
                if ( node is EntityMethod ) methods.Add( (EntityMethod) node );
             }
@@ -2018,7 +2011,7 @@ namespace Detox.ScriptEditor
          {
             List<EntityProperty> properties = new List<EntityProperty>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_Nodes.Nodes )
             {
                if ( node is EntityProperty ) properties.Add( (EntityProperty) node );
             }
@@ -2033,7 +2026,7 @@ namespace Detox.ScriptEditor
          {
             List<LogicNode> logics = new List<LogicNode>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_Nodes.Nodes )
             {
                if ( node is LogicNode ) logics.Add( (LogicNode) node );
             }
@@ -2048,7 +2041,7 @@ namespace Detox.ScriptEditor
          {
             List<ExternalConnection> externals = new List<ExternalConnection>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_Nodes.Nodes )
             {
                if ( node is ExternalConnection ) externals.Add( (ExternalConnection) node );
             }
@@ -2063,7 +2056,7 @@ namespace Detox.ScriptEditor
          {
             List<OwnerConnection> owners = new List<OwnerConnection>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_Nodes.Nodes )
             {
                if ( node is OwnerConnection ) owners.Add( (OwnerConnection) node );
             }
@@ -2078,7 +2071,7 @@ namespace Detox.ScriptEditor
          {
             List<LocalNode> locals = new List<LocalNode>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_Nodes.Nodes )
             {
                if ( node is LocalNode ) locals.Add( (LocalNode) node );
             }
@@ -2093,7 +2086,7 @@ namespace Detox.ScriptEditor
          {
             Dictionary<string, LocalNode> uniqueLocals = new Dictionary<string, LocalNode>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_Nodes.Nodes )
             {
                if ( node is LocalNode ) 
                {
@@ -2120,7 +2113,7 @@ namespace Detox.ScriptEditor
          {
             List<LinkNode> links = new List<LinkNode>( );
             
-            foreach( EntityNode node in m_Nodes.Values )
+            foreach( EntityNode node in m_Nodes.Nodes )
             {
                if ( node is LinkNode ) links.Add( (LinkNode) node );
             }
@@ -2141,9 +2134,60 @@ namespace Detox.ScriptEditor
 
       public string SceneName = "";
 
-      Hashtable m_Nodes = new Hashtable( );
-      Hashtable m_DeprecatedNodes = new Hashtable( );
+      public class OrderedHash
+      {
+         private Hashtable m_Hash = new Hashtable();
+         private List<EntityNode> m_List = new List<EntityNode>();
 
+         public EntityNode[] Nodes { get { return m_List.ToArray(); } }
+         public int Count { get { return m_List.Count; } }
+
+         public bool Contains(Guid guid) { return m_Hash.Contains(guid); }
+         public EntityNode Get(Guid guid) { return m_Hash[guid] as EntityNode; }
+
+         public void Remove(Guid guid)
+         {
+            m_Hash.Remove(guid);
+
+            int i;
+            for (i = 0; i < m_List.Count; i++)
+            {
+               if (m_List[i].Guid == guid)
+               {
+                  break;
+               }
+            }
+
+            if (i < m_List.Count)
+            {
+               m_List.RemoveAt(i);
+            }
+         }
+
+         public void Add(EntityNode node)
+         {
+            m_Hash[node.Guid] = node;
+
+            int i;
+            for (i = 0; i < m_List.Count; i++)
+            {
+               if (m_List[i].Guid == node.Guid)
+               {
+                  m_List[i] = node;
+                  break;
+               }
+            }
+
+            if (i == m_List.Count)
+            {
+               m_List.Add(node);
+            }
+         }
+      }
+
+      OrderedHash m_Nodes = new OrderedHash();
+      Hashtable m_DeprecatedNodes = new Hashtable();
+  
       public bool IsNodeInstanceDeprecated( EntityNode node )
       {
          return m_DeprecatedNodes.Contains(node.Guid);
@@ -2279,10 +2323,10 @@ namespace Detox.ScriptEditor
 
          if ( script.m_Nodes.Count != m_Nodes.Count ) return false;
 
-         foreach ( EntityNode node in m_Nodes.Values )
+         foreach ( EntityNode node in m_Nodes.Nodes )
          {
             if ( false == script.m_Nodes.Contains(node.Guid) ) return false;             
-            if ( false == node.Equals(script.m_Nodes[node.Guid]) ) return false;
+            if ( false == node.Equals(script.m_Nodes.Get(node.Guid)) ) return false;
          }
 
          return true;
@@ -2300,7 +2344,7 @@ namespace Detox.ScriptEditor
          //if node can't be found we won't need to fail on the backtrace
          if ( false == m_Nodes.Contains(link.Source.Guid) ) return true;
       
-         EntityNode node = m_Nodes[ link.Source.Guid ] as EntityNode;
+         EntityNode node = m_Nodes.Get(link.Source.Guid) as EntityNode;
          
          if ( node is EntityEvent )
          {
@@ -2344,7 +2388,7 @@ namespace Detox.ScriptEditor
          //if node can't be found we won't need to fail on the backtrace
          if ( false == m_Nodes.Contains(link.Source.Guid) ) return true;
       
-         EntityNode node = m_Nodes[ link.Source.Guid ] as EntityNode;
+         EntityNode node = m_Nodes.Get(link.Source.Guid) as EntityNode;
       
          //if its first output is a method
          //then see if it'll get hung up on an event
@@ -2452,8 +2496,8 @@ namespace Detox.ScriptEditor
             }
          }
 
-         EntityNode source = (EntityNode) m_Nodes[ link.Source.Guid ];
-         EntityNode dest   = (EntityNode) m_Nodes[ link.Destination.Guid ];
+         EntityNode source = (EntityNode) m_Nodes.Get(link.Source.Guid);
+         EntityNode dest   = (EntityNode) m_Nodes.Get(link.Destination.Guid);
 
          if ( source is ExternalConnection )
          {
@@ -2921,7 +2965,7 @@ namespace Detox.ScriptEditor
 
                      foreach ( LocalNode clone in updates )
                      {
-                        m_Nodes[ clone.Guid ] = clone;
+                        m_Nodes.Add(clone);
                      }
                   }
                   else
@@ -2941,7 +2985,7 @@ namespace Detox.ScriptEditor
                }
             }
 
-            m_Nodes[ node.Guid ] = node;
+            m_Nodes.Add(node);
 
             //now it's fully added - reverify our graph
             //to make sure it's compatible with all externals
@@ -3012,7 +3056,7 @@ namespace Detox.ScriptEditor
       {
          if ( m_Nodes.Contains(guid) )
          {
-            return (EntityNode) m_Nodes[ guid ];
+            return (EntityNode) m_Nodes.Get(guid);
          }
 
          return null;
@@ -3027,7 +3071,7 @@ namespace Detox.ScriptEditor
             references.Add( removeNode );
          }
 
-         foreach ( EntityNode node in m_Nodes.Values )
+         foreach ( EntityNode node in m_Nodes.Nodes )
          {
             if ( node is LinkNode )
             {
@@ -3197,7 +3241,7 @@ namespace Detox.ScriptEditor
 
             List<EntityNodeData> nodeDatas = new List<EntityNodeData>( );
 
-            foreach ( object value in m_Nodes.Values )
+            foreach ( object value in m_Nodes.Nodes )
             {
                EntityNode node = (EntityNode) value;
                nodeDatas.Add( node.NodeData );
@@ -3259,7 +3303,7 @@ namespace Detox.ScriptEditor
 
                if ( null != node )
                {
-                  m_Nodes.Add( node.Guid, node );
+                  m_Nodes.Add( node );
                }
             }
 
