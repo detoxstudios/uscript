@@ -691,7 +691,7 @@ public static class uScriptGUI
             }
 
    #if UNITY_3_3
-            unityObject = EditorGUILayout.ObjectField( unityObject, type, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
+            unityObject = EditorGUILayout.ObjectField( unityObject, type, true, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
    #elif UNITY_3_4
             unityObject = EditorGUILayout.ObjectField( unityObject, type, true, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
    #endif
