@@ -85,7 +85,7 @@ public class uScriptAct_LookAt : uScriptLogic
       }
    }
 
-   public override void Update()
+   public void Update()
    {
       if ( null == m_Targets ) return;
 

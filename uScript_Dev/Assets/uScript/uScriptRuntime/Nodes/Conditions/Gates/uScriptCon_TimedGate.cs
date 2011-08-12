@@ -46,7 +46,7 @@ public class uScriptCon_TimedGate : uScriptLogic
       }
    }
 
-   public override void Update()
+   public void Update()
    {
       if (m_TimeToTrigger > 0)
       {

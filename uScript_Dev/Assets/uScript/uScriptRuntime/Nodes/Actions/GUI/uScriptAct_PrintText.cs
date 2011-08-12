@@ -61,7 +61,7 @@ public class uScriptAct_PrintText : uScriptLogic
       m_DisplayText = false;
    }
 
-   public override void OnGUI()
+   public void OnGUI()
    {
       if (m_DisplayText)
       {

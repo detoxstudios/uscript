@@ -35,7 +35,7 @@ public class uScriptAct_Delay : uScriptLogic
 
    public void OnDestroy( ) {}
 
-   public override void Update( )
+   public void Update( )
    {
       if ( m_TimeToTrigger > 0 )
       {

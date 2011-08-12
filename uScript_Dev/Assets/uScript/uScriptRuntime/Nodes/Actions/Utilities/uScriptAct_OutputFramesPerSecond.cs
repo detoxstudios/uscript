@@ -26,7 +26,7 @@ public class uScriptAct_OutputFramesPerSecond : uScriptLogic
       FPS = m_FPS;
    }
 
-   public override void Update ()
+   public void Update ()
    {
       m_FPS = (1.0f / Time.deltaTime) / Time.timeScale;
    }

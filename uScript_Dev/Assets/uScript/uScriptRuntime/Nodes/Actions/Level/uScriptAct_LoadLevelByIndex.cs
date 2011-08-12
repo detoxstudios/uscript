@@ -62,7 +62,7 @@ public class uScriptAct_LoadLevelByIndex : uScriptLogic
       }
    }
 
-   public override void Update()
+   public void Update()
    {
       if ( true == m_IsLoading && true == m_Async.isDone )
       {

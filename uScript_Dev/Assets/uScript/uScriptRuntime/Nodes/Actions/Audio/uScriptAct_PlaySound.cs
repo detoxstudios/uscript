@@ -60,7 +60,7 @@ public class uScriptAct_PlaySound : uScriptLogic
       }
    }
 
-   public override void Update()
+   public void Update()
    {
       // Called every tick
       if ( null == m_AudioSources ) return;

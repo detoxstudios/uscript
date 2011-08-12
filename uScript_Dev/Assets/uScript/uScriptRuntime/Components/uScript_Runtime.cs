@@ -59,6 +59,20 @@ public class NodeDeprecated : Attribute
 }
 
 [AttributeUsage(AttributeTargets.Class)]
+public class NodeNeedsGuiLayout : Attribute
+{
+   public bool Value = false;
+
+   public NodeNeedsGuiLayout(bool value)
+   {
+      Value = value;
+   }
+
+   public NodeNeedsGuiLayout( )
+   {}
+}
+
+[AttributeUsage(AttributeTargets.Class)]
 public class NodeComponentType : Attribute
 {
    public NodeComponentType(Type type) 
@@ -104,13 +118,6 @@ public class NodePropertiesPath : Attribute
    public NodePropertiesPath(string value) { Value = value; }
    public string Value;
 }
-
-/*[AttributeUsage(AttributeTargets.Class)]
-public class NodeLicense : Attribute
-{
-   public NodeLicense(string value) { Value = value; }
-   public string Value;
-}*/
 
 [AttributeUsage(AttributeTargets.Class)]
 public class NodeCopyright : Attribute
@@ -159,11 +166,6 @@ public class uScriptEvent : MonoBehaviour
 public class uScriptLogic : ScriptableObject
 {
    public virtual void SetParent( GameObject parent ) {}
-   public virtual void Start( )      {}
-   public virtual void Update( )     {}
-   public virtual void LateUpdate( ) {}
-   public virtual void FixedUpdate( ){}
-   public virtual void OnGUI( )      {}
    
    //editor
    public virtual Hashtable EditorDragDrop( object o ) { return null; }

@@ -1536,6 +1536,7 @@ namespace Detox.ScriptEditor
          node.Drivens   = Drivens;
          node.Guid      = Guid.NewGuid( );
          node.Comment    = Comment;
+         node.RequiredMethods = RequiredMethods;
          node.ShowComment= ShowComment;
          return node;
       }
@@ -1598,6 +1599,11 @@ namespace Detox.ScriptEditor
       public Plug    []Events;
       public string  []Drivens;
 
+      //used only if this logic node is wrapping
+      //a nested script and that nested script
+      //code has been deleted so we can't reflect the data
+      public string  []RequiredMethods;
+
       public bool IsStatic { get { return false; } }
 
       private Parameter m_ShowComment;
@@ -1633,16 +1639,17 @@ namespace Detox.ScriptEditor
 
       public LogicNode(string type, string friendlyName)       
       { 
-         Type = type; 
+         Type = type;
          FriendlyName = friendlyName;
 
          m_Guid = Guid.NewGuid( );
 
-         Drivens      = new string[ 0 ];
-         Inputs       = new Plug[ 0 ];
-         Outputs      = new Plug[ 0 ];
-         Events       = new Plug[ 0 ];
-         m_Parameters = new Parameter[ 0 ];
+         RequiredMethods = new string[ 0 ];
+         Drivens         = new string[ 0 ];
+         Inputs          = new Plug[ 0 ];
+         Outputs         = new Plug[ 0 ];
+         Events          = new Plug[ 0 ];
+         m_Parameters    = new Parameter[ 0 ];
 
          m_Position = Point.Empty; 
 
@@ -1669,6 +1676,7 @@ namespace Detox.ScriptEditor
       { 
          Type = data.Type; 
          FriendlyName = data.FriendlyName;
+         RequiredMethods = new string[ 0 ];
 
          m_Guid = data.Guid;
 

@@ -74,7 +74,7 @@ public class uScriptAct_MoveToLocation : uScriptLogic
       }
    }
 
-   public override void Update()
+   public void Update()
    {
       if ( m_CurrentTime == m_TotalTime ) return;
 

@@ -3372,6 +3372,12 @@ http://uscript.net
       baseMethods["OnDisable"] = "OnDisable";
       baseMethods["OnEnable"] = "OnEnable";
 
+      baseMethods["Start"]       = "Start";
+      baseMethods["Update"]      = "Update";
+      baseMethods["LateUpdate"]  = "LateUpdate";
+      baseMethods["FixedUpdate"] = "FixedUpdate";
+      baseMethods["OnGUI"]       = "OnGUI";
+
       //this function is added to nested uscripts by the code generator
       //and we don't want to expose it to the user
       baseMethods["Awake"] = "Awake";
@@ -3603,6 +3609,7 @@ http://uscript.net
          logicNode.Outputs = rawScript.ExternalOutputs;
          logicNode.Events = rawScript.ExternalEvents;
          logicNode.Drivens = rawScript.Drivens;
+         logicNode.RequiredMethods = rawScript.RequiredMethods;
 
          returnNodes[rawScript.Type] = logicNode;
       }
@@ -4158,6 +4165,27 @@ http://uscript.net
       }
 
       return defaultName;
+   }
+
+   public static bool NodeNeedsGuiLayout(string type)
+   {
+      Type uscriptType = uScript.MasterComponent.GetType(type);
+
+      if (uscriptType != null)
+      {
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return false;
+
+         foreach (object a in attributes)
+         {
+            if (a is NodeNeedsGuiLayout)
+            {
+               return ((NodeNeedsGuiLayout)a).Value;
+            }
+         }
+      }
+
+      return false;
    }
 
    public static bool FindNodeAutoAssignMasterInstance(string type)

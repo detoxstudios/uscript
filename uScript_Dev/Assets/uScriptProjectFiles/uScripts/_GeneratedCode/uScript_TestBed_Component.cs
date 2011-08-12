@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.6.0905
+//uScript Generated Code - Build 0.9.1104
 using UnityEngine;
 using System.Collections;
 
@@ -11,28 +11,13 @@ public class uScript_TestBed_Component : uScriptCode
    
    void Awake( )
    {
+      useGUILayout = false;
       uScript = ScriptableObject.CreateInstance(typeof(uScript_TestBed)) as uScript_TestBed;
       uScript.SetParent( this.gameObject );
-   }
-   void Start( )
-   {
-      uScript.Start( );
    }
    void Update( )
    {
       uScript.Update( );
-   }
-   void LateUpdate( )
-   {
-      uScript.LateUpdate( );
-   }
-   void FixedUpdate( )
-   {
-      uScript.FixedUpdate( );
-   }
-   void OnGUI( )
-   {
-      uScript.OnGUI( );
    }
    #if UNITY_EDITOR
       void OnDrawGizmos( )

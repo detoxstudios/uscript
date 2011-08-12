@@ -70,7 +70,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
       }
    }
 
-   public override void Update()
+   public void Update()
    {
       if ( null != m_GameObject )
       {

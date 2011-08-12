@@ -137,7 +137,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_RotationFilterConstant = rotationFilterConstant;
    }
 
-   public override void Update()
+   public void Update()
    {
       if (null == m_Target) return;
       

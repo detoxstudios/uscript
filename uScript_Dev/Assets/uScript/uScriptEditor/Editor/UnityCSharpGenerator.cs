@@ -23,6 +23,7 @@ namespace Detox.ScriptEditor
       public Plug      []ExternalOutputs    { get { return m_ExternalOutputs.ToArray( ); } }
       public Plug      []ExternalEvents     { get { return m_ExternalEvents.ToArray( ); } }
       public string    []Drivens            { get { return m_Drivens.ToArray( ); } }
+      public string    []RequiredMethods    { get { return m_RequiredMethods.ToArray( ); } }
 
       private string       m_CSharpString;
       private int          m_TabStack;
@@ -34,6 +35,7 @@ namespace Detox.ScriptEditor
       List<Plug>      m_ExternalOutputs    = new List<Plug>( );
       List<Plug>      m_ExternalEvents     = new List<Plug>( );
       List<string>    m_Drivens            = new List<string>( );
+      List<string>    m_RequiredMethods    = new List<string>( );
 
       private void Preprocess( )
       {         
@@ -279,56 +281,73 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
+                  AddCSharpLine( "useGUILayout = " + (NeedsGuiLayout( ) ? "true;" : "false;") );
+
                   AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
                   AddCSharpLine( "uScript.SetParent( this.gameObject );" );
 
                --m_TabStack;
                AddCSharpLine( "}" );
             
-               AddCSharpLine( "void Start( )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-            
-                  AddCSharpLine( "uScript.Start( );" );
-            
-               --m_TabStack;
-               AddCSharpLine( "}" );
+               if ( true == NeedsMethod("Start") )
+               {
+                  AddCSharpLine( "void Start( )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+               
+                     AddCSharpLine( "uScript.Start( );" );
+               
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
 
-               AddCSharpLine( "void Update( )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-            
-                  AddCSharpLine( "uScript.Update( );" );
-            
-               --m_TabStack;
-               AddCSharpLine( "}" );
+               if ( true == NeedsMethod("Update") )
+               {
+                  AddCSharpLine( "void Update( )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+               
+                     AddCSharpLine( "uScript.Update( );" );
+               
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
 
-               AddCSharpLine( "void LateUpdate( )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-            
-                  AddCSharpLine( "uScript.LateUpdate( );" );
-            
-               --m_TabStack;
-               AddCSharpLine( "}" );
+               if ( true == NeedsMethod("LateUpdate") )
+               {
+                  AddCSharpLine( "void LateUpdate( )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+               
+                     AddCSharpLine( "uScript.LateUpdate( );" );
+               
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
 
-               AddCSharpLine( "void FixedUpdate( )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-            
-                  AddCSharpLine( "uScript.FixedUpdate( );" );
-            
-               --m_TabStack;
-               AddCSharpLine( "}" );
+               if ( true == NeedsMethod("FixedUpdate") )
+               {
+                  AddCSharpLine( "void FixedUpdate( )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+               
+                     AddCSharpLine( "uScript.FixedUpdate( );" );
+               
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
 
-               AddCSharpLine( "void OnGUI( )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-            
-                  AddCSharpLine( "uScript.OnGUI( );" );
-            
-               --m_TabStack;
-               AddCSharpLine( "}" );
+               if ( true == NeedsMethod("OnGUI") )
+               {
+                  AddCSharpLine( "void OnGUI( )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+               
+                     AddCSharpLine( "uScript.OnGUI( );" );
+               
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
 
                AddCSharpLine( "#if UNITY_EDITOR" );
                ++m_TabStack;
@@ -352,6 +371,55 @@ namespace Detox.ScriptEditor
          return m_CSharpString;
       }
 
+      private bool NeedsMethod(EntityNode node, string methodName)
+      {
+         string s = ScriptEditor.FindNodeType(node);         
+         if ( "" == s ) return false;
+
+         Type t = uScript.MasterComponent.GetType(s);
+
+         //nested script which isn't reflected yet 
+         //(maybe the code hasn't been generated)
+         if ( null == t && node is LogicNode )
+         {
+            LogicNode logic = (LogicNode) node;
+
+            foreach ( string m in logic.RequiredMethods )
+            {
+               if ( m == methodName ) return true;
+            }
+         }
+         else
+         {
+            if ( null != t.GetMethod(methodName) ) 
+            {
+               return true;
+            }
+         }
+
+         return false;
+      }
+
+      private bool NeedsMethod(string methodName)
+      {
+         foreach ( EntityNode node in m_Script.EntityNodes )
+         {
+            if ( true == NeedsMethod(node, methodName) ) return true;
+         }
+
+         return false;
+      }
+
+      private bool NeedsGuiLayout( )
+      {
+         foreach ( EntityNode node in m_Script.EntityNodes )
+         {
+            if ( true == uScript.NodeNeedsGuiLayout(ScriptEditor.FindNodeType(node)) ) return true;
+         }
+
+         return false;
+      }
+
       public string GenerateLogicScript(string logicClassName, ScriptEditor script)
       {
          m_CSharpString = "";
@@ -364,6 +432,7 @@ namespace Detox.ScriptEditor
          m_ExternalOutputs    = new List<Plug>( );
          m_ExternalEvents     = new List<Plug>( );
          m_Drivens            = new List<string>( );
+         m_RequiredMethods    = new List<string>( );
 
          if ( null != script )
          {
@@ -403,55 +472,80 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "}" );
                AddCSharpLine( "" );
                
-               AddCSharpLine( "public override void Start()" );
-               AddCSharpLine( "{" );
+               if ( true == NeedsMethod("Start") )
+               {
+                  if ( false == m_RequiredMethods.Contains("Start") ) m_RequiredMethods.Add("Start");
 
-               ++m_TabStack;
-                  DefineStartInitialization( );
-               --m_TabStack;
+                  AddCSharpLine( "public void Start()" );
+                  AddCSharpLine( "{" );
 
-               AddCSharpLine( "}" );
-               AddCSharpLine( "" );
+                  ++m_TabStack;
+                     DefineStartInitialization( );
+                  --m_TabStack;
 
-               AddCSharpLine( "public override void Update()" );
-               AddCSharpLine( "{" );
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "" );
+               }
 
-               ++m_TabStack;
-                  DefineUpdate( );
-               --m_TabStack;
+               if ( true == NeedsMethod("Update") )
+               {
+                  if ( false == m_RequiredMethods.Contains("Update") ) m_RequiredMethods.Add("Update");
 
-               AddCSharpLine( "}" );
-               AddCSharpLine( "" );
+                  AddCSharpLine( "public void Update()" );
+                  AddCSharpLine( "{" );
 
-               AddCSharpLine( "public override void LateUpdate()" );
-               AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     DefineUpdate( );
+                  --m_TabStack;
 
-               ++m_TabStack;
-                  DefineLateUpdate( );
-               --m_TabStack;
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "" );
+               }
 
-               AddCSharpLine( "}" );
-               AddCSharpLine( "" );
+               if ( true == NeedsMethod("LateUpdate") )
+               {
+                  if ( false == m_RequiredMethods.Contains("LateUpdate") ) m_RequiredMethods.Add("LateUpdate");
 
-               AddCSharpLine( "public override void FixedUpdate()" );
-               AddCSharpLine( "{" );
+                  AddCSharpLine( "public void LateUpdate()" );
+                  AddCSharpLine( "{" );
 
-               ++m_TabStack;
-                  DefineFixedUpdate( );
-               --m_TabStack;
+                  ++m_TabStack;
+                     DefineLateUpdate( );
+                  --m_TabStack;
 
-               AddCSharpLine( "}" );
-               AddCSharpLine( "" );
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "" );
+               }
 
-               AddCSharpLine( "public override void OnGUI()" );
-               AddCSharpLine( "{" );
+               if ( true == NeedsMethod("FixedUpdate") )
+               {
+                  if ( false == m_RequiredMethods.Contains("FixedUpdate") ) m_RequiredMethods.Add("FixedUpdate");
 
-               ++m_TabStack;
-                  DefineOnGUI( );
-               --m_TabStack;
+                  AddCSharpLine( "public void FixedUpdate()" );
+                  AddCSharpLine( "{" );
 
-               AddCSharpLine( "}" );
-               AddCSharpLine( "" );
+                  ++m_TabStack;
+                     DefineFixedUpdate( );
+                  --m_TabStack;
+
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "" );
+               }
+
+               if ( true == NeedsMethod("OnGUI") )
+               {
+                  if ( false == m_RequiredMethods.Contains("OnGUI") ) m_RequiredMethods.Add("OnGUI");
+
+                  AddCSharpLine( "public void OnGUI()" );
+                  AddCSharpLine( "{" );
+
+                  ++m_TabStack;
+                     DefineOnGUI( );
+                  --m_TabStack;
+
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "" );
+               }
 
                DefineEvents( );
             --m_TabStack;
@@ -1219,7 +1313,10 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Start( );" );
+            if ( NeedsMethod(logicNode, "Start") )
+            {
+               AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Start( );" );
+            }
          }
       }
       
@@ -1252,7 +1349,10 @@ namespace Detox.ScriptEditor
 
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Update( );" );
+            if ( true == NeedsMethod(logicNode, "Update") )
+            {
+               AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Update( );" );
+            }
          }
 
          foreach ( LogicNode logicNode in m_Script.Logics )
@@ -1269,7 +1369,10 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".LateUpdate( );" );
+            if ( true == NeedsMethod(logicNode, "LateUpdate") )
+            {
+               AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".LateUpdate( );" );
+            }
          }
       }
 
@@ -1278,7 +1381,10 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".FixedUpdate( );" );
+            if ( true == NeedsMethod(logicNode, "FixedUpdate") )
+            {
+               AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".FixedUpdate( );" );
+            }
          }
       }
 
@@ -1287,7 +1393,10 @@ namespace Detox.ScriptEditor
          //for each logic node, create an script specific instance
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".OnGUI( );" );
+            if ( true == NeedsMethod(logicNode, "OnGUI") )
+            {
+               AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".OnGUI( );" );
+            }
          }
       }
 
@@ -1552,13 +1661,19 @@ namespace Detox.ScriptEditor
          }
       }
 
+      private string SetCode( string s )
+      {
+         string c = m_CSharpString;
+         m_CSharpString = s;
+
+         return c;
+      }
+
       private void SetupEventListeners( string eventVariable, EntityNode node, bool setup )
       {
-         AddCSharpLine( "if ( null != " + eventVariable + " )" );
+         string currentCode = SetCode( "" );
 
-         AddCSharpLine( "{" );               
          ++m_TabStack;
-
             if ( node is EntityEvent )
             {
                SetupEvent( eventVariable, ((EntityEvent)node), setup );
@@ -1613,10 +1728,20 @@ namespace Detox.ScriptEditor
                   }
                }
             }
-
          --m_TabStack;
-         AddCSharpLine( "}" );               
 
+         string newCode = SetCode( currentCode );
+
+         if ( "" != newCode )
+         {            
+            AddCSharpLine( "if ( null != " + eventVariable + " )" );
+
+            AddCSharpLine( "{" );               
+
+               m_CSharpString += newCode;
+
+            AddCSharpLine( "}" );               
+         }
       }
 
       //default inputs for events which can only be set through the property grid
@@ -2493,6 +2618,22 @@ namespace Detox.ScriptEditor
          CallRelays(receiver.Guid, receiver.Output.Name);
       }
 
+      //are any relay functions connected to the point
+      //defined in the source parameters
+      private bool HasRelays(Guid guid, string name)
+      {
+         foreach ( LinkNode link in m_Script.Links )
+         {
+            if ( link.Source.Anchor == name &&
+                 link.Source.Guid   == guid )
+            {
+               return true;
+            }
+         }
+
+         return false;
+      }
+
       //call any relay functions connected to the point
       //defined in the source parameters
       private void CallRelays(Guid guid, string name)
@@ -2573,12 +2714,15 @@ namespace Detox.ScriptEditor
          //if the result of the logic node has set our output to true
          foreach ( Plug output in receiver.Outputs )
          {
-            AddCSharpLine( "if ( " + CSharpName(receiver, receiver.Type) + "." + output.Name + " == true )" );
-            AddCSharpLine( "{" );
-            ++m_TabStack;
-               CallRelays(receiver.Guid, output.Name);
-            --m_TabStack;
-            AddCSharpLine( "}" );
+            if ( true == HasRelays(receiver.Guid, output.Name) )
+            {
+               AddCSharpLine( "if ( " + CSharpName(receiver, receiver.Type) + "." + output.Name + " == true )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+                  CallRelays(receiver.Guid, output.Name);
+               --m_TabStack;
+               AddCSharpLine( "}" );
+            }
          }
       }
 
@@ -2638,12 +2782,15 @@ namespace Detox.ScriptEditor
             //if the result of the logic node has set our output to true
             foreach ( Plug output in receiver.Outputs )
             {
-               AddCSharpLine( "if ( " + CSharpName(receiver, receiver.Type) + "." + output.Name + " == true )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-                  CallRelays(receiver.Guid, output.Name);
-               --m_TabStack;
-               AddCSharpLine( "}" );
+               if ( true == HasRelays(receiver.Guid, output.Name) )
+               {
+                  AddCSharpLine( "if ( " + CSharpName(receiver, receiver.Type) + "." + output.Name + " == true )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     CallRelays(receiver.Guid, output.Name);
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
             }
 
          --m_TabStack;
@@ -3142,20 +3289,18 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "{" );
          ++m_TabStack;
 
-         AddCSharpLine( "#pragma warning disable 219" );
-         AddCSharpLine( "#pragma warning disable 168" );
+         string currentCode = SetCode( "" );
 
-         AddCSharpLine( "int index = 0;" );
-         AddCSharpLine( "System.Array properties;" );
-
-         AddCSharpLine( "#pragma warning restore 219" );
-         AddCSharpLine( "#pragma warning restore 168" );
+         bool needsProperties = false;
+         bool needsIndex = false;
 
          foreach ( Parameter parameter in parameters )
          {
-            AddCSharpLine( "index = 0;" );
-            AddCSharpLine( "properties = null;" );
-   
+            bool needsPropertiesCleared = false;
+            bool needsIndexCleared = false;
+
+            string nestedCode = SetCode( "" );
+
             //if the input parameter is an array
             //we need to place all source node values into the array
             if ( parameter.Type.Contains("[]") )
@@ -3189,6 +3334,14 @@ namespace Detox.ScriptEditor
                         //copy the source node array into the input parameter array
                         AddCSharpLine( "System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);" );
                         AddCSharpLine( "index += properties.Length;" );
+                        AddCSharpLine( "" );
+
+                        needsProperties = true;
+                        needsIndex = true;
+
+                        needsPropertiesCleared = true;
+                        needsIndexCleared = true;
+
                      }
                      else
                      {
@@ -3202,16 +3355,16 @@ namespace Detox.ScriptEditor
 
                         //copy the source node value into the input parameter array
                         AddCSharpLine( CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";" );
+                        AddCSharpLine( "" );
+
+                        needsIndex = true;
+                        needsIndexCleared = true;
                      }
                   }
 
                   //check to see if any source nodes are local variables
                   if ( argNode is OwnerConnection )
                   {
-#pragma warning disable 219
-                     OwnerConnection ownerNode = (OwnerConnection) argNode;
-#pragma warning restore 219
-
                      //make sure our input array is large enough to hold another value
                      AddCSharpLine( "if ( " + CSharpName(node, parameter.Name) + ".Length <= index)" );
                      AddCSharpLine( "{" );
@@ -3222,6 +3375,10 @@ namespace Detox.ScriptEditor
 
                      //copy the source node value into the input parameter array
                      AddCSharpLine( CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";" );
+                     AddCSharpLine( "" );
+
+                     needsIndex = true;
+                     needsIndexCleared = true;
                   }
 
                   //check to see if any source nodes are property nodes
@@ -3247,6 +3404,12 @@ namespace Detox.ScriptEditor
 
                            AddCSharpLine( "System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);" );
                            AddCSharpLine( "index += properties.Length;" );
+                           AddCSharpLine( "" );
+
+                           needsProperties = true;
+                           needsIndex = true;
+                           needsPropertiesCleared = true;
+                           needsIndexCleared = true;
                         }
                         else
                         {
@@ -3260,11 +3423,13 @@ namespace Detox.ScriptEditor
 
                            //copy the source node value into the input parameter array
                            AddCSharpLine( CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration( entityProperty ) + "( );" );
+                           AddCSharpLine( "" );
+
+                           needsIndex = true;
+                           needsIndexCleared = true;
                         }
                      }
                   }
-
-                  AddCSharpLine( "" );
                }
             }
             else
@@ -3281,6 +3446,7 @@ namespace Detox.ScriptEditor
                   if ( argNode is LocalNode || argNode is OwnerConnection )
                   {
                      AddCSharpLine( CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";" );
+                     AddCSharpLine( "" );
                   }
 
                   //if any of those links is a property node
@@ -3292,10 +3458,31 @@ namespace Detox.ScriptEditor
                      if ( true == entityProperty.Parameter.Output )
                      {
                         AddCSharpLine( CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration( entityProperty ) + "( );" );
+                        AddCSharpLine( "" );
                      }
                   }
                }
             }
+
+            string newNestedCode = SetCode( nestedCode );
+
+            if ( newNestedCode != "" )
+            {
+               if ( true == needsIndexCleared ) AddCSharpLine( "index = 0;" );
+               if ( true == needsPropertiesCleared ) AddCSharpLine( "properties = null;" );
+            
+               m_CSharpString += newNestedCode;
+            }
+         }
+
+         string newCode = SetCode( currentCode );
+
+         if ( newCode != "" )
+         {
+            if ( true == needsIndex ) AddCSharpLine( "int index;" );
+            if ( true == needsProperties ) AddCSharpLine( "System.Array properties;" );
+
+            m_CSharpString += newCode;
          }
 
          --m_TabStack;
