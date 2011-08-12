@@ -14,8 +14,8 @@ using Detox.FlowChart;
 public class uScript : EditorWindow
 {
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string uScriptBuild { get { return "0.9.1082"; } }
-   static string BetaVersion { get { return "Beta 8"; } }
+   public string uScriptBuild { get { return "0.9.1102"; } }
+   static string BetaVersion { get { return "Beta 9"; } }
    public string LastUnityBuild { get { return "3.3"; } }
    public string CurrentUnityBuild { get { return "3.4"; } }
    public string BetaUnityBuild { get { return "3.5"; } }
@@ -956,7 +956,7 @@ http://uscript.net
                      //refresh screen so context menu shows up
                      Repaint();
 #else
-                     m_ScriptEditorCtrl.BuildContextMenu();
+                  m_ScriptEditorCtrl.BuildContextMenu();
 
                      BuildCanvasContextMenu(null, null);
 
