@@ -49,6 +49,14 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
       //
    }
 
+
+//   AssetType assetType = AssetType.TextAsset;
+//   string assetPath = string.Empty;
+//   string resourcePath = string.Empty;
+
+//   bool tmpBool = false;
+
+
    public override void Draw()
    {
       //
@@ -82,6 +90,9 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
             {
                uScriptGUI.BeginColumns("Property", "Value", "Type", _scrollviewOffset, _svRect);
                {
+//                  resourcePath = uScriptGUI.ResourcePathField(resourcePath, ref tmpBool, false, false);
+//                  assetPath = uScriptGUI.AssetPathField(assetType, assetPath, ref tmpBool, false, false);
+
                   m_ScriptEditorCtrl.PropertyGrid.OnPaint();
                }
                uScriptGUI.EndColumns();

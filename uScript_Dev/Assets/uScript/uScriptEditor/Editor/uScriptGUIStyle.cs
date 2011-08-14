@@ -31,6 +31,11 @@ public static class uScriptGUIStyle
    private static GUIStyle _referenceText;
    public static GUIStyle referenceText { get { return _referenceText; } }
 
+   private static GUIStyle _columnHeader;
+   public static GUIStyle columnHeader { get { return _columnHeader; } }
+
+   public static readonly int columnHeaderHeight = 16;
+
    private static GUIStyle _hDivider;
    public static GUIStyle hDivider { get { return _hDivider; } }
 
@@ -42,6 +47,15 @@ public static class uScriptGUIStyle
 
    private static GUIStyle _hScrollbar;
    public static GUIStyle hScrollbar { get { return _hScrollbar; } }
+
+   private static GUIStyle _vColumnScrollbar;
+   public static GUIStyle vColumnScrollbar { get { return _vColumnScrollbar; } }
+
+   private static GUIStyle _hColumnScrollbar;
+   public static GUIStyle hColumnScrollbar { get { return _hColumnScrollbar; } }
+
+   private static GUIStyle _columnScrollView;
+   public static GUIStyle columnScrollView { get { return _columnScrollView; } }
 
    private static GUIStyle _nodeButtonLeft;
    public static GUIStyle nodeButtonLeft { get { return _nodeButtonLeft; } }
@@ -112,6 +126,14 @@ public static class uScriptGUIStyle
       _referenceText.wordWrap = true;
       _referenceText.stretchWidth = true;
 
+      _columnHeader = new GUIStyle(EditorStyles.toolbarButton);
+      _columnHeader.normal.background = _columnHeader.onNormal.background;
+      _columnHeader.fontStyle = FontStyle.Bold;
+      _columnHeader.alignment = TextAnchor.MiddleLeft;
+      _columnHeader.padding = new RectOffset(5, 8, 0, 0);
+      _columnHeader.fixedHeight = columnHeaderHeight;
+      _columnHeader.contentOffset = new Vector2(0, -1);
+
       _hDivider = new GUIStyle(GUI.skin.box);
       _hDivider.margin = new RectOffset(0, 0, 0, 0);
       _hDivider.padding = new RectOffset(0, 0, 0, 0);
@@ -129,6 +151,16 @@ public static class uScriptGUIStyle
 
       _hScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar);
       _hScrollbar.margin = new RectOffset();
+
+      _vColumnScrollbar = new GUIStyle(_vScrollbar);
+      _vColumnScrollbar.normal.background = _columnHeader.normal.background;
+      _vColumnScrollbar.overflow = new RectOffset();
+
+      _hColumnScrollbar = new GUIStyle(_hScrollbar);
+      _hColumnScrollbar.fixedHeight = 0;
+
+      _columnScrollView = new GUIStyle(GUI.skin.box);
+      _columnScrollView.margin = new RectOffset(4, 4, 3, 0);
 
       _nodeButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
       _nodeButtonLeft.alignment = TextAnchor.UpperLeft;
@@ -156,5 +188,38 @@ public static class uScriptGUIStyle
       _nodeButtonRight.contentOffset = new Vector2(-1, 1);
 
       _contextMenu = new GUIStyle(EditorStyles.toolbarButton);
+   }
+
+   static public void DebugInformation(GUIStyle style)
+   {
+      Debug.Log(style.name + ":"
+                + "\n\t margin: \t\t\t\t" + style.margin
+                + "\t\t alignment: \t\t\t" + style.alignment
+
+                + "\n\t padding: \t\t\t" + style.padding
+                + "\t\t font: \t\t\t\t\t" + style.font
+
+                + "\n\t fixedHeight: \t\t" + style.fixedHeight
+                + "\t\t\t\t\t\t\t\t\t\t fontSize: \t\t\t" + style.fontSize
+
+                + "\n\t fixedWidth: \t\t" + style.fixedWidth
+                + "\t\t\t\t\t\t\t\t\t\t fontStyle: \t\t\t" + style.fontStyle
+
+                + "\n\t stretchHeight: \t" + style.stretchHeight
+                + "\t\t\t\t\t\t\t\t\t imagePosition: \t" + style.imagePosition
+
+                + "\n\t stretchWidth: \t\t" + style.stretchWidth
+                + "\t\t\t\t\t\t\t\t\t lineHeight: \t\t\t" + style.lineHeight
+
+                + "\n\t border: \t\t\t\t" + style.border
+                + "\t\t wordWrap: \t\t\t" + style.wordWrap
+
+                + "\n\t overflow: \t\t\t" + style.overflow
+                + "\n\t clipping: \t\t\t" + style.clipping
+                + "\n\t contentOffset: \t" + style.contentOffset
+
+                + "\n\t isHeightDependantOnWidth: \t\t\t" + style.isHeightDependantOnWidth
+                + "\n"
+               );
    }
 }

@@ -443,6 +443,18 @@ http://uscript.net
       wasCanvasDragged = m_CanvasDragging;
 
 
+      // Initializing the AssetBrowserWindow during OnGUI was causing strange
+      // errors, such as null exception errors and reports that OnGUI calls were
+      // being made outside of OnGUI, which clearly wasn't the case.
+      //
+      // Moving the window Init() to Update() avoid these issues.
+      //
+      if (AssetBrowserWindow.shouldOpen && AssetBrowserWindow.isOpen == false)
+      {
+         AssetBrowserWindow.Init();
+      }
+
+
       if (true == CodeValidator.RequireRebuild(m_ForceCodeValidation))
       {
          RebuildAllScripts();

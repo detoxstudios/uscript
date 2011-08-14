@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.IO;
 
 using Detox.ScriptEditor;
 using Detox.FlowChart;
@@ -33,14 +34,12 @@ public static class uScriptGUI
    static Column _columnValue;
    static Column _columnType;
 
-   static GUIStyle _styleColumnHeader;
    static GUIStyle _styleEnabled;
    static GUIStyle _styleLabel;
    static GUIStyle _styleType;
 
    public static Vector2 columnOffset;
    public static Rect svRect;
-   public static int columnHeaderHeight = 16;
 
    public static string _focusedControl = string.Empty;
    public static string _previousControl = string.Empty;
@@ -84,16 +83,8 @@ public static class uScriptGUI
       columnOffset = offset;
       svRect = rect;
 
-      if (null == _styleColumnHeader)
+      if (null == _styleEnabled)
       {
-         _styleColumnHeader = new GUIStyle(EditorStyles.toolbarButton);
-         _styleColumnHeader.normal.background = _styleColumnHeader.onNormal.background;
-         _styleColumnHeader.fontStyle = FontStyle.Bold;
-         _styleColumnHeader.alignment = TextAnchor.MiddleLeft;
-         _styleColumnHeader.padding = new RectOffset(5, 8, 0, 0);
-         _styleColumnHeader.fixedHeight = columnHeaderHeight;
-         _styleColumnHeader.contentOffset = new Vector2(0, -1);
-
          _styleEnabled = new GUIStyle(GUI.skin.toggle);
          _styleEnabled.margin = new RectOffset(4, 0, 2, 4);
          _styleEnabled.padding = new RectOffset(20, 0, 0, 0);
@@ -107,7 +98,7 @@ public static class uScriptGUI
 			
       }
 		
-      GUILayout.Label(string.Empty, new GUIStyle(), GUILayout.Height(columnHeaderHeight));
+      GUILayout.Label(string.Empty, new GUIStyle(), GUILayout.Height(uScriptGUIStyle.columnHeaderHeight));
    }
 
 
@@ -133,22 +124,22 @@ public static class uScriptGUI
       // is excluded when positioning the GUI elements, since the offset is automatically applied.
 
       // First column - Checkbox
-      GUI.Label(new Rect(x, y, _columnEnabled.Width + 4 + 2, columnHeaderHeight), _columnEnabled.Label, _styleColumnHeader);
+      GUI.Label(new Rect(x, y, _columnEnabled.Width + 4 + 2, uScriptGUIStyle.columnHeaderHeight), _columnEnabled.Label, uScriptGUIStyle.columnHeader);
       x += _columnEnabled.Width + 2;
 
       // Interior column - Property name
-      GUI.Label(new Rect(x, y, _columnLabel.Width + 4, columnHeaderHeight), _columnLabel.Label, _styleColumnHeader);
+      GUI.Label(new Rect(x, y, _columnLabel.Width + 4, uScriptGUIStyle.columnHeaderHeight), _columnLabel.Label, uScriptGUIStyle.columnHeader);
       x += _columnLabel.Width + 4;
 
       // Interior column - Property value
-      GUI.Label(new Rect(x, y, _columnValue.Width + 4, columnHeaderHeight), _columnValue.Label, _styleColumnHeader);
+      GUI.Label(new Rect(x, y, _columnValue.Width + 4, uScriptGUIStyle.columnHeaderHeight), _columnValue.Label, uScriptGUIStyle.columnHeader);
       x += _columnValue.Width + 4;
 
       // Last column - Property type
       // This right-most column should appear to have an expanded width
-      GUI.Label(new Rect(x, y, svRect.width, columnHeaderHeight), _columnType.Label, _styleColumnHeader);
-//      GUI.Label(new Rect(x, y, _columnType.Width + 4 + 2, columnHeaderHeight), _columnType.Label, style);
-//      GUI.Label(new Rect(x, y, svRect.width - _columnLabel.Width - _columnValue.Width - 22 + columnOffset.x, columnHeaderHeight), _columnType.Label, style);
+      GUI.Label(new Rect(x, y, svRect.width, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, uScriptGUIStyle.columnHeader);
+//      GUI.Label(new Rect(x, y, _columnType.Width + 4 + 2, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, style);
+//      GUI.Label(new Rect(x, y, svRect.width - _columnLabel.Width - _columnValue.Width - 22 + columnOffset.x, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, style);
 
 
       //
@@ -881,6 +872,7 @@ public static class uScriptGUI
       return newArray;
    }
 
+
    public static int ArraySizeField(int size)
    {
       //int newSize = 
@@ -889,6 +881,7 @@ public static class uScriptGUI
 
       return size;
    }
+
 
    public static T PropertyRow<T>(string label, T value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
@@ -1029,6 +1022,237 @@ public static class uScriptGUI
 
 
 
+   static GUIStyle hSB_LB = null;
+   static GUIStyle hSB_RB = null;
+   static GUIStyle hSB_TH = null;
+
+   static GUIStyle vSB_UB = null;
+   static GUIStyle vSB_DB = null;
+   static GUIStyle vSB_TH = null;
+
+   public static void HideScrollbars()
+   {
+      if (hSB_LB == null)
+      {
+         hSB_LB = new GUIStyle(GUI.skin.horizontalScrollbarLeftButton);
+         hSB_RB = new GUIStyle(GUI.skin.horizontalScrollbarRightButton);
+         hSB_TH = new GUIStyle(GUI.skin.horizontalScrollbarThumb);
+
+         vSB_UB = new GUIStyle(GUI.skin.verticalScrollbarUpButton);
+         vSB_DB = new GUIStyle(GUI.skin.verticalScrollbarDownButton);
+         vSB_TH = new GUIStyle(GUI.skin.verticalScrollbarThumb);
+
+         GUI.skin.horizontalScrollbarLeftButton = GUIStyle.none;
+         GUI.skin.horizontalScrollbarRightButton = GUIStyle.none;
+         GUI.skin.horizontalScrollbarThumb = GUIStyle.none;
+
+         GUI.skin.verticalScrollbarUpButton = GUIStyle.none;
+         GUI.skin.verticalScrollbarDownButton = GUIStyle.none;
+         GUI.skin.verticalScrollbarThumb = GUIStyle.none;
+      }
+   }
+
+
+   public static void ShowScrollbars()
+   {
+      if (hSB_LB != null)
+      {
+         GUI.skin.horizontalScrollbarLeftButton = hSB_LB;
+         GUI.skin.horizontalScrollbarRightButton = hSB_RB;
+         GUI.skin.horizontalScrollbarThumb = hSB_TH;
+
+         GUI.skin.verticalScrollbarUpButton = vSB_UB;
+         GUI.skin.verticalScrollbarDownButton = vSB_DB;
+         GUI.skin.verticalScrollbarThumb = vSB_TH;
+
+         hSB_LB = null;
+         hSB_RB = null;
+         hSB_TH = null;
+
+         vSB_UB = null;
+         vSB_DB = null;
+         vSB_TH = null;
+      }
+   }
+
+
+
+
+
+
+   static List<string> _resourcePaths = null;
+//   static string[] choices = null;
+
+   // How much deep to scan. (of course you can also pass it to the method)
+   const int _maximumFolderRecursioDepth = 12;
+
+   public static void GetResourceFolderPaths(string sourceDir, int recursionDepth)
+   {
+      if (recursionDepth <= _maximumFolderRecursioDepth)
+      {
+         // Grab the valid paths
+         if ((sourceDir.EndsWith("/Resources") || sourceDir.Contains("/Resources/"))
+             && sourceDir.Contains("/.svn") == false)
+         {
+            // get the substring we care about
+            string path = sourceDir.Substring(sourceDir.IndexOf("Resources")).Replace('/', '\\');
+
+            // add the path if it doesn't already exist
+            if (_resourcePaths.Contains(path) == false)
+            {
+               _resourcePaths.Add(path);
+            }
+
+            // sort the list or it will place the paths in a strange order
+            _resourcePaths.Sort();
+         }
+
+         // Recurse into subdirectories of this directory.
+         string [] subdirEntries = Directory.GetDirectories(sourceDir);
+         foreach(string subdir in subdirEntries)
+         {
+            // Do not iterate through reparse points
+            if ((File.GetAttributes(subdir) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint)
+            {
+               GetResourceFolderPaths(subdir,recursionDepth+1);
+            }
+         }
+      }
+   }
+
+
+   public static string ResourcePathField(string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      // Resource Path
+      //
+      // The control uses a standard popup control for path selection, although the current
+      // selection is stored as a string.  The string array used for the popup should only
+      // include all valid Resource folders under assets.
+      //
+      //    Popup control
+      //    (exposed socket should be a string)
+      //
+
+      string label = "Resource Path";
+
+      if (_resourcePaths == null || _resourcePaths.Count == 0)
+      {
+         // Create the path list and populate it with Resource folders
+         _resourcePaths = new List<string>();
+         GetResourceFolderPaths(Application.dataPath, 0);
+//         choices = _resourcePaths.ToArray();
+      }
+
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         int menuIndex = 0;
+         for (int i = 0; i < _resourcePaths.Count; i++)
+         {
+            if (_resourcePaths[i] == value.Replace('/', '\\'))
+            {
+               menuIndex = i;
+            }
+         }
+
+         //send the new value to the popup and whatever it
+         //returns (in case the user modified it here) is what our final value is
+         //
+         // When the popup control has options that include '/' characters, it automatically
+         // creates subfolders for the popup. This is undesirable. Therefore, all '/' has been
+         // replaced with '\', but the string returned by this function should use '/'.
+         //
+         menuIndex = EditorGUILayout.Popup(menuIndex, _resourcePaths.ToArray(), GUILayout.Width(_columnValue.Width));
+         value = _resourcePaths[menuIndex].Replace('\\', '/');
+      }
+
+      EndRow(value.GetType().ToString());
+
+//      Debug.Log("Returning: " + value + "\n");
+      return value;
+   }
+
+
+
+
+   public static string AssetPathField(AssetType assetType, string assetPath, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      // Asset File Name
+      //
+      // The browser to default to the specific Resource folder path.
+      // Once a file has been selected, validate that it exists in the previously specified
+      // path. If not, make sure it exists under any Resource folder path, and update the
+      // path control.
+      //
+      //    String field
+      //    Button to launch file browser
+      //    (exposed socket should be a string)
+      //
+
+      string label = System.Enum.GetName(typeof(AssetType), (int)assetType) + " Path";
+
+      GUIStyle style = new GUIStyle(GUI.skin.button);
+      style.padding = new RectOffset(6, 6, 1, 2);
+      style.margin = new RectOffset(4, 4, 2, 4);
+
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         Vector2 buttonSize = style.CalcSize(new GUIContent("Browse"));
+
+         GUI.SetNextControlName(label);
+         assetPath = EditorGUILayout.TextField(assetPath, GUILayout.Width(_columnValue.Width - 4 - buttonSize.x));
+
+         uScriptGUI.enabled = !AssetBrowserWindow.isOpen;
+
+         if (GUILayout.Button("Browse", style, GUILayout.Width(buttonSize.x)))
+         {
+            AssetBrowserWindow.assetType = assetType;
+            AssetBrowserWindow.assetFilePath = assetPath;
+            AssetBrowserWindow.shouldOpen = true;
+            AssetBrowserWindow.propertyKey = _propertyKey;
+
+//            AssetBrowserWindow.Init(resourcePath, AssetBrowserWindow.AssetType.Texture);
+//            AssetBrowserWindow.FocusWindowIfItsOpen<AssetBrowserWindow>();
+
+//            Debug.Log("BUTTON PRESSED\n");
+//            filepath = EditorUtility.OpenFilePanel(name, path, extension);
+//            Debug.Log("Results: " + filepath + "\n");
+         }
+
+         if (AssetBrowserWindow.propertyKey == _propertyKey)
+         {
+            assetPath = AssetBrowserWindow.assetFilePath;
+         }
+
+         uScriptGUI.enabled = true;
+      }
+
+      EndRow(assetPath.GetType().ToString());
+
+      return assetPath;
+   }
+
+   static void OpenAssetBrowserWindow(AssetType type, string currentSelection)
+   {
+      if (AssetBrowserWindow.isOpen)
+      {
+         Debug.LogWarning("The AssetBrowserWindow is already open!\n");
+         return;
+      }
+
+      AssetBrowserWindow.assetType = type;
+
+   }
+
+
+
+
+
+
+
 
 
 //               EditorGUILayout.Separator();
@@ -1037,9 +1261,6 @@ public static class uScriptGUI
 //   Slider         Make a slider the user can drag to change a value between a min and a max.
 //   IntSlider      Make a slider the user can drag to change an integer value between a min and a max.
 //   MinMaxSlider   Make a special slider the user can use to specify a range between a min and a max.
-//   Popup          Make a generic popup selection field.
-//   EnumPopup      Make an enum popup selection field.
-//   IntPopup       Make an integer popup selection field.
 //   TagField       Make a tag selection field.
 //   LayerField     Make a layer selection field.
 //   ObjectField    Make an object drop slot field.
