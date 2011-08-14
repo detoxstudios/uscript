@@ -188,7 +188,7 @@ public class AssetBrowserWindow : EditorWindow
 
 
       // Get existing open window or if none, make a new one:
-      window = EditorWindow.GetWindow<AssetBrowserWindow>(true, "uScript Preferences", true) as AssetBrowserWindow;
+      window = EditorWindow.GetWindow<AssetBrowserWindow>(true, "uScript Resource Asset Browser", true) as AssetBrowserWindow;
       window._firstRun = true;   // unnecessary, but we'll get a warning that 'window' is unused, otherwise
       window.Focus();
    }
