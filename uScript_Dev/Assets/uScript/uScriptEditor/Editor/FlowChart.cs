@@ -162,9 +162,10 @@ namespace Detox.FlowChart
       public delegate void FlowChartSelectionModifiedEventHandler(object sender, EventArgs e);
       public event FlowChartSelectionModifiedEventHandler SelectionModified;
 
-      private void OnSelectionModified( )
+      public void OnSelectionModified( )
       {
          if (null != SelectionModified) SelectionModified(this, new EventArgs());
+         Controls.Sort(CompareNodes);
       }
 
       public delegate void FlowChartLinkCreatedEventHandler(object sender, FlowchartLinkCreatedEventArgs e);
@@ -1162,41 +1163,31 @@ namespace Detox.FlowChart
                                  uScriptConfig.PointerLineEnd.width, uScriptConfig.PointerLineEnd.height), 
                                  uScriptConfig.PointerLineEnd);
          }
-
+         
          int i;
-         // render unselected pre-link nodes
+         List<Control> visibleList = new List<Control>();
+         // pare down list to only visible nodes
          for (i = 0; i < Controls.Count; i++)
          {
             Node node = Controls[i] as Node;
-            if (node != null)
+            if (node.IsVisible(visibleRect))
             {
-               if (node.RenderDepth >= LinkRenderDepth)
-               {
-                  break;
-               }
-					
-               if ((!node.Selected || node.StyleName.Contains("comment")) && node.IsVisible(visibleRect))
-               {
-                  node.OnPaint(e);
-               }
+               visibleList.Add(node);
             }
          }
-
-         // render selected pre-link nodes
-         for (i = 0; i < Controls.Count; i++)
+         
+         // render pre-link nodes
+         for (i = 0; i < visibleList.Count; i++)
          {
-            Node node = Controls[i] as Node;
+            Node node = visibleList[i] as Node;
             if (node != null)
             {
                if (node.RenderDepth >= LinkRenderDepth)
                {
                   break;
                }
-               
-               if ((node.Selected && !node.StyleName.Contains("comment")) && node.IsVisible(visibleRect))
-               {
-                  node.OnPaint(e);
-               }
+
+               node.OnPaint(e);
             }
          }
 
@@ -1304,35 +1295,13 @@ namespace Detox.FlowChart
          }
 
          int postLinkIndex = i;
-         // render unselected post-link nodes
-         for (i = postLinkIndex; i < Controls.Count; i++)
+         // render post-link nodes
+         for (i = postLinkIndex; i < visibleList.Count; i++)
          {
-            Node node = Controls[i] as Node;
+            Node node = visibleList[i] as Node;
             if (node != null)
             {
-               if (!node.Selected)
-               {
-                  if (node.IsVisible(visibleRect))
-                  {
-                     node.OnPaint(e);
-                  }
-               }
-            }
-         }
-
-         // render selected post-link nodes
-         for (i = postLinkIndex; i < Controls.Count; i++)
-         {
-            Node node = Controls[i] as Node;
-            if (node != null)
-            {
-               if (node.Selected && !node.StyleName.Contains("comment"))
-               {
-                  if (node.IsVisible(visibleRect))
-                  {
-                     node.OnPaint(e);
-                  }
-               }
+               node.OnPaint(e);
             }
          }
 
@@ -1364,6 +1333,41 @@ namespace Detox.FlowChart
       public void AddLink(Link link)
       {
          m_Links.Add( link );
+      }
+      
+      private static int CompareNodes(Control c1, Control c2)
+      {
+         Node n1 = c1 as Node;
+         Node n2 = c2 as Node;
+
+         // selected nodes should always render last
+         if (n1.Selected)
+         {
+            if (n2.Selected)
+            {
+               return 0;
+            }
+            else
+            {
+               return 1;
+            }
+         }
+         else if (n2.Selected)
+         {
+            return -1;
+         }
+         
+         // if neither node is selected, use render depth
+         if (n1.RenderDepth < n2.RenderDepth)
+         {
+            return -1;
+         }
+         else if (n1.RenderDepth > n2.RenderDepth)
+         {
+            return 1;
+         }
+         
+         return 0;
       }
    }
 

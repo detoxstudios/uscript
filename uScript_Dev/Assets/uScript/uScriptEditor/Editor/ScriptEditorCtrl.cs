@@ -853,6 +853,7 @@ namespace Detox.ScriptEditor
             m_ChangeStack.AddChange( new ChangeStack.Change("Paste", oldEditor, m_ScriptEditor.Copy( )) );
 
             RefreshScript( guidsToSelect );
+            m_FlowChart.OnSelectionModified();
          }
       }
 
