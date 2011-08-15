@@ -207,10 +207,8 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             //
             // Spacer
             //
-            GUILayout.BeginHorizontal(GUI.skin.box, GUILayout.ExpandWidth(true));
-            {
-            }
-            GUILayout.EndHorizontal();
+            uScriptGUI.HR();
+            
 
             _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
             {

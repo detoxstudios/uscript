@@ -163,12 +163,21 @@ public static class uScriptGUI
    }
 
 
-   static void Separator()
+   public static void Separator()
    {
       GUILayout.Space(10);
    }
 
 
+   public static void HR()
+   {
+      GUILayout.BeginHorizontal(uScriptGUIStyle.panelHR, GUILayout.ExpandWidth(true));
+      {
+      }
+      GUILayout.EndHorizontal();
+   }
+
+   
    public static bool BeginProperty(string label, Node node)
    {
       ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;

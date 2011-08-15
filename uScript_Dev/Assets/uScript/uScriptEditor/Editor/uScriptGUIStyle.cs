@@ -22,6 +22,9 @@ public static class uScriptGUIStyle
    private static GUIStyle _panelBox;
    public static GUIStyle panelBox { get { return _panelBox; } }
 
+   private static GUIStyle _panelHR;
+   public static GUIStyle panelHR { get { return _panelHR; } }
+
    private static GUIStyle _panelTitle;
    public static GUIStyle panelTitle { get { return _panelTitle; } }
 
@@ -112,21 +115,32 @@ public static class uScriptGUIStyle
                 ); */
 
       _panelBox = new GUIStyle(GUI.skin.box);
+      _panelBox.name = "panelBox";
       _panelBox.padding = new RectOffset(1, 1, 1, 1);
       _panelBox.margin = new RectOffset(0, 0, 0, 0);
 
+      _panelHR = new GUIStyle(GUI.skin.box);
+      _panelHR.name = "panelHR";
+      _panelHR.padding = new RectOffset(1, 1, 1, 1);
+      _panelHR.margin = new RectOffset(8, 8, 8, 6);
+      _panelHR.border = new RectOffset(0, 0, 1, 1);
+
       _panelTitle = new GUIStyle(EditorStyles.boldLabel);
+      _panelTitle.name = "panelTitle";
       _panelTitle.margin = new RectOffset(4, 4, 0, 0);
 
       _panelTitleDropDown = new GUIStyle(EditorStyles.toolbarDropDown);
+      _panelTitleDropDown.name = "panelTitleDropDown";
       _panelTitleDropDown.font = EditorStyles.boldLabel.font;
       _panelTitleDropDown.padding = new RectOffset(6, 12, 1, 3);
 
       _referenceText = new GUIStyle(GUI.skin.label);
+      _referenceText.name = "referenceText";
       _referenceText.wordWrap = true;
       _referenceText.stretchWidth = true;
 
       _columnHeader = new GUIStyle(EditorStyles.toolbarButton);
+      _columnHeader.name = "columnHeader";
       _columnHeader.normal.background = _columnHeader.onNormal.background;
       _columnHeader.fontStyle = FontStyle.Bold;
       _columnHeader.alignment = TextAnchor.MiddleLeft;
@@ -135,34 +149,42 @@ public static class uScriptGUIStyle
       _columnHeader.contentOffset = new Vector2(0, -1);
 
       _hDivider = new GUIStyle(GUI.skin.box);
+      _hDivider.name = "hDivider";
       _hDivider.margin = new RectOffset(0, 0, 0, 0);
       _hDivider.padding = new RectOffset(0, 0, 0, 0);
       _hDivider.border = new RectOffset(0, 0, 0, 0);
       _hDivider.normal.background = null;
 
       _vDivider = new GUIStyle(GUI.skin.box);
+      _vDivider.name = "vDivider";
       _vDivider.margin = new RectOffset(0, 0, 0, 0);
       _vDivider.padding = new RectOffset(0, 0, 0, 0);
       _vDivider.border = new RectOffset(0, 0, 0, 0);
       _vDivider.normal.background = null;
 
       _vScrollbar = new GUIStyle(GUI.skin.verticalScrollbar);
+      _vScrollbar.name = "vScrollbar";
       _vScrollbar.margin = new RectOffset();
 
       _hScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar);
+      _hScrollbar.name = "hScrollbar";
       _hScrollbar.margin = new RectOffset();
 
       _vColumnScrollbar = new GUIStyle(_vScrollbar);
+      _vColumnScrollbar.name = "vColumnScrollbar";
       _vColumnScrollbar.normal.background = _columnHeader.normal.background;
       _vColumnScrollbar.overflow = new RectOffset();
 
       _hColumnScrollbar = new GUIStyle(_hScrollbar);
+      _hColumnScrollbar.name = "hColumnScrollbar";
       _hColumnScrollbar.fixedHeight = 0;
 
       _columnScrollView = new GUIStyle(GUI.skin.box);
+      _columnScrollView.name = "columnScrollView";
       _columnScrollView.margin = new RectOffset(4, 4, 3, 0);
 
       _nodeButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
+      _nodeButtonLeft.name = "nodeButtonLeft";
       _nodeButtonLeft.alignment = TextAnchor.UpperLeft;
       _nodeButtonLeft.padding = new RectOffset( 4, 4, 2, 4 );
       _nodeButtonLeft.margin = new RectOffset( 4, 0, 0, 0 );
@@ -170,6 +192,7 @@ public static class uScriptGUIStyle
       _nodeButtonLeft.fontSize = 11;
 
       _nodeButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid);
+      _nodeButtonMiddle.name = "nodeButtonMiddle";
       _nodeButtonMiddle.alignment = TextAnchor.MiddleCenter;
       _nodeButtonMiddle.padding = new RectOffset( 0, 0, 2, 4 );
       _nodeButtonMiddle.margin = new RectOffset( 0, 0, 0, 0 );
@@ -179,6 +202,7 @@ public static class uScriptGUIStyle
       _nodeButtonMiddle.contentOffset = new Vector2(0, 1);
 
       _nodeButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
+      _nodeButtonRight.name = "nodeButtonRight";
       _nodeButtonRight.alignment = TextAnchor.UpperCenter;
       _nodeButtonRight.padding = new RectOffset( 0, 0, 2, 4 );
       _nodeButtonRight.margin = new RectOffset( 0, 4, 0, 0 );
