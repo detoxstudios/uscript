@@ -27,10 +27,16 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
    String _panelScriptFilterText = string.Empty;
 
+
+
+
    //
    // Members specific to this panel class
    //
-//   public readonly uScriptGUI.Region;
+   const double doubleClickTime = 0.5; // default in Windows OS is 500ms
+   double clickTime;
+   string clickedControl = string.Empty;
+
 
 
 
@@ -208,7 +214,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             // Spacer
             //
             uScriptGUI.HR();
-            
+
 
             _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
             {
@@ -254,22 +260,47 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            scriptName = string.Empty;
                         }
 
-
-                        if (sceneName == "None")
+                        // prepare for double-click
+                        bool wasClicked = false;
+                        if ((EditorApplication.timeSinceStartup - clickTime) < doubleClickTime
+                            && clickedControl == scriptName)
                         {
-                           GUILayout.Label(scriptName, scriptStyle, GUILayout.ExpandWidth(true));
+                           wasClicked = true;
+                           scriptStyle.fontStyle = FontStyle.Bold;
                         }
                         else
                         {
-                           GUILayout.Label(scriptName + " (" + sceneName + ")", scriptStyle, GUILayout.ExpandWidth(true));
+                           scriptStyle.fontStyle = FontStyle.Normal;
+                           uScript.Instance.Redraw();
+                        }
+
+                        // the script path
+                        string path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptName + ".uscript");
+
+                        if (GUILayout.Button(scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), scriptStyle, GUILayout.ExpandWidth(true)))
+                        {
+                           if (wasClicked)
+                           {
+                              // double-click
+                              clickTime = EditorApplication.timeSinceStartup - clickTime; // prevents multiple double-clicks
+                              if (false == string.IsNullOrEmpty(path))
+                              {
+                                 uScriptInstance._openScriptToggle = false;
+                                 uScriptInstance.OpenScript(path);
+                              }
+                           }
+                           else
+                           {
+                              // single-click
+                              clickTime = EditorApplication.timeSinceStartup;
+                              clickedControl = scriptName;
+                           }
                         }
 
                         // Load
                         if (GUILayout.Button(contentLoad, EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
                         {
-                           string path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptName + ".uscript");
-
-                           if ("" != path)
+                           if (false == string.IsNullOrEmpty(path))
                            {
                               uScriptInstance._openScriptToggle = false;
                               uScriptInstance.OpenScript(path);
@@ -307,8 +338,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Script);
       uScriptInstance.SetMouseRegion(uScript.MouseRegion.NestedScripts);
    }
-
-
 
 
 
