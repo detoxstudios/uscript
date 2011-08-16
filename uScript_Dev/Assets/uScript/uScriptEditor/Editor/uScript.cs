@@ -177,6 +177,34 @@ public class uScript : EditorWindow
       }
    }
 
+   private static string m_UnityVersion = "";
+ 
+   public static string UnityVersion
+   {
+      get
+      {
+         if ( "" == m_UnityVersion )
+         {
+            Type t = uScript.MasterComponent.GetType("uScriptUnityVersion");
+            if ( null != t ) 
+            {
+               uScriptIUnityVersion v = Activator.CreateInstance( t ) as uScriptIUnityVersion; 
+               if ( null != v ) m_UnityVersion = v.Version;
+            }
+
+            if ( "" == m_UnityVersion )
+            {
+               uScriptDebug.Log( "Unable to get Unity Version", uScriptDebug.Type.Warning );
+               return "0.0";
+            }
+
+            uScriptDebug.Log("Unity Version: " + m_UnityVersion, uScriptDebug.Type.Message );
+         }
+
+         return m_UnityVersion;
+      }
+   }
+
    public ScriptEditorCtrl ScriptEditorCtrl
    {
       get { return m_ScriptEditorCtrl; }
@@ -194,6 +222,7 @@ public class uScript : EditorWindow
 
    public bool m_SelectAllNodes = false;
    public bool isPreferenceWindowOpen = false;
+
 
    public string CurrentScript = null;
    public string CurrentScriptName = "";
@@ -957,7 +986,8 @@ http://uscript.net
                {
                   // Use the new context menu in Unity 3.4 and higher
 
-#if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3)
+                  if ( UnityVersion == "3.0" || UnityVersion == "3.1" || UnityVersion == "3.2" || UnityVersion == "3.3" )
+                  {
                      m_ScriptEditorCtrl.BuildContextMenu();
 
 //                     BuildPaletteMenu(null, null);
@@ -967,8 +997,10 @@ http://uscript.net
 
                      //refresh screen so context menu shows up
                      Repaint();
-#else
-                  m_ScriptEditorCtrl.BuildContextMenu();
+                  }
+                  else
+                  {
+                     m_ScriptEditorCtrl.BuildContextMenu();
 
                      BuildCanvasContextMenu(null, null);
 
@@ -982,8 +1014,7 @@ http://uscript.net
 //                        m_MouseDownRegion = MouseRegion.Reference;
 //                        m_MouseDown = false;
 //                     }
-#endif
-
+                  }
                }
                break;
 

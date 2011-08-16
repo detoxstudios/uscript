@@ -624,27 +624,7 @@ public static class uScriptGUI
 
          if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
-            // game objects are held/treated as strings
-            // but we will custom convert them to actual game objects (if they exist)
-            // so we can use the game object browser
-            //
-            // first show the text field and get back the same (or changed value)
-            //if ( true == uScriptConfig.ShouldAutoPackage(type) )
-            //{
-            //   string labelValue = textValue;
-            
-            //   int index = labelValue.LastIndexOf("/") + 1;
-            //   if ( index > 0 ) 
-            //   {
-            //      labelValue = labelValue.Substring( index, labelValue.Length - index );
-            //   }
-   
-            //   EditorGUILayout.LabelField(labelValue, "", GUILayout.Width(_columnValue.Width));
-            //}
-            //else
-            {
-               textValue = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
-            }
+            textValue = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
    
             EndRow(textValue.GetType().ToString());
 
@@ -657,28 +637,12 @@ public static class uScriptGUI
             UnityEngine.Object []objects   = UnityEngine.Object.FindObjectsOfType(type);
             UnityEngine.Object unityObject = null;
    
-            //if ( true == uScriptConfig.ShouldAutoPackage(type) )
-            //{
-            //   foreach ( UnityEngine.Object o in objects )
-            //   {
-            //      string key = uScriptConfig.GetAssetPackageKey(o, o.GetType());
-                  
-            //      if ( key == textValue )
-            //      {
-            //         unityObject = o;
-            //         break;
-            //      }
-            //   }
-            //}
-            //else
+            foreach ( UnityEngine.Object o in objects )
             {
-               foreach ( UnityEngine.Object o in objects )
+               if ( o.name == textValue )
                {
-                  if ( o.name == textValue )
-                  {
-                     unityObject = o;
-                     break;
-                  }
+                  unityObject = o;
+                  break;
                }
             }
 
@@ -689,27 +653,28 @@ public static class uScriptGUI
                type = typeof(GameObject);
                if ( null != unityObject ) unityObject = ((Component) unityObject).gameObject;
             }
-
-   #if UNITY_3_3
-            unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
-   #elif UNITY_3_4
-            unityObject = EditorGUILayout.ObjectField( unityObject, type, true, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
-   #endif
-
+   
+            //if we're building with 3.4 then check the client version
+            //and figure out which one to display
+            #if (UNITY_3_4)
+               if ( uScript.UnityVersion == "3.3" )
+               {
+                  unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
+               }
+               else
+               {
+                  unityObject = EditorGUILayout.ObjectField( unityObject, type, true, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
+               }
+            #else
+               //if we're not building with 3.4 then default to the old one
+               unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;               
+            #endif
+   
             // if that object (or the changed object) does exist, use it's name to update the property value
             // if it doesn't exist then the 'val' will stay as what was entered into the TextField
             if ( unityObject != null )
             {
-               //if ( true == uScriptConfig.ShouldAutoPackage(type) )
-               //{
-               //   //we have to package now because the returned parameter is just the string representation
-               //   //and it won't always be able to reference back to the actual object
-               //   textValue = uScript.PackageAsset(unityObject, type);
-               //}
-               //else
-               {
-                  textValue = unityObject.name;               
-               }
+               textValue = unityObject.name;               
             }
          }
 

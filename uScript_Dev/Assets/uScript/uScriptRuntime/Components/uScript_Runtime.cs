@@ -6,6 +6,11 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+public interface uScriptIUnityVersion
+{
+	string Version { get; }
+}
+
 public class uScriptRuntimeConfig
 {
 	public static string MasterObjectName = "_uScript";
