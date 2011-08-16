@@ -55,6 +55,7 @@ public class uScript : EditorWindow
    private bool m_RebuildWhenReady = false;
 
    private float m_MapScale = 1.0f;
+   private Point m_ZoomPoint = new Point( 0, 0 );
 
    private String m_AddVariableNode = "";
    private KeyCode m_PressedKey = KeyCode.None;
@@ -1272,6 +1273,8 @@ http://uscript.net
             case EventType.ScrollWheel:
                if (_canvasRect.Contains(e.mousePosition))
                {
+                  m_ZoomPoint = System.Windows.Forms.Cursor.Position;
+
                   float newScale = Mathf.Clamp(m_MapScale - Mathf.Clamp(e.delta.y * 0.01f, -1, 1), 0.1f, 1.0f);
                   
                   //make sure we stop on 1.0 before going lower or higher
@@ -2490,7 +2493,19 @@ http://uscript.net
 
          Vector3 end = new Vector3( x, y, 0 );
 
-         Handles.DrawLine(start, end);
+         if ( link.Selected )
+         {
+            UnityEngine.Color handleColor = Handles.color;
+            Handles.color = UnityEngine.Color.yellow;
+
+            Handles.DrawLine(start, end);
+
+            Handles.color = normalColor;
+         }
+         else
+         {
+            Handles.DrawLine(start, end);
+         }
       }
       
       foreach (Node n in m_ScriptEditorCtrl.FlowChart.Nodes)
@@ -2503,6 +2518,8 @@ http://uscript.net
          //center around 0 in our window rect
          x = x - m_NodeWindowRect.width  / 2;
          y = y - m_NodeWindowRect.height / 2;
+         //x = x - m_ZoomPoint.X;
+         //y = y - m_ZoomPoint.Y;
 
          //scale our coords
          x = x * m_MapScale;
@@ -2511,6 +2528,8 @@ http://uscript.net
          //move back into canvas space
          x = x + m_NodeWindowRect.width  / 2;
          y = y + m_NodeWindowRect.height / 2;
+         //x = x + m_ZoomPoint.X;
+         //y = y + m_ZoomPoint.Y;
 
          Rect nodeRect = new Rect(x,
                                   y,
@@ -2530,7 +2549,14 @@ http://uscript.net
 
          // Style the node by type
          GUIStyle tmpNodeStyle = new GUIStyle(GUI.skin.box);
+         
          UnityEngine.Color nodeTextGrey = new UnityEngine.Color(0.737f, 0.737f, 0.737f);
+         
+         if ( displayNode.Selected )
+         {
+            GUI.color = UnityEngine.Color.yellow;
+         }
+         
          if (displayNode is EntityEventDisplayNode)
          {
             tmpNodeStyle.normal.background = uScriptConfig.nodeEventTexture;
@@ -2560,6 +2586,11 @@ http://uscript.net
          {
             tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
             GUI.Box(nodeRect, n.Name, tmpNodeStyle);
+         }
+
+         if ( displayNode.Selected )
+         {
+            GUI.color = normalColor;
          }
       }
    }
