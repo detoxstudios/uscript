@@ -163,20 +163,20 @@ public static class uScriptGUIStyle
       _vDivider.normal.background = null;
 
       _vScrollbar = new GUIStyle(GUI.skin.verticalScrollbar);
-      _vScrollbar.name = "vScrollbar";
+      // _vScrollbar.name = "vScrollbar";                // DO NOT RENAME
       _vScrollbar.margin = new RectOffset();
 
       _hScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar);
-      _hScrollbar.name = "hScrollbar";
+      // _hScrollbar.name = "hScrollbar";                // DO NOT RENAME
       _hScrollbar.margin = new RectOffset();
 
       _vColumnScrollbar = new GUIStyle(_vScrollbar);
-      _vColumnScrollbar.name = "vColumnScrollbar";
+      // _vColumnScrollbar.name = "vColumnScrollbar";    // DO NOT RENAME
       _vColumnScrollbar.normal.background = _columnHeader.normal.background;
       _vColumnScrollbar.overflow = new RectOffset();
 
       _hColumnScrollbar = new GUIStyle(_hScrollbar);
-      _hColumnScrollbar.name = "hColumnScrollbar";
+      // _hColumnScrollbar.name = "hColumnScrollbar";    // DO NOT RENAME
       _hColumnScrollbar.fixedHeight = 0;
 
       _columnScrollView = new GUIStyle(GUI.skin.box);
