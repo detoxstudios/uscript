@@ -289,7 +289,6 @@ namespace Detox.ScriptEditor
                --m_TabStack;
                AddCSharpLine( "}" );
             
-               if ( true == NeedsMethod("Start") )
                {
                   AddCSharpLine( "void Start( )" );
                   AddCSharpLine( "{" );
@@ -472,7 +471,6 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "}" );
                AddCSharpLine( "" );
                
-               if ( true == NeedsMethod("Start") )
                {
                   if ( false == m_RequiredMethods.Contains("Start") ) m_RequiredMethods.Add("Start");
 
