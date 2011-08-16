@@ -859,7 +859,15 @@ namespace Detox.ScriptEditor
 
       private string GetClipboardData( )
       {
-         string text = UnityEditor.EditorGUIUtility.systemCopyBuffer;
+         string text = null;
+         try
+         {
+            text = UnityEditor.EditorGUIUtility.systemCopyBuffer;
+         }
+         catch ( Exception )
+         {
+         }
+         
          if ( null == text ) return null;
 
          if ( false == text.StartsWith("[SCRIPTEDITOR]") ) return null;
