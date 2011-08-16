@@ -1286,23 +1286,6 @@ namespace Detox.ScriptEditor
 
       private void DefineStartInitialization( )
       {
-         foreach ( EntityNode node in m_Script.EntityNodes )
-         {
-            foreach ( Parameter p in node.Parameters )
-            {
-               if ( p.Default == "" ) continue;
-               
-               Type type = uScript.MasterComponent.GetType(p.Type);
-               if ( null == type ) continue;
-
-               if ( false == uScriptConfig.ShouldAutoPackage(type) ) continue;
-                  
-                AddCSharpLine( CSharpName(node, p.Name) + " = uScript_Assets.LatestAssets.Find(\"" + EscapeString(p.Default) + "\") as " + p.Type + ";" );
-            }
-         }
-
-         AddCSharpLine( "" );
-
          //make sure all components we plan to reference
          //have been placed in their local variables
          AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
