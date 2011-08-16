@@ -147,10 +147,10 @@ public class WelcomeWindow : EditorWindow
          _styleItemLabel.fontStyle = FontStyle.Bold;
          _styleItemLabel.margin = new RectOffset(4, 4, 0, 4);
 
-         #if UNITY_EDITOR && UNITY_STANDALONE_WIN
-         //Debug.Log("===== Editor in Windows");
-         window.Focus();
-         #endif
+         if (Application.platform == RuntimePlatform.WindowsEditor)
+         {
+            window.Focus();
+         }
       }
 
       if (_position != new Rect())
