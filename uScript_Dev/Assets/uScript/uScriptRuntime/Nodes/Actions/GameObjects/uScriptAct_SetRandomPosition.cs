@@ -46,14 +46,12 @@ public class uScriptAct_SetRandomPosition : uScriptLogic
 			float finalX;
 			float finalY;
 			float finalZ;
-			Vector3 finalOrigin = new Vector3(0,0,0);
 					
          if ( currentTarget != null )
          {
 			if (PreserveX_Axis)
 			{
 				finalX = currentTarget.transform.position.x;
-				finalOrigin.x = 0f;
 			}
 			else
 			{
@@ -63,7 +61,6 @@ public class uScriptAct_SetRandomPosition : uScriptLogic
 			if (PreserveY_Axis)
 			{
 				finalY = currentTarget.transform.position.y;
-				finalOrigin.y = 0f;
 			}
 			else
 			{
@@ -73,21 +70,21 @@ public class uScriptAct_SetRandomPosition : uScriptLogic
 			if (PreserveZ_Axis)
 			{
 				finalZ = currentTarget.transform.position.z;
-				finalOrigin.z = 0f;
 			}
 			else
 			{
 			   finalZ = Random.Range(MinZ, MaxZ);
 			}
 
-	        Vector3 finalOffset = new Vector3(finalX, finalY, finalZ);
-				
+	        Vector3 randomPosition = new Vector3(finalX, finalY, finalZ);
+           Vector3 origin = Vector3.zero;
+
 				if (AsOffset)
 				{
-					Origin = currentTarget.transform.position;
+					origin = currentTarget.transform.position;
 				}
 				
-            currentTarget.transform.position = finalOrigin + finalOffset;
+            currentTarget.transform.position = origin + randomPosition;
          }
       }
 		
