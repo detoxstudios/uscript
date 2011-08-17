@@ -659,7 +659,9 @@ public static class uScriptGUI
             #if (UNITY_3_4)
                if ( uScript.UnityVersion < 3.4f )
                {
-                  unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
+                  #pragma warning disable 618
+                     unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
+                  #pragma warning restore 618
                }
                else
                {
