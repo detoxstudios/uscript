@@ -19,6 +19,7 @@ public class uScriptAct_LoadAudioClip : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
+      [AssetPathField(AssetType.AudioClip)]
       [FriendlyName("Audio Clip")]
       string name, 
       [FriendlyName("Loaded AudioClip")]

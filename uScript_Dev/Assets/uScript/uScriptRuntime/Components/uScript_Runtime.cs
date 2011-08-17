@@ -6,6 +6,26 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+// The list of asset types supported by the AssetBrowserWindow class
+public enum AssetType
+{
+   Invalid = -1,
+
+   AnimationClip,
+   AudioClip,
+   BinaryAsset,
+   Material,
+   Mesh,
+   MovieTexture,
+   TextAsset,
+   Texture2D
+//    Cubemap Texture
+//    Flare
+//    Font : .ttf
+//    Procedural Material Assets
+//    Render Texture
+}
+
 public interface uScriptIUnityVersion
 {
 	float Version { get; }
@@ -33,6 +53,17 @@ public class SocketState : Attribute
    {
       Visible = visible;
       Locked  = locked;
+   }
+}
+
+[AttributeUsage(AttributeTargets.Parameter)]
+public class AssetPathField : Attribute
+{
+   public AssetType AssetType = AssetType.Invalid;
+
+   public AssetPathField(AssetType assetType) 
+   {
+      AssetType = assetType;
    }
 }
 

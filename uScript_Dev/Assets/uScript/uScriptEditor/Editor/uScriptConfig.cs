@@ -686,56 +686,6 @@ public partial class uScriptConfig
       }
    }
 
-   public static bool RequiresResourceFolder(Type type)
-   {
-      if ( type == typeof(AudioClip) )     return true;
-      if ( type == typeof(AnimationClip) ) return true;
-      if ( type == typeof(Texture2D))      return true;
-      if ( type == typeof(Material))       return true;
-   
-      return false;
-   }
-
-   public static bool ShouldAutoPackage(Type type)
-   {
-      if ( type == typeof(AudioClip) )     return true;
-      if ( type == typeof(AnimationClip) ) return true;
-      if ( type == typeof(Texture2D))      return true;
-      if ( type == typeof(Material))       return true;
-      //if (type == typeof(GameObject)) return true;
-   
-      return false;
-   }
-
-   //public static string GetAssetPackageKey(object asset, Type type)
-   //{
-   //   GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-   //   uScript_Assets assetComponent = null;
-   
-   //   if ( null != uScriptMaster ) assetComponent = uScriptMaster.GetComponent<uScript_Assets>( );                        
-      
-   //   if ( null != assetComponent )
-   //   {
-   //      object assetInstance = asset;
-      
-   //      //if it was saved as a string - assume it's a path
-   //      if ( assetInstance is string )
-   //      {
-   //         assetInstance = UnityEditor.AssetDatabase.LoadAssetAtPath( assetInstance as string, type );
-   //      }
-
-   //      if ( assetInstance is UnityEngine.Object )
-   //      {
-   //         UnityEngine.Object objectInstance = assetInstance as UnityEngine.Object;
-
-   //         //append the name as part of the unique key - because some items (like fbx files) have multiple assets in them
-   //         return UnityEditor.AssetDatabase.GetAssetPath( objectInstance.GetInstanceID() ) + "/" + objectInstance.name; 
-   //      }
-   //   }
-
-   //   return "";
-   //}
-
    //do not override in the preferences path, 
    //these are accessed outside the scope of uScript.cs and out preferences file
    public struct ConstantPaths

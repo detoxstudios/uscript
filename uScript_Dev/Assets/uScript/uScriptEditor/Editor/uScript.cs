@@ -83,6 +83,7 @@ public class uScript : EditorWindow
 
    private Detox.FlowChart.Node m_FocusedNode = null;
 
+   public static Hashtable m_NodeParameterFields = new Hashtable( );
    static public Preferences Preferences = new Preferences();
    static private AppFrameworkData m_AppData = new AppFrameworkData();
    static private bool m_SettingsLoaded = false;
@@ -210,7 +211,7 @@ public class uScript : EditorWindow
                if ( null != v ) m_UnityVersion = v.Version;
             }
 
-            if ( 0.0f == m_UnityVersion )
+            if ( 0.0f != m_UnityVersion )
             {
                uScriptDebug.Log("Unity Version: " + m_UnityVersion, uScriptDebug.Type.Debug );
             }
@@ -3944,6 +3945,7 @@ http://uscript.net
                variable.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
                variable.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
+               AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
                MasterComponent.AddType(p.ParameterType);
 
                variables.Add(variable);
@@ -4119,6 +4121,7 @@ http://uscript.net
 
             parameter.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
+            AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
             MasterComponent.AddType(p.ParameterType);
 
             parameters.Add(parameter);
@@ -4179,6 +4182,7 @@ http://uscript.net
                input.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
                input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
 
+               AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
                MasterComponent.AddType(p.PropertyType);
 
                eventInputsOutpus.Add(input);
@@ -4547,6 +4551,34 @@ http://uscript.net
       }
 
       return defaultValue;
+   }
+
+   public static AssetType GetAssetPathField(EntityNode node, string parameterName)
+   {
+      string type = ScriptEditor.FindNodeType(node);
+      string key  = type + "_" + parameterName;
+
+      if ( true == m_NodeParameterFields.Contains(key) )
+      {
+         return (AssetType) m_NodeParameterFields[ key ];     
+      }
+
+      return AssetType.Invalid;
+   }
+
+   public static void AddAssetPathField(string type, string parameterName, object []attributes)
+   {
+      foreach (object a in attributes)
+      {
+         if (a is AssetPathField)
+         {
+            AssetPathField field = (AssetPathField) a;
+            string key = type + "_" + parameterName;
+
+            m_NodeParameterFields[ key ] = field.AssetType;         
+            break;
+         }
+      }
    }
 
    public static Parameter.VisibleState FindSocketState(object[] attributes)

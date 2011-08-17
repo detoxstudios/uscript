@@ -19,6 +19,7 @@ public class uScriptAct_LoadAnimationClip : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
+      [AssetPathField(AssetType.AnimationClip)]
       [FriendlyName("Animation Clip")]
       string name,
       [FriendlyName("Loaded AnimationClip")]

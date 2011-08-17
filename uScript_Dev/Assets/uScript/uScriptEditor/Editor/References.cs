@@ -285,6 +285,10 @@ namespace System.Windows.Forms
                      {
                         val = uScriptGUI.EnumTextField(p.FriendlyName, (System.Enum) val, p.Default, ref isSocketExposed, isLocked, isReadOnly);
                      }
+                     else if ( AssetType.Invalid != uScript.GetAssetPathField(parameters.EntityNode, p.Name) )
+                     {
+                        val = uScriptGUI.AssetPathField(uScript.GetAssetPathField(parameters.EntityNode, p.Name), p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                     }
                      else if ( null != GetObjectFieldType(p.Type) )
                      {
                         val = uScriptGUI.ObjectTextField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref isSocketExposed, isLocked, isReadOnly);

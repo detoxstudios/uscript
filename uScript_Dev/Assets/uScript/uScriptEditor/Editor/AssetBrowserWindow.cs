@@ -4,29 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-
-
-// The list of asset types supported by the AssetBrowserWindow class
-public enum AssetType
-{
-   AnimationClip,
-   AudioClip,
-   BinaryAsset,
-   Material,
-   Mesh,
-   MovieTexture,
-   TextAsset,
-   Texture2D
-//    Cubemap Texture
-//    Flare
-//    Font : .ttf
-//    Procedural Material Assets
-//    Render Texture
-}
-
-
-
-
 public class AssetBrowserWindow : EditorWindow
 {
    const int _labelWidth = 200;

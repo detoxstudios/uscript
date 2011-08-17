@@ -20,6 +20,7 @@ public class uScriptAct_LoadMaterial : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
+      [AssetPathField(AssetType.Material)]
       [FriendlyName("Name")]
       string name,
       [FriendlyName("Loaded Material")]
