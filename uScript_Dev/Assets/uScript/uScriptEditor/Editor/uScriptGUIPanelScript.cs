@@ -275,10 +275,12 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                         }
 
                         // the script path
-                        string path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptName + ".uscript");
+                        string path = null;
 
                         if (GUILayout.Button(scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), scriptStyle, GUILayout.ExpandWidth(true)))
                         {
+                           path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptName + ".uscript");
+   
                            if (wasClicked)
                            {
                               // double-click
@@ -300,6 +302,8 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                         // Load
                         if (GUILayout.Button(contentLoad, EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
                         {
+                           if ( null == path ) path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptName + ".uscript");
+
                            if (false == string.IsNullOrEmpty(path))
                            {
                               uScriptInstance._openScriptToggle = false;
