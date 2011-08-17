@@ -300,7 +300,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "}" );
                }
 
-               if ( true == NeedsMethod("Update") )
+               //always do update because the unity hooks
+               //and drivens are valdiated there
                {
                   AddCSharpLine( "void Update( )" );
                   AddCSharpLine( "{" );
@@ -485,7 +486,7 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "" );
                }
 
-               if ( true == NeedsMethod("Update") )
+               //always do fixed update because this is where we sync our unity hooks
                {
                   if ( false == m_RequiredMethods.Contains("Update") ) m_RequiredMethods.Add("Update");
 
@@ -1327,6 +1328,9 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "//if it ever goes above MaxRelayCallCount before being reset" );
          AddCSharpLine( "//then we assume it is stuck in an infinite loop" );         
          AddCSharpLine( "if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;" );
+
+         AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
+         AddCSharpLine( "" );
 
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
@@ -3265,8 +3269,6 @@ namespace Detox.ScriptEditor
       //write themselves to the input parameters for the node passed into this method
       private void SyncSlaveConnections( EntityNode node, Parameter [] parameters )
       {
-         AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
-
          AddCSharpLine( "{" );
          ++m_TabStack;
 
@@ -3476,8 +3478,6 @@ namespace Detox.ScriptEditor
       {
          //make sure all components we plan to reference
          //have been placed in their local variables
-         AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
-
          foreach ( Parameter parameter in parameters )
          {
             //get all the links which go out from the output on this node

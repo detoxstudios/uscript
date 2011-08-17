@@ -1558,6 +1558,7 @@ namespace Detox.ScriptEditor
             nodeData.Guid      = Guid;
             nodeData.Comment     = Comment.ToParameterData( );
             nodeData.ShowComment = ShowComment.ToParameterData( );
+            nodeData.RequiredMethods = RequiredMethods;
 
             return nodeData;
          }
@@ -1582,6 +1583,10 @@ namespace Detox.ScriptEditor
          if ( false == ArrayUtil.ArraysAreEqual(node.Outputs, Outputs) ) return false;
          if ( false == ArrayUtil.ArraysAreEqual(node.Events, Events) ) return false;
          if ( false == ArrayUtil.ArraysAreEqual(node.Drivens, Drivens) ) return false;
+
+         //don't compare required methods because these come straight from Unity
+         //and are only saved so parent scripts can check nested ones 
+         //without using reflection
 
          if ( Position != node.Position ) return false;
          if ( Guid != node.Guid ) return false;
@@ -1676,11 +1681,13 @@ namespace Detox.ScriptEditor
       { 
          Type = data.Type; 
          FriendlyName = data.FriendlyName;
-         RequiredMethods = new string[ 0 ];
+
+         RequiredMethods = data.RequiredMethods;
 
          m_Guid = data.Guid;
 
          Drivens      = data.Drivens;
+         
          Inputs       = ArrayUtil.ToPlugs(data.Inputs);
          Outputs      = ArrayUtil.ToPlugs(data.Outputs);
          Events       = ArrayUtil.ToPlugs(data.Events);

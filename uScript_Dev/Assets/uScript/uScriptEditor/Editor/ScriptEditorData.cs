@@ -492,6 +492,7 @@ namespace Detox.Data.ScriptEditor
       public Plug   []Outputs;
       public Plug   []Events;
       public string []Drivens;
+      public string []RequiredMethods;
 
       public Parameter []Parameters;
 
@@ -509,9 +510,10 @@ namespace Detox.Data.ScriptEditor
          Parameters = data.Parameters;
          Events = data.Events;   
          Drivens = data.Drivens;
+         RequiredMethods = data.RequiredMethods;
       }
 
-      public new int Version { get { return 3; } }
+      public new int Version { get { return 5; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -586,6 +588,15 @@ namespace Detox.Data.ScriptEditor
             {
                Drivens = new string[0];
             }
+
+            if ( serializer.CurrentVersion > 4 )
+            {
+               RequiredMethods = (string[]) serializer.LoadNamedObject( "RequiredMethods" );
+            }
+            else
+            {
+               RequiredMethods = new string[0];
+            }
          }
 
          Parameters = (Parameter[]) serializer.LoadNamedObject( "Parameters" ); 
@@ -602,6 +613,7 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObject( "Events", Events );         
          serializer.SaveNamedObject( "Parameters", Parameters );
          serializer.SaveNamedObject( "Drivens", Drivens );
+         serializer.SaveNamedObject( "RequiredMethods", RequiredMethods );
       }
    }
 

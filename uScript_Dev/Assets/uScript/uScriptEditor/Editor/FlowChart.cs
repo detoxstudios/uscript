@@ -1009,6 +1009,21 @@ namespace Detox.FlowChart
          Location = position;
       }
 
+      public void JumpToPoint( Point point )
+      {
+         Point position = point;
+
+         //clamp top left
+         if ( position.X > 0 ) position.X = 0;
+         if ( position.Y > 0 ) position.Y = 0;
+
+         //clamp bottom right
+         if ( position.X + Bounds.Width  < Parent.Bounds.Right  ) position.X += Parent.Bounds.Right  - ( position.X + Bounds.Width); 
+         if ( position.Y + Bounds.Height < Parent.Bounds.Bottom ) position.Y += Parent.Bounds.Bottom - ( position.Y + Bounds.Height); 
+
+         Location = position;
+      }
+
       private void MoveWithCursor( )
       {
          MoveWithCursor( 1.0f );
