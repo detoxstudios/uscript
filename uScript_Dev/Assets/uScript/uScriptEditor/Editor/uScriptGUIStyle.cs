@@ -10,6 +10,8 @@ using UnityEditor;
 
 public static class uScriptGUIStyle
 {
+   static string _currentSkin = string.Empty;
+
    private static GUIStyle _paletteToolbarButton;
    public static GUIStyle paletteToolbarButton { get { return _paletteToolbarButton; } }
 
@@ -72,15 +74,36 @@ public static class uScriptGUIStyle
    private static GUIStyle _contextMenu;
    public static GUIStyle ContextMenu { get { return _contextMenu; } }
 
+   private static GUIStyle _menuDropDownWindow;
+   public static GUIStyle menuDropDownWindow { get { return _menuDropDownWindow; } }
+
+   private static GUIStyle _menuDropDownButton;
+   public static GUIStyle menuDropDownButton { get { return _menuDropDownButton; } }
+
+
+
+
+   static Texture2D _texture_windowMenuDropDown = null;
+
+
+
+
    public static void Init()
    {
-      if (panelTitle != null)
+      if (_currentSkin != GUI.skin.name)
+      {
+         // the skin has been changed
+         _currentSkin = GUI.skin.name;
+
+         // reload all custom GUI textures to match the new skin
+         string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + _currentSkin + "_";
+         _texture_windowMenuDropDown = AssetDatabase.LoadAssetAtPath(skinPath + "MenuDropDown.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      }
+      else if (panelTitle != null)
       {
          // The styles have already been initialized
          return;
       }
-
-//      uScriptDebug.Log("Initalizing uScriptStyles", uScriptDebug.Type.Debug);
 
       _paletteToolbarButton = new GUIStyle(EditorStyles.toolbarButton);
       _paletteToolbarButton.margin = new RectOffset(12, 6, 0, 0);
@@ -94,25 +117,6 @@ public static class uScriptGUIStyle
       _paletteButton.padding = new RectOffset( 4, 4, 2, 2 );
       _paletteButton.margin = new RectOffset( 4, 4, 0, 0 );
       _paletteButton.active.textColor = UnityEngine.Color.white;
-
-      /* Debug.Log("BUTTON:"
-                + "\n\t name: \t\t\t\t" + _paletteButton.name
-                + "\n\t alignment: \t\t\t" + _paletteButton.alignment
-                + "\n\t border: \t\t\t\t" + _paletteButton.border
-                + "\n\t clipping: \t\t\t" + _paletteButton.clipping
-                + "\n\t contentOffset: \t" + _paletteButton.contentOffset
-                + "\n\t fixedHeight: \t\t" + _paletteButton.fixedHeight
-                + "\n\t font: \t\t\t\t\t" + _paletteButton.font
-                + "\n\t fontSize: \t\t\t" + _paletteButton.fontSize
-                + "\n\t imagePosition: \t" + _paletteButton.imagePosition
-                + "\n\t lineHeight: \t\t\t" + _paletteButton.lineHeight
-                + "\n\t margin: \t\t\t\t" + _paletteButton.margin
-                + "\n\t overflow: \t\t\t" + _paletteButton.overflow
-                + "\n\t padding: \t\t\t" + _paletteButton.padding
-                + "\n\t stretchHeight: \t" + _paletteButton.stretchHeight
-                + "\n\t stretchWidth: \t\t" + _paletteButton.stretchWidth
-                + "\n\t wordWrap: \t\t\t" + _paletteButton.wordWrap
-                ); */
 
       _panelBox = new GUIStyle(GUI.skin.box);
       _panelBox.name = "panelBox";
@@ -212,9 +216,26 @@ public static class uScriptGUIStyle
       _nodeButtonRight.contentOffset = new Vector2(-1, 1);
 
       _contextMenu = new GUIStyle(EditorStyles.toolbarButton);
+
+      _menuDropDownWindow = new GUIStyle(GUI.skin.window);
+      _menuDropDownWindow.normal.background = _texture_windowMenuDropDown;
+      _menuDropDownWindow.onNormal.background = _texture_windowMenuDropDown;
+      _menuDropDownWindow.border = new RectOffset(10, 10, 4, 10);
+      _menuDropDownWindow.padding = new RectOffset(0, 0, 0, 4);
+      _menuDropDownWindow.overflow = new RectOffset(6, 6, 0, 6);
+      _menuDropDownWindow.contentOffset = Vector2.zero;
+
+      _menuDropDownButton = new GUIStyle(EditorStyles.largeLabel);
+      _menuDropDownButton.name = "menuDropDownButton";
+      _menuDropDownButton.active.background = EditorStyles.toolbarButton.onActive.background;
+      _menuDropDownButton.hover.background = EditorStyles.toolbarButton.onNormal.background;
+      _menuDropDownButton.border = EditorStyles.toolbarButton.border;
+      _menuDropDownButton.margin = new RectOffset();
+      _menuDropDownButton.padding = new RectOffset(8, 8, 4, 4);
    }
 
-   static public void DebugInformation(GUIStyle style)
+
+   static public void Information(GUIStyle style)
    {
       Debug.Log(style.name + ":"
                 + "\n\t margin: \t\t\t\t" + style.margin
@@ -246,4 +267,5 @@ public static class uScriptGUIStyle
                 + "\n"
                );
    }
+
 }

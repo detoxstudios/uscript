@@ -1545,7 +1545,7 @@ http://uscript.net
 
          if (isFileMenuOpen)
          {
-            windowRect = GUILayout.Window("FileMenu".GetHashCode(), windowRect, DrawFileMenuWindow, string.Empty, GUI.skin.window);
+            windowRect = GUILayout.Window("FileMenu".GetHashCode(), windowRect, DrawFileMenuWindow, string.Empty, uScriptGUIStyle.menuDropDownWindow);
          }
 
       }
@@ -2434,39 +2434,40 @@ http://uscript.net
       Vector2 v = EditorStyles.boldLabel.CalcSize(new GUIContent(shortcut));
 
       // place the string at the left inside edge of the previous rect
-      r = new Rect(r.x + r.width - 12 + ((12 - v.x) / 2), r.y, v.x, v.y);
+      r = new Rect(r.x + r.width - 20 + ((12 - v.x) / 2), r.y + 2, v.x, v.y);
 
 //      Debug.Log("Shortcut: '" + shortcut + "' is " + v.x + "px wide\n");
       GUI.Label(r, shortcut, EditorStyles.boldLabel);
    }
 
+
    void DrawFileMenuWindow(int windowID)
    {
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonNew, EditorStyles.largeLabel))
+      if (GUILayout.Button(uScriptGUIContent.toolbarButtonNew, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_New();
       }
       DrawMenuItemShortcut("N");
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonOpen, EditorStyles.largeLabel))
+      if (GUILayout.Button(uScriptGUIContent.toolbarButtonOpen, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_Open();
       }
       DrawMenuItemShortcut("O");
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonSave, EditorStyles.largeLabel))
+      if (GUILayout.Button(uScriptGUIContent.toolbarButtonSave, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_Save();
       }
       DrawMenuItemShortcut("S");
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonSaveAs, EditorStyles.largeLabel))
+      if (GUILayout.Button(uScriptGUIContent.toolbarButtonSaveAs, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_SaveAs();
       }
       DrawMenuItemShortcut("A");
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonQuickSave, EditorStyles.largeLabel))
+      if (GUILayout.Button(uScriptGUIContent.toolbarButtonQuickSave, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_QuickSave();
       }
@@ -2474,12 +2475,12 @@ http://uscript.net
 
       uScriptGUI.HR();
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonRebuildAll, EditorStyles.largeLabel))
+      if (GUILayout.Button(uScriptGUIContent.toolbarButtonRebuildAll, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_RebuildAll();
       }
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonRemoveGenerated, EditorStyles.largeLabel))
+      if (GUILayout.Button(uScriptGUIContent.toolbarButtonRemoveGenerated, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_Clean();
       }
