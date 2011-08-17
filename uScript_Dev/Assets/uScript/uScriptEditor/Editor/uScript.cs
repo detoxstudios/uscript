@@ -195,13 +195,13 @@ public class uScript : EditorWindow
       }
    }
 
-   private static string m_UnityVersion = "";
+   private static float m_UnityVersion = 0.0f;
  
-   public static string UnityVersion
+   public static float UnityVersion
    {
       get
       {
-         if ( "" == m_UnityVersion )
+         if ( 0.0f == m_UnityVersion )
          {
             Type t = uScript.MasterComponent.GetType("uScriptUnityVersion");
             if ( null != t ) 
@@ -210,13 +210,14 @@ public class uScript : EditorWindow
                if ( null != v ) m_UnityVersion = v.Version;
             }
 
-            if ( "" == m_UnityVersion )
+            if ( 0.0f == m_UnityVersion )
+            {
+               uScriptDebug.Log("Unity Version: " + m_UnityVersion, uScriptDebug.Type.Debug );
+            }
+            else
             {
                uScriptDebug.Log( "Unable to get Unity Version", uScriptDebug.Type.Warning );
-               return "0.0";
             }
-
-            uScriptDebug.Log("Unity Version: " + m_UnityVersion, uScriptDebug.Type.Message );
          }
 
          return m_UnityVersion;
@@ -1007,7 +1008,7 @@ http://uscript.net
                   {
                      // Use the new context menu in Unity 3.4 and higher
 
-                     if ( UnityVersion == "3.0" || UnityVersion == "3.1" || UnityVersion == "3.2" || UnityVersion == "3.3" )
+                     if ( UnityVersion < 3.4f )
                      {
                         m_ScriptEditorCtrl.BuildContextMenu();
 

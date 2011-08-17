@@ -2,16 +2,16 @@
 public class uScriptUnityVersion : uScriptIUnityVersion
 {
 #if UNITY_3_0
-	public string Version { get { return "3.0"; } }
+	public float Version { get { return 3.0f; } }
 #elif UNITY_3_1
-	public string Version { get { return "3.1"; } }
+	public float Version { get { return 3.1f; } }
 #elif UNITY_3_2
-	public string Version { get { return "3.2"; } }
+	public float Version { get { return 3.2f; } }
 #elif UNITY_3_3
-	public string Version { get { return "3.3"; } }
+	public float Version { get { return 3.3f; } }
 #elif UNITY_4_0
-	public string Version { get { return "4.0"; } }
+	public float Version { get { return 4.0f; } }
 #else
- 	public string Version { get { return "0.0"; } }
+ 	public float Version { get { return 0.0f; } }
 #endif
 }

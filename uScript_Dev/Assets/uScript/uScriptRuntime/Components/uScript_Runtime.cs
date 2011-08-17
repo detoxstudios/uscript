@@ -8,7 +8,7 @@ using UnityEngine;
 
 public interface uScriptIUnityVersion
 {
-	string Version { get; }
+	float Version { get; }
 }
 
 public class uScriptRuntimeConfig

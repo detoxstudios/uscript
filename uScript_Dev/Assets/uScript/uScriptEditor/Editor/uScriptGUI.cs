@@ -657,7 +657,7 @@ public static class uScriptGUI
             //if we're building with 3.4 then check the client version
             //and figure out which one to display
             #if (UNITY_3_4)
-               if ( uScript.UnityVersion == "3.3" )
+               if ( uScript.UnityVersion < 3.4f )
                {
                   unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
                }
