@@ -217,7 +217,7 @@ public class uScript : EditorWindow
             }
             else
             {
-               uScriptDebug.Log( "Unable to get Unity Version", uScriptDebug.Type.Warning );
+               uScriptDebug.Log( "Unable to get Unity Version", uScriptDebug.Type.Debug );
             }
          }
 

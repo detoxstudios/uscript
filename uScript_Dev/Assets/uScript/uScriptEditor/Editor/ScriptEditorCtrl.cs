@@ -524,9 +524,7 @@ namespace Detox.ScriptEditor
 
                      if ( null != asset )
                      {
-                        string key = key = asset as string;
-                        
-                        parameters[i].DefaultAsObject = key;                  
+                        parameters[i].DefaultAsObject = asset as string;                  
                      }
                   }
 
