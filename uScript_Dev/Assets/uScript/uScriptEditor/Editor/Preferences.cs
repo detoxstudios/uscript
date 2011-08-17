@@ -11,32 +11,32 @@ public class Preferences
    
    public string ProjectFiles 
    { 
-      get { LoadIfRequired( ); return m_Preferences[ "ProjectFiles" ] as string; } 
-      set { LoadIfRequired( ); m_Preferences[ "ProjectFiles" ] = value; }       
+      get { LoadIfRequired( ); return UnityEngine.Application.dataPath + (m_Preferences[ "RelativeProjectFiles" ] as string); } 
+      set { LoadIfRequired( ); m_Preferences[ "RelativeProjectFiles" ] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }       
    }
 
    public string UserScripts
    { 
-      get { LoadIfRequired( ); return m_Preferences[ "UserScripts" ] as string; } 
-      set { LoadIfRequired( ); m_Preferences[ "UserScripts" ] = value; }       
+      get { LoadIfRequired( ); return UnityEngine.Application.dataPath + (m_Preferences[ "RelativeUserScripts" ] as string); } 
+      set { LoadIfRequired( ); m_Preferences[ "RelativeUserScripts" ] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }       
    }
 
    public string UserNodes
    { 
-      get { LoadIfRequired( ); return m_Preferences[ "UserNodes" ] as string; } 
-      set { LoadIfRequired( ); m_Preferences[ "UserNodes" ] = value; }       
+      get { LoadIfRequired( ); return UnityEngine.Application.dataPath + (m_Preferences[ "RelativeUserNodes" ] as string); } 
+      set { LoadIfRequired( ); m_Preferences[ "RelativeUserNodes" ] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }       
    }
 
    public string GeneratedScripts
    { 
-      get { LoadIfRequired( ); return m_Preferences[ "GeneratedScripts" ] as string; } 
-      set { LoadIfRequired( ); m_Preferences[ "GeneratedScripts" ] = value; }       
+      get { LoadIfRequired( ); return UnityEngine.Application.dataPath + (m_Preferences[ "RelativeGeneratedScripts" ] as string); } 
+      set { LoadIfRequired( ); m_Preferences[ "RelativeGeneratedScripts" ] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }       
    }
 
    public string NestedScripts
    { 
-      get { LoadIfRequired( ); return m_Preferences[ "NestedScripts" ] as string; } 
-      set { LoadIfRequired( ); m_Preferences[ "NestedScripts" ] = value; }       
+      get { LoadIfRequired( ); return UnityEngine.Application.dataPath + (m_Preferences[ "RelativeNestedScripts" ] as string); } 
+      set { LoadIfRequired( ); m_Preferences[ "RelativeNestedScripts" ] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }       
    }
 
    public bool DrawPanelsOnUpdate
@@ -132,11 +132,6 @@ public class Preferences
 
    private void LoadDefaultsIfRequired( )
    {
-      if ( null == m_Preferences[ "ProjectFiles" ] )         m_Preferences[ "ProjectFiles" ]         = UnityEngine.Application.dataPath + "/uScriptProjectFiles";
-      if ( null == m_Preferences[ "UserScripts" ] )          m_Preferences[ "UserScripts" ]          = ProjectFiles + "/uScripts";
-      if ( null == m_Preferences[ "UserNodes" ] )            m_Preferences[ "UserNodes" ]            = ProjectFiles + "/Nodes";
-      if ( null == m_Preferences[ "GeneratedScripts" ] )     m_Preferences[ "GeneratedScripts" ]     = UserScripts  + "/_GeneratedCode";
-      if ( null == m_Preferences[ "NestedScripts" ] )        m_Preferences[ "NestedScripts" ]        = GeneratedScripts;
       if ( null == m_Preferences[ "DrawPanelsOnUpdate" ] )   m_Preferences[ "DrawPanelsOnUpdate" ]   = false;
       if ( null == m_Preferences[ "ToolbarButtonStyle" ] )   m_Preferences[ "ToolbarButtonStyle" ]   = 1;
       if ( null == m_Preferences[ "ShowGrid" ] )             m_Preferences[ "ShowGrid" ]             = uScriptConfig.Style.ShowGrid;
@@ -148,7 +143,12 @@ public class Preferences
       if ( null == m_Preferences[ "VariableExpansion" ] )    m_Preferences[ "VariableExpansion" ]    = VariableExpansionType.Dynamic;
       if ( null == m_Preferences[ "ShowAtStartup" ] )        m_Preferences[ "ShowAtStartup" ]        = true;
 
-      if ( null == m_Preferences[ "MaximumNodeRecursionCount" ] )m_Preferences[ "MaximumNodeRecursionCount" ]= 1000;
+      if ( null == m_Preferences[ "RelativeProjectFiles" ] )     m_Preferences[ "RelativeProjectFiles" ]      = uScriptConfig.ConstantPaths.RelativePathInAssets(UnityEngine.Application.dataPath + "/uScriptProjectFiles");
+      if ( null == m_Preferences[ "RelativeUserScripts" ] )      m_Preferences[ "RelativeUserScripts" ]       = uScriptConfig.ConstantPaths.RelativePathInAssets(ProjectFiles + "/uScripts");
+      if ( null == m_Preferences[ "RelativeUserNodes" ] )        m_Preferences[ "RelativeUserNodes" ]         = uScriptConfig.ConstantPaths.RelativePathInAssets(ProjectFiles + "/Nodes");
+      if ( null == m_Preferences[ "RelativeNestedScripts" ] )    m_Preferences[ "RelativeNestedScripts" ]     = uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode");
+      if ( null == m_Preferences[ "RelativeGeneratedScripts" ] ) m_Preferences[ "RelativeGeneratedScripts" ]  = uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode");
+      if ( null == m_Preferences[ "MaximumNodeRecursionCount" ] )m_Preferences[ "MaximumNodeRecursionCount" ] = 1000;
    }
    
    public void Save( )

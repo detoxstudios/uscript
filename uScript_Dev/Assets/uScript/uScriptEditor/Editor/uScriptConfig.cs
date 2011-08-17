@@ -700,7 +700,29 @@ public partial class uScriptConfig
    
       public static string RelativePath(string absolutePath)
       {
-         return absolutePath.Substring( UnityEngine.Application.dataPath.Length - "Assets".Length );
+         absolutePath = absolutePath.Replace( '\\', '/' );
+
+         if ( absolutePath.StartsWith(UnityEngine.Application.dataPath) )
+         {
+            return absolutePath.Substring( UnityEngine.Application.dataPath.Length - "Assets".Length );
+         }
+         else
+         {
+            return absolutePath;
+         }
+      }
+      public static string RelativePathInAssets(string absolutePath)
+      {
+         absolutePath = absolutePath.Replace( '\\', '/' );
+
+         if ( absolutePath.StartsWith(UnityEngine.Application.dataPath) )
+         {
+            return absolutePath.Substring( UnityEngine.Application.dataPath.Length );
+         }
+         else
+         {
+            return absolutePath;
+         }
       }
    }
 
