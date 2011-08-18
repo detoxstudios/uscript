@@ -20,7 +20,7 @@ public class uScriptAct_LoadTexture2D : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [AssetPathField(AssetType.AnimationClip)]
+      [AssetPathField(AssetType.Texture2D)]
       [FriendlyName("Name")]
       string name,
       [FriendlyName("Loaded Texture2D")]
