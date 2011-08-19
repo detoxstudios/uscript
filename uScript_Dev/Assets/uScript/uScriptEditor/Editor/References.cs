@@ -199,7 +199,9 @@ namespace System.Windows.Forms
                         continue;
                      }
 
-                     object val = p.DefaultAsObject;
+                     Parameter cloned = p;
+
+                     object val = cloned.DefaultAsObject;
 
                      bool isSocketExposed  = p.IsVisible( );
                      bool isReadOnly = false == p.Input;
@@ -301,8 +303,6 @@ namespace System.Windows.Forms
                      {
                         val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
                      }
-
-                     Parameter cloned = p;
                      
                      //remove the old states
                      cloned.State &= ~Parameter.VisibleState.Visible;

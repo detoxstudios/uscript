@@ -1200,7 +1200,14 @@ public static class uScriptGUI
 
          if (AssetBrowserWindow.propertyKey == _propertyKey)
          {
-            assetPath = AssetBrowserWindow.assetFilePath;
+            //only get it once, don't continue to get it
+            //because it'll override changes from other areas
+            //like undo/redo and drag/drop
+            if ( "" != AssetBrowserWindow.assetFilePath )
+            {
+               assetPath = AssetBrowserWindow.assetFilePath;
+               AssetBrowserWindow.assetFilePath = "";
+            }
          }
 
          uScriptGUI.enabled = true;

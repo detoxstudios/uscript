@@ -504,6 +504,8 @@ namespace Detox.ScriptEditor
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
+                  ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+
                   uScriptLogic logic = UnityEngine.ScriptableObject.CreateInstance( t ) as uScriptLogic;
                   Hashtable hash = logic.EditorDragDrop( o );
                
@@ -531,7 +533,11 @@ namespace Detox.ScriptEditor
                   UnityEngine.ScriptableObject.DestroyImmediate( logic );
 
                   entityNode.Parameters = parameters;
+
+                  m_ChangeStack.AddChange( new ChangeStack.Change("DragDrop", oldEditor, m_ScriptEditor.Copy( )) );
+
                   RefreshScript( null );
+
                   return true;
                }
                else if ( true == typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType( )) )
