@@ -173,6 +173,17 @@ public class AssetBrowserWindow : EditorWindow
 
 
 
+   void Update()
+   {
+      if (isOpen && (focusedWindow.GetType() != typeof(AssetBrowserWindow)))
+      {
+         EditorWindow.FocusWindowIfItsOpen<AssetBrowserWindow>();
+      }
+   }
+
+
+
+
    void OnEnable()
    {
       isOpen = true;
