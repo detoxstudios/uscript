@@ -454,6 +454,8 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "" );
                DefineSyncUnityHooks( );
                AddCSharpLine( "" );
+               DefineSyncEventListeners( );
+               AddCSharpLine( "" );
                
                AddCSharpLine( "public override void SetParent(GameObject g)" );
                AddCSharpLine( "{" );
@@ -1329,7 +1331,9 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "//then we assume it is stuck in an infinite loop" );         
          AddCSharpLine( "if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;" );
 
-         AddCSharpLine( CSharpSyncUnityHooksDeclaration( ) + ";" );
+         AddCSharpLine( "//other scripts might have added GameObjects with event scripts" );
+         AddCSharpLine( "//so we need to verify all our event listeners are registered" );
+         AddCSharpLine( CSharpSyncEventListenersDeclaration( ) + ";" );
          AddCSharpLine( "" );
 
          foreach ( LogicNode logicNode in m_Script.Logics )
@@ -1410,20 +1414,7 @@ namespace Detox.ScriptEditor
                }
             }
 
-            foreach ( EntityEvent entityEvent in m_Script.Events )
-            {
-               if ( false == entityEvent.IsStatic )
-               {
-                  if ( entityEvent.Instance.Default != "" )
-                  {
-                     FillComponent( entityEvent, entityEvent.Instance );
-                  }
-               }
-               else
-               {
-                  SetupEvent( null, entityEvent, true );
-               }
-            }
+            AddCSharpLine( CSharpSyncEventListenersDeclaration( ) + ";" );
 
             foreach ( EntityProperty entityProperty in m_Script.Properties )
             {
@@ -1453,6 +1444,31 @@ namespace Detox.ScriptEditor
             foreach ( OwnerConnection ownerNode in m_Script.Owners )
             {
                FillComponent( ownerNode, ownerNode.Connection );
+            }
+
+         --m_TabStack;
+         AddCSharpLine( "}" );
+      }
+
+      public void DefineSyncEventListeners( )
+      {
+         AddCSharpLine( "void " + CSharpSyncEventListenersDeclaration( ) );
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+
+            foreach ( EntityEvent entityEvent in m_Script.Events )
+            {
+               if ( false == entityEvent.IsStatic )
+               {
+                  if ( entityEvent.Instance.Default != "" )
+                  {
+                     FillComponent( entityEvent, entityEvent.Instance );
+                  }
+               }
+               else
+               {
+                  SetupEvent( null, entityEvent, true );
+               }
             }
 
          --m_TabStack;
@@ -3190,6 +3206,11 @@ namespace Detox.ScriptEditor
          return "SyncUnityHooks( )";
       }
 
+      private string CSharpSyncEventListenersDeclaration( )
+      {
+         return "SyncEventListeners( )";
+      }
+
       private string CSharpExternalDriven(EntityNode node, string name)
       {
          return name + "_" + GetGuidId(node.Guid);
@@ -3284,13 +3305,19 @@ namespace Detox.ScriptEditor
 
             string nestedCode = SetCode( "" );
 
+            //get all the links hooked to the input on this node
+            LinkNode []links = FindLinksByDestination( node.Guid, parameter.Name );
+            if ( links.Length == 0 )
+            {
+               //no links? then they've specified
+               //a default parmaeter so make sure that is hooked up
+               AddCSharpHooks( node, parameter );
+            }
+
             //if the input parameter is an array
             //we need to place all source node values into the array
             if ( parameter.Type.Contains("[]") )
             {
-               //get all the links hooked to the input on this node
-               LinkNode []links = FindLinksByDestination( node.Guid, parameter.Name );
-
                foreach ( LinkNode link in links )
                {
                   EntityNode argNode = m_Script.GetNode( link.Source.Guid );
@@ -3299,6 +3326,7 @@ namespace Detox.ScriptEditor
                   if ( argNode is LocalNode )
                   {
                      LocalNode localNode = (LocalNode) argNode;
+                     AddCSharpHooks( argNode, localNode.Value );
                      
                      //if the local variable is an array then we need to copy the array
                      //to the next available index of the input parameter
@@ -3370,7 +3398,9 @@ namespace Detox.ScriptEditor
                      EntityProperty entityProperty = (EntityProperty) argNode;
                      
                      if ( true == entityProperty.Parameter.Output )
-                     {
+                     {   
+                        AddCSharpHooks( argNode, entityProperty.Parameter );
+
                         //if the property variable is an array then we need to copy the array
                         //to the next available index of the input parameter
                         if ( entityProperty.Parameter.Type.Contains("[]") )
@@ -3417,9 +3447,6 @@ namespace Detox.ScriptEditor
             }
             else
             {
-               //get all the links hooked to the input on this node
-               LinkNode []links = FindLinksByDestination( node.Guid, parameter.Name );
-
                foreach ( LinkNode link in links )
                {
                   EntityNode argNode = m_Script.GetNode( link.Source.Guid );
@@ -3428,6 +3455,12 @@ namespace Detox.ScriptEditor
                   //we need to write the line for the property to refresh
                   if ( argNode is LocalNode || argNode is OwnerConnection )
                   {
+                     if ( argNode is LocalNode )
+                     {
+                        LocalNode localNode = (LocalNode) argNode;
+                        AddCSharpHooks( localNode, localNode.Value );
+                     }
+
                      AddCSharpLine( CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";" );
                      AddCSharpLine( "" );
                   }
@@ -3440,6 +3473,8 @@ namespace Detox.ScriptEditor
 
                      if ( true == entityProperty.Parameter.Output )
                      {
+                        AddCSharpHooks( entityProperty, entityProperty.Parameter );
+
                         AddCSharpLine( CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration( entityProperty ) + "( );" );
                         AddCSharpLine( "" );
                      }
@@ -3472,6 +3507,17 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "}" );
       }
    
+      private void AddCSharpHooks( EntityNode node, Parameter parameter )
+      {
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+            
+            FillComponent( node, parameter );
+
+         --m_TabStack;
+         AddCSharpLine( "}" );
+      }
+
       //go through and tell all the property linked to us to update their entity's values
       //because we could have modified the CSharp representation
       private void RefreshSetProperties( EntityNode node, Parameter [] parameters )
@@ -3492,9 +3538,10 @@ namespace Detox.ScriptEditor
                if ( argNode is EntityProperty )
                {
                   EntityProperty property = (EntityProperty) argNode;
-                
+
                   if ( true == property.Parameter.Input )
                   {
+                     AddCSharpHooks( property, property.Parameter );
                      AddCSharpLine( CSharpRefreshSetPropertyDeclaration( property ) + "( );" );
                   }
                }
