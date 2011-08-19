@@ -2754,13 +2754,31 @@ namespace Detox.ScriptEditor
          //force any potential entites affected to update
          RefreshSetProperties( receiver, receiver.Parameters );
 
+         AddCSharpLine( "" );
+         AddCSharpLine( "//save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested" );
+
+         int i = 0;
+
          //call anyone else connected to our outputs
          //if the result of the logic node has set our output to true
          foreach ( Plug output in receiver.Outputs )
          {
             if ( true == HasRelays(receiver.Guid, output.Name) )
             {
-               AddCSharpLine( "if ( " + CSharpName(receiver, receiver.Type) + "." + output.Name + " == true )" );
+               AddCSharpLine( "bool test_" + (i++) + " = " + CSharpName(receiver, receiver.Type) + "." + output.Name + ";" );
+            }
+         }
+
+         AddCSharpLine( "" );
+         i = 0;
+
+         //call anyone else connected to our outputs
+         //if the result of the logic node has set our output to true
+         foreach ( Plug output in receiver.Outputs )
+         {
+            if ( true == HasRelays(receiver.Guid, output.Name) )
+            {
+               AddCSharpLine( "if ( test_" + (i++) + " == true )" );
                AddCSharpLine( "{" );
                ++m_TabStack;
                   CallRelays(receiver.Guid, output.Name);
