@@ -428,6 +428,8 @@ public class AssetBrowserWindow : EditorWindow
 
    public static void GetResourceFolderPaths(string sourceDir, int recursionDepth)
    {
+      sourceDir = sourceDir.Replace( '\\', '/' );
+
       if (recursionDepth == 0)
       {
          _assetFullPath.Clear();
@@ -451,7 +453,7 @@ public class AssetBrowserWindow : EditorWindow
             string [] fileEntries = Directory.GetFiles(sourceDir);
             foreach(string fileName in fileEntries)
             {
-               modified = fileName;
+               modified = fileName.Replace( '\\', '/' );
 
                // get the extension
                i = modified.LastIndexOf('.');
