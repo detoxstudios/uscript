@@ -2308,7 +2308,7 @@ namespace Detox.ScriptEditor
                   if ( p.Name == link.Destination.Anchor )
                   {
                      AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
-                     AddCSharpHooks( parameterNode, p );
+                     SyncReferencedGameObject( parameterNode, p );
                   }
                }
             }
@@ -2471,14 +2471,14 @@ namespace Detox.ScriptEditor
                {
                   if ( p.Name == link.Destination.Anchor )
                   {
-                     AddCSharpHooks( argNode, parameter );
+                     SyncReferencedGameObject( argNode, parameter );
                      break;
                   }
                }
 
                if ( argNode.Instance.Name == link.Destination.Anchor )
                {
-                  AddCSharpHooks( argNode, argNode.Instance );
+                  SyncReferencedGameObject( argNode, argNode.Instance );
                }
             }
          }
@@ -2629,14 +2629,14 @@ namespace Detox.ScriptEditor
                {
                   if ( p.Name == link.Destination.Anchor )
                   {
-                     AddCSharpHooks( argNode, parameter );
+                     SyncReferencedGameObject( argNode, parameter );
                      break;
                   }
                }
 
                if ( argNode.Instance.Name == link.Destination.Anchor )
                {
-                  AddCSharpHooks( argNode, argNode.Instance );
+                  SyncReferencedGameObject( argNode, argNode.Instance );
                }
             }
          }
@@ -2739,14 +2739,14 @@ namespace Detox.ScriptEditor
                {
                   if ( p.Name == link.Destination.Anchor )
                   {
-                     AddCSharpHooks( argNode, parameter );
+                     SyncReferencedGameObject( argNode, parameter );
                      break;
                   }
                }
 
                if ( argNode.Instance.Name == link.Destination.Anchor )
                {
-                  AddCSharpHooks( argNode, argNode.Instance );
+                  SyncReferencedGameObject( argNode, argNode.Instance );
                }
             }
          }
@@ -2821,14 +2821,14 @@ namespace Detox.ScriptEditor
                   {
                      if ( p.Name == link.Destination.Anchor )
                      {
-                        AddCSharpHooks( argNode, parameter );
+                        SyncReferencedGameObject( argNode, parameter );
                         break;
                      }
                   }
 
                   if ( argNode.Instance.Name == link.Destination.Anchor )
                   {
-                     AddCSharpHooks( argNode, argNode.Instance );
+                     SyncReferencedGameObject( argNode, argNode.Instance );
                   }
                }
             }
@@ -3368,7 +3368,7 @@ namespace Detox.ScriptEditor
             {
                //no links? then they've specified
                //a default parmaeter so make sure that is hooked up
-               AddCSharpHooks( node, parameter );
+               SyncReferencedGameObject( node, parameter );
             }
 
             //if the input parameter is an array
@@ -3383,7 +3383,7 @@ namespace Detox.ScriptEditor
                   if ( argNode is LocalNode )
                   {
                      LocalNode localNode = (LocalNode) argNode;
-                     AddCSharpHooks( argNode, localNode.Value );
+                     SyncReferencedGameObject( argNode, localNode.Value );
                      
                      //if the local variable is an array then we need to copy the array
                      //to the next available index of the input parameter
@@ -3456,7 +3456,7 @@ namespace Detox.ScriptEditor
                      
                      if ( true == entityProperty.Parameter.Output )
                      {   
-                        AddCSharpHooks( argNode, entityProperty.Parameter );
+                        SyncReferencedGameObject( argNode, entityProperty.Parameter );
 
                         //if the property variable is an array then we need to copy the array
                         //to the next available index of the input parameter
@@ -3515,7 +3515,7 @@ namespace Detox.ScriptEditor
                      if ( argNode is LocalNode )
                      {
                         LocalNode localNode = (LocalNode) argNode;
-                        AddCSharpHooks( localNode, localNode.Value );
+                        SyncReferencedGameObject( localNode, localNode.Value );
                      }
 
                      AddCSharpLine( CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";" );
@@ -3530,7 +3530,7 @@ namespace Detox.ScriptEditor
 
                      if ( true == entityProperty.Parameter.Output )
                      {
-                        AddCSharpHooks( entityProperty, entityProperty.Parameter );
+                        SyncReferencedGameObject( entityProperty, entityProperty.Parameter );
 
                         AddCSharpLine( CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration( entityProperty ) + "( );" );
                         AddCSharpLine( "" );
@@ -3564,7 +3564,7 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "}" );
       }
    
-      private void AddCSharpHooks( EntityNode node, Parameter parameter )
+      private void SyncReferencedGameObject( EntityNode node, Parameter parameter )
       {
          AddCSharpLine( "{" );
          ++m_TabStack;
@@ -3598,7 +3598,7 @@ namespace Detox.ScriptEditor
 
                   if ( true == property.Parameter.Input )
                   {
-                     AddCSharpHooks( property, property.Parameter );
+                     SyncReferencedGameObject( property, property.Parameter );
                      AddCSharpLine( CSharpRefreshSetPropertyDeclaration( property ) + "( );" );
                   }
                }
