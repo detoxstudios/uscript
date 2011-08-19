@@ -2308,6 +2308,7 @@ namespace Detox.ScriptEditor
                   if ( p.Name == link.Destination.Anchor )
                   {
                      AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
+                     AddCSharpHooks( parameterNode, p );
                   }
                }
             }
@@ -2465,6 +2466,20 @@ namespace Detox.ScriptEditor
                //set variable directly based on the last set event argument
                AddCSharpLine( CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";" );
                outputList.Add( parameter );
+
+               foreach ( Parameter p in argNode.Parameters )
+               {
+                  if ( p.Name == link.Destination.Anchor )
+                  {
+                     AddCSharpHooks( argNode, parameter );
+                     break;
+                  }
+               }
+
+               if ( argNode.Instance.Name == link.Destination.Anchor )
+               {
+                  AddCSharpHooks( argNode, argNode.Instance );
+               }
             }
          }
 
@@ -2597,9 +2612,6 @@ namespace Detox.ScriptEditor
             }
          }
 
-         //force any potential entites affected to update
-         RefreshSetProperties( receiver, receiver.Parameters );
-
          //push the output values
          //to all the links we connect out to
          foreach ( Parameter parameter in receiver.Parameters )
@@ -2612,8 +2624,25 @@ namespace Detox.ScriptEditor
             {
                EntityNode argNode = m_Script.GetNode( link.Destination.Guid );
                AddCSharpLine( CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";" );
+
+               foreach ( Parameter p in argNode.Parameters )
+               {
+                  if ( p.Name == link.Destination.Anchor )
+                  {
+                     AddCSharpHooks( argNode, parameter );
+                     break;
+                  }
+               }
+
+               if ( argNode.Instance.Name == link.Destination.Anchor )
+               {
+                  AddCSharpHooks( argNode, argNode.Instance );
+               }
             }
          }
+
+         //force any potential entites affected to update
+         RefreshSetProperties( receiver, receiver.Parameters );
 
          //call anyone else connected to us
          CallRelays(receiver.Guid, receiver.Output.Name);
@@ -2705,6 +2734,20 @@ namespace Detox.ScriptEditor
             {
                EntityNode argNode = m_Script.GetNode( link.Destination.Guid );
                AddCSharpLine( CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";" );
+
+               foreach ( Parameter p in argNode.Parameters )
+               {
+                  if ( p.Name == link.Destination.Anchor )
+                  {
+                     AddCSharpHooks( argNode, parameter );
+                     break;
+                  }
+               }
+
+               if ( argNode.Instance.Name == link.Destination.Anchor )
+               {
+                  AddCSharpHooks( argNode, argNode.Instance );
+               }
             }
          }
 
@@ -2773,6 +2816,20 @@ namespace Detox.ScriptEditor
                {
                   EntityNode argNode = m_Script.GetNode( link.Destination.Guid );
                   AddCSharpLine( CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";" );
+
+                  foreach ( Parameter p in argNode.Parameters )
+                  {
+                     if ( p.Name == link.Destination.Anchor )
+                     {
+                        AddCSharpHooks( argNode, parameter );
+                        break;
+                     }
+                  }
+
+                  if ( argNode.Instance.Name == link.Destination.Anchor )
+                  {
+                     AddCSharpHooks( argNode, argNode.Instance );
+                  }
                }
             }
 
