@@ -46,7 +46,6 @@ public class uScriptCon_RandomSwitch : uScriptLogic
 
    public void In(
       [FriendlyName("Max Output Used"), DefaultValue(6), SocketState(false, false)] int MaxOutputUsed,
-      [FriendlyName("Seed"), DefaultValue(0), SocketState(false, false)] int Seed,
       [FriendlyName("Current Output")] out int CurrentOutput
       )
    {
@@ -59,8 +58,6 @@ public class uScriptCon_RandomSwitch : uScriptLogic
 
       // Check bounds on MaxOutputUsed
       MaxOutputUsed = Mathf.Clamp(MaxOutputUsed, 1, 6);
-
-      if (Seed > 0) { Random.seed = Seed; }
 
       m_CurrentOutput = Random.Range(1, MaxOutputUsed);
 
