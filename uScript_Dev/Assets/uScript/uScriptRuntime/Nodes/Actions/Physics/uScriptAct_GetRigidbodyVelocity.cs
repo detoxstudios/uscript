@@ -20,7 +20,7 @@ public class uScriptAct_GetRigidbodyVelocity : uScriptLogic
 
    public void In(GameObject Target, out Vector3 Velocity)
    {
-      if (Target != null && Target.GetComponent("rigidbody"))
+      if (Target != null && Target.GetComponent<Rigidbody>( ))
       {
          Velocity = Target.rigidbody.velocity;
       }
