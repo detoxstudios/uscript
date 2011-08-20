@@ -579,11 +579,6 @@ http://uscript.net
             uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_MasterComponent));
          }
-         //if (null == uScriptMaster.GetComponent<uScript_Assets>())
-         //{
-         //   uScriptDebug.Log("Adding Asset Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-         //   uScriptMaster.AddComponent(typeof(uScript_Assets));
-         //}
 
          //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
          //we don't save the fully qualified type name which is required to return types of assemblies not loaded
@@ -4389,7 +4384,6 @@ http://uscript.net
 
       foreach (Type t in types)
       {
-         if (t == typeof(uScript_Assets)) continue;
          if (t == typeof(uScript_MasterComponent)) continue;
 
          Reflect(t, entityDescs, baseMethods, baseEvents, baseProperties);

@@ -47,7 +47,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Assets.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Lerper.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_MasterComponent.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Runtime.cs" />
