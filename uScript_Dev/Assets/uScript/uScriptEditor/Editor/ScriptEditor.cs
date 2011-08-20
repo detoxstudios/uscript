@@ -3758,23 +3758,23 @@ namespace Detox.ScriptEditor
             {
                if ( node.Type == data.Type )
                {
-                  //TRAPZZ CODE - FORCEABLY CHANGE ANIMATIONCLIPS TO STRINGS
-                  //REMOVE THIS WHEN WE'RE SURE EVERYONE HAS MIGRATED
-                  for ( int i = 0; i < data.Parameters.Length; i++ )
-                  {
-                     Detox.Data.ScriptEditor.Parameter p = data.Parameters[ i ];
+                  ////TRAPZZ CODE - FORCEABLY CHANGE ANIMATIONCLIPS TO STRINGS
+                  ////REMOVE THIS WHEN WE'RE SURE EVERYONE HAS MIGRATED
+                  //for ( int i = 0; i < data.Parameters.Length; i++ )
+                  //{
+                  //   Detox.Data.ScriptEditor.Parameter p = data.Parameters[ i ];
 
-                     if ( p.Type == "UnityEngine.AnimationClip" )
-                     {
-                        p.Type    = "System.String";
+                  //   if ( p.Type == "UnityEngine.AnimationClip" )
+                  //   {
+                  //      p.Type    = "System.String";
                         
-                        int index = p.Default.LastIndexOf( '/' );
-                        if ( index >= 0 && index < p.Default.Length ) p.Default =  p.Default.Substring( index + 1 );
+                  //      int index = p.Default.LastIndexOf( '/' );
+                  //      if ( index >= 0 && index < p.Default.Length ) p.Default =  p.Default.Substring( index + 1 );
                   
-                        data.Parameters[ i ] = p;
-                     }
-                  }
-                  //END TRAPZZ CODE
+                  //      data.Parameters[ i ] = p;
+                  //   }
+                  //}
+                  ////END TRAPZZ CODE
 
                   cloned = node;
                   

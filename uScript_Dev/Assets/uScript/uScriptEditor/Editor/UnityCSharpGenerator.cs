@@ -3584,13 +3584,22 @@ namespace Detox.ScriptEditor
    
       private void SyncReferencedGameObject( EntityNode node, Parameter parameter )
       {
-         AddCSharpLine( "{" );
+         string currentCode = SetCode( "" );
+         
          ++m_TabStack;
-            
             FillComponent( node, parameter );
-
          --m_TabStack;
-         AddCSharpLine( "}" );
+
+         string newCode = SetCode( currentCode );
+
+         if ( newCode != "" )
+         {
+            AddCSharpLine( "{" );
+            
+               m_CSharpString += newCode;
+
+            AddCSharpLine( "}" );
+         }
       }
 
       //go through and tell all the property linked to us to update their entity's values

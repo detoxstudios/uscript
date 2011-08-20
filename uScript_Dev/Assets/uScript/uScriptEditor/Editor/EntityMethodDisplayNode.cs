@@ -37,6 +37,18 @@ namespace Detox.ScriptEditor
             socket.Type = entityMethod.Instance.Type;
             socket.Input  = true;
             socket.Output = false;
+
+            if ( null != m_Ctrl )
+            {
+               //if it can be expanded or collapsed that means
+               //there is nothing attached to it so we can render the default value
+               if ( true == m_Ctrl.CanExpandParameter(entityMethod.Instance) ||
+                    true == m_Ctrl.CanCollapseParameter(Guid, entityMethod.Instance) )
+               {
+                  socket.DefaultValue = entityMethod.Instance.Default;
+               }
+            }
+
             sockets.Add( socket );
          }
 
