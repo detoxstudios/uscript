@@ -176,7 +176,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                      if ("" != path)
                      {
-                        uScriptInstance._openScriptToggle = false;
                         uScriptInstance.OpenScript(path);
                      }
                   }
@@ -287,7 +286,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               clickTime = EditorApplication.timeSinceStartup - clickTime; // prevents multiple double-clicks
                               if (false == string.IsNullOrEmpty(path))
                               {
-                                 uScriptInstance._openScriptToggle = false;
                                  uScriptInstance.OpenScript(path);
                               }
                            }
@@ -306,7 +304,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                            if (false == string.IsNullOrEmpty(path))
                            {
-                              uScriptInstance._openScriptToggle = false;
                               uScriptInstance.OpenScript(path);
                            }
                         }

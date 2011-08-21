@@ -96,6 +96,29 @@ public class uScript : EditorWindow
    private bool m_CanvasDragging = false;
    public bool wasCanvasDragged = false;
 
+   int _paddingAroundContextMenu = 4;
+
+   bool _isContextMenuOpen = false;
+   public bool isContextMenuOpen
+   {
+      get { return _isContextMenuOpen; }
+      set
+      {
+         if (_isContextMenuOpen != value)
+         {
+            _isContextMenuOpen = value;
+            if (value == false)
+            {
+               m_ContextX = 0;
+               m_ContextY = 0;
+               m_CurrentMenu = null;
+               rectContextMenuWindow = new Rect(m_ContextX, m_ContextY, 10, 10);
+               Event.current.Use();
+            }
+         }
+      }
+   }
+
    private int m_ContextX = 0;
    private int m_ContextY = 0;
    private ToolStripItem m_CurrentMenu = null;
@@ -234,8 +257,6 @@ public class uScript : EditorWindow
    //
    // Content Panel Variables
    //
-   public bool _openScriptToggle = false;
-
    MouseEventArgs m_MouseDownArgs = null;
    MouseEventArgs m_MouseUpArgs = null;
    MouseEventArgs m_MouseMoveArgs = new MouseEventArgs();
@@ -930,11 +951,6 @@ http://uscript.net
          GUI.enabled = _EULAagreed == EULAVersion;
       }
 
-
-
-
-
-
       // Set the default mouse region
       _mouseRegion = uScript.MouseRegion.Outside;
 
@@ -943,8 +959,8 @@ http://uscript.net
 
       bool lastMouseDown = m_MouseDown;
 
-      bool contextActive = 0 != m_ContextX || 0 != m_ContextY;
-      if (false == contextActive && false == isPreferenceWindowOpen)
+      isContextMenuOpen = 0 != m_ContextX || 0 != m_ContextY;
+      if (false == isPreferenceWindowOpen)
       {
          int modifierKeys = 0;
 
@@ -957,8 +973,143 @@ http://uscript.net
          Event e = Event.current;
 
 
-         if (isFileMenuOpen == false)
+         if (isContextMenuOpen)
          {
+            //
+            // isContextMenuOpen
+            //
+            switch (e.type)
+            {
+               case EventType.ContextClick:
+                  isContextMenuOpen = false;
+                  break;
+
+               case EventType.KeyDown:
+               case EventType.KeyUp:
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.Escape:
+                        isContextMenuOpen = false;
+                        break;
+                  }
+                  e.Use();
+                  break;
+
+               case EventType.MouseDown:
+                  if (rectContextMenuWindow.Contains(e.mousePosition) == false)
+                  {
+                     isContextMenuOpen = false;
+                  }
+                  else if (e.button != 0)
+                  {
+                     isContextMenuOpen = false;
+                  }
+                  break;
+
+//               case EventType.MouseUp:
+//                  if (e.button != 0)
+//                  {
+//                     isContextMenuOpen = false;
+//                  }
+//                  break;
+
+               case EventType.ScrollWheel:
+                  if (rectContextMenuWindow.Contains(e.mousePosition) == false)
+                  {
+                     e.Use();
+                  }
+                  break;
+
+               // paint/layout events
+               case EventType.Layout:
+                  break;
+               case EventType.Repaint:
+                  break;
+
+               // ignore these events
+               case EventType.Ignore:
+               case EventType.Used:
+               default:
+                  break;
+            }
+         }
+         else if (isFileMenuOpen)
+         {
+            //
+            // isFileMenuOpen
+            //
+            switch (e.type)
+            {
+               case EventType.ContextClick:
+                  isFileMenuOpen = false;
+                  break;
+
+               case EventType.KeyDown:
+               case EventType.KeyUp:
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.Escape:
+                        isFileMenuOpen = false;
+                        break;
+                     case KeyCode.N:
+                        FileMenuItem_New();
+                        break;
+                     case KeyCode.O:
+                        FileMenuItem_Open();
+                        break;
+                     case KeyCode.S:
+                        FileMenuItem_Save();
+                        break;
+                     case KeyCode.A:
+                        FileMenuItem_SaveAs();
+                        break;
+                     case KeyCode.Q:
+                        FileMenuItem_QuickSave();
+                        break;
+                  }
+                  e.Use();
+                  break;
+
+               case EventType.MouseDown:
+                  if (rectFileMenuWindow.Contains(e.mousePosition) == false)
+                  {
+                     isFileMenuOpen = false;
+                  }
+                  else if (e.button != 0)
+                  {
+                     isFileMenuOpen = false;
+                  }
+                  break;
+
+               case EventType.MouseUp:
+                  if (e.button != 0)
+                  {
+                     isFileMenuOpen = false;
+                  }
+                  break;
+
+               case EventType.ScrollWheel:
+                  e.Use();
+                  break;
+
+               // paint/layout events
+               case EventType.Layout:
+                  break;
+               case EventType.Repaint:
+                  break;
+
+               // ignore these events
+               case EventType.Ignore:
+               case EventType.Used:
+               default:
+                  break;
+            }
+         }
+         else
+         {
+            //
+            // handle normal canvas controls
+            //
             switch (e.type)
             {
                // command events
@@ -1312,78 +1463,6 @@ http://uscript.net
                   break;
             }
          }
-         else
-         {
-            //
-            // isFileMenuOpen is true
-            //
-            switch (e.type)
-            {
-               case EventType.ContextClick:
-                  isFileMenuOpen = false;
-                  break;
-
-               case EventType.KeyDown:
-               case EventType.KeyUp:
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Escape:
-                        isFileMenuOpen = false;
-                        break;
-                     case KeyCode.N:
-                        FileMenuItem_New();
-                        break;
-                     case KeyCode.O:
-                        FileMenuItem_Open();
-                        break;
-                     case KeyCode.S:
-                        FileMenuItem_Save();
-                        break;
-                     case KeyCode.A:
-                        FileMenuItem_SaveAs();
-                        break;
-                     case KeyCode.Q:
-                        FileMenuItem_QuickSave();
-                        break;
-                  }
-                  e.Use();
-                  break;
-
-               case EventType.MouseDown:
-                  if (windowRect.Contains(e.mousePosition) == false)
-                  {
-                     isFileMenuOpen = false;
-                  }
-                  else if (e.button != 0)
-                  {
-                     isFileMenuOpen = false;
-                  }
-                  break;
-
-               case EventType.MouseUp:
-                  if (e.button != 0)
-                  {
-                     isFileMenuOpen = false;
-                  }
-                  break;
-
-               case EventType.ScrollWheel:
-                  e.Use();
-                  break;
-
-               // paint/layout events
-               case EventType.Layout:
-                  break;
-               case EventType.Repaint:
-                  break;
-
-               // ignore these events
-               case EventType.Ignore:
-               case EventType.Used:
-               default:
-                  break;
-            }
-         }
       }
       else
       {
@@ -1408,7 +1487,7 @@ http://uscript.net
       CalculateMouseRegion();
 
       // do external windows/popups
-      DrawPopups(contextActive);
+      DrawPopups();
 
       if (m_MouseDown == false)
       {
@@ -1468,7 +1547,7 @@ http://uscript.net
       }
    }
 
-   public void DrawPopups(bool contextActive)
+   public void DrawPopups()
    {
       // Draw window elements, including the context menu
       //
@@ -1491,28 +1570,46 @@ http://uscript.net
 
       if (_EULAagreed == EULAVersion)
       {
-         if (true == contextActive)
+         if (isContextMenuOpen)
          {
-            DrawContextMenu(m_ContextX, m_ContextY);
+            // try to put the window where the user clicked
+            rectContextMenuWindow.x = m_ContextX;
+            rectContextMenuWindow.y = m_ContextY;
 
-            if (Event.current.type == EventType.MouseDown)
+            // update the x, y, width, and height to ensure the context menu appears within the _canvasRect bounds
+            //
+            // they should be handled in the xMax, xMin and then yMax and yMin order
+            //
+            if (_canvasRect.xMax - _paddingAroundContextMenu < rectContextMenuWindow.xMax)
             {
-               m_ContextX = 0;
-               m_ContextY = 0;
-               m_CurrentMenu = null;
+               rectContextMenuWindow.x -= rectContextMenuWindow.xMax - (_canvasRect.xMax - _paddingAroundContextMenu);
+            }
+
+            if (_canvasRect.xMin + _paddingAroundContextMenu > rectContextMenuWindow.xMin)
+            {
+               rectContextMenuWindow.x = (_canvasRect.xMin + _paddingAroundContextMenu);
+            }
+
+            if (position.height - _paddingAroundContextMenu < rectContextMenuWindow.yMax)
+            {
+               rectContextMenuWindow.y -= rectContextMenuWindow.yMax - (position.height - _paddingAroundContextMenu);
+            }
+
+            if (_canvasRect.yMin + _paddingAroundContextMenu > rectContextMenuWindow.yMin)
+            {
+               rectContextMenuWindow.y = (_canvasRect.yMin + _paddingAroundContextMenu);
+            }
+
+            Rect tmpRect = GUILayout.Window("ContextMenu".GetHashCode(), rectContextMenuWindow, DrawContextMenuWindow, string.Empty, uScriptGUIStyle.menuContextWindow);
+            if (Event.current.type == EventType.Repaint)
+            {
+               rectContextMenuWindow = tmpRect;
             }
          }
-
-         if (_openScriptToggle)
+         else if (isFileMenuOpen)
          {
-            DrawAssetList();
+            rectFileMenuWindow = GUILayout.Window("FileMenu".GetHashCode(), rectFileMenuWindow, DrawFileMenuWindow, string.Empty, uScriptGUIStyle.menuDropDownWindow);
          }
-
-         if (isFileMenuOpen)
-         {
-            windowRect = GUILayout.Window("FileMenu".GetHashCode(), windowRect, DrawFileMenuWindow, string.Empty, uScriptGUIStyle.menuDropDownWindow);
-         }
-
       }
 
       EndWindows();
@@ -1796,6 +1893,8 @@ http://uscript.net
                //
                _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
                {
+                  uScriptGUIPanelReference.Instance.hotNodeControl = null;
+
                   foreach (PaletteMenuItem item in _paletteMenuItems)
                   {
                      if (DrawPaletteMenu(item))
@@ -2103,6 +2202,11 @@ http://uscript.net
          _mouseRegionRect[region] = GUILayoutUtility.GetLastRect();
       }
 
+      if (isContextMenuOpen || isFileMenuOpen)
+      {
+         return;
+      }
+
       if (_mouseRegionRect.ContainsKey(region))
       {
          if (GUI.enabled)
@@ -2343,6 +2447,16 @@ http://uscript.net
                uScriptDebug.Log("Cannot execute menu item: " + item.Name + "\n", uScriptDebug.Type.Debug);
             }
          }
+
+         // if hovering over the button, display the reference description
+         if (Event.current.type == EventType.Repaint)
+         {
+            Rect rect = GUILayoutUtility.GetLastRect();
+            if (rect.Contains(Event.current.mousePosition))
+            {
+               uScriptGUIPanelReference.Instance.hotNodeControl = item.Tag as EntityNode;
+            }
+         }
       }
 
       return true;
@@ -2372,7 +2486,7 @@ http://uscript.net
 
 
    bool _isFileMenuOpen = false;
-   bool isFileMenuOpen
+   public bool isFileMenuOpen
    {
       get { return _isFileMenuOpen; }
       set
@@ -2514,8 +2628,10 @@ http://uscript.net
    }
 
 
+   Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
+
    Rect rectFileMenuButton = new Rect();
-   Rect windowRect = new Rect(20, 20, 120, 50);
+   Rect rectFileMenuWindow = new Rect(20, 20, 10, 10);
 
 
    void DrawGUIContent()
@@ -2535,8 +2651,8 @@ http://uscript.net
             if (Event.current.type == EventType.Repaint)
             {
                rectFileMenuButton = GUILayoutUtility.GetLastRect();
-               windowRect.x = rectFileMenuButton.x;
-               windowRect.y = rectFileMenuButton.y + rectFileMenuButton.height;
+               rectFileMenuWindow.x = rectFileMenuButton.x;
+               rectFileMenuWindow.y = rectFileMenuButton.y + rectFileMenuButton.height;
             }
 
             if (GUILayout.Button(uScriptGUIContent.toolbarButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
@@ -2996,60 +3112,20 @@ http://uscript.net
 
 
 
-   public void DrawContextMenu(int x, int y)
+   void DrawContextMenuWindow(int windowID)
    {
-//      List<string> options = new List<string>();
-//
-//      foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
-//      {
-//         options.Add(item.Text);
-//      }
-
-      Rect windowRect = new Rect(x, y, 10, 10);
-      windowRect = GUILayout.Window(0, windowRect, DoContextMenu, "");
-   }
-
-   public void DrawAssetList()
-   {
-      Rect windowRect = new Rect(_canvasRect.xMin + 50, 50, 10, 10);
-      windowRect = GUILayout.Window(10000, windowRect, DoAssetList, "");
-   }
-
-   void DoAssetList(int windowID)
-   {
-      GUILayout.Label("uScripts", EditorStyles.boldLabel);
-
-      UnityEngine.Object[] objects = GameObject.FindObjectsOfType(typeof(uScriptCode));
-      foreach (UnityEngine.Object o in objects)
-      {
-         uScriptCode code = o as uScriptCode;
-
-         if (GUILayout.Button(code.GetType().ToString(), EditorStyles.label))
-         {
-            string path = FindFile(Application.dataPath, code.GetType().ToString() + ".uscript");
-            if ("" != path)
-            {
-               _openScriptToggle = false;
-               OpenScript(path);
-            }
-         }
-      }
-   }
-
-
-   void DoContextMenu(int windowID)
-   {
+      GUI.depth = 0;
       if (null == m_CurrentMenu)
       {
          foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
          {
             if (item.Text == "<hr>")
             {
-               GUILayout.Button("", uScriptGUIStyle.hDivider);
+               uScriptGUI.HR();
             }
             else
             {
-               if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.ContextMenu))
+               if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.menuContextButton))
                {
                   m_CurrentMenu = item;
                   break;
@@ -3112,15 +3188,18 @@ http://uscript.net
       return paths.ToArray();
    }
 
+
    private void DrawSubItems(ToolStripMenuItem menuItem)
    {
       if (null == menuItem) return;
 
       foreach (ToolStripItem item in menuItem.DropDownItems.Items)
       {
-         if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.ContextMenu))
+         if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.menuContextButton))
          {
             m_CurrentMenu = item;
+            rectContextMenuWindow.width = 10;
+            rectContextMenuWindow.height = 10;
             break;
          }
       }
@@ -3132,6 +3211,7 @@ http://uscript.net
          m_ContextX = 0;
          m_ContextY = 0;
          m_CurrentMenu = null;
+         rectContextMenuWindow = new Rect();
 
          item.OnClick();
       }
@@ -4779,7 +4859,7 @@ http://uscript.net
       return "";
    }
 
-   public static string FindNodeDescription(string type, DisplayNode node)
+   public static string FindNodeDescription(string type, EntityNode node)
    {
       // check non-logic, non-event types first...
       // structs can't have attributes, so we have to specify this information here, explicitly
@@ -4797,8 +4877,8 @@ http://uscript.net
       }
       else if (type == "LocalNode")
       {
-         LocalNodeDisplayNode variable = node as LocalNodeDisplayNode;
-         string friendlyType = uScriptConfig.Variable.FriendlyName(variable.LocalNode.Value.Type);
+         LocalNode variable = (LocalNode)node;
+         string friendlyType = uScriptConfig.Variable.FriendlyName(variable.Value.Type);
 
          switch (friendlyType)
          {

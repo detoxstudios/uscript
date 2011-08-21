@@ -24,6 +24,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
    //
    // Members specific to this panel class
    //
+   public EntityNode hotNodeControl = null;
 
 
    //
@@ -62,7 +63,34 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
       string helpButtonURL       = "http://www.uscript.net/docs/";
 
-      if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
+      if (hotNodeControl != null)
+      {
+         string nodeType = ScriptEditor.FindNodeType(hotNodeControl);
+         if (string.IsNullOrEmpty(nodeType))
+         {
+            // other node types...
+            if (hotNodeControl is CommentNode)
+            {
+               nodeType = "CommentNode";
+            }
+            else if (hotNodeControl is ExternalConnection)
+            {
+               nodeType = "ExternalConnection";
+            }
+            else if (hotNodeControl is OwnerConnection)
+            {
+               nodeType = "OwnerConnection";
+            }
+            else if (hotNodeControl is LocalNode)
+            {
+               nodeType = "LocalNode";
+            }
+         }
+         helpButtonURL = string.Empty;
+         helpDescription = uScript.FindNodeDescription(nodeType, hotNodeControl);
+         helpButtonTooltip = string.Empty;
+      }
+      else if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
       {
          if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
          {
@@ -88,7 +116,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                }
             }
             helpButtonURL = uScript.FindNodeHelp(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
-            helpDescription = uScript.FindNodeDescription(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
+            helpDescription = uScript.FindNodeDescription(nodeType, m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
             helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
          }
       }
@@ -120,12 +148,14 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                Help.BrowseURL(helpButtonURL);
             }
 
-            uScriptGUI.enabled = true;
+            uScriptGUI.enabled = hotNodeControl == null;
 
             if (GUILayout.Button(uScriptGUIContent.toolbarButtonOnlineForum, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                Help.BrowseURL("http://uscript.net/forum");
             }
+
+            uScriptGUI.enabled = true;
          }
          EditorGUILayout.EndHorizontal();
 

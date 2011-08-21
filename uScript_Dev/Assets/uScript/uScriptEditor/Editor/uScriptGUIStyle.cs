@@ -80,10 +80,17 @@ public static class uScriptGUIStyle
    private static GUIStyle _menuDropDownButton;
    public static GUIStyle menuDropDownButton { get { return _menuDropDownButton; } }
 
+   private static GUIStyle _menuContextWindow;
+   public static GUIStyle menuContextWindow { get { return _menuContextWindow; } }
+
+   private static GUIStyle _menuContextButton;
+   public static GUIStyle menuContextButton { get { return _menuContextButton; } }
+
 
 
 
    static Texture2D _texture_windowMenuDropDown = null;
+   static Texture2D _texture_windowMenuContext = null;
 
 
 
@@ -98,6 +105,7 @@ public static class uScriptGUIStyle
          // reload all custom GUI textures to match the new skin
          string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + _currentSkin + "_";
          _texture_windowMenuDropDown = AssetDatabase.LoadAssetAtPath(skinPath + "MenuDropDown.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         _texture_windowMenuContext = AssetDatabase.LoadAssetAtPath(skinPath + "MenuContext.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
       }
       else if (panelTitle != null)
       {
@@ -232,6 +240,22 @@ public static class uScriptGUIStyle
       _menuDropDownButton.border = EditorStyles.toolbarButton.border;
       _menuDropDownButton.margin = new RectOffset();
       _menuDropDownButton.padding = new RectOffset(8, 8, 4, 4);
+
+      _menuContextWindow = new GUIStyle(GUI.skin.window);
+      _menuContextWindow.normal.background = _texture_windowMenuContext;
+      _menuContextWindow.onNormal.background = _texture_windowMenuContext;
+      _menuContextWindow.border = new RectOffset(10, 10, 10, 10);
+      _menuContextWindow.padding = new RectOffset(0, 0, 4, 4);
+      _menuContextWindow.overflow = new RectOffset(6, 6, 6, 6);
+      _menuContextWindow.contentOffset = Vector2.zero;
+
+      _menuContextButton = new GUIStyle(EditorStyles.largeLabel);
+      _menuContextButton.name = "menuDropDownButton";
+      _menuContextButton.active.background = EditorStyles.toolbarButton.onActive.background;
+      _menuContextButton.hover.background = EditorStyles.toolbarButton.onNormal.background;
+      _menuContextButton.border = EditorStyles.toolbarButton.border;
+      _menuContextButton.margin = new RectOffset();
+      _menuContextButton.padding = new RectOffset(8, 8, 4, 4);
    }
 
 
