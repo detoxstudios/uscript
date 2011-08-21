@@ -1354,6 +1354,23 @@ namespace Detox.FlowChart
       {
          Node n1 = c1 as Node;
          Node n2 = c2 as Node;
+         
+         // comments should always go to the back
+         if (n1.StyleName.Contains("comment"))
+         {
+            if (n2.StyleName.Contains("comment"))
+            {
+               return 0;
+            }
+            else
+            {
+               return -1;
+            }
+         }
+         else if (n2.StyleName.Contains("comment"))
+         {
+            return 1;
+         }
 
          // selected nodes should always render last
          if (n1.Selected)
