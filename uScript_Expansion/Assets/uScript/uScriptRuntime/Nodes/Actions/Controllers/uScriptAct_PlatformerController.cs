@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Loads a Texture from your Resources directory.
+// Desc: Wraps Unity's PlatformerController.js
 
 using UnityEngine;
 using System.Collections;
