@@ -14,7 +14,7 @@ using System.Collections;
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Platfomer_Controller")]
 
 [FriendlyName("Platformer Controller")]
-public class uScriptAct_PlatfomerController : uScriptLogic
+public class uScriptAct_PlatformerController : uScriptLogic
 {
    public bool Out { get { return true; } }
 
@@ -25,8 +25,8 @@ public class uScriptAct_PlatfomerController : uScriptLogic
       bool canControl,
       [FriendlyName("Spawn Point")]
       Transform spawnPoint,
-      [FriendlyName("Walk Speed")]
       [SocketState(false, false)]
+      [FriendlyName("Walk Speed")]
       [DefaultValue(3)]
       float walkSpeed,
       [FriendlyName("Run Speed")]
@@ -72,20 +72,20 @@ public class uScriptAct_PlatfomerController : uScriptLogic
 
       if ( null == c ) 
       {
-         c = instance.AddComponent( "PlatformerController" );
-      
-         if ( null == c )
-         {
-            uScriptDebug.Log( "Could not add PlatformerController to " + instance.name, uScriptDebug.Type.Error );
-            return;
-         }
+         uScriptDebug.Log( "PlatformerController.js must be added to " + instance.name + " (with a Transform set in the Inspector) for uScript's Platform Controller to work." + instance.name, uScriptDebug.Type.Warning );
+         return;
       }
 
       PlatformerController controller = (PlatformerController) c;
 
-      controller.canControl          = canControl;
-      controller.spawnPoint.position = spawnPoint.position;
-      controller.spawnPoint.rotation = spawnPoint.rotation;
+      controller.canControl = canControl;
+
+      if ( null != spawnPoint )
+      {
+         controller.spawnPoint.position = spawnPoint.position;
+         controller.spawnPoint.rotation = spawnPoint.rotation;
+      }
+
       controller.movement.walkSpeed  = walkSpeed;
       controller.movement.runSpeed   = runSpeed;
 
