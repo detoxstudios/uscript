@@ -2358,7 +2358,7 @@ namespace Detox.ScriptEditor
          m_LogicNodes  = nodes;
       }
 
-      public bool FailOnEvent( LinkNode link, Guid startingGuid, string startingAnchor )
+      public bool FailOnEvent( LinkNode link, Hashtable checkedHash )
       {
          //if node can't be found we won't need to fail on the backtrace
          if ( false == m_Nodes.Contains(link.Source.Guid) ) return true;
@@ -2390,10 +2390,13 @@ namespace Detox.ScriptEditor
          {
             if ( sourceLink.Destination.Guid == node.Guid )
             {
-               if ( sourceLink.Destination.Guid   != startingGuid &&
-                    sourceLink.Destination.Anchor != startingAnchor )
+               string key = sourceLink.Destination.Guid + sourceLink.Destination.Anchor;
+
+               if ( false == checkedHash.Contains(key) )
                {
-                  bool result = FailOnEvent( sourceLink, startingGuid, startingAnchor );            
+                  checkedHash[key] = true;
+
+                  bool result = FailOnEvent( sourceLink, checkedHash );            
                   if ( false == result ) return false;
                }
             }
@@ -2409,6 +2412,8 @@ namespace Detox.ScriptEditor
       
          EntityNode node = m_Nodes.Get(link.Source.Guid) as EntityNode;
       
+         Hashtable checkedHash = new Hashtable( );
+
          //if its first output is a method
          //then see if it'll get hung up on an event
          if ( node is EntityMethod || node is LogicNode )
@@ -2433,7 +2438,7 @@ namespace Detox.ScriptEditor
             {
                if ( sourceLink.Destination.Guid == node.Guid )
                {
-                  bool result = FailOnEvent( sourceLink, link.Source.Guid, link.Source.Anchor );            
+                  bool result = FailOnEvent( sourceLink, checkedHash );            
                   if ( false == result ) return false;
                }
             }
@@ -2517,6 +2522,23 @@ namespace Detox.ScriptEditor
 
          EntityNode source = (EntityNode) m_Nodes.Get(link.Source.Guid);
          EntityNode dest   = (EntityNode) m_Nodes.Get(link.Destination.Guid);
+
+         //if a link already exists in the other direction
+         //allow the bi-directional link regardless of if the parameters match up
+         //for example a string might go into an object in/out
+         foreach ( LinkNode existingLink in Links )
+         {
+            if ( existingLink.Source.Guid        == link.Destination.Guid &&
+                 existingLink.Source.Anchor      == link.Destination.Anchor &&
+                 existingLink.Destination.Guid   == link.Source.Guid &&
+                 existingLink.Destination.Anchor == link.Source.Anchor ) 
+            {
+               Parameter destP   = FindNodeParameter(dest,   link.Destination.Anchor);
+               Parameter sourceP = FindNodeParameter(source, link.Source.Anchor);
+            
+               if ( destP.Input == true && sourceP.Output == true ) return true;
+            }
+         }
 
          if ( source is ExternalConnection )
          {
