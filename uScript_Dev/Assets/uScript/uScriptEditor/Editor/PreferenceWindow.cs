@@ -67,8 +67,6 @@ public class PreferenceWindow : EditorWindow
          // Revert to the saved version and close the window
          _preferences.Load();
       }
-
-      uScriptGUIContent.Style = (uScriptGUIContent.ContentStyle)_preferences.ToolbarButtonStyle;
    }
 
 
@@ -157,7 +155,6 @@ public class PreferenceWindow : EditorWindow
          GUILayout.Label("Panel Settings", EditorStyles.boldLabel);
 
          _preferences.DrawPanelsOnUpdate = EditorGUILayout.Toggle("Draw Panels During Update", _preferences.DrawPanelsOnUpdate);
-         _preferences.ToolbarButtonStyle = (int)(uScriptGUIContent.ContentStyle)EditorGUILayout.EnumPopup("Toolbar Button Style", (uScriptGUIContent.ContentStyle)_preferences.ToolbarButtonStyle);
 
          EditorGUILayout.Separator();
 

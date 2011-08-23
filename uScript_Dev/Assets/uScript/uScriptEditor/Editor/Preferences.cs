@@ -45,12 +45,6 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "DrawPanelsOnUpdate" ] = value; }
    }
 
-   public int ToolbarButtonStyle
-   {
-      get { LoadIfRequired( ); return (int) m_Preferences[ "ToolbarButtonStyle" ]; }
-      set { LoadIfRequired( ); m_Preferences[ "ToolbarButtonStyle" ] = value; }
-   }
-
    public int MaximumNodeRecursionCount
    {
       get { LoadIfRequired( ); return (int) m_Preferences[ "MaximumNodeRecursionCount" ]; }
@@ -133,7 +127,6 @@ public class Preferences
    private void LoadDefaultsIfRequired( )
    {
       if ( null == m_Preferences[ "DrawPanelsOnUpdate" ] )   m_Preferences[ "DrawPanelsOnUpdate" ]   = false;
-      if ( null == m_Preferences[ "ToolbarButtonStyle" ] )   m_Preferences[ "ToolbarButtonStyle" ]   = 1;
       if ( null == m_Preferences[ "ShowGrid" ] )             m_Preferences[ "ShowGrid" ]             = uScriptConfig.Style.ShowGrid;
       if ( null == m_Preferences[ "GridSizeVertical" ] )     m_Preferences[ "GridSizeVertical" ]     = uScriptConfig.Style.GridSizeVertical;
       if ( null == m_Preferences[ "GridSizeHorizontal" ] )   m_Preferences[ "GridSizeHorizontal" ]   = uScriptConfig.Style.GridSizeHorizontal;

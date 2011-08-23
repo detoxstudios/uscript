@@ -1325,7 +1325,7 @@ public static class uScriptGUI
 
 //   public static void Draw()
 //   {
-//      uScriptGUIContent.Init((uScriptGUIContent.ContentStyle)uScript.Preferences.ToolbarButtonStyle);
+//      uScriptGUIContent.Init(uScriptGUIContent.ContentStyle.Text);
 //      uScriptGUIStyle.Init();
 //      InitPanels();
 //

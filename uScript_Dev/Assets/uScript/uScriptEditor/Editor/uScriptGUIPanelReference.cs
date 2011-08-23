@@ -142,7 +142,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                uScriptGUI.enabled = false;
             }
 
-            uScriptGUIContent.ChangeTooltip(uScriptGUIContent.ContentID.OnlineReference, helpButtonTooltip);
+            uScriptGUIContent.ChangeTooltip(helpButtonTooltip);
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                Help.BrowseURL(helpButtonURL);

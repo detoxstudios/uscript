@@ -1681,7 +1681,7 @@ http://uscript.net
 
    void DrawMainGUI()
    {
-      uScriptGUIContent.Init((uScriptGUIContent.ContentStyle)Preferences.ToolbarButtonStyle);
+      uScriptGUIContent.Init();
       uScriptGUIStyle.Init();
       uScriptGUI.InitPanels();
 
@@ -2452,8 +2452,10 @@ http://uscript.net
          if (Event.current.type == EventType.Repaint)
          {
             Rect rect = GUILayoutUtility.GetLastRect();
+            rect.width = Mathf.Min(rect.width, _guiPanelPalette_Width - rect.x - 15);
             if (rect.Contains(Event.current.mousePosition))
             {
+//               Debug.Log(_guiPanelPalette_Width.ToString() + ", " + rect.width.ToString() + "\n");
                uScriptGUIPanelReference.Instance.hotNodeControl = item.Tag as EntityNode;
             }
          }
