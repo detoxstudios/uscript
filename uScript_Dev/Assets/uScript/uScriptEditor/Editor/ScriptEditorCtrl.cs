@@ -2782,7 +2782,7 @@ namespace Detox.ScriptEditor
                   string text = socket.DefaultValue;
                   if ( text.Length > 9 ) text = text.Substring( 0, 6 ) + "...";
 
-                  SizeF valueLength = Graphics.sMeasureString( text, "socket_text" );
+                  SizeF valueLength = Graphics.sMeasureString( text, "value_text" );
 
                   textPoint.Name = text;
                   textPoint.X =  x + xOffset + ((textLength.Width - valueLength.Width) / 2);
