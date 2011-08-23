@@ -44,6 +44,67 @@ namespace Detox.ScriptEditor
          PruneUnusedNodes( );
       }
 
+      //short cut method to figure out just the external links/parameters
+      //without needing to parse th entire script
+      public void ParseExternals( ScriptEditor script )
+      {
+         m_CSharpString = "";
+         m_TabStack = 0;
+
+         m_Script = null;
+
+         m_ExternalParameters = new List<Parameter>( );
+         m_ExternalInputs     = new List<Plug>( );
+         m_ExternalOutputs    = new List<Plug>( );
+         m_ExternalEvents     = new List<Plug>( );
+         m_Drivens            = new List<string>( );
+         m_RequiredMethods    = new List<string>( );
+
+         if ( null != script )
+         {
+            m_Script = script.Copy( );
+
+            Preprocess( );
+
+            foreach ( ExternalConnection external in m_Script.Externals )
+            {
+               DefineExternalInput( external );
+            }
+
+            Plug []properties = FindExternalOutputProperties( );
+
+            for ( int i = 0; i < properties.Length; i++ )
+            {
+               m_ExternalOutputs.Add( properties[i] );
+            }
+            
+            Plug []events = FindExternalEvents( );
+
+            if ( events.Length > 0 )
+            {
+               foreach ( Plug eventPlug in events )
+               {
+                  m_ExternalEvents.Add( eventPlug );
+               }
+            }
+
+            DefineExternalDrivens( );
+
+            m_RequiredMethods.Add("Start");
+            m_RequiredMethods.Add("Update");
+
+            if ( true == NeedsMethod("LateUpdate") )
+            {
+               m_RequiredMethods.Add("LateUpdate");
+            }
+
+            if ( true == NeedsMethod("FixedUpdate") )
+            {
+               m_RequiredMethods.Add("FixedUpdate");
+            }
+         }
+      }
+
       private void CreateBidirectionalLinks( )
       {
          List<LinkNode> newLinks = new List<LinkNode>( );

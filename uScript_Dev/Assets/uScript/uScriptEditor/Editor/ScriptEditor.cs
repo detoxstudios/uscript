@@ -2271,6 +2271,8 @@ namespace Detox.ScriptEditor
                   {
                      typeHash[ p.Type ] = p.Type;
                   }
+
+                  typeHash[ node.Type ] = node.Type;
                }
             }
             else
@@ -2312,6 +2314,8 @@ namespace Detox.ScriptEditor
                   {
                      typeHash[ p.Type ] = p.Type;
                   }
+
+                  typeHash[ node.Type ] = node.Type;
                }
             }
 
@@ -2835,7 +2839,7 @@ namespace Detox.ScriptEditor
 
             if ( false == sourceFound )
             {
-               reason = "Output socket " + link.Source.Anchor + " is no longer available";
+               reason = "Output socket " + link.Source.Anchor + " on " + ScriptEditor.FindNodeType(source) + " is no longer available";
                return false;
             }
 

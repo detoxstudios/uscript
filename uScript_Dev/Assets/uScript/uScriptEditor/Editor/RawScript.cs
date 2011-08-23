@@ -36,12 +36,12 @@ namespace Detox.ScriptEditor
 
          m_GeneratedCode = new UnityCSharpGenerator( );
          
+         m_Type = Path.GetFileNameWithoutExtension(path) + uScriptConfig.Files.GeneratedCodeExtension;
+
          if ( 0 != scriptEditor.Externals.Length )
          {
-            m_GeneratedCode.GenerateLogicScript( m_Type, scriptEditor );
+            m_GeneratedCode.ParseExternals( scriptEditor );
          }
-
-         m_Type = Path.GetFileNameWithoutExtension(path) + uScriptConfig.Files.GeneratedCodeExtension;
 
          return true;
       }

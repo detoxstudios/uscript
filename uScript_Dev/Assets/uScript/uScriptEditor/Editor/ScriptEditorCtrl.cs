@@ -1925,7 +1925,10 @@ namespace Detox.ScriptEditor
          {
             if ( item.Text == name ) 
             {
-               return (ToolStripMenuItem) item;
+               if ( item is ToolStripMenuItem )
+               {
+                  return (ToolStripMenuItem) item;
+               }
             }
          }
 
