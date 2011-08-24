@@ -299,6 +299,7 @@ public class uScriptDefaultStyle : uScriptStyle
 
 
       string assetPath = uScriptConfig.ConstantPaths.SkinPath + "/elements";
+      assetPath = uScriptConfig.ConstantPaths.RelativePath(assetPath);
 
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( assetPath );
       System.IO.FileInfo [] files = directory.GetFiles( "*.png" );
