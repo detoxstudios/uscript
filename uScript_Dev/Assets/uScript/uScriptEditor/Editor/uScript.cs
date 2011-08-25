@@ -4506,6 +4506,11 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
             if (null != type)
             {
+               //ignore any required logic types because those
+               //get populated in PopulateLogicNodes and are not
+               //entity types
+               if (typeof(uScriptLogic).IsAssignableFrom(type)) continue;
+      
                if (typeof(UnityEngine.Object).IsAssignableFrom(type))
                {
                   uniqueObjects[t] = type;
