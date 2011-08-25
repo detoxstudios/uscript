@@ -1164,7 +1164,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
                         _canvasContextMenu.ShowAsContext();
 
-                        e.Use();
+//                        e.Use();
 
                         // stupid hack to prevent the "canvasDragging" behavior
    //                     if (m_MouseDown)
@@ -1354,13 +1354,13 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
                      if (_canvasRect.Contains(e.mousePosition))
                      {
-                        m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
-
                         int button = 0;
 
                         if (e.button == 0) button = MouseButtons.Left;
                         else if (e.button == 1) button = MouseButtons.Right;
                         else if (e.button == 2) button = MouseButtons.Middle;
+
+                        m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
 
                         m_MouseDownArgs.Button = button;
                         m_MouseDownArgs.X = (int)(e.mousePosition.x);
@@ -1386,7 +1386,12 @@ Should you have any questions concerning this EULA, or if you desire to contact 
                   m_MouseMoveArgs.Button = Control.MouseButtons.Buttons;
                   m_MouseMoveArgs.X = (int)e.mousePosition.x;
                   m_MouseMoveArgs.Y = (int)e.mousePosition.y;
-                  if (m_MouseDownRegion == uScript.MouseRegion.Canvas && _canvasRect.Contains(e.mousePosition))
+
+                  if (m_MouseMoveArgs.Button == MouseButtons.Right)
+                  {
+                     // ignore the right-click here, otherwise it thinks its dragging after closing the context menu
+                  }
+                  else if (m_MouseDownRegion == uScript.MouseRegion.Canvas && _canvasRect.Contains(e.mousePosition))
                   {
                      // this is the switch to use to turn off panel rendering while panning/marquee selecting
                      m_CanvasDragging = true;
