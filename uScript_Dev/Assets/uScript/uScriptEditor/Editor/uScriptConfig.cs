@@ -248,7 +248,7 @@ public class uScriptDefaultStyle : uScriptStyle
       elementSettings["property"] = element;
 
       element = new GUIStyle();
-      element.normal.textColor = nodeTextGrey;
+      element.normal.textColor = Color.white;
       element.border.left = 25;
       element.border.right = 31;
       element.border.top = 25;
@@ -381,7 +381,7 @@ public class uScriptDefaultStyle : uScriptStyle
          GUIStyle settings = elementSettings[key];
          GUIStyle style = new GUIStyle();
          style.name = name;
-         style.normal.textColor = Color.black;
+         style.normal.textColor = settings.normal.textColor;
          style.border.left = settings.border.left;
          style.border.right = settings.border.right;
          style.border.top = settings.border.top;
