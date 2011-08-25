@@ -367,7 +367,16 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       System.IO.Directory.CreateDirectory(Preferences.GeneratedScripts);
       System.IO.Directory.CreateDirectory(Preferences.NestedScripts);
 
-      //System.IO.Directory.CreateDirectory( Preferences.TutorialFiles );
+      //copy gizmos into root
+      string gizmos = UnityEngine.Application.dataPath + "/Gizmos";
+      System.IO.Directory.CreateDirectory( gizmos );
+      
+      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( uScriptConfig.ConstantPaths.Gizmos );
+      
+      foreach ( System.IO.FileInfo file in directory.GetFiles( ) )
+      {
+         System.IO.File.Copy( file.FullName, gizmos + "/" + file.Name, false );
+      }
    }
 
    static public object GetSetting(string key)

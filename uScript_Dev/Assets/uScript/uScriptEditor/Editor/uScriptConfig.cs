@@ -698,6 +698,7 @@ public partial class uScriptConfig
       public static string uScriptNodes      { get {return RuntimeFolder   + "/Nodes";} }
       public static string GuiPath           { get {return uScriptEditor   + "/Editor/_GUI"; } }
       public static string SkinPath          { get {return GuiPath         + "/uScriptDefault"; } }
+      public static string Gizmos            { get {return uScriptEditor    + "/Editor/_Gizmos"; } }
    
       public static string RelativePath(string absolutePath)
       {
