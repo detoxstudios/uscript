@@ -87,7 +87,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
             }
          }
          helpButtonURL = string.Empty;
-         helpDescription = uScript.FindNodeDescription(nodeType, hotNodeControl);
+         helpDescription = "HOT TIP:\n\n" + uScript.FindNodeDescription(nodeType, hotNodeControl);
          helpButtonTooltip = string.Empty;
       }
       else if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)

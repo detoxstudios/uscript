@@ -475,6 +475,9 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
    void Update()
    {
+      uScriptGUIPanelReference.Instance.hotNodeControl = _hotNodeControl;
+
+
       // Because Unity has an awesome GUI system, the mouse dragging is detected
       // after EventType.Layout has occurred. If any GUILayout calls are made in
       // a conditional block that references m_CanvasDragging, there may be
@@ -1943,7 +1946,10 @@ Should you have any questions concerning this EULA, or if you desire to contact 
                //
                _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
                {
-                  uScriptGUIPanelReference.Instance.hotNodeControl = null;
+                  if (Event.current.type == EventType.Repaint)
+                  {
+                     _hotNodeControl = null;
+                  }
 
                   foreach (PaletteMenuItem item in _paletteMenuItems)
                   {
@@ -2506,13 +2512,18 @@ Should you have any questions concerning this EULA, or if you desire to contact 
             if (rect.Contains(Event.current.mousePosition))
             {
 //               Debug.Log(_guiPanelPalette_Width.ToString() + ", " + rect.width.ToString() + "\n");
-               uScriptGUIPanelReference.Instance.hotNodeControl = item.Tag as EntityNode;
+               _hotNodeControl = item.Tag as EntityNode;
             }
          }
       }
 
       return true;
    }
+
+
+
+   EntityNode _hotNodeControl = null;
+
 
 
 
