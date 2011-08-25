@@ -31,7 +31,7 @@ public class uScript : EditorWindow
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
    public bool CommercialBuild = true; // Set to false for free forum builds so it will use ExpireDate.
-   public string uScriptBuild { get { return "0.9.1173"; } }
+   public string uScriptBuild { get { return "0.9.1180"; } }
    static string BetaVersion { get { return "Retail Beta 1"; } }
    public string FullVersionName { get { return BetaVersion + " (" + uScriptBuild + ")"; } }
    public string LastUnityBuild { get { return "3.3"; } }
