@@ -86,6 +86,15 @@ public static class uScriptGUIStyle
    private static GUIStyle _menuContextButton;
    public static GUIStyle menuContextButton { get { return _menuContextButton; } }
 
+   private static GUIStyle _panelMessage;
+   public static GUIStyle panelMessage { get { return _panelMessage; } }
+
+   private static GUIStyle _panelMessageBold;
+   public static GUIStyle panelMessageBold { get { return _panelMessageBold; } }
+
+   private static GUIStyle _panelMessageError;
+   public static GUIStyle panelMessageError { get { return _panelMessageError; } }
+
 
 
 
@@ -256,6 +265,21 @@ public static class uScriptGUIStyle
       _menuContextButton.border = EditorStyles.toolbarButton.border;
       _menuContextButton.margin = new RectOffset();
       _menuContextButton.padding = new RectOffset(8, 8, 4, 4);
+
+      _panelMessage = new GUIStyle(GUI.skin.label);
+      _panelMessage.wordWrap = true;
+      _panelMessage.padding = new RectOffset(16, 16, 16, 16);
+
+      _panelMessageBold = new GUIStyle(EditorStyles.boldLabel);
+      _panelMessageBold.alignment = TextAnchor.MiddleCenter;
+      _panelMessageBold.wordWrap = true;
+      _panelMessageBold.padding = new RectOffset(16, 16, 16, 16);
+
+      _panelMessageError = new GUIStyle(GUI.skin.box);
+      _panelMessageError.normal.textColor = EditorStyles.boldLabel.normal.textColor;
+      _panelMessageError.font = EditorStyles.boldLabel.font;
+      _panelMessageError.wordWrap = true;
+      _panelMessageError.stretchWidth = true;
    }
 
 

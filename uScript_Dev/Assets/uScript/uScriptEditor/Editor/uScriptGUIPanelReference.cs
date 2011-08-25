@@ -63,6 +63,8 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
       string helpButtonURL       = "http://www.uscript.net/docs/";
 
+      GUIStyle helpDescriptionStyle = uScriptGUIStyle.panelMessage;
+
       if (hotNodeControl != null)
       {
          string nodeType = ScriptEditor.FindNodeType(hotNodeControl);
@@ -89,6 +91,8 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          helpButtonURL = string.Empty;
          helpDescription = "HOT TIP:\n\n" + uScript.FindNodeDescription(nodeType, hotNodeControl);
          helpButtonTooltip = string.Empty;
+
+         helpDescriptionStyle = uScriptGUIStyle.referenceText;
       }
       else if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
       {
@@ -118,11 +122,14 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
             helpButtonURL = uScript.FindNodeHelp(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
             helpDescription = uScript.FindNodeDescription(nodeType, m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
             helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
+
+            helpDescriptionStyle = uScriptGUIStyle.referenceText;
          }
       }
       else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
       {
          helpDescription = "Help cannot be provided when multiple nodes are selected.";
+         helpDescriptionStyle = uScriptGUIStyle.panelMessage;
       }
 
       helpButtonTooltip += " (" + helpButtonURL + ")";
@@ -175,18 +182,13 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                {
                   if (uScript.IsNodeTypeDeprecated(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode) || m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode))
                   {
-                     GUIStyle style = new GUIStyle(GUI.skin.box);
-                     style.normal.textColor = EditorStyles.boldLabel.normal.textColor;
-                     style.font = EditorStyles.boldLabel.font;
-                     style.wordWrap = true;
-                     style.stretchWidth = true;
-                     GUILayout.Box("SELECTED NODE IS DEPRECATED: UPDATE OR REPLACE", style);
+                     GUILayout.Box("SELECTED NODE IS DEPRECATED: UPDATE OR REPLACE", uScriptGUIStyle.panelMessageError);
                   }
                }
 
                // prevent the help TextArea from getting focus
                GUI.SetNextControlName("helpTextArea");
-               GUILayout.TextArea(helpDescription, uScriptGUIStyle.referenceText);
+               GUILayout.TextArea(helpDescription, helpDescriptionStyle);
                if (GUI.GetNameOfFocusedControl() == "helpTextArea")
                {
                   GUIUtility.keyboardControl = 0;

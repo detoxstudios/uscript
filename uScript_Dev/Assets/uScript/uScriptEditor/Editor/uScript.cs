@@ -1930,11 +1930,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
             string message =
                "The " + (_paletteMode == 0 ? "Node Palette" : "Graph Contents") + " panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
 
-            GUIStyle style = new GUIStyle(GUI.skin.label);
-            style.wordWrap = true;
-            style.padding = new RectOffset(16, 16, 16, 16);
-
-            GUILayout.Label(message, style, GUILayout.ExpandHeight(true));
+            GUILayout.Label(message, uScriptGUIStyle.panelMessage, GUILayout.ExpandHeight(true));
          }
          else
          {
@@ -1961,9 +1957,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
                   if (filterMatches == 0)
                   {
-                     GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
-                     style.alignment = TextAnchor.MiddleCenter;
-                     GUILayout.Label("The search found no matches!", style);
+                     GUILayout.Label("The search found no matches!", uScriptGUIStyle.panelMessageBold);
                   }
                }
                EditorGUILayout.EndScrollView();
@@ -2228,9 +2222,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
                   if (filterMatches == 0)
                   {
-                     GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
-                     style.alignment = TextAnchor.MiddleCenter;
-                     GUILayout.Label("The search found no matches!", style);
+                     GUILayout.Label("The search found no matches!", uScriptGUIStyle.panelMessageBold);
                   }
                }
                EditorGUILayout.EndScrollView();
