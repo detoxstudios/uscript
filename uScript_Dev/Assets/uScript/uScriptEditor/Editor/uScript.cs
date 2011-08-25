@@ -1,3 +1,5 @@
+#define UNITY_STORE_BUILD
+
 using UnityEngine;
 using UnityEditor;
 using Detox.ScriptEditor;
@@ -30,7 +32,6 @@ public class uScript : EditorWindow
    private List<ZoomLink> m_ZoomLinks = null;
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public bool CommercialBuild = true; // Set to false for free forum builds so it will use ExpireDate.
    public string uScriptBuild { get { return "0.9.1180"; } }
    static string BetaVersion { get { return "Retail Beta 1"; } }
    public string FullVersionName { get { return BetaVersion + " (" + uScriptBuild + ")"; } }
@@ -270,6 +271,8 @@ public class uScript : EditorWindow
    public string CurrentScript = null;
    public string CurrentScriptName = "";
    public string CurrentScene = "";
+   
+#if !(UNITY_STORE_BUILD)
    #region EULA Variables
    private int _EULAagreed = -1;
    private Vector2 _EULAscroll;
@@ -312,6 +315,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
 (08/24/2011)";
    #endregion
+#endif
 
    public bool IsAttachedToMaster
    {
@@ -578,29 +582,30 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       {
          if (null == m_ScriptEditorCtrl)
          {
-			if (!CommercialBuild) // See if expiration date and build cap should be used. Not needed for commercial version.
-		    {
-	            //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
-	            if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild) || Application.unityVersion.Contains(BetaUnityBuild))
-	            {
-	            }
-	            else
-	            {
-	               uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
-	               return;
-	            }
-            
-			
-               if (DateTime.Now > ExpireDate)
-               {
-                  uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "has expired.\n", uScriptDebug.Type.Error);
-                  return;
-               }
-               else
-               {
-                  uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
-               }
-			 }
+         #if !(UNITY_STORE_BUILD) // See if expiration date and build cap should be used. Not needed for commercial version.
+		       {
+	               //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
+	               if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild) || Application.unityVersion.Contains(BetaUnityBuild))
+	               {
+	               }
+	               else
+	               {
+	                  uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
+	                  return;
+	               }
+               
+   			
+                  if (DateTime.Now > ExpireDate)
+                  {
+                     uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "has expired.\n", uScriptDebug.Type.Error);
+                     return;
+                  }
+                  else
+                  {
+                     uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
+                  }
+			    }
+         #endif
          }
 
          m_ScriptEditorCtrl = null;
@@ -964,12 +969,13 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       //
       // Show the EULA if the user hasn't yet agreed to it
       //
+#if !(UNITY_STORE_BUILD)
       if (_EULAagreed != EULAVersion)
       {
          _EULAagreed = (int)uScript.GetSetting("EULA\\AgreedVersion", -1);
          GUI.enabled = _EULAagreed == EULAVersion;
       }
-
+#endif
       // Set the default mouse region
       _mouseRegion = uScript.MouseRegion.Outside;
 
@@ -1584,6 +1590,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       GUI.enabled = true;
       BeginWindows();
 
+#if !(UNITY_STORE_BUILD)
       if (_EULAagreed != EULAVersion)
       {
          _EULAagreed = (int)uScript.GetSetting("EULA\\AgreedVersion", -1);
@@ -1599,6 +1606,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       }
 
       if (_EULAagreed == EULAVersion)
+#endif
       {
          if (isContextMenuOpen)
          {
@@ -3112,6 +3120,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
 
 
+#if !(UNITY_STORE_BUILD)
    void DoWindowEULA(int windowID)
    {
       GUIStyle EULAstyle = new GUIStyle("box");
@@ -3164,7 +3173,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       }
       GUILayout.EndHorizontal();
    }
-
+#endif
 
 
 
