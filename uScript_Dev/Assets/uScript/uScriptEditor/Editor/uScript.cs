@@ -30,9 +30,10 @@ public class uScript : EditorWindow
    private List<ZoomLink> m_ZoomLinks = null;
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public bool CommercialBuild = false; // Set to false for free forum builds so it will use ExpireDate.
-   public string uScriptBuild { get { return "0.9.1160"; } }
+   public bool CommercialBuild = true; // Set to false for free forum builds so it will use ExpireDate.
+   public string uScriptBuild { get { return "0.9.1173"; } }
    static string BetaVersion { get { return "Retail Beta 1"; } }
+   public string FullVersionName { get { return BetaVersion + " (" + uScriptBuild + ")"; } }
    public string LastUnityBuild { get { return "3.3"; } }
    public string CurrentUnityBuild { get { return "3.4"; } }
    public string BetaUnityBuild { get { return "3.5"; } }
@@ -2678,9 +2679,16 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
             GUILayout.FlexibleSpace();
 
-            GUIStyle style2 = new GUIStyle(EditorStyles.boldLabel);
+            GUIStyle style2 = new GUIStyle(EditorStyles.label);
             style2.padding = new RectOffset(16, 4, 2, 2);
             style2.margin = new RectOffset();
+			GUILayout.Label(FullVersionName, style2); // Changed this to show the build number.
+				
+			/*
+			GUIStyle style2 = new GUIStyle(EditorStyles.boldLabel);
+            style2.padding = new RectOffset(16, 4, 2, 2);
+            style2.margin = new RectOffset();
+			GUILayout.Label(FullVersionName, style2); // Changed this to show the build number.
             if (m_ScriptEditorCtrl != null && !string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptName))
             {
                int dot = m_ScriptEditorCtrl.ScriptName.IndexOf(".");
@@ -2692,6 +2700,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
                GUILayout.Label(filename, style2);
             }
+            */
          }
          EditorGUILayout.EndHorizontal();
 
