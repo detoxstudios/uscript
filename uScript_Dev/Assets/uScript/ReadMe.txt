@@ -6,6 +6,8 @@ to learn all about uScript!
 
 http://www.uscript.net/docs
 
+Quick Start Guide: http://uscript.net/docs/index.php?title=Getting_Started
+
 
 
 ** uScript Community Website **
