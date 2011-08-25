@@ -2785,7 +2785,7 @@ namespace Detox.ScriptEditor
                   SizeF valueLength = Graphics.sMeasureString( text, "value_text" );
 
                   textPoint.Name = text;
-                  textPoint.X =  x + xOffset + ((textLength.Width - valueLength.Width) / 2);
+                  textPoint.X = (x + xOffset + ((textLength.Width - valueLength.Width) / 2)) - uScriptConfig.Style.SocketValueTextHorizontalOffset;
                   textPoint.Y = Size.Height + uScriptConfig.Style.SocketValueTextVerticalOffset + valueLength.Height / 2;
                   textPoint.StyleName = "value_text";
                   textPoints.Add( textPoint );              

@@ -92,6 +92,7 @@ public abstract class uScriptStyle
 {
    public abstract GUIStyle Get(string name);
 	
+   public abstract int SocketValueTextHorizontalOffset { get; }	
    public abstract int SocketValueTextVerticalOffset { get; }		
    public abstract int BottomSocketLabelGapSize { get; }
    public abstract int BottomSocketBorderAdjustmentPad { get; }
@@ -475,7 +476,7 @@ public class uScriptDefaultStyle : uScriptStyle
       m_Styles["title_comment"] = element;
 		
 	  element = new GUIStyle();
-      element.normal.textColor = new UnityEngine.Color(0.15f, 0.15f, 0.15f, 1f);//Color.black;
+      element.normal.textColor = new UnityEngine.Color(0.15f, 0.15f, 0.15f, 1f);
       element.border.left = 6;
       element.border.right = 6;
       element.border.top = 6;
@@ -592,8 +593,11 @@ public class uScriptDefaultStyle : uScriptStyle
 	  }
    }
 	
+   //how many pixels to adjust the variable socket value text left (+) or right (-) (horizontal)
+   public override int SocketValueTextHorizontalOffset { get { return 2; } }
+	
    //how many pixels between the variable socket and the value text (vertical)
-   public override int SocketValueTextVerticalOffset { get { return 10; } }
+   public override int SocketValueTextVerticalOffset { get { return 15; } }
 	
    //how many pixels between variable socket labels (horizontal)
    public override int BottomSocketLabelGapSize { get { return 4; } }

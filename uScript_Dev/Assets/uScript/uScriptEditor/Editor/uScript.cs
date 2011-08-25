@@ -30,12 +30,13 @@ public class uScript : EditorWindow
    private List<ZoomLink> m_ZoomLinks = null;
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
+   public bool CommercialBuild = false; // Set to false for free forum builds so it will use ExpireDate.
    public string uScriptBuild { get { return "0.9.1160"; } }
-   static string BetaVersion { get { return "Beta 11"; } }
+   static string BetaVersion { get { return "Retail Beta 1"; } }
    public string LastUnityBuild { get { return "3.3"; } }
    public string CurrentUnityBuild { get { return "3.4"; } }
    public string BetaUnityBuild { get { return "3.5"; } }
-   public DateTime ExpireDate { get { return new DateTime(2011, 9, 15); } }
+   public DateTime ExpireDate { get { return new DateTime(2011, 10, 31); } }
    public int EULAVersion { get { return 20110824; } }
 
    public enum MouseRegion
@@ -375,7 +376,10 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       
       foreach ( System.IO.FileInfo file in directory.GetFiles( ) )
       {
-         System.IO.File.Copy( file.FullName, gizmos + "/" + file.Name, false );
+		 if (!System.IO.File.Exists( gizmos + "/" + file.Name ))
+			{
+				System.IO.File.Copy( file.FullName, gizmos + "/" + file.Name, false );
+			}
       }
    }
 
@@ -570,25 +574,29 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       {
          if (null == m_ScriptEditorCtrl)
          {
-            //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
-            if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild) || Application.unityVersion.Contains(BetaUnityBuild))
-            {
-            }
-            else
-            {
-               uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
-               return;
-            }
-
-            if (DateTime.Now > ExpireDate)
-            {
-               uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "has expired.\n", uScriptDebug.Type.Error);
-               return;
-            }
-            else
-            {
-               uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
-            }
+			if (!CommercialBuild) // See if expiration date and build cap should be used. Not needed for commercial version.
+		    {
+	            //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
+	            if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild) || Application.unityVersion.Contains(BetaUnityBuild))
+	            {
+	            }
+	            else
+	            {
+	               uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
+	               return;
+	            }
+            
+			
+               if (DateTime.Now > ExpireDate)
+               {
+                  uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "has expired.\n", uScriptDebug.Type.Error);
+                  return;
+               }
+               else
+               {
+                  uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
+               }
+			 }
          }
 
          m_ScriptEditorCtrl = null;
