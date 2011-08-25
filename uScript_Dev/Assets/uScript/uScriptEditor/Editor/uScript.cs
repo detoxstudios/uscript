@@ -115,7 +115,7 @@ public class uScript : EditorWindow
                m_ContextY = 0;
                m_CurrentMenu = null;
                rectContextMenuWindow = new Rect(m_ContextX, m_ContextY, 10, 10);
-               Event.current.Use();
+//               Event.current.Use();
             }
          }
       }
@@ -817,6 +817,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
       if (false == contextActive)
       {
+//         Debug.Log("OnMouseMove\n");
          OnMouseMove();
       }
    }
@@ -1047,6 +1048,11 @@ Should you have any questions concerning this EULA, or if you desire to contact 
                default:
                   break;
             }
+
+            if (isContextMenuOpen == false)
+            {
+               e.Use();
+            }
          }
          else if (isFileMenuOpen)
          {
@@ -1148,7 +1154,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
                         m_ContextY = (int)(e.mousePosition.y - _canvasRect.yMin);
 
                         //refresh screen so context menu shows up
-                        Repaint();
+//                        Repaint();
                      }
                      else
                      {
@@ -1493,6 +1499,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
          }
       }
 
+
       //
       // All the GUI drawing code
       //
@@ -1725,7 +1732,30 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       {
          if (!m_HidePanelMode)
          {
+            // If the palette contents have been updated, update the linear palette control list
+            //    Any foldout has been toggled
+            //    The master expand/collapse foldout has been toggled
+            //    The search filter text field has changed
+            //
+            // UpdateGUIPalette()
+            //    Create a linear list of controls that can be iterated over using a single FOR loop.
+            //    The array element should contain information about the button
+            //       Text
+            //       Click
+            //       Indent
+            //       Node
+            //       Description
+            //       Foldout or button
+            //       Foldout state
+            //       Tooltip
+            //
+            // DrawGUIPalette()
+            //    Iterate through the linear list using a single FOR loop
+            //    Draw the button labels during repaint to prevent the appearance of the horizontal scrollbar
+            //    Update the help text to display the button text in the refernce panel (non-truncated labels)
+            //
             DrawGUIPalette();
+
             DrawGUIVerticalDivider();
 
             SetMouseRegion(MouseRegion.HandlePalette);//, -3, 1, 6, -4 );
