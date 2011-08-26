@@ -39,7 +39,8 @@ public class uScript : EditorWindow
    public string CurrentUnityBuild { get { return "3.4"; } }
    public string BetaUnityBuild { get { return "3.5"; } }
    public DateTime ExpireDate { get { return new DateTime(2011, 10, 31); } }
-   public int EULAVersion { get { return 20110824; } }
+
+   public bool isLicenseAccepted = false;
 
    public enum MouseRegion
    {
@@ -69,7 +70,6 @@ public class uScript : EditorWindow
    private bool m_WantsCopy = false;
    private bool m_WantsCut = false;
    private bool m_WantsPaste = false;
-   private bool m_WantsClose = false;
 
    private bool m_RebuildWhenReady = false;
 
@@ -267,55 +267,12 @@ public class uScript : EditorWindow
    public bool m_SelectAllNodes = false;
    public bool isPreferenceWindowOpen = false;
 
-
    public string CurrentScript = null;
    public string CurrentScriptName = "";
    public string CurrentScene = "";
-   
-#if !(UNITY_STORE_BUILD)
-   #region EULA Variables
-   private int _EULAagreed = -1;
-   private Vector2 _EULAscroll;
-   private bool _EULAtoggle;
-   private string _EULAtext = @"IMPORTANT, PLEASE READ CAREFULLY. THIS IS A LICENSE AGREEMENT
 
-USCRIPT VISUAL SCRIPTING TOOL END USER LICENSE AGREEMENT
 
-This SOFTWARE PRODUCT is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. This SOFTWARE PRODUCT is licensed, not sold.
 
-End User License Agreement
-
-This End User License Agreement (""EULA"") is a legal agreement between you (either an individual or a single entity) and Detox Studios LLC with regard to the copyrighted Software (herein referred to as ""SOFTWARE PRODUCT"" or ""SOFTWARE"") provided with this EULA. The SOFTWARE PRODUCT includes computer software, the associated media, any printed materials, and any ""online"" or electronic documentation. Use of any software and related documentation provided to you by Detox Studios LLC in whatever form or media, will constitute your acceptance of these terms, unless separate terms are provided by the software supplier, in which case certain additional or different terms may apply. If you do not agree with the terms of this EULA do not use the Software and uninstall it. By continuing past this EULA, and/or using the SOFTWARE PRODUCT, you agree to be bound by the terms of this EULA.  If you do not agree to the terms of this EULA, Detox Studios LLC is unwilling to license the SOFTWARE PRODUCT to you. 
-
-1.  Eligible Licensees. This Software is available for license solely to SOFTWARE owners, with no right of duplication or further distribution, licensing, or sub-licensing.  IF YOU DO NOT OWN THE SOFTWARE, THEN DO NOT DOWNLOAD, INSTALL, COPY OR USE THE SOFTWARE.
- 
-2.  License Grant.  Detox Studios LLC grants to you a personal, non-transferable and non-exclusive right to use the Software provided with this EULA. You agree you will not copy the Software except as necessary for your single and individual use. You may install the Software on as many computers as you wish for your single and individual use. Modifying, translating, renting, copying, transferring or assigning all or part of the Software, or any rights granted hereunder, to any other persons and removing any proprietary notices, labels or marks from the Software is strictly prohibited.  Furthermore, you hereby agree not to create derivative works based on the Software.  You may not transfer this Software.
-
-3.  Copyright.  The Software is licensed, not sold.  You acknowledge that no title to the intellectual property in the Software is transferred to you. You further acknowledge that title and full ownership rights to the Software will remain the exclusive property of Detox Studios LLC and/or its suppliers, and you will not acquire any rights to the Software, except as expressly set forth above. All copies of the Software will contain the same proprietary notices as contained in or on the Software. All title and copyrights in and to the SOFTWARE PRODUCT (including but not limited to any images, photographs, animations, video, audio, music, text and ""applets,"" incorporated into the SOFTWARE PRODUCT), the accompanying printed materials, and any copies of the SOFTWARE PRODUCT, are owned by Detox Studios LLC or its suppliers.  The SOFTWARE PRODUCT is protected by copyright laws and international treaty provisions.
-
-4.  Reverse Engineering.  You agree that you will not attempt, and if you are a corporation, you will use your best efforts to prevent your employees and contractors from attempting to reverse compile, modify, translate or disassemble the Software in whole or in part. Any failure to comply with the above or any other terms and conditions contained herein will result in the automatic termination of this license and the reversion of the rights granted hereunder to Detox Studios LLC.
-
-5.  Disclaimer of Warranty. The Software is provided ""AS IS"" without warranty of any kind. Detox Studios LLC and its suppliers disclaim and make no express or implied warranties and specifically disclaim the warranties of merchantability, fitness for a particular purpose and non-infringement of third-party rights. The entire risk as to the quality and performance of the Software is with you. Neither Detox Studios LLC nor its suppliers warrant that the functions contained in the Software will meet your requirements or that the operation of the Software will be uninterrupted or error-free. You acknowledge that Detox Studios LLC may update, modify or cancel some or all of the functionality of the Software at any time, without prior notice. Detox Studios LLC IS NOT OBLIGATED TO PROVIDE ANY UPDATES TO THE SOFTWARE.
-
-6.  Copyright.  The Software is licensed, not sold.  You acknowledge that no title to the intellectual property in the Software is transferred to you. You further acknowledge that title and full ownership rights to the Software will remain the exclusive property of Detox Studios LLC and/or its suppliers, and you will not acquire any rights to the Software, except as expressly set forth above. All copies of the Software will contain the same proprietary notices as contained in or on the Software. All title and copyrights in and to the SOFTWARE PRODUCT (including but not limited to any images, photographs, animations, video, audio, music, text and ""applets,"" incorporated into the SOFTWARE PRODUCT), the accompanying printed materials, and any copies of the SOFTWARE PRODUCT, are owned by Detox Studios LLC or its suppliers.  The SOFTWARE PRODUCT is protected by copyright laws and international treaty provisions.  You may not copy the printed materials accompanying the SOFTWARE PRODUCT.
-
-7.  Rental.  You may not loan, rent, or lease the SOFTWARE.  
-
-8.  Upgrades.  If the SOFTWARE is an upgrade from an earlier release or previously released version, you now may use that upgraded product only in accordance with this EULA.  If the SOFTWARE PRODUCT is an upgrade of a software program which you licensed as a single product, the SOFTWARE PRODUCT may be used only as part of that single product package and may not be separated for use by anyone other than the individual user who has been granted the license.
-
-9.  OEM Product Support. Product support for the SOFTWARE PRODUCT is provided by Detox Studios LLC through an online website and documentation.  For product support, please visit http://uscript.net.  Should you have any questions concerning this, please refer to the email address provided in the documentation.
-
-10. No Liability for Consequential Damages.  In no event shall Detox Studios LLC or its suppliers be liable for any damages whatsoever (including, without limitation, incidental, direct, indirect special and consequential damages, damages for loss of business profits, business interruption, loss of business information, loss from the need to modify files generated by the Software, or other pecuniary loss) arising out of the use or inability to use this SOFTWARE PRODUCT, even if Detox Studios LLC has been advised of the possibility of such damages.  Because some states/countries do not allow the exclusion or limitation of liability for consequential or incidental damages, the above limitation may not apply to you.
-
-11. Indemnification By You.  If you distribute the Software in violation of this Agreement, you agree to indemnify, hold harmless and defend Detox Studios LLC and its suppliers from and against any claims or lawsuits, including attorney's fees that arise or result from the use or distribution of the Software in violation of this Agreement.
-
-12. Termination of Use. Without prejudice to any other rights, Detox Studios LLC may terminate this EULA if you fail to comply with the terms and conditions of this EULA. In such event, you must destroy all copies of the Software and all of its component parts. The above assurance and commitment as well as all warranties, representations, indemnity clauses and restrictions contained in this EULA, shall survive termination of this EULA.
-
-Should you have any questions concerning this EULA, or if you desire to contact Detox Studios LLC for any reason, please visit us on the World Wide Web at www.detoxstudios.com
-
-(08/24/2011)";
-   #endregion
-#endif
 
    public bool IsAttachedToMaster
    {
@@ -479,6 +436,26 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
    void Update()
    {
+#if !(UNITY_STORE_BUILD)
+      // Initialize the LicenseWindow here if needed. Doing it during OnGUI may
+      // cause issues, such as null exception errors and reports that OnGUI calls
+      // are being made outside of OnGUI.
+      //
+      if (isLicenseAccepted == false)
+      {
+         isLicenseAccepted = LicenseWindow.HasUserAcceptedLicense();
+         if (isLicenseAccepted == false && LicenseWindow.isOpen == false)
+         {
+            LicenseWindow.Init();
+         }
+      }
+#else
+      // Force the license acceptance
+      isLicenseAccepted = true;
+#endif
+
+
+
       uScriptGUIPanelReference.Instance.hotNodeControl = _hotNodeControl;
 
 
@@ -728,14 +705,6 @@ Should you have any questions concerning this EULA, or if you desire to contact 
          _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
       }
 
-      if (m_WantsClose)
-      {
-         Close();
-         m_WantsClose = false;
-         return;
-      }
-      m_WantsClose = false;
-
       //we can't ignore if the context menu is up
       //because we need to send the mouse up
       //after it has been activated
@@ -964,18 +933,8 @@ Should you have any questions concerning this EULA, or if you desire to contact 
          return;
       }
 
-      GUI.enabled = !isPreferenceWindowOpen;
+      GUI.enabled = isLicenseAccepted && !isPreferenceWindowOpen;
 
-      //
-      // Show the EULA if the user hasn't yet agreed to it
-      //
-#if !(UNITY_STORE_BUILD)
-      if (_EULAagreed != EULAVersion)
-      {
-         _EULAagreed = (int)uScript.GetSetting("EULA\\AgreedVersion", -1);
-         GUI.enabled = _EULAagreed == EULAVersion;
-      }
-#endif
       // Set the default mouse region
       _mouseRegion = uScript.MouseRegion.Outside;
 
@@ -1290,7 +1249,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
                      else if (e.keyCode == KeyCode.W && (modifierKeys & Keys.Control) != 0)
                      {
                         // close the window
-                        m_WantsClose = true;
+                        this.Close();
                      }
                      else if (e.keyCode == KeyCode.BackQuote)
                      {
@@ -1589,24 +1548,6 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       //
       GUI.enabled = true;
       BeginWindows();
-
-#if !(UNITY_STORE_BUILD)
-      if (_EULAagreed != EULAVersion)
-      {
-         _EULAagreed = (int)uScript.GetSetting("EULA\\AgreedVersion", -1);
-
-         if (_EULAagreed != EULAVersion)
-         {
-            int w = 550;
-            int h = Math.Max(300, (int)position.height - 400);
-            Rect r = new Rect((position.width - w) / 2, (position.height - h) / 2, w, h);
-
-            GUI.Window(110, r, DoWindowEULA, "End User License Agreement");
-         }
-      }
-
-      if (_EULAagreed == EULAVersion)
-#endif
       {
          if (isContextMenuOpen)
          {
@@ -1649,7 +1590,6 @@ Should you have any questions concerning this EULA, or if you desire to contact 
             rectFileMenuWindow = GUILayout.Window("FileMenu".GetHashCode(), rectFileMenuWindow, DrawFileMenuWindow, string.Empty, uScriptGUIStyle.menuDropDownWindow);
          }
       }
-
       EndWindows();
    }
 
@@ -3117,63 +3057,6 @@ Should you have any questions concerning this EULA, or if you desire to contact 
    Vector2 _scrollNewProperties;
    // END TEMP Variables
 
-
-
-
-#if !(UNITY_STORE_BUILD)
-   void DoWindowEULA(int windowID)
-   {
-      GUIStyle EULAstyle = new GUIStyle("box");
-      EULAstyle.padding = new RectOffset(1, 1, 1, 1);
-
-      GUILayout.BeginHorizontal(EULAstyle);
-      {
-         _EULAscroll = GUILayout.BeginScrollView(_EULAscroll);
-         {
-            // prevent the help TextArea from getting focus
-            GUI.SetNextControlName("EULA");
-            GUILayout.TextArea(_EULAtext, uScriptGUIStyle.referenceText);
-            if (GUI.GetNameOfFocusedControl() == "EULA")
-            {
-               GUIUtility.keyboardControl = 0;
-            }
-         }
-         GUILayout.EndScrollView();
-      }
-      GUILayout.EndHorizontal();
-
-      GUILayout.BeginHorizontal();
-      {
-         GUILayout.Space(10);
-
-         _EULAtoggle = GUILayout.Toggle(_EULAtoggle, "  I agree to the terms of this license agreement.");
-
-         GUI.enabled = false;
-         if (_EULAtoggle)
-         {
-            GUI.enabled = true;
-         }
-
-         GUILayout.FlexibleSpace();
-         if (GUILayout.Button("Accept", GUILayout.Width(100)))
-         {
-            uScript.SetSetting("EULA\\AgreedVersion", EULAVersion);
-            _EULAagreed = EULAVersion;
-         }
-
-         GUI.enabled = true;
-
-         GUILayout.FlexibleSpace();
-         if (GUILayout.Button("Close uScript", GUILayout.Width(100)))
-         {
-            m_WantsClose = true;
-         }
-
-         GUILayout.Space(10);
-      }
-      GUILayout.EndHorizontal();
-   }
-#endif
 
 
 
