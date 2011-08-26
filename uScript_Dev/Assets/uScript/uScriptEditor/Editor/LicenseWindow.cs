@@ -87,13 +87,13 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
    void Update()
    {
-      if (Application.platform == RuntimePlatform.WindowsEditor)
+      // In WindowsEditor, the Utility Window is not always on top, so force it
+      if (Application.platform == RuntimePlatform.WindowsEditor
+          && isOpen
+             && (focusedWindow == null
+                 || focusedWindow.GetType() != typeof(LicenseWindow)))
       {
-         if (isOpen && (focusedWindow.GetType() != typeof(LicenseWindow)))
-         {
-//            Debug.Log("Focusing on the License Window\n");
-            EditorWindow.FocusWindowIfItsOpen<LicenseWindow>();
-         }
+         EditorWindow.FocusWindowIfItsOpen<LicenseWindow>();
       }
    }
 
