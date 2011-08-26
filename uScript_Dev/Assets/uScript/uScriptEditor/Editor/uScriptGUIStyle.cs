@@ -11,6 +11,7 @@ using UnityEditor;
 public static class uScriptGUIStyle
 {
    static string _currentSkin = string.Empty;
+   static bool _stylesInitialized = false;
 
    private static GUIStyle _paletteToolbarButton;
    public static GUIStyle paletteToolbarButton { get { return _paletteToolbarButton; } }
@@ -116,11 +117,13 @@ public static class uScriptGUIStyle
          _texture_windowMenuDropDown = AssetDatabase.LoadAssetAtPath(skinPath + "MenuDropDown.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _texture_windowMenuContext = AssetDatabase.LoadAssetAtPath(skinPath + "MenuContext.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
       }
-      else if (panelTitle != null)
+      else if (_stylesInitialized)
       {
          // The styles have already been initialized
          return;
       }
+
+      _stylesInitialized = true;
 
       _paletteToolbarButton = new GUIStyle(EditorStyles.toolbarButton);
       _paletteToolbarButton.margin = new RectOffset(12, 6, 0, 0);
@@ -159,6 +162,7 @@ public static class uScriptGUIStyle
       _referenceText.name = "referenceText";
       _referenceText.wordWrap = true;
       _referenceText.stretchWidth = true;
+      _referenceText.stretchHeight = true;
 
       _columnHeader = new GUIStyle(EditorStyles.toolbarButton);
       _columnHeader.name = "columnHeader";

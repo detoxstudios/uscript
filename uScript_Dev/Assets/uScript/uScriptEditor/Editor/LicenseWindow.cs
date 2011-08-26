@@ -10,25 +10,25 @@ public class LicenseWindow : EditorWindow
    //
    // Common Window variables
    //
-   bool _firstRun = true;
-   bool _saveOnClose = false;
-   Rect _position;
-
    static LicenseWindow window = null;
 
    static public bool isOpen = false;
    static public bool shouldOpen = false;
 
+   bool _firstRun = true;
+   bool _saveOnClose = false;
+
 
    //
    // Class-specific variables
    //
+   GUIContent _contentAgreeToggle = null;
+   GUIContent _contentAcceptButton = null;
+   GUIContent _contentDeclineButton = null;
+
    GUIStyle _styleWindow = null;
    GUIStyle _styleContainer = null;
-
-   static GUIContent _contentAgreeToggle = null;
-   static GUIContent _contentAcceptButton = null;
-   static GUIContent _contentDeclineButton = null;
+   GUIStyle _styleButton = null;
 
    Vector2 _scrollviewOffset = Vector2.zero;
    bool _hasAgreed = false;
@@ -79,11 +79,6 @@ Should you have any questions concerning this EULA, or if you desire to contact 
    // Create the window
    public static void Init()
    {
-      // prepare the static content for the window
-      _contentAgreeToggle = new GUIContent("  I agree to the terms of this license.");
-      _contentAcceptButton = new GUIContent("Accept");
-      _contentDeclineButton = new GUIContent("Close uScript");
-
       // Get existing open window or if none, make a new one:
       window = EditorWindow.GetWindow<LicenseWindow>(true, "uScript End User License Agreement", true) as LicenseWindow;
       window._firstRun = true;   // unnecessary, but we'll get a warning that 'window' is unused, otherwise
@@ -92,9 +87,13 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
    void Update()
    {
-      if (isOpen && (focusedWindow.GetType() != typeof(LicenseWindow)))
+      if (Application.platform == RuntimePlatform.WindowsEditor)
       {
-         EditorWindow.FocusWindowIfItsOpen<LicenseWindow>();
+         if (isOpen && (focusedWindow.GetType() != typeof(LicenseWindow)))
+         {
+//            Debug.Log("Focusing on the License Window\n");
+            EditorWindow.FocusWindowIfItsOpen<LicenseWindow>();
+         }
       }
    }
 
@@ -130,8 +129,19 @@ Should you have any questions concerning this EULA, or if you desire to contact 
       {
          _firstRun = false;
 
+         uScriptGUIStyle.Init();
+
          // Force the window to a position relative to the uScript window
          base.position = new Rect(uScript.Instance.position.x + 50, uScript.Instance.position.y + 50, 0, 0);
+
+         // Set the min and max window dimensions to prevent resizing
+         base.minSize = new Vector2(600, 400);
+         base.maxSize = base.minSize;
+
+         // prepare the content for the window
+         _contentAgreeToggle = new GUIContent("  I agree to the terms of this license.");
+         _contentAcceptButton = new GUIContent("Accept");
+         _contentDeclineButton = new GUIContent("Close uScript");
 
          // Setup the custom GUIStyles used to layout the window
          _styleWindow = new GUIStyle();
@@ -139,13 +149,9 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
          _styleContainer = new GUIStyle(GUI.skin.box);
          _styleContainer.padding = new RectOffset(1, 1, 1, 1);
-      }
 
-      if (_position != new Rect())
-      {
-         // Set the min and max window dimensions to prevent resizing
-         base.minSize = new Vector2(600, 400);
-         base.maxSize = base.minSize;
+         _styleButton = new GUIStyle(GUI.skin.button);
+         _styleButton.fixedWidth = 100;
       }
 
 
@@ -158,9 +164,9 @@ Should you have any questions concerning this EULA, or if you desire to contact 
          // Project Settings
          //
 
-         GUILayout.BeginHorizontal(_styleContainer);
+         EditorGUILayout.BeginHorizontal(_styleContainer);
          {
-            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, true, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, GUI.skin.scrollView);
             {
                // prevent the help TextArea from getting focus
                GUI.SetNextControlName("EULA");
@@ -170,9 +176,9 @@ Should you have any questions concerning this EULA, or if you desire to contact 
                   GUIUtility.keyboardControl = 0;
                }
             }
-            GUILayout.EndScrollView();
+            EditorGUILayout.EndScrollView();
          }
-         GUILayout.EndHorizontal();
+         EditorGUILayout.EndHorizontal();
 
 
          EditorGUILayout.Separator();
@@ -184,7 +190,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
             GUILayout.FlexibleSpace();
 
             GUI.enabled = _hasAgreed;
-            if (GUILayout.Button(_contentAcceptButton, GUILayout.Width(100)))
+            if (GUILayout.Button(_contentAcceptButton, _styleButton))
             {
                _saveOnClose = true;
                this.Close();
@@ -193,7 +199,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 
             GUILayout.Space(10);
 
-            if (GUILayout.Button(_contentDeclineButton, GUILayout.Width(100)))
+            if (GUILayout.Button(_contentDeclineButton, _styleButton))
             {
                this.Close();
             }
@@ -201,11 +207,6 @@ Should you have any questions concerning this EULA, or if you desire to contact 
          GUILayout.EndHorizontal();
       }
       EditorGUILayout.EndVertical();
-
-      if (Event.current.type == EventType.Repaint)
-      {
-         _position = GUILayoutUtility.GetLastRect();
-      }
    }
 
 
