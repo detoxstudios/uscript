@@ -1,3 +1,5 @@
+#define UNITY_STORE_BUILD
+
 #if !(UNITY_STORE_BUILD)
 
 using UnityEditor;
