@@ -49,13 +49,14 @@ public class uScript : EditorWindow
       Palette,
       Properties,
       Reference,
-      NestedScripts,
+      Scripts,
       HandleCanvas,
       HandlePalette,
       HandleProperties,
       HandleReference
    }
-   private MouseRegion _mouseRegion;
+   private MouseRegion _mouseRegion = MouseRegion.Outside;
+   private MouseRegion _mouseRegionUpdate = MouseRegion.Outside;
    private MouseRegion m_MouseDownRegion = MouseRegion.Outside;
 
    public Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
@@ -484,6 +485,10 @@ public class uScript : EditorWindow
       {
          AssetBrowserWindow.Init();
       }
+
+
+      // Additional variable changes that should occur after OnGUI has completed
+      _mouseRegion = _mouseRegionUpdate;
 
 
       if (true == CodeValidator.RequireRebuild(m_ForceCodeValidation))
@@ -936,7 +941,7 @@ public class uScript : EditorWindow
       GUI.enabled = isLicenseAccepted && !isPreferenceWindowOpen;
 
       // Set the default mouse region
-      _mouseRegion = uScript.MouseRegion.Outside;
+      _mouseRegionUpdate = uScript.MouseRegion.Outside;
 
       // As little logic as possible should be performed here.  It is better
       // to use Update() to perform tasks once per tick.
@@ -1421,37 +1426,42 @@ public class uScript : EditorWindow
 
          // mouse events
          case EventType.MouseDown:
-            if (false == m_MouseDown)
+            // Ignore Right-clicks
+            if (e.button != 1)
             {
-               GUI.FocusControl("MainView");
-
-               if (_canvasRect.Contains(e.mousePosition))
+               if (false == m_MouseDown)
                {
-                  int button = 0;
+                  GUI.FocusControl("MainView");
 
-                  if (e.button == 0) button = MouseButtons.Left;
-                  else if (e.button == 1) button = MouseButtons.Right;
-                  else if (e.button == 2) button = MouseButtons.Middle;
+                  if (_canvasRect.Contains(e.mousePosition))
+                  {
+                     int button = 0;
 
-                  m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
+                     if (e.button == 0) button = MouseButtons.Left;
+                     else if (e.button == 1) button = MouseButtons.Right;
+                     else if (e.button == 2) button = MouseButtons.Middle;
 
-                  m_MouseDownArgs.Button = button;
-                  m_MouseDownArgs.X = (int)(e.mousePosition.x);
-                  if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
-                  m_MouseDownArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
+                     m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
+
+                     m_MouseDownArgs.Button = button;
+                     m_MouseDownArgs.X = (int)(e.mousePosition.x);
+                     if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
+                     m_MouseDownArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
+
+                     m_MouseDown = true;
+                  }
+
+                  // Does this work on all platforms?  Wasn't e.clickCount unstable on one platform?
+                  if (e.clickCount == 2)
+                  {
+                     OpenLogicNode();
+                  }
                }
 
-               if (e.clickCount == 2)
-               {
-                  OpenLogicNode();
-               }
+               // update the mouse move position whenever there's a click in case we were previously outside the window
+               m_MouseMoveArgs.X = (int)e.mousePosition.x;
+               m_MouseMoveArgs.Y = (int)e.mousePosition.y;
             }
-
-            // update the mouse move position whenever there's a click in case we were previously outside the window
-            m_MouseMoveArgs.X = (int)e.mousePosition.x;
-            m_MouseMoveArgs.Y = (int)e.mousePosition.y;
-
-            m_MouseDown = true;
             break;
          case EventType.MouseDrag:
          case EventType.MouseMove:
@@ -2284,7 +2294,7 @@ public class uScript : EditorWindow
       {
          if (kvp.Value.Contains(Event.current.mousePosition) && !HiddenRegion(kvp.Key))
          {
-            _mouseRegion = kvp.Key;
+            _mouseRegionUpdate = kvp.Key;
             break;
             //EditorGUIUtility.DrawColorSwatch(_mouseRegionRect[region], UnityEngine.Color.cyan);
          }

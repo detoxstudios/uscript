@@ -337,7 +337,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
       EditorGUILayout.EndVertical();
 
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Script);
-      uScriptInstance.SetMouseRegion(uScript.MouseRegion.NestedScripts);
+      uScriptInstance.SetMouseRegion(uScript.MouseRegion.Scripts);
    }
 
 
