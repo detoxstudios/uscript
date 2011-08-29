@@ -2789,7 +2789,7 @@ public class uScript : EditorWindow
                   // Paint the graph (nodes, sockets, links, and comments)
                   PaintEventArgs args = new PaintEventArgs();
                   args.Graphics = new System.Drawing.Graphics();
-                  m_ScriptEditorCtrl.GuiPaint(args);
+                  if (m_ScriptEditorCtrl != null) m_ScriptEditorCtrl.GuiPaint(args);
                }
             }
             EditorGUILayout.EndScrollView();
