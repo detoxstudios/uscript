@@ -1700,7 +1700,7 @@ public class uScript : EditorWindow
 
          DrawGUIBottomAreas();
       }
-      DrawGUIStatusbar();
+      OnGUI_DrawStatusbar();
 
       // @TODO: This bool flag could be removed if the GUI is repainted after the canvas stops panning
       if (_wasMoving)
@@ -1782,30 +1782,51 @@ public class uScript : EditorWindow
       GUILayout.Box("", uScriptGUIStyle.vDivider, GUILayout.Width(DIVIDER_WIDTH), GUILayout.ExpandHeight(true));
    }
 
-   void DrawGUIStatusbar()
+   void OnGUI_DrawStatusbar()
    {
-      if (GUI.tooltip != _statusbarMessage || Event.current.type == EventType.MouseMove)
+      Event e = Event.current;
+
+      if (GUI.tooltip != _statusbarMessage || e.type == EventType.MouseMove)
       {
          _statusbarMessage = GUI.tooltip;
+      }
+
+      // Get mouse position and region
+      string extraDetails = ((int)e.mousePosition.x).ToString() + ", "
+                            + ((int)e.mousePosition.y).ToString()
+                            + " (" + _mouseRegion.ToString() + ")";
+
+      // Get button state
+      if (Control.MouseButtons.Buttons != 0)
+      {
+         extraDetails = (Control.MouseButtons.Buttons == MouseButtons.Left ? "Left-Click"
+                         : Control.MouseButtons.Buttons == MouseButtons.Middle ? "Middle-Click"
+                         : "Right-Click")
+                        + " :: " + extraDetails;
+      }
+
+      // Get modifiers
+      if (e.modifiers != 0)
+      {
+         extraDetails = e.modifiers.ToString().Replace(",", " +")
+                        + (Control.MouseButtons.Buttons != 0 ? " + " : " :: ")
+                        + extraDetails;
       }
 
       EditorGUILayout.BeginHorizontal();
       {
          GUILayout.Label(_statusbarMessage, GUILayout.ExpandWidth(true));
-         GUILayout.Label((Event.current.modifiers != 0 ? Event.current.modifiers + " :: " : "")
-                           + (int)Event.current.mousePosition.x + ", "
-                           + (int)Event.current.mousePosition.y + " (" + _mouseRegion + ")",
-                           GUILayout.ExpandWidth(false));
+         GUILayout.Label(extraDetails, GUILayout.ExpandWidth(false));
       }
       EditorGUILayout.EndHorizontal();
 
 
-      if (Event.current.type == EventType.Repaint)
-      {
-         //         _statusbarRect = GUILayoutUtility.GetLastRect();
-      }
-
-      //      Redraw();  // This is taking to much CPU time.
+//      if (e.type == EventType.Repaint)
+//      {
+//         _statusbarRect = GUILayoutUtility.GetLastRect();
+//      }
+//
+//      Redraw();  // This is taking to much CPU time.
    }
 
    //   Rect _statusbarRect = new Rect();
@@ -3202,14 +3223,32 @@ public class uScript : EditorWindow
 
    public void OnMouseDown()
    {
-//      Debug.Log("OnMouseDown()\n");
-
       Control.MouseButtons.Buttons = m_MouseDownArgs.Button;
+
+//      Debug.Log("OnMouseDown() - " + Control.MouseButtons.Buttons + "\n");
 
       System.Windows.Forms.Cursor.Position.X = m_MouseDownArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseDownArgs.Y;
 
       m_ScriptEditorCtrl.OnMouseDown(m_MouseDownArgs);
+   }
+
+   public void OnMouseUp()
+   {
+//      Debug.Log("OnMouseUp() - " + Control.MouseButtons.Buttons + "\n");
+
+      System.Windows.Forms.Cursor.Position.X = m_MouseUpArgs.X;
+      System.Windows.Forms.Cursor.Position.Y = m_MouseUpArgs.Y;
+
+      m_ScriptEditorCtrl.OnMouseUp(m_MouseUpArgs);
+
+      m_CurrentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
+      if (!String.IsNullOrEmpty(m_FullPath))
+      {
+         SetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", m_CurrentCanvasPosition);
+      }
+
+      Control.MouseButtons.Buttons = 0;
    }
 
    static int lastMouseX = 0;
@@ -3282,23 +3321,7 @@ public class uScript : EditorWindow
       }
    }
 
-   public void OnMouseUp()
-   {
-//      Debug.Log("OnMouseUp()\n");
 
-      System.Windows.Forms.Cursor.Position.X = m_MouseUpArgs.X;
-      System.Windows.Forms.Cursor.Position.Y = m_MouseUpArgs.Y;
-
-      m_ScriptEditorCtrl.OnMouseUp(m_MouseUpArgs);
-
-      m_CurrentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
-      if (!String.IsNullOrEmpty(m_FullPath))
-      {
-         SetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", m_CurrentCanvasPosition);
-      }
-
-      Control.MouseButtons.Buttons = 0;
-   }
 
    public void Redraw()
    {
