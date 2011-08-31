@@ -67,6 +67,7 @@ public class uScript : EditorWindow
 
    private ScriptEditorCtrl m_ScriptEditorCtrl = null;
    private bool m_MouseDown = false;
+   private bool m_MouseDownOverCanvas = false;
    private bool m_Repainting = false;
    private bool m_WantsCopy = false;
    private bool m_WantsCut = false;
@@ -1448,7 +1449,7 @@ public class uScript : EditorWindow
                      if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
                      m_MouseDownArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
-                     m_MouseDown = true;
+                     m_MouseDownOverCanvas = true;
                   }
 
                   // Does this work on all platforms?  Wasn't e.clickCount unstable on one platform?
@@ -1456,6 +1457,8 @@ public class uScript : EditorWindow
                   {
                      OpenLogicNode();
                   }
+
+                  m_MouseDown = true;
                }
 
                // update the mouse move position whenever there's a click in case we were previously outside the window
@@ -1481,7 +1484,7 @@ public class uScript : EditorWindow
             }
             break;
          case EventType.MouseUp:
-            if (true == m_MouseDown)
+            if (m_MouseDown && m_MouseDownOverCanvas)
             {
                m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs();
 
@@ -1538,6 +1541,7 @@ public class uScript : EditorWindow
                }
             }
             m_MouseDownRegion = MouseRegion.Outside;
+            m_MouseDownOverCanvas = false;
             m_MouseDown = false;
             break;
          case EventType.ScrollWheel:
