@@ -258,30 +258,46 @@ namespace System.Windows.Forms
                      }
                      else if ( typeof(UnityEngine.LayerMask).IsAssignableFrom(val.GetType()) )
                      {
-                        UnityEngine.LayerMask mask = (UnityEngine.LayerMask)val;
-                        string layerValue = UnityEngine.LayerMask.LayerToName(mask);
-               
-                        // build layer list
-                        List<string> layerList = new List<string>();
-                        for (int i = 0; i < 32; i++)
-                        {
-                           if (!string.IsNullOrEmpty(UnityEngine.LayerMask.LayerToName(i)))
-                           {
-                              layerList.Add(UnityEngine.LayerMask.LayerToName(i));
-                           }
-                        }
-                        
-                        string returnedName = uScriptGUI.ChoiceField(p.FriendlyName, layerValue, layerList.ToArray(), ref isSocketExposed, isLocked, isReadOnly);
-                        
-                        for (int i = 0; i < 32; i++)
-                        {
-                           string name = UnityEngine.LayerMask.LayerToName(i);
-                           if (!string.IsNullOrEmpty(name) && returnedName == name)
-                           {
-                              val = UnityEngine.LayerMask.NameToLayer(returnedName);
-                              break;
-                           }
-                        }
+//                        UnityEngine.LayerMask mask = (UnityEngine.LayerMask)val;
+//                        string layerValue = UnityEngine.LayerMask.LayerToName(mask);
+//
+//                        // build layer list
+//                        List<string> layerList = new List<string>();
+//                        for (int i = 0; i < 32; i++)
+//                        {
+//                           if (!string.IsNullOrEmpty(UnityEngine.LayerMask.LayerToName(i)))
+//                           {
+//                              layerList.Add(UnityEngine.LayerMask.LayerToName(i));
+//                           }
+//                        }
+//
+//                        string returnedName = uScriptGUI.ChoiceField(p.FriendlyName, layerValue, layerList.ToArray(), ref isSocketExposed, isLocked, isReadOnly);
+//
+//                        for (int i = 0; i < 32; i++)
+//                        {
+//                           string name = UnityEngine.LayerMask.LayerToName(i);
+//                           if (!string.IsNullOrEmpty(name) && returnedName == name)
+//                           {
+//                              val = UnityEngine.LayerMask.NameToLayer(returnedName);
+//                              break;
+//                           }
+//                        }
+
+                        val = uScriptGUI.LayerField(p.FriendlyName, (LayerMask)val, ref isSocketExposed, isLocked, isReadOnly);
+
+//                        // Later, if we support actual LayerMask fields, the popup control should use
+//                        // labels like "xxx" or "xxx, xxx" or "xxx, xxx, xxx" or "Mixed ..."
+//                        //
+//                        // See the Camera Culling Mask in the Inspector for example
+//
+//                        //    Nothing           0
+//                        //    Everything        -1
+//                        // 0  Default           1
+//                        // 1  TransparentFX     2
+//                        // 2  Ignore Raycast    4
+//                        // ...
+//                        // 31  Unnamed 31
+
                      }
                      else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
                      {

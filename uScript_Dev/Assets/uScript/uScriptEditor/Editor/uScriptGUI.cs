@@ -558,6 +558,34 @@ public static class uScriptGUI
    }
 
 
+   public static int LayerField(string label, int value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         value = EditorGUILayout.LayerField(value, GUILayout.Width(_columnValue.Width));
+      }
+
+      EndRow(value.GetType().ToString());
+      return value;
+   }
+
+
+   public static string TagField(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         value = EditorGUILayout.TagField(value, GUILayout.Width(_columnValue.Width));
+      }
+
+      EndRow(value.GetType().ToString());
+      return value;
+   }
+
+
    public static string ChoiceField(string label, string value, string[] choices, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
@@ -1248,8 +1276,6 @@ public static class uScriptGUI
 //   Slider         Make a slider the user can drag to change a value between a min and a max.
 //   IntSlider      Make a slider the user can drag to change an integer value between a min and a max.
 //   MinMaxSlider   Make a special slider the user can use to specify a range between a min and a max.
-//   TagField       Make a tag selection field.
-//   LayerField     Make a layer selection field.
 //   ObjectField    Make an object drop slot field.
 //   CurveField     Make a field for editing an AnimationCurve.
 //   PropertyField  Make a field for SerializedProperty.
