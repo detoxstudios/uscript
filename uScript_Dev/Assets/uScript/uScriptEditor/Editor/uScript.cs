@@ -1796,6 +1796,8 @@ public class uScript : EditorWindow
       GUILayout.Box("", uScriptGUIStyle.vDivider, GUILayout.Width(DIVIDER_WIDTH), GUILayout.ExpandHeight(true));
    }
 
+//   int counter = 0;
+
    void OnGUI_DrawStatusbar()
    {
       Event e = Event.current;
@@ -1827,23 +1829,15 @@ public class uScript : EditorWindow
                         + extraDetails;
       }
 
+//      extraDetails = "Counter: " + (int)(counter++ / 50) + " - " + extraDetails;
+
       EditorGUILayout.BeginHorizontal();
       {
          GUILayout.Label(_statusbarMessage, GUILayout.ExpandWidth(true));
          GUILayout.Label(extraDetails, GUILayout.ExpandWidth(false));
       }
       EditorGUILayout.EndHorizontal();
-
-
-//      if (e.type == EventType.Repaint)
-//      {
-//         _statusbarRect = GUILayoutUtility.GetLastRect();
-//      }
-//
-//      Redraw();  // This is taking to much CPU time.
    }
-
-   //   Rect _statusbarRect = new Rect();
 
 
 
@@ -3239,20 +3233,20 @@ public class uScript : EditorWindow
    {
       Control.MouseButtons.Buttons = m_MouseDownArgs.Button;
 
-//      Debug.Log("OnMouseDown() - " + Control.MouseButtons.Buttons + "\n");
-
       System.Windows.Forms.Cursor.Position.X = m_MouseDownArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseDownArgs.Y;
+
+//      Debug.Log("BUTTON " + Control.MouseButtons.Buttons + " - OnMouseDown() at " + System.Windows.Forms.Cursor.Position.ToString() + "\n");
 
       m_ScriptEditorCtrl.OnMouseDown(m_MouseDownArgs);
    }
 
    public void OnMouseUp()
    {
-//      Debug.Log("OnMouseUp() - " + Control.MouseButtons.Buttons + "\n");
-
       System.Windows.Forms.Cursor.Position.X = m_MouseUpArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseUpArgs.Y;
+
+//      Debug.Log("BUTTON " + Control.MouseButtons.Buttons + " - OnMouseUp() at " + System.Windows.Forms.Cursor.Position.ToString() + "\n");
 
       m_ScriptEditorCtrl.OnMouseUp(m_MouseUpArgs);
 
@@ -3279,8 +3273,12 @@ public class uScript : EditorWindow
       lastMouseY = m_MouseMoveArgs.Y;
 
       // convert to main canvas space
-      if (!m_HidePanelMode) m_MouseMoveArgs.X -= _guiPanelPalette_Width;
-      m_MouseMoveArgs.Y -= (int)_canvasRect.yMin;
+      m_MouseMoveArgs.X -= (int)_canvasRect.x;
+      m_MouseMoveArgs.Y -= (int)_canvasRect.y;
+
+//      Debug.Log("m_MouseMoveArgs: \t" + m_MouseMoveArgs.X.ToString() + ", " + m_MouseMoveArgs.Y.ToString()
+//                + "\n_canvasRect: \t\t\t" + _canvasRect.x.ToString() + ", " + _canvasRect.y.ToString() + " ... "
+//                + (_guiPanelPalette_Width + DIVIDER_WIDTH - 1).ToString());
 
       System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
       System.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
@@ -3291,47 +3289,30 @@ public class uScript : EditorWindow
       }
 
       // convert back to screen
-      if (!m_HidePanelMode) m_MouseMoveArgs.X += _guiPanelPalette_Width;
-      m_MouseMoveArgs.Y += (int)_canvasRect.yMin;
+      m_MouseMoveArgs.X += (int)_canvasRect.x;
+      m_MouseMoveArgs.Y += (int)_canvasRect.y;
 
-      if (GUI.enabled && !m_HidePanelMode)
+      // check for divider draggging
+      if (GUI.enabled && !m_HidePanelMode && m_MouseDown)
       {
-         // check for divider draggging
-         foreach (KeyValuePair<MouseRegion, Rect> kvp in _mouseRegionRect)
+         if (m_MouseDownRegion == MouseRegion.HandleCanvas)
          {
-            MouseRegion region = kvp.Key;
-            switch (region)
-            {
-               case MouseRegion.HandleCanvas:
-                  if (m_MouseDown && region == m_MouseDownRegion)
-                  {
-                     _guiPanelProperties_Height -= deltaY;
-                     Repaint();
-                  }
-                  break;
-               case MouseRegion.HandlePalette:
-                  if (m_MouseDown && region == m_MouseDownRegion)
-                  {
-                     _guiPanelPalette_Width += deltaX;
-                     Repaint();
-                  }
-                  break;
-               case MouseRegion.HandleProperties:
-                  if (m_MouseDown && region == m_MouseDownRegion)
-                  {
-                     _guiPanelProperties_Width += deltaX;
-                     Repaint();
-                  }
-                  break;
-               case MouseRegion.HandleReference:
-                  if (m_MouseDown && region == m_MouseDownRegion)
-                  {
-                     _guiPanelSequence_Width -= deltaX;
-                     Repaint();
-                  }
-                  break;
-            }
+            _guiPanelProperties_Height -= deltaY;
          }
+         else if (m_MouseDownRegion == MouseRegion.HandlePalette)
+         {
+            _guiPanelPalette_Width += deltaX;
+         }
+         else if (m_MouseDownRegion == MouseRegion.HandleProperties)
+         {
+            _guiPanelProperties_Width += deltaX;
+         }
+         else if (m_MouseDownRegion == MouseRegion.HandleReference)
+         {
+            _guiPanelSequence_Width -= deltaX;
+         }
+
+//         Repaint();
       }
    }
 
