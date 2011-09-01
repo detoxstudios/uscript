@@ -3,10 +3,10 @@
 // Desc: uScript's configuration file. Edit settings here to configure the uScript visual scripting tool.
 
 #define ENABLE_DEBUG_LOG
-// Public beta reminders:
-// 1. Disable above define(s)
+// Build reminders:
 // 2. Increment build number
 // 3. Optionally increase end date
+// 4. Forum Build Only: Comment out UNITY_STORE_BUILD in uScript.cs and LicenseWindow.cs
 
 
 using System;
