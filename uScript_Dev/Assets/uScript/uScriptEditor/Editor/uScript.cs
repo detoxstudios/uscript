@@ -1362,21 +1362,6 @@ public class uScript : EditorWindow
                   // close the window
                   this.Close();
                }
-               else if (e.keyCode == KeyCode.BackQuote)
-               {
-                  m_HidePanelMode = !m_HidePanelMode;
-
-                  if (m_HidePanelMode)
-                  {
-                     m_ScriptEditorCtrl.FlowChart.Location.X += _guiPanelPalette_Width + DIVIDER_WIDTH;
-                     m_ScriptEditorCtrl.RefreshScript(null, false);
-                  }
-                  else
-                  {
-                     m_ScriptEditorCtrl.FlowChart.Location.X -= _guiPanelPalette_Width + DIVIDER_WIDTH;
-                     m_ScriptEditorCtrl.RefreshScript(null, false);
-                  }
-               }
                else if (e.keyCode == KeyCode.Escape)
                {
                   if ("MainView" == GUI.GetNameOfFocusedControl())
@@ -1416,6 +1401,25 @@ public class uScript : EditorWindow
                   m_MapScale = Mathf.Min(m_MapScale + 0.1f, 1.0f);
 
                   if ( 1 == m_MapScale ) ResetZoom( );
+               }
+            }
+
+            if (e.keyCode == KeyCode.BackQuote)
+            {
+               m_HidePanelMode = !m_HidePanelMode;
+
+               // FIXME: When toggled while the mouse is down, the canvas often shifts around.
+               if (m_HidePanelMode)
+               {
+//                  m_ScriptEditorCtrl.FlowChart.Location.X += (int)_canvasRect.x;
+                  m_ScriptEditorCtrl.FlowChart.Location.X += _guiPanelPalette_Width + DIVIDER_WIDTH;
+                  m_ScriptEditorCtrl.RefreshScript(null, false);
+               }
+               else
+               {
+//                  m_ScriptEditorCtrl.FlowChart.Location.X -= (int)_canvasRect.x;
+                  m_ScriptEditorCtrl.FlowChart.Location.X -= _guiPanelPalette_Width + DIVIDER_WIDTH;
+                  m_ScriptEditorCtrl.RefreshScript(null, false);
                }
             }
 
