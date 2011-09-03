@@ -13,7 +13,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_TextAsset")]
 
-[FriendlyName("Load TextAsset", "Loads a TextAsset file from your Resources directory.  Binary files can be loaded as a TextAsset, but they must use the \"bytes\" file extension")]
+[FriendlyName("Load TextAsset", "Loads a TextAsset file from your Resources directory.  Binary files can be loaded as a TextAsset, but they must use the \"bytes\" file extension.")]
 public class uScriptAct_LoadTextAsset : uScriptLogic
 {
    public bool Out { get { return true; } }

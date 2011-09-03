@@ -10,19 +10,23 @@ using UnityEngine;
 public enum AssetType
 {
    Invalid = -1,
-
    AnimationClip,
    AudioClip,
+   Cubemap,
+   Flare,
+   Font,
+   GUISkin,
    Material,
    Mesh,
    MovieTexture,
+   PhysicMaterial,
+   Prefab,
+   RenderTexture,
+   Shader,
    TextAsset,
    Texture2D
-//    Cubemap Texture
-//    Flare
-//    Font : .ttf
+
 //    Procedural Material Assets
-//    Render Texture
 }
 
 public interface uScriptIUnityVersion

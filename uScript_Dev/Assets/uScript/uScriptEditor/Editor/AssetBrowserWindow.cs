@@ -101,10 +101,6 @@ public class AssetBrowserWindow : EditorWindow
 
 
 
-
-
-
-
    // Create the window
    public static void Init()
    {
@@ -120,9 +116,21 @@ public class AssetBrowserWindow : EditorWindow
             _assetExtensions = new List<string> { "aif", "wav", "mp3", "ogg", "xm", "mod", "it", "s3m" };
             _type = typeof(AudioClip);
             break;
-         case AssetType.BinaryAsset:
-            _assetExtensions = new List<string> { "bytes" };
-            _type = typeof(TextAsset);
+         case AssetType.Cubemap:
+            _assetExtensions = new List<string> { "cubemap" };
+            _type = typeof(Cubemap);
+            break;
+         case AssetType.Flare:
+            _assetExtensions = new List<string> { "flare" };
+            _type = typeof(Flare);
+            break;
+         case AssetType.Font:
+            _assetExtensions = new List<string> { "otf", "ttf" };
+            _type = typeof(Font);
+            break;
+         case AssetType.GUISkin:
+            _assetExtensions = new List<string> { "guiskin" };
+            _type = typeof(GUISkin);
             break;
          case AssetType.Material:
             _assetExtensions = new List<string> { "mat" };
@@ -136,8 +144,24 @@ public class AssetBrowserWindow : EditorWindow
             _assetExtensions = new List<string> { "mov", "mpg", "mpeg", "mp4", "avi", "asf" };
             _type = typeof(MovieTexture);
             break;
+         case AssetType.PhysicMaterial:
+            _assetExtensions = new List<string> { "physicmaterial" };
+            _type = typeof(PhysicMaterial);
+            break;
+         case AssetType.Prefab:
+            _assetExtensions = new List<string> { "prefab" };
+            _type = typeof(GameObject);
+            break;
+         case AssetType.RenderTexture:
+            _assetExtensions = new List<string> { "rendertexture" };
+            _type = typeof(RenderTexture);
+            break;
+         case AssetType.Shader:
+            _assetExtensions = new List<string> { "shader" };
+            _type = typeof(Shader);
+            break;
          case AssetType.TextAsset:
-            _assetExtensions = new List<string> { "txt", "html", "htm", "xml" };
+            _assetExtensions = new List<string> { "txt", "html", "htm", "xml", "bytes" };
             _type = typeof(TextAsset);
             break;
          case AssetType.Texture2D:
@@ -357,11 +381,14 @@ public class AssetBrowserWindow : EditorWindow
          _assetSelection.Clear();
          if (string.IsNullOrEmpty(_selectedAssetPath) == false)
          {
+            string path;
             for (int i=0; i < _assetFullPath.Count; i++)
             {
-               if (_assetFullPath[i].Contains("/Resources/" + _selectedAssetPath))
+               path = _assetFullPath[i];
+               // adding the "." is a hack to avoid "AssetName.ext" matching "AssetName2.ext"
+               if (path.Contains("/Resources/" + _selectedAssetPath + "."))
                {
-                  _assetSelection.Add(_assetFullPath[i].Substring(Application.dataPath.Length + 1));
+                  _assetSelection.Add(path.Substring(Application.dataPath.Length + 1));
                }
             }
          }
