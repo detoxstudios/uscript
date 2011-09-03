@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Loads an AudioClip from your Resources directory.
+// Desc: Loads a MovieTexture from your Resources directory.
 
 using UnityEngine;
 using System.Collections;
@@ -8,25 +8,25 @@ using System.Collections;
 [NodePath("Actions/Assets")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Loads an AudioClip")]
-[NodeDescription("Loads an AudioClip file from your Resources directory.\n\nAsset Path: The AudioClip file to load.  The supported file formats are: \"aif\", \"wav\", \"mp3\", \"ogg\", \"xm\", \"mod\", \"it\", and \"s3m\".\n\nLoaded Asset (out): The AudioClip loaded from the specified file.")]
+[NodeToolTip("Loads a MovieTexture")]
+[NodeDescription("Loads a MovieTexture file from your Resources directory.\n\nAsset Path: The MovieTexture file to load.  The supported file formats are: \"mov\", \"mpg\", \"mpeg\", \"mp4\", \"avi\", and \"asf\".\n\nLoaded Asset (out): The MovieTexture loaded from the specified file.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_AudioClip")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_MovieTexture")]
 
-[FriendlyName("Load AudioClip", "Loads an AudioClip from your Resources directory.")]
-public class uScriptAct_LoadAudioClip : uScriptLogic
+[FriendlyName("Load MovieTexture", "Loads a MovieTexture file from your Resources directory.")]
+public class uScriptAct_LoadMovieTexture : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [AssetPathField(AssetType.AudioClip)]
-      [FriendlyName("Asset Path", "The AudioClip file to load.  The supported file formats are: \"aif\", \"wav\", \"mp3\", \"ogg\", \"xm\", \"mod\", \"it\", and \"s3m\".")]
+      [AssetPathField(AssetType.MovieTexture)]
+      [FriendlyName("Asset Path", "The MovieTexture file to load.  The supported file formats are: \"mov\", \"mpg\", \"mpeg\", \"mp4\", \"avi\", and \"asf\".")]
       string name,
-      [FriendlyName("Loaded Asset", "The AudioClip loaded from the specified file path.")]
-      out AudioClip asset
+      [FriendlyName("Loaded Asset", "The MovieTexture loaded from the specified file path.")]
+      out MovieTexture asset
    )
    {
-      asset = Resources.Load(name) as AudioClip;
+      asset = Resources.Load(name) as MovieTexture;
 
       if ( null == asset )
       {
@@ -38,9 +38,9 @@ public class uScriptAct_LoadAudioClip : uScriptLogic
 #if UNITY_EDITOR
    public override Hashtable EditorDragDrop( object o )
    {
-      if ( typeof( AudioClip ).IsAssignableFrom( o.GetType() ) )
+      if ( typeof(MovieTexture).IsAssignableFrom( o.GetType() ) )
       {
-         AudioClip ac = (AudioClip) o;
+         MovieTexture ac = (MovieTexture)o;
 
          string path = UnityEditor.AssetDatabase.GetAssetPath( ac.GetInstanceID( ) );
 

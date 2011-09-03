@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Loads an AudioClip from your Resources directory.
+// Desc: Loads a Mesh from your Resources directory.
 
 using UnityEngine;
 using System.Collections;
@@ -8,25 +8,25 @@ using System.Collections;
 [NodePath("Actions/Assets")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Loads an AudioClip")]
-[NodeDescription("Loads an AudioClip file from your Resources directory.\n\nAsset Path: The AudioClip file to load.  The supported file formats are: \"aif\", \"wav\", \"mp3\", \"ogg\", \"xm\", \"mod\", \"it\", and \"s3m\".\n\nLoaded Asset (out): The AudioClip loaded from the specified file.")]
+[NodeToolTip("Loads a Mesh")]
+[NodeDescription("Loads a Mesh file from your Resources directory.\n\nAsset Path: The Mesh file to load.  The supported file formats are: \"fbx\", \"dae\", \"3ds\", \"dxf\", and \"obj\".\n\nLoaded Asset (out): The Mesh loaded from the specified file.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_AudioClip")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_Mesh")]
 
-[FriendlyName("Load AudioClip", "Loads an AudioClip from your Resources directory.")]
-public class uScriptAct_LoadAudioClip : uScriptLogic
+[FriendlyName("Load Mesh", "Loads a Mesh file from your Resources directory.")]
+public class uScriptAct_LoadMesh : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [AssetPathField(AssetType.AudioClip)]
-      [FriendlyName("Asset Path", "The AudioClip file to load.  The supported file formats are: \"aif\", \"wav\", \"mp3\", \"ogg\", \"xm\", \"mod\", \"it\", and \"s3m\".")]
+      [AssetPathField(AssetType.Mesh)]
+      [FriendlyName("Asset Path", "The Mesh file to load.  The supported file formats are: \"fbx\", \"dae\", \"3ds\", \"dxf\", and \"obj\".")]
       string name,
-      [FriendlyName("Loaded Asset", "The AudioClip loaded from the specified file path.")]
-      out AudioClip asset
+      [FriendlyName("Loaded Asset", "The Mesh loaded from the specified file path.")]
+      out Mesh asset
    )
    {
-      asset = Resources.Load(name) as AudioClip;
+      asset = Resources.Load(name) as Mesh;
 
       if ( null == asset )
       {
@@ -38,9 +38,9 @@ public class uScriptAct_LoadAudioClip : uScriptLogic
 #if UNITY_EDITOR
    public override Hashtable EditorDragDrop( object o )
    {
-      if ( typeof( AudioClip ).IsAssignableFrom( o.GetType() ) )
+      if ( typeof(Mesh).IsAssignableFrom( o.GetType() ) )
       {
-         AudioClip ac = (AudioClip) o;
+         Mesh ac = (Mesh)o;
 
          string path = UnityEditor.AssetDatabase.GetAssetPath( ac.GetInstanceID( ) );
 

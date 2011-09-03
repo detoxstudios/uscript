@@ -13,7 +13,6 @@ public enum AssetType
 
    AnimationClip,
    AudioClip,
-   BinaryAsset,
    Material,
    Mesh,
    MovieTexture,
@@ -70,8 +69,10 @@ public class AssetPathField : Attribute
 [AttributeUsage(AttributeTargets.All)]
 public class FriendlyName : Attribute
 {
-   public FriendlyName(string name) { Name = name; }
+   public FriendlyName(string name) { Name = name; Desc = string.Empty; }
+   public FriendlyName(string name, string desc) { Name = name; Desc = desc; }
    public string Name;
+   public string Desc;
 }
 
 [AttributeUsage(AttributeTargets.Method)]

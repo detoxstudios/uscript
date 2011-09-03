@@ -9,28 +9,28 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads an AnimationClip")]
-[NodeDescription("Loads an AnimationClip from your Resources directory.\n \nAnimation Clip: The animation file to load. \nLoaded AnimationClip (out): The AnimationClip loaded from the specified file.")]
+[NodeDescription("Loads an AnimationClip file from your Resources directory.\n\nAsset Path: The AnimationClip file to load.  The supported file format is: \"anim\".\n\nLoaded Asset (out): The AnimationClip loaded from the specified file.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_AnimationClip")]
 
-[FriendlyName("Load AnimationClip")]
+[FriendlyName("Load AnimationClip", "Loads an AnimationClip from your Resources directory.")]
 public class uScriptAct_LoadAnimationClip : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
       [AssetPathField(AssetType.AnimationClip)]
-      [FriendlyName("Animation Clip")]
+      [FriendlyName("Asset Path", "The AnimationClip file to load.  The supported file format is: \"anim\".")]
       string name,
-      [FriendlyName("Loaded AnimationClip")]
-      out AnimationClip animationClip
+      [FriendlyName("Loaded Asset", "The AnimationClip loaded from the specified file path.")]
+      out AnimationClip asset
    )
    {
-      animationClip = Resources.Load(name) as AnimationClip;
+      asset = Resources.Load(name) as AnimationClip;
 
-      if (null == animationClip) 
+      if ( null == asset )
       {
-         uScriptDebug.Log("AnimationClip " + name + " couldn't be loaded, are you sure it's in a Resources folder?", uScriptDebug.Type.Warning);
+         uScriptDebug.Log( "Asset " + name + " couldn't be loaded, are you sure it's in a Resources folder?", uScriptDebug.Type.Warning );
       }
    }
 
@@ -38,7 +38,7 @@ public class uScriptAct_LoadAnimationClip : uScriptLogic
 #if UNITY_EDITOR
    public override Hashtable EditorDragDrop( object o )
    {
-      if (typeof(AnimationClip).IsAssignableFrom(o.GetType()))
+      if ( typeof( AnimationClip ).IsAssignableFrom( o.GetType() ) )
       {
          AnimationClip ac = (AnimationClip)o;
 
