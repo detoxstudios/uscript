@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.IO;
 
 using Detox.ScriptEditor;
 using Detox.FlowChart;
@@ -44,6 +45,9 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       //
    }
 
+   string helpNodeClassName = string.Empty;
+   string helpNodeClassPath = string.Empty;
+
    public override void Draw()
    {
       //
@@ -64,6 +68,8 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       string helpButtonURL       = "http://www.uscript.net/docs/";
 
       GUIStyle helpDescriptionStyle = uScriptGUIStyle.panelMessage;
+
+      DisplayNode dn = null;
 
       if (hotNodeControl != null)
       {
@@ -93,43 +99,55 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          helpButtonTooltip = string.Empty;
 
          helpDescriptionStyle = uScriptGUIStyle.referenceText;
-      }
-      else if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
-      {
-         if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
-         {
-            string nodeType = ScriptEditor.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
-            if (string.IsNullOrEmpty(nodeType))
-            {
-               // other node types...
-               if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is CommentNode)
-               {
-                  nodeType = "CommentNode";
-               }
-               else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is ExternalConnection)
-               {
-                  nodeType = "ExternalConnection";
-               }
-               else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is OwnerConnection)
-               {
-                  nodeType = "OwnerConnection";
-               }
-               else if (m_ScriptEditorCtrl.SelectedNodes[0].EntityNode is LocalNode)
-               {
-                  nodeType = "LocalNode";
-               }
-            }
-            helpButtonURL = uScript.FindNodeHelp(nodeType, m_ScriptEditorCtrl.SelectedNodes[0]);
-            helpDescription = uScript.FindNodeDescription(nodeType, m_ScriptEditorCtrl.SelectedNodes[0].EntityNode);
-            helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
-
-            helpDescriptionStyle = uScriptGUIStyle.referenceText;
-         }
+         helpNodeClassName = string.Empty;
+         helpNodeClassPath = string.Empty;
       }
       else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
       {
          helpDescription = "Help cannot be provided when multiple nodes are selected.";
          helpDescriptionStyle = uScriptGUIStyle.panelMessage;
+         helpNodeClassName = string.Empty;
+         helpNodeClassPath = string.Empty;
+      }
+      else if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
+      {
+         dn = m_ScriptEditorCtrl.SelectedNodes[0];
+         if (dn != null)
+         {
+            string nodeType = ScriptEditor.FindNodeType(dn.EntityNode);
+            if (string.IsNullOrEmpty(nodeType))
+            {
+               // other node types...
+               if (dn.EntityNode is CommentNode)
+               {
+                  nodeType = "CommentNode";
+               }
+               else if (dn.EntityNode is ExternalConnection)
+               {
+                  nodeType = "ExternalConnection";
+               }
+               else if (dn.EntityNode is OwnerConnection)
+               {
+                  nodeType = "OwnerConnection";
+               }
+               else if (dn.EntityNode is LocalNode)
+               {
+                  nodeType = "LocalNode";
+               }
+            }
+            helpButtonURL = uScript.FindNodeHelp(nodeType, dn);
+            helpDescription = uScript.FindNodeDescription(nodeType, dn.EntityNode);
+            helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
+
+            helpDescriptionStyle = uScriptGUIStyle.referenceText;
+
+            string className = ScriptEditor.FindNodeType(dn.EntityNode);
+            if (className != helpNodeClassName)
+            {
+               helpNodeClassName = className;
+               helpNodeClassPath = GetClassPath();
+            }
+         }
       }
 
       helpButtonTooltip += " (" + helpButtonURL + ")";
@@ -144,10 +162,23 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          {
             GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 
-            if (helpButtonURL == string.Empty)
+            uScriptGUI.enabled = (string.IsNullOrEmpty(helpNodeClassPath) == false);
+
+            if (GUILayout.Button(uScriptGUIContent.toolbarButtonSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               uScriptGUI.enabled = false;
+               UnityEngine.Object obj = Resources.LoadAssetAtPath(helpNodeClassPath, typeof(TextAsset));
+               if (obj != null)
+               {
+                  int instanceID = obj.GetInstanceID();
+                  EditorGUIUtility.PingObject(instanceID);
+               }
+               else
+               {
+                  Debug.Log("File not found: " + helpNodeClassPath + "\n");
+               }
             }
+
+            uScriptGUI.enabled = (string.IsNullOrEmpty(helpButtonURL) == false);
 
             uScriptGUIContent.ChangeTooltip(helpButtonTooltip);
             if ( GUILayout.Button( uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
@@ -202,6 +233,31 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Reference);
       uScriptInstance.SetMouseRegion( uScript.MouseRegion.Reference );
    }
+
+
+   string GetClassPath()
+   {
+      if (string.IsNullOrEmpty(helpNodeClassName) == false)
+      {
+         // Find the associated class file
+         string startPath = Application.dataPath;
+         string[] exts = new string[] { ".cs", ".js", ".boo" };
+
+         foreach (string ext in exts)
+         {
+            string[] files = Directory.GetFiles(startPath, helpNodeClassName + ext, SearchOption.AllDirectories);
+            if (files.Length == 1)
+            {
+               return files[0].Remove(0, startPath.Length - 6);
+            }
+         }
+      }
+
+      return string.Empty;
+   }
+
+
+
 
 
 /*
