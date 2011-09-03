@@ -1184,7 +1184,7 @@ public static class uScriptGUI
 
 
 
-   public static string AssetPathField(AssetType assetType, string assetPath, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   public static string AssetPathField(string label, AssetType assetType, string assetPath, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       // Asset File Name
       //
@@ -1198,7 +1198,7 @@ public static class uScriptGUI
       //    (exposed socket should be a string)
       //
 
-      string label = System.Enum.GetName(typeof(AssetType), (int)assetType) + " Path";
+//      string label = System.Enum.GetName(typeof(AssetType), (int)assetType) + " Path";
 
       GUIStyle style = new GUIStyle(GUI.skin.button);
       style.padding = new RectOffset(6, 6, 1, 2);

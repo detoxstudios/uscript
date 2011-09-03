@@ -305,7 +305,7 @@ namespace System.Windows.Forms
                      }
                      else if ( AssetType.Invalid != uScript.GetAssetPathField(parameters.EntityNode, p.Name) )
                      {
-                        val = uScriptGUI.AssetPathField(uScript.GetAssetPathField(parameters.EntityNode, p.Name), p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                        val = uScriptGUI.AssetPathField(p.FriendlyName, uScript.GetAssetPathField(parameters.EntityNode, p.Name), p.Default, ref isSocketExposed, isLocked, isReadOnly);
                      }
                      else if ( null != GetObjectFieldType(p.Type) )
                      {
