@@ -27,7 +27,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
    {
       int tempIntValue = 0;
       float tempFloatValue = 0F;
-      string tempStringValue = "";
+      string tempStringValue = Target.ToString();
       bool tempBooleanValue = false;
 
       // Convert from GameObject
@@ -51,8 +51,38 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          }
       }
 
+      // Convert from Enum
+      else if (Target is System.Enum)
+      {
+         tempIntValue = (int)Target;
+         tempFloatValue = tempIntValue;
+         tempBooleanValue = tempIntValue == 0 ? false : true;
+         tempStringValue = Target.ToString();
+      }
+
+      // Convert from Vector2
+      else if (typeof(Vector2) == Target.GetType())
+      {
+         Vector3 tmpTarget = (Vector2)Target;
+
+         if (tmpTarget.ToString() == "(0.0, 0.0)")
+         {
+            tempIntValue = 0;
+            tempFloatValue = 0F;
+            tempBooleanValue = false;
+            tempStringValue = tmpTarget.ToString();
+         }
+         else
+         {
+            tempIntValue = 1;
+            tempFloatValue = 1F;
+            tempBooleanValue = true;
+            tempStringValue = tmpTarget.ToString();
+         }
+      }
+
       // Convert from Vector3
-      if (typeof(Vector3) == Target.GetType())
+      else if (typeof(Vector3) == Target.GetType())
       {
          Vector3 tmpTarget = (Vector3)Target;
 
@@ -73,7 +103,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       }
 
       // Convert from Vector4
-      if (typeof(Vector4) == Target.GetType())
+      else if (typeof(Vector4) == Target.GetType())
       {
          Vector4 tmpTarget = (Vector4)Target;
 
@@ -94,7 +124,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       }
 
       // Convert from String
-      if (typeof(string) == Target.GetType())
+      else if (typeof(string) == Target.GetType())
       {
          string tmpTarget = (string)Target;
 
@@ -135,7 +165,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       }
 
       // Convert from Int
-      if (typeof(int) == Target.GetType())
+      else if (typeof(int) == Target.GetType())
       {
          int tmpTarget = (int)Target;
 
@@ -156,7 +186,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       }
 
       // Convert from Float
-      if (typeof(float) == Target.GetType())
+      else if (typeof(float) == Target.GetType())
       {
          float tmpTarget = (float)Target;
 
@@ -176,8 +206,8 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          }
       }
 		
-	  // Convert from Bool
-      if (typeof(bool) == Target.GetType())
+      // Convert from Bool
+      else if (typeof(bool) == Target.GetType())
       {
          bool tmpTarget = (bool)Target;
 
