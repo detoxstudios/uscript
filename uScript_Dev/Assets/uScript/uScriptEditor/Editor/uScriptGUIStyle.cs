@@ -96,11 +96,25 @@ public static class uScriptGUIStyle
    private static GUIStyle _panelMessageError;
    public static GUIStyle panelMessageError { get { return _panelMessageError; } }
 
+   private static GUIStyle _underline;
+   public static GUIStyle underline { get { return _underline; } }
+
+   private static GUIStyle _referenceName;
+   public static GUIStyle referenceName { get { return _referenceName; } }
+
+   private static GUIStyle _referenceInfo;
+   public static GUIStyle referenceInfo { get { return _referenceInfo; } }
+
+   private static GUIStyle _referenceDesc;
+   public static GUIStyle referenceDesc { get { return _referenceDesc; } }
+
 
 
 
    static Texture2D _texture_windowMenuDropDown = null;
    static Texture2D _texture_windowMenuContext = null;
+
+   static Texture2D _texture_underline = null;
 
 
 
@@ -116,6 +130,7 @@ public static class uScriptGUIStyle
          string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + _currentSkin + "_";
          _texture_windowMenuDropDown = AssetDatabase.LoadAssetAtPath(skinPath + "MenuDropDown.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _texture_windowMenuContext = AssetDatabase.LoadAssetAtPath(skinPath + "MenuContext.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         _texture_underline = AssetDatabase.LoadAssetAtPath(skinPath + "Underline.png", typeof(UnityEngine.Texture2D)) as Texture2D;
       }
       else if (_stylesInitialized)
       {
@@ -284,6 +299,31 @@ public static class uScriptGUIStyle
       _panelMessageError.font = EditorStyles.boldLabel.font;
       _panelMessageError.wordWrap = true;
       _panelMessageError.stretchWidth = true;
+
+      _underline = new GUIStyle(EditorStyles.boldLabel);
+      _underline.normal.background = _texture_underline;
+      _underline.border = new RectOffset(0, 0, 0, 2);
+      _underline.padding = new RectOffset(0, 0, 2, 2);
+
+      _referenceName = new GUIStyle(EditorStyles.boldLabel);
+      _referenceName.name = "referenceName";
+      _referenceName.normal.background = _texture_underline;
+      _referenceName.border = new RectOffset(0, 0, 0, 2);
+      _referenceName.padding = new RectOffset(0, 0, 2, 2);
+
+      _referenceInfo = new GUIStyle(EditorStyles.miniLabel);
+      _referenceInfo.name = "referenceInfo";
+      _referenceInfo.alignment = TextAnchor.LowerRight;
+      _referenceInfo.padding = new RectOffset(0, 0, 3, 2);
+
+      _referenceDesc = new GUIStyle(EditorStyles.label);
+      _referenceDesc.name = "referenceDesc";
+      _referenceDesc.padding = new RectOffset(0, 0, 0, 3);
+      _referenceDesc.stretchHeight = false;
+      _referenceDesc.stretchWidth = true;
+      _referenceDesc.wordWrap = true;
+
+//      uScriptGUIStyle.Information(underline);
    }
 
 

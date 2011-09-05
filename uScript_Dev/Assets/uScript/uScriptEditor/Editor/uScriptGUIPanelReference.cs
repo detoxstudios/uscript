@@ -217,13 +217,69 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                   }
                }
 
+
+//               // Node name and palette location
+//               GUILayout.Label("Load Material", uScriptGUIStyle.referenceName);
+//               Rect r = GUILayoutUtility.GetLastRect();
+//               GUI.Label(r, "Actions > Assets", uScriptGUIStyle.referenceInfo);
+//
+//               // Node description
+//               GUILayout.Label("Loads a Material file from your Resources directory.", uScriptGUIStyle.referenceDesc);
+//
+//               // Parameter block
+//               GUILayout.BeginHorizontal();
+//               {
+//                  // Icon
+//                  GUILayout.Space(24);
+//
+//                  //
+//                  GUILayout.BeginVertical();
+//                  {
+//                     // Parameter name and type
+//                     GUILayout.Label("Asset Path:", uScriptGUIStyle.referenceName);
+//                     r = GUILayoutUtility.GetLastRect();
+//                     GUI.Label(r, "String", uScriptGUIStyle.referenceInfo);
+//
+//                     // Parameter description
+//                     GUILayout.Label("The Material file to load.  The supported file format is: \"mat\".", uScriptGUIStyle.referenceDesc);
+//                  }
+//                  GUILayout.EndVertical();
+//               }
+//               GUILayout.EndHorizontal();
+//
+//               // Parameter block
+//               GUILayout.BeginHorizontal();
+//               {
+//                  // Icon
+//                  GUILayout.Space(24);
+////                  r = GUILayoutUtility.GetLastRect();
+////                  r.height = 20;
+////                  GUI.Label(r, "(o)", styleInfo);
+//
+//                  //
+//                  GUILayout.BeginVertical();
+//                  {
+//                     // Parameter name and type
+//                     GUILayout.Label("Loaded Asset:", uScriptGUIStyle.referenceName);
+//                     r = GUILayoutUtility.GetLastRect();
+//                     GUI.Label(r, "Material", uScriptGUIStyle.referenceInfo);
+//
+//                     // Parameter description
+//                     GUILayout.Label("The Material loaded from the specified file path.", uScriptGUIStyle.referenceDesc);
+//                  }
+//                  GUILayout.EndVertical();
+//               }
+//               GUILayout.EndHorizontal();
+
+
+
                // prevent the help TextArea from getting focus
-               GUI.SetNextControlName("helpTextArea");
-               GUILayout.TextArea(helpDescription, helpDescriptionStyle);
-               if (GUI.GetNameOfFocusedControl() == "helpTextArea")
-               {
-                  GUIUtility.keyboardControl = 0;
-               }
+//               GUI.SetNextControlName("helpTextArea");
+               GUILayout.Label(helpDescription, helpDescriptionStyle);
+//               if (GUI.GetNameOfFocusedControl() == "helpTextArea")
+//               {
+//                  GUIUtility.keyboardControl = 0;
+//               }
             }
             EditorGUILayout.EndScrollView();
          }
