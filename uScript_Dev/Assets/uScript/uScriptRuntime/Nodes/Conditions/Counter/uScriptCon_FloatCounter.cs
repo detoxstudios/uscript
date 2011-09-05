@@ -84,4 +84,16 @@ public class uScriptCon_FloatCounter : uScriptLogic
          m_LessThan = true;
       }
    }
+	
+	public void Reset(float A, float B, [FriendlyName("Current Value")] out float currentValue)
+    {
+	  m_InitialPulse = true;
+      m_GreaterThan = false;
+      m_GreaterThanOrEqualTo = false;
+      m_EqualTo = false;
+      m_LessThanOrEqualTo = false;
+      m_LessThan = false;
+	  currentValue = A;
+
+    }
 }

@@ -83,5 +83,18 @@ public class uScriptCon_IntCounter : uScriptLogic
       {
          m_LessThan = true;
       }
-   }
+	}
+		
+    public void Reset(int A, int B, [FriendlyName("Current Value")] out int currentValue)
+    {
+	  m_InitialPulse = true;
+      m_GreaterThan = false;
+      m_GreaterThanOrEqualTo = false;
+      m_EqualTo = false;
+      m_LessThanOrEqualTo = false;
+      m_LessThan = false;
+	  currentValue = A;
+
+    }
+	
 }
