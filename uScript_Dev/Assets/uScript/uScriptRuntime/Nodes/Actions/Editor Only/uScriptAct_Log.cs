@@ -18,22 +18,14 @@ public class uScriptAct_Log : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In([SocketState(false, false)] string Prefix, object[] Target, [SocketState(false, false)] string Postfix)
+   public void In([SocketState(false, false)] object Prefix, object[] Target, [SocketState(false, false)] object Postfix)
    {
-      if (string.IsNullOrEmpty(Prefix) && string.IsNullOrEmpty(Postfix))
+      foreach (object currentTarget in Target)
       {
-         foreach (object currentTarget in Target)
-         {
-            Debug.Log(currentTarget + "\n");
-         }
+         Debug.Log(( (Prefix == null ? string.Empty : Prefix.ToString())
+                     + currentTarget.ToString()
+                     + (Postfix == null ? string.Empty : Postfix.ToString())
+                     + "\n" ));
       }
-      else
-      {
-         foreach (object currentTarget in Target)
-         {
-            Debug.Log((Prefix + currentTarget.ToString() + Postfix + "\n"));
-         }
-      }
-
    }
 }
