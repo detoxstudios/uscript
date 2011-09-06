@@ -504,6 +504,7 @@ namespace Detox.ScriptEditor
             DeclareNamespaces( );
             AddCSharpLine( "" );
 
+            AddCSharpLine( "[NodePath(\"Graphs\")]" );
             BeginLogicClass( logicClassName );
             AddCSharpLine( "" );
 
@@ -3229,6 +3230,10 @@ namespace Detox.ScriptEditor
          s = s.Replace( "\\", "\\\\" );
          //escape quotes
          s = s.Replace( "\"", "\\\"");
+         //newline
+         s = s.Replace( "\n", "\\n");
+         //carriage return
+         s = s.Replace( "\r", "\\r");
       
          return s;
       }

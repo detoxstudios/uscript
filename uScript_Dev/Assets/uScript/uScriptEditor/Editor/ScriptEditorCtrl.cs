@@ -2262,7 +2262,7 @@ namespace Detox.ScriptEditor
       private void BuildAddMenu(ToolStripMenuItem addMenu, Hashtable typeHash)
       {
          string sceneMenu = (typeHash == null
-                             ? "Scene (" + System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene) + ")"
+                             ? "Reflected (" + System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene) + ")"
                              : "Place <other>");
 
          //
@@ -2404,7 +2404,7 @@ namespace Detox.ScriptEditor
             //if we care about types, and this type isn't registered, ignore it
             if ( null != typeHash && false == typeHash.Contains(node.Type) ) continue;
 
-            string categoryName = uScript.FindNodePath(sceneMenu + "/Logic", node.Type);
+            string categoryName = uScript.FindNodePath(sceneMenu + "/Actions", node.Type);
 
             string friendlyName = node.FriendlyName;
             ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName);

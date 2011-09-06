@@ -4085,16 +4085,28 @@ public class uScript : EditorWindow
 
       foreach (RawScript rawScript in rawScripts)
       {
-         LogicNode logicNode = new LogicNode(rawScript.Type, rawScript.Type);
+         //omly use it if it exposes some type of external
+         if ( rawScript.ExternalParameters.Length > 0 ||
+              rawScript.ExternalInputs.Length     > 0 ||
+              rawScript.ExternalOutputs.Length    > 0 ||
+              rawScript.ExternalEvents.Length     > 0
+            )
+         {
+            LogicNode logicNode = new LogicNode(rawScript.Type, rawScript.Type);
+   
+            logicNode.Parameters = rawScript.ExternalParameters;
+            logicNode.Inputs = rawScript.ExternalInputs;
+            logicNode.Outputs = rawScript.ExternalOutputs;
+            logicNode.Events = rawScript.ExternalEvents;
+            logicNode.Drivens = rawScript.Drivens;
+            logicNode.RequiredMethods = rawScript.RequiredMethods;
 
-         logicNode.Parameters = rawScript.ExternalParameters;
-         logicNode.Inputs = rawScript.ExternalInputs;
-         logicNode.Outputs = rawScript.ExternalOutputs;
-         logicNode.Events = rawScript.ExternalEvents;
-         logicNode.Drivens = rawScript.Drivens;
-         logicNode.RequiredMethods = rawScript.RequiredMethods;
-
-         returnNodes[rawScript.Type] = logicNode;
+            returnNodes[rawScript.Type] = logicNode;
+         }
+         else
+         {
+            returnNodes.Remove( rawScript.Type );
+         }
       }
 
       return returnNodes.Values.ToArray();
