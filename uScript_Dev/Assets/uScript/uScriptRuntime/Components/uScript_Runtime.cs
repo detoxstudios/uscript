@@ -70,6 +70,14 @@ public class AssetPathField : Attribute
    }
 }
 
+[AttributeUsage(AttributeTargets.Parameter)]
+public class RequiresLink : Attribute
+{
+   public RequiresLink() 
+   {
+   }
+}
+
 [AttributeUsage(AttributeTargets.All)]
 public class FriendlyName : Attribute
 {

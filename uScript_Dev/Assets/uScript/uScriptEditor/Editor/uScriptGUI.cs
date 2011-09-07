@@ -405,6 +405,15 @@ public static class uScriptGUI
       return value;
    }
 
+   public static void BlankField(string label, string text, ref bool isSocketExposed, bool isLocked)
+   {
+      BeginRow(label, ref isSocketExposed, isLocked, true);
+
+      GUI.SetNextControlName(label);
+      EditorGUILayout.TextField(text, GUILayout.Width(_columnValue.Width));
+
+      EndRow("");
+   }
 
    public static UnityEngine.Color ColorField(string label, Color value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {

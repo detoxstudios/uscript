@@ -86,13 +86,11 @@ namespace Detox.ScriptEditor
       public bool IsHidden( )  { return 0 != (State & VisibleState.Hidden); }
       public bool IsLocked( )  { return 0 != (State & VisibleState.Locked); }
 
-      public object DefaultAsObject
+      public object DefaultAsKnownObject
       {
-         //hardcoded mappings to/from property grid types
-         //this should be stored in a mapping file
-         get 
-         { 
-            string type = uScriptConfig.Variable.FriendlyName(Type);
+         get
+         {
+          string type = uScriptConfig.Variable.FriendlyName(Type);
 
             //Arrays (lists) can't be set through a property grid, only through multiple links
             //which means we never worry about our Default value being an array
@@ -217,7 +215,9 @@ namespace Detox.ScriptEditor
             {
                return Default;
             }
+           
             System.Type eType = uScript.MasterComponent.GetType(this.Type);
+   
             if (eType == null)
             {
                eType = uScript.MasterComponent.GetAssemblyQualifiedType(this.Type);
@@ -226,6 +226,7 @@ namespace Detox.ScriptEditor
                   uScript.MasterComponent.AddType(eType);
                }
             }
+            
             if ( eType != null && typeof(System.Enum).IsAssignableFrom(eType) )
             {
                try
@@ -238,8 +239,21 @@ namespace Detox.ScriptEditor
                }
             }
 
-            // should never get here - this is to satisfy the compiler ;)
-            return Default;
+            return null;
+         }
+      }
+
+      public object DefaultAsObject
+      {
+         //hardcoded mappings to/from property grid types
+         //this should be stored in a mapping file
+         get 
+         { 
+            object v = DefaultAsKnownObject;
+            //if we don't know it then just return it as a string
+            if ( null == v ) v = Default;
+
+            return v;
          }
          set
          {

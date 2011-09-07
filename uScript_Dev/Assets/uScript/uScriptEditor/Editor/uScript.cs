@@ -89,6 +89,7 @@ public class uScript : EditorWindow
    private Detox.FlowChart.Node m_FocusedNode = null;
 
    public static Hashtable m_NodeParameterFields = new Hashtable( );
+   public static Hashtable m_RequiresLink = new Hashtable( );
    static public Preferences Preferences = new Preferences();
    static private AppFrameworkData m_AppData = new AppFrameworkData();
    static private bool m_SettingsLoaded = false;
@@ -3995,6 +3996,8 @@ public class uScript : EditorWindow
                variable.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
                AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
+               AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
+
                MasterComponent.AddType(p.ParameterType);
 
                variables.Add(variable);
@@ -4183,6 +4186,7 @@ public class uScript : EditorWindow
             parameter.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
             AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
+            AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
             MasterComponent.AddType(p.ParameterType);
 
             parameters.Add(parameter);
@@ -4244,6 +4248,7 @@ public class uScript : EditorWindow
                input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
 
                AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
+               AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
                MasterComponent.AddType(p.PropertyType);
 
                eventInputsOutpus.Add(input);
@@ -4631,6 +4636,14 @@ public class uScript : EditorWindow
       return AssetType.Invalid;
    }
 
+   public static bool GetRequiresLink(EntityNode node, string parameterName)
+   {
+      string type = ScriptEditor.FindNodeType(node);
+      string key  = type + "_" + parameterName;
+
+      return m_RequiresLink.Contains(key);
+   }
+
    public static void AddAssetPathField(string type, string parameterName, object []attributes)
    {
       foreach (object a in attributes)
@@ -4641,6 +4654,19 @@ public class uScript : EditorWindow
             string key = type + "_" + parameterName;
 
             m_NodeParameterFields[ key ] = field.AssetType;         
+            break;
+         }
+      }
+   }
+
+   public static void AddRequiresLink(string type, string parameterName, object []attributes)
+   {
+      foreach (object a in attributes)
+      {
+         if (a is RequiresLink)
+         {
+            string key = type + "_" + parameterName;
+            m_RequiresLink[ key ] = true;         
             break;
          }
       }
