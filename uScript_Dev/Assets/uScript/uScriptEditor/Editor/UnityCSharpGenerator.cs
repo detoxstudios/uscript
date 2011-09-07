@@ -894,6 +894,10 @@ namespace Detox.ScriptEditor
          {
             return "new UnityEngine.Ray( )";
          }
+         else if ( "UnityEngine.JointDrive" == type )
+         {
+            return "new UnityEngine.JointDrive( )";
+         }
          else if ( "UnityEngine.RaycastHit" == type )
          {
             return "new UnityEngine.RaycastHit( )";

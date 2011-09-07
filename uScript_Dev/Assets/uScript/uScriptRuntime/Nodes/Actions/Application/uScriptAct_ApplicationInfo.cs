@@ -80,10 +80,12 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       [SocketState(false, false)]
       out SystemLanguage systemLanguage,
 
+      //allow for 3_4 and higher
+#if !UNITY_3_2 && !UNITY_3_3
       // "internetReachability", "Returns internet reachability status."
       [SocketState(false, false)]
       out NetworkReachability internetReachability,
-
+#endif
       // "webSecurityEnabled", "Indicates whether Unity's webplayer security model is enabled."
       [SocketState(false, false)]
       out bool webSecurityEnabled,
@@ -95,7 +97,7 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       // "runInBackground", "Returns the application background play state."
       [SocketState(false, false)]
       out bool runInBackground,
-
+      
       // "targetFrameRate", "Returns the frame rate the game is instructed to use. The value is the ideal frame rate and may not reflect the actual frame rate."
       [SocketState(false, false)]
       out int targetFrameRate,
@@ -128,7 +130,11 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       unityVersion = Application.unityVersion;
       systemLanguage = Application.systemLanguage;
 
-      internetReachability = Application.internetReachability;
+      //allow for 3_4 and higher
+      #if !UNITY_3_2 && !UNITY_3_3
+            internetReachability = Application.internetReachability;
+      #endif
+
       webSecurityEnabled = Application.webSecurityEnabled;
       webSecurityHostUrl = Application.webSecurityHostUrl;
 
