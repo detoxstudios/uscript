@@ -31,7 +31,7 @@ using System.Collections;
                  "\n\nWindow Shake Y (out): Vertical window movement delta."
                  )]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Input_Events")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Managed_Input_Events")]
 
 [FriendlyName("Managed Input Events")]
 public class uScript_ManagedInput : uScriptEvent
