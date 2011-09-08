@@ -1028,11 +1028,25 @@ namespace System.Drawing
       {
          if (styleName.Contains("comment"))
          {
-            // Comments
-            //UnityEngine.Color NormalColor = GUI.color;
-            //GUI.color = new UnityEngine.Color(.52f, .64f, 0.8f, 1f);
-            GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), nodeName, uScriptConfig.Style.Get(styleName));
-            //GUI.color = NormalColor;
+            // This code will set the colors for each comment node when drawn on the canvas.
+			
+			// Grab the "norml" color and store it.
+            UnityEngine.Color NormalColor = GUI.color;
+				
+			// Set the comment's node color.
+            //GUI.color = CommentNodeColor;
+				
+			// Set the comment Title text color.
+			GUIStyle commentStyle = uScriptConfig.Style.Get(styleName);
+			commentStyle.fontSize = 12;
+			//commentStyle.normal.textColor = CommentTitleTextColor;
+			
+			// Set the comment Body text color.
+			// I think the comment body text is it's own control drawn elsewhere, so I am am not sure how/where to set it.
+			
+            GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), nodeName, commentStyle); //uScriptConfig.Style.Get(styleName));
+				//Debug.Log("Style: " + styleName);
+            GUI.color = NormalColor;
 
          }
          else
