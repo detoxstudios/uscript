@@ -321,14 +321,14 @@ namespace System.Windows.Forms
                         {
                            //if we know what it is allow them to type a string
                            //if we don't (because it's some new data type) then blank it out and require a link
-                           if ( null != p.DefaultAsKnownObject )
+                           //if ( null != p.DefaultAsKnownObject )
                            {
                               val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
                            }
-                           else
-                           {
-                              uScriptGUI.BlankField(p.FriendlyName, "Requires Link", ref isSocketExposed, isLocked);
-                           }
+                           //else
+                           //{
+                           //   uScriptGUI.BlankField(p.FriendlyName, "Requires Link", ref isSocketExposed, isLocked);
+                           //}
                         }
                      }
                      else
