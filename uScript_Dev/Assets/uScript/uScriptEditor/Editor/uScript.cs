@@ -457,7 +457,7 @@ public class uScript : EditorWindow
 
 
 
-      uScriptGUIPanelReference.Instance.hotNodeControl = _hotNodeControl;
+      uScriptGUIPanelReference.Instance.hotSelection = _hotSelection;
 
 
       // Because Unity has an awesome GUI system, the mouse dragging is detected
@@ -1954,7 +1954,7 @@ public class uScript : EditorWindow
                {
                   if (Event.current.type == EventType.Repaint)
                   {
-                     _hotNodeControl = null;
+                     _hotSelection = null;
                   }
 
                   foreach (PaletteMenuItem item in _paletteMenuItems)
@@ -2514,7 +2514,7 @@ public class uScript : EditorWindow
             if (rect.Contains(Event.current.mousePosition))
             {
 //               Debug.Log(_guiPanelPalette_Width.ToString() + ", " + rect.width.ToString() + "\n");
-               _hotNodeControl = item.Tag as EntityNode;
+               _hotSelection = item.Tag as EntityNode;
             }
          }
       }
@@ -2524,7 +2524,7 @@ public class uScript : EditorWindow
 
 
 
-   EntityNode _hotNodeControl = null;
+   EntityNode _hotSelection = null;
 
 
 
@@ -5024,7 +5024,7 @@ public class uScript : EditorWindow
       return "";
    }
 
-   public static string FindNodeHelp(string type, DisplayNode node)
+   public static string FindNodeHelp(string type, EntityNode node)
    {
       // check non-logic, non-event types first...
       // structs can't have attributes, so we have to specify this information here, explicitly

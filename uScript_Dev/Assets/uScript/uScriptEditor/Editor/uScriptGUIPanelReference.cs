@@ -25,7 +25,11 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
    //
    // Members specific to this panel class
    //
-   public EntityNode hotNodeControl = null;
+   private string currentNodeClassName = string.Empty;
+   private string currentNodeClassPath = string.Empty;
+
+   private EntityNode _hotSelection = null;
+   public EntityNode hotSelection { set { _hotSelection = value; } }
 
 
    //
@@ -45,9 +49,6 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       //
    }
 
-   string helpNodeClassName = string.Empty;
-   string helpNodeClassPath = string.Empty;
-
    public override void Draw()
    {
       //
@@ -63,94 +64,64 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
 
       // Setup the strings for the button
-      string helpDescription     = "Select a node on the canvas to view usage and behavior information.";
-      string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
-      string helpButtonURL       = "http://www.uscript.net/docs/";
+      string helpButtonTooltip   = string.Empty;
+      string helpButtonURL       = string.Empty;
 
-      GUIStyle helpDescriptionStyle = uScriptGUIStyle.panelMessage;
+      string nodeType            = string.Empty;
 
-      DisplayNode dn = null;
+      EntityNode node = null;
 
-      if (hotNodeControl != null)
+
+      // Hot node selection has priority.  If the mouse isn't hovering over a node in the Node Palette,
+      // use the current node selection to determine the contents of the panel.
+
+      // Setup the toolbar buttons
+      if (_hotSelection != null)
       {
-         string nodeType = ScriptEditor.FindNodeType(hotNodeControl);
-         if (string.IsNullOrEmpty(nodeType))
-         {
-            // other node types...
-            if (hotNodeControl is CommentNode)
-            {
-               nodeType = "CommentNode";
-            }
-            else if (hotNodeControl is ExternalConnection)
-            {
-               nodeType = "ExternalConnection";
-            }
-            else if (hotNodeControl is OwnerConnection)
-            {
-               nodeType = "OwnerConnection";
-            }
-            else if (hotNodeControl is LocalNode)
-            {
-               nodeType = "LocalNode";
-            }
-         }
+         node = _hotSelection;
+         nodeType = GetNodeType(node);
+
+         currentNodeClassName = string.Empty;
+         currentNodeClassPath = string.Empty;
          helpButtonURL = string.Empty;
-         helpDescription = "HOT TIP:\n\n" + uScript.FindNodeDescription(nodeType, hotNodeControl);
          helpButtonTooltip = string.Empty;
-
-         helpDescriptionStyle = uScriptGUIStyle.referenceText;
-         helpNodeClassName = string.Empty;
-         helpNodeClassPath = string.Empty;
       }
-      else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
+      else
       {
-         helpDescription = "Help cannot be provided when multiple nodes are selected.";
-         helpDescriptionStyle = uScriptGUIStyle.panelMessage;
-         helpNodeClassName = string.Empty;
-         helpNodeClassPath = string.Empty;
-      }
-      else if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
-      {
-         dn = m_ScriptEditorCtrl.SelectedNodes[0];
-         if (dn != null)
+         if (m_ScriptEditorCtrl.SelectedNodes.Length != 1)
          {
-            string nodeType = ScriptEditor.FindNodeType(dn.EntityNode);
-            if (string.IsNullOrEmpty(nodeType))
-            {
-               // other node types...
-               if (dn.EntityNode is CommentNode)
-               {
-                  nodeType = "CommentNode";
-               }
-               else if (dn.EntityNode is ExternalConnection)
-               {
-                  nodeType = "ExternalConnection";
-               }
-               else if (dn.EntityNode is OwnerConnection)
-               {
-                  nodeType = "OwnerConnection";
-               }
-               else if (dn.EntityNode is LocalNode)
-               {
-                  nodeType = "LocalNode";
-               }
-            }
-            helpButtonURL = uScript.FindNodeHelp(nodeType, dn);
-            helpDescription = uScript.FindNodeDescription(nodeType, dn.EntityNode);
-            helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
+            currentNodeClassName = string.Empty;
+            currentNodeClassPath = string.Empty;
+            helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
+            helpButtonURL       = "http://www.uscript.net/docs/";
+         }
+         else
+         {
+            node = m_ScriptEditorCtrl.SelectedNodes[0].EntityNode;
 
-            helpDescriptionStyle = uScriptGUIStyle.referenceText;
-
-            string className = ScriptEditor.FindNodeType(dn.EntityNode);
-            if (className != helpNodeClassName)
+            if (node != null)
             {
-               helpNodeClassName = className;
-               helpNodeClassPath = GetClassPath();
+               nodeType = GetNodeType(node);
+
+               string newNodeClassName = ScriptEditor.FindNodeType(node);
+               if (newNodeClassName != currentNodeClassName)
+               {
+                  currentNodeClassName = newNodeClassName;
+                  currentNodeClassPath = GetClassPath(newNodeClassName);
+               }
+
+               helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
+               helpButtonURL = uScript.FindNodeHelp(GetNodeType(node), node);
             }
          }
+
+         helpButtonTooltip += " (" + helpButtonURL + ")";
       }
 
-      helpButtonTooltip += " (" + helpButtonURL + ")";
+
+
+
+
 
 //      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, _options);
       EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
@@ -162,11 +133,11 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          {
             GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 
-            uScriptGUI.enabled = (string.IsNullOrEmpty(helpNodeClassPath) == false);
+            uScriptGUI.enabled = (string.IsNullOrEmpty(currentNodeClassPath) == false);
 
             if (GUILayout.Button(uScriptGUIContent.toolbarButtonSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               UnityEngine.Object obj = Resources.LoadAssetAtPath(helpNodeClassPath, typeof(TextAsset));
+               UnityEngine.Object obj = Resources.LoadAssetAtPath(currentNodeClassPath, typeof(TextAsset));
                if (obj != null)
                {
                   int instanceID = obj.GetInstanceID();
@@ -174,7 +145,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                }
                else
                {
-                  Debug.Log("File not found: " + helpNodeClassPath + "\n");
+                  Debug.Log("File not found: " + currentNodeClassPath + "\n");
                }
             }
 
@@ -186,7 +157,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                Help.BrowseURL(helpButtonURL);
             }
 
-            uScriptGUI.enabled = hotNodeControl == null;
+            uScriptGUI.enabled = (_hotSelection == null);
 
             if (GUILayout.Button(uScriptGUIContent.toolbarButtonOnlineForum, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
@@ -216,6 +187,95 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                      GUILayout.Box("SELECTED NODE IS DEPRECATED: UPDATE OR REPLACE", uScriptGUIStyle.panelMessageError);
                   }
                }
+
+               if (node == null)
+               {
+                  GUILayout.Label( (m_ScriptEditorCtrl.SelectedNodes.Length == 0
+                                    ? "Select a node on the canvas to view usage and behavior information."
+                                    : "Help cannot be provided when multiple nodes are selected."
+                                    ), uScriptGUIStyle.panelMessage);
+               }
+               else
+               {
+                  DrawReferenceContent(node, nodeType, _hotSelection != null);
+               }
+            }
+            EditorGUILayout.EndScrollView();
+         }
+      }
+      EditorGUILayout.EndVertical();
+
+//      uScriptGUI.DefineRegion(uScriptGUI.Region.Reference);
+      uScriptInstance.SetMouseRegion( uScript.MouseRegion.Reference );
+   }
+
+
+   //
+   // This method can be expensive, so call it sparingly
+   //
+   string GetClassPath(string newName)
+   {
+      if (string.IsNullOrEmpty(newName) == false)
+      {
+         // Find the associated class file
+         string startPath = Application.dataPath;
+         string[] exts = new string[] { ".cs", ".js", ".boo" };
+
+         foreach (string ext in exts)
+         {
+            string[] files = Directory.GetFiles(startPath, newName + ext, SearchOption.AllDirectories);
+            if (files.Length == 1)
+            {
+               return files[0].Remove(0, startPath.Length - 6);
+            }
+         }
+      }
+
+      return string.Empty;
+   }
+
+
+   //
+   //
+   //
+   string GetNodeType(EntityNode node)
+   {
+      string nodeType = ScriptEditor.FindNodeType(node);
+      if (string.IsNullOrEmpty(nodeType))
+      {
+         // other node types...
+         if (node is CommentNode)
+         {
+            nodeType = "CommentNode";
+         }
+         else if (node is ExternalConnection)
+         {
+            nodeType = "ExternalConnection";
+         }
+         else if (node is OwnerConnection)
+         {
+            nodeType = "OwnerConnection";
+         }
+         else if (node is LocalNode)
+         {
+            nodeType = "LocalNode";
+         }
+      }
+      return nodeType;
+   }
+
+
+   //
+   // Draws all the GUI controls necessary to display the reference information
+   //
+   void DrawReferenceContent(EntityNode node, string nodeType, bool isHotSelection)
+   {
+      if (isHotSelection)
+      {
+         GUILayout.Label("HOT TIP:", EditorStyles.boldLabel);
+      }
+
+      GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceText);
 
 
 //               // Node name and palette location
@@ -271,47 +331,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 //               }
 //               GUILayout.EndHorizontal();
 
-
-
-               // prevent the help TextArea from getting focus
-//               GUI.SetNextControlName("helpTextArea");
-               GUILayout.Label(helpDescription, helpDescriptionStyle);
-//               if (GUI.GetNameOfFocusedControl() == "helpTextArea")
-//               {
-//                  GUIUtility.keyboardControl = 0;
-//               }
-            }
-            EditorGUILayout.EndScrollView();
-         }
-      }
-      EditorGUILayout.EndVertical();
-
-//      uScriptGUI.DefineRegion(uScriptGUI.Region.Reference);
-      uScriptInstance.SetMouseRegion( uScript.MouseRegion.Reference );
    }
-
-
-   string GetClassPath()
-   {
-      if (string.IsNullOrEmpty(helpNodeClassName) == false)
-      {
-         // Find the associated class file
-         string startPath = Application.dataPath;
-         string[] exts = new string[] { ".cs", ".js", ".boo" };
-
-         foreach (string ext in exts)
-         {
-            string[] files = Directory.GetFiles(startPath, helpNodeClassName + ext, SearchOption.AllDirectories);
-            if (files.Length == 1)
-            {
-               return files[0].Remove(0, startPath.Length - 6);
-            }
-         }
-      }
-
-      return string.Empty;
-   }
-
 
 
 
