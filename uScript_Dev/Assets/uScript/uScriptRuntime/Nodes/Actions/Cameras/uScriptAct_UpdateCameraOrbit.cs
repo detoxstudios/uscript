@@ -42,7 +42,7 @@ public class uScriptAct_UpdateCameraOrbit : uScriptLogic
 
                   Vector2 Movement,
 
-                  [DefaultValue( new float[]{ 2f, 2f } ) ]
+                  [DefaultValue(typeof(Vector2), new float[]{ 2f, 2f })]
                   Vector2 Speed,
 
                   [FriendlyName("Constrain Angles")]
