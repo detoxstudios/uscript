@@ -17,13 +17,11 @@ using System.Collections;
              "\n\nCamera: The camera that will orbit around the target." +
              "\n\nTarget: The vector in world space. To target a GameObject, pass its position property." +
              "\n\nDistance: The camera's distance from the target." +
-             "\n\nxSpeed: Horizontal rotation speed." +
-             "\n\nySpeed: Vertical rotation speed." +
-             "\n\nxOffset: Horizontal rotation offset." +
-             "\n\nyOffset: Vertical rotation offset." +
+             "\n\nMovement: Horizontal and vertical rotation movement." +
+             "\n\nSpeed: Horizontal and Vertical rotation speed." +
              "\n\nConstrainAngles: Should the rotation be constrained to a range of angles?" +
-             "\n\nxAngleRange: The horizontal rotation range where X must be less than or equal to Y." +
-             "\n\nyAngleRange: The vertical rotation range where X must be less than or equal to Y.")]
+             "\n\nHorizontal Range: The horizontal rotation range where X must be less than or equal to Y." +
+             "\n\nVertical Range: The vertical rotation range where X must be less than or equal to Y.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Update_Camera_Orbit")]
 
@@ -38,32 +36,38 @@ public class uScriptAct_UpdateCameraOrbit : uScriptLogic
    public void In(
                   Camera Camera,
                   Vector3 Target,
-                  float Distance,
-                  float xSpeed,
-                  float ySpeed,
-                  float xOffset,
-                  float yOffset,
 
+                  [DefaultValue(5), SocketState(false, false)]
+                  float Distance,
+
+                  Vector2 Movement,
+
+                  [DefaultValue( new float[]{ 2f, 2f } ) ]
+                  Vector2 Speed,
+
+                  [FriendlyName("Constrain Angles")]
                   [SocketState(false, false)]
                   bool ConstrainAngles,
 
+                  [FriendlyName("Horizontal Range")]
                   [SocketState(false, false)]
-                  Vector2 xAngleRange,
+                  Vector2 HorizontalRange,
 
+                  [FriendlyName("Vertical Range")]
                   [SocketState(false, false)]
-                  Vector2 yAngleRange
+                  Vector2 VerticalRange
                  )
    {
-      x += xOffset * xSpeed * Distance;
-      y -= yOffset * ySpeed * Distance;
+      x += Movement.x * Speed.x * Distance;
+      y -= Movement.y * Speed.y * Distance;
 
       if (ConstrainAngles)
       {
-         if (xAngleRange.x <= xAngleRange.y) x = Mathf.Max(x, xAngleRange.x);
-         if (xAngleRange.y >= xAngleRange.x) x = Mathf.Min(x, xAngleRange.y);
+         if (HorizontalRange.x <= HorizontalRange.y) x = Mathf.Max(x, HorizontalRange.x);
+         if (HorizontalRange.y >= HorizontalRange.x) x = Mathf.Min(x, HorizontalRange.y);
 
-         if (yAngleRange.x <= yAngleRange.y) y = Mathf.Max(y, yAngleRange.x);
-         if (yAngleRange.y >= yAngleRange.x) y = Mathf.Min(y, yAngleRange.y);
+         if (VerticalRange.x <= VerticalRange.y) y = Mathf.Max(y, VerticalRange.x);
+         if (VerticalRange.y >= VerticalRange.x) y = Mathf.Min(y, VerticalRange.y);
       }
 
       Quaternion rotation = Quaternion.Euler(y, x, 0);
