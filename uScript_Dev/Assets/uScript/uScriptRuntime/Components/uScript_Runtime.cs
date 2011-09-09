@@ -42,8 +42,17 @@ public class uScriptRuntimeConfig
 [AttributeUsage(AttributeTargets.ReturnValue | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
 public class DefaultValue : Attribute
 {
-   public DefaultValue(object o) { Default = o; }
    public object Default;
+
+   public DefaultValue(object o) { Default = o; }
+
+   public DefaultValue(float[] f)
+   {
+      if (f.Length == 2) Default = new Vector2(f[0], f[1]);
+      else if (f.Length == 3) Default = new Vector3(f[0], f[1], f[2]);
+      else if (f.Length == 4) Default = new Vector4(f[0], f[1], f[2], f[3]);
+      else Debug.LogError("Unhandled DefaultValue float[] length: " + f.Length.ToString() + "\n");
+   }
 }
 
 [AttributeUsage(AttributeTargets.ReturnValue | AttributeTargets.Parameter | AttributeTargets.Property)]
