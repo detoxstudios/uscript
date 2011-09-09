@@ -17,7 +17,7 @@ using System.Collections;
                   "Tool Tip: The tool tip to display when the label is being hovered over.\n\n" +
                   "GUI Style: The name of a custom GUI style to use when displaying this box.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Label")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Box")]
 
 [FriendlyName("GUI Box")]
 public class uScriptAct_GUIBox : uScriptLogic
