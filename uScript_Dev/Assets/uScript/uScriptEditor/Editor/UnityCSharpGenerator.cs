@@ -42,6 +42,7 @@ namespace Detox.ScriptEditor
          CreateGlobalVariables( );
          CreateBidirectionalLinks( );
          PruneUnusedNodes( );
+         RemoveOverriddenInstances( );
       }
 
       //short cut method to figure out just the external links/parameters
@@ -294,6 +295,36 @@ namespace Detox.ScriptEditor
             }
          }
       }
+
+      private void RemoveOverriddenInstances( )
+      {
+         //first prune out any nodes which don't have valid instances
+         EntityNode []nodes = m_Script.EntityNodes;
+
+         foreach ( EntityNode entityNode in nodes )
+         {
+            //if it doesn't need an instance, don't worry about finding one
+            if ( false == entityNode is EntityProperty &&
+                 false == entityNode is EntityEvent &&
+                 false == entityNode is EntityMethod ) continue;
+
+
+            //no instance? then don't worry about it
+            if ( entityNode.Instance.Default == "" ) continue;
+
+            //how about an instance linked to it?
+            LinkNode []instanceLinks = FindLinksByDestination( entityNode.Guid, entityNode.Instance.Name );
+            
+            if ( instanceLinks.Length > 0 )
+            {
+               Parameter p = entityNode.Instance;
+               p.Default = "";
+               entityNode.Instance = p;
+               m_Script.AddNode( entityNode );
+            }
+         }
+      }
+
 
       private bool FindLink(Guid sourceGuid, string sourceAnchor, Guid destGuid, string destAnchor, out LinkNode outNode)
       {
