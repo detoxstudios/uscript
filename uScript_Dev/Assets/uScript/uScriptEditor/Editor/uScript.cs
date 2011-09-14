@@ -3409,6 +3409,8 @@ public class uScript : EditorWindow
                                         "It may not be compatible with this scene or run correctly if edited while this scene is open.", "OK");
          }
 
+         //reset zoom we're not in some weird zoom state
+         ResetZoom( );
 
          UnityEditor.Undo.ClearUndo(MasterComponent);
 
