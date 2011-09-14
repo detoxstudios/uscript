@@ -413,12 +413,7 @@ public class AssetBrowserWindow : EditorWindow
             {
                if (GUILayout.Button(_assetSelection[i], _styleAssetPingButton))
                {
-                  Object obj = Resources.LoadAssetAtPath("Assets/" + _assetSelection[i], _type);
-                  if (obj != null)
-                  {
-                     int instanceID = obj.GetInstanceID();
-                     EditorGUIUtility.PingObject(instanceID);
-                  }
+                  uScriptGUI.PingObject("Assets/" + _assetSelection[i], _type);
                }
             }
          }

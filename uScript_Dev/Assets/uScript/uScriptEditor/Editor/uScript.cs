@@ -1872,7 +1872,7 @@ public class uScript : EditorWindow
             {
                // Toggle hierarchy foldouts
                bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
-                                                      (_paletteFoldoutToggle ? uScriptGUIContent.toolbarButtonCollapse : uScriptGUIContent.toolbarButtonExpand),
+                                                      (_paletteFoldoutToggle ? uScriptGUIContent.buttonListCollapse : uScriptGUIContent.buttonListExpand),
                                                       uScriptGUIStyle.paletteToolbarButton,
                                                       GUILayout.ExpandWidth(false));
                if (_paletteFoldoutToggle != newToggleState)
@@ -2187,7 +2187,7 @@ public class uScript : EditorWindow
                                     {
                                        if ( true == m_ScriptEditorCtrl.ScriptEditor.CanUpgradeNode(dn.EntityNode) )
                                        {
-                                          if (GUILayout.Button(uScriptGUIContent.listMiniUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+                                          if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
                                           {
                                              System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
                                              if (Click != null)
@@ -2202,7 +2202,7 @@ public class uScript : EditorWindow
                                        }
                                        else
                                        {
-                                          if (GUILayout.Button(uScriptGUIContent.listMiniDeleteMissing, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+                                          if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
                                           {
                                              System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
                                              if (Click != null)
@@ -2217,7 +2217,7 @@ public class uScript : EditorWindow
                                        }
                                     }
 
-                                    if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
+                                    if (GUILayout.Button(uScriptGUIContent.buttonNodeFind, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
                                     {
                                        uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
                                     }
@@ -2587,31 +2587,31 @@ public class uScript : EditorWindow
 
    void DrawFileMenuWindow(int windowID)
    {
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonNew, uScriptGUIStyle.menuDropDownButton))
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptNew, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_New();
       }
       DrawMenuItemShortcut("N");
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonOpen, uScriptGUIStyle.menuDropDownButton))
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptOpen, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_Open();
       }
       DrawMenuItemShortcut("O");
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonSave, uScriptGUIStyle.menuDropDownButton))
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_Save();
       }
       DrawMenuItemShortcut("S");
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonSaveAs, uScriptGUIStyle.menuDropDownButton))
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveAs, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_SaveAs();
       }
       DrawMenuItemShortcut("A");
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonQuickSave, uScriptGUIStyle.menuDropDownButton))
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptQuickSave, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_QuickSave();
       }
@@ -2619,12 +2619,12 @@ public class uScript : EditorWindow
 
       uScriptGUI.HR();
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonRebuildAll, uScriptGUIStyle.menuDropDownButton))
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptsRebuildAll, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_RebuildAll();
       }
 
-      if (GUILayout.Button(uScriptGUIContent.toolbarButtonRemoveGenerated, uScriptGUIStyle.menuDropDownButton))
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptsRemoveGenerated, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_Clean();
       }
@@ -2720,7 +2720,7 @@ public class uScript : EditorWindow
                rectFileMenuWindow.y = rectFileMenuButton.y + rectFileMenuButton.height;
             }
 
-            if (GUILayout.Button(uScriptGUIContent.toolbarButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(uScriptGUIContent.buttonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                PreferenceWindow.Init();
             }

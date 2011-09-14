@@ -221,7 +221,7 @@ public static class uScriptGUI
          {
             if ( true == m_ScriptEditorCtrl.ScriptEditor.CanUpgradeNode(((DisplayNode)node).EntityNode) )
             {
-               if (GUILayout.Button(uScriptGUIContent.listMiniUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+               if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
                {
                   System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
                   if (Click != null)
@@ -236,7 +236,7 @@ public static class uScriptGUI
             }
             else
             {
-               if (GUILayout.Button(uScriptGUIContent.listMiniDeleteMissing, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+               if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
                {
                   System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
                   if (Click != null)
@@ -263,7 +263,7 @@ public static class uScriptGUI
          //
          // Search button
          //
-         if (GUILayout.Button(uScriptGUIContent.listMiniSearch, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
+         if (GUILayout.Button(uScriptGUIContent.buttonNodeFind, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
          {
             m_ScriptEditorCtrl.CenterOnNode(node);
          }
@@ -1272,9 +1272,24 @@ public static class uScriptGUI
    }
 
 
+   public static void PingObject(string path, Type type)
+   {
+      UnityEngine.Object obj = Resources.LoadAssetAtPath(path, type);
+      if (obj != null)
+      {
+         int instanceID = obj.GetInstanceID();
+         EditorGUIUtility.PingObject(instanceID);
+      }
+      else
+      {
+         Debug.Log("File not found:\t" + path + "\n");
+      }
+   }
 
-
-
+   public static void PingGeneratedScript(string scriptName)
+   {
+      PingObject(uScript.Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6) + "/" + scriptName + ".cs", typeof(TextAsset));
+   }
 
 
 

@@ -11,123 +11,107 @@ public static class uScriptGUIContent
 {
    static string _currentSkin = string.Empty;
 
-   private static GUIContent _toolbarButtonNew;
-   public static GUIContent toolbarButtonNew
-   {
-      get { return _toolbarButtonNew; }
-   }
 
-   private static GUIContent _toolbarButtonOpen;
-   public static GUIContent toolbarButtonOpen
-   {
-      get { return _toolbarButtonOpen; }
-   }
+   private static GUIContent _buttonListCollapse;
+   public static GUIContent buttonListCollapse { get { return _buttonListCollapse; } }
 
-   private static GUIContent _toolbarButtonSave;
-   public static GUIContent toolbarButtonSave
-   {
-      get { return _toolbarButtonSave; }
-   }
+   private static GUIContent _buttonListExpand;
+   public static GUIContent buttonListExpand { get { return _buttonListExpand; } }
 
-   private static GUIContent _toolbarButtonSaveAs;
-   public static GUIContent toolbarButtonSaveAs
-   {
-      get { return _toolbarButtonSaveAs; }
-   }
+   private static GUIContent _buttonNodeDeleteMissing;
+   public static GUIContent buttonNodeDeleteMissing { get { return _buttonNodeDeleteMissing; } }
 
-   private static GUIContent _toolbarButtonQuickSave;
-   public static GUIContent toolbarButtonQuickSave
-   {
-      get { return _toolbarButtonQuickSave; }
-   }
+   private static GUIContent _buttonNodeFind;
+   public static GUIContent buttonNodeFind { get { return _buttonNodeFind; } }
 
-   private static GUIContent _toolbarButtonRebuildAll;
-   public static GUIContent toolbarButtonRebuildAll
-   {
-      get { return _toolbarButtonRebuildAll; }
-   }
+   private static GUIContent _buttonNodeSource;
+   public static GUIContent buttonNodeSource { get { return _buttonNodeSource; } }
 
-   private static GUIContent _toolbarButtonRemoveGenerated;
-   public static GUIContent toolbarButtonRemoveGenerated
-   {
-      get { return _toolbarButtonRemoveGenerated; }
-   }
+   private static GUIContent _buttonNodeToggle;
+   public static GUIContent buttonNodeToggle { get { return _buttonNodeToggle; } }
 
-   private static GUIContent _toolbarButtonPreferences;
-   public static GUIContent toolbarButtonPreferences
-   {
-      get { return _toolbarButtonPreferences; }
-   }
+   private static GUIContent _buttonNodeUpgrade;
+   public static GUIContent buttonNodeUpgrade { get { return _buttonNodeUpgrade; } }
 
-   private static GUIContent _toolbarButtonCollapse;
-   public static GUIContent toolbarButtonCollapse
-   {
-      get { return _toolbarButtonCollapse; }
-   }
+   private static GUIContent _buttonPreferences;
+   public static GUIContent buttonPreferences { get { return _buttonPreferences; } }
 
-   private static GUIContent _toolbarButtonExpand;
-   public static GUIContent toolbarButtonExpand
-   {
-      get { return _toolbarButtonExpand; }
-   }
+   private static GUIContent _buttonScriptLoad;
+   public static GUIContent buttonScriptLoad { get { return _buttonScriptLoad; } }
 
-   private static GUIContent _toolbarButtonSource;
-   public static GUIContent toolbarButtonSource
-   {
-      get { return _toolbarButtonSource; }
-   }
+   private static GUIContent _buttonScriptNew;
+   public static GUIContent buttonScriptNew { get { return _buttonScriptNew; } }
 
-   private static GUIContent _toolbarButtonOnlineForum;
-   public static GUIContent toolbarButtonOnlineForum
-   {
-      get { return _toolbarButtonOnlineForum; }
-   }
+   private static GUIContent _buttonScriptOpen;
+   public static GUIContent buttonScriptOpen { get { return _buttonScriptOpen; } }
 
-   private static GUIContent _toolbarButtonOnlineReference;
-   public static GUIContent toolbarButtonOnlineReference
-   {
-      get { return _toolbarButtonOnlineReference; }
-   }
+   private static GUIContent _buttonScriptQuickSave;
+   public static GUIContent buttonScriptQuickSave { get { return _buttonScriptQuickSave; } }
 
-   private static GUIContent _listMiniSearch;
-   public static GUIContent listMiniSearch
-   {
-      get { return _listMiniSearch; }
-   }
+   private static GUIContent _buttonScriptReload;
+   public static GUIContent buttonScriptReload { get { return _buttonScriptReload; } }
 
-   private static GUIContent _listMiniToggle;
-   public static GUIContent listMiniToggle
-   {
-      get { return _listMiniToggle; }
-   }
+   private static GUIContent _buttonScriptSave;
+   public static GUIContent buttonScriptSave { get { return _buttonScriptSave; } }
 
-   private static GUIContent _listMiniUpgrade;
-   public static GUIContent listMiniUpgrade
-   {
-      get { return _listMiniUpgrade; }
-   }
+   private static GUIContent _buttonScriptSaveAs;
+   public static GUIContent buttonScriptSaveAs { get { return _buttonScriptSaveAs; } }
 
-   private static GUIContent _listMiniDeleteMissing;
-   public static GUIContent listMiniDeleteMissing
-   {
-      get { return _listMiniDeleteMissing; }
-   }
+   private static GUIContent _buttonScriptSource;
+   public static GUIContent buttonScriptSource { get { return _buttonScriptSource; } }
 
+   private static GUIContent _buttonScriptsRebuildAll;
+   public static GUIContent buttonScriptsRebuildAll { get { return _buttonScriptsRebuildAll; } }
 
+   private static GUIContent _buttonScriptsRemoveGenerated;
+   public static GUIContent buttonScriptsRemoveGenerated { get { return _buttonScriptsRemoveGenerated; } }
 
+   private static GUIContent _buttonWebDocumentation;
+   public static GUIContent buttonWebDocumentation { get { return _buttonWebDocumentation; } }
 
-   static Texture2D _texture_toolbarButtonCollapse = null;
-   static Texture2D _texture_toolbarButtonExpand = null;
-   static Texture2D _texture_listMiniSearch = null;
-   static Texture2D _texture_listMiniToggle = null;
-   static Texture2D _texture_listMiniUpgrade = null;
-   static Texture2D _texture_listMiniDeleteMissing = null;
+   private static GUIContent _buttonWebForum;
+   public static GUIContent buttonWebForum { get { return _buttonWebForum; } }
 
 
 
 
    public static void Init ()
    {
+      if (_buttonScriptNew != null)
+      {
+         // The content has already been initialized
+         return;
+      }
+
+      // create the objects
+      _buttonListCollapse           = new GUIContent(string.Empty,            "Collapse all node categories.");
+      _buttonListExpand             = new GUIContent(string.Empty,            "Expand all node categories.");
+
+      _buttonNodeDeleteMissing      = new GUIContent(string.Empty,            "Delete this missing node.");
+      _buttonNodeFind               = new GUIContent(string.Empty,            "Center the canvas on this node.");
+      _buttonNodeSource             = new GUIContent("Source",                "Ping the source file associated with this node.");
+      _buttonNodeToggle             = new GUIContent(string.Empty,            "Toggle socket visibility on this node (Show All or Hide Unused).");
+      _buttonNodeUpgrade            = new GUIContent(string.Empty,            "Upgrade this deprecated node.");
+
+      _buttonPreferences            = new GUIContent("Preferences...",        "Opens the preferences.");
+
+      _buttonScriptLoad             = new GUIContent("Load",                  "Load this uScript.");
+      _buttonScriptNew              = new GUIContent("New",                   "Create a new uScript. The active uScript will be closed automatically.");
+      _buttonScriptOpen             = new GUIContent("Open...",               "Open a uScript using the file browser.");
+      _buttonScriptQuickSave        = new GUIContent("Quick Save",            "Save the current uScript without generating code.");
+      _buttonScriptReload           = new GUIContent("Reload",                "Reload this uScript.");
+      _buttonScriptSave             = new GUIContent("Save",                  "Save this uScript.");
+      _buttonScriptSaveAs           = new GUIContent("Save As...",            "Save the current uScript using the file browser.");
+      _buttonScriptSource           = new GUIContent("Source",                "Ping the source file associated with this uScript.");
+
+      _buttonScriptsRebuildAll      = new GUIContent("Rebuild All uScripts",  "Rebuild all uScripts in the scene.");
+      _buttonScriptsRemoveGenerated = new GUIContent("Remove Generated Code", "Removes all code generated by uScript.");
+
+      _buttonWebDocumentation       = new GUIContent("Online Reference",      "Open the online uScript reference in the default web browser.");
+      _buttonWebForum               = new GUIContent("Forum",                 "Open the online forum in the default web browser.");
+
+
+      // add images to the GUIContent objects
       if (_currentSkin != GUI.skin.name)
       {
          // the skin has been changed
@@ -136,44 +120,17 @@ public static class uScriptGUIContent
          // reload all custom GUI textures to match the new skin
          string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + _currentSkin + "_";
 
-         _texture_toolbarButtonCollapse = AssetDatabase.LoadAssetAtPath(skinPath + "iconCollapse.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         _texture_toolbarButtonExpand = AssetDatabase.LoadAssetAtPath(skinPath + "iconExpand.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         _texture_listMiniSearch = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         _texture_listMiniToggle = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniToggle.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         _texture_listMiniUpgrade = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniUpgrade.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         _texture_listMiniDeleteMissing = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniDelete.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-
-         // icons only
-         _toolbarButtonCollapse = new GUIContent(_texture_toolbarButtonCollapse, "Collapse all node categories.");
-         _toolbarButtonExpand = new GUIContent(_texture_toolbarButtonExpand, "Expand all node categories.");
-
-         _listMiniSearch = new GUIContent(_texture_listMiniSearch, "Center the canvas on this node.");
-         _listMiniToggle = new GUIContent(_texture_listMiniToggle, "Toggle socket visibility on this node (Show All or Hide Unused).");
-         _listMiniUpgrade = new GUIContent(_texture_listMiniUpgrade, "Upgrade this deprecated node.");
-         _listMiniDeleteMissing = new GUIContent(_texture_listMiniDeleteMissing, "Delete this missing node.");
+         _buttonListCollapse.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconCollapse.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         _buttonListExpand.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconExpand.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         _buttonNodeFind.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         _buttonNodeToggle.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniToggle.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         _buttonNodeUpgrade.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniUpgrade.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         _buttonNodeDeleteMissing.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniDelete.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
       }
-      else if (_toolbarButtonNew != null)
-      {
-         // The content has already been initialized
-         return;
-      }
-
-      // text only
-      _toolbarButtonNew = new GUIContent("New", "Create a new uScript. The active uScript will be closed automatically.");
-      _toolbarButtonOpen = new GUIContent("Open...", "Open a uScript using the file browser.");
-      _toolbarButtonSave = new GUIContent("Save", "Save the current uScript.");
-      _toolbarButtonSaveAs = new GUIContent("Save As...", "Save the current uScript using the file browser.");
-      _toolbarButtonQuickSave = new GUIContent("Quick Save", "Save the current uScript without generating code.");
-      _toolbarButtonRebuildAll = new GUIContent("Rebuild All uScripts", "Rebuild all uScripts in the scene.");
-      _toolbarButtonRemoveGenerated = new GUIContent("Remove Generated Code", "Removes all code generated by uScript.");
-      _toolbarButtonPreferences = new GUIContent("Preferences...", "Opens the preferences.");
-      _toolbarButtonSource = new GUIContent("Source", "Ping the source file associated with this node.");
-      _toolbarButtonOnlineForum = new GUIContent("Forum", "Open the online forum in the default web browser.");
-      _toolbarButtonOnlineReference = new GUIContent("Online Reference", "Open the online uScript reference in the default web browser.");
    }
 
    public static void ChangeTooltip (string tooltip)
    {
-      _toolbarButtonOnlineReference.tooltip = tooltip;
+      _buttonWebDocumentation.tooltip = tooltip;
    }
 }

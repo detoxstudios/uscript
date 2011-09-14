@@ -135,31 +135,22 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
             uScriptGUI.enabled = (string.IsNullOrEmpty(currentNodeClassPath) == false);
 
-            if (GUILayout.Button(uScriptGUIContent.toolbarButtonSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(uScriptGUIContent.buttonNodeSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               UnityEngine.Object obj = Resources.LoadAssetAtPath(currentNodeClassPath, typeof(TextAsset));
-               if (obj != null)
-               {
-                  int instanceID = obj.GetInstanceID();
-                  EditorGUIUtility.PingObject(instanceID);
-               }
-               else
-               {
-                  Debug.Log("File not found: " + currentNodeClassPath + "\n");
-               }
+               uScriptGUI.PingObject(currentNodeClassPath, typeof(TextAsset));
             }
 
             uScriptGUI.enabled = (string.IsNullOrEmpty(helpButtonURL) == false);
 
             uScriptGUIContent.ChangeTooltip(helpButtonTooltip);
-            if ( GUILayout.Button( uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if ( GUILayout.Button( uScriptGUIContent.buttonWebDocumentation, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
             {
                Help.BrowseURL(helpButtonURL);
             }
 
             uScriptGUI.enabled = (_hotSelection == null);
 
-            if (GUILayout.Button(uScriptGUIContent.toolbarButtonOnlineForum, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(uScriptGUIContent.buttonWebForum, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                Help.BrowseURL("http://uscript.net/forum");
             }
