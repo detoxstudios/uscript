@@ -3392,7 +3392,44 @@ namespace Detox.ScriptEditor
          return name + "_" + GetGuidId(node.Guid);
       }
 
+      //we can't query unity base classes for possibly external connection
+      //name ocnflicts because unity uses reflection to call and not true base calsses
+      //so i have a manual list here of methods which are external inputs should not be called
+      private string RemoveReflectionConflicts( string methodName )
+      {
+         if ( methodName == "OnDestroy" )   return "_" + methodName;
+         if ( methodName == "OnDisable" )   return "_" + methodName;
+         if ( methodName == "OnEnable" )    return "_" + methodName;
+         if ( methodName == "Start" )       return "_" + methodName;
+         if ( methodName == "Update" )      return "_" + methodName;
+         if ( methodName == "LateUpdate" )  return "_" + methodName;
+         if ( methodName == "FixedUpdate" ) return "_" + methodName;
+         if ( methodName == "OnGUI" )       return "_" + methodName;
+         if ( methodName == "Awake" )       return "_" + methodName;
+
+         return methodName;
+      }
+
       private Plug CSharpExternalInputDeclaration(string defaultName)
+      {
+         Plug plug;
+
+         plug.FriendlyName = defaultName;
+         
+         //use friendlyname as external name
+         //so the name stays the same even if they reorder the nodes
+         //this prevents links from breaking in the parent scripts
+         string methodName = MakeSyntaxSafe(plug.FriendlyName);
+
+         //make sure it doesn't conflict with any known unity reflected calls
+         methodName = RemoveReflectionConflicts( methodName );
+
+         plug.Name = methodName;
+
+         return plug;
+      }
+
+      private Plug CSharpExternalParameterDeclaration(string defaultName)
       {
          Plug plug;
 
@@ -3406,24 +3443,12 @@ namespace Detox.ScriptEditor
          return plug;
       }
 
-      private Plug CSharpExternalParameterDeclaration(string defaultName)
-      {
-         Plug plug;
-
-         plug.FriendlyName = defaultName;
-         //use friendlyname as external name
-         //so the name stays the same even if they reorder the nodes
-         //this prevents links from breaking in the parent scripts
-         plug.Name = MakeSyntaxSafe(plug.FriendlyName);
-
-         return plug;
-      }
-
       private Plug CSharpExternalOutputPropertyDeclaration(string defaultName)
       {
          Plug plug;
 
          plug.FriendlyName = defaultName;
+
          //use friendlyname as external name
          //so the name stays the same even if they reorder the nodes
          //this prevents links from breaking in the parent scripts
