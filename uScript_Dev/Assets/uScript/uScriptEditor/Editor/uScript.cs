@@ -3303,21 +3303,23 @@ public class uScript : EditorWindow
          if (m_MouseDownRegion == MouseRegion.HandleCanvas)
          {
             _guiPanelProperties_Height -= deltaY;
+            Repaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandlePalette)
          {
             _guiPanelPalette_Width += deltaX;
+            Repaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandleProperties)
          {
             _guiPanelProperties_Width += deltaX;
+            Repaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandleReference)
          {
             _guiPanelSequence_Width -= deltaX;
+            Repaint();
          }
-
-//         Repaint();
       }
    }
 
