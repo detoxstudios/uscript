@@ -99,6 +99,8 @@ public class uScript : EditorWindow
    private double clickTime;
    //   private double doubleClickTime = 0.3;
 
+   bool _wasHierarchyChanged = false;
+
    private bool m_CanvasDragging = false;
    public bool wasCanvasDragged = false;
 
@@ -558,6 +560,12 @@ public class uScript : EditorWindow
          }
       }
 
+      if (_wasHierarchyChanged)
+      {
+         _wasHierarchyChanged = false;
+         rebuildScript = true;
+      }
+
       if (null == m_ScriptEditorCtrl || true == rebuildScript)
       {
          if (null == m_ScriptEditorCtrl)
@@ -682,7 +690,6 @@ public class uScript : EditorWindow
          m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 
          m_ScriptEditorCtrl.BuildContextMenu();
-
          BuildPaletteMenu(null, null);
 
          Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
@@ -725,6 +732,7 @@ public class uScript : EditorWindow
             }
             // reset menu offset
             m_ScriptEditorCtrl.BuildContextMenu();
+            BuildPaletteMenu(null, null);
          }
          m_RefreshTimestamp = -1.0;
       }
@@ -908,6 +916,12 @@ public class uScript : EditorWindow
             Debug.Log("Context menu selection had no event handler.\n");
          }
       }
+   }
+
+
+   void OnHierarchyChange()
+   {
+      _wasHierarchyChanged = true;
    }
 
 
@@ -1227,8 +1241,7 @@ public class uScript : EditorWindow
                if ( UnityVersion < 3.4f )
                {
                   m_ScriptEditorCtrl.BuildContextMenu();
-
-//                  BuildPaletteMenu(null, null);
+                  BuildPaletteMenu(null, null);
 
                   m_ContextX = (int)e.mousePosition.x;
                   m_ContextY = (int)(e.mousePosition.y - _canvasRect.yMin);
@@ -1239,7 +1252,6 @@ public class uScript : EditorWindow
                else
                {
                   m_ScriptEditorCtrl.BuildContextMenu();
-
                   BuildCanvasContextMenu(null, null);
 
                   _canvasContextMenu.ShowAsContext();
