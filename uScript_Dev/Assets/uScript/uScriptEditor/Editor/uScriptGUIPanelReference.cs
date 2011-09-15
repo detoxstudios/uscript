@@ -107,7 +107,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                if (newNodeClassName != currentNodeClassName)
                {
                   currentNodeClassName = newNodeClassName;
-                  currentNodeClassPath = GetClassPath(newNodeClassName);
+//                  currentNodeClassPath = GetClassPath(newNodeClassName);
                }
 
                helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
@@ -133,10 +133,14 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          {
             GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 
-            uScriptGUI.enabled = (string.IsNullOrEmpty(currentNodeClassPath) == false);
+//            uScriptGUI.enabled = (string.IsNullOrEmpty(currentNodeClassPath) == false);
 
             if (GUILayout.Button(uScriptGUIContent.buttonNodeSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
+               // BEGIN TEMP
+               currentNodeClassPath = GetClassPath(currentNodeClassName);
+               // END TEMP
+
                uScriptGUI.PingObject(currentNodeClassPath, typeof(TextAsset));
             }
 
