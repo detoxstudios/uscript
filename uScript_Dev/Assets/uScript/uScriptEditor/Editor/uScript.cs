@@ -926,6 +926,7 @@ public class uScript : EditorWindow
    void OnHierarchyChange()
    {
       _wasHierarchyChanged = true;
+//      _paletteFilterText = string.Empty;
    }
 
 
@@ -2458,7 +2459,7 @@ public class uScript : EditorWindow
          GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
          tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (item.Indent * 12), 0, 0, 0);
 
-         _paletteMenuItemFoldout[item.Path] = GUILayout.Toggle(_paletteMenuItemFoldout[item.Path], item.Path, tmpStyle);
+         _paletteMenuItemFoldout[item.Path] = GUILayout.Toggle(_paletteMenuItemFoldout[item.Path], item.Name, tmpStyle);
          if (_paletteMenuItemFoldout[item.Path])
          {
             foreach (PaletteMenuItem subitem in item.Items)
