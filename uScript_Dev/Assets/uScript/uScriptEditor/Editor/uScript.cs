@@ -32,7 +32,7 @@ public class uScript : EditorWindow
    private List<ZoomLink> m_ZoomLinks = null;
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string uScriptBuild { get { return "0.9.1254"; } }
+   public string uScriptBuild { get { return "0.9.1256"; } }
    static string BetaVersion { get { return "Retail Beta 3"; } }
    public string FullVersionName { get { return BetaVersion + " (" + uScriptBuild + ")"; } }
    public string LastUnityBuild { get { return "3.3"; } }
