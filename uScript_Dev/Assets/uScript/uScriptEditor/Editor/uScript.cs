@@ -166,11 +166,15 @@ public class uScript : EditorWindow
    {
       public String Name;
       public String Tooltip;
-      public System.EventHandler Click;
+      public string Path;
       public List<PaletteMenuItem> Items;
-      public bool Expanded;
+      public System.EventHandler Click;
       public bool Hidden;
       public int Indent;
+
+//      public bool Expanded;
+//      public Rect Position;
+//      public string ID;
 
       public void OnClick()
       {
@@ -690,7 +694,7 @@ public class uScript : EditorWindow
          m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 
          m_ScriptEditorCtrl.BuildContextMenu();
-         BuildPaletteMenu(null, null);
+         BuildPaletteMenu(null, null, string.Empty);
 
          Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
@@ -732,7 +736,7 @@ public class uScript : EditorWindow
             }
             // reset menu offset
             m_ScriptEditorCtrl.BuildContextMenu();
-            BuildPaletteMenu(null, null);
+            BuildPaletteMenu(null, null, string.Empty);
          }
          m_RefreshTimestamp = -1.0;
       }
@@ -1241,7 +1245,7 @@ public class uScript : EditorWindow
                if ( UnityVersion < 3.4f )
                {
                   m_ScriptEditorCtrl.BuildContextMenu();
-                  BuildPaletteMenu(null, null);
+                  BuildPaletteMenu(null, null, string.Empty);
 
                   m_ContextX = (int)e.mousePosition.x;
                   m_ContextY = (int)(e.mousePosition.y - _canvasRect.yMin);
@@ -1890,14 +1894,7 @@ public class uScript : EditorWindow
                if (_paletteFoldoutToggle != newToggleState)
                {
                   _paletteFoldoutToggle = newToggleState;
-                  if (_paletteFoldoutToggle)
-                  {
-                     ExpandPaletteMenuItem(null);
-                  }
-                  else
-                  {
-                     CollapsePaletteMenuItem(null);
-                  }
+                  ExpandPaletteMenuItemFoldouts(_paletteFoldoutToggle);
                }
 
                GUI.SetNextControlName("FilterSearch");
@@ -2317,51 +2314,18 @@ public class uScript : EditorWindow
    }
 
 
-   private void ExpandPaletteMenuItem(PaletteMenuItem paletteMenuItem)
-   {
-      if (paletteMenuItem == null)
-      {
-         foreach (PaletteMenuItem item in _paletteMenuItems)
-         {
-            ExpandPaletteMenuItem(item);
-         }
-      }
-      else if (paletteMenuItem.Items != null && paletteMenuItem.Items.Count > 0)
-      {
-         paletteMenuItem.Expanded = true;
-         foreach (PaletteMenuItem item in paletteMenuItem.Items)
-         {
-            if (item == null)
-            {
-               uScriptDebug.Log(paletteMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
-               return;
-            }
-            ExpandPaletteMenuItem(item);
-         }
-      }
-   }
+   private static Dictionary<string, bool> _paletteMenuItemFoldout = new Dictionary<string, bool>();
 
-   private void CollapsePaletteMenuItem(PaletteMenuItem paletteMenuItem)
+
+   //
+   // Use recursion to set all menu item foldouts in the node palette
+   //
+   private void ExpandPaletteMenuItemFoldouts(bool state)
    {
-      if (paletteMenuItem == null)
+      string[] keys = _paletteMenuItemFoldout.Keys.ToArray();
+      foreach (string key in keys)
       {
-         foreach (PaletteMenuItem item in _paletteMenuItems)
-         {
-            CollapsePaletteMenuItem(item);
-         }
-      }
-      else if (paletteMenuItem.Items != null && paletteMenuItem.Items.Count > 0)
-      {
-         paletteMenuItem.Expanded = false;
-         foreach (PaletteMenuItem item in paletteMenuItem.Items)
-         {
-            if (item == null)
-            {
-               uScriptDebug.Log(paletteMenuItem.Name + " has a null child!\n", uScriptDebug.Type.Error);
-               return;
-            }
-            CollapsePaletteMenuItem(item);
-         }
+         _paletteMenuItemFoldout[key] = state;
       }
    }
 
@@ -2373,6 +2337,7 @@ public class uScript : EditorWindow
          item.Hidden = FilterPaletteMenuItem(item, false);
       }
    }
+
 
    private bool FilterPaletteMenuItem(PaletteMenuItem paletteMenuItem, bool shouldForceVisible)
    {
@@ -2410,7 +2375,10 @@ public class uScript : EditorWindow
    }
 
 
-   private void BuildPaletteMenu(ToolStripItem contextMenuItem, PaletteMenuItem paletteMenuItem)
+
+
+
+   private void BuildPaletteMenu(ToolStripItem contextMenuItem, PaletteMenuItem paletteMenuItem, string paletteMenuItemParent)
    {
       if (contextMenuItem == null || paletteMenuItem == null)
       {
@@ -2428,7 +2396,7 @@ public class uScript : EditorWindow
                   PaletteMenuItem paletteItem = new PaletteMenuItem();
                   paletteItem.Indent = 0;
 
-                  BuildPaletteMenu(subitem, paletteItem);
+                  BuildPaletteMenu(subitem, paletteItem, string.Empty);
 
                   _paletteMenuItems.Add(paletteItem);
                }
@@ -2439,8 +2407,15 @@ public class uScript : EditorWindow
       {
          if ((contextMenuItem is ToolStripMenuItem) && ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items.Count > 0)
          {
+            // This is a foldout
             paletteMenuItem.Name = contextMenuItem.Text.Replace("...", "");
+            paletteMenuItem.Path = (string.IsNullOrEmpty(paletteMenuItemParent) ? string.Empty : paletteMenuItemParent + "/") + paletteMenuItem.Name;
             paletteMenuItem.Items = new List<PaletteMenuItem>();
+
+            if (_paletteMenuItemFoldout.ContainsKey(paletteMenuItem.Path) == false)
+            {
+               _paletteMenuItemFoldout.Add(paletteMenuItem.Path, false);
+            }
 
             foreach (ToolStripItem item in ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items)
             {
@@ -2451,12 +2426,13 @@ public class uScript : EditorWindow
                   uScriptDebug.Log("Trying to pass a null parameter to BuildPaletteMenu()!\n", uScriptDebug.Type.Error);
                   return;
                }
-               BuildPaletteMenu(item, newItem);
+               BuildPaletteMenu(item, newItem, paletteMenuItem.Path);
                paletteMenuItem.Items.Add(newItem);
             }
          }
          else
          {
+            // This is a menu item
             paletteMenuItem.Name = contextMenuItem.Text.Replace("&", "");
             paletteMenuItem.Tooltip = FindNodeToolTip(ScriptEditor.FindNodeType(contextMenuItem.Tag as EntityNode));
             paletteMenuItem.Click = contextMenuItem.Click;
@@ -2482,8 +2458,8 @@ public class uScript : EditorWindow
          GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
          tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (item.Indent * 12), 0, 0, 0);
 
-         item.Expanded = GUILayout.Toggle(item.Expanded, item.Name, tmpStyle);
-         if (item.Expanded)
+         _paletteMenuItemFoldout[item.Path] = GUILayout.Toggle(_paletteMenuItemFoldout[item.Path], item.Path, tmpStyle);
+         if (_paletteMenuItemFoldout[item.Path])
          {
             foreach (PaletteMenuItem subitem in item.Items)
             {
@@ -3398,7 +3374,7 @@ public class uScript : EditorWindow
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 
       m_ScriptEditorCtrl.BuildContextMenu();
-      BuildPaletteMenu(null, null);
+      BuildPaletteMenu(null, null, string.Empty);
 
       m_FullPath = "";
 
