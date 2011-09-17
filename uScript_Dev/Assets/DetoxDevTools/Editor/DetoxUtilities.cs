@@ -25,9 +25,6 @@ public class DetoxUtilities : EditorWindow
 		GameObject new_uScript = new GameObject("_uScript");
 		new_uScript.transform.position = new Vector3(0f, 0f, 0f);
       new_uScript.AddComponent(typeof(uScript_MasterComponent));
-		new_uScript.AddComponent(typeof(uScript_Global));
-      new_uScript.AddComponent(typeof(uScript_Input));
-      new_uScript.AddComponent(typeof(uScript_Triggers));
       
       System.Type type = uScript.MasterComponent.GetAssemblyQualifiedType( "uScript_TestBed_Component" );
       if ( null != type )
@@ -48,7 +45,6 @@ public class DetoxUtilities : EditorWindow
 		BoxCollider newBoxCollider = new_Trigger.AddComponent(typeof(BoxCollider)) as BoxCollider;
 		newBoxCollider.size = new Vector3(6f, 3f, 2f);
 		newBoxCollider.isTrigger = true;
-		new_Trigger.AddComponent(typeof(uScript_Triggers));
 		new_Trigger.transform.parent = GameObject.Find("Trigger").transform;
 		new_Trigger.transform.position = new Vector3(0, 1.5f, 8.5f);
 		
