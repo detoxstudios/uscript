@@ -93,7 +93,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 //                  resourcePath = uScriptGUI.ResourcePathField(resourcePath, ref tmpBool, false, false);
 //                  assetPath = uScriptGUI.AssetPathField(assetType, assetPath, ref tmpBool, false, false);
 
-                  m_ScriptEditorCtrl.PropertyGrid.OnPaint();
+                  if (m_ScriptEditorCtrl != null) m_ScriptEditorCtrl.PropertyGrid.OnPaint();
                }
                uScriptGUI.EndColumns();
             }
