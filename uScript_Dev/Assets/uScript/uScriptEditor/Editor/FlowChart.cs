@@ -1745,8 +1745,6 @@ namespace Detox.FlowChart
             {
                UnityEngine.Color color = Handles.color;
 
-               GUIStyle style = uScriptConfig.Style.Get(StyleName);
-               
                Handles.color = uScriptConfig.GetStyleColor(StyleName);
 
                Handles.DrawSolidDisc(new Vector3(nodeRect.X + nodeRect.Width / 2, nodeRect.Y + nodeRect.Height / 2, 0), new Vector3(0, 0, -1), nodeRect.Width / 2.0f);

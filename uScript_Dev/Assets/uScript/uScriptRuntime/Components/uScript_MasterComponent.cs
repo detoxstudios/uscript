@@ -2,7 +2,7 @@
 // (C) 2011 Detox Studios LLC
 // Desc: The master uScript component. This class is also used as a data transport class between the uScript window and the uScriptBackgroundProcess.
 
-//#define PLE_BUILD
+#define PLE_BUILD
 
 using UnityEngine;
 using System;
@@ -61,8 +61,11 @@ public class uScript_MasterComponent : MonoBehaviour
    void OnGUI()
    {
       // Draw the PLE watermark
-      GUI.depth = 0;
-      GUI.DrawTexture(new Rect(16, 16, 256, 64), WatermarkTexture, ScaleMode.ScaleToFit, true);
+      if ( this.gameObject == LatestMaster )
+      {
+         GUI.depth = 0;
+         GUI.DrawTexture(new Rect(16, 16, 256, 64), WatermarkTexture, ScaleMode.ScaleToFit, true);
+      }
    }
 #endif
 
