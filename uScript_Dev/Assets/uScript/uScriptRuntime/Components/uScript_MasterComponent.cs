@@ -2,7 +2,7 @@
 // (C) 2011 Detox Studios LLC
 // Desc: The master uScript component. This class is also used as a data transport class between the uScript window and the uScriptBackgroundProcess.
 
-#define PLE_BUILD
+//#define PLE_BUILD
 
 using UnityEngine;
 using System;
