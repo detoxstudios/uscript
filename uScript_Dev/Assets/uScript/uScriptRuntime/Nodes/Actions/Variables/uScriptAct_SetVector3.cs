@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Variables")]
+[NodePath("Actions/Variables/Vector3")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the value of a Vector3 variable using the value of another Vector3 variable.")]

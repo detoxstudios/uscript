@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Variables")]
+[NodePath("Actions/Variables/Vector4")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a Vector4 to the defined X, Y, Z and W float component values.")]
