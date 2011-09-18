@@ -756,6 +756,34 @@ public partial class uScriptConfig
    public static float bezierPenWidth = 1.25f;
    public static float bezierPenWidthSelected = 1.5f;
 
+   public static UnityEngine.Color GetStyleColor(string style)
+   {
+      int index = 0;
+
+      foreach ( string s in VariableStyleTypes )
+      {
+         if ( s == style ) break;
+
+         index++;
+      }
+
+      if ( index == VariableStyleTypes.Length )
+      {
+         index = 0;
+
+         foreach ( string s in PropertyStyleTypes )
+         {
+            if ( s == style ) break;
+
+            index++;            
+         }
+
+         if( index == PropertyStyleTypes.Length ) index = 0;
+      }
+
+      return LineColors[ index ];
+   }
+
    public static String[] VariableStyleTypes = 
                                     {
                                        "variable_default",

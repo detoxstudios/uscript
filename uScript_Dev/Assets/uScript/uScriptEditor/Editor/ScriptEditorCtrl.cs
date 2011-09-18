@@ -409,8 +409,8 @@ namespace Detox.ScriptEditor
             Point point = node.PointToClient( Cursor.Position );
 
             if ( point.X >= 0 && point.Y >= 0 && 
-                 point.X <= node.Size.Width &&
-                 point.Y <= node.Size.Height )
+                 point.X <= node.ZoomSize.Width &&
+                 point.Y <= node.ZoomSize.Height )
             {      
                string type = ScriptEditor.FindNodeType(entityNode);
                Type t = uScript.MasterComponent.GetAssemblyQualifiedType(type);
@@ -496,8 +496,8 @@ namespace Detox.ScriptEditor
             Point point = node.PointToClient( Cursor.Position );
 
             if ( point.X >= 0 && point.Y >= 0 && 
-                 point.X <= node.Size.Width &&
-                 point.Y <= node.Size.Height )
+                 point.X <= node.ZoomSize.Width &&
+                 point.Y <= node.ZoomSize.Height )
             {
                string type = ScriptEditor.FindNodeType(entityNode);
                Type t = uScript.MasterComponent.GetAssemblyQualifiedType(type);
@@ -660,8 +660,8 @@ namespace Detox.ScriptEditor
             Point point = node.PointToClient( Cursor.Position );
 
             if ( point.X >= 0 && point.Y >= 0 && 
-                 point.X <= node.Size.Width &&
-                 point.Y <= node.Size.Height )
+                 point.X <= node.ZoomSize.Width &&
+                 point.Y <= node.ZoomSize.Height )
             {               
                return false;
             }
@@ -2826,7 +2826,7 @@ namespace Detox.ScriptEditor
                   TextPoint textPoint = new TextPoint( );
 
                   textPoint.Name = FormatName(socket);
-                  textPoint.X = (Size.Width - uScriptConfig.Style.RightShadow - size.Width) / 2;
+                  textPoint.X = (Size.Width  - uScriptConfig.Style.RightShadow - size.Width) / 2;
                   textPoint.Y = (Size.Height - uScriptConfig.Style.BottomShadow - size.Height) / 2;
                   textPoint.StyleName = "socket_text";
 
@@ -2869,12 +2869,15 @@ namespace Detox.ScriptEditor
       {
          UpdateStyleName();   // remove this later when we figure out why removing it doesn't initialize StyleName correctly
    
-         if (m_EntityNode.Comment != Parameter.Empty && !String.IsNullOrEmpty(m_EntityNode.Comment.Default))
+         if (1.0f == ZoomScale)
          {
-            String comment = m_EntityNode.Comment.Default;
-            Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
-         
-            e.Graphics.FillRectangle("title_comment", new Rectangle(location.X, location.Y, Size.Width, Size.Height), comment);
+            if (m_EntityNode.Comment != Parameter.Empty && !String.IsNullOrEmpty(m_EntityNode.Comment.Default))
+            {
+               String comment = m_EntityNode.Comment.Default;
+               Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
+            
+               e.Graphics.FillRectangle("title_comment", new Rectangle(location.X, location.Y, Size.Width, Size.Height), comment);
+            }
          }
 
          base.OnPaint( e );

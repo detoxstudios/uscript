@@ -15,22 +15,6 @@ using Detox.FlowChart;
 
 public class uScript : EditorWindow
 {
-   private struct ZoomNode
-   {
-      public Rect rect;
-      public DisplayNode node;
-   }
-
-   private struct ZoomLink
-   {
-      public Vector3 start;
-      public Vector3 end;
-      public Link link;
-   }
-
-   private List<ZoomNode> m_ZoomNodes = null;
-   private List<ZoomLink> m_ZoomLinks = null;
-
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
    public string uScriptBuild { get { return "0.9.1256"; } }
    static string BetaVersion { get { return "Retail Beta 3"; } }
@@ -76,7 +60,6 @@ public class uScript : EditorWindow
    private bool m_RebuildWhenReady = false;
 
    private float m_MapScale = 1.0f;
-   private float m_PrevMapScale = 1.0f;
    private Point m_ZoomPoint = new Point( 0, 0 );
 
    private String m_AddVariableNode = "";
@@ -1408,7 +1391,7 @@ public class uScript : EditorWindow
                }
                else if (e.keyCode == KeyCode.Alpha0)
                {
-                  ResetZoom( );
+                  m_MapScale = 1.0f;
                }
                else if (e.keyCode == KeyCode.Minus)
                {
@@ -1418,7 +1401,7 @@ public class uScript : EditorWindow
                {
                   m_MapScale = Mathf.Min(m_MapScale + 0.1f, 1.0f);
 
-                  if ( 1 == m_MapScale ) ResetZoom( );
+                  if ( 1 == m_MapScale ) m_MapScale = 1.0f;
                }
             }
 
@@ -1578,8 +1561,6 @@ public class uScript : EditorWindow
                if ( m_MapScale > 1 && newScale < 1 ) newScale = 1;
 
                m_MapScale = newScale;
-
-               if ( 1 == m_MapScale ) ResetZoom( );
 
 //               Debug.Log("SCROLLWHEEL: " + e.delta + "\n");
             }
@@ -2758,30 +2739,30 @@ public class uScript : EditorWindow
 
             _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, style, GUILayout.ExpandWidth(true));
             {
-               if (m_MapScale != 1.0f)
-               {
-                  MiniMapDraw();
-               }
-               else
-               {
-                  // Get the bounding area of all nodes on the canvas, plus 64px to
-                  // allow for 32px padding around the edges.  This will allow the
-                  // scrollbars to span the bounds accurately.
-                  //
-                  // For each dimension, use the larger of the bounding area and the
-                  // canvas mouseRegionRect.
-                  //
-                  // When zoom is implemented, make sure the results are accurately scaled
-                  //
-                  //            int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].width) : 0);
-                  //            int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].height-18) : 0);
-                  //
-                  //            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
+               // Get the bounding area of all nodes on the canvas, plus 64px to
+               // allow for 32px padding around the edges.  This will allow the
+               // scrollbars to span the bounds accurately.
+               //
+               // For each dimension, use the larger of the bounding area and the
+               // canvas mouseRegionRect.
+               //
+               // When zoom is implemented, make sure the results are accurately scaled
+               //
+               //            int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].width) : 0);
+               //            int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].height-18) : 0);
+               //
+               //            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
 
-                  // Paint the graph (nodes, sockets, links, and comments)
-                  PaintEventArgs args = new PaintEventArgs();
-                  args.Graphics = new System.Drawing.Graphics();
-                  if (m_ScriptEditorCtrl != null) m_ScriptEditorCtrl.GuiPaint(args);
+               // Paint the graph (nodes, sockets, links, and comments)
+               PaintEventArgs args = new PaintEventArgs();
+               args.Graphics = new System.Drawing.Graphics();
+
+               if (m_ScriptEditorCtrl != null) 
+               {
+                  m_ScriptEditorCtrl.FlowChart.Zoom      = m_MapScale;
+                  m_ScriptEditorCtrl.FlowChart.ZoomPoint = m_ZoomPoint;
+
+                  m_ScriptEditorCtrl.GuiPaint(args);
                }
             }
             EditorGUILayout.EndScrollView();
@@ -2798,301 +2779,6 @@ public class uScript : EditorWindow
       EditorGUILayout.EndVertical();
 
       SetMouseRegion(MouseRegion.Canvas);//, 3, 1, -2, -4 );
-   }
-
-   void ResetZoom( )
-   {
-      if ( m_ZoomNodes != null && m_ZoomNodes.Count > 0 )
-      {
-         float x = m_ZoomNodes[0].rect.x;
-         float y = m_ZoomNodes[0].rect.y;
-
-         //center around 0 in our window rect
-         x = x - m_ZoomPoint.X;
-         y = y - m_ZoomPoint.Y;
-
-         //scale our coords
-         x = x * 1.0f / m_PrevMapScale;
-         y = y * 1.0f / m_PrevMapScale;
-
-         //move back into canvas space
-         x = x + m_ZoomPoint.X;
-         y = y + m_ZoomPoint.Y;
-
-         Point newP = new Point( (int) x, (int) y );
-         Point oldP = m_ZoomNodes[0].node.Location;
-
-         m_ScriptEditorCtrl.FlowChart.JumpToPoint( new Point(newP.X - oldP.X, newP.Y - oldP.Y) );
-      }
-
-      m_ZoomNodes    = null;
-      m_ZoomLinks    = null;
-      m_PrevMapScale = 1.0f;
-      m_MapScale     = 1.0f;
-   }
-
-   void MiniMapDraw()
-   {   
-      float mapLeft = m_ScriptEditorCtrl.FlowChart.Location.X;
-      float mapTop  = m_ScriptEditorCtrl.FlowChart.Location.Y;
-
-      UnityEngine.Color normalColor = GUI.color;
-
-      //if the nodes haven't yet been copied to rescale and move with zooming
-      //then copy them now
-      if ( null == m_ZoomNodes )
-      {
-         m_ZoomNodes = new List<ZoomNode>( );
-
-         foreach (Node n in m_ScriptEditorCtrl.FlowChart.Nodes)
-         {
-            DisplayNode displayNode = n as DisplayNode;
-
-            float x = n.Location.X + mapLeft;
-            float y = n.Location.Y + mapTop;
-
-            Rect nodeRect = new Rect(x,
-                                     y,
-                                     n.Size.Width,
-                                     n.Size.Height);
-
-            ZoomNode zoomNode;
-            zoomNode.rect = nodeRect;
-            zoomNode.node = displayNode;
-
-            m_ZoomNodes.Add( zoomNode );
-         }
-      }
-      
-      //if the nodes haven't yet been copied to rescale and move with zooming
-      //then copy them now
-      if ( null == m_ZoomLinks )
-      {
-         m_ZoomLinks = new List<ZoomLink>( );
-
-         foreach (Link link in m_ScriptEditorCtrl.FlowChart.Links)
-         {
-            Handles.color = UnityEngine.Color.black;
-      
-            Node n = link.Source.Node;
-
-            float x = n.Location.X + mapLeft;
-            float y = n.Location.Y + mapTop;
-
-            x = x + (link.Source.Anchor.X / 100.0f) * (n.Size.Width  * m_MapScale);
-            y = y + (link.Source.Anchor.Y / 100.0f) * (n.Size.Height * m_MapScale);
-
-            Vector3 start = new Vector3( x, y, 0 );
-
-      
-            n = link.Destination.Node;
-
-            x = n.Location.X + mapLeft;
-            y = n.Location.Y + mapTop;
-
-            x = x + (link.Destination.Anchor.X / 100.0f) * (n.Size.Width  * m_MapScale);
-            y = y + (link.Destination.Anchor.Y / 100.0f) * (n.Size.Height * m_MapScale);
-
-            Vector3 end = new Vector3( x, y, 0 );
-
-            ZoomLink zoomLink;
-            zoomLink.link = link;
-            zoomLink.start = start;
-            zoomLink.end   = end;
-
-            m_ZoomLinks.Add( zoomLink );
-         }
-      }
-
-      //force panning if applicable
-      if ( true == m_ScriptEditorCtrl.FlowChart.InMoveMode )
-      {
-         m_ScriptEditorCtrl.FlowChart.MoveWithCursor( 1.0f / m_MapScale );
-      }
-
-      float panX  = m_ScriptEditorCtrl.FlowChart.Location.X - mapLeft;
-      float panY  = m_ScriptEditorCtrl.FlowChart.Location.Y - mapTop;
-
-      //determine relative scale
-      //for this iteration
-      float scale = 1.0f;
-
-      if ( m_MapScale != m_PrevMapScale )
-      {
-         scale = m_MapScale / m_PrevMapScale;
-         m_PrevMapScale = m_MapScale;
-      }
-
-      List<ZoomNode> newZoomNodes = new List<ZoomNode>( );
-
-      //update our special zoom display nodes with
-      //new positions
-      foreach (ZoomNode zoomNode in m_ZoomNodes)
-      {
-         DisplayNode displayNode = zoomNode.node;
-
-         float x = zoomNode.rect.x;
-         float y = zoomNode.rect.y;
-
-         //center around our zoomp point
-         x = x - m_ZoomPoint.X;
-         y = y - m_ZoomPoint.Y;
-
-         //scale our coords
-         x = x * scale;
-         y = y * scale;
-
-         //move back into canvas space
-         x = x + m_ZoomPoint.X;
-         y = y + m_ZoomPoint.Y;
-
-         Rect nodeRect = new Rect(x + panX,
-                                  y + panY,
-                                  zoomNode.rect.width * scale,
-                                  zoomNode.rect.height * scale);
-
-
-         ZoomNode z;
-         z.rect = nodeRect;
-         z.node = displayNode;
-
-         newZoomNodes.Add( z );
-      }
-
-      m_ZoomNodes = newZoomNodes;
-
-      List<ZoomLink> newZoomLinks = new List<ZoomLink>( );
-
-      //update our special zoom display nodes with
-      //new positions
-      foreach (ZoomLink link in m_ZoomLinks)
-      {
-         ZoomLink z = link;
-
-         float x = z.start.x;
-         float y = z.start.y;
-
-         //center around 0 in our window rect
-         x = x - m_ZoomPoint.X;
-         y = y - m_ZoomPoint.Y;
-
-         //scale our coords
-         x = x * scale;
-         y = y * scale;
-
-         //move back into canvas space
-         x = x + m_ZoomPoint.X;
-         y = y + m_ZoomPoint.Y;
-
-         z.start.x = x + panX;
-         z.start.y = y + panY;
-
-         x = z.end.x;
-         y = z.end.y;
-
-         //center around 0 in our window rect
-         x = x - m_ZoomPoint.X;
-         y = y - m_ZoomPoint.Y;
-
-         //scale our coords
-         x = x * scale;
-         y = y * scale;
-
-         //move back into canvas space
-         x = x + m_ZoomPoint.X;
-         y = y + m_ZoomPoint.Y;
-
-         z.end.x = x + panX;
-         z.end.y = y + panY;
-
-         newZoomLinks.Add( z );
-      }
-
-      m_ZoomLinks = newZoomLinks;
-
-      //now render our updated zoom links
-      foreach (ZoomLink link in m_ZoomLinks)
-      {
-         Handles.color = UnityEngine.Color.black;
-   
-         if ( link.link.Selected )
-         {
-            UnityEngine.Color handleColor = Handles.color;
-
-            Handles.color = UnityEngine.Color.yellow;
-
-            Handles.DrawLine(link.start, link.end);
-
-            Handles.color = handleColor;
-         }
-         else
-         {
-            Handles.DrawLine(link.start, link.end);
-         }
-      }
-      
-      //now render our updated zoom nodes
-      foreach (ZoomNode zoomNode in m_ZoomNodes)
-      {
-         DisplayNode displayNode = zoomNode.node;
-         Rect nodeRect = zoomNode.rect;
-
-         //cull offscreen nodes
-         if ( nodeRect.xMax < 0 ||
-              nodeRect.xMin > m_NodeWindowRect.width ||
-              nodeRect.yMax < 0 ||
-              nodeRect.yMin > m_NodeWindowRect.height 
-            )
-         {
-            continue;
-         }
-
-         // Style the node by type
-         GUIStyle tmpNodeStyle = new GUIStyle(GUI.skin.box);
-         
-         UnityEngine.Color nodeTextGrey = new UnityEngine.Color(0.737f, 0.737f, 0.737f);
-         
-         if ( displayNode.Selected )
-         {
-            GUI.color = UnityEngine.Color.yellow;
-         }
-         
-         if (displayNode is EntityEventDisplayNode)
-         {
-            tmpNodeStyle.normal.background = uScriptConfig.nodeEventTexture;
-            tmpNodeStyle.normal.textColor = nodeTextGrey;
-            GUI.Box(nodeRect, displayNode.Name, tmpNodeStyle);
-         }
-         else if (displayNode is LogicNodeDisplayNode)
-         {
-            tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
-            tmpNodeStyle.normal.textColor = nodeTextGrey;
-            GUI.Box(nodeRect, displayNode.Name, tmpNodeStyle);
-         }
-         else if (displayNode is LocalNodeDisplayNode)
-         {
-            tmpNodeStyle.normal.background = uScriptConfig.nodeVariableTexture;
-            tmpNodeStyle.normal.textColor = nodeTextGrey;
-            GUI.Box(nodeRect, displayNode.Name, tmpNodeStyle);
-         }
-         else if (displayNode is CommentDisplayNode)
-         {
-            //tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
-            GUI.color = UnityEngine.Color.cyan;
-            GUI.Box(nodeRect, displayNode.Name, tmpNodeStyle);
-            GUI.color = normalColor;
-         }
-         else
-         {
-            tmpNodeStyle.normal.background = uScriptConfig.nodeDefaultTexture;
-            GUI.Box(nodeRect, displayNode.Name, tmpNodeStyle);
-         }
-
-         if ( displayNode.Selected )
-         {
-            GUI.color = normalColor;
-         }
-      }
    }
 
 
@@ -3401,7 +3087,7 @@ public class uScript : EditorWindow
          }
 
          //reset zoom we're not in some weird zoom state
-         ResetZoom( );
+         m_MapScale = 1.0f;
 
          UnityEditor.Undo.ClearUndo(MasterComponent);
 

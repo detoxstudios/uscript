@@ -469,19 +469,37 @@ namespace System.Windows.Forms
       public List<Control> Controls = new List<Control>( );
 
       private bool     m_MouseIsDown = false;
+
       public string    Name;
       public string    Text;
       public string    TabText;
       public Region    Region;   
       public Control   Parent;
-      public Size      Size;
-      public Point     Location;
-   
+
+      public Point Location;
+      public Size  Size;
+
+      //important notes about zooming
+      //Size/Location do not have the zoom factor
+      //to get the zoomed location you need to call PointToScreen
+      //which will take into account the child and parent zooms
+      //then you can translate back PointToClient
+
+      public float ZoomScale = 1.0f;
+
+      public Size ZoomSize
+      {
+         get
+         {
+            return new Size( (int) (Size.Width * ZoomScale), (int) (Size.Height * ZoomScale) );
+         }
+      }
+
       public Rectangle Bounds
       {
          get
          {
-            return new Rectangle( Location.X, Location.Y, Size.Width, Size.Height );
+            return new Rectangle( (int) (Location.X), (int) (Location.Y), (int) (Size.Width), (int) (Size.Height) );
          }
       }
 
@@ -494,13 +512,18 @@ namespace System.Windows.Forms
       {
          Point p = new Point( );
       
-         p.X = point.X + Location.X;
-         p.Y = point.Y + Location.Y;
+         Point location = Location;
 
          if ( null != Parent )
          {
-            p = Parent.PointToScreen( p );
+            location = Parent.PointToScreen( location );
          }
+
+         location.X = (int) (location.X * ZoomScale);
+         location.Y = (int) (location.Y * ZoomScale);
+
+         p.X = point.X + location.X;
+         p.Y = point.Y + location.Y;
 
          return p;
       }
@@ -509,51 +532,48 @@ namespace System.Windows.Forms
       {
          PointF p = new PointF( );
       
-         p.X = point.X + Location.X;
-         p.Y = point.Y + Location.Y;
+         Point location = Location;
 
          if ( null != Parent )
          {
-            p = Parent.PointToScreen( p );
+            location = Parent.PointToScreen( location );
          }
+
+         location.X = (int) (location.X * ZoomScale);
+         location.Y = (int) (location.Y * ZoomScale);
+
+         p.X = point.X + location.X;
+         p.Y = point.Y + location.Y;
 
          return p;
       }
 
       public Point PointToClient(Point point)
       {
-         Point p = new Point( );
+         Point p = new Point( 0, 0 );
 
          if ( null != Parent )
          {
-            p = Parent.PointToClient( point );
-         }
-         else
-         {
-            p = point;
+            p = Parent.PointToClient( p );
          }
 
-         p.X = p.X - Location.X;
-         p.Y = p.Y - Location.Y;
+         p.X = (int)(point.X - ((Location.X - p.X) * ZoomScale));
+         p.Y = (int)(point.Y - ((Location.Y - p.Y) * ZoomScale));
 
          return p;
       }
 
       public PointF PointToClient(PointF point)
       {
-         PointF p = new PointF( );
+         PointF p = new PointF( 0, 0 );
 
          if ( null != Parent )
          {
-            p = Parent.PointToClient( point );
-         }
-         else
-         {
-            p = point;
+            p = Parent.PointToClient( p );
          }
 
-         p.X = p.X - Location.X;
-         p.Y = p.Y - Location.Y;
+         p.X = point.X - ((Location.X - p.X) * ZoomScale);
+         p.Y = point.Y - ((Location.Y - p.Y) * ZoomScale);
 
          return p;
       }
@@ -579,8 +599,8 @@ namespace System.Windows.Forms
 
          Point point = PointToClient( new Point(e.X, e.Y) );
 
-         bool inRect = point.X > 0 && point.X < Size.Width &&
-                       point.Y > 0 && point.Y < Size.Height;
+         bool inRect = point.X > 0 && point.X < ZoomSize.Width &&
+                       point.Y > 0 && point.Y < ZoomSize.Height;
          
          if ( false == m_MouseIsDown &&
               true == inRect )
@@ -657,9 +677,6 @@ namespace System.Windows.Forms
    {
       public System.Drawing.Color BackColor;
       public bool  DoubleBuffered;
-
-      //public void InitializeComponent( )
-      //{}
 
       public void SuspendLayout( )
       {}

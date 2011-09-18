@@ -35,6 +35,57 @@ namespace Detox.FlowChart
       private Point m_FCMouseDownPoint    = Point.Empty;
       private Point m_MoveBoundariesStart = Point.Empty;
 
+      private float m_PrevZoom = 1.0f;
+      
+      //we have a separate Zoom we use instead of
+      //ZoomScale because we don't want the flowchart itself to zoom
+      //we only want to zoom the children
+      public float Zoom = 1.0f;
+      public Point ZoomPoint 
+      {
+         set 
+         {
+            //this changes the top/left location
+            //of the graph so it appears the scaling
+            //takes place under the mouse cursor instead
+            //of at the top left
+
+            if ( m_PrevZoom == Zoom ) return;
+
+            foreach ( Node n in m_Nodes.Values )
+            {
+               //nodes might need to change shape
+               //now that we are changing zoom
+               n.PreparePoints( );
+            }
+
+            float d = 1.0f - Zoom;
+            float p = 1.0f - m_PrevZoom;
+
+            //similar to a perspective divide
+            //the zoom affect isn't linear
+            //and the location change
+            //is on an exponential curve
+            float expDivide     = 1.0f / Zoom;
+            float prevExpDivide = 1.0f / m_PrevZoom;
+
+            Point zoomPoint = value;
+
+            //back off any applied zoom amount
+            //so we move location based off a fresh zoom
+            float oldX = Location.X - (zoomPoint.X * p * prevExpDivide);
+            float oldY = Location.Y - (zoomPoint.Y * p * prevExpDivide);
+
+            float x = oldX + (zoomPoint.X * d * expDivide);
+            float y = oldY + (zoomPoint.Y * d * expDivide);
+
+            m_PrevZoom = Zoom;
+
+            Location.X = (int) x;
+            Location.Y = (int) y;
+         }
+      }
+
       public bool InMoveMode 
       { 
          get 
@@ -280,14 +331,14 @@ namespace Detox.FlowChart
 
       private bool LinkInRect(Link link, Rectangle rect)
       {
-         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.Size.Width), 
-                                  (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.Size.Height) );
+         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width), 
+                                  (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height) );
    
          start  = link.Source.Node.PointToScreen( start );
          start  = this.PointToClient( start );
 
-         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.Size.Width), 
-                                (int) (link.Destination.Anchor.Y / 100.0f * link.Destination.Node.Size.Height) );
+         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width), 
+                                (int) (link.Destination.Anchor.Y / 100.0f * link.Destination.Node.ZoomSize.Height) );
    
          end  = link.Destination.Node.PointToScreen( end );
          end  = this.PointToClient( end );
@@ -315,13 +366,14 @@ namespace Detox.FlowChart
          //(in actuality it's slightly curved w/ bezier rendering)
          //but in my tests so far, this is still accurate enough
 
-         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.Size.Width), 
-                                  (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.Size.Height) );
+         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width), 
+                                  (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height) );
    
          start  = link.Source.Node.PointToScreen( start );
          start  = this.PointToClient( start );
-         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.Size.Width), 
-                                (int) (link.Destination.Anchor.Y / 100.0f * link.Destination.Node.Size.Height) );
+         
+         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width), 
+                                (int) (link.Destination.Anchor.Y / 100.0f * link.Destination.Node.ZoomSize.Height) );
    
          end  = link.Destination.Node.PointToScreen( end );
          end  = this.PointToClient( end );
@@ -469,7 +521,7 @@ namespace Detox.FlowChart
                   {
                      deselectedNode.Selected = false;
                   }
-                  
+
                   node.Selected = true;
                   selectionSetChanged = true;
                }
@@ -481,8 +533,8 @@ namespace Detox.FlowChart
    
                if ( true == node.CanResize )
                {
-                  if ( position.X > node.Size.Width  - uScriptConfig.ResizeTexture.width &&
-                       position.Y > node.Size.Height - uScriptConfig.ResizeTexture.height )
+                  if ( position.X > node.ZoomSize.Width  - uScriptConfig.ResizeTexture.width &&
+                       position.Y > node.ZoomSize.Height - uScriptConfig.ResizeTexture.height )
                   {
                      m_NodeMouseSizing = true;
                   }
@@ -872,7 +924,7 @@ namespace Detox.FlowChart
 
          foreach ( Node node in m_Nodes.Values )
          {
-            if ( true == node.Bounds.IntersectsWith(rect) )
+            if ( true == node.IntersectsWith(rect) )
             {
                if (true == Control.ModifierKeys.Contains(Keys.Control))
                {
@@ -1056,9 +1108,10 @@ namespace Detox.FlowChart
          }
 
          // This is the viewport Rect
-         Rectangle visibleRect = new Rectangle(-Location.X, -Location.Y, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
+         //Rectangle visibleRect = new Rectangle(-Location.X, -Location.Y, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
+         Rectangle visibleRect = new Rectangle(0,0, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
 
-         if ( uScript.Preferences.ShowGrid == true )
+         if ( 1.0f == Zoom && uScript.Preferences.ShowGrid == true )
          {
             float g;
     
@@ -1185,6 +1238,7 @@ namespace Detox.FlowChart
          for (i = 0; i < Controls.Count; i++)
          {
             Node node = Controls[i] as Node;
+            node.ZoomScale = Zoom;
             if (node.IsVisible(visibleRect))
             {
                visibleList.Add(node);
@@ -1209,8 +1263,8 @@ namespace Detox.FlowChart
          // render links
          foreach (Link link in m_Links)
          {
-            PointF start = new PointF( link.Source.Anchor.X / 100.0f * link.Source.Node.Size.Width, 
-                                       link.Source.Anchor.Y / 100.0f * link.Source.Node.Size.Height );
+            PointF start = new PointF( link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width, 
+                                       link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height );
       
             start  = link.Source.Node.PointToScreen( start );
             start  = PointToClient( start );
@@ -1218,8 +1272,8 @@ namespace Detox.FlowChart
             start.X += Location.X;
             start.Y += Location.Y;
 
-            PointF end = new PointF( link.Destination.Anchor.X / 100.0f * link.Destination.Node.Size.Width, 
-                                     link.Destination.Anchor.Y / 100.0f * link.Destination.Node.Size.Height );
+            PointF end = new PointF( link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width, 
+                                     link.Destination.Anchor.Y / 100.0f * link.Destination.Node.ZoomSize.Height );
       
             end  = link.Destination.Node.PointToScreen( end );
             end  = PointToClient( end );
@@ -1316,6 +1370,7 @@ namespace Detox.FlowChart
             Node node = visibleList[i] as Node;
             if (node != null)
             {
+               node.ZoomScale = Zoom;
                node.OnPaint(e);
             }
          }
@@ -1476,6 +1531,8 @@ namespace Detox.FlowChart
 
    public abstract class Node : UserControl
    {
+      public bool IsCircleWhenZoomed = false;
+
       public string StyleName = "";
       public string UnselectedStyleName = "";
 
@@ -1504,6 +1561,23 @@ namespace Detox.FlowChart
       public delegate void ModifiedEventHandler(object sender, EventArgs e);
       public event ModifiedEventHandler Modified;
 
+      public bool IntersectsWith(Rectangle rectangle)
+      {
+         Point p = new Point( (int) ((Location.X + Parent.Location.X) * ZoomScale),
+                              (int) ((Location.Y + Parent.Location.Y) * ZoomScale));
+
+         p = Parent.PointToClient( p );
+
+         Rectangle b = new Rectangle( p.X, p.Y, ZoomSize.Width, ZoomSize.Height );
+
+         if ( b.Right  < rectangle.Left )   return false;
+         if ( b.Left   > rectangle.Right )  return false;
+         if ( b.Bottom < rectangle.Top )    return false;
+         if ( b.Top    > rectangle.Bottom ) return false;
+
+         return true;
+      }
+
       public void OnModified( )
       {
          if (null != Modified) Modified(this, new EventArgs());
@@ -1523,13 +1597,23 @@ namespace Detox.FlowChart
 		
       public virtual bool IsVisible( Rectangle visibleRect )
       {
-         float leftSide = Location.X;
-         float rightSide = Location.X + Size.Width;
-         if (rightSide < visibleRect.X || leftSide > visibleRect.Right) return false;
+         Point location = PointToScreen( new Point(0,0) );
+
+         float leftSide  = location.X;
+         float rightSide = location.X + ZoomSize.Width;
+
+         if (rightSide < visibleRect.X || leftSide > visibleRect.Right) 
+         {
+            return false;
+         }
          
-         float topSide = Location.Y;
-         float bottomSide = Location.Y + Size.Height;
-         if (bottomSide < visibleRect.Y || topSide > visibleRect.Bottom) return false;
+         float topSide = location.Y;
+         float bottomSide = location.Y + ZoomSize.Height;
+         
+         if (bottomSide < visibleRect.Y || topSide > visibleRect.Bottom )
+         {
+            return false;
+         }
          
          return true;
       }
@@ -1545,11 +1629,11 @@ namespace Detox.FlowChart
          foreach ( AnchorPoint ap in m_AnchorPoints )
          {
             //RectangleF rect = ap.Region.GetBounds(g);
-            float x = ap.X / 100.0f * Size.Width;
-            float y = ap.Y / 100.0f * Size.Height;
+            float x = ap.X / 100.0f * ZoomSize.Width;
+            float y = ap.Y / 100.0f * ZoomSize.Height;
 
-            float width  = ap.Width / 100.0f * Size.Width;
-            float height = ap.Height / 100.0f * Size.Height;
+            float width  = ap.Width / 100.0f * ZoomSize.Width;
+            float height = ap.Height / 100.0f * ZoomSize.Height;
 
             if ( point.X >= x - width  / 2 && point.X <= x + width / 2 &&
                  point.Y >= y - height / 2 && point.Y <= y + height / 2 )
@@ -1570,13 +1654,16 @@ namespace Detox.FlowChart
          Point position = System.Windows.Forms.Cursor.Position;
          position = this.Parent.PointToClient( position );
 
-         m_MouseOffset = new System.Drawing.Point(position.X - Location.X, position.Y - Location.Y);
+         Point p = PointToScreen( new Point(0, 0) );
+         p = this.Parent.PointToClient( p );
+         
+         m_MouseOffset = new System.Drawing.Point( (int) ((position.X - p.X)), (int) ((position.Y - p.Y)));
       }
 
       public void StartNodeResize( )
       {
          m_MouseOffset  = System.Windows.Forms.Cursor.Position;
-         m_ResizeOffset = Size;
+         m_ResizeOffset = ZoomSize;
       }
 
       public void NodeMove( )
@@ -1588,7 +1675,17 @@ namespace Detox.FlowChart
          Point position = System.Windows.Forms.Cursor.Position;
          position = this.Parent.PointToClient( position );
 
-         Location = new System.Drawing.Point(position.X - m_MouseOffset.X, position.Y - m_MouseOffset.Y );
+         Point p = new System.Drawing.Point( (int) ((position.X - m_MouseOffset.X)), (int) ((position.Y - m_MouseOffset.Y)) );
+
+         p = this.Parent.PointToScreen( p );
+
+         //accounting for zoom factor must take place in screen space
+         p.X = (int) (p.X / ZoomScale);
+         p.Y = (int) (p.Y / ZoomScale);
+         
+         p = this.Parent.PointToClient( p );
+   
+         Location = p;
       }
 
       public void NodeResize( )
@@ -1600,9 +1697,9 @@ namespace Detox.FlowChart
          Point position = System.Windows.Forms.Cursor.Position;
 
          Size = new System.Drawing.Size(m_ResizeOffset.Width + position.X - m_MouseOffset.X, m_ResizeOffset.Height + position.Y - m_MouseOffset.Y );
-      
+         
          if ( Size.Width  < uScriptConfig.MinResizeX  ) Size.Width = uScriptConfig.MinResizeX;
-         if ( Size.Height < uScriptConfig.MinResizeY ) Size.Height = uScriptConfig.MinResizeY;
+         if ( Size.Height < uScriptConfig.MinResizeY )  Size.Height = uScriptConfig.MinResizeY;
       }
 
       public AnchorPoint GetAnchorPoint(string name)
@@ -1635,76 +1732,105 @@ namespace Detox.FlowChart
 
          Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
 
+         Rectangle nodeRect = new Rectangle( );
+         nodeRect.X      = (int) (location.X * ZoomScale);
+         nodeRect.Y      = (int) (location.Y * ZoomScale);
+         nodeRect.Width  = (int) (ZoomSize.Width);
+         nodeRect.Height = (int) (ZoomSize.Height);
+
          // Draw the node
-         e.Graphics.FillRectangle(StyleName, new Rectangle(location.X, location.Y, Size.Width, Size.Height), Name);
-
-         FlowChartCtrl flowChart = Parent as FlowChartCtrl;
-
-         Point position = System.Windows.Forms.Cursor.Position;
-         position = PointToClient( position );
-
-         for ( int i = 0; i < AnchorPoints.Length; i++ )
+         if ( 1.0f != ZoomScale )
          {
-            AnchorPoint point = m_AnchorPoints[ i ];
-
-            bool connecting = false;
-
-            float x = point.X / 100.0f * Size.Width;
-            float y = point.Y / 100.0f * Size.Height;
-
-            float diameter = (point.Width / 100.0f * Size.Width);
-            float radius   = (diameter / 2.0f + 0.5f);
-
-            if ( true == flowChart.LinkStartAnchor.Output && true == point.Input ||
-                 true == flowChart.LinkStartAnchor.Input  && true == point.Output )
+            if ( true == IsCircleWhenZoomed )
             {
-               if ( position.X >= x - radius && position.X <= x + radius &&
-                    position.Y >= y - radius && position.Y <= y + radius )
+               UnityEngine.Color color = Handles.color;
+
+               GUIStyle style = uScriptConfig.Style.Get(StyleName);
+               
+               Handles.color = uScriptConfig.GetStyleColor(StyleName);
+
+               Handles.DrawSolidDisc(new Vector3(nodeRect.X + nodeRect.Width / 2, nodeRect.Y + nodeRect.Height / 2, 0), new Vector3(0, 0, -1), nodeRect.Width / 2.0f);
+            
+               Handles.color = color;
+            }
+            else
+            {
+               e.Graphics.FillRectangle(StyleName, nodeRect, "");
+            }
+         }
+         else
+         {
+            e.Graphics.FillRectangle(StyleName, nodeRect, Name);
+   
+            FlowChartCtrl flowChart = Parent as FlowChartCtrl;
+
+            Point position = System.Windows.Forms.Cursor.Position;
+            position = PointToClient( position );
+
+            
+            for ( int i = 0; i < AnchorPoints.Length; i++ )
+            {
+               AnchorPoint point = m_AnchorPoints[ i ];
+
+               bool connecting = false;
+
+               float x = point.X / 100.0f * ZoomSize.Width;
+               float y = point.Y / 100.0f * ZoomSize.Height;
+
+               float diameter = (point.Width / 100.0f * ZoomSize.Width);
+               float radius   = (diameter / 2.0f + 0.5f);
+
+               if ( true == flowChart.LinkStartAnchor.Output && true == point.Input ||
+                    true == flowChart.LinkStartAnchor.Input  && true == point.Output )
                {
-                  connecting = true;
+                  if ( position.X >= x - radius && position.X <= x + radius &&
+                       position.Y >= y - radius && position.Y <= y + radius )
+                  {
+                     connecting = true;
+                  }
                }
+
+               if ( false == connecting )
+               {
+                  if ( null != flowChart.LinkStartNode )
+                  {
+                     connecting = flowChart.LinkStartNode == this &&
+                                  flowChart.LinkStartAnchor.Name == point.Name;
+                  }
+               }
+
+               //save original style in case it'll be modified for rendering
+               AnchorPoint originalPoint = point;
+
+               flowChart.OnPointRender( this, i, point, connecting );
+
+               //reget point incase the point render modified it
+               point = m_AnchorPoints[ i ];
+
+               // Sockets
+               GUI.Box(new Rect(x + location.X - radius, y + location.Y - radius, diameter, diameter), "", uScriptConfig.Style.Get(point.StyleName));
+
+               //return original style in case it was modified for rendering
+               m_AnchorPoints[ i ] = originalPoint;
             }
 
-            if ( false == connecting )
+            for (int i = 0; i < TextPoints.Count(); i++)
             {
-               if ( null != flowChart.LinkStartNode )
-               {
-                  connecting = flowChart.LinkStartNode == this &&
-                               flowChart.LinkStartAnchor.Name == point.Name;
-               }
+               float x = TextPoints[i].X / 100.0f * ZoomSize.Width;
+               float y = TextPoints[i].Y / 100.0f * ZoomSize.Height;
+
+               //trapperm...
+               //we do Size.Height + 14 because we want some text to be able to hang off of the
+               //bottom of the node.  In a perfect world we would require a rect in the TextPoint struct
+               //but I think that is too big of a chance for Retail Beta
+               GUI.Label( new Rect(x + location.X, y + location.Y, ZoomSize.Width - x, (ZoomSize.Height + 14) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
             }
 
-            //save original style in case it'll be modified for rendering
-            AnchorPoint originalPoint = point;
-
-            flowChart.OnPointRender( this, i, point, connecting );
-
-            //reget point incase the point render modified it
-            point = m_AnchorPoints[ i ];
-
-            // Sockets
-            GUI.Box(new Rect(x + location.X - radius, y + location.Y - radius, diameter, diameter), "", uScriptConfig.Style.Get(point.StyleName));
-
-            //return original style in case it was modified for rendering
-            m_AnchorPoints[ i ] = originalPoint;
-         }
-
-         for (int i = 0; i < TextPoints.Count(); i++)
-         {
-            float x = TextPoints[i].X / 100.0f * Size.Width;
-            float y = TextPoints[i].Y / 100.0f * Size.Height;
-
-            //trapperm...
-            //we do Size.Height + 14 because we want some text to be able to hang off of the
-            //bottom of the node.  In a perfect world we would require a rect in the TextPoint struct
-            //but I think that is too big of a chance for Retail Beta
-            GUI.Label( new Rect(x + location.X, y + location.Y, Size.Width - x, (Size.Height + 14) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
-         }
-
-         if ( CanResize )
-         {
-            Rect rect = new Rect( location.X + Size.Width - uScriptConfig.ResizeTexture.width, location.Y + Size.Height - uScriptConfig.ResizeTexture.height, uScriptConfig.ResizeTexture.width, uScriptConfig.ResizeTexture.height );
-            GUI.DrawTexture( rect, uScriptConfig.ResizeTexture );
+            if ( CanResize )
+            {
+               Rect rect = new Rect( location.X + ZoomSize.Width - uScriptConfig.ResizeTexture.width, location.Y + ZoomSize.Height - uScriptConfig.ResizeTexture.height, uScriptConfig.ResizeTexture.width, uScriptConfig.ResizeTexture.height );
+               GUI.DrawTexture( rect, uScriptConfig.ResizeTexture );
+            }
          }
       }
    }

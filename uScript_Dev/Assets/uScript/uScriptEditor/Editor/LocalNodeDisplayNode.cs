@@ -24,6 +24,7 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
+         IsCircleWhenZoomed = true;
          Location = new System.Drawing.Point( localNode.Position.X, localNode.Position.Y );
          Name = "";
 
@@ -92,7 +93,16 @@ namespace Detox.ScriptEditor
 
       protected override Size CalculateSize(Socket []sockets)
       {
-         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded ) return new Size(57, 57);
+         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && 
+              uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded ) 
+         {
+            return new Size(57, 57);
+         }
+
+         if ( true == this.m_Ctrl.FlowChart.Zoom < 1.0f )
+         {
+            return new Size(57, 57);
+         }
 
          Size size = base.CalculateSize(sockets);
          if (size.Width < 57) size.Width = 57;
@@ -101,15 +111,7 @@ namespace Detox.ScriptEditor
 
          return size;
       }
-
-      //overridden so we can expand if we are selected
-      public override void OnPaint( PaintEventArgs e )
-      {
-         base.OnPaint( e );
-      }
    }
-
-
 
    public partial class ExternalConnectionDisplayNode : DisplayNode
    {
@@ -123,6 +125,7 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
+         IsCircleWhenZoomed = true;
          NodeStyle = "externalconnection";
                   
          Location = new System.Drawing.Point( externalConnection.Position.X, externalConnection.Position.Y );
@@ -182,7 +185,13 @@ namespace Detox.ScriptEditor
 
       protected override Size CalculateSize(Socket []sockets)
       {
-         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded ) return new Size(61, 59);
+         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && 
+               uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded ) return new Size(61, 59);
+
+         if ( true == this.m_Ctrl.FlowChart.Zoom < 1.0f )
+         {
+            return new Size(61, 59);
+         }
 
          Size size = base.CalculateSize(sockets);
          if (size.Width < 61) size.Width = 61;
@@ -191,13 +200,7 @@ namespace Detox.ScriptEditor
 
          return size;
       }
-
-      //overridden so we can expand if we are selected
-      public override void OnPaint( PaintEventArgs e )
-      {
-         base.OnPaint( e );
-      }
-
+      
       protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
       {
          foreach ( Socket socket in sockets )
@@ -251,6 +254,7 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
+         IsCircleWhenZoomed = true;
          NodeStyle = "variable_owner";
                   
          Location = new System.Drawing.Point( ownerConnection.Position.X, ownerConnection.Position.Y );
