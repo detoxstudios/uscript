@@ -1963,6 +1963,7 @@ namespace Detox.ScriptEditor
    public class ScriptEditor
    {
       private bool m_GeneratedCodeIsStale = false;
+      private bool m_SavedForDebugging    = false;
 
       private string m_Name  = "";
 
@@ -2154,6 +2155,11 @@ namespace Detox.ScriptEditor
       public bool GeneratedCodeIsStale
       {
          get { return m_GeneratedCodeIsStale; }
+      }
+
+      public bool SavedForDebugging
+      {
+         get { return m_SavedForDebugging; }
       }
 
       public string Name 
@@ -3305,6 +3311,7 @@ namespace Detox.ScriptEditor
             data.NodeDatas = nodeDatas.ToArray( );
             data.SceneName = SceneName;
             data.GeneratedCodeIsStale = GeneratedCodeIsStale;
+            data.SavedForDebugging = SavedForDebugging;
 
             return data;
          }
@@ -3502,8 +3509,10 @@ namespace Detox.ScriptEditor
          return true;
       }
 
-      public bool Save(string binaryFile, string logicFile, string wrapperFile)
+      public bool Save(string binaryFile, string logicFile, string wrapperFile, bool saveForDebugging)
       {
+         m_SavedForDebugging = saveForDebugging;
+
          string base64 = ToBase64( );
 
          StreamWriter streamWriter = null;
@@ -3551,7 +3560,7 @@ namespace Detox.ScriptEditor
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
             streamWriter = File.CreateText( logicFile );
-            streamWriter.Write( codeGenerator.GenerateLogicScript(logicClass, this) );
+            streamWriter.Write( codeGenerator.GenerateLogicScript(logicClass, this, saveForDebugging) );
             streamWriter.Close( );
          }
          catch (Exception e)

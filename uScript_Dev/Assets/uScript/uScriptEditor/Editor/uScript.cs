@@ -87,6 +87,8 @@ public class uScript : EditorWindow
    private bool m_CanvasDragging = false;
    public bool wasCanvasDragged = false;
 
+   public bool  GenerateDebugInfo = true;
+
    bool _isContextMenuOpen = false;
    public bool isContextMenuOpen
    {
@@ -3182,7 +3184,7 @@ public class uScript : EditorWindow
 
          if (true == scriptEditor.Open(file.FullName))
          {
-            if (true == SaveScript(scriptEditor, file.FullName, true))
+            if (true == SaveScript(scriptEditor, file.FullName, true, GenerateDebugInfo))
             {
                uScriptDebug.Log("Rebuilt " + file.FullName);
             }
@@ -3225,7 +3227,7 @@ public class uScript : EditorWindow
       return logicPath;
    }
 
-   private bool SaveScript(Detox.ScriptEditor.ScriptEditor script, string binaryPath, bool generateCode)
+   private bool SaveScript(Detox.ScriptEditor.ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo)
    {
       bool result;
 
@@ -3234,7 +3236,7 @@ public class uScript : EditorWindow
          string wrapperPath = GetGeneratedScriptPath(binaryPath);
          string logicPath   = GetNestedScriptPath(binaryPath);
 
-         result = script.Save(binaryPath, logicPath, wrapperPath);
+         result = script.Save(binaryPath, logicPath, wrapperPath, generateDebugInfo);
 
          if (true == result)
          {
@@ -3328,7 +3330,7 @@ public class uScript : EditorWindow
 
 uScriptDebug.Log("6 - Inside SaveScript(): " + script.Name + "\n", uScriptDebug.Type.Warning);
 
-         if (true == SaveScript(script, m_FullPath, generateCode))
+         if (true == SaveScript(script, m_FullPath, generateCode, GenerateDebugInfo))
          {
 
 uScriptDebug.Log("7 - Inside SaveScript(): " + script.Name + "\n\t\t\t\t At this point, script.Name lost the file extension!", uScriptDebug.Type.Error);

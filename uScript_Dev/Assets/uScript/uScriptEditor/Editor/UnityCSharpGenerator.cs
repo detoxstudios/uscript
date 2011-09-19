@@ -26,6 +26,7 @@ namespace Detox.ScriptEditor
       public string    []RequiredMethods    { get { return m_RequiredMethods.ToArray( ); } }
 
       private string       m_CSharpString;
+      private bool         m_GenerateDebugInfo;
       private int          m_TabStack;
       private Hashtable    m_GuidToId = new Hashtable( );
       private ScriptEditor m_Script = null;
@@ -49,6 +50,7 @@ namespace Detox.ScriptEditor
       //without needing to parse th entire script
       public void ParseExternals( ScriptEditor script )
       {
+         m_GenerateDebugInfo = false;
          m_CSharpString = "";
          m_TabStack = 0;
 
@@ -346,6 +348,7 @@ namespace Detox.ScriptEditor
 
       public string GenerateGameObjectScript(string logicClassName, ScriptEditor script)
       {
+         m_GenerateDebugInfo = false;
          m_CSharpString = "";
          m_TabStack = 0;
 
@@ -512,12 +515,13 @@ namespace Detox.ScriptEditor
          return false;
       }
 
-      public string GenerateLogicScript(string logicClassName, ScriptEditor script)
+      public string GenerateLogicScript(string logicClassName, ScriptEditor script, bool generateDebugInfo)
       {
          m_CSharpString = "";
          m_TabStack = 0;
 
          m_Script = null;
+         m_GenerateDebugInfo = generateDebugInfo;
 
          m_ExternalParameters = new List<Parameter>( );
          m_ExternalInputs     = new List<Plug>( );
@@ -653,6 +657,10 @@ namespace Detox.ScriptEditor
       private void DeclareNamespaces( )
       {
          AddCSharpLine( "//uScript Generated Code - Build " + uScript.Instance.uScriptBuild );
+         if ( true == m_GenerateDebugInfo )
+         {
+            AddCSharpLine( "//Generated with Debug Info" );
+         }
 
          AddCSharpLine( "using UnityEngine;" );
          AddCSharpLine( "using System.Collections;" );
@@ -1215,8 +1223,12 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "#pragma warning disable 414" );
 
          AddCSharpLine( "GameObject parentGameObject = null;" );
-         AddCSharpLine( "const int MaxRelayCallCount = " + uScript.Preferences.MaximumNodeRecursionCount + ";" );
-         AddCSharpLine( "int relayCallCount = 0;" );
+         
+         if ( true == m_GenerateDebugInfo )
+         {
+            AddCSharpLine( "const int MaxRelayCallCount = " + uScript.Preferences.MaximumNodeRecursionCount + ";" );
+            AddCSharpLine( "int relayCallCount = 0;" );
+         }
 
          AddCSharpLine( "//external output properties" );
          Plug []properties = FindExternalOutputProperties( );
@@ -1423,10 +1435,13 @@ namespace Detox.ScriptEditor
 
       private void DefineUpdate( )
       {
-         AddCSharpLine( "//reset each Update, and increments each method call" );
-         AddCSharpLine( "//if it ever goes above MaxRelayCallCount before being reset" );
-         AddCSharpLine( "//then we assume it is stuck in an infinite loop" );         
-         AddCSharpLine( "if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;" );
+         if ( true == m_GenerateDebugInfo )
+         {
+            AddCSharpLine( "//reset each Update, and increments each method call" );
+            AddCSharpLine( "//if it ever goes above MaxRelayCallCount before being reset" );
+            AddCSharpLine( "//then we assume it is stuck in an infinite loop" );         
+            AddCSharpLine( "if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;" );
+         }
 
          AddCSharpLine( "//other scripts might have added GameObjects with event scripts" );
          AddCSharpLine( "//so we need to verify all our event listeners are registered" );
@@ -2985,24 +3000,31 @@ namespace Detox.ScriptEditor
 
             ++m_TabStack;
 
-               AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
+               if ( true == m_GenerateDebugInfo )
+               {
+                  AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
 
-                  PrintDebug( receiver );
+                     PrintDebug( receiver );
+                     RelayToMethod( (EntityMethod) receiver );
+
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "else" );               
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+
+                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + ((EntityMethod)receiver).ComponentType + ".  " +
+                                    "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
+
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
+               else
+               {
                   RelayToMethod( (EntityMethod) receiver );
-
-               --m_TabStack;
-               AddCSharpLine( "}" );
-               AddCSharpLine( "else" );               
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-
-                  AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + ((EntityMethod)receiver).ComponentType + ".  " +
-                                 "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
-
-               --m_TabStack;
-               AddCSharpLine( "}" );
+               }
 
             --m_TabStack;
 
@@ -3020,24 +3042,31 @@ namespace Detox.ScriptEditor
 
                ++m_TabStack;
 
-                  AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
+                  if ( true == m_GenerateDebugInfo )
+                  {
+                     AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
 
-                     PrintDebug( receiver );
-                     RelayToEvent( entityEvent, eventName.Name );            
+                        PrintDebug( receiver );
+                        RelayToEvent( entityEvent, eventName.Name );
 
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "else" );               
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                     AddCSharpLine( "else" );               
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
 
-                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + entityEvent.FriendlyType + ".  " +
-                                    "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
+                        AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + entityEvent.FriendlyType + ".  " +
+                                       "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
 
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  }
+                  else
+                  {
+                     RelayToEvent( entityEvent, eventName.Name );
+                  }
 
                --m_TabStack;
 
@@ -3054,23 +3083,30 @@ namespace Detox.ScriptEditor
 
             ++m_TabStack;
 
-               AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
+               if ( true == m_GenerateDebugInfo )
+               {
+                  AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
 
-                  PrintDebug( receiver );
+                     PrintDebug( receiver );
+                     RelayToExternal( external );
+
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "else" );               
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+
+                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + external.Name.Default + ".  " + 
+                                    "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
+               else
+               {
                   RelayToExternal( external );
-
-               --m_TabStack;
-               AddCSharpLine( "}" );
-               AddCSharpLine( "else" );               
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-
-                  AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + external.Name.Default + ".  " + 
-                                 "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
-               --m_TabStack;
-               AddCSharpLine( "}" );
+               }
                
             --m_TabStack;
 
@@ -3088,23 +3124,30 @@ namespace Detox.ScriptEditor
 
                ++m_TabStack;
 
-                  AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
+                  if ( true == m_GenerateDebugInfo )
+                  {
+                     AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
 
-                     PrintDebug( receiver );                  
+                        PrintDebug( receiver );                  
+                        CallRelays(receiver.Guid, eventName.Name);
+
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                     AddCSharpLine( "else" );               
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+
+                        AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " + 
+                                       "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  }
+                  else
+                  {
                      CallRelays(receiver.Guid, eventName.Name);
-
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "else" );               
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-
-                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " + 
-                                    "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
+                  }
 
                --m_TabStack;
 
@@ -3119,23 +3162,30 @@ namespace Detox.ScriptEditor
 
                ++m_TabStack;
 
-                  AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
+                  if ( true == m_GenerateDebugInfo )
+                  {
+                     AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
 
-                     PrintDebug(receiver);                  
+                        PrintDebug(receiver);                  
+                        RelayToLogic((LogicNode)receiver, input.Name);
+
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                     AddCSharpLine( "else" );               
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+
+                        AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " + 
+                                       "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  }
+                  else
+                  {
                      RelayToLogic((LogicNode)receiver, input.Name);
-
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "else" );               
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-
-                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " + 
-                                    "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
+                  }
 
                --m_TabStack;
 
@@ -3149,23 +3199,29 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
+                  if ( true == m_GenerateDebugInfo )
+                  {
+                     AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
 
+                        DefineDriven( logicNode, driven );
+
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                     AddCSharpLine( "else" );               
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+
+                        AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " + 
+                                       "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  }
+                  else
+                  {
                      DefineDriven( logicNode, driven );
-
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "else" );               
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-
-                     AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " + 
-                                    "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-
+                  }
 
                --m_TabStack;
                AddCSharpLine( "}" );
@@ -3795,9 +3851,12 @@ namespace Detox.ScriptEditor
 
       private void PrintDebug(EntityNode node)
       {
-         if ( "true" == node.ShowComment.Default )
+         if ( true == m_GenerateDebugInfo )
          {
-            AddCSharpLine( "uScriptDebug.Log( \"[" + uScriptConfig.Variable.FriendlyName(node.GetType().ToString()) + "] " + EscapeString(node.Comment.Default) + "\", uScriptDebug.Type.Message);" );
+            if ( "true" == node.ShowComment.Default )
+            {
+               AddCSharpLine( "uScriptDebug.Log( \"[" + uScriptConfig.Variable.FriendlyName(node.GetType().ToString()) + "] " + EscapeString(node.Comment.Default) + "\", uScriptDebug.Type.Message);" );
+            }
          }
       }
    }

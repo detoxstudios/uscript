@@ -13,6 +13,7 @@ namespace Detox.Data.ScriptEditor
       private EntityNodeData []m_NodeDatas = null;
       public string SceneName = "";
       public bool GeneratedCodeIsStale = false;
+      public bool SavedForDebugging = false;
 
       static ScriptEditorData( )
       {
@@ -54,7 +55,7 @@ namespace Detox.Data.ScriptEditor
       }
 
 
-      public int Version { get { return 3; } }
+      public int Version { get { return 4; } }
 
       public void Load(ObjectSerializer serializer)
       {
@@ -79,6 +80,11 @@ namespace Detox.Data.ScriptEditor
          {
             GeneratedCodeIsStale = (bool) serializer.LoadNamedObject( "GeneratedCodeIsStale" );
          }
+
+         if ( serializer.CurrentVersion > 3 )
+         {
+            SavedForDebugging = (bool) serializer.LoadNamedObject( "SavedForDebugging" );
+         }
       }
 
       public void Save(ObjectSerializer serializer)
@@ -86,6 +92,7 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObjects( "NodeDatas", m_NodeDatas ); 
          serializer.SaveNamedObject ( "SceneName", SceneName ); 
          serializer.SaveNamedObject ( "GeneratedCodeIsStale", GeneratedCodeIsStale );
+         serializer.SaveNamedObject ( "SavedForDebugging",    SavedForDebugging );
       }
    }
 
