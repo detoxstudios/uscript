@@ -3328,14 +3328,14 @@ public class uScript : EditorWindow
             script.SceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
          }
 
-uScriptDebug.Log("6 - Inside SaveScript(): " + script.Name + "\n", uScriptDebug.Type.Warning);
+//uScriptDebug.Log("6 - Inside SaveScript(): " + script.Name + "\n", uScriptDebug.Type.Warning);
 
          if (true == SaveScript(script, m_FullPath, generateCode, GenerateDebugInfo))
          {
 
-uScriptDebug.Log("7 - Inside SaveScript(): " + script.Name + "\n\t\t\t\t At this point, script.Name lost the file extension!", uScriptDebug.Type.Error);
+//uScriptDebug.Log("7 - Inside SaveScript(): " + script.Name + "\n\t\t\t\t At this point, script.Name lost the file extension!", uScriptDebug.Type.Error);
 
-						m_ScriptEditorCtrl.IsDirty = false;
+            m_ScriptEditorCtrl.IsDirty = false;
 
             //force a sync here just in case somehwere in code
             //we missed a call to the change stack

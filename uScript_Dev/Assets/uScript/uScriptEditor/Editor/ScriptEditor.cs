@@ -3490,7 +3490,7 @@ namespace Detox.ScriptEditor
          
          try
          {
-            m_Name = Path.GetFileNameWithoutExtension( binaryFile );
+            m_Name = Path.GetFileName( binaryFile );
 
             streamWriter = File.CreateText( binaryFile );
             streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
@@ -3519,7 +3519,7 @@ namespace Detox.ScriptEditor
          
          try
          {
-            m_Name = Path.GetFileNameWithoutExtension( binaryFile );
+            m_Name = Path.GetFileName( binaryFile );
 
             streamWriter = File.CreateText( binaryFile );
             streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
