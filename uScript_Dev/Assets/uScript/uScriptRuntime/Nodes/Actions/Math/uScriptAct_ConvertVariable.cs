@@ -163,6 +163,49 @@ public class uScriptAct_ConvertVariable : uScriptLogic
             tempStringValue = tmpTarget;
          }
       }
+		
+	  // Convert from TextAsset
+      else if (typeof(TextAsset) == Target.GetType())
+      {
+         TextAsset tmpTextAsset = (TextAsset)Target;
+			
+		 string tmpTarget = tmpTextAsset.text;
+
+         if (tmpTarget == "")
+         {
+            tempIntValue = 0;
+            tempFloatValue = 0F;
+            tempBooleanValue = false;
+            tempStringValue = tmpTarget;
+         }
+         else
+         {
+            int intNumber = 1;
+            bool canConvertInt = System.Int32.TryParse(tmpTarget, out intNumber);
+            if (canConvertInt)
+            {
+               tempIntValue = intNumber;
+            }
+            else
+            {
+               tempIntValue = 1;
+            }
+
+            float floatNumber = 1F;
+            bool canConvertFloat = System.Single.TryParse(tmpTarget, out floatNumber);
+            if (canConvertFloat)
+            {
+               tempFloatValue = floatNumber;
+            }
+            else
+            {
+               tempFloatValue = 1F;
+            }
+
+            tempBooleanValue = true;
+            tempStringValue = tmpTarget;
+         }
+      }
 
       // Convert from Int
       else if (typeof(int) == Target.GetType())
