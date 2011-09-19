@@ -43,29 +43,24 @@ public class uScriptAct_GetSubString : uScriptLogic
 			
 			if(!skip)
 			{
-				Debug.Log("Not skipping");
 				if(useLength)
 				{
-					Debug.Log("Use Length");
 					Result = Target.Substring(StartPos, StringLength);
 				}
 				else
 				{
-					Debug.Log("Not using Length");
 					Result = Target.Substring(StartPos);
 				}
 				
 			}
 			else
 			{
-				Debug.Log("Skipping!");
 				Result = "";
 			}
 			
 		}
 		else
 		{
-			Debug.Log("String NULL");
 			Result = "";
 		}
 		
