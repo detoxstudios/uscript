@@ -3574,7 +3574,7 @@ namespace Detox.ScriptEditor
    
       private string CSharpExternalOutputDeclaration(string defaultName)
       {
-         return "output_Link_" + defaultName;
+         return "output_Link_" + MakeSyntaxSafe(defaultName);
       }
 
       private Plug CSharpExternalEventDeclaration(string defaultName)
