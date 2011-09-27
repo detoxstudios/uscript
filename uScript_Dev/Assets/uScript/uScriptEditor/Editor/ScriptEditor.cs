@@ -1295,7 +1295,7 @@ namespace Detox.ScriptEditor
          m_BodyTextColor = new Parameter( );
          m_BodyTextColor.State = Parameter.VisibleState.Visible;
          m_BodyTextColor.Name = "BodyColor";
-         m_BodyTextColor.FriendlyName = "Body Color";
+         m_BodyTextColor.FriendlyName = "Body Text Color";
          m_BodyTextColor.Default = "50, 127, 50";
          m_BodyTextColor.Type = "Color";
          m_BodyTextColor.Input = true;
