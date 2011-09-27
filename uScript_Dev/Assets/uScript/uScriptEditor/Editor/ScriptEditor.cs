@@ -2600,11 +2600,13 @@ namespace Detox.ScriptEditor
                   {
                      if ( true == nameAlreadyUsed )
                      {
-                        reason = "An External Node with the same name (" + externalSource.Name.Default + ") already exists and is connected to a different type";
+                        reason = "An External Node with the same name (" + externalSource.Name.Default + ") already exists and is connected to a different type  (" + 
+                                    "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                      }
                      else
                      {
-                        reason = "An External Node (" + externalSource.Name.Default + ") can't link to two different types";
+                        reason = "An External Node (" + externalSource.Name.Default + ") can't link to two different types  (" + 
+                                    "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                      }
                      return false;
                   }                  
@@ -2647,7 +2649,7 @@ namespace Detox.ScriptEditor
                      {
                         if ( true == nameAlreadyUsed )
                         {
-                           reason = "An External Node with the same name (" + externalSource.Name.Default + ")already exists and is connected to a different type";
+                           reason = "An External Node with the same name (" + externalSource.Name.Default + ") already exists and is connected is connected to an Input";
                         }
                         else
                         {
@@ -2655,16 +2657,17 @@ namespace Detox.ScriptEditor
                         }
                         return false;
                      }
-
-                     if ( existingParam.Type != myParam.Type )
+                     else if ( existingParam.Type != myParam.Type )
                      {
                         if ( true == nameAlreadyUsed )
                         {
-                           reason = "An External Node with the same name (" + externalSource.Name.Default + ")already exists and is connected to a different type";
+                           reason = "An External Node with the same name (" + externalSource.Name.Default + ") already exists and is connected to a different type.  (" + 
+                                    "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                         }
                         else
                         {
-                           reason = "An External Node (" + externalSource.Name.Default + ") can't link to two different types";
+                           reason = "An External Node (" + externalSource.Name.Default + ") can't link to two different types  (" + 
+                                    "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                         }
                         return false;
                      }
@@ -2716,7 +2719,7 @@ namespace Detox.ScriptEditor
                   {
                      if ( true == nameAlreadyUsed )
                      {
-                        reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                        reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to an Output";
                      }
                      else
                      {
@@ -2731,7 +2734,7 @@ namespace Detox.ScriptEditor
                   {
                      if ( true == nameAlreadyUsed )
                      {
-                        reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                        reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a parameter";
                      }
                      else
                      {
@@ -2746,11 +2749,13 @@ namespace Detox.ScriptEditor
                   {
                      if ( true == nameAlreadyUsed )
                      {
-                        reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                        reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type  (" + 
+                                    "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                      }
                      else
                      {
-                        reason = "An External Node (" + externalDest.Name.Default + ") can't link to two different types";
+                        reason = "An External Node (" + externalDest.Name.Default + ") can't link to two different types  (" + 
+                                    "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                      }
                      return false;
                   }
@@ -2758,7 +2763,7 @@ namespace Detox.ScriptEditor
                else
                {
                   
-                  checkTypes = existingLinks.Destination.Guid == dest.Guid ;
+                  checkTypes = existingLinks.Destination.Guid == dest.Guid;
                   nameAlreadyUsed = false;
 
                   if (false == checkTypes)
@@ -2799,7 +2804,14 @@ namespace Detox.ScriptEditor
                         {
                            if ( true == nameAlreadyUsed )
                            {
-                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                              if ( true == isEventA )
+                              {
+                                 reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to an Event output";
+                              }
+                              else
+                              {
+                                 reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is not connected to an Event output";
+                              }
                            }
                            else
                            {
@@ -2811,7 +2823,7 @@ namespace Detox.ScriptEditor
                         {
                            if ( true == nameAlreadyUsed )
                            {
-                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to an Input";
                            }
                            else
                            {
@@ -2825,9 +2837,9 @@ namespace Detox.ScriptEditor
                         //we know the existing link is a parameter
                         if ( Parameter.Empty == myParam )
                         {
-                           if ( true == nameAlreadyUsed )
+                           if ( true == nameAlreadyUsed ) 
                            {
-                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a parameter";
                            }
                            else
                            {
@@ -2840,11 +2852,13 @@ namespace Detox.ScriptEditor
                         {
                            if ( true == nameAlreadyUsed )
                            {
-                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type  (" + 
+                                    "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                            }
                            else
                            {
-                              reason = "An External Node (" + externalDest.Name.Default + ") can't link to two different types";
+                              reason = "An External Node (" + externalDest.Name.Default + ") can't link to two different types  (" + 
+                                    "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                            }
                            return false;
                         }
