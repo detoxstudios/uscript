@@ -474,7 +474,7 @@ namespace Detox.ScriptEditor
       Parameter Instance { get; set; }
       bool IsStatic { get; }
 
-      EntityNode Copy( );
+      EntityNode Copy( bool preserveGuid );
    }
 
    public struct EntityDesc
@@ -667,12 +667,12 @@ namespace Detox.ScriptEditor
       public Parameter Instance { get { return Parameter.Empty; } set {} }
       public Parameter[] Parameters { get { return new Parameter[ 0 ]; } set { } }
 
-      public EntityNode Copy( )
+      public EntityNode Copy( bool preserveGuid )
       {
          LinkNode linkNode   = new LinkNode( );
          linkNode.Source     = Source;
          linkNode.Destination= Destination;
-         linkNode.Guid       = Guid.NewGuid( );
+         linkNode.Guid       = preserveGuid ? Guid : Guid.NewGuid( );
 
          return linkNode;
       }
@@ -740,12 +740,12 @@ namespace Detox.ScriptEditor
 
    public struct ExternalConnection : EntityNode
    {
-      public EntityNode Copy( )
+      public EntityNode Copy( bool preserveGuid )
       {
          ExternalConnection connection = new ExternalConnection( );
          connection.Connection     = Connection;
          connection.Position       = Position;
-         connection.Guid           = Guid.NewGuid( );
+         connection.Guid           = preserveGuid ? Guid : Guid.NewGuid( );
          connection.Name           = Name;
          connection.ShowComment    = ShowComment;
          connection.Comment        = Comment;
@@ -864,12 +864,12 @@ namespace Detox.ScriptEditor
 
    public struct OwnerConnection : EntityNode
    {
-      public EntityNode Copy( )
+      public EntityNode Copy( bool preserveGuid )
       {
          OwnerConnection connection = new OwnerConnection( );
          connection.Connection     = Connection;
          connection.Position       = Position;
-         connection.Guid           = Guid.NewGuid( );
+         connection.Guid           = preserveGuid ? Guid : Guid.NewGuid( );
          connection.ShowComment    = ShowComment;
          connection.Comment        = Comment;
 
@@ -982,7 +982,7 @@ namespace Detox.ScriptEditor
    
    public struct EntityMethod : EntityNode
    {
-      public EntityNode Copy( )
+      public EntityNode Copy( bool preserveGuid )
       {
          EntityMethod method = new EntityMethod( );
          method.Instance  = Instance;
@@ -991,7 +991,7 @@ namespace Detox.ScriptEditor
          method.Output    = Output;
          method.Position  = Position;
          method.IsStatic  = IsStatic;
-         method.Guid      = Guid.NewGuid( );
+         method.Guid      = preserveGuid ? Guid : Guid.NewGuid( );
          method.ComponentType = ComponentType;
          return method;
       }
@@ -1159,15 +1159,13 @@ namespace Detox.ScriptEditor
 
    public struct CommentNode : EntityNode
    {
-      public EntityNode Copy( )
+      public EntityNode Copy( bool preserveGuid )
       {
          CommentNode commentNode = new CommentNode( );
          commentNode.Parameters = Parameters;
          commentNode.Position   = Position;
-         commentNode.Guid       = Guid.NewGuid( );
+         commentNode.Guid       = preserveGuid ? Guid : Guid.NewGuid( );
 
-         //copy parameters not currently supported
-         //so they maintain valid values
          commentNode.NodeColor      = NodeColor;
          commentNode.TitleTextColor = TitleTextColor;
          commentNode.BodyTextColor  = BodyTextColor;
@@ -1239,8 +1237,8 @@ namespace Detox.ScriptEditor
 
       public Parameter[] Parameters 
       { 
-         get { return new Parameter[] { m_TitleText, m_BodyText, m_Width, m_Height}; } 
-         set { m_TitleText = value[ 0 ]; m_BodyText = value[ 1 ]; m_Width = value[ 2 ]; m_Height = value[ 3 ]; } 
+         get { return new Parameter[] { m_TitleText, m_BodyText, m_Width, m_Height, m_NodeColor, m_BodyTextColor}; } 
+         set { m_TitleText = value[ 0 ]; m_BodyText = value[ 1 ]; m_Width = value[ 2 ]; m_Height = value[ 3 ]; m_NodeColor = value[4]; m_BodyTextColor = value[5];} 
       }
       
       public Parameter BodyText       { get { return m_BodyText; } set { m_BodyText = value; } }
@@ -1355,7 +1353,7 @@ namespace Detox.ScriptEditor
          return consolidatedEvent;
       }
 
-      public EntityNode Copy( )
+      public EntityNode Copy( bool preserveGuid )
       {
          EntityEvent entityEvent   = new EntityEvent( );
          entityEvent.Instance      = Instance;
@@ -1365,7 +1363,7 @@ namespace Detox.ScriptEditor
          entityEvent.FriendlyType  = FriendlyType;
          entityEvent.ComponentType = ComponentType;
          entityEvent.Outputs       = Outputs;
-         entityEvent.Guid          = Guid.NewGuid( );
+         entityEvent.Guid          = preserveGuid ? Guid : Guid.NewGuid( );
          entityEvent.Comment       = Comment;
          entityEvent.ShowComment   = ShowComment;
          entityEvent.IsStatic      = IsStatic;
@@ -1537,7 +1535,7 @@ namespace Detox.ScriptEditor
 
    public struct LogicNode : EntityNode
    {
-      public EntityNode Copy( )
+      public EntityNode Copy( bool preserveGuid )
       {
          LogicNode node = new LogicNode( );
          node.Type      = Type;
@@ -1548,7 +1546,7 @@ namespace Detox.ScriptEditor
          node.Position  = Position;
          node.Events    = Events;
          node.Drivens   = Drivens;
-         node.Guid      = Guid.NewGuid( );
+         node.Guid      = preserveGuid ? Guid : Guid.NewGuid( );
          node.Comment    = Comment;
          node.RequiredMethods = RequiredMethods;
          node.ShowComment= ShowComment;
@@ -1716,14 +1714,14 @@ namespace Detox.ScriptEditor
 
    public struct EntityProperty : EntityNode
    {
-      public EntityNode Copy( )
+      public EntityNode Copy( bool preserveGuid )
       {
          EntityProperty entityProperty = new EntityProperty( );
          entityProperty.ComponentType = ComponentType;
          entityProperty.Instance      = Instance;
          entityProperty.Parameter     = Parameter;
          entityProperty.Position      = Position;
-         entityProperty.Guid          = Guid.NewGuid( );
+         entityProperty.Guid          = preserveGuid ? Guid : Guid.NewGuid( );
          entityProperty.IsStatic      = IsStatic;
          return entityProperty;
       }
@@ -1849,12 +1847,12 @@ namespace Detox.ScriptEditor
 
    public struct LocalNode : EntityNode
    {
-      public EntityNode Copy( )
+      public EntityNode Copy( bool preserveGuid )
       {
          LocalNode localNode  = new LocalNode( );
          localNode.Parameters = Parameters;
          localNode.Position   = Position;
-         localNode.Guid       = Guid.NewGuid( );
+         localNode.Guid       = preserveGuid ? Guid : Guid.NewGuid( );
          
          return localNode;
       }
@@ -2562,9 +2560,34 @@ namespace Detox.ScriptEditor
 
          if ( source is ExternalConnection )
          {
+            ExternalConnection externalSource = (ExternalConnection) source;
+            
             foreach ( LinkNode existingLinks in Links )
             {
-               if ( existingLinks.Source.Guid == source.Guid )
+               bool checkTypes = existingLinks.Source.Guid == source.Guid;
+               bool nameAlreadyUsed = false;
+
+               if ( false == checkTypes )
+               {
+                  EntityNode node = GetNode( existingLinks.Source.Guid );
+   
+                  //if there is an external sharing the same name
+                  //treat it as the same external
+                  if ( node is ExternalConnection )
+                  {
+                     ExternalConnection e = (ExternalConnection) node;
+                     checkTypes = ((ExternalConnection)source).Name.Default == e.Name.Default;
+                  
+                     if ( true == checkTypes )
+                     {
+                        nameAlreadyUsed = true;
+                     }
+                  }
+               }
+
+               //new link and existing link are both sources so make sure the destination connections
+               //are the same type
+               if ( true == checkTypes )
                {
                   //we already source out to another one
                   //let's see if the dest types match
@@ -2575,38 +2598,110 @@ namespace Detox.ScriptEditor
 
                   if ( existingParam.Type != myParam.Type )
                   {
-                     reason = "An External Node can't link to two different types";
+                     if ( true == nameAlreadyUsed )
+                     {
+                        reason = "An External Node with the same name (" + externalSource.Name.Default + ") already exists and is connected to a different type";
+                     }
+                     else
+                     {
+                        reason = "An External Node (" + externalSource.Name.Default + ") can't link to two different types";
+                     }
                      return false;
                   }                  
                }
-               else if (existingLinks.Destination.Guid == source.Guid )
+               else
                {
-                  //someone is linking to us so
-                  //see if their source matches our dest type
-                  EntityNode node = GetNode( existingLinks.Source.Guid );
+                  checkTypes = existingLinks.Destination.Guid == source.Guid ;
+                  nameAlreadyUsed = false;
 
-                  Parameter existingParam = FindNodeParameter(node, existingLinks.Source.Anchor);
-                  Parameter myParam       = FindNodeParameter(dest, link.Destination.Anchor);
-
-                  if ( Parameter.Empty == existingParam )
+                  if ( false == checkTypes )
                   {
-                     reason = "An External Node can't link to an input and an output";
-                     return false;
+                     EntityNode node = GetNode( existingLinks.Destination.Guid );
+
+                     //if there is an external sharing the same name
+                     //treat it as the same external
+                     if ( node is ExternalConnection )
+                     {
+                        ExternalConnection e = (ExternalConnection) node;
+                        checkTypes = ((ExternalConnection)source).Name.Default == e.Name.Default;
+
+                        if ( true == checkTypes )
+                        {
+                           nameAlreadyUsed = true;
+                        }
+                     }
                   }
 
-                  if ( existingParam.Type != myParam.Type )
+                  //new link is a source and existing link is a destination
+                  //this is ok (it will generate as a ref) if the types are the same
+                  if (true == checkTypes)
                   {
-                     reason = "An External Node can't link to two different types";
-                     return false;
+                     //someone is linking to us so
+                     //see if their source matches our dest type
+                     EntityNode node = GetNode( existingLinks.Source.Guid );
+
+                     Parameter existingParam = FindNodeParameter(node, existingLinks.Source.Anchor);
+                     Parameter myParam       = FindNodeParameter(dest, link.Destination.Anchor);
+
+                     if ( Parameter.Empty == existingParam )
+                     {
+                        if ( true == nameAlreadyUsed )
+                        {
+                           reason = "An External Node with the same name (" + externalSource.Name.Default + ")already exists and is connected to a different type";
+                        }
+                        else
+                        {
+                           reason = "An External Node (" + externalSource.Name.Default + ") can't link to an input and an output";
+                        }
+                        return false;
+                     }
+
+                     if ( existingParam.Type != myParam.Type )
+                     {
+                        if ( true == nameAlreadyUsed )
+                        {
+                           reason = "An External Node with the same name (" + externalSource.Name.Default + ")already exists and is connected to a different type";
+                        }
+                        else
+                        {
+                           reason = "An External Node (" + externalSource.Name.Default + ") can't link to two different types";
+                        }
+                        return false;
+                     }
                   }
                }
             }
          }
          if ( dest is ExternalConnection )
          {
+            ExternalConnection externalDest = (ExternalConnection) dest;
+
             foreach ( LinkNode existingLinks in Links )
             {
-               if ( existingLinks.Source.Guid == dest.Guid )
+               bool checkTypes = existingLinks.Source.Guid == dest.Guid;
+               bool nameAlreadyUsed = false;
+
+               if (false == checkTypes)
+               {
+                  EntityNode node = GetNode( existingLinks.Source.Guid );
+   
+                  //if there is an external sharing the same name
+                  //treat it as the same external
+                  if ( node is ExternalConnection )
+                  {
+                     ExternalConnection e = (ExternalConnection) node;
+                     checkTypes = ((ExternalConnection)dest).Name.Default == e.Name.Default;
+
+                     if ( true == checkTypes )
+                     {
+                        nameAlreadyUsed = true;
+                     }
+                  }
+               }
+               
+               //new link is a destination and existing link is a source
+               //this is ok we'll generate it as a 'ref' but make sure the types match 
+               if (true == checkTypes)
                {
                   //someone is linking to us so
                   //see if their dest matches our source type
@@ -2619,7 +2714,14 @@ namespace Detox.ScriptEditor
                   //because we are an Output or an out parameter
                   if ( existingParam == Parameter.Empty )
                   {
-                     reason = "An External Node can't link to an Input and a output parameter or an Output";
+                     if ( true == nameAlreadyUsed )
+                     {
+                        reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                     }
+                     else
+                     {
+                        reason = "An External Node (" + externalDest.Name.Default + ") can't link to an Input and a output parameter or an Output";
+                     }
                      return false;
                   }
 
@@ -2627,7 +2729,14 @@ namespace Detox.ScriptEditor
                   //there is already some source connected to us
                   if ( myParam == Parameter.Empty )
                   {
-                     reason = "An External Node can't link to an Output and an input parameter or an Input";
+                     if ( true == nameAlreadyUsed )
+                     {
+                        reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                     }
+                     else
+                     {
+                        reason = "An External Node (" + externalDest.Name.Default + ") can't link to an Output and an input parameter or an Input";
+                     }
                      return false;
                   }
 
@@ -2635,49 +2744,112 @@ namespace Detox.ScriptEditor
                   //and this is an input, this is allowed as long as the types match
                   if ( existingParam.Type != myParam.Type )
                   {
-                     reason = "An External Node can't link to two different types";
-                     return false;
-                  }
-               }
-               else if (existingLinks.Destination.Guid == dest.Guid )
-               {
-                  //we already dest out to another one
-                  //let's see if the source types match
-                  EntityNode node = GetNode( existingLinks.Source.Guid );
-
-                  Parameter existingParam = FindNodeParameter(node,   existingLinks.Source.Anchor);
-                  Parameter myParam       = FindNodeParameter(source, link.Source.Anchor);
-
-                  if ( Parameter.Empty == existingParam )
-                  {
-                     bool isEventA = IsSourceLinkEvent(existingLinks);
-                     bool isEventB = IsSourceLinkEvent(link);
-
-                     if ( isEventA != isEventB )
+                     if ( true == nameAlreadyUsed )
                      {
-                        reason = "An External Node can't link to an event output and an immediate output";
-                        return false;
-                     }
-                     else if ( Parameter.Empty != myParam )
-                     {
-                        reason = "An External Node can't link to an output and a parameter";
-                        return false;
-                     }
-                  }
-                  else
-                  {
-                     //we know the existing link is a parameter
-                     if ( Parameter.Empty == myParam )
-                     {
-                        reason = "An External Node can't link to an output and a parameter";
-                        return false;
+                        reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
                      }
                      else
                      {
-                        reason = "An External Output Parameter Node cannot link from multiple outputs.";
-                        return false;
+                        reason = "An External Node (" + externalDest.Name.Default + ") can't link to two different types";
                      }
-                  }                 
+                     return false;
+                  }
+               }
+               else
+               {
+                  
+                  checkTypes = existingLinks.Destination.Guid == dest.Guid ;
+                  nameAlreadyUsed = false;
+
+                  if (false == checkTypes)
+                  {
+                     EntityNode node = GetNode( existingLinks.Destination.Guid );
+
+                     //if there is an external sharing the same name
+                     //treat it as the same external
+                     if ( node is ExternalConnection )
+                     {
+                        ExternalConnection e = (ExternalConnection) node;
+                        checkTypes = ((ExternalConnection)dest).Name.Default == e.Name.Default;
+                     
+                        if ( true == checkTypes )
+                        {
+                           nameAlreadyUsed = true;
+                        }
+                     }
+                  }
+
+                  //new link is a destination and existing link is a destination
+                  //make sure the types match
+                  if (true == checkTypes)
+                  {
+                     //we already dest out to another one
+                     //let's see if the source types match
+                     EntityNode node = GetNode( existingLinks.Source.Guid );
+
+                     Parameter existingParam = FindNodeParameter(node,   existingLinks.Source.Anchor);
+                     Parameter myParam       = FindNodeParameter(source, link.Source.Anchor);
+
+                     if ( Parameter.Empty == existingParam )
+                     {
+                        bool isEventA = IsSourceLinkEvent(existingLinks);
+                        bool isEventB = IsSourceLinkEvent(link);
+
+                        if ( isEventA != isEventB )
+                        {
+                           if ( true == nameAlreadyUsed )
+                           {
+                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                           }
+                           else
+                           {
+                              reason = "An External Node (" + externalDest.Name.Default + ") can't link to an event output and an immediate output";
+                              return false;
+                           }
+                        }
+                        else if ( Parameter.Empty != myParam )
+                        {
+                           if ( true == nameAlreadyUsed )
+                           {
+                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                           }
+                           else
+                           {
+                              reason = "An External Node (" + externalDest.Name.Default + ") can't link to an output and a parameter";
+                              return false;
+                           }
+                        }
+                     }
+                     else
+                     {
+                        //we know the existing link is a parameter
+                        if ( Parameter.Empty == myParam )
+                        {
+                           if ( true == nameAlreadyUsed )
+                           {
+                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                           }
+                           else
+                           {
+                              reason = "An External Node (" + externalDest.Name.Default + ") can't link to an output and a parameter";
+                              return false;
+                           }
+                        }
+                        //ok we know they're both parameters, and we know we are both outputs
+                        else if ( existingParam.Type != myParam.Type )
+                        {
+                           if ( true == nameAlreadyUsed )
+                           {
+                              reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is connected to a different type";
+                           }
+                           else
+                           {
+                              reason = "An External Node (" + externalDest.Name.Default + ") can't link to two different types";
+                           }
+                           return false;
+                        }
+                     }
+                  }
                }
             }
 
@@ -2988,7 +3160,7 @@ namespace Detox.ScriptEditor
 
             if ( false == allow )
             {
-               Status.Info( reason );
+               Status.Info( Name + " " + reason );
             }
          }
 
@@ -3079,6 +3251,13 @@ namespace Detox.ScriptEditor
                //won't be clear to the user and I want them to see the message
                Status.Warning( reason );
 
+            }
+            else
+            {
+               if ( node is ExternalConnection )
+               {
+                  VerifyAllLinks( );
+               }
             }
          }
       }
@@ -3219,7 +3398,7 @@ namespace Detox.ScriptEditor
                   {
                      if ( ScriptEditor.FindNodeType(eventNode) == newType.ToString( ) )
                      {
-                        EntityEvent cloned = (EntityEvent) eventNode.Copy( );
+                        EntityEvent cloned = (EntityEvent) eventNode.Copy( true );
                         
                         //copy everything compatible from the old node to the new node
                         cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, oldNode.Parameters );
@@ -3250,7 +3429,7 @@ namespace Detox.ScriptEditor
                {
                   if ( ScriptEditor.FindNodeType(logicNode) == newType.ToString( ) )
                   {
-                     LogicNode cloned = (LogicNode) logicNode.Copy( );
+                     LogicNode cloned = (LogicNode) logicNode.Copy( true );
 
                      //copy everything compatible from the old node to the new node
                      cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, oldNode.Parameters);                  

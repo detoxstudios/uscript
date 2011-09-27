@@ -1753,12 +1753,12 @@ namespace Detox.FlowChart
             }
             else
             {
-               e.Graphics.FillRectangle(StyleName, nodeRect, "");
+               e.Graphics.FillRectangle(StyleName, nodeRect, "", this);
             }
          }
          else
          {
-            e.Graphics.FillRectangle(StyleName, nodeRect, Name);
+            e.Graphics.FillRectangle(StyleName, nodeRect, Name, this);
    
             FlowChartCtrl flowChart = Parent as FlowChartCtrl;
 
@@ -1821,6 +1821,14 @@ namespace Detox.FlowChart
                //we do Size.Height + 14 because we want some text to be able to hang off of the
                //bottom of the node.  In a perfect world we would require a rect in the TextPoint struct
                //but I think that is too big of a chance for Retail Beta
+               if ( ((Detox.ScriptEditor.DisplayNode)this).EntityNode is Detox.ScriptEditor.CommentNode )
+               {
+                  Detox.ScriptEditor.CommentNode comment = (Detox.ScriptEditor.CommentNode) ((Detox.ScriptEditor.DisplayNode)this).EntityNode;
+
+                  GUIStyle commentStyle = uScriptConfig.Style.Get(TextPoints[i].StyleName);
+                  commentStyle.normal.textColor = (UnityEngine.Color) comment.BodyTextColor.DefaultAsObject;
+               }
+               
                GUI.Label( new Rect(x + location.X, y + location.Y, ZoomSize.Width - x, (ZoomSize.Height + 14) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
             }
 

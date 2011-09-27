@@ -16,26 +16,30 @@ using System.Collections;
 [FriendlyName("Delay")]
 public class uScriptAct_Delay : uScriptLogic
 {
-   public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    private float m_TimeToTrigger;
+   private bool  m_DelayedOut;
+   private bool  m_ImmediateOut;
 
    [FriendlyName("Immediate Out")]
-   public bool Immediate { get { return true; } }
+   public bool Immediate { get { return m_ImmediateOut; } }
   
    [FriendlyName("Delayed Out")]
-   public event uScriptEventHandler AfterDelay;
+   public bool AfterDelay { get { return m_DelayedOut; } }
 
    [FriendlyName("In")]
    public void In(
       [FriendlyName("Duration")] float Duration
    )
    {
+      m_ImmediateOut = true;
+      m_DelayedOut = false;
       m_TimeToTrigger = Duration;
    }
 
    public void OnDestroy( ) {}
 
-   public void Update( )
+   [Driven]
+   public bool DrivenDelay( )
    {
       if ( m_TimeToTrigger > 0 )
       {
@@ -43,9 +47,13 @@ public class uScriptAct_Delay : uScriptLogic
       
          if ( m_TimeToTrigger <= 0 )
          {
-            if ( AfterDelay != null ) AfterDelay( this, new System.EventArgs());
+            m_ImmediateOut = false;
+            m_DelayedOut = true;
+            return true;
          }
       }
+
+      return false;
    }
 }
 

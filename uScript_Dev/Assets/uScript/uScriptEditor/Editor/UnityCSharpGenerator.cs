@@ -39,11 +39,23 @@ namespace Detox.ScriptEditor
       List<string>    m_RequiredMethods    = new List<string>( );
 
       private void Preprocess( )
-      {         
+      {  
+         CreateGuidIndices( );
          CreateGlobalVariables( );
          CreateBidirectionalLinks( );
          PruneUnusedNodes( );
          RemoveOverriddenInstances( );
+         ConslidateExternals( );
+      }
+
+      //setup all the guids now so 
+      //indices are not node order dependent
+      private void CreateGuidIndices( )
+      {
+         foreach ( EntityNode node in m_Script.EntityNodes )
+         {
+            GetGuidId( node.Guid );
+         }
       }
 
       //short cut method to figure out just the external links/parameters
@@ -185,6 +197,62 @@ namespace Detox.ScriptEditor
          foreach ( LinkNode link in newLinks )
          {
             m_Script.AddNode( link );
+         }
+      }
+
+      private void ConslidateExternals( )
+      {
+         ExternalConnection []externals = m_Script.Externals;
+         Hashtable unique = new Hashtable( );
+
+         //build lists, keyed by external name
+         //so we can consolidate all the links to the same external
+         foreach ( ExternalConnection external in externals )
+         {
+            if ( null == unique[external.Name.Default] )
+            {
+               unique[ external.Name.Default ] = new List<ExternalConnection>( );
+            }
+
+            List<ExternalConnection> list = unique[ external.Name.Default ] as List<ExternalConnection>;
+            list.Add( external );
+         }
+
+         //for each external list...
+         foreach ( object o in unique.Values )
+         {
+            List<ExternalConnection> list = o as List<ExternalConnection>;
+
+            //the first one in the list is where we will consolidate
+            ExternalConnection external = list[ 0 ];
+
+            //every subsequent one, replace the links with the links to the consolidated one
+            //and then remove the subsequent one (which will also remove its links)
+            for ( int i = 1; i < list.Count; i++ )
+            {
+               ExternalConnection e = list[ i ];
+
+               LinkNode [] sources = FindLinksBySource( e.Guid, e.Connection );         
+               LinkNode [] dests   = FindLinksByDestination( e.Guid, e.Connection );   
+
+               m_Script.RemoveNode( e );
+
+               foreach ( LinkNode source in sources )
+               {
+                  LinkNode clone = source;
+                  clone.Source.Guid = external.Guid;
+
+                  m_Script.AddNode( clone );
+               }
+ 
+               foreach ( LinkNode dest in dests )
+               {
+                  LinkNode clone = dest;
+                  clone.Destination.Guid = external.Guid;
+
+                  m_Script.AddNode( clone );
+               }
+            }
          }
       }
 
@@ -1155,7 +1223,10 @@ namespace Detox.ScriptEditor
                   }
                   else
                   {
-                     declaration += cast + element.Trim() + ",";
+                     string value = element.Trim();
+                     if ( "" == value ) value = "0";
+
+                     declaration += cast + value + ",";
                   }
                }
 
@@ -2224,14 +2295,12 @@ namespace Detox.ScriptEditor
       //create the external function outsiders can call
       private void DefineExternalInput( ExternalConnection externalInput )
       {
-         List<Parameter>  parameters = new List<Parameter>( );
-         List<EntityNode> nodes      = new List<EntityNode>( );
-
-         List<ExternalConnection> externals  = new List<ExternalConnection>( );
-         Hashtable uniqueMatches = new Hashtable( );
+         Hashtable uniqueParameters = new Hashtable( );
 
          foreach ( ExternalConnection external in m_Script.Externals )
          {
+            if ( null != uniqueParameters[ external.Name.Default ] ) continue;
+
             LinkNode []links = FindLinksBySource( external.Guid, external.Connection );
 
             foreach ( LinkNode link in links )
@@ -2242,16 +2311,7 @@ namespace Detox.ScriptEditor
                {
                   if ( p.Name == link.Destination.Anchor )
                   {
-                     string key = node.Guid + "" + p.Name;
-
-                     if ( false == uniqueMatches.Contains(key) )
-                     {
-                        uniqueMatches[ key ] = true;
-
-                        parameters.Add( p );
-                        nodes.Add( node );
-                        externals.Add( external );
-                     }
+                     uniqueParameters[ external.Name.Default ] = p;
                   }
                }
             
@@ -2266,22 +2326,23 @@ namespace Detox.ScriptEditor
 
             foreach ( LinkNode link in links )
             {
+               //the link ends at our external
+               //so if it's already used as a source, change it to a ref
+               if ( null != uniqueParameters[ external.Name.Default ] ) 
+               {
+                  Parameter p = (Parameter) uniqueParameters[ external.Name.Default ];
+                  p.Output = true;
+                  uniqueParameters[ external.Name.Default ] = p;
+                  continue;
+               }
+
                EntityNode node = m_Script.GetNode( link.Source.Guid );
 
                foreach ( Parameter p in node.Parameters )
                {
                   if ( p.Name == link.Source.Anchor )
                   {
-                     string key = node.Guid + "" + p.Name;
-
-                     if ( false == uniqueMatches.Contains(key) )
-                     {
-                        uniqueMatches[ key ] = true;
-
-                        parameters.Add( p );
-                        nodes.Add( node );
-                        externals.Add( external );
-                     }
+                     uniqueParameters[ external.Name.Default ] = p;
                   }
                }
 
@@ -2292,25 +2353,24 @@ namespace Detox.ScriptEditor
 
          string args = "";
 
-         for ( int i = 0; i < parameters.Count; i++ )
+         foreach ( string key in uniqueParameters.Keys )
          {
-            Parameter p  = parameters[ i ];
-            ExternalConnection e = externals[ i ];
-         
+            Parameter p  = (Parameter) uniqueParameters[ key ];
+
             if ( true == p.Input && false == p.Output )
             {
-               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default).FriendlyName + "\")] ";
-               args += FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default).Name + ", ";
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\")] ";
+               args += FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(key).Name + ", ";
             }
             else if ( true == p.Input && true == p.Output )
             {
-               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default).FriendlyName + "\")] ";
-               args += "ref " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default).Name + ", ";
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\")] ";
+               args += "ref " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(key).Name + ", ";
             }
             else if ( false == p.Input && true == p.Output )
             {
-               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(e.Name.Default).FriendlyName + "\")] ";
-               args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(e.Name.Default).Name + ", ";
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\")] ";
+               args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(key).Name + ", ";
             }
          }
  
@@ -2359,12 +2419,11 @@ namespace Detox.ScriptEditor
             //they match for every method signature
             if ( 0 == m_ExternalParameters.Count )
             {
-               for ( int i = 0; i < parameters.Count; i++ )
+               foreach ( string key in uniqueParameters.Keys )
                {
-                  Parameter p  = parameters[ i ];
-                  ExternalConnection e = externals[ i ];
+                  Parameter p  = (Parameter) uniqueParameters[ key ];
                
-                  Plug plug = CSharpExternalParameterDeclaration(e.Name.Default);
+                  Plug plug = CSharpExternalParameterDeclaration(key);
 
                   Parameter clone = p;
                   clone.FriendlyName = plug.FriendlyName;

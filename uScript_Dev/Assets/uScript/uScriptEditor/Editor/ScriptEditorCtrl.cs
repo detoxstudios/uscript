@@ -1147,7 +1147,7 @@ namespace Detox.ScriptEditor
          {
             foreach (object obj in m_ContextObject)
             {
-               entityNode = (EntityNode) ((EntityNode) item.Tag).Copy( );
+               entityNode = (EntityNode) ((EntityNode) item.Tag).Copy( false );
       
                entityNode.Position = new Point( m_ContextCursor.X + offset.X, m_ContextCursor.Y + offset.Y );
                object contextObject = obj;
@@ -1192,7 +1192,7 @@ namespace Detox.ScriptEditor
          }
          else
          {
-            entityNode = (EntityNode) ((EntityNode) item.Tag).Copy( );
+            entityNode = (EntityNode) ((EntityNode) item.Tag).Copy( false );
    
             entityNode.Position = new Point( m_ContextCursor.X, m_ContextCursor.Y );
             if ( "" != uScript.Instance.AutoAssignInstance(entityNode) )
@@ -1406,7 +1406,7 @@ namespace Detox.ScriptEditor
       {
          foreach ( LogicNode node in m_ScriptEditor.LogicNodes )
          {
-            if (node.Type == type) return node.Copy();
+            if (node.Type == type) return node.Copy( false );
          }
          
          return null;
@@ -2876,7 +2876,7 @@ namespace Detox.ScriptEditor
                String comment = m_EntityNode.Comment.Default;
                Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
             
-               e.Graphics.FillRectangle("title_comment", new Rectangle(location.X, location.Y, Size.Width, Size.Height), comment);
+               e.Graphics.FillRectangle("title_comment", new Rectangle(location.X, location.Y, Size.Width, Size.Height), comment, this);
             }
          }
 

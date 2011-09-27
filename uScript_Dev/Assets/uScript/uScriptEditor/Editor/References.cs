@@ -1041,30 +1041,26 @@ namespace System.Drawing
          GUI.color = NormalColor;
       }
 
-      public void FillRectangle( string styleName, Rectangle rectangle, string nodeName )
+      public void FillRectangle( string styleName, Rectangle rectangle, string nodeName, Detox.FlowChart.Node node )
       {
          if (styleName.Contains("comment"))
          {
-            // This code will set the colors for each comment node when drawn on the canvas.
-			
-			// Grab the "norml" color and store it.
-            UnityEngine.Color NormalColor = GUI.color;
-				
-			// Set the comment's node color.
-            //GUI.color = CommentNodeColor;
-				
-			// Set the comment Title text color.
-			GUIStyle commentStyle = uScriptConfig.Style.Get(styleName);
-			commentStyle.fontSize = 12;
-			//commentStyle.normal.textColor = CommentTitleTextColor;
-			
-			// Set the comment Body text color.
-			// I think the comment body text is it's own control drawn elsewhere, so I am am not sure how/where to set it.
-			
-            GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), nodeName, commentStyle); //uScriptConfig.Style.Get(styleName));
-				//Debug.Log("Style: " + styleName);
-            GUI.color = NormalColor;
+   			UnityEngine.Color normalColor = GUI.color;
 
+		      GUIStyle commentStyle = uScriptConfig.Style.Get(styleName);
+		      commentStyle.fontSize = 12;
+
+            if ( ((Detox.ScriptEditor.DisplayNode)node).EntityNode is Detox.ScriptEditor.CommentNode )
+            {
+               Detox.ScriptEditor.CommentNode comment = (Detox.ScriptEditor.CommentNode) ((Detox.ScriptEditor.DisplayNode)node).EntityNode;
+
+               GUI.color = (UnityEngine.Color) comment.NodeColor.DefaultAsObject;   				
+               commentStyle.normal.textColor = (UnityEngine.Color) UnityEngine.Color.black;
+            }
+			
+            GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), nodeName, commentStyle);
+
+            GUI.color = normalColor;
          }
          else
          {
