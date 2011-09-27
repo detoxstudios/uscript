@@ -5,6 +5,8 @@
 using UnityEngine;
 using System.Collections;
 
+[NodeDeprecated(typeof(uScriptAct_CreateRelativeRectScreen))]
+
 [NodePath("Actions/Screen")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
@@ -41,7 +43,7 @@ public class uScriptAct_CreateScreenCenterRect : uScriptLogic
 
       // Find Center Left and Top
       RectLeft = ((Screen.width / 2) - (RectWidth / 2));
-      RectTop = ((Screen.height / 2) - (RectWidth / 2));
+      RectTop = ((Screen.height / 2) - (RectHeight / 2));
 
       Rect finalRect = new Rect(RectLeft, RectTop, RectWidth, RectHeight);
       OutputRect = finalRect;
