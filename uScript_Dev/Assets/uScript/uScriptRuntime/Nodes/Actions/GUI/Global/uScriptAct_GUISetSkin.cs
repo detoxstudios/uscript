@@ -18,7 +18,7 @@ public class uScriptAct_GUISetSkin : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In([FriendlyName("Skin")] GUISkin skin)
+   public void In([RequiresLink][FriendlyName("Skin")] GUISkin skin)
    {
       GUI.skin = skin;
    }

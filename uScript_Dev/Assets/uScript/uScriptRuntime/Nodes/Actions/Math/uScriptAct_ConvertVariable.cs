@@ -9,7 +9,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Converts a variable into another type.")]
-[NodeDescription("Converts a variable into another type.\n \nTarget: The Target variable to be converted.\nInt Value (out): The Target variable represented as an integer.\nFloat Value (out): The Target variable represented as a floating point value.\nString Value (out): The Target variable represented as a string.\nBoolean Value (out): The Target variable represented as a Boolean (true/false) value.")]
+[NodeDescription("Converts a variable into another type.\n \nTarget: The Target variable to be converted.\nInt Value (out): The Target variable represented as an integer.\nFloat Value (out): The Target variable represented as a floating point value.\nString Value (out): The Target variable represented as a string.\nBoolean Value (out): The Target variable represented as a Boolean (true/false) value.\nVector3Value (out): The Target variable represented as a Vector3 value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Convert_Variable")]
 
@@ -22,13 +22,16 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       [FriendlyName("Int Value")] out int IntValue,
       [FriendlyName("Float Value")] out float FloatValue,
       [FriendlyName("String Value")] out string StringValue,
-      [FriendlyName("Boolean Value")] out bool BooleanValue
+      [FriendlyName("Boolean Value")] out bool BooleanValue,
+      [FriendlyName("Vector3 Value")] out Vector3 Vector3Value
+
       )
    {
       int tempIntValue = 0;
       float tempFloatValue = 0F;
       string tempStringValue = Target.ToString();
       bool tempBooleanValue = false;
+      Vector3 tempVector3Value = Vector3.zero;
 
       // Convert from GameObject
       if (typeof(GameObject) == Target.GetType())
@@ -85,6 +88,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       else if (typeof(Vector3) == Target.GetType())
       {
          Vector3 tmpTarget = (Vector3)Target;
+         tempVector3Value = tmpTarget;
 
          if (tmpTarget.ToString() == "(0.0, 0.0, 0.0)")
          {
@@ -275,5 +279,6 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       FloatValue = tempFloatValue;
       StringValue = tempStringValue;
       BooleanValue = tempBooleanValue;
+      Vector3Value = tempVector3Value;
    }
 }
