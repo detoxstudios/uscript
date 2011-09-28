@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.1104
+//uScript Generated Code - Build 0.9.1297
 using UnityEngine;
 using System.Collections;
 
@@ -14,6 +14,10 @@ public class uScript_TestBed_Component : uScriptCode
       useGUILayout = false;
       uScript = ScriptableObject.CreateInstance(typeof(uScript_TestBed)) as uScript_TestBed;
       uScript.SetParent( this.gameObject );
+   }
+   void Start( )
+   {
+      uScript.Start( );
    }
    void Update( )
    {
