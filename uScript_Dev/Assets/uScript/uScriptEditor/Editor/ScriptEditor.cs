@@ -86,18 +86,449 @@ namespace Detox.ScriptEditor
       public bool IsHidden( )  { return 0 != (State & VisibleState.Hidden); }
       public bool IsLocked( )  { return 0 != (State & VisibleState.Locked); }
 
+      private object ParseArray(string t, string value)
+      {
+         string []values = value.Split( ',' );
+
+         if ( t == "Bool[]" )
+         {
+            try
+            {
+               bool[] array = new bool[ values.Length + 1 ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = "true" == values[ i ];
+               }
+
+               return array;
+            }
+            catch { return new bool[0]; }
+         }
+         if ( t == "Color[]" )
+         {
+            try
+            {
+               int num = (values.Length + 1) / 4;
+
+               UnityEngine.Color[] array = new UnityEngine.Color[ num ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = new UnityEngine.Color( Single.Parse(values[i*4+0]), Single.Parse(values[i*4+1]), Single.Parse(values[i*4+2]), Single.Parse(values[i*4+3]) );
+               }
+
+               return array;
+            }
+            catch { return new UnityEngine.Color[0]; }
+         }
+         if ( t == "Float[]" )
+         {
+            try
+            {
+               float[] array = new float[ values.Length + 1 ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = Single.Parse(values[i]);
+               }
+
+               return array;
+            }
+            catch { return new float[0]; }
+         }
+         if ( t == "Int[]" )
+         {
+            try
+            {
+               int[] array = new int[ values.Length + 1 ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = Int32.Parse(values[i]);
+               }
+
+               return array;
+            }
+            catch { return new int[0]; }
+         }
+         if ( t == "Vector2[]" )
+         {
+            try
+            {
+               int num = (values.Length + 1) / 2;
+
+               Vector2[] array = new Vector2[ num ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = new Vector2( Single.Parse(values[i*2+0]), Single.Parse(values[i*2+1]) );
+               }
+
+               return array;
+            }
+            catch { return new Vector2[0]; }
+         }
+         if ( t == "Vector3[]" )
+         {
+            try
+            {
+               int num = (values.Length + 1) / 3;
+
+               Vector3[] array = new Vector3[ num ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = new Vector3( Single.Parse(values[i*3+0]), Single.Parse(values[i*3+1]), Single.Parse(values[i*3+2]) );
+               }
+
+               return array;
+            }
+            catch { return new Vector2[0]; }
+         }
+         if ( t == "Vector4[]" )
+         {
+            try
+            {
+               int num = (values.Length + 1) / 4;
+
+               Vector4[] array = new Vector4[ num ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = new Vector4( Single.Parse(values[i*4+0]), Single.Parse(values[i*4+1]), Single.Parse(values[i*4+2]), Single.Parse(values[i*4+3]) );
+               }
+
+               return array;
+            }
+            catch { return new Vector4[0]; }
+         }
+         if ( t == "Rect[]" )
+         {
+            try
+            {
+               int num = (values.Length + 1) / 4;
+
+               Rect[] array = new Rect[ num ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = new Rect( Single.Parse(values[i*4+0]), Single.Parse(values[i*4+1]), Single.Parse(values[i*4+2]), Single.Parse(values[i*4+3]) );
+               }
+
+               return array;
+            }
+            catch { return new Rect[0]; }
+         }
+         if ( t == "Quaternion[]" )
+         {
+            try
+            {
+               int num = (values.Length + 1) / 4;
+
+               Quaternion[] array = new Quaternion[ num ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = new Quaternion( Single.Parse(values[i*4+0]), Single.Parse(values[i*4+1]), Single.Parse(values[i*4+2]), Single.Parse(values[i*4+3]) );
+               }
+
+               return array;
+            }
+            catch { return new Quaternion[0]; }
+         }
+         if ( t == "LayerMask[]" )
+         {
+            try
+            {
+               LayerMask[] array = new LayerMask[ values.Length + 1 ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = Int32.Parse(values[i]);
+               }
+
+               return array;
+            }
+            catch { return new LayerMask[0]; }
+         }
+         if ( t == "String[]" )
+         {
+            try
+            {
+               String[] array = new String[ values.Length + 1 ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = values[i];
+               }
+
+               return array;
+            }
+            catch { return new String[0]; }
+         }
+
+         System.Type eType = uScript.MasterComponent.GetType(t.Replace("[]", ""));
+   
+         if (eType == null)
+         {
+            eType = uScript.MasterComponent.GetAssemblyQualifiedType(this.Type);
+
+            if (eType != null)
+            {
+               uScript.MasterComponent.AddType(eType);
+            }
+         }
+         
+         if ( eType != null && typeof(System.Enum).IsAssignableFrom(eType) )
+         {
+            try
+            {
+               object[] array = new object[ values.Length + 1 ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  array[ i ] = System.Enum.Parse(eType, values[i]);
+               }
+
+               return array;
+            }
+            catch 
+            {
+               return new System.Enum[0];
+            }
+         }
+
+         return null;
+      }
+
+      public string ArrayToString(string t, object values)
+      {
+         string result = "";
+
+         if ( t == "Bool[]" )
+         {
+            try
+            {
+               bool [] array = (bool[]) values;
+               foreach ( bool a in array )
+               {
+                  result += a + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+         if ( t == "Color[]" )
+         {
+            try
+            {
+               UnityEngine.Color [] array = (UnityEngine.Color[]) values;
+               foreach ( UnityEngine.Color a in array )
+               {
+                  result += a.r + "," + a.g + "," + a.b + "," + a.a + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+         if ( t == "Float[]" )
+         {
+            try
+            {
+               float [] array = (float[]) values;
+               foreach ( float a in array )
+               {
+                  result += a + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+         if ( t == "Int[]" )
+         {
+            try
+            {
+               int [] array = (int[]) values;
+               foreach ( int a in array )
+               {
+                  result += a + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+               return result;
+            }
+            catch { return ""; }
+         }
+         if ( t == "Vector2[]" )
+         {
+            try
+            {
+               Vector2 [] array = (Vector2[]) values;
+               foreach ( Vector2 a in array )
+               {
+                  result += a.x + "," + a.y + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+         if ( t == "Vector3[]" )
+         {
+            try
+            {
+               Vector3 [] array = (Vector3[]) values;
+               foreach ( Vector3 a in array )
+               {
+                  result += a.x + "," + a.y + "," + a.z + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+         if ( t == "Vector4[]" )
+         {
+            try
+            {
+               Vector4 [] array = (Vector4[]) values;
+               foreach ( Vector4 a in array )
+               {
+                  result += a.x + "," + a.y + "," + a.z + "," + a.w + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+         if ( t == "Rect[]" )
+         {
+            try
+            {
+               Rect [] array = (Rect[]) values;
+               foreach ( Rect a in array )
+               {
+                  result += a.x + "," + a.y + "," + a.width + "," + a.height + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+         if ( t == "Quaternion[]" )
+         {
+            try
+            {
+               Quaternion [] array = (Quaternion[]) values;
+               foreach ( Quaternion a in array )
+               {
+                  result += a.x + "," + a.y + "," + a.z + "," + a.w + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+         if ( t == "LayerMask[]" )
+         {
+            try
+            {
+               LayerMask [] array = (LayerMask[]) values;
+               foreach ( LayerMask a in array )
+               {
+                  result += a + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+         if ( t == "String[]" )
+         {
+            try
+            {
+               string [] array = (string[]) values;
+               foreach ( string a in array )
+               {
+                  result += a + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+
+         System.Type eType = uScript.MasterComponent.GetType(t.Replace("[]", ""));
+
+         if (eType == null)
+         {
+            eType = uScript.MasterComponent.GetAssemblyQualifiedType(this.Type);
+            if (eType != null)
+            {
+               uScript.MasterComponent.AddType(eType);
+            }
+         }
+         
+         if ( eType != null && typeof(System.Enum).IsAssignableFrom(eType) )
+         {
+            try
+            {
+               object [] array = (object[]) values;
+               foreach ( object a in array )
+               {
+                  result += a + ",";
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+
+               return result;
+            }
+            catch { return ""; }
+         }
+
+         return "";
+      }
+
       public object DefaultAsKnownObject
       {
          get
          {
-          string type = uScriptConfig.Variable.FriendlyName(Type);
+            string type = uScriptConfig.Variable.FriendlyName(Type);
 
-            //Arrays (lists) can't be set through a property grid, only through multiple links
-            //which means we never worry about our Default value being an array
-            //so we are safe to parse the "List" part out of the type and treat it as
-            //if it was just a single value
-            type = type.Replace( " List", "" );
+            //if it has a friendly name it'll probably have ' List' at the end of it
+            //if it doesn't have a friendly name it'll be the default [] so 
+            //we change ' List' to [] for easy parsing (so we only have to check for one type)
+            type = type.Replace( " List", "[]" );
             type = type.Trim( );
+
+            if ( type.Contains("[]") )
+            {
+               return ParseArray( type, Default );
+            }
 
             if ( type == "Bool" )
             {
@@ -259,13 +690,17 @@ namespace Detox.ScriptEditor
          {
             string type = uScriptConfig.Variable.FriendlyName(Type);
 
-            //Arrays (lists) can't be set through a property grid, only through multiple links
-            //which means we never worry about our Default value being an array
-            //so we are safe to parse the "List" part out of the type and treat it as
-            //if it was just a single value
-            type = type.Replace( " List", "" );
+            //if it has a friendly name it'll probably have ' List' at the end of it
+            //if it doesn't have a friendly name it'll be the default [] so 
+            //we change ' List' to [] for easy parsing (so we only have to check for one type)
+            type = type.Replace( " List", "[]" );
             type = type.Trim( );
 
+            if ( type.Contains("[]") )
+            {
+               Default = ArrayToString( type, value );
+               return;
+            }
             if ( type == "Bool" )  
             {
                try

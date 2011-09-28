@@ -206,6 +206,7 @@ namespace System.Windows.Forms
                      bool isSocketExposed  = p.IsVisible( );
                      bool isReadOnly = false == p.Input;
                      bool isLocked = true == p.IsLocked( );
+                     bool foldout = true;
 
                      if ( false == isLocked )
                      {
@@ -221,6 +222,10 @@ namespace System.Windows.Forms
                         if ( val.GetType() == typeof(System.Boolean) )
                         {
                            val = uScriptGUI.BoolField(p.FriendlyName, (bool) val, ref isSocketExposed, isLocked, isReadOnly);
+                        }
+                        else if ( val.GetType() == typeof(System.Int32[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<System.Int32>(p.FriendlyName, (int[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(System.Int32) )
                         {
