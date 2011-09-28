@@ -16,8 +16,8 @@ using Detox.FlowChart;
 public class uScript : EditorWindow
 {
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string uScriptBuild { get { return "0.9.1256"; } }
-   static string BetaVersion { get { return "Retail Beta 3"; } }
+   public string uScriptBuild { get { return "0.9.1297"; } }
+   static string BetaVersion { get { return "Retail Beta 4"; } }
    public string FullVersionName { get { return BetaVersion + " (" + uScriptBuild + ")"; } }
    public string LastUnityBuild { get { return "3.3"; } }
    public string CurrentUnityBuild { get { return "3.4"; } }
