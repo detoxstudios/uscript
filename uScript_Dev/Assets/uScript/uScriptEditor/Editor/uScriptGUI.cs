@@ -829,15 +829,30 @@ public static class uScriptGUI
       return array;
    }
 
+   static Rect _previousHotRect = new Rect();
 
    public static T ArrayElementRow<T>(ref T[] array, int index, T value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       BeginRow("["+index.ToString()+"]", ref isSocketExposed, isLocked, isReadOnly);
 
+      // Get the last rect to determine where we want to draw the array modifier buttons
       Rect r = GUILayoutUtility.GetLastRect();
 
-      if (r.Contains(Event.current.mousePosition))
+      // Determine the rect for the entire property panel row
+      Rect row = r;
+      row.x = uScriptGUIPanelProperty.Rect.x;
+      row.width = uScriptGUIPanelProperty.Rect.width;
+
+      // When the mouse is over the row
+      if (row.Contains(Event.current.mousePosition))
       {
+         // Draw once if the row has changed
+         if (_previousHotRect != row)
+         {
+            _previousHotRect = row;
+            uScript.Instance.Repaint();
+         }
+
          if (GUI.Button(new Rect(r.xMax-20, r.y, 20, r.height), new GUIContent("R", "Remove this item.")))
          {
             array = ArrayRemove<T>(array, index);
@@ -851,6 +866,15 @@ public static class uScriptGUI
          if (GUI.Button(new Rect(r.xMax-60, r.y, 20, r.height), new GUIContent("I", "Insert a new item before this item.")))
          {
             array = ArrayInsert<T>(array, index, default(T));
+         }
+      }
+      else
+      {
+         // Draw once when the mouse is not over any row
+         if (_previousHotRect != new Rect())
+         {
+            _previousHotRect = new Rect();
+            uScript.Instance.Repaint();
          }
       }
 

@@ -55,6 +55,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 //   string resourcePath = string.Empty;
 
 //   bool tmpBool = false;
+//   int[] tmpArray = new int[]{};
 
 
    public override void Draw()
@@ -93,6 +94,9 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 //                  resourcePath = uScriptGUI.ResourcePathField(resourcePath, ref tmpBool, false, false);
 //                  assetPath = uScriptGUI.AssetPathField(assetType, assetPath, ref tmpBool, false, false);
 
+//                  tmpArray = uScriptGUI.ArrayFoldout<int>("Int Array", tmpArray, ref tmpBool, false, false);
+//                  uScriptGUI.Separator();
+
                   if (m_ScriptEditorCtrl != null) m_ScriptEditorCtrl.PropertyGrid.OnPaint();
                }
                uScriptGUI.EndColumns();
@@ -106,6 +110,11 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
          }
       }
       EditorGUILayout.EndVertical();
+
+      if (Event.current.type == EventType.Repaint)
+      {
+         _rect = GUILayoutUtility.GetLastRect();
+      }
 
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Property);
       uScriptInstance.SetMouseRegion(uScript.MouseRegion.Properties);

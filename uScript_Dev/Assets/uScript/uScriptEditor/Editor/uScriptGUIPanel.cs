@@ -119,7 +119,8 @@ public abstract class uScriptGUIPanel
 //   protected uScriptGUI.Region _region;
 //   public uScriptGUI.Region Region { get { return _region; } }
 
-   protected Rect _rect;
+   static protected Rect _rect;
+   static public Rect Rect { get { return _rect; } }
    
 //   protected int _size;
 //   public int Size
