@@ -30,7 +30,7 @@ public class AssetBrowserWindow : EditorWindow
 
    static public AssetType assetType;
    static public string assetFilePath = string.Empty;
-   static public string propertyKey = string.Empty;
+   static public string nodeKey = string.Empty;
 
    static List<string> _assetExtensions = null;                // contains the extensions supported by AssetType
    static List<string> _assetFullPath = new List<string>();    // contains raw paths of all assets

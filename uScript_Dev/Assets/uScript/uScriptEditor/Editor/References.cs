@@ -206,7 +206,6 @@ namespace System.Windows.Forms
                      bool isSocketExposed  = p.IsVisible( );
                      bool isReadOnly = false == p.Input;
                      bool isLocked = true == p.IsLocked( );
-                     bool foldout = true;
 
                      if ( false == isLocked )
                      {
@@ -221,7 +220,7 @@ namespace System.Windows.Forms
                      {
                         if ( val.GetType() == typeof(System.Boolean[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<System.Boolean>(p.FriendlyName, (Boolean[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<System.Boolean>(p.FriendlyName, (Boolean[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(System.Boolean) )
                         {
@@ -229,7 +228,7 @@ namespace System.Windows.Forms
                         }
                         else if ( val.GetType() == typeof(System.Int32[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<System.Int32>(p.FriendlyName, (int[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<System.Int32>(p.FriendlyName, (int[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(System.Int32) )
                         {
@@ -237,7 +236,7 @@ namespace System.Windows.Forms
                         }
                         else if ( val.GetType() == typeof(System.Single[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<System.Single>(p.FriendlyName, (Single[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<System.Single>(p.FriendlyName, (Single[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(System.Single) )
                         {
@@ -245,7 +244,7 @@ namespace System.Windows.Forms
                         }
                         else if ( val.GetType() == typeof(System.Double[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<System.Double>(p.FriendlyName, (Double[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<System.Double>(p.FriendlyName, (Double[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(System.Double) )
                         {
@@ -253,7 +252,7 @@ namespace System.Windows.Forms
                         }
                         else if ( val.GetType() == typeof(Vector2[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<Vector2>(p.FriendlyName, (Vector2[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<Vector2>(p.FriendlyName, (Vector2[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(Vector2) )
                         {
@@ -261,7 +260,7 @@ namespace System.Windows.Forms
                         }
                         else if ( val.GetType() == typeof(Rect[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<Rect>(p.FriendlyName, (Rect[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<Rect>(p.FriendlyName, (Rect[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(Rect) )
                         {
@@ -269,7 +268,7 @@ namespace System.Windows.Forms
                         }
                         else if ( val.GetType() == typeof(Vector3[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<Vector3>(p.FriendlyName, (Vector3[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<Vector3>(p.FriendlyName, (Vector3[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(Vector3) )
                         {
@@ -277,7 +276,7 @@ namespace System.Windows.Forms
                         }
                         else if ( val.GetType() == typeof(Vector4[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<Vector4>(p.FriendlyName, (Vector4[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<Vector4>(p.FriendlyName, (Vector4[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(Vector4) )
                         {
@@ -285,7 +284,7 @@ namespace System.Windows.Forms
                         }
                         else if ( val.GetType() == typeof(Quaternion[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<Quaternion>(p.FriendlyName, (Quaternion[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<Quaternion>(p.FriendlyName, (Quaternion[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(Quaternion) )
                         {
@@ -293,7 +292,7 @@ namespace System.Windows.Forms
                         }
                         else if ( val.GetType() == typeof(UnityEngine.Color[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<UnityEngine.Color>(p.FriendlyName, (UnityEngine.Color[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<UnityEngine.Color>(p.FriendlyName, (UnityEngine.Color[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(UnityEngine.Color) )
                         {
@@ -301,7 +300,7 @@ namespace System.Windows.Forms
                         }
                         else if ( val.GetType() == typeof(UnityEngine.LayerMask[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<UnityEngine.LayerMask>(p.FriendlyName, (UnityEngine.LayerMask[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<UnityEngine.LayerMask>(p.FriendlyName, (UnityEngine.LayerMask[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( typeof(UnityEngine.LayerMask).IsAssignableFrom(val.GetType()) )
                         {
@@ -348,7 +347,7 @@ namespace System.Windows.Forms
                         }
                         else if ( typeof(System.Enum[]).IsAssignableFrom(val.GetType()) )
                         {
-                           val = uScriptGUI.ArrayFoldout<System.Enum>(p.FriendlyName, (System.Enum[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout<System.Enum>(p.FriendlyName, (System.Enum[]) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
                         {

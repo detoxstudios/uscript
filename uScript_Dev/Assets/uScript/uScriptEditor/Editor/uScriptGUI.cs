@@ -45,9 +45,9 @@ public static class uScriptGUI
    public static string _previousControl = string.Empty;
 
    static Dictionary<string, bool> _foldoutExpanded = new Dictionary<string, bool>();
-   static Dictionary<string, object> _modifiedValue = new Dictionary<string, object>();
+//   static Dictionary<string, object> _modifiedValue = new Dictionary<string, object>();
 
-   static string _propertyKey = string.Empty;
+   static string _nodeKey = string.Empty;
    static int _propertyCount;
 
 
@@ -187,10 +187,10 @@ public static class uScriptGUI
       ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
 
       _propertyCount++;
-      _propertyKey = node.Guid.ToString();
-      if (false == _foldoutExpanded.ContainsKey(_propertyKey))
+      _nodeKey = node.Guid.ToString();
+      if (false == _foldoutExpanded.ContainsKey(_nodeKey))
       {
-         _foldoutExpanded[_propertyKey] = true;
+         _foldoutExpanded[_nodeKey] = true;
       }
 
       GUILayout.BeginHorizontal();
@@ -209,7 +209,7 @@ public static class uScriptGUI
 //            label += "\t\t--- DEPRECATED ---";
          }
 
-         _foldoutExpanded[_propertyKey] = GUILayout.Toggle(_foldoutExpanded[_propertyKey], label, uScriptGUIStyle.nodeButtonLeft);
+         _foldoutExpanded[_nodeKey] = GUILayout.Toggle(_foldoutExpanded[_nodeKey], label, uScriptGUIStyle.nodeButtonLeft);
 
          GUI.color = tmpColor;
          uScriptGUIStyle.nodeButtonLeft.normal.textColor = textColor;
@@ -270,13 +270,13 @@ public static class uScriptGUI
       }
       GUILayout.EndHorizontal();
 
-      return _foldoutExpanded[_propertyKey];
+      return _foldoutExpanded[_nodeKey];
    }
 
 
    public static void EndProperty()
    {
-      if (_foldoutExpanded[_propertyKey])
+      if (_foldoutExpanded[_nodeKey])
       {
          Separator();
       }
@@ -728,28 +728,16 @@ public static class uScriptGUI
    }
 
 
-   public static T[] ArrayFoldout<T>(string label, T[] array, ref bool foldout, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   public static T[] ArrayFoldout<T>(string label, T[] array, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      T[] newArray = array;
-      int arraySize;
       string type;
       Vector2 v;
 
-
-
-
-      if (_modifiedValue.ContainsKey(label))
+      string propertyKey = _nodeKey + "_" + label;
+      if (false == _foldoutExpanded.ContainsKey(propertyKey))
       {
-         arraySize = (int)_modifiedValue[label];
+         _foldoutExpanded[propertyKey] = true;
       }
-      else
-      {
-         arraySize = array.Length;
-         _modifiedValue.Add(label, arraySize);
-      }
-
-
-
 
       //
       // The Foldout row
@@ -777,7 +765,7 @@ public static class uScriptGUI
          }
          else
          {
-            foldout = GUILayout.Toggle(foldout, label, EditorStyles.foldout, GUILayout.Width(_columnLabel.Width - 3));
+            _foldoutExpanded[propertyKey] = GUILayout.Toggle(_foldoutExpanded[propertyKey], label, EditorStyles.foldout, GUILayout.Width(_columnLabel.Width - 3));
          }
 
          uScriptGUI.enabled = (! isReadOnly) && (! isSocketExposed || ! isLocked);
@@ -785,15 +773,18 @@ public static class uScriptGUI
          // Display the array info, readonly, socketUsed, or an empty area
          if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
-            if (foldout)
+            GUILayout.Label("... (" + array.Length + " item" + (array.Length==1 ? string.Empty : "s") + ")", _styleLabel, GUILayout.Width(_columnValue.Width));
+
+            Rect r = GUILayoutUtility.GetLastRect();
+            if (GUI.Button(new Rect(r.xMax-20, r.y, 20, r.height), new GUIContent("+", "Add a new item to the end of the array.")))
             {
-               GUILayout.Space(_columnValue.Width + 4);
-            }
-            else
-            {
-               GUILayout.Label("(" + arraySize + " item" + (arraySize==1 ? string.Empty : "s") + ")", _styleLabel, GUILayout.Width(_columnValue.Width));
+               array = ArrayAppend<T>(array, default(T));
             }
 
+            if (GUI.Button(new Rect(r.xMax-40, r.y, 20, r.height), new GUIContent("{}", "Remove all items from the array.")))
+            {
+               array = new T[]{};
+            }
          }
 
          // Display the type column
@@ -811,98 +802,58 @@ public static class uScriptGUI
       //
       EditorGUILayout.BeginVertical();
       {
-         if (foldout)
+         if (_foldoutExpanded[propertyKey])
          {
             bool hideSocket = false;
 
-            EditorGUI.indentLevel += 3;
-
-            BeginRow("Size", ref hideSocket, true, false);
-
-            GUI.SetNextControlName(label+"_ArraySize");
-            arraySize = EditorGUILayout.IntField(arraySize, GUILayout.Width(_columnValue.Width));
-
-            // Handle keyboard events while the control is focused
-            if (Event.current.type == EventType.KeyDown && GUI.GetNameOfFocusedControl() == label+"_ArraySize")
-            {
-               // TAB
-               if (Event.current.keyCode == KeyCode.Tab)
-               {
-                  Debug.Log("============== TAB was pressed to change the control\n" + Event.current.type.ToString());
-                  _previousControl = GUI.GetNameOfFocusedControl();
-               }
-
-               // ENTER
-               if (Event.current.keyCode == KeyCode.Escape ||
-                   Event.current.keyCode == KeyCode.KeypadEnter ||
-                   Event.current.keyCode == KeyCode.Return)
-               {
-                  Debug.Log("=============== '"+Event.current.keyCode.ToString()+"' was pressed\n");
-               }
-            }
-
-//            if (_focusedControl != GUI.GetNameOfFocusedControl())
-//            {
-//               Debug.Log("============== Changed");
-//            }
-
-            if (_previousControl == (label+"_ArraySize") && arraySize != array.Length)
-            {
-               _previousControl = string.Empty;
-               Debug.Log("Committing change to '"+label+"_ArraySize with "+ arraySize +"\n");
-               Debug.Log( "arraySize:"+arraySize+" is not equal to array.Length:"+array.Length+"\n");
-
-               arraySize = Mathf.Clamp(arraySize, 0, 32);
-
-               newArray = new T[arraySize];
-               if (_modifiedValue.ContainsKey(label))
-               {
-                  _modifiedValue.Remove(label);
-               }
-            }
-            else
-            {
-               _modifiedValue[label] = arraySize;
-            }
-
-            // Display the type column
-            EndRow(arraySize.GetType().ToString());
+            EditorGUI.indentLevel += 2;
 
             //
             // The elements
             //
-            for (int i = 0; i < newArray.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
                T entry = default(T);
                if (i < array.Length)
                {
                   entry = array[i];
                }
-               newArray[i] = PropertyRow<T>("Element " + i, entry, ref hideSocket, true, false);
+               array[i] = ArrayElementRow<T>(ref array, i, entry, ref hideSocket, true, false);
             }
 
-            EditorGUI.indentLevel -= 3;
+            EditorGUI.indentLevel -= 2;
          }
       }
       EditorGUILayout.EndVertical();
 
-      return newArray;
+      return array;
    }
 
 
-   public static int ArraySizeField(int size)
+   public static T ArrayElementRow<T>(ref T[] array, int index, T value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      //int newSize = 
+      BeginRow("["+index.ToString()+"]", ref isSocketExposed, isLocked, isReadOnly);
 
+      Rect r = GUILayoutUtility.GetLastRect();
 
+      if (r.Contains(Event.current.mousePosition))
+      {
+         if (GUI.Button(new Rect(r.xMax-20, r.y, 20, r.height), new GUIContent("R", "Remove this item.")))
+         {
+            array = ArrayRemove<T>(array, index);
+         }
 
-      return size;
-   }
+         if (GUI.Button(new Rect(r.xMax-40, r.y, 20, r.height), new GUIContent("C", "Insert a copy of this item.")))
+         {
+            array = ArrayInsert<T>(array, index, array[index]);
+         }
+   
+         if (GUI.Button(new Rect(r.xMax-60, r.y, 20, r.height), new GUIContent("I", "Insert a new item before this item.")))
+         {
+            array = ArrayInsert<T>(array, index, default(T));
+         }
+      }
 
-
-   public static T PropertyRow<T>(string label, T value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
-   {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       object t = value;
       string typeFormat = string.Empty;
@@ -1021,7 +972,39 @@ public static class uScriptGUI
    }
 
 
-	public static string ToolbarSearchField(string value, params GUILayoutOption[] options)
+   static T[] ArrayAppend<T>(T[] array, T val)
+   {
+      List<T> list = new List<T>(array);
+      list.Add(val);
+      return list.ToArray();
+   }
+
+   static T[] ArrayInsert<T>(T[] array, int index, T val)
+   {
+      if (index < 0 || index >= array.Length)
+      {
+         uScriptDebug.Log("The specified index ("+index+") is out of range [0.."+(array.Length-1)+"]",uScriptDebug.Type.Error);
+         return array;
+      }
+      List<T> list = new List<T>(array);
+      list.Insert(index, val);
+      return list.ToArray();
+   }
+
+   static T[] ArrayRemove<T>(T[] array, int index)
+   {
+      if (index < 0 || index >= array.Length)
+      {
+         uScriptDebug.Log("The specified index ("+index+") is out of range [0.."+(array.Length-1)+"]",uScriptDebug.Type.Error);
+         return array;
+      }
+      List<T> list = new List<T>(array);
+      list.RemoveAt(index);
+      return list.ToArray();
+   }
+
+
+   public static string ToolbarSearchField(string value, params GUILayoutOption[] options)
 	{
 		// Unity's built-in search field is internal. Lame.
 		//
@@ -1229,7 +1212,7 @@ public static class uScriptGUI
             AssetBrowserWindow.assetType = assetType;
             AssetBrowserWindow.assetFilePath = assetPath;
             AssetBrowserWindow.shouldOpen = true;
-            AssetBrowserWindow.propertyKey = _propertyKey;
+            AssetBrowserWindow.nodeKey = _nodeKey;
 
 //            AssetBrowserWindow.Init(resourcePath, AssetBrowserWindow.AssetType.Texture);
 //            AssetBrowserWindow.FocusWindowIfItsOpen<AssetBrowserWindow>();
@@ -1239,7 +1222,7 @@ public static class uScriptGUI
 //            Debug.Log("Results: " + filepath + "\n");
          }
 
-         if (AssetBrowserWindow.propertyKey == _propertyKey)
+         if (AssetBrowserWindow.nodeKey == _nodeKey)
          {
             //only get it once, don't continue to get it
             //because it'll override changes from other areas
