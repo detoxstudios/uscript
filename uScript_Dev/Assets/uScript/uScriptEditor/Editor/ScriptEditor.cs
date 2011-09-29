@@ -299,7 +299,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         return null;
+         return t;
       }
 
       public string ArrayToString(string t, object values)
@@ -510,7 +510,7 @@ namespace Detox.ScriptEditor
             catch { return ""; }
          }
 
-         return "";
+         return values.ToString( );
       }
 
       public object DefaultAsKnownObject

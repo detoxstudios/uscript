@@ -1022,6 +1022,10 @@ namespace Detox.ScriptEditor
 
             return stringValue;
          }
+         else if ( "UnityEngine.NetworkMessageInfo" == type )
+         {
+            return "new UnityEngine.NetworkMessageInfo( )";
+         }
          else if ( type.Contains("[]") )
          {
             return FormatArrayValue( stringValue, type );
@@ -1202,6 +1206,45 @@ namespace Detox.ScriptEditor
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new UnityEngine.NetworkPlayer[0]"; }
+         }
+         else if ( "UnityEngine.Camera[]" == type )
+         {
+            try
+            {
+               declaration = "new UnityEngine.Camera[] {";
+
+               for ( int i = 0; i < elements.Length; i++ )
+               {
+                  declaration += "null,";
+               };
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new UnityEngine.Camera[0]"; }
+         }
+         else if ( "System.Boolean[]" == type )
+         {
+            try
+            {
+               declaration = "new System.Boolean[] {";
+
+               for ( int i = 0; i < elements.Length; i++ )
+               {
+                  string value = elements[i].Trim();
+                  if ( "" == value ) value = "false";
+
+                  declaration += value + ",";
+               };
+
+               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               declaration += "}";
+            }
+            catch ( Exception ) { declaration = "new UnityEngine.Boolean[0]"; }
+         }
+         else if ( "UnityEngine.ContactPoint[]" == type )
+         {
+            declaration = "new UnityEngine.ContactPoint[ " + elements.Length + " ]";;
          }
          else
          {
