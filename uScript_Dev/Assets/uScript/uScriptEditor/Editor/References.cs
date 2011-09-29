@@ -219,7 +219,11 @@ namespace System.Windows.Forms
 
                      if ( false == uScript.GetRequiresLink(parameters.EntityNode, p.Name) )
                      {
-                        if ( val.GetType() == typeof(System.Boolean) )
+                        if ( val.GetType() == typeof(System.Boolean[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<System.Boolean>(p.FriendlyName, (Boolean[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                        }
+                        else if ( val.GetType() == typeof(System.Boolean) )
                         {
                            val = uScriptGUI.BoolField(p.FriendlyName, (bool) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
@@ -231,37 +235,73 @@ namespace System.Windows.Forms
                         {
                            val = uScriptGUI.IntField(p.FriendlyName, (int) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
+                        else if ( val.GetType() == typeof(System.Single[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<System.Single>(p.FriendlyName, (Single[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                        }
                         else if ( val.GetType() == typeof(System.Single) )
                         {
                            val = uScriptGUI.FloatField(p.FriendlyName, (float) val, ref isSocketExposed, isLocked, isReadOnly);
+                        }
+                        else if ( val.GetType() == typeof(System.Double[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<System.Double>(p.FriendlyName, (Double[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(System.Double) )
                         {
                            val = (double) uScriptGUI.FloatField(p.FriendlyName, (float) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
+                        else if ( val.GetType() == typeof(Vector2[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<Vector2>(p.FriendlyName, (Vector2[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                        }
                         else if ( val.GetType() == typeof(Vector2) )
                         {
                            val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2) val, ref isSocketExposed, isLocked, isReadOnly);
+                        }
+                        else if ( val.GetType() == typeof(Rect[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<Rect>(p.FriendlyName, (Rect[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(Rect) )
                         {
                            val = uScriptGUI.RectField(p.FriendlyName, (Rect) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
+                        else if ( val.GetType() == typeof(Vector3[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<Vector3>(p.FriendlyName, (Vector3[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                        }
                         else if ( val.GetType() == typeof(Vector3) )
                         {
                            val = uScriptGUI.Vector3Field(p.FriendlyName, (Vector3) val, ref isSocketExposed, isLocked, isReadOnly);
+                        }
+                        else if ( val.GetType() == typeof(Vector4[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<Vector4>(p.FriendlyName, (Vector4[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( val.GetType() == typeof(Vector4) )
                         {
                            val = uScriptGUI.Vector4Field(p.FriendlyName, (Vector4) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
+                        else if ( val.GetType() == typeof(Quaternion[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<Quaternion>(p.FriendlyName, (Quaternion[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                        }
                         else if ( val.GetType() == typeof(Quaternion) )
                         {
                            val = uScriptGUI.QuaternionField(p.FriendlyName, (Quaternion) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
+                        else if ( val.GetType() == typeof(UnityEngine.Color[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<UnityEngine.Color>(p.FriendlyName, (UnityEngine.Color[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
+                        }
                         else if ( val.GetType() == typeof(UnityEngine.Color) )
                         {
                            val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color) val, ref isSocketExposed, isLocked, isReadOnly);
+                        }
+                        else if ( val.GetType() == typeof(UnityEngine.LayerMask[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<UnityEngine.LayerMask>(p.FriendlyName, (UnityEngine.LayerMask[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( typeof(UnityEngine.LayerMask).IsAssignableFrom(val.GetType()) )
                         {
@@ -305,6 +345,10 @@ namespace System.Windows.Forms
    //                        // ...
    //                        // 31  Unnamed 31
 
+                        }
+                        else if ( typeof(System.Enum[]).IsAssignableFrom(val.GetType()) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<System.Enum>(p.FriendlyName, (System.Enum[]) val, ref foldout, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
                         {

@@ -136,7 +136,7 @@ namespace Detox.Data.ScriptEditor
          ShowComment.FriendlyName = "Output Comment";
          ShowComment.Name         = "Output Comment";
          ShowComment.Default      = "false";
-         ShowComment.Type         = "Bool";
+         ShowComment.Type         = typeof(bool).ToString( );
          ShowComment.Input        = true;
          ShowComment.Output       = false;
          ShowComment.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -145,7 +145,7 @@ namespace Detox.Data.ScriptEditor
          Comment.FriendlyName = "Comment";
          Comment.Name         = "Comment";
          Comment.Default      = "";
-         Comment.Type         = "String";
+         Comment.Type         = typeof(String).ToString( );
          Comment.Input        = true;
          Comment.Output       = false;
          Comment.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -178,7 +178,7 @@ namespace Detox.Data.ScriptEditor
             ShowComment.FriendlyName = "Output Comment";
             ShowComment.Name         = "Output Comment";
             ShowComment.Default      = "false";
-            ShowComment.Type         = "Bool";
+            ShowComment.Type         = typeof(bool).ToString( );
             ShowComment.Input        = true;
             ShowComment.Output       = false;
             ShowComment.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -187,7 +187,7 @@ namespace Detox.Data.ScriptEditor
             Comment.FriendlyName = "Comment";
             Comment.Name         = "Comment";
             Comment.Default      = "";
-            Comment.Type         = "String";
+            Comment.Type         = typeof(String).ToString( );
             Comment.Input        = true;
             Comment.Output       = false;
             Comment.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -281,7 +281,7 @@ namespace Detox.Data.ScriptEditor
             Name.FriendlyName = "Name";
             Name.Input   = false;
             Name.Output  = false;
-            Name.Type    = "String";
+            Name.Type    = typeof(String).ToString( );
             Name.Default = "";
             Name.State   = Parameter.VisibleState.Visible;
          }
@@ -738,7 +738,7 @@ namespace Detox.Data.ScriptEditor
             Width = new Parameter( );
             Width.Name    = "Width";
             Width.FriendlyName = "Width";
-            Width.Type         = "Int";
+            Width.Type         = typeof(int).ToString( );
             Width.Input        = true;
             Width.Output       = false;
             Width.Default      = intArray[0];
@@ -747,7 +747,7 @@ namespace Detox.Data.ScriptEditor
             Height = new Parameter( );
             Height.Name    = "Height";
             Height.FriendlyName = "Height";
-            Height.Type         = "Int";
+            Height.Type         = typeof(int).ToString( );
             Height.Input        = true;
             Height.Output       = false;
             Height.Default      = intArray.Length > 1 ? intArray[1] : "0";
@@ -758,7 +758,7 @@ namespace Detox.Data.ScriptEditor
             Width = new Parameter( );
             Width.Name    = "Width";
             Width.FriendlyName = "Width";
-            Width.Type         = "Int";
+            Width.Type         = typeof(int).ToString( );
             Width.Input        = true;
             Width.Output       = false;
             Width.Default      = "0";
@@ -767,7 +767,7 @@ namespace Detox.Data.ScriptEditor
             Height = new Parameter( );
             Height.Name    = "Height";
             Height.FriendlyName = "Height";
-            Height.Type         = "Int";
+            Height.Type         = typeof(int).ToString( );
             Height.Input        = true;
             Height.Output       = false;
             Height.Default      = "0";
@@ -840,7 +840,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterSerializer : ITypeSerializer
    {
-      public int Version { get { return 4; } }
+      public int Version { get { return 5; } }
       public string SerializableType { get { return typeof(Parameter).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -870,6 +870,14 @@ namespace Detox.Data.ScriptEditor
          parameter.Type    = reader.ReadString( );
          parameter.Input   = reader.ReadBoolean( );
          parameter.Output  = reader.ReadBoolean( );
+
+         if ( serializer.CurrentVersion < 5 )
+         {
+            if ( "Int"    == parameter.Type ) parameter.Type = typeof(int).ToString( );
+            if ( "String" == parameter.Type ) parameter.Type = typeof(String).ToString( );
+            if ( "Color"  == parameter.Type ) parameter.Type = typeof(UnityEngine.Color).ToString( );
+            if ( "Bool"   == parameter.Type ) parameter.Type = typeof(bool).ToString( );
+         }
 
          if ( serializer.CurrentVersion > 2 )
          {
@@ -917,7 +925,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterArraySerializer : ITypeSerializer
    {
-      public int Version { get { return 4; } }
+      public int Version { get { return 6; } }
       public string SerializableType { get { return typeof(Parameter[]).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -951,6 +959,14 @@ namespace Detox.Data.ScriptEditor
             parameters[ i ].Type    = reader.ReadString( );
             parameters[ i ].Input   = reader.ReadBoolean( );
             parameters[ i ].Output  = reader.ReadBoolean( );
+
+            if ( serializer.CurrentVersion < 5 )
+            {
+               if ( "Int"    == parameters[ i ].Type ) parameters[ i ].Type = typeof(int).ToString( );
+               if ( "String" == parameters[ i ].Type ) parameters[ i ].Type = typeof(String).ToString( );
+               if ( "Color"  == parameters[ i ].Type ) parameters[ i ].Type = typeof(UnityEngine.Color).ToString( );
+               if ( "Bool"   == parameters[ i ].Type ) parameters[ i ].Type = typeof(bool).ToString( );
+            }
 
             if ( serializer.CurrentVersion > 2 )
             {

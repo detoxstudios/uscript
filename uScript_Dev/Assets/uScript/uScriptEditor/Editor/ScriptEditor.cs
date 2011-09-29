@@ -90,7 +90,7 @@ namespace Detox.ScriptEditor
       {
          string []values = value.Split( ',' );
 
-         if ( t == "Bool[]" )
+         if ( t == typeof(bool[]).ToString() )
          {
             try
             {
@@ -105,7 +105,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new bool[0]; }
          }
-         if ( t == "Color[]" )
+         if ( t == typeof(UnityEngine.Color[]).ToString() )
          {
             try
             {
@@ -122,7 +122,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new UnityEngine.Color[0]; }
          }
-         if ( t == "Float[]" )
+         if ( t == typeof(float[]).ToString() )
          {
             try
             {
@@ -137,7 +137,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new float[0]; }
          }
-         if ( t == "Int[]" )
+         if ( t == typeof(int[]).ToString() )
          {
             try
             {
@@ -152,7 +152,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new int[0]; }
          }
-         if ( t == "Vector2[]" )
+         if ( t == typeof(Vector2[]).ToString() )
          {
             try
             {
@@ -169,7 +169,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new Vector2[0]; }
          }
-         if ( t == "Vector3[]" )
+         if ( t == typeof(Vector3[]).ToString() )
          {
             try
             {
@@ -186,7 +186,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new Vector2[0]; }
          }
-         if ( t == "Vector4[]" )
+         if ( t == typeof(Vector4[]).ToString() )
          {
             try
             {
@@ -203,7 +203,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new Vector4[0]; }
          }
-         if ( t == "Rect[]" )
+         if ( t == typeof(Rect[]).ToString() )
          {
             try
             {
@@ -220,7 +220,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new Rect[0]; }
          }
-         if ( t == "Quaternion[]" )
+         if ( t == typeof(Quaternion[]).ToString() )
          {
             try
             {
@@ -237,7 +237,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new Quaternion[0]; }
          }
-         if ( t == "LayerMask[]" )
+         if ( t == typeof(LayerMask[]).ToString() )
          {
             try
             {
@@ -252,7 +252,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new LayerMask[0]; }
          }
-         if ( t == "String[]" )
+         if ( t == typeof(String[]).ToString() )
          {
             try
             {
@@ -306,7 +306,7 @@ namespace Detox.ScriptEditor
       {
          string result = "";
 
-         if ( t == "Bool[]" )
+         if ( t == typeof(bool[]).ToString() )
          {
             try
             {
@@ -322,7 +322,7 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
-         if ( t == "Color[]" )
+         if ( t == typeof(UnityEngine.Color[]).ToString() )
          {
             try
             {
@@ -338,7 +338,7 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
-         if ( t == "Float[]" )
+         if ( t == typeof(float[]).ToString() )
          {
             try
             {
@@ -354,7 +354,7 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
-         if ( t == "Int[]" )
+         if ( t == typeof(int[]).ToString() )
          {
             try
             {
@@ -369,7 +369,7 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
-         if ( t == "Vector2[]" )
+         if ( t == typeof(UnityEngine.Vector2[]).ToString() )
          {
             try
             {
@@ -385,7 +385,7 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
-         if ( t == "Vector3[]" )
+         if ( t == typeof(UnityEngine.Vector3[]).ToString() )
          {
             try
             {
@@ -401,7 +401,7 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
-         if ( t == "Vector4[]" )
+         if ( t == typeof(Vector4[]).ToString() )
          {
             try
             {
@@ -417,7 +417,7 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
-         if ( t == "Rect[]" )
+         if ( t == typeof(Rect[]).ToString() )
          {
             try
             {
@@ -433,7 +433,7 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
-         if ( t == "Quaternion[]" )
+         if ( t == typeof(Quaternion[]).ToString() )
          {
             try
             {
@@ -449,7 +449,7 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
-         if ( t == "LayerMask[]" )
+         if ( t == typeof(LayerMask[]).ToString() )
          {
             try
             {
@@ -465,7 +465,7 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
-         if ( t == "String[]" )
+         if ( t == typeof(String[]).ToString() )
          {
             try
             {
@@ -517,24 +517,17 @@ namespace Detox.ScriptEditor
       {
          get
          {
-            string type = uScriptConfig.Variable.FriendlyName(Type);
-
-            //if it has a friendly name it'll probably have ' List' at the end of it
-            //if it doesn't have a friendly name it'll be the default [] so 
-            //we change ' List' to [] for easy parsing (so we only have to check for one type)
-            type = type.Replace( " List", "[]" );
-            type = type.Trim( );
-
-            if ( type.Contains("[]") )
+            if ( Type.Contains("[]") )
             {
-               return ParseArray( type, Default );
+               return ParseArray( Type, Default );
             }
 
-            if ( type == "Bool" )
+
+            if ( Type == typeof(bool).ToString( ) )
             {
                return "true" == Default;
             }
-            if ( type == "Color" )
+            if ( Type == typeof(UnityEngine.Color).ToString( ) )
             {
                try
                {
@@ -546,7 +539,7 @@ namespace Detox.ScriptEditor
                   return new UnityEngine.Color(0, 0, 0);
                }
             }
-            if ( type == "Float" )
+            if ( Type == typeof(float).ToString( )  )
             {
                try
                {
@@ -557,7 +550,7 @@ namespace Detox.ScriptEditor
                   return 0.0f;
                }
             }
-            if ( type == "Int" )
+            if ( Type == typeof(int).ToString( )  )
             {
                try
                {
@@ -568,7 +561,7 @@ namespace Detox.ScriptEditor
                   return 0.0f;
                }
             }
-            if ( type == "Vector2" )
+            if ( Type == typeof(Vector2).ToString( )  )
             {
                try
                {
@@ -580,7 +573,7 @@ namespace Detox.ScriptEditor
                   return new Vector2(0, 0);
                }
             }
-            if ( type == "Vector3" )
+            if ( Type == typeof(Vector3).ToString( )  )
             {
                try
                {
@@ -592,7 +585,7 @@ namespace Detox.ScriptEditor
                   return new Vector3(0, 0, 0);
                }
             }
-            if ( type == "Vector4" )
+            if ( Type == typeof(Vector4).ToString( )  )
             {
                try
                {
@@ -605,7 +598,7 @@ namespace Detox.ScriptEditor
                   return new Vector4(0, 0, 0, 0);
                }
             }
-            if ( type == "Rect" )
+            if ( Type == typeof(Rect).ToString( )  )
             {
                try
                {
@@ -618,7 +611,7 @@ namespace Detox.ScriptEditor
                   return new Rect(0, 0, 0, 0);
                }
             }
-            if ( type == "Quaternion" )
+            if ( Type == typeof(Quaternion).ToString( )  )
             {
                try
                {
@@ -631,7 +624,7 @@ namespace Detox.ScriptEditor
                   return new Quaternion(0, 0, 0, 0);
                }
             }
-            if ( type == "UnityEngine.LayerMask" )
+            if ( Type == typeof(LayerMask).ToString( )  )
             {
                try
                {
@@ -642,7 +635,7 @@ namespace Detox.ScriptEditor
                   return (UnityEngine.LayerMask)0;
                }
             }
-            if ( type == "String" )
+            if ( Type == typeof(String).ToString( ) )
             {
                return Default;
             }
@@ -688,20 +681,12 @@ namespace Detox.ScriptEditor
          }
          set
          {
-            string type = uScriptConfig.Variable.FriendlyName(Type);
-
-            //if it has a friendly name it'll probably have ' List' at the end of it
-            //if it doesn't have a friendly name it'll be the default [] so 
-            //we change ' List' to [] for easy parsing (so we only have to check for one type)
-            type = type.Replace( " List", "[]" );
-            type = type.Trim( );
-
-            if ( type.Contains("[]") )
+            if ( Type.Contains("[]") )
             {
-               Default = ArrayToString( type, value );
+               Default = ArrayToString( Type, value );
                return;
             }
-            if ( type == "Bool" )  
+            if ( Type == typeof(bool).ToString( ) )  
             {
                try
                {
@@ -713,17 +698,17 @@ namespace Detox.ScriptEditor
                }
                return;
             }
-            if ( type == "Float" )
+            if ( Type == typeof(float).ToString( )  )
             {
                Default = "" + value;
                return;
             }
-            if ( type == "Int" )
+            if ( Type == typeof(int).ToString( ) )
             {
                Default = "" + value;
                return;
             }
-            if ( type == "Vector2" )
+            if ( Type == typeof(Vector2).ToString( )  )
             {
                try
                {
@@ -736,7 +721,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
-            if ( type == "Vector3" )
+            if ( Type == typeof(Vector3).ToString( )  )
             {
                try
                {
@@ -749,7 +734,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
-            if ( type == "Vector4" )
+            if ( Type == typeof(Vector4).ToString( )  )
             {
                try
                {
@@ -762,7 +747,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
-            if ( type == "Rect" )
+            if ( Type == typeof(Rect).ToString( )  )
             {
                try
                {
@@ -775,7 +760,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
-            if ( type == "Quaternion" )
+            if ( Type == typeof(Quaternion).ToString( )  )
             {
                try
                {
@@ -788,7 +773,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
-            if ( type == "Color" )
+            if ( Type == typeof(UnityEngine.Color).ToString( ) )
             {
                try
                {
@@ -801,7 +786,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
-            if ( type == "String" )
+            if ( Type == typeof(String).ToString( )  )
             {
                Default = value.ToString( );
                return;
@@ -1272,7 +1257,7 @@ namespace Detox.ScriptEditor
          Name.Name    = "Name";
          Name.FriendlyName = "Name";
          Name.Default = "";
-         Name.Type    = "String";
+         Name.Type    = typeof(String).ToString( );
          Name.Input   = true;
          Name.Output  = false;
          Name.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -1281,7 +1266,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Name    = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
-         m_ShowComment.Type    = "Bool";
+         m_ShowComment.Type    = typeof(bool).ToString( );
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
          m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -1290,7 +1275,7 @@ namespace Detox.ScriptEditor
          m_Comment.Name    = "Comment";
          m_Comment.FriendlyName = "Comment";
          m_Comment.Default = "";
-         m_Comment.Type    = "String";
+         m_Comment.Type    = typeof(String).ToString( );
          m_Comment.Input   = true;
          m_Comment.Output  = false;
          m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -1390,7 +1375,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Name    = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
-         m_ShowComment.Type    = "Bool";
+         m_ShowComment.Type    = typeof(bool).ToString( );
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
          m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;;
@@ -1399,7 +1384,7 @@ namespace Detox.ScriptEditor
          m_Comment.Name    = "Comment";
          m_Comment.FriendlyName = "Comment";
          m_Comment.Default = "";
-         m_Comment.Type    = "String";
+         m_Comment.Type    = typeof(String).ToString( );
          m_Comment.Input   = true;
          m_Comment.Output  = false;
          m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;;
@@ -1545,7 +1530,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Name    = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
-         m_ShowComment.Type    = "Bool";
+         m_ShowComment.Type    = typeof(bool).ToString( );
          m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
@@ -1555,7 +1540,7 @@ namespace Detox.ScriptEditor
          m_Comment.Name    = "Comment";
          m_Comment.FriendlyName = "Comment";
          m_Comment.Default = "";
-         m_Comment.Type    = "String";
+         m_Comment.Type    = typeof(String).ToString( );
          m_Comment.Input   = true;
          m_Comment.Output  = false;
          m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -1705,7 +1690,7 @@ namespace Detox.ScriptEditor
          m_TitleText.Name = "Title";
          m_TitleText.FriendlyName = "Title";
          m_TitleText.Default = "Comment";
-         m_TitleText.Type = "String";
+         m_TitleText.Type = typeof(String).ToString( );
          m_TitleText.Input = true;
          m_TitleText.Output = false;
 
@@ -1714,7 +1699,7 @@ namespace Detox.ScriptEditor
          m_TitleTextColor.Name = "TitleColor";
          m_TitleTextColor.FriendlyName = "Title Color";
          m_TitleTextColor.Default = "50, 50, 127";
-         m_TitleTextColor.Type = "Color";
+         m_TitleTextColor.Type = typeof(UnityEngine.Color).ToString( );
          m_TitleTextColor.Input = true;
          m_TitleTextColor.Output = false;
 
@@ -1732,7 +1717,7 @@ namespace Detox.ScriptEditor
          m_BodyTextColor.Name = "BodyColor";
          m_BodyTextColor.FriendlyName = "Body Text Color";
          m_BodyTextColor.Default = "50, 127, 50";
-         m_BodyTextColor.Type = "Color";
+         m_BodyTextColor.Type = typeof(UnityEngine.Color).ToString( );
          m_BodyTextColor.Input = true;
          m_BodyTextColor.Output = false;
 
@@ -1741,14 +1726,14 @@ namespace Detox.ScriptEditor
          m_NodeColor.Name = "NodeColor";
          m_NodeColor.FriendlyName = "Node Color";
          m_NodeColor.Default = "127, 127, 127";
-         m_NodeColor.Type = "Color";
+         m_NodeColor.Type = typeof(UnityEngine.Color).ToString( );
          m_NodeColor.Input = true;
          m_NodeColor.Output = false;
 
          m_Width.Name  = "Width";
          m_Width.State = Parameter.VisibleState.Visible;
          m_Width.FriendlyName = "Width";
-         m_Width.Type  = "Int";
+         m_Width.Type  = typeof(int).ToString( );
          m_Width.ReferenceGuid = "";
          m_Width.Input = true;
          m_Width.Output= false;
@@ -1758,7 +1743,7 @@ namespace Detox.ScriptEditor
          m_Height.ReferenceGuid = "";
          m_Height.State = Parameter.VisibleState.Visible;
          m_Height.FriendlyName = "Height";
-         m_Height.Type  = "Int";
+         m_Height.Type  = typeof(int).ToString( );
          m_Height.Input = true;
          m_Height.Output= false;
          m_Height.Default = "0";
@@ -1931,7 +1916,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Name    = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
-         m_ShowComment.Type    = "Bool";
+         m_ShowComment.Type    = typeof(bool).ToString( );
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
 
@@ -1940,7 +1925,7 @@ namespace Detox.ScriptEditor
          m_Comment.Name    = "Comment";
          m_Comment.FriendlyName = "Comment";
          m_Comment.Default = "";
-         m_Comment.Type    = "String";
+         m_Comment.Type    = typeof(String).ToString( );
          m_Comment.Input   = true;
          m_Comment.Output  = false;
 
@@ -2109,7 +2094,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Name    = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
          m_ShowComment.Default = "false";
-         m_ShowComment.Type    = "Bool";
+         m_ShowComment.Type    = typeof(bool).ToString( );
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
          m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -2118,7 +2103,7 @@ namespace Detox.ScriptEditor
          m_Comment.Name    = "Comment";
          m_Comment.FriendlyName = "Comment";
          m_Comment.Default = "";
-         m_Comment.Type    = "String";
+         m_Comment.Type    = typeof(String).ToString( );
          m_Comment.Input   = true;
          m_Comment.Output  = false;
          m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -2386,7 +2371,7 @@ namespace Detox.ScriptEditor
          m_Name.Output  = false;
          m_Name.Name    = "Name";
          m_Name.FriendlyName = "Name";
-         m_Name.Type    = "String";
+         m_Name.Type    = typeof(String).ToString( );
 
          m_Position = Point.Empty; 
          m_Guid = Guid.NewGuid( ); 
@@ -4435,24 +4420,6 @@ namespace Detox.ScriptEditor
             {
                if ( node.Type == data.Type )
                {
-                  ////TRAPZZ CODE - FORCEABLY CHANGE ANIMATIONCLIPS TO STRINGS
-                  ////REMOVE THIS WHEN WE'RE SURE EVERYONE HAS MIGRATED
-                  //for ( int i = 0; i < data.Parameters.Length; i++ )
-                  //{
-                  //   Detox.Data.ScriptEditor.Parameter p = data.Parameters[ i ];
-
-                  //   if ( p.Type == "UnityEngine.AnimationClip" )
-                  //   {
-                  //      p.Type    = "System.String";
-                        
-                  //      int index = p.Default.LastIndexOf( '/' );
-                  //      if ( index >= 0 && index < p.Default.Length ) p.Default =  p.Default.Substring( index + 1 );
-                  
-                  //      data.Parameters[ i ] = p;
-                  //   }
-                  //}
-                  ////END TRAPZZ CODE
-
                   cloned = node;
                   
                   if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), node.Parameters) &&
@@ -4511,24 +4478,6 @@ namespace Detox.ScriptEditor
 
       private LocalNode CreateLocalNode( LocalNodeData data )
       {
-         //TRAPZZ CODE - FORCEABLY CHANGE ANIMATIONCLIPS TO STRINGS
-         //REMOVE THIS WHEN WE'RE SURE EVERYONE HAS MIGRATED
-         for ( int i = 0; i < data.Parameters.Length; i++ )
-         {
-            Detox.Data.ScriptEditor.Parameter p = data.Parameters[ i ];
-
-            if ( p.Type == "UnityEngine.AnimationClip" )
-            {
-               p.Type = "System.String";
-               
-               int index = p.Default.LastIndexOf( '/' );
-               if ( index >= 0 && index < p.Default.Length ) p.Default =  p.Default.Substring( index + 1 );
-         
-               data.Parameters[ i ] = p;
-            }
-         }
-         //END TRAPZZ CODE
-
          LocalNode local  = new LocalNode( );
          local.Guid       = data.Guid;
          local.Position   = data.Position;
