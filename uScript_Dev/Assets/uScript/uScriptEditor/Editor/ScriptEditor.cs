@@ -94,7 +94,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               bool[] array = new bool[ values.Length + 1 ];
+               bool[] array = new bool[ values.Length ];
 
                for ( int i = 0; i < array.Length; i++ )
                {
@@ -109,7 +109,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               int num = (values.Length + 1) / 4;
+               int num = (values.Length) / 4;
 
                UnityEngine.Color[] array = new UnityEngine.Color[ num ];
 
@@ -126,7 +126,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               float[] array = new float[ values.Length + 1 ];
+               float[] array = new float[ values.Length ];
 
                for ( int i = 0; i < array.Length; i++ )
                {
@@ -141,7 +141,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               int[] array = new int[ values.Length + 1 ];
+               int[] array = new int[ values.Length ];
 
                for ( int i = 0; i < array.Length; i++ )
                {
@@ -156,7 +156,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               int num = (values.Length + 1) / 2;
+               int num = (values.Length) / 2;
 
                Vector2[] array = new Vector2[ num ];
 
@@ -173,7 +173,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               int num = (values.Length + 1) / 3;
+               int num = (values.Length) / 3;
 
                Vector3[] array = new Vector3[ num ];
 
@@ -190,7 +190,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               int num = (values.Length + 1) / 4;
+               int num = (values.Length) / 4;
 
                Vector4[] array = new Vector4[ num ];
 
@@ -207,7 +207,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               int num = (values.Length + 1) / 4;
+               int num = (values.Length) / 4;
 
                Rect[] array = new Rect[ num ];
 
@@ -224,7 +224,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               int num = (values.Length + 1) / 4;
+               int num = (values.Length) / 4;
 
                Quaternion[] array = new Quaternion[ num ];
 
@@ -241,7 +241,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               LayerMask[] array = new LayerMask[ values.Length + 1 ];
+               LayerMask[] array = new LayerMask[ values.Length ];
 
                for ( int i = 0; i < array.Length; i++ )
                {
@@ -256,7 +256,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               String[] array = new String[ values.Length + 1 ];
+               String[] array = new String[ values.Length ];
 
                for ( int i = 0; i < array.Length; i++ )
                {
@@ -284,7 +284,7 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               object[] array = new object[ values.Length + 1 ];
+               object[] array = new object[ values.Length ];
 
                for ( int i = 0; i < array.Length; i++ )
                {
@@ -359,6 +359,7 @@ namespace Detox.ScriptEditor
             try
             {
                int [] array = (int[]) values;
+
                foreach ( int a in array )
                {
                   result += a + ",";
