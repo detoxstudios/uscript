@@ -2736,6 +2736,8 @@ namespace Detox.ScriptEditor
          //starting offset to draw the point and text for each x position
          //point pad preceeding the x and half the point size
          float xOffset = uScriptConfig.Style.BottomSocketLabelGapSize + uScriptConfig.Style.PointSize / 2;
+         
+         float charLength = Graphics.sMeasureString( "W", "value_text" ).Width;
 
          foreach ( Socket socket in sockets )
          {
@@ -2779,8 +2781,10 @@ namespace Detox.ScriptEditor
                // Draw the socket value label under the socket
                if ( null != socket.DefaultValue )
                {
+                  int sizeForLabel = (int)((xStep + textLength.Width) / charLength);
+
                   string text = socket.DefaultValue;
-                  if ( text.Length > 9 ) text = text.Substring( 0, 6 ) + "...";
+                  if ( text.Length > sizeForLabel ) text = text.Substring( 0, sizeForLabel ) + "...";
 
                   SizeF valueLength = Graphics.sMeasureString( text, "value_text" );
 
