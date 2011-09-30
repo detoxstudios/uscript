@@ -2781,10 +2781,11 @@ namespace Detox.ScriptEditor
                // Draw the socket value label under the socket
                if ( null != socket.DefaultValue )
                {
-                  int sizeForLabel = (int)((xStep + textLength.Width) / charLength);
+                  int charsForLabel = (int)(((xStep + textLength.Width) * 1.75f) / charLength);
+                  charsForLabel = Math.Max( 3, charsForLabel );
 
                   string text = socket.DefaultValue;
-                  if ( text.Length > sizeForLabel ) text = text.Substring( 0, sizeForLabel ) + "...";
+                  if ( text.Length > charsForLabel ) text = text.Substring( 0, charsForLabel - 3 ) + "...";
 
                   SizeF valueLength = Graphics.sMeasureString( text, "value_text" );
 
