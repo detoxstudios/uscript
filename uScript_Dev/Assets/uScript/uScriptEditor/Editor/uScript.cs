@@ -944,6 +944,9 @@ public class uScript : EditorWindow
          return;
       }
 
+      //must be done in OnGUI rather than on demand
+      m_ScriptEditorCtrl.ParseClipboardData( );
+
       GUI.enabled = isLicenseAccepted && !isPreferenceWindowOpen;
 
       // Set the default mouse region

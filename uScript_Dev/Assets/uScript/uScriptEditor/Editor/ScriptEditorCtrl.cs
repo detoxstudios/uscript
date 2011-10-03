@@ -97,6 +97,7 @@ namespace Detox.ScriptEditor
          }
       }
 
+      private string m_ClipboardText = null;
       private ChangeStack m_ChangeStack = new ChangeStack( );
       
       private PropertyGrid m_PropertyGrid = null;
@@ -849,9 +850,20 @@ namespace Detox.ScriptEditor
          }
       }
 
+      //use cached copy we got from OnGUI call
       private string GetClipboardData( )
       {
+         return m_ClipboardText;
+      }
+
+      //has to be called manually from OnGUI rather than
+      //on demand
+      public void ParseClipboardData( )
+      {
+         m_ClipboardText = null;
+
          string text = null;
+
          try
          {
             text = UnityEditor.EditorGUIUtility.systemCopyBuffer;
@@ -860,10 +872,11 @@ namespace Detox.ScriptEditor
          {
          }
          
-         if ( null == text ) return null;
+         if ( null == text ) return;
 
-         if ( false == text.StartsWith("[SCRIPTEDITOR]") ) return null;
-         return text.Substring( "[SCRIPTEDITOR]".Length );
+         if ( false == text.StartsWith("[SCRIPTEDITOR]") )  return;
+
+         m_ClipboardText = text.Substring( "[SCRIPTEDITOR]".Length );
       }
 
       private void ExpandNodes( Node [] nodes )
