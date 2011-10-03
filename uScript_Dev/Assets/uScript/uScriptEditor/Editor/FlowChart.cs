@@ -1078,7 +1078,7 @@ namespace Detox.FlowChart
 
       private void MoveWithCursor( )
       {
-         MoveWithCursor( 1.0f );
+         MoveWithCursor( 1.0f / Zoom );
       }
 
       public override void OnPaint(PaintEventArgs e)
