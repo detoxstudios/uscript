@@ -157,14 +157,18 @@ namespace System.Windows.Forms
          if ( null != PropertyValueChanged ) PropertyValueChanged( this, new PropertyValueChangedEventArgs( ) );
       }
 
+      private Type GetObjectArrayFieldType(string stringType)
+      {
+         Type type = uScript.MasterComponent.GetType(stringType);
+         if ( null == type ) return null;
+
+         if ( typeof(UnityEngine.Object[]).IsAssignableFrom(type) ) return type;
+
+         return null;
+      }
+
       private Type GetObjectFieldType(string stringType)
       {
-         //Arrays (lists) can't be set through a property grid, only through multiple links
-         //which means we never worry about our Default value being an array
-         //so we are safe to parse the "List" part out of the type and treat it as
-         //if it was just a single value
-         stringType = stringType.Replace("[]", "");
-         
          Type type = uScript.MasterComponent.GetType(stringType);
          if ( null == type ) return null;
 
@@ -357,6 +361,10 @@ namespace System.Windows.Forms
                         {
                            val = uScriptGUI.AssetPathField(p.FriendlyName, uScript.GetAssetPathField(parameters.EntityNode, p.Name), p.Default, ref isSocketExposed, isLocked, isReadOnly);
                         }
+                        else if ( null != GetObjectArrayFieldType(p.Type) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<UnityEngine.Object>(p.FriendlyName, (UnityEngine.Object[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                        }
                         else if ( null != GetObjectFieldType(p.Type) )
                         {
                            val = uScriptGUI.ObjectTextField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref isSocketExposed, isLocked, isReadOnly);
@@ -367,16 +375,7 @@ namespace System.Windows.Forms
                         }
                         else
                         {
-                           //if we know what it is allow them to type a string
-                           //if we don't (because it's some new data type) then blank it out and require a link
-                           //if ( null != p.DefaultAsKnownObject )
-                           {
-                              val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
-                           }
-                           //else
-                           //{
-                           //   uScriptGUI.BlankField(p.FriendlyName, "Requires Link", ref isSocketExposed, isLocked);
-                           //}
+                           val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
                         }
                      }
                      else

@@ -2962,6 +2962,27 @@ namespace Detox.ScriptEditor
          EntityNode source = (EntityNode) m_Nodes.Get(link.Source.Guid);
          EntityNode dest   = (EntityNode) m_Nodes.Get(link.Destination.Guid);
 
+         //if something is already connected to this destination
+         //then see if the dest can handle multiple inputs
+         foreach ( LinkNode existingLink in Links )
+         {
+            if ( existingLink.Destination.Guid   == link.Destination.Guid &&
+                 existingLink.Destination.Anchor == link.Destination.Anchor ) 
+            {
+               Parameter p = this.FindNodeParameter( dest, link.Destination.Anchor );
+               if ( p != Parameter.Empty )
+               {
+                  if ( false == p.Type.Contains("[]") )
+                  {
+                     reason = "There is already a connection to " + p.FriendlyName;
+                     return false;
+                  }
+               }
+            }
+         }
+
+
+
          //if a link already exists in the other direction
          //allow the bi-directional link regardless of if the parameters match up
          //for example a string might go into an object in/out
