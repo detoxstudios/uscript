@@ -108,8 +108,25 @@ public static class uScriptGUIStyle
    private static GUIStyle _referenceDesc;
    public static GUIStyle referenceDesc { get { return _referenceDesc; } }
 
+   private static GUIStyle _propertyRowOdd;
+   public static GUIStyle propertyRowOdd { get { return _propertyRowOdd; } }
+
+   private static GUIStyle _propertyRowEven;
+   public static GUIStyle propertyRowEven { get { return _propertyRowEven; } }
+
+   private static GUIStyle _propertyTextField;
+   public static GUIStyle propertyTextField { get { return _propertyTextField; } }
+
+   private static GUIStyle _propertyBoolField;
+   public static GUIStyle propertyBoolField { get { return _propertyBoolField; } }
+
+   private static GUIStyle _propertyArrayButton;
+   public static GUIStyle propertyArrayButton { get { return _propertyArrayButton; } }
 
 
+
+
+   static Texture2D _texture_propertyRowEven = null;
 
    static Texture2D _texture_windowMenuDropDown = null;
    static Texture2D _texture_windowMenuContext = null;
@@ -131,6 +148,11 @@ public static class uScriptGUIStyle
          _texture_windowMenuDropDown = AssetDatabase.LoadAssetAtPath(skinPath + "MenuDropDown.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _texture_windowMenuContext = AssetDatabase.LoadAssetAtPath(skinPath + "MenuContext.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _texture_underline = AssetDatabase.LoadAssetAtPath(skinPath + "Underline.png", typeof(UnityEngine.Texture2D)) as Texture2D;
+
+         // creature some textures manually
+         _texture_propertyRowEven = new Texture2D(1, 1);
+         _texture_propertyRowEven.SetPixel(0, 0, new Color(0, 0, 0, 0.075f));
+         _texture_propertyRowEven.Apply();
       }
       else if (_stylesInitialized)
       {
@@ -322,6 +344,24 @@ public static class uScriptGUIStyle
       _referenceDesc.stretchHeight = false;
       _referenceDesc.stretchWidth = true;
       _referenceDesc.wordWrap = true;
+
+      _propertyTextField = new GUIStyle(EditorStyles.textField);
+      _propertyTextField.margin = new RectOffset(4, 4, 2, 2);
+
+      _propertyBoolField = new GUIStyle(EditorStyles.toggle);
+      _propertyBoolField.margin = new RectOffset(4, 4, 1, 1);
+
+      _propertyArrayButton = new GUIStyle(EditorStyles.miniButton);
+      _propertyArrayButton.fontStyle = FontStyle.Bold;
+      _propertyArrayButton.padding = new RectOffset(0, 2, 1, 1);
+      _propertyArrayButton.contentOffset = new Vector2(0, 1);
+      _propertyArrayButton.alignment = TextAnchor.UpperCenter;
+
+      _propertyRowOdd = new GUIStyle(GUIStyle.none);
+      _propertyRowOdd.fixedHeight = 20;
+
+      _propertyRowEven = new GUIStyle(_propertyRowOdd);
+      _propertyRowEven.normal.background = _texture_propertyRowEven;
 
 //      uScriptGUIStyle.Information(underline);
    }
