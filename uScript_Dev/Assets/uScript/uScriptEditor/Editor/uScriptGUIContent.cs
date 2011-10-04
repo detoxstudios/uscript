@@ -36,6 +36,15 @@ public static class uScriptGUIContent
    private static GUIContent _buttonPreferences;
    public static GUIContent buttonPreferences { get { return _buttonPreferences; } }
 
+   private static GUIContent _buttonSaveModeDebug;
+   public static GUIContent buttonSaveModeDebug { get { return _buttonSaveModeDebug; } }
+
+   private static GUIContent _buttonSaveModeQuick;
+   public static GUIContent buttonSaveModeQuick { get { return _buttonSaveModeQuick; } }
+
+   private static GUIContent _buttonSaveModeRelease;
+   public static GUIContent buttonSaveModeRelease { get { return _buttonSaveModeRelease; } }
+
    private static GUIContent _buttonScriptLoad;
    public static GUIContent buttonScriptLoad { get { return _buttonScriptLoad; } }
 
@@ -45,9 +54,6 @@ public static class uScriptGUIContent
    private static GUIContent _buttonScriptOpen;
    public static GUIContent buttonScriptOpen { get { return _buttonScriptOpen; } }
 
-   private static GUIContent _buttonScriptQuickSave;
-   public static GUIContent buttonScriptQuickSave { get { return _buttonScriptQuickSave; } }
-
    private static GUIContent _buttonScriptReload;
    public static GUIContent buttonScriptReload { get { return _buttonScriptReload; } }
 
@@ -56,6 +62,15 @@ public static class uScriptGUIContent
 
    private static GUIContent _buttonScriptSaveAs;
    public static GUIContent buttonScriptSaveAs { get { return _buttonScriptSaveAs; } }
+
+   private static GUIContent _buttonScriptSaveDebug;
+   public static GUIContent buttonScriptSaveDebug { get { return _buttonScriptSaveDebug; } }
+
+   private static GUIContent _buttonScriptSaveQuick;
+   public static GUIContent buttonScriptSaveQuick { get { return _buttonScriptSaveQuick; } }
+
+   private static GUIContent _buttonScriptSaveRelease;
+   public static GUIContent buttonScriptSaveRelease { get { return _buttonScriptSaveRelease; } }
 
    private static GUIContent _buttonScriptSource;
    public static GUIContent buttonScriptSource { get { return _buttonScriptSource; } }
@@ -95,13 +110,19 @@ public static class uScriptGUIContent
 
       _buttonPreferences            = new GUIContent("Preferences...",        "Opens the preferences.");
 
+      _buttonSaveModeDebug          = new GUIContent("Debug",                 "When saved, the generated code will contain debug information.");
+      _buttonSaveModeQuick          = new GUIContent("Quick",                 "When saved, no code will be generated.");
+      _buttonSaveModeRelease        = new GUIContent("Release",               "When saved, the generated code will be free of debug information.");
+
       _buttonScriptLoad             = new GUIContent("Load",                  "Load this uScript.");
       _buttonScriptNew              = new GUIContent("New",                   "Create a new uScript. The active uScript will be closed automatically.");
       _buttonScriptOpen             = new GUIContent("Open...",               "Open a uScript using the file browser.");
-      _buttonScriptQuickSave        = new GUIContent("Quick Save",            "Save the current uScript without generating code.");
       _buttonScriptReload           = new GUIContent("Reload",                "Reload this uScript.");
-      _buttonScriptSave             = new GUIContent("Save",                  "Save this uScript.");
-      _buttonScriptSaveAs           = new GUIContent("Save As...",            "Save the current uScript using the file browser.");
+      _buttonScriptSave             = new GUIContent("Save",                  "Save this uScript using the specified 'save method'.");
+      _buttonScriptSaveAs           = new GUIContent("Save As...",            "Save the current uScript through the file browser using the specified 'save method'.");
+      _buttonScriptSaveDebug        = new GUIContent("Debug Save",            "Save the current uScript and generate debug code.");
+      _buttonScriptSaveQuick        = new GUIContent("Quick Save",            "Save the current uScript without generating code.");
+      _buttonScriptSaveRelease      = new GUIContent("Release Save",          "Save the current uScript and generate code.");
       _buttonScriptSource           = new GUIContent("Source",                "Ping the source file associated with this uScript.");
 
       _buttonScriptsRebuildAll      = new GUIContent("Rebuild All uScripts",  "Rebuild all uScripts in the scene.");

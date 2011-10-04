@@ -141,6 +141,15 @@ public class uScript : EditorWindow
 
    Vector2 _guiHelpScrollPos;
 
+
+   Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
+
+   Rect rectFileMenuButton = new Rect();
+   Rect rectFileMenuWindow = new Rect(20, 20, 10, 10);
+
+   int _saveMethod = 1;    // 0:Quick, 1:Debug, 2:Release
+
+
    /* Palette Variables */
    private List<PaletteMenuItem> _paletteMenuItems;
    bool _paletteFoldoutToggle = false;
@@ -1160,6 +1169,12 @@ public class uScript : EditorWindow
                case KeyCode.Q:
                   FileMenuItem_QuickSave();
                   break;
+               case KeyCode.D:
+                  FileMenuItem_DebugSave();
+                  break;
+               case KeyCode.R:
+                  FileMenuItem_ReleaseSave();
+                  break;
             }
             e.Use();
             break;
@@ -1841,6 +1856,7 @@ public class uScript : EditorWindow
 
       EditorGUILayout.BeginHorizontal();
       {
+//         GUILayout.Label(GUIUtility.keyboardControl + "\t\t" + _statusbarMessage, GUILayout.ExpandWidth(true));
          GUILayout.Label(_statusbarMessage, GUILayout.ExpandWidth(true));
          GUILayout.Label(extraDetails, GUILayout.ExpandWidth(false));
       }
@@ -2586,11 +2602,23 @@ public class uScript : EditorWindow
       }
       DrawMenuItemShortcut("A");
 
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptQuickSave, uScriptGUIStyle.menuDropDownButton))
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveQuick, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_QuickSave();
       }
       DrawMenuItemShortcut("Q");
+
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveDebug, uScriptGUIStyle.menuDropDownButton))
+      {
+         FileMenuItem_DebugSave();
+      }
+      DrawMenuItemShortcut("D");
+
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveRelease, uScriptGUIStyle.menuDropDownButton))
+      {
+         FileMenuItem_ReleaseSave();
+      }
+      DrawMenuItemShortcut("R");
 
       uScriptGUI.HR();
 
@@ -2624,33 +2652,57 @@ public class uScript : EditorWindow
       isFileMenuOpen = false;
    }
 
+
+
+   void RequestSave(bool quick, bool debug, bool rename)
+   {
+      if (quick)
+      {
+//         Debug.Log("QUICK SAVE\n");
+         SaveScript(rename, false);
+      }
+      else
+      {
+//         Debug.Log(debug ? "DEBUG SAVE\n" : "RELEASE SAVE\n");
+         bool saved = false;
+         GenerateDebugInfo = debug;
+
+         AssetDatabase.StartAssetEditing();
+         saved = SaveScript(rename);
+         AssetDatabase.StopAssetEditing();
+
+         GenerateDebugInfo = _saveMethod != 2;  // "Release" is not selected
+
+         if (saved) RefreshScript();
+      }
+      isFileMenuOpen = false;
+   }
+
    void FileMenuItem_Save()
    {
-      AssetDatabase.StartAssetEditing();
-      bool saved = SaveScript(false);
-      AssetDatabase.StopAssetEditing();
-
-      if (saved) RefreshScript();
-
-      isFileMenuOpen = false;
+      RequestSave(_saveMethod == 0, _saveMethod == 1, false);
    }
 
    void FileMenuItem_SaveAs()
    {
-      AssetDatabase.StartAssetEditing();
-      bool saved = SaveScript(true);
-      AssetDatabase.StopAssetEditing();
-
-      if (saved) RefreshScript();
-
-      isFileMenuOpen = false;
+      RequestSave(_saveMethod == 0, _saveMethod == 1, true);
    }
 
    void FileMenuItem_QuickSave()
    {
-      SaveScript(false, false);
-      isFileMenuOpen = false;
+      RequestSave(true, false, false);
    }
+
+   void FileMenuItem_DebugSave()
+   {
+      RequestSave(false, true, false);
+   }
+
+   void FileMenuItem_ReleaseSave()
+   {
+      RequestSave(false, false, false);
+   }
+
 
    void FileMenuItem_RebuildAll()
    {
@@ -2666,12 +2718,6 @@ public class uScript : EditorWindow
       AssetDatabase.Refresh();
       isFileMenuOpen = false;
    }
-
-
-   Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
-
-   Rect rectFileMenuButton = new Rect();
-   Rect rectFileMenuWindow = new Rect(20, 20, 10, 10);
 
 
    void DrawGUIContent()
@@ -2702,16 +2748,21 @@ public class uScript : EditorWindow
 
             GUILayout.FlexibleSpace();
 
+            _saveMethod = uScriptGUI.ToolbarButtonGroup("Save method: ", _saveMethod, new GUIContent[] { uScriptGUIContent.buttonSaveModeQuick, uScriptGUIContent.buttonSaveModeDebug, uScriptGUIContent.buttonSaveModeRelease });
+            GenerateDebugInfo = _saveMethod != 2;  // "Release" is not selected
+
+            GUILayout.FlexibleSpace();
+
             GUIStyle style2 = new GUIStyle(EditorStyles.label);
             style2.padding = new RectOffset(16, 4, 2, 2);
             style2.margin = new RectOffset();
-			GUILayout.Label(FullVersionName, style2); // Changed this to show the build number.
+			   GUILayout.Label(FullVersionName, style2); // Changed this to show the build number.
 				
 			/*
-			GUIStyle style2 = new GUIStyle(EditorStyles.boldLabel);
+   			GUIStyle style2 = new GUIStyle(EditorStyles.boldLabel);
             style2.padding = new RectOffset(16, 4, 2, 2);
             style2.margin = new RectOffset();
-			GUILayout.Label(FullVersionName, style2); // Changed this to show the build number.
+	   		GUILayout.Label(FullVersionName, style2); // Changed this to show the build number.
             if (m_ScriptEditorCtrl != null && !string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptName))
             {
                int dot = m_ScriptEditorCtrl.ScriptName.IndexOf(".");
