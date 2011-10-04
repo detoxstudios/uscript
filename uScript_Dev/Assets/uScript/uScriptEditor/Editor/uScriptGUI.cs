@@ -49,6 +49,7 @@ public static class uScriptGUI
 
    static string _nodeKey = string.Empty;
    static int _propertyCount;
+   static bool _isPropertyRowEven = false;
 
 
 
@@ -99,7 +100,6 @@ public static class uScriptGUI
 
          _styleType = new GUIStyle(EditorStyles.label);
          _styleType.margin.left = 6;
-			
       }
 		
       GUILayout.Label(string.Empty, new GUIStyle(), GUILayout.Height(uScriptGUIStyle.columnHeaderHeight));
@@ -270,6 +270,12 @@ public static class uScriptGUI
       }
       GUILayout.EndHorizontal();
 
+      // add a little extra space after the node foldout
+      GUILayout.Space(2);
+
+      // begin the first property of each node as an "odd" row
+      _isPropertyRowEven = false;
+
       return _foldoutExpanded[_nodeKey];
    }
 
@@ -281,12 +287,36 @@ public static class uScriptGUI
          Separator();
       }
    }
-   
 
-   static void BeginRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+
+   static void BeginFoldoutRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly, ref bool isExpanded)
    {
-      EditorGUILayout.BeginHorizontal();
-      //GUILayout.Space(EditorGUI.indentLevel * 15);
+      SetupRow(label, ref isSocketExposed, isLocked, isReadOnly);
+
+      if (isSocketExposed && isLocked || isReadOnly)
+      {
+         EditorGUILayout.PrefixLabel(label, _styleLabel);
+      }
+      else
+      {
+         isExpanded = GUILayout.Toggle(isExpanded, label, EditorStyles.foldout, GUILayout.Width(_columnLabel.Width - 3));
+      }
+      uScriptGUI.enabled = (! isReadOnly) && (! isSocketExposed || ! isLocked);
+   }
+
+   static void BeginStaticRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      SetupRow(label, ref isSocketExposed, isLocked, isReadOnly);
+
+      EditorGUILayout.PrefixLabel(label, _styleLabel);
+      uScriptGUI.enabled = (! isReadOnly) && (! isSocketExposed || ! isLocked);
+   }
+
+   static void SetupRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      EditorGUILayout.BeginHorizontal((_isPropertyRowEven ? uScriptGUIStyle.propertyRowEven : uScriptGUIStyle.propertyRowOdd));
+      _isPropertyRowEven = !_isPropertyRowEven;
+
       if (isSocketExposed == false && isLocked)
       {
          GUILayout.Space(_columnEnabled.Width + 4);
@@ -297,11 +327,9 @@ public static class uScriptGUI
          isSocketExposed = GUILayout.Toggle(isSocketExposed, string.Empty, _styleEnabled, GUILayout.Width(_columnEnabled.Width));
          uScriptGUI.enabled = true;
       }
-      //EditorGUIUtility.LookLikeInspector();
+
+      // Display the column label
       EditorGUIUtility.LookLikeControls(_columnLabel.Width);
-      EditorGUILayout.PrefixLabel(label, _styleLabel);
-      
-      uScriptGUI.enabled = (! isReadOnly) && (! isSocketExposed || ! isLocked);
    }
 
 
@@ -320,7 +348,7 @@ public static class uScriptGUI
    {
       if ((isSocketExposed && isLocked) || isReadOnly)
       {
-         EditorGUILayout.TextField(isReadOnly ? "(read-only)" : "(socket used)", GUILayout.Width(_columnValue.Width));
+         EditorGUILayout.TextField(isReadOnly ? "(read-only)" : "(socket used)", uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
          return false;
       }
       return true;
@@ -333,12 +361,12 @@ public static class uScriptGUI
 
    public static int IntField(string label, int value, ref bool isSocketExposed, bool isLocked, bool isReadOnly, int min, int max)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          GUI.SetNextControlName(label);
-         value = EditorGUILayout.IntField(value, GUILayout.Width(_columnValue.Width));
+         value = EditorGUILayout.IntField(value, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
       }
 
       EndRow(value.GetType().ToString());
@@ -348,12 +376,12 @@ public static class uScriptGUI
 
    public static float FloatField(string label, float value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          GUI.SetNextControlName(label);
-         value = EditorGUILayout.FloatField(value, GUILayout.Width(_columnValue.Width));
+         value = EditorGUILayout.FloatField(value, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
       }
 
       EndRow(value.GetType().ToString());
@@ -363,12 +391,12 @@ public static class uScriptGUI
 
    public static string TextField(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          GUI.SetNextControlName(label);
-         value = EditorGUILayout.TextField(value, GUILayout.Width(_columnValue.Width));
+         value = EditorGUILayout.TextField(value, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
       }
 
       EndRow(value.GetType().ToString());
@@ -378,7 +406,7 @@ public static class uScriptGUI
 
    public static string TextArea(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
@@ -393,12 +421,12 @@ public static class uScriptGUI
 
    public static bool BoolField(string label, bool value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          GUI.SetNextControlName(label);
-         value = EditorGUILayout.Toggle(value, GUILayout.Width(_columnValue.Width));
+         value = GUILayout.Toggle(value, GUIContent.none, uScriptGUIStyle.propertyBoolField, GUILayout.Width(_columnValue.Width));
       }
 
       EndRow(value.GetType().ToString());
@@ -407,17 +435,17 @@ public static class uScriptGUI
 
    public static void BlankField(string label, string text, ref bool isSocketExposed, bool isLocked)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, true);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, true);
 
       GUI.SetNextControlName(label);
-      EditorGUILayout.TextField(text, GUILayout.Width(_columnValue.Width));
+      EditorGUILayout.TextField(text, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
 
       EndRow("");
    }
 
    public static UnityEngine.Color ColorField(string label, Color value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
@@ -447,7 +475,7 @@ public static class uScriptGUI
 
    public static Vector2 Vector2Field(string label, Vector2 value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
@@ -456,9 +484,9 @@ public static class uScriptGUI
          int p = (_columnValue.Width - spacing) % (w * 2);
 
          GUI.SetNextControlName(label + ".x");
-         value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
+         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
          GUI.SetNextControlName(label + ".y");
-         value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w + p));
+         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
       }
 
       EndRow(value.GetType().ToString() + " [X, Y]");
@@ -468,16 +496,16 @@ public static class uScriptGUI
 
    public static Vector3 Vector3Field(string label, Vector3 value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          int spacing = 8; // 4 * 2
          int w = (_columnValue.Width - spacing) / 3;
          int p = (_columnValue.Width - spacing) % (w * 3);
-         value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-         value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
-         value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w + p));
+         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.z = EditorGUILayout.FloatField(value.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
       }
 
       EndRow(value.GetType().ToString() + " [X, Y, Z]");
@@ -487,17 +515,17 @@ public static class uScriptGUI
 
    public static Vector4 Vector4Field(string label, Vector4 value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-         value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
-         value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w));
-         value.w = EditorGUILayout.FloatField(value.w, GUILayout.Width(w + p));
+         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.z = EditorGUILayout.FloatField(value.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.w = EditorGUILayout.FloatField(value.w, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
       }
 
       EndRow(value.GetType().ToString() + " [X, Y, Z, W]");
@@ -507,17 +535,17 @@ public static class uScriptGUI
 
    public static Rect RectField(string label, Rect value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-         value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
-         value.width = EditorGUILayout.FloatField(value.width, GUILayout.Width(w));
-         value.height = EditorGUILayout.FloatField(value.height, GUILayout.Width(w + p));
+         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.width = EditorGUILayout.FloatField(value.width, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.height = EditorGUILayout.FloatField(value.height, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
       }
 
       EndRow(value.GetType().ToString() + " [X, Y, W, H]");
@@ -527,17 +555,17 @@ public static class uScriptGUI
 
    public static Quaternion QuaternionField(string label, Quaternion value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-         value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
-         value.z = EditorGUILayout.FloatField(value.z, GUILayout.Width(w));
-         value.w = EditorGUILayout.FloatField(value.w, GUILayout.Width(w + p));
+         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.z = EditorGUILayout.FloatField(value.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         value.w = EditorGUILayout.FloatField(value.w, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
       }
 
       EndRow(value.GetType().ToString() + " [X, Y, Z, W]");
@@ -547,17 +575,17 @@ public static class uScriptGUI
 
    public static System.Enum EnumField(string label, System.Enum value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          //int spacing = 12; // 4 * 3
          //int w = (_columnValue.Width - spacing) / 4;
          //int p = (_columnValue.Width - spacing) % (w * 4);
-         //value.x = EditorGUILayout.FloatField(value.x, GUILayout.Width(w));
-         //value.y = EditorGUILayout.FloatField(value.y, GUILayout.Width(w));
-         //value.width = EditorGUILayout.FloatField(value.width, GUILayout.Width(w));
-         //value.height = EditorGUILayout.FloatField(value.height, GUILayout.Width(w + p));
+         //value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         //value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         //value.width = EditorGUILayout.FloatField(value.width, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         //value.height = EditorGUILayout.FloatField(value.height, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
 
          value = EditorGUILayout.EnumPopup(value, GUILayout.Width(_columnValue.Width));
       }
@@ -569,7 +597,7 @@ public static class uScriptGUI
 
    public static int LayerField(string label, int value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
@@ -583,7 +611,7 @@ public static class uScriptGUI
 
    public static string TagField(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
@@ -597,7 +625,7 @@ public static class uScriptGUI
 
    public static string ChoiceField(string label, string value, string[] choices, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
@@ -626,12 +654,12 @@ public static class uScriptGUI
    {
       EditorGUILayout.BeginVertical();
       {
-         BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
          if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
             //first show the text field and get back the same (or changed value)
-            string userText = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
+            string userText = EditorGUILayout.TextField(textValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
             System.Enum newEnum;
 
             //try and turn the text field value back into an enum, if it doesn't work
@@ -643,7 +671,7 @@ public static class uScriptGUI
 
             bool tmpBool = false;
 
-            BeginRow(string.Empty, ref tmpBool, true, isReadOnly);
+            BeginStaticRow(string.Empty, ref tmpBool, true, isReadOnly);
 
             //send the new value to the enum popup and whatever it
             //returns (in case the user modified it here) is what our final value is
@@ -661,18 +689,18 @@ public static class uScriptGUI
    {
       EditorGUILayout.BeginVertical();
       {
-         BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
          if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
-            textValue = EditorGUILayout.TextField(textValue, GUILayout.Width(_columnValue.Width));
+            textValue = EditorGUILayout.TextField(textValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
    
             EndRow(textValue.GetType().ToString());
 
 
             bool tmpBool = false;
 
-            BeginRow(string.Empty, ref tmpBool, true, isReadOnly);
+            BeginStaticRow(string.Empty, ref tmpBool, true, isReadOnly);
 
             // now try and update the object browser with an instance of the specified object
             UnityEngine.Object []objects   = UnityEngine.Object.FindObjectsOfType(type);
@@ -694,7 +722,7 @@ public static class uScriptGUI
                type = typeof(GameObject);
                if ( null != unityObject ) unityObject = ((Component) unityObject).gameObject;
             }
-   
+
             //if we're building with 3.4 then check the client version
             //and figure out which one to display
             #if (UNITY_3_4)
@@ -710,7 +738,7 @@ public static class uScriptGUI
                }
             #else
                //if we're not building with 3.4 then default to the old one
-               unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;               
+               unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
             #endif
    
             // if that object (or the changed object) does exist, use it's name to update the property value
@@ -730,153 +758,132 @@ public static class uScriptGUI
 
    public static T[] ArrayFoldout<T>(string label, T[] array, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      string type;
-      Vector2 v;
-
       string propertyKey = _nodeKey + "_" + label;
-      if (false == _foldoutExpanded.ContainsKey(propertyKey))
-      {
-         _foldoutExpanded[propertyKey] = true;
-      }
+      bool isExpanded = (_foldoutExpanded.ContainsKey(propertyKey) ? _foldoutExpanded[propertyKey] : true);
 
       //
       // The Foldout row
       //
-      EditorGUILayout.BeginHorizontal();
+      BeginFoldoutRow(label, ref isSocketExposed, isLocked, isReadOnly, ref isExpanded);
+
+      // Display the array info, readonly, socketUsed, or an empty area
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         // Display the socket toggle
-         if (isSocketExposed == false && isLocked)
-         {
-            GUILayout.Space(_columnEnabled.Width + 4);
-         }
-         else
-         {
-            uScriptGUI.enabled = false == isLocked;
-            isSocketExposed = GUILayout.Toggle(isSocketExposed, string.Empty, _styleEnabled, GUILayout.Width(_columnEnabled.Width));
-            uScriptGUI.enabled = true;
-         }
+         GUILayout.Label("... (" + array.Length + " item" + (array.Length==1 ? string.Empty : "s") + ")", _styleLabel, GUILayout.Width(_columnValue.Width));
 
-         // Display the foldout
-         EditorGUIUtility.LookLikeControls(_columnLabel.Width);
+         Rect btnRect = GUILayoutUtility.GetLastRect();
+         btnRect.x = btnRect.xMax - 18;
+         btnRect.width = 18;
+         btnRect.height = 16;
 
-         if (isSocketExposed && isLocked || isReadOnly)
+         if (GUI.Button(btnRect, new GUIContent("+", "Add a new item to the end of the array."), uScriptGUIStyle.propertyArrayButton))
          {
-            EditorGUILayout.PrefixLabel(label, _styleLabel);
-         }
-         else
-         {
-            _foldoutExpanded[propertyKey] = GUILayout.Toggle(_foldoutExpanded[propertyKey], label, EditorStyles.foldout, GUILayout.Width(_columnLabel.Width - 3));
+            array = ArrayAppend<T>(array, default(T));
          }
 
-         uScriptGUI.enabled = (! isReadOnly) && (! isSocketExposed || ! isLocked);
+         btnRect.x -= 18;
 
-         // Display the array info, readonly, socketUsed, or an empty area
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (GUI.Button(btnRect, new GUIContent("{ }", "Remove all items from the array."), uScriptGUIStyle.propertyArrayButton))
          {
-            GUILayout.Label("... (" + array.Length + " item" + (array.Length==1 ? string.Empty : "s") + ")", _styleLabel, GUILayout.Width(_columnValue.Width));
-
-            Rect r = GUILayoutUtility.GetLastRect();
-            if (GUI.Button(new Rect(r.xMax-20, r.y, 20, r.height), new GUIContent("+", "Add a new item to the end of the array.")))
-            {
-               array = ArrayAppend<T>(array, default(T));
-            }
-
-            if (GUI.Button(new Rect(r.xMax-40, r.y, 20, r.height), new GUIContent("{}", "Remove all items from the array.")))
-            {
-               array = new T[]{};
-            }
+            array = new T[]{};
          }
-
-         // Display the type column
-         type = array.GetType().ToString().Replace("UnityEngine.", string.Empty);
-         v = _styleType.CalcSize(new GUIContent(type));
-         _columnType.Width = Mathf.Max(_columnType.Width, (int)v.x);
-
-         uScriptGUI.enabled = true;
-         GUILayout.Label(type, _styleType);
       }
-      EditorGUILayout.EndHorizontal();
+
+      EndRow(array.GetType().ToString());
 
       //
       // The array size
       //
-      EditorGUILayout.BeginVertical();
+      if (isExpanded)
       {
-         if (_foldoutExpanded[propertyKey])
+         bool hideSocket = false;
+
+         EditorGUI.indentLevel += 2;
+
+         //
+         // The elements
+         //
+         for (int i = 0; i < array.Length; i++)
          {
-            bool hideSocket = false;
-
-            EditorGUI.indentLevel += 2;
-
-            //
-            // The elements
-            //
-            for (int i = 0; i < array.Length; i++)
+            T entry = default(T);
+            if (i < array.Length)
             {
-               T entry = default(T);
-               if (i < array.Length)
-               {
-                  entry = array[i];
-               }
-               array[i] = ArrayElementRow<T>(ref array, i, entry, ref hideSocket, true, false);
+               entry = array[i];
             }
-
-            EditorGUI.indentLevel -= 2;
+            array[i] = ArrayElementRow<T>(ref array, i, entry, ref hideSocket, true, false);
          }
+
+         EditorGUI.indentLevel -= 2;
       }
-      EditorGUILayout.EndVertical();
+
+      _foldoutExpanded[propertyKey] = isExpanded;
 
       return array;
    }
 
-   static Rect _previousHotRect = new Rect();
 
+   static Rect _previousHotRect = new Rect();
    public static T ArrayElementRow<T>(ref T[] array, int index, T value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      BeginRow("["+index.ToString()+"]", ref isSocketExposed, isLocked, isReadOnly);
+      Rect r1 = GUILayoutUtility.GetLastRect();
+      r1.y = r1.yMax + 2;
 
-      // Get the last rect to determine where we want to draw the array modifier buttons
-      Rect r = GUILayoutUtility.GetLastRect();
+      BeginStaticRow("["+index.ToString()+"]", ref isSocketExposed, isLocked, isReadOnly);
 
-      // Determine the rect for the entire property panel row
-      Rect row = r;
-      row.x = uScriptGUIPanelProperty.Rect.x;
-      row.width = uScriptGUIPanelProperty.Rect.width;
+//      if (Event.current.type == EventType.Repaint)
+//      {
+         // Get the last rect to determine where we want to draw the array modifier buttons
+         Rect btnRect = GUILayoutUtility.GetLastRect();
+         Rect row = btnRect;
 
-      // When the mouse is over the row
-      if (row.Contains(Event.current.mousePosition))
-      {
-         // Draw once if the row has changed
-         if (_previousHotRect != row)
-         {
-            _previousHotRect = row;
-            uScript.Instance.Repaint();
-         }
+         btnRect.x = btnRect.xMax - 18;
+         btnRect.width = 18;
+         btnRect.height = 16;
 
-         if (GUI.Button(new Rect(r.xMax-20, r.y, 20, r.height), new GUIContent("R", "Remove this item.")))
-         {
-            array = ArrayRemove<T>(array, index);
-         }
+         // Determine the rect for the entire property panel row
+         row.x = uScriptGUIPanelProperty.Rect.x;
+         row.width = uScriptGUIPanelProperty.Rect.width;
 
-         if (GUI.Button(new Rect(r.xMax-40, r.y, 20, r.height), new GUIContent("C", "Insert a copy of this item.")))
+         // When the mouse is over the row
+         if (row.Contains(Event.current.mousePosition))
          {
-            array = ArrayInsert<T>(array, index, array[index]);
+            // Draw once if the row has changed
+            if (_previousHotRect != row)
+            {
+               _previousHotRect = row;
+               uScript.Instance.Repaint();
+            }
+//
+            if (GUI.Button(btnRect, new GUIContent("R", "Remove this item."), uScriptGUIStyle.propertyArrayButton))
+            {
+               array = ArrayRemove<T>(array, index);
+            }
+
+            btnRect.x -= 18;
+
+            if (GUI.Button(btnRect, new GUIContent("C", "Insert a copy of this item."), uScriptGUIStyle.propertyArrayButton))
+            {
+               array = ArrayInsert<T>(array, index, array[index]);
+            }
+
+            btnRect.x -= 18;
+
+            if (GUI.Button(btnRect, new GUIContent("I", "Insert a new item before this item."), uScriptGUIStyle.propertyArrayButton))
+            {
+               array = ArrayInsert<T>(array, index, default(T));
+            }
+//
          }
-   
-         if (GUI.Button(new Rect(r.xMax-60, r.y, 20, r.height), new GUIContent("I", "Insert a new item before this item.")))
+         else
          {
-            array = ArrayInsert<T>(array, index, default(T));
+            // Draw once when the mouse is not over any row
+            if (_previousHotRect != new Rect())
+            {
+               _previousHotRect = new Rect();
+               uScript.Instance.Repaint();
+            }
          }
-      }
-      else
-      {
-         // Draw once when the mouse is not over any row
-         if (_previousHotRect != new Rect())
-         {
-            _previousHotRect = new Rect();
-            uScript.Instance.Repaint();
-         }
-      }
+//      }
 
 
       object t = value;
@@ -884,19 +891,19 @@ public static class uScriptGUI
 
       if (value is int)
       {
-         t = EditorGUILayout.IntField((int)t, GUILayout.Width(_columnValue.Width));
+         t = EditorGUILayout.IntField((int)t, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
       }
       else if (value is float)
       {
-         t = EditorGUILayout.FloatField((float)t, GUILayout.Width(_columnValue.Width));
+         t = EditorGUILayout.FloatField((float)t, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
       }
       else if (value is string)
       {
-         t = EditorGUILayout.TextField((string)t, GUILayout.Width(_columnValue.Width));
+         t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
       }
       else if (value is bool)
       {
-         t = EditorGUILayout.Toggle((bool)t, GUILayout.Width(_columnValue.Width));
+         t = GUILayout.Toggle((bool)t, GUIContent.none, uScriptGUIStyle.propertyBoolField, GUILayout.Width(_columnValue.Width));
       }
       else if (value is System.Enum)
       {
@@ -914,8 +921,8 @@ public static class uScriptGUI
          int w = (_columnValue.Width - spacing) / 2;
          int p = (_columnValue.Width - spacing) % (w * 2);
 
-         val.x = EditorGUILayout.FloatField(val.x, GUILayout.Width(w));
-         val.y = EditorGUILayout.FloatField(val.y, GUILayout.Width(w + p));
+         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
          typeFormat = " [X, Y]";
 
          t = val;
@@ -927,9 +934,9 @@ public static class uScriptGUI
          int spacing = 8; // 4 * 2
          int w = (_columnValue.Width - spacing) / 3;
          int p = (_columnValue.Width - spacing) % (w * 3);
-         val.x = EditorGUILayout.FloatField(val.x, GUILayout.Width(w));
-         val.y = EditorGUILayout.FloatField(val.y, GUILayout.Width(w));
-         val.z = EditorGUILayout.FloatField(val.z, GUILayout.Width(w + p));
+         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.z = EditorGUILayout.FloatField(val.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
          typeFormat = " [X, Y, Z]";
 
          t = val;
@@ -941,10 +948,10 @@ public static class uScriptGUI
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         val.x = EditorGUILayout.FloatField(val.x, GUILayout.Width(w));
-         val.y = EditorGUILayout.FloatField(val.y, GUILayout.Width(w));
-         val.z = EditorGUILayout.FloatField(val.z, GUILayout.Width(w));
-         val.w = EditorGUILayout.FloatField(val.w, GUILayout.Width(w + p));
+         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.z = EditorGUILayout.FloatField(val.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.w = EditorGUILayout.FloatField(val.w, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
          typeFormat = " [X, Y, Z, W]";
 
          t = val;
@@ -956,10 +963,10 @@ public static class uScriptGUI
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         val.x = EditorGUILayout.FloatField(val.x, GUILayout.Width(w));
-         val.y = EditorGUILayout.FloatField(val.y, GUILayout.Width(w));
-         val.width = EditorGUILayout.FloatField(val.width, GUILayout.Width(w));
-         val.height = EditorGUILayout.FloatField(val.height, GUILayout.Width(w + p));
+         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.width = EditorGUILayout.FloatField(val.width, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.height = EditorGUILayout.FloatField(val.height, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
          typeFormat = " [X, Y, W, H]";
 
          t = val;
@@ -971,10 +978,10 @@ public static class uScriptGUI
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         val.x = EditorGUILayout.FloatField(val.x, GUILayout.Width(w));
-         val.y = EditorGUILayout.FloatField(val.y, GUILayout.Width(w));
-         val.z = EditorGUILayout.FloatField(val.z, GUILayout.Width(w));
-         val.w = EditorGUILayout.FloatField(val.w, GUILayout.Width(w + p));
+         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.z = EditorGUILayout.FloatField(val.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
+         val.w = EditorGUILayout.FloatField(val.w, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
          typeFormat = " [X, Y, Z, W]";
 
          t = val;
@@ -1043,6 +1050,29 @@ public static class uScriptGUI
 		}
 		return value;
 	}
+
+
+   public static int ToolbarButtonGroup(string label, int index, GUIContent[] content)
+   {
+      if (string.IsNullOrEmpty(label) == false)
+      {
+         GUIStyle style1 = new GUIStyle(EditorStyles.label);
+         style1.padding = new RectOffset(16, 4, 2, 2);
+         style1.margin = new RectOffset();
+         GUILayout.Label(label, style1);
+      }
+
+      for (int i = 0; i < content.Length; i++)
+      {
+         if (GUILayout.Toggle(index == i, content[i], EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+         {
+            index = i;
+         }
+      }
+
+      return index;
+   }
+
 
 
 
@@ -1167,7 +1197,7 @@ public static class uScriptGUI
 //         choices = _resourcePaths.ToArray();
       }
 
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
@@ -1216,18 +1246,18 @@ public static class uScriptGUI
 
 //      string label = System.Enum.GetName(typeof(AssetType), (int)assetType) + " Path";
 
-      GUIStyle style = new GUIStyle(GUI.skin.button);
+      GUIStyle style = new GUIStyle(EditorStyles.miniButton);
       style.padding = new RectOffset(6, 6, 1, 2);
       style.margin = new RectOffset(4, 4, 2, 4);
 
-      BeginRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          Vector2 buttonSize = style.CalcSize(new GUIContent("Browse"));
 
          GUI.SetNextControlName(label);
-         assetPath = EditorGUILayout.TextField(assetPath, GUILayout.Width(_columnValue.Width - 4 - buttonSize.x));
+         assetPath = EditorGUILayout.TextField(assetPath, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width - 4 - buttonSize.x));
 
          uScriptGUI.enabled = !AssetBrowserWindow.isOpen;
 
