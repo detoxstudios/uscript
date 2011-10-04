@@ -342,10 +342,13 @@ namespace Detox.ScriptEditor
             }
          }
 
+
+
          //now that we have removed all the nodes
          //which don't have valid instances assigned
-         //lets remove any nodes which don't have links to them
-         
+         //track all the nodes which have links to them
+         //and remove everything else
+
          //track all the link source / destination nodes
          Hashtable usedNodes = new Hashtable( );
 

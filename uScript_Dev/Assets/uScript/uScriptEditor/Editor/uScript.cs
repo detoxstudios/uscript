@@ -4033,7 +4033,6 @@ public class uScript : EditorWindow
          foreach (FieldInfo f in fieldInfos)
          {
             if (false == f.IsPublic) continue;
-            if (true == f.IsStatic) continue;
 
             EntityProperty property = new EntityProperty(f.Name, FindFriendlyName(f.Name, f.GetCustomAttributes(false)), type.ToString(), f.FieldType.ToString(), true, true);
             property.IsStatic = f.IsStatic;
