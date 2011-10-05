@@ -692,7 +692,7 @@ public static class uScriptGUI
 
          if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
-            bool tmpBool = false;
+//            bool tmpBool = false;
 
             #if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3)
                textValue = EditorGUILayout.TextField(textValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
@@ -707,7 +707,7 @@ public static class uScriptGUI
             // now try and update the object browser with an instance of the specified object
             UnityEngine.Object []objects   = UnityEngine.Object.FindObjectsOfType(type);
             UnityEngine.Object unityObject = null;
-   
+
             foreach ( UnityEngine.Object o in objects )
             {
                if ( o.name == textValue )
@@ -739,7 +739,7 @@ public static class uScriptGUI
                }
                else
                {
-                  unityObject = EditorGUILayout.ObjectField( unityObject, type, true, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
+                  unityObject = EditorGUILayout.ObjectField(unityObject, type, true, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
                }
             #endif
    
@@ -747,7 +747,7 @@ public static class uScriptGUI
             // if it doesn't exist then the 'val' will stay as what was entered into the TextField
             if ( unityObject != null )
             {
-               textValue = unityObject.name;               
+               textValue = unityObject.name;
             }
          }
 
@@ -759,6 +759,11 @@ public static class uScriptGUI
 
 
    public static T[] ArrayFoldout<T>(string label, T[] array, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      return ArrayFoldout<T>(label, array, ref isSocketExposed, isLocked, isReadOnly, null);
+   }
+
+   public static T[] ArrayFoldout<T>(string label, T[] array, ref bool isSocketExposed, bool isLocked, bool isReadOnly, Type type)
    {
       string propertyKey = _nodeKey + "_" + label;
       bool isExpanded = (_foldoutExpanded.ContainsKey(propertyKey) ? _foldoutExpanded[propertyKey] : true);
@@ -812,7 +817,7 @@ public static class uScriptGUI
             {
                entry = array[i];
             }
-            array[i] = ArrayElementRow<T>(ref array, i, entry, ref hideSocket, true, false);
+            array[i] = ArrayElementRow<T>(ref array, i, entry, ref hideSocket, true, false, type);
          }
 
          EditorGUI.indentLevel -= 2;
@@ -823,9 +828,20 @@ public static class uScriptGUI
       return array;
    }
 
+   public static string GetHierarchyPath(Transform transform)
+   {
+      string result = string.Empty;
+      while (transform)
+      {
+         result = transform.gameObject.name + '/' + result;
+         transform = transform.parent;
+      }
+      return '/' + result.Remove(result.Length - 1);
+   }
 
-   static Rect _previousHotRect = new Rect();
-   public static T ArrayElementRow<T>(ref T[] array, int index, T value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+
+//   static Rect _previousHotRect = new Rect();
+   public static T ArrayElementRow<T>(ref T[] array, int index, T value, ref bool isSocketExposed, bool isLocked, bool isReadOnly, Type type)
    {
       Rect r1 = GUILayoutUtility.GetLastRect();
       r1.y = r1.yMax + 2;
@@ -845,14 +861,14 @@ public static class uScriptGUI
       row.width = uScriptGUIPanelProperty.Rect.width;
 
       // When the mouse is over the row
-      if (row.Contains(Event.current.mousePosition))
-      {
-         // Draw once if the row has changed
-         if (_previousHotRect != row)
-         {
-            _previousHotRect = row;
-            uScript.Instance.Repaint();
-         }
+//      if (row.Contains(Event.current.mousePosition))
+//      {
+//         // Draw once if the row has changed
+//         if (_previousHotRect != row)
+//         {
+//            _previousHotRect = row;
+//            uScript.Instance.Repaint();
+//         }
 
          if (GUI.Button(btnRect, new GUIContent("R", "Remove this item."), uScriptGUIStyle.propertyArrayButton))
          {
@@ -872,7 +888,7 @@ public static class uScriptGUI
          {
             array = ArrayInsert<T>(array, index, default(T));
          }
-      }
+//      }
 
       object t = value;
       string typeFormat = string.Empty;
@@ -887,7 +903,57 @@ public static class uScriptGUI
       }
       else if (value is string)
       {
-         t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+         if (type != null)
+         {
+            EditorGUILayout.BeginHorizontal(GUILayout.Width(_columnValue.Width));
+            {
+               t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.propertyTextField, GUILayout.ExpandWidth(true));
+
+               Rect r = GUILayoutUtility.GetLastRect();
+
+               if (r.Contains(Event.current.mousePosition) && GUI.enabled)
+               {
+                  UnityEngine.Object[] objectReferences = DragAndDrop.objectReferences;
+
+                  if (objectReferences.Length == 1)
+                  {
+                     if (objectReferences[0] is GameObject)
+                     {
+                        GameObject go = objectReferences[0] as GameObject;
+
+                        DragAndDrop.visualMode = DragAndDropVisualMode.Link;
+
+                        if (Event.current.type == EventType.DragPerform)
+                        {
+                           t = GetHierarchyPath(go.transform);
+                           GUI.changed = true;
+                           DragAndDrop.AcceptDrag();
+                           DragAndDrop.activeControlID = 0;
+                        }
+                     }
+                     Event.current.Use();
+                  }
+               }
+
+               if (GUILayout.Button("S", EditorStyles.miniButton, GUILayout.ExpandWidth(false)))
+               {
+                  GameObject go = GameObject.Find((string)t);
+                  if (go != null)
+                  {
+                     EditorGUIUtility.PingObject(go);
+                  }
+                  else
+                  {
+                     Debug.LogWarning("No GameObject matching \"" + t.ToString() + "\" was found in the Scene.\n");
+                  }
+               }
+            }
+            EditorGUILayout.EndHorizontal();
+         }
+         else
+         {
+            t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+         }
       }
       else if (value is bool)
       {
@@ -986,7 +1052,7 @@ public static class uScriptGUI
 
       value = (T)t;
 
-      EndRow(value.GetType().ToString() + typeFormat);
+      EndRow(type != null ? type.ToString() : value.GetType().ToString() + typeFormat);
       return value;
    }
 
