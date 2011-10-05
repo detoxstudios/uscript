@@ -684,8 +684,7 @@ public static class uScriptGUI
       return value;
    }
 
-
-   public static string ObjectTextField(string label, UnityEngine.Object value, Type type, string textValue, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   public static string ObjectField(string label, UnityEngine.Object value, Type type, string textValue, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       EditorGUILayout.BeginVertical();
       {
@@ -693,14 +692,17 @@ public static class uScriptGUI
 
          if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
-            textValue = EditorGUILayout.TextField(textValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
-   
-            EndRow(textValue.GetType().ToString());
-
-
             bool tmpBool = false;
 
-            BeginStaticRow(string.Empty, ref tmpBool, true, isReadOnly);
+            #if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3)
+               textValue = EditorGUILayout.TextField(textValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+      
+               EndRow(textValue.GetType().ToString());
+
+
+
+               BeginStaticRow(string.Empty, ref tmpBool, true, isReadOnly);
+            #endif
 
             // now try and update the object browser with an instance of the specified object
             UnityEngine.Object []objects   = UnityEngine.Object.FindObjectsOfType(type);
@@ -725,7 +727,10 @@ public static class uScriptGUI
 
             //if we're building with 3.4 then check the client version
             //and figure out which one to display
-            #if (UNITY_3_4)
+            #if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3)
+               //if we're not building with 3.4 then default to the old one
+               unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
+            #else
                if ( uScript.UnityVersion < 3.4f )
                {
                   #pragma warning disable 618
@@ -736,9 +741,6 @@ public static class uScriptGUI
                {
                   unityObject = EditorGUILayout.ObjectField( unityObject, type, true, GUILayout.Width(_columnValue.Width) ) as UnityEngine.Object;
                }
-            #else
-               //if we're not building with 3.4 then default to the old one
-               unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
             #endif
    
             // if that object (or the changed object) does exist, use it's name to update the property value

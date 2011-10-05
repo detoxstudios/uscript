@@ -367,7 +367,7 @@ namespace System.Windows.Forms
                         }
                         else if ( null != GetObjectFieldType(p.Type) )
                         {
-                           val = uScriptGUI.ObjectTextField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ObjectField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "TextArea" )
                         {
