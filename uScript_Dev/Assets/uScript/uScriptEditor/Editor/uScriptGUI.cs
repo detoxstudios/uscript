@@ -796,7 +796,7 @@ public static class uScriptGUI
          }
       }
 
-      EndRow(array.GetType().ToString());
+      EndRow(type != null ? type.ToString()+"[]" : array.GetType().ToString());
 
       //
       // The array size
