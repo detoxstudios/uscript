@@ -40,9 +40,19 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
    string _currentScriptName = string.Empty;
    string _currentScriptName_uScript = string.Empty;
 
-   GUIStyle _scriptStyleNormal = null;
-   GUIStyle _scriptStyleBold = null;
-   GUIStyle _scriptStyleError = null;
+   GUIStyle _scriptCurrentNormal = null;
+   GUIStyle _scriptCurrentError = null;
+   GUIStyle _scriptListNormal = null;
+   GUIStyle _scriptListBold = null;
+
+   GUIStyle _styleMiniButtonLeft = null;
+   GUIStyle _styleMiniButtonRight = null;
+
+//   static Rect _previousHotRect = new Rect();
+//   static int _previousHotIndex = 0;
+//
+//   static Rect _scrollviewRect = new Rect();
+//   static bool wasInside = false;
 
 
 
@@ -129,16 +139,25 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
 
 
-            if (_scriptStyleNormal == null)
+            if (_scriptCurrentNormal == null)
             {
-               _scriptStyleNormal = new GUIStyle(EditorStyles.label);
+               _scriptCurrentNormal = new GUIStyle(EditorStyles.boldLabel);
 
-               _scriptStyleBold = new GUIStyle(EditorStyles.label);
-               _scriptStyleBold.fontStyle = FontStyle.Bold;
+               _scriptCurrentError = new GUIStyle(_scriptCurrentNormal);
+               _scriptCurrentError.normal.textColor = UnityEngine.Color.red;
 
-               _scriptStyleError = new GUIStyle(EditorStyles.label);
-               _scriptStyleError.fontStyle = FontStyle.Bold;
-               _scriptStyleError.normal.textColor = UnityEngine.Color.red;
+               _scriptListNormal = new GUIStyle(EditorStyles.label);
+               _scriptListNormal.margin = new RectOffset(4, 4, 1, 1);
+               _scriptListNormal.padding = new RectOffset(2, 2, 0, 0);
+
+               _scriptListBold = new GUIStyle(_scriptListNormal);
+               _scriptListBold.fontStyle = FontStyle.Bold;
+
+               _styleMiniButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
+               _styleMiniButtonLeft.margin = new RectOffset(4, 0, 1, 1);
+
+               _styleMiniButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
+               _styleMiniButtonRight.margin = new RectOffset(0, 4, 1, 1);
             }
 
 
@@ -176,7 +195,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                                ( (isScriptNew ? "(new)" : _currentScriptName)
                                  + (isScriptDirty ? " *" : string.Empty) ),
                                // Style
-                               (isScriptAttachToScene ? _scriptStyleBold : _scriptStyleError)
+                               (isScriptAttachToScene ? _scriptCurrentNormal : _scriptCurrentError)
                               );
 
                GUILayout.FlexibleSpace();
@@ -248,6 +267,8 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                string scriptName = string.Empty;
                int filterMatches = 0;
+               bool _isListRowEven = false;
+//               bool _wereButtonsDrawn = false;
 
                foreach (string scriptFile in keys)
                {
@@ -264,7 +285,10 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                   {
                      filterMatches++;
 
-                     GUILayout.BeginHorizontal();
+                     // the script path
+                     string path = null;
+
+                     GUILayout.BeginHorizontal((_isListRowEven ? uScriptGUIStyle.scriptRowEven : uScriptGUIStyle.scriptRowOdd));
                      {
                         // uScript Label
                         sceneName = "None";
@@ -289,10 +313,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            }
                         }
 
-                        // the script path
-                        string path = null;
-
-                        if (GUILayout.Button(scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), (wasClicked ? _scriptStyleBold : _scriptStyleNormal), GUILayout.ExpandWidth(true)))
+                        if (GUILayout.Button(scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), (wasClicked ? _scriptListBold : _scriptListNormal), GUILayout.ExpandWidth(true)))
                         {
                            path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFile);
    
@@ -313,14 +334,19 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            }
                         }
 
+//                        if (filterMatches == _previousHotIndex)
+//                        {
+//                           GUILayout.Space(85);
+//                        }
+
                         // Source
-                        if (GUILayout.Button(uScriptGUIContent.buttonScriptSource, EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
+                        if (GUILayout.Button(uScriptGUIContent.buttonScriptSource, _styleMiniButtonLeft, GUILayout.ExpandWidth(false)))
                         {
                            uScriptGUI.PingGeneratedScript(scriptName);
                         }
 
                         // Load
-                        if (GUILayout.Button(uScriptGUIContent.buttonScriptLoad, EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false)))
+                        if (GUILayout.Button(uScriptGUIContent.buttonScriptLoad, _styleMiniButtonRight, GUILayout.ExpandWidth(false)))
                         {
                            if ( null == path ) path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFile);
 
@@ -329,20 +355,65 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               uScriptInstance.OpenScript(path);
                            }
                         }
-
-//                        // Insert as Nested uScript
-//                        if (GUILayout.Button(_contentInsert, EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false)))
-//                        {
-//                           if (m_ScriptEditorCtrl != null)
-//                           {
-//                              float canvasX = uScriptInstance._mouseRegionRect[uScript.MouseRegion.Canvas].x;
-//                              float canvasY = uScriptInstance._mouseRegionRect[uScript.MouseRegion.Canvas].y;
-//                              m_ScriptEditorCtrl.ContextCursor = new Point((int)(canvasX - uScriptInstance._guiPanelPalette_Width + uScript.Instance.NodeWindowRect.width / 2.0f), (int)(canvasY + uScript.Instance.NodeWindowRect.height / 2.0f));
-//                              m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode(scriptName));
-//                           }
-//                        }
                      }
                      GUILayout.EndHorizontal();
+
+//                     // When the mouse is over the row
+//                     Rect row = GUILayoutUtility.GetLastRect();
+//                     if (row.Contains(Event.current.mousePosition))
+//                     {
+//                        // Draw once if the row has changed
+//                        if (_previousHotRect != row)
+//                        {
+//                           Debug.Log("HOVER over " + scriptName + ", Repaint: " + Event.current.type + "\n");
+//                           _previousHotRect = row;
+//                           _previousHotIndex = filterMatches;
+//                           uScript.Instance.Repaint();
+//                        }
+//
+//                        Rect btnRect = row;
+//                        btnRect.x = btnRect.xMax - 4;
+//                        btnRect.y += 1;
+//                        btnRect.height = 15;
+//
+//                        // Load
+//                        btnRect.width = 34;
+//                        btnRect.x -= btnRect.width;
+//                        if (GUI.Button(btnRect, uScriptGUIContent.buttonScriptLoad, EditorStyles.miniButtonRight))
+//                        {
+//                           if ( null == path ) path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFile);
+//
+//                           if (false == string.IsNullOrEmpty(path))
+//                           {
+//                              uScriptInstance.OpenScript(path);
+//                           }
+//                        }
+//
+//                        // Source
+//                        btnRect.width = 43;
+//                        btnRect.x -= btnRect.width;
+//                        if (GUI.Button(btnRect, uScriptGUIContent.buttonScriptSource, EditorStyles.miniButtonLeft))
+//                        {
+//                           uScriptGUI.PingGeneratedScript(scriptName);
+//                        }
+//
+//                        _wereButtonsDrawn = true;
+//                        wasInside = true;
+//                     }
+//
+//                     if (_scrollviewRect.Contains(Event.current.mousePosition) == false)
+//                     {
+//                        if (wasInside && (Event.current.type != EventType.Repaint && Event.current.type != EventType.MouseMove))
+//                        {
+//                           wasInside = false;
+//                           Debug.Log("OUT Repaint: " + GUIUtility.hotControl + "\n");
+//                           _previousHotRect = new Rect();
+//                           _previousHotIndex = 0;
+//                           uScript.Instance.Repaint();
+//                        }
+//                     }
+
+                     _isListRowEven = !_isListRowEven;
                   }
                }
 
@@ -354,6 +425,11 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                }
             }
             EditorGUILayout.EndScrollView();
+
+//            if (Event.current.type == EventType.Repaint)
+//            {
+//               _scrollviewRect = GUILayoutUtility.GetLastRect();
+//            }
          }
       }
       EditorGUILayout.EndVertical();
