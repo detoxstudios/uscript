@@ -830,61 +830,47 @@ public static class uScriptGUI
 
       BeginStaticRow("["+index.ToString()+"]", ref isSocketExposed, isLocked, isReadOnly);
 
-//      if (Event.current.type == EventType.Repaint)
-//      {
-         // Get the last rect to determine where we want to draw the array modifier buttons
-         Rect btnRect = GUILayoutUtility.GetLastRect();
-         Rect row = btnRect;
+      // Get the last rect to determine where we want to draw the array modifier buttons
+      Rect row = GUILayoutUtility.GetLastRect();
 
-         btnRect.x = btnRect.xMax - 18;
-         btnRect.width = 18;
-         btnRect.height = 16;
+      Rect btnRect = row;
+      btnRect.x = btnRect.xMax - 18;
+      btnRect.width = 18;
+      btnRect.height = 16;
 
-         // Determine the rect for the entire property panel row
-         row.x = uScriptGUIPanelProperty.Rect.x;
-         row.width = uScriptGUIPanelProperty.Rect.width;
+      // Determine the rect for the entire property panel row
+      row.x = uScriptGUIPanelProperty.Rect.x;
+      row.width = uScriptGUIPanelProperty.Rect.width;
 
-         // When the mouse is over the row
-         if (row.Contains(Event.current.mousePosition))
+      // When the mouse is over the row
+      if (row.Contains(Event.current.mousePosition))
+      {
+         // Draw once if the row has changed
+         if (_previousHotRect != row)
          {
-            // Draw once if the row has changed
-            if (_previousHotRect != row)
-            {
-               _previousHotRect = row;
-               uScript.Instance.Repaint();
-            }
-//
-            if (GUI.Button(btnRect, new GUIContent("R", "Remove this item."), uScriptGUIStyle.propertyArrayButton))
-            {
-               array = ArrayRemove<T>(array, index);
-            }
-
-            btnRect.x -= 18;
-
-            if (GUI.Button(btnRect, new GUIContent("C", "Insert a copy of this item."), uScriptGUIStyle.propertyArrayButton))
-            {
-               array = ArrayInsert<T>(array, index, array[index]);
-            }
-
-            btnRect.x -= 18;
-
-            if (GUI.Button(btnRect, new GUIContent("I", "Insert a new item before this item."), uScriptGUIStyle.propertyArrayButton))
-            {
-               array = ArrayInsert<T>(array, index, default(T));
-            }
-//
+            _previousHotRect = row;
+            uScript.Instance.Repaint();
          }
-         else
+
+         if (GUI.Button(btnRect, new GUIContent("R", "Remove this item."), uScriptGUIStyle.propertyArrayButton))
          {
-            // Draw once when the mouse is not over any row
-            if (_previousHotRect != new Rect())
-            {
-               _previousHotRect = new Rect();
-               uScript.Instance.Repaint();
-            }
+            array = ArrayRemove<T>(array, index);
          }
-//      }
 
+         btnRect.x -= 18;
+
+         if (GUI.Button(btnRect, new GUIContent("C", "Insert a copy of this item."), uScriptGUIStyle.propertyArrayButton))
+         {
+            array = ArrayInsert<T>(array, index, array[index]);
+         }
+
+         btnRect.x -= 18;
+
+         if (GUI.Button(btnRect, new GUIContent("I", "Insert a new item before this item."), uScriptGUIStyle.propertyArrayButton))
+         {
+            array = ArrayInsert<T>(array, index, default(T));
+         }
+      }
 
       object t = value;
       string typeFormat = string.Empty;
