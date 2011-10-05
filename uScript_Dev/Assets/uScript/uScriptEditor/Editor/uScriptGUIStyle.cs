@@ -123,6 +123,12 @@ public static class uScriptGUIStyle
    private static GUIStyle _propertyArrayButton;
    public static GUIStyle propertyArrayButton { get { return _propertyArrayButton; } }
 
+   private static GUIStyle _scriptRowOdd;
+   public static GUIStyle scriptRowOdd { get { return _scriptRowOdd; } }
+
+   private static GUIStyle _scriptRowEven;
+   public static GUIStyle scriptRowEven { get { return _scriptRowEven; } }
+
 
 
 
@@ -362,6 +368,12 @@ public static class uScriptGUIStyle
 
       _propertyRowEven = new GUIStyle(_propertyRowOdd);
       _propertyRowEven.normal.background = _texture_propertyRowEven;
+
+      _scriptRowOdd = new GUIStyle(GUIStyle.none);
+      _scriptRowOdd.fixedHeight = 17;
+
+      _scriptRowEven = new GUIStyle(_scriptRowOdd);
+      _scriptRowEven.normal.background = _texture_propertyRowEven;
 
 //      uScriptGUIStyle.Information(underline);
    }
