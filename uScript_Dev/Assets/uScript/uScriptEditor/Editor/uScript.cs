@@ -1303,6 +1303,7 @@ public class uScript : EditorWindow
                e.Use();
             }
             break;
+
          case EventType.ExecuteCommand:
             if (e.commandName == "Copy" && "MainView" == GUI.GetNameOfFocusedControl())
             {
@@ -1340,14 +1341,28 @@ public class uScript : EditorWindow
                m_PressedKey = e.keyCode;
             }
 
-            if ("MainView" == GUI.GetNameOfFocusedControl())
+            if ("MainView" == GUI.GetNameOfFocusedControl() || GUIUtility.keyboardControl == 0)
             {
-               if (e.keyCode == KeyCode.F
-                   && (e.modifiers == EventModifiers.Alt
-                       || e.modifiers == EventModifiers.Control
-//                       || e.modifiers == EventModifiers.Command
-                      )
-                  )
+               if (  (e.keyCode == KeyCode.F
+                     && (e.modifiers == EventModifiers.Alt
+                        || e.modifiers == EventModifiers.Control))
+                  || (e.keyCode == KeyCode.S
+                     && (e.modifiers == EventModifiers.Alt
+                        || e.modifiers == EventModifiers.Control))
+                  || e.keyCode == KeyCode.BackQuote
+                  || e.keyCode == KeyCode.Home
+                  || (e.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0)
+                  || (e.keyCode == KeyCode.H && (modifierKeys & Keys.Control) != 0)
+                  || (e.keyCode == KeyCode.W && (modifierKeys & Keys.Control) != 0)
+                  || e.keyCode == KeyCode.Delete
+                  || e.keyCode == KeyCode.Backspace
+                  || e.keyCode == KeyCode.Escape
+                  || e.keyCode == KeyCode.F1
+                  || e.keyCode == KeyCode.RightBracket
+                  || e.keyCode == KeyCode.LeftBracket
+                  || e.keyCode == KeyCode.Alpha0
+                  || e.keyCode == KeyCode.Minus
+                  || e.keyCode == KeyCode.Equals )
                {
                   e.Use();
                }
@@ -1385,10 +1400,7 @@ public class uScript : EditorWindow
                }
                else if (e.keyCode == KeyCode.Escape)
                {
-                  if ("MainView" == GUI.GetNameOfFocusedControl())
-                  {
-                     m_ScriptEditorCtrl.DeselectAll();
-                  }
+                  m_ScriptEditorCtrl.DeselectAll();
                }
                else if (e.keyCode == KeyCode.F1)
                {
@@ -1425,7 +1437,7 @@ public class uScript : EditorWindow
                }
             }
 
-            if (e.keyCode == KeyCode.BackQuote)
+            if (e.keyCode == KeyCode.BackQuote && (GUI.GetNameOfFocusedControl() == "MainView" || GUIUtility.keyboardControl == 0))
             {
                m_HidePanelMode = !m_HidePanelMode;
 
@@ -1457,10 +1469,10 @@ public class uScript : EditorWindow
             {
                if (false == m_MouseDown)
                {
-                  GUI.FocusControl("MainView");
-
                   if (_canvasRect.Contains(e.mousePosition))
                   {
+                     GUI.FocusControl("MainView");
+
                      int button = 0;
 
                      if (e.button == 0) button = MouseButtons.Left;
