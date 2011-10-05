@@ -367,9 +367,14 @@ namespace System.Windows.Forms
                            //arrays are stored as comma delimited string, so parse it now
                            string [] values = p.Default.Split( ',' );
 
-                           Debug.Log("BEFORE source type: " + p.Default.GetType().ToString() + " - source ToString(): " + p.Default.ToString() + "\n");
-                           val = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly, typeof(GameObject));
-                           Debug.Log("AFTER The array contains " + ((string[])val).Length + " elements\n");
+                           string []result = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly, typeof(GameObject));
+                           val = "";
+                           foreach ( string s in result )
+                           {
+                              val += s + ",";
+                           }
+
+                           if ( ((string)val).Length > 1 ) val = ((string)val).Substring( 0, ((string)val).Length - 1 );
                         }
                         else if ( null != GetObjectFieldType(p.Type) )
                         {
