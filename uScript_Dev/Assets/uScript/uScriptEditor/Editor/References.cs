@@ -363,7 +363,9 @@ namespace System.Windows.Forms
                         }
                         else if ( null != GetObjectArrayFieldType(p.Type) )
                         {
-                           val = uScriptGUI.ArrayFoldout<UnityEngine.Object>(p.FriendlyName, (UnityEngine.Object[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           //arrays are stored as comma delimited string, so parse it now
+                           string [] values = p.Default.Split( ',' );
+                           val = uScriptGUI.ArrayFoldout<String>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( null != GetObjectFieldType(p.Type) )
                         {

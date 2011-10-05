@@ -692,14 +692,12 @@ public static class uScriptGUI
 
          if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
-//            bool tmpBool = false;
-
             #if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3)
                textValue = EditorGUILayout.TextField(textValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
       
                EndRow(textValue.GetType().ToString());
 
-
+               bool tmpBool = false;
 
                BeginStaticRow(string.Empty, ref tmpBool, true, isReadOnly);
             #endif
