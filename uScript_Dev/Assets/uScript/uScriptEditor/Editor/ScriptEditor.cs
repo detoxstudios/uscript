@@ -2970,9 +2970,10 @@ namespace Detox.ScriptEditor
                  existingLink.Destination.Anchor == link.Destination.Anchor ) 
             {
                Parameter p = this.FindNodeParameter( dest, link.Destination.Anchor );
+
                if ( p != Parameter.Empty )
                {
-                  if ( false == p.Type.Contains("[]") )
+                  if ( false == p.Type.Contains("[]") && true == p.Input && false == p.Output )
                   {
                      reason = "There is already a connection to " + p.FriendlyName;
                      return false;
