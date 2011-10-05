@@ -177,6 +177,7 @@ namespace System.Windows.Forms
          return null;
       }
 
+
       public void OnPaint( )
       {
          bool signalUpdate = false;
@@ -365,7 +366,10 @@ namespace System.Windows.Forms
                         {
                            //arrays are stored as comma delimited string, so parse it now
                            string [] values = p.Default.Split( ',' );
-                           val = uScriptGUI.ArrayFoldout<String>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly);
+
+                           Debug.Log("BEFORE source type: " + p.Default.GetType().ToString() + " - source ToString(): " + p.Default.ToString() + "\n");
+                           val = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly, typeof(GameObject));
+                           Debug.Log("AFTER The array contains " + ((string[])val).Length + " elements\n");
                         }
                         else if ( null != GetObjectFieldType(p.Type) )
                         {
