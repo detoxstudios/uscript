@@ -840,7 +840,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterSerializer : ITypeSerializer
    {
-      public int Version { get { return 5; } }
+      public int Version { get { return 6; } }
       public string SerializableType { get { return typeof(Parameter).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -897,6 +897,14 @@ namespace Detox.Data.ScriptEditor
             parameter.ReferenceGuid = "";
          }
 
+         if ( serializer.CurrentVersion < 6 )
+         {
+            if ( parameter.Type.Contains("[]") )
+            {
+               parameter.Default = parameter.Default.Replace( ',', (char)31 );
+            }
+         }
+
          reader.Close( );
 
          return parameter;
@@ -925,7 +933,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterArraySerializer : ITypeSerializer
    {
-      public int Version { get { return 6; } }
+      public int Version { get { return 7; } }
       public string SerializableType { get { return typeof(Parameter[]).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -986,6 +994,13 @@ namespace Detox.Data.ScriptEditor
                parameters[ i ].ReferenceGuid = "";
             }
 
+            if ( serializer.CurrentVersion < 7 )
+            {
+               if ( parameters[i].Type.Contains("[]") )
+               {
+                  parameters[i].Default = parameters[i].Default.Replace( ',', (char)31 );
+               }
+            }
          }
 
          reader.Close( );

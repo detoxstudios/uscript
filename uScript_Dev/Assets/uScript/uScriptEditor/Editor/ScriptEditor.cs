@@ -88,7 +88,7 @@ namespace Detox.ScriptEditor
 
       private object ParseArray(string t, string value)
       {
-         string []values = value.Split( ',' );
+         string []values = value.Split( (char) 31 );
 
          if ( t == typeof(bool[]).ToString() )
          {
@@ -313,7 +313,7 @@ namespace Detox.ScriptEditor
                bool [] array = (bool[]) values;
                foreach ( bool a in array )
                {
-                  result += a + ",";
+                  result += a + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -329,7 +329,7 @@ namespace Detox.ScriptEditor
                UnityEngine.Color [] array = (UnityEngine.Color[]) values;
                foreach ( UnityEngine.Color a in array )
                {
-                  result += a.r + "," + a.g + "," + a.b + "," + a.a + ",";
+                  result += a.r + "," + a.g + "," + a.b + "," + a.a + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -345,7 +345,7 @@ namespace Detox.ScriptEditor
                float [] array = (float[]) values;
                foreach ( float a in array )
                {
-                  result += a + ",";
+                  result += a + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -362,7 +362,7 @@ namespace Detox.ScriptEditor
 
                foreach ( int a in array )
                {
-                  result += a + ",";
+                  result += a + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -377,7 +377,7 @@ namespace Detox.ScriptEditor
                Vector2 [] array = (Vector2[]) values;
                foreach ( Vector2 a in array )
                {
-                  result += a.x + "," + a.y + ",";
+                  result += a.x + "," + a.y + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -393,7 +393,7 @@ namespace Detox.ScriptEditor
                Vector3 [] array = (Vector3[]) values;
                foreach ( Vector3 a in array )
                {
-                  result += a.x + "," + a.y + "," + a.z + ",";
+                  result += a.x + "," + a.y + "," + a.z + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -409,7 +409,7 @@ namespace Detox.ScriptEditor
                Vector4 [] array = (Vector4[]) values;
                foreach ( Vector4 a in array )
                {
-                  result += a.x + "," + a.y + "," + a.z + "," + a.w + ",";
+                  result += a.x + "," + a.y + "," + a.z + "," + a.w + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -425,7 +425,7 @@ namespace Detox.ScriptEditor
                Rect [] array = (Rect[]) values;
                foreach ( Rect a in array )
                {
-                  result += a.x + "," + a.y + "," + a.width + "," + a.height + ",";
+                  result += a.x + "," + a.y + "," + a.width + "," + a.height + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -441,7 +441,7 @@ namespace Detox.ScriptEditor
                Quaternion [] array = (Quaternion[]) values;
                foreach ( Quaternion a in array )
                {
-                  result += a.x + "," + a.y + "," + a.z + "," + a.w + ",";
+                  result += a.x + "," + a.y + "," + a.z + "," + a.w + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -457,7 +457,7 @@ namespace Detox.ScriptEditor
                LayerMask [] array = (LayerMask[]) values;
                foreach ( LayerMask a in array )
                {
-                  result += a + ",";
+                  result += a + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -473,7 +473,7 @@ namespace Detox.ScriptEditor
                string [] array = (string[]) values;
                foreach ( string a in array )
                {
-                  result += a + ",";
+                  result += a + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -501,7 +501,7 @@ namespace Detox.ScriptEditor
                object [] array = (object[]) values;
                foreach ( object a in array )
                {
-                  result += a + ",";
+                  result += a + "" + (char) 31;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
