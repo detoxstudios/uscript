@@ -1,4 +1,6 @@
-#define UNITY_STORE_BUILD
+//#define UNITY_STORE_BUILD
+//#define DETOX_STORE_BUILD
+#define FREE_PLE_BUILD
 
 using UnityEngine;
 using UnityEditor;
@@ -21,7 +23,7 @@ public class uScript : EditorWindow
    public string FullVersionName { get { return BetaVersion + " (" + uScriptBuild + ")"; } }
    public string LastUnityBuild { get { return "3.3"; } }
    public string CurrentUnityBuild { get { return "3.4"; } }
-   public string BetaUnityBuild { get { return "3.5"; } }
+   //public string BetaUnityBuild { get { return "3.5"; } }
    public DateTime ExpireDate { get { return new DateTime(2011, 10, 31); } }
 
    public bool isLicenseAccepted = false;
@@ -437,8 +439,21 @@ public class uScript : EditorWindow
 
    void Update()
    {
-#if !(UNITY_STORE_BUILD)
+#if DETOX_STORE_BUILD
       // Initialize the LicenseWindow here if needed. Doing it during OnGUI may
+      // cause issues, such as null exception errors and reports that OnGUI calls
+      // are being made outside of OnGUI.
+      //
+      if (isLicenseAccepted == false)
+      {
+         isLicenseAccepted = LicenseWindow.HasUserAcceptedLicense();
+         if (isLicenseAccepted == false && LicenseWindow.isOpen == false)
+         {
+            LicenseWindow.Init();
+         }
+      }
+#elif FREE_PLE_BUILD
+	  // Initialize the LicenseWindow here if needed. Doing it during OnGUI may
       // cause issues, such as null exception errors and reports that OnGUI calls
       // are being made outside of OnGUI.
       //
@@ -568,10 +583,10 @@ public class uScript : EditorWindow
       {
          if (null == m_ScriptEditorCtrl)
          {
-         #if !(UNITY_STORE_BUILD) // See if expiration date and build cap should be used. Not needed for commercial version.
+         #if FREE_PLE_BUILD // See if expiration date and build cap should be used. Not needed for commercial version.
 		       {
 	               //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
-	               if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild) || Application.unityVersion.Contains(BetaUnityBuild))
+	               if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild))
 	               {
 	               }
 	               else

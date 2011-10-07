@@ -7,7 +7,7 @@
 // 2. Increment build number
 // 3. Optionally increase end date
 // 4. Forum Build Only: Comment out UNITY_STORE_BUILD in uScript.cs and LicenseWindow.cs
-// 5. PLE Build Only: Uncomment PLE_BUILD in uScript_MasterComponent.cs
+// 5. PLE Build Only: Uncomment FREE_PLE_BUILD in uScript_MasterComponent.cs
 
 
 using System;
