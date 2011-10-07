@@ -114,6 +114,8 @@ namespace Detox.Data.ScriptEditor
       public string ReferenceGuid;
       public bool   Input;
       public bool   Output;
+
+      public static char ArrayDelimeter { get { return (char) 31; } }
    }
 
    public struct Plug
@@ -840,7 +842,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterSerializer : ITypeSerializer
    {
-      public int Version { get { return 6; } }
+      public int Version { get { return 7; } }
       public string SerializableType { get { return typeof(Parameter).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -901,7 +903,15 @@ namespace Detox.Data.ScriptEditor
          {
             if ( parameter.Type.Contains("[]") )
             {
-               parameter.Default = parameter.Default.Replace( ',', (char)31 );
+               parameter.Default = parameter.Default.Replace( ',', Parameter.ArrayDelimeter );
+            }
+         }
+
+         if ( serializer.CurrentVersion < 7 )
+         {
+            if ( parameter.Type.Contains("[]") && parameter.Default.Length > 0 )
+            {
+               parameter.Default = Parameter.ArrayDelimeter + parameter.Default;
             }
          }
 
@@ -933,7 +943,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterArraySerializer : ITypeSerializer
    {
-      public int Version { get { return 7; } }
+      public int Version { get { return 8; } }
       public string SerializableType { get { return typeof(Parameter[]).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -998,9 +1008,18 @@ namespace Detox.Data.ScriptEditor
             {
                if ( parameters[i].Type.Contains("[]") )
                {
-                  parameters[i].Default = parameters[i].Default.Replace( ',', (char)31 );
+                  parameters[i].Default = parameters[i].Default.Replace( ',', Parameter.ArrayDelimeter );
                }
             }
+
+            if ( serializer.CurrentVersion < 8 )
+            {
+               if ( parameters[i].Type.Contains("[]") && parameters[i].Default.Length > 0 )
+               {
+                  parameters[i].Default = Parameter.ArrayDelimeter + parameters[i].Default;
+               }
+            }
+
          }
 
          reader.Close( );

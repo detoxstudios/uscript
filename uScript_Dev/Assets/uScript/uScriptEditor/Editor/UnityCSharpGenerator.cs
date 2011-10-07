@@ -1058,7 +1058,7 @@ namespace Detox.ScriptEditor
       {
          string declaration = "";
 
-         string []elements = stringValue.Split( (char) 31 );
+         string []elements = Parameter.StringToArray( stringValue );
 
          if ( "UnityEngine.Quaternion[]" == type )
          {
@@ -1721,7 +1721,7 @@ namespace Detox.ScriptEditor
             string type = FormatType(parameter.Type);
             type = type.Substring( 0, type.Length - 2 );
 
-            string []values = parameter.Default.Split( (char) 31 );
+            string []values = Parameter.StringToArray( parameter.Default );
 
             for ( int i = 0; i < values.Length; i++ )
             {
@@ -1747,7 +1747,7 @@ namespace Detox.ScriptEditor
          }
          else if ( true == componentArrayType.IsAssignableFrom(nodeType) )
          {
-            string []values = parameter.Default.Split( (char) 31 );
+            string []values = Parameter.StringToArray( parameter.Default );
          
             //remove curly braces from type declaration
             //so we can use it to cast the object to the array element type

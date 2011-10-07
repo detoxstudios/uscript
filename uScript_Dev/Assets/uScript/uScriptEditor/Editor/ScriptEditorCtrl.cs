@@ -2798,6 +2798,8 @@ namespace Detox.ScriptEditor
                   charsForLabel = Math.Max( 3, charsForLabel );
 
                   string text = socket.DefaultValue;
+                  text = text.Replace( Parameter.ArrayDelimeter, ',' );
+
                   if ( text.Length > charsForLabel ) text = text.Substring( 0, charsForLabel - 3 ) + "...";
 
                   SizeF valueLength = Graphics.sMeasureString( text, "value_text" );

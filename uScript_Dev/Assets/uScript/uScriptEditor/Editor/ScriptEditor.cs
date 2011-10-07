@@ -86,9 +86,39 @@ namespace Detox.ScriptEditor
       public bool IsHidden( )  { return 0 != (State & VisibleState.Hidden); }
       public bool IsLocked( )  { return 0 != (State & VisibleState.Locked); }
 
+      public static char ArrayDelimeter { get { return Detox.Data.ScriptEditor.Parameter.ArrayDelimeter; } }
+
+      public static string[] StringToArray(string value)
+      {
+         string []array;
+
+         if ( value.Length > 0 && value[0] == Parameter.ArrayDelimeter )
+         {
+            array = value.Substring( 1 ).Split( Parameter.ArrayDelimeter );
+         } 
+         else
+         {
+            array = new string[0];
+         }
+
+         return array;
+      }
+
+      public static string ArrayToString(string []array)
+      {
+         string val = "";
+
+         if ( array.Length > 0 )
+         {
+            val = Parameter.ArrayDelimeter + string.Join( Parameter.ArrayDelimeter.ToString(), array );
+         }
+
+         return val;
+      }
+
       private object ParseArray(string t, string value)
       {
-         string []values = value.Split( (char) 31 );
+         string []values = Parameter.StringToArray( value );
 
          if ( t == typeof(bool[]).ToString() )
          {
@@ -311,9 +341,11 @@ namespace Detox.ScriptEditor
             try
             {
                bool [] array = (bool[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( bool a in array )
                {
-                  result += a + "" + (char) 31;
+                  result += a + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -327,9 +359,11 @@ namespace Detox.ScriptEditor
             try
             {
                UnityEngine.Color [] array = (UnityEngine.Color[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( UnityEngine.Color a in array )
                {
-                  result += a.r + "," + a.g + "," + a.b + "," + a.a + "" + (char) 31;
+                  result += a.r + "," + a.g + "," + a.b + "," + a.a + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -343,9 +377,11 @@ namespace Detox.ScriptEditor
             try
             {
                float [] array = (float[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( float a in array )
                {
-                  result += a + "" + (char) 31;
+                  result += a + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -359,10 +395,11 @@ namespace Detox.ScriptEditor
             try
             {
                int [] array = (int[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
 
                foreach ( int a in array )
                {
-                  result += a + "" + (char) 31;
+                  result += a + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -375,9 +412,11 @@ namespace Detox.ScriptEditor
             try
             {
                Vector2 [] array = (Vector2[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( Vector2 a in array )
                {
-                  result += a.x + "," + a.y + "" + (char) 31;
+                  result += a.x + "," + a.y + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -391,9 +430,11 @@ namespace Detox.ScriptEditor
             try
             {
                Vector3 [] array = (Vector3[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( Vector3 a in array )
                {
-                  result += a.x + "," + a.y + "," + a.z + "" + (char) 31;
+                  result += a.x + "," + a.y + "," + a.z + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -407,9 +448,11 @@ namespace Detox.ScriptEditor
             try
             {
                Vector4 [] array = (Vector4[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( Vector4 a in array )
                {
-                  result += a.x + "," + a.y + "," + a.z + "," + a.w + "" + (char) 31;
+                  result += a.x + "," + a.y + "," + a.z + "," + a.w + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -423,9 +466,11 @@ namespace Detox.ScriptEditor
             try
             {
                Rect [] array = (Rect[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( Rect a in array )
                {
-                  result += a.x + "," + a.y + "," + a.width + "," + a.height + "" + (char) 31;
+                  result += a.x + "," + a.y + "," + a.width + "," + a.height + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -439,9 +484,11 @@ namespace Detox.ScriptEditor
             try
             {
                Quaternion [] array = (Quaternion[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( Quaternion a in array )
                {
-                  result += a.x + "," + a.y + "," + a.z + "," + a.w + "" + (char) 31;
+                  result += a.x + "," + a.y + "," + a.z + "," + a.w + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -455,9 +502,11 @@ namespace Detox.ScriptEditor
             try
             {
                LayerMask [] array = (LayerMask[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( LayerMask a in array )
                {
-                  result += a + "" + (char) 31;
+                  result += a + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -471,9 +520,11 @@ namespace Detox.ScriptEditor
             try
             {
                string [] array = (string[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( string a in array )
                {
-                  result += a + "" + (char) 31;
+                  result += a + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
@@ -499,9 +550,11 @@ namespace Detox.ScriptEditor
             try
             {
                object [] array = (object[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
                foreach ( object a in array )
                {
-                  result += a + "" + (char) 31;
+                  result += a + "" + Parameter.ArrayDelimeter;
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
