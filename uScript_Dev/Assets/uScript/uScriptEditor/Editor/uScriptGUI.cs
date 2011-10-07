@@ -783,13 +783,16 @@ public static class uScriptGUI
 
          if (GUI.Button(btnRect, new GUIContent("+", "Add a new item to the end of the array."), uScriptGUIStyle.propertyArrayButton))
          {
-            array = ArrayAppend<T>(array, default(T));
+            GUIUtility.keyboardControl = 0;
+            // Special conversion case for strings
+            array = ArrayAppend<T>(array, (typeof(T) == typeof(string) ? (T)(object)string.Empty : default(T)));
          }
 
          btnRect.x -= 18;
 
          if (GUI.Button(btnRect, new GUIContent("{ }", "Remove all items from the array."), uScriptGUIStyle.propertyArrayButton))
          {
+            GUIUtility.keyboardControl = 0;
             array = new T[]{};
          }
       }
@@ -870,6 +873,7 @@ public static class uScriptGUI
 
          if (GUI.Button(btnRect, new GUIContent("R", "Remove this item."), uScriptGUIStyle.propertyArrayButton))
          {
+            GUIUtility.keyboardControl = 0;
             array = ArrayRemove<T>(array, index);
          }
 
@@ -877,6 +881,7 @@ public static class uScriptGUI
 
          if (GUI.Button(btnRect, new GUIContent("C", "Insert a copy of this item."), uScriptGUIStyle.propertyArrayButton))
          {
+            GUIUtility.keyboardControl = 0;
             array = ArrayInsert<T>(array, index, array[index]);
          }
 
@@ -884,6 +889,7 @@ public static class uScriptGUI
 
          if (GUI.Button(btnRect, new GUIContent("I", "Insert a new item before this item."), uScriptGUIStyle.propertyArrayButton))
          {
+            GUIUtility.keyboardControl = 0;
             array = ArrayInsert<T>(array, index, default(T));
          }
 //      }
@@ -935,6 +941,7 @@ public static class uScriptGUI
 
                if (GUILayout.Button("S", EditorStyles.miniButton, GUILayout.ExpandWidth(false)))
                {
+                  GUIUtility.keyboardControl = 0;
                   GameObject go = GameObject.Find((string)t);
                   if (go != null)
                   {
@@ -942,7 +949,7 @@ public static class uScriptGUI
                   }
                   else
                   {
-                     Debug.LogWarning("No GameObject matching \"" + t.ToString() + "\" was found in the Scene.\n");
+                     Debug.LogWarning("No GameObject matching \"" + t.ToString() + "\" was found in the Scene.\n\tAn associated Game Object may not yet exist, or might not be active.  Game Object names may contain leading and trailing whitespace.\n");
                   }
                }
             }
@@ -1044,7 +1051,7 @@ public static class uScriptGUI
       }
       else
       {
-         Debug.LogWarning("Unhandled array type!\n");
+         Debug.LogWarning("Unhandled array type: " + value.GetType().ToString() + "\n");
          //throw System.ArgumentException("Unhandled type: " + value.GetType().ToString());
       }
 

@@ -365,16 +365,9 @@ namespace System.Windows.Forms
                         else if ( null != GetObjectArrayFieldType(p.Type) )
                         {
                            //arrays are stored as comma delimited string, so parse it now
-                           string [] values = p.Default.Split( (char) 31 );
-
-                           string []result = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly, typeof(GameObject));
-                           val = "";
-                           foreach ( string s in result )
-                           {
-                              val += s + (char) 31;
-                           }
-
-                           if ( ((string)val).Length > 0 ) val = ((string)val).Substring( 0, ((string)val).Length - 1 );
+                           string[] values = p.Default.Split( (char)31 );
+                           values = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly, typeof(GameObject));
+                           val = string.Join( ((char)31).ToString(), values );
                         }
                         else if ( null != GetObjectFieldType(p.Type) )
                         {
