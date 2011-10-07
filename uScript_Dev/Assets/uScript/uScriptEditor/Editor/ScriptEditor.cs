@@ -95,7 +95,7 @@ namespace Detox.ScriptEditor
          if ( value.Length > 0 && value[0] == Parameter.ArrayDelimeter )
          {
             array = value.Substring( 1 ).Split( Parameter.ArrayDelimeter );
-         } 
+         }
          else
          {
             array = new string[0];
@@ -114,6 +114,15 @@ namespace Detox.ScriptEditor
          }
 
          return val;
+      }
+
+      public static string FormatArrayString(string value)
+      {
+         if ( value.Length > 0 && value[0] == Parameter.ArrayDelimeter )
+         {
+            value = value.Substring( 1 ).Replace( Parameter.ArrayDelimeter, ',' );
+         }
+         return value;
       }
 
       private object ParseArray(string t, string value)

@@ -2797,8 +2797,7 @@ namespace Detox.ScriptEditor
                   int charsForLabel = (int)(((xStep + textLength.Width) * 1.75f) / charLength);
                   charsForLabel = Math.Max( 3, charsForLabel );
 
-                  string text = socket.DefaultValue;
-                  text = text.Replace( Parameter.ArrayDelimeter, ',' );
+                  string text = Parameter.FormatArrayString( socket.DefaultValue );
 
                   if ( text.Length > charsForLabel ) text = text.Substring( 0, charsForLabel - 3 ) + "...";
 
@@ -2841,11 +2840,12 @@ namespace Detox.ScriptEditor
 
                if ( socket.Input == false && socket.Output == false )
                {
-                  SizeF size = Graphics.sMeasureString( FormatName(socket), "socket_text" );
-
+                  // Update the name before calculating the size, because we'll use it for the calculation
                   TextPoint textPoint = new TextPoint( );
+                  textPoint.Name = Parameter.FormatArrayString( FormatName(socket) );
 
-                  textPoint.Name = FormatName(socket);
+                  SizeF size = Graphics.sMeasureString( textPoint.Name, "socket_text" );
+
                   textPoint.X = (Size.Width  - uScriptConfig.Style.RightShadow - size.Width) / 2;
                   textPoint.Y = (Size.Height - uScriptConfig.Style.BottomShadow - size.Height) / 2;
                   textPoint.StyleName = "socket_text";
