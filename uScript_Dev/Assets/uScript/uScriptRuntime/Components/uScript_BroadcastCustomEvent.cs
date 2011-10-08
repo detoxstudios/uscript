@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 
 [AddComponentMenu("uScript/Events/Broadcast Custom Event")]
-public class uScript_BroadcastCustomEvent : uScriptEvent
+public class uScript_BroadcastCustomEvent : MonoBehaviour
 {
    void uScript_Broadcast_Custom_Event(string eventName)
    {
