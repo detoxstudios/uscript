@@ -3504,8 +3504,18 @@ namespace Detox.ScriptEditor
          }
          else
          {
-            AddCSharpLine( entityEvent.ComponentType + " component = " + eventVariable + ".GetComponent<" + entityEvent.ComponentType + ">();" );
-            AddMissingComponent( "component", eventVariable, entityEvent.ComponentType ); 
+            //if we're setting up a new event which is not a gui listener
+            //or if we're removing the events, see if there is an existing one matching the name first
+            if ( entityEvent.ComponentType != "uScript_GUI" || false == add )
+            {
+               AddCSharpLine( entityEvent.ComponentType + " component = " + eventVariable + ".GetComponent<" + entityEvent.ComponentType + ">();" );
+               AddMissingComponent( "component", eventVariable, entityEvent.ComponentType ); 
+            }
+            else
+            {
+               AddCSharpLine( "//OnGUI need unique listeners so calls like GUI.depth will work across and within uScripts" );
+               AddCSharpLine( entityEvent.ComponentType + " component = " + eventVariable + ".AddComponent<" + entityEvent.ComponentType + ">();" );
+            }
             AddCSharpLine( "if ( null != component )" );
             AddCSharpLine( "{" );
             ++m_TabStack;
