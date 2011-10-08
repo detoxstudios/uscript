@@ -1071,7 +1071,7 @@ namespace Detox.ScriptEditor
                   declaration += "new Quaternion((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + ",(float)" + elements[i+3] + "),";
                }
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new Quaternion[0]"; }
@@ -1087,7 +1087,7 @@ namespace Detox.ScriptEditor
                   declaration += "new Vector2((float)" + elements[i] + ",(float)" + elements[i+1] + "),";
                }
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new Vector2[0]"; }
@@ -1103,7 +1103,7 @@ namespace Detox.ScriptEditor
                   declaration += "new Vector3((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + "),";
                }
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new Vector3[0]"; }
@@ -1119,7 +1119,7 @@ namespace Detox.ScriptEditor
                   declaration += "new Vector4((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + ",(float)" + elements[i+3] + "),";
                }
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new Vector4[0]"; }
@@ -1135,7 +1135,7 @@ namespace Detox.ScriptEditor
                   declaration += "new Rect((float)" + elements[i] + ",(float)" + elements[i+1] + ",(float)" + elements[i+2] + ",(float)" + elements[i+3] + "),";
                }
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new Rect[0]"; }
@@ -1151,7 +1151,7 @@ namespace Detox.ScriptEditor
                   declaration += "new UnityEngine.Color((float)" + elements[i] + ", (float)" + elements[i+1] + ", (float)" + elements[i+2] + ", (float)" + elements[i+3] + "),";
                }
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new UnityEngine.Color[0]"; }
@@ -1189,7 +1189,7 @@ namespace Detox.ScriptEditor
                   declaration += "null,";
                };
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new UnityEngine.Component[0]"; }
@@ -1205,7 +1205,7 @@ namespace Detox.ScriptEditor
                   declaration += "new UnityEngine.NetworkPlayer(),";
                };
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new UnityEngine.NetworkPlayer[0]"; }
@@ -1221,7 +1221,7 @@ namespace Detox.ScriptEditor
                   declaration += "null,";
                };
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new UnityEngine.Camera[0]"; }
@@ -1240,7 +1240,7 @@ namespace Detox.ScriptEditor
                   declaration += value + ",";
                };
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new UnityEngine.Boolean[0]"; }
@@ -1276,7 +1276,7 @@ namespace Detox.ScriptEditor
                   }
                }
 
-               declaration = declaration.Substring( 0, declaration.Length - 1 );
+               if ( elements.Length > 0 ) declaration = declaration.Substring( 0, declaration.Length - 1 );
                declaration += "}";
             }
             catch ( Exception ) { declaration = "new " + type.Replace("[]", "") + "[0]";  }
