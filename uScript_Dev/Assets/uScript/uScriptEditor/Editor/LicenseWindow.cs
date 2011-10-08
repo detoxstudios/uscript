@@ -35,11 +35,11 @@ public class LicenseWindow : EditorWindow
    Vector2 _scrollviewOffset = Vector2.zero;
    bool _hasAgreed = false;
 
-   static int _licenseVersion { get { return 20110824; } }
+   static int _licenseVersion { get { return 20111008; } }
    static int _licenseVersionAccepted = -1;
 
 #pragma warning disable 414
-   string _licenseText = @"IMPORTANT, PLEASE READ CAREFULLY. THIS IS A LICENSE AGREEMENT
+   string _licenseText = @"IMPORTANT, PLEASE READ CAREFULLY. THIS IS A LICENSE AGREEMENT!
 
 USCRIPT VISUAL SCRIPTING TOOL END USER LICENSE AGREEMENT
 
@@ -75,14 +75,16 @@ This End User License Agreement (""EULA"") is a legal agreement between you (eit
 
 Should you have any questions concerning this EULA, or if you desire to contact Detox Studios LLC for any reason, please visit us on the World Wide Web at www.detoxstudios.com
 
-(08/24/2011)";
+(rev. 10/08/2011)";
 
 
-   string _licenseTextPLE = @"IMPORTANT, PLEASE READ CAREFULLY. THIS IS A LICENSE AGREEMENT
+   string _licenseTextPLE = @"IMPORTANT, PLEASE READ CAREFULLY. THIS IS A LICENSE AGREEMENT!
 
-USCRIPT VISUAL SCRIPTING TOOL END USER LICENSE AGREEMENT
+USCRIPT VISUAL SCRIPTING TOOL - PERSONAL LEARNING EDITION
 
-This SOFTWARE PRODUCT is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. This SOFTWARE PRODUCT is licensed, not sold.
+END USER LICENSE AGREEMENT
+
+This SOFTWARE PRODUCT is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. This SOFTWARE PRODUCT is licensed, not sold.  This SOFTWARE PRODUCT is for evaluation and personal learning only and may not be used in any way to develop, or contribute to the development of, commercial products.
 
 End User License Agreement
 
@@ -90,7 +92,7 @@ This End User License Agreement (""EULA"") is a legal agreement between you (eit
 
 1.  Eligible Licensees. This Software is available for license solely to SOFTWARE owners, with no right of duplication or further distribution, licensing, or sub-licensing.  IF YOU DO NOT OWN THE SOFTWARE, THEN DO NOT DOWNLOAD, INSTALL, COPY OR USE THE SOFTWARE.
  
-2.  License Grant.  Detox Studios LLC grants to you a personal, non-transferable and non-exclusive right to use the Software provided with this EULA. You agree you will not copy the Software except as necessary for your single and individual use. You may install the Software on as many computers as you wish for your single and individual use. Modifying, translating, renting, copying, transferring or assigning all or part of the Software, or any rights granted hereunder, to any other persons and removing any proprietary notices, labels or marks from the Software is strictly prohibited.  Furthermore, you hereby agree not to create derivative works based on the Software.  You may not transfer this Software.
+2.  License Grant.  Detox Studios LLC grants to you a personal, non-transferable and non-exclusive right to use the Software provided with this EULA. You agree you will not copy the Software except as necessary for your single and individual use. You may install the Software on as many computers as you wish for your single and individual use. Modifying, translating, renting, copying, transferring or assigning all or part of the Software, or any rights granted hereunder, to any other persons and removing any proprietary notices, labels or marks from the Software is strictly prohibited.  Furthermore, you hereby agree not to create derivative works based on the Software.  You may not transfer this Software.  You may not use this software, directly or indirectly, to generate commercial products, or receive compensation of any kind for any product in which the SOFTWARE was used in its development.
 
 3.  Copyright.  The Software is licensed, not sold.  You acknowledge that no title to the intellectual property in the Software is transferred to you. You further acknowledge that title and full ownership rights to the Software will remain the exclusive property of Detox Studios LLC and/or its suppliers, and you will not acquire any rights to the Software, except as expressly set forth above. All copies of the Software will contain the same proprietary notices as contained in or on the Software. All title and copyrights in and to the SOFTWARE PRODUCT (including but not limited to any images, photographs, animations, video, audio, music, text and ""applets,"" incorporated into the SOFTWARE PRODUCT), the accompanying printed materials, and any copies of the SOFTWARE PRODUCT, are owned by Detox Studios LLC or its suppliers.  The SOFTWARE PRODUCT is protected by copyright laws and international treaty provisions.
 
@@ -114,7 +116,7 @@ This End User License Agreement (""EULA"") is a legal agreement between you (eit
 
 Should you have any questions concerning this EULA, or if you desire to contact Detox Studios LLC for any reason, please visit us on the World Wide Web at www.detoxstudios.com
 
-(08/24/2011)";
+(rev. 10/08/2011)";
 
 #pragma warning restore 414
 
