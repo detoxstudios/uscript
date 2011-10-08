@@ -1,6 +1,6 @@
 //#define UNITY_STORE_BUILD
-//#define DETOX_STORE_BUILD
-#define FREE_PLE_BUILD
+#define DETOX_STORE_BUILD
+//#define FREE_PLE_BUILD
 
 using UnityEngine;
 using UnityEditor;
