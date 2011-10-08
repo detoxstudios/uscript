@@ -1340,7 +1340,8 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "#pragma warning disable 414" );
 
          AddCSharpLine( "GameObject parentGameObject = null;" );
-         
+         AddCSharpLine( "uScript_GUI " + OnGuiListenerName( ) + " = null; " );
+
          if ( true == m_GenerateDebugInfo )
          {
             AddCSharpLine( "const int MaxRelayCallCount = " + uScript.Preferences.MaximumNodeRecursionCount + ";" );
@@ -3506,15 +3507,24 @@ namespace Detox.ScriptEditor
          {
             //if we're setting up a new event which is not a gui listener
             //or if we're removing the events, see if there is an existing one matching the name first
-            if ( entityEvent.ComponentType != "uScript_GUI" || false == add )
+            if ( entityEvent.ComponentType != "uScript_GUI" )
             {
                AddCSharpLine( entityEvent.ComponentType + " component = " + eventVariable + ".GetComponent<" + entityEvent.ComponentType + ">();" );
                AddMissingComponent( "component", eventVariable, entityEvent.ComponentType ); 
             }
             else
             {
-               AddCSharpLine( "//OnGUI need unique listeners so calls like GUI.depth will work across and within uScripts" );
-               AddCSharpLine( entityEvent.ComponentType + " component = " + eventVariable + ".AddComponent<" + entityEvent.ComponentType + ">();" );
+               AddCSharpLine( "if ( null == " + OnGuiListenerName( ) + " )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+
+                  AddCSharpLine( "//OnGUI need unique listeners so calls like GUI.depth will work across uScripts" );
+                  AddCSharpLine( OnGuiListenerName( ) + " = " + eventVariable + ".AddComponent<" + entityEvent.ComponentType + ">();" );
+               
+               --m_TabStack;
+               AddCSharpLine( "}" );
+
+               AddCSharpLine( entityEvent.ComponentType + " component = " + OnGuiListenerName( ) + ";" );
             }
             AddCSharpLine( "if ( null != component )" );
             AddCSharpLine( "{" );
@@ -3898,6 +3908,8 @@ namespace Detox.ScriptEditor
             AddCSharpLine( "}" );
          }
       }
+
+      private string OnGuiListenerName( ) { return "thisScriptsOnGuiListener"; }
 
       //go through and tell all the property linked to us to update their entity's values
       //because we could have modified the CSharp representation
