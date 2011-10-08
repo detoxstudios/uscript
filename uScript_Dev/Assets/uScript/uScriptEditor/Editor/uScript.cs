@@ -17,10 +17,15 @@ using Detox.FlowChart;
 
 public class uScript : EditorWindow
 {
+
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string uScriptBuild { get { return "0.9.1353"; } }
-   static string BetaVersion { get { return "Retail Beta 5"; } }
-   public string FullVersionName { get { return BetaVersion + " (" + uScriptBuild + ")"; } }
+   public string BuildNumber { get { return "0.9.1360"; } }
+#if FREE_PLE_BUILD
+    static string ProductName { get { return "Release Candidate 1 - Personal Learning Edition"; } }
+#else
+   static string ProductName { get { return "Release Candidate 1"; } }
+#endif
+   public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    public string LastUnityBuild { get { return "3.3"; } }
    public string CurrentUnityBuild { get { return "3.4"; } }
    //public string BetaUnityBuild { get { return "3.5"; } }
@@ -591,19 +596,19 @@ public class uScript : EditorWindow
 	               }
 	               else
 	               {
-	                  uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
+	                  uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
 	                  return;
 	               }
                
    			
                   if (DateTime.Now > ExpireDate)
                   {
-                     uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "has expired.\n", uScriptDebug.Type.Error);
+                     uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "has expired.\n", uScriptDebug.Type.Error);
                      return;
                   }
                   else
                   {
-                     uScriptDebug.Log(BetaVersion + " (" + uScriptBuild + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
+                     uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
                   }
 			    }
          #endif
