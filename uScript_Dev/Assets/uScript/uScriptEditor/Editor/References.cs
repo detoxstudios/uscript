@@ -379,7 +379,17 @@ namespace System.Windows.Forms
                         }
                         else
                         {
-                           val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                           //arrays are stored as comma delimited string, so parse it now
+                           if ( p.Type.Contains("[]") )
+                           {
+                              string []values = Parameter.StringToArray(p.Default);
+                              values = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly, typeof(GameObject));
+                              val = Parameter.ArrayToString(values);
+                           }
+                           else
+                           {
+                              val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                           }
                         }
                      }
                      else
