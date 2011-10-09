@@ -1,6 +1,7 @@
 //#define UNITY_STORE_BUILD
-#define DETOX_STORE_BUILD
+//#define DETOX_STORE_BUILD
 //#define FREE_PLE_BUILD
+#define FREE_BETA_BUILD
 
 #if !(UNITY_STORE_BUILD)
 
@@ -217,7 +218,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
                // prevent the help TextArea from getting focus
                GUI.SetNextControlName("EULA");
 
-#if DETOX_STORE_BUILD
+#if (DETOX_STORE_BUILD || FREE_BETA_BUILD)
                GUILayout.TextArea(_licenseText, uScriptGUIStyle.referenceText);
 #else
                GUILayout.TextArea(_licenseTextPLE, uScriptGUIStyle.referenceText);

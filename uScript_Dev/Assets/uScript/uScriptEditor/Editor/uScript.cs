@@ -1,6 +1,7 @@
 //#define UNITY_STORE_BUILD
-#define DETOX_STORE_BUILD
+//#define DETOX_STORE_BUILD
 //#define FREE_PLE_BUILD
+#define FREE_BETA_BUILD
 
 using UnityEngine;
 using UnityEditor;
@@ -21,9 +22,9 @@ public class uScript : EditorWindow
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
    public string BuildNumber { get { return "0.9.1360"; } }
 #if FREE_PLE_BUILD
-    static string ProductName { get { return "Release Candidate 1 - Personal Learning Edition"; } }
+    static string ProductName { get { return "Personal Learning Edition"; } }
 #else
-   static string ProductName { get { return "Release Candidate 1"; } }
+   static string ProductName { get { return "Retail Beta 5"; } }
 #endif
    public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    public string LastUnityBuild { get { return "3.3"; } }
@@ -444,21 +445,8 @@ public class uScript : EditorWindow
 
    void Update()
    {
-#if DETOX_STORE_BUILD
+#if (!UNITY_STORE_BUILD)
       // Initialize the LicenseWindow here if needed. Doing it during OnGUI may
-      // cause issues, such as null exception errors and reports that OnGUI calls
-      // are being made outside of OnGUI.
-      //
-      if (isLicenseAccepted == false)
-      {
-         isLicenseAccepted = LicenseWindow.HasUserAcceptedLicense();
-         if (isLicenseAccepted == false && LicenseWindow.isOpen == false)
-         {
-            LicenseWindow.Init();
-         }
-      }
-#elif FREE_PLE_BUILD
-	  // Initialize the LicenseWindow here if needed. Doing it during OnGUI may
       // cause issues, such as null exception errors and reports that OnGUI calls
       // are being made outside of OnGUI.
       //
@@ -588,7 +576,7 @@ public class uScript : EditorWindow
       {
          if (null == m_ScriptEditorCtrl)
          {
-         #if FREE_PLE_BUILD // See if expiration date and build cap should be used. Not needed for commercial version.
+#if FREE_BETA_BUILD // See if expiration date and build cap should be used. Not needed for commercial version.
 		       {
 	               //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
 	               if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild))
@@ -611,7 +599,7 @@ public class uScript : EditorWindow
                      uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
                   }
 			    }
-         #endif
+#endif
          }
 
          m_ScriptEditorCtrl = null;
