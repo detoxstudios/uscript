@@ -1,7 +1,7 @@
-//#define UNITY_STORE_BUILD
+#define UNITY_STORE_BUILD
 //#define DETOX_STORE_BUILD
 //#define FREE_PLE_BUILD
-#define FREE_BETA_BUILD
+//#define FREE_BETA_BUILD
 
 #if !(UNITY_STORE_BUILD)
 

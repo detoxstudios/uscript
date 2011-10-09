@@ -1,7 +1,7 @@
-//#define UNITY_STORE_BUILD
-//#define DETOX_STORE_BUILD
-//#define FREE_PLE_BUILD
-#define FREE_BETA_BUILD
+#define UNITY_STORE_BUILD //Don't forget LicenseWindow.cs
+//#define DETOX_STORE_BUILD //Don't forget LicenseWindow.cs
+//#define FREE_PLE_BUILD // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
+//#define FREE_BETA_BUILD
 
 using UnityEngine;
 using UnityEditor;
