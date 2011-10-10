@@ -383,7 +383,7 @@ namespace System.Windows.Forms
                            if ( p.Type.Contains("[]") )
                            {
                               string []values = Parameter.StringToArray(p.Default);
-                              values = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly, typeof(GameObject));
+                              values = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly);
                               val = Parameter.ArrayToString(values);
                            }
                            else
