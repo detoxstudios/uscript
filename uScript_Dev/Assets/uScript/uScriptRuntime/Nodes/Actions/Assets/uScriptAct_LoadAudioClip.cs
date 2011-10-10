@@ -23,12 +23,12 @@ public class uScriptAct_LoadAudioClip : uScriptLogic
       [FriendlyName("Asset Path", "The AudioClip file to load.  The supported file formats are: \"aif\", \"wav\", \"mp3\", \"ogg\", \"xm\", \"mod\", \"it\", and \"s3m\".")]
       string name,
       [FriendlyName("Loaded Asset", "The AudioClip loaded from the specified file path.")]
-      out AudioClip asset
+      out AudioClip audioClip
    )
    {
-      asset = Resources.Load(name) as AudioClip;
+      audioClip = Resources.Load(name) as AudioClip;
 
-      if ( null == asset )
+      if ( null == audioClip )
       {
          uScriptDebug.Log( "Asset " + name + " couldn't be loaded, are you sure it's in a Resources folder?", uScriptDebug.Type.Warning );
       }

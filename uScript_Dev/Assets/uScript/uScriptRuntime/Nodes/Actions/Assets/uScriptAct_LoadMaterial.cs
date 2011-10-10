@@ -23,12 +23,12 @@ public class uScriptAct_LoadMaterial : uScriptLogic
       [FriendlyName("Asset Path", "The Material file to load.  The supported file format is: \"mat\".")]
       string name,
       [FriendlyName("Loaded Asset", "The Material loaded from the specified file path.")]
-      out Material asset
+      out Material materialFile
    )
    {
-      asset = Resources.Load(name) as Material;
+      materialFile = Resources.Load(name) as Material;
 
-      if ( null == asset )
+      if ( null == materialFile )
       {
          uScriptDebug.Log( "Asset " + name + " couldn't be loaded, are you sure it's in a Resources folder?", uScriptDebug.Type.Warning );
       }

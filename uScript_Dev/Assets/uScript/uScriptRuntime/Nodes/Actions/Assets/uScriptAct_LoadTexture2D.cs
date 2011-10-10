@@ -23,12 +23,12 @@ public class uScriptAct_LoadTexture2D : uScriptLogic
       [FriendlyName("Asset Path", "The Texture2D file to load.  The supported file formats are: \"psd\", \"tiff\", \"jpg\", \"tga\", \"png\", \"gif\", \"bmp\", \"iff\", and \"pict\"")]
       string name,
       [FriendlyName("Loaded Asset", "The Texture2D loaded from the specified file path.")]
-      out Texture2D asset
+      out Texture2D textureFile
    )
    {
-      asset = Resources.Load(name) as Texture2D;
+      textureFile = Resources.Load(name) as Texture2D;
 
-      if ( null == asset )
+      if ( null == textureFile )
       {
          uScriptDebug.Log( "Asset " + name + " couldn't be loaded, are you sure it's in a Resources folder?", uScriptDebug.Type.Warning );
       }
