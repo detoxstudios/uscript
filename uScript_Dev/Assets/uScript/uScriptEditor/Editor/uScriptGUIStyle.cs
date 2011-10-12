@@ -120,8 +120,11 @@ public static class uScriptGUIStyle
    private static GUIStyle _propertyBoolField;
    public static GUIStyle propertyBoolField { get { return _propertyBoolField; } }
 
-   private static GUIStyle _propertyArrayButton;
-   public static GUIStyle propertyArrayButton { get { return _propertyArrayButton; } }
+   private static GUIStyle _propertyArrayIconButton;
+   public static GUIStyle propertyArrayIconButton { get { return _propertyArrayIconButton; } }
+
+   private static GUIStyle _propertyArrayTextButton;
+   public static GUIStyle propertyArrayTextButton { get { return _propertyArrayTextButton; } }
 
    private static GUIStyle _scriptRowOdd;
    public static GUIStyle scriptRowOdd { get { return _scriptRowOdd; } }
@@ -357,11 +360,16 @@ public static class uScriptGUIStyle
       _propertyBoolField = new GUIStyle(EditorStyles.toggle);
       _propertyBoolField.margin = new RectOffset(4, 4, 1, 1);
 
-      _propertyArrayButton = new GUIStyle(EditorStyles.miniButton);
-      _propertyArrayButton.fontStyle = FontStyle.Bold;
-      _propertyArrayButton.padding = new RectOffset(0, 2, 1, 1);
-      _propertyArrayButton.contentOffset = new Vector2(0, 1);
-      _propertyArrayButton.alignment = TextAnchor.UpperCenter;
+      _propertyArrayIconButton = new GUIStyle(EditorStyles.miniButton);
+      _propertyArrayIconButton.margin = new RectOffset(4, 4, 2, 2);
+      _propertyArrayIconButton.padding = new RectOffset(3, 3, 2, 2);
+      _propertyArrayIconButton.stretchWidth = false;
+
+      _propertyArrayTextButton = new GUIStyle(EditorStyles.miniButton);
+      _propertyArrayTextButton.fontStyle = FontStyle.Bold;
+      _propertyArrayTextButton.padding = new RectOffset(0, 2, 1, 1);
+      _propertyArrayTextButton.contentOffset = new Vector2(0, 1);
+      _propertyArrayTextButton.alignment = TextAnchor.UpperCenter;
 
       _propertyRowOdd = new GUIStyle(GUIStyle.none);
       _propertyRowOdd.fixedHeight = 20;

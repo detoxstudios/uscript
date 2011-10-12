@@ -11,6 +11,23 @@ public static class uScriptGUIContent
 {
    static string _currentSkin = string.Empty;
 
+   private static GUIContent _buttonArrayAdd;
+   public static GUIContent buttonArrayAdd { get { return _buttonArrayAdd; } }
+
+   private static GUIContent _buttonArrayClear;
+   public static GUIContent buttonArrayClear { get { return _buttonArrayClear; } }
+
+   private static GUIContent _buttonArrayDuplicate;
+   public static GUIContent buttonArrayDuplicate { get { return _buttonArrayDuplicate; } }
+
+   private static GUIContent _buttonArrayInsert;
+   public static GUIContent buttonArrayInsert { get { return _buttonArrayInsert; } }
+
+   private static GUIContent _buttonArrayRemove;
+   public static GUIContent buttonArrayRemove { get { return _buttonArrayRemove; } }
+
+   private static GUIContent _buttonArraySearch;
+   public static GUIContent buttonArraySearch { get { return _buttonArraySearch; } }
 
    private static GUIContent _buttonListCollapse;
    public static GUIContent buttonListCollapse { get { return _buttonListCollapse; } }
@@ -99,6 +116,13 @@ public static class uScriptGUIContent
       }
 
       // create the objects
+      _buttonArrayAdd               = new GUIContent("+",                     "Add a new item to the end of the array.");
+      _buttonArrayClear             = new GUIContent("{ }",                   "Remove all items from the array.");
+      _buttonArrayDuplicate         = new GUIContent("C",                     "Insert a copy of this item.");
+      _buttonArrayInsert            = new GUIContent("I",                     "Insert a new item before this item.");
+      _buttonArrayRemove            = new GUIContent("R",                     "Remove this item.");
+      _buttonArraySearch            = new GUIContent(string.Empty,            "Attempt to locate a GameObject in the project Hierarchy using this string.");
+
       _buttonListCollapse           = new GUIContent(string.Empty,            "Collapse all node categories.");
       _buttonListExpand             = new GUIContent(string.Empty,            "Expand all node categories.");
 
@@ -141,6 +165,7 @@ public static class uScriptGUIContent
          // reload all custom GUI textures to match the new skin
          string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + _currentSkin + "_";
 
+         _buttonArraySearch.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _buttonListCollapse.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconCollapse.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _buttonListExpand.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconExpand.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _buttonNodeFind.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;

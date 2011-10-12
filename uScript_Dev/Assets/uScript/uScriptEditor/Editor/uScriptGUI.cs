@@ -781,7 +781,7 @@ public static class uScriptGUI
          btnRect.width = 18;
          btnRect.height = 16;
 
-         if (GUI.Button(btnRect, new GUIContent("+", "Add a new item to the end of the array."), uScriptGUIStyle.propertyArrayButton))
+         if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayAdd, uScriptGUIStyle.propertyArrayTextButton))
          {
             GUIUtility.keyboardControl = 0;
             // Special conversion case for strings
@@ -790,7 +790,7 @@ public static class uScriptGUI
 
          btnRect.x -= 18;
 
-         if (GUI.Button(btnRect, new GUIContent("{ }", "Remove all items from the array."), uScriptGUIStyle.propertyArrayButton))
+         if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayClear, uScriptGUIStyle.propertyArrayTextButton))
          {
             GUIUtility.keyboardControl = 0;
             array = new T[]{};
@@ -871,7 +871,7 @@ public static class uScriptGUI
 //            uScript.Instance.Repaint();
 //         }
 
-         if (GUI.Button(btnRect, new GUIContent("R", "Remove this item."), uScriptGUIStyle.propertyArrayButton))
+         if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayRemove, uScriptGUIStyle.propertyArrayTextButton))
          {
             GUIUtility.keyboardControl = 0;
             array = ArrayRemove<T>(array, index);
@@ -879,7 +879,7 @@ public static class uScriptGUI
 
          btnRect.x -= 18;
 
-         if (GUI.Button(btnRect, new GUIContent("C", "Insert a copy of this item."), uScriptGUIStyle.propertyArrayButton))
+         if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayDuplicate, uScriptGUIStyle.propertyArrayTextButton))
          {
             GUIUtility.keyboardControl = 0;
             array = ArrayInsert<T>(array, index, array[index]);
@@ -887,7 +887,7 @@ public static class uScriptGUI
 
          btnRect.x -= 18;
 
-         if (GUI.Button(btnRect, new GUIContent("I", "Insert a new item before this item."), uScriptGUIStyle.propertyArrayButton))
+         if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayInsert, uScriptGUIStyle.propertyArrayTextButton))
          {
             GUIUtility.keyboardControl = 0;
             array = ArrayInsert<T>(array, index, default(T));
@@ -939,7 +939,9 @@ public static class uScriptGUI
                   }
                }
 
-               if (GUILayout.Button("S", EditorStyles.miniButton, GUILayout.ExpandWidth(false)))
+               uScriptGUI.enabled = (string.IsNullOrEmpty((string)t) == false);
+
+               if (GUILayout.Button(uScriptGUIContent.buttonArraySearch, uScriptGUIStyle.propertyArrayIconButton))
                {
                   GUIUtility.keyboardControl = 0;
                   GameObject go = GameObject.Find((string)t);
@@ -952,6 +954,8 @@ public static class uScriptGUI
                      Debug.LogWarning("No GameObject matching \"" + t.ToString() + "\" was found in the Scene.\n\tAn associated Game Object may not yet exist, or might not be active.  Game Object names may contain leading and trailing whitespace.\n");
                   }
                }
+
+               uScriptGUI.enabled = true;;
             }
             EditorGUILayout.EndHorizontal();
          }
