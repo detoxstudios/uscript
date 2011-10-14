@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
+using Detox.Drawing;
+using Detox.Data;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using Detox.Windows.Forms;
 
 using Detox.FlowChart;
 
@@ -25,7 +25,7 @@ namespace Detox.ScriptEditor
          AddEventHandlers( );
 
          IsCircleWhenZoomed = true;
-         Location = new System.Drawing.Point( localNode.Position.X, localNode.Position.Y );
+         Location = new Detox.Drawing.Point( localNode.Position.X, localNode.Position.Y );
          Name = "";
 
          PrepareNode( );
@@ -128,7 +128,7 @@ namespace Detox.ScriptEditor
          IsCircleWhenZoomed = true;
          NodeStyle = "externalconnection";
                   
-         Location = new System.Drawing.Point( externalConnection.Position.X, externalConnection.Position.Y );
+         Location = new Detox.Drawing.Point( externalConnection.Position.X, externalConnection.Position.Y );
 
          Name = "";
 
@@ -257,7 +257,7 @@ namespace Detox.ScriptEditor
          IsCircleWhenZoomed = true;
          NodeStyle = "variable_owner";
                   
-         Location = new System.Drawing.Point( ownerConnection.Position.X, ownerConnection.Position.Y );
+         Location = new Detox.Drawing.Point( ownerConnection.Position.X, ownerConnection.Position.Y );
 
          Name = "";
 

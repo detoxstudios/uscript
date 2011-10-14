@@ -1,7 +1,7 @@
 ﻿
 namespace Detox.ScriptEditor
 {
-   using System.Windows.Forms;
+   using Detox.Windows.Forms;
    using UnityEngine;
    using UnityEditor;
 
@@ -90,8 +90,8 @@ namespace Detox.ScriptEditor
 
          //why so big?  because it's simply virtual coordinates to handle scrolling and we
          //want them to be able to scroll as much as they need
-         m_FlowChart.Size     = new System.Drawing.Size( maxValue, maxValue );
-         m_FlowChart.Location = new System.Drawing.Point(-maxValue / 2, -maxValue / 2);
+         m_FlowChart.Size     = new Detox.Drawing.Size( maxValue, maxValue );
+         m_FlowChart.Location = new Detox.Drawing.Point(-maxValue / 2, -maxValue / 2);
 
          Controls.Add( m_FlowChart );
 

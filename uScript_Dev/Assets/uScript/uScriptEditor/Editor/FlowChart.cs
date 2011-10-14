@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using System.Drawing;
+using Detox.Windows.Forms;
+using Detox.Drawing;
 
 using UnityEditor;
 using UnityEngine;
@@ -182,13 +182,13 @@ namespace Detox.FlowChart
          // 
          // FlowChartCtrl
          // 
-         this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+         this.BackColor = Detox.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
          this.DoubleBuffered = true;
          this.Name = "FlowChartCtrl";
-         this.Size = new System.Drawing.Size(0, 0);
-         this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseMove);
-         this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseDown);
-         this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseUp);
+         this.Size = new Detox.Drawing.Size(0, 0);
+         this.MouseMove += new Detox.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseMove);
+         this.MouseDown += new Detox.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseDown);
+         this.MouseUp += new Detox.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseUp);
          this.ResumeLayout(false);
 
          this.Location = new Point(0, 0);
@@ -429,11 +429,11 @@ namespace Detox.FlowChart
          {
             m_AllowPanning = true;
          }
-         m_FCMouseDownPoint = System.Windows.Forms.Cursor.Position;
+         m_FCMouseDownPoint = Detox.Windows.Forms.Cursor.Position;
          
          if ( e.Button == MouseButtons.Left )
          {
-            m_MoveBoundariesStart = System.Windows.Forms.Cursor.Position;
+            m_MoveBoundariesStart = Detox.Windows.Forms.Cursor.Position;
          }
       }
 
@@ -480,13 +480,13 @@ namespace Detox.FlowChart
                }
             }
             
-            m_MoveBoundariesStart = System.Windows.Forms.Cursor.Position;
+            m_MoveBoundariesStart = Detox.Windows.Forms.Cursor.Position;
 
             //use the parent's position
             //for mouse coords, if we use our position
             //the mouse is relative to us which throws it off when
             //we move ourselves
-            Point position = System.Windows.Forms.Cursor.Position;
+            Point position = Detox.Windows.Forms.Cursor.Position;
             position = node.PointToClient( position );
 
             AnchorPoint anchorPoint = new AnchorPoint( );
@@ -651,8 +651,8 @@ namespace Detox.FlowChart
 
       private bool UserProbablyDidntMeanToMoveMouse( )
       {
-         int dx = m_FCMouseDownPoint.X - System.Windows.Forms.Cursor.Position.X;
-         int dy = m_FCMouseDownPoint.Y - System.Windows.Forms.Cursor.Position.Y;
+         int dx = m_FCMouseDownPoint.X - Detox.Windows.Forms.Cursor.Position.X;
+         int dy = m_FCMouseDownPoint.Y - Detox.Windows.Forms.Cursor.Position.Y;
 
          dx = Math.Abs(dx);
          dy = Math.Abs(dy);
@@ -695,7 +695,7 @@ namespace Detox.FlowChart
    
             if ( null != m_StartLinkNode )
             {
-               Point position = System.Windows.Forms.Cursor.Position;
+               Point position = Detox.Windows.Forms.Cursor.Position;
    
                AnchorPoint hitPoint = new AnchorPoint( );
    
@@ -880,7 +880,7 @@ namespace Detox.FlowChart
       
       private bool MouseOverLink(out Link retLink)
       {
-         Point position = PointToClient( System.Windows.Forms.Cursor.Position );
+         Point position = PointToClient( Detox.Windows.Forms.Cursor.Position );
          retLink = null;
 
          foreach ( Link link in m_Links )
@@ -897,7 +897,7 @@ namespace Detox.FlowChart
 
       private void RunMarqueeSelect( )
       {
-         Point position = System.Windows.Forms.Cursor.Position;
+         Point position = Detox.Windows.Forms.Cursor.Position;
          position = this.PointToClient( position );
 
          //if no control key, unselect the rest
@@ -997,8 +997,8 @@ namespace Detox.FlowChart
 
          //cursor is already in NodeWindowRect space
          //no need to subtract coordinates
-         location.X = System.Windows.Forms.Cursor.Position.X;
-         location.Y = System.Windows.Forms.Cursor.Position.Y;
+         location.X = Detox.Windows.Forms.Cursor.Position.X;
+         location.Y = Detox.Windows.Forms.Cursor.Position.Y;
 
          float width  = uScript.Instance.NodeWindowRect.xMax - uScript.Instance.NodeWindowRect.xMin;
          float height = uScript.Instance.NodeWindowRect.yMax - uScript.Instance.NodeWindowRect.yMin;
@@ -1039,11 +1039,11 @@ namespace Detox.FlowChart
 
       public void MoveWithCursor( float movementScale )
       {
-         Point position = System.Windows.Forms.Cursor.Position;
+         Point position = Detox.Windows.Forms.Cursor.Position;
 
          if ( Point.Empty == m_MoveOffset )
          {
-            m_MoveOffset        = System.Windows.Forms.Cursor.Position;
+            m_MoveOffset        = Detox.Windows.Forms.Cursor.Position;
             m_StartMoveLocation = Location;
          }
 
@@ -1186,12 +1186,12 @@ namespace Detox.FlowChart
             }
          }
 
-         Pen pen = new Pen( System.Drawing.Color.Black, uScriptConfig.bezierPenWidth );
-         Pen selectedPen = new Pen( System.Drawing.Color.LightYellow, uScriptConfig.bezierPenWidthSelected );
+         Pen pen = new Pen( Detox.Drawing.Color.Black, uScriptConfig.bezierPenWidth );
+         Pen selectedPen = new Pen( Detox.Drawing.Color.LightYellow, uScriptConfig.bezierPenWidthSelected );
 
          if (null != m_StartLinkNode)
          {
-            PointF position = new PointF(System.Windows.Forms.Cursor.Position.X, System.Windows.Forms.Cursor.Position.Y);
+            PointF position = new PointF(Detox.Windows.Forms.Cursor.Position.X, Detox.Windows.Forms.Cursor.Position.Y);
             position = this.PointToClient( position );
 
             PointF start = new PointF( (m_LinkStartAnchor.X / 100.0f * m_StartLinkNode.Size.Width), 
@@ -1203,7 +1203,7 @@ namespace Detox.FlowChart
             start.X += Location.X;
             start.Y += Location.Y;
 
-            PointF end = new PointF(System.Windows.Forms.Cursor.Position.X, System.Windows.Forms.Cursor.Position.Y);
+            PointF end = new PointF(Detox.Windows.Forms.Cursor.Position.X, Detox.Windows.Forms.Cursor.Position.Y);
             end = PointToClient( end );
 
             end.X += Location.X;
@@ -1377,7 +1377,7 @@ namespace Detox.FlowChart
 
          if ( Point.Empty != m_StartMarquee )
          {
-            Point position = System.Windows.Forms.Cursor.Position;
+            Point position = Detox.Windows.Forms.Cursor.Position;
             position = this.PointToClient( position );
 
             int startX = Math.Min( m_StartMarquee.X, position.X );
@@ -1622,7 +1622,7 @@ namespace Detox.FlowChart
       {
          bool found = false;
 
-         System.Drawing.Graphics g = CreateGraphics( );
+         Detox.Drawing.Graphics g = CreateGraphics( );
 
          if ( m_AnchorPoints == null ) return false;
 
@@ -1651,18 +1651,18 @@ namespace Detox.FlowChart
 
       public void StartNodeMove( )
       {
-         Point position = System.Windows.Forms.Cursor.Position;
+         Point position = Detox.Windows.Forms.Cursor.Position;
          position = this.Parent.PointToClient( position );
 
          Point p = PointToScreen( new Point(0, 0) );
          p = this.Parent.PointToClient( p );
          
-         m_MouseOffset = new System.Drawing.Point( (int) ((position.X - p.X)), (int) ((position.Y - p.Y)));
+         m_MouseOffset = new Detox.Drawing.Point( (int) ((position.X - p.X)), (int) ((position.Y - p.Y)));
       }
 
       public void StartNodeResize( )
       {
-         m_MouseOffset  = System.Windows.Forms.Cursor.Position;
+         m_MouseOffset  = Detox.Windows.Forms.Cursor.Position;
          m_ResizeOffset = ZoomSize;
       }
 
@@ -1672,10 +1672,10 @@ namespace Detox.FlowChart
          //for mouse coords, if we use our position
          //the mouse is relative to us which throws it off when
          //we move ourselves
-         Point position = System.Windows.Forms.Cursor.Position;
+         Point position = Detox.Windows.Forms.Cursor.Position;
          position = this.Parent.PointToClient( position );
 
-         Point p = new System.Drawing.Point( (int) ((position.X - m_MouseOffset.X)), (int) ((position.Y - m_MouseOffset.Y)) );
+         Point p = new Detox.Drawing.Point( (int) ((position.X - m_MouseOffset.X)), (int) ((position.Y - m_MouseOffset.Y)) );
 
          p = this.Parent.PointToScreen( p );
 
@@ -1694,9 +1694,9 @@ namespace Detox.FlowChart
          //for mouse coords, if we use our position
          //the mouse is relative to us which throws it off when
          //we move ourselves
-         Point position = System.Windows.Forms.Cursor.Position;
+         Point position = Detox.Windows.Forms.Cursor.Position;
 
-         Size = new System.Drawing.Size(m_ResizeOffset.Width + position.X - m_MouseOffset.X, m_ResizeOffset.Height + position.Y - m_MouseOffset.Y );
+         Size = new Detox.Drawing.Size(m_ResizeOffset.Width + position.X - m_MouseOffset.X, m_ResizeOffset.Height + position.Y - m_MouseOffset.Y );
          
          if ( Size.Width  < uScriptConfig.MinResizeX  ) Size.Width = uScriptConfig.MinResizeX;
          if ( Size.Height < uScriptConfig.MinResizeY )  Size.Height = uScriptConfig.MinResizeY;
@@ -1762,7 +1762,7 @@ namespace Detox.FlowChart
    
             FlowChartCtrl flowChart = Parent as FlowChartCtrl;
 
-            Point position = System.Windows.Forms.Cursor.Position;
+            Point position = Detox.Windows.Forms.Cursor.Position;
             position = PointToClient( position );
 
             

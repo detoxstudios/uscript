@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Collections;
-using Microsoft.DirectX;
+
+using Detox.DirectX;
 
 namespace Detox.Data.Anim
 {

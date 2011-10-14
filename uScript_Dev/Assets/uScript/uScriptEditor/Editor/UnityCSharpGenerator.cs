@@ -1064,6 +1064,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               elements = Parameter.FlattenStringArrays( elements, ',' );
+
                declaration = "new Quaternion[] {";
 
                for ( int i = 0; i < elements.Length; i += 4 )
@@ -1080,6 +1082,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               elements = Parameter.FlattenStringArrays( elements, ',' );
+
                declaration = "new Vector2[] {";
 
                for ( int i = 0; i < elements.Length; i += 2 )
@@ -1096,6 +1100,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               elements = Parameter.FlattenStringArrays( elements, ',' );
+
                declaration = "new Vector3[] {";
 
                for ( int i = 0; i < elements.Length; i += 3 )
@@ -1112,6 +1118,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               elements = Parameter.FlattenStringArrays( elements, ',' );
+
                declaration = "new Vector4[] {";
 
                for ( int i = 0; i < elements.Length; i += 4 )
@@ -1128,6 +1136,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               elements = Parameter.FlattenStringArrays( elements, ',' );
+
                declaration = "new Rect[] {";
 
                for ( int i = 0; i < elements.Length; i += 4 )
@@ -1144,6 +1154,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               elements = Parameter.FlattenStringArrays( elements, ',' );
+
                declaration = "new UnityEngine.Color[] {";
 
                for ( int i = 0; i < elements.Length; i += 3 )

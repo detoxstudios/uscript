@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
+using Detox.Drawing;
+using Detox.Data;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using Detox.Windows.Forms;
 
 using Detox.FlowChart;
 
@@ -21,7 +21,7 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
-         Location = new System.Drawing.Point( entityMethod.Position.X, entityMethod.Position.Y );
+         Location = new Detox.Drawing.Point( entityMethod.Position.X, entityMethod.Position.Y );
          Name = uScriptConfig.Variable.FriendlyName(entityMethod.ComponentType);
 
          List<Socket> sockets = new List<Socket>( );

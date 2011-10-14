@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
+using Detox.Drawing;
+using Detox.Data;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using Detox.Windows.Forms;
 using System.Collections;
 using System.Reflection.Emit;
 
@@ -676,7 +676,7 @@ namespace Detox.ScriptEditor
       {
          //no nodes were intersected so allow context menu
          m_ContextObject = objects;
-         m_ContextCursor = System.Windows.Forms.Cursor.Position;
+         m_ContextCursor = Detox.Windows.Forms.Cursor.Position;
          m_ContextCursor = m_FlowChart.PointToClient( m_ContextCursor );
 
          m_ContextMenuStrip.Items.Clear( );
@@ -1970,7 +1970,7 @@ namespace Detox.ScriptEditor
       private void m_ContextMenuStrip_Opening(object sender, CancelEventArgs args)
       {
          m_ContextObject = null;
-         m_ContextCursor = System.Windows.Forms.Cursor.Position;
+         m_ContextCursor = Detox.Windows.Forms.Cursor.Position;
          m_ContextCursor = m_FlowChart.PointToClient( m_ContextCursor );
 
          m_ContextMenuStrip.Items.Clear( );
@@ -1992,14 +1992,14 @@ namespace Detox.ScriptEditor
          m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
 
          expandAll.Name = "m_ExpandAllMenu";
-         expandAll.Size = new System.Drawing.Size(152, 22);
+         expandAll.Size = new Detox.Drawing.Size(152, 22);
          expandAll.Text = "Expand All";
          expandAll.Click += new System.EventHandler(m_MenuExpandAll_Click);
 
          m_ContextMenuStrip.Items.Add( expandAll );
 
          collapseAll.Name = "m_CollapseAllMenu";
-         collapseAll.Size = new System.Drawing.Size(152, 22);
+         collapseAll.Size = new Detox.Drawing.Size(152, 22);
          collapseAll.Text = "Collapse All";
          collapseAll.Click += new System.EventHandler(m_MenuCollapseAll_Click);
 
@@ -2012,7 +2012,7 @@ namespace Detox.ScriptEditor
             if ( CanExpand )
             {
                expandMenu.Name = "m_ExpandMenu";
-               expandMenu.Size = new System.Drawing.Size(152, 22);
+               expandMenu.Size = new Detox.Drawing.Size(152, 22);
                expandMenu.Text = "E&xpand Selection";
                expandMenu.Click += new System.EventHandler(m_MenuExpand_Click);
 
@@ -2022,7 +2022,7 @@ namespace Detox.ScriptEditor
             if ( CanCollapse )
             {
                collapseMenu.Name = "m_CollapseMenu";
-               collapseMenu.Size = new System.Drawing.Size(152, 22);
+               collapseMenu.Size = new Detox.Drawing.Size(152, 22);
                collapseMenu.Text = "Co&llapse Selection";
                collapseMenu.Click += new System.EventHandler(m_MenuCollapse_Click);
 
@@ -2037,7 +2037,7 @@ namespace Detox.ScriptEditor
             if ( CanCopy )
             {
                copyMenu.Name = "m_Copy";
-               copyMenu.Size = new System.Drawing.Size(152, 22);
+               copyMenu.Size = new Detox.Drawing.Size(152, 22);
                copyMenu.Text = "Copy";
                copyMenu.Click += new System.EventHandler(m_MenuCopy_Click);
 
@@ -2047,7 +2047,7 @@ namespace Detox.ScriptEditor
             if ( CanPaste )
             {
                pasteMenu.Name = "m_Paste";
-               pasteMenu.Size = new System.Drawing.Size(152, 22);
+               pasteMenu.Size = new Detox.Drawing.Size(152, 22);
                pasteMenu.Text = "Paste";
                pasteMenu.Click += new System.EventHandler(m_MenuPaste_Click);
 
@@ -2069,7 +2069,7 @@ namespace Detox.ScriptEditor
 
 
          addMenu.Name = "m_Add";
-         addMenu.Size = new System.Drawing.Size(152, 22);
+         addMenu.Size = new Detox.Drawing.Size(152, 22);
          addMenu.Text = "Add";
 
 
@@ -2077,13 +2077,13 @@ namespace Detox.ScriptEditor
          ToolStripMenuItem external = new ToolStripMenuItem();
 
          comment.Name = "m_AddComment";
-         comment.Size = new System.Drawing.Size(152, 22);
+         comment.Size = new Detox.Drawing.Size(152, 22);
          comment.Text = "Comment";
          comment.Click += new System.EventHandler(m_MenuAddNode_Click);
          comment.Tag  = new CommentNode( "" );
 
          external.Name = "m_AddExternal";
-         external.Size = new System.Drawing.Size(152, 22);
+         external.Size = new Detox.Drawing.Size(152, 22);
          external.Text = "External Connection";
          external.Click += new System.EventHandler(m_MenuAddNode_Click);
          external.Tag  = new ExternalConnection( Guid.NewGuid( ) );
@@ -2099,7 +2099,7 @@ namespace Detox.ScriptEditor
             EntityNode entityNode = ((DisplayNode)node).EntityNode;
             if ( entityNode is LocalNode ) continue;
 
-            Point position = System.Windows.Forms.Cursor.Position;
+            Point position = Detox.Windows.Forms.Cursor.Position;
             position = node.PointToClient( position );
 
             AnchorPoint hitPoint = new AnchorPoint( );
@@ -2135,7 +2135,7 @@ namespace Detox.ScriptEditor
                   autoLink.Name = hitPoint.Name;
 
                   createLink.Name   = "m_TypedLocalNode";
-                  createLink.Size   = new System.Drawing.Size(152, 22);
+                  createLink.Size   = new Detox.Drawing.Size(152, 22);
                   createLink.Text   = "Create Linked Variable";
                   createLink.Tag    = autoLink;
                   createLink.Click += new System.EventHandler(m_MenuAddLinkedVariable_Click);
@@ -2156,7 +2156,7 @@ namespace Detox.ScriptEditor
                   ToolStripMenuItem objectList = new ToolStripMenuItem();
 
                   objectList.Name = "m_ObjectList";
-                  objectList.Size = new System.Drawing.Size(152, 22);
+                  objectList.Size = new Detox.Drawing.Size(152, 22);
                   objectList.Text = "&Create List";
                   objectList.Click += new System.EventHandler(m_MenuCreateList_Click);
 
@@ -2191,7 +2191,7 @@ namespace Detox.ScriptEditor
             if ( allowSelectActive > 0 )
             {
                selectActive.Name = "m_SelectActive";
-               selectActive.Size = new System.Drawing.Size(152, 22);
+               selectActive.Size = new Detox.Drawing.Size(152, 22);
                selectActive.Click += new System.EventHandler(m_MenuSelectActive_Click);
 
                if ( 1 == allowSelectActive )
@@ -2223,7 +2223,7 @@ namespace Detox.ScriptEditor
             if ( canUpgrade > 0 )
             {
                upgradeNode.Name = "m_UpgradeNode";
-               upgradeNode.Size = new System.Drawing.Size(152, 22);
+               upgradeNode.Size = new Detox.Drawing.Size(152, 22);
                upgradeNode.Click += new System.EventHandler(m_MenuUpgradeNode_Click);
 
                if ( canUpgrade > 1 )
@@ -2255,7 +2255,7 @@ namespace Detox.ScriptEditor
             if ( canDeleteMissing > 0 )
             {
                deleteMissingNode.Name = "m_DeleteMissingNode";
-               deleteMissingNode.Size = new System.Drawing.Size(152, 22);
+               deleteMissingNode.Size = new Detox.Drawing.Size(152, 22);
                deleteMissingNode.Click += new System.EventHandler(m_MenuDeleteMissingNode_Click);
 
                if ( canDeleteMissing > 1 )

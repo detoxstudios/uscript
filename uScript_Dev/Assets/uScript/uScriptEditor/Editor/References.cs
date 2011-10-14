@@ -1,14 +1,14 @@
-namespace System.Windows
+namespace Detox.Windows
 {
 }
 
-namespace System.ComponetModel
+namespace Detox.ComponetModel
 {
    public class ITypeDescriptorContext
    {}
 }
 
-namespace System.Windows.Forms.Design
+namespace Detox.Windows.Forms.Design
 {
    public class FileNameEditor
    {
@@ -21,7 +21,7 @@ namespace System.Windows.Forms.Design
       //   return null;
       //}
 
-      //public virtual System.Drawing.Design.UITypeEditorEditStyle GetEditStyle(
+      //public virtual Detox.Drawing.Design.UITypeEditorEditStyle GetEditStyle(
       //   System.ComponetModel.ITypeDescriptorContext context
       //)
       //{
@@ -30,11 +30,11 @@ namespace System.Windows.Forms.Design
    }
 }
 
-namespace System.Data
+namespace Detox.Data
 {
 }
 
-namespace System.Drawing.Design
+namespace Detox.Drawing.Design
 {
    public enum UITypeEditorEditStyle
    {
@@ -42,7 +42,7 @@ namespace System.Drawing.Design
    }
 }
 
-namespace Microsoft.DirectX
+namespace Detox.DirectX
 {
    public struct Matrix
    {
@@ -94,50 +94,21 @@ namespace Microsoft.DirectX
          M44 = m44;
       }
    }
-
-
-   public struct Vector4
-   {
-      public float X;
-      public float Y;
-      public float Z;
-      public float W;
-
-      public Vector4(float x, float y, float z, float w)
-      {
-         X = x;
-         Y = y;
-         Z = z;
-         W = w;
-      }
-   }
-
-   public struct Vector3
-   {
-      public float X;
-      public float Y;
-      public float Z;
-   }
-
-   public struct Vector2
-   {
-      public float X;
-      public float Y;
-   }
 }
 
 namespace Detox.Application
 {
-   public class ToolWindow : System.Windows.Forms.Form
+   public class ToolWindow : Detox.Windows.Forms.Form
    {}
 }
 
-namespace System.Windows.Forms
+namespace Detox.Windows.Forms
 {
    using System.Reflection;
+   using System;
    using System.Collections.Generic;
-   using System.Windows.Forms;
-   using System.Drawing;
+   using Detox.Windows.Forms;
+   using Detox.Drawing;
    using UnityEngine;
    using UnityEditor;
    using Detox.ScriptEditor;
@@ -383,8 +354,7 @@ namespace System.Windows.Forms
                            if ( p.Type.Contains("[]") )
                            {
                               string []values = Parameter.StringToArray(p.Default);
-                              values = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly);
-                              val = Parameter.ArrayToString(values);
+                              val = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly);
                            }
                            else
                            {
@@ -564,9 +534,9 @@ namespace System.Windows.Forms
          }
       }
 
-      public System.Drawing.Graphics CreateGraphics( )
+      public Detox.Drawing.Graphics CreateGraphics( )
       {
-         return new System.Drawing.Graphics( );
+         return new Detox.Drawing.Graphics( );
       }
 
       public Point PointToScreen(Point point)
@@ -643,7 +613,7 @@ namespace System.Windows.Forms
       public event MouseEventHandler MouseDown;
       public event MouseEventHandler MouseUp;
 
-      public bool OnMouseDown( System.Windows.Forms.MouseEventArgs e )
+      public bool OnMouseDown( Detox.Windows.Forms.MouseEventArgs e )
       {
          Control []controls = Controls.ToArray( );
          int i;
@@ -668,7 +638,7 @@ namespace System.Windows.Forms
          {
             m_MouseIsDown = true;
 
-            System.Windows.Forms.MouseEventArgs args = new System.Windows.Forms.MouseEventArgs( );
+            Detox.Windows.Forms.MouseEventArgs args = new Detox.Windows.Forms.MouseEventArgs( );
             args.X = point.X;
             args.Y = point.Y;
             args.Button = e.Button;
@@ -679,7 +649,7 @@ namespace System.Windows.Forms
          return inRect;
       }
 
-      public void OnMouseUp( System.Windows.Forms.MouseEventArgs e )
+      public void OnMouseUp( Detox.Windows.Forms.MouseEventArgs e )
       {
          if ( true == m_MouseIsDown )
          {
@@ -687,7 +657,7 @@ namespace System.Windows.Forms
 
             Point point = PointToClient( new Point(e.X, e.Y) );
             
-            System.Windows.Forms.MouseEventArgs args = new System.Windows.Forms.MouseEventArgs( );
+            Detox.Windows.Forms.MouseEventArgs args = new Detox.Windows.Forms.MouseEventArgs( );
             args.X = point.X;
             args.Y = point.Y;
             args.Button = e.Button;
@@ -703,13 +673,13 @@ namespace System.Windows.Forms
          }
       }
 
-      public void OnMouseMove( System.Windows.Forms.MouseEventArgs e )
+      public void OnMouseMove( Detox.Windows.Forms.MouseEventArgs e )
       {
          if ( true == m_MouseIsDown )
          {
             Point point = PointToClient( new Point(e.X, e.Y) );
             
-            System.Windows.Forms.MouseEventArgs args = new System.Windows.Forms.MouseEventArgs( );
+            Detox.Windows.Forms.MouseEventArgs args = new Detox.Windows.Forms.MouseEventArgs( );
             args.X = point.X;
             args.Y = point.Y;
             args.Button = e.Button;
@@ -736,7 +706,7 @@ namespace System.Windows.Forms
 
    public class UserControl : Control
    {
-      public System.Drawing.Color BackColor;
+      public Detox.Drawing.Color BackColor;
       public bool  DoubleBuffered;
 
       public void SuspendLayout( )
@@ -834,7 +804,7 @@ namespace System.Windows.Forms
       }
    }
 
-   public class MouseEventArgs : EventArgs
+   public class MouseEventArgs : System.EventArgs
    {
       public int X;
       public int Y;
@@ -843,16 +813,17 @@ namespace System.Windows.Forms
 
    public class PaintEventArgs
    {
-      public System.Drawing.Graphics Graphics;
+      public Detox.Drawing.Graphics Graphics;
    }
 
    public delegate void MouseEventHandler(object sender, MouseEventArgs e);
 }
 
-namespace System.Drawing
+namespace Detox.Drawing
 {
    using UnityEditor;
    using UnityEngine;
+   using System;
 
    public struct Point
    {

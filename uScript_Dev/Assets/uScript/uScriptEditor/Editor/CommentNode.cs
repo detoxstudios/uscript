@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
+using Detox.Drawing;
+using Detox.Data;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using Detox.Windows.Forms;
 
 using Detox.FlowChart;
 using UnityEngine;
@@ -27,7 +27,7 @@ namespace Detox.ScriptEditor
          CanResize = true;
          NodeStyle = "comment";
    
-         Location = new System.Drawing.Point( comment.Position.X, comment.Position.Y );
+         Location = new Detox.Drawing.Point( comment.Position.X, comment.Position.Y );
 
          Name = comment.TitleText.Default;
 

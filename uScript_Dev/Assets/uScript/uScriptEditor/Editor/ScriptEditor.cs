@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
-using System.Drawing;
 using System.IO;
 using System.Reflection;
 
+using Detox.Drawing;
 using Detox.Utility;
 using Detox.Data;
 using Detox.Data.ScriptEditor;
@@ -125,6 +125,23 @@ namespace Detox.ScriptEditor
          return value;
       }
 
+      public static string []FlattenStringArrays(string []values, char delimiter)
+      {
+         List<string> list = new List<string>( );
+
+         foreach ( string v in values )
+         {
+            string [] scalars = v.Split( delimiter );
+
+            foreach ( string s in scalars )
+            {
+               list.Add( s );
+            }
+         }
+
+         return list.ToArray( );
+      }
+
       private object ParseArray(string t, string value)
       {
          string []values = Parameter.StringToArray( value );
@@ -148,6 +165,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               values = FlattenStringArrays( values, ',' );
+
                int num = (values.Length) / 4;
 
                UnityEngine.Color[] array = new UnityEngine.Color[ num ];
@@ -195,6 +214,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               values = FlattenStringArrays( values, ',' );
+
                int num = (values.Length) / 2;
 
                Vector2[] array = new Vector2[ num ];
@@ -212,6 +233,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               values = FlattenStringArrays( values, ',' );
+               
                int num = (values.Length) / 3;
 
                Vector3[] array = new Vector3[ num ];
@@ -223,12 +246,14 @@ namespace Detox.ScriptEditor
 
                return array;
             }
-            catch { return new Vector2[0]; }
+            catch { return new Vector3[0]; }
          }
          if ( t == typeof(Vector4[]).ToString() )
          {
             try
             {
+               values = FlattenStringArrays( values, ',' );
+
                int num = (values.Length) / 4;
 
                Vector4[] array = new Vector4[ num ];
@@ -246,6 +271,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               values = FlattenStringArrays( values, ',' );
+
                int num = (values.Length) / 4;
 
                Rect[] array = new Rect[ num ];
@@ -263,6 +290,8 @@ namespace Detox.ScriptEditor
          {
             try
             {
+               values = FlattenStringArrays( values, ',' );
+
                int num = (values.Length) / 4;
 
                Quaternion[] array = new Quaternion[ num ];
@@ -537,7 +566,6 @@ namespace Detox.ScriptEditor
                }
 
                if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
-
                return result;
             }
             catch { return ""; }

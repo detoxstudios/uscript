@@ -7,13 +7,13 @@ using UnityEngine;
 using UnityEditor;
 using Detox.ScriptEditor;
 using Detox.Data.Tools;
-using System.Windows.Forms;
+using Detox.Windows.Forms;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
+using Detox.Drawing;
 using Detox.FlowChart;
 
 public class uScript : EditorWindow
@@ -164,7 +164,7 @@ public class uScript : EditorWindow
    String _paletteFilterText = string.Empty;
    String _graphListFilterText = string.Empty;
 
-   public class PaletteMenuItem : System.Windows.Forms.MenuItem
+   public class PaletteMenuItem : Detox.Windows.Forms.MenuItem
    {
       public String Name;
       public String Tooltip;
@@ -763,22 +763,22 @@ public class uScript : EditorWindow
       {
          if (m_AddVariableNode == "Comment")
          {
-            m_ScriptEditorCtrl.ContextCursor = System.Windows.Forms.Cursor.Position;
+            m_ScriptEditorCtrl.ContextCursor = Detox.Windows.Forms.Cursor.Position;
             m_ScriptEditorCtrl.AddVariableNode(new CommentNode(""));
          }
          else if (m_AddVariableNode == "External")
          {
-            m_ScriptEditorCtrl.ContextCursor = new Point(System.Windows.Forms.Cursor.Position.X - 28, System.Windows.Forms.Cursor.Position.Y - 28);
+            m_ScriptEditorCtrl.ContextCursor = new Point(Detox.Windows.Forms.Cursor.Position.X - 28, Detox.Windows.Forms.Cursor.Position.Y - 28);
             m_ScriptEditorCtrl.AddVariableNode(new ExternalConnection(Guid.NewGuid()));
          }
          else if (m_AddVariableNode == "Log")
          {
-            m_ScriptEditorCtrl.ContextCursor = new Point(System.Windows.Forms.Cursor.Position.X - 10, System.Windows.Forms.Cursor.Position.Y - 10);
+            m_ScriptEditorCtrl.ContextCursor = new Point(Detox.Windows.Forms.Cursor.Position.X - 10, Detox.Windows.Forms.Cursor.Position.Y - 10);
             m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode("uScriptAct_Log"));
          }
          else
          {
-            m_ScriptEditorCtrl.ContextCursor = new Point(System.Windows.Forms.Cursor.Position.X - 28, System.Windows.Forms.Cursor.Position.Y - 28);
+            m_ScriptEditorCtrl.ContextCursor = new Point(Detox.Windows.Forms.Cursor.Position.X - 28, Detox.Windows.Forms.Cursor.Position.Y - 28);
             m_ScriptEditorCtrl.AddVariableNode(new LocalNode("", m_AddVariableNode, ""));
          }
          m_AddVariableNode = "";
@@ -997,7 +997,7 @@ public class uScript : EditorWindow
             m_MouseDownArgs = null;
             m_MouseDown = false;
 
-            m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs();
+            m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
             m_MouseUpArgs.Button = MouseButtons.Left;
             m_MouseUpArgs.X = (int)e.mousePosition.x;
             m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
@@ -1047,7 +1047,7 @@ public class uScript : EditorWindow
       // know we don't have a duplicate mouse up event
       if (true == m_MouseDown && _mouseRegion == MouseRegion.Outside && m_MouseUpArgs == null)
       {
-         m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs();
+         m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
 
          int button = 0;
 
@@ -1487,7 +1487,7 @@ public class uScript : EditorWindow
                      else if (e.button == 1) button = MouseButtons.Right;
                      else if (e.button == 2) button = MouseButtons.Middle;
 
-                     m_MouseDownArgs = new System.Windows.Forms.MouseEventArgs();
+                     m_MouseDownArgs = new Detox.Windows.Forms.MouseEventArgs();
 
                      m_MouseDownArgs.Button = button;
                      m_MouseDownArgs.X = (int)(e.mousePosition.x);
@@ -1531,7 +1531,7 @@ public class uScript : EditorWindow
          case EventType.MouseUp:
             if (m_MouseDown && m_MouseDownOverCanvas)
             {
-               m_MouseUpArgs = new System.Windows.Forms.MouseEventArgs();
+               m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
 
                int button = 0;
 
@@ -1592,7 +1592,7 @@ public class uScript : EditorWindow
          case EventType.ScrollWheel:
             if (_canvasRect.Contains(e.mousePosition))
             {
-               m_ZoomPoint = System.Windows.Forms.Cursor.Position;
+               m_ZoomPoint = Detox.Windows.Forms.Cursor.Position;
 
                float newScale = Mathf.Clamp(m_MapScale - Mathf.Clamp(e.delta.y * 0.01f, -1, 1), 0.1f, 1.0f);
 
@@ -2831,7 +2831,7 @@ public class uScript : EditorWindow
 
                // Paint the graph (nodes, sockets, links, and comments)
                PaintEventArgs args = new PaintEventArgs();
-               args.Graphics = new System.Drawing.Graphics();
+               args.Graphics = new Detox.Drawing.Graphics();
 
                if (m_ScriptEditorCtrl != null) 
                {
@@ -2989,20 +2989,20 @@ public class uScript : EditorWindow
    {
       Control.MouseButtons.Buttons = m_MouseDownArgs.Button;
 
-      System.Windows.Forms.Cursor.Position.X = m_MouseDownArgs.X;
-      System.Windows.Forms.Cursor.Position.Y = m_MouseDownArgs.Y;
+      Detox.Windows.Forms.Cursor.Position.X = m_MouseDownArgs.X;
+      Detox.Windows.Forms.Cursor.Position.Y = m_MouseDownArgs.Y;
 
-//      Debug.Log("BUTTON " + Control.MouseButtons.Buttons + " - OnMouseDown() at " + System.Windows.Forms.Cursor.Position.ToString() + "\n");
+//      Debug.Log("BUTTON " + Control.MouseButtons.Buttons + " - OnMouseDown() at " + Detox.Windows.Forms.Cursor.Position.ToString() + "\n");
 
       m_ScriptEditorCtrl.OnMouseDown(m_MouseDownArgs);
    }
 
    public void OnMouseUp()
    {
-      System.Windows.Forms.Cursor.Position.X = m_MouseUpArgs.X;
-      System.Windows.Forms.Cursor.Position.Y = m_MouseUpArgs.Y;
+      Detox.Windows.Forms.Cursor.Position.X = m_MouseUpArgs.X;
+      Detox.Windows.Forms.Cursor.Position.Y = m_MouseUpArgs.Y;
 
-//      Debug.Log("BUTTON " + Control.MouseButtons.Buttons + " - OnMouseUp() at " + System.Windows.Forms.Cursor.Position.ToString() + "\n");
+//      Debug.Log("BUTTON " + Control.MouseButtons.Buttons + " - OnMouseUp() at " + Detox.Windows.Forms.Cursor.Position.ToString() + "\n");
 
       m_ScriptEditorCtrl.OnMouseUp(m_MouseUpArgs);
 
@@ -3036,8 +3036,8 @@ public class uScript : EditorWindow
 //                + "\n_canvasRect: \t\t\t" + _canvasRect.x.ToString() + ", " + _canvasRect.y.ToString() + " ... "
 //                + (_guiPanelPalette_Width + DIVIDER_WIDTH - 1).ToString());
 
-      System.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
-      System.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
+      Detox.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
+      Detox.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
 
       if (_mouseRegion == MouseRegion.Canvas)
       {

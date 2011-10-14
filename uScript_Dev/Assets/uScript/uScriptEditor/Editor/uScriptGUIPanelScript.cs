@@ -3,14 +3,14 @@ using UnityEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
+using Detox.Drawing;
 using System.Reflection;
 
 using Detox.ScriptEditor;
 using Detox.FlowChart;
 
 //using Detox.Data.Tools;
-//using System.Windows.Forms;
+//using Detox.Windows.Forms;
 //using System.Linq;
 
 

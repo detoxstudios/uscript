@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
-using System.Drawing;
+using Detox.Drawing;
 using System.IO;
 using System.Reflection;
 

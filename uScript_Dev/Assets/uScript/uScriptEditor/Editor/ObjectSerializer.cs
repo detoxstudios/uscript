@@ -10,7 +10,7 @@ using Detox.Utility.Bxml;
 using Detox.Utility;
 //using Detox.Data.Model;
 
-using Microsoft.DirectX;
+using Detox.DirectX;
 
 namespace Detox.Data
 {
@@ -59,18 +59,8 @@ namespace Detox.Data
          AddTypeSerializer( new StringArraySerializer( ) );
          AddTypeSerializer( new BoolSerializer( ) );
          AddTypeSerializer( new FloatSerializer( ) );            
-         AddTypeSerializer( new BoneSerializer( ) );
-         AddTypeSerializer( new BoneArraySerializer( ) );
          AddTypeSerializer( new MatrixSerializer( ) );
          AddTypeSerializer( new MatrixArraySerializer( ) );
-         AddTypeSerializer( new Vector2Serializer( ) );
-         AddTypeSerializer( new Vector2ArraySerializer( ) );
-         AddTypeSerializer( new Vector3Serializer( ) );
-         AddTypeSerializer( new Vector3ArraySerializer( ) );
-         AddTypeSerializer( new Vector4Serializer( ) );
-         AddTypeSerializer( new Vector4ArraySerializer( ) );
-         AddTypeSerializer( new BoneDescSerializer( ) );
-         AddTypeSerializer( new BoneDescArraySerializer( ) );            
          AddTypeSerializer( new SampleSerializer( ) );
          AddTypeSerializer( new AnimExportSettingsSerializer( ) );
          AddTypeSerializer( new EnumSerializer( ) );

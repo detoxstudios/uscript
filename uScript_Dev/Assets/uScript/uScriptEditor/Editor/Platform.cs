@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.ComponentModel;
-using System.Drawing.Design;
+using Detox.Drawing.Design;
 using System.Globalization;
 
 namespace Detox.Utility
@@ -103,7 +103,7 @@ namespace Detox.Utility
       }
    }
 
-   public class SystemIdTypeEditor : System.Windows.Forms.Design.FileNameEditor
+   public class SystemIdTypeEditor : Detox.Windows.Forms.Design.FileNameEditor
    {
       //public override Object EditValue(
       //   ITypeDescriptorContext context,
@@ -146,8 +146,8 @@ namespace Detox.Utility
 
    [Serializable]
    [TypeConverter(typeof(SystemIdConverter))]
-//   [Editor(typeof(System.Windows.Forms.Design.FileNameEditor), typeof(UITypeEditor))]
-   [Editor(typeof(Detox.Utility.SystemIdTypeEditor), typeof(System.Windows.Forms.Design.FileNameEditor))]
+//   [Editor(typeof(Detox.Windows.Forms.Design.FileNameEditor), typeof(UITypeEditor))]
+   [Editor(typeof(Detox.Utility.SystemIdTypeEditor), typeof(Detox.Windows.Forms.Design.FileNameEditor))]
    public class SystemId
    {
 //      [Browsable(false)]

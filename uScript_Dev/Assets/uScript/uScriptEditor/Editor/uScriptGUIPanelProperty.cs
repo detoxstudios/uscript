@@ -9,9 +9,9 @@ using Detox.ScriptEditor;
 using Detox.FlowChart;
 
 //using Detox.Data.Tools;
-//using System.Windows.Forms;
+//using Detox.Windows.Forms;
 //using System.Linq;
-//using System.Drawing;
+//using Detox.Drawing;
 
 
 
