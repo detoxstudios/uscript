@@ -85,11 +85,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
       // Local references to uScript
       uScript uScriptInstance = uScript.Instance;
       ScriptEditorCtrl m_ScriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
-//      bool m_CanvasDragging = uScriptInstance.m_CanvasDragging;
-
-
-
-
 
 
       EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptInstance._guiPanelSequence_Width));
@@ -240,8 +235,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             GUILayout.EndHorizontal();
 
 
-
-
             //  It should turn red when you load a script that belongs to an unloaded scene
             //
             // Load a scene that has scripts associated with it.
@@ -249,7 +242,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             // make dirty and save (script turns red.  it shouldn't).
             //
             // Consider losing the red altogether
-
 
 
             //
@@ -270,7 +262,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                string scriptName = string.Empty;
                int filterMatches = 0;
                bool _isListRowEven = false;
-//               bool _wereButtonsDrawn = false;
 
                foreach (string scriptFile in keys)
                {
@@ -289,12 +280,9 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                   }
                }
 
-//               Debug.Log("Matches: " + filterMatches);
-
                GUIStyle padding = new GUIStyle(GUIStyle.none);
                padding.stretchWidth = true;
 //               padding.margin = new RectOffset();
-
 
 
                // Draw the padding box to establish the row width (excluding scrollbar)
@@ -307,6 +295,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                // Prepare to draw the rows
                Rect r = new Rect(0, 0, _previousRowWidth, 17);
+               Rect buttonRect;
                filterMatches = 0;
 
                foreach (string scriptFile in keys)
@@ -361,8 +350,10 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            uScript.Instance.Repaint();
                         }
 
-                        Rect buttonRect = new Rect(r);
+                        buttonRect = new Rect(r);
                         buttonRect.x = buttonRect.xMax - 81;
+                        buttonRect.y++;
+                        buttonRect.height = 15;
                         buttonRect.width = 43;
 
                         // Source
@@ -388,7 +379,11 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                      }
 
                      // Draw the script button
-                     if (GUI.Button(r, scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), (wasClicked ? _scriptListBold : _scriptListNormal)))
+                     buttonRect = new Rect(r);
+                     buttonRect.x += 4;
+                     buttonRect.y += 2;
+                     buttonRect.width -= 4;
+                     if (GUI.Button(buttonRect, scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), (wasClicked ? _scriptListBold : _scriptListNormal)))
                      {
                         path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFile);
 
