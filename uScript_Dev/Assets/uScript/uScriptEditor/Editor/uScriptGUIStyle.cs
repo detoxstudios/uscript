@@ -132,6 +132,9 @@ public static class uScriptGUIStyle
    private static GUIStyle _scriptRowEven;
    public static GUIStyle scriptRowEven { get { return _scriptRowEven; } }
 
+   private static GUIStyle _listRow;
+   public static GUIStyle listRow { get { return _listRow; } }
+
 
 
 
@@ -383,7 +386,16 @@ public static class uScriptGUIStyle
       _scriptRowEven = new GUIStyle(_scriptRowOdd);
       _scriptRowEven.normal.background = _texture_propertyRowEven;
 
-//      uScriptGUIStyle.Information(underline);
+      Texture2D tmpT = new Texture2D(1, 1);
+      tmpT.SetPixel(0, 0, Color.black);
+      tmpT.Apply();
+      _listRow = new GUIStyle(GUIStyle.none);
+//      _listRow.fixedHeight = 17;
+//      _listRow.onNormal.background = tmpT;
+//      _listRow.onActive.background = _texture_propertyRowEven;
+      _listRow.onNormal.background = _texture_propertyRowEven;
+//      _listRow.onFocused.background = _texture_propertyRowEven;
+//      uScriptGUIStyle.Information(_listRow);
    }
 
 
@@ -412,10 +424,17 @@ public static class uScriptGUIStyle
                 + "\t\t wordWrap: \t\t\t" + style.wordWrap
 
                 + "\n\t overflow: \t\t\t" + style.overflow
+
                 + "\n\t clipping: \t\t\t" + style.clipping
+
                 + "\n\t contentOffset: \t" + style.contentOffset
 
                 + "\n\t isHeightDependantOnWidth: \t\t\t" + style.isHeightDependantOnWidth
+
+                + "\n\t states:\t normal( " + style.normal.background + ", " + style.normal.textColor + " )"
+                + "\n\t\t\t\t hover( " + style.hover.background + ", " + style.hover.textColor + " )"
+                + "\n\t\t\t\t active( " + style.active.background + ", " + style.active.textColor + " )"
+                + "\n\t\t\t\t focused( " + style.focused.background + ", " + style.focused.textColor + " )"
                 + "\n"
                );
    }
