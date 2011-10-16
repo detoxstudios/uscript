@@ -52,10 +52,26 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 //   static int _previousHotIndex = 0;
 //
    static Rect _scrollviewRect = new Rect();
-//   static bool wasInside = false;
 
    static float _previousRowWidth = 0;
    static bool _isMouseOverScrollview = false;
+
+   const int ROW_HEIGHT = 17;
+   const int BUTTON_HEIGHT = 15;
+   const int BUTTON_WIDTH_SOURCE = 43;
+   const int BUTTON_WIDTH_LOAD = 34;
+   const int BUTTON_PADDING = 4;
+
+//   float _tListData_count;
+//   float _tListData_height;
+
+//   float _mListData_count;
+//   float _mListData_height;
+
+//   float _bListData_count;
+//   float _bListData_height;
+
+//   LocalTestDebug _debugScript;
 
 
 
@@ -85,6 +101,22 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
       // Local references to uScript
       uScript uScriptInstance = uScript.Instance;
       ScriptEditorCtrl m_ScriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
+
+
+//      // Grab the deubgging script
+//      if (_debugScript == null)
+//      {
+//         _debugScript = GameObject.Find("_uScript").GetComponent(typeof(LocalTestDebug)) as LocalTestDebug;
+//      }
+//      _debugScript.Top = Vector2.zero;
+//      _debugScript.Middle = Vector2.zero;
+//      _debugScript.Bottom = Vector2.zero;
+//      _debugScript.svRect = _scrollviewRect;
+//
+//      // Update debug data
+//      _tListData_count = 0;
+//      _mListData_count = 0;
+//      _bListData_count = 0;
 
 
       EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptInstance._guiPanelSequence_Width));
@@ -133,8 +165,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             //    Display all other scripts in the project (except the active script)
             //    Filter the list
             //    Support foldout containers eventually
-
-
 
             if (_scriptCurrentNormal == null)
             {
@@ -252,167 +282,212 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
             _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
             {
-               //
-               // Filtered script list
-               //
+//               // Debug
+//               if (debugScript.svOffset != _scrollviewOffset)
+//               {
+//                  Debug.Log("Offset delta: " + (_scrollviewOffset.y - debugScript.svOffset.y).ToString() + ", Event: " + Event.current.type.ToString() + "\n");
+//               }
+//               _debugScript.svOffset = _scrollviewOffset;
+
+
+               // Commonly used variables
                List<string> keylist = new List<string>();
                keylist.AddRange(uScriptBackgroundProcess.s_uScriptInfo.Keys);
                string[] keys = keylist.ToArray();
 
                string scriptName = string.Empty;
-               int filterMatches = 0;
-               bool _isListRowEven = false;
+               int listItem_count = 0;
+               int listItem_yMin = 0;
+               int listItem_yMax = 0;
+               bool isListRowEven = false;
 
+
+               // Apply the filter and determine how many items will be drawn.
+               //
                foreach (string scriptFile in keys)
                {
                   scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFile);
 
-                  if ( // is not the loaded script
-                       scriptName != _currentScriptName
-                       && ( // there is no filter text
-                            String.IsNullOrEmpty(_panelScriptFilterText)
-                            // or the filter text matches the scriptName
-                            || scriptName.ToLower().Contains(_panelScriptFilterText.ToLower())
-                          )
+                  if (scriptName != _currentScriptName                                       // is not the loaded script
+                      && (String.IsNullOrEmpty(_panelScriptFilterText)                       // there is no filter text
+                          || scriptName.ToLower().Contains(_panelScriptFilterText.ToLower()) // or the filter text matches the scriptName
+                         )
                      )
                   {
-                     filterMatches++;
+                     listItem_count++;
                   }
                }
 
+               // Draw the padding box to establish the row width (excluding scrollbar)
+               // and force the scrollview content height
+               //
                GUIStyle padding = new GUIStyle(GUIStyle.none);
                padding.stretchWidth = true;
 //               padding.margin = new RectOffset();
 
-
-               // Draw the padding box to establish the row width (excluding scrollbar)
-               // and force the scrollview content height
-               GUILayout.Box(string.Empty, padding, GUILayout.Height(17 * filterMatches));
+               GUILayout.Box(string.Empty, padding, GUILayout.Height(ROW_HEIGHT * listItem_count));
                if (Event.current.type == EventType.Repaint)
                {
                   _previousRowWidth = GUILayoutUtility.GetLastRect().width;
                }
 
-               // Prepare to draw the rows
-               Rect r = new Rect(0, 0, _previousRowWidth, 17);
+
+               // Prepare to draw each row of the filtered list
+               //
+               Rect rowRect = new Rect(0, 0, _previousRowWidth, ROW_HEIGHT);
                Rect buttonRect;
-               filterMatches = 0;
+               listItem_count = 0;
 
                foreach (string scriptFile in keys)
                {
                   scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFile);
+                  listItem_yMin = ROW_HEIGHT * listItem_count;
+                  listItem_yMax = listItem_yMin + ROW_HEIGHT;
 
-                  if (scriptName != _currentScriptName                                          // is not the loaded script
-                       && ( String.IsNullOrEmpty(_panelScriptFilterText)                        // there is no filter text
-                            || scriptName.ToLower().Contains(_panelScriptFilterText.ToLower())  // or the filter text matches the scriptName
-                          )
+                  if (scriptName != _currentScriptName                                       // is not the loaded script
+                      && (String.IsNullOrEmpty(_panelScriptFilterText)                       // there is no filter text
+                          || scriptName.ToLower().Contains(_panelScriptFilterText.ToLower()) // or the filter text matches the scriptName
+                         )
                      )
                   {
-                     filterMatches++;
-                     // the script path
-                     string path = null;
-
-                     // Draw the row background
-                     if (_isListRowEven && Event.current.type == EventType.Repaint)
+                     if (_scrollviewOffset.y <= listItem_yMax)
                      {
-                        uScriptGUIStyle.listRow.Draw(r, false, false, true, false);
-                     }
-
-                     // uScript Label
-                     sceneName = "None";
-                     if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
-                     {
-                        sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
-                     }
-
-                     if (Event.current.type == EventType.Layout)
-                     {
-                        scriptName = string.Empty;
-                     }
-
-                     // prepare for double-click
-                     bool wasClicked = false;
-                     if (_clickedControl == scriptName)
-                     {
-                        if ((EditorApplication.timeSinceStartup - _clickTime) < _doubleClickTime)
+                        // draw
+                        if (_scrollviewOffset.y + _scrollviewRect.height > listItem_yMin)
                         {
-                           wasClicked = true;
-                           uScript.Instance.Redraw();
-                        }
-                     }
+//                           _mListData_count++;
+//                           _mListData_height = listItem_yMax - 0 - _tListData_height;
 
-                     // Handle mouse hovering
-                     if (_isMouseOverScrollview && r.Contains(Event.current.mousePosition))
-                     {
-                        if (_previousHotRect != r)
-                        {
-                           _previousHotRect = r;
-                           uScript.Instance.Repaint();
-                        }
+                           //
+                           // draw the row normally
+                           //
 
-                        buttonRect = new Rect(r);
-                        buttonRect.x = buttonRect.xMax - 81;
-                        buttonRect.y++;
-                        buttonRect.height = 15;
-                        buttonRect.width = 43;
+                           // the script path
+                           string path = null;
 
-                        // Source
-                        if (GUI.Button(buttonRect, uScriptGUIContent.buttonScriptSource, _styleMiniButtonLeft))
-                        {
-                           uScriptGUI.PingGeneratedScript(scriptName);
-                        }
-
-                        buttonRect.x += 43;
-                        buttonRect.width = 34;
-                        // Load
-                        if (GUI.Button(buttonRect, uScriptGUIContent.buttonScriptLoad, _styleMiniButtonRight))
-                        {
-                           if ( null == path ) path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFile);
-
-                           if (false == string.IsNullOrEmpty(path))
+                           // Draw the row background
+                           if (isListRowEven && Event.current.type == EventType.Repaint)
                            {
-                              uScriptInstance.OpenScript(path);
+                              uScriptGUIStyle.listRow.Draw(rowRect, false, false, true, false);
+                           }
+
+                           // uScript Label
+                           sceneName = "None";
+                           if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
+                           {
+                              sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
+                           }
+
+                           if (Event.current.type == EventType.Layout)
+                           {
+                              scriptName = string.Empty;
+                           }
+
+                           // prepare for double-click
+                           bool wasClicked = false;
+                           if (_clickedControl == scriptName)
+                           {
+                              if ((EditorApplication.timeSinceStartup - _clickTime) < _doubleClickTime)
+                              {
+                                 wasClicked = true;
+                                 uScript.Instance.Redraw();
+                              }
+                           }
+
+                           // Handle mouse hovering
+                           if (_isMouseOverScrollview && rowRect.Contains(Event.current.mousePosition))
+                           {
+                              if (_previousHotRect != rowRect)
+                              {
+                                 _previousHotRect = rowRect;
+                                 uScript.Instance.Repaint();
+                              }
+
+                              buttonRect = new Rect(rowRect);
+                              buttonRect.x = buttonRect.xMax - BUTTON_WIDTH_SOURCE - BUTTON_WIDTH_LOAD - BUTTON_PADDING;
+                              buttonRect.y += (ROW_HEIGHT - BUTTON_HEIGHT) / 2;
+                              buttonRect.height = BUTTON_HEIGHT;
+                              buttonRect.width = BUTTON_WIDTH_SOURCE;
+
+                              // Source
+                              if (GUI.Button(buttonRect, uScriptGUIContent.buttonScriptSource, _styleMiniButtonLeft))
+                              {
+                                 uScriptGUI.PingGeneratedScript(scriptName);
+                              }
+
+                              buttonRect.x += BUTTON_WIDTH_SOURCE;
+                              buttonRect.width = BUTTON_WIDTH_LOAD;
+                              // Load
+                              if (GUI.Button(buttonRect, uScriptGUIContent.buttonScriptLoad, _styleMiniButtonRight))
+                              {
+                                 if ( null == path ) path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFile);
+
+                                 if (false == string.IsNullOrEmpty(path))
+                                 {
+                                    uScriptInstance.OpenScript(path);
+                                 }
+                              }
+
+                              rowRect.width = _previousRowWidth - BUTTON_PADDING - BUTTON_WIDTH_SOURCE - BUTTON_WIDTH_LOAD - BUTTON_PADDING;
+                           }
+
+                           // Draw the script button
+                           buttonRect = new Rect(rowRect);
+                           buttonRect.x += BUTTON_PADDING;
+                           buttonRect.y += 2;
+                           buttonRect.width -= BUTTON_PADDING;
+                           if (GUI.Button(buttonRect, scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), (wasClicked ? _scriptListBold : _scriptListNormal)))
+                           {
+                              path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFile);
+
+                              if (wasClicked)
+                              {
+                                 // double-click
+                                 _clickTime = EditorApplication.timeSinceStartup - _clickTime; // prevents multiple double-clicks
+                                 if (false == string.IsNullOrEmpty(path))
+                                 {
+                                    uScriptInstance.OpenScript(path);
+                                 }
+                              }
+                              else
+                              {
+                                 // single-click
+                                 _clickTime = EditorApplication.timeSinceStartup;
+                                 _clickedControl = scriptName;
+                              }
                            }
                         }
-
-                        r.width = _previousRowWidth - 85;
+//                        else
+//                        {
+//                           // skip the items below the viewable area
+//                           _bListData_count++;
+//                           _bListData_height = listItem_yMax - 0 - _tListData_height - _mListData_height;
+//                        }
                      }
+//                     else
+//                     {
+//                        // skip the items above the viewable area
+//                        _tListData_count++;
+//                        _tListData_height = listItem_yMax - 0;
+//                     }
 
-                     // Draw the script button
-                     buttonRect = new Rect(r);
-                     buttonRect.x += 4;
-                     buttonRect.y += 2;
-                     buttonRect.width -= 4;
-                     if (GUI.Button(buttonRect, scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), (wasClicked ? _scriptListBold : _scriptListNormal)))
-                     {
-                        path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFile);
 
-                        if (wasClicked)
-                        {
-                           // double-click
-                           _clickTime = EditorApplication.timeSinceStartup - _clickTime; // prevents multiple double-clicks
-                           if (false == string.IsNullOrEmpty(path))
-                           {
-                              uScriptInstance.OpenScript(path);
-                           }
-                        }
-                        else
-                        {
-                           // single-click
-                           _clickTime = EditorApplication.timeSinceStartup;
-                           _clickedControl = scriptName;
-                        }
-                     }
+//                     // Debug
+//                     _debugScript.Top = new Vector2(_tListData_count, _tListData_height);
+//                     _debugScript.Middle = new Vector2(_mListData_count, _mListData_height);
+//                     _debugScript.Bottom = new Vector2(_bListData_count, _bListData_height);
+
 
                      // Prepare for the next row
-                     _isListRowEven = !_isListRowEven;
-                     r.width = _previousRowWidth;
-                     r.y += r.height;
+                     listItem_count++;
+                     isListRowEven = !isListRowEven;
+                     rowRect.width = _previousRowWidth;
+                     rowRect.y += rowRect.height;
                   }
                }
 
                // Display a message if there were no matches
-               if (filterMatches == 0)
+               if (listItem_count == 0)
                {
                   GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
                   style.alignment = TextAnchor.MiddleCenter;
