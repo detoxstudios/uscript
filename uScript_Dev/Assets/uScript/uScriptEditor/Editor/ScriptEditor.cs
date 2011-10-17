@@ -367,7 +367,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         return t;
+         return values;
       }
 
       public string ArrayToString(string t, object values)
@@ -600,6 +600,24 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
+         if ( t == typeof(object[]).ToString() )
+         {
+            try
+            {
+               object [] array = (object[]) values;
+               if ( array.Length > 0 ) result = Parameter.ArrayDelimeter.ToString( );
+
+               foreach ( object a in array )
+               {
+                  result += a + "" + Parameter.ArrayDelimeter;
+               }
+
+               if ( result.Length > 0 ) result = result.Substring( 0, result.Length - 1 );
+               return result;
+            }
+            catch { return ""; }
+         }
+
 
          return values.ToString( );
       }
