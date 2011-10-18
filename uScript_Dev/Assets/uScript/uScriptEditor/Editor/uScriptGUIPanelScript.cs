@@ -3,11 +3,11 @@ using UnityEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Detox.Drawing;
 using System.Reflection;
 
-using Detox.ScriptEditor;
+using Detox.Drawing;
 using Detox.FlowChart;
+using Detox.ScriptEditor;
 
 //using Detox.Data.Tools;
 //using Detox.Windows.Forms;
@@ -25,14 +25,12 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
    public static uScriptGUIPanelScript Instance { get { return _instance; } }
    private uScriptGUIPanelScript() { Init(); }
 
-   String _panelScriptFilterText = string.Empty;
-
-
-
 
    //
    // Members specific to this panel class
    //
+   string _panelFilterText = string.Empty;
+
    const double _doubleClickTime = 0.5; // default in Windows OS is 500ms
    double _clickTime;
    string _clickedControl = string.Empty;
@@ -72,7 +70,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 //   float _bListData_height;
 
 //   LocalTestDebug _debugScript;
-
 
 
    //
@@ -130,9 +127,9 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             GUILayout.FlexibleSpace();
 
             GUI.SetNextControlName ("ScriptFilterSearch" );
-            string _filterText = uScriptGUI.ToolbarSearchField(_panelScriptFilterText, GUILayout.Width(100));
-            GUI.SetNextControlName ("" );
-            if (_filterText != _panelScriptFilterText)
+            string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.Width(100));
+//            GUI.SetNextControlName ("" );
+            if (_filterText != _panelFilterText)
             {
                // Drop focus if the user inserted a newline (hit enter)
                if (_filterText.Contains("\n"))
@@ -143,7 +140,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                // Trim leading whitespace
                _filterText = _filterText.TrimStart( new char[] { ' ' } );
 
-               _panelScriptFilterText = _filterText;
+               _panelFilterText = _filterText;
             }
          }
          EditorGUILayout.EndHorizontal();
@@ -308,9 +305,9 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                {
                   scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFile);
 
-                  if (scriptName != _currentScriptName                                       // is not the loaded script
-                      && (String.IsNullOrEmpty(_panelScriptFilterText)                       // there is no filter text
-                          || scriptName.ToLower().Contains(_panelScriptFilterText.ToLower()) // or the filter text matches the scriptName
+                  if (scriptName != _currentScriptName                                 // is not the loaded script
+                      && (String.IsNullOrEmpty(_panelFilterText)                       // there is no filter text
+                          || scriptName.ToLower().Contains(_panelFilterText.ToLower()) // or the filter text matches the scriptName
                          )
                      )
                   {
@@ -344,9 +341,9 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                   listItem_yMin = ROW_HEIGHT * listItem_count;
                   listItem_yMax = listItem_yMin + ROW_HEIGHT;
 
-                  if (scriptName != _currentScriptName                                       // is not the loaded script
-                      && (String.IsNullOrEmpty(_panelScriptFilterText)                       // there is no filter text
-                          || scriptName.ToLower().Contains(_panelScriptFilterText.ToLower()) // or the filter text matches the scriptName
+                  if (scriptName != _currentScriptName                                 // is not the loaded script
+                      && (String.IsNullOrEmpty(_panelFilterText)                       // there is no filter text
+                          || scriptName.ToLower().Contains(_panelFilterText.ToLower()) // or the filter text matches the scriptName
                          )
                      )
                   {
