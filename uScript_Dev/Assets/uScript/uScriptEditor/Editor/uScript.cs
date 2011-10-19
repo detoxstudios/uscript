@@ -4383,6 +4383,56 @@ public class uScript : EditorWindow
       return "";
    }
 
+
+   public static string FindNodeName(string type, EntityNode node)
+   {
+      // Check non-logic, non-event types first, because structs can't have attributes,
+      // so we have to specify this information here, explicitly
+
+      if (type == "CommentNode")
+      {
+         return "Comment";
+      }
+      else if (type == "ExternalConnection")
+      {
+         return "External Connection";
+      }
+      else if (type == "OwnerConnection")
+      {
+         return "Owner GameObject";
+      }
+      else if (type == "LocalNode")
+      {
+         return uScriptConfig.Variable.FriendlyName(((LocalNode)node).Value.Type).Replace("UnityEngine.", string.Empty);
+      }
+
+      Type uscriptType = uScript.MasterComponent.GetType(type);
+
+      if (uscriptType != null)
+      {
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         foreach (object a in attributes)
+         {
+            if (a is FriendlyName)
+            {
+               return ((FriendlyName)a).Name;
+            }
+         }
+      }
+
+      // If there is no name at this point, the node is likely reflected
+      if (node is EntityMethod)
+      {
+         return "Reflected " + type.Replace("UnityEngine.", string.Empty) + " action";
+      }
+      else if (node is EntityProperty)
+      {
+         return "Reflected " + type.Replace("UnityEngine.", string.Empty) + " property";
+      }
+
+      return string.Empty;
+   }
+
    public static string FindNodeDescription(string type, EntityNode node)
    {
       // check non-logic, non-event types first...
@@ -4439,6 +4489,49 @@ public class uScript : EditorWindow
       {
          object[] attributes = uscriptType.GetCustomAttributes(false);
          if (null == attributes) return "";
+
+         foreach (object a in attributes)
+         {
+            if (a is FriendlyName)
+            {
+               if ( ((FriendlyName)a).Desc != string.Empty )
+               {
+                  return ((FriendlyName)a).Desc;
+               }
+            }
+         }
+
+         foreach (object a in attributes)
+         {
+            if (a is NodeDescription)
+            {
+               return ((NodeDescription)a).Value;
+            }
+         }
+      }
+
+      return "";
+   }
+
+   public static string FindParameterDescription(Parameter p)
+   {
+      Type uscriptType = uScript.MasterComponent.GetType(p.ToString());
+
+      if (uscriptType != null)
+      {
+         object[] attributes = uscriptType.GetCustomAttributes(false);
+         if (null == attributes) return "";
+
+         foreach (object a in attributes)
+         {
+            if (a is FriendlyName)
+            {
+               if ( ((FriendlyName)a).Desc != string.Empty )
+               {
+                  return ((FriendlyName)a).Desc;
+               }
+            }
+         }
 
          foreach (object a in attributes)
          {

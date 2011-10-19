@@ -170,7 +170,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          }
          else
          {
-            // Node list
+            // Selection description
             //
 //            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
             _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
@@ -265,67 +265,138 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
    //
    void DrawReferenceContent(EntityNode node, string nodeType, bool isHotSelection)
    {
+      // Expected array format 3+(3*n) in length:
+      //
+      //    Name           // "Node Name"
+      //    Desc           // "This is the node description."
+      //    Path           // "Actions > Assets"
+      //
+      //    [0] ParamName  // "Parameter Name"
+      //        ParamDesc  // "This is the parameter description."
+      //        ParamType  // "String (out)"
+      //
+      //    [1] Param...
+
+//      string[] data = Parameter.StringToArray(uScript.FindNodeReferenceData(nodeType, node));
+//
+//      if (data.Length == 0 || data.Length % 3 != 0)
+//      {
+//         Debug.LogError("The node reference data length is invalid: " + data.Length + "\n");
+//         return;
+//      }
+
+
+      // For now, display the following text if this is a hot selection
       if (isHotSelection)
       {
          GUILayout.Label("HOT TIP:", EditorStyles.boldLabel);
       }
 
-      GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceText);
+      Rect r;
+
+      // Node name
+      GUILayout.Label(uScript.FindNodeName(nodeType, node), uScriptGUIStyle.referenceName);
+
+//      // Node palette location
+//      r = GUILayoutUtility.GetLastRect();
+//      GUI.Label(r, "PATH", uScriptGUIStyle.referenceInfo);
+
+      // Node description
+      GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceDesc);
+
+      // Display an "Instance" parameter if necessary
+      if (node.Instance.Input)
+      {
+         // Parameter block
+         GUILayout.BeginHorizontal();
+         {
+            // Icon
+            GUILayout.Space(24);
+
+            //
+            GUILayout.BeginVertical();
+            {
+               // Parameter name and type
+               GUILayout.Label(node.Instance.FriendlyName + ":", uScriptGUIStyle.referenceName);
+               r = GUILayoutUtility.GetLastRect();
+               GUI.Label(r, uScriptConfig.Variable.FriendlyName(node.Instance.Type).Replace("UnityEngine.", string.Empty), uScriptGUIStyle.referenceInfo);
+
+               // Parameter description
+               GUILayout.Label("The object instance that is linked to this node.", uScriptGUIStyle.referenceDesc);
+            }
+            GUILayout.EndVertical();
+         }
+         GUILayout.EndHorizontal();
+      }
+
+      // Display the remaining parameters
+      foreach (Parameter p in node.Parameters)
+      {
+         // Parameter block
+         GUILayout.BeginHorizontal();
+         {
+            // Icon
+            GUILayout.Space(24);
+
+            //
+            GUILayout.BeginVertical();
+            {
+               // Parameter name and type
+               GUILayout.Label(p.FriendlyName + ":", uScriptGUIStyle.referenceName);
+               r = GUILayoutUtility.GetLastRect();
+               GUI.Label(r, uScriptConfig.Variable.FriendlyName(p.Type).Replace("UnityEngine.", string.Empty) + (p.Output ? " (out)" : string.Empty), uScriptGUIStyle.referenceInfo);
+
+               // Parameter description
+               GUILayout.Label(uScript.FindParameterDescription(p), uScriptGUIStyle.referenceDesc);
+            }
+            GUILayout.EndVertical();
+         }
+         GUILayout.EndHorizontal();
+      }
 
 
-//               // Node name and palette location
-//               GUILayout.Label("Load Material", uScriptGUIStyle.referenceName);
-//               Rect r = GUILayoutUtility.GetLastRect();
-//               GUI.Label(r, "Actions > Assets", uScriptGUIStyle.referenceInfo);
+//      uScriptGUI.HR();
 //
-//               // Node description
-//               GUILayout.Label("Loads a Material file from your Resources directory.", uScriptGUIStyle.referenceDesc);
+//      int dataIndex = 0;
 //
-//               // Parameter block
-//               GUILayout.BeginHorizontal();
-//               {
-//                  // Icon
-//                  GUILayout.Space(24);
+//      // Node name and palette location
+//      GUILayout.Label(data[dataIndex++], uScriptGUIStyle.referenceName);
+//      r = GUILayoutUtility.GetLastRect();
+//      GUI.Label(r, data[dataIndex++], uScriptGUIStyle.referenceInfo);
 //
-//                  //
-//                  GUILayout.BeginVertical();
-//                  {
-//                     // Parameter name and type
-//                     GUILayout.Label("Asset Path:", uScriptGUIStyle.referenceName);
-//                     r = GUILayoutUtility.GetLastRect();
-//                     GUI.Label(r, "String", uScriptGUIStyle.referenceInfo);
+//      // Node description
+//      GUILayout.Label(data[dataIndex++], uScriptGUIStyle.referenceDesc);
 //
-//                     // Parameter description
-//                     GUILayout.Label("The Material file to load.  The supported file format is: \"mat\".", uScriptGUIStyle.referenceDesc);
-//                  }
-//                  GUILayout.EndVertical();
-//               }
-//               GUILayout.EndHorizontal();
+//      while (dataIndex < data.Length)
+//      {
+//         // Parameter block
+//         GUILayout.BeginHorizontal();
+//         {
+//            // Icon
+//            GUILayout.Space(24);
 //
-//               // Parameter block
-//               GUILayout.BeginHorizontal();
-//               {
-//                  // Icon
-//                  GUILayout.Space(24);
-////                  r = GUILayoutUtility.GetLastRect();
-////                  r.height = 20;
-////                  GUI.Label(r, "(o)", styleInfo);
+//            //
+//            GUILayout.BeginVertical();
+//            {
+//               // Parameter name and type
+//               GUILayout.Label(data[dataIndex++] + ":", uScriptGUIStyle.referenceName);
+//               r = GUILayoutUtility.GetLastRect();
+//               GUI.Label(r, data[dataIndex++], uScriptGUIStyle.referenceInfo);
 //
-//                  //
-//                  GUILayout.BeginVertical();
-//                  {
-//                     // Parameter name and type
-//                     GUILayout.Label("Loaded Asset:", uScriptGUIStyle.referenceName);
-//                     r = GUILayoutUtility.GetLastRect();
-//                     GUI.Label(r, "Material", uScriptGUIStyle.referenceInfo);
+//               // Parameter description
+//               GUILayout.Label(data[dataIndex++], uScriptGUIStyle.referenceDesc);
+//            }
+//            GUILayout.EndVertical();
+//         }
+//         GUILayout.EndHorizontal();
+//      }
 //
-//                     // Parameter description
-//                     GUILayout.Label("The Material loaded from the specified file path.", uScriptGUIStyle.referenceDesc);
-//                  }
-//                  GUILayout.EndVertical();
-//               }
-//               GUILayout.EndHorizontal();
-
+//
+//      uScriptGUI.HR();
+//
+//
+//      // For now, display the original description text
+//      GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceText);
    }
 
 
