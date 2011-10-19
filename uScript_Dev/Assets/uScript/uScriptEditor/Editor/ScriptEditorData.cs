@@ -96,7 +96,7 @@ namespace Detox.Data.ScriptEditor
       }
    }
 
-   public struct Parameter 
+   public struct Parameter
    {
       [Flags]
       public enum VisibleState
@@ -108,6 +108,7 @@ namespace Detox.Data.ScriptEditor
 
       public VisibleState State;
       public string FriendlyName;
+//      public string Description;
       public string Name;
       public string Default;
       public string Type;
@@ -867,6 +868,8 @@ namespace Detox.Data.ScriptEditor
          {
             parameter.FriendlyName = parameter.Name;
          }
+
+//         parameter.Description = reader.ReadString( );
 
          parameter.Default = reader.ReadString( );
          parameter.Type    = reader.ReadString( );
