@@ -101,10 +101,10 @@ public class RequiresLink : Attribute
 }
 
 [AttributeUsage(AttributeTargets.All)]
-public class FriendlyName : Attribute
+public class FriendlyNameAttribute : Attribute
 {
-   public FriendlyName(string name) { Name = name; Desc = string.Empty; }
-   public FriendlyName(string name, string desc) { Name = name; Desc = desc; }
+   public FriendlyNameAttribute(string name) { Name = name; Desc = string.Empty; }
+   public FriendlyNameAttribute(string name, string desc) { Name = name; Desc = desc; }
    public string Name;
    public string Desc;
 }

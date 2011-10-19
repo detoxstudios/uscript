@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using Detox.Drawing;
 using Detox.FlowChart;
 
+using System.IO;
+
 public class uScript : EditorWindow
 {
 
@@ -2496,6 +2498,11 @@ public class uScript : EditorWindow
                PreferenceWindow.Init();
             }
 
+//            if (GUILayout.Button("Export to PNG", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+//            {
+//               ExportPNG();
+//            }
+
             GUILayout.FlexibleSpace();
 
             _saveMethod = uScriptGUI.ToolbarButtonGroup("Save method: ", _saveMethod, new GUIContent[] { uScriptGUIContent.buttonSaveModeQuick, uScriptGUIContent.buttonSaveModeDebug, uScriptGUIContent.buttonSaveModeRelease });
@@ -2581,6 +2588,53 @@ public class uScript : EditorWindow
 
    Vector2 _scrollNewProperties;
    // END TEMP Variables
+
+
+
+
+   void ExportPNG()
+   {
+      string filename = GUI.skin.name + "_" + ((int)Time.realtimeSinceStartup).ToString();
+
+      TextAsset ta = Resources.Load("uScript", typeof(TextAsset)) as TextAsset;
+      if (ta == null)
+         Debug.Log("NULL");
+      byte[] bytes = ta.bytes;
+
+      Debug.Log("Length: " + bytes.Length + "\n");
+
+      // start with byte 82
+      int offset = 76;
+
+      // Create a texture the size of the screen, RGB24 format
+      int width = 71;
+      int height = 68;
+      Texture2D tex = new Texture2D(width, height, TextureFormat.ARGB32, false);
+
+//      Color color = Color.magenta;
+      int position = 0;
+
+      UnityEngine.Color[] colors = new UnityEngine.Color[width * height];
+
+      for (int i=0; i < width * height; i++)
+      {
+         // get byte position
+         position = offset + (i * 4);
+
+         // get color
+         colors[i] = new UnityEngine.Color(bytes[position + 1] / 255f, bytes[position + 2] / 255f, bytes[position + 3] / 255f, bytes[position] / 255f);
+
+//         Debug.Log("Color " + i + " is " + colors[i].ToString() + "\n");
+      }
+
+      tex.SetPixels(colors);
+      tex.Apply();
+
+      // For testing purposes, also write to a file in the project folder
+      File.WriteAllBytes(Application.dataPath + "/../" + filename + ".png", tex.EncodeToPNG());
+
+      Debug.Log("Saved the image to \"" + filename + "\" ... hopefully.\n");
+   }
 
 
 
@@ -3464,6 +3518,7 @@ public class uScript : EditorWindow
                variable.Name = p.Name;
                variable.Type = p.ParameterType.ToString().Replace("&", "");
                variable.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
+               variable.Description = FindParameterDescription(p.Name, p.GetCustomAttributes(false));
                variable.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
                AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
@@ -3484,6 +3539,7 @@ public class uScript : EditorWindow
                parameter.Default = "";
                parameter.State = FindSocketState(m.GetCustomAttributes(false));
                parameter.FriendlyName = "Return Value";
+               parameter.Description = "The results of the action.";
 
                MasterComponent.AddType(m.ReturnType);
 
@@ -4183,9 +4239,9 @@ public class uScript : EditorWindow
 
       foreach (object a in attributes)
       {
-         if (a is FriendlyName)
+         if (a is FriendlyNameAttribute)
          {
-            return ((FriendlyName)a).Name;
+            return ((FriendlyNameAttribute)a).Name;
          }
       }
 
@@ -4413,9 +4469,9 @@ public class uScript : EditorWindow
          object[] attributes = uscriptType.GetCustomAttributes(false);
          foreach (object a in attributes)
          {
-            if (a is FriendlyName)
+            if (a is FriendlyNameAttribute)
             {
-               return ((FriendlyName)a).Name;
+               return ((FriendlyNameAttribute)a).Name;
             }
          }
       }
@@ -4439,15 +4495,24 @@ public class uScript : EditorWindow
       // structs can't have attributes, so we have to specify this information here, explicitly
       if (type == "CommentNode")
       {
-         return "Use a comment box to comment or hint at what a particular block of uScript nodes does. Comment boxes can be resized so that they surround the nodes that they are referencing.\n \nTo resize a comment box, drag the bottom-right corner of the comment box or set its width/height properties explicitly in the Properties panel.\n \nTitle: The title or header for this comment box.\nBody: The actual comment text and information. Empty lines are supported.\nWidth: The width of the comment box in pixels.\nHeight: The height of the comment box in pixels.";
+         return "Use a comment box to comment or hint at what a particular block of uScript nodes" +
+            " does. Comment boxes can be resized so that they surround the nodes that they are" +
+            " referencing.\n\nTo resize a comment box, drag the bottom-right corner of the comment" +
+            " box or set its width/height properties explicitly in the Properties panel.";
       }
       else if (type == "ExternalConnection")
       {
-         return "Use External Connections to create nested uScripts. An External Connection node will turn into a socket when the current uScript is used as a nested uScript inside another uScript. The type of socket it turns into will be determined by the type of socket it is connected to in this uScript.\n \nTo place this uScript in another uScript as a nested uScript, save it and then look for it under the Scene()->Logic menu of the node palette or 'Add' context menu.";
+         return "Use External Connections to create nested uScripts. An External Connection node" +
+            " will turn into a socket when the current uScript is used as a nested uScript inside" +
+            " another uScript. The type of socket it turns into will be determined by the type of" +
+            " socket it is connected to in this uScript.\n\nTo place this uScript in another" +
+            " uScript as a nested uScript, save it and then look for it under the Scene()->Logic" +
+            " menu of the node palette or 'Add' context menu.";
       }
       else if (type == "OwnerConnection")
       {
-         return "Owner GameObject variables are a special kind of GameObject variable. They represent the GameObject that this uScript is attached to.";
+         return "Owner GameObject variables are a special kind of GameObject variable. They" +
+            " represent the GameObject that this uScript is attached to.";
       }
       else if (type == "LocalNode")
       {
@@ -4457,27 +4522,27 @@ public class uScript : EditorWindow
          switch (friendlyType)
          {
             case "Bool":
-               return "A Boolean variable.\n \nValue can be True or False.";
+               return "A Boolean variable, which stores the value of True or False.";
             case "Color":
-               return "A Color variable.\n \nValue is a color represented by an R,G,B triplet.";
+               return "A Color variable. The color is defined in RGB color space and contains an Alpha (opacity) channel.";
             case "Float":
-               return "A Floating point variable.\n \nValue is any real number (ex. 1.234, 5.0, -3.21).";
+               return "A Floating point variable may store a real number (e.g., 1.234, 5.0, -3.21).";
             case "Int":
-               return "An Integer variable.\n \nValue is any whole number (ex. 1, 0, -3).";
+               return "An Integer variable may store a whole number (e.g., 1, 0, -3).";
             case "Vector2":
-               return "A Vector2 variable.\n \nValue is a 2-dimensional point in space (x,y).";
+               return "A Vector2 variable represents a 2-dimensional point in space (x,y).";
             case "Vector3":
-               return "A Vector3 variable.\n \nValue is a 3-dimensional point or direction in space (x,y,z).";
+               return "A Vector3 variable represents a 3-dimensional point or direction in space (x,y,z).";
             case "Vector4":
-               return "A Vector4 variable.\n \nValue is a 3-dimensional point or direction in space with a w-value (x,y,z,w).";
+               return "A Vector4 variable represents a 3-dimensional point or direction in space with an additional 'W' component (x,y,z,w).";
             case "Rect":
-               return "A Rect variable.\n \nValue contains a 2-dimensional position (x,y) and an area (width, height).";
+               return "A Rect variable represents a 2-dimensional position (x,y) and an area (width, height).";
             case "Quaternion":
-               return "A Quaternion variable.\n \nValue is quaternion representation of a rotation in space.";
+               return "A Quaternion variable stores a quaternion representation of a rotation in space.";
             case "GameObject":
-               return "A GameObject variable.\n \nValue is a GameObject in the scene. Note that if a GameObject is being used as a node's input parameter, it is set by name and when this is done, it must be unique in the scene.";
+               return "A GameObject variable that stores a refernce to a GameObject in the scene.\n\nNote that if a GameObject is being used as a node's input parameter, it is set by name and when this is done, it must be unique in the scene.";
             case "String":
-               return "A String variable.\n \nValue is text data.";
+               return "A String variable, which stores text data.";
             default:
                return "Use variables to store data in your uScript.";
          }
@@ -4492,11 +4557,11 @@ public class uScript : EditorWindow
 
          foreach (object a in attributes)
          {
-            if (a is FriendlyName)
+            if (a is FriendlyNameAttribute)
             {
-               if ( ((FriendlyName)a).Desc != string.Empty )
+               if ( ((FriendlyNameAttribute)a).Desc != string.Empty )
                {
-                  return ((FriendlyName)a).Desc;
+                  return ((FriendlyNameAttribute)a).Desc;
                }
             }
          }
@@ -4513,36 +4578,74 @@ public class uScript : EditorWindow
       return "";
    }
 
-   public static string FindParameterDescription(Parameter p)
+   public static string FindParameterDescription(string defaultName, object[] attributes)
    {
-      Type uscriptType = uScript.MasterComponent.GetType(p.ToString());
+      // This method is used to get the parameter descriptions at load
+      if (null == attributes) return defaultName;
 
-      if (uscriptType != null)
+      foreach (object a in attributes)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return "";
-
-         foreach (object a in attributes)
+         if (a is FriendlyNameAttribute)
          {
-            if (a is FriendlyName)
-            {
-               if ( ((FriendlyName)a).Desc != string.Empty )
-               {
-                  return ((FriendlyName)a).Desc;
-               }
-            }
-         }
-
-         foreach (object a in attributes)
-         {
-            if (a is NodeDescription)
-            {
-               return ((NodeDescription)a).Value;
-            }
+            return ((FriendlyNameAttribute)a).Desc;
          }
       }
 
-      return "";
+      return defaultName;
+   }
+
+   public static string FindParameterDescription(string type, Parameter p)
+   {
+      // This method is used to get the parameter descriptions in OnGUI updates
+      if (string.IsNullOrEmpty(p.Description))
+      {
+         // check non-logic, non-event types first...
+         // structs can't have attributes, so we have to specify this information here, explicitly
+         if (type == "CommentNode")
+         {
+            switch (p.FriendlyName)
+            {
+               case "Title":
+                  return ParameterDescription.COMMENTNODE_TITLE;
+               case "Body":
+                  return ParameterDescription.COMMENTNODE_BODY;
+               case "Width":
+                  return ParameterDescription.COMMENTNODE_WIDTH;
+               case "Height":
+                  return ParameterDescription.COMMENTNODE_HEIGHT;
+               case "Node Color":
+                  return ParameterDescription.COMMENTNODE_NODECOLOR;
+               case "Body Text Color":
+                  return ParameterDescription.COMMENTNODE_BODYTEXTCOLOR;
+               default:
+                  return p.FriendlyName;
+            }
+         }
+         else if (type == "LocalNode")
+         {
+            if (p.FriendlyName == "Name")
+            {
+               return ParameterDescription.VARIABLE_NAME;
+            }
+            else if (p.FriendlyName == "Value")
+            {
+               return ParameterDescription.VARIABLE_VALUE;
+            }
+         }
+         else if (type == "ExternalConnection")
+         {
+            if (p.FriendlyName == "Name")
+            {
+               return ParameterDescription.CONNECTION_NAME;
+            }
+         }
+         else
+         {
+            return string.Empty;
+         }
+      }
+
+      return p.Description;
    }
 
    public static string FindNodeAuthorName(string type)

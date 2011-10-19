@@ -304,6 +304,81 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       // Node description
       GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceDesc);
 
+      // Display the dynamic parameters
+      foreach (Parameter p in node.Parameters)
+      {
+         // Parameter block
+         GUILayout.BeginHorizontal();
+         {
+            // Icon
+            GUILayout.Space(24);
+
+            //
+            GUILayout.BeginVertical();
+            {
+               // Parameter name and type
+               GUILayout.Label(p.FriendlyName + ":", uScriptGUIStyle.referenceName);
+               r = GUILayoutUtility.GetLastRect();
+               GUI.Label(r, uScriptConfig.Variable.FriendlyName(p.Type).Replace("UnityEngine.", string.Empty) + (p.Input && p.Output ? " (In/Out)" : p.Output  ? " (out)" : string.Empty), uScriptGUIStyle.referenceInfo);
+
+               // Parameter description
+               GUILayout.Label(uScript.FindParameterDescription(nodeType, p), uScriptGUIStyle.referenceDesc);
+            }
+            GUILayout.EndVertical();
+         }
+         GUILayout.EndHorizontal();
+      }
+
+      // Display an "ShowComment" parameter if necessary
+      if (node.ShowComment.Input)
+      {
+         // Parameter block
+         GUILayout.BeginHorizontal();
+         {
+            // Icon
+            GUILayout.Space(24);
+
+            //
+            GUILayout.BeginVertical();
+            {
+               // Parameter name and type
+               GUILayout.Label(node.ShowComment.FriendlyName + ":", uScriptGUIStyle.referenceName);
+               r = GUILayoutUtility.GetLastRect();
+               GUI.Label(r, uScriptConfig.Variable.FriendlyName(node.ShowComment.Type).Replace("UnityEngine.", string.Empty), uScriptGUIStyle.referenceInfo);
+
+               // Parameter description
+               GUILayout.Label(ParameterDescription.NODE_SHOWCOMMENT, uScriptGUIStyle.referenceDesc);
+            }
+            GUILayout.EndVertical();
+         }
+         GUILayout.EndHorizontal();
+      }
+
+      // Display an "Comment" parameter if necessary
+      if (node.Comment.Input)
+      {
+         // Parameter block
+         GUILayout.BeginHorizontal();
+         {
+            // Icon
+            GUILayout.Space(24);
+
+            //
+            GUILayout.BeginVertical();
+            {
+               // Parameter name and type
+               GUILayout.Label(node.Comment.FriendlyName + ":", uScriptGUIStyle.referenceName);
+               r = GUILayoutUtility.GetLastRect();
+               GUI.Label(r, uScriptConfig.Variable.FriendlyName(node.Comment.Type).Replace("UnityEngine.", string.Empty), uScriptGUIStyle.referenceInfo);
+
+               // Parameter description
+               GUILayout.Label(ParameterDescription.NODE_COMMENT, uScriptGUIStyle.referenceDesc);
+            }
+            GUILayout.EndVertical();
+         }
+         GUILayout.EndHorizontal();
+      }
+
       // Display an "Instance" parameter if necessary
       if (node.Instance.Input)
       {
@@ -322,32 +397,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                GUI.Label(r, uScriptConfig.Variable.FriendlyName(node.Instance.Type).Replace("UnityEngine.", string.Empty), uScriptGUIStyle.referenceInfo);
 
                // Parameter description
-               GUILayout.Label("The object instance that is linked to this node.", uScriptGUIStyle.referenceDesc);
-            }
-            GUILayout.EndVertical();
-         }
-         GUILayout.EndHorizontal();
-      }
-
-      // Display the remaining parameters
-      foreach (Parameter p in node.Parameters)
-      {
-         // Parameter block
-         GUILayout.BeginHorizontal();
-         {
-            // Icon
-            GUILayout.Space(24);
-
-            //
-            GUILayout.BeginVertical();
-            {
-               // Parameter name and type
-               GUILayout.Label(p.FriendlyName + ":", uScriptGUIStyle.referenceName);
-               r = GUILayoutUtility.GetLastRect();
-               GUI.Label(r, uScriptConfig.Variable.FriendlyName(p.Type).Replace("UnityEngine.", string.Empty) + (p.Output ? " (out)" : string.Empty), uScriptGUIStyle.referenceInfo);
-
-               // Parameter description
-               GUILayout.Label(uScript.FindParameterDescription(p), uScriptGUIStyle.referenceDesc);
+               GUILayout.Label(node.Instance.Description, uScriptGUIStyle.referenceDesc);
             }
             GUILayout.EndVertical();
          }

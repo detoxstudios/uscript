@@ -108,7 +108,7 @@ namespace Detox.Data.ScriptEditor
 
       public VisibleState State;
       public string FriendlyName;
-//      public string Description;
+      public string Description;
       public string Name;
       public string Default;
       public string Type;
@@ -138,6 +138,7 @@ namespace Detox.Data.ScriptEditor
          ShowComment = new Parameter( );
          ShowComment.FriendlyName = "Output Comment";
          ShowComment.Name         = "Output Comment";
+         ShowComment.Description  = Detox.ScriptEditor.ParameterDescription.NODE_SHOWCOMMENT;
          ShowComment.Default      = "false";
          ShowComment.Type         = typeof(bool).ToString( );
          ShowComment.Input        = true;
@@ -147,6 +148,7 @@ namespace Detox.Data.ScriptEditor
          Comment = new Parameter( );
          Comment.FriendlyName = "Comment";
          Comment.Name         = "Comment";
+         Comment.Description  = Detox.ScriptEditor.ParameterDescription.NODE_COMMENT;
          Comment.Default      = "";
          Comment.Type         = typeof(String).ToString( );
          Comment.Input        = true;
@@ -180,6 +182,7 @@ namespace Detox.Data.ScriptEditor
             ShowComment = new Parameter( );
             ShowComment.FriendlyName = "Output Comment";
             ShowComment.Name         = "Output Comment";
+            ShowComment.Description  = Detox.ScriptEditor.ParameterDescription.NODE_SHOWCOMMENT;
             ShowComment.Default      = "false";
             ShowComment.Type         = typeof(bool).ToString( );
             ShowComment.Input        = true;
@@ -189,6 +192,7 @@ namespace Detox.Data.ScriptEditor
             Comment = new Parameter( );
             Comment.FriendlyName = "Comment";
             Comment.Name         = "Comment";
+            Comment.Description  = Detox.ScriptEditor.ParameterDescription.NODE_COMMENT;
             Comment.Default      = "";
             Comment.Type         = typeof(String).ToString( );
             Comment.Input        = true;
@@ -822,6 +826,7 @@ namespace Detox.Data.ScriptEditor
             name.Output       = false;
             name.Name         = "Name";
             name.FriendlyName = "Name";
+            name.Description  = "Description";
             name.State        = Parameter.VisibleState.Visible;
             name.Type         = typeof(string).ToString( );
 
@@ -869,7 +874,14 @@ namespace Detox.Data.ScriptEditor
             parameter.FriendlyName = parameter.Name;
          }
 
-//         parameter.Description = reader.ReadString( );
+         if ( serializer.CurrentVersion > 7 )
+         {
+            parameter.Description = reader.ReadString( );
+         }
+         else
+         {
+            parameter.Description = "";
+         }
 
          parameter.Default = reader.ReadString( );
          parameter.Type    = reader.ReadString( );
