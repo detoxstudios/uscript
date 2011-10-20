@@ -2499,10 +2499,10 @@ public class uScript : EditorWindow
                PreferenceWindow.Init();
             }
 
-//            if (GUILayout.Button("Export to PNG", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
-//            {
-//               ExportPNG();
-//            }
+            if (GUILayout.Button("Export to PNG", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            {
+               ExportPNG();
+            }
 
             GUILayout.FlexibleSpace();
 
@@ -2608,8 +2608,8 @@ public class uScript : EditorWindow
    void ExportPNG()
    {
       // Create a texture the size of the screen, RGB24 format
-//#      int x = (int)_canvasRect.x;
-//#      int y = (int)_canvasRect.y;
+//      int x = (int)_canvasRect.x;
+//      int y = (int)_canvasRect.y;
       int width = (int)_canvasRect.width;
       int height = (int)_canvasRect.height;
 
@@ -2624,7 +2624,7 @@ public class uScript : EditorWindow
       Type t;
       t = uScript.Instance.GetType();
 
-//#      FieldInfo[] fields;
+//      FieldInfo[] fields;
 
 //      fields = t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 //      Debug.Log("There are " + fields.Length + " fields.\n");
@@ -2644,49 +2644,80 @@ public class uScript : EditorWindow
          Debug.Log("We have " + f.Name + "\n");
 
 
-         t = f.FieldType;
 
-         f = t.GetField("background", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-
-//Type logEntryType = asm.GetType("UnityEditorInternal.LogEntry");
-//if ( null == logEntryType ) return true;
-//
-//object logEntry = Activator.CreateInstance(logEntryType);
-//if ( null == logEntry ) return true;
-//
-//FieldInfo field = logEntryType.GetField("condition");
-//if ( null == field ) return true;
-//
-//string condition = field.GetValue( logEntry ) as string;
-
-         object backgroundObj = ScriptableObject.CreateInstance(t);
-
-         GUIStyle style = f.GetValue( backgroundObj ) as GUIStyle;
-         if (style == null)
-            Debug.Log("The style is null");
+         object parent = f.GetValue(uScript.Instance);
+         if ( null == parent )
+            Debug.Log("PARENT IS NULL\n");
          else
-            Debug.Log(style.name + "\n");
+         {
+            Debug.Log("PARENT IS NOT NULL\n");
+   
+            Debug.Log(parent.ToString());
+   
+   
+            t = parent.GetType();
 
-//         Debug.Log("----------------------\nGetting children of Parent\n");
-//         fields = t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-//         Debug.Log("There are " + fields.Length + " fields.\n");
-//         foreach (FieldInfo fi in fields)
-//         {
-//            Debug.Log(fi.Name + "\n");
-//         }
 
-//#         PropertyInfo p = t.GetProperty("borderSize", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            PropertyInfo pi = t.GetProperty("borderSize", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-//         RectOffset ro = (RectOffset)p.GetValue(null, new object[] { 0 });
+            Debug.Log(pi.Name + "\n");
+            RectOffset ro = (RectOffset)pi.GetValue(parent, new object[] { 0 });
+            Debug.Log(ro.ToString() + "\n");
+
+            
+
+
+      }
+
+
+//         t = f.FieldType;
+//
+//         f = t.GetField("background", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+//
+//
+////Type logEntryType = asm.GetType("UnityEditorInternal.LogEntry");
+////if ( null == logEntryType ) return true;
+////
+////object logEntry = Activator.CreateInstance(logEntryType);
+////if ( null == logEntry ) return true;
+////
+////FieldInfo field = logEntryType.GetField("condition");
+////if ( null == field ) return true;
+////
+////string condition = field.GetValue( logEntry ) as string;
+//
+//         object backgroundObj = ScriptableObject.CreateInstance(t);
+//
+//         GUIStyle style = f.GetValue( backgroundObj ) as GUIStyle;
+//         if (style == null)
+//            Debug.Log("The style is null");
+//         else
+//            Debug.Log(style.name + "\n");
+//
+////         Debug.Log("----------------------\nGetting children of Parent\n");
+////         fields = t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+////         Debug.Log("There are " + fields.Length + " fields.\n");
+////         foreach (FieldInfo fi in fields)
+////         {
+////            Debug.Log(fi.Name + "\n");
+////         }
+//
+//         PropertyInfo pi = t.GetProperty("borderSize", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+//
+//         RectOffset ro1 = new RectOffset();
+//         RectOffset ro = (RectOffset)pi.GetValue(null, new object[] { 1 });
 //         Debug.Log(ro.ToString() + "\n");
-
-//         PropertyInfo[] properties =  t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-//         Debug.Log("There are " + properties.Length + " properties.\n");
-//         foreach (PropertyInfo pi in properties)
-//         {
+//
+////         PropertyInfo[] properties =  t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+////         Debug.Log("There are " + properties.Length + " properties.\n");
+////         foreach (PropertyInfo pi in properties)
+////         {
 //            Debug.Log(pi.Name + "\n");
-//         }
+////         }
+
+
+
+
       }
 
 
