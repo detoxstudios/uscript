@@ -3518,7 +3518,6 @@ public class uScript : EditorWindow
                variable.Name = p.Name;
                variable.Type = p.ParameterType.ToString().Replace("&", "");
                variable.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
-               variable.Description = FindParameterDescription(p.Name, p.GetCustomAttributes(false));
                variable.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
                AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
@@ -3539,7 +3538,6 @@ public class uScript : EditorWindow
                parameter.Default = "";
                parameter.State = FindSocketState(m.GetCustomAttributes(false));
                parameter.FriendlyName = "Return Value";
-               parameter.Description = "The results of the action.";
 
                MasterComponent.AddType(m.ReturnType);
 
@@ -4578,6 +4576,9 @@ public class uScript : EditorWindow
       return "";
    }
 
+
+
+
    public static string FindParameterDescription(string defaultName, object[] attributes)
    {
       // This method is used to get the parameter descriptions at load
@@ -4596,57 +4597,81 @@ public class uScript : EditorWindow
 
    public static string FindParameterDescription(string type, Parameter p)
    {
-      // This method is used to get the parameter descriptions in OnGUI updates
-      if (string.IsNullOrEmpty(p.Description))
+      // Check non-logic, non-event types first
+      //
+      // Structs can't have attributes and some parameters are manually added to some nodes. To
+      // support descriptions on these parameters, we have to specify this information explicitly.
+      //
+      if (string.IsNullOrEmpty(type))
       {
-         // check non-logic, non-event types first...
-         // structs can't have attributes, so we have to specify this information here, explicitly
-         if (type == "CommentNode")
+         switch (p.FriendlyName)
          {
-            switch (p.FriendlyName)
-            {
-               case "Title":
-                  return ParameterDescription.COMMENTNODE_TITLE;
-               case "Body":
-                  return ParameterDescription.COMMENTNODE_BODY;
-               case "Width":
-                  return ParameterDescription.COMMENTNODE_WIDTH;
-               case "Height":
-                  return ParameterDescription.COMMENTNODE_HEIGHT;
-               case "Node Color":
-                  return ParameterDescription.COMMENTNODE_NODECOLOR;
-               case "Body Text Color":
-                  return ParameterDescription.COMMENTNODE_BODYTEXTCOLOR;
-               default:
-                  return p.FriendlyName;
-            }
-         }
-         else if (type == "LocalNode")
-         {
-            if (p.FriendlyName == "Name")
-            {
-               return ParameterDescription.VARIABLE_NAME;
-            }
-            else if (p.FriendlyName == "Value")
-            {
-               return ParameterDescription.VARIABLE_VALUE;
-            }
-         }
-         else if (type == "ExternalConnection")
-         {
-            if (p.FriendlyName == "Name")
-            {
-               return ParameterDescription.CONNECTION_NAME;
-            }
-         }
-         else
-         {
-            return string.Empty;
+            case "Comment":            return "The comment text that will be sent to the console.";
+            case "Output Comment":     return "The comment will be sent when True.";
+            case "Instance":           return "The GameObject instance associated with this node.";
+            default:                   return p.FriendlyName;
          }
       }
+      if (type == "CommentNode")
+      {
+         switch (p.FriendlyName)
+         {
+            case "Title":              return "The title or header for this comment box.";
+            case "Body":               return "The actual comment text and information. Empty lines are supported.";
+            case "Width":              return "The width of the comment box (in pixels).";
+            case "Height":             return "The height of the comment box (in pixels).";
+            case "Node Color":         return "The comment box color.";
+            case "Body Text Color":    return "The color of the body text.";
+            case "Title Color":        return "The color of the title text.";    // Not used?
+            default:                   return p.FriendlyName;
+         }
+      }
+      else if (type == "LocalNode")
+      {
+         if (p.FriendlyName == "Name")
+            return "The variable name. Variables that share the same name are automatically linked together. Once linked, changing the value of one will affect all others.";
+         else if (p.FriendlyName == "Value")
+            return "The variable value.";
+      }
+      else if (type == "ExternalConnection")
+      {
+         if (p.FriendlyName == "Name")
+            return "The connection name.";
+      }
+      else if (type == "OwnerConnection")
+      {
+         if (p.FriendlyName == "Connection")
+            return "The GameObject this uScript is attached to.";
+      }
+      else if (type == "_reflectedAction")
+      {
+      }
+      else if (type == "_reflectedProperty")
+      {
+         return "This is the reflected object property that will be referenced and/or modified.";
+      }
 
-      return p.Description;
+
+      // Attempt to retrieve the cached parameter description
+      //
+//      return cachedDescription;
+
+
+      // Any remaining parameters are likely be be reflected.
+      //
+      // If the parameter is on a Property node
+      //    -- can we even identify properties by looking at the parameter or passed type??
+      //
+
+
+      // We really don't know what the parameter does at this point
+      //
+      return string.Empty;
    }
+
+
+
+
 
    public static string FindNodeAuthorName(string type)
    {

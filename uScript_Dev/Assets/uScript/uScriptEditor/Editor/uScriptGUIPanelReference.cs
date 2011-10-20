@@ -295,7 +295,14 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       Rect r;
 
       // Node name
-      GUILayout.Label(uScript.FindNodeName(nodeType, node), uScriptGUIStyle.referenceName);
+      string nodeName = uScript.FindNodeName(nodeType, node);
+      GUILayout.Label(nodeName, uScriptGUIStyle.referenceName);
+
+      // Identify reflected nodes
+      if (nodeName.StartsWith("Reflected "))
+      {
+         nodeType = "_reflected" + (nodeName.EndsWith(" action") ? "Action" : "Property");
+      }
 
 //      // Node palette location
 //      r = GUILayoutUtility.GetLastRect();
@@ -347,7 +354,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                GUI.Label(r, uScriptConfig.Variable.FriendlyName(node.ShowComment.Type).Replace("UnityEngine.", string.Empty), uScriptGUIStyle.referenceInfo);
 
                // Parameter description
-               GUILayout.Label(ParameterDescription.NODE_SHOWCOMMENT, uScriptGUIStyle.referenceDesc);
+               GUILayout.Label(uScript.FindParameterDescription(string.Empty, node.ShowComment), uScriptGUIStyle.referenceDesc);
             }
             GUILayout.EndVertical();
          }
@@ -372,7 +379,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                GUI.Label(r, uScriptConfig.Variable.FriendlyName(node.Comment.Type).Replace("UnityEngine.", string.Empty), uScriptGUIStyle.referenceInfo);
 
                // Parameter description
-               GUILayout.Label(ParameterDescription.NODE_COMMENT, uScriptGUIStyle.referenceDesc);
+               GUILayout.Label(uScript.FindParameterDescription(string.Empty, node.Comment), uScriptGUIStyle.referenceDesc);
             }
             GUILayout.EndVertical();
          }
@@ -397,7 +404,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                GUI.Label(r, uScriptConfig.Variable.FriendlyName(node.Instance.Type).Replace("UnityEngine.", string.Empty), uScriptGUIStyle.referenceInfo);
 
                // Parameter description
-               GUILayout.Label(node.Instance.Description, uScriptGUIStyle.referenceDesc);
+               GUILayout.Label(uScript.FindParameterDescription(string.Empty, node.Instance), uScriptGUIStyle.referenceDesc);
             }
             GUILayout.EndVertical();
          }

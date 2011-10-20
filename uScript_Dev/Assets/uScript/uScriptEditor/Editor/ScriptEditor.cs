@@ -61,24 +61,6 @@ namespace Detox.ScriptEditor
       }
    }
 
-   public static class ParameterDescription
-   {
-      public const string COMMENTNODE_TITLE = "The title or header for this comment box.";
-      public const string COMMENTNODE_BODY = "The actual comment text and information. Empty lines are supported.";
-      public const string COMMENTNODE_WIDTH = "The width of the comment box (in pixels).";
-      public const string COMMENTNODE_HEIGHT = "The height of the comment box (in pixels).";
-      public const string COMMENTNODE_NODECOLOR = "The comment box color.";
-      public const string COMMENTNODE_BODYTEXTCOLOR = "The color of the body text.";
-
-      public const string CONNECTION_NAME = "The connection name.";
-      public const string NODE_COMMENT = "The comment text that will be sent to the console.";
-      public const string NODE_INSTANCE = "The GameObject instance associated with this node.";
-      public const string NODE_SHOWCOMMENT = "The comment will be sent when TRUE.";
-
-      public const string VARIABLE_NAME = "The variable name. Variables that share the same name are automatically linked together. Once linked, changing the value of one will affect all others.";
-      public const string VARIABLE_VALUE = "The variable value.";
-   }
-
    public struct Parameter
    {
       [Flags]
@@ -94,7 +76,6 @@ namespace Detox.ScriptEditor
       public VisibleState State;
       public string       Name;
       public string       FriendlyName;
-      public string       Description;
       public string       Default;
       public string       Type;
       public string       ReferenceGuid;
@@ -994,7 +975,7 @@ namespace Detox.ScriptEditor
          data.State   = State != 0 ? (Detox.Data.ScriptEditor.Parameter.VisibleState) (int) State : Detox.Data.ScriptEditor.Parameter.VisibleState.Visible;
          data.ReferenceGuid = ReferenceGuid;
          data.FriendlyName  = FriendlyName;
-         data.Description = Description;
+
          return data;
       }
 
@@ -1008,7 +989,6 @@ namespace Detox.ScriptEditor
          State   = parameterData.State != 0 ? (Parameter.VisibleState) parameterData.State : Parameter.VisibleState.Visible;
          ReferenceGuid = parameterData.ReferenceGuid;
          FriendlyName  = parameterData.FriendlyName;
-         Description   = parameterData.Description;
       }
    }
 
@@ -1386,7 +1366,6 @@ namespace Detox.ScriptEditor
          Name = new Parameter( );
          Name.Name    = "Name";
          Name.FriendlyName = "Name";
-         Name.Description = ParameterDescription.CONNECTION_NAME;
          Name.Default = "";
          Name.Type    = typeof(String).ToString( );
          Name.Input   = true;
@@ -1396,7 +1375,6 @@ namespace Detox.ScriptEditor
          m_ShowComment = new Parameter( );
          m_ShowComment.Name         = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
-         m_ShowComment.Description  = ParameterDescription.NODE_SHOWCOMMENT;
          m_ShowComment.Default = "false";
          m_ShowComment.Type    = typeof(bool).ToString( );
          m_ShowComment.Input   = true;
@@ -1406,7 +1384,6 @@ namespace Detox.ScriptEditor
          m_Comment = new Parameter( );
          m_Comment.Name          = "Comment";
          m_Comment.FriendlyName  = "Comment";
-         m_Comment.Description   = ParameterDescription.NODE_COMMENT;
          m_Comment.Default = "";
          m_Comment.Type    = typeof(String).ToString( );
          m_Comment.Input   = true;
@@ -1507,7 +1484,6 @@ namespace Detox.ScriptEditor
          m_ShowComment = new Parameter( );
          m_ShowComment.Name         = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
-         m_ShowComment.Description  = ParameterDescription.NODE_SHOWCOMMENT;
          m_ShowComment.Default = "false";
          m_ShowComment.Type    = typeof(bool).ToString( );
          m_ShowComment.Input   = true;
@@ -1517,7 +1493,6 @@ namespace Detox.ScriptEditor
          m_Comment = new Parameter( );
          m_Comment.Name          = "Comment";
          m_Comment.FriendlyName  = "Comment";
-         m_Comment.Description   = ParameterDescription.NODE_COMMENT;
          m_Comment.Default = "";
          m_Comment.Type    = typeof(String).ToString( );
          m_Comment.Input   = true;
@@ -1527,7 +1502,6 @@ namespace Detox.ScriptEditor
          Connection = new Parameter( );
          Connection.Name = "Connection";
          Connection.FriendlyName = "Connection";
-         Connection.Description = "The GameObject this uScript is attached to.";
          Connection.Default = "";
          Connection.State  = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          Connection.Input  = false;
@@ -1660,13 +1634,11 @@ namespace Detox.ScriptEditor
          m_Instance.State  = Parameter.VisibleState.Visible;
          m_Instance.Name         = "Instance";
          m_Instance.FriendlyName = "Instance";
-         m_Instance.Description  = ParameterDescription.NODE_INSTANCE;
-         
+
          m_ShowComment = new Parameter( );
          m_ShowComment.ReferenceGuid = "";
          m_ShowComment.Name         = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
-         m_ShowComment.Description  = ParameterDescription.NODE_SHOWCOMMENT;
          m_ShowComment.Default = "false";
          m_ShowComment.Type    = typeof(bool).ToString( );
          m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -1677,7 +1649,6 @@ namespace Detox.ScriptEditor
          m_Comment.ReferenceGuid = "";
          m_Comment.Name          = "Comment";
          m_Comment.FriendlyName  = "Comment";
-         m_Comment.Description   = ParameterDescription.NODE_COMMENT;
          m_Comment.Default = "";
          m_Comment.Type    = typeof(String).ToString( );
          m_Comment.Input   = true;
@@ -1828,7 +1799,6 @@ namespace Detox.ScriptEditor
          m_TitleText.State = Parameter.VisibleState.Visible;
          m_TitleText.Name = "Title";
          m_TitleText.FriendlyName = "Title";
-         m_TitleText.Description = ParameterDescription.COMMENTNODE_TITLE;
          m_TitleText.Default = "Comment";
          m_TitleText.Type = typeof(String).ToString( );
          m_TitleText.Input = true;
@@ -1838,7 +1808,6 @@ namespace Detox.ScriptEditor
          m_TitleTextColor.State = Parameter.VisibleState.Visible;
          m_TitleTextColor.Name = "TitleColor";
          m_TitleTextColor.FriendlyName = "Title Color";
-         m_TitleTextColor.Description = "The color of the title text.";
          m_TitleTextColor.Default = "50, 50, 127";
          m_TitleTextColor.Type = typeof(UnityEngine.Color).ToString( );
          m_TitleTextColor.Input = true;
@@ -1848,7 +1817,6 @@ namespace Detox.ScriptEditor
          m_BodyText.State = Parameter.VisibleState.Visible;
          m_BodyText.Name = "Body";
          m_BodyText.FriendlyName = "Body";
-         m_BodyText.Description = ParameterDescription.COMMENTNODE_BODY;
          m_BodyText.Default = "";
          m_BodyText.Type = "TextArea";
          m_BodyText.Input = true;
@@ -1858,7 +1826,6 @@ namespace Detox.ScriptEditor
          m_BodyTextColor.State = Parameter.VisibleState.Visible;
          m_BodyTextColor.Name = "BodyColor";
          m_BodyTextColor.FriendlyName = "Body Text Color";
-         m_BodyTextColor.Description = ParameterDescription.COMMENTNODE_BODYTEXTCOLOR;
          m_BodyTextColor.Default = "50, 127, 50";
          m_BodyTextColor.Type = typeof(UnityEngine.Color).ToString( );
          m_BodyTextColor.Input = true;
@@ -1868,7 +1835,6 @@ namespace Detox.ScriptEditor
          m_NodeColor.State = Parameter.VisibleState.Visible;
          m_NodeColor.Name = "NodeColor";
          m_NodeColor.FriendlyName = "Node Color";
-         m_NodeColor.Description = ParameterDescription.COMMENTNODE_NODECOLOR;
          m_NodeColor.Default = "127, 127, 127";
          m_NodeColor.Type = typeof(UnityEngine.Color).ToString( );
          m_NodeColor.Input = true;
@@ -1877,7 +1843,6 @@ namespace Detox.ScriptEditor
          m_Width.Name  = "Width";
          m_Width.State = Parameter.VisibleState.Visible;
          m_Width.FriendlyName = "Width";
-         m_Width.Description = ParameterDescription.COMMENTNODE_WIDTH;
          m_Width.Type  = typeof(int).ToString( );
          m_Width.ReferenceGuid = "";
          m_Width.Input = true;
@@ -1888,7 +1853,6 @@ namespace Detox.ScriptEditor
          m_Height.ReferenceGuid = "";
          m_Height.State = Parameter.VisibleState.Visible;
          m_Height.FriendlyName = "Height";
-         m_Height.Description = ParameterDescription.COMMENTNODE_HEIGHT;
          m_Height.Type  = typeof(int).ToString( );
          m_Height.Input = true;
          m_Height.Output= false;
@@ -2047,7 +2011,6 @@ namespace Detox.ScriptEditor
          m_Instance.ReferenceGuid = "";
          m_Instance.State = Parameter.VisibleState.Visible;
          m_Instance.FriendlyName = "Instance";
-         m_Instance.Description  = ParameterDescription.NODE_INSTANCE;
          m_Instance.Type    = typeof(UnityEngine.GameObject).ToString( );
          m_Instance.Input   = true;
          m_Instance.Output  = false;
@@ -2062,7 +2025,6 @@ namespace Detox.ScriptEditor
          m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_ShowComment.Name         = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
-         m_ShowComment.Description  = ParameterDescription.NODE_SHOWCOMMENT;
          m_ShowComment.Default = "false";
          m_ShowComment.Type    = typeof(bool).ToString( );
          m_ShowComment.Input   = true;
@@ -2072,7 +2034,6 @@ namespace Detox.ScriptEditor
          m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Comment.Name          = "Comment";
          m_Comment.FriendlyName  = "Comment";
-         m_Comment.Description   = ParameterDescription.NODE_COMMENT;
          m_Comment.Default = "";
          m_Comment.Type    = typeof(String).ToString( );
          m_Comment.Input   = true;
@@ -2242,7 +2203,6 @@ namespace Detox.ScriptEditor
          m_ShowComment = new Parameter( );
          m_ShowComment.Name         = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
-         m_ShowComment.Description  = ParameterDescription.NODE_SHOWCOMMENT;
          m_ShowComment.Default = "false";
          m_ShowComment.Type    = typeof(bool).ToString( );
          m_ShowComment.Input   = true;
@@ -2252,7 +2212,6 @@ namespace Detox.ScriptEditor
          m_Comment = new Parameter( );
          m_Comment.Name          = "Comment";
          m_Comment.FriendlyName  = "Comment";
-         m_Comment.Description   = ParameterDescription.NODE_COMMENT;
          m_Comment.Default = "";
          m_Comment.Type    = typeof(String).ToString( );
          m_Comment.Input   = true;
@@ -2383,7 +2342,6 @@ namespace Detox.ScriptEditor
          m_Instance.Name         = "Instance";
          m_Instance.ReferenceGuid = "";
          m_Instance.FriendlyName = "Instance";
-         m_Instance.Description  = ParameterDescription.NODE_INSTANCE;
          m_Instance.State  = Parameter.VisibleState.Hidden;
          m_Instance.Type   = typeof(UnityEngine.GameObject).ToString( );
          m_Instance.Input  = true;
@@ -2394,7 +2352,6 @@ namespace Detox.ScriptEditor
          m_Parameter.Name    = name;
          m_Parameter.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Parameter.FriendlyName = friendlyName;
-         m_Parameter.Description = "This is the reflected object property that will be referenced and/or modified.";
          m_Parameter.Input   = input;
          m_Parameter.Output  = output;
          m_Parameter.Default = "";
@@ -2511,7 +2468,6 @@ namespace Detox.ScriptEditor
          m_Value.Default = defaultValue;
          m_Value.ReferenceGuid = "";
          m_Value.FriendlyName = "Value";
-         m_Value.Description = ParameterDescription.VARIABLE_VALUE;
          m_Value.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Value.Input   = true;
          m_Value.Output  = true;
@@ -2525,7 +2481,6 @@ namespace Detox.ScriptEditor
          m_Name.Output  = false;
          m_Name.Name    = "Name";
          m_Name.FriendlyName = "Name";
-         m_Name.Description = ParameterDescription.VARIABLE_NAME;
          m_Name.Type    = typeof(String).ToString( );
 
          m_Position = Point.Empty; 
