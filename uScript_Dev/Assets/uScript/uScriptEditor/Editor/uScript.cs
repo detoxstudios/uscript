@@ -17,6 +17,7 @@ using Detox.Drawing;
 using Detox.FlowChart;
 
 using System.IO;
+using System.Collections.ObjectModel;
 
 public class uScript : EditorWindow
 {
@@ -2590,50 +2591,181 @@ public class uScript : EditorWindow
    // END TEMP Variables
 
 
+   private static void FindFields(ICollection<FieldInfo> fields, Type t) {
+        var flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
+        foreach (var field in t.GetFields(flags)) {
+                // Ignore inherited fields.
+                if (field.DeclaringType == t)
+                        fields.Add(field);
+        }
+
+        var baseType = t.BaseType;
+        if (baseType != null)
+                FindFields(fields, baseType);
+}
 
    void ExportPNG()
    {
-      string filename = GUI.skin.name + "_" + ((int)Time.realtimeSinceStartup).ToString();
-
-      TextAsset ta = Resources.Load("uScript", typeof(TextAsset)) as TextAsset;
-      if (ta == null)
-         Debug.Log("NULL");
-      byte[] bytes = ta.bytes;
-
-      Debug.Log("Length: " + bytes.Length + "\n");
-
-      // start with byte 82
-      int offset = 76;
-
       // Create a texture the size of the screen, RGB24 format
-      int width = 71;
-      int height = 68;
-      Texture2D tex = new Texture2D(width, height, TextureFormat.ARGB32, false);
+//#      int x = (int)_canvasRect.x;
+//#      int y = (int)_canvasRect.y;
+      int width = (int)_canvasRect.width;
+      int height = (int)_canvasRect.height;
 
-//      Color color = Color.magenta;
-      int position = 0;
 
-      UnityEngine.Color[] colors = new UnityEngine.Color[width * height];
+//      var fields = new Collection<FieldInfo>();
+//      FindFields(fields, uScript.Instance.GetType());
+//      foreach (FieldInfo fi in fields)
+//         Debug.Log(fi.DeclaringType.Name + " - " + fi.Name + "\n");
 
-      for (int i=0; i < width * height; i++)
+
+
+      Type t;
+      t = uScript.Instance.GetType();
+
+//#      FieldInfo[] fields;
+
+//      fields = t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+//      Debug.Log("There are " + fields.Length + " fields.\n");
+//      foreach (FieldInfo fi in fields)
+//      {
+//         Debug.Log(fi.Name + "\n");
+//      }
+
+      FieldInfo f = t.GetField("m_Parent", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+      if (f == null)
       {
-         // get byte position
-         position = offset + (i * 4);
+         Debug.Log("NULL");
+      }
+      else
+      {
+         Debug.Log("We have " + f.Name + "\n");
 
-         // get color
-         colors[i] = new UnityEngine.Color(bytes[position + 1] / 255f, bytes[position + 2] / 255f, bytes[position + 3] / 255f, bytes[position] / 255f);
 
-//         Debug.Log("Color " + i + " is " + colors[i].ToString() + "\n");
+         t = f.FieldType;
+
+         f = t.GetField("background", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+
+//Type logEntryType = asm.GetType("UnityEditorInternal.LogEntry");
+//if ( null == logEntryType ) return true;
+//
+//object logEntry = Activator.CreateInstance(logEntryType);
+//if ( null == logEntry ) return true;
+//
+//FieldInfo field = logEntryType.GetField("condition");
+//if ( null == field ) return true;
+//
+//string condition = field.GetValue( logEntry ) as string;
+
+         object backgroundObj = ScriptableObject.CreateInstance(t);
+
+         GUIStyle style = f.GetValue( backgroundObj ) as GUIStyle;
+         if (style == null)
+            Debug.Log("The style is null");
+         else
+            Debug.Log(style.name + "\n");
+
+//         Debug.Log("----------------------\nGetting children of Parent\n");
+//         fields = t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+//         Debug.Log("There are " + fields.Length + " fields.\n");
+//         foreach (FieldInfo fi in fields)
+//         {
+//            Debug.Log(fi.Name + "\n");
+//         }
+
+//#         PropertyInfo p = t.GetProperty("borderSize", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+//         RectOffset ro = (RectOffset)p.GetValue(null, new object[] { 0 });
+//         Debug.Log(ro.ToString() + "\n");
+
+//         PropertyInfo[] properties =  t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+//         Debug.Log("There are " + properties.Length + " properties.\n");
+//         foreach (PropertyInfo pi in properties)
+//         {
+//            Debug.Log(pi.Name + "\n");
+//         }
       }
 
-      tex.SetPixels(colors);
+
+
+
+      // Adjust positions and sizes
+
+
+//      y = Screen.height - width - y - EditorWindow.
+
+
+      Debug.Log( "Screen: \t" + Screen.width + ", " + Screen.height
+                + "\n" + "Canvas: \t" + _canvasRect.ToString());
+
+//      width = (int)_canvasRect.width;
+//      height = (int)_canvasRect.height;
+
+//      width = 100;
+//      height = 800;
+
+      Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
+      // Read screen contents into the texture
+//      tex.ReadPixels(new Rect(_canvasRect.x, Screen.height - _canvasRect.y, width, height), 0, 0);
+      tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
       tex.Apply();
 
+      // Encode texture into PNG
+      byte[] bytes = tex.EncodeToPNG();
+      DestroyImmediate(tex);
+
+
       // For testing purposes, also write to a file in the project folder
-      File.WriteAllBytes(Application.dataPath + "/../" + filename + ".png", tex.EncodeToPNG());
+      string filename = GUI.skin.name + "_" + ((int)Time.realtimeSinceStartup).ToString();
+      File.WriteAllBytes(Application.dataPath + "/../Screenshots/" + filename + ".png", bytes);
 
       Debug.Log("Saved the image to \"" + filename + "\" ... hopefully.\n");
+
+
+//      string filename = GUI.skin.name + "_" + ((int)Time.realtimeSinceStartup).ToString();
+//
+//      TextAsset ta = Resources.Load("Scene", typeof(TextAsset)) as TextAsset;
+//      if (ta == null)
+//         Debug.Log("NULL");
+//      byte[] bytes = ta.bytes;
+//
+//      return;
+//      Debug.Log("Length: " + bytes.Length + "\n");
+//
+//      // start with byte 82
+//      int offset = 76;
+//
+//      // Create a texture the size of the screen, RGB24 format
+//      int width = 71;
+//      int height = 68;
+//      Texture2D tex = new Texture2D(width, height, TextureFormat.ARGB32, false);
+//
+////      Color color = Color.magenta;
+//      int position = 0;
+//
+//      UnityEngine.Color[] colors = new UnityEngine.Color[width * height];
+//
+//      for (int i=0; i < width * height; i++)
+//      {
+//         // get byte position
+//         position = offset + (i * 4);
+//
+//         // get color
+//         colors[i] = new UnityEngine.Color(bytes[position + 1] / 255f, bytes[position + 2] / 255f, bytes[position + 3] / 255f, bytes[position] / 255f);
+//
+////         Debug.Log("Color " + i + " is " + colors[i].ToString() + "\n");
+//      }
+//
+//      tex.SetPixels(colors);
+//      tex.Apply();
+//
+//      // For testing purposes, also write to a file in the project folder
+//      File.WriteAllBytes(Application.dataPath + "/../" + filename + ".png", tex.EncodeToPNG());
+//
+//      Debug.Log("Saved the image to \"" + filename + "\" ... hopefully.\n");
    }
 
 
