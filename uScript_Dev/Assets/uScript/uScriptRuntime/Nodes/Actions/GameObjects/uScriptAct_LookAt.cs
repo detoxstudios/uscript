@@ -31,6 +31,7 @@ public class uScriptAct_LookAt : uScriptLogic
 
    private GameObject[] m_Targets;
    private Quaternion[] m_StartRotations;
+   private Vector3   [] m_StartPositions;
    private GameObject   m_Focus;
    private Vector3      m_FocusPosition;
 
@@ -46,7 +47,7 @@ public class uScriptAct_LookAt : uScriptLogic
          m_TotalTime = time;
          m_Targets   = null;
          m_Focus     = null;
-
+         
          if (typeof(GameObject) == Focus.GetType())
          {
             m_Focus = (GameObject) Focus;
@@ -74,12 +75,14 @@ public class uScriptAct_LookAt : uScriptLogic
             m_Targets = Target;
 
             m_StartRotations = new Quaternion[ m_Targets.Length ];
+            m_StartPositions = new Vector3   [ m_Targets.Length ];
 
             for (int i = 0; i < m_Targets.Length; i++)
             {
                if ( null == m_Targets[i] ) continue;
 
                m_StartRotations[ i ] = m_Targets[ i ].transform.rotation;
+               m_StartPositions[ i ] = m_Targets[ i ].transform.position;
             }
          }
       }
@@ -101,10 +104,10 @@ public class uScriptAct_LookAt : uScriptLogic
          if ( null == m_Targets[i] ) continue;
       
          //our targets might be moving too, so recalculate their desired lookat and slerp it
-         Quaternion q = Quaternion.LookRotation( m_FocusPosition - m_Targets[ i ].transform.position );
+         Quaternion q = Quaternion.LookRotation( m_FocusPosition - m_StartPositions[ i ] );
          m_Targets[ i ].transform.rotation = Quaternion.Slerp( m_StartRotations[ i ], q, t );
       }
-
+   
       //finish if we hit our max time
       if ( 1 == t )
       {

@@ -1835,6 +1835,7 @@ namespace Detox.ScriptEditor
 
          if ( false == oldEditor.Equals(m_ScriptEditor) )
          {
+            m_Dirty = true;
             m_ChangeStack.AddChange( new ChangeStack.Change("Node Modified", oldEditor, m_ScriptEditor.Copy( )) );
             RefreshScript( null );
          }

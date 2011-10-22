@@ -47,6 +47,20 @@ public class uScriptAct_PlaySound : uScriptLogic
       }
    }
 
+   [FriendlyName("Update Volume")]
+   public void UpdateVolume(
+      [RequiresLink][FriendlyName("Audio Clip")] AudioClip audioClip,
+      [FriendlyName("Target")] GameObject []target,
+      [FriendlyName("Volume"), DefaultValue(1f), SocketState(false, false)] float volume, 
+      [FriendlyName("Loop")] bool loop
+   )
+   {
+      foreach ( AudioSource a in m_AudioSources )
+      {
+         a.volume = volume;
+      }
+   }
+
    public void Stop(
       [RequiresLink][FriendlyName("Audio Clip")] AudioClip audioClip,
       [FriendlyName("Target")] GameObject []target,
