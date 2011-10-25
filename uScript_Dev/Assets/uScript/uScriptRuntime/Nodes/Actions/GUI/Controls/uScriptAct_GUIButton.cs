@@ -9,15 +9,23 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a GUIButton on the screen and allows responses when held down, released, and clicked.")]
-[NodeDescription("Shows a GUIButton on the screen and allows responses when held down, released, and clicked.\n \nText: The text you want to display on the button. \nPosition: The position and size of the button.\nTexture: The background image to use for the button.\nControl Name: Name to give to this button GUI control.\nTool Tip: The tool tip to display when the button is being hovered over.\nGUI Style: The name of a custom GUI style to use when displaying this button.")]
+[NodeDescription("Shows a GUIButton on the screen and allows responses when held down, released, and clicked.\n \nText: The text you want to display on the button. \nIdentifier: A unique identifier if the same node is used to represent multiple buttons.  \nPosition: The position and size of the button.\nTexture: The background image to use for the button.\nControl Name: Name to give to this button GUI control.\nTool Tip: The tool tip to display when the button is being hovered over.\nGUI Style: The name of a custom GUI style to use when displaying this button.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Button")]
 
 [FriendlyName("GUI Button")]
 public class uScriptAct_GUIButton : uScriptLogic
 {
-   private bool m_ButtonDown = false;
-   
+   private class Identifier
+   {
+      public Identifier(int _id) { id = _id; wasDown = false; }
+
+      public bool   wasDown;
+      public int id;
+   }
+
+   private System.Collections.Generic.List<Identifier> m_Identifiers = new System.Collections.Generic.List<Identifier>( );
+
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
    [FriendlyName("Button Down")]
@@ -36,6 +44,7 @@ public class uScriptAct_GUIButton : uScriptLogic
 
    public void In(
       string Text,
+      [FriendlyName("Unique Identifier"), DefaultValue(0), SocketState(false, false)] int identifier,
       Rect Position,
       Texture2D Texture,
       [FriendlyName("Control Name"), DefaultValue(""), SocketState(false, false)] string ControlName,
@@ -43,6 +52,22 @@ public class uScriptAct_GUIButton : uScriptLogic
       [FriendlyName("GUI Style"), DefaultValue(""), SocketState(false, false)] string guiStyle
       )
    {
+      Identifier myIdentifier = null;
+
+      foreach ( Identifier id in m_Identifiers )
+      {
+         if ( id.id == identifier )
+         {
+            myIdentifier = id;
+         }
+      }
+
+      if ( myIdentifier == null ) 
+      {
+         myIdentifier = new Identifier(identifier);
+         m_Identifiers.Add( myIdentifier );
+      }
+
       GUIContent content = new GUIContent(Text, Texture, ToolTip);
       bool buttonDown = false;
       
@@ -59,20 +84,23 @@ public class uScriptAct_GUIButton : uScriptLogic
          
       if (Event.current.type == EventType.Repaint || Event.current.isMouse)
       {
+         //save state now just incase events cause recursive logic
+         bool wasDown = myIdentifier.wasDown;
+
+         myIdentifier.wasDown = buttonDown;
+
          // down event
-         if (!m_ButtonDown && buttonDown && OnButtonDown != null) OnButtonDown( this, new System.EventArgs() );
-     
+         if (!wasDown && buttonDown && OnButtonDown != null) OnButtonDown( this, new System.EventArgs() );
+
          // held event
-         if (m_ButtonDown && buttonDown && OnButtonHeld != null) OnButtonHeld( this, new System.EventArgs() );
-     
+         if (wasDown && buttonDown && OnButtonHeld != null) OnButtonHeld( this, new System.EventArgs() );
+
          // up/clicked event
-         if (m_ButtonDown && !buttonDown)
+         if (wasDown && !buttonDown)
          {
             if (OnButtonUp != null) OnButtonUp( this, new System.EventArgs() );
             if (OnButtonClicked != null) OnButtonClicked( this, new System.EventArgs() );
-         }
-         
-         m_ButtonDown = buttonDown;
+         }         
       }
    }
 }
