@@ -1,7 +1,10 @@
+#define DEVELOPMENT_BUILD // Allows us to wrap features in progress. Used along with other BUILD settings.
+
 #define UNITY_STORE_BUILD //Don't forget LicenseWindow.cs
 //#define DETOX_STORE_BUILD //Don't forget LicenseWindow.cs
 //#define FREE_PLE_BUILD // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
 //#define FREE_BETA_BUILD
+
 
 using UnityEngine;
 using UnityEditor;
@@ -2499,10 +2502,12 @@ public class uScript : EditorWindow
                PreferenceWindow.Init();
             }
 
+#if DEVELOPMENT_BUILD
             if (GUILayout.Button("Export to PNG", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                ExportPNG();
             }
+#endif
 
             GUILayout.FlexibleSpace();
 
