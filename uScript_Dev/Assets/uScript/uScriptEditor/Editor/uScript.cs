@@ -33,7 +33,7 @@ public class uScript : EditorWindow
    public string LastUnityBuild { get { return "3.3"; } }
    public string CurrentUnityBuild { get { return "3.4"; } }
    //public string BetaUnityBuild { get { return "3.5"; } }
-   public DateTime ExpireDate { get { return new DateTime(2011, 10, 31); } }
+   public DateTime ExpireDate { get { return new DateTime(2011, 11, 30); } }
 
    public bool isLicenseAccepted = false;
 
@@ -568,7 +568,7 @@ public class uScript : EditorWindow
    			
                   if (DateTime.Now > ExpireDate)
                   {
-                     uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "has expired.\n", uScriptDebug.Type.Error);
+                     uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "has expired. Please use the free Personal Learning Edition (PLE) to continue to evaluate uScript.\n", uScriptDebug.Type.Error);
                      return;
                   }
                   else
