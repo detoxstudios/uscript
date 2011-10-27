@@ -86,6 +86,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUI.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIContent.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanel.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelPalette.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelProperty.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelReference.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelScript.cs" />
