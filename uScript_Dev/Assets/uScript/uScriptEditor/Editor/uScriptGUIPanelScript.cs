@@ -54,10 +54,11 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
    static float _previousRowWidth = 0;
    static bool _isMouseOverScrollview = false;
 
+   int _widthButtonSource;
+   int _widthButtonLoad;
+
    const int ROW_HEIGHT = 17;
    const int BUTTON_HEIGHT = 15;
-   const int BUTTON_WIDTH_SOURCE = 43;
-   const int BUTTON_WIDTH_LOAD = 34;
    const int BUTTON_PADDING = 4;
 
 //   float _tListData_count;
@@ -80,6 +81,30 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
       _name = "uScripts";
 //      _size = 150;
 //      _region = uScriptGUI.Region.Script;
+
+      // Setup the custom GUI styles
+      _scriptCurrentNormal = new GUIStyle(EditorStyles.boldLabel);
+
+      _scriptCurrentError = new GUIStyle(_scriptCurrentNormal);
+      _scriptCurrentError.normal.textColor = UnityEngine.Color.red;
+
+      _scriptListNormal = new GUIStyle(EditorStyles.label);
+      _scriptListNormal.margin = new RectOffset(4, 4, 1, 1);
+      _scriptListNormal.padding = new RectOffset(2, 2, 0, 0);
+
+      _scriptListBold = new GUIStyle(_scriptListNormal);
+      _scriptListBold.fontStyle = FontStyle.Bold;
+
+      _styleMiniButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
+      _styleMiniButtonLeft.margin = new RectOffset(4, 0, 1, 1);
+
+      _styleMiniButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
+      _styleMiniButtonRight.margin = new RectOffset(0, 4, 1, 1);
+
+      // Get the width of the buttons, since the content under Windows
+	  // has a different size then under Mac
+      _widthButtonSource = (int)_styleMiniButtonLeft.CalcSize(uScriptGUIContent.buttonNodeSource).x;
+      _widthButtonLoad = (int)_styleMiniButtonRight.CalcSize(uScriptGUIContent.buttonScriptLoad).x;
    }
 
    public void Update()
@@ -162,29 +187,6 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             //    Display all other scripts in the project (except the active script)
             //    Filter the list
             //    Support foldout containers eventually
-
-            if (_scriptCurrentNormal == null)
-            {
-               _scriptCurrentNormal = new GUIStyle(EditorStyles.boldLabel);
-
-               _scriptCurrentError = new GUIStyle(_scriptCurrentNormal);
-               _scriptCurrentError.normal.textColor = UnityEngine.Color.red;
-
-               _scriptListNormal = new GUIStyle(EditorStyles.label);
-               _scriptListNormal.margin = new RectOffset(4, 4, 1, 1);
-               _scriptListNormal.padding = new RectOffset(2, 2, 0, 0);
-
-               _scriptListBold = new GUIStyle(_scriptListNormal);
-               _scriptListBold.fontStyle = FontStyle.Bold;
-
-               _styleMiniButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
-               _styleMiniButtonLeft.margin = new RectOffset(4, 0, 1, 1);
-
-               _styleMiniButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
-               _styleMiniButtonRight.margin = new RectOffset(0, 4, 1, 1);
-            }
-
-
 
             string sceneName = string.Empty;
 
@@ -401,10 +403,10 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               }
 
                               buttonRect = new Rect(rowRect);
-                              buttonRect.x = buttonRect.xMax - BUTTON_WIDTH_SOURCE - BUTTON_WIDTH_LOAD - BUTTON_PADDING;
+                              buttonRect.x = buttonRect.xMax - _widthButtonSource - _widthButtonLoad - BUTTON_PADDING;
                               buttonRect.y += (ROW_HEIGHT - BUTTON_HEIGHT) / 2;
                               buttonRect.height = BUTTON_HEIGHT;
-                              buttonRect.width = BUTTON_WIDTH_SOURCE;
+                              buttonRect.width = _widthButtonSource;
 
                               // Source
                               if (GUI.Button(buttonRect, uScriptGUIContent.buttonScriptSource, _styleMiniButtonLeft))
@@ -412,8 +414,8 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                                  uScriptGUI.PingGeneratedScript(scriptName);
                               }
 
-                              buttonRect.x += BUTTON_WIDTH_SOURCE;
-                              buttonRect.width = BUTTON_WIDTH_LOAD;
+                              buttonRect.x += _widthButtonSource;
+                              buttonRect.width = _widthButtonLoad;
                               // Load
                               if (GUI.Button(buttonRect, uScriptGUIContent.buttonScriptLoad, _styleMiniButtonRight))
                               {
@@ -425,7 +427,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                                  }
                               }
 
-                              rowRect.width = _previousRowWidth - BUTTON_PADDING - BUTTON_WIDTH_SOURCE - BUTTON_WIDTH_LOAD - BUTTON_PADDING;
+                              rowRect.width = _previousRowWidth - BUTTON_PADDING - _widthButtonSource - _widthButtonLoad - BUTTON_PADDING;
                            }
 
                            // Draw the script button
