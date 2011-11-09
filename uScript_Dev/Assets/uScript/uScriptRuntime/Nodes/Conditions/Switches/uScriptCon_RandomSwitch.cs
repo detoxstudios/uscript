@@ -59,7 +59,8 @@ public class uScriptCon_RandomSwitch : uScriptLogic
       // Check bounds on MaxOutputUsed
       MaxOutputUsed = Mathf.Clamp(MaxOutputUsed, 1, 6);
 
-      m_CurrentOutput = Random.Range(1, MaxOutputUsed);
+      //Unity's int version of Random is exclusive for Max, not inclusive
+      m_CurrentOutput = Random.Range(1, MaxOutputUsed + 1);
 
       // Set correct output socket to true
       if (m_SwitchOpen)

@@ -352,11 +352,18 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               object[] array = new object[ values.Length ];
+               System.Enum[] array = new System.Enum[ values.Length ];
 
                for ( int i = 0; i < array.Length; i++ )
                {
-                  array[ i ] = System.Enum.Parse(eType, values[i]);
+                  try
+                  {
+                     array[ i ] = (System.Enum) System.Enum.Parse(eType, values[i]);
+                  }
+                  catch
+                  {
+                     array[ i ] = (System.Enum) System.Enum.Parse(eType, System.Enum.GetNames(eType)[0]);
+                  }
                }
 
                return array;

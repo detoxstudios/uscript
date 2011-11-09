@@ -323,7 +323,9 @@ namespace Detox.Windows.Forms
                         }
                         else if ( typeof(System.Enum[]).IsAssignableFrom(val.GetType()) )
                         {
-                           val = uScriptGUI.ArrayFoldout<System.Enum>(p.FriendlyName, (System.Enum[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           //use p.Type to figure out the specific type of enum it is, instead of a generic System.Enum
+                           System.Type eType = uScript.MasterComponent.GetType(p.Type.ToString().Replace("[]", ""));
+                           val = uScriptGUI.ArrayFoldout<System.Enum>(p.FriendlyName, (System.Enum[]) val, ref isSocketExposed, isLocked, isReadOnly, eType);
                         }
                         else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
                         {

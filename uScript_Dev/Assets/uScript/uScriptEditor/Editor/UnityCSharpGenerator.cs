@@ -1265,11 +1265,30 @@ namespace Detox.ScriptEditor
          {
             try
             {
-               bool   formatString = ( type == "System.String[]" || type == "System.Object[]" );
                string cast = "";
-               
-               if ( "System.Single[]" == type ) cast = "(float)";
-               else if ( "System.Double[]" == type ) cast = "(double)";
+
+               if ( "System.Single[]" == type ) 
+               {
+                  cast = "(float)";
+               }
+               else if ( "System.Double[]" == type ) 
+               {
+                  cast = "(double)";
+               }
+               else
+               {
+                  if ( null != uScript.MasterComponent.GetAssemblyQualifiedType(type.Replace("[]", "")) )
+                  {
+                     System.Type netType = uScript.MasterComponent.GetAssemblyQualifiedType(type.Replace("[]", ""));
+
+                     if ( typeof(System.Enum).IsAssignableFrom(netType) )
+                     {
+                        cast = netType.ToString() + ".";
+                     }
+                  }
+               }
+
+               bool formatString = ( type == "System.String[]" || type == "System.Object[]" );
 
                declaration = "new " + type + " {";
 

@@ -814,10 +814,20 @@ public static class uScriptGUI
          for (int i = 0; i < array.Length; i++)
          {
             T entry = default(T);
+            
             if (i < array.Length)
             {
                entry = array[i];
             }
+
+            if ( entry == null )
+            {
+               if ( typeof(T) == typeof(System.Enum) ) 
+               {
+                  entry = (T) System.Enum.Parse(type, System.Enum.GetNames(type)[0]);
+               }
+            }
+
             array[i] = ArrayElementRow<T>(ref array, i, entry, ref hideSocket, true, false, type);
          }
 
