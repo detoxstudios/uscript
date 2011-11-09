@@ -99,15 +99,28 @@ public class uScriptAct_LookAt : uScriptLogic
       //update our focal position to the game object's latest position
       if ( null != m_Focus ) m_FocusPosition = m_Focus.transform.position;
 
-      for (int i = 0; i < m_Targets.Length; i++)
+      if ( t < 1.0f )
       {
-         if ( null == m_Targets[i] ) continue;
-      
-         //our targets might be moving too, so recalculate their desired lookat and slerp it
-         Quaternion q = Quaternion.LookRotation( m_FocusPosition - m_StartPositions[ i ] );
-         m_Targets[ i ].transform.rotation = Quaternion.Slerp( m_StartRotations[ i ], q, t );
+         for (int i = 0; i < m_Targets.Length; i++)
+         {
+            if ( null == m_Targets[i] ) continue;
+         
+            //our targets might be moving too, so recalculate their desired lookat and slerp it
+            Quaternion q = Quaternion.LookRotation( m_FocusPosition - m_StartPositions[ i ] );
+            m_Targets[ i ].transform.rotation = Quaternion.Slerp( m_StartRotations[ i ], q, t );
+         }
       }
-   
+      else
+      {
+         for (int i = 0; i < m_Targets.Length; i++)
+         {
+            if ( null == m_Targets[i] ) continue;
+         
+            m_Targets[ i ].transform.LookAt( m_FocusPosition );
+         }
+      }
+
+
       //finish if we hit our max time
       if ( 1 == t )
       {

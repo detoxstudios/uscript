@@ -3181,24 +3181,10 @@ namespace Detox.ScriptEditor
 
                   if ( true == m_GenerateDebugInfo )
                   {
-                     AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
-                     AddCSharpLine( "{" );
-                     ++m_TabStack;
-
-                        PrintDebug( receiver );
-                        RelayToEvent( entityEvent, eventName.Name );
-
-                     --m_TabStack;
-                     AddCSharpLine( "}" );
-                     AddCSharpLine( "else" );               
-                     AddCSharpLine( "{" );
-                     ++m_TabStack;
-
-                        AddCSharpLine( "uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + entityEvent.FriendlyType + ".  " +
-                                       "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);" );
-
-                     --m_TabStack;
-                     AddCSharpLine( "}" );
+                     //no need to wrap call count checking
+                     //because this is an event coming in from Unity
+                     PrintDebug( receiver );
+                     RelayToEvent( entityEvent, eventName.Name );
                   }
                   else
                   {
