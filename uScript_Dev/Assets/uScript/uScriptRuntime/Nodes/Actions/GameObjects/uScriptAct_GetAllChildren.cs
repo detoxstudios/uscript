@@ -39,9 +39,11 @@ public class uScriptAct_GetAllChildren : uScriptLogic
 
       List<GameObject> list = new List<GameObject> ();
       
-      if (null != Target) {
+      if (null != Target) 
+      {
          foreach (Transform child in Target.transform)
          {
+            list.Add(child.gameObject);
             list.AddRange(GetChildren(recursive, child.gameObject));
          }
 
@@ -75,6 +77,7 @@ public class uScriptAct_GetAllChildren : uScriptLogic
             list.AddRange(GetChildren(recursive, child.gameObject));
          }
 
+         Debug.Log("found " + child.name );
          list.Add (child.gameObject);
       }
       
