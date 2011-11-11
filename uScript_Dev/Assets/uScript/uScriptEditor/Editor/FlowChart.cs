@@ -770,7 +770,7 @@ namespace Detox.FlowChart
    
             OnNodesModified( modifiedNodes.ToArray( ) );
    
-//            Invalidate( );  // This appears to be unnecessary
+            Invalidate( );  // Node (and link) MouseUp
          }
          else if (e.Button == MouseButtons.Middle || (e.Button == MouseButtons.Left && true == Control.ModifierKeys.Contains(Keys.Alt)))
          {
