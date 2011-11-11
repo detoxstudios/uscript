@@ -6,9 +6,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[NodeDeprecated(typeof(uScriptAct_IsInListGameObject))]
-
-[NodePath("Actions/GameObjects")]
+[NodePath("Actions/Variables/Lists/GameObject")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if GameObjects are in a GameObject List.")]
@@ -16,8 +14,8 @@ using System.Collections.Generic;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Is_In_GameObject_List")]
 
-[FriendlyName("Is In GameObject List")]
-public class uScriptAct_IsInObjectList : uScriptLogic
+[FriendlyName("Is In List (GameObject)")]
+public class uScriptAct_IsInListGameObject : uScriptLogic
 {
    private bool m_InList = false;
    

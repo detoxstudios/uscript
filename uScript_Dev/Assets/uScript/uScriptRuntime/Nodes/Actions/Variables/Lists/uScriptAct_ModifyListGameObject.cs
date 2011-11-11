@@ -6,9 +6,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[NodeDeprecated(typeof(uScriptAct_ModifyListGameObject))]
-
-[NodePath("Actions/GameObjects")]
+[NodePath("Actions/Variables/Lists/GameObject")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes GameObjects from a GameObject List. Can also empty the GameObject List.")]
@@ -16,8 +14,8 @@ using System.Collections.Generic;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Modify_GameObject_List")]
 
-[FriendlyName("Modify GameObject List")]
-public class uScriptAct_ModifyGameObjectList : uScriptLogic
+[FriendlyName("Modify List (GameObject)")]
+public class uScriptAct_ModifyListGameObject : uScriptLogic
 {
 
    public bool Out { get { return true; } }

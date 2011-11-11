@@ -7,9 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-[NodeDeprecated(typeof(uScriptAct_ForEachListGameObject))]
-
-[NodePath("Actions/GameObjects")]
+[NodePath("Actions/Variables/Lists/GameObject")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).")]
@@ -17,8 +15,8 @@ using System;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#For_Each_GameObject_In_List")]
 
-[FriendlyName("For Each GameObject In List")]
-public class uScriptAct_ForEachObjectList : uScriptLogic
+[FriendlyName("For Each In List (GameObject)")]
+public class uScriptAct_ForEachListGameObject : uScriptLogic
 {
    private GameObject[] m_List = null;
    private int m_CurrentIndex = 0;
@@ -51,7 +49,7 @@ public class uScriptAct_ForEachObjectList : uScriptLogic
       go = null;
       if (m_List == null)
       {
-         uScriptDebug.Log("For Each GameObject List must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
+         uScriptDebug.Log("For Each List (GameObject) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
          return;
       }
       

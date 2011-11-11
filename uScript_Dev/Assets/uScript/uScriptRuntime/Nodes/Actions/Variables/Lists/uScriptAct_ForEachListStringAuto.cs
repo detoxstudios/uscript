@@ -1,26 +1,24 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Iterate through each GameObject in a GameObject list (node will automatically iterate through the list).
+// Desc: Iterate through each string in a String List (node will automatically iterate through the list).
 
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
 
-[NodeDeprecated(typeof(uScriptAct_ForEachListGameObjectAuto))]
-
-[NodePath("Actions/GameObjects")]
+[NodePath("Actions/Variables/Lists/String")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Iterate through each GameObject in a GameObject list (node will automatically iterate through the list).")]
-[NodeDescription("Iterate through each GameObject in a GameObject list (node will automatically iterate through the list).\n \nGameObject List: The list of GameObjects to iterate over.\nCurrent GameObject (out): The GameObject for the current loop iteration.")]
+[NodeToolTip("Iterate through each string in a String List (node will automatically iterate through the list).")]
+[NodeDescription("Iterate through each string in a String List (node will automatically iterate through the list).\n \nString List: The list of strings to iterate over.\nCurrent String (out): The string for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#For_Each_GameObject_In_List_.28Auto.29")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each GameObject In List (Auto)")]
-public class uScriptAct_ForEachObjectListAuto : uScriptLogic
+[FriendlyName("For Each In List Auto (String)")]
+public class uScriptAct_ForEachListStringAuto : uScriptLogic
 {
-   private GameObject[] m_List = null;
+   private string[] m_List = null;
    private int m_CurrentIndex = 0;
    private bool m_Done = false;
    private bool m_ImmediateDone = false;
@@ -45,11 +43,11 @@ public class uScriptAct_ForEachObjectListAuto : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
-   public void In([FriendlyName("GameObject List")] GameObject[] GameObjectList, [FriendlyName("Current GameObject")] out GameObject go)
+   public void In([FriendlyName("String List")] string[] List, [FriendlyName("Current String")] out string Value)
    {
-      if (GameObjectList.Length > 0)
+      if (List.Length > 0)
       {
-         m_List = GameObjectList;
+         m_List = List;
       }
       else
       {
@@ -58,12 +56,12 @@ public class uScriptAct_ForEachObjectListAuto : uScriptLogic
       m_CurrentIndex = 0;
       m_Done = false;
 
-      go = null;
+      Value = null;
       if (m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
-            go = m_List[m_CurrentIndex];
+            Value = m_List[m_CurrentIndex];
          }
          m_CurrentIndex++;
       }
@@ -72,14 +70,14 @@ public class uScriptAct_ForEachObjectListAuto : uScriptLogic
    }
  
    [Driven]
-   public bool Driven(out GameObject go)
+   public bool Driven(out string Value)
    {
-      go = null;
+      Value = null;
       if (!m_Done && m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
-            go = m_List[m_CurrentIndex];
+            Value = m_List[m_CurrentIndex];
          }
          m_CurrentIndex++;
 

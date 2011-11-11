@@ -1,26 +1,24 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).
+// Desc: Iterate through each camera in a Camera List (uScript events must drive each iteration).
 
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
 
-[NodeDeprecated(typeof(uScriptAct_ForEachListGameObject))]
-
-[NodePath("Actions/GameObjects")]
+[NodePath("Actions/Variables/Lists/Camera")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).")]
-[NodeDescription("Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).\n \nGameObject List: The list of GameObjects to iterate over.\nCurrent GameObject (out): The GameObject for the current loop iteration.")]
+[NodeToolTip("Iterate through each camera in a Camera List (uScript events must drive each iteration).")]
+[NodeDescription("Iterate through each camera in a Camera List (uScript events must drive each iteration).\n \nCamera List: The list of cameras to iterate over.\nCurrent Camera (out): The camera for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#For_Each_GameObject_In_List")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each GameObject In List")]
-public class uScriptAct_ForEachObjectList : uScriptLogic
+[FriendlyName("For Each In List (Camera)")]
+public class uScriptAct_ForEachListCamera : uScriptLogic
 {
-   private GameObject[] m_List = null;
+   private Camera[] m_List = null;
    private int m_CurrentIndex = 0;
    private bool m_Done = false;
    private bool m_ImmediateDone = false;
@@ -46,18 +44,18 @@ public class uScriptAct_ForEachObjectList : uScriptLogic
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
    [FriendlyName("Reset")]
-   public void Reset([FriendlyName("GameObject List")] GameObject[] GameObjectList, [FriendlyName("Current GameObject")] out GameObject go)
+   public void Reset([FriendlyName("Camera List")] Camera[] List, [FriendlyName("Current Camera")] out Camera Value)
    {
-      go = null;
+      Value = null;
       if (m_List == null)
       {
-         uScriptDebug.Log("For Each GameObject List must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
+         uScriptDebug.Log("For Each List (Camera) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
          return;
       }
-      
-      if (GameObjectList.Length > 0)
+
+      if (List.Length > 0)
       {
-         m_List = GameObjectList;
+         m_List = List;
       }
       else
       {
@@ -69,13 +67,13 @@ public class uScriptAct_ForEachObjectList : uScriptLogic
       m_ImmediateDone = false;
    }
 
-   public void In([FriendlyName("GameObject List")] GameObject[] GameObjectList, [FriendlyName("Current GameObject")] out GameObject go)
+   public void In([FriendlyName("Camera List")] Camera[] List, [FriendlyName("Current Camera")] out Camera Value)
    {
       if (m_List == null)
       {
-         if (GameObjectList.Length > 0)
+         if (List.Length > 0)
          {
-            m_List = GameObjectList;
+            m_List = List;
          }
          else
          {
@@ -86,12 +84,12 @@ public class uScriptAct_ForEachObjectList : uScriptLogic
       }
 
       m_ImmediateDone = !(m_List != null && m_CurrentIndex == 0);
-      go = null;
+      Value = null;
       if (m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
-            go = m_List[m_CurrentIndex];
+            Value = m_List[m_CurrentIndex];
          }
          m_CurrentIndex++;
 

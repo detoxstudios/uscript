@@ -7,9 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-[NodeDeprecated(typeof(uScriptAct_ForEachListGameObjectAuto))]
-
-[NodePath("Actions/GameObjects")]
+[NodePath("Actions/Variables/Lists/GameObject")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each GameObject in a GameObject list (node will automatically iterate through the list).")]
@@ -17,8 +15,8 @@ using System;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#For_Each_GameObject_In_List_.28Auto.29")]
 
-[FriendlyName("For Each GameObject In List (Auto)")]
-public class uScriptAct_ForEachObjectListAuto : uScriptLogic
+[FriendlyName("For Each In List Auto (GameObject)")]
+public class uScriptAct_ForEachListGameObjectAuto : uScriptLogic
 {
    private GameObject[] m_List = null;
    private int m_CurrentIndex = 0;
