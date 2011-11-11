@@ -134,13 +134,10 @@ public class uScript : EditorWindow
    Rect m_NodeToolbarRect;
    public Rect NodeToolbarRect { get { return m_NodeToolbarRect; } }
 
-   private const int DIVIDER_WIDTH = 4;
 
    /* uScript GUI Window Panel Layout Variables */
 
 
-   bool m_HidePanelMode = false;
-   public int _guiPanelPalette_Width = 250;
    int _guiPanelProperties_Height = 250;
    public int _guiPanelProperties_Width = 250;
    public int _guiPanelSequence_Width = 250;
@@ -1037,7 +1034,7 @@ public class uScript : EditorWindow
 
          m_MouseUpArgs.Button = button;
          m_MouseUpArgs.X = (int)(e.mousePosition.x);
-         if (!m_HidePanelMode) m_MouseUpArgs.X -= _guiPanelPalette_Width;
+         if (!uScriptGUI.panelsHidden) m_MouseUpArgs.X -= uScriptGUI.panelLeftWidth;
          m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
          m_MouseDownRegion = MouseRegion.Outside;
@@ -1427,19 +1424,19 @@ public class uScript : EditorWindow
 
             if (e.keyCode == KeyCode.BackQuote && (GUI.GetNameOfFocusedControl() == "MainView" || GUIUtility.keyboardControl == 0))
             {
-               m_HidePanelMode = !m_HidePanelMode;
+               uScriptGUI.panelsHidden = !uScriptGUI.panelsHidden;
 
                // FIXME: When toggled while the mouse is down, the canvas often shifts around.
-               if (m_HidePanelMode)
+               if (uScriptGUI.panelsHidden)
                {
 //                  m_ScriptEditorCtrl.FlowChart.Location.X += (int)_canvasRect.x;
-                  m_ScriptEditorCtrl.FlowChart.Location.X += _guiPanelPalette_Width + DIVIDER_WIDTH;
+                  m_ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
                   m_ScriptEditorCtrl.RefreshScript(null, false);
                }
                else
                {
 //                  m_ScriptEditorCtrl.FlowChart.Location.X -= (int)_canvasRect.x;
-                  m_ScriptEditorCtrl.FlowChart.Location.X -= _guiPanelPalette_Width + DIVIDER_WIDTH;
+                  m_ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
                   m_ScriptEditorCtrl.RefreshScript(null, false);
                }
             }
@@ -1471,7 +1468,7 @@ public class uScript : EditorWindow
 
                      m_MouseDownArgs.Button = button;
                      m_MouseDownArgs.X = (int)(e.mousePosition.x);
-                     if (!m_HidePanelMode) m_MouseDownArgs.X -= _guiPanelPalette_Width;
+                     if (!uScriptGUI.panelsHidden) m_MouseDownArgs.X -= uScriptGUI.panelLeftWidth;
                      m_MouseDownArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
                      m_MouseDownOverCanvas = true;
@@ -1521,7 +1518,7 @@ public class uScript : EditorWindow
 
                m_MouseUpArgs.Button = button;
                m_MouseUpArgs.X = (int)(e.mousePosition.x);
-               if (!m_HidePanelMode) m_MouseUpArgs.X -= _guiPanelPalette_Width;
+               if (!uScriptGUI.panelsHidden) m_MouseUpArgs.X -= uScriptGUI.panelLeftWidth;
                m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
                if (m_PressedKey == KeyCode.S)
@@ -1729,7 +1726,7 @@ public class uScript : EditorWindow
       uScriptGUI.InitPanels();
 
       DrawGUITopAreas();
-      if (!m_HidePanelMode)
+      if (!uScriptGUI.panelsHidden)
       {
          DrawGUIHorizontalDivider();
 
@@ -1751,7 +1748,7 @@ public class uScript : EditorWindow
    {
       EditorGUILayout.BeginHorizontal();
       {
-         if (!m_HidePanelMode)
+         if (!uScriptGUI.panelsHidden)
          {
             // If the palette contents have been updated, update the linear palette control list
             //    Any foldout has been toggled
@@ -1792,31 +1789,28 @@ public class uScript : EditorWindow
       EditorGUILayout.BeginHorizontal(GUILayout.Height(_guiPanelProperties_Height));
       {
          uScriptGUIPanelProperty.Instance.Draw();
-//         DrawGUIPropertyGrid();
 
          DrawGUIVerticalDivider();
          SetMouseRegion(MouseRegion.HandleProperties);//, -3, 3, 6, -3 );
 
          uScriptGUIPanelReference.Instance.Draw();
-//         DrawGUIHelp();
 
          DrawGUIVerticalDivider();
          SetMouseRegion(MouseRegion.HandleReference);//, -3, 3, 6, -3 );
 
          uScriptGUIPanelScript.Instance.Draw();
-//         DrawGUINestedScripts();
       }
       EditorGUILayout.EndHorizontal();
    }
 
    void DrawGUIHorizontalDivider()
    {
-      GUILayout.Box("", uScriptGUIStyle.hDivider, GUILayout.Height(DIVIDER_WIDTH), GUILayout.ExpandWidth(true));
+      GUILayout.Box("", uScriptGUIStyle.hDivider, GUILayout.Height(uScriptGUI.panelDividerThickness), GUILayout.ExpandWidth(true));
    }
 
    void DrawGUIVerticalDivider()
    {
-      GUILayout.Box("", uScriptGUIStyle.vDivider, GUILayout.Width(DIVIDER_WIDTH), GUILayout.ExpandHeight(true));
+      GUILayout.Box("", uScriptGUIStyle.vDivider, GUILayout.Width(uScriptGUI.panelDividerThickness), GUILayout.ExpandHeight(true));
    }
 
 //   int counter = 0;
@@ -1878,7 +1872,7 @@ public class uScript : EditorWindow
       }
       else
       {
-         paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(_guiPanelPalette_Width));
+         paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelLeftWidth));
          {
             // Toolbar
             //
@@ -2210,9 +2204,9 @@ public class uScript : EditorWindow
          }
          EditorGUILayout.EndVertical();
 
-         if ((int)paletteRect.width != 0 && (int)paletteRect.width != _guiPanelPalette_Width)
+         if ((int)paletteRect.width != 0 && (int)paletteRect.width != uScriptGUI.panelLeftWidth)
          {
-            _guiPanelPalette_Width = (int)paletteRect.width;
+            uScriptGUI.panelLeftWidth = (int)paletteRect.width;
          }
       }  // if (_paletteMode != 0)
 
@@ -2256,7 +2250,7 @@ public class uScript : EditorWindow
 
    bool HiddenRegion(MouseRegion region)
    {
-      if (!m_HidePanelMode) return false;
+      if (!uScriptGUI.panelsHidden) return false;
 
       return region != uScript.MouseRegion.Canvas && region != uScript.MouseRegion.Outside;
    }
@@ -2968,7 +2962,7 @@ public class uScript : EditorWindow
 
 //      Debug.Log("m_MouseMoveArgs: \t" + m_MouseMoveArgs.X.ToString() + ", " + m_MouseMoveArgs.Y.ToString()
 //                + "\n_canvasRect: \t\t\t" + _canvasRect.x.ToString() + ", " + _canvasRect.y.ToString() + " ... "
-//                + (_guiPanelPalette_Width + DIVIDER_WIDTH - 1).ToString());
+//                + (uScriptGUI.panelLeftWidth + DIVIDER_WIDTH - 1).ToString());
 
       Detox.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
       Detox.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
@@ -2983,7 +2977,7 @@ public class uScript : EditorWindow
       m_MouseMoveArgs.Y += (int)_canvasRect.y;
 
       // check for divider draggging
-      if (GUI.enabled && !m_HidePanelMode && m_MouseDown)
+      if (GUI.enabled && !uScriptGUI.panelsHidden && m_MouseDown)
       {
          if (m_MouseDownRegion == MouseRegion.HandleCanvas)
          {
@@ -2992,7 +2986,7 @@ public class uScript : EditorWindow
          }
          else if (m_MouseDownRegion == MouseRegion.HandlePalette)
          {
-            _guiPanelPalette_Width += deltaX;
+            uScriptGUI.panelLeftWidth += deltaX;
             Repaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandleProperties)

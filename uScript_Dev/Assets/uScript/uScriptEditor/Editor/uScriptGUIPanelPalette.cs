@@ -144,7 +144,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 //      _debug_BottomCount = 0;
 
 
-      uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptInstance._guiPanelPalette_Width));
+      uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelLeftWidth));
       {
          // Toolbar
          //
@@ -296,9 +296,9 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       }
       EditorGUILayout.EndVertical();
 
-      if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScript.Instance._guiPanelPalette_Width)
+      if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScriptGUI.panelLeftWidth)
       {
-         uScript.Instance._guiPanelPalette_Width = (int)uScript.Instance.paletteRect.width;
+         uScriptGUI.panelLeftWidth = (int)uScript.Instance.paletteRect.width;
       }
 
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Palette);

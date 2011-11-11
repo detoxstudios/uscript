@@ -51,6 +51,27 @@ public static class uScriptGUI
    static int _propertyCount;
    static bool _isPropertyRowEven = false;
 
+   static bool _panelsHidden;
+   public static bool panelsHidden
+   {
+      get { return _panelsHidden; }
+      set
+      {
+         _panelsHidden = value;
+      }
+   }
+
+   private const int _panelDividerThickness = 4;
+   public static int panelDividerThickness { get { return _panelDividerThickness; } }
+
+   public static int _panelLeftWidth = 250;
+   public static int panelLeftWidth
+   {
+      get { return _panelLeftWidth; }
+      set { _panelLeftWidth = value; }
+   }
+
+
 
 
    //
