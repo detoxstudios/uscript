@@ -310,7 +310,7 @@ namespace Detox.ScriptEditor
                      break;
                   }
                }
-               else if ( node is OwnerConnection )
+               else if ( node is OwnerConnection || node is ExternalConnection )
                {
                   includeNode = true;
                }
@@ -1434,6 +1434,22 @@ namespace Detox.ScriptEditor
                //only one link allowed for each external parameter output
                break;
             }
+
+            links = FindLinksBySource( external.Guid, external.Connection );
+
+            foreach ( LinkNode link in links )
+            {
+               EntityNode node = m_Script.GetNode( link.Destination.Guid );
+
+               if ( node is EntityMethod )
+               {
+                  if ( node.Instance.Name == link.Destination.Anchor )
+                  {
+                     AddCSharpLine( FormatType(node.Instance.Type) + " " + CSharpName(external) + " = " + FormatValue(node.Instance.Default, node.Instance.Type) + ";" );
+                     break;
+                  }
+               }
+            }
          }
 
          AddCSharpLine( "" );
@@ -2393,6 +2409,11 @@ namespace Detox.ScriptEditor
                   }
                }
             
+               if ( node.Instance.Name == link.Destination.Anchor )
+               {
+                  uniqueParameters[ external.Name.Default ] = node.Instance;
+               }
+
                //only needs to be defined once, even if multiple nodes are connected to it
                break;
             }
@@ -2471,7 +2492,6 @@ namespace Detox.ScriptEditor
                if ( method.Input.Name == relayLink.Destination.Anchor )
                {
                   allowLink = true;
-                  break;
                }
             }
             else if ( node is LogicNode )
@@ -2483,7 +2503,6 @@ namespace Detox.ScriptEditor
                   if ( input.Name == relayLink.Destination.Anchor )
                   {
                      allowLink = true;
-                     break;
                   }
                }
             }
@@ -2511,6 +2530,8 @@ namespace Detox.ScriptEditor
                   m_ExternalParameters.Add( clone );
                }
             }
+
+            if ( true == allowLink ) break;
          }
          
          if ( allowedRelays.Count > 0 )
@@ -2544,6 +2565,7 @@ namespace Detox.ScriptEditor
 
 
          //transfer input args to our member variables
+         Hashtable filledExternals = new Hashtable( );
          foreach ( ExternalConnection external in m_Script.Externals )
          {
             LinkNode []inputs = FindLinksBySource( external.Guid, external.Connection );
@@ -2558,6 +2580,15 @@ namespace Detox.ScriptEditor
                   {
                      AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
                      SyncReferencedGameObject( parameterNode, p );
+                  }
+               }
+
+               if ( parameterNode.Instance.Name == link.Destination.Anchor )
+               {
+                  if ( false == filledExternals.Contains(external.Guid) )
+                  {
+                     AddCSharpLine( CSharpName(external) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
+                     filledExternals[ external.Guid ] = external;
                   }
                }
             }
