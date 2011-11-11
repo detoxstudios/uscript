@@ -32,11 +32,26 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    public string _panelFilterText = string.Empty;
    bool _paletteFoldoutToggle = false;
 
-   // List
+   int filterMatches;
+
+   // Scrollview
+   static Rect _scrollviewRect = new Rect();
+   static bool _isMouseOverScrollview = false;
+
+   // Scrollview contents
    const int ROW_HEIGHT = 17;
    const int BUTTON_INDENT = 12;
    const int BUTTON_PADDING = 4;
 
+   GUIStyle _stylePadding;
+
+   private Rect buttonRect;
+   int listItem_rowCount;
+   int listItem_rowWidth;
+
+   private static Dictionary<string, bool> _paletteMenuItemFoldout = new Dictionary<string, bool>();
+
+   private List<PaletteMenuItem> _paletteMenuItems;
    public class PaletteMenuItem : Detox.Windows.Forms.MenuItem
    {
       public String Name;
@@ -58,21 +73,11 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       }
    }
 
-   private List<PaletteMenuItem> _paletteMenuItems;
-
-   private static Dictionary<string, bool> _paletteMenuItemFoldout = new Dictionary<string, bool>();
-
+   // Reference panel hot tips
    public EntityNode _hotSelection = null;
+   private EntityNode _tempHotSelection = null;
 
-   private Rect buttonRect;
-   int listItem_rowCount;
-   int listItem_rowWidth;
-
-   static Rect _previousHotRect = new Rect();
-   static Rect _scrollviewRect = new Rect();
-   static bool _isMouseOverScrollview = false;
-
-//   // Debugging variables used with the "LocalTestDebug" script
+   // Debugging variables used with the "LocalTestDebug" script
 //   LocalTestDebug _debugScript;
 //   float _debug_TopCount;
 //   float _debug_TopHeight;
@@ -110,6 +115,17 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
       // Local references to uScript
       uScript uScriptInstance = uScript.Instance;
+
+      // Initialize the style used for scrollview "padding"
+      if ( _stylePadding == null )
+      {
+         _stylePadding = new GUIStyle( GUIStyle.none );
+         _stylePadding.stretchWidth = true;
+//         padding.normal.background = GUI.skin.box.normal.background;
+//         padding.border = GUI.skin.box.border;
+      }
+
+
 
 
 //      // Grab the deubgging script
@@ -185,7 +201,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          {
             // Draw the contents
             //
-            int filterMatches = 0;
 
 
             // Node list
@@ -211,41 +226,56 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                   DetermineListStats(item);
                }
 
-//               Debug.Log(_paletteMenuItemWidth.Count() + " items, " + listItem_count + " are visible" + "\n");
-
                // Draw the padding box to establish the row width (excluding scrollbar)
                // and force the scrollview content height
                //
-               GUIStyle padding = new GUIStyle(GUIStyle.none);
-               padding.stretchWidth = true;
-//               padding.margin = new RectOffset();
-//               padding.normal.background = GUI.skin.box.normal.background;
-//               padding.border = GUI.skin.box.border;
-
-               GUILayout.Box(string.Empty, padding, GUILayout.Height(Math.Max(0, ROW_HEIGHT * listItem_rowCount - 10)), GUILayout.Width(listItem_rowWidth));
-               GUILayout.Box(string.Empty, padding, GUILayout.Height(10), GUILayout.ExpandWidth(true));
-               if (Event.current.type == EventType.Repaint)
-               {
-                  listItem_rowWidth = Math.Max(listItem_rowWidth, (int)GUILayoutUtility.GetLastRect().width);
-               }
-
+               GUILayout.Box(string.Empty, _stylePadding, GUILayout.Height(Math.Max(0, ROW_HEIGHT * listItem_rowCount - 10)), GUILayout.Width(listItem_rowWidth));
+               GUILayout.Box(string.Empty, _stylePadding, GUILayout.Height(10), GUILayout.ExpandWidth(true));
 
                // Prepare to draw each row of the filtered list
                //
-               buttonRect = new Rect(0, 0, 0, ROW_HEIGHT);
-               listItem_rowCount = 0;
-
-               if (Event.current.type == EventType.Repaint)
+               // From this point on, the contents of the scrollview should
+               // never use GUILayout, so we can safely skip EventType.Layout.
+               //
+               if (Event.current.type != EventType.Layout)
                {
-                  _hotSelection = null;
+                  // Make sure the we get the width of the last GUILayout.Box
+                  // just in case it is wider than the widest button below
+                  listItem_rowWidth = Math.Max(listItem_rowWidth, (int)GUILayoutUtility.GetLastRect().width);
+
+                  // Reset some variables we'll use later
+                  buttonRect = new Rect(0, 0, 0, ROW_HEIGHT);
+                  filterMatches = 0;
+
+                  // Reset the temporary hot selection at the beginning of each pass
+                  _tempHotSelection = null;
+
+                  // Draw all the palette items
+                  foreach (PaletteMenuItem item in _paletteMenuItems)
+                  {
+                     if (DrawPaletteMenu(item))
+                     {
+                        filterMatches++;
+                     }
+                  }
+
+                  // Check here for possible repaint needed for hot tips
+                  if (_hotSelection != _tempHotSelection)
+                  {
+                     _hotSelection = _tempHotSelection;
+                     uScript.Instance.Repaint();
+                  }
+
                }
 
-               foreach (PaletteMenuItem item in _paletteMenuItems)
+               // Display a message if no filter matches were found.
+               //
+               // The filterMatches variable is reset to zero right before the menu items are
+               // drawn when Event.current.type != EventType.Layout
+               //
+               if (filterMatches == 0)
                {
-                  if (DrawPaletteMenu(item))
-                  {
-                     filterMatches++;
-                  }
+                  GUILayout.Label("The search found no matches!", uScriptGUIStyle.panelMessageBold);
                }
 
 //               // Debug
@@ -253,10 +283,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 //               _debugScript.Middle = new Vector2(_debug_MiddleCount, _debug_MiddleHeight);
 //               _debugScript.Bottom = new Vector2(_debug_BottomCount, _debug_BottomHeight);
 
-               if (filterMatches == 0)
-               {
-                  GUILayout.Label("The search found no matches!", uScriptGUIStyle.panelMessageBold);
-               }
             }
             EditorGUILayout.EndScrollView();
 
@@ -323,6 +349,10 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
    private bool DrawPaletteMenu(PaletteMenuItem item)
    {
+      //
+      // This method should never be called when Event.current.type == EventType.Layout
+      //
+
       if (item.Hidden)
       {
          return false;
@@ -331,7 +361,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       // Update button rect before drawing the control
       buttonRect.x = item.x;
       buttonRect.width = listItem_rowWidth - item.x - BUTTON_PADDING;
-
 
       // Determine if the item should be drawn
       if (_scrollviewOffset.y <= buttonRect.yMax)
@@ -389,15 +418,9 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       //
 
       // Handle mouse hovering
-      if (Event.current.type != EventType.Layout && _isMouseOverScrollview && buttonRect.Contains(Event.current.mousePosition))
+      if ( _isMouseOverScrollview && buttonRect.Contains(Event.current.mousePosition) )
       {
-         _hotSelection = item.Tag as EntityNode;
-         if (_previousHotRect != buttonRect)
-         {
-            _previousHotRect = buttonRect;
-            uScript.Instance.Repaint();
-//            Debug.LogWarning("Repainting: " + item.Name + ", " + Event.current.type.ToString() + "\n");
-         }
+         _tempHotSelection = item.Tag as EntityNode;
       }
 
       // Prepare for the next control
@@ -546,6 +569,5 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          uScriptDebug.Log("The contextMenuItem (" + contextMenuItem.Text + ") is a " + contextMenuItem.GetType() + " and is unhandled!\n", uScriptDebug.Type.Warning);
       }
    }
-
 
 }
