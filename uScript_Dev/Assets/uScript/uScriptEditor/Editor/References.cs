@@ -720,11 +720,13 @@ namespace Detox.Windows.Forms
       public void ResumeLayout(bool performLayout)
       {}
 
-      public void Invalidate( )
+      public void Invalidate( /* string description */ )
       {
          if ( null != uScript.Instance )
          {
             uScript.Instance.Repaint( );
+//            Debug.Log( "Invalidate: " + description + "\n" );
+//            uScript.RequestRepaint();
          }
       }
 

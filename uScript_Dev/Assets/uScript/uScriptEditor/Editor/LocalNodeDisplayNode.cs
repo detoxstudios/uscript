@@ -34,10 +34,13 @@ namespace Detox.ScriptEditor
       public override bool Selected 
       {
          set 
-         { 
-            base.Selected = value;
-            PrepareNode( );
-            Invalidate( );
+         {
+            if (base.Selected != value)
+            {
+               base.Selected = value;
+               PrepareNode( );
+               Invalidate( );  // Node SelectionChanged
+            }
          }
       }
 
@@ -138,10 +141,13 @@ namespace Detox.ScriptEditor
       public override bool Selected 
       {
          set 
-         { 
-            base.Selected = value;
-            PrepareNode( );
-            Invalidate( );
+         {
+            if (base.Selected != value)
+            {
+               base.Selected = value;
+               PrepareNode( );
+               Invalidate( );  // ExternalConnection SelectionChanged
+            }
          }
       }
 

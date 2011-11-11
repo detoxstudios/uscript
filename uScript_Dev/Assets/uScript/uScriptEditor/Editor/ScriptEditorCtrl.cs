@@ -372,7 +372,7 @@ namespace Detox.ScriptEditor
          point.X = Math.Min(0, Math.Max(-System.UInt16.MaxValue, -point.X + (int)(uScript.Instance.NodeWindowRect.width * 0.5f)));
          point.Y = Math.Min(0, Math.Max(-System.UInt16.MaxValue, -point.Y + (int)(uScript.Instance.NodeWindowRect.height * 0.5f) - (int)uScript.Instance.NodeToolbarRect.height));
          m_FlowChart.Location = point;
-         m_FlowChart.Invalidate();
+         m_FlowChart.Invalidate( );  // CenterOnPoint
       }
 
       public void CenterOnNode(Node node)
@@ -383,7 +383,7 @@ namespace Detox.ScriptEditor
          Point center = new Point(node.Bounds.Left + node.Bounds.Width / 2, node.Bounds.Top + node.Bounds.Height / 2);
          m_FlowChart.Location = new Point( Math.Min(0, Math.Max(-System.UInt16.MaxValue, -center.X + halfWidth)),
                                            Math.Min(0, Math.Max(-System.UInt16.MaxValue, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
-         m_FlowChart.Invalidate();
+         m_FlowChart.Invalidate( );  // CenterOnNode
       }
 
       public void SelectNode(Guid guid)
@@ -1708,14 +1708,14 @@ namespace Detox.ScriptEditor
          }
 
          m_FlowChart.ResumeLayout( );
-         m_FlowChart.Invalidate( );
+//         m_FlowChart.Invalidate( );  // RefreshScript (resume)
 			
          if (m_FlowChart.Nodes.Length > 0)
          {
             if (location != Point.Empty)
             {
                m_FlowChart.Location = location;
-               m_FlowChart.Invalidate();
+//               m_FlowChart.Invalidate( );  // RefreshScript (compiled)
             }
             else if (zoomExtents)
             {
@@ -1724,9 +1724,12 @@ namespace Detox.ScriptEditor
                int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
                Point center = new Point((int)(minX + (maxX - minX) / 2.0f), (int)(minY + (maxY - minY) / 2.0f));
                m_FlowChart.Location = new Point(Math.Min(0, Math.Max(-System.UInt16.MaxValue, -center.X + halfWidth)), Math.Min(0, Math.Max(-System.UInt16.MaxValue, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
-               m_FlowChart.Invalidate();
+//               m_FlowChart.Invalidate( );  // RefreshScript (zoomExtents)
             }
          }
+
+         m_FlowChart.Invalidate( );  // RefreshScript - Replaces the three calls above
+
 
          FlowchartSelectionModified( null, null );
 
@@ -2593,12 +2596,15 @@ namespace Detox.ScriptEditor
       override public bool Selected 
       {
          set 
-         { 
-            m_Selected = value; 
-    
-            UpdateStyleName();
-   
-            base.Selected = value;
+         {
+            if (m_Selected != value)
+            {
+               m_Selected = value;
+
+               UpdateStyleName();
+
+               base.Selected = value;
+            }
          }
       }
 

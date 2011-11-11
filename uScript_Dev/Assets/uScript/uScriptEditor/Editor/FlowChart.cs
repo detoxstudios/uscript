@@ -326,7 +326,7 @@ namespace Detox.FlowChart
             m_StartLinkNode   = null;
          }
             
-         Invalidate( );
+         Invalidate( );  // ??
       }
 
       private bool LinkInRect(Link link, Rectangle rect)
@@ -498,7 +498,7 @@ namespace Detox.FlowChart
                if ( true == anchorPoint.CanSource )
                {
                   OnAnchorPointActivated( node, anchorPoint );
-                  Invalidate( );
+                  Invalidate( );  // Socket MouseDown
 
                   pointSourced = true;
                }
@@ -578,7 +578,7 @@ namespace Detox.FlowChart
             {
                OnSelectionModified( );
    
-               Invalidate( );
+               Invalidate( );  // Node MouseDown
             }
          }
          else if (e.Button == MouseButtons.Middle || (e.Button == MouseButtons.Left && true == Control.ModifierKeys.Contains(Keys.Alt)))
@@ -639,8 +639,9 @@ namespace Detox.FlowChart
                   }
                }
             }
-            
-            Invalidate( );
+
+            // @FIXME : Repaints even when the mouse is stationary
+            Invalidate( );  // Node MouseDrag
          }
          else if (e.Button == MouseButtons.Middle || (e.Button == MouseButtons.Left && true == Control.ModifierKeys.Contains(Keys.Alt)))
          {
@@ -769,7 +770,7 @@ namespace Detox.FlowChart
    
             OnNodesModified( modifiedNodes.ToArray( ) );
    
-            Invalidate( );
+//            Invalidate( );  // This appears to be unnecessary
          }
          else if (e.Button == MouseButtons.Middle || (e.Button == MouseButtons.Left && true == Control.ModifierKeys.Contains(Keys.Alt)))
          {
@@ -875,7 +876,7 @@ namespace Detox.FlowChart
             OnSelectionModified( );
          }
 
-         Invalidate( );
+         Invalidate( );  // Canvas MouseUp
       }
       
       private bool MouseOverLink(out Link retLink)
@@ -900,20 +901,6 @@ namespace Detox.FlowChart
          Point position = Detox.Windows.Forms.Cursor.Position;
          position = this.PointToClient( position );
 
-         //if no control key, unselect the rest
-         if ( false == Control.ModifierKeys.Contains(Keys.Control) && false == Control.ModifierKeys.Contains(Keys.Shift) )
-         {
-            foreach (Node node in SelectedNodes)
-            {
-               node.Selected = false;
-            }
-
-            foreach ( Link link in SelectedLinks )
-            {
-               link.Selected = false;
-            }
-         }
-
          int startX = Math.Min( m_StartMarquee.X, position.X );
          int endX   = Math.Max( m_StartMarquee.X, position.X );
 
@@ -922,10 +909,26 @@ namespace Detox.FlowChart
       
          Rectangle rect = new Rectangle( startX, startY, endX - startX, endY - startY );
 
+         // If no control or shift key, unselect the rest
+         if ( false == Control.ModifierKeys.Contains(Keys.Control) && false == Control.ModifierKeys.Contains(Keys.Shift) )
+         {
+            foreach (Node node in SelectedNodes)
+            {
+               // Only deselect if it's not in the rect to prevent repaints
+               node.Selected = node.IntersectsWith(rect);
+            }
+
+            foreach ( Link link in SelectedLinks )
+            {
+               // Only deselect if it's not in the rect to prevent repaints
+               link.Selected = LinkInRect(link, rect);
+            }
+         }
+
          foreach ( Node node in m_Nodes.Values )
          {
             if ( true == node.IntersectsWith(rect) )
-            {
+            {  // Intersects
                if (true == Control.ModifierKeys.Contains(Keys.Control))
                {
                   node.Selected = false;
@@ -958,7 +961,8 @@ namespace Detox.FlowChart
          if ( true == InMoveMode )
          {
             OnLocationChanged( );
-            Invalidate( );
+            // @FIXME : Repaints even when the mouse is stationary
+            Invalidate( );  // Canvas MouseDrag
          }
          else
          {
@@ -966,7 +970,7 @@ namespace Detox.FlowChart
             {
                m_StartMarquee = new Point(e.X, e.Y);
             }
-            
+
             if ( null != m_StartLinkNode || Point.Empty != m_StartMarquee )
             {
                if ( Point.Empty != m_StartMarquee )
@@ -974,7 +978,8 @@ namespace Detox.FlowChart
                   RunMarqueeSelect( );
                }
 
-               Invalidate( );
+               // @FIXME : Repaints even when the mouse is stationary
+               Invalidate( );  // Marquee MouseDrag
             }
             else if ( true == m_NodeMouseTracking )
             {
@@ -983,7 +988,7 @@ namespace Detox.FlowChart
                   selectedNode.NodeMove( );
                }
 
-               Invalidate( );
+               Invalidate( );  // ??
             }
          }
       }
@@ -1546,9 +1551,12 @@ namespace Detox.FlowChart
       {
          get { return m_Selected; }
          set 
-         { 
-            m_Selected = value; 
-            Invalidate( );
+         {
+            if (m_Selected != value)
+            {
+               m_Selected = value;
+               Invalidate( ); // Node (base) SelectionChanged - This may not be needed
+            }
          }
       }
 
