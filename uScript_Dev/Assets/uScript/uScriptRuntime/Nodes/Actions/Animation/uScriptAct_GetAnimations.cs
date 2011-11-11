@@ -67,9 +67,15 @@ public class uScriptAct_GetAnimations : uScriptLogic
 					counter++;
 				}
 			}
+			
+			Animations = m_Animations;
 		}
-		
-		Animations = m_Animations;
+		else
+		{
+			m_Animations = new string[1];
+			m_Animations[0] = "";
+			Animations = m_Animations;
+		}
 		
    }
 
