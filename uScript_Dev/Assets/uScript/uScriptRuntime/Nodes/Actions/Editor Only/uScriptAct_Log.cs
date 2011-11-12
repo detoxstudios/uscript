@@ -20,12 +20,21 @@ public class uScriptAct_Log : uScriptLogic
 
    public void In([SocketState(false, false)] object Prefix, object[] Target, [SocketState(false, false)] object Postfix)
    {
-      foreach (object currentTarget in Target)
+      if (Target.Length > 0)
       {
-         Debug.Log(( (Prefix == null ? string.Empty : Prefix.ToString())
-                     + currentTarget.ToString()
-                     + (Postfix == null ? string.Empty : Postfix.ToString())
-                     + "\n" ));
+         foreach (object currentTarget in Target)
+         {
+            Debug.Log(((Prefix == null ? string.Empty : Prefix.ToString())
+                        + currentTarget.ToString()
+                        + (Postfix == null ? string.Empty : Postfix.ToString())
+                        + "\n"));
+         }
+      }
+      else
+      {
+         Debug.Log(((Prefix == null ? string.Empty : Prefix.ToString())
+                        + (Postfix == null ? string.Empty : Postfix.ToString())
+                        + "\n"));
       }
    }
 }
