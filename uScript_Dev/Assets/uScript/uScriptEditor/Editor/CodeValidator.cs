@@ -107,7 +107,9 @@ public class CodeValidator
          MethodInfo getEntry = type.GetMethod("GetEntryInternal", new Type[]{typeof(int), logEntryType} );
    		if ( null == getEntry ) return true;
          
-         int i = 0;
+         //super long logs really slow this down
+         //so just check the last 10 entries
+         int i = (numWarnings + numMessages + numErrors) - 10;
 
          object logEntry = Activator.CreateInstance(logEntryType);
    		if ( null == logEntry ) return true;
