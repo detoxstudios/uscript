@@ -26,7 +26,7 @@ public class uScriptAct_ShuffleList : uScriptLogic
 
       for ( int i = 0; i < shuffled.Length; i++ )
       {
-         int index = UnityEngine.Random.Range( 0, remain - 1 );
+         int index = UnityEngine.Random.Range( 0, remain );
          shuffled[ i ] = list[ index ];
 
          --remain;
