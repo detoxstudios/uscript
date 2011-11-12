@@ -1,6 +1,6 @@
    // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Attaches a script component to a GameObject.
+// Desc: Attaches a script or component to a GameObject.
 
 using UnityEngine;
 using System.Collections;
@@ -8,18 +8,18 @@ using System.Collections;
 [NodePath("Actions/GameObjects")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Attaches a script component to a GameObject.")]
-[NodeDescription("Attaches a script component to a GameObject.\n \nTarget: The GameObject(s) to attach the script to.\nScript Name: The name of the script to attach to the specified object(s).")]
+[NodeToolTip("Attaches a script or component to a GameObject.")]
+[NodeDescription("Attaches a script or component to a GameObject. To remove Components, use the Destroy Component node.\n\nTarget: The GameObject(s) to attach the script to.\nComponent Name: The name of the component or script filename to attach to the specified GameObject(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Attach_Script")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Attach Script")]
+[FriendlyName("Attach Component")]
 public class uScriptAct_AttachScript : uScriptLogic
 {
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, [FriendlyName("Script Name")] string[] ScriptName)
+   public void In(GameObject[] Target, [FriendlyName("Component Name")] string[] ScriptName)
    {
       foreach ( string currentScript in ScriptName )
       {
@@ -39,8 +39,6 @@ public class uScriptAct_AttachScript : uScriptLogic
                tempScript = tempScript.Remove(stringLength, 4);
             }
 
-            //uScriptDebug.Log("ScriptName = " + tempScript);
-
             try
             {
                foreach ( GameObject currentGameObject in Target )
@@ -54,7 +52,7 @@ public class uScriptAct_AttachScript : uScriptLogic
             }
             catch (System.Exception e)
             {
-               uScriptDebug.Log(e.ToString(), uScriptDebug.Type.Error);
+               uScriptDebug.Log("[Attach Component] " + e.ToString(), uScriptDebug.Type.Error);
             }
          }
       }
