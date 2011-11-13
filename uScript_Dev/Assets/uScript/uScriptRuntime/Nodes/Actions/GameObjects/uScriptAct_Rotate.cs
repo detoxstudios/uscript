@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/GameObjects")]
+[NodePath("Actions/GameObjects/Movement")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Rotates the target GameObject by a number of degrees over X seconds.")]

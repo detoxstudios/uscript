@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/GameObjects")]
+[NodePath("Actions/GameObjects/Movement")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Causes the targeted GameObject to be relocated to the destination GameObject.")]

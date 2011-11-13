@@ -5,7 +5,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/GameObjects")]
+[NodePath("Actions/GameObjects/Movement")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the world position of a GameObject based around an origin point in the world.")]
