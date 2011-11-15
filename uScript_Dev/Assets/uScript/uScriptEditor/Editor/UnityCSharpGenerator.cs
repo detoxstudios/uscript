@@ -1056,6 +1056,10 @@ namespace Detox.ScriptEditor
          {
             return "new UnityEngine.RaycastHit( )";
          }
+         else if ( "UnityEngine.ContactPoint" == type )
+         {
+            return "new UnityEngine.ContactPoint( )";
+         }
          else if ( "UnityEngine.NetworkPlayer" == type )
          {
             return "new UnityEngine.NetworkPlayer( )";
