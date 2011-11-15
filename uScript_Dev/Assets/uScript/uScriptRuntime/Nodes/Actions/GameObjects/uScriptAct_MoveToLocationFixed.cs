@@ -62,7 +62,7 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
          for ( int i = 0; i < m_TargetArray.Length; i++ )
          {
             GameObject target = m_TargetArray[ i ];
-            if ( null == target ) return;
+            if ( null == target ) continue;
 
             Vector3 delta = (m_EndingLocation + m_StartingLocations[ i ]) - target.transform.position;
 
@@ -85,7 +85,7 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
          for ( int i = 0; i < m_TargetArray.Length; i++ )
          {
             GameObject target = m_TargetArray[ i ];
-            if ( null == target ) return;
+            if ( null == target ) continue;
 
             Vector3 delta = m_EndingLocation - target.transform.position;
 

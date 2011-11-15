@@ -92,7 +92,7 @@ public class uScriptAct_MoveToLocation : uScriptLogic
          for ( int i = 0; i < m_TargetArray.Length; i++ )
          {
             GameObject target = m_TargetArray[ i ];
-            if ( null == target ) return;
+            if ( null == target ) continue;
 
             target.transform.position = Vector3.Lerp( m_StartingLocations[ i ], m_EndingLocation + m_StartingLocations[ i ], t );
          }
@@ -102,7 +102,7 @@ public class uScriptAct_MoveToLocation : uScriptLogic
          for ( int i = 0; i < m_TargetArray.Length; i++ )
          {
             GameObject target = m_TargetArray[ i ];
-            if ( null == target ) return;
+            if ( null == target ) continue;
 
             target.transform.position = Vector3.Lerp( m_StartingLocations[ i ], m_EndingLocation, t );
          }
