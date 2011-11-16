@@ -38,8 +38,8 @@ public static class uScriptExportPNG
    static string _destinationFileName;
 
    static Rect _graphBounds;
-   static List<string> _debugOutput;
-   static GUIStyle _debugBoxStyle;
+//   static List<string> _debugOutput;
+//   static GUIStyle _debugBoxStyle;
 
    private static bool _isExporting;
    public static bool IsExporting { get { return _isExporting; } }
@@ -118,8 +118,9 @@ public static class uScriptExportPNG
          _originalMapScale = _uScript.m_MapScale;
          _originalPanelState = uScriptGUI.panelsHidden;
 
-         _debugOutput = new List<string>();
-         _debugOutput.Add("Export to PNG");
+//         // Clear the debug GUI output
+//         _debugOutput = new List<string>();
+//         _debugOutput.Add("Export to PNG");
 
          _destinationFileName = System.IO.Path.GetFileNameWithoutExtension(_uScript.CurrentScriptName) + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmssff");
 
@@ -247,15 +248,15 @@ public static class uScriptExportPNG
          // Create the texture
          _texture = new Texture2D((int)_graphBounds.width, (int)_graphBounds.height, TextureFormat.RGB24, false);
 
-         // Display debug information for the graph
-         _debugOutput.Add( "\tCanvas Size:\t\t\t" + _viewportWidth.ToString() + ", " + _viewportHeight.ToString() );
-         _debugOutput.Add( "\tCanvas Locatiion\t\t" + (-_originalCanvasLocation.X).ToString() + ", " + (-_originalCanvasLocation.Y).ToString() );
-
-         _debugOutput.Add( string.Empty );
-         _debugOutput.Add( "Graph:" );
-         _debugOutput.Add( "\tTotal Segments:\t" + _segmentColumns.ToString() + ", " + _segmentRows.ToString() );
-         _debugOutput.Add( "\tTotal Size:\t\t\t" + _graphBounds.width.ToString() + ", " + _graphBounds.height.ToString() );
-         _debugOutput.Add( "\tOverflow Size:\t\t" + _segmentColumnOverflow.ToString() + ", " + _segmentRowOverflow.ToString() );
+//         // Display debug information for the graph
+//         _debugOutput.Add( "\tCanvas Size:\t\t\t" + _viewportWidth.ToString() + ", " + _viewportHeight.ToString() );
+//         _debugOutput.Add( "\tCanvas Locatiion\t\t" + (-_originalCanvasLocation.X).ToString() + ", " + (-_originalCanvasLocation.Y).ToString() );
+//
+//         _debugOutput.Add( string.Empty );
+//         _debugOutput.Add( "Graph:" );
+//         _debugOutput.Add( "\tTotal Segments:\t" + _segmentColumns.ToString() + ", " + _segmentRows.ToString() );
+//         _debugOutput.Add( "\tTotal Size:\t\t\t" + _graphBounds.width.ToString() + ", " + _graphBounds.height.ToString() );
+//         _debugOutput.Add( "\tOverflow Size:\t\t" + _segmentColumnOverflow.ToString() + ", " + _segmentRowOverflow.ToString() );
 
          Debug.Log( string.Format( "\tThe resulting image will be {0}x{1} pixels in size.\n{2}",
                                    (int)_graphBounds.width,
@@ -321,12 +322,12 @@ public static class uScriptExportPNG
       }
       else if ( _phase == uScriptExportPNG.ExportPhase.CaptureSegmentImage )
       {
-         _debugOutput.Add( string.Empty );
-         _debugOutput.Add( "Segment:\t\t" + _segmentColumn.ToString() + ", " + _segmentRow.ToString() );
-         _debugOutput.Add( "\tOffset:\t\t" + _segmentX.ToString() + ", " + _segmentY.ToString() );
-         _debugOutput.Add( "\tLocation:\t" + (-_uScript.ScriptEditorCtrl.FlowChart.Location.X).ToString() + ", " + (-_uScript.ScriptEditorCtrl.FlowChart.Location.Y).ToString() );
-         _debugOutput.Add( "\tSize:\t\t\t" + _segmentWidth.ToString() + ", " + _segmentHeight.ToString() );
-
+//         _debugOutput.Add( string.Empty );
+//         _debugOutput.Add( "Segment:\t\t" + _segmentColumn.ToString() + ", " + _segmentRow.ToString() );
+//         _debugOutput.Add( "\tOffset:\t\t" + _segmentX.ToString() + ", " + _segmentY.ToString() );
+//         _debugOutput.Add( "\tLocation:\t" + (-_uScript.ScriptEditorCtrl.FlowChart.Location.X).ToString() + ", " + (-_uScript.ScriptEditorCtrl.FlowChart.Location.Y).ToString() );
+//         _debugOutput.Add( "\tSize:\t\t\t" + _segmentWidth.ToString() + ", " + _segmentHeight.ToString() );
+//
 //         DisplayDebugInformation();
 
          // Read segment contents from the screen and store them in the texture
@@ -383,39 +384,39 @@ public static class uScriptExportPNG
    /// This method is temporary.  It is used to display debug information on each segment.
    /// It might eventually be used to display some optional script information on the finished export.
    /// </summary>
-   static void DisplayDebugInformation()
-   {
-      if (_debugBoxStyle == null)
-      {
-         UnityEngine.Color color = UnityEngine.Color.white;
-
-         Texture2D texture = new Texture2D( 4, 4 );
-         for (int y = 0; y < 4; y++)
-            for (int x = 0; x < 4; x++)
-               texture.SetPixel( x, y, color );
-
-         color = new UnityEngine.Color(0, 0, 0, 0.5f);
-         texture.SetPixel( 1, 1, color );
-         texture.SetPixel( 1, 2, color );
-         texture.SetPixel( 2, 1, color );
-         texture.SetPixel( 2, 2, color );
-         texture.Apply();
-
-         _debugBoxStyle = new GUIStyle( GUI.skin.box );
-         _debugBoxStyle.border = new RectOffset(2, 2, 2, 2);
-         _debugBoxStyle.normal.background = texture;
-      }
-
-      GUI.BeginGroup(new Rect(0, 17, 250, _debugOutput.Count() * 15 + 10), _debugBoxStyle);
-      {
-         for (int i = 0; i < _debugOutput.Count(); i++)
-         {
-            GUI.Label(new Rect(10, 4 + (15 * i), 380, 15), _debugOutput[i], EditorStyles.whiteLabel);
-         }
-      }
-      GUI.EndGroup();
-
-      GUI.Box( _graphBounds, string.Empty );
-   }
-
+//   static void DisplayDebugInformation()
+//   {
+//      if (_debugBoxStyle == null)
+//      {
+//         UnityEngine.Color color = UnityEngine.Color.white;
+//
+//         Texture2D texture = new Texture2D( 4, 4 );
+//         for (int y = 0; y < 4; y++)
+//            for (int x = 0; x < 4; x++)
+//               texture.SetPixel( x, y, color );
+//
+//         color = new UnityEngine.Color(0, 0, 0, 0.5f);
+//         texture.SetPixel( 1, 1, color );
+//         texture.SetPixel( 1, 2, color );
+//         texture.SetPixel( 2, 1, color );
+//         texture.SetPixel( 2, 2, color );
+//         texture.Apply();
+//
+//         _debugBoxStyle = new GUIStyle( GUI.skin.box );
+//         _debugBoxStyle.border = new RectOffset(2, 2, 2, 2);
+//         _debugBoxStyle.normal.background = texture;
+//      }
+//
+//      GUI.BeginGroup(new Rect(0, 17, 250, _debugOutput.Count() * 15 + 10), _debugBoxStyle);
+//      {
+//         for (int i = 0; i < _debugOutput.Count(); i++)
+//         {
+//            GUI.Label(new Rect(10, 4 + (15 * i), 380, 15), _debugOutput[i], EditorStyles.whiteLabel);
+//         }
+//      }
+//      GUI.EndGroup();
+//
+//      GUI.Box( _graphBounds, string.Empty );
+//   }
+//
 }

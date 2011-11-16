@@ -62,6 +62,9 @@ public static class uScriptGUIContent
    private static GUIContent _buttonSaveModeRelease;
    public static GUIContent buttonSaveModeRelease { get { return _buttonSaveModeRelease; } }
 
+   private static GUIContent _buttonScriptExportPNG;
+   public static GUIContent buttonScriptExportPNG { get { return _buttonScriptExportPNG; } }
+
    private static GUIContent _buttonScriptLoad;
    public static GUIContent buttonScriptLoad { get { return _buttonScriptLoad; } }
 
@@ -138,6 +141,7 @@ public static class uScriptGUIContent
       _buttonSaveModeQuick          = new GUIContent("Quick",                 "When saved, no code will be generated.");
       _buttonSaveModeRelease        = new GUIContent("Release",               "When saved, the generated code will be free of debug information.");
 
+      _buttonScriptExportPNG        = new GUIContent("Export to PNG",         "Export the graph to a PNG image.");
       _buttonScriptLoad             = new GUIContent("Load",                  "Load this uScript.");
       _buttonScriptNew              = new GUIContent("New",                   "Create a new uScript. The active uScript will be closed automatically.");
       _buttonScriptOpen             = new GUIContent("Open...",               "Open a uScript using the file browser.");

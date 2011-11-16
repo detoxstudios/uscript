@@ -1181,6 +1181,9 @@ public class uScript : EditorWindow
                case KeyCode.R:
                   FileMenuItem_ReleaseSave();
                   break;
+               case KeyCode.E:
+                  FileMenuItem_ExportPNG();
+                  break;
             }
             e.Use();
             break;
@@ -2397,6 +2400,14 @@ public class uScript : EditorWindow
 
       uScriptGUI.HR();
 
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptExportPNG, uScriptGUIStyle.menuDropDownButton))
+      {
+         FileMenuItem_ExportPNG();
+      }
+      DrawMenuItemShortcut("E");
+
+      uScriptGUI.HR();
+
       if (GUILayout.Button(uScriptGUIContent.buttonScriptsRebuildAll, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_RebuildAll();
@@ -2478,6 +2489,18 @@ public class uScript : EditorWindow
       RequestSave(false, false, false);
    }
 
+   void FileMenuItem_ExportPNG()
+   {
+//#if DEVELOPMENT_BUILD
+//      uScriptGUI.enabled = !uScriptExportPNG.IsExporting;
+//      if (GUILayout.Button(, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+//      {
+      uScriptExportPNG.Start();
+//      }
+//      uScriptGUI.enabled = true;
+//#endif
+      isFileMenuOpen = false;
+   }
 
    void FileMenuItem_RebuildAll()
    {
@@ -2520,15 +2543,6 @@ public class uScript : EditorWindow
             {
                PreferenceWindow.Init();
             }
-
-#if DEVELOPMENT_BUILD
-            uScriptGUI.enabled = !uScriptExportPNG.IsExporting;
-            if (GUILayout.Button("Export to PNG", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
-            {
-               uScriptExportPNG.Start();
-            }
-            uScriptGUI.enabled = true;
-#endif
 
             GUILayout.FlexibleSpace();
 
