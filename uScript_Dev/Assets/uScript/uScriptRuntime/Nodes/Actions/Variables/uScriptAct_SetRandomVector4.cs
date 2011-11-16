@@ -9,7 +9,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the value of a Vector4 variable.")]
-[NodeDescription("Randomly sets the value of a Vector4 variable.\n \nMin(X/Y/Z/W): Minimum allowable float value.\nMax(X/Y/Z/W): Maximum allowable float value.\nSeed: Optional. Seed value for the random number generator. Using a specific seed value will generate the same random number each time. A value of zero (the default) will generate random numbers each time.\nTarget Vector4 (out): The Vector4 variable that gets set.")]
+[NodeDescription("Randomly sets the value of a Vector4 variable.\n \nMin(X/Y/Z/W): Minimum allowable float value.\nMax(X/Y/Z/W): Maximum allowable float value.\nTarget Vector4 (out): The Vector4 variable that gets set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Random_Vector4")]
 
