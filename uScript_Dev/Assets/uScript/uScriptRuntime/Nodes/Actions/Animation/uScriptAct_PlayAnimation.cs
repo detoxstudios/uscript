@@ -36,43 +36,43 @@ public class uScriptAct_PlayAnimation : uScriptLogic
 
       foreach ( GameObject currentTarget in Target )
       {
-
-		 
-
          if (currentTarget != null)
          {
-		    if(currentTarget.animation.GetClip(Animation))
-			{
-				
-	            //only save one so we can ask about the animation state
-	            //i don't need to save all of them in the array
-	            m_GameObject = currentTarget;
-	            m_Animation  = Animation;
-	
-	            if (SpeedFactor == 0F)
-	            {
-	               currentTarget.animation[Animation].speed = 1.0F;
-	            }
-	            else
-	            {
-	               currentTarget.animation[Animation].speed = SpeedFactor;
-	            }
-	
-	            if (StopOtherAnimations)
-	            {
-	               currentTarget.animation.Play(PlayMode.StopAll);
-	            }
-	
-	            if (SpeedFactor < 0)
-	            {
-	               // Needed to play in reverse with a negative speed
-	               currentTarget.animation[Animation].time = currentTarget.animation[Animation].length;
-	            }
-	
-	
-	            currentTarget.animation[Animation].wrapMode = AnimWrapMode;
-	            currentTarget.animation.Play(Animation);
-			}
+            if(currentTarget.animation.GetClip(Animation))
+            {
+               //only save one so we can ask about the animation state
+               //i don't need to save all of them in the array
+               m_GameObject = currentTarget;
+               m_Animation  = Animation;
+
+               if (SpeedFactor == 0F)
+               {
+                  currentTarget.animation[Animation].speed = 1.0F;
+               }
+               else
+               {
+                  currentTarget.animation[Animation].speed = SpeedFactor;
+               }
+
+               if (StopOtherAnimations)
+               {
+                  currentTarget.animation.Play(PlayMode.StopAll);
+               }
+
+               if (SpeedFactor < 0)
+               {
+                  // Needed to play in reverse with a negative speed
+                  currentTarget.animation[Animation].time = currentTarget.animation[Animation].length;
+               }
+
+
+               currentTarget.animation[Animation].wrapMode = AnimWrapMode;
+               currentTarget.animation.Play(Animation);
+            }
+         }
+         else
+         {
+   			uScriptDebug.Log("The specified Target " + currentTarget.name + " doesn't contain animation " + Animation, uScriptDebug.Type.Warning);
          }
       }
    }
