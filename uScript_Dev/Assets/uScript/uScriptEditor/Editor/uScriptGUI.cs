@@ -899,7 +899,7 @@ public static class uScriptGUI
 //         if (_previousHotRect != row)
 //         {
 //            _previousHotRect = row;
-//            uScript.Instance.Repaint();
+//            uScript.RequestRepaint();
 //         }
 
          if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayRemove, uScriptGUIStyle.propertyArrayTextButton))
@@ -1536,7 +1536,7 @@ public static class uScriptGUI
 ////      if (_wasMoving)
 ////      {
 ////         _wasMoving = false;
-////         uScript.Instance.Repaint();
+////         uScript.RequestRepaint();
 ////      }
 //   }
 

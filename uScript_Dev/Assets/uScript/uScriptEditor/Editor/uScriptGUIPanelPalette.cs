@@ -263,7 +263,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                   if (_hotSelection != _tempHotSelection)
                   {
                      _hotSelection = _tempHotSelection;
-                     uScript.Instance.Repaint();
+                     uScript.RequestRepaint();
                   }
 
                }

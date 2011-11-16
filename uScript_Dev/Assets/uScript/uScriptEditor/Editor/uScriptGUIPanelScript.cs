@@ -389,7 +389,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               if ((EditorApplication.timeSinceStartup - _clickTime) < _doubleClickTime)
                               {
                                  wasClicked = true;
-                                 uScript.Instance.Redraw();
+                                 uScript.RequestRepaint();
                               }
                            }
 
@@ -399,7 +399,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               if (_previousHotRect != rowRect)
                               {
                                  _previousHotRect = rowRect;
-                                 uScript.Instance.Repaint();
+                                 uScript.RequestRepaint();
                               }
 
                               buttonRect = new Rect(rowRect);

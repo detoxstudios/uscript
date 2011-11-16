@@ -66,14 +66,13 @@ public class uScript : EditorWindow
    private ScriptEditorCtrl m_ScriptEditorCtrl = null;
    private bool m_MouseDown = false;
    private bool m_MouseDownOverCanvas = false;
-   private bool m_Repainting = false;
    private bool m_WantsCopy = false;
    private bool m_WantsCut = false;
    private bool m_WantsPaste = false;
 
    private bool m_RebuildWhenReady = false;
 
-   private float m_MapScale = 1.0f;
+   public float m_MapScale = 1.0f;
    private Point m_ZoomPoint = new Point( 0, 0 );
 
    private String m_AddVariableNode = "";
@@ -143,7 +142,7 @@ public class uScript : EditorWindow
    public int _guiPanelSequence_Width = 250;
 
 
-   Rect _canvasRect;
+   public Rect _canvasRect;
    Vector2 _guiPanelPalette_ScrollPos;
 
    public Vector2 _guiContentScrollPos;
@@ -792,6 +791,14 @@ public class uScript : EditorWindow
          }
       }
 
+      // Repaint if a request was previously made
+      //
+      if (_wasRepaintRequested)
+      {
+         _wasRepaintRequested = false;
+         uScript.Instance.Repaint();
+//         Debug.Log("Repaint\n");
+      }
    }
 
 
@@ -992,6 +999,20 @@ public class uScript : EditorWindow
 
       // do external windows/popups
       DrawPopups();
+
+
+
+      if (Event.current.type == EventType.Repaint)
+      {
+         // Process the PNG export first
+         //
+         // The user should not be able to input during this process
+         //
+         uScriptExportPNG.ProcessImageExport();
+      }
+
+
+
 
       if (m_MouseDown == false)
       {
@@ -1240,7 +1261,7 @@ public class uScript : EditorWindow
                   m_ContextY = (int)(e.mousePosition.y - _canvasRect.yMin);
 
 //                  //refresh screen so context menu shows up
-//                  Repaint();
+//                  RequestRepaint();
                }
                else
                {
@@ -1740,7 +1761,7 @@ public class uScript : EditorWindow
       if (_wasMoving)
       {
          _wasMoving = false;
-         Repaint();
+         RequestRepaint();
       }
    }
 
@@ -2501,10 +2522,12 @@ public class uScript : EditorWindow
             }
 
 #if DEVELOPMENT_BUILD
+            uScriptGUI.enabled = !uScriptExportPNG.IsExporting;
             if (GUILayout.Button("Export to PNG", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               ExportPNG();
+               uScriptExportPNG.Start();
             }
+            uScriptGUI.enabled = true;
 #endif
 
             GUILayout.FlexibleSpace();
@@ -2594,220 +2617,12 @@ public class uScript : EditorWindow
    // END TEMP Variables
 
 
-   private static void FindFields(ICollection<FieldInfo> fields, Type t) {
-        var flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-
-        foreach (var field in t.GetFields(flags)) {
-                // Ignore inherited fields.
-                if (field.DeclaringType == t)
-                        fields.Add(field);
-        }
-
-        var baseType = t.BaseType;
-        if (baseType != null)
-                FindFields(fields, baseType);
-}
-
-   void ExportPNG()
-   {
-      // Create a texture the size of the screen, RGB24 format
-//      int x = (int)_canvasRect.x;
-//      int y = (int)_canvasRect.y;
-      int width = (int)_canvasRect.width;
-      int height = (int)_canvasRect.height;
-
-
-//      var fields = new Collection<FieldInfo>();
-//      FindFields(fields, uScript.Instance.GetType());
-//      foreach (FieldInfo fi in fields)
-//         Debug.Log(fi.DeclaringType.Name + " - " + fi.Name + "\n");
-
-
-
-      Type t;
-      t = uScript.Instance.GetType();
-
-//      FieldInfo[] fields;
-
-//      fields = t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-//      Debug.Log("There are " + fields.Length + " fields.\n");
-//      foreach (FieldInfo fi in fields)
-//      {
-//         Debug.Log(fi.Name + "\n");
-//      }
-
-      FieldInfo f = t.GetField("m_Parent", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-      if (f == null)
-      {
-         Debug.Log("NULL");
-      }
-      else
-      {
-         Debug.Log("We have " + f.Name + "\n");
-
-
-
-         object parent = f.GetValue(uScript.Instance);
-         if ( null == parent )
-            Debug.Log("PARENT IS NULL\n");
-         else
-         {
-            Debug.Log("PARENT IS NOT NULL\n");
-   
-            Debug.Log(parent.ToString());
-   
-   
-            t = parent.GetType();
-
-
-            PropertyInfo pi = t.GetProperty("borderSize", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-            Debug.Log(pi.Name + "\n");
-            RectOffset ro = (RectOffset)pi.GetValue(parent, new object[] { 0 });
-            Debug.Log(ro.ToString() + "\n");
-
-            
-
-
-      }
-
-
-//         t = f.FieldType;
-//
-//         f = t.GetField("background", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-//
-//
-////Type logEntryType = asm.GetType("UnityEditorInternal.LogEntry");
-////if ( null == logEntryType ) return true;
-////
-////object logEntry = Activator.CreateInstance(logEntryType);
-////if ( null == logEntry ) return true;
-////
-////FieldInfo field = logEntryType.GetField("condition");
-////if ( null == field ) return true;
-////
-////string condition = field.GetValue( logEntry ) as string;
-//
-//         object backgroundObj = ScriptableObject.CreateInstance(t);
-//
-//         GUIStyle style = f.GetValue( backgroundObj ) as GUIStyle;
-//         if (style == null)
-//            Debug.Log("The style is null");
-//         else
-//            Debug.Log(style.name + "\n");
-//
-////         Debug.Log("----------------------\nGetting children of Parent\n");
-////         fields = t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-////         Debug.Log("There are " + fields.Length + " fields.\n");
-////         foreach (FieldInfo fi in fields)
-////         {
-////            Debug.Log(fi.Name + "\n");
-////         }
-//
-//         PropertyInfo pi = t.GetProperty("borderSize", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-//
-//         RectOffset ro1 = new RectOffset();
-//         RectOffset ro = (RectOffset)pi.GetValue(null, new object[] { 1 });
-//         Debug.Log(ro.ToString() + "\n");
-//
-////         PropertyInfo[] properties =  t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-////         Debug.Log("There are " + properties.Length + " properties.\n");
-////         foreach (PropertyInfo pi in properties)
-////         {
-//            Debug.Log(pi.Name + "\n");
-////         }
-
-
-
-
-      }
-
-
-
-
-      // Adjust positions and sizes
-
-
-//      y = Screen.height - width - y - EditorWindow.
-
-
-      Debug.Log( "Screen: \t" + Screen.width + ", " + Screen.height
-                + "\n" + "Canvas: \t" + _canvasRect.ToString());
-
-//      width = (int)_canvasRect.width;
-//      height = (int)_canvasRect.height;
-
-//      width = 100;
-//      height = 800;
-
-      Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
-      // Read screen contents into the texture
-//      tex.ReadPixels(new Rect(_canvasRect.x, Screen.height - _canvasRect.y, width, height), 0, 0);
-      tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-      tex.Apply();
-
-      // Encode texture into PNG
-      byte[] bytes = tex.EncodeToPNG();
-      DestroyImmediate(tex);
-
-
-      // For testing purposes, also write to a file in the project folder
-      string filename = GUI.skin.name + "_" + ((int)Time.realtimeSinceStartup).ToString();
-      File.WriteAllBytes(Application.dataPath + "/../Screenshots/" + filename + ".png", bytes);
-
-      Debug.Log("Saved the image to \"" + filename + "\" ... hopefully.\n");
-
-
-//      string filename = GUI.skin.name + "_" + ((int)Time.realtimeSinceStartup).ToString();
-//
-//      TextAsset ta = Resources.Load("Scene", typeof(TextAsset)) as TextAsset;
-//      if (ta == null)
-//         Debug.Log("NULL");
-//      byte[] bytes = ta.bytes;
-//
-//      return;
-//      Debug.Log("Length: " + bytes.Length + "\n");
-//
-//      // start with byte 82
-//      int offset = 76;
-//
-//      // Create a texture the size of the screen, RGB24 format
-//      int width = 71;
-//      int height = 68;
-//      Texture2D tex = new Texture2D(width, height, TextureFormat.ARGB32, false);
-//
-////      Color color = Color.magenta;
-//      int position = 0;
-//
-//      UnityEngine.Color[] colors = new UnityEngine.Color[width * height];
-//
-//      for (int i=0; i < width * height; i++)
-//      {
-//         // get byte position
-//         position = offset + (i * 4);
-//
-//         // get color
-//         colors[i] = new UnityEngine.Color(bytes[position + 1] / 255f, bytes[position + 2] / 255f, bytes[position + 3] / 255f, bytes[position] / 255f);
-//
-////         Debug.Log("Color " + i + " is " + colors[i].ToString() + "\n");
-//      }
-//
-//      tex.SetPixels(colors);
-//      tex.Apply();
-//
-//      // For testing purposes, also write to a file in the project folder
-//      File.WriteAllBytes(Application.dataPath + "/../" + filename + ".png", tex.EncodeToPNG());
-//
-//      Debug.Log("Saved the image to \"" + filename + "\" ... hopefully.\n");
-   }
-
 
 
 
    void m_ScriptEditorCtrl_ScriptModified(object sender, EventArgs e)
    {
-      Repaint();
+      RequestRepaint();
    }
 
 
@@ -2986,38 +2801,43 @@ public class uScript : EditorWindow
          if (m_MouseDownRegion == MouseRegion.HandleCanvas && deltaY != 0)
          {
             _guiPanelProperties_Height -= deltaY;
-            Repaint();
+            RequestRepaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandlePalette && deltaX != 0)
          {
             uScriptGUI.panelLeftWidth += deltaX;
-            Repaint();
+            RequestRepaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandleProperties && deltaX != 0)
          {
             _guiPanelProperties_Width += deltaX;
-            Repaint();
+            RequestRepaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandleReference && deltaX != 0)
          {
             _guiPanelSequence_Width -= deltaX;
-            Repaint();
+            RequestRepaint();
          }
       }
    }
 
 
-
-   public void Redraw()
+   private static bool _wasRepaintRequested;
+   public static void RequestRepaint()
    {
-      if (true == m_Repainting) return;
-
-      m_Repainting = true;
-
-      Repaint();
-
-      m_Repainting = false;
+      _wasRepaintRequested = true;
    }
+
+//   public void Redraw()
+//   {
+//      if (true == m_Repainting) return;
+//
+//      m_Repainting = true;
+//
+//      Repaint();
+//
+//      m_Repainting = false;
+//   }
 
    private bool AllowNewFile(bool allowCancel)
    {

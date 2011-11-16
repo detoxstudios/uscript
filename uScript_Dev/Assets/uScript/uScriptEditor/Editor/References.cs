@@ -724,9 +724,9 @@ namespace Detox.Windows.Forms
       {
          if ( null != uScript.Instance )
          {
-            uScript.Instance.Repaint( );
+//            uScript.Instance.Repaint( );
 //            Debug.Log( "Invalidate: " + description + "\n" );
-//            uScript.RequestRepaint();
+            uScript.RequestRepaint();
          }
       }
 

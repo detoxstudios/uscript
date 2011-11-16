@@ -699,14 +699,15 @@ public partial class uScriptConfig
    public struct ConstantPaths
    {
       public static string SettingsPath      { get {return UnityEngine.Application.dataPath + "/uScriptProjectFiles"; } } 
-      public static string RootFolder        { get {return UnityEngine.Application.dataPath + "/uScript";} }
+      public static string RootFolder        { get {return UnityEngine.Application.dataPath + "/uScript"; } }
       public static string RuntimeFolder     { get {return RootFolder      + "/uScriptRuntime";} }
       public static string uScriptEditor     { get {return RootFolder      + "/uScriptEditor";} }
       public static string uScriptNodes      { get {return RuntimeFolder   + "/Nodes";} }
       public static string GuiPath           { get {return uScriptEditor   + "/Editor/_GUI"; } }
       public static string SkinPath          { get {return GuiPath         + "/uScriptDefault"; } }
       public static string Gizmos            { get {return uScriptEditor    + "/Editor/_Gizmos"; } }
-   
+      public static string Screenshots       { get {return UnityEngine.Application.dataPath + "/../Screenshots"; } }
+
       public static string RelativePath(string absolutePath)
       {
          absolutePath = absolutePath.Replace( '\\', '/' );
