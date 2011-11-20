@@ -329,6 +329,10 @@ public static class uScriptExportPNG
 //         _debugOutput.Add( "\tSize:\t\t\t" + _segmentWidth.ToString() + ", " + _segmentHeight.ToString() );
 //
 //         DisplayDebugInformation();
+         Debug.Log( "Read\tX: " + _viewportX
+                    + ", Y: " + _viewportY + (_viewportHeight - _segmentHeight)
+                    + ", W: " + _segmentWidth + 1
+                    + ", H: " + _segmentHeight + "\nWrite\tX: " + _segmentX  + ", Y: " + _segmentY);
 
          // Read segment contents from the screen and store them in the texture
          _texture.ReadPixels( new Rect( _viewportX,
