@@ -246,6 +246,7 @@ public static class uScriptExportPNG
          _segmentRows = (int)_graphBounds.height / _viewportHeight + (_segmentRowOverflow > 0 ? 1 : 0);
 
          // Create the texture
+         Debug.Log("About to create texture " + _graphBounds.width + " x " + _graphBounds.height + "\n");
          _texture = new Texture2D((int)_graphBounds.width, (int)_graphBounds.height, TextureFormat.RGB24, false);
 
 //         // Display debug information for the graph
