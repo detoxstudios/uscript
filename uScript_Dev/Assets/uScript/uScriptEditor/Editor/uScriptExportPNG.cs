@@ -246,7 +246,7 @@ public static class uScriptExportPNG
          _segmentRows = (int)_graphBounds.height / _viewportHeight + (_segmentRowOverflow > 0 ? 1 : 0);
 
          // Create the texture
-         Debug.Log("About to create texture " + _graphBounds.width + " x " + _graphBounds.height + "\n");
+//         Debug.Log("About to create texture " + _graphBounds.width + " x " + _graphBounds.height + "\n");
          _texture = new Texture2D((int)_graphBounds.width, (int)_graphBounds.height, TextureFormat.RGB24, false);
 
 //         // Display debug information for the graph
@@ -330,15 +330,17 @@ public static class uScriptExportPNG
 //         _debugOutput.Add( "\tSize:\t\t\t" + _segmentWidth.ToString() + ", " + _segmentHeight.ToString() );
 //
 //         DisplayDebugInformation();
-         Debug.Log( "Read\tX: " + _viewportX
-                    + ", Y: " + _viewportY + (_viewportHeight - _segmentHeight)
-                    + ", W: " + _segmentWidth + 1
-                    + ", H: " + _segmentHeight + "\nWrite\tX: " + _segmentX  + ", Y: " + _segmentY);
+//         Debug.Log( "Read\tX: " + _viewportX.ToString()
+//                    + ", Y: " + (_viewportY + (_viewportHeight - _segmentHeight)).ToString()
+//                    + ", W: " + (_segmentWidth + 1).ToString()
+//                    + ", H: " + _segmentHeight.ToString()
+//                    + "\nWrite\tX: " + _segmentX.ToString()  + ", Y: " + _segmentY.ToString());
 
          // Read segment contents from the screen and store them in the texture
          _texture.ReadPixels( new Rect( _viewportX,
                                         _viewportY + (_viewportHeight - _segmentHeight),
-                                        _segmentWidth + 1,
+                                        _segmentWidth,
+//                                        _segmentWidth + 1,
                                         _segmentHeight),
                               _segmentX,
                               _segmentY
@@ -423,5 +425,5 @@ public static class uScriptExportPNG
 //
 //      GUI.Box( _graphBounds, string.Empty );
 //   }
-//
+
 }
