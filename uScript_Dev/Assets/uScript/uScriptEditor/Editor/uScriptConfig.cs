@@ -678,6 +678,9 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(UnityEngine.Camera), "Camera", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Camera[]), "Camera List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Color), "Color", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Color[]), "Color List", "Variables/Lists" ),
+            new uScriptConfigBlock( typeof(UnityEngine.AudioClip), "AudioClip", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.AudioClip[]), "AudioClip List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.GameObject), "GameObject", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.GameObject[]), "GameObject List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(uScript_Lerper.LoopType), "Loop Type", "Variables" ),
@@ -686,10 +689,15 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(UnityEngine.Ray), "Ray", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.RaycastHit), "RaycastHit", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Rect), "Rect", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Rect[]), "Rect List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Texture2D), "Texture2D", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Texture2D[]), "Texture2D List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Vector2), "Vector2", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Vector2[]), "Vector2 List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Vector3), "Vector3", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Vector3[]), "Vector3 List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Vector4), "Vector4", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Vector4[]), "Vector4 List", "Variables/Lists" ),
          };
       }
    }
