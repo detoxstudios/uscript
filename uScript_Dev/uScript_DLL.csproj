@@ -83,6 +83,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptBackgroundProcess.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptConfig.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptExportPNG.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUI.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIContent.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanel.cs" />

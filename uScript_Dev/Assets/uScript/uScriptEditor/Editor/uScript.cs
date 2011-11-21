@@ -26,7 +26,7 @@ public class uScript : EditorWindow
 {
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string BuildNumber { get { return "0.9.1440"; } }
+   public string BuildNumber { get { return "0.9.1458"; } }
 #if FREE_PLE_BUILD
     static string ProductName { get { return "Personal Learning Edition"; } }
 #else

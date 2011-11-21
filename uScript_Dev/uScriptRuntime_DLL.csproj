@@ -12,6 +12,8 @@
     <AssemblyName>uScriptRuntime</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>dr1bbleDrabbl3.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,9 +53,10 @@
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Lerper.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_MasterComponent.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Runtime.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <None Include="dr1bbleDrabbl3.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
