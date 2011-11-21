@@ -1181,11 +1181,9 @@ public class uScript : EditorWindow
                case KeyCode.R:
                   FileMenuItem_ReleaseSave();
                   break;
-#if DEVELOPMENT_BUILD
                case KeyCode.E:
                   FileMenuItem_ExportPNG();
                   break;
-#endif
             }
             e.Use();
             break;
@@ -2402,7 +2400,6 @@ public class uScript : EditorWindow
 
       uScriptGUI.HR();
 
-#if DEVELOPMENT_BUILD
       if (GUILayout.Button(uScriptGUIContent.buttonScriptExportPNG, uScriptGUIStyle.menuDropDownButton))
       {
          FileMenuItem_ExportPNG();
@@ -2410,7 +2407,6 @@ public class uScript : EditorWindow
       DrawMenuItemShortcut("E");
 
       uScriptGUI.HR();
-#endif
 
       if (GUILayout.Button(uScriptGUIContent.buttonScriptsRebuildAll, uScriptGUIStyle.menuDropDownButton))
       {
