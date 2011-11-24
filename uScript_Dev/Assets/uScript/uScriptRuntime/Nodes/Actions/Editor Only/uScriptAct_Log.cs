@@ -9,16 +9,26 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Outputs a string to the debug log.")]
-[NodeDescription("Outputs a string to the debug log.\n \nPrefix: String to print ahead of each attached Target object.\nTarget: Objects to be printed to the console. If multiple are attached, they will all be printed 1 per line as Prefix + Target + Postfix.\nPostfix: String to print after each attached Target object.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Log")]
 
-[FriendlyName("Log")]
+[FriendlyName("Log", "Outputs a string to the debug log.")]
 public class uScriptAct_Log : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In([SocketState(false, false)] object Prefix, object[] Target, [SocketState(false, false)] object Postfix)
+   public void In(
+      [FriendlyName("Prefix", "String to print ahead of each attached Target object.")]
+      [SocketState(false, false)]
+      object Prefix,
+
+      [FriendlyName("Target", "Objects to be printed to the console. If multiple are attached, they will all be printed 1 per line as Prefix + Target + Postfix.")]
+      object[] Target,
+
+      [FriendlyName("Postfix", "String to print after each attached Target object.")]
+      [SocketState(false, false)]
+      object Postfix
+      )
    {
       if (Target.Length > 0)
       {

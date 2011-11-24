@@ -9,17 +9,23 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Destroys the target GameObject.")]
-[NodeDescription("Destroys the target GameObject.\n \nTarget: The target GameObject(s) to destroy.\nDelay: The time to wait before destroying the target object(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Destroy")]
 
-[FriendlyName("Destroy")]
+[FriendlyName("Destroy", "Destroys the target GameObject.")]
 public class uScriptAct_Destroy : uScriptLogic
 {
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, [FriendlyName("Delay"), SocketState(false, false)] float DelayTime)
+   public void In(
+      [FriendlyName("Target", "The target GameObject(s) to destroy.")]
+      GameObject[] Target,
+
+      [FriendlyName("Delay", "The time to wait before destroying the target object(s).")]
+      [SocketState(false, false)]
+      float DelayTime
+      )
    {
       if (DelayTime > 0F)
       {

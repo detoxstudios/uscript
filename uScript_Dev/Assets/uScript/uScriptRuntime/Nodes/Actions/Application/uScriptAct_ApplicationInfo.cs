@@ -9,8 +9,6 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Access to application run-time data.")]
-//[NodeDescription("ReturnsThis class contains static methods for looking up information about and controlling the run-time data." +
-// "  Shows a GUILabel on the screen.\n \nText: The text you want to display. \nPosition: The position and size of the label.\nTexture: The background image to use for the label.\nControl Name: Name to give to this label GUI control.\nTool Tip: The tool tip to display when the label is being hovered over.\nGUI Style: The name of a custom GUI style to use when displaying this label.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Label")]
 

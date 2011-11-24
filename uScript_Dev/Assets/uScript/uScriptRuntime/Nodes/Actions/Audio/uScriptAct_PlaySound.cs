@@ -9,11 +9,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Plays the specified AudioClip on the target GameObject.")]
-[NodeDescription("Plays the specified AudioClip on the target GameObject.\n \nAudio Clip: The AudioClip to play.\nTarget: The GameObject to emit the sound from.\nVolume: The volume level (0.0-1.0) to play the audio clip at.\nLoop: Whether or not to loop the sound.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Play_Sound")]
 
-[FriendlyName("Play Sound")]
+[FriendlyName("Play Sound", "Plays the specified AudioClip on the target GameObject.")]
 public class uScriptAct_PlaySound : uScriptLogic
 {
    private AudioSource []m_AudioSources;
@@ -22,12 +21,8 @@ public class uScriptAct_PlaySound : uScriptLogic
 
    public event System.EventHandler Finished;
 
-   public void Play(
-      [RequiresLink][FriendlyName("Audio Clip")] AudioClip audioClip,
-      [FriendlyName("Target")] GameObject []target,
-      [FriendlyName("Volume"), DefaultValue(1f), SocketState(false, false)] float volume,
-      [FriendlyName("Loop"), SocketState(false, false)] bool loop
-   )
+   // Parameter Attributes are applied below in Stop()
+   public void Play( AudioClip audioClip, GameObject []target, float volume, bool loop )
    {
       m_AudioSources = null;
 
@@ -47,13 +42,9 @@ public class uScriptAct_PlaySound : uScriptLogic
       }
    }
 
+   // Parameter Attributes are applied below in Stop()
    [FriendlyName("Update Volume")]
-   public void UpdateVolume(
-      [RequiresLink][FriendlyName("Audio Clip")] AudioClip audioClip,
-      [FriendlyName("Target")] GameObject []target,
-      [FriendlyName("Volume"), DefaultValue(1f), SocketState(false, false)] float volume, 
-      [FriendlyName("Loop")] bool loop
-   )
+   public void UpdateVolume( AudioClip audioClip, GameObject []target, float volume, bool loop )
    {
       foreach ( AudioSource a in m_AudioSources )
       {
@@ -62,10 +53,20 @@ public class uScriptAct_PlaySound : uScriptLogic
    }
 
    public void Stop(
-      [RequiresLink][FriendlyName("Audio Clip")] AudioClip audioClip,
-      [FriendlyName("Target")] GameObject []target,
-      [FriendlyName("Volume"), DefaultValue(1f), SocketState(false, false)] float volume, 
-      [FriendlyName("Loop")] bool loop
+      [FriendlyName("Audio Clip", "The AudioClip to play.")]
+      [RequiresLink]
+      AudioClip audioClip,
+
+      [FriendlyName("Target", "The GameObject to emit the sound from.")]
+      GameObject []target,
+
+      [FriendlyName("Volume", "The volume level (0.0-1.0) to play the audio clip at.")]
+      [DefaultValue(1f), SocketState(false, false)]
+      float volume,
+
+      [FriendlyName("Loop", "Whether or not to loop the sound.")]
+      [SocketState(false, false)]
+      bool loop
    )
    {
       foreach ( AudioSource a in m_AudioSources )

@@ -9,19 +9,19 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads a Material")]
-[NodeDescription("Loads a Material file from your Resources directory.\n\nAsset Path: The Material file to load.  The supported file format is: \"mat\".\n\nLoaded Asset (out): The Material loaded from the specified file name.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_Material")]
 
-[FriendlyName("Load Material")]
+[FriendlyName("Load Material", "Loads a Material file from your Resources directory.")]
 public class uScriptAct_LoadMaterial : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [AssetPathField(AssetType.Material)]
       [FriendlyName("Asset Path", "The Material file to load.  The supported file format is: \"mat\".")]
+      [AssetPathField(AssetType.Material)]
       string name,
+
       [FriendlyName("Loaded Asset", "The Material loaded from the specified file path.")]
       out Material materialFile
    )

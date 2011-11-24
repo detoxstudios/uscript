@@ -9,29 +9,60 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the world position of a GameObject based around an origin point in the world.")]
-[NodeDescription("Randomly sets the world position of a GameObject based around an origin point in the world.\n \nTarget: The GameObject(s) that the random position is applied to.\nOrigin: The starting location for the random position offset.\nMin(X/Y/Z): Minimum allowable float value.\nMax(X/Y/Z): Maximum allowable float value.\n\nPreserve(Z/Y/Z): If checked, the existing value will be passed into the new position, overriding the random value for that axis. Also not that preserving an axis will also override that axis for the specified Origin.\nAs Offset: This will use the target GameObject's current position as the origin point (Origin is not used when this property is checked).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Set Random Position")]
+[FriendlyName("Set Random Position", "Randomly sets the world position of a GameObject based around an origin point in the world.\n\nNote: Preserving an axis will also override that axis for the specified Origin.")]
 public class uScriptAct_SetRandomPosition : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-	  [FriendlyName("Target")] GameObject[] Target,
-	  [FriendlyName("Origin")] Vector3 Origin,             
-      [FriendlyName("Min X"), DefaultValue(-10f), SocketState(false, false)] float MinX,
-      [FriendlyName("Max X"), DefaultValue(10f), SocketState(false, false)] float MaxX,
-      [FriendlyName("Min Y"), DefaultValue(-10f), SocketState(false, false)] float MinY,
-      [FriendlyName("Max Y"), DefaultValue(10f), SocketState(false, false)] float MaxY,
-      [FriendlyName("Min Z"), DefaultValue(-10f), SocketState(false, false)] float MinZ,
-      [FriendlyName("Max Z"), DefaultValue(10f), SocketState(false, false)] float MaxZ,
-	  [FriendlyName("Preserve X"), SocketState(false, false)] bool PreserveX_Axis, 
-      [FriendlyName("Preserve Y"), SocketState(false, false)] bool PreserveY_Axis,
-      [FriendlyName("Preserve Z"), SocketState(false, false)] bool PreserveZ_Axis,
-	  [FriendlyName("As Offset"), DefaultValue(false), SocketState(false, false)] bool AsOffset
-	  )
+      [FriendlyName("Target", "The GameObject(s) that the random position is applied to.")]
+      GameObject[] Target,
+      
+      [FriendlyName("Origin", "The starting location for the random position offset.")]
+      Vector3 Origin,
+
+      [FriendlyName("Min X", "Minimum allowable float value.")]
+      [DefaultValue(-10f), SocketState(false, false)]
+      float MinX,
+      
+      [FriendlyName("Max X", "Maximum allowable float value.")]
+      [DefaultValue(10f), SocketState(false, false)]
+      float MaxX,
+      
+      [FriendlyName("Min Y", "Minimum allowable float value.")]
+      [DefaultValue(-10f), SocketState(false, false)]
+      float MinY,
+      
+      [FriendlyName("Max Y", "Maximum allowable float value.")]
+      [DefaultValue(10f), SocketState(false, false)]
+      float MaxY,
+      
+      [FriendlyName("Min Z", "Minimum allowable float value.")]
+      [DefaultValue(-10f), SocketState(false, false)]
+      float MinZ,
+      
+      [FriendlyName("Max Z", "Maximum allowable float value.")]
+      [DefaultValue(10f), SocketState(false, false)]
+      float MaxZ,
+
+      [FriendlyName("Preserve X", "If checked, the existing value will be passed into the new position, overriding the random value for this axis.")]
+      [SocketState(false, false)]
+      bool PreserveX_Axis,
+      
+      [FriendlyName("Preserve Y", "If checked, the existing value will be passed into the new position, overriding the random value for this axis.")]
+      [SocketState(false, false)]
+      bool PreserveY_Axis,
+      
+      [FriendlyName("Preserve Z", "If checked, the existing value will be passed into the new position, overriding the random value for this axis.")]
+      [SocketState(false, false)]
+      bool PreserveZ_Axis,
+
+      [FriendlyName("As Offset", "This will use the target GameObject's current position as the origin point (Origin is not used when this property is checked).")]
+      [DefaultValue(false), SocketState(false, false)] bool AsOffset
+      )
    {
       // Make sure we don't have min > max (or other way around)
       if (MinX > MaxX) { MinX = MaxX; }

@@ -10,11 +10,13 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns all the children GameObjects of a parent GameObject.")]
-[NodeDescription("Returns all the children GameObjects of a parent GameObject.\nThe \"Children Found\" output socket will be triggered if at least one child GameObject is found, otherwise the \"Children Not Found\" output socket will be triggered.\n\nVariable Sockets:\nTarget (In): The parent GameObject you wish to search for children GameObjects on.\nSearch In Children (in): Whether or not to return children of children.\nFirst Child (Out): The first child in the list of Children.\nChildren (Out): Assigns found children GameObjects to the attached variable\nChildren Count (Out): Sets the total number of childrenGameObjects found to the attached variable\n\nOutput Sockets:\nOut: The standard output socket (always fired).\nChildren Found: Fired once if at least on child GameObject is found.\nChildren Not Found: Fired once if no child GameObject is found.\n")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_All_Children")]
 
-[FriendlyName("Get All Children")]
+[FriendlyName("Get All Children",
+              "Returns all the child GameObjects of a parent GameObject.\n\n" +
+              "\"Children Found\" will fire if one (or more) child GameObject is found, " +
+              "otherwise \"Children Not Found\" will fire.")]
 public class uScriptAct_GetAllChildren : uScriptLogic
 {
    private bool m_Out = false;
@@ -28,11 +30,23 @@ public class uScriptAct_GetAllChildren : uScriptLogic
    public bool ChildrenNotFound { get { return !m_True; } }
 
    public void In (
-                   [FriendlyName("Target")] GameObject Target,
-                   [FriendlyName("Search In Children"), SocketState(false, false), DefaultValue(false)] bool recursive,
-                   [FriendlyName("First Child")] out GameObject FirstChild,
-                   [FriendlyName("Children")] out GameObject[] Children,
-                   [FriendlyName("Children Count"), SocketState(false, false)] out int ChildrenCount)
+      [FriendlyName("Target", "The parent GameObject you wish to search for children GameObjects on.")]
+      GameObject Target,
+
+      [FriendlyName("Search In Children", "Whether or not to return children of children.")]
+      [SocketState(false, false), DefaultValue(false)]
+      bool recursive,
+
+      [FriendlyName("First Child", "The first child in the list of Children.")]
+      out GameObject FirstChild,
+
+      [FriendlyName("Children", "Assigns found child GameObjects to the attached variable.")]
+      out GameObject[] Children,
+      
+      [FriendlyName("Children Count", "Sets the total number of child GameObjects found to the attached variable.")]
+      [SocketState(false, false)]
+      out int ChildrenCount
+      )
    {
       m_Out = false;
       m_True = false;

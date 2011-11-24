@@ -9,18 +9,23 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Stop all animation on the target GameObjects.")]
-[NodeDescription("Stop and rewinds all animations on the target GameObjects. Optionaly you can specify an animation name to stop and rewind just that animation on the target GameObjects.\n \nTarget: The Target GameObject(s) you wish to stop animations on.\nAnimation Name: Optionally provide an animation name to just stop a specific animation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Stop Animation")]
+[FriendlyName("Stop Animation", "Stop and rewinds all animations on the target GameObjects. You can specify an optional animation name to stop and rewind just that animation on the target GameObjects.")]
 public class uScriptAct_StopAnimation : uScriptLogic
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, [FriendlyName("Animation Name"), SocketState(false, false)] string AnimationName)
+   public void In(
+      [FriendlyName("Target", "The target GameObject(s) you wish to stop animations on.")]
+      GameObject[] Target,
+
+      [FriendlyName("Animation Name", "(optional) Provide an animation name to just stop a specific animation.")]
+      [SocketState(false, false)]
+      string AnimationName)
    {
 
       foreach ( GameObject currentTarget in Target )

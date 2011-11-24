@@ -9,21 +9,26 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Get the list of animation names on the target GameObject.")]
-[NodeDescription("Get the list of animation names on the target GameObject.\n \nTarget: The Target GameObject with the animations.\nFilter: An optional string used to filter the returned animations to ones that contain this string.\nAnimations (out): The list of animations as a String List variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Get Animations")]
+[FriendlyName("Get Animations", "Get the list of animation names on the target GameObject.")]
 public class uScriptAct_GetAnimations : uScriptLogic
 {
    private string[] m_Animations;
    public bool Out { get { return true; } }
 
    public void In(
+      [FriendlyName("Target", "The target GameObject with the animations.")]
       GameObject Target,
-      [FriendlyName("Filter"), SocketState(false, false)] string Filter,
-      [FriendlyName("Animations")] out string[] Animations
-	  )
+
+      [FriendlyName("Filter", "(optional) A string used to filter the returned animations to ones that contain this string.")]
+      [SocketState(false, false)]
+      string Filter,
+
+      [FriendlyName("Animations", "The list of animations as a String List variable.")]
+      out string[] Animations
+      )
    {
 		
 		Animation anims = (Animation)Target.GetComponent("Animation");

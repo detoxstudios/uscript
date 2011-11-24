@@ -9,16 +9,25 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Assigns the specified Material to the GameObject.")]
-[NodeDescription("Assigns the specified Material (by name) to the GameObject on the specifed material channel.\n \nTarget: The GameObject(s) to assign the material to.\nMaterial: The filename of the material to assign.\nMaterial Channel: The material channel of the object to assign the material to.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Assign_Material")]
 
-[FriendlyName("Assign Material")]
+[FriendlyName("Assign Material", "Assigns the specified Material (by name) to the GameObject on the specifed material channel.")]
 public class uScriptAct_AssignMaterial : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, [FriendlyName("Material")]Material materialName, [FriendlyName("Material Channel"), SocketState(false, false)]int MatChannel)
+   public void In(
+      [FriendlyName("Target", "The GameObject(s) to assign the material to.")]
+      GameObject[] Target,
+
+      [FriendlyName("Material", "The filename of the material to assign.")]
+      Material materialName,
+
+      [FriendlyName("Material Channel", "The material channel of the object to assign the material to.")]
+      [SocketState(false, false)]
+      int MatChannel
+      )
    {
       
       foreach (GameObject tmpTarget in Target)

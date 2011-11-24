@@ -9,11 +9,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Rotates the target GameObject by a number of degrees over X seconds.")]
-[NodeDescription("Rotates the target GameObject by a number of degrees over X seconds.\n \nTarget: The Target GameObject(s) to rotate.\nDegrees: The number of degrees to rotate.\nAxis: The axis to rotate around.\nSeconds: The number of seconds to complete the full rotation.\nLoop: Whether or not to loop the rotation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Rotate")]
 
-[FriendlyName("Rotate")]
+[FriendlyName("Rotate", "Rotates the target GameObject by a number of degrees over X seconds.")]
 public class uScriptAct_Rotate : uScriptLogic
 {
    GameObject[] m_Target;
@@ -28,11 +27,22 @@ public class uScriptAct_Rotate : uScriptLogic
    public bool Out { get { return true; } }
    
    public void In(
+      [FriendlyName("Target", "The Target GameObject(s) to rotate.")]
       GameObject[] Target,
+      
+      [FriendlyName("Degrees", "The number of degrees to rotate.")]
       float Degrees,
-      string Axis, 
+      
+      [FriendlyName("Axis", "The axis to rotate around.")]
+      string Axis,
+      
+      [FriendlyName("Seconds", "The number of seconds to complete the full rotation.")]
       float Seconds,
-      [SocketState(false, false)] bool Loop)
+      
+      [FriendlyName("Loop", "Whether or not to loop the rotation.")]
+      [SocketState(false, false)]
+      bool Loop
+      )
    {
       m_Target = new GameObject[Target.Length];
       m_TargetTransforms = new Quaternion[Target.Length];

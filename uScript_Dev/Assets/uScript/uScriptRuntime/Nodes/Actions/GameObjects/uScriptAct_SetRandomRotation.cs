@@ -9,27 +9,54 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the rotation of a GameObject.")]
-[NodeDescription("Randomly sets the rotation of a GameObject.\n \nTarget: The GameObject(s) that the random rotation is applied to.\nMin Angle(X/Y/Z): Minimum allowable angle. (0-360 degrees)\nMax Angle(X/Y/Z): Maximum allowable angle. (0-360 degrees)\nPreserve(X/Y/Z): If checked, the existing value will be passed into the new rotation, overriding the random value for that axis.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Set Random Rotation")]
+[FriendlyName("Set Random Rotation", "Randomly sets the rotation of a GameObject.")]
 public class uScriptAct_SetRandomRotation : uScriptLogic
 {
    public bool Out { get { return true; } }
 	
    public void In(
-      GameObject[] Target, 
-	  [FriendlyName("Min Angle X"), DefaultValue(0f), SocketState(false, false)] float MinX,
-      [FriendlyName("Max Angle X"), DefaultValue(360f), SocketState(false, false)] float MaxX,
-      [FriendlyName("Min Angle Y"), DefaultValue(0f), SocketState(false, false)] float MinY,
-      [FriendlyName("Max Angle Y"), DefaultValue(360f), SocketState(false, false)] float MaxY,
-      [FriendlyName("Min Angle Z"), DefaultValue(0f), SocketState(false, false)] float MinZ,
-      [FriendlyName("Max Angle Z"), DefaultValue(360f), SocketState(false, false)] float MaxZ,                      
-      [FriendlyName("Preserve X"), SocketState(false, false)] bool PreserveX_Axis, 
-      [FriendlyName("Preserve Y"), SocketState(false, false)] bool PreserveY_Axis,
-      [FriendlyName("Preserve Z"), SocketState(false, false)] bool PreserveZ_Axis
-	  )
+      [FriendlyName("Target", "The GameObject(s) that the random rotation is applied to.")]
+      GameObject[] Target,
+
+      [FriendlyName("Min Angle X", "Minimum allowable angle. (0-360 degrees)")]
+      [DefaultValue(0f), SocketState(false, false)]
+      float MinX,
+      
+      [FriendlyName("Max Angle X", "Maximum allowable angle. (0-360 degrees)")]
+      [DefaultValue(360f), SocketState(false, false)]
+      float MaxX,
+      
+      [FriendlyName("Min Angle Y", "Minimum allowable angle. (0-360 degrees)")]
+      [DefaultValue(0f), SocketState(false, false)]
+      float MinY,
+      
+      [FriendlyName("Max Angle Y", "Maximum allowable angle. (0-360 degrees)")]
+      [DefaultValue(360f), SocketState(false, false)]
+      float MaxY,
+      
+      [FriendlyName("Min Angle Z", "Minimum allowable angle. (0-360 degrees)")]
+      [DefaultValue(0f), SocketState(false, false)]
+      float MinZ,
+      
+      [FriendlyName("Max Angle Z", "Maximum allowable angle. (0-360 degrees)")]
+      [DefaultValue(360f), SocketState(false, false)]
+      float MaxZ,
+
+      [FriendlyName("Preserve X", "If checked, the existing value will be passed into the new rotation, overriding the random value for this axis.")]
+      [SocketState(false, false)]
+      bool PreserveX_Axis,
+
+      [FriendlyName("Preserve Y", "If checked, the existing value will be passed into the new rotation, overriding the random value for this axis.")]
+      [SocketState(false, false)]
+      bool PreserveY_Axis,
+      
+      [FriendlyName("Preserve Z", "If checked, the existing value will be passed into the new rotation, overriding the random value for this axis.")]
+      [SocketState(false, false)]
+      bool PreserveZ_Axis
+      )
    {
 		
 	  // Make sure we don't have min > max (or other way around)

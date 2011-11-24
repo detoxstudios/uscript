@@ -9,7 +9,6 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads a GUISkin")]
-[NodeDescription("Loads a GUISkin file from your Resources directory.\n\nAsset Path: The GUISkin file to load.  The supported file format is: \"guiSkin\".\n\nLoaded Asset (out): The GUISkin loaded from the specified file path.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_GUISkin")]
 
@@ -19,9 +18,10 @@ public class uScriptAct_LoadGUISkin : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [AssetPathField(AssetType.GUISkin)]
       [FriendlyName("Asset Path", "The GUISkin file to load.  The supported file format is: \"guiSkin\".")]
+      [AssetPathField(AssetType.GUISkin)]
       string name,
+
       [FriendlyName("Loaded Asset", "The GUISkin loaded from the specified file path.")]
       out GUISkin asset
    )

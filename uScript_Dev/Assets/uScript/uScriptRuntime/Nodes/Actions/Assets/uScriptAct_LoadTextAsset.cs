@@ -9,7 +9,6 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads a TextAsset")]
-//[NodeDescription("Loads a TextAsset file from your Resources directory.  Binary files can be loaded as a TextAsset, but they must use the \"bytes\" file extension\n\nAsset Path: The TextAsset file to load.  The supported file formats are: \"txt\", \"htm\", \"html\", \"xml\", and \"bytes\".\n\nLoaded Asset (out): The TextAsset loaded from the specified file.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_TextAsset")]
 
@@ -19,8 +18,8 @@ public class uScriptAct_LoadTextAsset : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [AssetPathField(AssetType.TextAsset)]
       [FriendlyName("Asset Path", "The TextAsset file to load.  The supported text formats are: \"txt\", \"htm\", \"html\", \"xml\", and \"bytes\".")]
+      [AssetPathField(AssetType.TextAsset)]
       string name,
 
       [FriendlyName("Loaded Asset", "The TextAsset loaded from the specified file path.")]

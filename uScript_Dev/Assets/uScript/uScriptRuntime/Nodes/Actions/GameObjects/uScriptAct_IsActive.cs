@@ -9,11 +9,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the active state of a GameObject.")]
-[NodeDescription("Gets the active state of a GameObject.\n \nTarget: GameObject to get the active state of.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Is_Active")]
 
-[FriendlyName("Is GameObject Active")]
+[FriendlyName("Is GameObject Active", "Gets the active state of a GameObject.")]
 public class uScriptAct_IsActive : uScriptLogic
 {
    private bool m_IsActive;
@@ -24,7 +23,10 @@ public class uScriptAct_IsActive : uScriptLogic
 
    public bool Inactive { get { return !m_IsActive; } }
 
-   public void In(GameObject Target)
+   public void In(
+      [FriendlyName("Target", "GameObject to get the active state of.")]
+      GameObject Target
+      )
    {
       m_IsActive = Target.active;
    }

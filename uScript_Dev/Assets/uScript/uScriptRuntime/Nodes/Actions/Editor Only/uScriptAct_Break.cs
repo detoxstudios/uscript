@@ -9,11 +9,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Pauses the game and spits out the game time and an optional text string to Unity's console.")]
-[NodeDescription("Pauses the game and spits out the game time and an optional text string to Unity's console. Restart the game by pressing the Play button in the Unity editor.\nData: Optional output for the Unity console when the break is triggered. Good for passing a vairable value or string at the time of the break.\nBreak Time: The time when the break was triggered (Time.time).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Break")]
+[FriendlyName("Break", "Pauses the game and spits out the game time and an optional text string to Unity's console. Restart the game by pressing the Play button in the Unity editor.")]
 public class uScriptAct_Break : uScriptLogic
 {
    private bool m_DelayedOut = false;
@@ -21,7 +20,13 @@ public class uScriptAct_Break : uScriptLogic
    [FriendlyName("Out")]
    public bool AfterDelay { get { return m_DelayedOut; } }
 
-   public void In([FriendlyName("Data")] object LogOuput, [FriendlyName("Break Time")] out float breakTime)
+   public void In(
+      [FriendlyName("Data", "Optional output for the Unity console when the break is triggered. Good for passing a vairable value or string at the time of the break.")]
+      object LogOuput,
+
+      [FriendlyName("Break Time", "The time when the break was triggered (Time.time).")]
+      out float breakTime
+      )
    {
       m_DelayedOut = false;
 

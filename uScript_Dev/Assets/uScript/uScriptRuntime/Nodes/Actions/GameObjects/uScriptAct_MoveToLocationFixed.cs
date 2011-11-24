@@ -9,11 +9,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Moves a GameObject to a Vector3 Location.")]
-[NodeDescription("Moves a GameObject to a Vector3 Location.\n \nTargets: The Target GameObject(s) to be moved.\nEnd Location: The ending location to move the Targets to.\nUse as Offset: Whether or not to treat End Location as an offset, rather than an absolute position.\nSpeed: The units per second you wish your object to move.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Move_To_Location")]
 
-[FriendlyName("Move To Location Fixed")]
+[FriendlyName("Move To Location Fixed", "Moves a GameObject to a Vector3 Location.")]
 public class uScriptAct_MoveToLocationFixed : uScriptLogic
 {
    public bool Out { get { return true; } }
@@ -28,11 +27,20 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
 
 
    public void In(
-      [FriendlyName("Target")] GameObject[] targetArray, 
-      [FriendlyName("End Location")] Vector3 location, 
-      [FriendlyName("Use as Offset"), SocketState(false, false)] bool asOffset, 
-      [FriendlyName("Speed"), DefaultValue(1.0f)] float speed
-   )
+      [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
+      GameObject[] targetArray,
+      
+      [FriendlyName("End Location", "The ending location to move the Targets to.")]
+      Vector3 location,
+      
+      [FriendlyName("Use as Offset", "Whether or not to treat End Location as an offset, rather than an absolute position.")]
+      [SocketState(false, false)]
+      bool asOffset,
+      
+      [FriendlyName("Speed", "The units per second you wish your object to move.")]
+      [DefaultValue(1.0f)]
+      float speed
+      )
    {
       m_Speed = speed;
 

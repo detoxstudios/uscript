@@ -9,19 +9,24 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns the value of the specified Key from the preference file if it exists.")]
-[NodeDescription("Returns the value of the specified Key from the preference file if it exists.\n\nKey Name: The name of the preference key you wish to get the value for.\nDefault Value: Optional. Allows you to specify a value to return if the actual value is not found. Will return (0,0,0,0) if not specified.\nValue: The returned key value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Log")]
 
-[FriendlyName("Get Preference Key (Rect)")]
+[FriendlyName("Get Preference Key (Rect)", "Returns the value of the specified Key from the preference file if it exists.")]
 public class uScriptAct_GetPreferenceKeyRect : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Key Name")] string KeyName,
-      [FriendlyName("Default Value")] Rect DefaultValue,
-      [FriendlyName("Value")] out Rect Value)
+      [FriendlyName("Key Name", "The name of the preference key you wish to get the value for.")]
+      string KeyName,
+
+      [FriendlyName("Default Value", "Optional. Allows you to specify a value to return if the actual value is not found. Will return (0,0,0,0) if not specified.")]
+      Rect DefaultValue,
+
+      [FriendlyName("Value", "The returned key value.")]
+      out Rect Value
+      )
    {
 		
 		string stringValue = PlayerPrefs.GetString(KeyName);

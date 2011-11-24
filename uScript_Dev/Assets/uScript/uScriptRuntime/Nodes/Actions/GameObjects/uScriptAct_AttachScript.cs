@@ -9,17 +9,22 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Attaches a script or component to a GameObject.")]
-[NodeDescription("Attaches a script or component to a GameObject. To remove Components, use the Destroy Component node.\n\nTarget: The GameObject(s) to attach the script to.\nComponent Name: The name of the component or script filename to attach to the specified GameObject(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Attach Component")]
+[FriendlyName("Attach Component", "Attaches a script or component to a GameObject. To remove Components, use the Destroy Component node.")]
 public class uScriptAct_AttachScript : uScriptLogic
 {
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, [FriendlyName("Component Name")] string[] ScriptName)
+   public void In(
+      [FriendlyName("Target", "The GameObject(s) to attach the script to.")]
+      GameObject[] Target,
+      
+      [FriendlyName("Component Name", "The names of the components or script filenames to attach to the specified GameObject(s).")]
+      string[] ScriptName
+      )
    {
       foreach ( string currentScript in ScriptName )
       {

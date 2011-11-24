@@ -9,11 +9,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Play the specified animation on the target object.")]
-[NodeDescription("Play the specified animation on the target object.\n \nTarget: The Target GameObject(s) to play the animation on.\nAnimation: The name of the animation to play. Animation must exist in the GameObject's AnimationClip.\nSpeed Factor: The speed at which to play the animation.\nWrap Mode: Specifies what should happen at the end of the animation.\nStop Other Animation: Stop any currently playing animations before playing this one.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Play_Animation")]
 
-[FriendlyName("Play Animation")]
+[FriendlyName("Play Animation", "Play the specified animation on the target object.")]
 public class uScriptAct_PlayAnimation : uScriptLogic
 {
    private GameObject m_GameObject = null;
@@ -27,10 +26,23 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    public event uScriptEventHandler Finished;
 
    public void In(
-      GameObject[] Target, string Animation,
-      [FriendlyName("Speed Factor"), DefaultValue(1f), SocketState(false, false)] float SpeedFactor, 
-      [FriendlyName("Wrap Mode"), SocketState(false, false)] WrapMode AnimWrapMode,
-      [FriendlyName("Stop Other Animation"), DefaultValue(true), SocketState(false, false)] bool StopOtherAnimations)
+      [FriendlyName("Target", "The target GameObject(s) to play the animation on.")]
+      GameObject[] Target,
+
+      [FriendlyName("Animation", "The name of the animation to play. Animation must exist in the GameObject's AnimationClip.")]
+      string Animation,
+
+      [FriendlyName("Speed Factor", "The speed at which to play the animation.")]
+      [DefaultValue(1f), SocketState(false, false)]
+      float SpeedFactor,
+
+      [FriendlyName("Wrap Mode", "Specifies what should happen at the end of the animation.")]
+      [SocketState(false, false)]
+      WrapMode AnimWrapMode,
+
+      [FriendlyName("Stop Other Animation", "Stop any currently playing animations before playing this one.")]
+      [DefaultValue(true), SocketState(false, false)]
+      bool StopOtherAnimations)
    {
       m_GameObject = null;
 

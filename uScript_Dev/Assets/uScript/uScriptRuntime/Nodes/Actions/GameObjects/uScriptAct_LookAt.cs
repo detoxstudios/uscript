@@ -9,15 +9,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Tells a GameObject to look at another GameObject transform or Vector3 position.")]
-[NodeDescription("Tells a GameObject (target) to look at another GameObject (focus) transform or Vector3 position in a specified amount of time (seconds).\n \n" +
-                  "Target: The Target GameObject(s) whose look direction will be adjusted.\n" + 
-                  "Focus: The item to focus on - can be a Vector3 position or a GameObject.\n" +
-                  "Seconds: The amount of time (in seconds) it takes to complete the look.  Use 0 for an instantaneous look.\n")]
-
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Look_At")]
 
-[FriendlyName("Look At")]
+[FriendlyName("Look At", "Tells a GameObject (target) to look at another GameObject (focus) transform or Vector3 position in a specified amount of time (seconds).")]
 public class uScriptAct_LookAt : uScriptLogic
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
@@ -36,9 +31,14 @@ public class uScriptAct_LookAt : uScriptLogic
    private Vector3      m_FocusPosition;
 
    public void In(
-      GameObject[] Target, 
+      [FriendlyName("Target", "The Target GameObject(s) whose look direction will be adjusted.")]
+      GameObject[] Target,
+      
+      [FriendlyName("Focus", "The item to focus on - can be a Vector3 position or a GameObject.")]
       object Focus,
-      [FriendlyName("Seconds")] float time
+
+      [FriendlyName("Seconds", "The amount of time (in seconds) it takes to complete the look.  Use 0 for an instantaneous look.")]
+      float time
       )
    {
       if (Focus != null)

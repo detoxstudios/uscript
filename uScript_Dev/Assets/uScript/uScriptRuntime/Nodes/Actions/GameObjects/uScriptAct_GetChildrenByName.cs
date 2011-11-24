@@ -10,11 +10,13 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns the children GameObjects of a parent GameObject with the specified name.")]
-[NodeDescription("Returns the children GameObjects of a parent GameObject with the specified name. The \"Children Found\" output socket will be triggered if at least one child GameObject matching the name is found, otherwise the \"Children Not Found\" output socket will be triggered.\n\nVariable Sockets:\nTarget (In): The parent GameObject you wish to search for children GameObjects on.\nName (In): The name of the child GameObject you are looking for.\nSearch Type (In): Use this to specify your search criteria:\n\tMatches - The Name specified must match exactly that of the child GameObject\n\tInclusive - The Name specified must be included within the full name of the child GameObject\n\tExclusive - The Name specified must not be found within the full name of the child GameObject\nSearch In Children (in): Whether or not to return children of children.\nFirst Child (Out): The first child in the list of Children.\nChildren (Out): Assigns found children GameObjects to the attached variable\nChildren Count (Out): Sets the total number of childrenGameObjects found to the attached variable\n\nOutput Sockets:\nOut: The standard output socket (always fired).\nChildren Found: Fired once if at least on child GameObject is found.\nChildren Not Found: Fired once if no child GameObject is found.\n")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Children_By_Name")]
 
-[FriendlyName("Get Children By Name")]
+[FriendlyName("Get Children By Name",
+              "Searches the target GameObject for children using the specified name.\n\n" +
+              "\"Children Found\" will fire if one (or more) child GameObject is found matching " +
+              "the search criteria, otherwise \"Children Not Found\" will fire.")]
 public class uScriptAct_GetChildrenByName : uScriptLogic
 {
 	private bool m_Out = false;
@@ -35,14 +37,33 @@ public class uScriptAct_GetChildrenByName : uScriptLogic
 	}
 
 	public void In (
-                   [FriendlyName("Target")] GameObject Target,
-                   [FriendlyName("Name")] string Name,
-                   [FriendlyName("Search Type"), SocketState(false, false)] SearchType SearchMethod,
-                   [FriendlyName("Search In Children"), SocketState(false, false), DefaultValue(false)] bool recursive,
-                   [FriendlyName("First Child")] out GameObject FirstChild,
-                   [FriendlyName("Children")] out GameObject[] Children,
-                   [FriendlyName("Children Count"), SocketState(false, false)] out int ChildrenCount
-                   )
+      [FriendlyName("Target", "The parent GameObject you wish to search for children GameObjects on.")]
+      GameObject Target,
+      
+      [FriendlyName("Name", "The name of the child GameObject you are looking for.")]
+      string Name,
+
+      [FriendlyName("Search Type", "Use this to specify your search criteria:\n\n" +
+       "\t- Matches: The Name specified must match exactly that of the child GameObject\n\n" +
+       "\t- Inclusive: The Name specified must be included within the full name of the child GameObject\n\n" +
+       "\t- Exclusive: The Name specified must not be found within the full name of the child GameObject")]
+      [SocketState(false, false)]
+      SearchType SearchMethod,
+
+      [FriendlyName("Search In Children", "Whether or not to return children of children.")]
+      [SocketState(false, false), DefaultValue(false)]
+      bool recursive,
+
+      [FriendlyName("First Child", "The first child in the list of Children.")]
+      out GameObject FirstChild,
+
+      [FriendlyName("Children", "Assigns found child GameObjects to the attached variable.")]
+      out GameObject[] Children,
+
+      [FriendlyName("Children Count", "Sets the total number of child GameObjects found to the attached variable.")]
+      [SocketState(false, false)]
+      out int ChildrenCount
+      )
 	{
 		m_Out = false;
 		m_True = false;

@@ -13,11 +13,12 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Access different elements in a GameObject List. Can access first, last, random or by index.")]
-[NodeDescription("Access different elements in a GameObject List. Can access first, last, random or by index.\n \nGameObject List: The list of GameObjects to operate on.\nIndex: The desired index to select (only used for the At Index input).\nSelected GameObject (out): The GameObject selected by this node.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Access_GameObject_List")]
 
-[FriendlyName("Access GameObject List")]
+//[NodeDescription("GameObject List: The list of GameObjects to operate on.\nIndex: The desired index to select (only used for the At Index input).\nSelected GameObject (out): The GameObject selected by this node.")]
+
+[FriendlyName("Access GameObject List", "Access different elements in a GameObject List. Can access first, last, random or by index.")]
 public class uScriptAct_AccessObjectList : uScriptLogic
 {
    public bool Out { get { return true; } }

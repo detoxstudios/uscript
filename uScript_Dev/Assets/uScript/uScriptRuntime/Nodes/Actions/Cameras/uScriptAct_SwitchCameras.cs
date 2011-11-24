@@ -9,20 +9,24 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Switches from 'From Camera' to 'To Camera'.")]
-[NodeDescription("Disables the 'From' GameObject camera and enables the 'To' GameObject camera. Good for switching from one main camera to another.\n\n\tFrom: The GameObject containing the camera to switch from.\n\n\tTo: The GameObject containing the camera to switch to.\n\n\tEnable AudioListener: Whether or not to enable the 'To' camera's AudioListener component (if it has one).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Switch_Cameras")]
 
-[FriendlyName("Switch Cameras")]
+[FriendlyName("Switch Cameras", "Disables the 'From' GameObject camera and enables the 'To' GameObject camera. Good for switching from one main camera to another.")]
 public class uScriptAct_SwitchCameras : uScriptLogic
 {
-
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("From")] GameObject FromCamera,
-      [FriendlyName("To")] GameObject Target,
-      [FriendlyName("Enable AudioListener"), DefaultValue(true), SocketState(false, false)] bool EnableAudioListener
+      [FriendlyName("From", "The GameObject containing the camera to switch from.")]
+      GameObject FromCamera,
+      
+      [FriendlyName("To", "The GameObject containing the camera to switch to.")]
+      GameObject Target,
+      
+      [FriendlyName("Enable AudioListener", "Whether or not to enable the 'To' camera's AudioListener component (if it has one).")]
+      [DefaultValue(true), SocketState(false, false)]
+      bool EnableAudioListener
       )
    {
       if (FromCamera != null && Target != null)
