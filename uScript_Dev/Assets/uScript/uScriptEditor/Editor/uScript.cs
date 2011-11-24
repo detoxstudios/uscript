@@ -5,7 +5,6 @@
 //#define FREE_PLE_BUILD // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
 //#define FREE_BETA_BUILD
 
-
 using UnityEngine;
 using UnityEditor;
 using Detox.ScriptEditor;
@@ -22,8 +21,18 @@ using Detox.FlowChart;
 using System.IO;
 using System.Collections.ObjectModel;
 
+public class ComplexData
+{
+}
+
+
 public class uScript : EditorWindow
 {
+   private bool m_Launched;
+
+   //complex class which Unity will not serialize
+   //so if it goes null I know the app domain has been rebuilt
+   private ComplexData m_ComplexData = null;
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
    public string BuildNumber { get { return "0.9.1458"; } }
@@ -84,12 +93,17 @@ public class uScript : EditorWindow
 
    private Detox.FlowChart.Node m_FocusedNode = null;
 
-   public static Hashtable m_NodeParameterFields = new Hashtable( );
-   public static Hashtable m_RequiresLink = new Hashtable( );
-   static public Preferences Preferences = new Preferences();
-   static private AppFrameworkData m_AppData = new AppFrameworkData();
-   static private bool m_SettingsLoaded = false;
-   private double m_RefreshTimestamp = -1.0;
+   private Hashtable    m_EntityTypeHash = null;
+   private EntityDesc []m_EntityTypes = null;
+   private LogicNode  []m_LogicTypes  = null;
+
+   private static Hashtable m_NodeParameterFields = new Hashtable( );
+   private static Hashtable m_RequiresLink = new Hashtable( );  
+   private static AppFrameworkData m_AppData = new AppFrameworkData();
+   public static  Preferences Preferences = new Preferences();
+
+
+   //   private double m_RefreshTimestamp = -1.0;
 
    // Used for double-click hack in uScripts panel
    private double clickTime;
@@ -254,9 +268,6 @@ public class uScript : EditorWindow
 
    public string CurrentScript = null;
    public string CurrentScriptName = "";
-   public string CurrentScene = "";
-
-
 
 
    public bool IsAttachedToMaster
@@ -303,7 +314,33 @@ public class uScript : EditorWindow
    static void Init()
    {
       s_Instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
-      s_Instance.wantsMouseMove = true;
+      s_Instance.Launching( );
+   }
+
+   private void Launching( )
+   {
+      if ( null != m_ComplexData ) return;
+
+      //Debug.Log( "Launching" );
+
+      if ( false == m_Launched )
+      {
+         LaunchingFromUnity( );
+         m_Launched = true;
+      }
+      else
+      {
+         RelaunchingFromRebuiltAppDomain( );
+      }
+   }
+
+   private void LaunchingFromUnity( )
+   {
+      uScriptDebug.Log("Launching From Unity.", uScriptDebug.Type.Debug );
+
+      LoadSettings();
+
+      wantsMouseMove = true;
 
       System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.RootFolder);
       System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.uScriptNodes);
@@ -328,30 +365,137 @@ public class uScript : EditorWindow
 				System.IO.File.Copy( file.FullName, gizmos + "/" + file.Name, false );
 			}
       }
+
+      //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
+      //we don't save the fully qualified type name which is required to return types of assemblies not loaded
+      List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(GameObject.FindObjectsOfType(typeof(UnityEngine.Object)));
+
+      foreach (UnityEngine.Object o in allObjects)
+      {
+         MasterComponent.AddType(o.GetType());
+      }
+
+      foreach (uScriptConfigBlock b in uScriptConfig.Variables)
+      {
+         MasterComponent.AddType(b.Type);
+      }
+
+      String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
+      String lastScene  = (String)uScript.GetSetting("uScript\\LastScene", "");
+      if (!String.IsNullOrEmpty(lastOpened) && lastScene == UnityEditor.EditorApplication.currentScene)
+      {
+         m_FullPath = UnityEngine.Application.dataPath + lastOpened;
+      }
+
+      //clear any old script undo data laying around
+      MasterComponent.Script = null;
+      MasterComponent.ScriptName = null;
+      UnityEditor.Undo.ClearUndo(MasterComponent);
+
+      if ("" != m_FullPath)
+      {
+         if ( false == OpenScript(m_FullPath) )
+         {
+            m_FullPath = "";
+         }
+      }
+
+      if ( "" == m_FullPath )
+      {
+         OpenFromMasterComponent( );
+      }
+      
+      m_ComplexData = new ComplexData( );
+
+      Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
+
+      _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
+      _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
+
+      uScriptBackgroundProcess.ForceFileRefresh();
+   }
+
+   private void RelaunchingFromRebuiltAppDomain( )
+   {
+      uScriptDebug.Log("Relaunching from Rebuilt AppDomain", uScriptDebug.Type.Debug );
+
+      LoadSettings();
+
+      m_ComplexData = new ComplexData( );
+
+      OpenFromMasterComponent( );
+
+      uScriptBackgroundProcess.ForceFileRefresh();
+   }
+
+   private void OpenFromMasterComponent( )
+   {
+      m_ScriptEditorCtrl = null;
+
+      #if FREE_BETA_BUILD // See if expiration date and build cap should be used. Not needed for commercial version.
+       {
+            //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
+            if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild))
+            {
+            }
+            else
+            {
+               uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
+               return;
+            }
+         
+   	
+            if (DateTime.Now > ExpireDate)
+            {
+               uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "has expired. Please use the free Personal Learning Edition (PLE) to continue to evaluate uScript.\n", uScriptDebug.Type.Error);
+               return;
+            }
+            else
+            {
+               uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
+            }
+       }
+      #endif
+
+
+
+      ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
+
+      if (!String.IsNullOrEmpty(MasterComponent.Script))
+      {
+         scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script);
+      }
+
+      Point loc = Point.Empty;
+      if (false == String.IsNullOrEmpty(m_CurrentCanvasPosition))
+      {
+         loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))),
+                         Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
+      }
+
+      m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor, loc);
+      m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
+
+      m_ScriptEditorCtrl.BuildContextMenu();
+      uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
+
+      CurrentScript = MasterComponent.Script;
+      CurrentScriptName = MasterComponent.ScriptName;
    }
 
    static public object GetSetting(string key)
    {
-      if (!m_SettingsLoaded) LoadSettings();
-      m_SettingsLoaded = true;
-
       return m_AppData.Get(key);
    }
 
    static public object GetSetting(string key, object defaultValue)
    {
-      if (!m_SettingsLoaded) LoadSettings();
-      m_SettingsLoaded = true;
-
       object value = m_AppData.Get(key);
       return null != value ? value : defaultValue;
    }
 
    static public void SetSetting(string key, object value)
    {
-      if (!m_SettingsLoaded) LoadSettings();
-      m_SettingsLoaded = true;
-
       m_AppData.Set(key, value);
       m_AppData.Save(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
    }
@@ -421,6 +565,15 @@ public class uScript : EditorWindow
 
    void Update()
    {
+      if ( null == m_ComplexData )
+      {
+         RelaunchingFromRebuiltAppDomain( );
+         return;
+      }
+
+      if ( null == m_ScriptEditorCtrl ) return;
+
+
 #if (!UNITY_STORE_BUILD)
       // Initialize the LicenseWindow here if needed. Doing it during OnGUI may
       // cause issues, such as null exception errors and reports that OnGUI calls
@@ -512,19 +665,7 @@ public class uScript : EditorWindow
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
 
-      // Initialization
-      //
-
-      if (EditorApplication.currentScene != CurrentScene)
-      {
-         MasterComponent.Script = CurrentScript;
-         MasterComponent.ScriptName = CurrentScriptName;
-      }
-      CurrentScene = EditorApplication.currentScene;
-
       //force a rebuild if undo was performed
-      bool rebuildScript = false;
-
       if (null != MasterComponent && CurrentScript != MasterComponent.Script )
       {
          //it's possible these will not equal, which means a different script is being undone then the one loaded
@@ -538,185 +679,14 @@ public class uScript : EditorWindow
          //is different then the current script, but it wasn't due to a user undo action
          if ( null == CurrentScriptName || CurrentScriptName == MasterComponent.ScriptName )
          {
-            rebuildScript = true;
+            OpenFromMasterComponent( );
          }
       }
 
       if (_wasHierarchyChanged)
       {
          _wasHierarchyChanged = false;
-         rebuildScript = true;
-      }
-
-      if (null == m_ScriptEditorCtrl || true == rebuildScript)
-      {
-         if (null == m_ScriptEditorCtrl)
-         {
-#if FREE_BETA_BUILD // See if expiration date and build cap should be used. Not needed for commercial version.
-		       {
-	               //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
-	               if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild))
-	               {
-	               }
-	               else
-	               {
-	                  uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
-	                  return;
-	               }
-               
-   			
-                  if (DateTime.Now > ExpireDate)
-                  {
-                     uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "has expired. Please use the free Personal Learning Edition (PLE) to continue to evaluate uScript.\n", uScriptDebug.Type.Error);
-                     return;
-                  }
-                  else
-                  {
-                     uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
-                  }
-			    }
-#endif
-         }
-
-         m_ScriptEditorCtrl = null;
-
-         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-         if (null == uScriptMaster)
-         {
-            uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Debug);
-
-            uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
-            uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
-         }
-         if (null == uScriptMaster.GetComponent<uScript_MasterComponent>())
-         {
-            uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_MasterComponent));
-         }
-
-         //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
-         //we don't save the fully qualified type name which is required to return types of assemblies not loaded
-         List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(GameObject.FindObjectsOfType(typeof(UnityEngine.Object)));
-
-         foreach (UnityEngine.Object o in allObjects)
-         {
-            MasterComponent.AddType(o.GetType());
-         }
-
-         foreach (uScriptConfigBlock b in uScriptConfig.Variables)
-         {
-            MasterComponent.AddType(b.Type);
-         }
-
-         bool isRestored = false;
-         bool isDirty = false;
-
-         ScriptEditor scriptEditor = null;
-
-         if (!String.IsNullOrEmpty(MasterComponent.Script))
-         {
-            //open with no preexisting types which means it loads the data direct
-            //and we can figure out what required types we need
-            scriptEditor = new ScriptEditor("", null, null);
-            if (true == scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script))
-            {
-               scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
-               scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script);
-
-               //I think I can put restored true only if current script is not null
-               //if it is null and we're here then we're coming back from a unity crash
-               //and we don't really have the file loaded (which means we would be restoring the
-               //last version cached by unity and not what's latest in our file)
-               //I'll be looking at this now so please don't remove this comment
-               isRestored = true;
-
-               //if we're restoring over an old script
-               //we need to flag us as dirty (because this was do to an undo/redo being triggered)
-               if (CurrentScript != MasterComponent.Script && null != CurrentScript)
-               {
-                  isDirty = true;
-               }
-
-               CurrentScript = MasterComponent.Script;
-               CurrentScriptName = MasterComponent.ScriptName;
-            }
-         }
-         else
-         {
-            scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
-         }
-
-         if (String.IsNullOrEmpty(m_FullPath))
-         {
-            String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
-            String lastScene  = (String)uScript.GetSetting("uScript\\LastScene", "");
-            if (!String.IsNullOrEmpty(lastOpened) && lastScene == UnityEditor.EditorApplication.currentScene)
-            {
-               m_FullPath = UnityEngine.Application.dataPath + lastOpened;
-            }
-         }
-
-         Point loc = Point.Empty;
-         if (!String.IsNullOrEmpty(m_FullPath))
-         {
-            m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
-         }
-         if (false == String.IsNullOrEmpty(m_CurrentCanvasPosition))
-         {
-            loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))),
-                            Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
-         }
-
-         m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor, loc);
-
-         m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
-
-         m_ScriptEditorCtrl.BuildContextMenu();
-         uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
-
-         Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
-
-         //when doing certain operations like 'play' in unity
-         //it seems to set any class references back to null
-         //since the string isn't a reference it stays valid
-         //so reopen our script
-         if ("" != m_FullPath && false == isRestored)
-         {
-            if (!OpenScript(m_FullPath)) m_FullPath = "";
-            m_RefreshTimestamp = EditorApplication.timeSinceStartup;
-         }
-
-         if (true == isDirty)
-         {
-            //force rebuilt from undo so mark as dirty
-            m_ScriptEditorCtrl.IsDirty = true;
-         }
-
-
-         _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
-         _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
-      }
-
-      if (m_RefreshTimestamp > 0.0 && EditorApplication.timeSinceStartup - m_RefreshTimestamp >= 0.05)
-      {
-         // re-center now that the gui is initialized
-         if (m_ScriptEditorCtrl != null)
-         {
-            m_ScriptEditorCtrl.RefreshScript(null, true);
-            if (!String.IsNullOrEmpty(m_FullPath))
-            {
-               m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
-            }
-            if (!String.IsNullOrEmpty(m_CurrentCanvasPosition))
-            {
-               Point loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))), Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
-               m_ScriptEditorCtrl.FlowChart.Location = loc;
-            }
-            // reset menu offset
-            m_ScriptEditorCtrl.BuildContextMenu();
-            uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
-         }
-         m_RefreshTimestamp = -1.0;
+         OpenFromMasterComponent( );
       }
 
       if (true == m_WantsCopy)
@@ -1703,16 +1673,13 @@ public class uScript : EditorWindow
       }
       Detox.Utility.Status.StatusUpdate -= new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
+      UnityEditor.Undo.ClearUndo(MasterComponent);
       MasterComponent.Script = null;
       MasterComponent.ScriptName = null;
 
       CurrentScript = null;
       CurrentScriptName = null;
-
-      // reset settings so they get re-loaded
-      m_SettingsLoaded = false;
-      m_AppData = new AppFrameworkData();
-      Preferences = new Preferences();
+      m_ComplexData = null;
    }
 
    void OpenLogicNode()
@@ -2940,6 +2907,12 @@ public class uScript : EditorWindow
 
          uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(fullPath).Substring("Assets".Length));
          uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
+
+         m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
+    
+         OpenFromMasterComponent( );
+
+         uScriptBackgroundProcess.ForceFileRefresh();
       }
       else
       {
@@ -3073,11 +3046,6 @@ public class uScript : EditorWindow
 
          if (true == result)
          {
-            //we're attempting to just attach components at runtime
-            //but i'm leaving this function here just in case we want
-            //to call it to help performance by auto attaching the scripts before they run
-            //AttachEventScriptsToOwners(script);
-
             // refresh uScript panel file list
             uScriptBackgroundProcess.ForceFileRefresh();
          }
@@ -3195,108 +3163,6 @@ public class uScript : EditorWindow
       return false;
    }
 
-   void AttachEventScriptsToOwners(ScriptEditor script)
-   {
-      foreach (EntityEvent entityEvent in script.Events)
-      {
-         LinkNode[] links = script.GetLinksByDestination(entityEvent.Guid, entityEvent.Instance.Name);
-
-         if ("" != entityEvent.Instance.Default)
-         {
-            AttachEventScriptToGameObject(GameObject.Find(entityEvent.Instance.Default), entityEvent.ComponentType);
-         }
-
-         foreach (LinkNode link in links)
-         {
-            EntityNode node = script.GetNode(link.Source.Guid);
-
-            //for each owner connected to an event instance
-            //add the required event component script
-            if (node is OwnerConnection)
-            {
-               AttachEventScriptToGameObjects(script.Name, entityEvent.ComponentType);
-            }
-            else if (node is LocalNode)
-            {
-               //for each gameobject used as an event instance
-               //add the required event component script
-               AttachEventScriptToGameObject(GameObject.Find(((LocalNode)node).Value.Default), entityEvent.ComponentType);
-            }
-         }
-      }
-   }
-
-   //go through all game objects and if they have the uscript attached to them
-   //then also attach the event component script
-   void AttachEventScriptToGameObjects(string scriptWhichMustExist, string componentTypeToAttach)
-   {
-      UnityEngine.Object[] objects = FindObjectsOfType(typeof(GameObject));
-
-      foreach (UnityEngine.Object o in objects)
-      {
-         GameObject gameObject = o as GameObject;
-
-         if (null != gameObject.GetComponent(scriptWhichMustExist))
-         {
-            AttachEventScriptToGameObject(o as GameObject, componentTypeToAttach);
-         }
-      }
-   }
-
-   //attach the event component script if it's not already on the game object
-   void AttachEventScriptToGameObject(GameObject gameObject, string componentTypeToAttach)
-   {
-      if (null == gameObject) return;
-
-      if (null == gameObject.GetComponent(componentTypeToAttach))
-      {
-         gameObject.AddComponent(componentTypeToAttach);
-      }
-
-      //print out a warning if the newly attached script still won't function
-      //because some other required component is missing
-      NodeComponentType requiredComponentType = FindNodeComponentType(MasterComponent.GetType(componentTypeToAttach));
-
-      bool componentWarning = true;
-
-      if (null != requiredComponentType)
-      {
-         //go through all the components and see if the required one exists
-         Component[] components = gameObject.GetComponents<Component>();
-
-         foreach (Component c in components)
-         {
-            //yes for some reason unity is giving me null components
-            if (null == c) continue;
-
-            if (requiredComponentType.ContainsType(c.GetType()))
-            {
-               componentWarning = false;
-               break;
-            }
-         }
-      }
-      else
-      {
-         componentWarning = false;
-      }
-
-      if (true == componentWarning)
-      {
-         string names = "";
-
-         foreach (Type t in requiredComponentType.ComponentTypes)
-         {
-            names += t + ", ";
-         }
-
-         if (names.Length >= 2) names = names.Substring(0, names.Length - 2);
-
-         Debug.LogWarning(componentTypeToAttach + " was attached to " + gameObject.name +
-                           " but one of the following additional components is required for it to function properly " + names);
-      }
-   }
-
    void AttachToMasterGO(String path)
    {
 #if UNITY_EDITOR
@@ -3336,6 +3202,10 @@ public class uScript : EditorWindow
 
    private LogicNode[] PopulateLogicTypes()
    {
+      if ( null != m_LogicTypes ) return m_LogicTypes;
+
+      uScriptDebug.Log( "Rebuilding Logic Types", uScriptDebug.Type.Debug );
+
       Hashtable baseMethods = new Hashtable();
       Hashtable baseEvents = new Hashtable();
       Hashtable baseProperties = new Hashtable();
@@ -3568,7 +3438,8 @@ public class uScript : EditorWindow
          logicNodes.Add(logicNode);
       }
 
-      return OverrideNestedScriptTypes(logicNodes.ToArray());
+      m_LogicTypes = OverrideNestedScriptTypes(logicNodes.ToArray());
+      return m_LogicTypes;
    }
 
    RawScript[] GatherRawScripts()
@@ -3884,6 +3755,25 @@ public class uScript : EditorWindow
 
    private EntityDesc[] PopulateEntityTypes(string[] requiredTypes)
    {
+      if ( null != m_EntityTypes ) 
+      {
+         if ( null != requiredTypes )
+         {
+            foreach ( string t in requiredTypes )
+            {
+               if ( false == m_EntityTypeHash.Contains(t) )
+               {
+                  m_EntityTypes = null;
+                  break;
+               }
+            }
+         }
+      
+         if ( null != m_EntityTypes ) return m_EntityTypes;
+      }
+
+      uScriptDebug.Log( "Rebuilding Entity Types", uScriptDebug.Type.Debug );
+
       Hashtable baseMethods = new Hashtable();
       Hashtable baseEvents = new Hashtable();
       Hashtable baseProperties = new Hashtable();
@@ -4058,7 +3948,16 @@ public class uScript : EditorWindow
          }
       }
 
-      return descs;
+      m_EntityTypes = descs;
+
+      m_EntityTypeHash = new Hashtable( );
+
+      foreach ( EntityDesc d in m_EntityTypes )
+      {
+         m_EntityTypeHash[ d.Type ] = true;
+      }
+
+      return m_EntityTypes;
    }
 
    public string AutoAssignInstance(EntityNode entityNode)
@@ -4572,21 +4471,21 @@ public class uScript : EditorWindow
 
 
 
-   public static string FindParameterDescription(string defaultName, object[] attributes)
-   {
-      // This method is used to get the parameter descriptions at load
-      if (null == attributes) return defaultName;
+   //public static string FindParameterDescription(string defaultName, object[] attributes)
+   //{
+   //   // This method is used to get the parameter descriptions at load
+   //   if (null == attributes) return defaultName;
 
-      foreach (object a in attributes)
-      {
-         if (a is FriendlyNameAttribute)
-         {
-            return ((FriendlyNameAttribute)a).Desc;
-         }
-      }
+   //   foreach (object a in attributes)
+   //   {
+   //      if (a is FriendlyNameAttribute)
+   //      {
+   //         return ((FriendlyNameAttribute)a).Desc;
+   //      }
+   //   }
 
-      return defaultName;
-   }
+   //   return defaultName;
+   //}
 
    public static string FindParameterDescription(string type, Parameter p)
    {
@@ -4645,11 +4544,16 @@ public class uScript : EditorWindow
       }
 
 
-      // Attempt to retrieve the cached parameter description
-      //
-//      return cachedDescription;
+      Type uscriptType = uScript.MasterComponent.GetType(type);
 
+      object[] attributes = uscriptType.GetCustomAttributes(typeof(FriendlyNameAttribute), false);
+      if (null == attributes) return "";
 
+      foreach (object a in attributes)
+      {
+         return ((FriendlyNameAttribute)a).Desc;
+      }
+      
       // Any remaining parameters are likely be be reflected.
       //
       // If the parameter is on a Property node

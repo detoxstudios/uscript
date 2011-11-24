@@ -36,7 +36,6 @@ public class uScriptBackgroundProcess
    
    public static Dictionary<string, uScriptInfo> s_uScriptInfo = new Dictionary<string, uScriptInfo>();
    private static int s_CurrentKeyIndex = -1;
-   private static double s_LastuScriptProcessTime = -USCRIPT_PROCESS_TIME - 1.0;
    
    static uScriptBackgroundProcess()
    {
@@ -52,23 +51,6 @@ public class uScriptBackgroundProcess
       if (!EditorApplication.isCompiling)
       {
          AttachUScripts();
-      }
-      
-      // get list of uScripts every USCRIPT_PROCESS_TIME seconds
-      if (EditorApplication.timeSinceStartup - s_LastuScriptProcessTime >= USCRIPT_PROCESS_TIME)
-      {
-         s_LastuScriptProcessTime = EditorApplication.timeSinceStartup;
-         s_uScriptInfo.Clear();
-
-         foreach (string fileName in System.IO.Directory.GetFiles(uScript.Preferences.UserScripts))
-         {
-            if (fileName.EndsWith(".uscript"))
-            {
-               s_uScriptInfo.Add(System.IO.Path.GetFileName(fileName), new uScriptInfo(fileName));
-            }
-         }
-         
-         s_CurrentKeyIndex = 0;
       }
       
       // any uScrupts left to process? Process them FILES_PER_TICK at a time each tick
@@ -90,7 +72,18 @@ public class uScriptBackgroundProcess
    
    public static void ForceFileRefresh()
    {
-      s_LastuScriptProcessTime = -USCRIPT_PROCESS_TIME - 1.0;
+      // get list of uScripts every USCRIPT_PROCESS_TIME seconds
+      s_uScriptInfo.Clear();
+
+      foreach (string fileName in System.IO.Directory.GetFiles(uScript.Preferences.UserScripts))
+      {
+         if (fileName.EndsWith(".uscript"))
+         {
+            s_uScriptInfo.Add(System.IO.Path.GetFileName(fileName), new uScriptInfo(fileName));
+         }
+      }
+      
+      s_CurrentKeyIndex = 0;
    }
    
    private static void AttachUScripts()
