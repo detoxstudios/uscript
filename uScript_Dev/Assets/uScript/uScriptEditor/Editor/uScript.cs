@@ -98,6 +98,7 @@ public class uScript : EditorWindow
    private LogicNode  []m_LogicTypes  = null;
 
    private static Hashtable m_NodeParameterFields = new Hashtable( );
+   private static Hashtable m_NodeParameterDescFields = new Hashtable( );
    private static Hashtable m_RequiresLink = new Hashtable( );  
    private static AppFrameworkData m_AppData = new AppFrameworkData();
    public static  Preferences Preferences = new Preferences();
@@ -3384,6 +3385,7 @@ public class uScript : EditorWindow
                variable.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
                AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
+               AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
                AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
 
                MasterComponent.AddType(p.ParameterType);
@@ -3575,6 +3577,7 @@ public class uScript : EditorWindow
             parameter.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
 
             AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
+            AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
             AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
             MasterComponent.AddType(p.ParameterType);
 
@@ -3637,6 +3640,7 @@ public class uScript : EditorWindow
                input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
 
                AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
+               AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
                AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
                MasterComponent.AddType(p.PropertyType);
 
@@ -4052,6 +4056,18 @@ public class uScript : EditorWindow
       return AssetType.Invalid;
    }
 
+   public static string GetParameterDescField(string type, string parameterName)
+   {
+      string key  = type + "_" + parameterName;
+
+      if ( true == m_NodeParameterDescFields.Contains(key) )
+      {
+         return (string) m_NodeParameterDescFields[ key ];     
+      }
+
+      return string.Empty;
+   }
+
    public static bool GetRequiresLink(EntityNode node, string parameterName)
    {
       string type = ScriptEditor.FindNodeType(node);
@@ -4074,6 +4090,22 @@ public class uScript : EditorWindow
          }
       }
    }
+
+   public static void AddParameterDescField(string type, string parameterName, object []attributes)
+   {
+      foreach (object a in attributes)
+      {
+         if (a is FriendlyNameAttribute)
+         {
+            FriendlyNameAttribute field = (FriendlyNameAttribute) a;
+            string key = type + "_" + parameterName;
+
+            m_NodeParameterDescFields[ key ] = field.Desc;         
+            break;
+         }
+      }
+   }
+
 
    public static void AddRequiresLink(string type, string parameterName, object []attributes)
    {
@@ -4469,24 +4501,6 @@ public class uScript : EditorWindow
    }
 
 
-
-
-   //public static string FindParameterDescription(string defaultName, object[] attributes)
-   //{
-   //   // This method is used to get the parameter descriptions at load
-   //   if (null == attributes) return defaultName;
-
-   //   foreach (object a in attributes)
-   //   {
-   //      if (a is FriendlyNameAttribute)
-   //      {
-   //         return ((FriendlyNameAttribute)a).Desc;
-   //      }
-   //   }
-
-   //   return defaultName;
-   //}
-
    public static string FindParameterDescription(string type, Parameter p)
    {
       // Check non-logic, non-event types first
@@ -4544,31 +4558,14 @@ public class uScript : EditorWindow
       }
 
 
-      Type uscriptType = uScript.MasterComponent.GetType(type);
+      return uScript.GetParameterDescField(type, p.Name);
 
-      object[] attributes = uscriptType.GetCustomAttributes(typeof(FriendlyNameAttribute), false);
-      if (null == attributes) return "";
-
-      foreach (object a in attributes)
-      {
-         return ((FriendlyNameAttribute)a).Desc;
-      }
-      
-      // Any remaining parameters are likely be be reflected.
-      //
-      // If the parameter is on a Property node
-      //    -- can we even identify properties by looking at the parameter or passed type??
-      //
-
-
-      // We really don't know what the parameter does at this point
-      //
-      return string.Empty;
+         // Any remaining parameters are likely be be reflected.
+         //
+         // If the parameter is on a Property node
+         //    -- can we even identify properties by looking at the parameter or passed type??
+         //
    }
-
-
-
-
 
    public static string FindNodeAuthorName(string type)
    {
