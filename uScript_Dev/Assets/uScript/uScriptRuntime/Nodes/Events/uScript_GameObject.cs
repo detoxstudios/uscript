@@ -11,11 +11,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when Instance is enabled, disabled or destroyed.")]
-[NodeDescription("Fires an event signal when Instance is enabled, disabled or destroyed.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GameObject_Events")]
 
-[FriendlyName("GameObject Events")]
+[FriendlyName("GameObject Events", "Fires an event signal when Instance is enabled, disabled or destroyed.")]
 public class uScript_GameObject : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);

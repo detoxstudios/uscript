@@ -11,11 +11,12 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when an on-screen keyboard event happens.")]
-[NodeDescription("Fires an event signal when an on-screen keyboard event happens. iOS - Supported. Android - Unsupported.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#On-Screen_Keyboard_Events")]
 
-[FriendlyName("On-Screen Keyboard Events")]
+[FriendlyName("On-Screen Keyboard Events", "Fires an event signal when an on-screen keyboard event happens." +
+ "\n\niOS - Supported." +
+ "\nAndroid - Unsupported.")]
 public class uScript_OnScreenKeyboard : uScriptEvent
 {
 #pragma warning disable 67

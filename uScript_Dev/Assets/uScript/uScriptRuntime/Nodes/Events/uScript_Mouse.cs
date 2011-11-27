@@ -11,11 +11,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when the mouse enters, is over, exits, is pressed down, released, or dragged over Instance.")]
-[NodeDescription("Fires an event signal when the mouse enters, is over, exits, is pressed down, released, or dragged over Instance.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Mouse_Cursor_Events")]
 
-[FriendlyName("Mouse Cursor Events")]
+[FriendlyName("Mouse Cursor Events", "Fires an event signal when the mouse enters, is over, exits, is pressed down, released, or dragged over Instance.")]
 public class uScript_Mouse : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);

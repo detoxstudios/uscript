@@ -12,11 +12,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when uScript starts.")]
-[NodeDescription("Fires an event signal when uScript starts.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#uScript_Events")]
 
-[FriendlyName("uScript Events")]
+[FriendlyName("uScript Events", "Fires an event signal when uScript starts.")]
 public class uScript_Global : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);

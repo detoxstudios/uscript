@@ -12,11 +12,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Input Events fires out any time input is detected from the keyboard, mouse, or joystick.")]
-[NodeDescription("Input Events fires out any time input is detected from the keyboard, mouse, or joystick.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Input_Events")]
 
-[FriendlyName("Input Events")]
+[FriendlyName("Input Events", "Input Events fires out any time input is detected from the keyboard, mouse, or joystick.")]
 public class uScript_Input : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);

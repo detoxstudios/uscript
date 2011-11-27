@@ -10,12 +10,11 @@ using System.Collections;
 [NodePath("Events/Renderer Events")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Fires an event signal when various render events (Pre Cull, Pre Render, Post Render, Render Object, and Will Render Object) take place.")]
-[NodeDescription("Fires an event signal when various render events (Pre Cull, Pre Render, Post Render, Render Object, and Will Render Object) take place.")]
+[NodeToolTip("Fires an event signal when various render events take place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Render_Events")]
 
-[FriendlyName("Render Events")]
+[FriendlyName("Render Events", "Fires an event signal when various render events (Pre Cull, Pre Render, Post Render, Render Object, and Will Render Object) take place.")]
 public class uScript_Render : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);

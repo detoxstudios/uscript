@@ -11,11 +11,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a network server is initialized.")]
-[NodeDescription("Fires an event signal when a network server is initialized.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Network_Server_Initialized")]
 
-[FriendlyName("Network Server Initialized")]
+[FriendlyName("Network Server Initialized", "Fires an event signal when a network server is initialized.")]
 public class uScript_NetworkServerInitialized: uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);

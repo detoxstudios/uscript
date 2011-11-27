@@ -10,12 +10,11 @@ using System.Collections;
 [NodePath("Events/Particles")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Fires an event signal when a particle collides with a GameObject.\n \nInstigator: The GameObject that was collided with.")]
-[NodeDescription("Fires an event signal when a particle collides with a GameObject.")]
+[NodeToolTip("Fires an event signal when a particle collides with a GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Particle_Collision")]
 
-[FriendlyName("Particle Collision")]
+[FriendlyName("Particle Collision", "Fires an event signal when a particle collides with a GameObject.")]
 public class uScript_Particle : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, ParticleCollisionEventArgs args);
@@ -24,7 +23,7 @@ public class uScript_Particle : uScriptEvent
    {
       private GameObject m_GameObject;
 
-      [FriendlyName("Instigator")]
+      [FriendlyName("Instigator", "The GameObject that was collided with.")]
       public GameObject GameObject { get { return m_GameObject; } }
 
       public ParticleCollisionEventArgs(GameObject hit)
