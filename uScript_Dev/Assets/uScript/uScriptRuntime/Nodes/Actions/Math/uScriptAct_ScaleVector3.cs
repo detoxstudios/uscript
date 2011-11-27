@@ -9,16 +9,24 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Scales a Vector3.")]
-[NodeDescription("Scales a Vector3.\n \nVector: Vector to scale.\nScale: Amount to scale Vector by.\nVector Result: Scaled vector.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Scale_Vector3")]
 
-[FriendlyName("Scale Vector3")]
+[FriendlyName("Scale Vector3", "Scales a Vector3.")]
 public class uScriptAct_ScaleVector3 : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In([FriendlyName("Vector")] Vector3 v, [FriendlyName("Scale")] float s, [FriendlyName("Vector Result")] out Vector3 result)
+   public void In(
+      [FriendlyName("Vector", "Vector to scale.")]
+      Vector3 v,
+      
+      [FriendlyName("Scale", "Amount to scale Vector by.")]
+      float s,
+      
+      [FriendlyName("Vector Result", "Scaled vector.")]
+      out Vector3 result
+      )
    {
       result = v * s;
    }

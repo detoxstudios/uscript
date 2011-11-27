@@ -9,28 +9,58 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the scale of a GameObject.")]
-[NodeDescription("Randomly sets the scale of a GameObject.\n \nTarget: The GameObject(s) that the random scale is applied to.\nMin(X/Y/Z): Minimum allowable float value.\nMax(X/Y/Z): Maximum allowable float value.\n\nPreserve(X/Y/Z): If checked, the existing value will be passed into the new scale, overriding the random value for that axis.\nUniform: Should the node scale the GameObject uniformly on all three axis. When set to true, only the Min and Max for X is used to determine the random scale range. Also, the Preserve(X/Y/Z) flags are ignored.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Set Random Scale")]
+[FriendlyName("Set Random Scale", "Randomly sets the scale of a GameObject.")]
 public class uScriptAct_SetRandomScale : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-	  [FriendlyName("Target")] GameObject[] Target,
-      [FriendlyName("Min X"), DefaultValue(0.5f), SocketState(false, false)] float MinX,
-      [FriendlyName("Max X"), DefaultValue(2f), SocketState(false, false)] float MaxX,
-      [FriendlyName("Min Y"), DefaultValue(0.5f), SocketState(false, false)] float MinY,
-      [FriendlyName("Max Y"), DefaultValue(2f), SocketState(false, false)] float MaxY,
-      [FriendlyName("Min Z"), DefaultValue(0.5f), SocketState(false, false)] float MinZ,
-      [FriendlyName("Max Z"), DefaultValue(2f), SocketState(false, false)] float MaxZ,
-	  [FriendlyName("Preserve X"), SocketState(false, false)] bool PreserveX_Axis, 
-      [FriendlyName("Preserve Y"), SocketState(false, false)] bool PreserveY_Axis,
-      [FriendlyName("Preserve Z"), SocketState(false, false)] bool PreserveZ_Axis,
-	  [FriendlyName("Uniform"), DefaultValue(true)] bool Uniform         
-	  )
+      [FriendlyName("Target", "The GameObject(s) that the random scale is applied to.")]
+      GameObject[] Target,
+      
+      [FriendlyName("Min X", "Minimum allowable float value.")]
+      [DefaultValue(0.5f), SocketState(false, false)]
+      float MinX,
+      
+      [FriendlyName("Max X", "Maximum allowable float value.")]
+      [DefaultValue(2f), SocketState(false, false)]
+      float MaxX,
+      
+      [FriendlyName("Min Y", "Minimum allowable float value.")]
+      [DefaultValue(0.5f), SocketState(false, false)]
+      float MinY,
+      
+      [FriendlyName("Max Y", "Maximum allowable float value.")]
+      [DefaultValue(2f), SocketState(false, false)]
+      float MaxY,
+      
+      [FriendlyName("Min Z", "Minimum allowable float value.")]
+      [DefaultValue(0.5f), SocketState(false, false)]
+      float MinZ,
+      
+      [FriendlyName("Max Z", "Maximum allowable float value.")]
+      [DefaultValue(2f), SocketState(false, false)]
+      float MaxZ,
+      
+      [FriendlyName("Preserve X", "If checked, the existing value will be passed into the new scale, overriding the random value for that axis.")]
+      [SocketState(false, false)]
+      bool PreserveX_Axis,
+      
+      [FriendlyName("Preserve Y", "If checked, the existing value will be passed into the new scale, overriding the random value for that axis.")]
+      [SocketState(false, false)]
+      bool PreserveY_Axis,
+
+      [FriendlyName("Preserve Z", "If checked, the existing value will be passed into the new scale, overriding the random value for that axis.")]
+      [SocketState(false, false)]
+      bool PreserveZ_Axis,
+      
+      [FriendlyName("Uniform", "Should the node scale the GameObject uniformly on all three axis. When set to true, only the Min and Max for X is used to determine the random scale range. Also, the Preserve(X/Y/Z) flags are ignored.")]
+      [DefaultValue(true)]
+      bool Uniform
+      )
    {
       // Make sure we don't have min > max (or other way around)
       if (MinX > MaxX) { MinX = MaxX; }

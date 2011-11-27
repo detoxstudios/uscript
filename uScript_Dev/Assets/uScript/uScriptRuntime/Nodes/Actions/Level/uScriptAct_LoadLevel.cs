@@ -9,13 +9,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads a level by its scene name.")]
-[NodeDescription("Loads a level by its scene name.\n \nLevel Name: The level to load (make sure it's been added to Unity through File->Build Settings...).\n" +
-                 "Unload Others: Whether or not to destroy the other objects in the scene.\n" + 
-                 "Block Until Loaded: Halt execution of the game until the level has loaded.  (Requires Unity Pro if set to false).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_Level")]
 
-[FriendlyName("Load Level")]
+[FriendlyName("Load Level", "Loads a level by its scene name.")]
 public class uScriptAct_LoadLevel : uScriptLogic
 {
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
@@ -29,10 +26,17 @@ public class uScriptAct_LoadLevel : uScriptLogic
    private AsyncOperation m_Async;
 
    public void In(
-      [FriendlyName("Level Name")] string name,       
-      [FriendlyName("Unload Others"), DefaultValue(true), SocketState(false, false)] bool destroyOtherObjects,
-      [FriendlyName("Block Until Loaded"), DefaultValue(true), SocketState(false, false)] bool blockUntilLoaded
-   )
+      [FriendlyName("Level Name", "The level to load (make sure it's been added to Unity through File->Build Settings...).")]
+      string name,
+
+      [FriendlyName("Unload Others", "Whether or not to destroy the other objects in the scene.")]
+      [DefaultValue(true), SocketState(false, false)]
+      bool destroyOtherObjects,
+
+      [FriendlyName("Block Until Loaded", "Halt execution of the game until the level has loaded.  (Requires Unity Pro if set to false).")]
+      [DefaultValue(true), SocketState(false, false)]
+      bool blockUntilLoaded
+      )
    {
       if ( true == blockUntilLoaded )
       {

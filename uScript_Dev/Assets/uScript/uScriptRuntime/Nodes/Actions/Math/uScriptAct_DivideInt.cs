@@ -9,16 +9,31 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Divides two integer variables and returns the result.")]
-[NodeDescription("Divides two integer variables and returns the result.\n \nA: The integer numerator.\nB: The integer denominator.\nResult (out): The integer result of the division operation.\nFloat Result (out): The floating point result of the division operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Divide_Int")]
+
+[NodeDescription("Divides two integer variables and returns the result." +
+ "\n\n[ A / B ]")]
 
 [FriendlyName("Divide Int")]
 public class uScriptAct_DivideInt : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(int A, int B, [FriendlyName("Result")] out int IntResult, [FriendlyName("Float Result"), SocketState(false, false)] out float FloatResult)
+   public void In(
+      [FriendlyName("A", "The numerator.")]
+      int A,
+
+      [FriendlyName("B", "The denominator.")]
+      int B,
+      
+      [FriendlyName("Result", "The integer result of the operation.")]
+      out int IntResult,
+
+      [FriendlyName("Float Result", "The floating point result of the operation.")]
+      [SocketState(false, false)]
+      out float FloatResult
+      )
    {
       int total = A / B;
       IntResult = total;

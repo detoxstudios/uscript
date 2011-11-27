@@ -9,22 +9,35 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a GUITexture on the screen.")]
-[NodeDescription("Shows a GUITexture on the screen.\n \nPosition: The position and size of the texture.\nTexture: The background image to use for the texture.\nControl Name: Name to give to this texture GUI control.\nScale Mode: The scale mode to use when drawing the texture.\nAlpha Blend: Whether or not to enable alpha blending when drawing the texture (default is true).\nImage Aspect: Aspect ratio to use for the source image. If 0 (default), the aspect ratio from the image is used. Otherwise, pass width/height.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Texture")]
 
-[FriendlyName("GUI Texture")]
+[FriendlyName("GUI Texture", "Shows a GUITexture on the screen.")]
 public class uScriptAct_GUITexture : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
+      [FriendlyName("Position", "The position and size of the texture.")]
       Rect Position,
+
+      [FriendlyName("Texture", "The background image to use for the texture.")]
       Texture2D Texture,
-      [FriendlyName("Control Name"), DefaultValue(""), SocketState(false, false)] string ControlName,
-      [FriendlyName("Scale Mode")] ScaleMode scaleMode,
-      [FriendlyName("Alpha Blend"), DefaultValue(true), SocketState(false, false)] bool alphaBlend,
-      [FriendlyName("Image Aspect"), DefaultValue(1.0f), SocketState(false, false)] float aspect
+
+      [FriendlyName("Control Name", "Name to give to this texture GUI control.")]
+      [DefaultValue(""), SocketState(false, false)]
+      string ControlName,
+
+      [FriendlyName("Scale Mode", "The scale mode to use when drawing the texture.")]
+      ScaleMode scaleMode,
+
+      [FriendlyName("Alpha Blend", "Whether or not to enable alpha blending when drawing the texture (default is true).")]
+      [DefaultValue(true), SocketState(false, false)]
+      bool alphaBlend,
+
+      [FriendlyName("Image Aspect", "Aspect ratio to use for the source image. If 0 (default), the aspect ratio from the image is used. Otherwise, pass width/height.")]
+      [DefaultValue(1.0f), SocketState(false, false)]
+      float aspect
       )
    {
       if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);            

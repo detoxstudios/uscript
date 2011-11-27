@@ -10,21 +10,26 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the layer for the target GameObjects.")]
-[NodeDescription("Sets the layer for the target GameObjects.\n\nTarget: The GameObject(s) you wish to set the layer for.\nLayer: The Layer you wish to set the Target(s) to.\nApply To Children: Specify if the Layer should also be assigned to any children GameObjects of the Target if found.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_GameObject_By_Name")]
 
-[FriendlyName("Set Layer")]
+[FriendlyName("Set Layer", "Sets the layer for the target GameObjects.")]
 public class uScriptAct_SetLayer : uScriptLogic
 {
    private bool m_ApplyToChildren;
 	public bool Out { get { return true; } }
 
    public void In(
-                   [FriendlyName("Target")] GameObject[] Target,
-                   [FriendlyName("Layer")] LayerMask Layer,
-	               [FriendlyName("Apply To Children"), SocketState(false, false), DefaultValue(true)] bool ApplyToChildren
-                   )
+      [FriendlyName("Target", "The GameObject(s) you wish to set the layer for.")]
+      GameObject[] Target,
+
+      [FriendlyName("Layer", "The Layer you wish to set the Target(s) to.")]
+      LayerMask Layer,
+
+      [FriendlyName("Apply To Children", "Specify if the Layer should also be assigned to any children GameObjects of the Target if found.")]
+      [SocketState(false, false), DefaultValue(true)]
+      bool ApplyToChildren
+      )
    {
 		m_ApplyToChildren = ApplyToChildren;
 		

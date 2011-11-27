@@ -9,32 +9,42 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Begins a GUI group view which can be scrolled.")]
-[NodeDescription("NOTE: Each use of those node. must be matched with a call to \"GUI End ScrollView\".\n\n" +
-					"Position: Rectangle on the screen to use for the ScrollView.\n\n" +
-					"ViewRect: The rectangle used inside the scrollview.\n\n" +
-					"Scroll Position: The position to use display.\n\n" +
-					"Always Show Horizontal: Always show vertical scrollbar regardless if it is required.\n\n" +
-					"Always Show Vertical: Always show horizontal scrollbar regardless if it is required.\n\n" +
-					"Horizontal Style: GUI Style for the horizontal scroll bar.\n\n" +
-               "Vertical Style: GUI Style for the vertical scroll bar.\n\n"+
-					"(out) Scroll Position: The new position of the scroll bar.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Begin_Scroll_View")]
 
-[FriendlyName("GUI Begin ScrollView")]
+[FriendlyName("GUI Begin ScrollView", "When you begin a group, the coordinate system for GUI controls are set so (0,0) is the top-left corner of the group.  All controls are clipped to the group.  Groups can be nested - if they are, children are clipped to their parents.\n\nNOTE: Each use of those node. must be matched with a call to \"GUI End ScrollView\".")]
 public class uScriptAct_GUIBeginScrollView : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
+      [FriendlyName("Position", "Rectangle on the screen to use for the ScrollView.")]
       Rect Position,
+      
+      [FriendlyName("ViewRect", "The rectangle used inside the scrollview.")]
       Rect ViewRect,
-      [FriendlyName("Scroll Position")] Vector2 startingScrollPosition,
-      [FriendlyName("Always Show Horizontal"), SocketState(false, false)] bool alwaysShowHorizontal,
-      [FriendlyName("Always Show Vertical"), SocketState(false, false)] bool alwaysShowVertical,
-      [FriendlyName("Horizontal Style"), DefaultValue(""), SocketState(false, false)] string horizontalStyle,
-      [FriendlyName("Vertical Style"), DefaultValue(""), SocketState(false, false)] string verticalStyle,
-      [FriendlyName("Scroll Position"), SocketState(false, false)] out Vector2 scrollPosition
+      
+      [FriendlyName("Scroll Position", "The position to use display.")]
+      Vector2 startingScrollPosition,
+      
+      [FriendlyName("Always Show Horizontal", "Always show horizontal scrollbar regardless if it is required.")]
+      [SocketState(false, false)]
+      bool alwaysShowHorizontal,
+      
+      [FriendlyName("Always Show Vertical", "Always show vertical scrollbar regardless if it is required.")]
+      [SocketState(false, false)]
+      bool alwaysShowVertical,
+      
+      [FriendlyName("Horizontal Style", "GUI Style for the horizontal scroll bar.")]
+      [DefaultValue(""), SocketState(false, false)]
+      string horizontalStyle,
+      
+      [FriendlyName("Vertical Style", "GUI Style for the vertical scroll bar.")]
+      [DefaultValue(""), SocketState(false, false)]
+      string verticalStyle,
+      
+      [FriendlyName("Scroll Position", "The new position of the scroll bar."), SocketState(false, false)]
+      out Vector2 scrollPosition
       )
    {
       if (string.IsNullOrEmpty(horizontalStyle) && string.IsNullOrEmpty(verticalStyle))

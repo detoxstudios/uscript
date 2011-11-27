@@ -9,16 +9,29 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Divides two float variables and returns the result.")]
-[NodeDescription("Divides two float variables and returns the result.\n \nA: The floating point numerator.\nB: The floating point denominator.\nResult (out): The floating point result of the division operation.\nInt Result (out): The integer result of the division operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Divide_Float")]
 
-[FriendlyName("Divide Float")]
+[FriendlyName("Divide Float", "Divides two float variables and returns the result." +
+ "\n\n[ A / B ]")]
 public class uScriptAct_DivideFloat : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(float A, float B, [FriendlyName("Result")] out float FloatResult, [FriendlyName("Int Result"), SocketState(false, false)] out int IntResult)
+   public void In(
+      [FriendlyName("A", "The numerator.")]
+      float A,
+
+      [FriendlyName("B", "The denominator.")]
+      float B,
+
+      [FriendlyName("Result", "The floating point result of the operation.")]
+      out float FloatResult,
+
+      [FriendlyName("Int Result", "The integer result of the operation.")]
+      [SocketState(false, false)]
+      out int IntResult
+      )
    {
       float total = A / B;
       FloatResult = total;

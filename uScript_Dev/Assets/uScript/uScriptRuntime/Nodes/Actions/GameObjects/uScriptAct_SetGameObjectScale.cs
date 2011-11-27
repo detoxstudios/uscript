@@ -9,17 +9,22 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the scale of a GameObject.")]
-[NodeDescription("Sets the scale of a GameObject.\n \nTarget: The Target GameObject(s) to set the position of.\nScale: The new X, Y and Z scale as a Vector3(X, Y, Z)")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Scale")]
 
-[FriendlyName("Set Scale")]
+[FriendlyName("Set Scale", "Sets the scale of a GameObject.")]
 public class uScriptAct_SetGameObjectScale : uScriptLogic
 {
 
    public bool Out { get { return true; } }
 
-   public void In(GameObject[] Target, Vector3 Scale)
+   public void In(
+      [FriendlyName("Target", "The Target GameObject(s) to set the position of.")]
+      GameObject[] Target,
+      
+      [FriendlyName("Scale", "The new X, Y and Z scale as a Vector3(X, Y, Z)")]
+      Vector3 Scale
+      )
    {
       foreach ( GameObject currentTarget in Target )
       {

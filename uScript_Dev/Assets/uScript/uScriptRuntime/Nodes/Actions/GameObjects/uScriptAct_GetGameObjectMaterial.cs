@@ -9,23 +9,33 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns a GameObject's material, material color, and material name assigned to the specified material index.")]
-[NodeDescription("Returns a GameObject's material, material color, and material name assigned to the specified material index.\n \nTarget: The Target GameObject you wish to get the material information from.\nMaterial Channel: The index number of the material you wish to get from the Target. Zero (0) is the default and most common material index.\nMaterial (out): Returns the material.\nColor (out): Returns the color of the material.\nName: Returns the name of the material.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Get Material")]
+[FriendlyName("Get Material", "Returns a GameObject's material, material color, and material name assigned to the specified material index.")]
 public class uScriptAct_GetGameObjectMaterial : uScriptLogic
 {
 
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target")] GameObject Target,
-	  [FriendlyName("Material Channel"), DefaultValue(0)] int MaterialIndex,
-      [FriendlyName("Material")] out Material targetMaterial,
-	  [FriendlyName("Color"), SocketState(false, false)]out UnityEngine.Color materialColor,
-	  [FriendlyName("Name"), SocketState(false, false)]out string materialName
-	               
+      [FriendlyName("Target", "The Target GameObject you wish to get the material information from.")]
+      GameObject Target,
+
+      [FriendlyName("Material Channel", "The index number of the material you wish to get from the Target. Zero (0) is the default and most common material index.")]
+      [DefaultValue(0)]
+      int MaterialIndex,
+      
+      [FriendlyName("Material", "Returns the material.")]
+      out Material targetMaterial,
+      
+      [FriendlyName("Color", "Returns the color of the material.")]
+      [SocketState(false, false)]
+      out UnityEngine.Color materialColor,
+      
+      [FriendlyName("Name", "Returns the name of the material.")]
+      [SocketState(false, false)]
+      out string materialName
       )
    {
 

@@ -9,19 +9,23 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Converts a forward and up vector into a quaternion.")]
-[NodeDescription("Converts a forward and up vector into a quaternion.\n \nForward Vector: The forward vector component of the quaternion.\nUp Vector: The up vector component of the quaternion.\nResult Quaternion (out): The quaternion calculated using the forward and up vectors passed in.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Quaternion_From_Vectors")]
 
-[FriendlyName("Quaternion From Vectors")]
+[FriendlyName("Quaternion From Vectors", "Converts a forward and up vector into a quaternion.")]
 public class uScriptAct_QuaternionFromVectors : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Foward Vector")] Vector3 forward,
-      [FriendlyName("Up Vector")] Vector3 up,
-      [FriendlyName("Result Quaternion")] out Quaternion result
+      [FriendlyName("Foward Vector", "The forward vector component of the quaternion.")]
+      Vector3 forward,
+      
+      [FriendlyName("Up Vector", "The up vector component of the quaternion.")]
+      Vector3 up,
+      
+      [FriendlyName("Result Quaternion", "The quaternion calculated using the forward and up vectors passed in.")]
+      out Quaternion result
       )
    {
       if (forward == Vector3.zero)

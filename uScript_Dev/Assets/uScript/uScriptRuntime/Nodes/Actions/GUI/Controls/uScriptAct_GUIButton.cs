@@ -9,11 +9,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a GUIButton on the screen and allows responses when held down, released, and clicked.")]
-[NodeDescription("Shows a GUIButton on the screen and allows responses when held down, released, and clicked.\n \nText: The text you want to display on the button. \nIdentifier: A unique identifier if the same node is used to represent multiple buttons.  \nPosition: The position and size of the button.\nTexture: The background image to use for the button.\nControl Name: Name to give to this button GUI control.\nTool Tip: The tool tip to display when the button is being hovered over.\nGUI Style: The name of a custom GUI style to use when displaying this button.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Button")]
 
-[FriendlyName("GUI Button")]
+[FriendlyName("GUI Button", "Shows a GUIButton on the screen and allows responses when held down, released, and clicked.")]
 public class uScriptAct_GUIButton : uScriptLogic
 {
    private class Identifier
@@ -43,13 +42,30 @@ public class uScriptAct_GUIButton : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
+      [FriendlyName("Text", "The text you want to display on the button.")]
       string Text,
-      [FriendlyName("Unique Identifier"), DefaultValue(0), SocketState(false, false)] int identifier,
+      
+      [FriendlyName("Unique Identifier", "A unique identifier if the same node is used to represent multiple buttons.")]
+      [DefaultValue(0), SocketState(false, false)]
+      int identifier,
+      
+      [FriendlyName("Position", "The position and size of the button.")]
       Rect Position,
+      
+      [FriendlyName("Texture", "The background image to use for the button.")]
       Texture2D Texture,
-      [FriendlyName("Control Name"), DefaultValue(""), SocketState(false, false)] string ControlName,
-      [FriendlyName("Tool Tip"), DefaultValue(""), SocketState(false, false)] string ToolTip,
-      [FriendlyName("GUI Style"), DefaultValue(""), SocketState(false, false)] string guiStyle
+      
+      [FriendlyName("Control Name", "Name to give to this button GUI control.")]
+      [DefaultValue(""), SocketState(false, false)]
+      string ControlName,
+      
+      [FriendlyName("Tool Tip", "The tool tip to display when the button is being hovered over.")]
+      [DefaultValue(""), SocketState(false, false)]
+      string ToolTip,
+      
+      [FriendlyName("GUI Style", "The name of a custom GUI style to use when displaying this button.")]
+      [DefaultValue(""), SocketState(false, false)]
+      string guiStyle
       )
    {
       Identifier myIdentifier = null;

@@ -9,19 +9,25 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Rounds the Target float and returns the result.")]
-[NodeDescription("Rounds the Target float to the nearest whole number and returns the result.\n \nTarget: The float to round.\nResult (out): The floating point result of the rounding operation.\nInt Result (out): The integer result of the rounding operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Round Float")]
+[FriendlyName("Round Float", "Rounds the Target float to the nearest whole number and returns the result.")]
 public class uScriptAct_RoundFloat : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      float Target, 
-      [FriendlyName("Result")] out float FloatResult,
-      [FriendlyName("Int Result"), SocketState(false, false)] out int IntResult)
+      [FriendlyName("Target", "The float to round.")]
+      float Target,
+
+      [FriendlyName("Result", "The floating point result of the rounding operation.")]
+      out float FloatResult,
+
+      [FriendlyName("Int Result", "The integer result of the rounding operation.")]
+      [SocketState(false, false)]
+      out int IntResult
+      )
    {
       FloatResult = UnityEngine.Mathf.Round(Target);
       IntResult = UnityEngine.Mathf.RoundToInt(Target);

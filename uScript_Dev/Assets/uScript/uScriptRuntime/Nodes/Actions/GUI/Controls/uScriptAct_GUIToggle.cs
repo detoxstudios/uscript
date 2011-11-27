@@ -9,11 +9,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a GUIToggle on the screen and allows responses when changed.")]
-[NodeDescription("Shows a GUIToggle on the screen and allows responses when changed.\n \nValue (in/out): The value of this toggle.\nText: The text you want to display with the toggle. \nPosition: The position and size of the toggle.\nTexture: The background image to use for the toggle.\nControl Name: Name to give to this toggle GUI control.\nTool Tip: The tool tip to display when the toggle is being hovered over.\nGUI Style: The name of a custom GUI style to use when displaying this toggle.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Toggle")]
 
-[FriendlyName("GUI Toggle")]
+[FriendlyName("GUI Toggle", "Shows a GUIToggle on the screen and allows responses when changed.")]
 public class uScriptAct_GUIToggle : uScriptLogic
 {
    [FriendlyName("Changed")]
@@ -23,13 +22,29 @@ public class uScriptAct_GUIToggle : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
+      [FriendlyName("Value", "The value of this toggle.")]
       ref bool Value,
+
+      [FriendlyName("Text", "The text you want to display with the toggle.")]
       string Text,
+
+      [FriendlyName("Position", "The position and size of the toggle.")]
       Rect Position,
+
+      [FriendlyName("Texture", "The background image to use for the toggle.")]
       Texture2D Texture,
-      [FriendlyName("Control Name"), DefaultValue(""), SocketState(false, false)] string ControlName,
-      [FriendlyName("Tool Tip"), DefaultValue(""), SocketState(false, false)] string ToolTip,
-      [FriendlyName("GUI Style"), DefaultValue(""), SocketState(false, false)] string guiStyle
+      
+      [FriendlyName("Control Name", "Name to give to this toggle GUI control.")]
+      [DefaultValue(""), SocketState(false, false)]
+      string ControlName,
+      
+      [FriendlyName("Tool Tip", "The tool tip to display when the toggle is being hovered over.")]
+      [DefaultValue(""), SocketState(false, false)]
+      string ToolTip,
+      
+      [FriendlyName("GUI Style", "The name of a custom GUI style to use when displaying this toggle.")]
+      [DefaultValue(""), SocketState(false, false)]
+      string guiStyle
       )
    {
       GUIContent content = new GUIContent(Text, Texture, ToolTip);

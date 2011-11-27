@@ -9,16 +9,27 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Adds two Vector4 variables together and returns the result.")]
-[NodeDescription("Adds two Vector4 variables together and returns the result.\n \nA: The first Vector4 addend.  If more than one Vector4 variable is connected to A, they will be added together before being added to B.\nB: The second Vector4 addend.  If more than one Vector4 variable is connected to B, they will be added together before being added to A.\nResult (out): The Vector4 result of the addition operation.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Add_Vector4")]
 
-[FriendlyName("Add Vector4")]
+[FriendlyName("Add Vector4", "Adds Vector4 variables together and returns the result." +
+ "\n\n[ A + B ]" +
+ "\n\nIf more than one variable is connected to A, they will be added together before being added to B." +
+ "\n\nIf more than one variable is connected to B, they will be added together before being added to A.")]
 public class uScriptAct_AddVector4 : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(Vector4[] A, Vector4[] B, out Vector4 Result)
+   public void In(
+      [FriendlyName("A", "The first variable or variable list.")]
+      Vector4[] A,
+
+      [FriendlyName("B", "The second variable or variable list.")]
+      Vector4[] B,
+
+      [FriendlyName("Result", "The Vector4 result of the operation.")]
+      out Vector4 Result
+      )
    {
       Vector4 aTotals = new Vector4(0, 0, 0, 0);
       Vector4 bTotals = new Vector4(0, 0, 0, 0);

@@ -9,18 +9,20 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Converts a Rect variable to a Vector4 variable.")]
-[NodeDescription("Converts a Rect variable to a Vector4 variable.\n \nRect: The Rect variable to be converted.\nVector4 (out): The new Vector4 variable created from the Rect.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Convert Rect To Vector4")]
+[FriendlyName("Convert Rect To Vector4", "Converts a Rect variable to a Vector4 variable.")]
 public class uScriptAct_ConvertRectToVector4 : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Rect")] Rect TargetRect,
-      [FriendlyName("Vector4")] out Vector4 NewVector4
+      [FriendlyName("Rect", "The Rect variable to be converted.")]
+      Rect TargetRect,
+      
+      [FriendlyName("Vector4", "The new Vector4 variable created from the Rect.")]
+      out Vector4 NewVector4
       )
    {
       float xMin = TargetRect.xMin;
@@ -29,6 +31,5 @@ public class uScriptAct_ConvertRectToVector4 : uScriptLogic
       float Height = TargetRect.height;
 
       NewVector4 = new Vector4(xMin, yMin, Width, Height);
-
    }
 }

@@ -9,22 +9,32 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Converts a variable into another type.")]
-[NodeDescription("Converts a variable into another type.\n \nTarget: The Target variable to be converted.\nInt Value (out): The Target variable represented as an integer.\nFloat Value (out): The Target variable represented as a floating point value.\nString Value (out): The Target variable represented as a string.\nBoolean Value (out): The Target variable represented as a Boolean (true/false) value.\nVector3Value (out): The Target variable represented as a Vector3 value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Convert_Variable")]
 
-[FriendlyName("Convert Variable")]
+[FriendlyName("Convert Variable", "Converts a variable into another type.")]
 public class uScriptAct_ConvertVariable : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(object Target,
-      [FriendlyName("Int Value")] out int IntValue,
-      [FriendlyName("Float Value")] out float FloatValue,
-      [FriendlyName("String Value")] out string StringValue,
-      [FriendlyName("Boolean Value")] out bool BooleanValue,
-      [FriendlyName("Vector3 Value")] out Vector3 Vector3Value
-
+   public void In(
+      [FriendlyName("Target", "The Target variable to be converted.")]
+      object Target,
+      
+      [FriendlyName("Int Value", "The Target variable represented as an integer.")]
+      out int IntValue,
+      
+      [FriendlyName("Float Value", "The Target variable represented as a floating point value.")]
+      out float FloatValue,
+      
+      [FriendlyName("String Value", "The Target variable represented as a string.")]
+      out string StringValue,
+      
+      [FriendlyName("Boolean Value", "The Target variable represented as a Boolean (true/false) value.")]
+      out bool BooleanValue,
+      
+      [FriendlyName("Vector3 Value", "The Target variable represented as a Vector3 value.")]
+      out Vector3 Vector3Value
       )
    {
       int tempIntValue = 0;
