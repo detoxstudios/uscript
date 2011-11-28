@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes ints from a Int List. Can also empty the Int List.")]
-[NodeDescription("Adds/removes ints from a Int List. Can also empty the Int List.\n \nTarget: The Target ints(s) to add or remove from the Int List.\nInt List: The Int List to modify.\nList Count (out): The remaining number of items in the Int List after modification has taken place.")]
+/* M */[NodeDescription("Adds/removes ints from a Int List. Can also empty the Int List.\n \nTarget: The Target ints(s) to add or remove from the Int List.\nInt List: The Int List to modify.\nList Count (out): The remaining number of items in the Int List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

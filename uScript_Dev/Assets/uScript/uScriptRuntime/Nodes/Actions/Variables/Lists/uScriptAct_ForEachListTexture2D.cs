@@ -11,7 +11,7 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Texture2D in a Texture2D List (uScript events must drive each iteration).")]
-[NodeDescription("Iterate through each Texture2D in a Texture2D List (uScript events must drive each iteration).\n \nTexture2D List: The list of Texture2Ds to iterate over.\nCurrent Texture2D (out): The Texture2D for the current loop iteration.")]
+/* M */[NodeDescription("Iterate through each Texture2D in a Texture2D List (uScript events must drive each iteration).\n \nTexture2D List: The list of Texture2Ds to iterate over.\nCurrent Texture2D (out): The Texture2D for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

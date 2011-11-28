@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes cameras from a Camera List. Can also empty the Camera List.")]
-[NodeDescription("Adds/removes cameras from a Camera List. Can also empty the Camera List.\n \nTarget: The Target camera(s) to add or remove from the Camera List.\nCamera List: The Camera List to modify.\nList Count (out): The remaining number of items in the Camera List after modification has taken place.")]
+/* M */[NodeDescription("Adds/removes cameras from a Camera List. Can also empty the Camera List.\n \nTarget: The Target camera(s) to add or remove from the Camera List.\nCamera List: The Camera List to modify.\nList Count (out): The remaining number of items in the Camera List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

@@ -11,7 +11,7 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each string in a String List (uScript events must drive each iteration).")]
-[NodeDescription("Iterate through each string in a String List (uScript events must drive each iteration).\n \nString List: The list of strings to iterate over.\nCurrent String (out): The string for the current loop iteration.")]
+/* M */[NodeDescription("Iterate through each string in a String List (uScript events must drive each iteration).\n \nString List: The list of strings to iterate over.\nCurrent String (out): The string for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

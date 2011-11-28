@@ -11,7 +11,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a Vector3 to the defined X, Y, and Z float component values.")]
-[NodeDescription("Sets a Vector3 to the defined X, Y, and Z float component values.\n \nX: X value to use for the Output Vector.\nY: Y value to use for the Output Vector.\nZ: Z value to use for the Output Vector.\nOutput Vector3 (out): Vector3 variable built from the specified X, Y, and Z.")]
+/* D */[NodeDescription("Sets a Vector3 to the defined X, Y, and Z float component values.\n \nX: X value to use for the Output Vector.\nY: Y value to use for the Output Vector.\nZ: Z value to use for the Output Vector.\nOutput Vector3 (out): Vector3 variable built from the specified X, Y, and Z.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Vector3_Components")]
 

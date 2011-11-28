@@ -13,7 +13,7 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).")]
-[NodeDescription("Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).\n \nGameObject List: The list of GameObjects to iterate over.\nCurrent GameObject (out): The GameObject for the current loop iteration.")]
+/* D */[NodeDescription("Iterate through each GameObject in a GameObject list (uScript events must drive each iteration).\n \nGameObject List: The list of GameObjects to iterate over.\nCurrent GameObject (out): The GameObject for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#For_Each_GameObject_In_List")]
 
@@ -46,7 +46,13 @@ public class uScriptAct_ForEachObjectList : uScriptLogic
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
    [FriendlyName("Reset")]
-   public void Reset([FriendlyName("GameObject List")] GameObject[] GameObjectList, [FriendlyName("Current GameObject")] out GameObject go)
+   public void Reset(
+      [FriendlyName("GameObject List")]
+      GameObject[] GameObjectList,
+
+      [FriendlyName("Current GameObject")]
+      out GameObject go
+      )
    {
       go = null;
       if (m_List == null)
@@ -69,7 +75,13 @@ public class uScriptAct_ForEachObjectList : uScriptLogic
       m_ImmediateDone = false;
    }
 
-   public void In([FriendlyName("GameObject List")] GameObject[] GameObjectList, [FriendlyName("Current GameObject")] out GameObject go)
+   public void In(
+      [FriendlyName("GameObject List")]
+      GameObject[] GameObjectList,
+      
+      [FriendlyName("Current GameObject")]
+      out GameObject go
+      )
    {
       if (m_List == null)
       {

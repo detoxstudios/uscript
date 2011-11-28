@@ -11,7 +11,7 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Color in a Color List (uScript events must drive each iteration).")]
-[NodeDescription("Iterate through each Color in a Color List (uScript events must drive each iteration).\n \nColor List: The list of Colors to iterate over.\nCurrent Color (out): The Color for the current loop iteration.")]
+/* M */[NodeDescription("Iterate through each Color in a Color List (uScript events must drive each iteration).\n \nColor List: The list of Colors to iterate over.\nCurrent Color (out): The Color for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

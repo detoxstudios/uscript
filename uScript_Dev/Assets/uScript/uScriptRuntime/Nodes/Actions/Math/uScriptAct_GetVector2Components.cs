@@ -11,7 +11,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the components of a Vector2 as floats.")]
-[NodeDescription("Gets the components of a Vector2 as floats.\n \nInput Vector2: The input vector to get components of.\nX: The x value of the Input Vector2.\nY: The y value of the Input Vector2.")]
+/* D */[NodeDescription("Gets the components of a Vector2 as floats.\n \nInput Vector2: The input vector to get components of.\nX: The x value of the Input Vector2.\nY: The y value of the Input Vector2.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Vector2_Components")]
 

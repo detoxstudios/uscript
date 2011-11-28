@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes Texture2D from a Texture2D List. Can also empty the Texture2D List.")]
-[NodeDescription("Adds/removes Texture2D from a Texture2D List. Can also empty the Texture2D List.\n \nTarget: The Target Texture2D(s) to add or remove from the Texture2D List.\nTexture2D List: The Texture2D List to modify.\nList Count (out): The remaining number of items in the Texture2D List after modification has taken place.")]
+/* M */[NodeDescription("Adds/removes Texture2D from a Texture2D List. Can also empty the Texture2D List.\n \nTarget: The Target Texture2D(s) to add or remove from the Texture2D List.\nTexture2D List: The Texture2D List to modify.\nList Count (out): The remaining number of items in the Texture2D List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

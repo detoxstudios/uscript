@@ -11,7 +11,7 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Vector4 in a Vector4 List (uScript events must drive each iteration).")]
-[NodeDescription("Iterate through each Vector4 in a Vector4 List (uScript events must drive each iteration).\n \nVector4 List: The list of Vector4s to iterate over.\nCurrent Vector4 (out): The Vector4 for the current loop iteration.")]
+/* M */[NodeDescription("Iterate through each Vector4 in a Vector4 List (uScript events must drive each iteration).\n \nVector4 List: The list of Vector4s to iterate over.\nCurrent Vector4 (out): The Vector4 for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

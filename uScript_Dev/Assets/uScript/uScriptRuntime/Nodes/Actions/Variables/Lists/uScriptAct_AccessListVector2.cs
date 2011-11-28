@@ -11,7 +11,7 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Access different elements in a Vector2 List. Can access first, last, random or by index.")]
-[NodeDescription("Access different elements in a Vector2 List. Can access first, last, random or by index.\n \nVector2 List: The list of Vector2s to operate on.\nIndex: The desired index to select (only used for the At Index input).\nSelected Vector2 (out): The Vector2 selected by this node.")]
+/* M */[NodeDescription("Access different elements in a Vector2 List. Can access first, last, random or by index.\n \nVector2 List: The list of Vector2s to operate on.\nIndex: The desired index to select (only used for the At Index input).\nSelected Vector2 (out): The Vector2 selected by this node.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

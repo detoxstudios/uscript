@@ -9,30 +9,69 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Clamps a Color variable between a min and a max value for the desired components and returns the resulting Color.")]
-[NodeDescription("Clamps a Color variable between a min and a max value for the desired components and returns the resulting Color. Values must be between Unity's color range of 0 and 1. Values outside this range are clamped to either 0 or 1.\n\nTarget: The Color to be clamped.\nClamp Red: Specifiy if the red component will be clamped.\nRed Min: The minimun float value allowed for the red component of the Color.\nRed Max: The maximum float value allowed for the red component of the Color.\nClamp Green: Specifiy if the Green component will be clamped.\nGreen Min: The minimun float value allowed for the green component of the Color.\nGreen Max: The maximum float value allowed for the green component of the Color.\nClamp Blue: Specifiy if the height component will be clamped.\nBlue Min: The minimun float value allowed for the blue component of the Color.\nBlue Max: The maximum float value allowed for the blue component of the Color.\nClamp Alpha: Specifiy if the alpha component will be clamped.\nAlpha Min: The minimun float value allowed for the alpha component of the Color.\nAlpha Max: The maximum float value allowed for the alpha component of the Color.\nResult: The resulting Color variable after clamping.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Clamp Color")]
+[FriendlyName("Clamp Color", "Clamps Color variable components between minimun and maximum values." +
+ "\n\nValues must be within the normalized color range of 0 and 1. Values outside this range are themselves clamped.")]
 public class uScriptAct_ClampColor : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
+      [FriendlyName("Target", "The Color to be clamped.")]
       Color Target,
-      [FriendlyName("Clamp Red"), SocketState(false, false)] bool ClampX,
-      [FriendlyName("Red Min"), SocketState(false, false)] float XMin,
-      [FriendlyName("Red Max"), SocketState(false, false)] float XMax,
-      [FriendlyName("Clamp Green"), SocketState(false, false)] bool ClampY,
-      [FriendlyName("Green Min"), SocketState(false, false)] float YMin,
-      [FriendlyName("Green Max"), SocketState(false, false)] float YMax,
-      [FriendlyName("Clamp Blue"), SocketState(false, false)] bool ClampZ,
-      [FriendlyName("Blue Min"), SocketState(false, false)] float ZMin,
-      [FriendlyName("Blue Max"), SocketState(false, false)] float ZMax,
-      [FriendlyName("Clamp Alpha"), SocketState(false, false)] bool ClampW,
-      [FriendlyName("Alpha Min"), SocketState(false, false)] float WMin,
-      [FriendlyName("Alpha Max"), SocketState(false, false)] float WMax,
-      [FriendlyName("Result")] out Color Result
+      
+      [FriendlyName("Clamp Red", "If True, the Red component will be clamped.")]
+      [SocketState(false, false)]
+      bool ClampX,
+      
+      [FriendlyName("Red Min", "The minimun value allowed for the Red component.")]
+      [SocketState(false, false)]
+      float XMin,
+      
+      [FriendlyName("Red Max", "The maximum value allowed for the Red component.")]
+      [SocketState(false, false)]
+      float XMax,
+      
+      [FriendlyName("Clamp Green", "If True, the Green component will be clamped.")]
+      [SocketState(false, false)]
+      bool ClampY,
+      
+      [FriendlyName("Green Min", "The minimun value allowed for the Green component.")]
+      [SocketState(false, false)]
+      float YMin,
+      
+      [FriendlyName("Green Max", "The maximum value allowed for the Green component.")]
+      [SocketState(false, false)]
+      float YMax,
+      
+      [FriendlyName("Clamp Blue", "If True, the Blue component will be clamped.")]
+      [SocketState(false, false)]
+      bool ClampZ,
+      
+      [FriendlyName("Blue Min", "The minimun value allowed for the Blue component.")]
+      [SocketState(false, false)]
+      float ZMin,
+      
+      [FriendlyName("Blue Max", "The maximum value allowed for the Blue component.")]
+      [SocketState(false, false)]
+      float ZMax,
+      
+      [FriendlyName("Clamp Alpha", "If True, the Alpha component will be clamped.")]
+      [SocketState(false, false)]
+      bool ClampW,
+      
+      [FriendlyName("Alpha Min", "The minimun value allowed for the Alpha component.")]
+      [SocketState(false, false)]
+      float WMin,
+      
+      [FriendlyName("Alpha Max", "The maximum value allowed for the Alpha component.")]
+      [SocketState(false, false)]
+      float WMax,
+      
+      [FriendlyName("Result", "The clamped Color variable.")]
+      out Color Result
       )
    {
 

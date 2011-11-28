@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes Vector3 from a Vector3 List. Can also empty the Vector3 List.")]
-[NodeDescription("Adds/removes Vector3 from a Vector3 List. Can also empty the Vector3 List.\n \nTarget: The Target Vector3(s) to add or remove from the Vector3 List.\nVector3 List: The Vector3 List to modify.\nList Count (out): The remaining number of items in the Vector3 List after modification has taken place.")]
+/* M */[NodeDescription("Adds/removes Vector3 from a Vector3 List. Can also empty the Vector3 List.\n \nTarget: The Target Vector3(s) to add or remove from the Vector3 List.\nVector3 List: The Vector3 List to modify.\nList Count (out): The remaining number of items in the Vector3 List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

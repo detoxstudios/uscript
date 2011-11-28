@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes floats from a Float List. Can also empty the Float List.")]
-[NodeDescription("Adds/removes floats from a Float List. Can also empty the Float List.\n \nTarget: The Target floats(s) to add or remove from the Float List.\nFloat List: The Float List to modify.\nList Count (out): The remaining number of items in the Float List after modification has taken place.")]
+/* M */[NodeDescription("Adds/removes floats from a Float List. Can also empty the Float List.\n \nTarget: The Target floats(s) to add or remove from the Float List.\nFloat List: The Float List to modify.\nList Count (out): The remaining number of items in the Float List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

@@ -11,7 +11,7 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Vector3 in a Vector3 List (uScript events must drive each iteration).")]
-[NodeDescription("Iterate through each Vector3 in a Vector3 List (uScript events must drive each iteration).\n \nVector3 List: The list of Vector3s to iterate over.\nCurrent Vector3 (out): The Vector3 for the current loop iteration.")]
+/* M */[NodeDescription("Iterate through each Vector3 in a Vector3 List (uScript events must drive each iteration).\n \nVector3 List: The list of Vector3s to iterate over.\nCurrent Vector3 (out): The Vector3 for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

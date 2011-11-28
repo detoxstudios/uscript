@@ -9,7 +9,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a boolean to the defined value.")]
-[NodeDescription("Sets a boolean to the defined value.\n \nTarget (out): The value that has been set for this variable.")]
+/* M */[NodeDescription("Sets a boolean to the defined value.\n \nTarget (out): The value that has been set for this variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Bool")]
 

@@ -11,7 +11,7 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each float in a Float List (uScript events must drive each iteration).")]
-[NodeDescription("Iterate through each float in a Float List (uScript events must drive each iteration).\n \nFloat List: The list of floats to iterate over.\nCurrent Float (out): The float for the current loop iteration.")]
+/* M */[NodeDescription("Iterate through each float in a Float List (uScript events must drive each iteration).\n \nFloat List: The list of floats to iterate over.\nCurrent Float (out): The float for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

@@ -9,7 +9,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Allows the signal to pass through to the Out link depending on the state of the gate.")]
-[NodeDescription("Allows the signal to pass through to the Out link depending on the state of the gate.\n\nStart Open (in): If checked, the gate will be open initially.\nAuto Close Count (in): Allows you to specify how many signals the gate will pass through before it closes automatically. This value is re-checked and reset when the gate recieves a signal to the Open or Toggle signal sockets.\nIs Open (out): Sets a Boolean variable to true when the gate is open and false when it is closed. Note: This will always return False if accessed before the gate has recieved a signal.")]
+/* M */[NodeDescription("Allows the signal to pass through to the Out link depending on the state of the gate.\n\nStart Open (in): If checked, the gate will be open initially.\nAuto Close Count (in): Allows you to specify how many signals the gate will pass through before it closes automatically. This value is re-checked and reset when the gate recieves a signal to the Open or Toggle signal sockets.\nIs Open (out): Sets a Boolean variable to true when the gate is open and false when it is closed. Note: This will always return False if accessed before the gate has recieved a signal.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Gate")]
 

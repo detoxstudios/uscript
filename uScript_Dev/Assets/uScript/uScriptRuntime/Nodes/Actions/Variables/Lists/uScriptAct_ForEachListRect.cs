@@ -11,7 +11,7 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Rect in a Rect List (uScript events must drive each iteration).")]
-[NodeDescription("Iterate through each Rect in a Rect List (uScript events must drive each iteration).\n \nRect List: The list of Rects to iterate over.\nCurrent Rect (out): The Rect for the current loop iteration.")]
+/* M */[NodeDescription("Iterate through each Rect in a Rect List (uScript events must drive each iteration).\n \nRect List: The list of Rects to iterate over.\nCurrent Rect (out): The Rect for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

@@ -9,7 +9,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Perform various floating point trigonometric functions.")]
-[NodeDescription("Perform various floating point trigonometric functions.\n \nInput: The input value to the trigonometric function.\nOutput: The output value of the trigonometric function.")]
+/* M */[NodeDescription("Perform various floating point trigonometric functions.\n \nInput: The input value to the trigonometric function.\nOutput: The output value of the trigonometric function.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Trigonometry")]
 

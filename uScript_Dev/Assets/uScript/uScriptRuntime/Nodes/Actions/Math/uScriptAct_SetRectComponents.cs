@@ -11,7 +11,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a Rect to the defined Left, Top, Width and Height float component values.")]
-[NodeDescription("Sets a Rect to the defined Left, Top, Width and Height float component values.\n \nLeft (in): Left value to use for the Output Rect.\nTop (in): Top value to use for the Output Rect.\nWidth (in): Width value to use for the Output Rect.\nHeight (in): Height value to use for the Output Rect.\nOutput Rect (out): Rect variable built from the specified Left, Top, Width, and Height.")]
+/* D */[NodeDescription("Sets a Rect to the defined Left, Top, Width and Height float component values.\n \nLeft (in): Left value to use for the Output Rect.\nTop (in): Top value to use for the Output Rect.\nWidth (in): Width value to use for the Output Rect.\nHeight (in): Height value to use for the Output Rect.\nOutput Rect (out): Rect variable built from the specified Left, Top, Width, and Height.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Vector4_Components")]
 

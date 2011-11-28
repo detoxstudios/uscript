@@ -9,19 +9,29 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Mirrors the X and Y of a Vector2.")]
-[NodeDescription("Mirrors the X and Y of a Vector2.\n \nTarget: Value to invert.\nIgnore X: Whether or not to mirror the X component of the Target.\nIgnore Y: Whether or not to mirror the Y component of the Target.\nValue (out): Inverted value ([x, y] -> [-x, -y]).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Invert_Vector2")]
 
-[FriendlyName("Invert Vector2")]
+[FriendlyName("Invert Vector2", "Returns the inverse value of a Vector2 variable. Individual components can optionally be ignored by this operation." +
+ "\n\nExample:" +
+ "\n\t[x, y] -> [-x, -y]")]
 public class uScriptAct_InvertVector2 : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
+      [FriendlyName("Target", "Value to invert.")]
       Vector2 Target,
-      [FriendlyName("Ignore X"), SocketState(false, false)] bool IgnoreX,
-      [FriendlyName("Ignore Y"), SocketState(false, false)] bool IgnoreY,
+
+      [FriendlyName("Ignore X", "If True, the X component will be ignored.")]
+      [SocketState(false, false)]
+      bool IgnoreX,
+
+      [FriendlyName("Ignore Y", "If True, the Y component will be ignored.")]
+      [SocketState(false, false)]
+      bool IgnoreY,
+
+      [FriendlyName("Value", "The inverted value.")]
       out Vector2 Value
       )
    {

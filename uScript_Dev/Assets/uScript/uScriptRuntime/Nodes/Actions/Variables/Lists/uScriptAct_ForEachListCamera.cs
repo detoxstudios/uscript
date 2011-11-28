@@ -11,7 +11,7 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each camera in a Camera List (uScript events must drive each iteration).")]
-[NodeDescription("Iterate through each camera in a Camera List (uScript events must drive each iteration).\n \nCamera List: The list of cameras to iterate over.\nCurrent Camera (out): The camera for the current loop iteration.")]
+/* M */[NodeDescription("Iterate through each camera in a Camera List (uScript events must drive each iteration).\n \nCamera List: The list of cameras to iterate over.\nCurrent Camera (out): The camera for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

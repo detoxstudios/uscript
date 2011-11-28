@@ -9,7 +9,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Counts the amount of time that elapses between starting and stopping.")]
-[NodeDescription("Counts the amount of time that elapses between starting and stopping.")]
+/* M */[NodeDescription("Counts the amount of time that elapses between starting and stopping.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Count_Time")]
 

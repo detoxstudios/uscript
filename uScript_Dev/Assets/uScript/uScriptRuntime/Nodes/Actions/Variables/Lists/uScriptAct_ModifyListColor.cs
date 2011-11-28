@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes Colors from a Color List. Can also empty the Color List.")]
-[NodeDescription("Adds/removes Colors from a Color List. Can also empty the Color List.\n \nTarget: The Target Color(s) to add or remove from the Color List.\nColor List: The Color List to modify.\nList Count (out): The remaining number of items in the Color List after modification has taken place.")]
+/* M */[NodeDescription("Adds/removes Colors from a Color List. Can also empty the Color List.\n \nTarget: The Target Color(s) to add or remove from the Color List.\nColor List: The Color List to modify.\nList Count (out): The remaining number of items in the Color List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

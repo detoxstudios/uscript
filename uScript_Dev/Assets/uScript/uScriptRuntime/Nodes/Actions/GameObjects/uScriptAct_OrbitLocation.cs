@@ -9,7 +9,7 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Orbits GameObjects around a world location.")]
-[NodeDescription("Orbits GameObjects around a world location.\n\nTarget: The GameObject(s) you wish to orbit.\nLocation: The location you wish to have the Target orbit around.\nAxis: The axis you wish to orbit on.\nOrbit Speed: How fast the Target rotates around the Location.\nOrbit State (out): Reflects the current orbit state as a bool variable (on = true/off = false).")]
+/* M */[NodeDescription("Orbits GameObjects around a world location.\n\nTarget: The GameObject(s) you wish to orbit.\nLocation: The location you wish to have the Target orbit around.\nAxis: The axis you wish to orbit on.\nOrbit Speed: How fast the Target rotates around the Location.\nOrbit State (out): Reflects the current orbit state as a bool variable (on = true/off = false).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 

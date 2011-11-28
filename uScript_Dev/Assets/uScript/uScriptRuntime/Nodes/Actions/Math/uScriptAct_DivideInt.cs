@@ -12,10 +12,8 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Divide_Int")]
 
-[NodeDescription("Divides two integer variables and returns the result." +
+[FriendlyName("Divide Int", "Divides two integer variables and returns the result." +
  "\n\n[ A / B ]")]
-
-[FriendlyName("Divide Int")]
 public class uScriptAct_DivideInt : uScriptLogic
 {
    public bool Out { get { return true; } }

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes GameObjects from a GameObject List. Can also empty the GameObject List.")]
-[NodeDescription("Adds/removes GameObjects from a GameObject List. Can also empty the GameObject List.\n \nTarget: The Target GameObject(s) to add or remove from the GameObject list.\nGameObject List: The GameObject list to modify.\nList Count (out): The remaining number of items in the GameObject List after modification has taken place.")]
+/* D */[NodeDescription("Adds/removes GameObjects from a GameObject List. Can also empty the GameObject List.\n \nTarget: The Target GameObject(s) to add or remove from the GameObject list.\nGameObject List: The GameObject list to modify.\nList Count (out): The remaining number of items in the GameObject List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Modify_GameObject_List")]
 
