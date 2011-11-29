@@ -340,7 +340,7 @@ public class uScript : EditorWindow
       uScriptDebug.Log("Launching From Unity.", uScriptDebug.Type.Debug );
 
       LoadSettings();
-
+      
       wantsMouseMove = true;
 
       System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.RootFolder);
@@ -383,10 +383,14 @@ public class uScript : EditorWindow
 
       String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
       String lastScene  = (String)uScript.GetSetting("uScript\\LastScene", "");
+      //Debug.Log("last = " + lastOpened + ", lastScene = " + lastScene );
       if (!String.IsNullOrEmpty(lastOpened) && lastScene == UnityEditor.EditorApplication.currentScene)
       {
          m_FullPath = UnityEngine.Application.dataPath + lastOpened;
+         //Debug.Log("fp loaded from settings" );
       }
+
+      //Debug.Log("fp = " + m_FullPath );
 
       //clear any old script undo data laying around
       MasterComponent.Script = null;
@@ -503,6 +507,8 @@ public class uScript : EditorWindow
 
    static public void LoadSettings()
    {
+     Preferences.Load( );
+
       if (System.IO.File.Exists(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile))
       {
          m_AppData.Load(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
@@ -2868,6 +2874,7 @@ public class uScript : EditorWindow
 
       m_FullPath = "";
 
+      //Debug.Log("clearing" );
       uScript.SetSetting("uScript\\LastOpened", "");
       uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
    }
@@ -2905,6 +2912,8 @@ public class uScript : EditorWindow
          if (fullPath != m_FullPath) m_CurrentCanvasPosition = "";
 
          m_FullPath = fullPath;
+
+         //Debug.Log("setting" );
 
          uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(fullPath).Substring("Assets".Length));
          uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
@@ -3130,12 +3139,8 @@ public class uScript : EditorWindow
             script.SceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
          }
 
-//uScriptDebug.Log("6 - Inside SaveScript(): " + script.Name + "\n", uScriptDebug.Type.Warning);
-
          if (true == SaveScript(script, m_FullPath, generateCode, GenerateDebugInfo))
          {
-
-//uScriptDebug.Log("7 - Inside SaveScript(): " + script.Name + "\n\t\t\t\t At this point, script.Name lost the file extension!", uScriptDebug.Type.Error);
 
             m_ScriptEditorCtrl.IsDirty = false;
 
@@ -3691,6 +3696,8 @@ public class uScript : EditorWindow
                            MasterComponent.AddType(eventProperty.PropertyType);
 
                            eventInputsOutpus.Add(output);
+
+                           AddParameterDescField(type.ToString(), eventProperty.Name, eventProperty.GetCustomAttributes(false));
                         }
                      }
                   }

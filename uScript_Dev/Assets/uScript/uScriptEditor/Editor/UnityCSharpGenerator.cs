@@ -429,6 +429,8 @@ namespace Detox.ScriptEditor
          {
             m_Script = script.Copy( );
 
+            Preprocess( );
+
             DeclareNamespaces( );
             AddCSharpLine( "" );
 
