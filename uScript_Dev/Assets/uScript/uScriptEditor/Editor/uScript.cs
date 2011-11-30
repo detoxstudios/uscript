@@ -507,12 +507,12 @@ public class uScript : EditorWindow
 
    static public void LoadSettings()
    {
-     Preferences.Load( );
-
       if (System.IO.File.Exists(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile))
       {
          m_AppData.Load(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
       }
+
+      Preferences.Load( );
    }
 
    static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)
