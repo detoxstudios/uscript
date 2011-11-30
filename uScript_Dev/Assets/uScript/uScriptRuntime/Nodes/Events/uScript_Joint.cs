@@ -1,6 +1,5 @@
 // uScript uScript_Joint.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when one of Instance's joints breaks.
 
 using UnityEngine;
 using System.Collections;

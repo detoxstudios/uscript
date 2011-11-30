@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Linearly interpolate a float over time.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Prints out a list of string variables from a String list to the console.
 
 using UnityEngine;
 using System.Collections;

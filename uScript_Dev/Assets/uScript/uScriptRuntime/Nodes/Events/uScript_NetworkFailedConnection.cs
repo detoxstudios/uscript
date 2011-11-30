@@ -1,6 +1,5 @@
 // uScript uScript_NetworkFailedConnection.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when the network client fails to connect to the server.
 
 using UnityEngine;
 using System.Collections;

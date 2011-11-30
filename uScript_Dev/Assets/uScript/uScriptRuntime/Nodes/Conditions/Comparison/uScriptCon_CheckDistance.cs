@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Checks the distance of two GameObjects against a specified distance and fires the appropriate output.
 
 using UnityEngine;
 using System.Collections;
@@ -9,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks the distance of two GameObjects against a specified distance.")]
-[NodeDescription("Checks the distance of two GameObjects against a specified distance and fires the appropriate output.\n \nA: First GameObject to compare distance between.\nB: Second GameObject to compare distance between.\nDistance: Distance to compare the distance between A and B with.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Check_Distance")]
 
-[FriendlyName("Check Distance")]
+[FriendlyName("Check Distance", "Checks the distance of two GameObjects against a specified distance and fires the appropriate output.")]
 public class uScriptCon_CheckDistance : uScriptLogic
 {
    // @TODO: This node would really benifit by being able to check every tick as part of a master uScript Update() event.
@@ -26,7 +24,16 @@ public class uScriptCon_CheckDistance : uScriptLogic
    public bool Further { get { return m_Further; } }
    public bool Equal { get { return m_Equal; } }
 
-   public void In(GameObject A, GameObject B, float Distance)
+   public void In(
+                  [FriendlyName("A", "First GameObject.")]
+                  GameObject A,
+
+                  [FriendlyName("B", "Second GameObject.")]
+                  GameObject B,
+
+                  [FriendlyName("Distance", "Distance value for the test.")]
+                  float Distance
+                  )
    {
       m_Closer = false;
       m_Further = false;

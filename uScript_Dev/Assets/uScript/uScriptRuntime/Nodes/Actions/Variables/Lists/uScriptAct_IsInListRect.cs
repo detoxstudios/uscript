@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Checks to see if a Rect is in a Rect List.
 
 using UnityEngine;
 using System.Collections;

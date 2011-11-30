@@ -1,6 +1,5 @@
 // uScript uScript_Mouse.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when the mouse enters, is over, exits, is pressed down, released, or dragged over Instance.
 
 using UnityEngine;
 using System.Collections;

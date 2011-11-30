@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Assigns the specified Material (by name) to the GameObject on the specifed material channel.
 
 using UnityEngine;
 using System.Collections;

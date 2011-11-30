@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Places the specified camera in orbit around the a world vector.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Captures a screenshot as a PNG file.
 
 using UnityEngine;
 using System.Collections;
@@ -10,11 +9,11 @@ using System.IO;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Captures a screenshot as a PNG file.")]
-[NodeDescription("Captures a screenshot as a PNG file. If the file already exists, it will be overwritten. If no path is defined or a bad path is provided, the screenshot will be placed in the root folder of the project. Note: This node will not function when run from the web player or a Dashboard widget.\n\nFile Name: The name of the file. You do not need to provide the extension.\nPath: The path where you wish to save the screenshot file to.\nRelative To Data Folder: Applies the project's root data folder path to the begining of the specified path (the same location as your project's Assets folder).\nAppend Number: If true, this will append an incrementing number in the format of \"_#####\" to the end of the file name.\nFile Saved: Outputs the full path and filename of the saved screenshot.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Capture_Screenshot")]
 
-[FriendlyName("Capture Screenshot")]
+[FriendlyName("Capture Screenshot", "Captures a screenshot as a PNG file. If the file already exists, it will be overwritten. If no path is defined or a bad path is provided, the screenshot will be placed in the root folder of the project." +
+ "\n\nNote: This node will not function when run from the web player or a Dashboard widget.")]
 public class uScriptAct_CaptureScreenshot : uScriptLogic
 {
 	int m_NumberCount = 0;
@@ -22,11 +21,23 @@ public class uScriptAct_CaptureScreenshot : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("File Name")] string FileName, 
+      [FriendlyName("File Name", "The name of the file. You do not need to provide the extension.")]
+      string FileName,
+      
+      [FriendlyName("Path", "The path where you wish to save the screenshot file to.")]
       string Path,
-      [FriendlyName("Relative To Data Folder"), DefaultValue(true), SocketState(false, false)] bool RelativeToDataFolder,
-	  [FriendlyName("Append Number"), DefaultValue(false), SocketState(false, false)] bool AppendNumber,
-	  [FriendlyName("File Saved"), DefaultValue(false), SocketState(false, false)] out string FileSaved
+
+      [FriendlyName("Relative To Data Folder", "Applies the project's root data folder path to the begining of the specified path (the same location as your project's Assets folder).")]
+      [DefaultValue(true), SocketState(false, false)]
+      bool RelativeToDataFolder,
+      
+      [FriendlyName("Append Number", "If true, this will append an incrementing number in the format of \"_#####\" to the end of the file name.")]
+      [DefaultValue(false), SocketState(false, false)]
+      bool AppendNumber,
+      
+      [FriendlyName("File Saved", "Outputs the full path and filename of the saved screenshot.")]
+      [DefaultValue(false), SocketState(false, false)]
+      out string FileSaved
       )
    {
       //Remove any slashes from the filename.

@@ -1,6 +1,5 @@
 // uScript uScript_Collision.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when Instance receives a collision.
 
 using UnityEngine;
 using System.Collections;

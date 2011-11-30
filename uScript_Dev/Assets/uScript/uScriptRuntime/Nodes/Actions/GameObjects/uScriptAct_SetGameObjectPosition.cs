@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sets the position (Vector3) of a GameObject as world coordinates. Optionally can set position as offest from the target's current position.
 
 using UnityEngine;
 using System.Collections;

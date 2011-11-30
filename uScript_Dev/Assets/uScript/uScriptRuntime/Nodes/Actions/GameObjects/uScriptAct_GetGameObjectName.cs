@@ -1,7 +1,5 @@
-
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Delays the AfterDelay output signal by x seconds.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Orbits GameObjects around another GameObject.
 
 using UnityEngine;
 using System.Collections;

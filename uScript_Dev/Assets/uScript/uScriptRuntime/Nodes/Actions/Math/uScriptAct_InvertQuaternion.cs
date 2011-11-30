@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Inverts a Quaternion.
 
 using UnityEngine;
 using System.Collections;

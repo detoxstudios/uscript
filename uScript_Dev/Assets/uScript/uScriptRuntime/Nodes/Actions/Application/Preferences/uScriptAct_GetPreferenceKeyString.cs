@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Returns the value of the specified Key from the preference file if it exists.
 
 using UnityEngine;
 using System.Collections;

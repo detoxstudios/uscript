@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Removes the specified Component from the target GameObject. Can optionally set a delay.
 
 using UnityEngine;
 using System.Collections;

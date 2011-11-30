@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Allows the signal to pass through to the Out link depending on the state of the gate.
 
 using UnityEngine;
 using System.Collections;

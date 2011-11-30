@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sets the Target GameObject's camera's depth to the specified float value.
 
 using UnityEngine;
 using System.Collections;

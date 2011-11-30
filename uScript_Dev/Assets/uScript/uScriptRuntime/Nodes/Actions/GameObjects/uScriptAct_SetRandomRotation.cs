@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Randomly sets the rotation of a GameObject.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Clamps a Vector2 variable between a min and a max value for the desired components and returns the resulting Vector2.
 
 using UnityEngine;
 using System.Collections;

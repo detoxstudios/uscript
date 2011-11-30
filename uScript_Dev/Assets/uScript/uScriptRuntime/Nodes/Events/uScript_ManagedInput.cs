@@ -1,6 +1,5 @@
 // uScript uScript_ManagedInput.cs
 // (C) 2010 Detox Studios LLC
-// Desc: uScript_ManagedInput contains all events related to handling the default Input Manager settings that Unity provides.
 
 using UnityEngine;
 using System.Collections;

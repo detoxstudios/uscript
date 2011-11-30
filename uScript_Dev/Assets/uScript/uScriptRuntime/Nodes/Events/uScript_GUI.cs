@@ -1,6 +1,5 @@
 // uScript uScript_GUI.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires GUI-related events.
 
 using UnityEngine;
 using System.Collections;

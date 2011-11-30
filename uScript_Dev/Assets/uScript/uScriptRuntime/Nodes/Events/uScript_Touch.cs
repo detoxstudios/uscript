@@ -1,6 +1,5 @@
 // uScript uScript_Touch.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.
 
 using UnityEngine;
 using System.Collections;

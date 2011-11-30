@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Takes the red, green and blue values of the Value color variable and combines them with the specified alpha value, outputing the results to the target color variable.
 
 using UnityEngine;
 using System.Collections;

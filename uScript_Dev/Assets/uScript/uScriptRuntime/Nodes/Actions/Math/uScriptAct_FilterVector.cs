@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Takes any Vector3 or Vector4 and outputs a low-pass filtered version.
 
 using UnityEngine;
 using System.Collections;

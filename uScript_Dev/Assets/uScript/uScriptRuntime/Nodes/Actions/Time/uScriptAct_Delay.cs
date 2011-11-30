@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Delays the AfterDelay output signal by x seconds.
 
 using UnityEngine;
 using System.Collections;
@@ -9,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Delays execution of a script.")]
-[NodeDescription("Delays execution of a script but can also fire off an immediate response.\n \nDuration: Amount of time (in seconds) to delay.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Delay")]
 
-[FriendlyName("Delay")]
+[FriendlyName("Delay", "Delays execution of a script but can also fire off an immediate response.")]
 public class uScriptAct_Delay : uScriptLogic
 {
    private float m_TimeToTrigger;
@@ -28,8 +26,9 @@ public class uScriptAct_Delay : uScriptLogic
 
    [FriendlyName("In")]
    public void In(
-      [FriendlyName("Duration")] float Duration
-   )
+      [FriendlyName("Duration", "Amount of time (in seconds) to delay.")]
+      float Duration
+      )
    {
       m_ImmediateOut = true;
       m_DelayedOut = false;

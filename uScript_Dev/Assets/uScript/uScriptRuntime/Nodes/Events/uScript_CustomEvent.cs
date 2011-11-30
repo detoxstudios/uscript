@@ -1,6 +1,5 @@
 // uScript uScript_CustomEvent.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when Instance receives a standard custom event.
 
 using UnityEngine;
 using System.Collections;

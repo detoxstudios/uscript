@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Checks to see if a Texture2D is in a Texture2D List.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Moves a GameObject to a Vector3 Location. Optionally can choose to Lerp to the location and use a local offset.
 
 using UnityEngine;
 using System.Collections;

@@ -17,8 +17,12 @@ public class uScriptAct_SetFloat : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-	               [FriendlyName("Value", "The variable you wish to use to set the target's value.")] float Value, 
-	               [FriendlyName("Target", "The Target variable you wish to set.")] out float Target)
+      [FriendlyName("Value", "The variable you wish to use to set the target's value.")]
+      float Value,
+      
+      [FriendlyName("Target", "The Target variable you wish to set.")]
+      out float Target
+      )
    {
       Target = Value;
    }

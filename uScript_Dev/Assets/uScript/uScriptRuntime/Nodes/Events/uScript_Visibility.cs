@@ -1,6 +1,5 @@
 // uScript uScript_Visibility.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when various GameObject visibility events (Became Visible, Became Invisible) take place.
 
 using UnityEngine;
 using System.Collections;

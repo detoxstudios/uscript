@@ -1,6 +1,5 @@
 // uScript uScript_DeviceOrientation.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when the screen orientation of a device happens. Supported events: Device Portrait, Device Portrait Upside-Down, Device Landscape Left, Device Landscape Right, Device Face Up, Device Face Down.
 
 using UnityEngine;
 using System.Collections;

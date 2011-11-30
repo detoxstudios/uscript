@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Converts a variable into another type.
 
 using UnityEngine;
 using System.Collections;

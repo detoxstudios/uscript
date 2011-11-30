@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Iterate through each Color in a Color List (uScript events must drive each iteration).
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
-   // uScript Action Node
+// uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Creates a GameObject with a primitive mesh renderer and appropriate collider.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Takes any non-zero target float and outputs its inverse version. Example: 3.25 becomes -3.25
 
 using UnityEngine;
 using System.Collections;

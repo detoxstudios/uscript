@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes cameras from a Camera List. Can also empty the Camera List.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Checks to see if a Vector4 is in a Vector4 List.
 
 using UnityEngine;
 using System.Collections;

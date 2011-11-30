@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Allows the signal to pass through each output socket in order.
 
 using UnityEngine;
 using System.Collections;

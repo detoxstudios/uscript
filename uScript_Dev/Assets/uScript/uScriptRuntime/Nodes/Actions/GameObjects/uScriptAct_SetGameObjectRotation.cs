@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sets the rotation in degrees (float) of a GameObject in local or world coordinates. Optionally can set rotation as offest from the target's current rotation.
 
 using UnityEngine;
 using System.Collections;
@@ -12,43 +11,41 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Position")]
 
-[NodeDescription("Sets the rotation in degrees (float) of a GameObject in local or world coordinates. Optionally can set rotation as offest from the target's current rotation.")]
-
-[FriendlyName("Set Rotation")]
+[FriendlyName("Set Rotation", "Sets the rotation of a GameObject in local or world coordinates. Optionally, can set rotation as offest from the target's current rotation.")]
 public class uScriptAct_SetGameObjectRotation : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target")]
+      [FriendlyName("Target", "?")]
       GameObject[] Target,
       
-      [FriendlyName("X Degrees")]
+      [FriendlyName("X Degrees", "?")]
       float XDegrees,
       
-      [FriendlyName("Y Degrees")]
+      [FriendlyName("Y Degrees", "?")]
       float YDegrees,
       
-      [FriendlyName("Z Degrees")]
+      [FriendlyName("Z Degrees", "?")]
       float ZDegrees,
       
-      [FriendlyName("Ignore X")]
+      [FriendlyName("Ignore X", "?")]
       [SocketState(false, false)]
       bool IgnoreX,
       
-      [FriendlyName("Ignore Y")]
+      [FriendlyName("Ignore Y", "?")]
       [SocketState(false, false)]
       bool IgnoreY,
       
-      [FriendlyName("Ignore Z")]
+      [FriendlyName("Ignore Z", "?")]
       [SocketState(false, false)]
       bool IgnoreZ,
       
-      [FriendlyName("Space")]
+      [FriendlyName("Space", "?")]
       [SocketState(false, false)]
       UnityEngine.Space CoordinateSystem,
       
-      [FriendlyName("As Offset")]
+      [FriendlyName("As Offset", "?")]
       [SocketState(false, false)]
       bool AsOffset
       )

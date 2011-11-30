@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sets a Vector2 to the defined X, Y, and Z float component values.
 
 using UnityEngine;
 using System.Collections;

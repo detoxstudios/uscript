@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Returns the GameObject in the scene with the specified name.
 
 using UnityEngine;
 using System.Collections;

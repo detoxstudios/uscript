@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Switches to the Target GameObject's camera. Can optionally enable that camera's AudioListener component.
 
 using UnityEngine;
 using System.Collections;

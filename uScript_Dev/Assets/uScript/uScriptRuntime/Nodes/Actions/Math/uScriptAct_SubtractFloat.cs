@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Subtracts two float variables together and returns the result.
 
 using UnityEngine;
 using System.Collections;

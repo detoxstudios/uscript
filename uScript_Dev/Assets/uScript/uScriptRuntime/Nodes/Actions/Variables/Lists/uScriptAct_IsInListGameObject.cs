@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Checks to see if GameObjects are in a GameObject List.
 
 using UnityEngine;
 using System.Collections;

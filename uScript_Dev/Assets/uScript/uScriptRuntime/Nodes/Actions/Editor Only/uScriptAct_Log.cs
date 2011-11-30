@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Outputs a string to the debug log. Optionally can add prefix and/or postfix strings.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Get various math constants.
 
 using UnityEngine;
 using System.Collections;

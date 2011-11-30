@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Filters the OnKeyPress event to a specific key when the key is pressed down, being held, or released.
 
 using UnityEngine;
 using System.Collections;

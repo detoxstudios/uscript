@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Checks to see if the Key string generates the provided SHA1 Hash string.
 
 using UnityEngine;
 using System.Collections;
@@ -11,11 +10,10 @@ using System.Security.Cryptography;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if the Key string generates the provided SHA1 Hash string.")]
-[NodeDescription("Checks to see if the Key string is a match for the provided SHA1 Hash string.\n\nKey: The string to be used to check against the provided SHA1 hash.\nSHA1 Hash: The SHA1 Hash to check the key against.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Check SHA1 Hash")]
+[FriendlyName("Check SHA1 Hash", "Checks to see if the Key string is a match for the provided SHA1 Hash string.")]
 public class uScriptAct_CheckSHA1Hash : uScriptLogic
 {
    private bool m_GoodHash = false;
@@ -23,7 +21,13 @@ public class uScriptAct_CheckSHA1Hash : uScriptLogic
    public bool Good { get { return m_GoodHash; } }
    public bool Bad { get { return !m_GoodHash; } }
 
-   public void In([FriendlyName("Key")] string Key, [FriendlyName("SHA1 Hash")] string Hash)
+   public void In(
+      [FriendlyName("Key", "The string to be used to check against the provided SHA1 hash.")]
+      string Key,
+      
+      [FriendlyName("SHA1 Hash", "The SHA1 Hash to check the key against.")]
+      string Hash
+      )
    {
       
 

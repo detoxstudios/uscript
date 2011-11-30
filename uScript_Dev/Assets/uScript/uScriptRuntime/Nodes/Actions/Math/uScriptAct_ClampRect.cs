@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Clamps a Rect variable between a min and a max value for the desired components and returns the resulting Rect.
 
 using UnityEngine;
 using System.Collections;

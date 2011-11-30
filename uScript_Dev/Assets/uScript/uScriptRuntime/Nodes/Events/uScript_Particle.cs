@@ -1,6 +1,5 @@
 // uScript uScript_Particle.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when a particle collides with a GameObject.
 
 using UnityEngine;
 using System.Collections;

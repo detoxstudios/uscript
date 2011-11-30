@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Shows a GUIToggle on the screen and allows responses when changed.
 
 using UnityEngine;
 using System.Collections;

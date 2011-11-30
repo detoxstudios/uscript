@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Sets the value of a Constraint variable using the value of another Constraint variable.
 
 using UnityEngine;
 using System.Collections;

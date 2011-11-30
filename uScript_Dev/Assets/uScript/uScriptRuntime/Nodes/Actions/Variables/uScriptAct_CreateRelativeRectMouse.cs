@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Creates a Rect based off the current mouse cursor position.
 
 using UnityEngine;
 using System.Collections;

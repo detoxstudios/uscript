@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Manually pick an Output to fire the signal to.
 
 using UnityEngine;
 using System.Collections;
@@ -9,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Manually pick an Output to fire the signal to.")]
-[NodeDescription("Manually pick an Output to fire the signal to. Providing an Output To Use number smaller than 1 caps to 1 and larger than 6 caps to 6.\n \nOutput To Use: The output switch to use.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Manual_Switch")]
 
-[FriendlyName("Manual Switch")]
+[FriendlyName("Manual Switch", "Manually pick an Output to fire the signal to.\n\nThe specified Output To Use value will be clamped within the range of 1 to 6.")]
 public class uScriptCon_ManualSwitch : uScriptLogic
 {
    private int m_CurrentOutput = 1;
@@ -34,7 +32,8 @@ public class uScriptCon_ManualSwitch : uScriptLogic
    public event uScriptEventHandler Output6;
 
    public void In(
-      [FriendlyName("Output To Use")] int CurrentOutput
+      [FriendlyName("Output To Use", "The output switch to use.")]
+      int CurrentOutput
       )
    {
       // Check bounds on MaxOutputUsed

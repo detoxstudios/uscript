@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sets the layer for the target GameObjects.
 
 using UnityEngine;
 using System.Collections;

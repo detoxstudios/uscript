@@ -1,6 +1,5 @@
 // uScript uScript_Triggers.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when a GameObject enters, exits, or stays in a trigger.
 
 using UnityEngine;
 using System.Collections;

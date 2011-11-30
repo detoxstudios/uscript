@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Returns the system's current date information.
 
 using UnityEngine;
 using System.Collections;
@@ -9,21 +8,33 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns the system's current date information.")]
-[NodeDescription("Returns the system's current date information.\n \nDate (out): Outputs the current date.\nDay (out): Outputs the current day of the week.\nDay Of Month (out): Outputs the current day value.\nMonth (out): Outputs the current month value.\nYear (out): Outputs the current year value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Game_Time")]
 
-[FriendlyName("Get System Date")]
+[FriendlyName("Get System Date", "Returns the system's current date information.")]
 public class uScriptAct_GetSystemDate : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Date")] out string FullDate,
-	  [FriendlyName("Day"), SocketState(false, false)] out string Day,
-	  [FriendlyName("Day of Month"), SocketState(false, false)] out int DayOfMonth,
-	  [FriendlyName("Month"), SocketState(false, false)] out int Month,
-	  [FriendlyName("Year"), SocketState(false, false)] out int Year
+      [FriendlyName("Date", "Outputs the current date.")]
+      out string FullDate,
+      
+      [FriendlyName("Day", "Outputs the current day of the week.")]
+      [SocketState(false, false)]
+      out string Day,
+      
+      [FriendlyName("Day of Month", "Outputs the current day value.")]
+      [SocketState(false, false)]
+      out int DayOfMonth,
+      
+      [FriendlyName("Month", "Outputs the current month value.")]
+      [SocketState(false, false)]
+      out int Month,
+      
+      [FriendlyName("Year", "Outputs the current year value.")]
+      [SocketState(false, false)]
+      out int Year
       )
    {
       FullDate = System.DateTime.Today.ToString("d");

@@ -1,6 +1,5 @@
 // uScript uScript_CustomEventGameObject.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when Instance receives a custom event with a GameObject.
 
 using UnityEngine;
 using System.Collections;

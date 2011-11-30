@@ -1,6 +1,5 @@
 // uScript uScript_Input.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when a player connects or disconnects from a server.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Inverse a boolean variable to its opposite value. Example: true becomes false
 
 using UnityEngine;
 using System.Collections;

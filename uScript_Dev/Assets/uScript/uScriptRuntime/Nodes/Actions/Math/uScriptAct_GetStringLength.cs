@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Returns the number of characters in a string as a float, integer, and string.
 
 using UnityEngine;
 using System.Collections;

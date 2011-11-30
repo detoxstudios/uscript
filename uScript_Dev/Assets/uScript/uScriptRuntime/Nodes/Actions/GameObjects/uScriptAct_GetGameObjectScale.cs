@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Gets the scale of a GameObject as both a Vector3 and X, Y and Z float variables.
 
 using UnityEngine;
 using System.Collections;

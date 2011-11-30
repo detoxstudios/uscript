@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Determines if the target Int is a power of two number.
 
 using UnityEngine;
 using System.Collections;
@@ -9,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Determines if the target Int is a power of two number.")]
-[NodeDescription("Determines if the target Int is a power of two number.\n\nTarget: The target Int variable to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Is_Power_of_Two")]
 
-[FriendlyName("Is Power of Two")]
+[FriendlyName("Is Power of Two", "Determines if the target Int is a power of two number.")]
 public class uScriptCon_IsPowerOfTwo : uScriptLogic
 {
 
@@ -25,7 +23,10 @@ public class uScriptCon_IsPowerOfTwo : uScriptLogic
    [FriendlyName("False")]
    public bool False { get { return !m_IsPOT; } }
     
-   public void In(int Target)
+   public void In(
+      [FriendlyName("Target", "The integer variable to compare.")]
+      int Target
+      )
    {
 
 #if (!UNITY_3_0 && !UNITY_3_1)

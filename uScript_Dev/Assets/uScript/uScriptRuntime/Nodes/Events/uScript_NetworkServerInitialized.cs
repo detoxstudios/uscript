@@ -1,6 +1,5 @@
 // uScript uScript_NetworkServerInitialized.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when a network server is initialized.
 
 using UnityEngine;
 using System.Collections;

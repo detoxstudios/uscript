@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Cast a ray from the specified screen location (in pxiels) out into the scene.
 
 using UnityEngine;
 using System.Collections;
@@ -9,23 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Cast a ray from the specified screen location (in pxiels) out into the scene.")]
-[NodeDescription(@"
-Cast a ray from the specified screen location (in pxiels) out into the scene, determines if anything was hit along the way, and fires the associated output link.\n
-\nCamera: The Camera GameObject to cast the ray from.
-\nPosition: The X and Y position (in pixels) to raycast from. Acceptable values are from the screen's minimum X and Y (0,0) to the maximum current X and Y screen resolution values (values outside this range will be capped).
-\nDistance: How far out to cast the ray.
-\nLayer Mask: A Layer mask that is used to selectively ignore colliders when casting a ray.
-\nInclude Masked Layers: If true the ray will test against the masked layers, if false it will test against all layers excluding the masked layers.
-\nShow Ray: If true the ray will be displayed as a line in the Scene view.
-\nHit GameObject: The first GameObject that was hit by the raycast (if any).
-\nHit Distance: The distance along the ray that the hit occured (if any).
-\nHit Location: The position of the hit (if any).
-\nHit Normal: The surface normal of the hit (if any).
-")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Raycast_From_Mouse_Cursor")]
 
-[FriendlyName("Raycast From Screen Point")]
+[FriendlyName("Raycast From Screen Point", "Cast a ray from the specified screen location (in pxiels) out into the scene, determines if anything was hit along the way, and fires the associated output link.")]
 public class uScriptAct_RaycastFromScreenPoint : uScriptLogic
 {
    private bool m_NotObstructed = false;
@@ -35,18 +21,46 @@ public class uScriptAct_RaycastFromScreenPoint : uScriptLogic
    public bool Obstructed { get { return m_Obstructed; } }
 
    public void In(
+      [FriendlyName("Camera", "The Camera GameObject to cast the ray from.")]
       Camera Camera,
-      [FriendlyName("Screen Position")] Vector2 ScreenPosition,
-      [FriendlyName("Distance"), SocketState(false, false), DefaultValue(100f)] float Distance,
-      [FriendlyName("Layer Mask"), SocketState(false, false)] LayerMask layerMask,
-// TODO: Uncomment when array support is added
-//      [FriendlyName("Layer Masks"), SocketState(false, false)] LayerMask[] layerMasks,
-      [FriendlyName("Include Masked Layers"), DefaultValue(true), SocketState(false, false)] bool include,
-      [FriendlyName("Show Ray"), SocketState(false, false)] bool showRay,
-      [FriendlyName("Hit GameObject")] out GameObject HitObject,
-      [FriendlyName("Hit Distance"), SocketState(false, false)] out float HitDistance,
-      [FriendlyName("Hit Location")] out Vector3 HitLocation,
-      [FriendlyName("Hit Normal"), SocketState(false, false)] out Vector3 HitNormal
+
+      [FriendlyName("Screen Position", "The X and Y position (in pixels) to raycast from. Acceptable values are from the screen's minimum X and Y (0,0) to the maximum current X and Y screen resolution values (values outside this range will be capped).")]
+      Vector2 ScreenPosition,
+      
+      [FriendlyName("Distance", "How far out to cast the ray.")]
+      [SocketState(false, false), DefaultValue(100f)]
+      float Distance,
+      
+      [FriendlyName("Layer Mask", "A Layer mask that is used to selectively ignore colliders when casting a ray.")]
+      [SocketState(false, false)]
+      LayerMask layerMask,
+
+//      @TODO: Uncomment when array support is added
+//      [FriendlyName("Layer Masks")]
+//      [SocketState(false, false)]
+//      LayerMask[] layerMasks,
+
+      [FriendlyName("Include Masked Layers", "If true, the ray will test against the masked layers, otherwise it will test against all layers excluding the masked layers.")]
+      [DefaultValue(true), SocketState(false, false)]
+      bool include,
+      
+      [FriendlyName("Show Ray", "If true, the ray will be displayed as a line in the Scene view.")]
+      [SocketState(false, false)]
+      bool showRay,
+      
+      [FriendlyName("Hit GameObject", "The first GameObject that was hit by the raycast (if any).")]
+      out GameObject HitObject,
+      
+      [FriendlyName("Hit Distance", "The distance along the ray that the hit occured (if any).")]
+      [SocketState(false, false)]
+      out float HitDistance,
+      
+      [FriendlyName("Hit Location", "The position of the hit (if any).")]
+      out Vector3 HitLocation,
+      
+      [FriendlyName("Hit Normal", "The surface normal of the hit (if any).")]
+      [SocketState(false, false)]
+      out Vector3 HitNormal
       )
    {
       bool hitTrue = false;

@@ -1,8 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Gets the position and rotation (in quaternion and euler angle formats) of a GameObject
-//       and outputs them as Vector3 variables. Optionally can get local position and rotation
-//       relative to a parent GameObject (if exists - otherwise returns World).
 
 using UnityEngine;
 using System.Collections;

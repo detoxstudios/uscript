@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes Texture2D from a Texture2D List. Can also empty the Texture2D List.
 
 using UnityEngine;
 using System.Collections;

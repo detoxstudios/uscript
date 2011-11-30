@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Fires the appropriate output link(s) depending on the comparison of the attached integer variables.
 
 using UnityEngine;
 using System.Collections;
@@ -9,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires the appropriate output link(s) depending on the comparison of the attached integer variables.")]
-[NodeDescription("Fires the appropriate output link(s) depending on the comparison of the attached integer variables.\n \nA: First integer to compare.\nB: Second integer to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Compare_Int")]
 
-[FriendlyName("Compare Int")]
+[FriendlyName("Compare Int", "Fires the appropriate output link(s) depending on the comparison of the attached integer variables.")]
 public class uScriptCon_CompareInt : uScriptLogic
 {
    private bool m_GreaterThan = false;
@@ -40,7 +38,13 @@ public class uScriptCon_CompareInt : uScriptLogic
    [FriendlyName("(Less Than)   <")]
    public bool LessThan { get { return m_LessThan; } }
 
-   public void In(int A, int B)
+   public void In(
+      [FriendlyName("A", "First value to compare.")]
+      int A,
+
+      [FriendlyName("B", "Second value to compare.")]
+      int B
+      )
    {
       m_GreaterThan = false;
       m_GreaterThanOrEqualTo = false;

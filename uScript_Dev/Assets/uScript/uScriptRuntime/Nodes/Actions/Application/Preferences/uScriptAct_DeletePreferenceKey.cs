@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Deletes the specified preference key if found.
 
 using UnityEngine;
 using System.Collections;

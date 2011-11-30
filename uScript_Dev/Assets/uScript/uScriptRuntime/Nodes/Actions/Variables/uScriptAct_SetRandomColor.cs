@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Randomly sets the value of a Color variable. Min/Max ovverrides allow you to change the range on a per-channel basis. Values should be 0 - 1. Currently, an Alpha Min and Max of both 0 will 1 until default node properties are working. 
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Sets the value of a Color variable by using RGBA float component values.
 
 using UnityEngine;
 using System.Collections;

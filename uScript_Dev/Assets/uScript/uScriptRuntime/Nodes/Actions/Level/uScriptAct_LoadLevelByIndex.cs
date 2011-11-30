@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Loads a level by its index value as defined in Unity's Build Settings.
 
 using UnityEngine;
 using System.Collections;

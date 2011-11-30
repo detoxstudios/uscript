@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Fires the appropriate signal depending on if the specified key exists in the PlayerPrefs file.
 
 using UnityEngine;
 using System.Collections;

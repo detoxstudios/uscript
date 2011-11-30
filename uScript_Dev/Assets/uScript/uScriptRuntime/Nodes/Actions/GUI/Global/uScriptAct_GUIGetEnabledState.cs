@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Gets the current enabled state of the GUI.
 
 using UnityEngine;
 using System.Collections;

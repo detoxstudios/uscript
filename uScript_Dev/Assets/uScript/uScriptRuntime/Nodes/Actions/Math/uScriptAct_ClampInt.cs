@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Clamps an integer variable between a min and a max value and returns the result.
 
 using UnityEngine;
 using System.Collections;

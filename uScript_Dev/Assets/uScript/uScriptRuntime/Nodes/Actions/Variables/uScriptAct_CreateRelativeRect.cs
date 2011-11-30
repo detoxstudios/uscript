@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Creates a new Rect within an existing target Rect.
 
 using UnityEngine;
 using System.Collections;

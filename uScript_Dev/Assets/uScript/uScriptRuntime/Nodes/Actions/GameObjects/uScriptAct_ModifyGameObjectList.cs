@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes GameObjects from a GameObject List. Can also empty the GameObject List.
 
 using UnityEngine;
 using System.Collections;

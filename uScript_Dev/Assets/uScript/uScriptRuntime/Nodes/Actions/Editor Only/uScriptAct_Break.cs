@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Editor only. Pauses the game and spits out the game time and an optional text string to Unity's console.
 
 using UnityEngine;
 using System.Collections;

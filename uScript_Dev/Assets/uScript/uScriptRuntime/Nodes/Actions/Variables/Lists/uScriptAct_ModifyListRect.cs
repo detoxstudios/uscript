@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes Rect from a Rect List. Can also empty the Rect List.
 
 using UnityEngine;
 using System.Collections;

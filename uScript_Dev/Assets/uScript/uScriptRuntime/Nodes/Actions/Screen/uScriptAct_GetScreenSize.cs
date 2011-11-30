@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Gets the current size informaiton for the screen.
 
 using UnityEngine;
 using System.Collections;
@@ -9,21 +8,29 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the current size informaiton for the screen.")]
-[NodeDescription("Gets the current size informaiton for the screen.\n\nWidth (Out): Returns the width of the screen size in pixels.\nHeight (Out): Returns the height of the screen size in pixels.\nScreen Rect (Out): Returns the screen size as a Rect variable.\nScreen Center (Out): The center of the screen as a Vector2.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Get Screen Size")]
+[FriendlyName("Get Screen Size", "Gets the current size informaiton for the screen.")]
 public class uScriptAct_GetScreenSize : uScriptLogic
 {
 
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Width")] out int ScreenWidth,
-      [FriendlyName("Height")] out int ScreenHeight,
-      [FriendlyName("Screen Rect"), SocketState(false, false)] out Rect ScreenRect,
-      [FriendlyName("Screen Center"), SocketState(false, false)] out Vector2 ScreenCenter
+      [FriendlyName("Width", "Returns the width of the screen size in pixels.")]
+      out int ScreenWidth,
+      
+      [FriendlyName("Height", "Returns the height of the screen size in pixels.")]
+      out int ScreenHeight,
+      
+      [FriendlyName("Screen Rect", "Returns the screen size as a Rect variable.")]
+      [SocketState(false, false)]
+      out Rect ScreenRect,
+      
+      [FriendlyName("Screen Center", "The center of the screen as a Vector2.")]
+      [SocketState(false, false)]
+      out Vector2 ScreenCenter
       )
    {
       Rect scrnSize = new Rect(0, 0, (float)Screen.width, (float)Screen.height);

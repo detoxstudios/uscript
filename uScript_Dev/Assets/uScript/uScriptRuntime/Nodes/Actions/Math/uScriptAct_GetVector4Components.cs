@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Gets the components of a Vector4 as floats.
 
 using UnityEngine;
 using System.Collections;

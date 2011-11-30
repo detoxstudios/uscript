@@ -1,6 +1,5 @@
 // uScript uScript_Update.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when various global events (Update, LateUpdate, and FixedUpdate) take place.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Pads a string to reach the specified width.
 
 using UnityEngine;
 using System.Collections;

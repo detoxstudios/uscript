@@ -1,6 +1,5 @@
-   // uScript uScript_Level.cs
+// uScript uScript_Level.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when a level is finished loading.
 
 using UnityEngine;
 using System.Collections;

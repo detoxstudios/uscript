@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Gets the tooltip of the control that is currently being hovered over with the cursor.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript uScript_NetworkMasterServer.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when a master server event takes place.
 
 using UnityEngine;
 using System.Collections;

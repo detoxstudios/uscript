@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Randomly sets the world position of a GameObject based around an origin point in the world.
 
 using UnityEngine;
 using System.Collections;

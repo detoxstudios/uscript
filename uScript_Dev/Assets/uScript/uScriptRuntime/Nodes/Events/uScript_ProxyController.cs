@@ -1,6 +1,5 @@
 // uScript uScript_ProxyController.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when a CharacterController collides with an object.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript uScript_NetworkClientConnection.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when the network client connects or disconnects from the server.
 
 using UnityEngine;
 using System.Collections;

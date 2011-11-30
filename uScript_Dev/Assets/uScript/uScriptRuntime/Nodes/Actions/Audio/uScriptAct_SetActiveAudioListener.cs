@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sets the active AudioListener to the one on the specified GameObject.
 
 using UnityEngine;
 using System.Collections;

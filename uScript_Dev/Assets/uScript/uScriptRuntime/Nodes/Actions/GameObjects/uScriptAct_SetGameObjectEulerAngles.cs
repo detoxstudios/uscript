@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sets the world coordinates euler angle rotation of a GameObject by specifing the X, Y, and Z axis in degrees. Any of the current euler angles can be preserved.
 
 using UnityEngine;
 using System.Collections;

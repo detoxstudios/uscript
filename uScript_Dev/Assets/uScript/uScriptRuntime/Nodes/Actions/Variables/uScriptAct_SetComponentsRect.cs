@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Sets a Rect to the defined Left, Top, Width and Height float component values.
 
 using UnityEngine;
 using System.Collections;

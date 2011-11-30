@@ -1,6 +1,5 @@
 // uScript uScript_GameObject.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when Instance is enabled, disabled or destroyed.
 
 using UnityEngine;
 using System.Collections;

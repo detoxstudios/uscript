@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Rounds the Target float and returns the result.
 
 using UnityEngine;
 using System.Collections;

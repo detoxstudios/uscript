@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes Colors from a Color List. Can also empty the Color List.
 
 using UnityEngine;
 using System.Collections;

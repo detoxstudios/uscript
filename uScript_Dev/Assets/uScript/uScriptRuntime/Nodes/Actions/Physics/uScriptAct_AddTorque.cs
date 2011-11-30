@@ -1,7 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Applies an Add Torque to the specified GameObject
-
 
 using UnityEngine;
 using System.Collections;
@@ -10,22 +8,32 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Applies an Add Torque to the specified GameObject.")]
-[NodeDescription("Applies an Add Torque to the specified GameObject. Target must have a Rigid Body Component in order to recieve a force\n \nTarget: GameObject to apply the force to.\nForce: The force to apply to the Target. The force is a Vector3, so it defines both the direction and magnitude of the force.\nScale: A scale to multiply to the force (force x scale).\nUse ForceMode: The force being applied will use the object's mass.\nForceMode Type: Specifies the ForceMode to use if Use ForceMode is set to true.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Add_Torque")]
 
-[FriendlyName("Add Torque")]
+[FriendlyName("Add Torque", "Applies an Add Torque to the specified GameObject. Target must have a Rigid Body Component in order to recieve a force.")]
 public class uScriptAct_AddTorque : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-	               [FriendlyName("Target")] GameObject Target,
-	               [FriendlyName("Force")] Vector3 Force,
-                  [FriendlyName("Scale"), DefaultValue(0f), SocketState(false, false)] float Scale,
-	               [FriendlyName("Use ForceMode"), SocketState(false, false)] bool UseForceMode,
-	               [FriendlyName("ForceMode Type"), SocketState(false, false)] ForceMode ForceModeType
+      [FriendlyName("Target", "GameObject to apply the force to.")]
+      GameObject Target,
+
+      [FriendlyName("Force", "The force to apply to the Target. The force is a Vector3, so it defines both the direction and magnitude of the force.")]
+      Vector3 Force,
       
+      [FriendlyName("Scale", "A scale to multiply to the force (force x scale).")]
+      [DefaultValue(0f), SocketState(false, false)]
+      float Scale,
+      
+      [FriendlyName("Use ForceMode", "The force being applied will use the object's mass.")]
+      [SocketState(false, false)]
+      bool UseForceMode,
+      
+      [FriendlyName("ForceMode Type", "Specifies the ForceMode to use if Use ForceMode is set to true.")]
+      [SocketState(false, false)]
+      ForceMode ForceModeType
       )
    {
 		if  ( null != Target.rigidbody )

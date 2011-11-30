@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes Vector2 from a Vector2 List. Can also empty the Vector2 List.
 
 using UnityEngine;
 using System.Collections;

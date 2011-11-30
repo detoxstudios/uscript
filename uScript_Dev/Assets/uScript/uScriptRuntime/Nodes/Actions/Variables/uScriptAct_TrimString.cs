@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Trims characters from the begining and end of a string.
 
 using UnityEngine;
 using System.Collections;

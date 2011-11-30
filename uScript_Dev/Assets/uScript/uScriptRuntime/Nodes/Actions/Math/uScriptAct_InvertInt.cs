@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Takes any non-zero target integer and outputs its inverse version. Example: -2 becomes 2
 
 using UnityEngine;
 using System.Collections;

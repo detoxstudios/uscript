@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Opens the user's default web browser to the specified URL.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Checks to see if a Vector2 is in a Vector2 List.
 
 using UnityEngine;
 using System.Collections;

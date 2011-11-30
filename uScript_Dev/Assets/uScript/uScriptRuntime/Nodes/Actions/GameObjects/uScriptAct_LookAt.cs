@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Tells a GameObject to look at another GameObject transform or Vector3 position.
 
 using UnityEngine;
 using System.Collections;

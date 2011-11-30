@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Loads an AudioClip from your Resources directory.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Randomly sets the value of a Bool variable.
 
 using UnityEngine;
 using System.Collections;

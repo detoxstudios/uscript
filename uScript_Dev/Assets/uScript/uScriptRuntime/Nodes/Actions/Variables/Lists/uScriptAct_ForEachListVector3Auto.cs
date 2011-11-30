@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Iterate through each Vector3 in a Vector3 List (node will automatically iterate through the list).
 
 using UnityEngine;
 using System.Collections;

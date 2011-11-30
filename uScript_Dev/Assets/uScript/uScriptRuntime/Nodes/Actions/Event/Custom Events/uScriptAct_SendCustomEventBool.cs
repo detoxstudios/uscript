@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sends a custom event with a bool variable.
 
 using UnityEngine;
 using System.Collections;

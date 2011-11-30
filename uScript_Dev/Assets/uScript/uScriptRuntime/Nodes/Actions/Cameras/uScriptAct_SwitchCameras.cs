@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Switches from the 'From' camera to the 'To' camera.
 
 using UnityEngine;
 using System.Collections;

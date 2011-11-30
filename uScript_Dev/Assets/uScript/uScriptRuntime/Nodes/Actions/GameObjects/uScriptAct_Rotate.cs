@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Rotates the target GameObject by a number of degrees over X seconds.
 
 using UnityEngine;
 using System.Collections;

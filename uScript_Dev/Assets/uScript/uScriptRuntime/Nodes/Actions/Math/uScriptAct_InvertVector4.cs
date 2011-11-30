@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Mirrors the X, Y, Z and W of a Vector4.
 
 using UnityEngine;
 using System.Collections;

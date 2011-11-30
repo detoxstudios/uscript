@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Shows a GUIPasswordField on the screen and allows getting/setting of its string contents and repsonses to changed event.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Returns all the children GameObjects of a parent GameObject.
 
 using UnityEngine;
 using System.Collections;

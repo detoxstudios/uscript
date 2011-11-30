@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sets the value of a Vector2 variable using the value of another Vector2 variable.
 
 using UnityEngine;
 using System.Collections;

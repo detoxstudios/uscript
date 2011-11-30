@@ -1,6 +1,5 @@
 // uScript uScript_OnScreenKeyboard.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when an on-screen keyboard event happens.
 
 using UnityEngine;
 using System.Collections;

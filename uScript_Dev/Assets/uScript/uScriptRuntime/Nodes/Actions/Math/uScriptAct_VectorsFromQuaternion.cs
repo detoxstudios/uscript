@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Converts a quaternion into forward and up vectors.
 
 using UnityEngine;
 using System.Collections;

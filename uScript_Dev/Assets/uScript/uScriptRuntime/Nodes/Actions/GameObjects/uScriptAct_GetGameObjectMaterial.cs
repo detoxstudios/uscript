@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Returns a GameObject's material, material color, and material name assigned to the specified material index.
 
 using UnityEngine;
 using System.Collections;

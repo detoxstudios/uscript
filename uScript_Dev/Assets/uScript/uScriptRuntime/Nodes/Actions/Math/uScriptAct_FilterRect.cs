@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Takes any Rect and outputs a low-pass filtered version.
 
 using UnityEngine;
 using System.Collections;

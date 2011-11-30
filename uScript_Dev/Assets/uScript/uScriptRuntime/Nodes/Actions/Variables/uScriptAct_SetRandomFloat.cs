@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Randomly sets the value of a Float variable. Min/Max ovverrides allow you to set the range of the random number.
 
 using UnityEngine;
 using System.Collections;

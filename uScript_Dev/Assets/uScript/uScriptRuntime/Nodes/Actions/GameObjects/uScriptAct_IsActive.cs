@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Gets the active state of a GameObject.
 
 using UnityEngine;
 using System.Collections;

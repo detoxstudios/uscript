@@ -1,6 +1,5 @@
 // uScript uScript_Global.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when uScript starts.
 
 using UnityEngine;
 using System.Collections;

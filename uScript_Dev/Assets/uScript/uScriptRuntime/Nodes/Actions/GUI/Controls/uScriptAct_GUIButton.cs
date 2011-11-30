@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Shows a GUIButton on the screen and allows responses when held down, released, and clicked.
 
 using UnityEngine;
 using System.Collections;

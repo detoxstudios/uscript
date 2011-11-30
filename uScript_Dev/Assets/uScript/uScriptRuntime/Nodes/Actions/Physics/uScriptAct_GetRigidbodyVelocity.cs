@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Gets the velocity of a GameObject's Rigidbody as a Vector3.
 
 using UnityEngine;
 using System.Collections;
@@ -9,16 +8,21 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the velocity of a GameObject's Rigidbody as a Vector3.")]
-[NodeDescription("Gets the velocity of a GameObject's Rigidbody as a Vector3. If Target does not have a rigidbody component, will return Vector3.zero.\n \nTarget: GameObject to get the velocity of.\nVelocity (out): The velocity of the rigidbody component attached to Target.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Rigidbody_Velocity")]
 
-[FriendlyName("Get Rigidbody Velocity")]
+[FriendlyName("Get Rigidbody Velocity", "Gets the velocity of a GameObject's Rigidbody as a Vector3. If Target does not have a rigidbody component, will return Vector3.zero.")]
 public class uScriptAct_GetRigidbodyVelocity : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(GameObject Target, out Vector3 Velocity)
+   public void In(
+      [FriendlyName("Target", "GameObject to get the velocity of.")]
+      GameObject Target,
+      
+      [FriendlyName("Velocity", "The velocity of the rigidbody component attached to Target.")]
+      out Vector3 Velocity
+      )
    {
       if (Target != null && Target.GetComponent<Rigidbody>( ))
       {

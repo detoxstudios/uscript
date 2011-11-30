@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Iterate through each float in a Float List (uScript events must drive each iteration).
 
 using UnityEngine;
 using System.Collections;

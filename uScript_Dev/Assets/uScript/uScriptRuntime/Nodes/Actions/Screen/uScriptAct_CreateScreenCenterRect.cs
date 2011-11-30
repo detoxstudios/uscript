@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Creates a Rect in the center of the screen based on screen size information.
 
 using UnityEngine;
 using System.Collections;

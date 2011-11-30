@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes Vector4 from a Vector4 List. Can also empty the Vector4 List.
 
 using UnityEngine;
 using System.Collections;

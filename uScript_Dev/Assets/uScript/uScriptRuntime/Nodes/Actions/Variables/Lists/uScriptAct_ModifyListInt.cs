@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes ints from a Int List. Can also empty the Int List.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript uScript_Render.cs
 // (C) 2010 Detox Studios LLC
-// Desc: uFires an event signal when various render events (Pre Cull, Pre Render, Post Render, Render Object, and Will Render Object) take place.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Quit the application on supported devices.
 
 using UnityEngine;
 using System.Collections;

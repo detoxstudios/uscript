@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Plays the specified AudioClip on the target GameObject.
 
 using UnityEngine;
 using System.Collections;

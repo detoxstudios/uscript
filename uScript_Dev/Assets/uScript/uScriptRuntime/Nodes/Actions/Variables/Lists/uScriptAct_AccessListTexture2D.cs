@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Access different elements in a Texture2D List. Can access first, last, random or by index.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes strings from a String List. Can also empty the String List.
 
 using UnityEngine;
 using System.Collections;

@@ -1,7 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc:  Performs a ray trace from the starting point to the end point, determines if
-//        anything was hit along the way, and fires the associated output link.
 
 using UnityEngine;
 using System.Collections;
@@ -10,20 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Performs a ray trace from the starting point to the end point. Returns any hit data.")]
-[NodeDescription("Performs a ray trace from the starting point to the end point, determines if anything was hit along the way, and fires the associated output link.\n \n" +
-                  "Start: The start point of the ray cast. Must be a GameObject or Vector3.\n" +
-                  "End: The end point of the ray cast. Must be a GameObject or Vector3.\n" +
-                  "Layer Mask: A Layer mask that is used to selectively ignore colliders when casting a ray.\n" +
-                  "Include Masked Layers: If true the ray will test against the masked layers, if false it will test against all layers excluding the masked layers.\n" +
-                  "Show Ray: If true the ray will be displayed as a line in the Scene view.\n" +
-                  "Hit GameObject: The first GameObject that was hit by the raycast (if any).\n" +
-                  "Hit Distance: The distance along the ray that the hit occured (if any).\n" +
-                  "Hit Location: The position of the hit (if any).\n" +
-                  "Hit Normal: The surface normal of the hit (if any).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Raycast")]
 
-[FriendlyName("Raycast")]
+[FriendlyName("Raycast", "Performs a ray trace from the starting point to the end point, determines if anything was hit along the way, and fires the associated output link.")]
 public class uScriptAct_Raycast : uScriptLogic
 {
    private Vector3 m_StartVector = Vector3.zero;
@@ -36,16 +24,40 @@ public class uScriptAct_Raycast : uScriptLogic
    public bool Obstructed { get { return m_Obstructed; } }
 
    public void In(
-      object Start, object End,
-      [FriendlyName("Layer Mask"), SocketState(false, false)] LayerMask layerMask,
-// TODO: Uncomment when array support is added
-//      [FriendlyName("Layer Masks"), SocketState(false, false)] LayerMask[] layerMasks,
-      [FriendlyName("Include Masked Layers"), DefaultValue(true), SocketState(false, false)] bool include,
-      [FriendlyName("Show Ray"), SocketState(false, false)] bool showRay,
-      [FriendlyName("Hit GameObject")] out GameObject HitObject,
-      [FriendlyName("Hit Distance")] out float HitDistance,
-      [FriendlyName("Hit Location")] out Vector3 HitLocation,
-      [FriendlyName("Hit Normal")] out Vector3 HitNormal
+      [FriendlyName("Start", "The start point of the ray cast. Must be a GameObject or Vector3.")]
+      object Start,
+      
+      [FriendlyName("End", "The end point of the ray cast. Must be a GameObject or Vector3.")]
+      object End,
+      
+      [FriendlyName("Layer Mask", "A Layer mask that is used to selectively ignore colliders when casting a ray.")]
+      [SocketState(false, false)]
+      LayerMask layerMask,
+      
+//      @TODO: Uncomment when array support is added
+//      [FriendlyName("Layer Masks")]
+//      [SocketState(false, false)]
+//      LayerMask[] layerMasks,
+
+      [FriendlyName("Include Masked Layers", "If true, the ray will test against the masked layers, otherwise it will test against all layers excluding the masked layers.")]
+      [DefaultValue(true), SocketState(false, false)]
+      bool include,
+
+      [FriendlyName("Show Ray", "If true, the ray will be displayed as a line in the Scene view.")]
+      [SocketState(false, false)]
+      bool showRay,
+
+      [FriendlyName("Hit GameObject", "The first GameObject that was hit by the raycast (if any).")]
+      out GameObject HitObject,
+
+      [FriendlyName("Hit Distance", "The distance along the ray that the hit occured (if any).")]
+      out float HitDistance,
+
+      [FriendlyName("Hit Location", "The position of the hit (if any).")]
+      out Vector3 HitLocation,
+
+      [FriendlyName("Hit Normal", "The surface normal of the hit (if any).")]
+      out Vector3 HitNormal
       )
    {
       bool hitTrue = false;
@@ -54,7 +66,7 @@ public class uScriptAct_Raycast : uScriptLogic
       Vector3 tmpHitLocation = Vector3.zero;
       Vector3 tmpHitNormal = new Vector3(0, 1, 0);
       GameObject tmpHitObject = null;
-      // TODO: Remove the following line when array support is added
+      // @TODO: Remove the following line when array support is added
       LayerMask[] layerMasks = new LayerMask[] { layerMask };
  
       if (typeof(GameObject) == Start.GetType() || typeof(Vector3) == Start.GetType())

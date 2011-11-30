@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Sets the seed for the random function.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sends a basic custom event.
 
 using UnityEngine;
 using System.Collections;

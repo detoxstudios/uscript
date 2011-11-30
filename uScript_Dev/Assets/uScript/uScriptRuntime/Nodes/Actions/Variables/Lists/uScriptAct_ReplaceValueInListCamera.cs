@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Replaces all instances of a value in the list with the new value.
 
 using UnityEngine;
 using System.Collections;

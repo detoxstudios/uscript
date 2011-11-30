@@ -1,6 +1,5 @@
 // uScript uScript_Input.cs
 // (C) 2010 Detox Studios LLC
-// Desc: uScript_Input contains all global events related to input. Assign this component to the master uScript GameObject.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Fires the appropriate output link(s) depending on the comparison of the attached float variables.
 
 using UnityEngine;
 using System.Collections;
@@ -9,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires the appropriate output link(s) depending on the comparison of the attached float variables.")]
-[NodeDescription("Fires the appropriate output link(s) depending on the comparison of the attached float variables.\n \nA: First float value to compare.\nB: Second float value to compare.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Compare_Float")]
 
-[FriendlyName("Compare Float")]
+[FriendlyName("Compare Float", "Fires the appropriate output link(s) depending on the comparison of the attached float variables.")]
 public class uScriptCon_CompareFloat : uScriptLogic
 {
 
@@ -41,7 +39,13 @@ public class uScriptCon_CompareFloat : uScriptLogic
    [FriendlyName("(Less Than)   <")]
    public bool LessThan { get { return m_LessThan; } }
    
-   public void In(float A, float B)
+   public void In(
+      [FriendlyName("A", "First value to compare.")]
+      float A,
+      
+      [FriendlyName("B", "Second value to compare.")]
+      float B
+      )
    {
       m_GreaterThan = false;
       m_GreaterThanOrEqualTo = false;

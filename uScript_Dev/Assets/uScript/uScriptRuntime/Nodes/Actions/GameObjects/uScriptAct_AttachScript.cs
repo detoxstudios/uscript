@@ -1,6 +1,5 @@
-   // uScript Action Node
+// uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Attaches a script or component to a GameObject.
 
 using UnityEngine;
 using System.Collections;

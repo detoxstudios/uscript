@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Create the inverse of characters in a string. Example: "ABCDE123" becomes "321EDCBA"
 
 using UnityEngine;
 using System.Collections;

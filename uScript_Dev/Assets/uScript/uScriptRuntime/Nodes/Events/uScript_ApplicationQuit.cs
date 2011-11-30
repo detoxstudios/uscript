@@ -1,6 +1,5 @@
 // uScript uScript_ApplicationQuit.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when the application is going to quit.
 
 using UnityEngine;
 using System.Collections;

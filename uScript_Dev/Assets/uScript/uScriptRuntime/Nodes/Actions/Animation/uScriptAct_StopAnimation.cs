@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Stop and rewinds all animations on the target GameObjects.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Divides two integer variables together and returns the result.
 
 using UnityEngine;
 using System.Collections;

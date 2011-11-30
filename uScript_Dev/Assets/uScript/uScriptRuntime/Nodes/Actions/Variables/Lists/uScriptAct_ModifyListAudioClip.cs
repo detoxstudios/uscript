@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes AudioClips from a AudioClip List. Can also empty the AudioClip List.
 
 using UnityEngine;
 using System.Collections;

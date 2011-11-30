@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Perform various floating point trigonometric functions.
 
 using UnityEngine;
 using System.Collections;

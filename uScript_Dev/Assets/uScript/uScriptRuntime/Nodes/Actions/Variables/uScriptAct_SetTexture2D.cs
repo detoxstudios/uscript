@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Sets a texture2d to the defined value.
 
 using UnityEngine;
 using System.Collections;

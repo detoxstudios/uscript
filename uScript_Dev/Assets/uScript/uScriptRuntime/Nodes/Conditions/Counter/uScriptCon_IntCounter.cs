@@ -1,8 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Increments the first attached integer variable and then performs a comparison with
-//       the second attached integer variable and fires the appropriate output link based on
-//       that comparison.
 
 using UnityEngine;
 using System.Collections;

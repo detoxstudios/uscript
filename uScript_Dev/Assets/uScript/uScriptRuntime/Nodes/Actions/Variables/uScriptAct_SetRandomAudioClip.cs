@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Randomly sets the value of a AudioClip variable from a set of choices.
 
 using UnityEngine;
 using System.Collections;

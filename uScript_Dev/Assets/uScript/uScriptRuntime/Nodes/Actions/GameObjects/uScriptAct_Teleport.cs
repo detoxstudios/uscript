@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Causes the targeted GameObject to be relocated to the destination GameObject. Optionally, can update the rotation to the destination's rotation as well.
 
 using UnityEngine;
 using System.Collections;

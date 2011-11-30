@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sets the current layering depth of the GUI.
 
 using UnityEngine;
 using System.Collections;

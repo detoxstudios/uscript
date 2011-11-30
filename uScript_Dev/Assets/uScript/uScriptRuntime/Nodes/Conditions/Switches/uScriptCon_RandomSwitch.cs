@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Randomly picks an Output to fire the signal to.
 
 using UnityEngine;
 using System.Collections;
@@ -9,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly picks an Output to fire the signal to.")]
-[NodeDescription("Randomly picks an Output to fire the signal to.\n \nMax Output Used: Highest valid output switch to use.\nSeed: Random number generator seed value.\nCurrent Output (out): The output switch that was randomly chosen.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Random_Switch")]
 
-[FriendlyName("Random Switch")]
+[FriendlyName("Random Switch", "Randomly picks an Output to fire the signal to.")]
 public class uScriptCon_RandomSwitch : uScriptLogic
 {
    private int m_CurrentOutput = 1;
@@ -45,8 +43,12 @@ public class uScriptCon_RandomSwitch : uScriptLogic
    public bool Output6 { get { return m_Output6; } }
 
    public void In(
-      [FriendlyName("Max Output Used"), DefaultValue(6), SocketState(false, false)] int MaxOutputUsed,
-      [FriendlyName("Current Output")] out int CurrentOutput
+      [FriendlyName("Max Output Used", "Highest valid output switch to use.")]
+      [DefaultValue(6), SocketState(false, false)]
+      int MaxOutputUsed,
+      
+      [FriendlyName("Current Output", "The output switch that was randomly chosen.")]
+      out int CurrentOutput
       )
    {
       m_Output1 = false;

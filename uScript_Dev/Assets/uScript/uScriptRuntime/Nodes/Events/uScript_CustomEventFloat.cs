@@ -1,6 +1,5 @@
 // uScript uScript_CustomEventFloat.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when Instance receives a custom event with a float.
 
 using UnityEngine;
 using System.Collections;

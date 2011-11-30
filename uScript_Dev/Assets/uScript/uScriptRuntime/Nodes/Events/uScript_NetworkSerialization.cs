@@ -1,6 +1,5 @@
 // uScript uScript_NetworkSerialization.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when network serialization takes place.
 
 using UnityEngine;
 using System.Collections;

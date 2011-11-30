@@ -1,6 +1,5 @@
 // uScript uScript_ApplicationFocus.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when the application's focus state changes.
 
 using UnityEngine;
 using System.Collections;

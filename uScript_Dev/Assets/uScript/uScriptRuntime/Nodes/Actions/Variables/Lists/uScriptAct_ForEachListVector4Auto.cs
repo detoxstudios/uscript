@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Iterate through each Vector4 in a Vector4 List (node will automatically iterate through the list).
 
 using UnityEngine;
 using System.Collections;

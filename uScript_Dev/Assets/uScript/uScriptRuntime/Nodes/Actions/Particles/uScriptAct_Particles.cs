@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Start and stop particle emitters. Optionally clear all particles before starting or after stopping.
 
 using UnityEngine;
 using System.Collections;

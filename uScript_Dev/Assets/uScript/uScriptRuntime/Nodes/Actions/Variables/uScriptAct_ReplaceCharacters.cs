@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Replaces characters in a string with the new ones specified. 
 
 using UnityEngine;
 using System.Collections;

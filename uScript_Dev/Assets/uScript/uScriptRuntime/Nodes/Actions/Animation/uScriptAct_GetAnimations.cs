@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Get the list of animation names on the target GameObject.
 
 using UnityEngine;
 using System.Collections;

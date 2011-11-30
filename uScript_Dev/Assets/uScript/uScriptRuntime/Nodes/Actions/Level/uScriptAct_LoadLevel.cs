@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Loads a level by its scene name.
 
 using UnityEngine;
 using System.Collections;

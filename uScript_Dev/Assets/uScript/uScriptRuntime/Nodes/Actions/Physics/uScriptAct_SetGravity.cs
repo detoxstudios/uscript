@@ -1,7 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Sets the gravity applied to all rigid bodies.
-
 
 using UnityEngine;
 using System.Collections;
@@ -10,16 +8,18 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the gravity applied to all rigid bodies.")]
-[NodeDescription("Sets the gravity force and direction applied to all rigid bodies. Use a zero Vector3 to turn gravity off (0, 0, 0).\n\nGravity: Defines the force and direction of gravity.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Gravity")]
 
-[FriendlyName("Set Gravity")]
+[FriendlyName("Set Gravity", "Sets the gravity force and direction applied to all rigid bodies. Use a zero Vector3 to turn gravity off (0, 0, 0).")]
 public class uScriptAct_SetGravity : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In([FriendlyName("Gravity")] Vector3 Gravity)
+   public void In(
+      [FriendlyName("Gravity", "Defines the force and direction of gravity.")]
+      Vector3 Gravity
+      )
    {
 		 Physics.gravity = Gravity;
       

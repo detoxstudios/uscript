@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Counts the amount of time that elapses between starting and stopping.
 
 using UnityEngine;
 using System.Collections;

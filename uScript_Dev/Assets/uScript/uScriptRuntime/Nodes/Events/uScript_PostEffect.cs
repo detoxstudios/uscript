@@ -1,6 +1,5 @@
 // uScript uScript_PostEffect.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when a post-effect is rendered.
 
 using UnityEngine;
 using System.Collections;

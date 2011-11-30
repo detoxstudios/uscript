@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes floats from a Float List. Can also empty the Float List.
 
 using UnityEngine;
 using System.Collections;

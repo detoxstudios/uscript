@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Adds/removes Vector3 from a Vector3 List. Can also empty the Vector3 List.
 
 using UnityEngine;
 using System.Collections;

@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Shows a GUITexture on the screen.
 
 using UnityEngine;
 using System.Collections;

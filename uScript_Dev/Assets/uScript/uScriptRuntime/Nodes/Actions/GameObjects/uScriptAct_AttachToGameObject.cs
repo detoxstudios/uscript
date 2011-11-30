@@ -1,7 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Attaches one GameObject to another, setting the Target as the parent of the Attachment.
-//       Optionally, a relative offset and rotation can be set for the attachment.
 
 using UnityEngine;
 using System.Collections;

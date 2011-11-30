@@ -1,7 +1,5 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Compares the unique InstanceID of the attached GameObject variables and outputs accordingly.
-//       Optionally you can compare by a GameObject's tag.
 
 using UnityEngine;
 using System.Collections;
@@ -10,18 +8,11 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Compares the unique tag, name and InstanceID of the attached GameObject variables and outputs accordingly.")]
-[NodeDescription("Compares the unique InstanceID of the attached GameObject variables and outputs accordingly. Optionally you can compare by a GameObject's tag and/or name instead.\n \n" +
-                 "A: The first GameObject to compare.\n" +
-                 "B: The seconds GameObject to compare.\n" +
-                 "Compare By Tag: Whether or not to compare the GameObjects' tags instead of the objects themselves.\n" +
-                 "Compare By Name: Whether or not to compare the GameObjects' names instead of the objects themselves.\n\n" +
-                 "Please note, if Compare By Name and Compare By Tag are both checked, they both much match for the 'Same' signal to fire.")]
-
-
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Compare_GameObjects")]
 
-[FriendlyName("Compare GameObjects")]
+[FriendlyName("Compare GameObjects", "Compares the unique InstanceID of the attached GameObject variables and outputs accordingly." +
+ "\n\nOptionally, you can compare by a GameObject's tag and/or name instead.  Please note, if Compare By Name and Compare By Tag are both checked, they must both match for the 'Same' signal to fire.")]
 public class uScriptCon_CompareGameObjects : uScriptLogic
 {
    private bool m_CompareValue = false;
@@ -29,7 +20,21 @@ public class uScriptCon_CompareGameObjects : uScriptLogic
    public bool Same { get { return m_CompareValue; } }
    public bool Different { get { return !m_CompareValue; } }
 
-   public void In(GameObject A, GameObject B, [FriendlyName("Compare By Tag"), SocketState(false, false)] bool CompareByTag, [FriendlyName("Compare By Name"), SocketState(false, false)] bool CompareByName)
+   public void In(
+      [FriendlyName("A", "The first GameObject.")]
+      GameObject A,
+
+      [FriendlyName("B", "The second GameObject.")]
+      GameObject B,
+
+      [FriendlyName("Compare By Tag", "Whether or not to compare the GameObjects' tags instead of the objects themselves.")]
+      [SocketState(false, false)]
+      bool CompareByTag,
+
+      [FriendlyName("Compare By Name", "Whether or not to compare the GameObjects' names instead of the objects themselves.")]
+      [SocketState(false, false)]
+      bool CompareByName
+      )
    {
       m_CompareValue = false;
    

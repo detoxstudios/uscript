@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-// Desc: Normalizes the vector.
 
 using UnityEngine;
 using System.Collections;

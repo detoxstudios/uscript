@@ -1,6 +1,5 @@
 // uScript uScript_CustomEventVector2.cs
 // (C) 2010 Detox Studios LLC
-// Desc: Fires an event signal when Instance receives a custom event with a Vector2.
 
 using UnityEngine;
 using System.Collections;
