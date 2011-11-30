@@ -1,42 +1,33 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Returns the smaller of two float variables.
 
 using UnityEngine;
-using System.Collections;
 
 [NodePath("Actions/Math")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Returns the smaller of two float variables.")]
-[NodeDescription("Returns the smaller of two float variables.\n \nA: The first of two values to be compared. Can also have multiple float variables connected.\nB: The second of two values to be compared. Can also have multiple float variables connected.\nResult (out): Smallest value passed in.")]
+[NodeToolTip("Returns the value of the smallest float variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Min_Float")]
 
-[FriendlyName("Min Float")]
+[FriendlyName("Min Float", "Returns the value of the smallest float variable.")]
 public class uScriptAct_MinFloat : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(float []A, float []B, out float Result)
+   public void In(
+      [FriendlyName("Values", "The variables to compare.")]
+      float[] Values,
+
+      [FriendlyName("Result", "Smallest value passed in. If no variables are passed in, 3.402823E+38 will be returned.")]
+      out float Result
+      )
    {
-      if (A.Length + B.Length < 2)
+      Result = float.MaxValue;
+
+      foreach(float value in Values)
       {
-         Result = float.MaxValue;
+         Result = Mathf.Min(Result, value);
       }
-      
-      float minA = float.MaxValue;
-      foreach(float a in A)
-      {
-         if (a < minA) minA = a;
-      }
-      
-      float minB = float.MaxValue;
-      foreach(float b in B)
-      {
-         if (b < minB) minB = b;
-      }
-      
-      Result = Mathf.Min(minA, minB);
    }
 }

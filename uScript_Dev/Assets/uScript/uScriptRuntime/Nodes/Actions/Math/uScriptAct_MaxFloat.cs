@@ -1,42 +1,33 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
-// Desc: Returns the larger of two float variables.
 
 using UnityEngine;
-using System.Collections;
 
 [NodePath("Actions/Math")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Returns the larger of two float variables.")]
-[NodeDescription("Returns the larger of two float variables.\n \nA: The first of two values to be compared. Can also have multiple float variables connected.\nB: The second of two values to be compared. Can also have multiple float variables connected.\nResult (out): Largest value passed in.")]
+[NodeToolTip("Returns the value of the largest float variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Max_Float")]
 
-[FriendlyName("Max Float")]
+[FriendlyName("Max Float", "Returns the value of the largest float variable.")]
 public class uScriptAct_MaxFloat : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(float []A, float []B, out float Result)
+   public void In(
+      [FriendlyName("Values", "The variables to compare.")]
+      float[] Values,
+
+      [FriendlyName("Result", "Largest value passed in. If no variables are passed in, -3.402823E+38 will be returned.")]
+      out float Result
+      )
    {
-      if (A.Length + B.Length < 2)
+      Result = float.MinValue;
+
+      foreach(float value in Values)
       {
-         Result = float.MinValue;
+         Result = Mathf.Max(Result, value);
       }
-      
-      float maxA = float.MinValue;
-      foreach(float a in A)
-      {
-         if (a > maxA) maxA = a;
-      }
-      
-      float maxB = float.MinValue;
-      foreach(float b in B)
-      {
-         if (b > maxB) maxB = b;
-      }
-      
-      Result = Mathf.Max(maxA, maxB);
    }
 }
