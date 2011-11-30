@@ -414,9 +414,6 @@ public class uScript : EditorWindow
 
       Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
-      _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
-      _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
-
       uScriptBackgroundProcess.ForceFileRefresh();
    }
 
@@ -910,6 +907,9 @@ public class uScript : EditorWindow
          {
             position = minSize;
          }
+
+         _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
+         _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
 
          if (Preferences.ShowAtStartup)
          {
