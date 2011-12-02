@@ -8,25 +8,50 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the value of a Color variable.")]
-[NodeDescription("Randomly sets the value of a Color variable.\n \nR Min: Minimum allowable Red component value for the random color.\nR Max: Maximum allowable Red component value for the random color.\nG Min: Minimum allowable Green component value for the random color.\nG Max: Maximum allowable Green component value for the random color.\nB Min: Minimum allowable Blue component value for the random color.\nB Max: Maximum allowable Blue component value for the random color.\nA Min: Minimum allowable Alpha component value for the random color.\nA Max: Maximum allowable Alpha component value for the random color.\nTarget Color (out): The random color that has been set.\n")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Random_Color")]
 
-[FriendlyName("Set Random Color")]
+[FriendlyName("Set Random Color", "Randomly sets the value of a Color variable.")]
 public class uScriptAct_SetRandomColor : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("R Min"), SocketState(false, false)] float RedMin,
-      [FriendlyName("R Max"), DefaultValue(1.0f), SocketState(false, false)] float RedMax,
-      [FriendlyName("G Min"), SocketState(false, false)] float GreenMin,
-      [FriendlyName("G Max"), DefaultValue(1.0f), SocketState(false, false)] float GreenMax,
-      [FriendlyName("B Min"), SocketState(false, false)] float BlueMin,
-      [FriendlyName("B Max"), DefaultValue(1.0f), SocketState(false, false)] float BlueMax,
-      [FriendlyName("A Min"), DefaultValue(1.0f), SocketState(false, false)] float AlphaMin,
-      [FriendlyName("A Max"), DefaultValue(1.0f), SocketState(false, false)] float AlphaMax,
-      [FriendlyName("Target Color")] out Color TargetColor)
+      [FriendlyName("Red Min", "Minimum allowable Red component value.")]
+      [SocketState(false, false)]
+      float RedMin,
+
+      [FriendlyName("Red Max", "Maximum allowable Red component value.")]
+      [DefaultValue(1.0f), SocketState(false, false)]
+      float RedMax,
+
+      [FriendlyName("Green Min", "Minimum allowable Green component value.")]
+      [SocketState(false, false)]
+      float GreenMin,
+      
+      [FriendlyName("Green Max", "Maximum allowable Green component value.")]
+      [DefaultValue(1.0f), SocketState(false, false)]
+      float GreenMax,
+
+      [FriendlyName("Blue Min", "Minimum allowable Blue component value.")]
+      [SocketState(false, false)]
+      float BlueMin,
+      
+      [FriendlyName("Blue Max", "Maximum allowable Blue component value.")]
+      [DefaultValue(1.0f), SocketState(false, false)]
+      float BlueMax,
+      
+      [FriendlyName("Alpha Min", "Minimum allowable Alpha component value.")]
+      [DefaultValue(1.0f), SocketState(false, false)]
+      float AlphaMin,
+      
+      [FriendlyName("Alpha Max", "Maximum allowable Alpha component value.")]
+      [DefaultValue(1.0f), SocketState(false, false)]
+      float AlphaMax,
+      
+      [FriendlyName("Target Color", "The random color that has been set.")]
+      out Color TargetColor
+      )
    {
       // Make sure values are in range, if not assign defaults that are
       if (RedMin < 0f) { RedMin = 0f; }
@@ -50,7 +75,6 @@ public class uScriptAct_SetRandomColor : uScriptLogic
    {
       // Make sure we don't have min > max (or other way around)
       if ( min > max ) { min = max; }
-      if ( max < min ) { max = min; }
 
       return Random.Range(min, max);
    }

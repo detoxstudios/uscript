@@ -8,18 +8,29 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the components of a Vector3 as floats.")]
-[NodeDescription("Gets the components of a Vector3 as floats.\n \nInput Vector3: The input vector to get components of.\nX: The x value of the Input Vector3.\nY: The y value of the Input Vector3.\nZ: The z value of the Input Vector3.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Vector3_Components")]
 
-[FriendlyName("Get Components (Vector3)")]
+[FriendlyName("Get Components (Vector3)", "Gets the components of a Vector3 as floats.")]
 public class uScriptAct_GetComponentsVector3 : uScriptLogic
 {
    // How many outputs defined here
    public bool Out { get { return true; } }
 
    // Do logic here
-   public void In([FriendlyName("Input Vector3")]Vector3 InputVector3, out float X, out float Y, out float Z)
+   public void In(
+      [FriendlyName("Input Vector3", "The input vector to get components of.")]
+      Vector3 InputVector3,
+      
+      [FriendlyName("X", "The X value of the Input Vector3.")]
+      out float X,
+      
+      [FriendlyName("Y", "The Y value of the Input Vector3.")]
+      out float Y,
+      
+      [FriendlyName("Z", "The Z value of the Input Vector3.")]
+      out float Z
+      )
    {
       X = InputVector3.x;
       Y = InputVector3.y;

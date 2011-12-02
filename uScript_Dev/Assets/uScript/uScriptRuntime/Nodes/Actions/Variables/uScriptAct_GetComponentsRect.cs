@@ -8,18 +8,32 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the components of a Rect as floats.")]
-[NodeDescription("Gets the components of a Rect as floats.\n \n\n \nInput Rect (in): The input Rect to get components of.\nLeft (out): The Left value of the Input Rect.\nTop (out): The Top value of the Input Rect.\nWidth (out): The Width value of the Input Rect.\nHeight (out): The Height value of the Input Rect.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Vector4_Components")]
 
-[FriendlyName("Get Components (Rect)")]
+[FriendlyName("Get Components (Rect)", "Gets the components of a Rect as floats.")]
 public class uScriptAct_GetComponentsRect : uScriptLogic
 {
    // How many outputs defined here
    public bool Out { get { return true; } }
 
    // Do logic here
-   public void In([FriendlyName("Input Rect")] Rect InputRect, out float Left, out float Top, out float Width, out float Height)
+   public void In(
+                  [FriendlyName("Input Rect", "The input Rect to get components of.")]
+                  Rect InputRect,
+
+                  [FriendlyName("Left", "The Left value of the Input Rect.")]
+                  out float Left,
+
+                  [FriendlyName("Top", "The Top value of the Input Rect.")]
+                  out float Top,
+
+                  [FriendlyName("Width", "The Width value of the Input Rect.")]
+                  out float Width,
+
+                  [FriendlyName("Height", "The Height value of the Input Rect.")]
+                  out float Height
+                  )
    {
       Left = InputRect.xMin;
       Top = InputRect.yMin;

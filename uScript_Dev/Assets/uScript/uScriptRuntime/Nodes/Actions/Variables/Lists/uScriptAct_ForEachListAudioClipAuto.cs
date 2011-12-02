@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each AudioClip in a AudioClip List (node will automatically iterate through the list).")]
-[NodeDescription("Iterate through each AudioClip in a AudioClip List (node will automatically iterate through the list).\n \nAudioClip List: The list of AudioClips to iterate over.\nCurrent AudioClip (out): The AudioClip for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List Auto (AudioClip)")]
+[FriendlyName("For Each In List Auto (AudioClip)", "Iterate through each AudioClip in a AudioClip List (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListAudioClipAuto : uScriptLogic
 {
    private AudioClip[] m_List = null;
@@ -42,7 +41,13 @@ public class uScriptAct_ForEachListAudioClipAuto : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
-   public void In([FriendlyName("AudioClip List")] AudioClip[] List, [FriendlyName("Current AudioClip")] out AudioClip Value)
+   public void In(
+      [FriendlyName("AudioClip List", "The list of AudioClips to iterate over.")]
+      AudioClip[] List,
+      
+      [FriendlyName("Current AudioClip", "The AudioClip for the current loop iteration.")]
+      out AudioClip Value
+      )
    {
       if (List.Length > 0)
       {

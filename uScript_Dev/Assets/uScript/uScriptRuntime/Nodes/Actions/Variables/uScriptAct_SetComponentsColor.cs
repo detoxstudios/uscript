@@ -8,22 +8,34 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the value of a Color variable by using RGBA float component values.")]
-[NodeDescription("Sets the value of a Color variable by using RGBA float component values. Unity uses a 0.0 - 1.0 color range to determine color. Set \"Use 8-bit Range\" to true to use the tradition 0-255 color range with this node instead. \n \nRed: The red color channel.\nGreen: The green color channel.\nBlue: The blue color channel.\nAlpha: The alpha color channel.\nUse 8-bit Range: Setting this to true will tell the node to use a traditional 0-255 value range for specifying the color channels.\nTarget (out): The Target variable you wish to set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Color")]
 
-[FriendlyName("Set Components (Color)")]
+[FriendlyName("Set Components (Color)", "Sets the value of a Color variable by using RGBA float component values.")]
 public class uScriptAct_SetComponentsColor : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-	               [FriendlyName("Red")] float RedValue, 
-	               [FriendlyName("Green")] float GreenValue, 
-	               [FriendlyName("Blue")] float BlueValue, 
-	               [FriendlyName("Alpha")] float AlphaValue,
-	               [FriendlyName("Use 8-bit Range")] bool Use8bitRange,
-	               [FriendlyName("Target")] out Color TargetColor)
+      [FriendlyName("Red", "The Red color channel.")]
+      float RedValue,
+      
+      [FriendlyName("Green", "The Green color channel.")]
+      float GreenValue,
+
+      [FriendlyName("Blue", "The Blue color channel.")]
+      float BlueValue,
+      
+      [FriendlyName("Alpha", "The Alpha channel.")]
+      float AlphaValue,
+
+      [FriendlyName("Use 8-bit Range", "If True, the channels will use a traditional 0-255 value range for specifying the channel value, otherwise the normalized range of 0.0 to 1.0 will be used.")]
+      [SocketState(false,false)]
+      bool Use8bitRange,
+      
+      [FriendlyName("Target", "The Target variable you wish to set.")]
+      out Color TargetColor
+      )
    {
 		Color finalColor = new Color(0f,0f,0f,0f);
 		
@@ -41,7 +53,6 @@ public class uScriptAct_SetComponentsColor : uScriptLogic
 			
 			// Set final ouput color
 			finalColor = new Color(RedValue/255, GreenValue/255, BlueValue/255, AlphaValue/255);
-			
 		}
 		else
 		{
@@ -57,10 +68,8 @@ public class uScriptAct_SetComponentsColor : uScriptLogic
 			
 			// Set final ouput color
 			finalColor = new Color(RedValue, GreenValue, BlueValue, AlphaValue);
-			                       
 		}
-		
-		
+
       TargetColor = finalColor;
    }
 }

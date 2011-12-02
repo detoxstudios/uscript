@@ -8,18 +8,32 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a Vector4 to the defined X, Y, Z and W float component values.")]
-[NodeDescription("Sets a Vector4 to the defined X, Y, Z and W float component values.\n \nX: X value to use for the Output Vector.\nY: Y value to use for the Output Vector.\nZ: Z value to use for the Output Vector.\nW: W value to use for the Output Vector.\nOutput Vector4 (out): Vector4 variable built from the specified X, Y, Z, and W.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Vector4_Components")]
 
-[FriendlyName("Set Components (Vector4)")]
+[FriendlyName("Set Components (Vector4)", "Sets a Vector4 to the defined X, Y, Z and W float component values.")]
 public class uScriptAct_SetComponentsVector4 : uScriptLogic
 {
    // How many outputs defined here
    public bool Out { get { return true; } }
 
    // Do logic here
-   public void In(float X, float Y, float Z, float W, [FriendlyName("Output Vector4")] out Vector4 OutputVector4)
+   public void In(
+      [FriendlyName("X", "X value to use for the Output Vector.")]
+      float X,
+
+      [FriendlyName("Y", "Y value to use for the Output Vector.")]
+      float Y,
+
+      [FriendlyName("Z", "Z value to use for the Output Vector.")]
+      float Z,
+      
+      [FriendlyName("W", "W value to use for the Output Vector.")]
+      float W,
+      
+      [FriendlyName("Output Vector4", "Vector4 variable built from the specified X, Y, Z, and W.")]
+      out Vector4 OutputVector4
+      )
    {
       OutputVector4 = new Vector4(X, Y, Z, W);
    }

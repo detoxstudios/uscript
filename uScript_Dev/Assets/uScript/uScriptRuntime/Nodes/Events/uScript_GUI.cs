@@ -11,11 +11,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires GUI-related events.")]
-[NodeDescription("Fires GUI-related events.\n \nGUI Changed: Whether or not one of the GUI controls currently displayed had its content data changed. NOTE: This is not control-specific, it is global.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Events")]
 
-[FriendlyName("GUI Events")]
+[FriendlyName("GUI Events", "Fires GUI-related events.")]
 public class uScript_GUI : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, GUIEventArgs args);
@@ -25,10 +24,12 @@ public class uScript_GUI : uScriptEvent
       private bool m_GUIChanged;
       private string m_FocusedControl;
 
-      [FriendlyName("GUI Changed")]
+      [FriendlyName("GUI Changed", "Returns True when any active GUI control has its content data changed. NOTE: This is not control-specific, it is global.")]
+      [SocketState(false, false)]
       public bool GUIChanged { get { return m_GUIChanged; } }
 
-      [FriendlyName("Focused Control")]
+      [FriendlyName("Focused Control", "Returns the GUI control that has focus.")]
+      [SocketState(false, false)]
       public string FocusedControl { get { return m_FocusedControl; } }
 
       public GUIEventArgs(bool guiChanged, string focusedControl)

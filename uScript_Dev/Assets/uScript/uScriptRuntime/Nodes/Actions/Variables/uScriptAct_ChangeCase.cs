@@ -8,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Changes the case of the chracters in the specified string.")]
-[NodeDescription("Changes the case of the chracters in the specified string based on the case type (Upper, Lower, or Inverted).\n \nTarget: The target string.\nCase: Specifies what case to change the characters to.\nResult (out): Resulting string with replaced characters.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Change Case")]
+[FriendlyName("Change Case", "Changes the case of the chracters in the specified string based on the case type (Upper, Lower, or Inverted).")]
 public class uScriptAct_ChangeCase : uScriptLogic
 {
    public enum CaseType {Upper, Lower, Invert};
@@ -20,10 +19,16 @@ public class uScriptAct_ChangeCase : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-	               string Target,
-	               [FriendlyName("Case"), SocketState(false, false)] CaseType caseType,
-	               out string Result
-	               )
+      [FriendlyName("Target", "The target string.")]
+      string Target,
+
+      [FriendlyName("Case", "Specifies what case to change the characters to.")]
+      [SocketState(false, false)]
+      CaseType caseType,
+      
+      [FriendlyName("Result", "Resulting string with replaced characters.")]
+      out string Result
+      )
    {
 		if("" != Target)
 		{
@@ -68,10 +73,5 @@ public class uScriptAct_ChangeCase : uScriptLogic
 		{
 			Result = Target;
 		}
-		
-		
-		
    }
-	
-
 }

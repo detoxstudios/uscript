@@ -8,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the components of a ContactPoint.")]
-[NodeDescription("Gets the components of a ContactPoint as floats.\n \nInput ContactPoint: The input vector to get components of.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_ContactPoint_Components")]
 
-[FriendlyName("Get Components (ContactPoint)")]
+[FriendlyName("Get Components (ContactPoint)", "Gets the components of a ContactPoint as floats.")]
 public class uScriptAct_GetComponentsContactPoint : uScriptLogic
 {
    // How many outputs defined here
@@ -20,11 +19,23 @@ public class uScriptAct_GetComponentsContactPoint : uScriptLogic
 
    // Do logic here
    public void In(
-      [FriendlyName("Input ContactPoint")]ContactPoint ContactPoint, 
-      [FriendlyName("Point")]out Vector3 point, 
-      [FriendlyName("Normal")]out Vector3 normal, 
-      [FriendlyName("This Collider"), SocketState(false, false)]out Collider ThisCollider, 
-      [FriendlyName("Other Collider"), SocketState(false, false)]out Collider OtherCollider)
+      [FriendlyName("Input ContactPoint", "The input vector to get components of.")]
+      ContactPoint ContactPoint,
+      
+      [FriendlyName("Point", "The point of contact.")]
+      out Vector3 point,
+
+      [FriendlyName("Normal", "Normal of the contact point.")]
+      out Vector3 normal,
+      
+      [FriendlyName("This Collider", "The first collider in contact.")]
+      [SocketState(false, false)]
+      out Collider ThisCollider,
+      
+      [FriendlyName("Other Collider", "The other collider in contact.")]
+      [SocketState(false, false)]
+      out Collider OtherCollider
+      )
    {
       normal = ContactPoint.normal;
       point  = ContactPoint.point;

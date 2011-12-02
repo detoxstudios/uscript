@@ -8,19 +8,19 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the value of a Bool variable.")]
-[NodeDescription("Randomly sets the value of a Bool variable.\n\nTarget Bool (out): The bool value that gets set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Random_Bool")]
 
-[FriendlyName("Set Random Bool")]
+[FriendlyName("Set Random Bool", "Randomly sets the value of a Bool variable to True or False.")]
 public class uScriptAct_SetRandomBool : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target Bool")] out bool TargetBool)
+      [FriendlyName("Target Bool", "The random bool value that gets set.")]
+      out bool TargetBool
+      )
    {
-
       TargetBool = Random.Range(0, 2) > 0;
    }
 }

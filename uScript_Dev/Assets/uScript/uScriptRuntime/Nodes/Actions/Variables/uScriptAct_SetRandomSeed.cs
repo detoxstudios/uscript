@@ -8,16 +8,18 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the seed for the random function.")]
-[NodeDescription("Sets the seed for the random function.\n \nVSeed: The seed value you wish to use.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Set Random Seed")]
+[FriendlyName("Set Random Seed", "Sets the seed for the random function.")]
 public class uScriptAct_SetRandomSeed : uScriptLogic
 {
    public bool Out { get { return true; } }
 
-   public void In(int Seed)
+   public void In(
+      [FriendlyName("Seed", "The seed value you wish to use.")]
+      int Seed
+      )
    {
       Random.seed = Seed;
    }

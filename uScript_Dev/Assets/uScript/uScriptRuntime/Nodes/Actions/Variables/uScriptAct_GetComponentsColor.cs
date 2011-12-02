@@ -8,18 +8,32 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the components of a color variable as floats.")]
-[NodeDescription("Gets the components of a color variable as floats. Unity uses a 0.0-1.0 range to specify color values.\n\nInput Color: The input color to get components of.\nRed: The red value of the Input Color.\nGreen: The green value of the Input Color.\nBlue: The blue value of the Input Color.\nAlpha: The alpha value of the Input Color.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Vector4_Components")]
 
-[FriendlyName("Get Components (Color)")]
+[FriendlyName("Get Components (Color)", "Returns the individual components of a Color variable. The component values are normalized using the range of 0.0 (none) to 1.0 (full).")]
 public class uScriptAct_GetComponentsColor : uScriptLogic
 {
    // How many outputs defined here
    public bool Out { get { return true; } }
 
    // Do logic here
-   public void In([FriendlyName("Input Color")] Color InputColor, out float Red, out float Green, out float Blue, out float Alpha)
+   public void In(
+      [FriendlyName("Input Color", "The input color to get components of.")]
+      Color InputColor,
+
+      [FriendlyName("Red", "The Red value of the Input Color.")]
+      out float Red,
+      
+      [FriendlyName("Green", "The Green value of the Input Color.")]
+      out float Green,
+      
+      [FriendlyName("Blue", "The Blue value of the Input Color.")]
+      out float Blue,
+      
+      [FriendlyName("Alpha", "The Alpha value of the Input Color.")]
+      out float Alpha
+      )
    {
       Red = InputColor.r;
       Green = InputColor.g;

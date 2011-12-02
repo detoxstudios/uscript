@@ -8,18 +8,29 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a Vector3 to the defined X, Y, and Z float component values.")]
-[NodeDescription("Sets a Vector3 to the defined X, Y, and Z float component values.\n \nX: X value to use for the Output Vector.\nY: Y value to use for the Output Vector.\nZ: Z value to use for the Output Vector.\nOutput Vector3 (out): Vector3 variable built from the specified X, Y, and Z.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Vector3_Components")]
 
-[FriendlyName("Set Components (Vector3)")]
+[FriendlyName("Set Components (Vector3)", "Sets a Vector3 to the defined X, Y, and Z float component values.")]
 public class uScriptAct_SetComponentsVector3 : uScriptLogic
 {
    // How many outputs defined here
    public bool Out { get { return true; } }
 
    // Do logic here
-   public void In(float X, float Y, float Z, [FriendlyName("Output Vector3")] out Vector3 OutputVector3)
+   public void In(
+      [FriendlyName("X", "X value to use for the Output Vector.")]
+      float X,
+
+      [FriendlyName("Y", "Y value to use for the Output Vector.")]
+      float Y,
+
+      [FriendlyName("Z", "Z value to use for the Output Vector.")]
+      float Z,
+      
+      [FriendlyName("Output Vector3", "Vector3 variable built from the specified X, Y, and Z.")]
+      out Vector3 OutputVector3
+      )
    {
       OutputVector3 = new Vector3(X, Y, Z);
    }

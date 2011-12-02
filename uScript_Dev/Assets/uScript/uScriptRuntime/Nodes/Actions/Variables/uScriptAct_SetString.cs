@@ -8,20 +8,31 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets a string to the defined value.")]
-[NodeDescription("Sets a string to the defined value.\n \nValue: The variable you wish to use to set the target's value.\nTo Upper Case: If this is set to true, the string set will be all upper case.\nTo Lower Case: If this is set to true, the string set will be all lower case.\nTrim Whitespace: If this is set to true, the string's whitespace will be trimmed.\nTarget (out): The Target variable you wish to set.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_String")]
 
-[FriendlyName("Set String")]
+[FriendlyName("Set String", "Sets a string to the defined value.")]
 public class uScriptAct_SetString : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
+      [FriendlyName("Value", "The variable you wish to use to set the target's value.")]
       string Value,
-      [FriendlyName("To Upper Case"), SocketState(false, false)] bool ToUpperCase,
-      [FriendlyName("To Lower Case"), SocketState(false, false)] bool ToLowerCase,
-      [FriendlyName("Trim Whitespace"), SocketState(false, false)] bool TrimWhitespace,
+      
+      [FriendlyName("To Upper Case", "If True, the string set will be all upper case.")]
+      [SocketState(false, false)]
+      bool ToUpperCase,
+      
+      [FriendlyName("To Lower Case", "If True, the string set will be all lower case.")]
+      [SocketState(false, false)]
+      bool ToLowerCase,
+      
+      [FriendlyName("Trim Whitespace", "If True, the string's whitespace will be trimmed.")]
+      [SocketState(false, false)]
+      bool TrimWhitespace,
+
+      [FriendlyName("Target", "The Target variable you wish to set.")]
       out string Target
       )
    {
