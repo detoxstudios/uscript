@@ -8,18 +8,20 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Prints out a list of string variables from a String list to the console.")]
-[NodeDescription("Prints out a list of string variables from a String list to the console.\n \nStrings: List of strings to print out, one line at a time.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Print String List")]
+[FriendlyName("Print String List", "Prints out a list of string variables from a String list to the console.")]
 public class uScriptAct_PrintList : uScriptLogic
 {
    // How many outputs defined here
    public bool Out { get { return true; } }
 
    // Do logic here
-   public void In(string []Strings)
+   public void In(
+      [FriendlyName("Strings", "List of strings to print out, one line at a time.")]
+      string []Strings
+      )
    {
       foreach ( object s in Strings )
       {

@@ -9,21 +9,31 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Replaces all instances of a value in the list with the new value.")]
-[NodeDescription("Replaces all instances of a value in the list with the new value. It will also return the number of values replaced.\n\nTarget List: The list to check.\nOld Value: The value to be replaced.\nNew Value: The new value to replace the old one.\nModified List: The List after the values have been changed.\nFound (out): The number of values that were found and replaced in the list.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Replace Value In List (Rect)")]
+[FriendlyName("Replace Value In List (Rect)", "Replaces all instances of a value in the list with the new value. It will also return the number of values replaced.")]
 public class uScriptAct_ReplaceValueInListRect : uScriptLogic
 {
 	public bool Out { get { return true; } }
    
 	public void In(
-      [FriendlyName("Target List")] Rect[] TargetList,
-      [FriendlyName("Old Value")] Rect OldValue,
-      [FriendlyName("New Value")]  Rect NewValue,
-      [FriendlyName("Modified list")] out Rect[] ModifiedList,
-      [FriendlyName("Found"), SocketState(false, false)] out int ValuesFound)
+      [FriendlyName("Target List", "The list to check.")]
+      Rect[] TargetList,
+      
+      [FriendlyName("Old Value", "The value to be replaced.")]
+      Rect OldValue,
+      
+      [FriendlyName("New Value", "The new value to replace the old one.")]
+      Rect NewValue,
+      
+      [FriendlyName("Modified list", "The List after the values have been changed.")]
+      out Rect[] ModifiedList,
+      
+      [FriendlyName("Found", "The number of values that were found and replaced in the list.")]
+      [SocketState(false, false)]
+      out int ValuesFound
+      )
 	{
       List<Rect> tempList = new List<Rect>();
       int foundCount = 0;

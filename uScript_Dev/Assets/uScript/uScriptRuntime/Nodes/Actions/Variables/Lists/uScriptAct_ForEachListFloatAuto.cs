@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each float in a Float List (node will automatically iterate through the list).")]
-[NodeDescription("Iterate through each float in a Float List (node will automatically iterate through the list).\n \nFloat List: The list of floats to iterate over.\nCurrent Float (out): The float for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List Auto (Float)")]
+[FriendlyName("For Each In List Auto (Float)", "Iterate through each float in a Float List (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListFloatAuto : uScriptLogic
 {
    private float[] m_List = null;
@@ -42,7 +41,13 @@ public class uScriptAct_ForEachListFloatAuto : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
-   public void In([FriendlyName("Float List")] float[] List, [FriendlyName("Current Float")] out float Value)
+   public void In(
+      [FriendlyName("Float List", "The list of floats to iterate over.")]
+      float[] List,
+      
+      [FriendlyName("Current Float", "The float for the current loop iteration.")]
+      out float Value
+      )
    {
       if (List.Length > 0)
       {

@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Color in a Color List (node will automatically iterate through the list).")]
-[NodeDescription("Iterate through each Color in a Color List (node will automatically iterate through the list).\n \nColor List: The list of Colors to iterate over.\nCurrent Color (out): The Color for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List Auto (Color)")]
+[FriendlyName("For Each In List Auto (Color)", "Iterate through each Color in a Color List (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListColorAuto : uScriptLogic
 {
    private Color[] m_List = null;
@@ -42,7 +41,13 @@ public class uScriptAct_ForEachListColorAuto : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
-   public void In([FriendlyName("Color List")] Color[] List, [FriendlyName("Current Color")] out Color Value)
+   public void In(
+      [FriendlyName("Color List", "The list of Colors to iterate over.")]
+      Color[] List,
+      
+      [FriendlyName("Current Color", "The Color for the current loop iteration.")]
+      out Color Value
+      )
    {
       if (List.Length > 0)
       {

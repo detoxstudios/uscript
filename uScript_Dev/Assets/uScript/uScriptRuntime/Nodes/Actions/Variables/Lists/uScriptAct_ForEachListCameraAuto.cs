@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each camera in a Camera List (node will automatically iterate through the list).")]
-[NodeDescription("Iterate through each camera in a Camera List (node will automatically iterate through the list).\n \nCamera List: The list of cameras to iterate over.\nCurrent Camera (out): The camera for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List Auto (Camera)")]
+[FriendlyName("For Each In List Auto (Camera)", "Iterate through each camera in a Camera List (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListCameraAuto : uScriptLogic
 {
    private Camera[] m_List = null;
@@ -42,7 +41,13 @@ public class uScriptAct_ForEachListCameraAuto : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
-   public void In([FriendlyName("Camera List")] Camera[] List, [FriendlyName("Current Camera")] out Camera Value)
+   public void In(
+      [FriendlyName("Camera List", "The list of cameras to iterate over.")]
+      Camera[] List,
+      
+      [FriendlyName("Current Camera", "The camera for the current loop iteration.")]
+      out Camera Value
+      )
    {
       if (List.Length > 0)
       {

@@ -9,11 +9,10 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if a Vector2 is in a Vector2 List.")]
-[NodeDescription("Checks to see if a Vector2 is in a Vector2 List.\n \nTarget: The target Vector2(s) to check for membership in the Vector2 List.\nVector2 List (in/out): The Vector2 List to check.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Is In List (Vector2)")]
+[FriendlyName("Is In List (Vector2)", "Checks to see if a Vector2 is in a Vector2 List.")]
 public class uScriptAct_IsInListVector2 : uScriptLogic
 {
    private bool m_InList = false;
@@ -26,8 +25,11 @@ public class uScriptAct_IsInListVector2 : uScriptLogic
     
    [FriendlyName("Test If In List")]
    public void TestIfInList(
+      [FriendlyNameAttribute("Target", "The target Vector2(s) to check for membership in the Vector2 List.")]
       Vector2[] Target,
-      [FriendlyName("Vector2 List")] ref Vector2[] List
+      
+      [FriendlyName("Vector2 List", "The Vector2 List to check.")]
+      ref Vector2[] List
       )
    {
       List<Vector2> list = new List<Vector2>(List);
