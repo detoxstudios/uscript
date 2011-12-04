@@ -11,11 +11,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when Instance receives a custom event with a float.")]
-[NodeDescription("Fires an event signal when Instance receives a custom event with a float.\n \nSender: The GameObject that sent this event (if available).\nEvent Name: The name of the custom event.\nEvent Data: The variable that was sent with this event.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Custom_Event_.28Float.29")]
 
-[FriendlyName("Custom Event (Float)")]
+[FriendlyName("Custom Event (Float)", "Fires an event signal when Instance receives a custom event with a float.")]
 public class uScript_CustomEventFloat : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventFloatArgs args);
@@ -26,13 +25,13 @@ public class uScript_CustomEventFloat : uScriptEvent
       private float m_EventData;
       private GameObject m_Sender;
       
-      [FriendlyName("Sender")]
+      [FriendlyName("Sender", "The GameObject that sent this event (if available).")]
       public GameObject Sender { get { return m_Sender; } }
 
-      [FriendlyName("Event Name")]
+      [FriendlyName("Event Name", "The name of the custom event.")]
       public string EventName { get { return m_EventName; } }
 
-      [FriendlyName("Event Data")]
+      [FriendlyName("Event Data", "The variable that was sent with this event.")]
       public float EventData { get { return m_EventData; } }
 
       public CustomEventFloatArgs(string eventName, float eventData, GameObject sender)

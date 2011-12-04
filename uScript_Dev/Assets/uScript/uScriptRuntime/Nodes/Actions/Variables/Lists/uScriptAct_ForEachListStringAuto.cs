@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each string in a String List (node will automatically iterate through the list).")]
-[NodeDescription("Iterate through each string in a String List (node will automatically iterate through the list).\n \nString List: The list of strings to iterate over.\nCurrent String (out): The string for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List Auto (String)")]
+[FriendlyName("For Each In List Auto (String)", "Iterate through each string in a String List (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListStringAuto : uScriptLogic
 {
    private string[] m_List = null;
@@ -42,7 +41,13 @@ public class uScriptAct_ForEachListStringAuto : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
-   public void In([FriendlyName("String List")] string[] List, [FriendlyName("Current String")] out string Value)
+   public void In(
+      [FriendlyName("String List", "The list of string variables to iterate over.")]
+      string[] List,
+
+      [FriendlyName("Current String", "The string for the current loop iteration.")]
+      out string Value
+      )
    {
       if (List.Length > 0)
       {

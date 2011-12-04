@@ -9,22 +9,21 @@ using System.Collections;
 [NodePath("Events/Renderer Events")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Fires an event signal when a post-effect is rendered.\n \nSource Texture: The source texture used in the post-effect.\nDestination Texture: The destination texture used in the post-effect.")]
-[NodeDescription("Fires an event signal when a post-effect is rendered.")]
+[NodeToolTip("Fires an event signal when a post-effect is rendered.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Post_Effect_Events")]
 
-[FriendlyName("Post Effect Events")]
+[FriendlyName("Post Effect Events", "Fires an event signal when a post-effect is rendered.")]
 public class uScript_PostEffect : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, PostEffectEventArgs args);
   
    public class PostEffectEventArgs : System.EventArgs
    {
-      [FriendlyName("Source Texture")]
+      [FriendlyName("Source Texture", "The source texture used in the post-effect.")]
       public RenderTexture SourceTexture { get { return m_SourceTexture; } }
 
-      [FriendlyName("Destination Texture")]
+      [FriendlyName("Destination Texture", "The destination texture used in the post-effect.")]
       public RenderTexture DestinationTexture { get { return m_DestinationTexture; } }
 
       private RenderTexture m_SourceTexture;

@@ -11,18 +11,17 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when the application's focus state changes.")]
-[NodeDescription("Fires an event signal when the application's focus state changes.\n \nHas Focus: Whether the application gained or lost focus.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Application_Focus")]
 
-[FriendlyName("Application Focus")]
+[FriendlyName("Application Focus", "Fires an event signal when the application's focus state changes.")]
 public class uScript_ApplicationFocus : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, ApplicationFocusEventArgs args);
   
    public class ApplicationFocusEventArgs : System.EventArgs
    {
-      [FriendlyName("Has Focus")]
+      [FriendlyName("Has Focus", "When True, the application has focus.")]
       public bool HasFocus { get { return m_HasFocus; } }
       private bool m_HasFocus;
      

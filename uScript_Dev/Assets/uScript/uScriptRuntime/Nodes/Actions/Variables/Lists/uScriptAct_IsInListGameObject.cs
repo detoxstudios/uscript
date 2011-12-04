@@ -9,11 +9,10 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if GameObjects are in a GameObject List.")]
-[NodeDescription("Checks to see if GameObjects are in a GameObject List.\n \nTarget: The target GameObject(s) to check for membership in the GameObject list.\nGameObject List (in/out): The list of GameObjects to check.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Is_In_GameObject_List")]
 
-[FriendlyName("Is In List (GameObject)")]
+[FriendlyName("Is In List (GameObject)", "Checks to see if GameObjects are in a GameObject List.")]
 public class uScriptAct_IsInListGameObject : uScriptLogic
 {
    private bool m_InList = false;
@@ -26,8 +25,11 @@ public class uScriptAct_IsInListGameObject : uScriptLogic
     
    [FriendlyName("Test If In List")]
    public void TestIfInList(
+      [FriendlyName("Target", "The target GameObject(s) to check for membership in the GameObject list.")]
       GameObject[] Target,
-      [FriendlyName("GameObject List")] ref GameObject[] GameObjectList
+
+      [FriendlyName("GameObject List", "The GameObject List to check.")]
+      ref GameObject[] GameObjectList
       )
    {
       List<GameObject> list = new List<GameObject>(GameObjectList);

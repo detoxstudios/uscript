@@ -9,11 +9,10 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if a Rect is in a Rect List.")]
-[NodeDescription("Checks to see if a Rect is in a Rect List.\n \nTarget: The target Rect(s) to check for membership in the Rect List.\nRect List (in/out): The Rect List to check.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Is In List (Rect)")]
+[FriendlyName("Is In List (Rect)", "Checks to see if a Rect is in a Rect List.")]
 public class uScriptAct_IsInListRect : uScriptLogic
 {
    private bool m_InList = false;
@@ -26,8 +25,11 @@ public class uScriptAct_IsInListRect : uScriptLogic
     
    [FriendlyName("Test If In List")]
    public void TestIfInList(
+      [FriendlyName("Target", "The target Rect(s) to check for membership in the Rect List.")]
       Rect[] Target,
-      [FriendlyName("Rect List")] ref Rect[] List
+      
+      [FriendlyName("Rect List", "The Rect List to check.")]
+      ref Rect[] List
       )
    {
       List<Rect> list = new List<Rect>(List);

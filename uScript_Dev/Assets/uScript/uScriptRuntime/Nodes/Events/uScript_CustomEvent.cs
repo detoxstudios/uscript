@@ -11,11 +11,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when Instance receives a standard custom event.")]
-[NodeDescription("Fires an event signal when Instance receives a standard custom event.\n \nSender: The GameObject that sent this event (if available).\nEvent Name: The name of the custom event.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Custom_Event")]
 
-[FriendlyName("Custom Event")]
+[FriendlyName("Custom Event", "Fires an event signal when Instance receives a standard custom event.")]
 public class uScript_CustomEvent : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventBoolArgs args);
@@ -25,10 +24,10 @@ public class uScript_CustomEvent : uScriptEvent
       private string m_EventName;
       private GameObject m_Sender;
       
-      [FriendlyName("Sender")]
+      [FriendlyName("Sender", "The GameObject that sent this event (if available).")]
       public GameObject Sender { get { return m_Sender; } }
 
-      [FriendlyName("Event Name")]
+      [FriendlyName("Event Name", "The name of the custom event.")]
       public string EventName { get { return m_EventName; } }
 
       public CustomEventBoolArgs(string eventName, GameObject sender)

@@ -9,11 +9,10 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if a camera is in a Camera List.")]
-[NodeDescription("Checks to see if a camera is in a Camera List.\n \nTarget: The target camera(s) to check for membership in the Camera List.\nCamera List (in/out): The Camera List to check.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Is In List (Camera)")]
+[FriendlyName("Is In List (Camera)", "Checks to see if a camera is in a Camera List.")]
 public class uScriptAct_IsInListCamera : uScriptLogic
 {
    private bool m_InList = false;
@@ -26,8 +25,11 @@ public class uScriptAct_IsInListCamera : uScriptLogic
     
    [FriendlyName("Test If In List")]
    public void TestIfInList(
+      [FriendlyName("Target", "The target camera(s) to check for membership in the Camera List.")]
       Camera[] Target,
-      [FriendlyName("Camera List")] ref Camera[] List
+      
+      [FriendlyName("Camera List", "The Camera List to check.")]
+      ref Camera[] List
       )
    {
       List<Camera> list = new List<Camera>(List);

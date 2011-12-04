@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Texture2D in a Texture2D List (node will automatically iterate through the list).")]
-[NodeDescription("Iterate through each Texture2D in a Texture2D List (node will automatically iterate through the list).\n \nTexture2D List: The list of Texture2Ds to iterate over.\nCurrent Texture2D (out): The Texture2D for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List Auto (Texture2D)")]
+[FriendlyName("For Each In List Auto (Texture2D)", "Iterate through each Texture2D in a Texture2D List (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListTexture2DAuto : uScriptLogic
 {
    private Texture2D[] m_List = null;
@@ -42,7 +41,13 @@ public class uScriptAct_ForEachListTexture2DAuto : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
-   public void In([FriendlyName("Texture2D List")] Texture2D[] List, [FriendlyName("Current Texture2D")] out Texture2D Value)
+   public void In(
+      [FriendlyName("Texture2D List", "The list of Texture2D variables to iterate over.")]
+      Texture2D[] List,
+      
+      [FriendlyName("Current Texture2D", "The Texture2D for the current loop iteration.")]
+      out Texture2D Value
+      )
    {
       if (List.Length > 0)
       {

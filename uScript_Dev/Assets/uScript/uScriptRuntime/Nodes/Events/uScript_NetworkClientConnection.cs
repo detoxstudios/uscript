@@ -9,17 +9,16 @@ using System.Collections;
 [NodePath("Events/Network Events")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Fires an event signal when the network client connects or disconnects from the server.\n \nReason for Failure (out): What happened if there is a connection failure - can be 'Disconnected', 'Lost Connection', or 'Unknown'.")]
-[NodeDescription("Fires an event signal when the network client connects or disconnects from the server.")]
+[NodeToolTip("Fires an event signal when the network client connects or disconnects from the server.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Network_Client_Connection")]
 
-[FriendlyName("Network Client Connection")]
+[FriendlyName("Network Client Connection", "Fires an event signal when the network client connects or disconnects from the server.")]
 public class uScript_NetworkClientConnection : uScriptEvent
 {
    public class NetworkClientConnectionEventArgs : System.EventArgs 
    {
-      [FriendlyName("Reason for Failure")]
+      [FriendlyName("Reason for Failure", "What happened if there is a connection failure - can be 'Disconnected', 'Lost Connection', or 'Unknown'.")]
       public string Failure { get { return m_Failure; } }
 
       private string m_Failure;

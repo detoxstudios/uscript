@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each GameObject in a GameObject list (node will automatically iterate through the list).")]
-[NodeDescription("Iterate through each GameObject in a GameObject list (node will automatically iterate through the list).\n \nGameObject List: The list of GameObjects to iterate over.\nCurrent GameObject (out): The GameObject for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#For_Each_GameObject_In_List_.28Auto.29")]
 
-[FriendlyName("For Each In List Auto (GameObject)")]
+[FriendlyName("For Each In List Auto (GameObject)", "Iterate through each GameObject in a GameObject list (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListGameObjectAuto : uScriptLogic
 {
    private GameObject[] m_List = null;
@@ -42,7 +41,13 @@ public class uScriptAct_ForEachListGameObjectAuto : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
-   public void In([FriendlyName("GameObject List")] GameObject[] GameObjectList, [FriendlyName("Current GameObject")] out GameObject go)
+   public void In(
+      [FriendlyName("GameObject List", "The list of GameObject variables to iterate over.")]
+      GameObject[] GameObjectList,
+      
+      [FriendlyName("Current GameObject", "The GameObject for the current loop iteration.")]
+      out GameObject go
+      )
    {
       if (GameObjectList.Length > 0)
       {

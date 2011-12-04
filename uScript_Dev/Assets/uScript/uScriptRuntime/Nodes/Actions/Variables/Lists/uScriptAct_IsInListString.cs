@@ -9,11 +9,10 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if a string is in a String List.")]
-[NodeDescription("Checks to see if a string is in a String List.\n \nTarget: The target string(s) to check for membership in the String List.\nString List (in/out): The String List to check.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Is In List (String)")]
+[FriendlyName("Is In List (String)", "Checks to see if a string is in a String List.")]
 public class uScriptAct_IsInListString : uScriptLogic
 {
    private bool m_InList = false;
@@ -26,8 +25,11 @@ public class uScriptAct_IsInListString : uScriptLogic
     
    [FriendlyName("Test If In List")]
    public void TestIfInList(
+      [FriendlyName("Target", "The target string(s) to check for membership in the String List.")]
       string[] Target,
-      [FriendlyName("String List")] ref string[] List
+
+      [FriendlyName("String List", "The String List to check.")]
+      ref string[] List
       )
    {
       List<string> list = new List<string>(List);

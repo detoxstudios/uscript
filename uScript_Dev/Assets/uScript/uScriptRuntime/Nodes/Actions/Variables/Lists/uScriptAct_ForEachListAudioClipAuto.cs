@@ -42,7 +42,7 @@ public class uScriptAct_ForEachListAudioClipAuto : uScriptLogic
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
    public void In(
-      [FriendlyName("AudioClip List", "The list of AudioClips to iterate over.")]
+      [FriendlyName("AudioClip List", "The list of AudioClip variables to iterate over.")]
       AudioClip[] List,
       
       [FriendlyName("Current AudioClip", "The AudioClip for the current loop iteration.")]

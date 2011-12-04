@@ -42,7 +42,7 @@ public class uScriptAct_ForEachListColorAuto : uScriptLogic
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
    public void In(
-      [FriendlyName("Color List", "The list of Colors to iterate over.")]
+      [FriendlyName("Color List", "The list of Color variables to iterate over.")]
       Color[] List,
       
       [FriendlyName("Current Color", "The Color for the current loop iteration.")]

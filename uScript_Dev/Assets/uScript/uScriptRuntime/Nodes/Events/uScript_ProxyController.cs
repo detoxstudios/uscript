@@ -10,11 +10,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a CharacterController collides with an object.")]
-[NodeDescription("Fires an event signal when a CharacterController collides with an object.\n \nCharacter Controller: The controller that hit Collider.\nCollider: The collider that was hit by Character Controller.\nRigid Body: The rigidbody that was hit by Character Controller.\nInstigator: The GameObject that was hit by Character Controller.\nTransform: The transform that was hit by Character Controller.\nPoint: The impact point in world space.\nNormal: The normal of the surface we collided with in world space.\nMove Direction: Approximately the direction from the center of the capsule to the point we touch.\nMove Length: How far the character has travelled until it hit the collider.\n")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Controller_Collision")]
 
-[FriendlyName("Controller Collision")]
+[FriendlyName("Controller Collision", "Fires an event signal when a CharacterController collides with an object.")]
 public class uScript_ProxyController : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, ProxyControllerCollisionEventArgs args);
@@ -23,31 +22,39 @@ public class uScript_ProxyController : uScriptEvent
    {
       private ControllerColliderHit m_Hit;
 
-      [FriendlyName("Instigator")]
+      [FriendlyName("Instigator", "The GameObject that was hit by Character Controller.")]
       public GameObject GameObject { get { return m_Hit.gameObject; } }
 
-      [FriendlyName("Character Controller"), SocketState(false, false)]
+      [FriendlyName("Character Controller", "The controller that hit Collider.")]
+      [SocketState(false, false)]
       public CharacterController Controller { get { return m_Hit.controller; } }
 
-      [FriendlyName("Collider"), SocketState(false, false)]
+      [FriendlyName("Collider", "The collider that was hit by Character Controller.")]
+      [SocketState(false, false)]
       public Collider Collider { get { return m_Hit.collider; } }
 
-      [FriendlyName("Rigid Body"), SocketState(false, false)]
+      [FriendlyName("Rigid Body", "The rigidbody that was hit by Character Controller.")]
+      [SocketState(false, false)]
       public Rigidbody RigidBody { get { return m_Hit.rigidbody; } }
 
-      [FriendlyName("Transform"), SocketState(false, false)]
+      [FriendlyName("Transform", "The transform that was hit by Character Controller.")]
+      [SocketState(false, false)]
       public Transform Transform { get { return m_Hit.transform; } }
 
-      [FriendlyName("Point"), SocketState(false, false)]
+      [FriendlyName("Point", "The impact point in world space.")]
+      [SocketState(false, false)]
       public Vector3 Point { get { return m_Hit.point; } }
 
-      [FriendlyName("Normal"), SocketState(false, false)]
+      [FriendlyName("Normal", "The normal of the surface we collided with in world space.")]
+      [SocketState(false, false)]
       public Vector3 Normal { get { return m_Hit.normal; } }
 
-      [FriendlyName("Move Direction"), SocketState(false, false)]
+      [FriendlyName("Move Direction", "Approximately the direction from the center of the capsule to the point we touch.")]
+      [SocketState(false, false)]
       public Vector3 MoveDirection { get { return m_Hit.moveDirection; } }
 
-      [FriendlyName("Move Length"), SocketState(false, false)]
+      [FriendlyName("Move Length", "How far the character has travelled until it hit the collider.")]
+      [SocketState(false, false)]
       public float MoveLength{ get { return m_Hit.moveLength; } }
 
       public ProxyControllerCollisionEventArgs(ControllerColliderHit hit)

@@ -9,11 +9,10 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if a int is in a Float List.")]
-[NodeDescription("Checks to see if a int is in a Float List.\n \nTarget: The target int(s) to check for membership in the Float List.\nFloat List (in/out): The Float List to check.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Is In List (Float)")]
+[FriendlyName("Is In List (Float)", "Checks to see if a int is in a Float List.")]
 public class uScriptAct_IsInListFloat : uScriptLogic
 {
    private bool m_InList = false;
@@ -26,8 +25,11 @@ public class uScriptAct_IsInListFloat : uScriptLogic
     
    [FriendlyName("Test If In List")]
    public void TestIfInList(
+      [FriendlyName("Target", "The target int(s) to check for membership in the Float List.")]
       int[] Target,
-      [FriendlyName("Float List")] ref float[] List
+
+      [FriendlyName("Float List", "The Float List to check.")]
+      ref float[] List
       )
    {
       List<float> list = new List<float>(List);

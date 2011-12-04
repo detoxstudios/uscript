@@ -9,11 +9,10 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if a Color is in a Color List.")]
-[NodeDescription("Checks to see if a Color is in a Color List.\n \nTarget: The target Color(s) to check for membership in the Color List.\nColor List (in/out): The Color List to check.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Is In List (Color)")]
+[FriendlyName("Is In List (Color)", "Checks to see if a Color is in a Color List.")]
 public class uScriptAct_IsInListColor : uScriptLogic
 {
    private bool m_InList = false;
@@ -26,8 +25,11 @@ public class uScriptAct_IsInListColor : uScriptLogic
     
    [FriendlyName("Test If In List")]
    public void TestIfInList(
+      [FriendlyName("Target", "The target Color(s) to check for membership in the Color List.")]
       Color[] Target,
-      [FriendlyName("Color List")] ref Color[] List
+
+      [FriendlyName("Color List", "The Color List to check.")]
+      ref Color[] List
       )
    {
       List<Color> list = new List<Color>(List);

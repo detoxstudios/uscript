@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each int in a Int List (node will automatically iterate through the list).")]
-[NodeDescription("Iterate through each int in a Int List (node will automatically iterate through the list).\n \nInt List: The list of ints to iterate over.\nCurrent Int (out): The int for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List Auto (Int)")]
+[FriendlyName("For Each In List Auto (Int)", "Iterate through each int in a Int List (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListIntAuto : uScriptLogic
 {
    private int[] m_List = null;
@@ -42,7 +41,13 @@ public class uScriptAct_ForEachListIntAuto : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
-   public void In([FriendlyName("Int List")] int[] List, [FriendlyName("Current Int")] out int Value)
+   public void In(
+      [FriendlyName("Int List", "The list of int variables to iterate over.")]
+      int[] List,
+      
+      [FriendlyName("Current Int", "The int for the current loop iteration.")]
+      out int Value
+      )
    {
       if (List.Length > 0)
       {

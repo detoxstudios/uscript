@@ -10,11 +10,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when an accelerometer event happens.")]
-[NodeDescription("Fires an event signal when an accelerometer event happens.\n \nAcceleration (out): The accelerometer value of this event.\nDelta Time (out): Amount of time (in seconds) that has passed since the last acceleraton measurement.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Accelerometer_Events")]
 
-[FriendlyName("Accelerometer Events")]
+[FriendlyName("Accelerometer Events", "Fires an event signal when an accelerometer event happens.")]
 public class uScript_Accelerometer : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, AccelerometerEventArgs args);
@@ -22,10 +21,12 @@ public class uScript_Accelerometer : uScriptEvent
    public class AccelerometerEventArgs : System.EventArgs
    {
       private AccelerationEvent m_AccelEvent;
-      
+
+      [FriendlyName("Acceleration", "The accelerometer value of this event.")]
       public Vector3 Acceleration { get { return m_AccelEvent.acceleration; } }
 
-      [FriendlyName("Delta Time"), SocketState(false, false)]
+      [FriendlyName("Delta Time", "Amount of time (in seconds) that has passed since the last acceleraton measurement.")]
+      [SocketState(false, false)]
       public float DeltaTime { get { return m_AccelEvent.deltaTime; } }
 
       public AccelerometerEventArgs(AccelerationEvent accelEvent)

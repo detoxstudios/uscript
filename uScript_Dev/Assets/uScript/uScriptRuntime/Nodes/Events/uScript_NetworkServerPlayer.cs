@@ -10,17 +10,16 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a player connects or disconnects from a server.")]
-[NodeDescription("Fires an event signal when a player connects or disconnects from a server.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Network_Server_Player")]
 
-[FriendlyName("Network Server Player")]
+[FriendlyName("Network Server Player", "Fires an event signal when a player connects or disconnects from a server.")]
 public class uScript_NetworkServerPlayer : uScriptEvent
 {
    public class NetworkServerPlayerEventArgs : System.EventArgs 
    {
+      [FriendlyName("Network Player", "?")]
       public NetworkPlayer NetworkPlayer { get { return m_NetworkPlayer; } }
-
       private NetworkPlayer m_NetworkPlayer;
 
       public NetworkServerPlayerEventArgs(NetworkPlayer netPlayer)

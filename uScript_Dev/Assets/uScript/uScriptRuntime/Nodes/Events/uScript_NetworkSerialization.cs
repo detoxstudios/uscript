@@ -9,20 +9,20 @@ using System.Collections;
 [NodePath("Events/Network Events")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Fires an event signal when network serialization takes place.\n \nBitStream: The serialized data.\nNetwork Message Info (out): Contains information about the network serialization.")]
-[NodeDescription("Fires an event signal when network serialization takes place.")]
+[NodeToolTip("Fires an event signal when network serialization takes place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Network_Serialization")]
 
-[FriendlyName("Network Serialization")]
+[FriendlyName("Network Serialization", "Fires an event signal when network serialization takes place.")]
 public class uScript_NetworkSerialization : uScriptEvent
 {
    public class NetworkSerializationEventArgs : System.EventArgs
    {
+      [FriendlyName("Bit Steam", "The serialized data.")]
       public BitStream BitStream { get { return m_BitStream; } }
       private BitStream m_BitStream;
 
-      [FriendlyName("Network Message Info")]
+      [FriendlyName("Network Message Info", "Contains information about the network serialization.")]
       public NetworkMessageInfo MessageInfo { get { return m_MessageInfo; } }
       private NetworkMessageInfo m_MessageInfo;
 

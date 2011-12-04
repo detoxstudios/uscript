@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Vector4 in a Vector4 List (node will automatically iterate through the list).")]
-[NodeDescription("Iterate through each Vector4 in a Vector4 List (node will automatically iterate through the list).\n \nVector4 List: The list of Vector4s to iterate over.\nCurrent Vector4 (out): The Vector4 for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List Auto (Vector4)")]
+[FriendlyName("For Each In List Auto (Vector4)", "Iterate through each Vector4 in a Vector4 List (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListVector4Auto : uScriptLogic
 {
    private Vector4[] m_List = null;
@@ -42,7 +41,13 @@ public class uScriptAct_ForEachListVector4Auto : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
-   public void In([FriendlyName("Vector4 List")] Vector4[] List, [FriendlyName("Current Vector4")] out Vector4 Value)
+   public void In(
+      [FriendlyName("Vector4 List", "The list of Vector4 variables to iterate over.")]
+      Vector4[] List,
+
+      [FriendlyName("Current Vector4", "The Vector4 for the current loop iteration.")]
+      out Vector4 Value
+      )
    {
       if (List.Length > 0)
       {

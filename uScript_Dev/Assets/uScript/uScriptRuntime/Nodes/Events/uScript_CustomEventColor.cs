@@ -11,11 +11,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when Instance receives a custom event with a Color.")]
-[NodeDescription("Fires an event signal when Instance receives a custom event with a Color.\n \nSender: The GameObject that sent this event (if available).\nEvent Name: The name of the custom event.\nEvent Data: The variable that was sent with this event.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Custom_Event_.28Color.29")]
 
-[FriendlyName("Custom Event (Color)")]
+[FriendlyName("Custom Event (Color)", "Fires an event signal when Instance receives a custom event with a Color.")]
 public class uScript_CustomEventColor : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventColorArgs args);
@@ -26,13 +25,13 @@ public class uScript_CustomEventColor : uScriptEvent
       private UnityEngine.Color m_EventData;
       private GameObject m_Sender;
       
-      [FriendlyName("Sender")]
+      [FriendlyName("Sender", "The GameObject that sent this event (if available).")]
       public GameObject Sender { get { return m_Sender; } }
 
-      [FriendlyName("Event Name")]
+      [FriendlyName("Event Name", "The name of the custom event.")]
       public string EventName { get { return m_EventName; } }
 
-      [FriendlyName("Event Data")]
+      [FriendlyName("Event Data", "The variable that was sent with this event.")]
       public UnityEngine.Color EventData { get { return m_EventData; } }
 
       public CustomEventColorArgs(string eventName, UnityEngine.Color eventData, GameObject sender)

@@ -10,11 +10,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.")]
-[NodeDescription("Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.\n \nFinger ID (out): ID of this Touch event.\nPosition (out): 2D screen position where the Touch event occured.\nDelta Position (out): Change in position of the Touch event.\nDelta Time (out): Amount of time (in seconds) that has passed since the last state change.\nTap Count (out): iOS - how many times the user has tapped the screen without moving away from the original tap spot. Android - unsupported, this is always 1.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Touch_Events")]
 
-[FriendlyName("Touch Events")]
+[FriendlyName("Touch Events", "Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.")]
 public class uScript_Touch : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, TouchEventArgs args);
@@ -23,18 +22,22 @@ public class uScript_Touch : uScriptEvent
    {
       private Touch m_Touch;
       
-      [FriendlyName("Finger ID"), SocketState(false, false)]
+      [FriendlyName("Finger ID", "ID of this Touch event.")]
+      [SocketState(false, false)]
       public int FingerId { get { return m_Touch.fingerId; } }
-     
+
+      [FriendlyName("Position", "2D screen position where the Touch event occured.")]
       public Vector2 Position { get { return m_Touch.position; } }
      
-      [FriendlyName("Delta Position")]
+      [FriendlyName("Delta Position", "Change in position of the Touch event.")]
       public Vector2 DeltaPosition { get { return m_Touch.deltaPosition; } }
 
-      [FriendlyName("Delta Time"), SocketState(false, false)]
+      [FriendlyName("Delta Time", "Amount of time (in seconds) that has passed since the last state change.")]
+      [SocketState(false, false)]
       public float DeltaTime { get { return m_Touch.deltaTime; } }
 
-      [FriendlyName("Tap Count"), SocketState(false, false)]
+      [FriendlyName("Tap Count", "The number of times the user has tapped the screen without moving away from the original tap spot. [This parameter is unsupported on Android, and will always return 1]")]
+      [SocketState(false, false)]
       public int TapCount { get { return m_Touch.tapCount; } }
 
       public TouchEventArgs(Touch touch)

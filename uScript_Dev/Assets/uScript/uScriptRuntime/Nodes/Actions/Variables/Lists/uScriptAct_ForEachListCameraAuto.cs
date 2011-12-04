@@ -42,10 +42,10 @@ public class uScriptAct_ForEachListCameraAuto : uScriptLogic
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
    public void In(
-      [FriendlyName("Camera List", "The list of cameras to iterate over.")]
+      [FriendlyName("Camera List", "The list of Camera variables to iterate over.")]
       Camera[] List,
       
-      [FriendlyName("Current Camera", "The camera for the current loop iteration.")]
+      [FriendlyName("Current Camera", "The Camera for the current loop iteration.")]
       out Camera Value
       )
    {

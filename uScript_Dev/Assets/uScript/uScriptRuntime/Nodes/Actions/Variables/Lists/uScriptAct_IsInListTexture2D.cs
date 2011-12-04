@@ -9,11 +9,10 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if a Texture2D is in a Texture2D List.")]
-[NodeDescription("Checks to see if a Texture2D is in a Texture2D List.\n \nTarget: The target Texture2D(s) to check for membership in the Texture2D List.\nTexture2D List (in/out): The Texture2D List to check.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Is In List (Texture2D)")]
+[FriendlyName("Is In List (Texture2D)", "Checks to see if a Texture2D is in a Texture2D List.")]
 public class uScriptAct_IsInListTexture2D : uScriptLogic
 {
    private bool m_InList = false;
@@ -26,8 +25,11 @@ public class uScriptAct_IsInListTexture2D : uScriptLogic
     
    [FriendlyName("Test If In List")]
    public void TestIfInList(
+      [FriendlyName("Target", "The target Texture2D(s) to check for membership in the Texture2D List.")]
       Texture2D[] Target,
-      [FriendlyName("Texture2D List")] ref Texture2D[] List
+
+      [FriendlyName("Texture2D List", "The Texture2D List to check.")]
+      ref Texture2D[] List
       )
    {
       List<Texture2D> list = new List<Texture2D>(List);

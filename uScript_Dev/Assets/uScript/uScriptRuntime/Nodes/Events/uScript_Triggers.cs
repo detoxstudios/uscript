@@ -9,25 +9,22 @@ using System.Collections;
 [NodePath("Events")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Fires an event signal when a GameObject enters, exits, or stays in a trigger.\n \nInstigator: The GameObject that interacted with the trigger (Instance).")]
+[NodeToolTip("Fires an event signal when a GameObject enters, exits, or stays in a trigger.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Trigger_Events")]
 
-[NodeDescription("Fires an event signal when a GameObject enters, exits, or stays in a trigger.")]
-
 [NodePropertiesPath("Properties/Triggers")]
-[FriendlyName("Trigger Events")]
+[FriendlyName("Trigger Events", "Fires an event signal when a GameObject enters, exits, or stays in a trigger.")]
 public class uScript_Triggers : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, TriggerEventArgs args);
 
    public class TriggerEventArgs : System.EventArgs
    {
-      private GameObject m_GameObject;
-      
-      [FriendlyName("Instigator")]
+      [FriendlyName("Instigator", "The GameObject that interacted with the trigger (Instance).")]
       [SocketState(false, false)]
       public GameObject GameObject { get { return m_GameObject; } }
+      private GameObject m_GameObject;
 
       public TriggerEventArgs(GameObject gameObject)
       {
@@ -42,7 +39,7 @@ public class uScript_Triggers : uScriptEvent
    private bool m_AlwaysTrigger = false;
    
    private int m_TimesToTrigger;
-   [FriendlyName("Times to Trigger")]
+   [FriendlyName("Times to Trigger", "?")]
    public int TimesToTrigger 
    { 
       set 

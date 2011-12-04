@@ -42,7 +42,7 @@ public class uScriptAct_ForEachListFloatAuto : uScriptLogic
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
    public void In(
-      [FriendlyName("Float List", "The list of floats to iterate over.")]
+      [FriendlyName("Float List", "The list of float variables to iterate over.")]
       float[] List,
       
       [FriendlyName("Current Float", "The float for the current loop iteration.")]

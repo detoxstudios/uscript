@@ -11,28 +11,15 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Monitors Unity's Input Manager and returns the current state of each named input axis.")]
-[NodeDescription("Monitors Unity's Input Manager and returns the current state of each named input axis." +
-                 "\n\nThis node only works with the default Input Manager settings that Unity provides.  If you have" +
-                 " removed or renamed any of the default axes, runtime errors will be generated.  Furthermore, any" +
-                 " new items added to the Input Manager will be ignored by this node." +
-                 "\n\nIf you wish to customize the Input Manager entries, you should create a custom node to handle" +
-                 " the modified Input Manager settings, using this node as a template." +
-                 "\n\nHorizontal (out): Horizontal joystick axis, including the keys \"left\" and \"a\" for negative values and \"right\" and \"d\" for positive values." +
-                 "\n\nVertical (out): Vertical joystick axis, including the keys \"down\" and \"s\" for negative values and \"up\" and \"w\" for positive values." +
-                 "\n\nFire 1 (out): Joystick button 0, \"left ctrl\", and Mouse button 0." +
-                 "\n\nFire 2 (out): Joystick button 1, \"left alt\", and Mouse button 1." +
-                 "\n\nFire 3 (out): Joystick button 2, \"left cmd\", and Mouse button 2." +
-                 "\n\nJump (out): Joystick button 3, and \"space\"." +
-                 "\n\nMouse X (out): Horizontal mouse movement delta." +
-                 "\n\nMouse Y (out): Vertical mouse movement delta." +
-                 "\n\nMouse ScrollWheel (out): Mouse scroll wheel delta." +
-                 "\n\nWindow Shake X (out): Horizontal window movement delta." +
-                 "\n\nWindow Shake Y (out): Vertical window movement delta."
-                 )]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Managed_Input_Events")]
 
-[FriendlyName("Managed Input Events")]
+[FriendlyName("Managed Input Events", "Monitors Unity's Input Manager and returns the current state of each named input axis." +
+   "\n\nThis node only works with the default Input Manager settings that Unity provides.  If you have" +
+   " removed or renamed any of the default axes, runtime errors will be generated.  Furthermore, any" +
+   " new items added to the Input Manager will be ignored by this node." +
+   "\n\nIf you wish to customize the Input Manager entries, you should create a custom node to handle" +
+   " the modified Input Manager settings, using this node as a template.")]
 public class uScript_ManagedInput : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventBoolArgs args);

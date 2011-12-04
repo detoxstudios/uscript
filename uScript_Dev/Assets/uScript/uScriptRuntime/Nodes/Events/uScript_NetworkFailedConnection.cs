@@ -9,17 +9,16 @@ using System.Collections;
 [NodePath("Events/Network Events")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Fires an event signal when the network client fails to connect to the server.\n \nConnection Error (out): The UnityEngine.NetworkConnectionError result.")]
-[NodeDescription("Fires an event signal when the network client fails to connect to the server.")]
+[NodeToolTip("Fires an event signal when the network client fails to connect to the server.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Network_Failed_Connection")]
 
-[FriendlyName("Network Failed Connection")]
+[FriendlyName("Network Failed Connection", "Fires an event signal when the network client fails to connect to the server.")]
 public class uScript_NetworkFailedConnection : uScriptEvent
 {
    public class NetworkFailedConnectionEventArgs : System.EventArgs 
    {
-      [FriendlyName("Connection Error")]
+      [FriendlyName("Connection Error", "The UnityEngine.NetworkConnectionError result.")]
       public NetworkConnectionError Error { get { return m_Error; } }
       private NetworkConnectionError m_Error;
 

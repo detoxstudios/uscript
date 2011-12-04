@@ -11,11 +11,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when Instance receives a custom event with a Vector3.")]
-[NodeDescription("Fires an event signal when Instance receives a custom event with a Vector3.\n \nSender: The GameObject that sent this event (if available).\nEvent Name: The name of the custom event.\nEvent Data: The variable that was sent with this event.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Custom_Event_.28Vector3.29")]
 
-[FriendlyName("Custom Event (Vector3)")]
+[FriendlyName("Custom Event (Vector3)", "Fires an event signal when Instance receives a custom event with a Vector3.")]
 public class uScript_CustomEventVector3 : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CustomEventVector3Args args);
@@ -26,13 +25,13 @@ public class uScript_CustomEventVector3 : uScriptEvent
       private Vector3 m_EventData;
       private GameObject m_Sender;
       
-      [FriendlyName("Sender")]
+      [FriendlyName("Sender", "The GameObject that sent this event (if available).")]
       public GameObject Sender { get { return m_Sender; } }
 
-      [FriendlyName("Event Name")]
+      [FriendlyName("Event Name", "The name of the custom event.")]
       public string EventName { get { return m_EventName; } }
 
-      [FriendlyName("Event Data")]
+      [FriendlyName("Event Data", "The variable that was sent with this event.")]
       public Vector3 EventData { get { return m_EventData; } }
 
       public CustomEventVector3Args(string eventName, Vector3 eventData, GameObject sender)
