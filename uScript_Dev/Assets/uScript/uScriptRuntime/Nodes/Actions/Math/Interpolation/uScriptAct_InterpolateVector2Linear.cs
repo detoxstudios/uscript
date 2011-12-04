@@ -33,7 +33,7 @@ public class uScriptAct_InterpolateVector2Linear : uScriptLogic
       [FriendlyName("Time")] float time,
       [FriendlyName("Loop Type"), SocketState(false, false)] uScript_Lerper.LoopType loopType,
       [FriendlyName("Loop Delay"), SocketState(false, false)] float loopDelay,
-      [FriendlyName("Loop Count"), SocketState(false, false)] int loopCount, 
+      [FriendlyName("Loop Count"), DefaultValue(-1), SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] out Vector2 currentValue
    )
    {
@@ -69,9 +69,9 @@ public class uScriptAct_InterpolateVector2Linear : uScriptLogic
       [FriendlyName("Start Value")] Vector2 startValue,
       [FriendlyName("End Value")] Vector2 endValue,
       [FriendlyName("Time")] float time, 
-      [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
-      [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Loop Count")] int loopCount, 
+      [FriendlyName("Loop Type"), SocketState(false, false)] uScript_Lerper.LoopType loopType, 
+      [FriendlyName("Loop Delay"), SocketState(false, false)] float loopDelay, 
+      [FriendlyName("Loop Count"), DefaultValue(-1), SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] out Vector2 currentValue
    )
    {
@@ -88,9 +88,9 @@ public class uScriptAct_InterpolateVector2Linear : uScriptLogic
       [FriendlyName("Start Value")] Vector2 startValue,
       [FriendlyName("End Value")] Vector2 endValue,
       [FriendlyName("Time")] float time, 
-      [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
-      [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Loop Count")] int loopCount, 
+      [FriendlyName("Loop Type"), SocketState(false, false)] uScript_Lerper.LoopType loopType, 
+      [FriendlyName("Loop Delay"), SocketState(false, false)] float loopDelay, 
+      [FriendlyName("Loop Count"), DefaultValue(-1), SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] out Vector2 currentValue
    )
    {

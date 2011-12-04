@@ -34,7 +34,7 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       [FriendlyName("Time")] float time,
       [FriendlyName("Loop Type"), SocketState(false, false)] uScript_Lerper.LoopType loopType,
       [FriendlyName("Loop Delay"), SocketState(false, false)] float loopDelay,
-      [FriendlyName("Loop Count"), SocketState(false, false)] int loopCount, 
+      [FriendlyName("Loop Count"), DefaultValue(-1), SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] out Quaternion currentValue
    )
    {
@@ -77,9 +77,9 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       [FriendlyName("Start Value")] Quaternion startValue, 
       [FriendlyName("End Value")] Quaternion endValue, 
       [FriendlyName("Time")] float time, 
-      [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
-      [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Loop Count")] int loopCount, 
+      [FriendlyName("Loop Type"), SocketState(false, false)] uScript_Lerper.LoopType loopType, 
+      [FriendlyName("Loop Delay"), SocketState(false, false)] float loopDelay, 
+      [FriendlyName("Loop Count"), DefaultValue(-1), SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] out Quaternion currentValue
    )
    {
@@ -96,9 +96,9 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       [FriendlyName("Start Value")] Quaternion startValue, 
       [FriendlyName("End Value")] Quaternion endValue, 
       [FriendlyName("Time")] float time, 
-      [FriendlyName("Loop Type")] uScript_Lerper.LoopType loopType, 
-      [FriendlyName("Loop Delay")] float loopDelay, 
-      [FriendlyName("Loop Count")] int loopCount, 
+      [FriendlyName("Loop Type"), SocketState(false, false)] uScript_Lerper.LoopType loopType, 
+      [FriendlyName("Loop Delay"), SocketState(false, false)] float loopDelay, 
+      [FriendlyName("Loop Count"), DefaultValue(-1), SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] out Quaternion currentValue
    )
    {

@@ -33,7 +33,7 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       [FriendlyName("Time")] float time,
       [FriendlyName("Loop Type"), SocketState(false, false)] uScript_Lerper.LoopType loopType,
       [FriendlyName("Loop Delay"), SocketState(false, false)] float loopDelay,
-      [FriendlyName("Loop Count"), SocketState(false, false)] int loopCount, 
+      [FriendlyName("Loop Count"), DefaultValue(-1), SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] [SocketState(true, false)] out float currentValue
    )
    {
@@ -71,7 +71,7 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] [SocketState(false, false)] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] [SocketState(false, false)] float loopDelay, 
-      [FriendlyName("Loop Count")] [SocketState(false, false)] int loopCount, 
+      [FriendlyName("Loop Count"), DefaultValue(-1)] [SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] [SocketState(true, false)] out float currentValue
    )
    {
@@ -90,7 +90,7 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
       [FriendlyName("Time")] float time, 
       [FriendlyName("Loop Type")] [SocketState(false, false)] uScript_Lerper.LoopType loopType, 
       [FriendlyName("Loop Delay")] [SocketState(false, false)] float loopDelay, 
-      [FriendlyName("Loop Count")] [SocketState(false, false)] int loopCount, 
+      [FriendlyName("Loop Count"), DefaultValue(-1)] [SocketState(false, false)] int loopCount, 
       [FriendlyName("Output Value")] [SocketState(true, false)] out float currentValue
    )
    {

@@ -37,7 +37,10 @@ public class uScriptAct_ToggleComponent : uScriptLogic
             {
 					if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
 					{
-						currentTarget.renderer.enabled = true;
+						if ( currentTarget.renderer != null )
+						{
+							currentTarget.renderer.enabled = true;
+						}
 					}
 					else
 					{
@@ -74,7 +77,10 @@ public class uScriptAct_ToggleComponent : uScriptLogic
             {
 					if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
 					{
-						currentTarget.renderer.enabled = false;
+						if ( currentTarget.renderer != null )
+						{
+							currentTarget.renderer.enabled = false;
+						}
 					}
 					else
 					{
@@ -111,14 +117,17 @@ public class uScriptAct_ToggleComponent : uScriptLogic
             {
 					if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
 					{
-						if (currentTarget.renderer.enabled)
+						if ( currentTarget.renderer != null )
 						{
-							currentTarget.renderer.enabled = false;
-						}
-						else
-						{
-							currentTarget.renderer.enabled = true;
-						}
+							if (currentTarget.renderer.enabled)
+							{
+								currentTarget.renderer.enabled = false;
+							}
+							else
+							{
+								currentTarget.renderer.enabled = true;
+							}
+							}
 						
 					}
 					else
