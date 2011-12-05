@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each AudioClip in a AudioClip List (uScript events must drive each iteration).")]
-/* M */[NodeDescription("Iterate through each AudioClip in a AudioClip List (uScript events must drive each iteration).\n \nAudioClip List: The list of AudioClips to iterate over.\nCurrent AudioClip (out): The AudioClip for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List (AudioClip)")]
+[FriendlyName("For Each In List (AudioClip)", "Iterates through a list, one item at a time, and returns the current item.\n\nNote: uScript events must drive each iteration.")]
 public class uScriptAct_ForEachListAudioClip : uScriptLogic
 {
    private AudioClip[] m_List = null;
@@ -22,6 +21,10 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
    private bool m_Done = false;
    private bool m_ImmediateDone = false;
 
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Immediate
    {
       get
@@ -42,8 +45,14 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset([FriendlyName("AudioClip List")] AudioClip[] List, [FriendlyName("Current AudioClip")] out AudioClip Value)
+   public void Reset(AudioClip[] List, out AudioClip Value)
    {
       Value = null;
       if (m_List == null)
@@ -66,7 +75,13 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
       m_ImmediateDone = false;
    }
 
-   public void In([FriendlyName("AudioClip List")] AudioClip[] List, [FriendlyName("Current AudioClip")] out AudioClip Value)
+   public void In(
+      [FriendlyName("List", "The list to iterate over.")]
+      AudioClip[] List,
+
+      [FriendlyName("Current", "The item for the current loop iteration.")]
+      out AudioClip Value
+      )
    {
       if (m_List == null)
       {
@@ -100,4 +115,10 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
          }
       }
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

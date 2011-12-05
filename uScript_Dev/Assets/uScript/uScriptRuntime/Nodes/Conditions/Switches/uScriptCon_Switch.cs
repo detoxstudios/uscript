@@ -8,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Allows the signal to pass through each output socket in order.")]
-/* M */[NodeDescription("Allows the signal to pass through each output socket in order.\n \nMax Output Used: Highest valid output switch to use.\nCurrent Output (out): The output switch that last executed.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Switch")]
 
-[FriendlyName("Switch")]
+[FriendlyName("Switch", "Allows the signal to pass through each output socket in order.")]
 public class uScriptCon_Switch : uScriptLogic
 {
    private int m_CurrentOutput = 1;
@@ -25,6 +24,11 @@ public class uScriptCon_Switch : uScriptLogic
    private bool m_Output5 = false;
    private bool m_Output6 = false;
 
+
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    [FriendlyName("Output 1")]
    public bool Output1 { get { return m_Output1; } }
 
@@ -43,10 +47,13 @@ public class uScriptCon_Switch : uScriptLogic
    [FriendlyName("Output 6")]
    public bool Output6 { get { return m_Output6; } }
 
-   public void In(
-      bool Loop,
-      [FriendlyName("Max Output Used"), DefaultValue(6), SocketState(false, false)] int MaxOutputUsed,
-      [FriendlyName("Current Output")] out int CurrentOutput)
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in Reset()
+   public void In(bool Loop,  int MaxOutputUsed,  out int CurrentOutput)
    {
       m_Output1 = false;
       m_Output2 = false;
@@ -187,7 +194,17 @@ public class uScriptCon_Switch : uScriptLogic
       }
    }
 
-   public void Reset(bool Loop, [FriendlyName("Max Output Used"), DefaultValue(6)] int MaxOutputUsed, [FriendlyName("Current Output")] out int CurrentOutput)
+   public void Reset(
+      [FriendlyName("Loop", "If True, the switch will loop back to 1 once the Max Output value has been reached.")]
+      bool Loop,
+      
+      [FriendlyName("Max Output Used", "Highest valid output switch to use.")]
+      [DefaultValue(6), SocketState(false, false)]
+      int MaxOutputUsed,
+      
+      [FriendlyName("Current Output", "The output switch that last executed.")]
+      out int CurrentOutput
+      )
    {
       m_Output1 = false;
       m_Output2 = false;
@@ -200,4 +217,10 @@ public class uScriptCon_Switch : uScriptLogic
       CurrentOutput = 1;
       m_SwitchOpen = true;
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

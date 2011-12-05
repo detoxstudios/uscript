@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each int in a Int List (uScript events must drive each iteration).")]
-/* M */[NodeDescription("Iterate through each int in a Int List (uScript events must drive each iteration).\n \nInt List: The list of ints to iterate over.\nCurrent Int (out): The int for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List (Int)")]
+[FriendlyName("For Each In List (Int)", "Iterates through a list, one item at a time, and returns the current item.\n\nNote: uScript events must drive each iteration.")]
 public class uScriptAct_ForEachListInt : uScriptLogic
 {
    private int[] m_List = null;
@@ -22,6 +21,10 @@ public class uScriptAct_ForEachListInt : uScriptLogic
    private bool m_Done = false;
    private bool m_ImmediateDone = false;
 
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Immediate
    {
       get
@@ -42,8 +45,14 @@ public class uScriptAct_ForEachListInt : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset([FriendlyName("Int List")] int[] List, [FriendlyName("Current Int")] out int Value)
+   public void Reset(int[] List, out int Value)
    {
       Value = 0;
       if (m_List == null)
@@ -66,7 +75,13 @@ public class uScriptAct_ForEachListInt : uScriptLogic
       m_ImmediateDone = false;
    }
 
-   public void In([FriendlyName("Int List")] int[] List, [FriendlyName("Current Int")] out int Value)
+   public void In(
+      [FriendlyName("List", "The list to iterate over.")]
+      int[] List,
+
+      [FriendlyName("Current", "The item for the current loop iteration.")]
+      out int Value
+      )
    {
       if (m_List == null)
       {
@@ -100,4 +115,10 @@ public class uScriptAct_ForEachListInt : uScriptLogic
          }
       }
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

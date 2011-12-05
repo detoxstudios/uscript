@@ -9,22 +9,26 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes cameras from a Camera List. Can also empty the Camera List.")]
-/* M */[NodeDescription("Adds/removes cameras from a Camera List. Can also empty the Camera List.\n \nTarget: The Target camera(s) to add or remove from the Camera List.\nCamera List: The Camera List to modify.\nList Count (out): The remaining number of items in the Camera List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Modify List (Camera)")]
+[FriendlyName("Modify List (Camera)", "Modify a list by adding/removing the specified variable(s), or by emptying it entirely.")]
 public class uScriptAct_ModifyListCamera : uScriptLogic
 {
-
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
     
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Add To List")]
-   public void AddToList(
-      Camera[] Target,
-      [FriendlyName("Camera List")] ref Camera[] List,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void AddToList(Camera[] Target, ref Camera[] List, out int ListCount)
    {
       List<Camera> list = new List<Camera>(List);
 
@@ -37,12 +41,9 @@ public class uScriptAct_ModifyListCamera : uScriptLogic
       ListCount = List.Length;
    }
 
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Remove From List")]
-   public void RemoveFromList(
-      Camera[] Target,
-      [FriendlyName("Camera List")] ref Camera[] List,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void RemoveFromList(Camera[] Target, ref Camera[] List, out int ListCount)
    {
       List<Camera> list = new List<Camera>(List);
 
@@ -60,12 +61,23 @@ public class uScriptAct_ModifyListCamera : uScriptLogic
 
    [FriendlyName("Empty List")]
    public void EmptyList(
+      [FriendlyName("Target", "The Target variable(s) to add or remove from the list.")]
       Camera[] Target,
-      [FriendlyName("Camera List")] ref Camera[] List,
-      [FriendlyName("List Count")] out int ListCount
+
+      [FriendlyName("List", "The list to modify.")]
+      ref Camera[] List,
+
+      [FriendlyName("List Size", "The remaining number of items in the list after the modification has taken place.")]
+      out int ListCount
       )
    {
       List = new Camera[] { };
       ListCount = 0;
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

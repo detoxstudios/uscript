@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Vector4 in a Vector4 List (uScript events must drive each iteration).")]
-/* M */[NodeDescription("Iterate through each Vector4 in a Vector4 List (uScript events must drive each iteration).\n \nVector4 List: The list of Vector4s to iterate over.\nCurrent Vector4 (out): The Vector4 for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List (Vector4)")]
+[FriendlyName("For Each In List (Vector4)", "Iterates through a list, one item at a time, and returns the current item.\n\nNote: uScript events must drive each iteration.")]
 public class uScriptAct_ForEachListVector4 : uScriptLogic
 {
    private Vector4[] m_List = null;
@@ -22,6 +21,10 @@ public class uScriptAct_ForEachListVector4 : uScriptLogic
    private bool m_Done = false;
    private bool m_ImmediateDone = false;
 
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Immediate
    {
       get
@@ -42,8 +45,14 @@ public class uScriptAct_ForEachListVector4 : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset([FriendlyName("Vector4 List")] Vector4[] List, [FriendlyName("Current Vector4")] out Vector4 Value)
+   public void Reset(Vector4[] List, out Vector4 Value)
    {
       Value = new Vector4(0,0,0,0);
       if (m_List == null)
@@ -66,7 +75,13 @@ public class uScriptAct_ForEachListVector4 : uScriptLogic
       m_ImmediateDone = false;
    }
 
-   public void In([FriendlyName("Vector4 List")] Vector4[] List, [FriendlyName("Current Vector4")] out Vector4 Value)
+   public void In(
+      [FriendlyName("List", "The list to iterate over.")]
+      Vector4[] List,
+
+      [FriendlyName("Current", "The item for the current loop iteration.")]
+      out Vector4 Value
+      )
    {
       if (m_List == null)
       {
@@ -100,4 +115,10 @@ public class uScriptAct_ForEachListVector4 : uScriptLogic
          }
       }
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

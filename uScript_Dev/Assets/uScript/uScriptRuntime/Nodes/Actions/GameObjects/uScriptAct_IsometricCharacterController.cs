@@ -8,15 +8,21 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Isometric Character Controller.")]
-/* M */[NodeDescription("Simple character controller.  Character always moves forward and backwards along its forward vector.\n \nTarget: The character to control.\nTranslation Units Per Second: How many units to move per second when the forward/backward keys are pressed.\nRotation Units Per Second: How many units to rotate per second when the left/right keys are pressed.\nFilter Translation: Whether or not to filter the object's translation.\nTranslation Filter Constant: The strength of the translation filter (lower numbers mean more filtering, i.e. slower).\nFilter Rotation: Whether or not to filter the object's rotation.\nRotation Filter Constant: The strength of the rotation filter (lower numbers mean more filtering, i.e. slower).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Isometric_Character_Controller")]
 
-[FriendlyName("Isometric Character Controller")]
+/* M */[NodeDescription(
+ "  \n \nTarget: The character to control." +
+ "  \nTranslation Units Per Second: How many units to move per second when the forward/backward keys are pressed." +
+ "  \nRotation Units Per Second: How many units to rotate per second when the left/right keys are pressed." +
+ "  \nFilter Translation: Whether or not to filter the object's translation." +
+ "  \nTranslation Filter Constant: The strength of the translation filter (lower numbers mean more filtering, i.e. slower)." +
+ "  \nFilter Rotation: Whether or not to filter the object's rotation." +
+ "  \nRotation Filter Constant: The strength of the rotation filter (lower numbers mean more filtering, i.e. slower).")]
+
+[FriendlyName("Isometric Character Controller", "Simple character controller.  Character always moves forward and backwards along its forward vector.")]
 public class uScriptAct_IsometricCharacterController : uScriptLogic
 {
-   public bool Out { get { return true; } }
-
    private enum Translate
    {
       None,
@@ -36,7 +42,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
    private Rotate m_Rotate = Rotate.None;
    private float m_TranslateSpeed = 0.0f;
    private float m_RotateSpeed = 0.0f;
-   
+
    private float m_LastTranslateSpeed = 0.0f;
    private float m_LastRotateSpeed = 0.0f;
    private bool m_FilterTranslation = false;
@@ -44,16 +50,22 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
    private float m_TranslationFilterConstant = 0.7f;
    private float m_RotationFilterConstant = 0.1f;
 
+
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
+   public bool Out { get { return true; } }
+
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in Resume()
+   // Parameter Attributes are applied below in RotateLeft()
    [FriendlyName("Move Local Forward")]
-   public void MoveForward(
-      [FriendlyName("Target")] GameObject target,
-      [FriendlyName("Translation Units Per Second"), DefaultValue(5f)] float translation,
-      [FriendlyName("Rotation Units Per Second"), DefaultValue(1.5f)] float rotation,
-      [FriendlyName("Filter Translation"), DefaultValue(false), SocketState(false, false)] bool filterTranslation,
-      [FriendlyName("Translation Filter Constant"), DefaultValue(0.7f), SocketState(false, false)] float translationFilterConstant,
-      [FriendlyName("Filter Rotation"), DefaultValue(false), SocketState(false, false)] bool filterRotation,
-      [FriendlyName("Rotation Filter Constant"), DefaultValue(0.1f), SocketState(false, false)] float rotationFilterConstant
-   )
+   public void MoveForward(GameObject target, float translation, float rotation, bool filterTranslation, float translationFilterConstant, bool filterRotation, float rotationFilterConstant)
    {
       m_Translate = Translate.Forward;
 
@@ -67,16 +79,11 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_RotationFilterConstant = rotationFilterConstant;
    }
 
+
+   // Parameter Attributes are applied below in RotateLeft()
+   //
    [FriendlyName("Move Local Backward")]
-   public void MoveBackward(
-      [FriendlyName("Target")] GameObject target,
-      [FriendlyName("Translation Units Per Second")] float translation,
-      [FriendlyName("Rotation Units Per Second"), DefaultValue(1.5f)] float rotation,
-      [FriendlyName("Filter Translation"), DefaultValue(false), SocketState(false, false)] bool filterTranslation,
-      [FriendlyName("Translation Filter Constant"), DefaultValue(0.7f), SocketState(false, false)] float translationFilterConstant,
-      [FriendlyName("Filter Rotation"), DefaultValue(false), SocketState(false, false)] bool filterRotation,
-      [FriendlyName("Rotation Filter Constant"), DefaultValue(0.1f), SocketState(false, false)] float rotationFilterConstant
-   )
+   public void MoveBackward(GameObject target, float translation, float rotation, bool filterTranslation, float translationFilterConstant, bool filterRotation, float rotationFilterConstant)
    {
       m_Translate = Translate.Backward;
 
@@ -90,16 +97,11 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_RotationFilterConstant = rotationFilterConstant;
    }
 
+
+   // Parameter Attributes are applied below in RotateLeft()
+   //
    [FriendlyName("Rotate Local Right")]
-   public void RotateRight(
-      [FriendlyName("Target")] GameObject target,
-      [FriendlyName("Translation Units Per Second")] float translation,
-      [FriendlyName("Rotation Units Per Second"), DefaultValue(1.5f)] float rotation,
-      [FriendlyName("Filter Translation"), DefaultValue(false), SocketState(false, false)] bool filterTranslation,
-      [FriendlyName("Translation Filter Constant"), DefaultValue(0.7f), SocketState(false, false)] float translationFilterConstant,
-      [FriendlyName("Filter Rotation"), DefaultValue(false), SocketState(false, false)] bool filterRotation,
-      [FriendlyName("Rotation Filter Constant"), DefaultValue(0.1f), SocketState(false, false)] float rotationFilterConstant
-   )
+   public void RotateRight(GameObject target, float translation, float rotation, bool filterTranslation, float translationFilterConstant, bool filterRotation, float rotationFilterConstant)
    {
       m_Rotate = Rotate.Right;
 
@@ -113,16 +115,35 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_RotationFilterConstant = rotationFilterConstant;
    }
 
+
    [FriendlyName("Rotate Local Left")]
    public void RotateLeft(
-      [FriendlyName("Target")] GameObject target,
-      [FriendlyName("Translation Units Per Second")] float translation,
-      [FriendlyName("Rotation Units Per Second"), DefaultValue(1.5f)] float rotation,
-      [FriendlyName("Filter Translation"), DefaultValue(false), SocketState(false, false)] bool filterTranslation,
-      [FriendlyName("Translation Filter Constant"), DefaultValue(0.7f), SocketState(false, false)] float translationFilterConstant,
-      [FriendlyName("Filter Rotation"), DefaultValue(false), SocketState(false, false)] bool filterRotation,
-      [FriendlyName("Rotation Filter Constant"), DefaultValue(0.1f), SocketState(false, false)] float rotationFilterConstant
-   )
+      [FriendlyName("Target")]
+      GameObject target,
+
+      [FriendlyName("Translation Units Per Second")]
+      float translation,
+
+      [FriendlyName("Rotation Units Per Second")]
+      [DefaultValue(1.5f)]
+      float rotation,
+      
+      [FriendlyName("Filter Translation")]
+      [DefaultValue(false), SocketState(false, false)]
+      bool filterTranslation,
+      
+      [FriendlyName("Translation Filter Constant")]
+      [DefaultValue(0.7f), SocketState(false, false)]
+      float translationFilterConstant,
+      
+      [FriendlyName("Filter Rotation")]
+      [DefaultValue(false), SocketState(false, false)]
+      bool filterRotation,
+      
+      [FriendlyName("Rotation Filter Constant")]
+      [DefaultValue(0.1f), SocketState(false, false)]
+      float rotationFilterConstant
+      )
    {
       m_Rotate = Rotate.Left;
 
@@ -135,6 +156,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_TranslationFilterConstant = translationFilterConstant;
       m_RotationFilterConstant = rotationFilterConstant;
    }
+
 
    public void Update()
    {
@@ -188,4 +210,10 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
          m_Target = null;
       }
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

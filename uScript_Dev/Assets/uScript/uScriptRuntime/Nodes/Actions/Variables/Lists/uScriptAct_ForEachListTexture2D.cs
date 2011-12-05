@@ -10,11 +10,10 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Texture2D in a Texture2D List (uScript events must drive each iteration).")]
-/* M */[NodeDescription("Iterate through each Texture2D in a Texture2D List (uScript events must drive each iteration).\n \nTexture2D List: The list of Texture2Ds to iterate over.\nCurrent Texture2D (out): The Texture2D for the current loop iteration.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("For Each In List (Texture2D)")]
+[FriendlyName("For Each In List (Texture2D)", "Iterates through a list, one item at a time, and returns the current item.\n\nNote: uScript events must drive each iteration.")]
 public class uScriptAct_ForEachListTexture2D : uScriptLogic
 {
    private Texture2D[] m_List = null;
@@ -22,6 +21,10 @@ public class uScriptAct_ForEachListTexture2D : uScriptLogic
    private bool m_Done = false;
    private bool m_ImmediateDone = false;
 
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Immediate
    {
       get
@@ -42,8 +45,14 @@ public class uScriptAct_ForEachListTexture2D : uScriptLogic
    [FriendlyName("Iteration")]
    public bool Iteration { get { return m_List != null && m_CurrentIndex <= m_List.Length && m_CurrentIndex != 0; } }
 
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset([FriendlyName("Texture2D List")] Texture2D[] List, [FriendlyName("Current Texture2D")] out Texture2D Value)
+   public void Reset(Texture2D[] List, out Texture2D Value)
    {
       Value = null;
       if (m_List == null)
@@ -66,7 +75,13 @@ public class uScriptAct_ForEachListTexture2D : uScriptLogic
       m_ImmediateDone = false;
    }
 
-   public void In([FriendlyName("Texture2D List")] Texture2D[] List, [FriendlyName("Current Texture2D")] out Texture2D Value)
+   public void In(
+      [FriendlyName("List", "The list to iterate over.")]
+      Texture2D[] List,
+
+      [FriendlyName("Current", "The item for the current loop iteration.")]
+      out Texture2D Value
+      )
    {
       if (m_List == null)
       {
@@ -100,4 +115,10 @@ public class uScriptAct_ForEachListTexture2D : uScriptLogic
          }
       }
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

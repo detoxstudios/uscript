@@ -9,22 +9,26 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes Vector4 from a Vector4 List. Can also empty the Vector4 List.")]
-/* M */[NodeDescription("Adds/removes Vector4 from a Vector4 List. Can also empty the Vector4 List.\n \nTarget: The Target Vector4(s) to add or remove from the Vector4 List.\nVector4 List: The Vector4 List to modify.\nList Count (out): The remaining number of items in the Vector4 List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Modify List (Vector4)")]
+[FriendlyName("Modify List (Vector4)", "Modify a list by adding/removing the specified variable(s), or by emptying it entirely.")]
 public class uScriptAct_ModifyListVector4 : uScriptLogic
 {
-
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
-    
+
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Add To List")]
-   public void AddToList(
-      Vector4[] Target,
-      [FriendlyName("Vector4 List")] ref Vector4[] List,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void AddToList(Vector4[] Target, ref Vector4[] List, out int ListCount)
    {
       List<Vector4> list = new List<Vector4>(List);
 
@@ -37,12 +41,9 @@ public class uScriptAct_ModifyListVector4 : uScriptLogic
       ListCount = List.Length;
    }
 
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Remove From List")]
-   public void RemoveFromList(
-      Vector4[] Target,
-      [FriendlyName("Vector4 List")] ref Vector4[] List,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void RemoveFromList(Vector4[] Target, ref Vector4[] List, out int ListCount)
    {
       List<Vector4> list = new List<Vector4>(List);
 
@@ -60,12 +61,23 @@ public class uScriptAct_ModifyListVector4 : uScriptLogic
 
    [FriendlyName("Empty List")]
    public void EmptyList(
+      [FriendlyName("Target", "The Target variable(s) to add or remove from the list.")]
       Vector4[] Target,
-      [FriendlyName("Vector4 List")] ref Vector4[] List,
-      [FriendlyName("List Count")] out int ListCount
+
+      [FriendlyName("List", "The list to modify.")]
+      ref Vector4[] List,
+
+      [FriendlyName("List Size", "The remaining number of items in the list after the modification has taken place.")]
+      out int ListCount
       )
    {
       List = new Vector4[] { };
       ListCount = 0;
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

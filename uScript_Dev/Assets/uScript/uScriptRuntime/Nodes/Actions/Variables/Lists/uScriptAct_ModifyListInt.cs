@@ -9,22 +9,26 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes ints from a Int List. Can also empty the Int List.")]
-/* M */[NodeDescription("Adds/removes ints from a Int List. Can also empty the Int List.\n \nTarget: The Target ints(s) to add or remove from the Int List.\nInt List: The Int List to modify.\nList Count (out): The remaining number of items in the Int List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Modify List (Int)")]
+[FriendlyName("Modify List (Int)", "Modify a list by adding/removing the specified variable(s), or by emptying it entirely.")]
 public class uScriptAct_ModifyListInt : uScriptLogic
 {
-
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
     
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Add To List")]
-   public void AddToList(
-      int[] Target,
-      [FriendlyName("Int List")] ref int[] IntList,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void AddToList(int[] Target, ref int[] IntList, out int ListCount)
    {
       List<int> list = new List<int>(IntList);
       
@@ -37,12 +41,9 @@ public class uScriptAct_ModifyListInt : uScriptLogic
       ListCount = IntList.Length;
    }
 
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Remove From List")]
-   public void RemoveFromList(
-      int[] Target,
-      [FriendlyName("Int List")] ref int[] IntList,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void RemoveFromList(int[] Target, ref int[] IntList, out int ListCount)
    {
       List<int> list = new List<int>(IntList);
       
@@ -60,12 +61,23 @@ public class uScriptAct_ModifyListInt : uScriptLogic
 
    [FriendlyName("Empty List")]
    public void EmptyList(
+      [FriendlyName("Target", "The Target variable(s) to add or remove from the list.")]
       int[] Target,
-      [FriendlyName("Int List")] ref int[] IntList,
-      [FriendlyName("List Count")] out int ListCount
+
+      [FriendlyName("List", "The list to modify.")]
+      ref int[] IntList,
+
+      [FriendlyName("List Size", "The remaining number of items in the list after the modification has taken place.")]
+      out int ListCount
       )
    {
       IntList = new int[] { };
       ListCount = 0;
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

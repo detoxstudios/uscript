@@ -9,22 +9,26 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes Vector2 from a Vector2 List. Can also empty the Vector2 List.")]
-/* M */[NodeDescription("Adds/removes Vector2 from a Vector2 List. Can also empty the Vector2 List.\n \nTarget: The Target Vector2(s) to add or remove from the Vector2 List.\nVector2 List: The Vector2 List to modify.\nList Count (out): The remaining number of items in the Vector2 List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Modify List (Vector2)")]
+[FriendlyName("Modify List (Vector2)", "Modify a list by adding/removing the specified variable(s), or by emptying it entirely.")]
 public class uScriptAct_ModifyListVector2 : uScriptLogic
 {
-
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
     
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Add To List")]
-   public void AddToList(
-      Vector2[] Target,
-      [FriendlyName("Vector2 List")] ref Vector2[] List,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void AddToList(Vector2[] Target, ref Vector2[] List, out int ListCount)
    {
       List<Vector2> list = new List<Vector2>(List);
 
@@ -37,12 +41,9 @@ public class uScriptAct_ModifyListVector2 : uScriptLogic
       ListCount = List.Length;
    }
 
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Remove From List")]
-   public void RemoveFromList(
-      Vector2[] Target,
-      [FriendlyName("Vector2 List")] ref Vector2[] List,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void RemoveFromList(Vector2[] Target, ref Vector2[] List, out int ListCount)
    {
       List<Vector2> list = new List<Vector2>(List);
 
@@ -60,12 +61,23 @@ public class uScriptAct_ModifyListVector2 : uScriptLogic
 
    [FriendlyName("Empty List")]
    public void EmptyList(
+      [FriendlyName("Target", "The Target variable(s) to add or remove from the list.")]
       Vector2[] Target,
-      [FriendlyName("Vector2 List")] ref Vector2[] List,
-      [FriendlyName("List Count")] out int ListCount
+
+      [FriendlyName("List", "The list to modify.")]
+      ref Vector2[] List,
+
+      [FriendlyName("List Size", "The remaining number of items in the list after the modification has taken place.")]
+      out int ListCount
       )
    {
       List = new Vector2[] { };
       ListCount = 0;
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

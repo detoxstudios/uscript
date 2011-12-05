@@ -8,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Orbits GameObjects around another GameObject.")]
-/* M */[NodeDescription("Orbits GameObjects around another GameObject.\n\nTarget: The GameObject(s) you wish to orbit.\nOrbiter: The GameObject you wish to have the Target orbit around.\nAxis: The axis you wish to orbit on.\nOrbit Speed: How fast the Target rotates around the Orbiter.\nOrbit State (out): Reflects the current orbit state as a bool variable (on = true/off = false).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Orbit Around GameObject")]
+[FriendlyName("Orbit Around GameObject", "Orbits GameObjects around another GameObject.")]
 public class uScriptAct_OrbitGameObject : uScriptLogic
 {
    private bool m_IsOrbitting;
@@ -21,19 +20,25 @@ public class uScriptAct_OrbitGameObject : uScriptLogic
    private GameObject m_Orbiter;
    private Vector3 m_Axis;
 
+
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    [FriendlyName("Orbitting")]
    public bool Orbitting { get { return m_IsOrbitting; } }
+
    [FriendlyName("Not Orbitting")]
    public bool NotOrbitting { get { return !m_IsOrbitting; } }
 
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in UpdateSpeed()
    [FriendlyName("Start Orbit")]
-   public void StartOrbit(
-      GameObject[] Target,
-      GameObject Orbiter,
-      Vector3 Axis,
-      [FriendlyName("Orbit Speed")] float OrbitSpeed,
-      [FriendlyName("Orbit State")] out bool OrbitState
-   )
+   public void StartOrbit(GameObject[] Target, GameObject Orbiter, Vector3 Axis, float OrbitSpeed, out bool OrbitState)
    {
       if (!m_IsOrbitting)
       {
@@ -50,14 +55,9 @@ public class uScriptAct_OrbitGameObject : uScriptLogic
       }
    }
 
+   // Parameter Attributes are applied below in UpdateSpeed()
    [FriendlyName("Stop Orbit")]
-   public void StopOrbit(
-      GameObject[] Target,
-      GameObject Orbiter,
-      Vector3 Axis,
-      [FriendlyName("Orbit Speed")] float OrbitSpeed,
-      [FriendlyName("Orbit State")] out bool OrbitState
-   )
+   public void StopOrbit(GameObject[] Target, GameObject Orbiter, Vector3 Axis, float OrbitSpeed, out bool OrbitState)
    {
       if (m_IsOrbitting)
       {
@@ -73,12 +73,21 @@ public class uScriptAct_OrbitGameObject : uScriptLogic
 
    [FriendlyName("Update Orbit Data")]
    public void UpdateSpeed(
+      [FriendlyName("Target", "The GameObject(s) you wish to orbit.")]
       GameObject[] Target,
+      
+      [FriendlyName("Orbiter", "The GameObject you wish to have the Target orbit around.")]
       GameObject Orbiter,
+      
+      [FriendlyName("Axis", "The axis you wish to orbit on.")]
       Vector3 Axis,
-      [FriendlyName("Orbit Speed")] float OrbitSpeed,
-      [FriendlyName("Orbit State")] out bool OrbitState
-   )
+      
+      [FriendlyName("Orbit Speed", "How fast the Target rotates around the Orbiter.")]
+      float OrbitSpeed,
+
+      [FriendlyName("Orbit State", "Reflects the current orbit state as a bool variable (True=On/False=Off).")]
+      out bool OrbitState
+      )
    {
       m_CurrentSpeed = OrbitSpeed;
       m_Targets = Target;
@@ -89,6 +98,10 @@ public class uScriptAct_OrbitGameObject : uScriptLogic
    }
 
 
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
    public void Update()
    {
       if (m_IsOrbitting == true && m_CurrentSpeed != 0f)
@@ -112,5 +125,4 @@ public class uScriptAct_OrbitGameObject : uScriptLogic
       
    }
 
-   
 }

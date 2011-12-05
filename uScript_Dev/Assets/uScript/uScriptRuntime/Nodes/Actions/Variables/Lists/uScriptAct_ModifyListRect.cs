@@ -9,22 +9,26 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes Rect from a Rect List. Can also empty the Rect List.")]
-/* M */[NodeDescription("Adds/removes Rect from a Rect List. Can also empty the Rect List.\n \nTarget: The Target Rect(s) to add or remove from the Rect List.\nRect List: The Rect List to modify.\nList Count (out): The remaining number of items in the Rect List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Modify List (Rect)")]
+[FriendlyName("Modify List (Rect)", "Modify a list by adding/removing the specified variable(s), or by emptying it entirely.")]
 public class uScriptAct_ModifyListRect : uScriptLogic
 {
-
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
     
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Add To List")]
-   public void AddToList(
-      Rect[] Target,
-      [FriendlyName("Rect List")] ref Rect[] List,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void AddToList(Rect[] Target, ref Rect[] List, out int ListCount)
    {
       List<Rect> list = new List<Rect>(List);
 
@@ -37,12 +41,9 @@ public class uScriptAct_ModifyListRect : uScriptLogic
       ListCount = List.Length;
    }
 
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Remove From List")]
-   public void RemoveFromList(
-      Rect[] Target,
-      [FriendlyName("Rect List")] ref Rect[] List,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void RemoveFromList(Rect[] Target, ref Rect[] List, out int ListCount)
    {
       List<Rect> list = new List<Rect>(List);
 
@@ -60,12 +61,23 @@ public class uScriptAct_ModifyListRect : uScriptLogic
 
    [FriendlyName("Empty List")]
    public void EmptyList(
+      [FriendlyName("Target", "The Target variable(s) to add or remove from the list.")]
       Rect[] Target,
-      [FriendlyName("Rect List")] ref Rect[] List,
-      [FriendlyName("List Count")] out int ListCount
+
+      [FriendlyName("List", "The list to modify.")]
+      ref Rect[] List,
+
+      [FriendlyName("List Size", "The remaining number of items in the list after the modification has taken place.")]
+      out int ListCount
       )
    {
       List = new Rect[] { };
       ListCount = 0;
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

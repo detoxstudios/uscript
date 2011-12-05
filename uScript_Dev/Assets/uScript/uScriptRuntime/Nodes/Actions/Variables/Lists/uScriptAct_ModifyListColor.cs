@@ -9,22 +9,26 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes Colors from a Color List. Can also empty the Color List.")]
-/* M */[NodeDescription("Adds/removes Colors from a Color List. Can also empty the Color List.\n \nTarget: The Target Color(s) to add or remove from the Color List.\nColor List: The Color List to modify.\nList Count (out): The remaining number of items in the Color List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Modify List (Color)")]
+[FriendlyName("Modify List (Color)", "Modify a list by adding/removing the specified variable(s), or by emptying it entirely.")]
 public class uScriptAct_ModifyListColor : uScriptLogic
 {
-
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
     
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Add To List")]
-   public void AddToList(
-      Color[] Target,
-      [FriendlyName("Color List")] ref Color[] List,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void AddToList(Color[] Target, ref Color[] List, out int ListCount)
    {
       List<Color> list = new List<Color>(List);
 
@@ -37,12 +41,9 @@ public class uScriptAct_ModifyListColor : uScriptLogic
       ListCount = List.Length;
    }
 
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Remove From List")]
-   public void RemoveFromList(
-      Color[] Target,
-      [FriendlyName("Color List")] ref Color[] List,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void RemoveFromList(Color[] Target, ref Color[] List, out int ListCount)
    {
       List<Color> list = new List<Color>(List);
 
@@ -60,12 +61,23 @@ public class uScriptAct_ModifyListColor : uScriptLogic
 
    [FriendlyName("Empty List")]
    public void EmptyList(
+      [FriendlyName("Target", "The Target variable(s) to add or remove from the list.")]
       Color[] Target,
-      [FriendlyName("Color List")] ref Color[] List,
-      [FriendlyName("List Count")] out int ListCount
+
+      [FriendlyName("List", "The list to modify.")]
+      ref Color[] List,
+
+      [FriendlyName("List Size", "The remaining number of items in the list after the modification has taken place.")]
+      out int ListCount
       )
    {
       List = new Color[] { };
       ListCount = 0;
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

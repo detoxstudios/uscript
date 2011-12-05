@@ -10,26 +10,37 @@ using System;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Access different elements in a AudioClip List. Can access first, last, random or by index.")]
-/* M */[NodeDescription("Access different elements in a AudioClip List. Can access first, last, random or by index.\n \nAudioClip List: The list of AudioClips to operate on.\nIndex: The desired index to select (only used for the At Index input).\nSelected AudioClip (out): The AudioClip selected by this node.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Access List (AudioClip)")]
+[FriendlyName("Access List (AudioClip)", "Access the contents of a list. May return the first or last item, a random item, or the item at a specific index.")]
 public class uScriptAct_AccessListAudioClip : uScriptLogic
 {
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
 
-   public void First([FriendlyName("AudioClip List")] AudioClip[] List, int Index, [FriendlyName("Selected AudioClip")] out AudioClip Value)
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in AtIndex()
+   public void First(AudioClip[] List, int Index, out AudioClip Value)
    {
       Value = List[0];
    }
 
-   public void Last([FriendlyName("AudioClip List")] AudioClip[] List, int Index, [FriendlyName("Selected AudioClip")] out AudioClip Value)
+   // Parameter Attributes are applied below in AtIndex()
+   public void Last(AudioClip[] List, int Index, out AudioClip Value)
    {
       Value = List[List.Length - 1];
    }
 
-   public void Random([FriendlyName("AudioClip List")] AudioClip[] List, int Index, [FriendlyName("Selected AudioClip")] out AudioClip Value)
+   // Parameter Attributes are applied below in AtIndex()
+   public void Random(AudioClip[] List, int Index, out AudioClip Value)
    {
       System.Random random = new System.Random();
       int index = random.Next(0, List.Length);
@@ -37,7 +48,16 @@ public class uScriptAct_AccessListAudioClip : uScriptLogic
    }
  
    [FriendlyName("At Index")]
-   public void AtIndex([FriendlyName("AudioClip List")] AudioClip[] List, int Index, [FriendlyName("Selected AudioClip")] out AudioClip Value)
+   public void AtIndex(
+      [FriendlyName("List", "The list to operate on.")]
+      AudioClip[] List,
+
+      [FriendlyName("Index", "The index or position of the item to return. If the list contains 5 items, the valid range is 0-4, where 0 is the first item. (this parameter is only used with the At Index input).")]
+      int Index,
+
+      [FriendlyName("Selected", "The selected variable.")]
+      out AudioClip Value
+      )
    {
       bool outOfRange = false;
       if (Index < 0 || Index >= List.Length) { outOfRange = true; }
@@ -51,8 +71,11 @@ public class uScriptAct_AccessListAudioClip : uScriptLogic
       {
          Value = List[Index];
       }
-
    }
 
-}
 
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
+}

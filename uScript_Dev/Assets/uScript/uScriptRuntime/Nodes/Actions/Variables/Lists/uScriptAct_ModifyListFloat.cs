@@ -9,22 +9,26 @@ using System.Collections.Generic;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes floats from a Float List. Can also empty the Float List.")]
-/* M */[NodeDescription("Adds/removes floats from a Float List. Can also empty the Float List.\n \nTarget: The Target floats(s) to add or remove from the Float List.\nFloat List: The Float List to modify.\nList Count (out): The remaining number of items in the Float List after modification has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Modify List (Float)")]
+[FriendlyName("Modify List (Float)", "Modify a list by adding/removing the specified variable(s), or by emptying it entirely.")]
 public class uScriptAct_ModifyListFloat : uScriptLogic
 {
-
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
     
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Add To List")]
-   public void AddToList(
-      float[] Target,
-      [FriendlyName("Float List")] ref float[] FloatList,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void AddToList(float[] Target, ref float[] FloatList, out int ListCount)
    {
       List<float> list = new List<float>(FloatList);
       
@@ -37,12 +41,9 @@ public class uScriptAct_ModifyListFloat : uScriptLogic
       ListCount = FloatList.Length;
    }
 
+   // Parameter Attributes are applied below in EmptyList()
    [FriendlyName("Remove From List")]
-   public void RemoveFromList(
-      float[] Target,
-      [FriendlyName("Float List")] ref float[] FloatList,
-      [FriendlyName("List Count")] out int ListCount
-      )
+   public void RemoveFromList(float[] Target, ref float[] FloatList, out int ListCount)
    {
       List<float> list = new List<float>(FloatList);
       
@@ -60,12 +61,23 @@ public class uScriptAct_ModifyListFloat : uScriptLogic
 
    [FriendlyName("Empty List")]
    public void EmptyList(
+      [FriendlyName("Target", "The Target variable(s) to add or remove from the list.")]
       float[] Target,
-      [FriendlyName("Float List")] ref float[] FloatList,
-      [FriendlyName("List Count")] out int ListCount
+
+      [FriendlyName("List", "The list to modify.")]
+      ref float[] FloatList,
+
+      [FriendlyName("List Size", "The remaining number of items in the list after the modification has taken place.")]
+      out int ListCount
       )
    {
       FloatList = new float[] { };
       ListCount = 0;
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

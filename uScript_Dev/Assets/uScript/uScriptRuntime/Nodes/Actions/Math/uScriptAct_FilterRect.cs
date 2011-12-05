@@ -8,23 +8,43 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Takes any Rect and outputs a low-pass filtered version.")]
-/* M */[NodeDescription("Takes any Rect and outputs a low-pass filtered version.\n \nTarget: Value to filter.\nFilter Constant: The strength of the filter (lower numbers mean more filtering, i.e. slower - default value = 0.1).\nValue (out): Filtered value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Filter_Rect")]
 
-[FriendlyName("Filter Rect")]
+[FriendlyName("Filter Rect", "Takes any Rect and outputs a low-pass filtered version.")]
 public class uScriptAct_FilterRect : uScriptLogic
 {
    private Rect m_PreviousValue = new Rect(0.0f, 0.0f, 0.0f, 0.0f);
-   
+
+
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
 
-   public void Reset(Rect Target, [FriendlyName("Filter Constant"), DefaultValue(0.1f)]float FilterConstant, out Rect Value)
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in Filter()
+   public void Reset(Rect Target, float FilterConstant, out Rect Value)
    {
       Value = m_PreviousValue = Target;
    }
 
-   public void Filter(Rect Target, [FriendlyName("Filter Constant"), DefaultValue(0.1f)]float FilterConstant, out Rect Value)
+   public void Filter(
+      [FriendlyName("Target", "Value to filter.")]
+      Rect Target,
+
+      [FriendlyName("Filter Constant", "The strength of the filter (lower numbers mean more filtering, i.e. slower - default value = 0.1).")]
+      [DefaultValue(0.1f)]
+      float FilterConstant,
+
+      [FriendlyName("Value", "Filtered value.")]
+      out Rect Value
+      )
    {
       float x = m_PreviousValue.x = (Target.x * FilterConstant) + (m_PreviousValue.x * (1.0f - FilterConstant));
       float y = m_PreviousValue.y = (Target.y * FilterConstant) + (m_PreviousValue.y * (1.0f - FilterConstant));
@@ -41,4 +61,10 @@ public class uScriptAct_FilterRect : uScriptLogic
          m_PreviousValue = Value = Target;
       }
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }
