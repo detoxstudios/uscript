@@ -71,12 +71,7 @@ public class uScriptAct_GetChildrenByTag : uScriptLogic
       
       if (null != Target)
       {
-
-         foreach (Transform child in Target.transform)
-         {
-            list.Add(child.gameObject);
-            list.AddRange(GetChildren(recursive, child.gameObject, SearchMethod, Tag));
-         }
+         list.AddRange(GetChildren(recursive, Target, SearchMethod, Tag));
 
          ChildrenCount = list.Count;
          Children = list.ToArray ();
