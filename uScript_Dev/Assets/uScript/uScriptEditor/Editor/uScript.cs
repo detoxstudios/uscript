@@ -4520,7 +4520,7 @@ public class uScript : EditorWindow
          switch (p.FriendlyName)
          {
             case "Comment":            return "The comment text that will be sent to the console.";
-            case "Output Comment":     return "The comment will be sent when True.";
+            case "Output Comment":     return "If True, the comment will be sent to the console.";
             case "Instance":           return "The GameObject instance associated with this node.";
             default:                   return p.FriendlyName;
          }
