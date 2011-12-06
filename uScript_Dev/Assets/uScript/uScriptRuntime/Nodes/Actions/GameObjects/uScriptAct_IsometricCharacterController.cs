@@ -11,15 +11,6 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Isometric_Character_Controller")]
 
-/* M */[NodeDescription(
- "  \n \nTarget: The character to control." +
- "  \nTranslation Units Per Second: How many units to move per second when the forward/backward keys are pressed." +
- "  \nRotation Units Per Second: How many units to rotate per second when the left/right keys are pressed." +
- "  \nFilter Translation: Whether or not to filter the object's translation." +
- "  \nTranslation Filter Constant: The strength of the translation filter (lower numbers mean more filtering, i.e. slower)." +
- "  \nFilter Rotation: Whether or not to filter the object's rotation." +
- "  \nRotation Filter Constant: The strength of the rotation filter (lower numbers mean more filtering, i.e. slower).")]
-
 [FriendlyName("Isometric Character Controller", "Simple character controller.  Character always moves forward and backwards along its forward vector.")]
 public class uScriptAct_IsometricCharacterController : uScriptLogic
 {
@@ -81,7 +72,6 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
 
 
    // Parameter Attributes are applied below in RotateLeft()
-   //
    [FriendlyName("Move Local Backward")]
    public void MoveBackward(GameObject target, float translation, float rotation, bool filterTranslation, float translationFilterConstant, bool filterRotation, float rotationFilterConstant)
    {
@@ -99,7 +89,6 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
 
 
    // Parameter Attributes are applied below in RotateLeft()
-   //
    [FriendlyName("Rotate Local Right")]
    public void RotateRight(GameObject target, float translation, float rotation, bool filterTranslation, float translationFilterConstant, bool filterRotation, float rotationFilterConstant)
    {
@@ -118,29 +107,29 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
 
    [FriendlyName("Rotate Local Left")]
    public void RotateLeft(
-      [FriendlyName("Target")]
+      [FriendlyName("Target", "The character to control.")]
       GameObject target,
 
-      [FriendlyName("Translation Units Per Second")]
+      [FriendlyName("Translation Units Per Second", "How many units to move per second when the forward/backward keys are pressed.")]
       float translation,
 
-      [FriendlyName("Rotation Units Per Second")]
+      [FriendlyName("Rotation Units Per Second", "How many units to rotate per second when the left/right keys are pressed.")]
       [DefaultValue(1.5f)]
       float rotation,
-      
-      [FriendlyName("Filter Translation")]
+
+      [FriendlyName("Filter Translation", "If True, the object's translation will be filtered.")]
       [DefaultValue(false), SocketState(false, false)]
       bool filterTranslation,
       
-      [FriendlyName("Translation Filter Constant")]
+      [FriendlyName("Translation Filter Constant", "The strength of the translation filter (lower numbers mean more filtering, i.e. slower).")]
       [DefaultValue(0.7f), SocketState(false, false)]
       float translationFilterConstant,
       
-      [FriendlyName("Filter Rotation")]
+      [FriendlyName("Filter Rotation", "If True, the object's rotation will be filtered.")]
       [DefaultValue(false), SocketState(false, false)]
       bool filterRotation,
       
-      [FriendlyName("Rotation Filter Constant")]
+      [FriendlyName("Rotation Filter Constant", "The strength of the rotation filter (lower numbers mean more filtering, i.e. slower).")]
       [DefaultValue(0.1f), SocketState(false, false)]
       float rotationFilterConstant
       )
@@ -158,6 +147,10 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
    }
 
 
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
    public void Update()
    {
       if (null == m_Target) return;
@@ -211,9 +204,4 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       }
    }
 
-
-   // ================================================================================
-   //    Miscellaneous Node Funtionality
-   // ================================================================================
-   //
 }

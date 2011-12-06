@@ -8,20 +8,26 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Start and stop particle emitters. Optionally clear all particles before starting or after stopping.")]
-/* M */[NodeDescription("Start and stop particle emitters.\n \nTarget: The Target GameObject(s) to start/stop particles on. Note: The Target GameObject must be setup in Unity to use particles (have the appropriate particle component assigned and set up).\nClear Particles: Whether or not to immediately clear all the particles already emitted by Target emitters - will be cleared before starting or after stopping.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Particles")]
 
-[FriendlyName("Particles")]
+[FriendlyName("Particles", "Start and stop particle emitters.")]
 public class uScriptAct_Particles : uScriptLogic
 {
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
 
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in StopEmitting()
    [FriendlyName("Start Emitting")]
-   public void StartEmitting(
-      GameObject[] Target,
-      [FriendlyName("Clear Particles"), DefaultValue(false), SocketState(false, false)] bool ClearParticles
-   )
+   public void StartEmitting(GameObject[] Target, bool ClearParticles)
    {
       foreach ( GameObject currentTarget in Target )
       {
@@ -45,9 +51,13 @@ public class uScriptAct_Particles : uScriptLogic
  
    [FriendlyName("Stop Emitting")]
    public void StopEmitting(
+      [FriendlyName("Target", "The Target GameObject(s) to start/stop particles on. Note: The Target GameObject must be setup in Unity to use particles (have the appropriate particle component assigned and set up).")]
       GameObject[] Target,
-      [FriendlyName("Clear Particles"), DefaultValue(false), SocketState(false, false)] bool ClearParticles
-   )
+      
+      [FriendlyName("Clear Particles", "Whether or not to immediately clear all the particles already emitted by Target emitters - will be cleared before starting or after stopping.")]
+      [DefaultValue(false), SocketState(false, false)]
+      bool ClearParticles
+      )
    {
       foreach ( GameObject currentTarget in Target )
       {
@@ -68,4 +78,10 @@ public class uScriptAct_Particles : uScriptLogic
          }
       }
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

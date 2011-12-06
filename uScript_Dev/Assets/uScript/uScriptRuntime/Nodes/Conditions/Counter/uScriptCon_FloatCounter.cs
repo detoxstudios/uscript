@@ -8,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Increments the first attached float variable and then performs a comparison with the second attached float variable and fires the appropriate output link based on that comparison.")]
-/* M */[NodeDescription("Increments the first attached float variable and then performs a comparison with the second attached float variable and fires the appropriate output link based on that comparison.\n \nA: Variable to increment.\nB: Variable to compare with incremented variable.\nCurrent Value: Value of A after increment has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Float_Counter")]
 
-[FriendlyName("Float Counter")]
+[FriendlyName("Float Counter", "Increments the first attached float variable and then performs a comparison with the second attached float variable and fires the appropriate output link based on that comparison.")]
 public class uScriptCon_FloatCounter : uScriptLogic
 {
    private float m_FloatTotal;
@@ -24,6 +23,11 @@ public class uScriptCon_FloatCounter : uScriptLogic
    private bool m_LessThanOrEqualTo = false;
    private bool m_LessThan = false;
 
+
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    [FriendlyName("(Greater Than)   >")]
    public bool GreaterThan { get { return m_GreaterThan; } }
 
@@ -39,7 +43,13 @@ public class uScriptCon_FloatCounter : uScriptLogic
    [FriendlyName("(Less Than)   <")]
    public bool LessThan { get { return m_LessThan; } }
 
-   public void In(float A, float B, [FriendlyName("Current Value")] out float currentValue)
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in Filter()
+   public void In(float A, float B, out float currentValue)
    {
       m_GreaterThan = false;
       m_GreaterThanOrEqualTo = false;
@@ -82,15 +92,29 @@ public class uScriptCon_FloatCounter : uScriptLogic
       }
    }
 	
-	public void Reset(float A, float B, [FriendlyName("Current Value")] out float currentValue)
-    {
-	  m_InitialPulse = true;
+   public void Reset(
+      [FriendlyName("A", "Variable to increment.")]
+      float A,
+
+      [FriendlyName("B", "Variable to compare with incremented variable.")]
+      float B,
+
+      [FriendlyName("Current Value", "Value of A after increment has taken place.")]
+      out float currentValue
+      )
+   {
+      m_InitialPulse = true;
       m_GreaterThan = false;
       m_GreaterThanOrEqualTo = false;
       m_EqualTo = false;
       m_LessThanOrEqualTo = false;
       m_LessThan = false;
-	  currentValue = A;
+      currentValue = A;
+   }
 
-    }
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

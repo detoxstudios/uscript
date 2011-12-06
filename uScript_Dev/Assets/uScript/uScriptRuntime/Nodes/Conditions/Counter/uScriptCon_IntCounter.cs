@@ -8,11 +8,10 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Increments the first attached integer variable and then performs a comparison with the second attached integer variable and fires the appropriate output link based on that comparison.")]
-/* M */[NodeDescription("Increments the first attached integer variable and then performs a comparison with the second attached integer variable and fires the appropriate output link based on that comparison.\n \nA: Variable to increment.\nB: Variable to compare with incremented variable.\nCurrent Value: Value of A after increment has taken place.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Int_Counter")]
 
-[FriendlyName("Int Counter")]
+[FriendlyName("Int Counter", "Increments the first attached integer variable and then performs a comparison with the second attached integer variable and fires the appropriate output link based on that comparison.")]
 public class uScriptCon_IntCounter : uScriptLogic
 {
    private int m_IntTotal;
@@ -24,6 +23,11 @@ public class uScriptCon_IntCounter : uScriptLogic
    private bool m_LessThanOrEqualTo = false;
    private bool m_LessThan = false;
 
+
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    [FriendlyName("(Greater Than)   >")]
    public bool GreaterThan { get { return m_GreaterThan; } }
 
@@ -39,7 +43,13 @@ public class uScriptCon_IntCounter : uScriptLogic
    [FriendlyName("(Less Than)   <")]
    public bool LessThan { get { return m_LessThan; } }
 
-   public void In(int A, int B, [FriendlyName("Current Value")] out int currentValue)
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in Reset()
+   public void In(int A, int B, out int currentValue)
    {
       m_GreaterThan = false;
       m_GreaterThanOrEqualTo = false;
@@ -82,16 +92,29 @@ public class uScriptCon_IntCounter : uScriptLogic
       }
 	}
 		
-    public void Reset(int A, int B, [FriendlyName("Current Value")] out int currentValue)
-    {
-	  m_InitialPulse = true;
+   public void Reset(
+      [FriendlyName("A", "Variable to increment.")]
+      int A,
+
+      [FriendlyName("B", "Variable to compare with incremented variable.")]
+      int B,
+
+      [FriendlyName("Current Value", "Value of A after increment has taken place.")]
+      out int currentValue
+      )
+   {
+      m_InitialPulse = true;
       m_GreaterThan = false;
       m_GreaterThanOrEqualTo = false;
       m_EqualTo = false;
       m_LessThanOrEqualTo = false;
       m_LessThan = false;
-	  currentValue = A;
+      currentValue = A;
+   }
 
-    }
-	
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

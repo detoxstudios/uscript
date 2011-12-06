@@ -8,26 +8,35 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Toggles the active state of a component on the Target GameObjects.")]
-/* M */[NodeDescription("Toggles the active state of a component on the Target GameObjects. Ignores GameObjects missing the specified component.\n \nTarget: The Target GameObject(s) to toggle component state on.\nComponent Name: The name of the component to toggle.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Toggle_Component")]
 
-[FriendlyName("Toggle Component")]
+[FriendlyName("Toggle Component", "Toggles the active state of a component on the Target GameObjects. Ignores GameObjects missing the specified component.")]
 public class uScriptAct_ToggleComponent : uScriptLogic
 {
-   [FriendlyName("Out (Turn On)")]
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
+   [FriendlyName("Turned On")]
    public event System.EventHandler OnOut;
 
-   [FriendlyName("Out (Turn Off)")]
+   [FriendlyName("Turned Off")]
    public event System.EventHandler OffOut;
 
-   [FriendlyName("Out (Toggle)")]
+   [FriendlyName("Toggled")]
    public event System.EventHandler ToggleOut;
 
    public bool Out { get { return true; } }
 
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in Toggle()
    [FriendlyName("Turn On")]
-   public void TurnOn( GameObject[] Target, [FriendlyName("Component Name")] string[] ComponentName )
+   public void TurnOn(GameObject[] Target, string[] ComponentName)
    {
       foreach ( GameObject currentTarget in Target)
       {
@@ -66,8 +75,9 @@ public class uScriptAct_ToggleComponent : uScriptLogic
       OnOut(this, new System.EventArgs());
    }
 
+   // Parameter Attributes are applied below in Toggle()
    [FriendlyName("Turn Off")]
-   public void TurnOff(GameObject[] Target, [FriendlyName("Component Name")] string[] ComponentName)
+   public void TurnOff(GameObject[] Target, string[] ComponentName)
    {
       foreach (GameObject currentTarget in Target)
       {
@@ -107,7 +117,13 @@ public class uScriptAct_ToggleComponent : uScriptLogic
    }
 
    [FriendlyName("Toggle")]
-   public void Toggle(GameObject[] Target, [FriendlyName("Component Name")] string[] ComponentName)
+   public void Toggle(
+      [FriendlyName("Target", "The Target GameObject(s) to toggle component state on.")]
+      GameObject[] Target,
+      
+      [FriendlyName("Component Name", "The name of the component to toggle.")]
+      string[] ComponentName
+      )
    {
       foreach (GameObject currentTarget in Target)
       {
@@ -166,4 +182,10 @@ public class uScriptAct_ToggleComponent : uScriptLogic
 
       ToggleOut(this, new System.EventArgs());
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

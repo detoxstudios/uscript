@@ -8,42 +8,68 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Perform various floating point trigonometric functions.")]
-/* M */[NodeDescription("Perform various floating point trigonometric functions.\n \nInput: The input value to the trigonometric function.\nOutput: The output value of the trigonometric function.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Trigonometry")]
 
-[FriendlyName("Trigonometry")]
+[FriendlyName("Trigonometry", "Perform various floating point trigonometric functions.")]
 public class uScriptAct_Trigonometry : uScriptLogic
 {
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
    public bool Out { get { return true; } }
 
-   public void Acos([FriendlyName("Input")]float input, [FriendlyName("Output")]out float output)
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in Tan()
+   public void Acos(float input, out float output)
    {
       output = Mathf.Acos(input);
    }
 
-   public void Asin([FriendlyName("Input")]float input, [FriendlyName("Output")]out float output)
+   // Parameter Attributes are applied below in Tan()
+   public void Asin(float input, out float output)
    {
       output = Mathf.Asin(input);
    }
    
-   public void Atan([FriendlyName("Input")]float input, [FriendlyName("Output")]out float output)
+   // Parameter Attributes are applied below in Tan()
+   public void Atan(float input, out float output)
    {
       output = Mathf.Atan(input);
    }
 
-   public void Cos([FriendlyName("Input")]float input, [FriendlyName("Output")]out float output)
+   // Parameter Attributes are applied below in Tan()
+   public void Cos(float input, out float output)
    {
       output = Mathf.Cos(input);
    }
 
-   public void Sin([FriendlyName("Input")]float input, [FriendlyName("Output")]out float output)
+   // Parameter Attributes are applied below in Tan()
+   public void Sin(float input, out float output)
    {
       output = Mathf.Sin(input);
    }
 
-   public void Tan([FriendlyName("Input")]float input, [FriendlyName("Output")]out float output)
+   // Parameter Attributes are applied below in Tan()
+   public void Tan(
+      [FriendlyName("Input", "The input value to the trigonometric function.")]
+      float input,
+      
+      [FriendlyName("Output", "The output value of the trigonometric function.")]
+      out float output
+      )
    {
       output = Mathf.Tan(input);
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }

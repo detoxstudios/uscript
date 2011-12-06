@@ -8,26 +8,35 @@ using System.Collections;
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Toggles the active state of a GameObject.")]
-/* M */[NodeDescription("Toggles the active state of a GameObject.\n \nTarget: The Target GameObject(s) to toggle state on.\nIgnore Children: Whether or not to also toggle the children of the Target GameObject(s).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Toggle")]
 
-[FriendlyName("Toggle")]
+[FriendlyName("Toggle", "Toggles the active state of a GameObject.")]
 public class uScriptAct_Toggle : uScriptLogic
 {
-   [FriendlyName("Out (Turn On)")]
+   // ================================================================================
+   //    Output Sockets
+   // ================================================================================
+   //
+   [FriendlyName("Turned On")]
    public event System.EventHandler OnOut;
 
-   [FriendlyName("Out (Turn Off)")]
+   [FriendlyName("Turn Off")]
    public event System.EventHandler OffOut;
 
-   [FriendlyName("Out (Toggle)")]
+   [FriendlyName("Toggled")]
    public event System.EventHandler ToggleOut;
 
    public bool Out { get { return true; } }
 
+
+   // ================================================================================
+   //    Input Sockets and Node Parameters
+   // ================================================================================
+   //
+   // Parameter Attributes are applied below in Toggle()
    [FriendlyName("Turn On")]
-   public void TurnOn(GameObject[] Target, [FriendlyName("Ignore Children"), SocketState(false, false)] bool IgnoreChildren)
+   public void TurnOn(GameObject[] Target, bool IgnoreChildren)
    {
       foreach ( GameObject currentTarget in Target)
       {
@@ -53,8 +62,9 @@ public class uScriptAct_Toggle : uScriptLogic
       OnOut(this, new System.EventArgs());
    }
 
+   // Parameter Attributes are applied below in Toggle()
    [FriendlyName("Turn Off")]
-   public void TurnOff(GameObject[] Target, [FriendlyName("Ignore Children")] bool IgnoreChildren)
+   public void TurnOff(GameObject[] Target, bool IgnoreChildren)
    {
       foreach (GameObject currentTarget in Target)
       {
@@ -81,7 +91,14 @@ public class uScriptAct_Toggle : uScriptLogic
    }
 
    [FriendlyName("Toggle")]
-   public void Toggle(GameObject[] Target, [FriendlyName("Ignore Children")] bool IgnoreChildren)
+   public void Toggle(
+      [FriendlyName("Target", "The Target GameObject(s) to toggle state on.")]
+      GameObject[] Target,
+
+      [FriendlyName("Ignore Children", "If True, the state change will not affect the Target's children.")]
+      [SocketState(false, false)]
+      bool IgnoreChildren
+      )
    {
       foreach (GameObject currentTarget in Target)
       {
@@ -114,4 +131,10 @@ public class uScriptAct_Toggle : uScriptLogic
 
       ToggleOut(this, new System.EventArgs());
    }
+
+
+   // ================================================================================
+   //    Miscellaneous Node Funtionality
+   // ================================================================================
+   //
 }
