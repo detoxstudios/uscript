@@ -150,6 +150,15 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          }
          else
          {
+            string []components = tmpTarget.Split( ',' );
+
+            if ( components.Length >= 3 )
+            {
+               System.Single.TryParse(components[0], out tempVector3Value.x);
+               System.Single.TryParse(components[1], out tempVector3Value.y);
+               System.Single.TryParse(components[2], out tempVector3Value.z);
+            }
+
             int intNumber = 1;
             bool canConvertInt = System.Int32.TryParse(tmpTarget, out intNumber);
             if (canConvertInt)
