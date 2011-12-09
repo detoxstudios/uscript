@@ -18,7 +18,7 @@ public class uScript_NetworkServerPlayer : uScriptEvent
 {
    public class NetworkServerPlayerEventArgs : System.EventArgs 
    {
-      [FriendlyName("Network Player", "?")]
+      [FriendlyName("Network Player", "The player who connected or disconnected")]
       public NetworkPlayer NetworkPlayer { get { return m_NetworkPlayer; } }
       private NetworkPlayer m_NetworkPlayer;
 

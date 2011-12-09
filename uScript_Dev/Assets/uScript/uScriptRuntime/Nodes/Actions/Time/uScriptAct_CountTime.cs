@@ -37,7 +37,7 @@ public class uScriptAct_CountTime : uScriptLogic
    }
 
    public void Stop(
-      [FriendlyName("Seconds", "?")]
+      [FriendlyName("Seconds", "Amount of seconds which passed since In was called")]
       out float Seconds
       )
    {

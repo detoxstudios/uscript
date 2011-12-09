@@ -39,7 +39,7 @@ public class uScript_Triggers : uScriptEvent
    private bool m_AlwaysTrigger = false;
    
    private int m_TimesToTrigger;
-   [FriendlyName("Times to Trigger", "?")]
+   [FriendlyName("Times to Trigger", "How many times this trigger should fire before it deactivates.")]
    public int TimesToTrigger 
    { 
       set 

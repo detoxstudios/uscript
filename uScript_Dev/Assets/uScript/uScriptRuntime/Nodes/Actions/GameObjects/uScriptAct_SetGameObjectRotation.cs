@@ -17,35 +17,35 @@ public class uScriptAct_SetGameObjectRotation : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "?")]
+      [FriendlyName("Target", "The GameObject(s) to rotate")]
       GameObject[] Target,
       
-      [FriendlyName("X Degrees", "?")]
+      [FriendlyName("X Degrees", "Rotation amount on the X axis")]
       float XDegrees,
       
-      [FriendlyName("Y Degrees", "?")]
+      [FriendlyName("Y Degrees", "Rotation amount on the Y axis")]
       float YDegrees,
       
-      [FriendlyName("Z Degrees", "?")]
+      [FriendlyName("Z Degrees", "Rotation amount on the Z axis")]
       float ZDegrees,
       
-      [FriendlyName("Ignore X", "?")]
+      [FriendlyName("Ignore X", "Do not apply this rotation to the X axis")]
       [SocketState(false, false)]
       bool IgnoreX,
       
-      [FriendlyName("Ignore Y", "?")]
+      [FriendlyName("Ignore Y", "Do not apply this rotation to the Y axis")]
       [SocketState(false, false)]
       bool IgnoreY,
       
-      [FriendlyName("Ignore Z", "?")]
+      [FriendlyName("Ignore Z", "Do not apply this rotation to the Z axis")]
       [SocketState(false, false)]
       bool IgnoreZ,
       
-      [FriendlyName("Space", "?")]
+      [FriendlyName("Space", "Space to apply rotation")]
       [SocketState(false, false)]
       UnityEngine.Space CoordinateSystem,
       
-      [FriendlyName("As Offset", "?")]
+      [FriendlyName("As Offset", "Treat this rotation as an offset of the current GameObject's rotation")]
       [SocketState(false, false)]
       bool AsOffset
       )
