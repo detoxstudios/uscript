@@ -28,6 +28,10 @@ public class ComplexData
 
 public class uScript : EditorWindow
 {
+   public string CurrentScript     = null;
+   public string CurrentScriptName = "";
+   public string []m_Patches       = new string[ 0 ];
+
    private bool m_Launched;
 
    //complex class which Unity will not serialize
@@ -138,6 +142,9 @@ public class uScript : EditorWindow
       }
    }
 
+   private int m_UndoNumber = 0;
+   public string [] m_UndoPatches = new string[ 0 ];
+
    private int m_ContextX = 0;
    private int m_ContextY = 0;
    private ToolStripItem m_CurrentMenu = null;
@@ -190,7 +197,7 @@ public class uScript : EditorWindow
    string _statusbarMessage;
 
    //IMPORTANT - THIS CANNOT BE CACHED
-   //BECAUSE WE END UP WITH STALE VERSIONS AS THE UNITY UNDO STACK IS MODIFIED
+   //BECAUSE WE END UP WITH STALE VERSIONS
    public static GameObject MasterObject
    {
       get
@@ -201,6 +208,29 @@ public class uScript : EditorWindow
 
    //IMPORTANT - THIS CANNOT BE CACHED
    //BECAUSE WE END UP WITH STALE VERSIONS AS THE UNITY UNDO STACK IS MODIFIED
+   public static uScript_UndoComponent UndoComponent
+   {
+      get
+      {
+         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+         if (null == uScriptMaster)
+         {
+            uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Debug);
+
+            uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
+            uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
+         }
+         if (null == uScriptMaster.GetComponent<uScript_UndoComponent>())
+         {
+            uScriptDebug.Log("Adding Undo Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_UndoComponent));
+         }
+         return uScriptMaster.GetComponent<uScript_UndoComponent>();
+      }
+   }
+
+   //IMPORTANT - THIS CANNOT BE CACHED
+   //BECAUSE WE END UP WITH STALE VERSIONS
    public static uScript_MasterComponent MasterComponent
    {
       get
@@ -266,10 +296,6 @@ public class uScript : EditorWindow
 
    public bool m_SelectAllNodes = false;
    public bool isPreferenceWindowOpen = false;
-
-   public string CurrentScript = null;
-   public string CurrentScriptName = "";
-
 
    public bool IsAttachedToMaster
    {
@@ -389,13 +415,11 @@ public class uScript : EditorWindow
          m_FullPath = UnityEngine.Application.dataPath + lastOpened;
          //Debug.Log("fp loaded from settings" );
       }
-
+      
       //Debug.Log("fp = " + m_FullPath );
 
       //clear any old script undo data laying around
-      MasterComponent.Script = null;
-      MasterComponent.ScriptName = null;
-      UnityEditor.Undo.ClearUndo(MasterComponent);
+      ClearChangeStack( );
 
       if ("" != m_FullPath)
       {
@@ -407,7 +431,7 @@ public class uScript : EditorWindow
 
       if ( "" == m_FullPath )
       {
-         OpenFromMasterComponent( );
+         OpenFromCache( );
       }
       
       m_ComplexData = new ComplexData( );
@@ -425,12 +449,77 @@ public class uScript : EditorWindow
 
       m_ComplexData = new ComplexData( );
 
-      OpenFromMasterComponent( );
+      OpenFromCache( );
 
       uScriptBackgroundProcess.ForceFileRefresh();
    }
 
-   private void OpenFromMasterComponent( )
+   private void ClearChangeStack( )
+   {
+      m_UndoNumber = 0;
+      UndoComponent.UndoNumber = m_UndoNumber;
+      UnityEditor.Undo.ClearUndo(UndoComponent);
+
+      m_UndoPatches = new string[ 0 ];
+      m_Patches     = new string[ 0 ];
+   }
+
+   //private void OpenFromMasterComponent( )
+   //{
+   //   m_ScriptEditorCtrl = null;
+
+   //   #if FREE_BETA_BUILD // See if expiration date and build cap should be used. Not needed for commercial version.
+   //    {
+   //         //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
+   //         if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild))
+   //         {
+   //         }
+   //         else
+   //         {
+   //            uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
+   //            return;
+   //         }
+         
+   	
+   //         if (DateTime.Now > ExpireDate)
+   //         {
+   //            uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "has expired. Please use the free Personal Learning Edition (PLE) to continue to evaluate uScript.\n", uScriptDebug.Type.Error);
+   //            return;
+   //         }
+   //         else
+   //         {
+   //            uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
+   //         }
+   //    }
+   //   #endif
+
+
+
+   //   ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
+
+   //   if (!String.IsNullOrEmpty(MasterComponent.Script))
+   //   {
+   //      scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script);
+   //   }
+
+   //   Point loc = Point.Empty;
+   //   if (false == String.IsNullOrEmpty(m_CurrentCanvasPosition))
+   //   {
+   //      loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))),
+   //                      Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
+   //   }
+
+   //   m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor, loc);
+   //   m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
+
+   //   m_ScriptEditorCtrl.BuildContextMenu();
+   //   uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
+
+   //   CurrentScript = MasterComponent.Script;
+   //   CurrentScriptName = MasterComponent.ScriptName;
+   //}
+
+   private void OpenFromCache( )
    {
       m_ScriptEditorCtrl = null;
 
@@ -461,11 +550,19 @@ public class uScript : EditorWindow
 
 
 
-      ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
+      ScriptEditor scriptEditor = null;
 
-      if (!String.IsNullOrEmpty(MasterComponent.Script))
+      if (!String.IsNullOrEmpty(CurrentScript))
       {
-         scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script);
+         //Debug.Log("Opening from valid script");
+         scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
+         scriptEditor.OpenFromBase64(CurrentScriptName, CurrentScript);
+      }
+      
+      if ( null == scriptEditor )
+      {
+         scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
+         //Debug.Log("no valid script");
       }
 
       Point loc = Point.Empty;
@@ -475,14 +572,68 @@ public class uScript : EditorWindow
                          Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
       }
 
+      foreach ( string patch in m_Patches )
+      {
+         if ( false == String.IsNullOrEmpty(patch) )
+         {
+            ApplyPatch( scriptEditor, patch );
+         }
+      }
+
       m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor, loc);
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
 
       m_ScriptEditorCtrl.BuildContextMenu();
       uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
+   
+      //clear out all patches and cache new copy of the script
+      CacheScript( );
+   }
 
-      CurrentScript = MasterComponent.Script;
-      CurrentScriptName = MasterComponent.ScriptName;
+   public void ApplyPatch(ScriptEditor scriptEditor, string patch)
+   {
+      object data;
+      Detox.Data.ObjectSerializer o = new Detox.Data.ObjectSerializer( );
+
+      byte[] binary = Convert.FromBase64String( patch );
+
+      MemoryStream stream = new MemoryStream( binary );
+
+      if ( true == o.Load(new BinaryReader(stream), out data) )
+      {
+         Detox.Patch.PatchData p = data as Detox.Patch.PatchData;
+
+         //Debug.Log( "Applying Patch: " + p.GetType( ) + ", " + p.Name );
+         p.Apply( scriptEditor );
+      }
+
+      stream.Close( );
+   }
+
+   public void RemovePatch(ScriptEditor scriptEditor, string patch)
+   {
+      object data;
+      Detox.Data.ObjectSerializer o = new Detox.Data.ObjectSerializer( );
+
+      byte[] binary = Convert.FromBase64String( patch );
+
+      MemoryStream stream = new MemoryStream( binary );
+
+      if ( true == o.Load(new BinaryReader(stream), out data) )
+      {
+         Detox.Patch.PatchData p = data as Detox.Patch.PatchData;
+
+         //Debug.Log( "Removing Patch: " + p.GetType( ) + ", " + p.Name );
+         p.Remove( scriptEditor );
+      }
+
+      stream.Close( );
+   }
+
+   public void CacheScript( )
+   {
+      m_Patches = new string[ 0 ];
+      CurrentScript = m_ScriptEditorCtrl.ScriptEditor.ToBase64( );
    }
 
    static public object GetSetting(string key)
@@ -529,25 +680,34 @@ public class uScript : EditorWindow
    }
 
 
-   public void RegisterUndo(string name, ScriptEditor oldScript, ScriptEditor newScript)
+   public void RegisterUndo(Detox.Patch.PatchData p)
    {
-      if (null != MasterComponent)
+      if (null != UndoComponent)
       {
-         MasterComponent.Script = oldScript.ToBase64();
-         MasterComponent.ScriptName = oldScript.Name;
+         string base64 = p.ToBase64( );
 
-         //save the old one to the undo stack
-         UnityEditor.Undo.RegisterUndo(MasterComponent, name + " (uScript)");
+         //UndoComponent.Patch      = base64;
+         UndoComponent.UndoNumber = m_UndoNumber;
 
-         //register the new one with uscript and the master component
-         CurrentScript = newScript.ToBase64();
-         CurrentScriptName = newScript.Name;
+         Array.Resize( ref m_Patches, m_Patches.Length + 1 );
+         m_Patches[ m_Patches.Length - 1 ] = base64;
+         
+         if ( m_UndoPatches.Length <= m_UndoNumber )
+         {
+            Array.Resize( ref m_UndoPatches, m_UndoNumber + 1 );
+         }
+         
+         m_UndoPatches[ m_UndoNumber ] = base64;
 
-         MasterComponent.Script = CurrentScript;
-         MasterComponent.ScriptName = newScript.Name;
+         //Debug.Log("undo " + m_UndoNumber );
+         UnityEditor.Undo.RegisterUndo(UndoComponent, p.Name + " (uScript)");
+
+         //now increment and if the old one is restored
+         //the numbers won't match
+         ++m_UndoNumber;
+         UndoComponent.UndoNumber = m_UndoNumber;
       }
    }
-
 
    // Unity Methods
    //
@@ -669,28 +829,36 @@ public class uScript : EditorWindow
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
 
-      //force a rebuild if undo was performed
-      if (null != MasterComponent && CurrentScript != MasterComponent.Script )
+
+      if ( UndoComponent.UndoNumber != m_UndoNumber )
       {
-         //it's possible these will not equal, which means a different script is being undone then the one loaded
-         //in that case it would clobber the current script with a different one.  Here is how it could happen:
-         //1. User is editing script A and presses play
-         //2. User loads script B
-         //3. User edits script B
-         //4. User presses stop.
-         //This causes unity to revert everything to the state right before 'play' was pressed
-         //which includes the object we keep on the master component - so now our object
-         //is different then the current script, but it wasn't due to a user undo action
-         if ( null == CurrentScriptName || CurrentScriptName == MasterComponent.ScriptName )
+         //if their number is greater then it was a redo
+         //so apply the patch
+         if ( UndoComponent.UndoNumber > m_UndoNumber )
          {
-            OpenFromMasterComponent( );
+            ApplyPatch( m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber - 1] );
+
          }
+         else
+         {
+            //if their number was less then it was an undo
+            //so remove the previous change
+            RemovePatch( m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber] );
+         }
+         
+         //recache the script since we're out of date with the patches
+         CacheScript( );
+         OpenFromCache( );
+
+         m_UndoNumber = UndoComponent.UndoNumber;
+         
+         //Debug.Log("applied undo " + m_UndoNumber );
       }
 
       if (_wasHierarchyChanged)
       {
          _wasHierarchyChanged = false;
-         OpenFromMasterComponent( );
+         OpenFromCache( );
       }
 
       if (true == m_WantsCopy)
@@ -1680,9 +1848,7 @@ public class uScript : EditorWindow
       }
       Detox.Utility.Status.StatusUpdate -= new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
-      UnityEditor.Undo.ClearUndo(MasterComponent);
-      MasterComponent.Script = null;
-      MasterComponent.ScriptName = null;
+      ClearChangeStack( );
 
       CurrentScript = null;
       CurrentScriptName = null;
@@ -2887,7 +3053,7 @@ public class uScript : EditorWindow
       scriptEditor.Open(fullPath);
 
       scriptEditor = new Detox.ScriptEditor.ScriptEditor("", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
-
+      
       if (true == scriptEditor.Open(fullPath))
       {
          if ("" != scriptEditor.SceneName && scriptEditor.SceneName != System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene))
@@ -2899,28 +3065,23 @@ public class uScript : EditorWindow
          //reset zoom we're not in some weird zoom state
          m_MapScale = 1.0f;
 
-         UnityEditor.Undo.ClearUndo(MasterComponent);
-
-         //force a change which will for a script rebuild in Update
-         //this keeps all the loading in the same place
-         MasterComponent.Script = scriptEditor.ToBase64();
-         MasterComponent.ScriptName = scriptEditor.Name;
-
-         CurrentScript = null;
          CurrentScriptName = null;
 
          if (fullPath != m_FullPath) m_CurrentCanvasPosition = "";
 
          m_FullPath = fullPath;
 
-         //Debug.Log("setting" );
-
          uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(fullPath).Substring("Assets".Length));
          uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
 
          m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
     
-         OpenFromMasterComponent( );
+         CurrentScript = scriptEditor.ToBase64( );
+         CurrentScriptName = scriptEditor.Name;
+
+         //brand new scriptso clear out any previous caches and undo/redo
+         ClearChangeStack( );
+         OpenFromCache( );
 
          uScriptBackgroundProcess.ForceFileRefresh();
       }
@@ -3144,13 +3305,7 @@ public class uScript : EditorWindow
 
             m_ScriptEditorCtrl.IsDirty = false;
 
-            //force a sync here just in case somehwere in code
-            //we missed a call to the change stack
-            MasterComponent.Script = script.ToBase64();
-            MasterComponent.ScriptName = script.Name;
-
-            CurrentScript = MasterComponent.Script;
-            CurrentScriptName = MasterComponent.ScriptName;
+            CacheScript( );
 
             if (true == pleaseAttachMe)
             {

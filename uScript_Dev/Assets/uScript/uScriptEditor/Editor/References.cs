@@ -394,6 +394,7 @@ namespace Detox.Windows.Forms
 
                      signalUpdate |= cloned.Default != p.Default;
                      signalUpdate |= cloned.State   != p.State;
+
                      updatedParameters.Add( cloned );
                   }
 

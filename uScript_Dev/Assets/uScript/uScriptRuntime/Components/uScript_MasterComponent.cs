@@ -154,12 +154,6 @@ public class uScript_MasterComponent : MonoBehaviour
    public string [] GameObjectGuids = new string[0];
 
    [HideInInspector]
-   public string Script     = null;
-
-   [HideInInspector]
-   public string ScriptName = null;
-
-   [HideInInspector]
    public string []m_uScriptsToAttach = new string[0];
    public string[] uScriptsToAttach
    {

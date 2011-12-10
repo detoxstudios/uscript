@@ -1611,11 +1611,7 @@ namespace Detox.ScriptEditor
       public Parameter Instance { get { return m_Instance; } set { m_Instance = value; } }
 
       private Parameter[] m_Parameters;
-      public Parameter[] Parameters 
-      { 
-         get { return m_Parameters; } 
-         set { m_Parameters = value; } 
-      }
+      public Parameter[] Parameters { get { return (Parameter[]) m_Parameters.Clone( ); } set { m_Parameters = (Parameter[]) value.Clone( ); } }
 
       private Point m_Position;
       public Point Position { get { return m_Position; } set { m_Position = value; } }
@@ -1982,7 +1978,7 @@ namespace Detox.ScriptEditor
       public Plug []Outputs;
       
       private Parameter[] m_Parameters;
-      public Parameter[] Parameters { get { return m_Parameters; } set { m_Parameters = value; } }
+      public Parameter[] Parameters { get { return (Parameter[]) m_Parameters.Clone( ); } set { m_Parameters = (Parameter[]) value.Clone( ); } }
 
       private Point m_Position;
       public Point Position { get { return m_Position; } set { m_Position = value; } }
@@ -2077,8 +2073,8 @@ namespace Detox.ScriptEditor
          LogicNode node = new LogicNode( );
          node.Type      = Type;
          node.FriendlyName = FriendlyName;
-         node.Inputs    = Inputs;
-         node.Parameters= Parameters;
+         node.Inputs    = Inputs;         
+         node.Parameters= Parameters;        
          node.Outputs   = Outputs;
          node.Position  = Position;
          node.Events    = Events;
@@ -2178,7 +2174,7 @@ namespace Detox.ScriptEditor
       public Parameter Instance { get { return Parameter.Empty; } set {} }
 
       private Parameter[] m_Parameters;
-      public Parameter[] Parameters { get { return m_Parameters; } set { m_Parameters = value; } }
+      public Parameter[] Parameters { get { return (Parameter[]) m_Parameters.Clone( ); } set { m_Parameters = (Parameter[]) value.Clone( ); } }
 
       private Point m_Position;
       public Point Position { get { return m_Position; } set { m_Position = value; } }
@@ -3841,9 +3837,12 @@ namespace Detox.ScriptEditor
 
          foreach ( LinkNode link in this.Links )
          {
-            if ( link.Destination.Guid == destGuid && link.Destination.Anchor == destAnchor )
+            if ( link.Destination.Guid == destGuid )
             {
-               links.Add( link );
+               if ( null == destAnchor || link.Destination.Anchor == destAnchor )
+               {
+                  links.Add( link );
+               }
             }
          }
 
@@ -3856,9 +3855,12 @@ namespace Detox.ScriptEditor
 
          foreach ( LinkNode link in this.Links )
          {
-            if ( link.Source.Guid == sourceGuid && link.Source.Anchor == sourceAnchor )
+            if ( link.Source.Guid == sourceGuid )
             {
-               links.Add( link );
+               if ( null == sourceAnchor || link.Source.Anchor == sourceAnchor )
+               {
+                  links.Add( link );
+               }
             }
          }
 
@@ -4046,6 +4048,54 @@ namespace Detox.ScriptEditor
          }
       }
 
+      public EntityNode CreateEntityNode( EntityNodeData data )
+      {
+         EntityNode node = null;
+
+         if ( data is EntityEventData )
+         {
+            node = CreateEntityEvent( data as EntityEventData );
+         }
+         else if ( data is CommentNodeData )
+         {
+            node = CreateCommentNode( data as CommentNodeData );
+         }
+         else if ( data is LinkNodeData )
+         {
+            node = CreateLinkNode( data as LinkNodeData );
+         }
+         else if ( data is EntityMethodData )
+         {
+            node = CreateEntityMethod( data as EntityMethodData );
+         }
+         else if ( data is LocalNodeData )
+         {
+            node = CreateLocalNode( data as LocalNodeData );
+         }
+         else if ( data is EntityPropertyData )
+         {
+            node = CreateEntityProperty( data as EntityPropertyData );
+         }
+         else if ( data is LogicNodeData )
+         {
+            node = CreateLogicNode( data as LogicNodeData );
+         }
+         else if ( data is ExternalConnectionData )
+         {
+            node = CreateExternalConnection( data as ExternalConnectionData );
+         }
+         else if ( data is OwnerConnectionData )
+         {
+            node = CreateOwnerConnection( data as OwnerConnectionData );
+         }
+         else
+         {
+            Status.Error( "Unrecognized script node " + data.GetType().ToString() );
+         }
+
+         return node;
+      }
+
       public ScriptEditorData ScriptEditorData
       {
          get 
@@ -4072,49 +4122,8 @@ namespace Detox.ScriptEditor
          {
             foreach ( EntityNodeData data in value.NodeDatas )
             {
-               EntityNode node = null;
-
-               if ( data is EntityEventData )
-               {
-                  node = CreateEntityEvent( data as EntityEventData );
-               }
-               else if ( data is CommentNodeData )
-               {
-                  node = CreateCommentNode( data as CommentNodeData );
-               }
-               else if ( data is LinkNodeData )
-               {
-                  node = CreateLinkNode( data as LinkNodeData );
-               }
-               else if ( data is EntityMethodData )
-               {
-                  node = CreateEntityMethod( data as EntityMethodData );
-               }
-               else if ( data is LocalNodeData )
-               {
-                  node = CreateLocalNode( data as LocalNodeData );
-               }
-               else if ( data is EntityPropertyData )
-               {
-                  node = CreateEntityProperty( data as EntityPropertyData );
-               }
-               else if ( data is LogicNodeData )
-               {
-                  node = CreateLogicNode( data as LogicNodeData );
-               }
-               else if ( data is ExternalConnectionData )
-               {
-                  node = CreateExternalConnection( data as ExternalConnectionData );
-               }
-               else if ( data is OwnerConnectionData )
-               {
-                  node = CreateOwnerConnection( data as OwnerConnectionData );
-               }
-               else
-               {
-                  Status.Error( "Unrecognized script node " + data.GetType().ToString() );
-               }
-
+               EntityNode node = CreateEntityNode( data );
+               
                if ( null != node )
                {
                   m_Nodes.Add( node );

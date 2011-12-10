@@ -98,7 +98,6 @@ namespace Detox.ScriptEditor
       }
 
       private string m_ClipboardText = null;
-      private ChangeStack m_ChangeStack = new ChangeStack( );
       
       private PropertyGrid m_PropertyGrid = null;
       public PropertyGrid PropertyGrid { get { return m_PropertyGrid; } }
@@ -505,11 +504,11 @@ namespace Detox.ScriptEditor
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
-                  ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-
                   uScriptLogic logic = UnityEngine.ScriptableObject.CreateInstance( t ) as uScriptLogic;
                   Hashtable hash = logic.EditorDragDrop( o );
                
+                  EntityNode oldNode = entityNode.Copy( true );
+
                   Parameter [] parameters = entityNode.Parameters;
 
                   for ( int i = 0; i < parameters.Length; i++ )
@@ -535,8 +534,11 @@ namespace Detox.ScriptEditor
 
                   entityNode.Parameters = parameters;
 
-                  m_ChangeStack.AddChange( new ChangeStack.Change("DragDrop", oldEditor, m_ScriptEditor.Copy( )) );
+                  m_ScriptEditor.AddNode( entityNode );
 
+                  uScript.Instance.RegisterUndo( new Patch.EntityNode("Drag Drop", oldNode, entityNode) );
+                  m_Dirty = true;
+                  
                   RefreshScript( null );
 
                   return true;
@@ -598,6 +600,8 @@ namespace Detox.ScriptEditor
 
                      if ( null != name )
                      {
+                        EntityNode oldNode = entityNode.Copy( true );
+
                         if ( entityNode.Instance != Parameter.Empty && entityNode.Instance.Input == true )
                         {
                            Parameter instance = entityNode.Instance;
@@ -633,11 +637,10 @@ namespace Detox.ScriptEditor
                            entityNode = localNode;
                         }
 
-                        ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+                        m_ScriptEditor.AddNode( entityNode );   
 
-                           m_ScriptEditor.AddNode( entityNode );   
-
-                        m_ChangeStack.AddChange( new ChangeStack.Change("DragDrop", oldEditor, m_ScriptEditor.Copy( )) );
+                        uScript.Instance.RegisterUndo( new Patch.EntityNode("Drag Drop", oldNode, entityNode) );
+                        m_Dirty = true;
 
                         RefreshScript( null );
                         return true;
@@ -768,8 +771,6 @@ namespace Detox.ScriptEditor
          {
             List<Guid> guidsToSelect = new List<Guid>( );
 
-            ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-
             Hashtable remappedGuid = new Hashtable( );
 				
 			   // calculate a base point for this script chunk
@@ -783,6 +784,8 @@ namespace Detox.ScriptEditor
                if (entityNode.Position.Y > bottom) bottom  = entityNode.Position.Y;
 			   }
             Rectangle baseRect = new Rectangle( (int)left, (int)top, (int)(right - left), (int)(bottom - top) );
+
+            Patch.Batch batchPatch = new Patch.Batch( "Paste" );
 
             foreach ( EntityNode entityNode in scriptEditor.EntityNodes )
             {
@@ -820,6 +823,10 @@ namespace Detox.ScriptEditor
                   Point diff = new Point( clone.Position.X - baseRect.X, clone.Position.Y - baseRect.Y );
                   clone.Position = new Point( cursorPoint.X + diff.X, cursorPoint.Y + diff.Y );
    			   }
+
+               Patch.EntityNode patchNode = new Detox.Patch.EntityNode( "", null, clone.Copy(true) );
+               batchPatch.Add( patchNode );
+
                m_ScriptEditor.AddNode( clone );
                guidsToSelect.Add( clone.Guid );
                m_Dirty = true;
@@ -838,12 +845,15 @@ namespace Detox.ScriptEditor
                clone.Destination.Guid = (Guid) remappedGuid[ link.Destination.Guid ];
                clone.Guid             = (Guid) remappedGuid[ link.Guid ];
 
+               Patch.EntityNode patchNode = new Detox.Patch.EntityNode( "", null, clone.Copy(true) );
+               batchPatch.Add( patchNode );
+
                m_ScriptEditor.AddNode( clone );
                guidsToSelect.Add( clone.Guid );
                m_Dirty = true;
             }
 
-            m_ChangeStack.AddChange( new ChangeStack.Change("Paste", oldEditor, m_ScriptEditor.Copy( )) );
+            uScript.Instance.RegisterUndo( batchPatch );
 
             RefreshScript( guidsToSelect );
             m_FlowChart.OnSelectionModified();
@@ -881,14 +891,16 @@ namespace Detox.ScriptEditor
 
       private void ExpandNodes( Node [] nodes )
       {
-         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-
          if ( null == nodes ) nodes = m_FlowChart.Nodes;
+
+         Patch.Batch batchPatch = new Patch.Batch( "Expand Nodes" );
 
          foreach ( Node node in nodes )
          {
             EntityNode entityNode = ((DisplayNode)node).EntityNode;
             List<Parameter> parameters = new List<Parameter>( );
+
+            EntityNode oldNode = entityNode.Copy( true );
 
             foreach ( Parameter p in entityNode.Parameters )
             {
@@ -918,22 +930,26 @@ namespace Detox.ScriptEditor
             entityNode.Parameters = parameters.ToArray( );
 
             m_ScriptEditor.AddNode( entityNode );
+         
+            Patch.EntityNode patchNode = new Detox.Patch.EntityNode( "", oldNode, entityNode.Copy(true) );
+            batchPatch.Add( patchNode );
          }
 
-         m_ChangeStack.AddChange( new ChangeStack.Change("Expand Nodes", oldEditor, m_ScriptEditor.Copy( )) );
+         uScript.Instance.RegisterUndo( batchPatch );
 
          RefreshScript( null );
       }
 
       private void CollapseNodes( Node [] nodes )
       {
-         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-
          if ( null == nodes ) nodes = m_FlowChart.Nodes;
          
+         Patch.Batch batchPatch = new Patch.Batch( "Collapse Nodes" );
+
          foreach ( Node node in nodes )
          {
             EntityNode entityNode = ((DisplayNode)node).EntityNode;
+            EntityNode oldNode = entityNode.Copy( true );
 
             List<Parameter> parameters = new List<Parameter>( );
 
@@ -965,9 +981,12 @@ namespace Detox.ScriptEditor
             entityNode.Parameters = parameters.ToArray( );
 
             m_ScriptEditor.AddNode( entityNode );
+
+            Patch.EntityNode patchNode = new Detox.Patch.EntityNode( "", oldNode, entityNode.Copy(true) );
+            batchPatch.Add( patchNode );
          }
 
-         m_ChangeStack.AddChange( new ChangeStack.Change("Collapse Nodes", oldEditor, m_ScriptEditor.Copy( )) );
+         uScript.Instance.RegisterUndo( batchPatch );
 
          RefreshScript( null );
       }
@@ -1102,8 +1121,9 @@ namespace Detox.ScriptEditor
 
          if ( linkTo != new Parameter( ) )
          {
-            ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-   
+            Patch.Batch batchPatch = new Detox.Patch.Batch( "Add" );
+            Patch.EntityNode patchNode;
+
             Point point = m_FlowChart.PointToClient( Cursor.Position );
 
             LocalNode localNode;
@@ -1122,6 +1142,9 @@ namespace Detox.ScriptEditor
             localNode.Position = point;
 
             m_ScriptEditor.AddNode( localNode );
+            
+            patchNode = new Detox.Patch.EntityNode( "", null, localNode.Copy(true) );
+            batchPatch.Add( patchNode );
 
             LinkNode linkNode;
 
@@ -1142,8 +1165,12 @@ namespace Detox.ScriptEditor
 
             m_ScriptEditor.AddNode( linkNode );
 
+            patchNode = new Detox.Patch.EntityNode( "", null, linkNode.Copy(true) );
+            batchPatch.Add( patchNode );
+
             m_Dirty = true;
-            m_ChangeStack.AddChange( new ChangeStack.Change("Add", oldEditor, m_ScriptEditor.Copy( )) );
+
+            uScript.Instance.RegisterUndo( batchPatch );
 
             RefreshScript( null );
          }
@@ -1151,11 +1178,12 @@ namespace Detox.ScriptEditor
    
       private void m_MenuAddNode_Click(object sender, EventArgs e)
       {
-         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-
          MenuItem item = sender as MenuItem;
          EntityNode entityNode;
          Point offset = new Point(0, 0);
+
+         Patch.Batch batchPatch = new Patch.Batch( "Add" );
+
          if ( null != m_ContextObject && typeof(Object[]).IsAssignableFrom(m_ContextObject.GetType()) )
          {
             foreach (object obj in m_ContextObject)
@@ -1195,6 +1223,8 @@ namespace Detox.ScriptEditor
                }
       
                m_ScriptEditor.AddNode( entityNode );
+               batchPatch.Add( new Patch.EntityNode( "", null, entityNode.Copy(true)) );
+
                m_Dirty = true;
                
                offset.X += 10;
@@ -1258,17 +1288,22 @@ namespace Detox.ScriptEditor
 
 
             m_ScriptEditor.AddNode( entityNode );
+            batchPatch.Add( new Patch.EntityNode( "", null, entityNode.Copy(true)) );
+            
             m_Dirty = true;
          }
 
-         m_ChangeStack.AddChange( new ChangeStack.Change("Add", oldEditor, m_ScriptEditor.Copy( )) );
+         if ( true == batchPatch.HasPatches )
+         {
+            uScript.Instance.RegisterUndo( batchPatch );
+         }
 
          RefreshScript( null );
       }
 
       public void m_MenuUpgradeNode_Click(object sender, EventArgs e)
       {
-         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+         Patch.Batch batchPatch = new Detox.Patch.Batch( "Upgrade Node" );
 
          foreach ( DisplayNode node in SelectedNodes )
          {
@@ -1276,19 +1311,28 @@ namespace Detox.ScriptEditor
             {
                if ( true == m_ScriptEditor.CanUpgradeNode(node.EntityNode) )
                {
+                  EntityNode oldNode = node.EntityNode.Copy( true );
+
                   m_ScriptEditor.UpgradeNode( node.EntityNode );
+
+                  EntityNode newNode = m_ScriptEditor.GetNode( oldNode.Guid );
+
+                  if ( newNode != null )
+                  {
+                     batchPatch.Add( new Patch.EntityNode("", oldNode, newNode) );
+                  }
                }
             }
          }
 
-         m_ChangeStack.AddChange( new ChangeStack.Change("Upgrade Node", oldEditor, m_ScriptEditor.Copy( )) );
+         uScript.Instance.RegisterUndo( batchPatch );
 
          RefreshScript( null );
       }
 
       public void m_MenuDeleteMissingNode_Click(object sender, EventArgs e)
       {
-         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+         Patch.Batch batchPatch = new Detox.Patch.Batch( "Delete Missing Node" );
 
          foreach ( DisplayNode node in SelectedNodes )
          {
@@ -1296,14 +1340,38 @@ namespace Detox.ScriptEditor
             {
                if ( false == m_ScriptEditor.CanUpgradeNode(node.EntityNode) )
                {
+                  //links will be removed when we remove the node
+                  //so apply patches for each one so they'll come back
+                  //during the undo
+                  BatchPatchLinks( batchPatch, node.EntityNode.Guid );
+
+                  batchPatch.Add( new Patch.EntityNode("", node.EntityNode, null) );
+                  
                   m_ScriptEditor.RemoveNode( node.EntityNode );
                }
             }
          }
 
-         m_ChangeStack.AddChange( new ChangeStack.Change("Delete Missing Node", oldEditor, m_ScriptEditor.Copy( )) );
+         uScript.Instance.RegisterUndo( batchPatch );
 
          RefreshScript( null );
+      }
+
+      private void BatchPatchLinks(Patch.Batch batchPatch, Guid guid)
+      {
+         LinkNode []links = m_ScriptEditor.GetLinksByDestination( guid, null );
+
+         foreach ( LinkNode link in links )
+         {
+            batchPatch.Add( new Patch.EntityNode("", link, null) );
+         }
+
+         links = m_ScriptEditor.GetLinksBySource( guid, null );
+
+         foreach ( LinkNode link in links )
+         {
+            batchPatch.Add( new Patch.EntityNode("", link, null) );
+         }
       }
 
       private void m_MenuCreateList_Click(object sender, EventArgs e)
@@ -1384,14 +1452,21 @@ namespace Detox.ScriptEditor
                }
             }  
 
-            ScriptEditor oldEditor = m_ScriptEditor.Copy( );
+            Patch.Batch patchBatch = new Detox.Patch.Batch( "Create List" );
 
             //remove all existing nodes, which means the links go away too
             foreach ( LocalNode local in locals )
             {
+               //links will be removed when we remove the node
+               //so apply patches for each one so they'll come back
+               //during the undo
+               BatchPatchLinks( patchBatch, local.Guid );
+               patchBatch.Add( new Patch.EntityNode("", local, null) );
+
                m_ScriptEditor.RemoveNode( local );
             }
 
+            patchBatch.Add( new Patch.EntityNode("", null, listNode) );
             m_ScriptEditor.AddNode( listNode );
 
             //now relink to our single node
@@ -1400,6 +1475,8 @@ namespace Detox.ScriptEditor
                LinkNode link = (LinkNode) o;
 
                LinkNode newLink = new LinkNode( link.Source.Guid, link.Source.Anchor, listNode.Guid, listNode.Value.Name );
+
+               patchBatch.Add( new Patch.EntityNode("", null, newLink) );
                m_ScriptEditor.AddNode( newLink );
             }
             foreach ( object o in connectFromMe.Values )
@@ -1407,10 +1484,12 @@ namespace Detox.ScriptEditor
                LinkNode link = (LinkNode) o;
 
                LinkNode newLink = new LinkNode( listNode.Guid, listNode.Value.Name, link.Destination.Guid, link.Destination.Anchor );
+
+               patchBatch.Add( new Patch.EntityNode("", null, newLink) );
                m_ScriptEditor.AddNode( newLink );
             }
 
-            m_ChangeStack.AddChange( new ChangeStack.Change("Create List", oldEditor, m_ScriptEditor.Copy( )) );
+            uScript.Instance.RegisterUndo( patchBatch );
             RefreshScript( null );
          }
       }
@@ -1427,8 +1506,6 @@ namespace Detox.ScriptEditor
 
       public void AddVariableNode(EntityNode entityNode)
       {
-         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-         
          entityNode.Position = new Point( m_ContextCursor.X, m_ContextCursor.Y );
          if ( "" != uScript.Instance.AutoAssignInstance(entityNode) )
          {
@@ -1440,8 +1517,9 @@ namespace Detox.ScriptEditor
          m_ScriptEditor.AddNode( entityNode );
          m_Dirty = true;
 
-         m_ChangeStack.AddChange( new ChangeStack.Change("Add", oldEditor, m_ScriptEditor.Copy( )) );
-
+         Patch.EntityNode patchNode = new Detox.Patch.EntityNode("Add", null, entityNode);
+         uScript.Instance.RegisterUndo( patchNode );
+         
          RefreshScript( null );
       }
 
@@ -1472,13 +1550,19 @@ namespace Detox.ScriptEditor
 
       public void DeleteSelectedNodes( )
       {
-         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-
          Detox.FlowChart.Node [] nodes = m_FlowChart.SelectedNodes;
+
+         Patch.Batch batch = new Detox.Patch.Batch( "Delete" );
 
          foreach ( Detox.FlowChart.Node node in nodes )
          {
+            //links will be removed when we remove the node
+            //so apply patches for each one so they'll come back
+            //during the undo
+            BatchPatchLinks( batch, ((DisplayNode)node).EntityNode.Guid );
+
             m_ScriptEditor.RemoveNode( ((DisplayNode)node).EntityNode );
+            batch.Add( new Patch.EntityNode("", ((DisplayNode)node).EntityNode, null) );
             m_Dirty = true;
          }
 
@@ -1487,10 +1571,11 @@ namespace Detox.ScriptEditor
          foreach ( Link link in links )
          {
             m_ScriptEditor.RemoveNode( ((LinkNode)link.Tag) );
+            batch.Add( new Patch.EntityNode("", ((LinkNode)link.Tag), null) );
             m_Dirty = true;
          }
 
-         m_ChangeStack.AddChange( new ChangeStack.Change("Delete", oldEditor, m_ScriptEditor.Copy( )) );
+         uScript.Instance.RegisterUndo( batch );
 
          RefreshScript( null );
       }
@@ -1740,13 +1825,15 @@ namespace Detox.ScriptEditor
 
       private void FlowchartNodesModified(object sender, FlowchartNodesModifiedEventArgs e)
       {
-         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-
          RemoveEventHandlers( );
+
+            Patch.Batch batch = new Detox.Patch.Batch( "Node Modified" );
 
             foreach ( FlowChart.Node node in e.Nodes )
             {
                EntityNode entityNode = ((DisplayNode)node).EntityNode;
+               EntityNode oldNode = entityNode.Copy(true);
+
                entityNode.Position = ((DisplayNode)node).Location;
 
                if ( entityNode is CommentNode )
@@ -1765,14 +1852,20 @@ namespace Detox.ScriptEditor
                }
 
                m_ScriptEditor.AddNode( entityNode );
+               
+               if ( false == oldNode.Equals(entityNode) )
+               {
+                  batch.Add( new Patch.EntityNode("", oldNode, entityNode) );
+               }
             }
          
          AddEventHandlers( );
 
-         if ( false == oldEditor.Equals(m_ScriptEditor) )
+         if ( true == batch.HasPatches )
          {
             m_Dirty = true;
-            m_ChangeStack.AddChange( new ChangeStack.Change("Node Modified", oldEditor, m_ScriptEditor.Copy( )) );
+            uScript.Instance.RegisterUndo( batch );
+
             RefreshScript( null );
          }
       }
@@ -1816,38 +1909,45 @@ namespace Detox.ScriptEditor
       }
 
       void m_PropertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-      {
-         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-         
+      {  
          RemoveEventHandlers( );
+
+         bool changed = false;
 
          foreach ( object o in m_PropertyGrid.SelectedObjects )
          {
             PropertyGridParameters p = (PropertyGridParameters) o;
 
-            EntityNode entityNode  = p.EntityNode;            
+            EntityNode entityNode  = p.EntityNode;
+            EntityNode oldNode = entityNode.Copy( true );
+
             entityNode.Parameters  = p.GetParameters( "Parameters" );
             entityNode.ShowComment = p.GetParameters( "Comment" ) [ 0 ];
             entityNode.Comment     = p.GetParameters( "Comment" ) [ 1 ];
             entityNode.Instance    = p.GetParameters( "Instance" )[ 0 ];
 
             m_ScriptEditor.AddNode( entityNode );
+
+            if ( false == oldNode.Equals(entityNode) )
+            {
+               changed = true;
+
+               Patch.EntityNode undoParameter = new Patch.EntityNode( "Node Modified", oldNode, entityNode );
+               uScript.Instance.RegisterUndo( undoParameter );
+            }
          }
 
          AddEventHandlers( );
 
-         if ( false == oldEditor.Equals(m_ScriptEditor) )
+         if ( true == changed )
          {
             m_Dirty = true;
-            m_ChangeStack.AddChange( new ChangeStack.Change("Node Modified", oldEditor, m_ScriptEditor.Copy( )) );
             RefreshScript( null );
          }
       }
 
       private void FlowchartLinkCreated(object sender, FlowchartLinkCreatedEventArgs e)
       {
-         ScriptEditor oldEditor = m_ScriptEditor.Copy( );
-
          RemoveEventHandlers( );
 
             LinkNode link = new LinkNode( e.Link.Source.Node.Guid, e.Link.Source.Anchor.Name, e.Link.Destination.Node.Guid, e.Link.Destination.Anchor.Name );
@@ -1856,8 +1956,9 @@ namespace Detox.ScriptEditor
 
          AddEventHandlers( );
 
-         m_ChangeStack.AddChange( new ChangeStack.Change("Link Created", oldEditor, m_ScriptEditor.Copy( )) );
-
+         Patch.EntityNode patchNode = new Detox.Patch.EntityNode("Link Created", null, link);
+         uScript.Instance.RegisterUndo( patchNode );
+         
          RefreshScript( null );
       }
 
@@ -3043,7 +3144,7 @@ namespace Detox.ScriptEditor
 
       public void AddChange(Change change)
       {
-         uScript.Instance.RegisterUndo( change.Name, ((ScriptEditor)change.OldObject), ((ScriptEditor)change.NewObject) );
+         //uScript.Instance.RegisterUndo( change.Name, ((ScriptEditor)change.OldObject), ((ScriptEditor)change.NewObject) );
       }
    };
 

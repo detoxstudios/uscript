@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BD28F23C-2EC1-4B74-AB69-1510EBD650EE}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -53,6 +53,7 @@
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Lerper.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_MasterComponent.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Runtime.cs" />
+    <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_UndoComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
