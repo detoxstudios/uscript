@@ -1,8 +1,6 @@
 // uScript utility class
 // (C) 2011 Detox Studios LLC
-// Desc: The master uScript component. This class is also used as a data transport class between the uScript window and the uScriptBackgroundProcess.
-
-//#define FREE_PLE_BUILD
+// Desc: Used for managing the undo system.
 
 using UnityEngine;
 using System;
