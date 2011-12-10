@@ -67,6 +67,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ModelData.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ObjectSerializer.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Partials.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\PatchData.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Platform.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Preferences.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\PreferenceWindow.cs" />
