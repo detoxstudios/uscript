@@ -39,17 +39,17 @@ public class uScript : EditorWindow
    private ComplexData m_ComplexData = null;
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string BuildNumber { get { return "0.9.1490"; } }
+   public string BuildNumber { get { return "0.9.1501"; } }
 #if FREE_PLE_BUILD
     static string ProductName { get { return "Personal Learning Edition"; } }
 #else
-   static string ProductName { get { return "Retail Beta 8 (RC1)"; } }
+   static string ProductName { get { return "Retail Beta 8"; } }
 #endif
    public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
-   public string LastUnityBuild { get { return "3.3"; } }
-   public string CurrentUnityBuild { get { return "3.4"; } }
+   //public string LastUnityBuild { get { return "3.3"; } }
+   //public string CurrentUnityBuild { get { return "3.4"; } }
    //public string BetaUnityBuild { get { return "3.5"; } }
-   public DateTime ExpireDate { get { return new DateTime(2011, 11, 30); } }
+   //public DateTime ExpireDate { get { return new DateTime(2011, 11, 30); } }
 
    public bool isLicenseAccepted = false;
 
