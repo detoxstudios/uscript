@@ -1,0 +1,45 @@
+// uScript Action Node
+// (C) 2010 Detox Studios LLC
+
+using UnityEngine;
+using System.Collections;
+
+[NodePath("Conditions/Comparison")]
+
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Checks to see if the Target float is between a minimum and maximum range.")]
+[NodeAuthor("Detox Studios LLC. Original node by SvdV on the uScript Community Forum", "http://www.detoxstudios.com")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+
+[FriendlyName("Between Ints", "Checks to see if the Target int is between a minimum and maximum range.")]
+public class uScriptCon_BetweenInts : uScriptLogic
+{
+   private bool m_Between = false;
+
+   public bool True { get { return m_Between; } }
+   public bool False { get { return !m_Between; } }
+
+   public void In(
+      [FriendlyName("Target", "The target float variable to compare against the range.")] int Target,
+      [FriendlyName("Min", "The minimum value of the range. This value is inclusive.")] int Min,
+      [FriendlyName("Max", "The maximum value of the range. This value is inclusive.")] int Max)
+   {
+
+      if (Min > Max || Min == Max)
+      {
+         m_Between = false;
+      }
+      else
+      {
+         if (Target >= Min && Target <= Max)
+         {
+            m_Between = true;
+         }
+         else
+         {
+            m_Between = false;
+         }
+      }
+		
+   }
+}
