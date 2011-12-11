@@ -32,8 +32,17 @@ public class uScriptAct_DivideInt : uScriptLogic
       out float FloatResult
       )
    {
-      int total = A / B;
-      IntResult = total;
-      FloatResult = System.Convert.ToSingle(total);
+      if (B != 0)
+      {
+         int total = A / B;
+         IntResult = total;
+         FloatResult = (float)A / (float)B;
+      }
+      else
+      {
+         uScriptDebug.Log("[Divide Int] Your denominator (B) is set to zero. Dividing by zero is not possible. Returning 0 as the result.", uScriptDebug.Type.Error);
+         FloatResult = 0f;
+         IntResult = 0;
+      }
    }
 }

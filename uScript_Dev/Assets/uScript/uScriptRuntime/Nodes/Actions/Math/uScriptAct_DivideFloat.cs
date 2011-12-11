@@ -32,8 +32,17 @@ public class uScriptAct_DivideFloat : uScriptLogic
       out int IntResult
       )
    {
-      float total = A / B;
-      FloatResult = total;
-      IntResult = System.Convert.ToInt32(total);
+      if (A != 0f && B != 0f)
+      {
+         float total = A / B;
+         FloatResult = total;
+         IntResult = System.Convert.ToInt32(total);
+      }
+      else
+      {
+         uScriptDebug.Log("[Divide Float] You can not have both A and B values set to 0 when dividing. Returning 0 as the result.", uScriptDebug.Type.Error);
+         FloatResult = 0f;
+         IntResult = 0;
+      }
    }
 }
