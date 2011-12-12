@@ -102,7 +102,8 @@ public class uScriptAct_PlayAnimationAdditive : uScriptLogic
 
        if (Target != null)
        {
-           foreach (GameObject t in MixingTransform)
+#pragma warning disable 0219
+          foreach (GameObject t in MixingTransform)
            {
                //TODO: Make the blend complete before removing mixing transform.
             #if (!UNITY_3_0 && !UNITY_3_1 && !UNITY_3_2 && !UNITY_3_3)
@@ -111,6 +112,7 @@ public class uScriptAct_PlayAnimationAdditive : uScriptLogic
               Target.animation[m_Animation].layer = setLayer;
                Target.animation.Blend(m_Animation, 0.0f, FadeLength);
            }
+#pragma warning restore 0219
        }
 		
 		Stopped(this, new System.EventArgs());
