@@ -28,6 +28,9 @@ public class ComplexData
 
 public class uScript : EditorWindow
 {
+   //so we know if the current script we've cached
+   //is dirty or has been saved to a file
+   public bool   CurrentScriptDirty= false;
    public string CurrentScript     = null;
    public string CurrentScriptName = "";
    public string []m_Patches       = new string[ 0 ];
@@ -586,6 +589,8 @@ public class uScript : EditorWindow
       m_ScriptEditorCtrl.BuildContextMenu();
       uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
    
+      m_ScriptEditorCtrl.IsDirty = CurrentScriptDirty;
+
       //clear out all patches and cache new copy of the script
       CacheScript( );
    }
@@ -634,6 +639,7 @@ public class uScript : EditorWindow
    {
       m_Patches = new string[ 0 ];
       CurrentScript = m_ScriptEditorCtrl.ScriptEditor.ToBase64( );
+      CurrentScriptDirty = m_ScriptEditorCtrl.IsDirty;
    }
 
    static public object GetSetting(string key)
@@ -1850,6 +1856,7 @@ public class uScript : EditorWindow
 
       ClearChangeStack( );
 
+      CurrentScriptDirty = false;
       CurrentScript = null;
       CurrentScriptName = null;
       m_ComplexData = null;
@@ -3076,6 +3083,7 @@ public class uScript : EditorWindow
 
          m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
     
+         CurrentScriptDirty = false;
          CurrentScript = scriptEditor.ToBase64( );
          CurrentScriptName = scriptEditor.Name;
 
