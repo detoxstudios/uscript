@@ -105,8 +105,10 @@ public class uScriptAct_PlayAnimationAdditive : uScriptLogic
            foreach (GameObject t in MixingTransform)
            {
                //TODO: Make the blend complete before removing mixing transform.
-               Target.animation[m_Animation].RemoveMixingTransform(t.transform);
-               Target.animation[m_Animation].layer = setLayer;
+            #if (!UNITY_3_0 && !UNITY_3_1 && !UNITY_3_2 && !UNITY_3_3)
+              Target.animation[m_Animation].RemoveMixingTransform(t.transform);
+            #endif
+              Target.animation[m_Animation].layer = setLayer;
                Target.animation.Blend(m_Animation, 0.0f, FadeLength);
            }
        }
