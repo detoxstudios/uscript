@@ -1708,14 +1708,14 @@ namespace Detox.ScriptEditor
                {
                   if ( entityMethod.Instance.Default != "" )
                   {
-                     FillComponent( entityMethod, entityMethod.Instance );
+                     FillComponent( true, entityMethod, entityMethod.Instance );
                   }
                }
 
                foreach ( Parameter p in entityMethod.Parameters )
                {
                   if ( false == p.Input ) continue;
-                  FillComponent( entityMethod, p );
+                  FillComponent( true, entityMethod, p );
                }
             }
 
@@ -1727,7 +1727,7 @@ namespace Detox.ScriptEditor
                {
                   if ( entityProperty.Instance.Default != "" )
                   {
-                     FillComponent( entityProperty, entityProperty.Instance );
+                     FillComponent( true, entityProperty, entityProperty.Instance );
                   }
                }
             }
@@ -1737,18 +1737,18 @@ namespace Detox.ScriptEditor
                foreach ( Parameter p in logicNode.Parameters )
                {
                   if ( false == p.Input ) continue;
-                  FillComponent( logicNode, p );
+                  FillComponent( true, logicNode, p );
                }
             }
 
             foreach ( LocalNode localNode in m_Script.UniqueLocals )
             {
-               FillComponent( localNode, localNode.Value );
+               FillComponent( true, localNode, localNode.Value );
             }
 
             foreach ( OwnerConnection ownerNode in m_Script.Owners )
             {
-               FillComponent( ownerNode, ownerNode.Connection );
+               FillComponent( true, ownerNode, ownerNode.Connection );
             }
 
          --m_TabStack;
@@ -1767,7 +1767,7 @@ namespace Detox.ScriptEditor
                {
                   if ( entityEvent.Instance.Default != "" )
                   {
-                     FillComponent( entityEvent, entityEvent.Instance );
+                     FillComponent( true, entityEvent, entityEvent.Instance );
                   }
                }
                else
@@ -1780,8 +1780,16 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "}" );
       }
 
-      private void FillComponent(EntityNode node, Parameter parameter)
+      private void FillComponent(bool fillNulls, EntityNode node, Parameter parameter)
       {
+         //fillNulls, only fill null values we don't want to keep filling them
+         //behind the scenes because a user might intentionally set something to null
+         //or resize an array which contains nulls (then we would crash because it's not the
+         //oroginal size of our code generation)
+
+         //if a user starts with something null and it doesn't spawn in the scene until later
+         //then he/she should use the SetGameObject node
+
          Type componentType  = typeof(UnityEngine.Component);
          Type gameObjectType = typeof(UnityEngine.GameObject);
          Type componentArrayType  = typeof(UnityEngine.Component[]);
@@ -1799,26 +1807,29 @@ namespace Detox.ScriptEditor
 
             string []values = Parameter.StringToArray( parameter.Default );
 
-            for ( int i = 0; i < values.Length; i++ )
+            if ( true == fillNulls )
             {
-               if ( values[i].Trim( ) == "" ) continue;
+               for ( int i = 0; i < values.Length; i++ )
+               {
+                  if ( values[i].Trim( ) == "" ) continue;
 
-               AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
+                  AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
 
-                  if ( uScriptRuntimeConfig.MasterObjectName == EscapeString(values[i].Trim( )) )
-                  {
-                     AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = uScript_MasterComponent.LatestMaster;" );
-                  }
-                  else
-                  {
-                     AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + EscapeString(values[i].Trim( )) + "\" ) as " + type + ";" );                     
-                  }
-                  SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, true );
-         
-               --m_TabStack;
-               AddCSharpLine( "}" );
+                     if ( uScriptRuntimeConfig.MasterObjectName == EscapeString(values[i].Trim( )) )
+                     {
+                        AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = uScript_MasterComponent.LatestMaster;" );
+                     }
+                     else
+                     {
+                        AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = GameObject.Find( \"" + EscapeString(values[i].Trim( )) + "\" ) as " + type + ";" );                     
+                     }
+                     SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, true );
+            
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
             }
          }
          else if ( true == componentArrayType.IsAssignableFrom(nodeType) )
@@ -1830,41 +1841,44 @@ namespace Detox.ScriptEditor
             string type = FormatType(parameter.Type);
             type = type.Substring( 0, type.Length - 2 );
 
-            AddCSharpLine( "{" );
-            ++m_TabStack;
-
-            AddCSharpLine( "GameObject gameObject = null;" );
-            
-            for ( int i = 0; i < values.Length; i++ )
+            if ( true == fillNulls )
             {
-               if ( values[i].Trim( ) == "" ) continue;
-
-               AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )" );
-               AddCSharpLine( "{" );               
+               AddCSharpLine( "{" );
                ++m_TabStack;
 
-                  if ( uScriptRuntimeConfig.MasterObjectName == EscapeString(values[i].Trim( )) )
-                  {
-                     AddCSharpLine( "gameObject = uScript_MasterComponent.LatestMaster;" );
-                  }
-                  else
-                  {
-                     AddCSharpLine( "gameObject = GameObject.Find( \"" + EscapeString(values[i].Trim( )) + "\" );" );
-                  }
+               AddCSharpLine( "GameObject gameObject = null;" );
                
-                  AddCSharpLine( "if ( null != " + "gameObject )" );
-         
+               for ( int i = 0; i < values.Length; i++ )
+               {
+                  if ( values[i].Trim( ) == "" ) continue;
+
+                  AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )" );
                   AddCSharpLine( "{" );               
                   ++m_TabStack;
-                     AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = gameObject.GetComponent<" + type + ">();" );
-                     AddMissingComponent( CSharpName(node, parameter.Name) + "[" + i + "]", "gameObject", type ); 
-                     SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, true );
-   
-                  --m_TabStack;
-                  AddCSharpLine( "}" );               
 
-               --m_TabStack;
-               AddCSharpLine( "};" );
+                     if ( uScriptRuntimeConfig.MasterObjectName == EscapeString(values[i].Trim( )) )
+                     {
+                        AddCSharpLine( "gameObject = uScript_MasterComponent.LatestMaster;" );
+                     }
+                     else
+                     {
+                        AddCSharpLine( "gameObject = GameObject.Find( \"" + EscapeString(values[i].Trim( )) + "\" );" );
+                     }
+                  
+                     AddCSharpLine( "if ( null != " + "gameObject )" );
+            
+                     AddCSharpLine( "{" );               
+                     ++m_TabStack;
+                        AddCSharpLine( CSharpName(node, parameter.Name) + "[" + i + "] = gameObject.GetComponent<" + type + ">();" );
+                        AddMissingComponent( CSharpName(node, parameter.Name) + "[" + i + "]", "gameObject", type ); 
+                        SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, true );
+      
+                     --m_TabStack;
+                     AddCSharpLine( "}" );               
+
+                  --m_TabStack;
+                  AddCSharpLine( "};" );
+               }
             }
 
             --m_TabStack;
@@ -1872,7 +1886,7 @@ namespace Detox.ScriptEditor
          }
          else if ( true == componentType.IsAssignableFrom(nodeType) )
          {
-            if ( parameter.Default != "" )
+            if ( true == fillNulls && parameter.Default != "" )
             {
                AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
                AddCSharpLine( "{" );
@@ -1904,7 +1918,7 @@ namespace Detox.ScriptEditor
          }
          else if ( true == gameObjectType.IsAssignableFrom(nodeType) )
          {
-            if ( true == node is OwnerConnection )
+            if ( true == fillNulls && true == node is OwnerConnection )
             {
                AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
                AddCSharpLine( "{" );
@@ -1914,7 +1928,7 @@ namespace Detox.ScriptEditor
                --m_TabStack;
                AddCSharpLine( "}" );
             }
-            else if ( parameter.Default != "" )
+            else if ( true == fillNulls && parameter.Default != "" )
             {
                AddCSharpLine( "if ( null == " + CSharpName(node, parameter.Name) + " )" );
                AddCSharpLine( "{" );
@@ -3977,7 +3991,7 @@ namespace Detox.ScriptEditor
          string currentCode = SetCode( "" );
          
          ++m_TabStack;
-            FillComponent( node, parameter );
+            FillComponent( false, node, parameter );
          --m_TabStack;
 
          string newCode = SetCode( currentCode );
