@@ -1404,8 +1404,14 @@ namespace Detox.ScriptEditor
          {
             AddCSharpLine( "bool " + outputs[i] + " = false;" );
 
+            //Immediately set to false after it's retrieved.  This forces the internal nodes to set it to true on a next signal
+            //if they want to continue feeding output.  Specifically this fixes a bug with [Driven] where an externalized socket
+            //might be hooked up to a true output and, later before it in the chain, someone outputs false.  It still
+            //would be stuck outputting true to the parent graph everytime [Driven] is iterated            
+            //It's ok if the parent hooks up to this multiple times because it creates a temp variable with the
+            //returned result and uses that, it doesn't requery us for each connection
             AddCSharpLine( "[FriendlyName(\"" + properties[i].FriendlyName + "\")]" );
-            AddCSharpLine( "public bool " + properties[i].Name + " { get { return " + outputs[i] + ";} }" );
+            AddCSharpLine( "public bool " + properties[i].Name + " { get { bool b = " + outputs[i] + "; " + outputs[i] + " = false; return b;} }" );
 
             m_ExternalOutputs.Add( properties[i] );
          }
@@ -1515,7 +1521,7 @@ namespace Detox.ScriptEditor
 
             foreach ( string driven in logic.Drivens )
             {
-               AddCSharpLine( "bool " + CSharpName(logic, driven) + " = true;" );
+               AddCSharpLine( "bool " + CSharpName(logic, driven) + " = false;" );
             }
          }
 
@@ -1642,7 +1648,12 @@ namespace Detox.ScriptEditor
          {
             foreach ( string driven in logicNode.Drivens )
             {
-               AddCSharpLine( CSharpRelay(logicNode, driven) + "();" );
+               AddCSharpLine( "if (true == " + CSharpName(logicNode, driven) + ")" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+                  AddCSharpLine( CSharpRelay(logicNode, driven) + "();" );
+               --m_TabStack;
+               AddCSharpLine( "}" );            
             }
          }
       }
@@ -3017,6 +3028,13 @@ namespace Detox.ScriptEditor
          else
          {
             AddCSharpLine( CSharpName(receiver, receiver.Type) + "." + methodName + "(" + args + ");" );            
+         }
+
+
+         //restart any drivens contained in this node
+         foreach ( string driven in receiver.Drivens )
+         {
+            AddCSharpLine( CSharpName(receiver, driven) + " = true;" );
          }
 
          //use previously saved temp variables to push the values

@@ -23,7 +23,7 @@ public class uScriptAct_Delay : uScriptLogic
   
    [FriendlyName("Delayed Out")]
    public bool AfterDelay { get { return m_DelayedOut; } }
-
+   
    [FriendlyName("In")]
    public void In(
       [FriendlyName("Duration", "Amount of time (in seconds) to delay.")]
@@ -40,16 +40,19 @@ public class uScriptAct_Delay : uScriptLogic
    [Driven]
    public bool DrivenDelay( )
    {
+      m_ImmediateOut = false;
+      m_DelayedOut = false;
+
       if ( m_TimeToTrigger > 0 )
       {
          m_TimeToTrigger -= UnityEngine.Time.deltaTime;
       
          if ( m_TimeToTrigger <= 0 )
          {
-            m_ImmediateOut = false;
             m_DelayedOut = true;
-            return true;
          }
+
+         return true;
       }
 
       return false;
