@@ -44,7 +44,7 @@ namespace Detox.ScriptEditor
          CreateGlobalVariables( );
          CreateBidirectionalLinks( );
          PruneUnusedNodes( );
-         RemoveOverriddenInstances( );
+         RemoveOverriddenParameters( );
          ConslidateExternals( );
       }
 
@@ -369,32 +369,52 @@ namespace Detox.ScriptEditor
          }
       }
 
-      private void RemoveOverriddenInstances( )
+      private void RemoveOverriddenParameters( )
       {
-         //first prune out any nodes which don't have valid instances
+         //prune out parameter values which have been overridden because
+         //a link is connected to it
          EntityNode []nodes = m_Script.EntityNodes;
 
          foreach ( EntityNode entityNode in nodes )
          {
-            //if it doesn't need an instance, don't worry about finding one
-            if ( false == entityNode is EntityProperty &&
-                 false == entityNode is EntityEvent &&
-                 false == entityNode is EntityMethod ) continue;
+            if ( entityNode is LocalNode ) continue;
 
-
-            //no instance? then don't worry about it
-            if ( entityNode.Instance.Default == "" ) continue;
-
-            //how about an instance linked to it?
-            LinkNode []instanceLinks = FindLinksByDestination( entityNode.Guid, entityNode.Instance.Name );
-            
-            if ( instanceLinks.Length > 0 )
+            if ( entityNode.Instance != Parameter.Empty && entityNode.Instance.Default != "" )
             {
-               Parameter p = entityNode.Instance;
-               p.Default = "";
-               entityNode.Instance = p;
-               m_Script.AddNode( entityNode );
+               //how about an instance linked to it?
+               LinkNode []instanceLinks = FindLinksByDestination( entityNode.Guid, entityNode.Instance.Name );
+               
+               if ( instanceLinks.Length > 0 )
+               {
+                  Parameter p = entityNode.Instance;
+                  p.Default = "";
+                  entityNode.Instance = p;
+                  m_Script.AddNode( entityNode );
+               }
             }
+
+            Parameter []parameters = entityNode.Parameters;
+
+            for ( int i = 0; i < parameters.Length; i++ )
+            {
+               Parameter p = parameters[ i ];
+
+               LinkNode []links = FindLinksByDestination( entityNode.Guid, p.Name );
+
+               if ( 0 == links.Length ) 
+               {
+                  links = FindLinksBySource( entityNode.Guid, p.Name );
+               }
+               
+               if ( links.Length > 0 )
+               {
+                  p.Default = "";
+                  parameters[ i ] = p;
+               }
+            }
+
+            entityNode.Parameters = parameters;
+            m_Script.AddNode( entityNode );
          }
       }
 
