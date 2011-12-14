@@ -2572,8 +2572,6 @@ namespace Detox.ScriptEditor
                   m_ExternalParameters.Add( clone );
                }
             }
-
-            if ( true == allowLink ) break;
          }
          
          if ( allowedRelays.Count > 0 )
