@@ -55,20 +55,3 @@ public class uScriptAct_SetLayer : uScriptLogic
    }
 	
 }
-
-
-
-
-
-/*
-	function SetLayerRecursively( obj : GameObject, newLayer : int  )
-{
-	obj.layer = newLayer;
-	
-	for( var child : Transform in obj.transform )
-	{
-		SetLayerRecursively( child.gameObject, newLayer );
-	}
-}
-	
-	*/
