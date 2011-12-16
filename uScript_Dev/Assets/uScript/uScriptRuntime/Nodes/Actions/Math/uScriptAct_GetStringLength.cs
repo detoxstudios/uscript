@@ -23,7 +23,7 @@ public class uScriptAct_GetStringLength : uScriptLogic
       [FriendlyName("Result", "The length of the Target string, expressed as an integer.")]
       out int IntValue,
 
-      [FriendlyName("Float Result", "The length of the Target string, expressed as a floating point number.")]
+      [FriendlyName("Float Result", "The length of the Target string, expressed as a floating-point number.")]
       [SocketState(false, false)]
       out float FloatValue,
 

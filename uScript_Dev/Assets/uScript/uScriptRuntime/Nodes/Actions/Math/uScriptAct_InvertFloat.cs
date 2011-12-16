@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Invert_Float")]
 
-[FriendlyName("Invert Float", "Returns the inverse value of a floating point variable." +
+[FriendlyName("Invert Float", "Returns the inverse value of a floating-point variable." +
  "\n\nExamples:" +
  "\n\t3.25 -> -3.25" +
  "\n\t-1.0 -> 1.0")]

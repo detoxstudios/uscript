@@ -18,31 +18,31 @@ public class uScriptAct_DivideFloat : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("A", "The numerator.")]
+      [FriendlyName("A", "The dividend.")]
       float A,
 
-      [FriendlyName("B", "The denominator.")]
+      [FriendlyName("B", "The divisor.  Must be a non-zero value.")]
       float B,
 
-      [FriendlyName("Result", "The floating point result of the operation.")]
+      [FriendlyName("Result", "The floating-point quotient or result of the operation.")]
       out float FloatResult,
 
-      [FriendlyName("Int Result", "The integer result of the operation.")]
+      [FriendlyName("Int Result", "The integer quotient or result of the operation.")]
       [SocketState(false, false)]
       out int IntResult
       )
    {
-      if (A != 0f && B != 0f)
+      if (B == 0)
+      {
+         uScriptDebug.Log("[Divide Float] You cannot divide by 0.  Returning 0 as the result.", uScriptDebug.Type.Error);
+         FloatResult = 0f;
+         IntResult = 0;
+      }
+      else
       {
          float total = A / B;
          FloatResult = total;
          IntResult = System.Convert.ToInt32(total);
-      }
-      else
-      {
-         uScriptDebug.Log("[Divide Float] You can not have both A and B values set to 0 when dividing. Returning 0 as the result.", uScriptDebug.Type.Error);
-         FloatResult = 0f;
-         IntResult = 0;
       }
    }
 }

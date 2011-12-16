@@ -4618,9 +4618,9 @@ public class uScript : EditorWindow
             case "Color":
                return "A Color variable. The color is defined in RGB color space and contains an Alpha (opacity) channel.";
             case "Float":
-               return "A Floating point variable may store a real number (e.g., 1.234, 5.0, -3.21).";
+               return "A floating-point variable may store a real number (e.g., 1.234, 5.0, -3.21).";
             case "Int":
-               return "An Integer variable may store a whole number (e.g., 1, 0, -3).";
+               return "An integer variable may store a whole number (e.g., 1, 0, -3).";
             case "Vector2":
                return "A Vector2 variable represents a 2-dimensional point in space (x,y).";
             case "Vector3":

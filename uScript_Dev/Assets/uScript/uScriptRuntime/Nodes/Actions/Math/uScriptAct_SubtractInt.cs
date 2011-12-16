@@ -27,7 +27,7 @@ public class uScriptAct_SubtractInt : uScriptLogic
       [FriendlyName("Result", "The integer result of the operation.")]
       out int IntResult,
 
-      [FriendlyName("Float Result", "The floating point result of the operation.")]
+      [FriendlyName("Float Result", "The floating-point result of the operation.")]
       [SocketState(false, false)]
       out float FloatResult
       )

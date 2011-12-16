@@ -20,7 +20,7 @@ public class uScriptAct_RoundFloat : uScriptLogic
       [FriendlyName("Target", "The float to round.")]
       float Target,
 
-      [FriendlyName("Result", "The floating point result of the rounding operation.")]
+      [FriendlyName("Result", "The floating-point result of the rounding operation.")]
       out float FloatResult,
 
       [FriendlyName("Int Result", "The integer result of the rounding operation.")]

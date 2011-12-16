@@ -24,7 +24,7 @@ public class uScriptAct_SubtractFloat : uScriptLogic
       [FriendlyName("B", "The second variable.")]
       float B,
 
-      [FriendlyName("Result", "The floating point result of the operation.")]
+      [FriendlyName("Result", "The floating-point result of the operation.")]
       out float FloatResult,
 
       [FriendlyName("Int Result", "The integer result of the operation.")]

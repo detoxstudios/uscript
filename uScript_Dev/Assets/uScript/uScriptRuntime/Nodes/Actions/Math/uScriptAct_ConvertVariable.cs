@@ -23,7 +23,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       [FriendlyName("Int Value", "The Target variable represented as an integer.")]
       out int IntValue,
       
-      [FriendlyName("Float Value", "The Target variable represented as a floating point value.")]
+      [FriendlyName("Float Value", "The Target variable represented as a floating-point value.")]
       out float FloatValue,
       
       [FriendlyName("String Value", "The Target variable represented as a string.")]

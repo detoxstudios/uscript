@@ -7,11 +7,11 @@ using System.Collections;
 [NodePath("Actions/Math")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip( "Perform various floating point exponent and logarithmic functions.")]
+[NodeToolTip( "Perform various floating-point exponent and logarithmic functions.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#ExponentLogarithm")]
 
-[FriendlyName("Exponent & Logarithmic Functions", "Perform various floating point exponent and logarithmic functions.")]
+[FriendlyName("Exponent & Logarithmic Functions", "Perform various floating-point exponent and logarithmic functions.")]
 public class uScriptAct_ExponentLogarithm : uScriptLogic
 {
    // ================================================================================

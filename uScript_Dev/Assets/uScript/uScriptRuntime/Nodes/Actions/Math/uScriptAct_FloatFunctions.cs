@@ -7,11 +7,11 @@ using System.Collections;
 [NodePath("Actions/Math")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip( "Perform various floating point functions.")]
+[NodeToolTip( "Perform various floating-point functions.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Trigonometry")]
 
-[FriendlyName("Floating Point Functions", "Perform various floating point functions.")]
+[FriendlyName("Floating Point Functions", "Perform various floating-point functions.")]
 public class uScriptAct_FloatFunctions : uScriptLogic
 {
    // ================================================================================

@@ -29,7 +29,7 @@ public class uScriptAct_ClampInt : uScriptLogic
       [FriendlyName("Result", "Integer result of the clamp operation.")]
       out int IntResult,
 
-      [FriendlyName("Float Result", "Floating point result of the clamp operation.")]
+      [FriendlyName("Float Result", "Floating-point result of the clamp operation.")]
       [SocketState(false, false)]
       out float FloatResult
       )

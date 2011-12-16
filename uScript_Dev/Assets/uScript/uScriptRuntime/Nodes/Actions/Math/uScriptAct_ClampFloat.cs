@@ -26,7 +26,7 @@ public class uScriptAct_ClampFloat : uScriptLogic
       [FriendlyName("Max", "The maximum value to clamp to.")]
       float Max,
       
-      [FriendlyName("Result", "Floating point result of the clamp operation.")]
+      [FriendlyName("Result", "Floating-point result of the clamp operation.")]
       out float FloatResult,
 
       [FriendlyName("Int Result", "Integer result of the clamp operation.")]
