@@ -131,7 +131,7 @@ public class uScriptAct_SpawnPrefab : uScriptLogic
       // Spawn the Prefab
       try
       {
-         GameObject spawnedPrefab = Instantiate(Resources.Load(fullPrefabPath), spawnPointPosition, spawnPointRotation) as GameObject;
+         GameObject spawnedPrefab = ScriptableObject.Instantiate(Resources.Load(fullPrefabPath), spawnPointPosition, spawnPointRotation) as GameObject;
 
          if (!string.IsNullOrEmpty(SpawnedName))
          {

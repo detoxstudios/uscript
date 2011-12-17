@@ -417,10 +417,12 @@ namespace Detox.ScriptEditor
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
-                  uScriptLogic logic = UnityEngine.ScriptableObject.CreateInstance( t ) as uScriptLogic;
+                  uScriptLogic logic = Activator.CreateInstance( t ) as uScriptLogic;//UnityEngine.ScriptableObject.CreateInstance( t ) as uScriptLogic;
 
                   bool result = null != logic.EditorDragDrop( o );
-                  UnityEngine.ScriptableObject.DestroyImmediate( logic );
+                  
+                  logic = null;
+                  //UnityEngine.ScriptableObject.DestroyImmediate( logic );
 
                   return result;
                }
@@ -504,7 +506,7 @@ namespace Detox.ScriptEditor
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
-                  uScriptLogic logic = UnityEngine.ScriptableObject.CreateInstance( t ) as uScriptLogic;
+                  uScriptLogic logic = Activator.CreateInstance( t ) as uScriptLogic;//UnityEngine.ScriptableObject.CreateInstance( t ) as uScriptLogic;
                   Hashtable hash = logic.EditorDragDrop( o );
                
                   EntityNode oldNode = entityNode.Copy( true );
@@ -530,7 +532,7 @@ namespace Detox.ScriptEditor
                      }
                   }
 
-                  UnityEngine.ScriptableObject.DestroyImmediate( logic );
+                  logic = null;//UnityEngine.ScriptableObject.DestroyImmediate( logic );
 
                   entityNode.Parameters = parameters;
 
@@ -1876,13 +1878,16 @@ namespace Detox.ScriptEditor
 
          foreach ( Node node in m_FlowChart.SelectedNodes )
          {
+            //TODO
+            //instead of parsing the node, the display node type should be 
+            //aware of what it wants to send to the property grid
+            //and could fill the parameters itself
             EntityNode entityNode = ((DisplayNode)node).EntityNode;
 
             string name = node.Name;
 
             if (node is EntityPropertyDisplayNode)
             {
-//               name = ((EntityPropertyDisplayNode)node).DisplayName.Replace("\n", ": ");
                name = "Instance Property";
             }
             else if (node is LocalNodeDisplayNode)
@@ -1899,6 +1904,11 @@ namespace Detox.ScriptEditor
             parameters.AddParameters( "Parameters", entityNode.Parameters );
             parameters.AddParameters( "Comment", new Parameter[] {entityNode.ShowComment, entityNode.Comment} );
             parameters.AddParameters( "Instance",new Parameter[] {entityNode.Instance} );
+
+            if (entityNode is LogicNode)
+            {
+               parameters.AddParameters( "Inspector Name",new Parameter[] {((LogicNode)entityNode).InspectorName} );
+            }
 
             gridParameters.Add( parameters );
          }
@@ -1925,6 +1935,14 @@ namespace Detox.ScriptEditor
             entityNode.ShowComment = p.GetParameters( "Comment" ) [ 0 ];
             entityNode.Comment     = p.GetParameters( "Comment" ) [ 1 ];
             entityNode.Instance    = p.GetParameters( "Instance" )[ 0 ];
+
+            if (entityNode is LogicNode)
+            {
+               LogicNode logicNode = (LogicNode) entityNode;
+               logicNode.InspectorName = p.GetParameters( "Inspector Name" )[ 0 ];
+               
+               entityNode = logicNode;
+            }
 
             m_ScriptEditor.AddNode( entityNode );
 

@@ -2081,8 +2081,9 @@ namespace Detox.ScriptEditor
          node.Drivens   = Drivens;
          node.Guid      = preserveGuid ? Guid : Guid.NewGuid( );
          node.Comment    = Comment;
-         node.RequiredMethods = RequiredMethods;
-         node.ShowComment= ShowComment;
+         node.InspectorName  = InspectorName;
+         node.RequiredMethods= RequiredMethods;
+         node.ShowComment    = ShowComment;
          return node;
       }
 
@@ -2101,8 +2102,9 @@ namespace Detox.ScriptEditor
             nodeData.Events    = ArrayUtil.ToPlugDatas( Events );
             nodeData.Drivens   = Drivens;
             nodeData.Guid      = Guid;
-            nodeData.Comment     = Comment.ToParameterData( );
-            nodeData.ShowComment = ShowComment.ToParameterData( );
+            nodeData.InspectorName   = InspectorName.ToParameterData( );
+            nodeData.Comment         = Comment.ToParameterData( );
+            nodeData.ShowComment     = ShowComment.ToParameterData( );
             nodeData.RequiredMethods = RequiredMethods;
 
             return nodeData;
@@ -2135,6 +2137,7 @@ namespace Detox.ScriptEditor
 
          if ( Position != node.Position ) return false;
          if ( Guid != node.Guid ) return false;
+         if ( InspectorName != node.InspectorName ) return false;
 
          if ( ShowComment != node.ShowComment ) return false;
          if ( Comment != node.Comment ) return false;
@@ -2158,6 +2161,7 @@ namespace Detox.ScriptEditor
 
       private Parameter m_ShowComment;
       private Parameter m_Comment;
+      private Parameter m_InspectorName;
 
       public Parameter ShowComment 
       {
@@ -2169,6 +2173,12 @@ namespace Detox.ScriptEditor
       {
          get { return m_Comment; }
          set { m_Comment = value; } 
+      }
+
+      public Parameter InspectorName
+      {
+         get { return m_InspectorName; }
+         set { m_InspectorName = value; } 
       }
 
       public Parameter Instance { get { return Parameter.Empty; } set {} }
@@ -2220,6 +2230,15 @@ namespace Detox.ScriptEditor
          m_Comment.Input   = true;
          m_Comment.Output  = false;
          m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+
+         m_InspectorName = new Parameter( );
+         m_InspectorName.Name         = "Inspector Name";
+         m_InspectorName.FriendlyName = "Inspector Name";
+         m_InspectorName.Type         = typeof(string).ToString( );
+         m_InspectorName.Input        = true;
+         m_InspectorName.Output       = false;
+         m_InspectorName.Default      = "";
+         m_InspectorName.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
       }
 
       public LogicNode(LogicNodeData data)       
@@ -2240,8 +2259,9 @@ namespace Detox.ScriptEditor
 
          m_Position = data.Position; 
 
-         m_ShowComment = new Parameter(data.ShowComment);
-         m_Comment     = new Parameter(data.Comment);
+         m_ShowComment   = new Parameter(data.ShowComment);
+         m_Comment       = new Parameter(data.Comment);
+         m_InspectorName = new Parameter(data.InspectorName);
       }
    }
 
@@ -2425,17 +2445,24 @@ namespace Detox.ScriptEditor
 
       public Parameter Instance { get { return Parameter.Empty; } set {} }
 
-      public Parameter[] Parameters { get { return new Parameter[] {m_Name, m_Value}; } set { m_Name = value[0]; m_Value = value[1];} }
+      public Parameter[] Parameters { get { return new Parameter[] {m_Name, m_Value, m_Externaled}; } set { m_Name = value[0]; m_Value = value[1];  m_Externaled = value[2];} }
 
       public bool IsStatic { get { return false; } }
 
       private Parameter m_Name;
       private Parameter m_Value;
+      private Parameter m_Externaled;
 
       public Parameter Name
       {
          get { return m_Name; }
          set { m_Name = value; }
+      }
+
+      public Parameter Externaled
+      {
+         get { return m_Externaled; }
+         set { m_Externaled = value; }
       }
 
       public Parameter Value
@@ -2485,6 +2512,15 @@ namespace Detox.ScriptEditor
          m_Name.Name    = "Name";
          m_Name.FriendlyName = "Name";
          m_Name.Type    = typeof(String).ToString( );
+
+         m_Externaled.Default = "false";
+         m_Externaled.ReferenceGuid = "";
+         m_Externaled.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         m_Externaled.Input   = true;
+         m_Externaled.Output  = false;
+         m_Externaled.Name    = "Expose to Inspector";
+         m_Externaled.FriendlyName = "Expose to Inspector";
+         m_Externaled.Type    = typeof(bool).ToString( );
 
          m_Position = Point.Empty; 
          m_Guid = Guid.NewGuid( ); 
@@ -4579,6 +4615,7 @@ namespace Detox.ScriptEditor
                   }
 
                   cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );                  
+                  cloned.InspectorName  = new Parameter( data.InspectorName );
                   break;
                }
             }

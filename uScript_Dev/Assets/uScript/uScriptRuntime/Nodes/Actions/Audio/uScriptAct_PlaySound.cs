@@ -101,7 +101,7 @@ public class uScriptAct_PlaySound : uScriptLogic
 
          for (i = 0; i < m_AudioSources.Length; i++)
          {
-            Destroy(m_AudioSources[i]);
+            ScriptableObject.Destroy(m_AudioSources[i]);
          }
 
          m_AudioSources = null;

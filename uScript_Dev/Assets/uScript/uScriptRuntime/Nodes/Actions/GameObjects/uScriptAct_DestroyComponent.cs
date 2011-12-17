@@ -40,11 +40,11 @@ public class uScriptAct_DestroyComponent : uScriptLogic
                {
                   if (DelayTime > 0F)
                   {
-                     Destroy(component, DelayTime);
+                     ScriptableObject.Destroy(component, DelayTime);
                   }
                   else
                   {
-                     Destroy(component);
+                     ScriptableObject.Destroy(component);
                   }
                }
                else

@@ -28,7 +28,7 @@ public class uScriptAct_SetActiveAudioListener : uScriptLogic
 		{
 			try
 			{
-				AudioListener[] listenerList = FindObjectsOfType(typeof(AudioListener)) as AudioListener[];
+				AudioListener[] listenerList = ScriptableObject.FindObjectsOfType(typeof(AudioListener)) as AudioListener[];
 				foreach (AudioListener tmpListener in listenerList)
 				{
 					tmpListener.enabled = false;

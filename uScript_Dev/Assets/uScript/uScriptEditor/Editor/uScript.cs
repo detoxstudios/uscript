@@ -3396,15 +3396,15 @@ public class uScript : EditorWindow
          }
       }
 
-      methods = typeof(ScriptableObject).GetMethods();
+      //methods = typeof(ScriptableObject).GetMethods();
 
-      foreach (MethodInfo m in methods)
-      {
-         if (true == m.IsPublic)
-         {
-            baseMethods[m.Name] = m.Name;
-         }
-      }
+      //foreach (MethodInfo m in methods)
+      //{
+      //   if (true == m.IsPublic)
+      //   {
+      //      baseMethods[m.Name] = m.Name;
+      //   }
+      //}
 
       //i think these are legacy uScript support and can go away
       //but i want to wait until we're inbetween builds to risk it

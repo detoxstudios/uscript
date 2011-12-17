@@ -32,7 +32,7 @@ public class uScriptAct_Destroy : uScriptLogic
          {
             if (currentTarget != null)
             {
-               Destroy(currentTarget, DelayTime);
+               ScriptableObject.Destroy(currentTarget, DelayTime);
             }
          }
       }
@@ -42,7 +42,7 @@ public class uScriptAct_Destroy : uScriptLogic
          {
             if (currentTarget != null)
             {
-               Destroy(currentTarget);
+               ScriptableObject.Destroy(currentTarget);
             }
          }
       }

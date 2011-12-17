@@ -503,6 +503,7 @@ namespace Detox.Data.ScriptEditor
       public string []Drivens;
       public string []RequiredMethods;
 
+      public Parameter InspectorName;
       public Parameter []Parameters;
 
       public override void Clone(EntityNodeData cloneFrom)
@@ -520,9 +521,10 @@ namespace Detox.Data.ScriptEditor
          Events = data.Events;   
          Drivens = data.Drivens;
          RequiredMethods = data.RequiredMethods;
+         InspectorName = data.InspectorName;
       }
 
-      public new int Version { get { return 5; } }
+      public new int Version { get { return 6; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -606,6 +608,22 @@ namespace Detox.Data.ScriptEditor
             {
                RequiredMethods = new string[0];
             }
+
+            if ( serializer.CurrentVersion > 5 )
+            {
+               InspectorName = (Parameter) serializer.LoadNamedObject( "InspectorName" );
+            }
+            else
+            {
+               InspectorName = new Parameter( );
+               InspectorName.Name         = "Inspector Name";
+               InspectorName.FriendlyName = "Inspector Name";
+               InspectorName.Type         = typeof(string).ToString( );
+               InspectorName.Input        = true;
+               InspectorName.Output       = false;
+               InspectorName.Default      = "";
+               InspectorName.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+            }
          }
 
          Parameters = (Parameter[]) serializer.LoadNamedObject( "Parameters" ); 
@@ -623,6 +641,7 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObject( "Parameters", Parameters );
          serializer.SaveNamedObject( "Drivens", Drivens );
          serializer.SaveNamedObject( "RequiredMethods", RequiredMethods );
+         serializer.SaveNamedObject( "InspectorName", InspectorName );
       }
    }
 
@@ -805,7 +824,7 @@ namespace Detox.Data.ScriptEditor
          Parameters = data.Parameters;
       }
 
-      public new int Version { get { return 2; } }
+      public new int Version { get { return 3; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -829,6 +848,22 @@ namespace Detox.Data.ScriptEditor
          else
          {
             Parameters = (Parameter[]) serializer.LoadNamedObject( "Parameters" );
+         
+            if ( serializer.CurrentVersion < 3 )
+            {
+               Parameter externaled = new Parameter( );
+
+               externaled.Default      = "false";
+               externaled.Input        = true;
+               externaled.Output       = false;
+               externaled.Name         = "Expose to Inspector";
+               externaled.FriendlyName = "Expose to Inspector";
+               externaled.State        = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
+               externaled.Type         = typeof(bool).ToString( );
+
+               Array.Resize<Parameter>( ref Parameters, Parameters.Length + 1 );            
+               Parameters[ Parameters.Length - 1 ] = externaled; 
+            }
          }
       }
 

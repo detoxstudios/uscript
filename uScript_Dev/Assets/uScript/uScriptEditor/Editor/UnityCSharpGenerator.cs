@@ -332,6 +332,11 @@ namespace Detox.ScriptEditor
                }
             }
 
+            if ( false == includeNode && entityNode is LocalNode )
+            {
+               includeNode = ((LocalNode)entityNode).Externaled.Default == "true";
+            }
+
             //no valid instance, so remove it
             if ( false == includeNode )
             {
@@ -364,6 +369,12 @@ namespace Detox.ScriptEditor
          {
             if ( false == usedNodes.Contains(entityNode.Guid) )
             {
+               if ( entityNode is LocalNode )
+               {
+                  bool externaled = ((LocalNode)entityNode).Externaled.Default == "true";
+                  if ( true == externaled ) continue;
+               }
+
                m_Script.RemoveNode( entityNode );
             }
          }
@@ -460,7 +471,7 @@ namespace Detox.ScriptEditor
             ++m_TabStack;
             
                AddCSharpLine( "#pragma warning disable 414" );
-               AddCSharpLine( logicClassName + " uScript; ");
+               AddCSharpLine( "public " + logicClassName + " uScript = new " + logicClassName + "( ); ");
                AddCSharpLine( "#pragma warning restore 414" );
             
                AddCSharpLine( "" );
@@ -470,8 +481,9 @@ namespace Detox.ScriptEditor
                ++m_TabStack;
 
                   AddCSharpLine( "useGUILayout = " + (NeedsGuiLayout( ) ? "true;" : "false;") );
-
-                  AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
+                  AddCSharpLine( "uScript.Awake( );" );
+            
+                  //AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
                   AddCSharpLine( "uScript.SetParent( this.gameObject );" );
 
                   string version = uScript_MasterComponent.Version;
@@ -644,6 +656,7 @@ namespace Detox.ScriptEditor
             AddCSharpLine( "" );
 
             AddCSharpLine( "[NodePath(\"Graphs\")]" );
+            AddCSharpLine( "[System.Serializable]" );
             BeginLogicClass( logicClassName );
             AddCSharpLine( "" );
 
@@ -1499,7 +1512,9 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "//local nodes" );
          foreach ( LocalNode local in m_Script.UniqueLocals )
          {
-            AddCSharpLine( FormatType(local.Value.Type) + " " + CSharpName(local) + " = " + FormatValue(local.Value.Default, local.Value.Type) + ";" );
+            string prefix = "true" == local.Externaled.Default ? "public " : "";
+
+            AddCSharpLine( prefix + FormatType(local.Value.Type) + " " + CSharpName(local) + " = " + FormatValue(local.Value.Default, local.Value.Type) + ";" );
             
             if ( local.Value.Type == "UnityEngine.GameObject" )
             {
@@ -1519,8 +1534,10 @@ namespace Detox.ScriptEditor
 
          foreach ( LogicNode logic in m_Script.Logics )
          {
+            string prefix = (true == (logic.InspectorName.Default != "")) ? "public " : "";
+
             AddCSharpLine( "//pointer to script instanced logic node" );
-            AddCSharpLine( FormatType(logic.Type) + " " + CSharpName(logic, logic.Type) + " = null;" );
+            AddCSharpLine( prefix + FormatType(logic.Type) + " " + CSharpName(logic, logic.Type) + " = new " + FormatType(logic.Type) + "( );" );
             
             foreach ( Parameter parameter in logic.Parameters )
             {
@@ -1625,8 +1642,13 @@ namespace Detox.ScriptEditor
       {   
          //for each logic node, create an script specific instance
          foreach ( LogicNode logicNode in m_Script.Logics )
-         {
-            AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = ScriptableObject.CreateInstance(typeof(" + logicNode.Type +")) as " + FormatType(logicNode.Type) + ";" );
+         {            
+            if ( NeedsMethod(logicNode, "Awake") )
+            {
+               AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Awake( );" );
+            }
+            
+            //AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = ScriptableObject.CreateInstance(typeof(" + logicNode.Type +")) as " + FormatType(logicNode.Type) + ";" );
          }
          
          AddCSharpLine( "" );
@@ -1854,15 +1876,15 @@ namespace Detox.ScriptEditor
          }
          else if ( true == componentArrayType.IsAssignableFrom(nodeType) )
          {
-            string []values = Parameter.StringToArray( parameter.Default );
-         
-            //remove curly braces from type declaration
-            //so we can use it to cast the object to the array element type
-            string type = FormatType(parameter.Type);
-            type = type.Substring( 0, type.Length - 2 );
-
             if ( true == fillNulls )
             {
+               string []values = Parameter.StringToArray( parameter.Default );
+            
+               //remove curly braces from type declaration
+               //so we can use it to cast the object to the array element type
+               string type = FormatType(parameter.Type);
+               type = type.Substring( 0, type.Length - 2 );
+
                AddCSharpLine( "{" );
                ++m_TabStack;
 
@@ -1898,11 +1920,12 @@ namespace Detox.ScriptEditor
 
                   --m_TabStack;
                   AddCSharpLine( "};" );
-               }
-            }
 
-            --m_TabStack;
-            AddCSharpLine( "};" );
+               }
+
+               --m_TabStack;
+               AddCSharpLine( "};" );
+            }
          }
          else if ( true == componentType.IsAssignableFrom(nodeType) )
          {
@@ -3501,8 +3524,15 @@ namespace Detox.ScriptEditor
          {
             LocalNode local = (LocalNode) entityNode;
 
-            name = "local_" + local.Name.Default + "_" + local.Value.Type;
-            name = name.Replace( "[]", "Array" );
+            if ( "true" == local.Externaled.Default ) 
+            {
+               name = local.Name.Default;
+            }
+            else
+            {
+               name = "local_" + local.Name.Default + "_" + local.Value.Type;
+               name = name.Replace( "[]", "Array" );
+            }
          }
          else if ( entityNode is OwnerConnection )
          {
@@ -3519,7 +3549,16 @@ namespace Detox.ScriptEditor
          else if ( entityNode is LogicNode )
          {
             LogicNode logicNode = (LogicNode) entityNode;
-            name = "logic_" + logicNode.Type + "_" + parameterName + "_" + guidId;
+
+            //InspectorName if we're creating a name for the Type of the logic node
+            if ( "" != logicNode.InspectorName.Default && logicNode.Type == parameterName )
+            {
+               name = logicNode.InspectorName.Default;
+            }
+            else
+            {
+               name = "logic_" + logicNode.Type + "_" + parameterName + "_" + guidId;
+            }
          }
          else
          {
@@ -3693,15 +3732,18 @@ namespace Detox.ScriptEditor
       //so i have a manual list here of methods which are external inputs should not be called
       private string RemoveReflectionConflicts( string methodName )
       {
-         if ( methodName == "OnDestroy" )   return "_" + methodName;
-         if ( methodName == "OnDisable" )   return "_" + methodName;
-         if ( methodName == "OnEnable" )    return "_" + methodName;
          if ( methodName == "Start" )       return "_" + methodName;
          if ( methodName == "Update" )      return "_" + methodName;
-         if ( methodName == "LateUpdate" )  return "_" + methodName;
-         if ( methodName == "FixedUpdate" ) return "_" + methodName;
          if ( methodName == "OnGUI" )       return "_" + methodName;
          if ( methodName == "Awake" )       return "_" + methodName;
+
+         //we no longer derive from ScriptableObject
+         //so these aren't a concern
+         //if ( methodName == "OnDestroy" )   return "_" + methodName;
+         //if ( methodName == "OnDisable" )   return "_" + methodName;
+         //if ( methodName == "OnEnable" )    return "_" + methodName;
+         //if ( methodName == "LateUpdate" )  return "_" + methodName;
+         //if ( methodName == "FixedUpdate" ) return "_" + methodName;
 
          return methodName;
       }

@@ -234,7 +234,7 @@ public class uScriptEvent : MonoBehaviour
 {
 }
 
-public class uScriptLogic : ScriptableObject
+public class uScriptLogic : System.Object
 {
    public virtual void SetParent( GameObject parent ) {}
    
