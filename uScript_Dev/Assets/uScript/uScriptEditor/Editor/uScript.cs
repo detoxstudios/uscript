@@ -4038,8 +4038,10 @@ public class uScript : EditorWindow
 
       foreach (UnityEngine.Object o in allObjects)
       {
-         //ignore our uscripts, they are handled separately
-         if (typeof(uScriptCode).IsAssignableFrom(o.GetType())) continue;
+         //don't ignore uScriptCode because we want to reflect
+         //any public inspector properties
+
+         //ignore our logic scripts, they are handled separately
          if (typeof(uScriptLogic).IsAssignableFrom(o.GetType())) continue;
 
          uniqueObjects[o.GetType().ToString()] = o.GetType();

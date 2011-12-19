@@ -475,6 +475,18 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "#pragma warning restore 414" );
             
                AddCSharpLine( "" );
+               
+               //any inspector variables should be also marked as public properties
+               //so they can be get/set by other uscripts
+               foreach ( LocalNode node in m_Script.UniqueLocals )
+               {
+                  if ( "true" == node.Externaled.Default )
+                  {
+                     AddCSharpLine( "public " + node.Value.Type + " " + CSharpName(node) + " { get { return uScript." + node.Name.Default + "; } set { " + node.Name.Default + " = value; } } " );
+                  }
+               }
+
+               AddCSharpLine( "" );
 
                AddCSharpLine( "void Awake( )" );
                AddCSharpLine( "{" );
