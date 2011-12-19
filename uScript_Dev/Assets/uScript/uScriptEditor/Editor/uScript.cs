@@ -814,7 +814,7 @@ public class uScript : EditorWindow
          //see the m_DoRebuildScripts below
          AssetDatabase.StartAssetEditing();
          {
-            RebuildScripts(Preferences.UserScripts);
+            RebuildScripts(Preferences.UserScripts, false);
          }
          AssetDatabase.StopAssetEditing();
          AssetDatabase.Refresh();
@@ -2651,7 +2651,7 @@ public class uScript : EditorWindow
    void FileMenuItem_Clean()
    {
       AssetDatabase.StartAssetEditing();
-      RemoveGeneratedCode(Preferences.GeneratedScripts);
+      StubGeneratedCode(Preferences.UserScripts);
       AssetDatabase.StopAssetEditing();
       AssetDatabase.Refresh();
       isFileMenuOpen = false;
@@ -3119,25 +3119,9 @@ public class uScript : EditorWindow
       }
    }
 
-   public void RemoveGeneratedCode(string path)
+   public void StubGeneratedCode(string path)
    {
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
-
-      System.IO.FileInfo[] files = directory.GetFiles();
-
-      foreach (System.IO.FileInfo file in files)
-      {
-         string relativePath = uScriptConfig.ConstantPaths.RelativePath(file.FullName);
-
-         if (file.FullName.EndsWith(uScriptConfig.Files.GeneratedComponentExtension + ".cs"))
-         {
-            StubComponentFile(relativePath);
-         }
-         else
-         {
-            AssetDatabase.DeleteAsset(relativePath);
-         }
-      }
+      RebuildScripts(path, true);
    }
 
    public void RebuildAllScripts()
@@ -3145,14 +3129,14 @@ public class uScript : EditorWindow
       //first remove everything so we get rid of any compiler errors
       //which allows the reflection to properly refresh
       AssetDatabase.StartAssetEditing();
-      RemoveGeneratedCode(Preferences.GeneratedScripts);
+      StubGeneratedCode(Preferences.UserScripts);
       AssetDatabase.StopAssetEditing();
       AssetDatabase.Refresh();
 
       m_RebuildWhenReady = true;
    }
 
-   public void RebuildScripts(string path)
+   public void RebuildScripts(string path, bool stubCode)
    {
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
 
@@ -3169,7 +3153,7 @@ public class uScript : EditorWindow
 
          if (true == scriptEditor.Open(file.FullName))
          {
-            if (true == SaveScript(scriptEditor, file.FullName, true, GenerateDebugInfo))
+            if (true == SaveScript(scriptEditor, file.FullName, true, GenerateDebugInfo, stubCode))
             {
                uScriptDebug.Log("Rebuilt " + file.FullName);
             }
@@ -3182,7 +3166,7 @@ public class uScript : EditorWindow
 
       foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
       {
-         RebuildScripts(subDirectory.FullName);
+         RebuildScripts(subDirectory.FullName, stubCode);
       }
    }
 
@@ -3212,7 +3196,7 @@ public class uScript : EditorWindow
       return logicPath;
    }
 
-   private bool SaveScript(Detox.ScriptEditor.ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo)
+   private bool SaveScript(Detox.ScriptEditor.ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo, bool stubCode)
    {
       bool result;
 
@@ -3221,7 +3205,7 @@ public class uScript : EditorWindow
          string wrapperPath = GetGeneratedScriptPath(binaryPath);
          string logicPath   = GetNestedScriptPath(binaryPath);
 
-         result = script.Save(binaryPath, logicPath, wrapperPath, generateDebugInfo);
+         result = script.Save(binaryPath, logicPath, wrapperPath, generateDebugInfo, stubCode);
 
          if (true == result)
          {
@@ -3308,7 +3292,7 @@ public class uScript : EditorWindow
             script.SceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
          }
 
-         if (true == SaveScript(script, m_FullPath, generateCode, GenerateDebugInfo))
+         if (true == SaveScript(script, m_FullPath, generateCode, GenerateDebugInfo, false))
          {
 
             m_ScriptEditorCtrl.IsDirty = false;

@@ -4306,7 +4306,7 @@ namespace Detox.ScriptEditor
          return true;
       }
 
-      public bool Save(string binaryFile, string logicFile, string wrapperFile, bool saveForDebugging)
+      public bool Save(string binaryFile, string logicFile, string wrapperFile, bool saveForDebugging, bool stubCode)
       {
          m_SavedForDebugging = saveForDebugging;
 
@@ -4339,7 +4339,7 @@ namespace Detox.ScriptEditor
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
             streamWriter = File.CreateText( wrapperFile );
-            streamWriter.Write( codeGenerator.GenerateGameObjectScript(logicClass, this) );
+            streamWriter.Write( codeGenerator.GenerateGameObjectScript(logicClass, this, stubCode) );
             streamWriter.Close( );
          }
          catch (Exception e)
@@ -4357,7 +4357,7 @@ namespace Detox.ScriptEditor
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
             streamWriter = File.CreateText( logicFile );
-            streamWriter.Write( codeGenerator.GenerateLogicScript(logicClass, this, saveForDebugging) );
+            streamWriter.Write( codeGenerator.GenerateLogicScript(logicClass, this, saveForDebugging, stubCode) );
             streamWriter.Close( );
          }
          catch (Exception e)

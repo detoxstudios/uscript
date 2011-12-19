@@ -448,7 +448,7 @@ namespace Detox.ScriptEditor
          return false;
       }
 
-      public string GenerateGameObjectScript(string logicClassName, ScriptEditor script)
+      public string GenerateGameObjectScript(string logicClassName, ScriptEditor script, bool stubCode)
       {
          m_GenerateDebugInfo = false;
          m_CSharpString = "";
@@ -488,104 +488,107 @@ namespace Detox.ScriptEditor
 
                AddCSharpLine( "" );
 
-               AddCSharpLine( "void Awake( )" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-
-                  AddCSharpLine( "useGUILayout = " + (NeedsGuiLayout( ) ? "true;" : "false;") );
-                  AddCSharpLine( "uScript.Awake( );" );
-            
-                  //AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
-                  AddCSharpLine( "uScript.SetParent( this.gameObject );" );
-
-                  string version = uScript_MasterComponent.Version;
-
-                  AddCSharpLine( "if ( \"" + version + "\" != uScript_MasterComponent.Version )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-                     AddCSharpLine( "uScriptDebug.Log( \"The generated code is not compatible with your current uScript Runtime \" + uScript_MasterComponent.Version, uScriptDebug.Type.Error );" );
-                     AddCSharpLine( "uScript = null;" );
-                     AddCSharpLine( "UnityEngine.Debug.Break();" );
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-
-               --m_TabStack;
-               AddCSharpLine( "}" );
-            
+               if ( false == stubCode )
                {
-                  AddCSharpLine( "void Start( )" );
+                  AddCSharpLine( "void Awake( )" );
                   AddCSharpLine( "{" );
                   ++m_TabStack;
+
+                     AddCSharpLine( "useGUILayout = " + (NeedsGuiLayout( ) ? "true;" : "false;") );
+                     AddCSharpLine( "uScript.Awake( );" );
                
-                     AddCSharpLine( "uScript.Start( );" );
-               
+                     //AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
+                     AddCSharpLine( "uScript.SetParent( this.gameObject );" );
+
+                     string version = uScript_MasterComponent.Version;
+
+                     AddCSharpLine( "if ( \"" + version + "\" != uScript_MasterComponent.Version )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                        AddCSharpLine( "uScriptDebug.Log( \"The generated code is not compatible with your current uScript Runtime \" + uScript_MasterComponent.Version, uScriptDebug.Type.Error );" );
+                        AddCSharpLine( "uScript = null;" );
+                        AddCSharpLine( "UnityEngine.Debug.Break();" );
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+
                   --m_TabStack;
                   AddCSharpLine( "}" );
+               
+                  {
+                     AddCSharpLine( "void Start( )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                  
+                        AddCSharpLine( "uScript.Start( );" );
+                  
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  }
+
+                  //always do update because the unity hooks
+                  //and drivens are valdiated there
+                  {
+                     AddCSharpLine( "void Update( )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                  
+                        AddCSharpLine( "uScript.Update( );" );
+                  
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  }
+
+                  if ( true == NeedsMethod("LateUpdate") )
+                  {
+                     AddCSharpLine( "void LateUpdate( )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                  
+                        AddCSharpLine( "uScript.LateUpdate( );" );
+                  
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  }
+
+                  if ( true == NeedsMethod("FixedUpdate") )
+                  {
+                     AddCSharpLine( "void FixedUpdate( )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                  
+                        AddCSharpLine( "uScript.FixedUpdate( );" );
+                  
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  }
+
+                  if ( true == NeedsMethod("OnGUI") )
+                  {
+                     AddCSharpLine( "void OnGUI( )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                  
+                        AddCSharpLine( "uScript.OnGUI( );" );
+                  
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+                  }
+
+                  AddCSharpLine( "#if UNITY_EDITOR" );
+                  ++m_TabStack;
+
+                     AddCSharpLine( "void OnDrawGizmos( )" );
+                     AddCSharpLine( "{" );
+                     ++m_TabStack;
+                  
+                        DefineDrawGizmos( );
+                  
+                     --m_TabStack;
+                     AddCSharpLine( "}" );
+
+                  --m_TabStack;
+                  AddCSharpLine( "#endif" );
                }
-
-               //always do update because the unity hooks
-               //and drivens are valdiated there
-               {
-                  AddCSharpLine( "void Update( )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-               
-                     AddCSharpLine( "uScript.Update( );" );
-               
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-               }
-
-               if ( true == NeedsMethod("LateUpdate") )
-               {
-                  AddCSharpLine( "void LateUpdate( )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-               
-                     AddCSharpLine( "uScript.LateUpdate( );" );
-               
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-               }
-
-               if ( true == NeedsMethod("FixedUpdate") )
-               {
-                  AddCSharpLine( "void FixedUpdate( )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-               
-                     AddCSharpLine( "uScript.FixedUpdate( );" );
-               
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-               }
-
-               if ( true == NeedsMethod("OnGUI") )
-               {
-                  AddCSharpLine( "void OnGUI( )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-               
-                     AddCSharpLine( "uScript.OnGUI( );" );
-               
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-               }
-
-               AddCSharpLine( "#if UNITY_EDITOR" );
-               ++m_TabStack;
-
-                  AddCSharpLine( "void OnDrawGizmos( )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-               
-                     DefineDrawGizmos( );
-               
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-
-               --m_TabStack;
-               AddCSharpLine( "#endif" );
 
             --m_TabStack;
             AddCSharpLine( "}" );
@@ -643,7 +646,7 @@ namespace Detox.ScriptEditor
          return false;
       }
 
-      public string GenerateLogicScript(string logicClassName, ScriptEditor script, bool generateDebugInfo)
+      public string GenerateLogicScript(string logicClassName, ScriptEditor script, bool generateDebugInfo, bool stubCode)
       {
          m_CSharpString = "";
          m_TabStack = 0;
@@ -676,105 +679,109 @@ namespace Detox.ScriptEditor
                DeclareMemberVariables( );
                AddCSharpLine( "" );
 
-               SetupProperties( );
-               AddCSharpLine( "" );
-               DefineSyncUnityHooks( );
-               AddCSharpLine( "" );
-               DefineSyncEventListeners( );
-               AddCSharpLine( "" );
-               
-               AddCSharpLine( "public override void SetParent(GameObject g)" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-                  DefineSetParent( );
-               --m_TabStack;
-               AddCSharpLine( "}" );
-
-               AddCSharpLine( "public void Awake()" );
-               AddCSharpLine( "{" );
-
-               ++m_TabStack;
-                  DefineAwakeInitialization( );
-               --m_TabStack;
-
-               AddCSharpLine( "}" );
-               AddCSharpLine( "" );
-               
+               if ( false == stubCode )
                {
-                  if ( false == m_RequiredMethods.Contains("Start") ) m_RequiredMethods.Add("Start");
+                  SetupProperties( );
+                  AddCSharpLine( "" );
+                  DefineSyncUnityHooks( );
+                  AddCSharpLine( "" );
+                  DefineSyncEventListeners( );
+                  AddCSharpLine( "" );
+                  
+                  AddCSharpLine( "public override void SetParent(GameObject g)" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     DefineSetParent( );
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
 
-                  AddCSharpLine( "public void Start()" );
+                  AddCSharpLine( "public void Awake()" );
                   AddCSharpLine( "{" );
 
                   ++m_TabStack;
-                     DefineStartInitialization( );
+                     DefineAwakeInitialization( );
                   --m_TabStack;
 
                   AddCSharpLine( "}" );
                   AddCSharpLine( "" );
+                  
+                  {
+                     if ( false == m_RequiredMethods.Contains("Start") ) m_RequiredMethods.Add("Start");
+
+                     AddCSharpLine( "public void Start()" );
+                     AddCSharpLine( "{" );
+
+                     ++m_TabStack;
+                        DefineStartInitialization( );
+                     --m_TabStack;
+
+                     AddCSharpLine( "}" );
+                     AddCSharpLine( "" );
+                  }
+
+                  //always do fixed update because this is where we sync our unity hooks
+                  {
+                     if ( false == m_RequiredMethods.Contains("Update") ) m_RequiredMethods.Add("Update");
+
+                     AddCSharpLine( "public void Update()" );
+                     AddCSharpLine( "{" );
+
+                     ++m_TabStack;
+                        DefineUpdate( );
+                     --m_TabStack;
+
+                     AddCSharpLine( "}" );
+                     AddCSharpLine( "" );
+                  }
+
+                  if ( true == NeedsMethod("LateUpdate") )
+                  {
+                     if ( false == m_RequiredMethods.Contains("LateUpdate") ) m_RequiredMethods.Add("LateUpdate");
+
+                     AddCSharpLine( "public void LateUpdate()" );
+                     AddCSharpLine( "{" );
+
+                     ++m_TabStack;
+                        DefineLateUpdate( );
+                     --m_TabStack;
+
+                     AddCSharpLine( "}" );
+                     AddCSharpLine( "" );
+                  }
+
+                  if ( true == NeedsMethod("FixedUpdate") )
+                  {
+                     if ( false == m_RequiredMethods.Contains("FixedUpdate") ) m_RequiredMethods.Add("FixedUpdate");
+
+                     AddCSharpLine( "public void FixedUpdate()" );
+                     AddCSharpLine( "{" );
+
+                     ++m_TabStack;
+                        DefineFixedUpdate( );
+                     --m_TabStack;
+
+                     AddCSharpLine( "}" );
+                     AddCSharpLine( "" );
+                  }
+
+                  if ( true == NeedsMethod("OnGUI") )
+                  {
+                     if ( false == m_RequiredMethods.Contains("OnGUI") ) m_RequiredMethods.Add("OnGUI");
+
+                     AddCSharpLine( "public void OnGUI()" );
+                     AddCSharpLine( "{" );
+
+                     ++m_TabStack;
+                        DefineOnGUI( );
+                     --m_TabStack;
+
+                     AddCSharpLine( "}" );
+                     AddCSharpLine( "" );
+                  }
+
+                  DefineEvents( );
                }
 
-               //always do fixed update because this is where we sync our unity hooks
-               {
-                  if ( false == m_RequiredMethods.Contains("Update") ) m_RequiredMethods.Add("Update");
-
-                  AddCSharpLine( "public void Update()" );
-                  AddCSharpLine( "{" );
-
-                  ++m_TabStack;
-                     DefineUpdate( );
-                  --m_TabStack;
-
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "" );
-               }
-
-               if ( true == NeedsMethod("LateUpdate") )
-               {
-                  if ( false == m_RequiredMethods.Contains("LateUpdate") ) m_RequiredMethods.Add("LateUpdate");
-
-                  AddCSharpLine( "public void LateUpdate()" );
-                  AddCSharpLine( "{" );
-
-                  ++m_TabStack;
-                     DefineLateUpdate( );
-                  --m_TabStack;
-
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "" );
-               }
-
-               if ( true == NeedsMethod("FixedUpdate") )
-               {
-                  if ( false == m_RequiredMethods.Contains("FixedUpdate") ) m_RequiredMethods.Add("FixedUpdate");
-
-                  AddCSharpLine( "public void FixedUpdate()" );
-                  AddCSharpLine( "{" );
-
-                  ++m_TabStack;
-                     DefineFixedUpdate( );
-                  --m_TabStack;
-
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "" );
-               }
-
-               if ( true == NeedsMethod("OnGUI") )
-               {
-                  if ( false == m_RequiredMethods.Contains("OnGUI") ) m_RequiredMethods.Add("OnGUI");
-
-                  AddCSharpLine( "public void OnGUI()" );
-                  AddCSharpLine( "{" );
-
-                  ++m_TabStack;
-                     DefineOnGUI( );
-                  --m_TabStack;
-
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "" );
-               }
-
-               DefineEvents( );
             --m_TabStack;
             
             EndClass( );
