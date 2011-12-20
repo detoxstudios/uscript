@@ -1944,9 +1944,33 @@ namespace Detox.ScriptEditor
                entityNode = logicNode;
             }
 
+            if (entityNode is LocalNode)
+            {
+               LocalNode localNode = (LocalNode) entityNode;
+               if ( localNode.Externaled.Default == "true" &&
+                    localNode.Name.Default == ""
+                  )
+               {
+                  Parameter clonedExternal = localNode.Externaled;
+                  clonedExternal.Default = "false";
+                  
+                  localNode.Externaled = clonedExternal;
+                  entityNode = localNode;
+
+                  //the old node might equal the new node
+                  //but we still changed
+                  //from the value in the property grid
+                  changed = true;
+
+                  //status updates aren't working and we have to get the build done
+                  //so i'm forcing a log warning
+                  UnityEngine.Debug.LogWarning( "For a node to be exposed to the Inspector it must have a name" );
+               }
+            }
+
             m_ScriptEditor.AddNode( entityNode );
 
-            if ( false == oldNode.Equals(entityNode) )
+            if ( true == changed || false == oldNode.Equals(entityNode) )
             {
                changed = true;
 

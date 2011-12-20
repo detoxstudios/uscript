@@ -482,7 +482,7 @@ namespace Detox.ScriptEditor
                {
                   if ( "true" == node.Externaled.Default )
                   {
-                     AddCSharpLine( "public " + node.Value.Type + " " + CSharpName(node) + " { get { return uScript." + node.Name.Default + "; } set { " + node.Name.Default + " = value; } } " );
+                     AddCSharpLine( "public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return uScript." + CSharpName(node) + "; } set { " + CSharpName(node) + " = value; } } " );
                   }
                }
 
