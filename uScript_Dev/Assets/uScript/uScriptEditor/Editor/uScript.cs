@@ -4027,6 +4027,7 @@ public class uScript : EditorWindow
 
          //ignore our logic scripts, they are handled separately
          if (typeof(uScriptLogic).IsAssignableFrom(o.GetType())) continue;
+         if (typeof(uScript_UndoComponent).IsAssignableFrom(o.GetType())) continue;
 
          uniqueObjects[o.GetType().ToString()] = o.GetType();
       }
