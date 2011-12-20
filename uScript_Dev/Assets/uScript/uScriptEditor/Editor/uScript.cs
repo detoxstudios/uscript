@@ -1896,6 +1896,20 @@ public class uScript : EditorWindow
       uScriptGUIStyle.Init();
       uScriptGUI.InitPanels();
 
+      // Notify the user when the editor is in play mode, since any changes
+      // made to the uScript will be lost when exiting the mode.
+      //
+      if (Application.isPlaying)
+      {
+         ShowNotification(uScriptGUIContent.messagePlaying);
+      }
+      else
+      {
+         RemoveNotification();
+      }
+
+      // Draw the various GUI panels
+      //
       DrawGUITopAreas();
       if (!uScriptGUI.panelsHidden)
       {
