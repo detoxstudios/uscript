@@ -29,7 +29,7 @@ public class uScriptAct_GetTransform : uScriptLogic
       else
       {
          uScriptDebug.Log ("(Node - Get Transform): The specified Target GameObject was null.", uScriptDebug.Type.Warning);
-         targetTransform = new Transform();
+         targetTransform = null;
       }
    }
 }
