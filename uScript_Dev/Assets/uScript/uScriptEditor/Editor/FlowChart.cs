@@ -1761,7 +1761,7 @@ namespace Detox.FlowChart
             }
             else
             {
-               e.Graphics.FillRectangle(StyleName, nodeRect, "", this);
+               e.Graphics.FillRectangle(StyleName, nodeRect, Name, this);
             }
          }
          else
