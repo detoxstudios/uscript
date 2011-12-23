@@ -24,7 +24,7 @@ public class uScriptAct_GetFacingAngle : uScriptLogic
       if (null != A && null != B)
       {
          Vector3 bPos = B.transform.position;
-         Vector3 finalPos = A.transform.InverseTransformDirection(bPos);
+         Vector3 finalPos = A.transform.InverseTransformPoint(bPos);
 
          float Result = Mathf.Atan2(finalPos.x, finalPos.z) * Mathf.Rad2Deg;
          Angle = Result;
