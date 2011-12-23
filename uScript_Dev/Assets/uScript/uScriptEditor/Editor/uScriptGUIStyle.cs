@@ -155,6 +155,15 @@ public static class uScriptGUIStyle
          // the skin has been changed
          _currentSkin = GUI.skin.name;
 
+         if (_currentSkin == "SceneGUISkin")
+         {
+            _currentSkin = "DarkSkin";
+         }
+         else if (_currentSkin == "InspectorGUISkin")
+         {
+            _currentSkin = "LightSkin";
+         }
+
          // reload all custom GUI textures to match the new skin
          string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + _currentSkin + "_";
          _texture_windowMenuDropDown = AssetDatabase.LoadAssetAtPath(skinPath + "MenuDropDown.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
