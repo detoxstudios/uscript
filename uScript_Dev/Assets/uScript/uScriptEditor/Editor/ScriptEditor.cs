@@ -3780,9 +3780,24 @@ namespace Detox.ScriptEditor
                if ( true == isGlobal )
                {
                   bool hasValue = ("" != localNode.Value.Default);
-   
+                  
+                  if ( false == hasValue )
+                  {
+                     //if it already exists see if the externaled
+                     //value changed, this would mean it's been updated
+                     //even if the value is blank
+                     if ( true == m_Nodes.Contains(node.Guid) )
+                     {
+                        LocalNode clone = (LocalNode) m_Nodes.Get(node.Guid);
+                        hasValue = clone.Externaled != localNode.Externaled;
+                     }
+                  }
+
                   //if they modified a local node
                   //go through the list and update all matching nodes
+
+                  //if hasValue is false then it was a new node they are placing
+                  //and we don't want to use its values and clear out all the globals
                   if ( true == hasValue )
                   {
                      List<LocalNode> updates = new List<LocalNode>( );
