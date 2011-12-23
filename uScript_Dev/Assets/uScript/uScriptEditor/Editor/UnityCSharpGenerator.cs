@@ -274,6 +274,29 @@ namespace Detox.ScriptEditor
                m_Script.AddNode( unique );
             }
          }
+
+
+         //now consolidate all links to the unique nodes
+
+         Dictionary<string, LocalNode> dictionary = new Dictionary<string, LocalNode>( );
+         
+         foreach ( LocalNode local in m_Script.UniqueLocals )
+         {
+            dictionary[ local.Name.Default + local.Value.Type ] = local;
+         }         
+
+         LocalNode [] allLocals = m_Script.Locals;
+
+         foreach ( LocalNode local in allLocals )
+         {
+            LocalNode existing = dictionary[ local.Name.Default + local.Value.Type ];
+
+            if ( existing.Guid != local.Guid )
+            {
+               m_Script.RedirectLinks( local.Guid, existing.Guid );
+               m_Script.RemoveNode( local );
+            }
+         }
       }
 
       private void PruneUnusedNodes( )
@@ -3683,7 +3706,7 @@ namespace Detox.ScriptEditor
             if ( entityEvent.ComponentType != "uScript_GUI" )
             {
                AddCSharpLine( entityEvent.ComponentType + " component = " + eventVariable + ".GetComponent<" + entityEvent.ComponentType + ">();" );
-               AddMissingComponent( "component", eventVariable, entityEvent.ComponentType ); 
+               if ( true == add ) AddMissingComponent( "component", eventVariable, entityEvent.ComponentType ); 
             }
             else
             {

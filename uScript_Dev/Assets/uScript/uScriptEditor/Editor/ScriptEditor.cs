@@ -3928,6 +3928,36 @@ namespace Detox.ScriptEditor
          return null;
       }
 
+      public void RedirectLinks(Guid fromNode, Guid toNode)
+      {
+         LinkNode [] links;
+         
+         links = GetLinksByDestination( fromNode, null );
+         
+         foreach ( LinkNode link in links )
+         {
+            LinkNode clone = link;
+
+            RemoveNode( link );
+            
+            clone.Destination.Guid = toNode;
+
+            AddNode( clone );
+         }
+
+         links = GetLinksBySource( fromNode, null );
+         
+         foreach ( LinkNode link in links )
+         {
+            LinkNode clone = link;
+
+            RemoveNode( link );
+            clone.Source.Guid = toNode;
+
+            AddNode( clone );
+         }
+      }
+
       public void RemoveNode(EntityNode removeNode)
       {
          List<EntityNode> references = new List<EntityNode>( );
@@ -4199,7 +4229,7 @@ namespace Detox.ScriptEditor
          if ( null == readData ) return false;
 
          ScriptEditorData = data as ScriptEditorData;
-
+         
          VerifyAllLinks( );
 
          return true;
