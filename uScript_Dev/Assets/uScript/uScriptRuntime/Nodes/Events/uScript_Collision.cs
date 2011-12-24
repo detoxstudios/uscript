@@ -4,8 +4,6 @@
 using UnityEngine;
 using System.Collections;
 
-[NodeComponentType(typeof(Collider), typeof(Rigidbody))]
-
 [NodePath("Events/Physics Events")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]

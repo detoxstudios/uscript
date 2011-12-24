@@ -4,8 +4,6 @@
 using UnityEngine;
 using System.Collections;
 
-[NodeComponentType(typeof(Transform))]
-
 [NodePath("Events/Custom Events")]
 [NodePropertiesPath("Properties/CustomEventBool")]
 

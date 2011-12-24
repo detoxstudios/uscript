@@ -4,8 +4,6 @@
 using UnityEngine;
 using System.Collections;
 
-[NodeComponentType(typeof(Joint))]
-
 [NodePath("Events/Physics Events")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]

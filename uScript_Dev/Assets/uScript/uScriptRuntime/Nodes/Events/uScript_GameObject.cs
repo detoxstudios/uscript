@@ -4,8 +4,6 @@
 using UnityEngine;
 using System.Collections;
 
-[NodeComponentType(typeof(Transform))]
-
 [NodePath("Events/GameObject Events")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
