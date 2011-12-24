@@ -3049,7 +3049,7 @@ public class uScript : EditorWindow
       return true;
    }
 
-  public void NewScript()
+   public void NewScript()
    {
       Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
 
