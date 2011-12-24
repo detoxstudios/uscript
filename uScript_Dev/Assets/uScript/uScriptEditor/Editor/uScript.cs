@@ -3298,6 +3298,10 @@ public class uScript : EditorWindow
          {
             firstSave = true;
          }
+         else if (true == forceNameRequest && true == generateCode)
+         {
+            firstSave = true;
+         }
 
          bool pleaseAttachMe = false;
          bool currentlyAttached = false;
