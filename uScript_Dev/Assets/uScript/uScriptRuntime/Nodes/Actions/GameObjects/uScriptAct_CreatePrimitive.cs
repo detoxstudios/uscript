@@ -11,16 +11,16 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Create_Primitive_GameObject")]
 
-[FriendlyName("Create Primitive GameObject", "Creates a GameObject with a primitive mesh renderer and appropriate collider.")]
+[FriendlyName("Create Primitive", "Creates a GameObject with a primitive mesh renderer and appropriate collider.")]
 public class uScriptAct_CreatePrimitive : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Name", "The name of the new GameObject.")]
+      [FriendlyName("Name", "The name of the new GameObject."), DefaultValue("Primitive")]
       string Name,
 
-      [FriendlyName("Primitive", "The type of primitive mesh for the GameObject.")]
+      [FriendlyName("Primitive", "The type of primitive mesh for the GameObject."), DefaultValue(PrimitiveType.Cube)]
       [SocketState(false, false)]
       PrimitiveType Primitive,
 
