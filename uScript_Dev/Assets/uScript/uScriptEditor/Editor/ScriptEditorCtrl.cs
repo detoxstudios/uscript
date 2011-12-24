@@ -1128,19 +1128,8 @@ namespace Detox.ScriptEditor
 
             Point point = m_FlowChart.PointToClient( Cursor.Position );
 
-            LocalNode localNode;
+            LocalNode localNode = new LocalNode( "", linkTo.Type, "" );
             
-            //if it's in input link we just want a single variable
-            //not an array hooked up to it
-            if ( true == linkTo.Input )
-            {
-               localNode = new LocalNode( "", linkTo.Type.Replace("[]", ""), "" );
-            }
-            else
-            {
-               //if it's an output link then need to use the exact link type
-               localNode = new LocalNode( "", linkTo.Type, "" );               
-            }
             localNode.Position = point;
 
             m_ScriptEditor.AddNode( localNode );
