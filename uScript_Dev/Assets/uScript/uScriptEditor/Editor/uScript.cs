@@ -3049,9 +3049,9 @@ public class uScript : EditorWindow
       return true;
    }
 
-   public void NewScript()
+  public void NewScript()
    {
-      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor("", PopulateEntityTypes(null), PopulateLogicTypes());
+      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
 
       m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor);
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
@@ -3059,6 +3059,21 @@ public class uScript : EditorWindow
       m_ScriptEditorCtrl.BuildContextMenu();
       uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
 
+      //reset zoom we're not in some weird zoom state
+      m_MapScale = 1.0f;
+
+      CurrentScriptName = null;
+ 
+      m_CurrentCanvasPosition = "";
+
+      CurrentScriptDirty = false;
+      CurrentScript = scriptEditor.ToBase64( );
+      CurrentScriptName = scriptEditor.Name;
+
+      //brand new scriptso clear out any previous caches and undo/redo
+      ClearChangeStack( );
+      OpenFromCache( );
+      
       m_FullPath = "";
 
       //Debug.Log("clearing" );
