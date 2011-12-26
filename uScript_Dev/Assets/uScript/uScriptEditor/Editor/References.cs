@@ -1102,7 +1102,21 @@ namespace Detox.Drawing
          else
          {
             // Nodes
-            GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), nodeName, uScriptConfig.Style.Get(styleName));
+            GUIContent nameContent = new GUIContent(nodeName);
+            GUIStyle nodeStyle = uScriptConfig.Style.Get(styleName);
+            Vector2 nameSize = Vector2.zero;
+
+            GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), string.Empty, nodeStyle);
+
+            GUIStyle nameStyle = new GUIStyle(nodeStyle);
+            nameStyle.normal.background = null;
+            nameSize = nameStyle.CalcSize(nameContent);
+
+            if (nameSize.x < rectangle.Width * 1.5f)
+            {
+               GUI.Label(new Rect(rectangle.Left + (rectangle.Width * 0.5f) - (nameSize.x * 0.5f), rectangle.Top,
+                                  nameSize.x, nameSize.y), nameContent, nameStyle);
+            }
          }
       }
 
