@@ -337,6 +337,16 @@ public class uScript : EditorWindow
       }
    }
 
+   public bool IsStale
+   {
+      get
+      {
+         // should return true if the script's generated code is out of date or just stubbed in.
+         return false;
+      }
+   }
+
+
    //
    // Editor Window Initialization
    //

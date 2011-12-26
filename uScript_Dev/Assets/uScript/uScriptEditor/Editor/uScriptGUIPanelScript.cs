@@ -52,7 +52,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
    static Rect _scrollviewRect = new Rect();
 
    static float _previousRowWidth = 0;
-   static bool _isMouseOverScrollview = false;
+//   static bool _isMouseOverScrollview = false;
 
    int _widthButtonSource;
    int _widthButtonLoad;
@@ -393,9 +393,9 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               }
                            }
 
-                           // Handle mouse hovering
-                           if (_isMouseOverScrollview && rowRect.Contains(Event.current.mousePosition))
-                           {
+//                           // Handle mouse hovering
+//                           if (_isMouseOverScrollview && rowRect.Contains(Event.current.mousePosition))
+//                           {
                               if (_previousHotRect != rowRect)
                               {
                                  _previousHotRect = rowRect;
@@ -408,11 +408,18 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               buttonRect.height = BUTTON_HEIGHT;
                               buttonRect.width = _widthButtonSource;
 
+                              if (uScript.Instance.IsStale)
+                              {
+                                 GUI.backgroundColor = UnityEngine.Color.red;
+                              }
+
                               // Source
                               if (GUI.Button(buttonRect, uScriptGUIContent.buttonScriptSource, _styleMiniButtonLeft))
                               {
                                  uScriptGUI.PingGeneratedScript(scriptName);
                               }
+
+                              GUI.backgroundColor = UnityEngine.Color.white;
 
                               buttonRect.x += _widthButtonSource;
                               buttonRect.width = _widthButtonLoad;
@@ -428,7 +435,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               }
 
                               rowRect.width = _previousRowWidth - BUTTON_PADDING - _widthButtonSource - _widthButtonLoad - BUTTON_PADDING;
-                           }
+//                           }
 
                            // Draw the script button
                            buttonRect = new Rect(rowRect);
@@ -500,7 +507,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                _scrollviewRect = GUILayoutUtility.GetLastRect();
             }
 
-            _isMouseOverScrollview = _scrollviewRect.Contains(Event.current.mousePosition);
+//            _isMouseOverScrollview = _scrollviewRect.Contains(Event.current.mousePosition);
          }
       }
       EditorGUILayout.EndVertical();
