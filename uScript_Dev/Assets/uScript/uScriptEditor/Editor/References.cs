@@ -1082,22 +1082,35 @@ namespace Detox.Drawing
       {
          if (styleName.Contains("comment"))
          {
-   			UnityEngine.Color normalColor = GUI.color;
+            // Comment box
+            GUIStyle commentStyle = uScriptConfig.Style.Get(styleName);
 
-		      GUIStyle commentStyle = uScriptConfig.Style.Get(styleName);
-		      commentStyle.fontSize = 12;
-
+            // Tint the comment box
             if ( ((Detox.ScriptEditor.DisplayNode)node).EntityNode is Detox.ScriptEditor.CommentNode )
             {
                Detox.ScriptEditor.CommentNode comment = (Detox.ScriptEditor.CommentNode) ((Detox.ScriptEditor.DisplayNode)node).EntityNode;
 
-               GUI.color = (UnityEngine.Color) comment.NodeColor.DefaultAsObject;   				
-               commentStyle.normal.textColor = (UnityEngine.Color) UnityEngine.Color.black;
+               GUI.backgroundColor = (UnityEngine.Color) comment.NodeColor.DefaultAsObject;
             }
-			
-            GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), nodeName, commentStyle);
 
-            GUI.color = normalColor;
+            // Draw the box without the title
+            GUI.Box(new Rect(rectangle.Left, rectangle.Top, rectangle.Width, rectangle.Height), string.Empty, commentStyle);
+
+            GUI.backgroundColor = UnityEngine.Color.white;
+
+            GUIContent titleContent = new GUIContent(nodeName);
+
+            // Setup the title style and draw it
+            GUIStyle titleStyle = new GUIStyle(commentStyle);
+            titleStyle.fontSize = 12;
+            titleStyle.normal.background = null;
+//            titleStyle.normal.textColor = UnityEngine.Color.black;
+
+            Vector2 titleSize = Vector2.zero;
+            titleSize = titleStyle.CalcSize(titleContent);
+
+            GUI.Label(new Rect(rectangle.Left, rectangle.Top,
+                               titleSize.x, titleSize.y), titleContent, titleStyle);
          }
          else
          {

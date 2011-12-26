@@ -1836,7 +1836,8 @@ namespace Detox.FlowChart
                   GUIStyle commentStyle = uScriptConfig.Style.Get(TextPoints[i].StyleName);
                   commentStyle.normal.textColor = (UnityEngine.Color) comment.BodyTextColor.DefaultAsObject;
                }
-               
+
+               // Socket labels
                GUI.Label( new Rect(x + location.X, y + location.Y, ZoomSize.Width - x, (ZoomSize.Height + 14) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
             }
 
