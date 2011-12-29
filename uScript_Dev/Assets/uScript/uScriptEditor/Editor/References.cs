@@ -1127,8 +1127,11 @@ namespace Detox.Drawing
 
             if (nameSize.x < rectangle.Width * 1.5f)
             {
+               // use rectanble.Height instead of nameSize.y, because
+               // named variables should have their name beneath the node.
+               //
                GUI.Label(new Rect(rectangle.Left + (rectangle.Width * 0.5f) - (nameSize.x * 0.5f), rectangle.Top,
-                                  nameSize.x, nameSize.y), nameContent, nameStyle);
+                                  nameSize.x, rectangle.Height), nameContent, nameStyle);
             }
          }
       }
