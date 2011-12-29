@@ -8,21 +8,18 @@ using System.Collections.Generic;
 [NodePath("Actions/GameObjects")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Sets the parent of a GameObject.")]
+[NodeToolTip("Detaches all children GameObjects from the target parent GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Set Parent", "Sets the parent of a GameObject.")]
-public class uScriptAct_SetParent : uScriptLogic
+[FriendlyName("Detach Children", "Detaches all children GameObjects from the target parent GameObject.")]
+public class uScriptAct_DetachChildren : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In (
-      [FriendlyName("Target", "The GameObject you wish to be the child.")]
-      GameObject[] Target,
-      
-      [FriendlyName("Parent", "The GameObject you wish to set as the Target's parent.")]
-      GameObject Parent
+      [FriendlyName("Target", "The target GameObject.")]
+      GameObject[] Target
       )
    {
       
@@ -30,15 +27,7 @@ public class uScriptAct_SetParent : uScriptLogic
 	  {
 	     if (null != tmpTarget)
 		 {
-		    if (null != Parent)
-			{
-			   tmpTarget.transform.parent = Parent.transform;
-			}
-			else
-			{
-			   tmpTarget.transform.parent = null;
-			}
-		    
+			   tmpTarget.transform.DetachChildren();
 		 }
 	  }
 
