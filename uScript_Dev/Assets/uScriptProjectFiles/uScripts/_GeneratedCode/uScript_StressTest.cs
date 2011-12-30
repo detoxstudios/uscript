@@ -1,14 +1,16 @@
-//uScript Generated Code - Build 0.9.1297
+//uScript Generated Code - Build 0.9.1556
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
 
 [NodePath("Graphs")]
+[System.Serializable]
 public class uScript_StressTest : uScriptLogic
 {
 
    #pragma warning disable 414
    GameObject parentGameObject = null;
+   uScript_GUI thisScriptsOnGuiListener = null; 
    const int MaxRelayCallCount = 1000;
    int relayCallCount = 0;
    //external output properties
@@ -49,11 +51,11 @@ public class uScript_StressTest : uScriptLogic
    UnityEngine.GameObject local_69_UnityEngine_GameObject_previous = null;
    UnityEngine.GameObject local_Cover2_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_Cover2_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_Monster_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_Monster_UnityEngine_GameObject_previous = null;
    System.String local_86_System_String = "";
    UnityEngine.GameObject local_88_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_88_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_Monster_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_Monster_UnityEngine_GameObject_previous = null;
    UnityEngine.GameObject local_94_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_94_UnityEngine_GameObject_previous = null;
    UnityEngine.GameObject local_105_UnityEngine_GameObject = null;
@@ -65,13 +67,13 @@ public class uScript_StressTest : uScriptLogic
    
    //logic nodes
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_1 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_1 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_1 = "";
-   System.Object[] logic_uScriptAct_Log_Target_1 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_1 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_1 = "";
    bool logic_uScriptAct_Log_Out_1 = true;
    //pointer to script instanced logic node
-   uScriptCon_IntCounter logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14 = null;
+   uScriptCon_IntCounter logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14 = new uScriptCon_IntCounter( );
    System.Int32 logic_uScriptCon_IntCounter_A_14 = (int) 0;
    System.Int32 logic_uScriptCon_IntCounter_B_14 = (int) 0;
    System.Int32 logic_uScriptCon_IntCounter_currentValue_14;
@@ -81,25 +83,25 @@ public class uScript_StressTest : uScriptLogic
    bool logic_uScriptCon_IntCounter_LessThanOrEqualTo_14 = true;
    bool logic_uScriptCon_IntCounter_LessThan_14 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_16 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_16 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_16 = "";
-   System.Object[] logic_uScriptAct_Log_Target_16 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_16 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_16 = "";
    bool logic_uScriptAct_Log_Out_16 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_19 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_19 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_19 = "";
-   System.Object[] logic_uScriptAct_Log_Target_19 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_19 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_19 = "";
    bool logic_uScriptAct_Log_Out_19 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_28 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_28 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_28 = "";
-   System.Object[] logic_uScriptAct_Log_Target_28 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_28 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_28 = "";
    bool logic_uScriptAct_Log_Out_28 = true;
    //pointer to script instanced logic node
-   uScriptCon_IntCounter logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36 = null;
+   uScriptCon_IntCounter logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36 = new uScriptCon_IntCounter( );
    System.Int32 logic_uScriptCon_IntCounter_A_36 = (int) 0;
    System.Int32 logic_uScriptCon_IntCounter_B_36 = (int) 0;
    System.Int32 logic_uScriptCon_IntCounter_currentValue_36;
@@ -109,128 +111,128 @@ public class uScript_StressTest : uScriptLogic
    bool logic_uScriptCon_IntCounter_LessThanOrEqualTo_36 = true;
    bool logic_uScriptCon_IntCounter_LessThan_36 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_43 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_43 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_43 = "";
-   System.Object[] logic_uScriptAct_Log_Target_43 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_43 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_43 = "";
    bool logic_uScriptAct_Log_Out_43 = true;
    //pointer to script instanced logic node
-   uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55 = null;
+   uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55 = new uScriptAct_PlaySound( );
    UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_55 = null;
    UnityEngine.GameObject[] logic_uScriptAct_PlaySound_target_55 = new UnityEngine.GameObject[] {};
    System.Single logic_uScriptAct_PlaySound_volume_55 = (float) 0;
    System.Boolean logic_uScriptAct_PlaySound_loop_55 = (bool) false;
    bool logic_uScriptAct_PlaySound_Out_55 = true;
    //pointer to script instanced logic node
-   uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_63 = null;
+   uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_63 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_63 = (float) 0;
    bool logic_uScriptAct_Delay_Immediate_63 = true;
    bool logic_uScriptAct_Delay_AfterDelay_63 = true;
-   bool logic_uScriptAct_Delay_DrivenDelay_63 = true;
+   bool logic_uScriptAct_Delay_DrivenDelay_63 = false;
    //pointer to script instanced logic node
-   uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_64 = null;
+   uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_64 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_64 = (float) 0;
    bool logic_uScriptAct_Delay_Immediate_64 = true;
    bool logic_uScriptAct_Delay_AfterDelay_64 = true;
-   bool logic_uScriptAct_Delay_DrivenDelay_64 = true;
+   bool logic_uScriptAct_Delay_DrivenDelay_64 = false;
    //pointer to script instanced logic node
-   uScriptAct_DestroyComponent logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_65 = null;
+   uScriptAct_DestroyComponent logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_65 = new uScriptAct_DestroyComponent( );
    UnityEngine.GameObject[] logic_uScriptAct_DestroyComponent_Target_65 = new UnityEngine.GameObject[] {};
-   System.String[] logic_uScriptAct_DestroyComponent_ComponentName_65 = new System.String[] {""};
+   System.String[] logic_uScriptAct_DestroyComponent_ComponentName_65 = new System.String[] {};
    System.Single logic_uScriptAct_DestroyComponent_DelayTime_65 = (float) 0;
    bool logic_uScriptAct_DestroyComponent_Out_65 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_67 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_67 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_67 = "";
-   System.Object[] logic_uScriptAct_Log_Target_67 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_67 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_67 = "";
    bool logic_uScriptAct_Log_Out_67 = true;
    //pointer to script instanced logic node
-   uScriptAct_DestroyComponent logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_68 = null;
+   uScriptAct_DestroyComponent logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_68 = new uScriptAct_DestroyComponent( );
    UnityEngine.GameObject[] logic_uScriptAct_DestroyComponent_Target_68 = new UnityEngine.GameObject[] {};
-   System.String[] logic_uScriptAct_DestroyComponent_ComponentName_68 = new System.String[] {""};
+   System.String[] logic_uScriptAct_DestroyComponent_ComponentName_68 = new System.String[] {};
    System.Single logic_uScriptAct_DestroyComponent_DelayTime_68 = (float) 0;
    bool logic_uScriptAct_DestroyComponent_Out_68 = true;
    //pointer to script instanced logic node
-   uScriptAct_Toggle logic_uScriptAct_Toggle_uScriptAct_Toggle_70 = null;
+   uScriptAct_Toggle logic_uScriptAct_Toggle_uScriptAct_Toggle_70 = new uScriptAct_Toggle( );
    UnityEngine.GameObject[] logic_uScriptAct_Toggle_Target_70 = new UnityEngine.GameObject[] {};
    System.Boolean logic_uScriptAct_Toggle_IgnoreChildren_70 = (bool) false;
    bool logic_uScriptAct_Toggle_Out_70 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_72 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_72 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_72 = "";
-   System.Object[] logic_uScriptAct_Log_Target_72 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_72 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_72 = "";
    bool logic_uScriptAct_Log_Out_72 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_74 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_74 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_74 = "";
-   System.Object[] logic_uScriptAct_Log_Target_74 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_74 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_74 = "";
    bool logic_uScriptAct_Log_Out_74 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_75 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_75 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_75 = "";
-   System.Object[] logic_uScriptAct_Log_Target_75 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_75 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_75 = "";
    bool logic_uScriptAct_Log_Out_75 = true;
    //pointer to script instanced logic node
-   uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76 = null;
+   uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76 = new uScriptAct_PlaySound( );
    UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_76 = null;
    UnityEngine.GameObject[] logic_uScriptAct_PlaySound_target_76 = new UnityEngine.GameObject[] {};
    System.Single logic_uScriptAct_PlaySound_volume_76 = (float) 0;
    System.Boolean logic_uScriptAct_PlaySound_loop_76 = (bool) false;
    bool logic_uScriptAct_PlaySound_Out_76 = true;
    //pointer to script instanced logic node
-   uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_80 = null;
+   uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_80 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_80 = UnityEngine.KeyCode.None;
    bool logic_uScriptAct_OnInputEventFilter_KeyHeld_80 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_80 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_80 = true;
    //pointer to script instanced logic node
-   uScriptAct_LookAt logic_uScriptAct_LookAt_uScriptAct_LookAt_83 = null;
+   uScriptAct_LookAt logic_uScriptAct_LookAt_uScriptAct_LookAt_83 = new uScriptAct_LookAt( );
    UnityEngine.GameObject[] logic_uScriptAct_LookAt_Target_83 = new UnityEngine.GameObject[] {};
    System.Object logic_uScriptAct_LookAt_Focus_83 = "";
    System.Single logic_uScriptAct_LookAt_time_83 = (float) 0;
    bool logic_uScriptAct_LookAt_Out_83 = true;
    //pointer to script instanced logic node
-   uScriptAct_LookAt logic_uScriptAct_LookAt_uScriptAct_LookAt_89 = null;
+   uScriptAct_LookAt logic_uScriptAct_LookAt_uScriptAct_LookAt_89 = new uScriptAct_LookAt( );
    UnityEngine.GameObject[] logic_uScriptAct_LookAt_Target_89 = new UnityEngine.GameObject[] {};
    System.Object logic_uScriptAct_LookAt_Focus_89 = "";
    System.Single logic_uScriptAct_LookAt_time_89 = (float) 0;
    bool logic_uScriptAct_LookAt_Out_89 = true;
    //pointer to script instanced logic node
-   uScriptAct_Teleport logic_uScriptAct_Teleport_uScriptAct_Teleport_96 = null;
+   uScriptAct_Teleport logic_uScriptAct_Teleport_uScriptAct_Teleport_96 = new uScriptAct_Teleport( );
    UnityEngine.GameObject[] logic_uScriptAct_Teleport_Target_96 = new UnityEngine.GameObject[] {};
    UnityEngine.GameObject logic_uScriptAct_Teleport_Destination_96 = null;
    System.Boolean logic_uScriptAct_Teleport_UpdateRotation_96 = (bool) false;
    bool logic_uScriptAct_Teleport_Out_96 = true;
    //pointer to script instanced logic node
-   uScriptCon_CompareBool logic_uScriptCon_CompareBool_uScriptCon_CompareBool_98 = null;
+   uScriptCon_CompareBool logic_uScriptCon_CompareBool_uScriptCon_CompareBool_98 = new uScriptCon_CompareBool( );
    System.Boolean logic_uScriptCon_CompareBool_Bool_98 = (bool) false;
    bool logic_uScriptCon_CompareBool_True_98 = true;
    bool logic_uScriptCon_CompareBool_False_98 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_103 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_103 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_103 = "";
-   System.Object[] logic_uScriptAct_Log_Target_103 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_103 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_103 = "";
    bool logic_uScriptAct_Log_Out_103 = true;
    //pointer to script instanced logic node
-   uScriptAct_Concatenate logic_uScriptAct_Concatenate_uScriptAct_Concatenate_107 = null;
-   System.Object[] logic_uScriptAct_Concatenate_A_107 = new System.Object[] {""};
-   System.Object[] logic_uScriptAct_Concatenate_B_107 = new System.Object[] {""};
+   uScriptAct_Concatenate logic_uScriptAct_Concatenate_uScriptAct_Concatenate_107 = new uScriptAct_Concatenate( );
+   System.Object[] logic_uScriptAct_Concatenate_A_107 = new System.Object[] {};
+   System.Object[] logic_uScriptAct_Concatenate_B_107 = new System.Object[] {};
    System.String logic_uScriptAct_Concatenate_Separator_107 = "";
    System.String logic_uScriptAct_Concatenate_Result_107;
    bool logic_uScriptAct_Concatenate_Out_107 = true;
    //pointer to script instanced logic node
-   uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_109 = null;
+   uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_109 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_109 = UnityEngine.KeyCode.None;
    bool logic_uScriptAct_OnInputEventFilter_KeyHeld_109 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_109 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_109 = true;
    //pointer to script instanced logic node
-   uScriptCon_IntCounter logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110 = null;
+   uScriptCon_IntCounter logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110 = new uScriptCon_IntCounter( );
    System.Int32 logic_uScriptCon_IntCounter_A_110 = (int) 0;
    System.Int32 logic_uScriptCon_IntCounter_B_110 = (int) 0;
    System.Int32 logic_uScriptCon_IntCounter_currentValue_110;
@@ -240,12 +242,12 @@ public class uScript_StressTest : uScriptLogic
    bool logic_uScriptCon_IntCounter_LessThanOrEqualTo_110 = true;
    bool logic_uScriptCon_IntCounter_LessThan_110 = true;
    //pointer to script instanced logic node
-   uScriptCon_CompareBool logic_uScriptCon_CompareBool_uScriptCon_CompareBool_115 = null;
+   uScriptCon_CompareBool logic_uScriptCon_CompareBool_uScriptCon_CompareBool_115 = new uScriptCon_CompareBool( );
    System.Boolean logic_uScriptCon_CompareBool_Bool_115 = (bool) false;
    bool logic_uScriptCon_CompareBool_True_115 = true;
    bool logic_uScriptCon_CompareBool_False_115 = true;
    //pointer to script instanced logic node
-   uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116 = null;
+   uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116 = new uScriptAct_PlaySound( );
    UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_116 = null;
    UnityEngine.GameObject[] logic_uScriptAct_PlaySound_target_116 = new UnityEngine.GameObject[] {};
    System.Single logic_uScriptAct_PlaySound_volume_116 = (float) 0;
@@ -366,20 +368,20 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject )
-      {
-         //tear down old listeners
-         
-         local_Monster_UnityEngine_GameObject_previous = local_Monster_UnityEngine_GameObject;
-         
-         //setup new listeners
-      }
-      //if our game object reference was changed then we need to reset event listeners
       if ( local_88_UnityEngine_GameObject_previous != local_88_UnityEngine_GameObject )
       {
          //tear down old listeners
          
          local_88_UnityEngine_GameObject_previous = local_88_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject )
+      {
+         //tear down old listeners
+         
+         local_Monster_UnityEngine_GameObject_previous = local_Monster_UnityEngine_GameObject;
          
          //setup new listeners
       }
@@ -479,35 +481,6 @@ public class uScript_StressTest : uScriptLogic
    }
    public void Awake()
    {
-      logic_uScriptAct_Log_uScriptAct_Log_1 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14 = ScriptableObject.CreateInstance(typeof(uScriptCon_IntCounter)) as uScriptCon_IntCounter;
-      logic_uScriptAct_Log_uScriptAct_Log_16 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_Log_uScriptAct_Log_19 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_Log_uScriptAct_Log_28 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36 = ScriptableObject.CreateInstance(typeof(uScriptCon_IntCounter)) as uScriptCon_IntCounter;
-      logic_uScriptAct_Log_uScriptAct_Log_43 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55 = ScriptableObject.CreateInstance(typeof(uScriptAct_PlaySound)) as uScriptAct_PlaySound;
-      logic_uScriptAct_Delay_uScriptAct_Delay_63 = ScriptableObject.CreateInstance(typeof(uScriptAct_Delay)) as uScriptAct_Delay;
-      logic_uScriptAct_Delay_uScriptAct_Delay_64 = ScriptableObject.CreateInstance(typeof(uScriptAct_Delay)) as uScriptAct_Delay;
-      logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_65 = ScriptableObject.CreateInstance(typeof(uScriptAct_DestroyComponent)) as uScriptAct_DestroyComponent;
-      logic_uScriptAct_Log_uScriptAct_Log_67 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_68 = ScriptableObject.CreateInstance(typeof(uScriptAct_DestroyComponent)) as uScriptAct_DestroyComponent;
-      logic_uScriptAct_Toggle_uScriptAct_Toggle_70 = ScriptableObject.CreateInstance(typeof(uScriptAct_Toggle)) as uScriptAct_Toggle;
-      logic_uScriptAct_Log_uScriptAct_Log_72 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_Log_uScriptAct_Log_74 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_Log_uScriptAct_Log_75 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76 = ScriptableObject.CreateInstance(typeof(uScriptAct_PlaySound)) as uScriptAct_PlaySound;
-      logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_80 = ScriptableObject.CreateInstance(typeof(uScriptAct_OnInputEventFilter)) as uScriptAct_OnInputEventFilter;
-      logic_uScriptAct_LookAt_uScriptAct_LookAt_83 = ScriptableObject.CreateInstance(typeof(uScriptAct_LookAt)) as uScriptAct_LookAt;
-      logic_uScriptAct_LookAt_uScriptAct_LookAt_89 = ScriptableObject.CreateInstance(typeof(uScriptAct_LookAt)) as uScriptAct_LookAt;
-      logic_uScriptAct_Teleport_uScriptAct_Teleport_96 = ScriptableObject.CreateInstance(typeof(uScriptAct_Teleport)) as uScriptAct_Teleport;
-      logic_uScriptCon_CompareBool_uScriptCon_CompareBool_98 = ScriptableObject.CreateInstance(typeof(uScriptCon_CompareBool)) as uScriptCon_CompareBool;
-      logic_uScriptAct_Log_uScriptAct_Log_103 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_Concatenate_uScriptAct_Concatenate_107 = ScriptableObject.CreateInstance(typeof(uScriptAct_Concatenate)) as uScriptAct_Concatenate;
-      logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_109 = ScriptableObject.CreateInstance(typeof(uScriptAct_OnInputEventFilter)) as uScriptAct_OnInputEventFilter;
-      logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110 = ScriptableObject.CreateInstance(typeof(uScriptCon_IntCounter)) as uScriptCon_IntCounter;
-      logic_uScriptCon_CompareBool_uScriptCon_CompareBool_115 = ScriptableObject.CreateInstance(typeof(uScriptCon_CompareBool)) as uScriptCon_CompareBool;
-      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116 = ScriptableObject.CreateInstance(typeof(uScriptAct_PlaySound)) as uScriptAct_PlaySound;
       
       logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Finished += uScriptAct_PlaySound_Finished_55;
       logic_uScriptAct_Toggle_uScriptAct_Toggle_70.OnOut += uScriptAct_Toggle_OnOut_70;
@@ -540,8 +513,14 @@ public class uScript_StressTest : uScriptLogic
       logic_uScriptAct_LookAt_uScriptAct_LookAt_83.Update( );
       logic_uScriptAct_LookAt_uScriptAct_LookAt_89.Update( );
       logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116.Update( );
-      Relay_DrivenDelay_63();
-      Relay_DrivenDelay_64();
+      if (true == logic_uScriptAct_Delay_DrivenDelay_63)
+      {
+         Relay_DrivenDelay_63();
+      }
+      if (true == logic_uScriptAct_Delay_DrivenDelay_64)
+      {
+         Relay_DrivenDelay_64();
+      }
    }
    
    void Instance_KeyEvent_92(object o, System.EventArgs e)
@@ -919,6 +898,28 @@ public class uScript_StressTest : uScriptLogic
       }
    }
    
+   void Relay_UpdateVolume_55()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         {
+         }
+         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.UpdateVolume(logic_uScriptAct_PlaySound_audioClip_55, logic_uScriptAct_PlaySound_target_55, logic_uScriptAct_PlaySound_volume_55, logic_uScriptAct_PlaySound_loop_55);
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Out;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_115();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
    void Relay_Stop_55()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
@@ -950,6 +951,7 @@ public class uScript_StressTest : uScriptLogic
             
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_63.In(logic_uScriptAct_Delay_Duration_63);
+         logic_uScriptAct_Delay_DrivenDelay_63 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_63.Immediate;
@@ -1003,6 +1005,7 @@ public class uScript_StressTest : uScriptLogic
          {
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_64.In(logic_uScriptAct_Delay_Duration_64);
+         logic_uScriptAct_Delay_DrivenDelay_64 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_64.Immediate;
@@ -1442,6 +1445,28 @@ public class uScript_StressTest : uScriptLogic
       }
    }
    
+   void Relay_UpdateVolume_76()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         {
+         }
+         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.UpdateVolume(logic_uScriptAct_PlaySound_audioClip_76, logic_uScriptAct_PlaySound_target_76, logic_uScriptAct_PlaySound_volume_76, logic_uScriptAct_PlaySound_loop_76);
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Out;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_98();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
    void Relay_Stop_76()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
@@ -1723,14 +1748,7 @@ public class uScript_StressTest : uScriptLogic
    
    void Relay_KeyEvent_92()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-         Relay_In_80();
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Input Events.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      Relay_In_80();
    }
    
    void Relay_In_96()
@@ -1817,14 +1835,7 @@ public class uScript_StressTest : uScriptLogic
    
    void Relay_KeyEvent_106()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-         Relay_In_109();
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Input Events.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      Relay_In_109();
    }
    
    void Relay_In_107()
@@ -1989,6 +2000,23 @@ public class uScript_StressTest : uScriptLogic
          {
          }
          logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116.Play(logic_uScriptAct_PlaySound_audioClip_116, logic_uScriptAct_PlaySound_target_116, logic_uScriptAct_PlaySound_volume_116, logic_uScriptAct_PlaySound_loop_116);
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_UpdateVolume_116()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         {
+         }
+         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116.UpdateVolume(logic_uScriptAct_PlaySound_audioClip_116, logic_uScriptAct_PlaySound_target_116, logic_uScriptAct_PlaySound_volume_116, logic_uScriptAct_PlaySound_loop_116);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          

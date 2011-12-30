@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.1297
+//uScript Generated Code - Build 0.9.1556
 using UnityEngine;
 using System.Collections;
 
@@ -6,14 +6,21 @@ using System.Collections;
 public class uScript_TestBed_Component : uScriptCode
 {
    #pragma warning disable 414
-   uScript_TestBed uScript; 
+   public uScript_TestBed uScript = new uScript_TestBed( ); 
    #pragma warning restore 414
+   
    
    void Awake( )
    {
       useGUILayout = false;
-      uScript = ScriptableObject.CreateInstance(typeof(uScript_TestBed)) as uScript_TestBed;
+      uScript.Awake( );
       uScript.SetParent( this.gameObject );
+      if ( "1.CMR" != uScript_MasterComponent.Version )
+      {
+         uScriptDebug.Log( "The generated code is not compatible with your current uScript Runtime " + uScript_MasterComponent.Version, uScriptDebug.Type.Error );
+         uScript = null;
+         UnityEngine.Debug.Break();
+      }
    }
    void Start( )
    {

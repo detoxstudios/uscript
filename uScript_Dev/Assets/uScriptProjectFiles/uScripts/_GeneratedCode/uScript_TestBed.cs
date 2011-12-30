@@ -1,14 +1,16 @@
-//uScript Generated Code - Build 0.9.1297
+//uScript Generated Code - Build 0.9.1556
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
 
 [NodePath("Graphs")]
+[System.Serializable]
 public class uScript_TestBed : uScriptLogic
 {
 
    #pragma warning disable 414
    GameObject parentGameObject = null;
+   uScript_GUI thisScriptsOnGuiListener = null; 
    const int MaxRelayCallCount = 1000;
    int relayCallCount = 0;
    //external output properties
@@ -25,13 +27,13 @@ public class uScript_TestBed : uScriptLogic
    
    //logic nodes
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_1 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_1 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_1 = "";
    System.Object[] logic_uScriptAct_Log_Target_1 = new System.Object[] {"Up"};
    System.Object logic_uScriptAct_Log_Postfix_1 = "";
    bool logic_uScriptAct_Log_Out_1 = true;
    //pointer to script instanced logic node
-   uScriptAct_InterpolateFloatLinear logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4 = null;
+   uScriptAct_InterpolateFloatLinear logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4 = new uScriptAct_InterpolateFloatLinear( );
    System.Single logic_uScriptAct_InterpolateFloatLinear_startValue_4 = (float) 0;
    System.Single logic_uScriptAct_InterpolateFloatLinear_endValue_4 = (float) 0;
    System.Single logic_uScriptAct_InterpolateFloatLinear_time_4 = (float) 0;
@@ -43,39 +45,39 @@ public class uScript_TestBed : uScriptLogic
    bool logic_uScriptAct_InterpolateFloatLinear_Stopped_4 = true;
    bool logic_uScriptAct_InterpolateFloatLinear_Interpolating_4 = true;
    bool logic_uScriptAct_InterpolateFloatLinear_Finished_4 = true;
-   bool logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
+   bool logic_uScriptAct_InterpolateFloatLinear_Driven_4 = false;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_6 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_6 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_6 = "";
    System.Object[] logic_uScriptAct_Log_Target_6 = new System.Object[] {"Down"};
    System.Object logic_uScriptAct_Log_Postfix_6 = "";
    bool logic_uScriptAct_Log_Out_6 = true;
    //pointer to script instanced logic node
-   uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_7 = null;
+   uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_7 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_7 = (float) 1;
    bool logic_uScriptAct_Delay_Immediate_7 = true;
    bool logic_uScriptAct_Delay_AfterDelay_7 = true;
-   bool logic_uScriptAct_Delay_DrivenDelay_7 = true;
+   bool logic_uScriptAct_Delay_DrivenDelay_7 = false;
    //pointer to script instanced logic node
-   uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8 = null;
+   uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_8 = UnityEngine.KeyCode.A;
    bool logic_uScriptAct_OnInputEventFilter_KeyHeld_8 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_8 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_8 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_9 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_9 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_9 = "";
-   System.Object[] logic_uScriptAct_Log_Target_9 = new System.Object[] {""};
+   System.Object[] logic_uScriptAct_Log_Target_9 = new System.Object[] {};
    System.Object logic_uScriptAct_Log_Postfix_9 = "";
    bool logic_uScriptAct_Log_Out_9 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_10 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_10 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_10 = "";
    System.Object[] logic_uScriptAct_Log_Target_10 = new System.Object[] {"Start FOV"};
    System.Object logic_uScriptAct_Log_Postfix_10 = "";
    bool logic_uScriptAct_Log_Out_10 = true;
    //pointer to script instanced logic node
-   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_13 = null;
+   uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_13 = new uScriptAct_Log( );
    System.Object logic_uScriptAct_Log_Prefix_13 = "";
    System.Object[] logic_uScriptAct_Log_Target_13 = new System.Object[] {"End FOV"};
    System.Object logic_uScriptAct_Log_Postfix_13 = "";
@@ -208,14 +210,6 @@ public class uScript_TestBed : uScriptLogic
    }
    public void Awake()
    {
-      logic_uScriptAct_Log_uScriptAct_Log_1 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4 = ScriptableObject.CreateInstance(typeof(uScriptAct_InterpolateFloatLinear)) as uScriptAct_InterpolateFloatLinear;
-      logic_uScriptAct_Log_uScriptAct_Log_6 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_Delay_uScriptAct_Delay_7 = ScriptableObject.CreateInstance(typeof(uScriptAct_Delay)) as uScriptAct_Delay;
-      logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8 = ScriptableObject.CreateInstance(typeof(uScriptAct_OnInputEventFilter)) as uScriptAct_OnInputEventFilter;
-      logic_uScriptAct_Log_uScriptAct_Log_9 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_Log_uScriptAct_Log_10 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
-      logic_uScriptAct_Log_uScriptAct_Log_13 = ScriptableObject.CreateInstance(typeof(uScriptAct_Log)) as uScriptAct_Log;
       
    }
    
@@ -235,8 +229,14 @@ public class uScript_TestBed : uScriptLogic
       //so we need to verify all our event listeners are registered
       SyncEventListeners( );
       
-      Relay_Driven_4();
-      Relay_DrivenDelay_7();
+      if (true == logic_uScriptAct_InterpolateFloatLinear_Driven_4)
+      {
+         Relay_Driven_4();
+      }
+      if (true == logic_uScriptAct_Delay_DrivenDelay_7)
+      {
+         Relay_DrivenDelay_7();
+      }
    }
    
    void Instance_KeyEvent_3(object o, System.EventArgs e)
@@ -272,14 +272,7 @@ public class uScript_TestBed : uScriptLogic
    
    void Relay_KeyEvent_3()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-         Relay_In_8();
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Input Events.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      Relay_In_8();
    }
    
    void Relay_Begin_4()
@@ -295,6 +288,7 @@ public class uScript_TestBed : uScriptLogic
             
          }
          logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Begin(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
+         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
          property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
          property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
          
@@ -330,6 +324,7 @@ public class uScript_TestBed : uScriptLogic
             
          }
          logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Stop(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
+         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
          property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
          property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
          
@@ -365,6 +360,7 @@ public class uScript_TestBed : uScriptLogic
             
          }
          logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Resume(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
+         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
          property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
          property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
          
@@ -443,6 +439,7 @@ public class uScript_TestBed : uScriptLogic
          {
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_7.In(logic_uScriptAct_Delay_Duration_7);
+         logic_uScriptAct_Delay_DrivenDelay_7 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_7.AfterDelay;
@@ -551,14 +548,7 @@ public class uScript_TestBed : uScriptLogic
    
    void Relay_uScriptStart_11()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-         Relay_In_7();
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at uScript Events.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      Relay_In_7();
    }
    
    void Relay_In_13()
