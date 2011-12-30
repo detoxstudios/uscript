@@ -3102,7 +3102,7 @@ namespace Detox.ScriptEditor
                  existingLink.Destination.Guid   == link.Destination.Guid &&
                  existingLink.Destination.Anchor == link.Destination.Anchor ) 
             {
-               reason = "Link already exists";
+               reason = "Link already exists (" + existingLink.Source.Anchor + " to " + existingLink.Destination.Anchor + ")";
                return false;
             }
          }
@@ -3936,25 +3936,31 @@ namespace Detox.ScriptEditor
          
          foreach ( LinkNode link in links )
          {
-            LinkNode clone = link;
+            if ( link.Destination.Guid != toNode )
+            {
+               LinkNode clone = link;
+   
+               RemoveNode( link );
+               
+               clone.Destination.Guid = toNode;
 
-            RemoveNode( link );
-            
-            clone.Destination.Guid = toNode;
-
-            AddNode( clone );
+               AddNode( clone );
+            }
          }
 
          links = GetLinksBySource( fromNode, null );
          
          foreach ( LinkNode link in links )
          {
-            LinkNode clone = link;
+            if ( link.Source.Guid != toNode )
+            {
+               LinkNode clone = link;
 
-            RemoveNode( link );
-            clone.Source.Guid = toNode;
+               RemoveNode( link );
+               clone.Source.Guid = toNode;
 
-            AddNode( clone );
+               AddNode( clone );
+            }
          }
       }
 
