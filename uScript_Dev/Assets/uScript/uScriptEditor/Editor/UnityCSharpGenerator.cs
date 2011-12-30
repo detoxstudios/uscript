@@ -505,7 +505,7 @@ namespace Detox.ScriptEditor
                {
                   if ( "true" == node.Externaled.Default )
                   {
-                     AddCSharpLine( "public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return uScript." + CSharpName(node) + "; } set { " + CSharpName(node) + " = value; } } " );
+                     AddCSharpLine( "public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return uScript." + CSharpName(node) + "; } set { uScript." + CSharpName(node) + " = value; } } " );
                   }
                }
 
