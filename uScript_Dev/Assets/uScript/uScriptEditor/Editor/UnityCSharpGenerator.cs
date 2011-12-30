@@ -412,6 +412,7 @@ namespace Detox.ScriptEditor
          foreach ( EntityNode entityNode in nodes )
          {
             if ( entityNode is LocalNode ) continue;
+            if ( entityNode is LinkNode  ) continue;
 
             if ( entityNode.Instance != Parameter.Empty && entityNode.Instance.Default != "" )
             {
