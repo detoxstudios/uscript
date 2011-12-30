@@ -72,7 +72,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          }
       }
 
-      OnOut(this, new System.EventArgs());
+      if ( null != OnOut ) OnOut(this, new System.EventArgs());
    }
 
    // Parameter Attributes are applied below in Toggle()
@@ -113,7 +113,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          }
       }
 
-      OffOut(this, new System.EventArgs());
+      if ( null != OffOut ) OffOut(this, new System.EventArgs());
    }
 
    [FriendlyName("Toggle")]
@@ -180,7 +180,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          }
       }
 
-      ToggleOut(this, new System.EventArgs());
+      if ( null != ToggleOut ) ToggleOut(this, new System.EventArgs());
    }
 
 
