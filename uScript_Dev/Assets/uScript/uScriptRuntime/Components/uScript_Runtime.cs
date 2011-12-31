@@ -143,30 +143,15 @@ public class NodeNeedsGuiLayout : Attribute
    {}
 }
 
+//deprectated, does nothing
 [AttributeUsage(AttributeTargets.Class)]
 public class NodeComponentType : Attribute
 {
    public NodeComponentType(Type type) 
-   { 
-      ComponentTypes = new Type[] { type };
-   }
+   {}
    
    public NodeComponentType(Type type1, Type type2) 
-   { 
-      ComponentTypes = new Type[] { type1, type2 };
-   }
-   
-   public Type [] ComponentTypes;
-
-   public bool ContainsType(Type type)
-   {
-      foreach ( Type t in ComponentTypes )
-      {
-         if ( t.IsAssignableFrom(type) ) return true;
-      }
-
-      return false;
-   }
+   {}
 }
 
 [AttributeUsage(AttributeTargets.Class)]

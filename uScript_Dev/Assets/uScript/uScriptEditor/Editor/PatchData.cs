@@ -48,6 +48,9 @@ namespace Detox.Patch
 
       public abstract void Apply ( ScriptEditor.ScriptEditor scriptEditor );
       public abstract void Remove( ScriptEditor.ScriptEditor scriptEditor );
+
+      public abstract void Apply ( ScriptEditor.ScriptEditorCtrl scriptEditorCtrl );
+      public abstract void Remove( ScriptEditor.ScriptEditorCtrl scriptEditorCtrl );
    };
 
    public class EntityNode : PatchData
@@ -100,6 +103,18 @@ namespace Detox.Patch
          }
       }
 
+      public override void Apply( ScriptEditor.ScriptEditorCtrl scriptEditorCtrl )
+      {
+         if ( null != NewNode )
+         {
+            scriptEditorCtrl.UpdateNodeDisplay( NewNode.Guid );
+         }
+         else
+         {
+            scriptEditorCtrl.RemoveNodeDisplay( OldNode.Guid );
+         }
+      }
+
       public override void Remove( ScriptEditor.ScriptEditor scriptEditor )
       {
          if ( null != OldNode )
@@ -109,6 +124,18 @@ namespace Detox.Patch
          else
          {
             scriptEditor.RemoveNode( scriptEditor.CreateEntityNode(NewNode) );
+         }
+      }
+
+      public override void Remove( ScriptEditor.ScriptEditorCtrl scriptEditorCtrl )
+      {
+         if ( null != OldNode )
+         {
+            scriptEditorCtrl.UpdateNodeDisplay( OldNode.Guid );
+         }
+         else
+         {
+            scriptEditorCtrl.RemoveNodeDisplay( NewNode.Guid );
          }
       }
    }
@@ -161,6 +188,14 @@ namespace Detox.Patch
          }
       }
 
+      public override void Apply( ScriptEditor.ScriptEditorCtrl scriptEditorCtrl )
+      {
+         foreach ( PatchData patch in Patches )
+         {
+            patch.Apply( scriptEditorCtrl );
+         }
+      }
+
       public override void Remove( ScriptEditor.ScriptEditor scriptEditor )
       {
          //remove them in reverse order they were added
@@ -169,6 +204,17 @@ namespace Detox.Patch
          for (int i = Patches.Count - 1; i >= 0; i-- )
          {
             Patches[i].Remove( scriptEditor );
+         }
+      }
+
+      public override void Remove( ScriptEditor.ScriptEditorCtrl scriptEditorCtrl )
+      {
+         //remove them in reverse order they were added
+         //so it simulates each step a user makes
+         //if a user did A, B, C we remove it as C, B, A
+         for (int i = Patches.Count - 1; i >= 0; i-- )
+         {
+            Patches[i].Remove( scriptEditorCtrl );
          }
       }
    }

@@ -306,7 +306,6 @@ namespace Detox.Windows.Forms
    //                        }
 
                            val = uScriptGUI.LayerField(p.FriendlyName, (LayerMask)val, ref isSocketExposed, isLocked, isReadOnly);
-
    //                        // Later, if we support actual LayerMask fields, the popup control should use
    //                        // labels like "xxx" or "xxx, xxx" or "xxx, xxx, xxx" or "Mixed ..."
    //                        //
@@ -711,15 +710,6 @@ namespace Detox.Windows.Forms
    {
       public Detox.Drawing.Color BackColor;
       public bool  DoubleBuffered;
-
-      public void SuspendLayout( )
-      {}
-
-      public void ResumeLayout()
-      {}
-
-      public void ResumeLayout(bool performLayout)
-      {}
 
       public void Invalidate( /* string description */ )
       {

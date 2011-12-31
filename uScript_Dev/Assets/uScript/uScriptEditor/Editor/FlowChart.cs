@@ -178,7 +178,6 @@ namespace Detox.FlowChart
 
       private void InitializeComponent()
       {
-         this.SuspendLayout();
          // 
          // FlowChartCtrl
          // 
@@ -189,7 +188,6 @@ namespace Detox.FlowChart
          this.MouseMove += new Detox.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseMove);
          this.MouseDown += new Detox.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseDown);
          this.MouseUp += new Detox.Windows.Forms.MouseEventHandler(this.FlowChartCtrl_MouseUp);
-         this.ResumeLayout(false);
 
          this.Location = new Point(0, 0);
       }
@@ -249,17 +247,37 @@ namespace Detox.FlowChart
          node.MouseDown            += FlowChartCtrl_NodeMouseDown;
          node.Modified             += FlowChartCtrl_NodeModified;
 
+         Node oldNode = m_Nodes[ node.Guid ] as Node;
+         int index = -1;
+
+         if ( null != oldNode )
+         {
+            index = Controls.IndexOf( oldNode );
+            Controls.RemoveAt( index );
+         }
+
          m_Nodes[ node.Guid ] = node;
 
          node.Parent = this;
 
-         int i = 0;
-         for (i = 0; i < Controls.Count; i++)
+         if ( -1 ==index )
          {
-            Node currentNode = (Node)Controls[i];
-            if (currentNode.RenderDepth >= node.RenderDepth) break;
+            for (index = 0; index < Controls.Count; index++)
+            {
+               Node currentNode = (Node)Controls[index];
+               if (currentNode.RenderDepth >= node.RenderDepth) break;
+            }
          }
-         Controls.Insert( i, node );
+         else
+         {
+            foreach ( Link link in m_Links )
+            {
+               if ( link.Source.Node == oldNode ) link.Source.Node = node;
+               else if ( link.Destination.Node == oldNode ) link.Destination.Node = node;
+            }
+         }
+
+         Controls.Insert( index, node );
       }
       
       public void SelectNodes(Guid []guids)
@@ -326,7 +344,7 @@ namespace Detox.FlowChart
             m_StartLinkNode   = null;
          }
             
-         Invalidate( );  // ??
+         //Invalidate( );  // ??
       }
 
       private bool LinkInRect(Link link, Rectangle rect)
@@ -1407,9 +1425,44 @@ namespace Detox.FlowChart
 
       public void AddLink(Link link)
       {
+         foreach ( Link existing in m_Links )
+         {
+            //don't add duplicate links
+            if ( existing.Source.Node            == link.Source.Node &&
+                 existing.Destination.Node       == link.Destination.Node &&
+                 existing.Source.AnchorName      == link.Source.AnchorName &&
+                 existing.Destination.AnchorName == link.Destination.AnchorName )
+            {
+               return;
+            }
+         }
+
          m_Links.Add( link );
       }
       
+      public void DeleteLink(Guid sourceGuid, string sourceName, Guid destGuid, string destName)
+      {
+         int index = -1;
+
+         for ( int i = 0; i < m_Links.Count; i++ )
+         {
+            //don't add duplicate links
+            if ( m_Links[i].Source.Node.Guid       == sourceGuid &&
+                 m_Links[i].Destination.Node.Guid  == destGuid &&
+                 m_Links[i].Source.AnchorName      == sourceName &&
+                 m_Links[i].Destination.AnchorName == destName )
+            {
+               index = i;
+               break;
+            }
+         }
+
+         if ( -1 != index )
+         {
+            m_Links.RemoveAt( index );
+         }
+      }
+
       private static int CompareNodes(Control c1, Control c2)
       {
          Node n1 = c1 as Node;

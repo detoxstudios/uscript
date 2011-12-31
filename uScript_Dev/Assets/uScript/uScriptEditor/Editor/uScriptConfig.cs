@@ -518,7 +518,7 @@ public class uScriptDefaultStyle : uScriptStyle
 
       if (m_Styles.ContainsKey(name)) return m_Styles[name];
 
-	   //Debug.Log( "Can not find style: " + name );
+      //Debug.Log( "Can not find style: " + name );
 
       if (false == name.Contains("socket") &&
           true == name.Contains("node") &&

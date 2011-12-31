@@ -177,7 +177,7 @@ namespace Detox.ScriptEditor
          Text    = m_ScriptEditor.Name;
          TabText = m_ScriptEditor.Name;
 
-         RefreshScript( null, true, location );
+         RebuildScript( null, true, location );
       }
 
       public void UpdateObjectReferences( )
@@ -539,9 +539,11 @@ namespace Detox.ScriptEditor
                   m_ScriptEditor.AddNode( entityNode );
 
                   uScript.Instance.RegisterUndo( new Patch.EntityNode("Drag Drop", oldNode, entityNode) );
-                  m_Dirty = true;
-                  
-                  RefreshScript( null );
+
+                  PatchDisplay( new Patch.EntityNode("Drag Drop", oldNode, entityNode) );
+                  //RebuildScript( null );
+
+                  m_Dirty = true;                  
 
                   return true;
                }
@@ -642,9 +644,11 @@ namespace Detox.ScriptEditor
                         m_ScriptEditor.AddNode( entityNode );   
 
                         uScript.Instance.RegisterUndo( new Patch.EntityNode("Drag Drop", oldNode, entityNode) );
+                        PatchDisplay( new Patch.EntityNode("Drag Drop", oldNode, entityNode) );
+
                         m_Dirty = true;
 
-                        RefreshScript( null );
+                        //RebuildScript( null );
                         return true;
                      }
                   }
@@ -856,8 +860,9 @@ namespace Detox.ScriptEditor
             }
 
             uScript.Instance.RegisterUndo( batchPatch );
+            PatchDisplay( batchPatch, guidsToSelect );
 
-            RefreshScript( guidsToSelect );
+            //RebuildScript( guidsToSelect );
             m_FlowChart.OnSelectionModified();
          }
       }
@@ -938,8 +943,9 @@ namespace Detox.ScriptEditor
          }
 
          uScript.Instance.RegisterUndo( batchPatch );
+         PatchDisplay( batchPatch );
 
-         RefreshScript( null );
+         //RebuildScript( null );
       }
 
       private void CollapseNodes( Node [] nodes )
@@ -989,8 +995,9 @@ namespace Detox.ScriptEditor
          }
 
          uScript.Instance.RegisterUndo( batchPatch );
+         PatchDisplay( batchPatch );
 
-         RefreshScript( null );
+         //RebuildScript( null );
       }
       
       public bool CanCollapseParameter(Guid guid, Parameter p)
@@ -1123,23 +1130,17 @@ namespace Detox.ScriptEditor
 
          if ( linkTo != new Parameter( ) )
          {
-            Patch.Batch batchPatch = new Detox.Patch.Batch( "Add" );
-            Patch.EntityNode patchNode;
+            Patch.Batch batchPatch = new Detox.Patch.Batch( "Add Linked Variable" );
 
             Point point = m_FlowChart.PointToClient( Cursor.Position );
 
             LocalNode localNode = new LocalNode( "", linkTo.Type, "" );
-            
             localNode.Position = point;
 
             m_ScriptEditor.AddNode( localNode );
-            
-            patchNode = new Detox.Patch.EntityNode( "", null, localNode.Copy(true) );
-            batchPatch.Add( patchNode );
+            batchPatch.Add( new Detox.Patch.EntityNode("", null, localNode) );
 
-            LinkNode linkNode;
-
-            linkNode = new LinkNode( localNode.Guid, localNode.Value.Name, node.Guid, linkTo.Name );
+            LinkNode linkNode = new LinkNode( localNode.Guid, localNode.Value.Name, node.Guid, linkTo.Name );
 
             string reason;
 
@@ -1155,15 +1156,14 @@ namespace Detox.ScriptEditor
             }
 
             m_ScriptEditor.AddNode( linkNode );
-
-            patchNode = new Detox.Patch.EntityNode( "", null, linkNode.Copy(true) );
-            batchPatch.Add( patchNode );
+            batchPatch.Add( new Detox.Patch.EntityNode("", null, linkNode) );
 
             m_Dirty = true;
 
             uScript.Instance.RegisterUndo( batchPatch );
+            PatchDisplay( batchPatch );
 
-            RefreshScript( null );
+            //RebuildScript( null );
          }
       }
    
@@ -1287,9 +1287,10 @@ namespace Detox.ScriptEditor
          if ( true == batchPatch.HasPatches )
          {
             uScript.Instance.RegisterUndo( batchPatch );
-         }
+            PatchDisplay( batchPatch );
 
-         RefreshScript( null );
+            //RebuildScript( null );
+         }
       }
 
       public void m_MenuUpgradeNode_Click(object sender, EventArgs e)
@@ -1317,8 +1318,9 @@ namespace Detox.ScriptEditor
          }
 
          uScript.Instance.RegisterUndo( batchPatch );
+         PatchDisplay( batchPatch );
 
-         RefreshScript( null );
+         //RebuildScript( null );
       }
 
       public void m_MenuDeleteMissingNode_Click(object sender, EventArgs e)
@@ -1344,8 +1346,9 @@ namespace Detox.ScriptEditor
          }
 
          uScript.Instance.RegisterUndo( batchPatch );
+         PatchDisplay( batchPatch );
 
-         RefreshScript( null );
+         //RebuildScript( null );
       }
 
       private void BatchPatchLinks(Patch.Batch batchPatch, Guid guid)
@@ -1481,7 +1484,8 @@ namespace Detox.ScriptEditor
             }
 
             uScript.Instance.RegisterUndo( patchBatch );
-            RefreshScript( null );
+            PatchDisplay( patchBatch );
+            //RebuildScript( null );
          }
       }
       
@@ -1510,8 +1514,9 @@ namespace Detox.ScriptEditor
 
          Patch.EntityNode patchNode = new Detox.Patch.EntityNode("Add", null, entityNode);
          uScript.Instance.RegisterUndo( patchNode );
+         PatchDisplay( patchNode );
          
-         RefreshScript( null );
+         //RebuildScript( null );
       }
 
       public void SelectAllNodes()
@@ -1567,8 +1572,9 @@ namespace Detox.ScriptEditor
          }
 
          uScript.Instance.RegisterUndo( batch );
+         PatchDisplay( batch );
 
-         RefreshScript( null );
+         //RebuildScript( null );
       }
 
       private void m_MenuDeleteNode_Click(object sender, EventArgs e)
@@ -1576,17 +1582,139 @@ namespace Detox.ScriptEditor
          DeleteSelectedNodes( );
       }
 
-      private void RefreshScript( List<Guid> guidsToSelect )
+      public void PatchDisplay( Patch.PatchData patch )
       {
-         RefreshScript(guidsToSelect, false, Point.Empty);
+         PatchDisplay( patch, null );
       }
 
-      public void RefreshScript( List<Guid> guidsToSelect, bool zoomExtents )
+      private void PatchDisplay( Patch.PatchData patch, List<Guid> guidsToSelect )
       {
-         RefreshScript(guidsToSelect, zoomExtents, Point.Empty);
+         RemoveEventHandlers( );
+
+         patch.Apply( this );
+
+         if ( null != guidsToSelect )
+         {
+            m_FlowChart.SelectNodes( guidsToSelect.ToArray( ) );
+         }
+
+         FlowchartSelectionModified( null, null );
+
+         OnScriptModified();
+
+         AddEventHandlers( );
       }
 
-      public void RefreshScript( List<Guid> guidsToSelect, bool zoomExtents, Point location )
+      public void UnpatchDisplay( Patch.PatchData patch )
+      {
+         RemoveEventHandlers( );
+
+         patch.Remove( this );
+
+         FlowchartSelectionModified( null, null );
+
+         OnScriptModified();
+
+         AddEventHandlers( );
+      }
+
+      public void UpdateNodeDisplay( Guid nodeGuid )
+      {
+         DisplayNode node = (DisplayNode) m_FlowChart.GetNode( nodeGuid );
+         EntityNode entityNode = m_ScriptEditor.GetNode( nodeGuid );
+
+         bool selected = null != node ? node.Selected : false;
+
+         if ( entityNode is CommentNode )
+         {
+            node = new CommentDisplayNode( (CommentNode) entityNode, this );
+         }
+         else if ( entityNode is EntityEvent )
+         {
+            node = new EntityEventDisplayNode( (EntityEvent) entityNode, this );
+         }
+         else if ( entityNode is EntityMethod )
+         {
+            node = new EntityMethodDisplayNode( (EntityMethod) entityNode, this );
+         }
+         else if ( entityNode is EntityProperty )
+         {
+            node = new EntityPropertyDisplayNode( (EntityProperty) entityNode, this );
+         }
+         else if ( entityNode is LocalNode )
+         {
+            node = new LocalNodeDisplayNode( (LocalNode) entityNode, this );
+         }
+         else if ( entityNode is LogicNode )
+         {
+            node = new LogicNodeDisplayNode( (LogicNode) entityNode, this );
+         }
+         else if ( entityNode is ExternalConnection )
+         {
+            node = new ExternalConnectionDisplayNode( (ExternalConnection) entityNode, this );
+         }
+         else if ( entityNode is OwnerConnection )
+         {
+            node = new OwnerConnectionDisplayNode( (OwnerConnection) entityNode, this );
+         }
+
+         if ( node != null )
+         {
+            node.Selected = selected;
+            m_FlowChart.AddNode( node );
+         }
+         else if ( entityNode is LinkNode )
+         {
+            LinkNode link = (LinkNode) entityNode;
+
+            Detox.FlowChart.Link chartLink = new Detox.FlowChart.Link( );
+            chartLink.Tag = link;
+
+            chartLink.Source.Node   = m_FlowChart.GetNode( link.Source.Guid );
+            chartLink.Source.AnchorName = link.Source.Anchor;
+
+            chartLink.Destination.Node   = m_FlowChart.GetNode( link.Destination.Guid );
+            chartLink.Destination.AnchorName = link.Destination.Anchor;
+
+            m_FlowChart.AddLink( chartLink );
+         }
+      }
+
+      public void RemoveNodeDisplay( Guid nodeGuid )
+      {
+         Node node = m_FlowChart.GetNode( nodeGuid );
+
+         //if no node, it must be a link
+         if ( null == node )
+         {
+            Link [] links = m_FlowChart.Links;
+
+            foreach ( Link link in links )
+            {
+               if ( ((EntityNode)link.Tag).Guid == nodeGuid )
+               {
+                  m_FlowChart.DeleteLink( link.Source.Node.Guid, link.Source.AnchorName, link.Destination.Node.Guid, link.Destination.AnchorName );
+                  break;
+               }
+            }
+         }
+         else
+         {
+            m_FlowChart.DeleteNode( nodeGuid );
+         }
+      }
+
+      private void RebuildScript( List<Guid> guidsToSelect )
+      {
+         RebuildScript(guidsToSelect, false, Point.Empty);
+      }
+
+      public void RebuildScript( List<Guid> guidsToSelect, bool zoomExtents )
+      {
+         RebuildScript(guidsToSelect, zoomExtents, Point.Empty);
+      }
+
+      public void RebuildScript( List<Guid> guidsToSelect, bool zoomExtents, Point location )
       {
          RemoveEventHandlers( );
 
@@ -1607,164 +1735,72 @@ namespace Detox.ScriptEditor
             }
          }
 
-         m_FlowChart.SuspendLayout( );
          m_FlowChart.Clear( );
 
          UpdateObjectReferences( );
+
+         List<LinkNode> links = new List<LinkNode>( );
          
-         foreach ( CommentNode commentNode in m_ScriptEditor.Comments )
+         foreach ( EntityNode entityNode in m_ScriptEditor.EntityNodes )
          {
-            CommentDisplayNode node = new CommentDisplayNode( commentNode, this );
+            DisplayNode node = null;
+
+            if ( entityNode is LinkNode )
+            {
+               links.Add( (LinkNode) entityNode );
+            }
+            else if ( entityNode is CommentNode )
+            {
+               node = new CommentDisplayNode( (CommentNode) entityNode, this );
+            }
+            else if ( entityNode is EntityEvent )
+            {
+               node = new EntityEventDisplayNode( (EntityEvent) entityNode, this );
+            }
+            else if ( entityNode is EntityMethod )
+            {
+               node = new EntityMethodDisplayNode( (EntityMethod) entityNode, this );
+            }
+            else if ( entityNode is EntityProperty )
+            {
+               node = new EntityPropertyDisplayNode( (EntityProperty) entityNode, this );
+            }
+            else if ( entityNode is LocalNode )
+            {
+               node = new LocalNodeDisplayNode( (LocalNode) entityNode, this );
+            }
+            else if ( entityNode is LogicNode )
+            {
+               node = new LogicNodeDisplayNode( (LogicNode) entityNode, this );
+            }
+            else if ( entityNode is ExternalConnection )
+            {
+               node = new ExternalConnectionDisplayNode( (ExternalConnection) entityNode, this );
+            }
+            else if ( entityNode is OwnerConnection )
+            {
+               node = new OwnerConnectionDisplayNode( (OwnerConnection) entityNode, this );
+            }
+
+            if ( node != null )
+            {
+               if ( m_ScriptEditor.IsNodeInstanceDeprecated(entityNode) ) node.Deprecate( );
             
-            if ( m_ScriptEditor.IsNodeInstanceDeprecated(commentNode) ) node.Deprecate( );
+               if ( guidsToSelect.Contains(node.Guid) )
+               {
+                  node.Selected = true;
+               }
+
+               m_FlowChart.AddNode( node );
+
+               if (node.Location.X < minX) minX = node.Location.X;
+               if (node.Location.X + node.Size.Width > maxX) maxX = node.Location.X;
+               if (node.Location.Y < minY) minY = node.Location.Y;
+               if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
+            }
+         }
          
-            if ( guidsToSelect.Contains(node.Guid) )
-            {
-               node.Selected = true;
-            }
-
-            m_FlowChart.AddNode( node );
-
-            if (node.Location.X < minX) minX = node.Location.X;
-            if (node.Location.X + node.Size.Width > maxX) maxX = node.Location.X;
-            if (node.Location.Y < minY) minY = node.Location.Y;
-            if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
-         }
-
-         foreach ( EntityEvent entityEvent in m_ScriptEditor.Events )
-         {
-            EntityEventDisplayNode node = new EntityEventDisplayNode( entityEvent, this );
-                     
-            if ( m_ScriptEditor.IsNodeInstanceDeprecated(entityEvent) ) node.Deprecate( );
-
-            if ( guidsToSelect.Contains(node.Guid) )
-            {
-               node.Selected = true;
-            }
-
-            m_FlowChart.AddNode( node );
-
-            if (node.Location.X < minX) minX = node.Location.X;
-            if (node.Location.X + node.Size.Width > maxX) maxX = node.Location.X;
-            if (node.Location.Y < minY) minY = node.Location.Y;
-            if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
-         }
-
-         foreach ( EntityMethod entityMethod in m_ScriptEditor.Methods )
-         {
-            EntityMethodDisplayNode node = new EntityMethodDisplayNode( entityMethod, this );
-
-            if ( m_ScriptEditor.IsNodeInstanceDeprecated(entityMethod) ) node.Deprecate( );
-
-            if ( guidsToSelect.Contains(node.Guid) )
-            {
-               node.Selected = true;
-            }
-         
-            m_FlowChart.AddNode( node );
-
-            if (node.Location.X < minX) minX = node.Location.X;
-            if (node.Location.X + node.Size.Width > maxX) maxX = node.Location.X;
-            if (node.Location.Y < minY) minY = node.Location.Y;
-            if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
-         }
-
-         foreach ( EntityProperty entityProperty in m_ScriptEditor.Properties )
-         {
-            EntityPropertyDisplayNode node = new EntityPropertyDisplayNode( entityProperty, this );
-
-            if ( m_ScriptEditor.IsNodeInstanceDeprecated(entityProperty) ) node.Deprecate( );
-
-            if ( guidsToSelect.Contains(node.Guid) )
-            {
-               node.Selected = true;
-            }
-         
-            m_FlowChart.AddNode( node );
-
-            if (node.Location.X < minX) minX = node.Location.X;
-            if (node.Location.X + node.Size.Width > maxX) maxX = node.Location.X;
-            if (node.Location.Y < minY) minY = node.Location.Y;
-            if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
-         }
-
-         foreach ( LocalNode localNode in m_ScriptEditor.Locals )
-         {
-            LocalNodeDisplayNode node = new LocalNodeDisplayNode( localNode, this );
-
-            if ( m_ScriptEditor.IsNodeInstanceDeprecated(localNode) ) node.Deprecate( );
-
-            if ( guidsToSelect.Contains(node.Guid) )
-            {
-               node.Selected = true;
-            }
-         
-            m_FlowChart.AddNode( node );
-
-            if (node.Location.X < minX) minX = node.Location.X;
-            if (node.Location.X + node.Size.Width > maxX) maxX = node.Location.X;
-            if (node.Location.Y < minY) minY = node.Location.Y;
-            if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
-         }
-
-         foreach ( LogicNode logicNode in m_ScriptEditor.Logics )
-         {
-            LogicNodeDisplayNode node = new LogicNodeDisplayNode( logicNode, this );
-
-            if ( m_ScriptEditor.IsNodeInstanceDeprecated(logicNode) ) node.Deprecate( );
-
-            if ( guidsToSelect.Contains(node.Guid) )
-            {
-               node.Selected = true;
-            }
-         
-            m_FlowChart.AddNode( node );
-
-            if (node.Location.X < minX) minX = node.Location.X;
-            if (node.Location.X + node.Size.Width > maxX) maxX = node.Location.X;
-            if (node.Location.Y < minY) minY = node.Location.Y;
-            if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
-         }
-
-         foreach ( ExternalConnection external in m_ScriptEditor.Externals )
-         {
-            ExternalConnectionDisplayNode node = new ExternalConnectionDisplayNode( external, this );
-
-            if ( m_ScriptEditor.IsNodeInstanceDeprecated(external) ) node.Deprecate( );
-
-            if ( guidsToSelect.Contains(node.Guid) )
-            {
-               node.Selected = true;
-            }
-         
-            m_FlowChart.AddNode( node );
-
-            if (node.Location.X < minX) minX = node.Location.X;
-            if (node.Location.X + node.Size.Width > maxX) maxX = node.Location.X;
-            if (node.Location.Y < minY) minY = node.Location.Y;
-            if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
-         }
-
-         foreach ( OwnerConnection owner in m_ScriptEditor.Owners )
-         {
-            OwnerConnectionDisplayNode node = new OwnerConnectionDisplayNode( owner, this );
-
-            if ( m_ScriptEditor.IsNodeInstanceDeprecated(owner) ) node.Deprecate( );
-
-            if ( guidsToSelect.Contains(node.Guid) )
-            {
-               node.Selected = true;
-            }
-         
-            m_FlowChart.AddNode( node );
-
-            if (node.Location.X < minX) minX = node.Location.X;
-            if (node.Location.X + node.Size.Width > maxX) maxX = node.Location.X;
-            if (node.Location.Y < minY) minY = node.Location.Y;
-            if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
-         }
-
-         foreach ( LinkNode link in m_ScriptEditor.Links )
+         foreach ( LinkNode link in links )
          {
             Detox.FlowChart.Link chartLink = new Detox.FlowChart.Link( );
             chartLink.Tag = link;
@@ -1782,16 +1818,12 @@ namespace Detox.ScriptEditor
                chartLink.Selected = true;
             }
          }
-
-         m_FlowChart.ResumeLayout( );
-//         m_FlowChart.Invalidate( );  // RefreshScript (resume)
-			
+      
          if (m_FlowChart.Nodes.Length > 0)
          {
             if (location != Point.Empty)
             {
                m_FlowChart.Location = location;
-//               m_FlowChart.Invalidate( );  // RefreshScript (compiled)
             }
             else if (zoomExtents)
             {
@@ -1804,7 +1836,8 @@ namespace Detox.ScriptEditor
             }
          }
 
-         m_FlowChart.Invalidate( );  // RefreshScript - Replaces the three calls above
+
+         //m_FlowChart.Invalidate( );  // RefreshScript - Replaces the three calls above
 
 
          FlowchartSelectionModified( null, null );
@@ -1856,8 +1889,7 @@ namespace Detox.ScriptEditor
          {
             m_Dirty = true;
             uScript.Instance.RegisterUndo( batch );
-
-            RefreshScript( null );
+            PatchDisplay( batch );
          }
       }
 
@@ -1888,7 +1920,7 @@ namespace Detox.ScriptEditor
             {
                name = "Owner GameObject";
             }
-
+            
             PropertyGridParameters parameters = new PropertyGridParameters( name, entityNode, this ); 
             parameters.AddParameters( "Parameters", entityNode.Parameters );
             parameters.AddParameters( "Comment", new Parameter[] {entityNode.ShowComment, entityNode.Comment} );
@@ -1911,10 +1943,12 @@ namespace Detox.ScriptEditor
       {  
          RemoveEventHandlers( );
 
-         bool changed = false;
-
+         Patch.Batch patchBatch = new Detox.Patch.Batch( "Property Changed" );
+         
          foreach ( object o in m_PropertyGrid.SelectedObjects )
          {
+            bool changed = false;
+
             PropertyGridParameters p = (PropertyGridParameters) o;
 
             EntityNode entityNode  = p.EntityNode;
@@ -1961,19 +1995,19 @@ namespace Detox.ScriptEditor
 
             if ( true == changed || false == oldNode.Equals(entityNode) )
             {
-               changed = true;
-
                Patch.EntityNode undoParameter = new Patch.EntityNode( "Node Modified", oldNode, entityNode );
-               uScript.Instance.RegisterUndo( undoParameter );
+               patchBatch.Add( undoParameter );
             }
          }
 
          AddEventHandlers( );
 
-         if ( true == changed )
+         if ( true == patchBatch.HasPatches )
          {
             m_Dirty = true;
-            RefreshScript( null );
+
+            uScript.Instance.RegisterUndo( patchBatch );
+            PatchDisplay( patchBatch );
          }
       }
 
@@ -1983,14 +2017,21 @@ namespace Detox.ScriptEditor
 
             LinkNode link = new LinkNode( e.Link.Source.Node.Guid, e.Link.Source.Anchor.Name, e.Link.Destination.Node.Guid, e.Link.Destination.Anchor.Name );
             m_ScriptEditor.AddNode( link );
-            m_Dirty = true;
 
          AddEventHandlers( );
-
-         Patch.EntityNode patchNode = new Detox.Patch.EntityNode("Link Created", null, link);
-         uScript.Instance.RegisterUndo( patchNode );
          
-         RefreshScript( null );
+         //remove it and then if it's successfully created the batch display patching will place it
+         m_FlowChart.DeleteLink( link.Source.Guid, link.Source.Anchor, link.Destination.Guid, link.Destination.Anchor );
+
+         //was it successful?
+         if ( null != m_ScriptEditor.GetNode(link.Guid) )
+         {
+            m_Dirty = true;
+
+            Patch.EntityNode patchNode = new Detox.Patch.EntityNode("Link Created", null, link);
+            uScript.Instance.RegisterUndo( patchNode );
+            PatchDisplay( patchNode );
+         }         
       }
 
       private void FlowchartPointRender(object sender, FlowchartPointRenderEventArgs e)
@@ -2045,7 +2086,7 @@ namespace Detox.ScriptEditor
       {
          m_CopiedFromThisLocation = false;
       }
-      
+
       private void RemoveEventHandlers( )
       {
          m_FlowChart.NodesModified     -= FlowchartNodesModified;
@@ -2759,7 +2800,7 @@ namespace Detox.ScriptEditor
 
       protected void UpdateNode(EntityNode node)
       {
-         m_EntityNode = node;
+         m_EntityNode = node.Copy( true );
 
          UpdateStyleName(); 
       }
@@ -3007,6 +3048,11 @@ namespace Detox.ScriptEditor
 
          PreparePoints( );
       }
+
+      public void RefreshPoints( )
+      {
+         PreparePoints( );
+      }
       
       protected void UpdateStyleName()
       {
@@ -3156,28 +3202,6 @@ namespace Detox.ScriptEditor
          AnchorPoints = finalAnchor.ToArray( );
       }
    }
-
-   public class ChangeStack
-   {
-      public struct Change
-      {
-         public Object OldObject;
-         public Object NewObject;
-         public string Name;
-
-         public Change(string name, Object oldObject, Object newObject)
-         {
-            OldObject = oldObject;
-            NewObject = newObject;
-            Name      = name;
-         }
-      }
-
-      public void AddChange(Change change)
-      {
-         //uScript.Instance.RegisterUndo( change.Name, ((ScriptEditor)change.OldObject), ((ScriptEditor)change.NewObject) );
-      }
-   };
 
    public class PropertyGridParameters
    {

@@ -143,7 +143,7 @@ public static class uScriptExportPNG
          {
             uScriptGUI.panelsHidden = true;
             _uScript.ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
-            _uScript.ScriptEditorCtrl.RefreshScript(null, false);
+            _uScript.ScriptEditorCtrl.RebuildScript(null, false);
          }
 
          // Set the map scale to normal
@@ -160,7 +160,7 @@ public static class uScriptExportPNG
          {
             uScriptGUI.panelsHidden = false;
             _uScript.ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
-            _uScript.ScriptEditorCtrl.RefreshScript(null, false);
+            _uScript.ScriptEditorCtrl.RebuildScript(null, false);
          }
          _uScript.m_MapScale = _originalMapScale;
          _uScript.ScriptEditorCtrl.FlowChart.Location = _originalCanvasLocation;

@@ -341,8 +341,9 @@ public class uScript : EditorWindow
    {
       get
       {
-         // should return true if the script's generated code is out of date or just stubbed in.
-         return false;
+         //leave out until we figure the correct solution
+         //because this turns all the scripts in the script list red
+         return false;//m_ScriptEditorCtrl.ScriptEditor.GeneratedCodeIsStale;
       }
    }
 
@@ -477,61 +478,6 @@ public class uScript : EditorWindow
       m_Patches     = new string[ 0 ];
    }
 
-   //private void OpenFromMasterComponent( )
-   //{
-   //   m_ScriptEditorCtrl = null;
-
-   //   #if FREE_BETA_BUILD // See if expiration date and build cap should be used. Not needed for commercial version.
-   //    {
-   //         //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
-   //         if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild))
-   //         {
-   //         }
-   //         else
-   //         {
-   //            uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will not work with Unity version " + Application.unityVersion + ".", uScriptDebug.Type.Error);
-   //            return;
-   //         }
-         
-   	
-   //         if (DateTime.Now > ExpireDate)
-   //         {
-   //            uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "has expired. Please use the free Personal Learning Edition (PLE) to continue to evaluate uScript.\n", uScriptDebug.Type.Error);
-   //            return;
-   //         }
-   //         else
-   //         {
-   //            uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "will expire in " + (ExpireDate - DateTime.Now).Days + " days.", uScriptDebug.Type.Message);
-   //         }
-   //    }
-   //   #endif
-
-
-
-   //   ScriptEditor scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
-
-   //   if (!String.IsNullOrEmpty(MasterComponent.Script))
-   //   {
-   //      scriptEditor.OpenFromBase64(MasterComponent.ScriptName, MasterComponent.Script);
-   //   }
-
-   //   Point loc = Point.Empty;
-   //   if (false == String.IsNullOrEmpty(m_CurrentCanvasPosition))
-   //   {
-   //      loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))),
-   //                      Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
-   //   }
-
-   //   m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor, loc);
-   //   m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
-
-   //   m_ScriptEditorCtrl.BuildContextMenu();
-   //   uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
-
-   //   CurrentScript = MasterComponent.Script;
-   //   CurrentScriptName = MasterComponent.ScriptName;
-   //}
-
    private void OpenFromCache( )
    {
       m_ScriptEditorCtrl = null;
@@ -589,7 +535,7 @@ public class uScript : EditorWindow
       {
          if ( false == String.IsNullOrEmpty(patch) )
          {
-            ApplyPatch( scriptEditor, patch );
+            ApplyPatch( null, scriptEditor, patch );
          }
       }
 
@@ -605,7 +551,7 @@ public class uScript : EditorWindow
       CacheScript( );
    }
 
-   public void ApplyPatch(ScriptEditor scriptEditor, string patch)
+   public void ApplyPatch(ScriptEditorCtrl ctrl, ScriptEditor scriptEditor, string patch)
    {
       object data;
       Detox.Data.ObjectSerializer o = new Detox.Data.ObjectSerializer( );
@@ -620,12 +566,17 @@ public class uScript : EditorWindow
 
          //Debug.Log( "Applying Patch: " + p.GetType( ) + ", " + p.Name );
          p.Apply( scriptEditor );
+
+         if ( null != ctrl )
+         {
+            ctrl.PatchDisplay( p );
+         }
       }
 
       stream.Close( );
    }
 
-   public void RemovePatch(ScriptEditor scriptEditor, string patch)
+   public void RemovePatch(ScriptEditorCtrl ctrl, ScriptEditor scriptEditor, string patch)
    {
       object data;
       Detox.Data.ObjectSerializer o = new Detox.Data.ObjectSerializer( );
@@ -640,6 +591,11 @@ public class uScript : EditorWindow
 
          //Debug.Log( "Removing Patch: " + p.GetType( ) + ", " + p.Name );
          p.Remove( scriptEditor );
+
+         if ( null != ctrl )
+         {
+            ctrl.UnpatchDisplay( p );
+         }
       }
 
       stream.Close( );
@@ -745,6 +701,8 @@ public class uScript : EditorWindow
 
    void Update()
    {
+      //Debug.Log( "BREAK AT: " + MasterComponent.BreakAt );
+
       if ( null == m_ComplexData )
       {
          RelaunchingFromRebuiltAppDomain( );
@@ -852,19 +810,18 @@ public class uScript : EditorWindow
          //so apply the patch
          if ( UndoComponent.UndoNumber > m_UndoNumber )
          {
-            ApplyPatch( m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber - 1] );
-
+            ApplyPatch( m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber - 1] );
+      
          }
          else
          {
             //if their number was less then it was an undo
             //so remove the previous change
-            RemovePatch( m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber] );
+            RemovePatch( m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber] );
          }
          
          //recache the script since we're out of date with the patches
          CacheScript( );
-         OpenFromCache( );
 
          m_UndoNumber = UndoComponent.UndoNumber;
          
@@ -1560,7 +1517,7 @@ public class uScript : EditorWindow
                   // re-center the graph
                   if (m_ScriptEditorCtrl != null)
                   {
-                     m_ScriptEditorCtrl.RefreshScript(null, true);
+                     m_ScriptEditorCtrl.RebuildScript(null, true);
                   }
                }
                else if (e.keyCode == KeyCode.W && (modifierKeys & Keys.Control) != 0)
@@ -1616,13 +1573,13 @@ public class uScript : EditorWindow
                {
 //                  m_ScriptEditorCtrl.FlowChart.Location.X += (int)_canvasRect.x;
                   m_ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
-                  m_ScriptEditorCtrl.RefreshScript(null, false);
+                  m_ScriptEditorCtrl.RebuildScript(null, false);
                }
                else
                {
 //                  m_ScriptEditorCtrl.FlowChart.Location.X -= (int)_canvasRect.x;
                   m_ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
-                  m_ScriptEditorCtrl.RefreshScript(null, false);
+                  m_ScriptEditorCtrl.RebuildScript(null, false);
                }
             }
 
@@ -4847,24 +4804,5 @@ public class uScript : EditorWindow
       }
 
       return "";
-   }
-
-   public static NodeComponentType FindNodeComponentType(Type type)
-   {
-      if (type != null)
-      {
-         object[] attributes = type.GetCustomAttributes(false);
-         if (null == attributes) return null;
-
-         foreach (object a in attributes)
-         {
-            if (a is NodeComponentType)
-            {
-               return ((NodeComponentType)a);
-            }
-         }
-      }
-
-      return null;
    }
 }
