@@ -337,14 +337,34 @@ public class uScript : EditorWindow
       }
    }
 
-   public bool IsStale
-   {
-      get
+
+   private Dictionary<string, bool> _staleScriptCache = new Dictionary<string, bool>();
+
+   public bool IsStale(string scriptName)
+	{
+      if (_staleScriptCache.ContainsKey(scriptName))
       {
+         return _staleScriptCache[scriptName];
+      }
+      else
+      {
+         // Perform the slow manual file check to get the actual state.
+
+
+//When uScript first loads, it should verify that the generated scripts are present, since the user could have manually deleted them.
+
+
          //leave out until we figure the correct solution
          //because this turns all the scripts in the script list red
          return false;//m_ScriptEditorCtrl.ScriptEditor.GeneratedCodeIsStale;
       }
+	}
+
+   // The stale script state cache should be updated whenever a script's stale state changes, and when uScript first launches.
+   //
+   public void SetStaleState(string scriptName, bool isStale)
+   {
+      _staleScriptCache[scriptName] = isStale;
    }
 
 
@@ -3304,6 +3324,12 @@ public class uScript : EditorWindow
                AssetDatabase.Refresh();
                AttachToMasterGO(m_FullPath);
             }
+
+            // When a file is saved (regardless of method), we should updated the
+            // Dictionary cache for that script.
+            //
+            string scriptName = System.IO.Path.GetFileNameWithoutExtension(m_FullPath);
+            SetStaleState(scriptName, !generateCode);
 
             return true;
          }

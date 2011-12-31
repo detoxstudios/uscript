@@ -228,11 +228,18 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                if (isScriptNew == false)
                {
+                  if (uScript.Instance.IsStale(_currentScriptName))
+                  {
+                     GUI.backgroundColor = UnityEngine.Color.red;
+                  }
+
                   // Source
                   if (GUILayout.Button(uScriptGUIContent.buttonScriptSource, EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
                   {
                      uScriptGUI.PingGeneratedScript(_currentScriptName);
                   }
+
+                  GUI.backgroundColor = UnityEngine.Color.white;
 
                   // Reload
                   if (GUILayout.Button(uScriptGUIContent.buttonScriptReload, EditorStyles.miniButtonMid))
@@ -408,7 +415,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               buttonRect.height = BUTTON_HEIGHT;
                               buttonRect.width = _widthButtonSource;
 
-                              if (uScript.Instance.IsStale)
+                              if (uScript.Instance.IsStale(scriptName))
                               {
                                  GUI.backgroundColor = UnityEngine.Color.red;
                               }

@@ -1403,23 +1403,31 @@ public static class uScriptGUI
    }
 
 
-   public static void PingObject(string path, Type type)
+   public static bool PingObject(string path, Type type)
    {
       UnityEngine.Object obj = Resources.LoadAssetAtPath(path, type);
-      if (obj != null)
-      {
-         int instanceID = obj.GetInstanceID();
-         EditorGUIUtility.PingObject(instanceID);
-      }
-      else
+      if (obj == null)
       {
          Debug.Log("File not found:\t" + path + "\n");
+         return false;
       }
+
+      int instanceID = obj.GetInstanceID();
+      EditorGUIUtility.PingObject(instanceID);
+      return true;
    }
 
    public static void PingGeneratedScript(string scriptName)
    {
-      PingObject(uScript.Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6) + "/" + scriptName + ".cs", typeof(TextAsset));
+      string scriptPath = uScript.Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6) + "/" + scriptName + ".cs";
+      if (PingObject(scriptPath, typeof(TextAsset)) == false)
+      {
+         // Whenever the user presses the "Source" button for a given script in the uScripts Panel,
+         // if the source file is not found (because it was deleted while uScript was running),
+         // the Dictionary cache should be updated for that script.
+         //
+         uScript.Instance.SetStaleState(scriptName, true);
+      }
    }
 
 
