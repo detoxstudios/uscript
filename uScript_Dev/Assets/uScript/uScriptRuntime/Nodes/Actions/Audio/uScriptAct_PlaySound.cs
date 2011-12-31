@@ -3,6 +3,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [NodePath("Actions/Audio")]
 
@@ -14,7 +15,7 @@ using System.Collections;
 [FriendlyName("Play Sound", "Plays the specified AudioClip on the target GameObject.")]
 public class uScriptAct_PlaySound : uScriptLogic
 {
-   private AudioSource[] m_AudioSources;
+   private List<AudioSource> m_AudioSources = new List<AudioSource>( );
 
    public bool Out { get { return true; } }
 
@@ -23,20 +24,18 @@ public class uScriptAct_PlaySound : uScriptLogic
    // Parameter Attributes are applied below in Stop()
    public void Play(AudioClip audioClip, GameObject[] target, float volume, bool loop)
    {
-      m_AudioSources = null;
-
       if (target.Length > 0 && null != audioClip)
       {
-         m_AudioSources = new AudioSource[target.Length];
-
          for (int i = 0; i < target.Length; i++)
          {
-            m_AudioSources[i] = target[i].AddComponent<AudioSource>();
-            m_AudioSources[i].clip = audioClip;
-            m_AudioSources[i].volume = volume;
-            m_AudioSources[i].loop = loop;
+            AudioSource source = target[i].AddComponent<AudioSource>();
+            source.clip = audioClip;
+            source.volume = volume;
+            source.loop = loop;
 
-            m_AudioSources[i].Play();
+            source.Play();
+
+            m_AudioSources.Add( source );
          }
       }
    }
@@ -45,12 +44,9 @@ public class uScriptAct_PlaySound : uScriptLogic
    [FriendlyName("Update Volume")]
    public void UpdateVolume(AudioClip audioClip, GameObject[] target, float volume, bool loop)
    {
-      if (null != m_AudioSources)
+      foreach (AudioSource a in m_AudioSources)
       {
-         foreach (AudioSource a in m_AudioSources)
-         {
-            a.volume = volume;
-         }
+         a.volume = volume;
       }
    }
 
@@ -82,29 +78,26 @@ public class uScriptAct_PlaySound : uScriptLogic
 
    public void Update()
    {
-      // Called every tick
-      if (null == m_AudioSources) return;
+      if (0 == m_AudioSources.Count) return;
 
       int i;
 
-      for (i = 0; i < m_AudioSources.Length; i++)
+      for (i = 0; i < m_AudioSources.Count; i++)
       {
-         if (m_AudioSources[i] != null && true == m_AudioSources[i].isPlaying) break;
+         if (false == m_AudioSources[i].isPlaying)
+         {
+            AudioSource finishedSource = m_AudioSources[i];
+            ScriptableObject.Destroy( finishedSource );
+
+            m_AudioSources.RemoveAt( i );
+
+            --i;
+         }
       }
 
-      if (i == m_AudioSources.Length)
+      if ( 0 == m_AudioSources.Count )
       {
-         if (Finished != null)
-         {
-            Finished(this, new System.EventArgs());
-         }
-
-         for (i = 0; i < m_AudioSources.Length; i++)
-         {
-            ScriptableObject.Destroy(m_AudioSources[i]);
-         }
-
-         m_AudioSources = null;
+         if (Finished != null) Finished(this, new System.EventArgs());
       }
    }
 
