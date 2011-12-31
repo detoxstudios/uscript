@@ -3187,6 +3187,10 @@ namespace Detox.ScriptEditor
                   Parameter existingParam = FindNodeParameter(node, existingLinks.Destination.Anchor);
                   Parameter myParam       = FindNodeParameter(dest, link.Destination.Anchor);
 
+                  //externals as sources into parameters no longer have to type match
+                  //when it comes to scalar verses array.  any other type of external
+                  //still needs to type match (even with arrays) support for others can
+                  //come on with an as-needed basis
                   string existingType = existingParam.Type.Replace("[]", "");
                   string newType      = myParam.Type.Replace("[]", "");
 
