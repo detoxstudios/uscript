@@ -2568,7 +2568,25 @@ namespace Detox.ScriptEditor
                {
                   if ( p.Name == link.Destination.Anchor )
                   {
-                     uniqueParameters[ external.Name.Default ] = p;
+                     bool useExisting = false;
+
+                     if ( uniqueParameters.Contains(external.Name.Default) )
+                     {
+                        Parameter existingP = (Parameter) uniqueParameters[ external.Name.Default ];
+                        
+                        if ( false == existingP.Type.Contains("[]") && true == p.Type.Contains("[]") )
+                        {
+                           useExisting = true;
+                        }
+                     }
+
+                     //go for the lowest common denominator
+                     //if one existed which didn't use an array
+                     //and a new array one comes, ignore it
+                     if ( false == useExisting )
+                     {
+                        uniqueParameters[ external.Name.Default ] = p;
+                     }
                   }
                }
             
@@ -2577,8 +2595,9 @@ namespace Detox.ScriptEditor
                   uniqueParameters[ external.Name.Default ] = node.Instance;
                }
 
-               //only needs to be defined once, even if multiple nodes are connected to it
-               break;
+               //we need to check them all to make sure
+               //we use the lowest common denominator of types
+               //so do not break here
             }
          }
 
@@ -2701,6 +2720,32 @@ namespace Detox.ScriptEditor
          }
       }
 
+      string GetLowestCommonExternalType( ExternalConnection external )
+      {
+         LinkNode []inputs = FindLinksBySource( external.Guid, external.Connection );
+
+         string type = "";
+
+         foreach ( LinkNode link in inputs )
+         {
+            EntityNode parameterNode = m_Script.GetNode( link.Destination.Guid );
+
+            foreach ( Parameter p in parameterNode.Parameters )
+            {
+               if ( p.Name == link.Destination.Anchor )
+               {
+                  type = p.Type;
+
+                  //if any type lacks an array, it is the lowest type
+                  //so return it, otherwise keep checking
+                  if ( false == type.Contains("[]") ) return type;
+               }
+            }
+         }
+
+         return type;
+      }
+
       void DefineExternalInput( ExternalConnection externalInput, LinkNode.Connection []connections, string args )
       {
          Plug inputPlug = CSharpExternalInputDeclaration(externalInput.Name.Default);
@@ -2739,7 +2784,17 @@ namespace Detox.ScriptEditor
                {
                   if ( p.Name == link.Destination.Anchor )
                   {
-                     AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
+                     string type = GetLowestCommonExternalType( external );
+
+                     if ( false == type.Contains("[]") && true == p.Type.Contains("[]") )
+                     {
+                        AddCSharpLine( "if ( " + CSharpName(parameterNode, p.Name) + ".Length == 0 ) " + CSharpName(parameterNode, p.Name) + " = new " + type + "[1];" );
+                        AddCSharpLine( CSharpName(parameterNode, p.Name) + "[ 0 ] = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
+                     }
+                     else
+                     {
+                        AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
+                     }
                      SyncReferencedGameObject( parameterNode, p );
                   }
                }

@@ -3187,7 +3187,10 @@ namespace Detox.ScriptEditor
                   Parameter existingParam = FindNodeParameter(node, existingLinks.Destination.Anchor);
                   Parameter myParam       = FindNodeParameter(dest, link.Destination.Anchor);
 
-                  if ( existingParam.Type != myParam.Type )
+                  string existingType = existingParam.Type.Replace("[]", "");
+                  string newType      = myParam.Type.Replace("[]", "");
+
+                  if ( existingType != newType )
                   {
                      if ( true == nameAlreadyUsed )
                      {
