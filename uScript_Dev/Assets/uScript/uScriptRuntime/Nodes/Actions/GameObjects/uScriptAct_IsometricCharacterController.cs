@@ -14,23 +14,19 @@ using System.Collections;
 [FriendlyName("Isometric Character Controller", "Simple character controller.  Character always moves forward and backwards along its forward vector.")]
 public class uScriptAct_IsometricCharacterController : uScriptLogic
 {
-   private enum Translate
+   private enum Direction
    {
       None,
       Forward,
-      Backward
-   }
-
-   private enum Rotate
-   {
-      None,
+      Backward,
       Right,
       Left
    }
 
    private GameObject m_Target = null;
-   private Translate m_Translate = Translate.None;
-   private Rotate m_Rotate = Rotate.None;
+   private Direction m_Translate = Direction.None;
+   private Direction m_Rotate = Direction.None;
+   private Direction m_Strafe = Direction.None;
    private float m_TranslateSpeed = 0.0f;
    private float m_RotateSpeed = 0.0f;
 
@@ -58,7 +54,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
    [FriendlyName("Move Local Forward")]
    public void MoveForward(GameObject target, float translation, float rotation, bool filterTranslation, float translationFilterConstant, bool filterRotation, float rotationFilterConstant)
    {
-      m_Translate = Translate.Forward;
+      m_Translate = Direction.Forward;
 
       m_Target = target;
       m_TranslateSpeed = m_LastTranslateSpeed = translation;
@@ -75,7 +71,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
    [FriendlyName("Move Local Backward")]
    public void MoveBackward(GameObject target, float translation, float rotation, bool filterTranslation, float translationFilterConstant, bool filterRotation, float rotationFilterConstant)
    {
-      m_Translate = Translate.Backward;
+      m_Translate = Direction.Backward;
 
       m_Target = target;
       m_TranslateSpeed = m_LastTranslateSpeed = translation;
@@ -89,10 +85,42 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
 
 
    // Parameter Attributes are applied below in RotateLeft()
+   [FriendlyName("Strafe Local Right")]
+   public void StrafeRight(GameObject target, float translation, float rotation, bool filterTranslation, float translationFilterConstant, bool filterRotation, float rotationFilterConstant)
+   {
+      m_Strafe = Direction.Right;
+
+      m_Target = target;
+      m_TranslateSpeed = m_LastTranslateSpeed = translation;
+      m_RotateSpeed = rotation;
+
+      m_FilterTranslation = filterTranslation;
+      m_FilterRotation = filterRotation;
+      m_TranslationFilterConstant = translationFilterConstant;
+      m_RotationFilterConstant = rotationFilterConstant;
+   }
+
+   // Parameter Attributes are applied below in RotateLeft()
+   [FriendlyName("Strafe Local Left")]
+   public void StrafeLeft(GameObject target, float translation, float rotation, bool filterTranslation, float translationFilterConstant, bool filterRotation, float rotationFilterConstant)
+   {
+      m_Strafe = Direction.Left;
+
+      m_Target = target;
+      m_TranslateSpeed = m_LastTranslateSpeed = translation;
+      m_RotateSpeed = rotation;
+
+      m_FilterTranslation = filterTranslation;
+      m_FilterRotation = filterRotation;
+      m_TranslationFilterConstant = translationFilterConstant;
+      m_RotationFilterConstant = rotationFilterConstant;
+   }
+
+   // Parameter Attributes are applied below in RotateLeft()
    [FriendlyName("Rotate Local Right")]
    public void RotateRight(GameObject target, float translation, float rotation, bool filterTranslation, float translationFilterConstant, bool filterRotation, float rotationFilterConstant)
    {
-      m_Rotate = Rotate.Right;
+      m_Rotate = Direction.Right;
 
       m_Target = target;
       m_TranslateSpeed = translation;
@@ -103,7 +131,6 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_TranslationFilterConstant = translationFilterConstant;
       m_RotationFilterConstant = rotationFilterConstant;
    }
-
 
    [FriendlyName("Rotate Local Left")]
    public void RotateLeft(
@@ -134,7 +161,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       float rotationFilterConstant
       )
    {
-      m_Rotate = Rotate.Left;
+      m_Rotate = Direction.Left;
 
       m_Target = target;
       m_TranslateSpeed = translation;
@@ -169,20 +196,30 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       }
 
       // apply translation/rotation
-      if (Rotate.Left == m_Rotate)
+      if (Direction.Left == m_Rotate)
       {
          m_Target.transform.RotateAroundLocal(Vector3.up, -rotateSpeed * Time.deltaTime);
       }
-      else if (Rotate.Right == m_Rotate)
+      else if (Direction.Right == m_Rotate)
       {
          m_Target.transform.RotateAroundLocal(Vector3.up, rotateSpeed * Time.deltaTime);
       }
 
-      if (Translate.Forward == m_Translate)
+      // apply translation/rotation
+      if (Direction.Left == m_Strafe)
+      {
+         m_Target.transform.position += m_Target.transform.right * - translateSpeed * Time.deltaTime;
+      }
+      else if (Direction.Right == m_Strafe)
+      {
+         m_Target.transform.position += m_Target.transform.right * translateSpeed * Time.deltaTime;
+      }
+
+      if (Direction.Forward == m_Translate)
       {
          m_Target.transform.position += m_Target.transform.forward * translateSpeed * Time.deltaTime;
       }
-      else if (Translate.Backward == m_Translate)
+      else if (Direction.Backward == m_Translate)
       {
          m_Target.transform.position += m_Target.transform.forward * -translateSpeed * Time.deltaTime;
       }
@@ -190,15 +227,16 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       // done translating/rotating?
       if (!m_FilterTranslation || Mathf.Abs(translateSpeed) <= 0.01)
       {
-         m_Translate = Translate.None;
+         m_Translate = Direction.None;
+         m_Strafe    = Direction.None;
       }
       if (!m_FilterRotation || Mathf.Abs(rotateSpeed) <= 0.01)
       {
-         m_Rotate = Rotate.None;
+         m_Rotate = Direction.None;
       }
 
       // if done translating and rotating, clear target
-      if (m_Rotate == Rotate.None && m_Translate == Translate.None)
+      if (m_Rotate == Direction.None && m_Translate == Direction.None && m_Strafe == Direction.None)
       {
          m_Target = null;
       }
