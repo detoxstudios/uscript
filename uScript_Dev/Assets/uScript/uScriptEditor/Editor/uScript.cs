@@ -3111,7 +3111,7 @@ public class uScript : EditorWindow
       }
       else
       {
-         uScriptDebug.Log("An error occured opening " + fullPath, uScriptDebug.Type.Error);
+         uScriptDebug.Log("An error occurred opening " + fullPath, uScriptDebug.Type.Error);
          return false;
       }
 
@@ -3131,7 +3131,7 @@ public class uScript : EditorWindow
       }
       catch ( Exception e )
       {
-         uScriptDebug.Log("An error occured stubbing component file " + path + "(" + e.Message + ")", uScriptDebug.Type.Error);
+         uScriptDebug.Log("An error occurred stubbing component file " + path + "(" + e.Message + ")", uScriptDebug.Type.Error);
       }
    }
 
