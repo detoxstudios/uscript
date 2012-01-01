@@ -183,6 +183,7 @@ public class uScript : EditorWindow
    Rect rectFileMenuWindow = new Rect(20, 20, 10, 10);
 
    int _saveMethod = 1;    // 0:Quick, 1:Debug, 2:Release
+   public int SaveMethod { get { return _saveMethod; } }
 
 
    /* Palette Variables */
@@ -1890,6 +1891,10 @@ public class uScript : EditorWindow
       {
          ShowNotification(uScriptGUIContent.messagePlaying);
       }
+      else if (EditorApplication.isCompiling)
+      {
+         ShowNotification(uScriptGUIContent.messageCompiling);
+      }
       else
       {
          RemoveNotification();
@@ -2588,7 +2593,7 @@ public class uScript : EditorWindow
 
 
 
-   void RequestSave(bool quick, bool debug, bool rename)
+   public void RequestSave(bool quick, bool debug, bool rename)
    {
       if (quick)
       {

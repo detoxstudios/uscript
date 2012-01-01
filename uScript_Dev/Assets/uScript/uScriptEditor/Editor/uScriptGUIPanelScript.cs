@@ -255,17 +255,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, isScriptNew ? EditorStyles.miniButton : EditorStyles.miniButtonRight))
                {
-                  bool saved = false;
-                  AssetDatabase.StartAssetEditing();
-                  {
-                     saved = uScriptInstance.SaveScript(false);
-                  }
-                  AssetDatabase.StopAssetEditing();
-
-                  if (saved)
-                  {
-                     uScriptInstance.RefreshScript();
-                  }
+                  uScriptInstance.RequestSave(uScriptInstance.SaveMethod == 0, uScriptInstance.SaveMethod == 1, false);
                }
             }
             GUILayout.EndHorizontal();
