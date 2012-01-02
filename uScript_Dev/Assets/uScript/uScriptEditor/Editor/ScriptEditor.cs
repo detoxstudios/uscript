@@ -4339,6 +4339,8 @@ namespace Detox.ScriptEditor
 
       public bool Save(string binaryFile)
       {
+         m_GeneratedCodeIsStale = true;
+
          string base64 = ToBase64( );
 
          StreamWriter streamWriter = null;
@@ -4359,14 +4361,13 @@ namespace Detox.ScriptEditor
             return false;
          }
 
-         m_GeneratedCodeIsStale = true;
-
          return true;
       }
 
       public bool Save(string binaryFile, string logicFile, string wrapperFile, bool saveForDebugging, bool stubCode)
       {
-         m_SavedForDebugging = saveForDebugging;
+         m_SavedForDebugging    = saveForDebugging;
+         m_GeneratedCodeIsStale = false;
 
          string base64 = ToBase64( );
 
@@ -4403,6 +4404,7 @@ namespace Detox.ScriptEditor
          catch (Exception e)
          {
             if ( null != streamWriter ) streamWriter.Close( );
+            m_GeneratedCodeIsStale = true;
 
             Status.Error( "Failed to write to " + wrapperFile + ". Exception: " + e.Message );
             return false;
@@ -4421,12 +4423,11 @@ namespace Detox.ScriptEditor
          catch (Exception e)
          {
             if ( null != streamWriter ) streamWriter.Close( );
+            m_GeneratedCodeIsStale = true;
 
             Status.Error( "Failed to write to " + logicFile + ". Exception: " + e.Message );
             return false;
          }
-
-         m_GeneratedCodeIsStale = false;
 
          return true;
       }

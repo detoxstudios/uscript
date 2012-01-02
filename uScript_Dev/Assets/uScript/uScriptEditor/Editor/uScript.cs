@@ -349,15 +349,24 @@ public class uScript : EditorWindow
       }
       else
       {
-         // Perform the slow manual file check to get the actual state.
+         string path = FindFile( Preferences.UserScripts, scriptName + ".uscript" );
 
+         if ( "" != path )
+         {
+            ScriptEditor s = new ScriptEditor( "", null, null );
+            if ( true == s.Open(path) )
+            {
+               SetStaleState( scriptName, s.GeneratedCodeIsStale );
+            }
+         }
+         
+         //if we failed to find it, mark it as always stale
+         if ( false == _staleScriptCache.ContainsKey(scriptName) )
+         {
+            SetStaleState( scriptName, true );
+         }
 
-//When uScript first loads, it should verify that the generated scripts are present, since the user could have manually deleted them.
-
-
-         //leave out until we figure the correct solution
-         //because this turns all the scripts in the script list red
-         return false;//m_ScriptEditorCtrl.ScriptEditor.GeneratedCodeIsStale;
+         return _staleScriptCache[ scriptName ];
       }
 	}
 
@@ -3319,6 +3328,11 @@ public class uScript : EditorWindow
 
          if (true == SaveScript(script, m_FullPath, generateCode, GenerateDebugInfo, false))
          {
+            // When a file is saved (regardless of method), we should updated the
+            // Dictionary cache for that script.
+            //
+            string scriptName = System.IO.Path.GetFileNameWithoutExtension(m_FullPath);
+            SetStaleState(scriptName, script.GeneratedCodeIsStale);
 
             m_ScriptEditorCtrl.IsDirty = false;
 
@@ -3329,12 +3343,6 @@ public class uScript : EditorWindow
                AssetDatabase.Refresh();
                AttachToMasterGO(m_FullPath);
             }
-
-            // When a file is saved (regardless of method), we should updated the
-            // Dictionary cache for that script.
-            //
-            string scriptName = System.IO.Path.GetFileNameWithoutExtension(m_FullPath);
-            SetStaleState(scriptName, !generateCode);
 
             return true;
          }
