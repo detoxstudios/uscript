@@ -25,6 +25,7 @@ namespace Detox.FlowChart
       public Node LinkStartNode { get { return m_StartLinkNode; } }
 
       private List<Link> m_Links = new List<Link>( );
+      private Hashtable  m_StyleHash = new Hashtable( );
 
       private bool m_NodeMouseTracking = false;
       private bool m_NodeMouseSizing   = false;
@@ -99,6 +100,14 @@ namespace Detox.FlowChart
       public FlowChartCtrl( )
       {
          InitializeComponent( );
+      
+         m_StyleHash = new Hashtable( );
+
+         for (int i = 0; i < uScriptConfig.VariableStyleTypes.Length; i++)
+         {
+            m_StyleHash[ uScriptConfig.VariableStyleTypes[i] ] = i;
+            m_StyleHash[ uScriptConfig.PropertyStyleTypes[i] ] = i;
+         }
       }
 
       public bool IsDragging( )
@@ -1257,6 +1266,8 @@ namespace Detox.FlowChart
          
          int i;
          List<Control> visibleList = new List<Control>();
+         Hashtable visibleHash = new Hashtable();
+
          // pare down list to only visible nodes
          for (i = 0; i < Controls.Count; i++)
          {
@@ -1265,6 +1276,7 @@ namespace Detox.FlowChart
             if (node.IsVisible(visibleRect))
             {
                visibleList.Add(node);
+               visibleHash[ node.Guid ] = node;
             }
          }
          
@@ -1286,6 +1298,14 @@ namespace Detox.FlowChart
          // render links
          foreach (Link link in m_Links)
          {
+            //ignore links which don't have visible nodes
+            //drawing these lines taxes performance
+            if ( false == visibleHash.Contains(link.Source.Node.Guid) && 
+                 false == visibleHash.Contains(link.Destination.Node.Guid) ) 
+            {
+               continue;
+            }
+
             PointF start = new PointF( link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width, 
                                        link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height );
       
@@ -1325,59 +1345,44 @@ namespace Detox.FlowChart
             }
             else
             {
-               int index = -1;
-               string styleName = "";
-               float lineWidth = pen.Width;
-               Handles.color = new UnityEngine.Color(pen.Color.FR, pen.Color.FG, pen.Color.FB);
-               bool oneNodeIsVariable = false;
+               float lineWidth = -1;
 
-               if (link.Source.Node != null || link.Destination.Node != null)
+               // check source node type first
+               string styleName = link.Source.Node.UnselectedStyleName;
+             
+               object value = m_StyleHash[styleName];
+               if ( null == value ) 
                {
-                  // check source node type first
-                  styleName = link.Source.Node.UnselectedStyleName;
-                  
-                  if (!String.IsNullOrEmpty(styleName))
-                  {
-                     oneNodeIsVariable = styleName.Contains("variable") || styleName.Contains("property");
-                     for (int j = 0; j < uScriptConfig.VariableStyleTypes.Length; j++)
-                     {
-                        if (styleName == uScriptConfig.VariableStyleTypes[j] || styleName == uScriptConfig.PropertyStyleTypes[j])
-                        {
-                           index = j;
-                           break;
-                        }
-                     }
-                  }
-						
-                  if (index == -1)
-                  {
-                     // didn't find source node style, try the destination
-                     styleName = link.Destination.Node.UnselectedStyleName;
-                     
-                     if (!String.IsNullOrEmpty(styleName))
-                     {
-                        oneNodeIsVariable = oneNodeIsVariable || styleName.Contains("variable") || styleName.Contains("property");
-                        for (int j = 0; j < uScriptConfig.VariableStyleTypes.Length; j++)
-                        {
-                           if (styleName == uScriptConfig.VariableStyleTypes[j] || styleName == uScriptConfig.PropertyStyleTypes[j])
-                           {
-                              index = j;
-                              break;
-                           }
-                        }
-                     }
-                  }
+                  // didn't find source node style, try the destination
+                  styleName = link.Destination.Node.UnselectedStyleName;
+                  value = m_StyleHash[styleName];                  
                }
 
-               if (index != -1)
+               if ( null != value )
                {
+                  int index = (int) value;
+
                   Handles.color = uScriptConfig.LineColors[index];
                   lineWidth = uScriptConfig.LineWidths[index];
                }
-               else if (oneNodeIsVariable)
+               else
                {
-                  Handles.color = uScriptConfig.LineColors[0];
-                  lineWidth = uScriptConfig.LineWidths[0];
+                  bool oneNodeIsVariable = link.Source.Node is Detox.ScriptEditor.LocalNodeDisplayNode ||
+                                           link.Source.Node is Detox.ScriptEditor.EntityPropertyDisplayNode ||
+                                           link.Destination.Node is Detox.ScriptEditor.LocalNodeDisplayNode ||
+                                           link.Destination.Node is Detox.ScriptEditor.EntityPropertyDisplayNode;
+
+                  if ( true == oneNodeIsVariable )
+                  {
+                     Handles.color = uScriptConfig.LineColors[0];
+                     lineWidth = uScriptConfig.LineWidths[0];
+                  }
+               }
+
+               if ( -1 == lineWidth )
+               {
+                  lineWidth = pen.Width;
+                  Handles.color = new UnityEngine.Color(pen.Color.FR, pen.Color.FG, pen.Color.FB);
                }
 
                Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0), 
