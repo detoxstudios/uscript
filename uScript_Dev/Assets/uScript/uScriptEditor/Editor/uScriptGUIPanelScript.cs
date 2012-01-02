@@ -38,6 +38,8 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
    string _currentScriptName = string.Empty;
    string _currentScriptName_uScript = string.Empty;
 
+   GUIStyle _styleButtonGroup = null;
+
    GUIStyle _scriptCurrentNormal = null;
    GUIStyle _scriptCurrentError = null;
    GUIStyle _scriptListNormal = null;
@@ -46,13 +48,9 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
    GUIStyle _styleMiniButtonLeft = null;
    GUIStyle _styleMiniButtonRight = null;
 
-   static Rect _previousHotRect = new Rect();
-//   static int _previousHotIndex = 0;
-//
    static Rect _scrollviewRect = new Rect();
 
    static float _previousRowWidth = 0;
-//   static bool _isMouseOverScrollview = false;
 
    int _widthButtonSource;
    int _widthButtonLoad;
@@ -101,8 +99,11 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
       _styleMiniButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
       _styleMiniButtonRight.margin = new RectOffset(0, 4, 1, 1);
 
-      // Get the width of the buttons, since the content under Windows
-	  // has a different size then under Mac
+      _styleButtonGroup = new GUIStyle();
+      _styleButtonGroup.margin.top = 2;
+
+      // Get the width of the buttons, since the content
+      // under Windows has a different size then under Mac
       _widthButtonSource = (int)_styleMiniButtonLeft.CalcSize(uScriptGUIContent.buttonNodeSource).x;
       _widthButtonLoad = (int)_styleMiniButtonRight.CalcSize(uScriptGUIContent.buttonScriptLoad).x;
    }
@@ -226,37 +227,37 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                GUILayout.FlexibleSpace();
 
-               if (isScriptNew == false)
+               GUILayout.BeginHorizontal(_styleButtonGroup);
                {
-                  if (uScript.Instance.IsStale(_currentScriptName))
+                  if (isScriptNew == false)
                   {
-                     GUI.backgroundColor = UnityEngine.Color.red;
-                  }
-
-                  // Source
-                  if (GUILayout.Button(uScriptGUIContent.buttonScriptSource, EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
-                  {
-                     uScriptGUI.PingGeneratedScript(_currentScriptName);
-                  }
-
-                  GUI.backgroundColor = UnityEngine.Color.white;
-
-                  // Reload
-                  if (GUILayout.Button(uScriptGUIContent.buttonScriptReload, EditorStyles.miniButtonMid))
-                  {
-                     string path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, _currentScriptName_uScript);
-
-                     if (path != string.Empty)
+                     // Source button
+                     GUI.backgroundColor = (uScriptInstance.IsStale(_currentScriptName) ? UnityEngine.Color.red : UnityEngine.Color.white);
+                     if (GUILayout.Button(uScriptGUIContent.buttonScriptSource, EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
                      {
-                        uScriptInstance.OpenScript(path);
+                        uScriptGUI.PingGeneratedScript(_currentScriptName);
+                     }
+                     GUI.backgroundColor = UnityEngine.Color.white;
+   
+                     // Reload button
+                     if (GUILayout.Button(uScriptGUIContent.buttonScriptReload, EditorStyles.miniButtonMid))
+                     {
+                        string path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, _currentScriptName_uScript);
+   
+                        if (path != string.Empty)
+                        {
+                           uScriptInstance.OpenScript(path);
+                        }
                      }
                   }
-               }
 
-               if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, isScriptNew ? EditorStyles.miniButton : EditorStyles.miniButtonRight))
-               {
-                  uScriptInstance.RequestSave(uScriptInstance.SaveMethod == 0, uScriptInstance.SaveMethod == 1, false);
+                  // Save button
+                  if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, isScriptNew ? EditorStyles.miniButton : EditorStyles.miniButtonRight))
+                  {
+                     uScriptInstance.RequestSave(uScriptInstance.SaveMethod == 0, uScriptInstance.SaveMethod == 1, false);
+                  }
                }
+               GUILayout.EndHorizontal();
             }
             GUILayout.EndHorizontal();
 
@@ -300,9 +301,9 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                // Apply the filter and determine how many items will be drawn.
                //
-               foreach (string scriptFile in keys)
+               foreach (string scriptFileName in keys)
                {
-                  scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFile);
+                  scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFileName);
 
                   if (scriptName != _currentScriptName                                 // is not the loaded script
                       && (String.IsNullOrEmpty(_panelFilterText)                       // there is no filter text
@@ -331,12 +332,17 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                // Prepare to draw each row of the filtered list
                //
                Rect rowRect = new Rect(0, 0, _previousRowWidth, ROW_HEIGHT);
-               Rect buttonRect;
                listItem_count = 0;
 
-               foreach (string scriptFile in keys)
+               // The following button rect are initialized in this specific
+               // order, because later initializations refer to earlier ones.
+               Rect rectLoadButton = new Rect(_previousRowWidth - _widthButtonLoad - BUTTON_PADDING, 1, _widthButtonLoad, BUTTON_HEIGHT);
+               Rect rectSourceButton = new Rect(rectLoadButton.x - _widthButtonSource, 1, _widthButtonSource, BUTTON_HEIGHT);
+               Rect rectLabelButton = new Rect(BUTTON_PADDING, 1, _previousRowWidth - _widthButtonSource - _widthButtonLoad - (BUTTON_PADDING * 3), ROW_HEIGHT);
+
+               foreach (string scriptFileName in keys)
                {
-                  scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFile);
+                  scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFileName);
                   listItem_yMin = ROW_HEIGHT * listItem_count;
                   listItem_yMax = listItem_yMin + ROW_HEIGHT;
 
@@ -369,9 +375,9 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                            // uScript Label
                            sceneName = "None";
-                           if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName))
+                           if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName))
                            {
-                              sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFile].m_SceneName;
+                              sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName;
                            }
 
                            if (Event.current.type == EventType.Layout)
@@ -390,58 +396,29 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               }
                            }
 
-//                           // Handle mouse hovering
-//                           if (_isMouseOverScrollview && rowRect.Contains(Event.current.mousePosition))
-//                           {
-                              if (_previousHotRect != rowRect)
-                              {
-                                 _previousHotRect = rowRect;
-                                 uScript.RequestRepaint();
-                              }
-
-                              buttonRect = new Rect(rowRect);
-                              buttonRect.x = buttonRect.xMax - _widthButtonSource - _widthButtonLoad - BUTTON_PADDING;
-                              buttonRect.y += (ROW_HEIGHT - BUTTON_HEIGHT) / 2;
-                              buttonRect.height = BUTTON_HEIGHT;
-                              buttonRect.width = _widthButtonSource;
-
-                              if (uScript.Instance.IsStale(scriptName))
-                              {
-                                 GUI.backgroundColor = UnityEngine.Color.red;
-                              }
-
-                              // Source
-                              if (GUI.Button(buttonRect, uScriptGUIContent.buttonScriptSource, _styleMiniButtonLeft))
-                              {
-                                 uScriptGUI.PingGeneratedScript(scriptName);
-                              }
-
-                              GUI.backgroundColor = UnityEngine.Color.white;
-
-                              buttonRect.x += _widthButtonSource;
-                              buttonRect.width = _widthButtonLoad;
-                              // Load
-                              if (GUI.Button(buttonRect, uScriptGUIContent.buttonScriptLoad, _styleMiniButtonRight))
-                              {
-                                 if ( null == path ) path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFile);
-
-                                 if (false == string.IsNullOrEmpty(path))
-                                 {
-                                    uScriptInstance.OpenScript(path);
-                                 }
-                              }
-
-                              rowRect.width = _previousRowWidth - BUTTON_PADDING - _widthButtonSource - _widthButtonLoad - BUTTON_PADDING;
-//                           }
-
-                           // Draw the script button
-                           buttonRect = new Rect(rowRect);
-                           buttonRect.x += BUTTON_PADDING;
-                           buttonRect.y += 2;
-                           buttonRect.width -= BUTTON_PADDING;
-                           if (GUI.Button(buttonRect, scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), (wasClicked ? _scriptListBold : _scriptListNormal)))
+                           // Source button
+                           GUI.backgroundColor = (uScriptInstance.IsStale(scriptName) ? UnityEngine.Color.red : UnityEngine.Color.white);
+                           if (GUI.Button(rectSourceButton, uScriptGUIContent.buttonScriptSource, _styleMiniButtonLeft))
                            {
-                              path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFile);
+                              uScriptGUI.PingGeneratedScript(scriptName);
+                           }
+                           GUI.backgroundColor = UnityEngine.Color.white;
+
+                           // Load button
+                           if (GUI.Button(rectLoadButton, uScriptGUIContent.buttonScriptLoad, _styleMiniButtonRight))
+                           {
+                              if ( null == path ) path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFileName);
+
+                              if (false == string.IsNullOrEmpty(path))
+                              {
+                                 uScriptInstance.OpenScript(path);
+                              }
+                           }
+
+                           // Script Label buton
+                           if (GUI.Button(rectLabelButton, scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), (wasClicked ? _scriptListBold : _scriptListNormal)))
+                           {
+                              path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFileName);
 
                               if (wasClicked)
                               {
@@ -484,8 +461,11 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                      // Prepare for the next row
                      listItem_count++;
                      isListRowEven = !isListRowEven;
-                     rowRect.width = _previousRowWidth;
-                     rowRect.y += rowRect.height;
+                     rowRect.y += ROW_HEIGHT;
+
+                     rectLabelButton.y += ROW_HEIGHT;
+                     rectLoadButton.y += ROW_HEIGHT;
+                     rectSourceButton.y += ROW_HEIGHT;
                   }
                }
 
