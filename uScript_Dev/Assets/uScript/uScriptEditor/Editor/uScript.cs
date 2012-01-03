@@ -356,7 +356,21 @@ public class uScript : EditorWindow
             ScriptEditor s = new ScriptEditor( "", null, null );
             if ( true == s.Open(path) )
             {
-               SetStaleState( scriptName, s.GeneratedCodeIsStale );
+               bool stale = s.GeneratedCodeIsStale;
+
+               if ( false == stale )
+               {
+                  string wrapperPath = GetGeneratedScriptPath(path);
+                  string logicPath   = GetNestedScriptPath(path);
+               
+                  if ( false == File.Exists(wrapperPath) || 
+                       false == File.Exists(logicPath) )
+                  {
+                     stale = true;
+                  }
+               }
+
+               SetStaleState( scriptName, stale );
             }
          }
          
@@ -3130,23 +3144,6 @@ public class uScript : EditorWindow
       }
 
       return true;
-   }
-
-   public void StubComponentFile(string path)
-   {
-      try
-      {
-         System.IO.StreamWriter stream = new System.IO.StreamWriter( path );
-         stream.WriteLine( "using UnityEngine;" );
-         stream.WriteLine( "public class " + System.IO.Path.GetFileNameWithoutExtension(path) + " : uScriptCode" );
-         stream.WriteLine( "{}" );
-
-         stream.Close( );
-      }
-      catch ( Exception e )
-      {
-         uScriptDebug.Log("An error occurred stubbing component file " + path + "(" + e.Message + ")", uScriptDebug.Type.Error);
-      }
    }
 
    public void StubGeneratedCode(string path)
