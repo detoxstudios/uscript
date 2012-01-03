@@ -13,9 +13,12 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class uScript_MasterComponent : MonoBehaviour
 {
+   private Hashtable m_BreakpointCache = null;
+
    //keep track of the latest master so uScripts loading
    //will know which master loaded with them for their scene infomration
    public static GameObject LatestMaster = null;
+   public static uScript_MasterComponent LatestMasterComponent = null;
 
 #if FREE_PLE_BUILD
    public static string Version = "1.PLE";
@@ -30,6 +33,7 @@ public class uScript_MasterComponent : MonoBehaviour
    public void Awake( )
    {
       LatestMaster = this.gameObject;
+      LatestMasterComponent = this;
 
 #if FREE_PLE_BUILD
       // Initialize the Watermark variable
@@ -60,6 +64,68 @@ public class uScript_MasterComponent : MonoBehaviour
       }
 #endif
    }
+
+//BREAKPOINTS
+   [HideInInspector]
+   public string [] m_Breakpoints = new string[0];
+
+   [HideInInspector]
+   public string CurrentBreakpoint = "";
+   
+   public bool HasBreakpoint(string guid)
+   {
+      BuildBreakpointCache( false );
+      return m_BreakpointCache.Contains(guid);
+   }
+
+#if UNITY_EDITOR
+   public void AddBreakpoint(string guid)
+   {
+      BuildBreakpointCache( false );
+
+      if ( false == m_BreakpointCache.Contains(guid) )
+      {
+         Array.Resize( ref m_Breakpoints, m_Breakpoints.Length + 1 );
+         m_Breakpoints[ m_Breakpoints.Length - 1 ] = guid;
+
+         //force cache to rebuild so it knows about our new breakpoint
+         BuildBreakpointCache( true );
+      }
+   }
+
+   public void RemoveBreakpoint(string guid)
+   {
+      BuildBreakpointCache( false );
+
+      if ( true == m_BreakpointCache.Contains(guid) )
+      {
+         m_BreakpointCache.Remove(guid);
+
+         m_Breakpoints = new string[ m_BreakpointCache.Keys.Count ];
+
+         int index = 0;
+
+         foreach ( string breakpoint in m_BreakpointCache.Keys )
+         {
+            m_Breakpoints[ index++ ] = breakpoint;
+         }
+      }
+   }
+
+   private void BuildBreakpointCache( bool force )
+   {
+      if ( null == m_BreakpointCache || true == force )
+      {
+         m_BreakpointCache = new Hashtable( );
+
+         foreach ( string breakpoint in m_Breakpoints )
+         {
+            m_BreakpointCache[ breakpoint ] = true;
+         }
+      }
+   }
+#endif
+//END BREAKPOINTS
 
 #if FREE_PLE_BUILD
    void OnGUI()

@@ -743,9 +743,17 @@ public class uScript : EditorWindow
       get { return SystemInfo.supportsRenderTextures; }
    }
 
+   public string CurrentBreakpoint = "";
+
    void Update()
    {
-      //Debug.Log( "BREAK AT: " + MasterComponent.BreakAt );
+      //if the current breakpoint has changed we need to repaint
+      //so the node visuals are properly reflected
+      if (uScript.MasterComponent.CurrentBreakpoint != CurrentBreakpoint)
+      {
+         CurrentBreakpoint = uScript.MasterComponent.CurrentBreakpoint;
+         uScript.RequestRepaint( );
+      }
 
       if ( null == m_ComplexData )
       {
@@ -794,7 +802,6 @@ public class uScript : EditorWindow
       // and user input behaviors.
       //
       wasCanvasDragged = m_CanvasDragging;
-
 
       // Initializing the AssetBrowserWindow during OnGUI was causing strange
       // errors, such as null exception errors and reports that OnGUI calls were

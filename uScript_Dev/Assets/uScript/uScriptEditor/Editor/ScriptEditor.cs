@@ -4225,6 +4225,7 @@ namespace Detox.ScriptEditor
             }
 
             m_GeneratedCodeIsStale = value.GeneratedCodeIsStale;
+            m_SavedForDebugging    = value.SavedForDebugging;
 
             SceneName = value.SceneName;
          }

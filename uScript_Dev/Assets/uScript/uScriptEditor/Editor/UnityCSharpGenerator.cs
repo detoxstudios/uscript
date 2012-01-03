@@ -1503,6 +1503,10 @@ namespace Detox.ScriptEditor
 
          if ( true == m_GenerateDebugInfo )
          {
+            AddCSharpLine( "delegate void ContinueExecution();" );
+            AddCSharpLine( "ContinueExecution m_ContinueExecution;" );
+            AddCSharpLine( "bool m_Breakpoint = false;" );
+
             AddCSharpLine( "const int MaxRelayCallCount = " + uScript.Preferences.MaximumNodeRecursionCount + ";" );
             AddCSharpLine( "int relayCallCount = 0;" );
          }
@@ -1749,6 +1753,17 @@ namespace Detox.ScriptEditor
             AddCSharpLine( "//if it ever goes above MaxRelayCallCount before being reset" );
             AddCSharpLine( "//then we assume it is stuck in an infinite loop" );         
             AddCSharpLine( "if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;" );
+         
+            AddCSharpLine( "if ( null != m_ContinueExecution )" );
+            AddCSharpLine( "{" );
+            ++m_TabStack;
+               AddCSharpLine( "ContinueExecution continueEx = m_ContinueExecution;" );
+               AddCSharpLine( "m_ContinueExecution = null;" );
+               AddCSharpLine( "m_Breakpoint = false;" );
+               AddCSharpLine( "continueEx( );" );
+               AddCSharpLine( "return;" );
+            --m_TabStack;
+            AddCSharpLine( "}" );
          }
 
          AddCSharpLine( "//other scripts might have added GameObjects with event scripts" );
@@ -3396,7 +3411,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "if ( relayCallCount++ < MaxRelayCallCount )" );
                   AddCSharpLine( "{" );
                   ++m_TabStack;
-
+                     
+                     CheckDebugBreak( receiver, CSharpRelay(receiver, ((EntityMethod)receiver).Input.Name) );
                      PrintDebug( receiver );
                      RelayToMethod( (EntityMethod) receiver );
 
@@ -3437,6 +3453,7 @@ namespace Detox.ScriptEditor
                   {
                      //no need to wrap call count checking
                      //because this is an event coming in from Unity
+                     CheckDebugBreak( receiver, CSharpRelay(receiver, eventName.Name) );
                      PrintDebug( receiver );
                      RelayToEvent( entityEvent, eventName.Name );
                   }
@@ -3466,6 +3483,7 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );
                   ++m_TabStack;
 
+                     CheckDebugBreak( receiver, CSharpRelay(receiver, external.Connection) );
                      PrintDebug( receiver );
                      RelayToExternal( external );
 
@@ -3507,6 +3525,7 @@ namespace Detox.ScriptEditor
                      AddCSharpLine( "{" );
                      ++m_TabStack;
 
+                        CheckDebugBreak( receiver, CSharpRelay(receiver, eventName.Name) );
                         PrintDebug( receiver );                  
                         CallRelays(receiver.Guid, eventName.Name);
 
@@ -3545,6 +3564,7 @@ namespace Detox.ScriptEditor
                      AddCSharpLine( "{" );
                      ++m_TabStack;
 
+                        CheckDebugBreak( receiver, CSharpRelay(receiver, input.Name) );
                         PrintDebug(receiver);                  
                         RelayToLogic((LogicNode)receiver, input.Name);
 
@@ -4264,6 +4284,38 @@ namespace Detox.ScriptEditor
          }
 
          return links.ToArray( );
+      }
+
+      private void CheckDebugBreak(EntityNode node, string method)
+      {
+         if ( true == m_GenerateDebugInfo )
+         {
+            AddCSharpLine( "if (true == m_Breakpoint) return;" );
+            AddCSharpLine( "" );
+
+            AddCSharpLine( "if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(\"" + node.Guid.ToString() + "\"))" );
+            AddCSharpLine( "{" );
+            ++m_TabStack;
+               AddCSharpLine( "if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == \"" + node.Guid.ToString() + "\")" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+                  AddCSharpLine( "uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = \"\";" );
+               --m_TabStack;
+               AddCSharpLine( "}" );
+               AddCSharpLine( "else" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+                  AddCSharpLine( "uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = \"" + node.Guid.ToString() + "\";" );
+                  AddCSharpLine( "UnityEngine.Debug.Log(\"uScript BREAK (Time: \" + Time.time + \"\");" );
+                  AddCSharpLine( "UnityEngine.Debug.Break();" );
+                  AddCSharpLine( "m_ContinueExecution = new ContinueExecution(" + method + ");" );
+                  AddCSharpLine( "m_Breakpoint = true;" );
+                  AddCSharpLine( "return;" );
+               --m_TabStack;
+               AddCSharpLine( "}" );
+            --m_TabStack;
+            AddCSharpLine( "}" );
+         }
       }
 
       private void PrintDebug(EntityNode node)

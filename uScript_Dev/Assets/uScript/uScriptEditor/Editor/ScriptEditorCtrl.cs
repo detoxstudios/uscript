@@ -1166,7 +1166,31 @@ namespace Detox.ScriptEditor
             //RebuildScript( null );
          }
       }
-   
+      
+      private void m_MenuAddBreakpoint_Click(object sender, EventArgs e)
+      {
+         foreach ( DisplayNode node in SelectedNodes )
+         {
+            if ( node is EntityEventDisplayNode || node is LogicNodeDisplayNode ||
+                 node is EntityMethodDisplayNode )
+            {
+               uScript.MasterComponent.AddBreakpoint( node.Guid.ToString( ) );
+            }
+         }
+      }
+      
+      private void m_MenuRemoveBreakpoint_Click(object sender, EventArgs e)
+      {
+         foreach ( DisplayNode node in SelectedNodes )
+         {
+            if ( node is EntityEventDisplayNode || node is LogicNodeDisplayNode ||
+                 node is EntityMethodDisplayNode )
+            {
+               uScript.MasterComponent.RemoveBreakpoint( node.Guid.ToString( ) );
+            }
+         }
+      }
+
       private void m_MenuAddNode_Click(object sender, EventArgs e)
       {
          MenuItem item = sender as MenuItem;
@@ -2232,6 +2256,65 @@ namespace Detox.ScriptEditor
             }
          }
 
+         if ( ScriptEditor.SavedForDebugging )
+         {
+            m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
+
+            bool hasBreakpoint = false;
+            bool needsBreakpoint = false;
+
+            foreach ( DisplayNode n in this.SelectedNodes )
+            {
+               if ( n is EntityEventDisplayNode || n is LogicNodeDisplayNode ||
+                    n is EntityMethodDisplayNode )
+               {
+                  if ( true == uScript.MasterComponent.HasBreakpoint(n.Guid.ToString()) )
+                  {
+                     hasBreakpoint = true;
+                  }
+                  else
+                  {
+                     needsBreakpoint = true;
+                  }
+               }
+
+               if ( true == hasBreakpoint && true == needsBreakpoint ) break;
+            }
+
+            if ( true == hasBreakpoint || true == needsBreakpoint )
+            {
+               ToolStripMenuItem item;
+
+               if ( true == needsBreakpoint )
+               {
+                  item = new ToolStripMenuItem( );
+
+                  item.Name = "m_AddBreakpoint";
+                  item.Text = "Add Breakpoint";
+                  item.Click += new System.EventHandler(m_MenuAddBreakpoint_Click);
+                  
+                  m_ContextMenuStrip.Items.Add( item );
+               }
+               if ( true == hasBreakpoint )
+               {
+                  item = new ToolStripMenuItem( );
+
+                  item.Name = "m_RemoveBreakpoint";
+                  item.Text = "Remove Breakpoint";
+                  item.Click += new System.EventHandler(m_MenuRemoveBreakpoint_Click);
+                  
+                  m_ContextMenuStrip.Items.Add( item );
+               }
+            }
+
+         }
+         else
+         {
+            m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
+            m_ContextMenuStrip.Items.Add( new ToolStripMenuItem( "No Debug Info" ) );
+         }
+
+
          if ( m_FlowChart.SelectedNodes.Length > 0 || m_FlowChart.SelectedLinks.Length > 0 )
          {
             m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
@@ -3086,6 +3169,40 @@ namespace Detox.ScriptEditor
          }
 
          base.OnPaint( e );
+
+         if ( this is EntityEventDisplayNode || this is LogicNodeDisplayNode ||
+              this is EntityMethodDisplayNode )
+         {
+            if ( true == m_Ctrl.ScriptEditor.SavedForDebugging &&
+                 true == uScript.MasterComponent.HasBreakpoint(Guid.ToString()) )
+            {
+               PaintBreakpoint( );
+            }
+         }
+      }
+
+      protected void PaintBreakpoint( )
+      {
+         UnityEngine.Color color = UnityEditor.Handles.color;
+         UnityEditor.Handles.color = UnityEngine.Color.red;
+
+         float radius = 8;
+
+         if ( uScript.MasterComponent.CurrentBreakpoint == Guid.ToString() )
+         {
+            UnityEditor.Handles.color = UnityEngine.Color.yellow;
+            radius = 16;
+         }
+
+         radius *= ZoomScale;
+
+         PointF location = new PointF( Location.X + Parent.Location.X + radius / 2, Location.Y + Parent.Location.Y + radius / 2);
+         location.X *= ZoomScale;
+         location.Y *= ZoomScale;
+
+         UnityEditor.Handles.DrawSolidDisc(new UnityEngine.Vector3(location.X, location.Y, 0), new UnityEngine.Vector3(0, 0, -1), radius);
+      
+         UnityEditor.Handles.color = color;
       }
 
       protected virtual Size CalculateSize(Socket []sockets)
