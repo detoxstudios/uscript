@@ -133,7 +133,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          {
             GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 
-//            uScriptGUI.enabled = (string.IsNullOrEmpty(currentNodeClassPath) == false);
+            uScriptGUI.enabled = (string.IsNullOrEmpty(currentNodeClassName) == false);
 
             if (GUILayout.Button(uScriptGUIContent.buttonNodeSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
