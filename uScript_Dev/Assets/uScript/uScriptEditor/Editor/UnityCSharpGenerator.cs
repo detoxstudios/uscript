@@ -3412,8 +3412,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );
                   ++m_TabStack;
                      
-                     CheckDebugBreak( receiver, CSharpRelay(receiver, ((EntityMethod)receiver).Input.Name) );
                      PrintDebug( receiver );
+                     CheckDebugBreak( receiver, CSharpRelay(receiver, ((EntityMethod)receiver).Input.Name) );
                      RelayToMethod( (EntityMethod) receiver );
 
                   --m_TabStack;
@@ -3453,8 +3453,8 @@ namespace Detox.ScriptEditor
                   {
                      //no need to wrap call count checking
                      //because this is an event coming in from Unity
-                     CheckDebugBreak( receiver, CSharpRelay(receiver, eventName.Name) );
                      PrintDebug( receiver );
+                     CheckDebugBreak( receiver, CSharpRelay(receiver, eventName.Name) );
                      RelayToEvent( entityEvent, eventName.Name );
                   }
                   else
@@ -3483,8 +3483,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "{" );
                   ++m_TabStack;
 
-                     CheckDebugBreak( receiver, CSharpRelay(receiver, external.Connection) );
                      PrintDebug( receiver );
+                     CheckDebugBreak( receiver, CSharpRelay(receiver, external.Connection) );
                      RelayToExternal( external );
 
                   --m_TabStack;
@@ -3525,8 +3525,8 @@ namespace Detox.ScriptEditor
                      AddCSharpLine( "{" );
                      ++m_TabStack;
 
-                        CheckDebugBreak( receiver, CSharpRelay(receiver, eventName.Name) );
                         PrintDebug( receiver );                  
+                        CheckDebugBreak( receiver, CSharpRelay(receiver, eventName.Name) );
                         CallRelays(receiver.Guid, eventName.Name);
 
                      --m_TabStack;
@@ -3564,8 +3564,8 @@ namespace Detox.ScriptEditor
                      AddCSharpLine( "{" );
                      ++m_TabStack;
 
-                        CheckDebugBreak( receiver, CSharpRelay(receiver, input.Name) );
                         PrintDebug(receiver);                  
+                        CheckDebugBreak( receiver, CSharpRelay(receiver, input.Name) );
                         RelayToLogic((LogicNode)receiver, input.Name);
 
                      --m_TabStack;
@@ -4306,7 +4306,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
                   AddCSharpLine( "uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = \"" + node.Guid.ToString() + "\";" );
-                  AddCSharpLine( "UnityEngine.Debug.Log(\"uScript BREAK (Time: \" + Time.time + \"\");" );
+                  AddCSharpLine( "UnityEngine.Debug.Log(\"uScript BREAK Node:" + uScript.FindFriendlyName(node) + "  ((Time: \" + Time.time + \"\");" );
                   AddCSharpLine( "UnityEngine.Debug.Break();" );
                   AddCSharpLine( "m_ContinueExecution = new ContinueExecution(" + method + ");" );
                   AddCSharpLine( "m_Breakpoint = true;" );

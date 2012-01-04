@@ -4355,6 +4355,14 @@ public class uScript : EditorWindow
       return false;
    }
 
+   public static string FindFriendlyName(EntityNode node)
+   {
+      string type = ScriptEditor.FindNodeType(node);
+      Type uscriptType = uScript.MasterComponent.GetType(type);
+
+      return FindFriendlyName( type, uscriptType.GetCustomAttributes(false) );
+   }
+
    public static string FindFriendlyName(string defaultName, object[] attributes)
    {
       if (null == attributes) return defaultName;
