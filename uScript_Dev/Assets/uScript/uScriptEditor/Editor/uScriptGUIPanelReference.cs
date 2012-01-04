@@ -26,7 +26,6 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
    // Members specific to this panel class
    //
    private string currentNodeClassName = string.Empty;
-   private string currentNodeClassPath = string.Empty;
 
    private EntityNode _hotSelection = null;
    public EntityNode hotSelection { set { _hotSelection = value; } }
@@ -82,7 +81,6 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          nodeType = GetNodeType(node);
 
          currentNodeClassName = string.Empty;
-         currentNodeClassPath = string.Empty;
          helpButtonURL = string.Empty;
          helpButtonTooltip = string.Empty;
       }
@@ -91,7 +89,6 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          if (m_ScriptEditorCtrl.SelectedNodes.Length != 1)
          {
             currentNodeClassName = string.Empty;
-            currentNodeClassPath = string.Empty;
             helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
             helpButtonURL       = "http://www.uscript.net/docs/";
          }
@@ -137,11 +134,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
             if (GUILayout.Button(uScriptGUIContent.buttonNodeSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               // BEGIN TEMP
-               currentNodeClassPath = GetClassPath(currentNodeClassName);
-               // END TEMP
-
-               uScriptGUI.PingObject(currentNodeClassPath, typeof(TextAsset));
+               uScriptGUI.PingObject(uScript.GetClassPath(currentNodeClassName), typeof(TextAsset));
             }
 
             uScriptGUI.enabled = (string.IsNullOrEmpty(helpButtonURL) == false);
@@ -205,29 +198,6 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
    }
 
 
-   //
-   // This method can be expensive, so call it sparingly
-   //
-   string GetClassPath(string newName)
-   {
-      if (string.IsNullOrEmpty(newName) == false)
-      {
-         // Find the associated class file
-         string startPath = Application.dataPath;
-         string[] exts = new string[] { ".cs", ".js", ".boo" };
-
-         foreach (string ext in exts)
-         {
-            string[] files = Directory.GetFiles(startPath, newName + ext, SearchOption.AllDirectories);
-            if (files.Length == 1)
-            {
-               return files[0].Remove(0, startPath.Length - 6);
-            }
-         }
-      }
-
-      return string.Empty;
-   }
 
 
    //

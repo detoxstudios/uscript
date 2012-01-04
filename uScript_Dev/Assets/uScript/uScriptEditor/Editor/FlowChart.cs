@@ -530,6 +530,11 @@ namespace Detox.FlowChart
                   pointSourced = true;
                }
             }
+            else
+            {
+               // Node was clicked
+               uScript.Instance.NodeClicked = node;
+            }
             
             if ( true == selectionSetModified && false == pointSourced ) return;
 

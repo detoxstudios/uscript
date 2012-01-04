@@ -1402,17 +1402,14 @@ public static class uScriptGUI
 
    }
 
-
    public static bool PingObject(string path, Type type)
    {
-      UnityEngine.Object obj = Resources.LoadAssetAtPath(path, type);
-      if (obj == null)
+      int instanceID = uScript.GetAssetInstanceID(path, type);
+      if (instanceID == -1)
       {
-         Debug.Log("File not found:\t" + path + "\n");
          return false;
       }
 
-      int instanceID = obj.GetInstanceID();
       EditorGUIUtility.PingObject(instanceID);
       return true;
    }

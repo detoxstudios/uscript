@@ -110,6 +110,10 @@ public class uScript : EditorWindow
    private static AppFrameworkData m_AppData = new AppFrameworkData();
    public static  Preferences Preferences = new Preferences();
 
+   private Node _nodeClicked = null;
+   public Node NodeClicked { get { return _nodeClicked; } set { _nodeClicked = value; } }
+
+
 
    //   private double m_RefreshTimestamp = -1.0;
 
@@ -1667,10 +1671,24 @@ public class uScript : EditorWindow
                      m_MouseDownOverCanvas = true;
                   }
 
+
+                  // Handle Double-Clicks
+                  //
+                  // NodeClicked is set in FlowChartCtrl_NodeMouseDown(), which executes
+                  // after this method completes. When we check NodeClicked, we're getting
+                  // the value from the previous click.
+                  //
                   // Does this work on all platforms?  Wasn't e.clickCount unstable on one platform?
-                  if (e.clickCount == 2)
+                  // - It appears to work fine on OS X.
+                  //
+                  if (e.clickCount == 2 && NodeClicked != null)
                   {
-                     OpenLogicNode();
+                     OpenNode(NodeClicked);
+                  }
+                  else
+                  {
+                     // Clear the clicked node in all other cases
+                     NodeClicked = null;
                   }
 
                   m_MouseDown = true;
@@ -1880,32 +1898,37 @@ public class uScript : EditorWindow
       m_ComplexData = null;
    }
 
-   void OpenLogicNode()
+
+   public void OpenNode(Node node)
    {
-      if (m_ScriptEditorCtrl.SelectedNodes.Length == 1)
+      if (node is DisplayNode)
       {
-         EntityNode entityNode = m_ScriptEditorCtrl.SelectedNodes[0].EntityNode;
+         string currentNodeClassName = ScriptEditor.FindNodeType(((DisplayNode)node).EntityNode);
 
-         if (entityNode is LogicNode)
+         // NOTE:
+         // Currently, opening a nested uScript will immediately load the script without
+         // saving the current uScript.  The user may lose work if this happens.  For now,
+         // just open the generated script like all other nodes.
+         //
+//         if (node is LogicNodeDisplayNode && currentNodeClassName.EndsWith("_Nested"))
+//         {
+//            // Open the nested uScript file
+//            string scriptPath = Preferences.UserScripts + "/" + currentNodeClassName + ".uscript";
+//
+//            if (System.IO.File.Exists(scriptPath))
+//            {
+//               OpenScript(scriptPath);
+//            }
+//         }
+//         else
          {
-            LogicNode logicNode = (LogicNode)entityNode;
-
-            string uscriptPath = Preferences.UserScripts;
-
-            if (logicNode.Type.EndsWith(uScriptConfig.Files.GeneratedCodeExtension))
-            {
-               string script = uscriptPath + "/" + logicNode.Type.Substring(0, logicNode.Type.LastIndexOf(uScriptConfig.Files.GeneratedCodeExtension));
-               script += ".uscript";
-
-               if (System.IO.File.Exists(script))
-               {
-                  OpenScript(script);
-               }
-            }
+            // Open the source file in the default editor
+            string currentNodeClassPath = GetClassPath(currentNodeClassName);
+            int instanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
+            AssetDatabase.OpenAsset(instanceID);
          }
       }
    }
-
 
 
    void DrawMainGUI()
@@ -4856,4 +4879,42 @@ public class uScript : EditorWindow
 
       return "";
    }
+
+   public static int GetAssetInstanceID(string path, Type type)
+   {
+      UnityEngine.Object obj = Resources.LoadAssetAtPath(path, type);
+      if (obj == null)
+      {
+//         Debug.Log("File not found:\t" + path + "\n");
+         return -1;
+      }
+
+      return obj.GetInstanceID();
+   }
+
+
+   //
+   // This method can be expensive, so call it sparingly
+   //
+   public static string GetClassPath(string newName)
+   {
+      if (string.IsNullOrEmpty(newName) == false)
+      {
+         // Find the associated class file
+         string startPath = Application.dataPath;
+         string[] exts = new string[] { ".cs", ".js", ".boo" };
+
+         foreach (string ext in exts)
+         {
+            string[] files = Directory.GetFiles(startPath, newName + ext, SearchOption.AllDirectories);
+            if (files.Length == 1)
+            {
+               return files[0].Remove(0, startPath.Length - 6);
+            }
+         }
+      }
+
+      return string.Empty;
+   }
+
 }
