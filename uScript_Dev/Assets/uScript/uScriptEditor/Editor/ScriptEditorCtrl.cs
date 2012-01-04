@@ -1590,9 +1590,14 @@ namespace Detox.ScriptEditor
 
          foreach ( Link link in links )
          {
-            m_ScriptEditor.RemoveNode( ((LinkNode)link.Tag) );
-            batch.Add( new Patch.EntityNode("", ((LinkNode)link.Tag), null) );
-            m_Dirty = true;
+            //it might not exist if it was removed
+            //due to a node it linked to being deleted
+            if ( null != m_ScriptEditor.GetNode(((LinkNode)link.Tag).Guid) )
+            {
+               m_ScriptEditor.RemoveNode( ((LinkNode)link.Tag) );
+               batch.Add( new Patch.EntityNode("", ((LinkNode)link.Tag), null) );
+               m_Dirty = true;
+            }
          }
 
          uScript.Instance.RegisterUndo( batch );
