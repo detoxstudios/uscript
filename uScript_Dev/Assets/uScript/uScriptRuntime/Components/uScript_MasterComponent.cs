@@ -65,6 +65,18 @@ public class uScript_MasterComponent : MonoBehaviour
 #endif
    }
 
+   public Hashtable m_Values = new Hashtable( );
+
+   public void UpdateNodeValue(string guid, object value)
+   {
+      m_Values[ guid ] = value;
+   }
+
+   public object GetNodeValue( string guid )
+   {
+      return m_Values[ guid ];
+   }
+   
 //BREAKPOINTS
    [HideInInspector]
    public string [] m_Breakpoints = new string[0];

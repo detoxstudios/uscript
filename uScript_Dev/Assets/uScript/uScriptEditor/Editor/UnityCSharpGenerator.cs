@@ -841,6 +841,12 @@ namespace Detox.ScriptEditor
                   DefineEvents( );
                }
 
+               if ( false == stubCode )
+               {
+                  DefineUpdateEditorValues( );
+                  DefineCheckDebugBreak( );
+               }
+
             --m_TabStack;
             
             EndClass( );
@@ -1764,6 +1770,8 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "return;" );
             --m_TabStack;
             AddCSharpLine( "}" );
+
+            AddCSharpLine( UpdateEditorValuesDeclaration( ) + ";" );
          }
 
          AddCSharpLine( "//other scripts might have added GameObjects with event scripts" );
@@ -4290,29 +4298,49 @@ namespace Detox.ScriptEditor
       {
          if ( true == m_GenerateDebugInfo )
          {
-            AddCSharpLine( "if (true == m_Breakpoint) return;" );
-            AddCSharpLine( "" );
+            AddCSharpLine( "if (true == " + CheckDebugBreakDeclaration(node, method) + ") return; " );
+         }
+      }
 
-            AddCSharpLine( "if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(\"" + node.Guid.ToString() + "\"))" );
+      private string CheckDebugBreakDeclaration(EntityNode node, string method)
+      {
+         return "CheckDebugBreak(\"" + node.Guid.ToString( ) + "\", \"" + uScript.FindFriendlyName(node) + "\", " + method + ")";
+      }
+
+      private void DefineCheckDebugBreak( )
+      {
+         if ( true == m_GenerateDebugInfo )
+         {
+            AddCSharpLine( "bool CheckDebugBreak(string guid, string name, ContinueExecution method)" );
             AddCSharpLine( "{" );
             ++m_TabStack;
-               AddCSharpLine( "if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == \"" + node.Guid.ToString() + "\")" );
+               AddCSharpLine( "if (true == m_Breakpoint) return true;" );
+               AddCSharpLine( "" );
+   
+               AddCSharpLine( "if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))" );
                AddCSharpLine( "{" );
                ++m_TabStack;
-                  AddCSharpLine( "uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = \"\";" );
+                  AddCSharpLine( "if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     AddCSharpLine( "uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = \"\";" );
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "else" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+                     AddCSharpLine( "uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = guid;" );
+                     AddCSharpLine( UpdateEditorValuesDeclaration( ) + ";" );
+                     AddCSharpLine( "UnityEngine.Debug.Log(\"uScript BREAK Node:\" + name + \" ((Time: \" + Time.time + \"\");" );
+                     AddCSharpLine( "UnityEngine.Debug.Break();" );
+                     AddCSharpLine( "m_ContinueExecution = new ContinueExecution(method);" );
+                     AddCSharpLine( "m_Breakpoint = true;" );
+                     AddCSharpLine( "return true;" );
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
                --m_TabStack;
                AddCSharpLine( "}" );
-               AddCSharpLine( "else" );
-               AddCSharpLine( "{" );
-               ++m_TabStack;
-                  AddCSharpLine( "uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = \"" + node.Guid.ToString() + "\";" );
-                  AddCSharpLine( "UnityEngine.Debug.Log(\"uScript BREAK Node:" + uScript.FindFriendlyName(node) + "  ((Time: \" + Time.time + \"\");" );
-                  AddCSharpLine( "UnityEngine.Debug.Break();" );
-                  AddCSharpLine( "m_ContinueExecution = new ContinueExecution(" + method + ");" );
-                  AddCSharpLine( "m_Breakpoint = true;" );
-                  AddCSharpLine( "return;" );
-               --m_TabStack;
-               AddCSharpLine( "}" );
+               AddCSharpLine( "return false;" );
             --m_TabStack;
             AddCSharpLine( "}" );
          }
@@ -4327,6 +4355,36 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "uScriptDebug.Log( \"[" + uScriptConfig.Variable.FriendlyName(node.GetType().ToString()) + "] " + EscapeString(node.Comment.Default) + "\", uScriptDebug.Type.Message);" );
             }
          }
+      }
+
+      private void DefineUpdateEditorValues( )
+      {
+         if ( true == m_GenerateDebugInfo )
+         {
+            AddCSharpLine( "private void " + UpdateEditorValuesDeclaration( ) );
+            AddCSharpLine( "{" );
+            ++m_TabStack;
+
+               foreach ( LocalNode local in m_Script.Locals )
+               {
+                  //send by name and id because non-globals don't have a synch'd name so they would have to use Id, whereas named variables have been consolidated
+                  //to a single id so we have to use their name
+                  AddCSharpLine( "uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + m_Script.Name + ":" + local.Name.Default + "\", " + CSharpName(local) + ");" );
+                  AddCSharpLine( "uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + local.Guid + "\", " + CSharpName(local) + ");" );
+               }
+               foreach ( EntityProperty property in m_Script.Properties )
+               {
+                  AddCSharpLine( "uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + property.Guid + "\", " + CSharpName(property, property.Parameter.Name) + ");" );
+               }
+
+            --m_TabStack;
+            AddCSharpLine( "}" );
+         }
+      }
+
+      private string UpdateEditorValuesDeclaration( )
+      {
+         return "UpdateEditorValues( )";
       }
    }
 }

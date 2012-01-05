@@ -1156,15 +1156,71 @@ namespace Detox.ScriptEditor
             }
 
             m_ScriptEditor.AddNode( linkNode );
-            batchPatch.Add( new Detox.Patch.EntityNode("", null, linkNode) );
+
+            if ( null != m_ScriptEditor.GetNode(linkNode.Guid) )
+            {
+               batchPatch.Add( new Detox.Patch.EntityNode("", null, linkNode) );
+
+               //now add the node again so the display is patched with
+               //the socket text no longer visible because a link was added
+               batchPatch.Add( new Detox.Patch.EntityNode("", localNode, localNode) );
+            }
 
             m_Dirty = true;
 
             uScript.Instance.RegisterUndo( batchPatch );
             PatchDisplay( batchPatch );
-
-            //RebuildScript( null );
          }
+      }
+
+      public void UpdateRemoteValues( )
+      {
+         if ( false == m_ScriptEditor.SavedForDebugging ) return;
+
+         Patch.Batch batchPatch = new Detox.Patch.Batch( "Runtime Debugging" );
+
+         foreach ( LocalNode localNode in m_ScriptEditor.UniqueLocals )
+         {
+            object value = uScript.MasterComponent.GetNodeValue( m_ScriptEditor.Name + ":" + localNode.Name.Default );
+            if ( null == value ) value = uScript.MasterComponent.GetNodeValue( localNode.Guid.ToString( ) );
+            
+            if ( null != value && localNode.Value.DefaultAsObject != value )
+            {
+               LocalNode clone = localNode;
+
+               Parameter p = clone.Value;
+
+               p.DefaultAsObject = value;
+               clone.Value = p;
+
+               m_ScriptEditor.AddNode( clone );
+               batchPatch.Add( new Patch.EntityNode("", localNode, clone) );
+            }
+         }
+         foreach ( EntityProperty propertyNode in m_ScriptEditor.Properties )
+         {
+            object value = uScript.MasterComponent.GetNodeValue( propertyNode.Guid.ToString( ) );
+            
+            if ( null != value && propertyNode.Parameter.DefaultAsObject != value )
+            {
+               EntityProperty clone = propertyNode;
+
+               Parameter p = clone.Parameter;
+
+               p.DefaultAsObject = value;
+               clone.Parameter = p;
+
+               m_ScriptEditor.AddNode( clone );
+               batchPatch.Add( new Patch.EntityNode("", propertyNode, clone) );
+            }
+         }
+
+         PatchDisplay( batchPatch );
+
+         //we do not patch the undo stack/cache because when unity stops running
+         //the undo stack/cache is used to reset us to the default state
+         //theoretically this doesn't matter because when Unity stops playing
+         //it restores our cache to the previous state anyway
       }
       
       private void m_MenuAddBreakpoint_Click(object sender, EventArgs e)
@@ -2057,9 +2113,20 @@ namespace Detox.ScriptEditor
          {
             m_Dirty = true;
 
-            Patch.EntityNode patchNode = new Detox.Patch.EntityNode("Link Created", null, link);
-            uScript.Instance.RegisterUndo( patchNode );
-            PatchDisplay( patchNode );
+            Patch.Batch batch = new Detox.Patch.Batch( "Link Created" );
+            Patch.EntityNode patchNode;
+
+            patchNode = new Detox.Patch.EntityNode("", null, link);
+            batch.Add( patchNode );
+            
+            patchNode = new Detox.Patch.EntityNode("", m_ScriptEditor.GetNode(link.Source.Guid), m_ScriptEditor.GetNode(link.Source.Guid));
+            batch.Add( patchNode );
+
+            patchNode = new Detox.Patch.EntityNode("", m_ScriptEditor.GetNode(link.Destination.Guid), m_ScriptEditor.GetNode(link.Destination.Guid));
+            batch.Add( patchNode );
+
+            uScript.Instance.RegisterUndo( batch );
+            PatchDisplay( batch );
          }         
       }
 

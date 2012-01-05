@@ -706,7 +706,6 @@ public class uScript : EditorWindow
       {
          string base64 = p.ToBase64( );
 
-         //UndoComponent.Patch      = base64;
          UndoComponent.UndoNumber = m_UndoNumber;
 
          Array.Resize( ref m_Patches, m_Patches.Length + 1 );
@@ -747,18 +746,11 @@ public class uScript : EditorWindow
       get { return SystemInfo.supportsRenderTextures; }
    }
 
-   public string CurrentBreakpoint = "";
+   private string m_CurrentBreakpoint = "";
+   private bool   m_IsRemotingValues  = false;
 
    void Update()
    {
-      //if the current breakpoint has changed we need to repaint
-      //so the node visuals are properly reflected
-      if (uScript.MasterComponent.CurrentBreakpoint != CurrentBreakpoint)
-      {
-         CurrentBreakpoint = uScript.MasterComponent.CurrentBreakpoint;
-         uScript.RequestRepaint( );
-      }
-
       if ( null == m_ComplexData )
       {
          RelaunchingFromRebuiltAppDomain( );
@@ -786,6 +778,26 @@ public class uScript : EditorWindow
       isLicenseAccepted = true;
 #endif
 
+      if ( EditorApplication.isPlayingOrWillChangePlaymode )
+      {
+         //if the current breakpoint has changed we need to repaint
+         //so the node visuals are properly reflected
+         if (uScript.MasterComponent.CurrentBreakpoint != m_CurrentBreakpoint)
+         {
+            m_CurrentBreakpoint = uScript.MasterComponent.CurrentBreakpoint;
+            uScript.RequestRepaint( );
+         }
+
+         m_ScriptEditorCtrl.UpdateRemoteValues( );
+         m_IsRemotingValues = true;
+      }
+      else if ( true == m_IsRemotingValues )
+      {
+         //no longer playing then reset
+         //our script to the previous state
+         m_IsRemotingValues = false;
+         OpenFromCache( );
+      }
 
       // Update the reference panel with the node palette's hot selection.
       uScriptGUIPanelReference.Instance.hotSelection = uScriptGUIPanelPalette.Instance._hotSelection;
