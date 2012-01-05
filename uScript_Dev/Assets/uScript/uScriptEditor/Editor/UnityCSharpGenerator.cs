@@ -1424,7 +1424,7 @@ namespace Detox.ScriptEditor
 
                bool formatString = ( type == "System.String[]" || type == "System.Object[]" );
 
-               declaration = "new " + type + " {";
+               declaration = "new " + FormatType(type) + " {";
 
                foreach ( string element in elements )
                {
