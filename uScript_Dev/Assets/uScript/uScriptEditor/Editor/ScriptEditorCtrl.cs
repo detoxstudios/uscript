@@ -996,8 +996,6 @@ namespace Detox.ScriptEditor
 
          uScript.Instance.RegisterUndo( batchPatch );
          PatchDisplay( batchPatch );
-
-         //RebuildScript( null );
       }
       
       public bool CanCollapseParameter(Guid guid, Parameter p)
@@ -1160,10 +1158,6 @@ namespace Detox.ScriptEditor
             if ( null != m_ScriptEditor.GetNode(linkNode.Guid) )
             {
                batchPatch.Add( new Detox.Patch.EntityNode("", null, linkNode) );
-
-               //now add the node again so the display is patched with
-               //the socket text no longer visible because a link was added
-               batchPatch.Add( new Detox.Patch.EntityNode("", localNode, localNode) );
             }
 
             m_Dirty = true;
@@ -1762,6 +1756,11 @@ namespace Detox.ScriptEditor
             chartLink.Destination.AnchorName = link.Destination.Anchor;
 
             m_FlowChart.AddLink( chartLink );
+
+            //refresh the nodes it was linked too so they
+            //correctly render their socket text
+            UpdateNodeDisplay( chartLink.Source.Node.Guid );
+            UpdateNodeDisplay( chartLink.Destination.Node.Guid );
          }
       }
 
@@ -1779,6 +1778,12 @@ namespace Detox.ScriptEditor
                if ( ((EntityNode)link.Tag).Guid == nodeGuid )
                {
                   m_FlowChart.DeleteLink( link.Source.Node.Guid, link.Source.AnchorName, link.Destination.Node.Guid, link.Destination.AnchorName );
+
+                  //refresh the nodes it was linked too so they
+                  //correctly render their socket text
+                  UpdateNodeDisplay( link.Source.Node.Guid );
+                  UpdateNodeDisplay( link.Destination.Node.Guid );
+                  
                   break;
                }
             }
@@ -2117,12 +2122,6 @@ namespace Detox.ScriptEditor
             Patch.EntityNode patchNode;
 
             patchNode = new Detox.Patch.EntityNode("", null, link);
-            batch.Add( patchNode );
-            
-            patchNode = new Detox.Patch.EntityNode("", m_ScriptEditor.GetNode(link.Source.Guid), m_ScriptEditor.GetNode(link.Source.Guid));
-            batch.Add( patchNode );
-
-            patchNode = new Detox.Patch.EntityNode("", m_ScriptEditor.GetNode(link.Destination.Guid), m_ScriptEditor.GetNode(link.Destination.Guid));
             batch.Add( patchNode );
 
             uScript.Instance.RegisterUndo( batch );
