@@ -14,12 +14,15 @@ using System.Collections;
 [FriendlyName("GameObject Has Tag", "Checks to see if a GameObject has the specified tag(s).")]
 public class uScriptCon_GameObjectHasTag : uScriptLogic
 {
-   private bool m_TagsMatched = false;
+   private bool m_AllTagsMatched = false;
+   private bool m_NoTagsMatched  = true;
  
-   [FriendlyName("Has Tag")]
-   public bool HasTags { get { return m_TagsMatched; } }
-   [FriendlyName("Does Not Have Tag")]
-   public bool MissingTags { get { return !m_TagsMatched; } }
+   [FriendlyName("Has All Tags")]
+   public bool HasAllTags { get { return m_AllTagsMatched; } }
+   [FriendlyName("Has At Least One Tag")]
+   public bool HasTag { get { return !m_NoTagsMatched; } }
+   [FriendlyName("Does Not Have Tags")]
+   public bool MissingTags { get { return m_NoTagsMatched; } }
 
    public void In(
       [FriendlyName("GameObject", "The GameObject to check.")]
@@ -29,15 +32,19 @@ public class uScriptCon_GameObjectHasTag : uScriptLogic
       string[] Tag
       )
    {
+      m_AllTagsMatched = true;
+      m_NoTagsMatched  = true;
+
       foreach(string tag in Tag)
       {
          if (!GameObject.CompareTag(tag))
          {
-            m_TagsMatched = false;
-            return;
+            m_AllTagsMatched = false;
+         }
+         else
+         {
+            m_NoTagsMatched = false;
          }
       }
-      
-      m_TagsMatched = true;
    }
 }
