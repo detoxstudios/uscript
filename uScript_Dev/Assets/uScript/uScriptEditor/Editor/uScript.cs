@@ -3710,7 +3710,10 @@ public class uScript : EditorWindow
               rawScript.ExternalEvents.Length     > 0
             )
          {
-            LogicNode logicNode = new LogicNode(rawScript.Type, rawScript.FriendlyName);
+            string friendlyName = rawScript.FriendlyName;
+            if ( "" == friendlyName ) friendlyName = rawScript.Type;
+
+            LogicNode logicNode = new LogicNode(rawScript.Type, friendlyName);
    
             logicNode.Parameters      = rawScript.ExternalParameters;
             logicNode.Inputs          = rawScript.ExternalInputs;

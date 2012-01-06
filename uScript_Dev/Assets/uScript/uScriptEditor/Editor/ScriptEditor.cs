@@ -2200,7 +2200,7 @@ namespace Detox.ScriptEditor
       public LogicNode(string type, string friendlyName)       
       { 
          Type = type;
-         FriendlyName = "" == friendlyName ? type : friendlyName;
+         FriendlyName = friendlyName;
 
          m_Guid = Guid.NewGuid( );
 
