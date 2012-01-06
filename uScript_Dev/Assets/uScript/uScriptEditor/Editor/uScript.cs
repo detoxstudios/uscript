@@ -1917,22 +1917,17 @@ public class uScript : EditorWindow
       {
          string currentNodeClassName = ScriptEditor.FindNodeType(((DisplayNode)node).EntityNode);
 
-         // NOTE:
-         // Currently, opening a nested uScript will immediately load the script without
-         // saving the current uScript.  The user may lose work if this happens.  For now,
-         // just open the generated script like all other nodes.
-         //
-//         if (node is LogicNodeDisplayNode && currentNodeClassName.EndsWith("_Nested"))
-//         {
-//            // Open the nested uScript file
-//            string scriptPath = Preferences.UserScripts + "/" + currentNodeClassName + ".uscript";
-//
-//            if (System.IO.File.Exists(scriptPath))
-//            {
-//               OpenScript(scriptPath);
-//            }
-//         }
-//         else
+         if (node is LogicNodeDisplayNode && currentNodeClassName.EndsWith("_Nested"))
+         {
+            // Open the nested uScript file
+            string scriptPath = Preferences.UserScripts + "/" + currentNodeClassName + ".uscript";
+
+            if (System.IO.File.Exists(scriptPath))
+            {
+               OpenScript(scriptPath);
+            }
+         }
+         else
          {
             // Open the source file in the default editor
             string currentNodeClassPath = GetClassPath(currentNodeClassName);
