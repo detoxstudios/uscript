@@ -565,20 +565,17 @@ namespace Detox.ScriptEditor
                --m_TabStack;
                AddCSharpLine( "}" );
 
-               if ( true == NeedsMethod("OnDestroy") )
+               AddCSharpLine( "void OnDestroy( )" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+            
+               if ( false == stubCode )
                {
-                  AddCSharpLine( "void OnDestroy( )" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-               
-                  if ( false == stubCode )
-                  {
-                     AddCSharpLine( "uScript.OnDestroy( );" );
-                  }
-
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
+                  AddCSharpLine( "uScript.OnDestroy( );" );
                }
+
+               --m_TabStack;
+               AddCSharpLine( "}" );
 
                if ( true == NeedsMethod("LateUpdate") )
                {
@@ -742,6 +739,8 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "" );
                   DefineSyncEventListeners( );
                   AddCSharpLine( "" );
+                  DefineUnregisterEventListeners( );
+                  AddCSharpLine( "" );
                   
                   AddCSharpLine( "public override void SetParent(GameObject g)" );
                   AddCSharpLine( "{" );
@@ -797,23 +796,22 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "}" );
                AddCSharpLine( "" );
 
-               if ( true == NeedsMethod("OnDestroy") )
+
+               if ( false == m_RequiredMethods.Contains("OnDestroy") ) m_RequiredMethods.Add("OnDestroy");
+
+               AddCSharpLine( "public void OnDestroy()" );
+               AddCSharpLine( "{" );
+               ++m_TabStack;
+
+               if ( false == stubCode )
                {
-                  if ( false == m_RequiredMethods.Contains("OnDestroy") ) m_RequiredMethods.Add("OnDestroy");
-
-                  AddCSharpLine( "public void OnDestroy()" );
-                  AddCSharpLine( "{" );
-                  ++m_TabStack;
-
-                  if ( false == stubCode )
-                  {
-                     DefineOnDestroy( );
-                  }
-                     
-                  --m_TabStack;
-                  AddCSharpLine( "}" );
-                  AddCSharpLine( "" );
+                  DefineOnDestroy( );
                }
+                  
+               --m_TabStack;
+               AddCSharpLine( "}" );
+               AddCSharpLine( "" );
+
 
                if ( true == NeedsMethod("LateUpdate") )
                {
@@ -1768,8 +1766,6 @@ namespace Detox.ScriptEditor
             {
                AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".Awake( );" );
             }
-            
-            //AddCSharpLine( CSharpName(logicNode, logicNode.Type) + " = ScriptableObject.CreateInstance(typeof(" + logicNode.Type +")) as " + FormatType(logicNode.Type) + ";" );
          }
          
          AddCSharpLine( "" );
@@ -1779,7 +1775,7 @@ namespace Detox.ScriptEditor
          {
             foreach ( Plug eventName in logicNode.Events )
             {
-               AddLogicEventListener( logicNode, eventName.Name );
+               AddLogicEventListener( logicNode, eventName.Name, true );
             }
          }
       }
@@ -1836,6 +1832,17 @@ namespace Detox.ScriptEditor
 
       private void DefineOnDestroy( )
       {
+         AddCSharpLine( CSharpUnregisterEventListenersDeclaration( ) + ";" );
+
+         //for each logic node event, register event listeners with it
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
+            foreach ( Plug eventName in logicNode.Events )
+            {
+               AddLogicEventListener( logicNode, eventName.Name, false );
+            }
+         }
+
          //for each logic node, create an script specific instance
          foreach ( LogicNode logicNode in m_Script.Logics )
          {
@@ -1968,6 +1975,78 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "}" );
       }
 
+      private void DefineUnregisterEventListeners( )
+      {
+         AddCSharpLine( "void " + CSharpUnregisterEventListenersDeclaration( ) );
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+   
+            foreach ( EntityMethod entityMethod in m_Script.Methods )
+            {
+               if ( false == entityMethod.IsStatic )
+               {
+                  if ( entityMethod.Instance.Default != "" )
+                  {
+                     UnregisterEventListeners( entityMethod, entityMethod.Instance );
+                  }
+               }
+
+               foreach ( Parameter p in entityMethod.Parameters )
+               {
+                  if ( false == p.Input ) continue;
+                  UnregisterEventListeners( entityMethod, p );
+               }
+            }
+
+            foreach ( EntityProperty entityProperty in m_Script.Properties )
+            {
+               if ( false == entityProperty.IsStatic )
+               {
+                  if ( entityProperty.Instance.Default != "" )
+                  {
+                     UnregisterEventListeners( entityProperty, entityProperty.Instance );
+                  }
+               }
+            }
+
+            foreach ( LogicNode logicNode in m_Script.Logics )
+            {
+               foreach ( Parameter p in logicNode.Parameters )
+               {
+                  if ( false == p.Input ) continue;
+                  UnregisterEventListeners( logicNode, p );
+               }
+            }
+
+            foreach ( LocalNode localNode in m_Script.UniqueLocals )
+            {
+               UnregisterEventListeners( localNode, localNode.Value );
+            }
+
+            foreach ( OwnerConnection ownerNode in m_Script.Owners )
+            {
+               UnregisterEventListeners( ownerNode, ownerNode.Connection );
+            }
+
+            foreach ( EntityEvent entityEvent in m_Script.Events )
+            {
+               if ( false == entityEvent.IsStatic )
+               {
+                  if ( entityEvent.Instance.Default != "" )
+                  {
+                     UnregisterEventListeners( entityEvent, entityEvent.Instance );
+                  }
+               }
+               else
+               {
+                  SetupEvent( null, entityEvent, false );
+               }
+            }
+
+         --m_TabStack;
+         AddCSharpLine( "}" );
+      }
+
       private void FillComponent(bool fillNulls, EntityNode node, Parameter parameter)
       {
          //fillNulls, only fill null values we don't want to keep filling them
@@ -2034,8 +2113,16 @@ namespace Detox.ScriptEditor
                AddCSharpLine( "{" );
                ++m_TabStack;
 
-               AddCSharpLine( "GameObject gameObject = null;" );
-               
+               //make sure there is at least one valid value
+               //before we declare our gameObject
+               for ( int i = 0; i < values.Length; i++ )
+               {
+                  if ( values[i].Trim( ) == "" ) continue;
+
+                  AddCSharpLine( "GameObject gameObject = null;" );
+                  break;
+               }
+
                for ( int i = 0; i < values.Length; i++ )
                {
                   if ( values[i].Trim( ) == "" ) continue;
@@ -2166,6 +2253,93 @@ namespace Detox.ScriptEditor
 
                --m_TabStack;
                AddCSharpLine( "}" );
+            }
+         }
+      }
+
+      private void UnregisterEventListeners(EntityNode node, Parameter parameter)
+      {
+         //fillNulls, only fill null values we don't want to keep filling them
+         //behind the scenes because a user might intentionally set something to null
+         //or resize an array which contains nulls (then we would crash because it's not the
+         //oroginal size of our code generation)
+
+         //if a user starts with something null and it doesn't spawn in the scene until later
+         //then he/she should use the SetGameObject node
+
+         Type componentType  = typeof(UnityEngine.Component);
+         Type gameObjectType = typeof(UnityEngine.GameObject);
+         Type componentArrayType  = typeof(UnityEngine.Component[]);
+         Type gameObjectArrayType = typeof(UnityEngine.GameObject[]);
+
+         Type nodeType = uScript.MasterComponent.GetType(parameter.Type);
+         if ( null == nodeType ) return;
+
+         if ( true == gameObjectArrayType.IsAssignableFrom(nodeType) )
+         {
+            //remove curly braces from type declaration
+            //so we can use it to cast the object to the array element type
+            string type = FormatType(parameter.Type);
+            type = type.Substring( 0, type.Length - 2 );
+
+            string []values = Parameter.StringToArray( parameter.Default );
+
+            for ( int i = 0; i < values.Length; i++ )
+            {
+               if ( values[i].Trim( ) == "" ) continue;
+
+               SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, false );
+            }
+         }
+         else if ( true == componentArrayType.IsAssignableFrom(nodeType) )
+         {
+            string []values = Parameter.StringToArray( parameter.Default );
+         
+            //remove curly braces from type declaration
+            //so we can use it to cast the object to the array element type
+            string type = FormatType(parameter.Type);
+            type = type.Substring( 0, type.Length - 2 );
+
+            AddCSharpLine( "{" );
+            ++m_TabStack;
+
+            AddCSharpLine( "GameObject gameObject = null;" );
+            
+            for ( int i = 0; i < values.Length; i++ )
+            {
+               if ( values[i].Trim( ) == "" ) continue;
+
+               SetupEventListeners( CSharpName(node, parameter.Name) + "[" + i + "]", node, false );
+            }
+
+            --m_TabStack;
+            AddCSharpLine( "};" );
+         }
+         else if ( true == componentType.IsAssignableFrom(nodeType) )
+         {
+            SetupEventListeners( CSharpName(node, parameter.Name), node, false );
+         }
+         else if ( true == gameObjectType.IsAssignableFrom(nodeType) )
+         {
+            if ( true == node is OwnerConnection )
+            {
+               SetupEventListeners( CSharpName(node, parameter.Name), node, false );
+            }
+            else if ( parameter.Default != "" )
+            {
+               if ( false == node is LocalNode )
+               {
+                  SetupEventListeners( CSharpName(node, parameter.Name), node, false );
+               }
+            }
+            
+            //if it's a variable node linked to us
+            //then we need to go a few steps further to see if its contents
+            //have been modified at runtime.  if they have then
+            //we need to register new event listeners
+            if ( true == node is LocalNode )
+            {
+               SetupEventListeners( CSharpName(node, parameter.Name), node, false );
             }
          }
       }
@@ -3901,9 +4075,11 @@ namespace Detox.ScriptEditor
       }
 
       //register event listener function with an entity
-      private void AddLogicEventListener( LogicNode logicNode, string eventName )
+      private void AddLogicEventListener( LogicNode logicNode, string eventName, bool addEvent )
       {
-         AddCSharpLine( CSharpName(logicNode, logicNode.Type) + "." + eventName + " += "+ CSharpEventDeclaration(logicNode, eventName) + ";" );            
+         string operation = addEvent ? "+=" : "-=";
+
+         AddCSharpLine( CSharpName(logicNode, logicNode.Type) + "." + eventName + " " + operation + " "+ CSharpEventDeclaration(logicNode, eventName) + ";" );            
       }
 
       //unique function name per entity property to get
@@ -3921,6 +4097,11 @@ namespace Detox.ScriptEditor
       private string CSharpSyncUnityHooksDeclaration( )
       {
          return "SyncUnityHooks( )";
+      }
+
+      private string CSharpUnregisterEventListenersDeclaration( )
+      {
+         return "UnregisterEventListeners( )";
       }
 
       private string CSharpSyncEventListenersDeclaration( )
