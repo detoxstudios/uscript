@@ -2303,7 +2303,15 @@ namespace Detox.ScriptEditor
             AddCSharpLine( "{" );
             ++m_TabStack;
 
-            AddCSharpLine( "GameObject gameObject = null;" );
+            //make sure there is at least one valid value
+            //before we declare our gameObject
+            for ( int i = 0; i < values.Length; i++ )
+            {
+               if ( values[i].Trim( ) == "" ) continue;
+
+               AddCSharpLine( "GameObject gameObject = null;" );
+               break;
+            }
             
             for ( int i = 0; i < values.Length; i++ )
             {
