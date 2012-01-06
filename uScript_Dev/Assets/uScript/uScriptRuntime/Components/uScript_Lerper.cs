@@ -154,7 +154,9 @@ public class uScript_Lerper
       }
       else
       {
-         return false;      
+         //true if we're waiting for another loop restart
+         //or false if we are not running and there is no loop restart
+         return m_LoopRestartCountdown > 0;
       }
    }
 
