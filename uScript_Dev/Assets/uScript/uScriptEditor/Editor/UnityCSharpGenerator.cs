@@ -565,6 +565,21 @@ namespace Detox.ScriptEditor
                --m_TabStack;
                AddCSharpLine( "}" );
 
+               if ( true == NeedsMethod("OnDestroy") )
+               {
+                  AddCSharpLine( "void OnDestroy( )" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+               
+                  if ( false == stubCode )
+                  {
+                     AddCSharpLine( "uScript.OnDestroy( );" );
+                  }
+
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+               }
+
                if ( true == NeedsMethod("LateUpdate") )
                {
                   AddCSharpLine( "void LateUpdate( )" );
@@ -781,6 +796,24 @@ namespace Detox.ScriptEditor
                --m_TabStack;
                AddCSharpLine( "}" );
                AddCSharpLine( "" );
+
+               if ( true == NeedsMethod("OnDestroy") )
+               {
+                  if ( false == m_RequiredMethods.Contains("OnDestroy") ) m_RequiredMethods.Add("OnDestroy");
+
+                  AddCSharpLine( "public void OnDestroy()" );
+                  AddCSharpLine( "{" );
+                  ++m_TabStack;
+
+                  if ( false == stubCode )
+                  {
+                     DefineOnDestroy( );
+                  }
+                     
+                  --m_TabStack;
+                  AddCSharpLine( "}" );
+                  AddCSharpLine( "" );
+               }
 
                if ( true == NeedsMethod("LateUpdate") )
                {
@@ -1797,6 +1830,18 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( CSharpRelay(logicNode, driven) + "();" );
                --m_TabStack;
                AddCSharpLine( "}" );            
+            }
+         }
+      }
+
+      private void DefineOnDestroy( )
+      {
+         //for each logic node, create an script specific instance
+         foreach ( LogicNode logicNode in m_Script.Logics )
+         {
+            if ( true == NeedsMethod(logicNode, "OnDestroy") )
+            {
+               AddCSharpLine( CSharpName(logicNode, logicNode.Type) + ".OnDestroy( );" );
             }
          }
       }

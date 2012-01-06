@@ -35,8 +35,6 @@ public class uScriptAct_Delay : uScriptLogic
       m_TimeToTrigger = Duration;
    }
 
-   public void OnDestroy( ) {}
-
    [Driven]
    public bool DrivenDelay( )
    {
