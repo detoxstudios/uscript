@@ -3691,6 +3691,8 @@ public class uScript : EditorWindow
       return rawScripts.ToArray();
    }
 
+   static private Hashtable m_RawDescription = new Hashtable( );
+
    private LogicNode[] OverrideNestedScriptTypes(LogicNode[] logicNodes)
    {
       Dictionary<string, LogicNode> returnNodes = new Dictionary<string, LogicNode>();
@@ -3711,14 +3713,16 @@ public class uScript : EditorWindow
               rawScript.ExternalEvents.Length     > 0
             )
          {
-            LogicNode logicNode = new LogicNode(rawScript.Type, rawScript.Type);
+            LogicNode logicNode = new LogicNode(rawScript.Type, rawScript.FriendlyName);
    
-            logicNode.Parameters = rawScript.ExternalParameters;
-            logicNode.Inputs = rawScript.ExternalInputs;
-            logicNode.Outputs = rawScript.ExternalOutputs;
-            logicNode.Events = rawScript.ExternalEvents;
-            logicNode.Drivens = rawScript.Drivens;
+            logicNode.Parameters      = rawScript.ExternalParameters;
+            logicNode.Inputs          = rawScript.ExternalInputs;
+            logicNode.Outputs         = rawScript.ExternalOutputs;
+            logicNode.Events          = rawScript.ExternalEvents;
+            logicNode.Drivens         = rawScript.Drivens;
             logicNode.RequiredMethods = rawScript.RequiredMethods;
+
+            m_RawDescription[rawScript.Type] = rawScript.Description;
 
             returnNodes[rawScript.Type] = logicNode;
          }
@@ -4390,7 +4394,12 @@ public class uScript : EditorWindow
       string type = ScriptEditor.FindNodeType(node);
       Type uscriptType = uScript.MasterComponent.GetType(type);
 
-      return FindFriendlyName( type, uscriptType.GetCustomAttributes(false) );
+      if ( null != uscriptType )
+      {
+         return FindFriendlyName( type, uscriptType.GetCustomAttributes(false) );
+      }
+
+      return "";
    }
 
    public static string FindFriendlyName(string defaultName, object[] attributes)
@@ -4732,6 +4741,14 @@ public class uScript : EditorWindow
             {
                return ((NodeDescription)a).Value;
             }
+         }
+      }
+      //if type was null it could be a nested script
+      else if ( node is LogicNode )
+      {
+         if ( m_RawDescription.Contains(((LogicNode)node).Type) )
+         {
+            return m_RawDescription[((LogicNode)node).Type] as string;
          }
       }
 

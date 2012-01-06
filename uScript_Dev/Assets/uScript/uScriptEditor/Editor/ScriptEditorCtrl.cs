@@ -2024,6 +2024,15 @@ namespace Detox.ScriptEditor
             gridParameters.Add( parameters );
          }
 
+         if ( 0 == m_FlowChart.SelectedNodes.Length )
+         {
+            PropertyGridParameters parameters = new PropertyGridParameters( System.IO.Path.GetFileNameWithoutExtension(Name) + " Properties", null, this ); 
+            parameters.AddParameters( "FriendlyName", new Parameter[] {m_ScriptEditor.FriendlyName} );
+            parameters.AddParameters( "Description",  new Parameter[] {m_ScriptEditor.Description} );
+
+            gridParameters.Add( parameters );
+         }
+
          m_PropertyGrid.SelectedObjects = gridParameters.ToArray( );
 
          OnScriptModified( );
@@ -2041,51 +2050,64 @@ namespace Detox.ScriptEditor
 
             PropertyGridParameters p = (PropertyGridParameters) o;
 
-            EntityNode entityNode  = p.EntityNode;
-            EntityNode oldNode = entityNode.Copy( true );
-
-            entityNode.Parameters  = p.GetParameters( "Parameters" );
-            entityNode.ShowComment = p.GetParameters( "Comment" ) [ 0 ];
-            entityNode.Comment     = p.GetParameters( "Comment" ) [ 1 ];
-            entityNode.Instance    = p.GetParameters( "Instance" )[ 0 ];
-
-            if (entityNode is LogicNode)
+            if ( null != p.EntityNode )
             {
-               LogicNode logicNode = (LogicNode) entityNode;
-               logicNode.InspectorName = p.GetParameters( "Inspector Name" )[ 0 ];
-               
-               entityNode = logicNode;
-            }
+               EntityNode entityNode  = p.EntityNode;
+               EntityNode oldNode = entityNode.Copy( true );
 
-            if (entityNode is LocalNode)
-            {
-               LocalNode localNode = (LocalNode) entityNode;
-               if ( localNode.Externaled.Default == "true" &&
-                    localNode.Name.Default == ""
-                  )
+               entityNode.Parameters  = p.GetParameters( "Parameters" );
+               entityNode.ShowComment = p.GetParameters( "Comment" ) [ 0 ];
+               entityNode.Comment     = p.GetParameters( "Comment" ) [ 1 ];
+               entityNode.Instance    = p.GetParameters( "Instance" )[ 0 ];
+
+               if (entityNode is LogicNode)
                {
-                  Parameter clonedExternal = localNode.Externaled;
-                  clonedExternal.Default = "false";
+                  LogicNode logicNode = (LogicNode) entityNode;
+                  logicNode.InspectorName = p.GetParameters( "Inspector Name" )[ 0 ];
                   
-                  localNode.Externaled = clonedExternal;
-                  entityNode = localNode;
+                  entityNode = logicNode;
+               }
 
-                  //the old node might equal the new node
-                  //but we still changed
-                  //from the value in the property grid
-                  changed = true;
+               if (entityNode is LocalNode)
+               {
+                  LocalNode localNode = (LocalNode) entityNode;
+                  if ( localNode.Externaled.Default == "true" &&
+                       localNode.Name.Default == ""
+                     )
+                  {
+                     Parameter clonedExternal = localNode.Externaled;
+                     clonedExternal.Default = "false";
+                     
+                     localNode.Externaled = clonedExternal;
+                     entityNode = localNode;
 
-                  //status updates aren't working and we have to get the build done
-                  //so i'm forcing a log warning
-                  uScriptDebug.Log( "For a node to be exposed to the Inspector it must have a name", uScriptDebug.Type.Warning );
+                     //the old node might equal the new node
+                     //but we still changed
+                     //from the value in the property grid
+                     changed = true;
+
+                     //status updates aren't working and we have to get the build done
+                     //so i'm forcing a log warning
+                     uScriptDebug.Log( "For a node to be exposed to the Inspector it must have a name", uScriptDebug.Type.Warning );
+                  }
+               }
+
+               m_ScriptEditor.AddNode( entityNode );
+
+               if ( true == changed || false == oldNode.Equals(entityNode) )
+               {
+                  Patch.EntityNode undoParameter = new Patch.EntityNode( "Node Modified", oldNode, entityNode );
+                  patchBatch.Add( undoParameter );
                }
             }
-
-            m_ScriptEditor.AddNode( entityNode );
-
-            if ( true == changed || false == oldNode.Equals(entityNode) )
+            else
             {
-               Patch.EntityNode undoParameter = new Patch.EntityNode( "Node Modified", oldNode, entityNode );
+               ScriptEditor oldScript = m_ScriptEditor.Copy( );
+
+               m_ScriptEditor.FriendlyName = p.GetParameters( "FriendlyName" )[ 0 ];
+               m_ScriptEditor.Description  = p.GetParameters( "Description" )[ 0 ];
+
+               Patch.ScriptEditorDesc undoParameter = new Patch.ScriptEditorDesc( "Script Modified", oldScript, m_ScriptEditor );
                patchBatch.Add( undoParameter );
             }
          }

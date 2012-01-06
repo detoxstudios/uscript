@@ -208,7 +208,7 @@ public static class uScriptGUI
       ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
 
       _propertyCount++;
-      _nodeKey = node.Guid.ToString();
+      _nodeKey = node != null ? node.Guid.ToString() : "";
       if (false == _foldoutExpanded.ContainsKey(_nodeKey))
       {
          _foldoutExpanded[_nodeKey] = true;
@@ -222,12 +222,15 @@ public static class uScriptGUI
          UnityEngine.Color tmpColor = GUI.color;
          UnityEngine.Color textColor = uScriptGUIStyle.nodeButtonLeft.normal.textColor;
 
-         if (uScript.IsNodeTypeDeprecated(((DisplayNode)node).EntityNode) || m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(((DisplayNode)node).EntityNode))
+         if (null != node)
          {
-            GUI.color = new UnityEngine.Color(1, 0.5f, 1, 1);
-            uScriptGUIStyle.nodeButtonLeft.normal.textColor = UnityEngine.Color.white;
-//            label += "\t\t--- DEPRECATED: UPDATED OR REPLACE ---";
-//            label += "\t\t--- DEPRECATED ---";
+            if (uScript.IsNodeTypeDeprecated(((DisplayNode)node).EntityNode) || m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(((DisplayNode)node).EntityNode))
+            {
+               GUI.color = new UnityEngine.Color(1, 0.5f, 1, 1);
+               uScriptGUIStyle.nodeButtonLeft.normal.textColor = UnityEngine.Color.white;
+   //            label += "\t\t--- DEPRECATED: UPDATED OR REPLACE ---";
+   //            label += "\t\t--- DEPRECATED ---";
+            }
          }
 
          _foldoutExpanded[_nodeKey] = GUILayout.Toggle(_foldoutExpanded[_nodeKey], label, uScriptGUIStyle.nodeButtonLeft);
@@ -238,41 +241,42 @@ public static class uScriptGUI
          //
          // Deprecation button
          //
-         if (uScript.IsNodeTypeDeprecated(((DisplayNode)node).EntityNode) == false && m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(((DisplayNode)node).EntityNode))
+         if (null != node)
          {
-            if ( true == m_ScriptEditorCtrl.ScriptEditor.CanUpgradeNode(((DisplayNode)node).EntityNode) )
+            if (uScript.IsNodeTypeDeprecated(((DisplayNode)node).EntityNode) == false && m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(((DisplayNode)node).EntityNode))
             {
-               if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+               if ( true == m_ScriptEditorCtrl.ScriptEditor.CanUpgradeNode(((DisplayNode)node).EntityNode) )
                {
-                  System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
-                  if (Click != null)
+                  if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
                   {
-                     // clear all selected nodes first
-                     m_ScriptEditorCtrl.DeselectAll();
-                     // toggle the clicked node
-                     m_ScriptEditorCtrl.ToggleNode(node.Guid);
-                     Click(null, new EventArgs());
+                     System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
+                     if (Click != null)
+                     {
+                        // clear all selected nodes first
+                        m_ScriptEditorCtrl.DeselectAll();
+                        // toggle the clicked node
+                        m_ScriptEditorCtrl.ToggleNode(node.Guid);
+                        Click(null, new EventArgs());
+                     }
+                  }
+               }
+               else
+               {
+                  if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+                  {
+                     System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
+                     if (Click != null)
+                     {
+                        // clear all selected nodes first
+                        m_ScriptEditorCtrl.DeselectAll();
+                        // toggle the clicked node
+                        m_ScriptEditorCtrl.ToggleNode(node.Guid);
+                        Click(null, new EventArgs());
+                     }
                   }
                }
             }
-            else
-            {
-               if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
-               {
-                  System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
-                  if (Click != null)
-                  {
-                     // clear all selected nodes first
-                     m_ScriptEditorCtrl.DeselectAll();
-                     // toggle the clicked node
-                     m_ScriptEditorCtrl.ToggleNode(node.Guid);
-                     Click(null, new EventArgs());
-                  }
-               }
-            }
-
          }
-
 //         //
 //         // Toggle Sockets button
 //         //

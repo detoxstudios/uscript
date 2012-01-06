@@ -140,6 +140,71 @@ namespace Detox.Patch
       }
    }
 
+   public class ScriptEditorDesc : PatchData
+   {
+      Data.ScriptEditor.ScriptEditorData OldScript;
+      Data.ScriptEditor.ScriptEditorData NewScript;
+
+      public ScriptEditorDesc( )
+      {}
+
+      public ScriptEditorDesc(string name, Detox.ScriptEditor.ScriptEditor oldScript, Detox.ScriptEditor.ScriptEditor newScript) : base(name)
+      {
+         OldScript = oldScript != null ? oldScript.ScriptEditorData : null;
+         NewScript = newScript != null ? newScript.ScriptEditorData : null;
+      }
+
+      public new void Load(ObjectSerializer serializer)
+      {
+         serializer.LoadBaseObject( this, typeof(PatchData) );
+
+         //could be null
+         OldScript = serializer.LoadNamedObject( "OldScript" ) as Data.ScriptEditor.ScriptEditorData;
+         NewScript = serializer.LoadNamedObject( "NewScript" ) as Data.ScriptEditor.ScriptEditorData;
+      }
+
+      public new void Save(ObjectSerializer serializer)
+      {
+         serializer.SaveBaseObject( this, typeof(PatchData) );
+
+         if ( null != OldScript )
+         {
+            serializer.SaveNamedObject( "OldScript", OldScript );
+         }
+         
+         if ( null != NewScript )
+         {
+            serializer.SaveNamedObject( "NewScript", NewScript  );
+         }
+      }
+
+      public override void Apply( ScriptEditor.ScriptEditor scriptEditor )
+      {
+         if ( null != NewScript )
+         {
+            scriptEditor.FriendlyName = new ScriptEditor.Parameter( NewScript.FriendlyName );
+            scriptEditor.Description  = new ScriptEditor.Parameter( NewScript.Description  );
+         }
+      }
+
+      public override void Apply( ScriptEditor.ScriptEditorCtrl scriptEditorCtrl )
+      {
+      }
+
+      public override void Remove( ScriptEditor.ScriptEditor scriptEditor )
+      {
+         if ( null != OldScript )
+         {
+            scriptEditor.FriendlyName = new ScriptEditor.Parameter( OldScript.FriendlyName );
+            scriptEditor.Description  = new ScriptEditor.Parameter( OldScript.Description  );
+         }
+      }
+
+      public override void Remove( ScriptEditor.ScriptEditorCtrl scriptEditorCtrl )
+      {
+      }
+   }
+
    public class Batch : PatchData
    {
       public bool HasPatches { get { return (null == Patches) ? false : (Patches.Count > 0); } }

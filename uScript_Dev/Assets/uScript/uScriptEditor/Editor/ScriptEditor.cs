@@ -2529,6 +2529,9 @@ namespace Detox.ScriptEditor
 
    public class ScriptEditor
    {
+      public Parameter FriendlyName;
+      public Parameter Description;
+
       private bool m_GeneratedCodeIsStale = false;
       private bool m_SavedForDebugging    = false;
 
@@ -2929,6 +2932,9 @@ namespace Detox.ScriptEditor
 
          if ( script.m_Nodes.Count != m_Nodes.Count ) return false;
 
+         if ( script.FriendlyName != FriendlyName ) return false;
+         if ( script.Description  != Description )  return false;
+
          foreach ( EntityNode node in m_Nodes.Nodes )
          {
             if ( false == script.m_Nodes.Contains(node.Guid) ) return false;             
@@ -2943,6 +2949,24 @@ namespace Detox.ScriptEditor
          m_Name = name;
          m_EntityDescs = descs;
          m_LogicNodes  = nodes;
+
+         FriendlyName = new Parameter( );
+         FriendlyName.Name = "FriendlyName";
+         FriendlyName.FriendlyName = "Friendly Name";
+         FriendlyName.Default = name;
+         FriendlyName.Type    = typeof(string).ToString( );
+         FriendlyName.Input   = true;
+         FriendlyName.Output  = false;
+         FriendlyName.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+
+         Description = new Parameter( );
+         Description.Name = "Description";
+         Description.FriendlyName = "Description";
+         Description.Default = "";
+         Description.Type    = typeof(string).ToString( );
+         Description.Input   = true;
+         Description.Output  = false;
+         Description.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
       }
 
       public bool FailOnEvent( LinkNode link, Hashtable checkedHash )
@@ -4208,6 +4232,8 @@ namespace Detox.ScriptEditor
             data.SceneName = SceneName;
             data.GeneratedCodeIsStale = GeneratedCodeIsStale;
             data.SavedForDebugging = SavedForDebugging;
+            data.Description  = Description.ToParameterData( );
+            data.FriendlyName = FriendlyName.ToParameterData( );
 
             return data;
          }
@@ -4226,6 +4252,9 @@ namespace Detox.ScriptEditor
 
             m_GeneratedCodeIsStale = value.GeneratedCodeIsStale;
             m_SavedForDebugging    = value.SavedForDebugging;
+
+            Description  = new Parameter( value.Description );
+            FriendlyName = new Parameter( value.FriendlyName );
 
             SceneName = value.SceneName;
          }

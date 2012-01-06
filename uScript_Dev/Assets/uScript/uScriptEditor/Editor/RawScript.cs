@@ -23,9 +23,13 @@ namespace Detox.ScriptEditor
       public Plug      []ExternalEvents     { get { return m_GeneratedCode.ExternalEvents; } }
       public string    []Drivens            { get { return m_GeneratedCode.Drivens; } }
       public string    []RequiredMethods    { get { return m_GeneratedCode.RequiredMethods; } }
-      public string      Type               { get { return m_Type; } }
+      public string    FriendlyName         { get { return m_FriendlyName; } }
+      public string    Description          { get { return m_Description; } }
+      public string    Type                 { get { return m_Type; } }
 
       private string m_Type = "";
+      private string m_Description  = "";
+      private string m_FriendlyName = "";
 
       private UnityCSharpGenerator m_GeneratedCode;
 
@@ -36,6 +40,9 @@ namespace Detox.ScriptEditor
 
          m_GeneratedCode = new UnityCSharpGenerator( );
          
+         m_FriendlyName = scriptEditor.FriendlyName.Default;
+         m_Description  = scriptEditor.Description.Default;
+
          m_Type = Path.GetFileNameWithoutExtension(path) + uScriptConfig.Files.GeneratedCodeExtension;
 
          if ( 0 != scriptEditor.Externals.Length )

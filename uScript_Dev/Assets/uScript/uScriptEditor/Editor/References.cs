@@ -165,7 +165,9 @@ namespace Detox.Windows.Forms
 
             if (parameters.Parameters.Length > 1)
             {
-               if (uScriptGUI.BeginProperty(parameters.Description, uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid)))
+               Detox.FlowChart.Node node = parameters.EntityNode != null ? uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid) : null;
+
+               if (uScriptGUI.BeginProperty(parameters.Description, node))
                {
                   foreach ( Parameter p in parameters.Parameters )
                   {
@@ -183,16 +185,19 @@ namespace Detox.Windows.Forms
                      bool isReadOnly = false == p.Input;
                      bool isLocked = true == p.IsLocked( );
 
-                     if ( false == isLocked )
+                     if (null != node)
                      {
-                        if ( false == parameters.ScriptEditorCtrl.CanCollapseParameter(parameters.EntityNode.Guid, p) &&
-                             false == parameters.ScriptEditorCtrl.CanExpandParameter(p) )
+                        if ( false == isLocked )
                         {
-                           isLocked = true;
+                           if ( false == parameters.ScriptEditorCtrl.CanCollapseParameter(parameters.EntityNode.Guid, p) &&
+                                false == parameters.ScriptEditorCtrl.CanExpandParameter(p) )
+                           {
+                              isLocked = true;
+                           }
                         }
                      }
 
-                     if ( false == uScript.GetRequiresLink(parameters.EntityNode, p.Name) )
+                     if ( node == null || false == uScript.GetRequiresLink(parameters.EntityNode, p.Name) )
                      {
                         if ( val.GetType() == typeof(System.Boolean[]) )
                         {

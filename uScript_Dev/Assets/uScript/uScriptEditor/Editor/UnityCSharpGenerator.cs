@@ -722,6 +722,7 @@ namespace Detox.ScriptEditor
 
             AddCSharpLine( "[NodePath(\"Graphs\")]" );
             AddCSharpLine( "[System.Serializable]" );
+            AddCSharpLine( "[FriendlyName(\""+ script.FriendlyName.Default + "\", \"" + script.Description.Default + "\")]" );
             BeginLogicClass( logicClassName );
             AddCSharpLine( "" );
 

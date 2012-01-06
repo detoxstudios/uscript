@@ -15,12 +15,19 @@ namespace Detox.Data.ScriptEditor
       public bool GeneratedCodeIsStale = false;
       public bool SavedForDebugging = false;
 
+      public Parameter FriendlyName;
+      public Parameter Description;
+
       static ScriptEditorData( )
       {
          ObjectSerializer.AddTypeSerializer( new ParameterSerializer( ) );
          ObjectSerializer.AddTypeSerializer( new ParameterArraySerializer( ) );
          ObjectSerializer.AddTypeSerializer( new PlugSerializer( ) );
          ObjectSerializer.AddTypeSerializer( new PlugArraySerializer( ) );
+      }
+
+      public ScriptEditorData( )
+      {
       }
 
       public EntityNodeData [] NodeDatas
@@ -55,7 +62,7 @@ namespace Detox.Data.ScriptEditor
       }
 
 
-      public int Version { get { return 4; } }
+      public int Version { get { return 5; } }
 
       public void Load(ObjectSerializer serializer)
       {
@@ -85,6 +92,32 @@ namespace Detox.Data.ScriptEditor
          {
             SavedForDebugging = (bool) serializer.LoadNamedObject( "SavedForDebugging" );
          }
+
+         if ( serializer.CurrentVersion > 4 )
+         {
+            FriendlyName = (Parameter) serializer.LoadNamedObject( "FriendlyName" );
+            Description  = (Parameter) serializer.LoadNamedObject( "Description" );
+         }
+         else
+         {
+            FriendlyName = new Parameter( );
+            FriendlyName.Name = "FriendlyName";
+            FriendlyName.FriendlyName = "Friendly Name";
+            FriendlyName.Default = "";
+            FriendlyName.Type    = typeof(string).ToString( );
+            FriendlyName.Input   = true;
+            FriendlyName.Output  = false;
+            FriendlyName.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+
+            Description = new Parameter( );
+            Description.Name = "Description";
+            Description.FriendlyName = "Description";
+            Description.Default = "";
+            Description.Type    = typeof(string).ToString( );
+            Description.Input   = true;
+            Description.Output  = false;
+            Description.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         }
       }
 
       public void Save(ObjectSerializer serializer)
@@ -93,6 +126,8 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObject ( "SceneName", SceneName ); 
          serializer.SaveNamedObject ( "GeneratedCodeIsStale", GeneratedCodeIsStale );
          serializer.SaveNamedObject ( "SavedForDebugging",    SavedForDebugging );
+         serializer.SaveNamedObject ( "FriendlyName",    FriendlyName );
+         serializer.SaveNamedObject ( "Description",     Description );
       }
    }
 
