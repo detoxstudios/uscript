@@ -24,7 +24,7 @@ public class uScriptAct_GUILabel : uScriptLogic
       Rect Position,
       
       [FriendlyName("Texture", "The background image to use for the label.")]
-      Texture2D Texture,
+      Texture Texture,
       
       [FriendlyName("Control Name", "Name to give to this label GUI control.")]
       [DefaultValue(""), SocketState(false, false)]
