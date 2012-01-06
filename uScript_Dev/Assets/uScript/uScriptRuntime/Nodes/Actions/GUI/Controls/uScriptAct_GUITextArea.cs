@@ -27,7 +27,7 @@ public class uScriptAct_GUITextArea : uScriptLogic
       [FriendlyName("Position", "The position and size of the text area.")]
       Rect Position,
 
-      [FriendlyName("Max Length", "The maximum allowable string length for this text area.")]
+      [FriendlyName("Max Length", "The maximum allowable string length for this text area. A value of -1 means there is no limit.")]
       [DefaultValue(50)]
       int maxLength,
       
