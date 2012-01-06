@@ -593,7 +593,7 @@ public class uScript : EditorWindow
       m_ScriptEditorCtrl.BuildContextMenu();
       uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
    
-      m_ScriptEditorCtrl.IsDirty = CurrentScriptDirty;
+      m_ScriptEditorCtrl.IsDirty = CurrentScriptDirty || m_Patches.Length > 0;
 
       //clear out all patches and cache new copy of the script
       CacheScript( );
