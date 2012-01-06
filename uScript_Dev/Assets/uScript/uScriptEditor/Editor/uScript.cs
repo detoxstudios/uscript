@@ -1917,15 +1917,12 @@ public class uScript : EditorWindow
       {
          string currentNodeClassName = ScriptEditor.FindNodeType(((DisplayNode)node).EntityNode);
 
-         if (node is LogicNodeDisplayNode && currentNodeClassName.EndsWith("_Nested"))
+         string path = FindFile( Preferences.UserScripts, currentNodeClassName + ".uscript" );
+
+         if ("" != path )
          {
             // Open the nested uScript file
-            string scriptPath = Preferences.UserScripts + "/" + currentNodeClassName + ".uscript";
-
-            if (System.IO.File.Exists(scriptPath))
-            {
-               OpenScript(scriptPath);
-            }
+            OpenScript(path);
          }
          else
          {
