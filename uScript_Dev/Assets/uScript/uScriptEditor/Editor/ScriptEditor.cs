@@ -2200,7 +2200,7 @@ namespace Detox.ScriptEditor
       public LogicNode(string type, string friendlyName)       
       { 
          Type = type;
-         FriendlyName = friendlyName;
+         FriendlyName = "" == friendlyName ? type : friendlyName;
 
          m_Guid = Guid.NewGuid( );
 
@@ -4255,7 +4255,6 @@ namespace Detox.ScriptEditor
 
             Description  = new Parameter( value.Description );
             FriendlyName = new Parameter( value.FriendlyName );
-
             SceneName = value.SceneName;
          }
       }
