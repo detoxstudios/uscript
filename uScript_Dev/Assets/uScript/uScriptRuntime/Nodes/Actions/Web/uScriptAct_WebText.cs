@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Web")]
+[NodePath("Actions/Web/Download")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Download text data from the specified URL.")]
@@ -19,7 +19,6 @@ public class uScriptAct_WebText : uScriptLogic
    private bool _OutError;
 
    private WWW _www = null;
-//   private WWWForm _form;
 
 
    // ================================================================================
@@ -45,10 +44,10 @@ public class uScriptAct_WebText : uScriptLogic
       [FriendlyName("URL", "The url to download")]
       string URL,
 
-//      [FriendlyName("Form Data", "A WWWForm instance containing the form data to post.")]
-//      [SocketState(false, false)]
-//      WWWForm Form,
-//
+      [FriendlyName("Form Data", "A WWWForm instance containing the form data to post.")]
+      [SocketState(false, false)]
+      WWWForm Form,
+
       [FriendlyName("Result", "The downloaded data.")]
       out string Result,
 
@@ -61,9 +60,14 @@ public class uScriptAct_WebText : uScriptLogic
       _OutFinished = false;
       _OutError = false;
 
-//      _form = Form;
-
-      _www = new WWW(URL);
+      if (Form == null)
+      {
+         _www = new WWW(URL);
+      }
+      else
+      {
+         _www = new WWW(URL, Form);
+      }
 
       Result = string.Empty;
       Error = string.Empty;
