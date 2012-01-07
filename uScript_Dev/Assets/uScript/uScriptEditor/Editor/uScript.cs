@@ -2652,24 +2652,31 @@ public class uScript : EditorWindow
 
    public void RequestSave(bool quick, bool debug, bool rename)
    {
-      if (quick)
+      if (EditorApplication.isPlayingOrWillChangePlaymode)
       {
-//         Debug.Log("QUICK SAVE\n");
-         SaveScript(rename, false);
+         EditorUtility.DisplayDialog("Unable to save", "The Unity Editor is in play mode, and the uScript graph cannot be saved at this time.", "Okay");
       }
       else
       {
-//         Debug.Log(debug ? "DEBUG SAVE\n" : "RELEASE SAVE\n");
-         bool saved = false;
-         GenerateDebugInfo = debug;
+         if (quick)
+         {
+   //         Debug.Log("QUICK SAVE\n");
+            SaveScript(rename, false);
+         }
+         else
+         {
+   //         Debug.Log(debug ? "DEBUG SAVE\n" : "RELEASE SAVE\n");
+            bool saved = false;
+            GenerateDebugInfo = debug;
+   
+            AssetDatabase.StartAssetEditing();
+            saved = SaveScript(rename);
+            AssetDatabase.StopAssetEditing();
+   
+            GenerateDebugInfo = _saveMethod != 2;  // "Release" is not selected
 
-         AssetDatabase.StartAssetEditing();
-         saved = SaveScript(rename);
-         AssetDatabase.StopAssetEditing();
-
-         GenerateDebugInfo = _saveMethod != 2;  // "Release" is not selected
-
-         if (saved) RefreshScript();
+            if (saved) RefreshScript();
+         }
       }
       isFileMenuOpen = false;
    }
