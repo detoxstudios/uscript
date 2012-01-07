@@ -290,6 +290,8 @@ namespace Detox.Data.ScriptEditor
    public class ExternalConnectionData : EntityNodeData
    {
       public Parameter Name;
+      public Parameter Description;
+      public Parameter Order;
 
       public override void Clone(EntityNodeData cloneFrom)
       {
@@ -299,9 +301,11 @@ namespace Detox.Data.ScriptEditor
          if ( null == data ) return;
       
          Name = data.Name;
+         Order= data.Order;
+         Description = data.Description;
       }
 
-      public new int Version { get { return 2; } }
+      public new int Version { get { return 3; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -322,6 +326,33 @@ namespace Detox.Data.ScriptEditor
             Name.Default = "";
             Name.State   = Parameter.VisibleState.Visible;
          }
+
+         if ( serializer.CurrentVersion > 2 )
+         {
+            Order       = (Parameter) serializer.LoadNamedObject( "Order" );
+            Description = (Parameter) serializer.LoadNamedObject( "Description" );
+         }
+         else
+         {
+            Order = new Parameter( );
+            Order.Name    = "Order";
+            Order.FriendlyName = "Order";
+            Order.Default = "0";
+            Order.Type    = typeof(int).ToString( );
+            Order.Input   = true;
+            Order.Output  = false;
+            Order.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+
+            Description = new Parameter( );
+            Description.Name    = "Description";
+            Description.FriendlyName = "Description";
+            Description.Default = "";
+            Description.Type    = typeof(string).ToString( );
+            Description.Input   = true;
+            Description.Output  = false;
+            Description.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         }
+
       }
 
       public new void Save(ObjectSerializer serializer)
@@ -329,6 +360,8 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveBaseObject( this, typeof(EntityNodeData) );
 
          serializer.SaveNamedObject( "Name", Name );
+         serializer.SaveNamedObject( "Order", Order );
+         serializer.SaveNamedObject( "Description", Description );
       }
    }
 

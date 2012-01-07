@@ -218,6 +218,7 @@ namespace Detox.ScriptEditor
             list.Add( external );
          }
 
+
          //for each external list...
          foreach ( object o in unique.Values )
          {
@@ -2803,8 +2804,8 @@ namespace Detox.ScriptEditor
       //create the external function outsiders can call
       private void DefineExternalInput( ExternalConnection externalInput )
       {
-         Hashtable uniqueParameters = new Hashtable( );
-
+         Hashtable uniqueParameters   = new Hashtable( );
+         
          foreach ( ExternalConnection external in m_Script.Externals )
          {
             if ( null != uniqueParameters[ external.Name.Default ] ) continue;
@@ -2885,23 +2886,28 @@ namespace Detox.ScriptEditor
 
          string args = "";
 
-         foreach ( string key in uniqueParameters.Keys )
+         foreach ( ExternalConnection external in m_Script.Externals )
          {
+            string key = external.Name.Default;
+            if ( false == uniqueParameters.Contains(key) ) continue;
+
             Parameter p  = (Parameter) uniqueParameters[ key ];
+
+            string description = external.Description.Default;
 
             if ( true == p.Input && false == p.Output )
             {
-               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\")] ";
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\", \"" + description + "\")] ";
                args += FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(key).Name + ", ";
             }
             else if ( true == p.Input && true == p.Output )
             {
-               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\")] ";
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\", \"" + description + "\")] ";
                args += "ref " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(key).Name + ", ";
             }
             else if ( false == p.Input && true == p.Output )
             {
-               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\")] ";
+               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\", \"" + description + "\")] ";
                args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(key).Name + ", ";
             }
          }
@@ -2949,8 +2955,11 @@ namespace Detox.ScriptEditor
             //they match for every method signature
             if ( 0 == m_ExternalParameters.Count )
             {
-               foreach ( string key in uniqueParameters.Keys )
+               foreach ( ExternalConnection external in m_Script.Externals )
                {
+                  string key = external.Name.Default;
+                  if ( false == uniqueParameters.Contains(key) ) continue;
+      
                   Parameter p  = (Parameter) uniqueParameters[ key ];
                
                   Plug plug = CSharpExternalParameterDeclaration(key);
@@ -3002,7 +3011,7 @@ namespace Detox.ScriptEditor
          Plug inputPlug = CSharpExternalInputDeclaration(externalInput.Name.Default);
          m_ExternalInputs.Add( inputPlug );
 
-         AddCSharpLine( "[FriendlyName(\"" + inputPlug.FriendlyName + "\")]" );
+         AddCSharpLine( "[FriendlyName(\"" + inputPlug.FriendlyName + "\", \"" + externalInput.Description.Default + "\")]" );
          AddCSharpLine( "public void " + inputPlug.Name + "( " + args + " )" );
          AddCSharpLine( "{" );
 

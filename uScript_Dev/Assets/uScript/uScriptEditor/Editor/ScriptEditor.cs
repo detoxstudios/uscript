@@ -1286,6 +1286,8 @@ namespace Detox.ScriptEditor
          connection.Name           = Name;
          connection.ShowComment    = ShowComment;
          connection.Comment        = Comment;
+         connection.Description    = Description;
+         connection.Order          = Order;
 
          return connection;
       }
@@ -1301,6 +1303,8 @@ namespace Detox.ScriptEditor
             nodeData.Guid       = Guid;
             nodeData.ShowComment= ShowComment.ToParameterData( );
             nodeData.Comment    = Comment.ToParameterData( );
+            nodeData.Description= Description.ToParameterData( );
+            nodeData.Order      = Order.ToParameterData( );
             return nodeData;
          }
       }
@@ -1319,7 +1323,7 @@ namespace Detox.ScriptEditor
          if ( Connection    != node.Connection    ) return false;
          if ( Guid          != node.Guid )          return false;
          if ( Position      != node.Position )      return false;
-         if ( Name          != node.Name )          return false;
+
          if ( false == ArrayUtil.ArraysAreEqual(Parameters, node.Parameters) ) return false;
 
          return true;
@@ -1343,11 +1347,13 @@ namespace Detox.ScriptEditor
       }
 
       public Parameter Name;
+      public Parameter Order;
+      public Parameter Description;
 
       public Parameter[] Parameters 
       { 
-         get { return new Parameter[] { Name }; } 
-         set { Name = value[ 0 ]; }
+         get { return new Parameter[] { Name, Order, Description }; } 
+         set { Name = value[ 0 ]; Order = value[ 1 ]; Description = value[ 2 ]; }
       }
       
       public string Connection;
@@ -1378,6 +1384,24 @@ namespace Detox.ScriptEditor
          Name.Input   = true;
          Name.Output  = false;
          Name.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+
+         Order = new Parameter( );
+         Order.Name    = "Order";
+         Order.FriendlyName = "Order";
+         Order.Default = "0";
+         Order.Type    = typeof(int).ToString( );
+         Order.Input   = true;
+         Order.Output  = false;
+         Order.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+
+         Description = new Parameter( );
+         Description.Name    = "Description";
+         Description.FriendlyName = "Description";
+         Description.Default = "";
+         Description.Type    = typeof(string).ToString( );
+         Description.Input   = true;
+         Description.Output  = false;
+         Description.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
 
          m_ShowComment = new Parameter( );
          m_ShowComment.Name         = "Output Comment";
@@ -2635,6 +2659,11 @@ namespace Detox.ScriptEditor
          }
       }
 
+      int ExternalSorter( ExternalConnection a, ExternalConnection b )
+      {
+         return (int) a.Order.DefaultAsObject - (int) b.Order.DefaultAsObject;
+      }
+
       public ExternalConnection [] Externals
       {
          get 
@@ -2646,7 +2675,10 @@ namespace Detox.ScriptEditor
                if ( node is ExternalConnection ) externals.Add( (ExternalConnection) node );
             }
 
-            return externals.ToArray( );
+            ExternalConnection [] sorted = externals.ToArray( );
+
+            Array.Sort( sorted, ExternalSorter );
+            return sorted;
          }
       }
 
@@ -4731,6 +4763,8 @@ namespace Detox.ScriptEditor
          external.Guid       = data.Guid;
          external.Position   = data.Position;
          external.Name       = new Parameter( data.Name );
+         external.Order      = new Parameter( data.Order );
+         external.Description= new Parameter( data.Description );
          external.ShowComment= new Parameter( data.ShowComment );
          external.Comment    = new Parameter( data.Comment );
 
