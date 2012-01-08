@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Assign_Material")]
 
-[FriendlyName("Assign Material", "Assigns the specified Material (by name) to the GameObject on the specifed material channel.")]
+[FriendlyName("Assign Material", "Assigns the specified Material to the GameObject on the specifed material channel.")]
 public class uScriptAct_AssignMaterial : uScriptLogic
 {
    public bool Out { get { return true; } }
@@ -20,7 +20,7 @@ public class uScriptAct_AssignMaterial : uScriptLogic
       [FriendlyName("Target", "The GameObject(s) to assign the material to.")]
       GameObject[] Target,
 
-      [FriendlyName("Material", "The filename of the material to assign.")]
+      [FriendlyName("Material", "The material to assign.")]
       Material materialName,
 
       [FriendlyName("Material Channel", "The material channel of the object to assign the material to.")]
