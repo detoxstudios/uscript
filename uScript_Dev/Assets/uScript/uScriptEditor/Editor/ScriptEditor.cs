@@ -3247,8 +3247,10 @@ namespace Detox.ScriptEditor
                   //when it comes to scalar verses array.  any other type of external
                   //still needs to type match (even with arrays) support for others can
                   //come on with an as-needed basis
-                  string existingType = existingParam.Type.Replace("[]", "");
-                  string newType      = myParam.Type.Replace("[]", "");
+                  
+                  //types could be null if it is a left or right socket
+                  string existingType = existingParam.Type != null ? existingParam.Type.Replace("[]", "") : "";
+                  string newType      = myParam.Type != null ? myParam.Type.Replace("[]", "") : "";
 
                   if ( existingType != newType )
                   {
@@ -3262,6 +3264,7 @@ namespace Detox.ScriptEditor
                         reason = "An External Node (" + externalSource.Name.Default + ") can't link to two different types  (" + 
                                     "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                      }
+
                      return false;
                   }                  
                }
