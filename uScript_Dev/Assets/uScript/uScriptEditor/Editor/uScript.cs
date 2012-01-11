@@ -747,7 +747,7 @@ public class uScript : EditorWindow
    }
 
    private string m_CurrentBreakpoint = "";
-   private bool   m_IsRemotingValues  = false;
+   private bool   m_IsDebuggingValues = false;
 
    void Update()
    {
@@ -789,13 +789,13 @@ public class uScript : EditorWindow
          }
 
          m_ScriptEditorCtrl.UpdateRemoteValues( );
-         m_IsRemotingValues = true;
+         m_IsDebuggingValues = true;
       }
-      else if ( true == m_IsRemotingValues )
+      else if ( true == m_IsDebuggingValues )
       {
          //no longer playing then reset
          //our script to the previous state
-         m_IsRemotingValues = false;
+         m_IsDebuggingValues = false;
          OpenFromCache( );
       
          //keep our undo stack at the value it was
@@ -1884,13 +1884,18 @@ public class uScript : EditorWindow
 
    void OnPlaymodeStateChanged()
    {
-      if (EditorApplication.isPlayingOrWillChangePlaymode && m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.IsDirty)
+      //if we're not debugging values then we're just starting into playing in the editor
+      //and warn them, otherwise we've already warned them so don't pop up a warning again
+      if ( false == m_IsDebuggingValues )
       {
-         EditorUtility.DisplayDialog("uScript Not Saved!", "uScript has detected that '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' has been changed, but not saved! You will not see any changes until you save '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' in the uScript Editor.", "OK");
-      }
-      else if (EditorApplication.isPlayingOrWillChangePlaymode && m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.CodeIsStale )
-      {
-         EditorUtility.DisplayDialog("uScript Not Saved!", "uScript has detected that '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' was quick saved but the code has not been generated! You will not see any changes until you save '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' in the uScript Editor.", "OK");
+         if (EditorApplication.isPlayingOrWillChangePlaymode && m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.IsDirty)
+         {
+            EditorUtility.DisplayDialog("uScript Not Saved!", "uScript has detected that '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' has been changed, but not saved! You will not see any changes until you save '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' in the uScript Editor.", "OK");
+         }
+         else if (EditorApplication.isPlayingOrWillChangePlaymode && m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.CodeIsStale )
+         {
+            EditorUtility.DisplayDialog("uScript Not Saved!", "uScript has detected that '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' was quick saved but the code has not been generated! You will not see any changes until you save '" + m_ScriptEditorCtrl.ScriptEditor.Name + "' in the uScript Editor.", "OK");
+         }
       }
    }
 
