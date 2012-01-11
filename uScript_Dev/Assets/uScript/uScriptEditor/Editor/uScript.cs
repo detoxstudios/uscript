@@ -778,7 +778,7 @@ public class uScript : EditorWindow
       isLicenseAccepted = true;
 #endif
 
-      if ( EditorApplication.isPlayingOrWillChangePlaymode )
+      if ( EditorApplication.isPlaying )
       {
          //if the current breakpoint has changed we need to repaint
          //so the node visuals are properly reflected
@@ -797,6 +797,10 @@ public class uScript : EditorWindow
          //our script to the previous state
          m_IsRemotingValues = false;
          OpenFromCache( );
+      
+         //keep our undo stack at the value it was
+         //when they last undid
+         UndoComponent.UndoNumber = m_UndoNumber;
       }
 
       // Update the reference panel with the node palette's hot selection.
@@ -877,8 +881,7 @@ public class uScript : EditorWindow
          //so apply the patch
          if ( UndoComponent.UndoNumber > m_UndoNumber )
          {
-            ApplyPatch( m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber - 1] );
-      
+            ApplyPatch( m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber - 1] );      
          }
          else
          {
@@ -2648,15 +2651,20 @@ public class uScript : EditorWindow
       isFileMenuOpen = false;
    }
 
-
-
-   public void RequestSave(bool quick, bool debug, bool rename)
+   private bool SaveDenied( )
    {
       if (EditorApplication.isPlayingOrWillChangePlaymode)
       {
          EditorUtility.DisplayDialog("Unable to save", "The Unity Editor is in play mode, and the uScript graph cannot be saved at this time.", "Okay");
+         return true;
       }
-      else
+
+      return false;
+   }
+
+   public void RequestSave(bool quick, bool debug, bool rename)
+   {
+      if (false == SaveDenied( ) )
       {
          if (quick)
          {
@@ -3083,6 +3091,11 @@ public class uScript : EditorWindow
 
          if (0 == result)
          {
+            if ( true == SaveDenied( ) )
+            {
+               return false;
+            }
+
             bool scriptSaved;
 
             AssetDatabase.StartAssetEditing();
