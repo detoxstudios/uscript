@@ -273,20 +273,10 @@ public class AssetBrowserWindow : EditorWindow
          _styleListItemName.contentOffset = new Vector2(0, 0);
 
          _styleListItemNameEvenRow = new GUIStyle(_styleListItemName);
-         _styleListItemNameEvenRow.normal.background = new Texture2D(16, 16);
+         _styleListItemNameEvenRow.normal.background = uScriptGUIStyle.propertyRowEven.normal.background;
 
          _styleListItemPath = new GUIStyle(_styleListItemName);
          _styleListItemPath.fontStyle = FontStyle.Normal;
-
-         Color color = new Color(0, 0, 0, 0.15f);
-         for (int h=0; h < _styleListItemNameEvenRow.normal.background.height; h++)
-         {
-            for (int w=0; w < _styleListItemNameEvenRow.normal.background.width; w++)
-            {
-               _styleListItemNameEvenRow.normal.background.SetPixel(w, h, color);
-            }
-         }
-         _styleListItemNameEvenRow.normal.background.Apply();
 
          _styleWarningMessage = new GUIStyle(uScriptGUIStyle.referenceText);
 //         _styleWarningMessage.normal.background = GUI.skin.box.normal.background;

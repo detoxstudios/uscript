@@ -150,11 +150,18 @@ public static class uScriptGUIStyle
 
    public static void Init()
    {
+      if (_stylesInitialized && _currentSkin == GUI.skin.name)
+      {
+         // The styles have already been initialized
+         return;
+      }
+
       if (_currentSkin != GUI.skin.name)
       {
          // the skin has been changed
          _currentSkin = GUI.skin.name;
 
+         // the skin names were different in pre-3.5 Unity builds, so override if necessary
          if (_currentSkin == "SceneGUISkin")
          {
             _currentSkin = "DarkSkin";
@@ -169,16 +176,10 @@ public static class uScriptGUIStyle
          _texture_windowMenuDropDown = AssetDatabase.LoadAssetAtPath(skinPath + "MenuDropDown.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _texture_windowMenuContext = AssetDatabase.LoadAssetAtPath(skinPath + "MenuContext.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _texture_underline = AssetDatabase.LoadAssetAtPath(skinPath + "Underline.png", typeof(UnityEngine.Texture2D)) as Texture2D;
+         _texture_propertyRowEven = AssetDatabase.LoadAssetAtPath(skinPath + "LineItem.png", typeof(UnityEngine.Texture2D)) as Texture2D;
 
-         // creature some textures manually
-         _texture_propertyRowEven = new Texture2D(1, 1);
-         _texture_propertyRowEven.SetPixel(0, 0, new Color(0, 0, 0, 0.075f));
-         _texture_propertyRowEven.Apply();
-      }
-      else if (_stylesInitialized)
-      {
-         // The styles have already been initialized
-         return;
+         // update the current skin again to replace any overridden skin name from pre-3.5 Unity builds.
+         _currentSkin = GUI.skin.name;
       }
 
       _stylesInitialized = true;
@@ -395,16 +396,8 @@ public static class uScriptGUIStyle
       _scriptRowEven = new GUIStyle(_scriptRowOdd);
       _scriptRowEven.normal.background = _texture_propertyRowEven;
 
-      Texture2D tmpT = new Texture2D(1, 1);
-      tmpT.SetPixel(0, 0, Color.black);
-      tmpT.Apply();
       _listRow = new GUIStyle(GUIStyle.none);
-//      _listRow.fixedHeight = 17;
-//      _listRow.onNormal.background = tmpT;
-//      _listRow.onActive.background = _texture_propertyRowEven;
       _listRow.onNormal.background = _texture_propertyRowEven;
-//      _listRow.onFocused.background = _texture_propertyRowEven;
-//      uScriptGUIStyle.Information(_listRow);
    }
 
 
