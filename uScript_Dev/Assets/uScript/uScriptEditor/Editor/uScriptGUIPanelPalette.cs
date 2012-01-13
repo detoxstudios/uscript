@@ -221,68 +221,74 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
                // Apply the filter and determine how many items will be drawn.
                //
-               foreach (PaletteMenuItem item in _paletteMenuItems)
+               if (_paletteMenuItems == null)
                {
-                  DetermineListStats(item);
+                  GUILayout.Label("\n\tERROR:\n\n\t\tFailed to initialize the node palette!", EditorStyles.boldLabel);
                }
-
-               // Draw the padding box to establish the row width (excluding scrollbar)
-               // and force the scrollview content height
-               //
-               GUILayout.Box(string.Empty, _stylePadding, GUILayout.Height(Math.Max(0, ROW_HEIGHT * listItem_rowCount - 10)), GUILayout.Width(listItem_rowWidth));
-               GUILayout.Box(string.Empty, _stylePadding, GUILayout.Height(10), GUILayout.ExpandWidth(true));
-
-               // Prepare to draw each row of the filtered list
-               //
-               // From this point on, the contents of the scrollview should
-               // never use GUILayout, so we can safely skip EventType.Layout.
-               //
-               if (Event.current.type != EventType.Layout)
+               else
                {
-                  // Make sure the we get the width of the last GUILayout.Box
-                  // just in case it is wider than the widest button below
-                  listItem_rowWidth = Math.Max(listItem_rowWidth, (int)GUILayoutUtility.GetLastRect().width);
-
-                  // Reset some variables we'll use later
-                  buttonRect = new Rect(0, 0, 0, ROW_HEIGHT);
-                  filterMatches = 0;
-
-                  // Reset the temporary hot selection at the beginning of each pass
-                  _tempHotSelection = null;
-
-                  // Draw all the palette items
                   foreach (PaletteMenuItem item in _paletteMenuItems)
                   {
-                     if (DrawPaletteMenu(item))
-                     {
-                        filterMatches++;
-                     }
+                     DetermineListStats(item);
                   }
-
-                  // Check here for possible repaint needed for hot tips
-                  if (_hotSelection != _tempHotSelection)
+   
+                  // Draw the padding box to establish the row width (excluding scrollbar)
+                  // and force the scrollview content height
+                  //
+                  GUILayout.Box(string.Empty, _stylePadding, GUILayout.Height(Math.Max(0, ROW_HEIGHT * listItem_rowCount - 10)), GUILayout.Width(listItem_rowWidth));
+                  GUILayout.Box(string.Empty, _stylePadding, GUILayout.Height(10), GUILayout.ExpandWidth(true));
+   
+                  // Prepare to draw each row of the filtered list
+                  //
+                  // From this point on, the contents of the scrollview should
+                  // never use GUILayout, so we can safely skip EventType.Layout.
+                  //
+                  if (Event.current.type != EventType.Layout)
                   {
-                     _hotSelection = _tempHotSelection;
-                     uScript.RequestRepaint();
+                     // Make sure the we get the width of the last GUILayout.Box
+                     // just in case it is wider than the widest button below
+                     listItem_rowWidth = Math.Max(listItem_rowWidth, (int)GUILayoutUtility.GetLastRect().width);
+   
+                     // Reset some variables we'll use later
+                     buttonRect = new Rect(0, 0, 0, ROW_HEIGHT);
+                     filterMatches = 0;
+   
+                     // Reset the temporary hot selection at the beginning of each pass
+                     _tempHotSelection = null;
+   
+                     // Draw all the palette items
+                     foreach (PaletteMenuItem item in _paletteMenuItems)
+                     {
+                        if (DrawPaletteMenu(item))
+                        {
+                           filterMatches++;
+                        }
+                     }
+   
+                     // Check here for possible repaint needed for hot tips
+                     if (_hotSelection != _tempHotSelection)
+                     {
+                        _hotSelection = _tempHotSelection;
+                        uScript.RequestRepaint();
+                     }
+   
                   }
-
-               }
-
-               // Display a message if no filter matches were found.
-               //
-               // The filterMatches variable is reset to zero right before the menu items are
-               // drawn when Event.current.type != EventType.Layout
-               //
-               if (filterMatches == 0)
-               {
-                  GUILayout.Label("The search found no matches!", uScriptGUIStyle.panelMessageBold);
+   
+                  // Display a message if no filter matches were found.
+                  //
+                  // The filterMatches variable is reset to zero right before the menu items are
+                  // drawn when Event.current.type != EventType.Layout
+                  //
+                  if (filterMatches == 0)
+                  {
+                     GUILayout.Label("The search found no matches!", uScriptGUIStyle.panelMessageBold);
+                  }
                }
 
 //               // Debug
 //               _debugScript.Top = new Vector2(_debug_TopCount, _debug_TopHeight);
 //               _debugScript.Middle = new Vector2(_debug_MiddleCount, _debug_MiddleHeight);
 //               _debugScript.Bottom = new Vector2(_debug_BottomCount, _debug_BottomHeight);
-
             }
             EditorGUILayout.EndScrollView();
 
