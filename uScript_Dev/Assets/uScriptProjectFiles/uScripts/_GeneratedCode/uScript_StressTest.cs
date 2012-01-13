@@ -1,18 +1,16 @@
-//uScript Generated Code - Build 0.9.1556
-//Generated with Debug Info
+//uScript Generated Code - Build 0.9.1613
 using UnityEngine;
 using System.Collections;
 
 [NodePath("Graphs")]
 [System.Serializable]
+[FriendlyName("", "")]
 public class uScript_StressTest : uScriptLogic
 {
 
    #pragma warning disable 414
    GameObject parentGameObject = null;
    uScript_GUI thisScriptsOnGuiListener = null; 
-   const int MaxRelayCallCount = 1000;
-   int relayCallCount = 0;
    //external output properties
    
    //externally exposed events
@@ -445,6 +443,30 @@ public class uScript_StressTest : uScriptLogic
       }
    }
    
+   void UnregisterEventListeners( )
+   {
+      if ( null != event_UnityEngine_GameObject_Instance_92 )
+      {
+         {
+            uScript_Input component = event_UnityEngine_GameObject_Instance_92.GetComponent<uScript_Input>();
+            if ( null != component )
+            {
+               component.KeyEvent -= Instance_KeyEvent_92;
+            }
+         }
+      }
+      if ( null != event_UnityEngine_GameObject_Instance_106 )
+      {
+         {
+            uScript_Input component = event_UnityEngine_GameObject_Instance_106.GetComponent<uScript_Input>();
+            if ( null != component )
+            {
+               component.KeyEvent -= Instance_KeyEvent_106;
+            }
+         }
+      }
+   }
+   
    public override void SetParent(GameObject g)
    {
       parentGameObject = g;
@@ -500,10 +522,6 @@ public class uScript_StressTest : uScriptLogic
    
    public void Update()
    {
-      //reset each Update, and increments each method call
-      //if it ever goes above MaxRelayCallCount before being reset
-      //then we assume it is stuck in an infinite loop
-      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       //other scripts might have added GameObjects with event scripts
       //so we need to verify all our event listeners are registered
       SyncEventListeners( );
@@ -521,6 +539,19 @@ public class uScript_StressTest : uScriptLogic
       {
          Relay_DrivenDelay_64();
       }
+   }
+   
+   public void OnDestroy()
+   {
+      UnregisterEventListeners( );
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Finished -= uScriptAct_PlaySound_Finished_55;
+      logic_uScriptAct_Toggle_uScriptAct_Toggle_70.OnOut -= uScriptAct_Toggle_OnOut_70;
+      logic_uScriptAct_Toggle_uScriptAct_Toggle_70.OffOut -= uScriptAct_Toggle_OffOut_70;
+      logic_uScriptAct_Toggle_uScriptAct_Toggle_70.ToggleOut -= uScriptAct_Toggle_ToggleOut_70;
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Finished -= uScriptAct_PlaySound_Finished_76;
+      logic_uScriptAct_LookAt_uScriptAct_LookAt_83.Finished -= uScriptAct_LookAt_Finished_83;
+      logic_uScriptAct_LookAt_uScriptAct_LookAt_89.Finished -= uScriptAct_LookAt_Finished_89;
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116.Finished -= uScriptAct_PlaySound_Finished_116;
    }
    
    void Instance_KeyEvent_92(object o, System.EventArgs e)
@@ -587,1163 +618,897 @@ public class uScript_StressTest : uScriptLogic
    
    void Relay_In_1()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_1.In(logic_uScriptAct_Log_Prefix_1, logic_uScriptAct_Log_Target_1, logic_uScriptAct_Log_Postfix_1);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_1.In(logic_uScriptAct_Log_Prefix_1, logic_uScriptAct_Log_Target_1, logic_uScriptAct_Log_Postfix_1);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_In_14()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptCon_IntCounter_B_14 = local_5_System_Int32;
-            
-         }
-         logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.In(logic_uScriptCon_IntCounter_A_14, logic_uScriptCon_IntCounter_B_14, out logic_uScriptCon_IntCounter_currentValue_14);
+         logic_uScriptCon_IntCounter_B_14 = local_5_System_Int32;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.GreaterThan;
-         bool test_1 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.GreaterThanOrEqualTo;
-         bool test_2 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.EqualTo;
-         bool test_3 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.LessThanOrEqualTo;
-         bool test_4 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.LessThan;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_43();
-         }
-         if ( test_1 == true )
-         {
-            Relay_In_75();
-         }
-         if ( test_2 == true )
-         {
-            Relay_In_16();
-         }
-         if ( test_3 == true )
-         {
-            Relay_In_103();
-         }
-         if ( test_4 == true )
-         {
-            Relay_In_103();
-         }
       }
-      else
+      logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.In(logic_uScriptCon_IntCounter_A_14, logic_uScriptCon_IntCounter_B_14, out logic_uScriptCon_IntCounter_currentValue_14);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.GreaterThan;
+      bool test_1 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.GreaterThanOrEqualTo;
+      bool test_2 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.EqualTo;
+      bool test_3 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.LessThanOrEqualTo;
+      bool test_4 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.LessThan;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Int Counter.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_43();
+      }
+      if ( test_1 == true )
+      {
+         Relay_In_75();
+      }
+      if ( test_2 == true )
+      {
+         Relay_In_16();
+      }
+      if ( test_3 == true )
+      {
+         Relay_In_103();
+      }
+      if ( test_4 == true )
+      {
+         Relay_In_103();
       }
    }
    
    void Relay_Reset_14()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptCon_IntCounter_B_14 = local_5_System_Int32;
-            
-         }
-         logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.Reset(logic_uScriptCon_IntCounter_A_14, logic_uScriptCon_IntCounter_B_14, out logic_uScriptCon_IntCounter_currentValue_14);
+         logic_uScriptCon_IntCounter_B_14 = local_5_System_Int32;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.GreaterThan;
-         bool test_1 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.GreaterThanOrEqualTo;
-         bool test_2 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.EqualTo;
-         bool test_3 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.LessThanOrEqualTo;
-         bool test_4 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.LessThan;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_43();
-         }
-         if ( test_1 == true )
-         {
-            Relay_In_75();
-         }
-         if ( test_2 == true )
-         {
-            Relay_In_16();
-         }
-         if ( test_3 == true )
-         {
-            Relay_In_103();
-         }
-         if ( test_4 == true )
-         {
-            Relay_In_103();
-         }
       }
-      else
+      logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.Reset(logic_uScriptCon_IntCounter_A_14, logic_uScriptCon_IntCounter_B_14, out logic_uScriptCon_IntCounter_currentValue_14);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.GreaterThan;
+      bool test_1 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.GreaterThanOrEqualTo;
+      bool test_2 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.EqualTo;
+      bool test_3 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.LessThanOrEqualTo;
+      bool test_4 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_14.LessThan;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Int Counter.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_43();
+      }
+      if ( test_1 == true )
+      {
+         Relay_In_75();
+      }
+      if ( test_2 == true )
+      {
+         Relay_In_16();
+      }
+      if ( test_3 == true )
+      {
+         Relay_In_103();
+      }
+      if ( test_4 == true )
+      {
+         Relay_In_103();
       }
    }
    
    void Relay_In_16()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_16.In(logic_uScriptAct_Log_Prefix_16, logic_uScriptAct_Log_Target_16, logic_uScriptAct_Log_Postfix_16);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_16.In(logic_uScriptAct_Log_Prefix_16, logic_uScriptAct_Log_Target_16, logic_uScriptAct_Log_Postfix_16);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_In_19()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_19.In(logic_uScriptAct_Log_Prefix_19, logic_uScriptAct_Log_Target_19, logic_uScriptAct_Log_Postfix_19);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_19.In(logic_uScriptAct_Log_Prefix_19, logic_uScriptAct_Log_Target_19, logic_uScriptAct_Log_Postfix_19);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_In_28()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
          {
-            int index;
-            index = 0;
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_Cover3_UnityEngine_GameObject_previous != local_Cover3_UnityEngine_GameObject )
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover3_UnityEngine_GameObject_previous != local_Cover3_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_Cover3_UnityEngine_GameObject_previous = local_Cover3_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
+               //tear down old listeners
+               
+               local_Cover3_UnityEngine_GameObject_previous = local_Cover3_UnityEngine_GameObject;
+               
+               //setup new listeners
             }
-            if ( logic_uScriptAct_Log_Target_28.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Log_Target_28, index + 1);
-            }
-            logic_uScriptAct_Log_Target_28[ index++ ] = local_Cover3_UnityEngine_GameObject;
-            
          }
-         logic_uScriptAct_Log_uScriptAct_Log_28.In(logic_uScriptAct_Log_Prefix_28, logic_uScriptAct_Log_Target_28, logic_uScriptAct_Log_Postfix_28);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         if ( logic_uScriptAct_Log_Target_28.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_Log_Target_28, index + 1);
+         }
+         logic_uScriptAct_Log_Target_28[ index++ ] = local_Cover3_UnityEngine_GameObject;
          
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_28.In(logic_uScriptAct_Log_Prefix_28, logic_uScriptAct_Log_Target_28, logic_uScriptAct_Log_Postfix_28);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_In_36()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptCon_IntCounter_B_36 = local_49_System_Int32;
-            
-         }
-         logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.In(logic_uScriptCon_IntCounter_A_36, logic_uScriptCon_IntCounter_B_36, out logic_uScriptCon_IntCounter_currentValue_36);
+         logic_uScriptCon_IntCounter_B_36 = local_49_System_Int32;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.GreaterThan;
-         bool test_1 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.GreaterThanOrEqualTo;
-         bool test_2 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.EqualTo;
-         bool test_3 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.LessThanOrEqualTo;
-         bool test_4 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.LessThan;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_72();
-         }
-         if ( test_1 == true )
-         {
-            Relay_In_74();
-         }
-         if ( test_2 == true )
-         {
-            Relay_In_1();
-         }
-         if ( test_3 == true )
-         {
-            Relay_In_67();
-         }
-         if ( test_4 == true )
-         {
-            Relay_In_67();
-         }
       }
-      else
+      logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.In(logic_uScriptCon_IntCounter_A_36, logic_uScriptCon_IntCounter_B_36, out logic_uScriptCon_IntCounter_currentValue_36);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.GreaterThan;
+      bool test_1 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.GreaterThanOrEqualTo;
+      bool test_2 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.EqualTo;
+      bool test_3 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.LessThanOrEqualTo;
+      bool test_4 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.LessThan;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Int Counter.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_72();
+      }
+      if ( test_1 == true )
+      {
+         Relay_In_74();
+      }
+      if ( test_2 == true )
+      {
+         Relay_In_1();
+      }
+      if ( test_3 == true )
+      {
+         Relay_In_67();
+      }
+      if ( test_4 == true )
+      {
+         Relay_In_67();
       }
    }
    
    void Relay_Reset_36()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptCon_IntCounter_B_36 = local_49_System_Int32;
-            
-         }
-         logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.Reset(logic_uScriptCon_IntCounter_A_36, logic_uScriptCon_IntCounter_B_36, out logic_uScriptCon_IntCounter_currentValue_36);
+         logic_uScriptCon_IntCounter_B_36 = local_49_System_Int32;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.GreaterThan;
-         bool test_1 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.GreaterThanOrEqualTo;
-         bool test_2 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.EqualTo;
-         bool test_3 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.LessThanOrEqualTo;
-         bool test_4 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.LessThan;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_72();
-         }
-         if ( test_1 == true )
-         {
-            Relay_In_74();
-         }
-         if ( test_2 == true )
-         {
-            Relay_In_1();
-         }
-         if ( test_3 == true )
-         {
-            Relay_In_67();
-         }
-         if ( test_4 == true )
-         {
-            Relay_In_67();
-         }
       }
-      else
+      logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.Reset(logic_uScriptCon_IntCounter_A_36, logic_uScriptCon_IntCounter_B_36, out logic_uScriptCon_IntCounter_currentValue_36);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.GreaterThan;
+      bool test_1 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.GreaterThanOrEqualTo;
+      bool test_2 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.EqualTo;
+      bool test_3 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.LessThanOrEqualTo;
+      bool test_4 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_36.LessThan;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Int Counter.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_72();
+      }
+      if ( test_1 == true )
+      {
+         Relay_In_74();
+      }
+      if ( test_2 == true )
+      {
+         Relay_In_1();
+      }
+      if ( test_3 == true )
+      {
+         Relay_In_67();
+      }
+      if ( test_4 == true )
+      {
+         Relay_In_67();
       }
    }
    
    void Relay_In_43()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_43.In(logic_uScriptAct_Log_Prefix_43, logic_uScriptAct_Log_Target_43, logic_uScriptAct_Log_Postfix_43);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_43.In(logic_uScriptAct_Log_Prefix_43, logic_uScriptAct_Log_Target_43, logic_uScriptAct_Log_Postfix_43);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_Finished_55()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
    }
    
    void Relay_Play_55()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Play(logic_uScriptAct_PlaySound_audioClip_55, logic_uScriptAct_PlaySound_target_55, logic_uScriptAct_PlaySound_volume_55, logic_uScriptAct_PlaySound_loop_55);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Out;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_115();
-         }
       }
-      else
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Play(logic_uScriptAct_PlaySound_audioClip_55, logic_uScriptAct_PlaySound_target_55, logic_uScriptAct_PlaySound_volume_55, logic_uScriptAct_PlaySound_loop_55);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_115();
       }
    }
    
    void Relay_UpdateVolume_55()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.UpdateVolume(logic_uScriptAct_PlaySound_audioClip_55, logic_uScriptAct_PlaySound_target_55, logic_uScriptAct_PlaySound_volume_55, logic_uScriptAct_PlaySound_loop_55);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Out;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_115();
-         }
       }
-      else
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.UpdateVolume(logic_uScriptAct_PlaySound_audioClip_55, logic_uScriptAct_PlaySound_target_55, logic_uScriptAct_PlaySound_volume_55, logic_uScriptAct_PlaySound_loop_55);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_115();
       }
    }
    
    void Relay_Stop_55()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Stop(logic_uScriptAct_PlaySound_audioClip_55, logic_uScriptAct_PlaySound_target_55, logic_uScriptAct_PlaySound_volume_55, logic_uScriptAct_PlaySound_loop_55);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Out;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_115();
-         }
       }
-      else
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Stop(logic_uScriptAct_PlaySound_audioClip_55, logic_uScriptAct_PlaySound_target_55, logic_uScriptAct_PlaySound_volume_55, logic_uScriptAct_PlaySound_loop_55);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_115();
       }
    }
    
    void Relay_In_63()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptAct_Delay_Duration_63 = local_25_System_Single;
-            
-         }
-         logic_uScriptAct_Delay_uScriptAct_Delay_63.In(logic_uScriptAct_Delay_Duration_63);
-         logic_uScriptAct_Delay_DrivenDelay_63 = true;
+         logic_uScriptAct_Delay_Duration_63 = local_25_System_Single;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_63.Immediate;
-         bool test_1 = logic_uScriptAct_Delay_uScriptAct_Delay_63.AfterDelay;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_19();
-         }
-         if ( test_1 == true )
-         {
-            Relay_In_28();
-         }
       }
-      else
+      logic_uScriptAct_Delay_uScriptAct_Delay_63.In(logic_uScriptAct_Delay_Duration_63);
+      logic_uScriptAct_Delay_DrivenDelay_63 = true;
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_63.Immediate;
+      bool test_1 = logic_uScriptAct_Delay_uScriptAct_Delay_63.AfterDelay;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_19();
+      }
+      if ( test_1 == true )
+      {
+         Relay_In_28();
       }
    }
    
    void Relay_DrivenDelay_63( )
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptAct_Delay_Duration_63 = local_25_System_Single;
-            
-         }
-         logic_uScriptAct_Delay_DrivenDelay_63 = logic_uScriptAct_Delay_uScriptAct_Delay_63.DrivenDelay();
-         if ( true == logic_uScriptAct_Delay_DrivenDelay_63 )
-         {
-            if ( logic_uScriptAct_Delay_uScriptAct_Delay_63.Immediate == true )
-            {
-               Relay_In_19();
-            }
-            if ( logic_uScriptAct_Delay_uScriptAct_Delay_63.AfterDelay == true )
-            {
-               Relay_In_28();
-            }
-         }
+         logic_uScriptAct_Delay_Duration_63 = local_25_System_Single;
+         
       }
-      else
+      logic_uScriptAct_Delay_DrivenDelay_63 = logic_uScriptAct_Delay_uScriptAct_Delay_63.DrivenDelay();
+      if ( true == logic_uScriptAct_Delay_DrivenDelay_63 )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         if ( logic_uScriptAct_Delay_uScriptAct_Delay_63.Immediate == true )
+         {
+            Relay_In_19();
+         }
+         if ( logic_uScriptAct_Delay_uScriptAct_Delay_63.AfterDelay == true )
+         {
+            Relay_In_28();
+         }
       }
    }
    void Relay_In_64()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Delay_uScriptAct_Delay_64.In(logic_uScriptAct_Delay_Duration_64);
-         logic_uScriptAct_Delay_DrivenDelay_64 = true;
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_64.Immediate;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_110();
-         }
       }
-      else
+      logic_uScriptAct_Delay_uScriptAct_Delay_64.In(logic_uScriptAct_Delay_Duration_64);
+      logic_uScriptAct_Delay_DrivenDelay_64 = true;
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_64.Immediate;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_110();
       }
    }
    
    void Relay_DrivenDelay_64( )
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Delay_DrivenDelay_64 = logic_uScriptAct_Delay_uScriptAct_Delay_64.DrivenDelay();
-         if ( true == logic_uScriptAct_Delay_DrivenDelay_64 )
-         {
-            if ( logic_uScriptAct_Delay_uScriptAct_Delay_64.Immediate == true )
-            {
-               Relay_In_110();
-            }
-         }
       }
-      else
+      logic_uScriptAct_Delay_DrivenDelay_64 = logic_uScriptAct_Delay_uScriptAct_Delay_64.DrivenDelay();
+      if ( true == logic_uScriptAct_Delay_DrivenDelay_64 )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         if ( logic_uScriptAct_Delay_uScriptAct_Delay_64.Immediate == true )
+         {
+            Relay_In_110();
+         }
       }
    }
    void Relay_In_65()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
          {
-            int index;
-            index = 0;
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject )
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_Monster_UnityEngine_GameObject_previous = local_Monster_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
+               //tear down old listeners
+               
+               local_Monster_UnityEngine_GameObject_previous = local_Monster_UnityEngine_GameObject;
+               
+               //setup new listeners
             }
-            if ( logic_uScriptAct_DestroyComponent_Target_65.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_DestroyComponent_Target_65, index + 1);
-            }
-            logic_uScriptAct_DestroyComponent_Target_65[ index++ ] = local_Monster_UnityEngine_GameObject;
-            
-            index = 0;
-            if ( logic_uScriptAct_DestroyComponent_ComponentName_65.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_DestroyComponent_ComponentName_65, index + 1);
-            }
-            logic_uScriptAct_DestroyComponent_ComponentName_65[ index++ ] = local_2_System_String;
-            
          }
-         logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_65.In(logic_uScriptAct_DestroyComponent_Target_65, logic_uScriptAct_DestroyComponent_ComponentName_65, logic_uScriptAct_DestroyComponent_DelayTime_65);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_65.Out;
-         
-         if ( test_0 == true )
+         if ( logic_uScriptAct_DestroyComponent_Target_65.Length <= index)
          {
-            Relay_In_36();
+            System.Array.Resize(ref logic_uScriptAct_DestroyComponent_Target_65, index + 1);
          }
+         logic_uScriptAct_DestroyComponent_Target_65[ index++ ] = local_Monster_UnityEngine_GameObject;
+         
+         index = 0;
+         if ( logic_uScriptAct_DestroyComponent_ComponentName_65.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_DestroyComponent_ComponentName_65, index + 1);
+         }
+         logic_uScriptAct_DestroyComponent_ComponentName_65[ index++ ] = local_2_System_String;
+         
       }
-      else
+      logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_65.In(logic_uScriptAct_DestroyComponent_Target_65, logic_uScriptAct_DestroyComponent_ComponentName_65, logic_uScriptAct_DestroyComponent_DelayTime_65);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_65.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Destroy Component.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_36();
       }
    }
    
    void Relay_In_67()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_67.In(logic_uScriptAct_Log_Prefix_67, logic_uScriptAct_Log_Target_67, logic_uScriptAct_Log_Postfix_67);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_67.In(logic_uScriptAct_Log_Prefix_67, logic_uScriptAct_Log_Target_67, logic_uScriptAct_Log_Postfix_67);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_In_68()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
          {
-            int index;
-            index = 0;
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject )
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_Monster_UnityEngine_GameObject_previous = local_Monster_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
+               //tear down old listeners
+               
+               local_Monster_UnityEngine_GameObject_previous = local_Monster_UnityEngine_GameObject;
+               
+               //setup new listeners
             }
-            if ( logic_uScriptAct_DestroyComponent_Target_68.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_DestroyComponent_Target_68, index + 1);
-            }
-            logic_uScriptAct_DestroyComponent_Target_68[ index++ ] = local_Monster_UnityEngine_GameObject;
-            
-            index = 0;
-            if ( logic_uScriptAct_DestroyComponent_ComponentName_68.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_DestroyComponent_ComponentName_68, index + 1);
-            }
-            logic_uScriptAct_DestroyComponent_ComponentName_68[ index++ ] = local_34_System_String;
-            
          }
-         logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_68.In(logic_uScriptAct_DestroyComponent_Target_68, logic_uScriptAct_DestroyComponent_ComponentName_68, logic_uScriptAct_DestroyComponent_DelayTime_68);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_68.Out;
-         
-         if ( test_0 == true )
+         if ( logic_uScriptAct_DestroyComponent_Target_68.Length <= index)
          {
-            Relay_In_14();
+            System.Array.Resize(ref logic_uScriptAct_DestroyComponent_Target_68, index + 1);
          }
+         logic_uScriptAct_DestroyComponent_Target_68[ index++ ] = local_Monster_UnityEngine_GameObject;
+         
+         index = 0;
+         if ( logic_uScriptAct_DestroyComponent_ComponentName_68.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_DestroyComponent_ComponentName_68, index + 1);
+         }
+         logic_uScriptAct_DestroyComponent_ComponentName_68[ index++ ] = local_34_System_String;
+         
       }
-      else
+      logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_68.In(logic_uScriptAct_DestroyComponent_Target_68, logic_uScriptAct_DestroyComponent_ComponentName_68, logic_uScriptAct_DestroyComponent_DelayTime_68);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_68.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Destroy Component.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_14();
       }
    }
    
    void Relay_OnOut_70()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Toggle.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
    }
    
    void Relay_OffOut_70()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Toggle.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
    }
    
    void Relay_ToggleOut_70()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Toggle.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
    }
    
    void Relay_TurnOn_70()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
          {
-            int index;
-            index = 0;
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject )
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_Cover1_UnityEngine_GameObject_previous = local_Cover1_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
+               //tear down old listeners
+               
+               local_Cover1_UnityEngine_GameObject_previous = local_Cover1_UnityEngine_GameObject;
+               
+               //setup new listeners
             }
-            if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
-            }
-            logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover1_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_Cover2_UnityEngine_GameObject_previous = local_Cover2_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
-            }
-            logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover2_UnityEngine_GameObject;
-            
          }
-         logic_uScriptAct_Toggle_uScriptAct_Toggle_70.TurnOn(logic_uScriptAct_Toggle_Target_70, logic_uScriptAct_Toggle_IgnoreChildren_70);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_Toggle_uScriptAct_Toggle_70.Out;
-         
-         if ( test_0 == true )
+         if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
          {
-            Relay_In_63();
+            System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
          }
+         logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover1_UnityEngine_GameObject;
+         
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_Cover2_UnityEngine_GameObject_previous = local_Cover2_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
+         }
+         logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover2_UnityEngine_GameObject;
+         
       }
-      else
+      logic_uScriptAct_Toggle_uScriptAct_Toggle_70.TurnOn(logic_uScriptAct_Toggle_Target_70, logic_uScriptAct_Toggle_IgnoreChildren_70);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_Toggle_uScriptAct_Toggle_70.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Toggle.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_63();
       }
    }
    
    void Relay_TurnOff_70()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
          {
-            int index;
-            index = 0;
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject )
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_Cover1_UnityEngine_GameObject_previous = local_Cover1_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
+               //tear down old listeners
+               
+               local_Cover1_UnityEngine_GameObject_previous = local_Cover1_UnityEngine_GameObject;
+               
+               //setup new listeners
             }
-            if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
-            }
-            logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover1_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_Cover2_UnityEngine_GameObject_previous = local_Cover2_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
-            }
-            logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover2_UnityEngine_GameObject;
-            
          }
-         logic_uScriptAct_Toggle_uScriptAct_Toggle_70.TurnOff(logic_uScriptAct_Toggle_Target_70, logic_uScriptAct_Toggle_IgnoreChildren_70);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_Toggle_uScriptAct_Toggle_70.Out;
-         
-         if ( test_0 == true )
+         if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
          {
-            Relay_In_63();
+            System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
          }
+         logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover1_UnityEngine_GameObject;
+         
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_Cover2_UnityEngine_GameObject_previous = local_Cover2_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
+         }
+         logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover2_UnityEngine_GameObject;
+         
       }
-      else
+      logic_uScriptAct_Toggle_uScriptAct_Toggle_70.TurnOff(logic_uScriptAct_Toggle_Target_70, logic_uScriptAct_Toggle_IgnoreChildren_70);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_Toggle_uScriptAct_Toggle_70.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Toggle.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_63();
       }
    }
    
    void Relay_Toggle_70()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
          {
-            int index;
-            index = 0;
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject )
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_Cover1_UnityEngine_GameObject_previous = local_Cover1_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
+               //tear down old listeners
+               
+               local_Cover1_UnityEngine_GameObject_previous = local_Cover1_UnityEngine_GameObject;
+               
+               //setup new listeners
             }
-            if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
-            }
-            logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover1_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_Cover2_UnityEngine_GameObject_previous = local_Cover2_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
-            }
-            logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover2_UnityEngine_GameObject;
-            
          }
-         logic_uScriptAct_Toggle_uScriptAct_Toggle_70.Toggle(logic_uScriptAct_Toggle_Target_70, logic_uScriptAct_Toggle_IgnoreChildren_70);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_Toggle_uScriptAct_Toggle_70.Out;
-         
-         if ( test_0 == true )
+         if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
          {
-            Relay_In_63();
+            System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
          }
+         logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover1_UnityEngine_GameObject;
+         
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_Cover2_UnityEngine_GameObject_previous = local_Cover2_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_Toggle_Target_70.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_Toggle_Target_70, index + 1);
+         }
+         logic_uScriptAct_Toggle_Target_70[ index++ ] = local_Cover2_UnityEngine_GameObject;
+         
       }
-      else
+      logic_uScriptAct_Toggle_uScriptAct_Toggle_70.Toggle(logic_uScriptAct_Toggle_Target_70, logic_uScriptAct_Toggle_IgnoreChildren_70);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_Toggle_uScriptAct_Toggle_70.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Toggle.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_63();
       }
    }
    
    void Relay_In_72()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_72.In(logic_uScriptAct_Log_Prefix_72, logic_uScriptAct_Log_Target_72, logic_uScriptAct_Log_Postfix_72);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_72.In(logic_uScriptAct_Log_Prefix_72, logic_uScriptAct_Log_Target_72, logic_uScriptAct_Log_Postfix_72);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_In_74()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_74.In(logic_uScriptAct_Log_Prefix_74, logic_uScriptAct_Log_Target_74, logic_uScriptAct_Log_Postfix_74);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_74.In(logic_uScriptAct_Log_Prefix_74, logic_uScriptAct_Log_Target_74, logic_uScriptAct_Log_Postfix_74);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_In_75()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_75.In(logic_uScriptAct_Log_Prefix_75, logic_uScriptAct_Log_Target_75, logic_uScriptAct_Log_Postfix_75);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_75.In(logic_uScriptAct_Log_Prefix_75, logic_uScriptAct_Log_Target_75, logic_uScriptAct_Log_Postfix_75);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_Finished_76()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
    }
    
    void Relay_Play_76()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Play(logic_uScriptAct_PlaySound_audioClip_76, logic_uScriptAct_PlaySound_target_76, logic_uScriptAct_PlaySound_volume_76, logic_uScriptAct_PlaySound_loop_76);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Out;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_98();
-         }
       }
-      else
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Play(logic_uScriptAct_PlaySound_audioClip_76, logic_uScriptAct_PlaySound_target_76, logic_uScriptAct_PlaySound_volume_76, logic_uScriptAct_PlaySound_loop_76);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_98();
       }
    }
    
    void Relay_UpdateVolume_76()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.UpdateVolume(logic_uScriptAct_PlaySound_audioClip_76, logic_uScriptAct_PlaySound_target_76, logic_uScriptAct_PlaySound_volume_76, logic_uScriptAct_PlaySound_loop_76);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Out;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_98();
-         }
       }
-      else
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.UpdateVolume(logic_uScriptAct_PlaySound_audioClip_76, logic_uScriptAct_PlaySound_target_76, logic_uScriptAct_PlaySound_volume_76, logic_uScriptAct_PlaySound_loop_76);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_98();
       }
    }
    
    void Relay_Stop_76()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Stop(logic_uScriptAct_PlaySound_audioClip_76, logic_uScriptAct_PlaySound_target_76, logic_uScriptAct_PlaySound_volume_76, logic_uScriptAct_PlaySound_loop_76);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Out;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_98();
-         }
       }
-      else
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Stop(logic_uScriptAct_PlaySound_audioClip_76, logic_uScriptAct_PlaySound_target_76, logic_uScriptAct_PlaySound_volume_76, logic_uScriptAct_PlaySound_loop_76);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_PlaySound_uScriptAct_PlaySound_76.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_98();
       }
    }
    
    void Relay_In_80()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_80.In(logic_uScriptAct_OnInputEventFilter_KeyCode_80);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_80.KeyDown;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_80.KeyUp;
-         
-         if ( test_0 == true )
-         {
-            Relay_Play_55();
-         }
-         if ( test_1 == true )
-         {
-            Relay_In_68();
-         }
       }
-      else
+      logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_80.In(logic_uScriptAct_OnInputEventFilter_KeyCode_80);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_80.KeyDown;
+      bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_80.KeyUp;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Input Events Filter.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_Play_55();
+      }
+      if ( test_1 == true )
+      {
+         Relay_In_68();
       }
    }
    
    void Relay_Finished_83()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Look At.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
    }
    
    void Relay_In_83()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
          {
-            int index;
-            index = 0;
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_94_UnityEngine_GameObject_previous != local_94_UnityEngine_GameObject )
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_94_UnityEngine_GameObject_previous != local_94_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_94_UnityEngine_GameObject_previous = local_94_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
+               //tear down old listeners
+               
+               local_94_UnityEngine_GameObject_previous = local_94_UnityEngine_GameObject;
+               
+               //setup new listeners
             }
-            if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
-            }
-            logic_uScriptAct_LookAt_Target_83[ index++ ] = local_94_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_88_UnityEngine_GameObject_previous != local_88_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_88_UnityEngine_GameObject_previous = local_88_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
-            }
-            logic_uScriptAct_LookAt_Target_83[ index++ ] = local_88_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_45_UnityEngine_GameObject_previous = local_45_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
-            }
-            logic_uScriptAct_LookAt_Target_83[ index++ ] = local_45_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_105_UnityEngine_GameObject_previous != local_105_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_105_UnityEngine_GameObject_previous = local_105_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
-            }
-            logic_uScriptAct_LookAt_Target_83[ index++ ] = local_105_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_26_UnityEngine_GameObject_previous != local_26_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_26_UnityEngine_GameObject_previous = local_26_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
-            }
-            logic_uScriptAct_LookAt_Target_83[ index++ ] = local_26_UnityEngine_GameObject;
-            
          }
-         logic_uScriptAct_LookAt_uScriptAct_LookAt_83.In(logic_uScriptAct_LookAt_Target_83, logic_uScriptAct_LookAt_Focus_83, logic_uScriptAct_LookAt_time_83);
+         if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
+         }
+         logic_uScriptAct_LookAt_Target_83[ index++ ] = local_94_UnityEngine_GameObject;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_88_UnityEngine_GameObject_previous != local_88_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_88_UnityEngine_GameObject_previous = local_88_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
+         }
+         logic_uScriptAct_LookAt_Target_83[ index++ ] = local_88_UnityEngine_GameObject;
+         
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_45_UnityEngine_GameObject_previous = local_45_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
+         }
+         logic_uScriptAct_LookAt_Target_83[ index++ ] = local_45_UnityEngine_GameObject;
+         
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_105_UnityEngine_GameObject_previous != local_105_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_105_UnityEngine_GameObject_previous = local_105_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
+         }
+         logic_uScriptAct_LookAt_Target_83[ index++ ] = local_105_UnityEngine_GameObject;
+         
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_26_UnityEngine_GameObject_previous != local_26_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_26_UnityEngine_GameObject_previous = local_26_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_LookAt_Target_83.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_LookAt_Target_83, index + 1);
+         }
+         logic_uScriptAct_LookAt_Target_83[ index++ ] = local_26_UnityEngine_GameObject;
          
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Look At.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_LookAt_uScriptAct_LookAt_83.In(logic_uScriptAct_LookAt_Target_83, logic_uScriptAct_LookAt_Focus_83, logic_uScriptAct_LookAt_time_83);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_Finished_89()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Look At.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
    }
    
    void Relay_In_89()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
          {
-            int index;
-            index = 0;
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_35_UnityEngine_GameObject_previous != local_35_UnityEngine_GameObject )
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_35_UnityEngine_GameObject_previous != local_35_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_35_UnityEngine_GameObject_previous = local_35_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
+               //tear down old listeners
+               
+               local_35_UnityEngine_GameObject_previous = local_35_UnityEngine_GameObject;
+               
+               //setup new listeners
             }
-            if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
-            }
-            logic_uScriptAct_LookAt_Target_89[ index++ ] = local_35_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_69_UnityEngine_GameObject_previous != local_69_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_69_UnityEngine_GameObject_previous = local_69_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
-            }
-            logic_uScriptAct_LookAt_Target_89[ index++ ] = local_69_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_0_UnityEngine_GameObject_previous != local_0_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_0_UnityEngine_GameObject_previous = local_0_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
-            }
-            logic_uScriptAct_LookAt_Target_89[ index++ ] = local_0_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_17_UnityEngine_GameObject_previous != local_17_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_17_UnityEngine_GameObject_previous = local_17_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
-            }
-            logic_uScriptAct_LookAt_Target_89[ index++ ] = local_17_UnityEngine_GameObject;
-            
-            {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_6_UnityEngine_GameObject_previous = local_6_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
-            }
-            if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
-            }
-            logic_uScriptAct_LookAt_Target_89[ index++ ] = local_6_UnityEngine_GameObject;
-            
          }
-         logic_uScriptAct_LookAt_uScriptAct_LookAt_89.In(logic_uScriptAct_LookAt_Target_89, logic_uScriptAct_LookAt_Focus_89, logic_uScriptAct_LookAt_time_89);
+         if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
+         }
+         logic_uScriptAct_LookAt_Target_89[ index++ ] = local_35_UnityEngine_GameObject;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_69_UnityEngine_GameObject_previous != local_69_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_69_UnityEngine_GameObject_previous = local_69_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
+         }
+         logic_uScriptAct_LookAt_Target_89[ index++ ] = local_69_UnityEngine_GameObject;
+         
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_0_UnityEngine_GameObject_previous != local_0_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_0_UnityEngine_GameObject_previous = local_0_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
+         }
+         logic_uScriptAct_LookAt_Target_89[ index++ ] = local_0_UnityEngine_GameObject;
+         
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_17_UnityEngine_GameObject_previous != local_17_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_17_UnityEngine_GameObject_previous = local_17_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
+         }
+         logic_uScriptAct_LookAt_Target_89[ index++ ] = local_17_UnityEngine_GameObject;
+         
+         {
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject )
+            {
+               //tear down old listeners
+               
+               local_6_UnityEngine_GameObject_previous = local_6_UnityEngine_GameObject;
+               
+               //setup new listeners
+            }
+         }
+         if ( logic_uScriptAct_LookAt_Target_89.Length <= index)
+         {
+            System.Array.Resize(ref logic_uScriptAct_LookAt_Target_89, index + 1);
+         }
+         logic_uScriptAct_LookAt_Target_89[ index++ ] = local_6_UnityEngine_GameObject;
          
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Look At.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_LookAt_uScriptAct_LookAt_89.In(logic_uScriptAct_LookAt_Target_89, logic_uScriptAct_LookAt_Focus_89, logic_uScriptAct_LookAt_time_89);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_KeyEvent_92()
@@ -1753,84 +1518,63 @@ public class uScript_StressTest : uScriptLogic
    
    void Relay_In_96()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
          {
-            int index;
-            index = 0;
+            //if our game object reference was changed then we need to reset event listeners
+            if ( local_54_UnityEngine_GameObject_previous != local_54_UnityEngine_GameObject )
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_54_UnityEngine_GameObject_previous != local_54_UnityEngine_GameObject )
-               {
-                  //tear down old listeners
-                  
-                  local_54_UnityEngine_GameObject_previous = local_54_UnityEngine_GameObject;
-                  
-                  //setup new listeners
-               }
+               //tear down old listeners
+               
+               local_54_UnityEngine_GameObject_previous = local_54_UnityEngine_GameObject;
+               
+               //setup new listeners
             }
-            if ( logic_uScriptAct_Teleport_Target_96.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Teleport_Target_96, index + 1);
-            }
-            logic_uScriptAct_Teleport_Target_96[ index++ ] = local_54_UnityEngine_GameObject;
-            
          }
-         logic_uScriptAct_Teleport_uScriptAct_Teleport_96.In(logic_uScriptAct_Teleport_Target_96, logic_uScriptAct_Teleport_Destination_96, logic_uScriptAct_Teleport_UpdateRotation_96);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_Teleport_uScriptAct_Teleport_96.Out;
-         
-         if ( test_0 == true )
+         if ( logic_uScriptAct_Teleport_Target_96.Length <= index)
          {
-            Relay_In_19();
+            System.Array.Resize(ref logic_uScriptAct_Teleport_Target_96, index + 1);
          }
+         logic_uScriptAct_Teleport_Target_96[ index++ ] = local_54_UnityEngine_GameObject;
+         
       }
-      else
+      logic_uScriptAct_Teleport_uScriptAct_Teleport_96.In(logic_uScriptAct_Teleport_Target_96, logic_uScriptAct_Teleport_Destination_96, logic_uScriptAct_Teleport_UpdateRotation_96);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_Teleport_uScriptAct_Teleport_96.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Teleport.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_19();
       }
    }
    
    void Relay_In_98()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptCon_CompareBool_Bool_98 = local_22_System_Boolean;
-            
-         }
-         logic_uScriptCon_CompareBool_uScriptCon_CompareBool_98.In(logic_uScriptCon_CompareBool_Bool_98);
+         logic_uScriptCon_CompareBool_Bool_98 = local_22_System_Boolean;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptCon_CompareBool_uScriptCon_CompareBool_98.False;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_89();
-         }
       }
-      else
+      logic_uScriptCon_CompareBool_uScriptCon_CompareBool_98.In(logic_uScriptCon_CompareBool_Bool_98);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptCon_CompareBool_uScriptCon_CompareBool_98.False;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Compare Bool.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_89();
       }
    }
    
    void Relay_In_103()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_103.In(logic_uScriptAct_Log_Prefix_103, logic_uScriptAct_Log_Target_103, logic_uScriptAct_Log_Postfix_103);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_103.In(logic_uScriptAct_Log_Prefix_103, logic_uScriptAct_Log_Target_103, logic_uScriptAct_Log_Postfix_103);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_KeyEvent_106()
@@ -1840,208 +1584,145 @@ public class uScript_StressTest : uScriptLogic
    
    void Relay_In_107()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
+         if ( logic_uScriptAct_Concatenate_A_107.Length <= index)
          {
-            int index;
-            index = 0;
-            if ( logic_uScriptAct_Concatenate_A_107.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Concatenate_A_107, index + 1);
-            }
-            logic_uScriptAct_Concatenate_A_107[ index++ ] = local_119_System_String;
-            
-            index = 0;
-            if ( logic_uScriptAct_Concatenate_B_107.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Concatenate_B_107, index + 1);
-            }
-            logic_uScriptAct_Concatenate_B_107[ index++ ] = local_9_System_Int32;
-            
+            System.Array.Resize(ref logic_uScriptAct_Concatenate_A_107, index + 1);
          }
-         logic_uScriptAct_Concatenate_uScriptAct_Concatenate_107.In(logic_uScriptAct_Concatenate_A_107, logic_uScriptAct_Concatenate_B_107, logic_uScriptAct_Concatenate_Separator_107, out logic_uScriptAct_Concatenate_Result_107);
-         local_86_System_String = logic_uScriptAct_Concatenate_Result_107;
+         logic_uScriptAct_Concatenate_A_107[ index++ ] = local_119_System_String;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_Concatenate_uScriptAct_Concatenate_107.Out;
-         
-         if ( test_0 == true )
+         index = 0;
+         if ( logic_uScriptAct_Concatenate_B_107.Length <= index)
          {
-            Relay_In_96();
-            Relay_Play_116();
+            System.Array.Resize(ref logic_uScriptAct_Concatenate_B_107, index + 1);
          }
+         logic_uScriptAct_Concatenate_B_107[ index++ ] = local_9_System_Int32;
+         
       }
-      else
+      logic_uScriptAct_Concatenate_uScriptAct_Concatenate_107.In(logic_uScriptAct_Concatenate_A_107, logic_uScriptAct_Concatenate_B_107, logic_uScriptAct_Concatenate_Separator_107, out logic_uScriptAct_Concatenate_Result_107);
+      local_86_System_String = logic_uScriptAct_Concatenate_Result_107;
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_Concatenate_uScriptAct_Concatenate_107.Out;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Concatenate.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_96();
+         Relay_Play_116();
       }
    }
    
    void Relay_In_109()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_109.In(logic_uScriptAct_OnInputEventFilter_KeyCode_109);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_109.KeyDown;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_109.KeyUp;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_65();
-         }
-         if ( test_1 == true )
-         {
-            Relay_Play_76();
-         }
       }
-      else
+      logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_109.In(logic_uScriptAct_OnInputEventFilter_KeyCode_109);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_109.KeyDown;
+      bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_109.KeyUp;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Input Events Filter.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_65();
+      }
+      if ( test_1 == true )
+      {
+         Relay_Play_76();
       }
    }
    
    void Relay_In_110()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptCon_IntCounter_A_110 = local_113_System_Int32;
-            
-            logic_uScriptCon_IntCounter_B_110 = local_53_System_Int32;
-            
-         }
-         logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110.In(logic_uScriptCon_IntCounter_A_110, logic_uScriptCon_IntCounter_B_110, out logic_uScriptCon_IntCounter_currentValue_110);
-         local_9_System_Int32 = logic_uScriptCon_IntCounter_currentValue_110;
+         logic_uScriptCon_IntCounter_A_110 = local_113_System_Int32;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110.GreaterThanOrEqualTo;
+         logic_uScriptCon_IntCounter_B_110 = local_53_System_Int32;
          
-         if ( test_0 == true )
-         {
-            Relay_In_107();
-         }
       }
-      else
+      logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110.In(logic_uScriptCon_IntCounter_A_110, logic_uScriptCon_IntCounter_B_110, out logic_uScriptCon_IntCounter_currentValue_110);
+      local_9_System_Int32 = logic_uScriptCon_IntCounter_currentValue_110;
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110.GreaterThanOrEqualTo;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Int Counter.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_107();
       }
    }
    
    void Relay_Reset_110()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptCon_IntCounter_A_110 = local_113_System_Int32;
-            
-            logic_uScriptCon_IntCounter_B_110 = local_53_System_Int32;
-            
-         }
-         logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110.Reset(logic_uScriptCon_IntCounter_A_110, logic_uScriptCon_IntCounter_B_110, out logic_uScriptCon_IntCounter_currentValue_110);
-         local_9_System_Int32 = logic_uScriptCon_IntCounter_currentValue_110;
+         logic_uScriptCon_IntCounter_A_110 = local_113_System_Int32;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110.GreaterThanOrEqualTo;
+         logic_uScriptCon_IntCounter_B_110 = local_53_System_Int32;
          
-         if ( test_0 == true )
-         {
-            Relay_In_107();
-         }
       }
-      else
+      logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110.Reset(logic_uScriptCon_IntCounter_A_110, logic_uScriptCon_IntCounter_B_110, out logic_uScriptCon_IntCounter_currentValue_110);
+      local_9_System_Int32 = logic_uScriptCon_IntCounter_currentValue_110;
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110.GreaterThanOrEqualTo;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Int Counter.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_107();
       }
    }
    
    void Relay_In_115()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptCon_CompareBool_Bool_115 = local_15_System_Boolean;
-            
-         }
-         logic_uScriptCon_CompareBool_uScriptCon_CompareBool_115.In(logic_uScriptCon_CompareBool_Bool_115);
+         logic_uScriptCon_CompareBool_Bool_115 = local_15_System_Boolean;
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptCon_CompareBool_uScriptCon_CompareBool_115.False;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_83();
-         }
       }
-      else
+      logic_uScriptCon_CompareBool_uScriptCon_CompareBool_115.In(logic_uScriptCon_CompareBool_Bool_115);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptCon_CompareBool_uScriptCon_CompareBool_115.False;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Compare Bool.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_83();
       }
    }
    
    void Relay_Finished_116()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
-      {
-      }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
    }
    
    void Relay_Play_116()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116.Play(logic_uScriptAct_PlaySound_audioClip_116, logic_uScriptAct_PlaySound_target_116, logic_uScriptAct_PlaySound_volume_116, logic_uScriptAct_PlaySound_loop_116);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116.Play(logic_uScriptAct_PlaySound_audioClip_116, logic_uScriptAct_PlaySound_target_116, logic_uScriptAct_PlaySound_volume_116, logic_uScriptAct_PlaySound_loop_116);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_UpdateVolume_116()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116.UpdateVolume(logic_uScriptAct_PlaySound_audioClip_116, logic_uScriptAct_PlaySound_target_116, logic_uScriptAct_PlaySound_volume_116, logic_uScriptAct_PlaySound_loop_116);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116.UpdateVolume(logic_uScriptAct_PlaySound_audioClip_116, logic_uScriptAct_PlaySound_target_116, logic_uScriptAct_PlaySound_volume_116, logic_uScriptAct_PlaySound_loop_116);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_Stop_116()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116.Stop(logic_uScriptAct_PlaySound_audioClip_116, logic_uScriptAct_PlaySound_target_116, logic_uScriptAct_PlaySound_volume_116, logic_uScriptAct_PlaySound_loop_116);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_PlaySound_uScriptAct_PlaySound_116.Stop(logic_uScriptAct_PlaySound_audioClip_116, logic_uScriptAct_PlaySound_target_116, logic_uScriptAct_PlaySound_volume_116, logic_uScriptAct_PlaySound_loop_116);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    [Driven]

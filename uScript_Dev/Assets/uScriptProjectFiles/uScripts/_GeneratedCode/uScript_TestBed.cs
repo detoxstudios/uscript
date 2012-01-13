@@ -1,18 +1,16 @@
-//uScript Generated Code - Build 0.9.1556
-//Generated with Debug Info
+//uScript Generated Code - Build 0.9.1613
 using UnityEngine;
 using System.Collections;
 
 [NodePath("Graphs")]
 [System.Serializable]
+[FriendlyName("", "")]
 public class uScript_TestBed : uScriptLogic
 {
 
    #pragma warning disable 414
    GameObject parentGameObject = null;
    uScript_GUI thisScriptsOnGuiListener = null; 
-   const int MaxRelayCallCount = 1000;
-   int relayCallCount = 0;
    //external output properties
    
    //externally exposed events
@@ -195,6 +193,30 @@ public class uScript_TestBed : uScriptLogic
       }
    }
    
+   void UnregisterEventListeners( )
+   {
+      if ( null != event_UnityEngine_GameObject_Instance_3 )
+      {
+         {
+            uScript_Input component = event_UnityEngine_GameObject_Instance_3.GetComponent<uScript_Input>();
+            if ( null != component )
+            {
+               component.KeyEvent -= Instance_KeyEvent_3;
+            }
+         }
+      }
+      if ( null != event_UnityEngine_GameObject_Instance_11 )
+      {
+         {
+            uScript_Global component = event_UnityEngine_GameObject_Instance_11.GetComponent<uScript_Global>();
+            if ( null != component )
+            {
+               component.uScriptStart -= Instance_uScriptStart_11;
+            }
+         }
+      }
+   }
+   
    public override void SetParent(GameObject g)
    {
       parentGameObject = g;
@@ -221,10 +243,6 @@ public class uScript_TestBed : uScriptLogic
    
    public void Update()
    {
-      //reset each Update, and increments each method call
-      //if it ever goes above MaxRelayCallCount before being reset
-      //then we assume it is stuck in an infinite loop
-      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       //other scripts might have added GameObjects with event scripts
       //so we need to verify all our event listeners are registered
       SyncEventListeners( );
@@ -237,6 +255,11 @@ public class uScript_TestBed : uScriptLogic
       {
          Relay_DrivenDelay_7();
       }
+   }
+   
+   public void OnDestroy()
+   {
+      UnregisterEventListeners( );
    }
    
    void Instance_KeyEvent_3(object o, System.EventArgs e)
@@ -255,19 +278,12 @@ public class uScript_TestBed : uScriptLogic
    
    void Relay_In_1()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_1.In(logic_uScriptAct_Log_Prefix_1, logic_uScriptAct_Log_Target_1, logic_uScriptAct_Log_Postfix_1);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_1.In(logic_uScriptAct_Log_Prefix_1, logic_uScriptAct_Log_Target_1, logic_uScriptAct_Log_Postfix_1);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_KeyEvent_3()
@@ -277,273 +293,203 @@ public class uScript_TestBed : uScriptLogic
    
    void Relay_Begin_4()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
-            
-            logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
-            
-            logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-            
-         }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Begin(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
-         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
-         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
+         logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating;
-         bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished;
+         logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
          
-         if ( test_0 == true )
-         {
-            Relay_In_9();
-         }
-         if ( test_1 == true )
-         {
-            Relay_In_13();
-         }
+         logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
+         
       }
-      else
+      logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Begin(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
+      logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
+      property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
+      property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating;
+      bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_9();
+      }
+      if ( test_1 == true )
+      {
+         Relay_In_13();
       }
    }
    
    void Relay_Stop_4()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
-            
-            logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
-            
-            logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-            
-         }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Stop(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
-         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
-         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
+         logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating;
-         bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished;
+         logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
          
-         if ( test_0 == true )
-         {
-            Relay_In_9();
-         }
-         if ( test_1 == true )
-         {
-            Relay_In_13();
-         }
+         logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
+         
       }
-      else
+      logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Stop(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
+      logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
+      property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
+      property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating;
+      bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_9();
+      }
+      if ( test_1 == true )
+      {
+         Relay_In_13();
       }
    }
    
    void Relay_Resume_4()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
-            
-            logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
-            
-            logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-            
-         }
-         logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Resume(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
-         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
-         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
-         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
+         logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating;
-         bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished;
+         logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
          
-         if ( test_0 == true )
-         {
-            Relay_In_9();
-         }
-         if ( test_1 == true )
-         {
-            Relay_In_13();
-         }
+         logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
+         
       }
-      else
+      logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Resume(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
+      logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
+      property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
+      property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating;
+      bool test_1 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_9();
+      }
+      if ( test_1 == true )
+      {
+         Relay_In_13();
       }
    }
    
    void Relay_Driven_4( )
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
-            
-            logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
-            
-            logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-            
-         }
-         logic_uScriptAct_InterpolateFloatLinear_Driven_4 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Driven(out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
-         if ( true == logic_uScriptAct_InterpolateFloatLinear_Driven_4 )
-         {
-            property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
-            property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
-            if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating == true )
-            {
-               Relay_In_9();
-            }
-            if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished == true )
-            {
-               Relay_In_13();
-            }
-         }
+         logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+         
+         logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
+         
+         logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
+         
       }
-      else
+      logic_uScriptAct_InterpolateFloatLinear_Driven_4 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Driven(out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
+      if ( true == logic_uScriptAct_InterpolateFloatLinear_Driven_4 )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Interpolate Float Linear.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = logic_uScriptAct_InterpolateFloatLinear_currentValue_4;
+         property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Set_Refresh( );
+         if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Interpolating == true )
+         {
+            Relay_In_9();
+         }
+         if ( logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Finished == true )
+         {
+            Relay_In_13();
+         }
       }
    }
    void Relay_In_6()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_6.In(logic_uScriptAct_Log_Prefix_6, logic_uScriptAct_Log_Target_6, logic_uScriptAct_Log_Postfix_6);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_6.In(logic_uScriptAct_Log_Prefix_6, logic_uScriptAct_Log_Target_6, logic_uScriptAct_Log_Postfix_6);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_In_7()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Delay_uScriptAct_Delay_7.In(logic_uScriptAct_Delay_Duration_7);
-         logic_uScriptAct_Delay_DrivenDelay_7 = true;
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_7.AfterDelay;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_10();
-            Relay_Begin_4();
-         }
       }
-      else
+      logic_uScriptAct_Delay_uScriptAct_Delay_7.In(logic_uScriptAct_Delay_Duration_7);
+      logic_uScriptAct_Delay_DrivenDelay_7 = true;
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_7.AfterDelay;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_10();
+         Relay_Begin_4();
       }
    }
    
    void Relay_DrivenDelay_7( )
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Delay_DrivenDelay_7 = logic_uScriptAct_Delay_uScriptAct_Delay_7.DrivenDelay();
-         if ( true == logic_uScriptAct_Delay_DrivenDelay_7 )
-         {
-            if ( logic_uScriptAct_Delay_uScriptAct_Delay_7.AfterDelay == true )
-            {
-               Relay_In_10();
-               Relay_Begin_4();
-            }
-         }
       }
-      else
+      logic_uScriptAct_Delay_DrivenDelay_7 = logic_uScriptAct_Delay_uScriptAct_Delay_7.DrivenDelay();
+      if ( true == logic_uScriptAct_Delay_DrivenDelay_7 )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         if ( logic_uScriptAct_Delay_uScriptAct_Delay_7.AfterDelay == true )
+         {
+            Relay_In_10();
+            Relay_Begin_4();
+         }
       }
    }
    void Relay_In_8()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8.In(logic_uScriptAct_OnInputEventFilter_KeyCode_8);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8.KeyDown;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8.KeyUp;
-         
-         if ( test_0 == true )
-         {
-            Relay_In_6();
-         }
-         if ( test_1 == true )
-         {
-            Relay_In_1();
-         }
       }
-      else
+      logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8.In(logic_uScriptAct_OnInputEventFilter_KeyCode_8);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8.KeyDown;
+      bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8.KeyUp;
+      
+      if ( test_0 == true )
       {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Input Events Filter.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+         Relay_In_6();
+      }
+      if ( test_1 == true )
+      {
+         Relay_In_1();
       }
    }
    
    void Relay_In_9()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
+         int index;
+         index = 0;
+         if ( logic_uScriptAct_Log_Target_9.Length <= index)
          {
-            int index;
-            index = 0;
-            if ( logic_uScriptAct_Log_Target_9.Length <= index)
-            {
-               System.Array.Resize(ref logic_uScriptAct_Log_Target_9, index + 1);
-            }
-            logic_uScriptAct_Log_Target_9[ index++ ] = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Get_Refresh( );
-            
+            System.Array.Resize(ref logic_uScriptAct_Log_Target_9, index + 1);
          }
-         logic_uScriptAct_Log_uScriptAct_Log_9.In(logic_uScriptAct_Log_Prefix_9, logic_uScriptAct_Log_Target_9, logic_uScriptAct_Log_Postfix_9);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         logic_uScriptAct_Log_Target_9[ index++ ] = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Get_Refresh( );
          
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_9.In(logic_uScriptAct_Log_Prefix_9, logic_uScriptAct_Log_Target_9, logic_uScriptAct_Log_Postfix_9);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_In_10()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_10.In(logic_uScriptAct_Log_Prefix_10, logic_uScriptAct_Log_Target_10, logic_uScriptAct_Log_Postfix_10);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_10.In(logic_uScriptAct_Log_Prefix_10, logic_uScriptAct_Log_Target_10, logic_uScriptAct_Log_Postfix_10);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    void Relay_uScriptStart_11()
@@ -553,19 +499,12 @@ public class uScript_TestBed : uScriptLogic
    
    void Relay_In_13()
    {
-      if ( relayCallCount++ < MaxRelayCallCount )
       {
-         {
-         }
-         logic_uScriptAct_Log_uScriptAct_Log_13.In(logic_uScriptAct_Log_Prefix_13, logic_uScriptAct_Log_Target_13, logic_uScriptAct_Log_Postfix_13);
-         
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         
       }
-      else
-      {
-         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
-      }
+      logic_uScriptAct_Log_uScriptAct_Log_13.In(logic_uScriptAct_Log_Prefix_13, logic_uScriptAct_Log_Target_13, logic_uScriptAct_Log_Postfix_13);
+      
+      //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+      
    }
    
    [Driven]

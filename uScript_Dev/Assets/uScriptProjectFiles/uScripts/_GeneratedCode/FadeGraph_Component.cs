@@ -2,13 +2,14 @@
 using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("uScript/Graphs/uScript_TestBed")]
-public class uScript_TestBed_Component : uScriptCode
+[AddComponentMenu("uScript/Graphs/FadeGraph")]
+public class FadeGraph_Component : uScriptCode
 {
    #pragma warning disable 414
-   public uScript_TestBed uScript = new uScript_TestBed( ); 
+   public FadeGraph uScript = new FadeGraph( ); 
    #pragma warning restore 414
    
+   public UnityEngine.Material FadeMaterial { get { return uScript.FadeMaterial; } set { uScript.FadeMaterial = value; } } 
    
    void Awake( )
    {
@@ -34,9 +35,18 @@ public class uScript_TestBed_Component : uScriptCode
    {
       uScript.OnDestroy( );
    }
+   void OnGUI( )
+   {
+      uScript.OnGUI( );
+   }
    #if UNITY_EDITOR
       void OnDrawGizmos( )
       {
+         {
+            GameObject gameObject;
+            gameObject = GameObject.Find( "FadePlane" ); 
+            if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_variables.png");
+         }
       }
    #endif
 }

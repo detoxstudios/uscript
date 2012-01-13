@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.1556
+//uScript Generated Code - Build 0.9.1613
 using UnityEngine;
 using System.Collections;
 
@@ -29,6 +29,10 @@ public class uScript_StressTest_Component : uScriptCode
    void Update( )
    {
       uScript.Update( );
+   }
+   void OnDestroy( )
+   {
+      uScript.OnDestroy( );
    }
    #if UNITY_EDITOR
       void OnDrawGizmos( )
