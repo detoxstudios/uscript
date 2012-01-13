@@ -15,6 +15,7 @@ using System.Collections;
 public class uScriptAct_CameraFade : uScriptLogic
 {
 	private float m_TimeToTrigger;
+   private float m_TotalTime;
 	public enum FadeDirection { To, From };
 	private bool m_fadeFinished = false;
 	private bool m_ImmediateOut = false;
@@ -91,6 +92,7 @@ public class uScriptAct_CameraFade : uScriptLogic
 			
 			// Start Fade
 			m_TimeToTrigger = FadeTime;
+         m_TotalTime     = FadeTime;
 
       }
 		else
@@ -109,17 +111,19 @@ public class uScriptAct_CameraFade : uScriptLogic
       if ( m_TimeToTrigger > 0 )
       {
          m_TimeToTrigger -= UnityEngine.Time.deltaTime;
-		
-		
+		   if (m_TimeToTrigger < 0) m_TimeToTrigger = 0;
+		   
+         float t = 1.0f - (m_TimeToTrigger / m_TotalTime);
+
          // Do fade here.
 			if (m_FadeTo)
 			{
-				m_CameraPlane.renderer.material.color = new Color(m_FadeMaterial.color.r, m_FadeMaterial.color.g, m_FadeMaterial.color.b, Mathf.Lerp(0F, 1F, Time.time));
+				m_CameraPlane.renderer.material.color = new Color(m_FadeMaterial.color.r, m_FadeMaterial.color.g, m_FadeMaterial.color.b, Mathf.Lerp(0F, 1F, t));
 				Debug.Log("To Value: " + m_CameraPlane.renderer.material.color.a.ToString());
 			}
 			else
 			{
-				m_CameraPlane.renderer.material.color = new Color(m_FadeMaterial.color.r, m_FadeMaterial.color.g, m_FadeMaterial.color.b, Mathf.Lerp(1F, 0F, Time.time));
+				m_CameraPlane.renderer.material.color = new Color(m_FadeMaterial.color.r, m_FadeMaterial.color.g, m_FadeMaterial.color.b, Mathf.Lerp(1F, 0F, t));
 				Debug.Log("From Value: " + m_CameraPlane.renderer.material.color.a.ToString());
 			}
       
