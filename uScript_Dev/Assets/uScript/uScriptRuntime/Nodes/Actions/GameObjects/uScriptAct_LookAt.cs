@@ -28,6 +28,8 @@ public class uScriptAct_LookAt : uScriptLogic
    private Vector3   [] m_StartPositions;
    private GameObject   m_Focus;
    private Vector3      m_FocusPosition;
+   private Vector3      m_RotationAxis;
+   private bool         m_RotateAroundVector;
 
    public void In(
       [FriendlyName("Target", "The Target GameObject(s) whose look direction will be adjusted.")]
@@ -37,7 +39,13 @@ public class uScriptAct_LookAt : uScriptLogic
       object Focus,
 
       [FriendlyName("Seconds", "The amount of time (in seconds) it takes to complete the look.  Use 0 for an instantaneous look.")]
-      float time
+      float time,
+
+      [FriendlyName("Rotate Around Vector", "Whether or not to only allow rotation around Rotation Vector.")]
+      bool rotateAroundVector,
+
+      [FriendlyName("Rotation Axis", "The vector/axis to rotate around.")]
+      Vector3 rotationAxis
       )
    {
       if (Focus != null)
@@ -46,6 +54,8 @@ public class uScriptAct_LookAt : uScriptLogic
          m_TotalTime = time;
          m_Targets   = null;
          m_Focus     = null;
+         m_RotationAxis = rotationAxis;
+         m_RotateAroundVector = rotateAroundVector;
          
          if (typeof(GameObject) == Focus.GetType())
          {
@@ -98,27 +108,23 @@ public class uScriptAct_LookAt : uScriptLogic
       //update our focal position to the game object's latest position
       if ( null != m_Focus ) m_FocusPosition = m_Focus.transform.position;
 
-      if ( t < 1.0f )
+      for (int i = 0; i < m_Targets.Length; i++)
       {
-         for (int i = 0; i < m_Targets.Length; i++)
+         if ( null == m_Targets[i] ) continue;
+      
+         //our targets might be moving too, so recalculate their desired lookat and slerp it
+         Vector3 rotationAxis = Vector3.up;
+         Vector3 look = m_FocusPosition - m_StartPositions[ i ];
+         if (m_RotateAroundVector)
          {
-            if ( null == m_Targets[i] ) continue;
-         
-            //our targets might be moving too, so recalculate their desired lookat and slerp it
-            Quaternion q = Quaternion.LookRotation( m_FocusPosition - m_StartPositions[ i ] );
-            m_Targets[ i ].transform.rotation = Quaternion.Slerp( m_StartRotations[ i ], q, t );
+            rotationAxis = m_RotationAxis;
+            look.Normalize();
+            Vector3 right = Vector3.Cross(look, rotationAxis);
+            look = Vector3.Cross(rotationAxis, right);
          }
+         Quaternion q = Quaternion.LookRotation( look, rotationAxis );
+         m_Targets[ i ].transform.rotation = Quaternion.Slerp( m_StartRotations[ i ], q, t );
       }
-      else
-      {
-         for (int i = 0; i < m_Targets.Length; i++)
-         {
-            if ( null == m_Targets[i] ) continue;
-         
-            m_Targets[ i ].transform.LookAt( m_FocusPosition );
-         }
-      }
-
 
       //finish if we hit our max time
       if ( 1 == t )
