@@ -17,6 +17,7 @@ public class uScriptAct_PrintText : uScriptLogic
    private string m_Text;
    private float m_Width;
    private float m_Height;
+   private float m_RemoveTime;
    private bool m_DisplayText;
    private GUIStyle m_Style = new GUIStyle();
 
@@ -34,7 +35,7 @@ public class uScriptAct_PrintText : uScriptLogic
    //
    // Parameter Attributes are applied below in HideLabel()
    [FriendlyName("Show Text")]
-   public void ShowLabel(string Text, int FontSize, UnityEngine.FontStyle FontStyle, UnityEngine.Color FontColor, UnityEngine.TextAnchor textAnchor, int EdgePadding)
+   public void ShowLabel(string Text, int FontSize, UnityEngine.FontStyle FontStyle, UnityEngine.Color FontColor, UnityEngine.TextAnchor textAnchor, int EdgePadding, float time)
    {
       m_Text = Text;
       m_Width = Screen.width - EdgePadding;
@@ -46,6 +47,7 @@ public class uScriptAct_PrintText : uScriptLogic
       m_Style.normal.textColor = FontColor;
 
       m_DisplayText = true;
+      m_RemoveTime = time;
    }
 
    [FriendlyName("Hide Text")]
@@ -71,7 +73,11 @@ public class uScriptAct_PrintText : uScriptLogic
       
       [FriendlyName("Edge Padding", "The number of pixels tp offset the text from the edge of the screen.")]
       [DefaultValue(8), SocketState(false, false)]
-      int EdgePadding
+      int EdgePadding,
+
+      [FriendlyName("Remove After", "The amount of time (in seconds) to wait before automatically removing the text.")]
+      [DefaultValue(0.0f), SocketState(false, false)]
+      float time
       )
    {
       m_DisplayText = false;
@@ -84,6 +90,16 @@ public class uScriptAct_PrintText : uScriptLogic
    //
    public void OnGUI()
    {
+      if (m_RemoveTime > 0.0f)
+      {
+         m_RemoveTime -= Time.deltaTime;
+         if (m_RemoveTime <= 0.0f)
+         {
+            m_RemoveTime = 0.0f;
+            m_DisplayText = false;
+         }
+      }
+
       if (m_DisplayText)
       {
          float halfHeight = m_Height / 2;
