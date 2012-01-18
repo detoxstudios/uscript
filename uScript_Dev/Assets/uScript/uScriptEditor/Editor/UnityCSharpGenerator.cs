@@ -1451,6 +1451,7 @@ namespace Detox.ScriptEditor
                      if ( typeof(System.Enum).IsAssignableFrom(netType) )
                      {
                         cast = netType.ToString() + ".";
+                        cast = FormatType(cast);
                      }
                   }
                }
