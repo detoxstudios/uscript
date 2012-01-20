@@ -3563,6 +3563,7 @@ public class uScript : EditorWindow
          }
 
          List<Plug> logicEvents = new List<Plug>();
+         List<Parameter> logicEventParameters = new List<Parameter>( );
 
          foreach (EventInfo e in type.GetEvents())
          {
@@ -3570,11 +3571,60 @@ public class uScript : EditorWindow
             p.Name = e.Name;
             p.FriendlyName = FindFriendlyName(p.Name, e.GetCustomAttributes(false));
 
+            if ( "" == logicNode.EventArgs )
+            {
+               ParameterInfo[] eventParameters = e.GetAddMethod().GetParameters();
+
+               foreach (ParameterInfo eventParameter in eventParameters)
+               {
+                  MethodInfo[] eventHandlerMethods = eventParameter.ParameterType.GetMethods();
+
+                  foreach (MethodInfo eventHandlerMethod in eventHandlerMethods)
+                  {
+                     if (eventHandlerMethod.Name == "Invoke")
+                     {
+                        ParameterInfo[] methodParameters = eventHandlerMethod.GetParameters();
+
+                        foreach (ParameterInfo methodParameter in methodParameters)
+                        {
+                           if (typeof(EventArgs).IsAssignableFrom(methodParameter.ParameterType))
+                           {
+                              logicNode.EventArgs = methodParameter.ParameterType.ToString().Replace("+", ".");
+
+                              PropertyInfo[] eventProperties = methodParameter.ParameterType.GetProperties();
+
+                              foreach (PropertyInfo eventProperty in eventProperties)
+                              {
+                                 Parameter output = new Parameter();
+                                 output.State = FindSocketState(eventProperty.GetCustomAttributes(false)); ;
+                                 output.Name = eventProperty.Name;
+                                 output.FriendlyName = FindFriendlyName(eventProperty.Name, eventProperty.GetCustomAttributes(false));
+                                 output.Type = eventProperty.PropertyType.ToString().Replace("&", "");
+                                 output.Input  = false;
+                                 output.Output = true;
+                                 output.DefaultAsObject = FindDefaultValue("", eventProperty.GetCustomAttributes(false));
+
+                                 MasterComponent.AddType(eventProperty.PropertyType);
+
+                                 logicEventParameters.Add(output);
+
+                                 AddParameterDescField(type.ToString(), eventProperty.Name, eventProperty.GetCustomAttributes(false));
+                              }
+                           }
+                        }
+
+                        //break after Invoke parameter, it's the only one we care about
+                        break;
+                     }
+                  }
+               }
+            }
+
             logicEvents.Add(p);
          }
 
          logicNode.Events = logicEvents.ToArray();
-
+         logicNode.EventParameters = logicEventParameters.ToArray();
 
          methods = type.GetMethods();
 
@@ -3746,6 +3796,8 @@ public class uScript : EditorWindow
             logicNode.Events          = rawScript.ExternalEvents;
             logicNode.Drivens         = rawScript.Drivens;
             logicNode.RequiredMethods = rawScript.RequiredMethods;
+            logicNode.EventArgs       = rawScript.EventArgs;
+            logicNode.EventParameters = rawScript.ExternalEventParameters;
 
             m_RawDescription[rawScript.Type] = rawScript.Description;
 

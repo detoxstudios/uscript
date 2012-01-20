@@ -17,15 +17,17 @@ namespace Detox.ScriptEditor
 {
    public class RawScript
    {
-      public Parameter []ExternalParameters { get { return m_GeneratedCode.ExternalParameters; } }
-      public Plug      []ExternalInputs     { get { return m_GeneratedCode.ExternalInputs; } }
-      public Plug      []ExternalOutputs    { get { return m_GeneratedCode.ExternalOutputs; } }
-      public Plug      []ExternalEvents     { get { return m_GeneratedCode.ExternalEvents; } }
-      public string    []Drivens            { get { return m_GeneratedCode.Drivens; } }
-      public string    []RequiredMethods    { get { return m_GeneratedCode.RequiredMethods; } }
-      public string    FriendlyName         { get { return m_FriendlyName; } }
-      public string    Description          { get { return m_Description; } }
-      public string    Type                 { get { return m_Type; } }
+      public Parameter []ExternalEventParameters  { get { return m_GeneratedCode.LogicEventArgs; } }
+      public Parameter []ExternalParameters       { get { return m_GeneratedCode.ExternalParameters; } }
+      public Plug      []ExternalInputs           { get { return m_GeneratedCode.ExternalInputs; } }
+      public Plug      []ExternalOutputs          { get { return m_GeneratedCode.ExternalOutputs; } }
+      public Plug      []ExternalEvents           { get { return m_GeneratedCode.ExternalEvents; } }
+      public string    []Drivens                  { get { return m_GeneratedCode.Drivens; } }
+      public string    []RequiredMethods          { get { return m_GeneratedCode.RequiredMethods; } }
+      public string    EventArgs                  { get { return m_Type + "." + m_GeneratedCode.LogicEventArgsDeclaration(); } }
+      public string    FriendlyName               { get { return m_FriendlyName; } }
+      public string    Description                { get { return m_Description; } }
+      public string    Type                       { get { return m_Type; } }
 
       private string m_Type = "";
       private string m_Description  = "";

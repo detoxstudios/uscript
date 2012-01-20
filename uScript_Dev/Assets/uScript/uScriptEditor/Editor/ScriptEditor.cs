@@ -2099,6 +2099,7 @@ namespace Detox.ScriptEditor
          node.FriendlyName = FriendlyName;
          node.Inputs    = Inputs;         
          node.Parameters= Parameters;        
+         node.EventArgs = EventArgs;
          node.Outputs   = Outputs;
          node.Position  = Position;
          node.Events    = Events;
@@ -2108,6 +2109,8 @@ namespace Detox.ScriptEditor
          node.InspectorName  = InspectorName;
          node.RequiredMethods= RequiredMethods;
          node.ShowComment    = ShowComment;
+         node.EventParameters= EventParameters;
+
          return node;
       }
 
@@ -2130,6 +2133,8 @@ namespace Detox.ScriptEditor
             nodeData.Comment         = Comment.ToParameterData( );
             nodeData.ShowComment     = ShowComment.ToParameterData( );
             nodeData.RequiredMethods = RequiredMethods;
+            nodeData.EventArgs       = EventArgs;
+            nodeData.EventParameters = ArrayUtil.ToParameterDatas( EventParameters );
 
             return nodeData;
          }
@@ -2154,11 +2159,13 @@ namespace Detox.ScriptEditor
          if ( false == ArrayUtil.ArraysAreEqual(node.Outputs, Outputs) ) return false;
          if ( false == ArrayUtil.ArraysAreEqual(node.Events, Events) ) return false;
          if ( false == ArrayUtil.ArraysAreEqual(node.Drivens, Drivens) ) return false;
+         if ( false == ArrayUtil.ArraysAreEqual(node.EventParameters, EventParameters) ) return false;
 
          //don't compare required methods because these come straight from Unity
          //and are only saved so parent scripts can check nested ones 
          //without using reflection
 
+         if ( EventArgs != node.EventArgs ) return false;
          if ( Position != node.Position ) return false;
          if ( Guid != node.Guid ) return false;
          if ( InspectorName != node.InspectorName ) return false;
@@ -2169,12 +2176,14 @@ namespace Detox.ScriptEditor
          return true;
       }
 
-      public string    Type;
-      public string    FriendlyName;
-      public Plug    []Inputs;
-      public Plug    []Outputs;
-      public Plug    []Events;
-      public string  []Drivens;
+      public string      Type;
+      public string      FriendlyName;
+      public string      EventArgs;
+      public Plug      []Inputs;
+      public Plug      []Outputs;
+      public Plug      []Events;
+      public string    []Drivens;
+      public Parameter []EventParameters;
 
       //used only if this logic node is wrapping
       //a nested script and that nested script
@@ -2235,6 +2244,9 @@ namespace Detox.ScriptEditor
          Events          = new Plug[ 0 ];
          m_Parameters    = new Parameter[ 0 ];
 
+         EventArgs       = "";
+         EventParameters = new Parameter[ 0 ];
+
          m_Position = Point.Empty; 
 
          m_ShowComment = new Parameter( );
@@ -2274,12 +2286,14 @@ namespace Detox.ScriptEditor
 
          m_Guid = data.Guid;
 
-         Drivens      = data.Drivens;
+         Drivens   = data.Drivens;
+         EventArgs = "";
          
          Inputs       = ArrayUtil.ToPlugs(data.Inputs);
          Outputs      = ArrayUtil.ToPlugs(data.Outputs);
          Events       = ArrayUtil.ToPlugs(data.Events);
          m_Parameters = ArrayUtil.ToParameters(data.Parameters);
+         EventParameters = ArrayUtil.ToParameters(data.EventParameters);
 
          m_Position = data.Position; 
 
@@ -3001,16 +3015,32 @@ namespace Detox.ScriptEditor
          Description.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
       }
 
-      public bool FailOnEvent( LinkNode link, Hashtable checkedHash )
+      public bool IsEventDriven( LinkNode link, Hashtable checkedHash )
       {
          //if node can't be found we won't need to fail on the backtrace
          if ( false == m_Nodes.Contains(link.Source.Guid) ) return true;
       
          EntityNode node = m_Nodes.Get(link.Source.Guid) as EntityNode;
          
+         //local nodes trigger no signals, so we can stop here
+         if ( node is LocalNode ) return false;
+
+         //if it's linked to parameter we can stop here
+         //because that's not a signaled event output
+         foreach (Parameter p in node.Parameters)
+         {
+            if (link.Source.Anchor == p.Name) return false;
+         }
+
+
          if ( node is EntityEvent )
          {
-            return false;
+            EntityEvent entityEvent = (EntityEvent) node;
+            
+            foreach (Plug p in entityEvent.Outputs)
+            {
+               if (p.Name == link.Source.Anchor) return true;
+            }
          }
 
          if ( node is LogicNode )
@@ -3021,13 +3051,10 @@ namespace Detox.ScriptEditor
             {
                if ( eventPlug.Name == link.Source.Anchor )
                {
-                  return false;
+                  return true;
                }
             }
          }
-
-         //local nodes trigger no signals, so we can stop here
-         if ( node is LocalNode ) return true;
 
          foreach ( LinkNode sourceLink in Links )
          {
@@ -3039,19 +3066,19 @@ namespace Detox.ScriptEditor
                {
                   checkedHash[key] = true;
 
-                  bool result = FailOnEvent( sourceLink, checkedHash );            
-                  if ( false == result ) return false;
+                  bool result = IsEventDriven( sourceLink, checkedHash );            
+                  if ( true == result ) return true;
                }
             }
          }
 
-         return true;
+         return false;
       }
 
-      public bool BacktraceExternalOutput(LinkNode link)
+      public bool IsEventDriven(LinkNode link)
       {
          //if node can't be found we won't need to fail on the backtrace
-         if ( false == m_Nodes.Contains(link.Source.Guid) ) return true;
+         if ( false == m_Nodes.Contains(link.Source.Guid) ) return false;
       
          EntityNode node = m_Nodes.Get(link.Source.Guid) as EntityNode;
       
@@ -3061,6 +3088,13 @@ namespace Detox.ScriptEditor
          //then see if it'll get hung up on an event
          if ( node is EntityMethod || node is LogicNode )
          {
+            //if it's linked to parameter we can stop here
+            //because that's not a signaled event output
+            foreach (Parameter p in node.Parameters)
+            {
+               if (link.Source.Anchor == p.Name) return false;
+            }
+
             if ( node is LogicNode )
             {
                LogicNode logic = (LogicNode) node;
@@ -3081,13 +3115,13 @@ namespace Detox.ScriptEditor
             {
                if ( sourceLink.Destination.Guid == node.Guid )
                {
-                  bool result = FailOnEvent( sourceLink, checkedHash );            
-                  if ( false == result ) return false;
+                  bool result = IsEventDriven( sourceLink, checkedHash );            
+                  if ( true == result ) return true;
                }
             }
          }
 
-         return true;
+         return false;
       }
 
       public Parameter FindNodeParameter(EntityNode node, string parameterName)
@@ -3662,17 +3696,17 @@ namespace Detox.ScriptEditor
 
          if ( source is ExternalConnection ) return true;
          
-         if ( dest is ExternalConnection )
-         {
-            if ( false == BacktraceExternalOutput(link) )
-            {
-               reason = "External Connections linked to an immediate output cannot also have an event in the same link chain. " +
-                        "This is because the parent script will be expecting an immediate output however the nested script will block on the event.";
-               return false;
-            }
+         if ( dest is ExternalConnection ) return true;
+         //{
+         //   if ( false == BacktraceExternalOutput(link) )
+         //   {
+         //      reason = "External Connections linked to an immediate output cannot also have an event in the same link chain. " +
+         //               "This is because the parent script will be expecting an immediate output however the nested script will block on the event.";
+         //      return false;
+         //   }
 
-            return true;
-         }
+         //   return true;
+         //}
 
          //Out socket (right side) connected to an In (left side)
          if ( sourceParam == emptyParam &&
@@ -3910,23 +3944,23 @@ namespace Detox.ScriptEditor
             //to make sure it's compatible with all externals
             bool rejected = false;
 
-            foreach ( ExternalConnection connection in Externals )
-            {
-               foreach ( LinkNode link in Links )
-               {
-                  if ( link.Destination.Guid == connection.Guid )
-                  {
-                     if ( false == BacktraceExternalOutput(link) )
-                     {
-                        m_Nodes.Remove( node.Guid );
-                        rejected = true;
-                        break;
-                     }
-                  }
-               }
+            //foreach ( ExternalConnection connection in Externals )
+            //{
+            //   foreach ( LinkNode link in Links )
+            //   {
+            //      if ( link.Destination.Guid == connection.Guid )
+            //      {
+            //         if ( false == BacktraceExternalOutput(link) )
+            //         {
+            //            m_Nodes.Remove( node.Guid );
+            //            rejected = true;
+            //            break;
+            //         }
+            //      }
+            //   }
 
-               if ( true == rejected ) break;
-            }
+            //   if ( true == rejected ) break;
+            //}
 
             if ( true == rejected )
             {
@@ -4730,15 +4764,19 @@ namespace Detox.ScriptEditor
                   cloned = node;
                   
                   if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), node.Parameters) &&
+                       true == ArrayUtil.ArraysAreEqual(node.EventParameters, ArrayUtil.ToParameters(data.EventParameters)) &&
                        true == ArrayUtil.ArraysAreEqual(node.Inputs, ArrayUtil.ToPlugs(data.Inputs)) &&
-                       true == ArrayUtil.ArraysAreEqual(node.Outputs, ArrayUtil.ToPlugs(data.Outputs)) &&
-                       true == ArrayUtil.ArraysAreEqual(node.Events, ArrayUtil.ToPlugs(data.Events)) )
+                       true == ArrayUtil.ArraysAreEqual(node.Outputs, ArrayUtil.ToPlugs(data.Outputs)) &&                       
+                       true == ArrayUtil.ArraysAreEqual(node.Events, ArrayUtil.ToPlugs(data.Events)) &&
+                       node.EventArgs == data.EventArgs )
                   {
                      exactMatch = true;
                   }
 
-                  cloned.Parameters = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );                  
+                  cloned.EventParameters= ArrayUtil.CopyCompatibleParameters(cloned.EventParameters, ArrayUtil.ToParameters(data.EventParameters) );                  
+                  cloned.Parameters     = ArrayUtil.CopyCompatibleParameters(cloned.Parameters, ArrayUtil.ToParameters(data.Parameters) );                  
                   cloned.InspectorName  = new Parameter( data.InspectorName );
+                  cloned.EventArgs  = data.EventArgs;
                   break;
                }
             }

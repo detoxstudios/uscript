@@ -565,6 +565,7 @@ namespace Detox.Data.ScriptEditor
    {
       public string Type;
       public string FriendlyName;
+      public string EventArgs;
       public Plug   []Inputs;
       public Plug   []Outputs;
       public Plug   []Events;
@@ -573,7 +574,8 @@ namespace Detox.Data.ScriptEditor
 
       public Parameter InspectorName;
       public Parameter []Parameters;
-
+      public Parameter []EventParameters;
+      
       public override void Clone(EntityNodeData cloneFrom)
       {
          base.Clone( cloneFrom );
@@ -590,9 +592,11 @@ namespace Detox.Data.ScriptEditor
          Drivens = data.Drivens;
          RequiredMethods = data.RequiredMethods;
          InspectorName = data.InspectorName;
+         EventArgs = data.EventArgs;
+         EventParameters = data.EventParameters;
       }
 
-      public new int Version { get { return 6; } }
+      public new int Version { get { return 7; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -692,6 +696,17 @@ namespace Detox.Data.ScriptEditor
                InspectorName.Default      = "";
                InspectorName.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
             }
+
+            if ( serializer.CurrentVersion > 6 )
+            {
+               EventParameters = (Parameter[]) serializer.LoadNamedObject( "EventParameters" );
+               EventArgs = (string) serializer.LoadNamedObject( "EventArgs" );
+            }
+            else
+            {
+               EventParameters = new Parameter[ 0 ];
+               EventArgs = "";
+            }
          }
 
          Parameters = (Parameter[]) serializer.LoadNamedObject( "Parameters" ); 
@@ -707,6 +722,8 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObject( "Outputs", Outputs );         
          serializer.SaveNamedObject( "Events", Events );         
          serializer.SaveNamedObject( "Parameters", Parameters );
+         serializer.SaveNamedObject( "EventArgs", EventArgs );
+         serializer.SaveNamedObject( "EventParameters", EventParameters );
          serializer.SaveNamedObject( "Drivens", Drivens );
          serializer.SaveNamedObject( "RequiredMethods", RequiredMethods );
          serializer.SaveNamedObject( "InspectorName", InspectorName );
