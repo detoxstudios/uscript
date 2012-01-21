@@ -86,8 +86,12 @@ public class uScript_MasterComponent : MonoBehaviour
    
    public bool HasBreakpoint(string guid)
    {
+#if UNITY_EDITOR
       BuildBreakpointCache( false );
       return m_BreakpointCache.Contains(guid);
+#else
+      return false;
+#endif
    }
 
 #if UNITY_EDITOR

@@ -881,12 +881,27 @@ public class uScript : EditorWindow
          //so apply the patch
          if ( UndoComponent.UndoNumber > m_UndoNumber )
          {
+            //for some reason we're going out of range when starting Unity with uScript open
+            //so make sure it's clamped here until i figure out the cause
+            if (m_UndoPatches.Length <= UndoComponent.UndoNumber - 1)
+            {
+               UndoComponent.UndoNumber = m_UndoPatches.Length;
+            }
+
             ApplyPatch( m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber - 1] );      
          }
          else
          {
             //if their number was less then it was an undo
             //so remove the previous change
+
+            //for some reason we're going out of range when starting Unity with uScript open
+            //so make sure it's clamped here until i figure out the cause
+            if (m_UndoPatches.Length <= UndoComponent.UndoNumber)
+            {
+               UndoComponent.UndoNumber = m_UndoPatches.Length - 1;
+            }
+
             RemovePatch( m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber] );
          }
          
