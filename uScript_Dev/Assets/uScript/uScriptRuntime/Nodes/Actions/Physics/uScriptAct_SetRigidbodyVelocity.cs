@@ -26,7 +26,7 @@ public class uScriptAct_SetRigidbodyVelocity : uScriptLogic
    {
       foreach (GameObject currentTarget in Target)
       {
-         if (currentTarget != null && currentTarget.GetComponent("rigidbody"))
+         if (currentTarget != null && currentTarget.rigidbody != null)
          {
             currentTarget.rigidbody.velocity = Velocity;
          }
