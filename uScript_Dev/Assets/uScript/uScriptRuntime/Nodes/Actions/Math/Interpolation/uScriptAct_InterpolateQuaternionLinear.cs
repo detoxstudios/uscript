@@ -112,7 +112,7 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       {
          //Quaternion.Lerp throws an exception
          //so i'm using v4 lerp for now
-         Vector4 v = Vector4.Lerp( m_Start, m_End, t );
+         Vector4 v = Quaternion.Lerp( m_Start, m_End, t );
          
          m_LastValue.x = v.x;
          m_LastValue.y = v.y;
