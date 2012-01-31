@@ -14,8 +14,8 @@ using System.Collections;
 [FriendlyName("Interpolate Quaternion Linear", "Linearly interpolate a Quaternion over time.")]
 public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
 { 
-   private Vector4 m_Start;
-   private Vector4 m_End;
+   private Quaternion m_Start;
+   private Quaternion m_End;
    private Quaternion m_LastValue;
    private bool m_Began = false;
 
@@ -41,8 +41,8 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
    {
       m_Lerper.Set( time, loopType, loopDelay, loopCount );
 
-      m_Start      = new Vector4(startValue.x, startValue.y, startValue.z, startValue.w);
-      m_End        = new Vector4(endValue.x, endValue.y, endValue.z, endValue.w);
+      m_Start      = startValue;
+      m_End        = endValue;
       m_LastValue  = startValue;
   
       m_Began      = true;
@@ -112,12 +112,7 @@ public class uScriptAct_InterpolateQuaternionLinear : uScriptLogic
       {
          //Quaternion.Lerp throws an exception
          //so i'm using v4 lerp for now
-         Vector4 v = Quaternion.Lerp( m_Start, m_End, t );
-         
-         m_LastValue.x = v.x;
-         m_LastValue.y = v.y;
-         m_LastValue.z = v.z;
-         m_LastValue.w = v.w;
+         m_LastValue = Quaternion.Lerp( m_Start, m_End, t );
       }
 
       currentValue = m_LastValue;
