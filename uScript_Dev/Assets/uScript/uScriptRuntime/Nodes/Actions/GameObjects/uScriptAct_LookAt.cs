@@ -14,6 +14,8 @@ using System.Collections;
 [FriendlyName("Look At", "Tells a GameObject (target) to look at another GameObject (focus) transform or Vector3 position in a specified amount of time (seconds).")]
 public class uScriptAct_LookAt : uScriptLogic
 {
+   public enum LockAxis { None, X, Y, Z };
+	
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
    public event uScriptEventHandler Finished;
@@ -28,8 +30,8 @@ public class uScriptAct_LookAt : uScriptLogic
    private Vector3   [] m_StartPositions;
    private GameObject   m_Focus;
    private Vector3      m_FocusPosition;
-   private Vector3      m_RotationAxis;
-   private bool         m_RotateAroundVector;
+   private LockAxis     m_LockAxis;
+   //private bool         m_RotateAroundVector;
 
    public void In(
       [FriendlyName("Target", "The Target GameObject(s) whose look direction will be adjusted.")]
@@ -41,11 +43,9 @@ public class uScriptAct_LookAt : uScriptLogic
       [FriendlyName("Seconds", "The amount of time (in seconds) it takes to complete the look.  Use 0 for an instantaneous look.")]
       float time,
 
-      [FriendlyName("Rotate Around Vector", "Whether or not to only allow rotation around Rotation Vector.")]
-      bool rotateAroundVector,
-
-      [FriendlyName("Rotation Axis", "The vector/axis to rotate around.")]
-      Vector3 rotationAxis
+      [FriendlyName("Lock Axis", "Use this to lock rotation on the specified axis.")]
+	  [SocketState(false, false)]
+      LockAxis lockAxis
       )
    {
       if (Focus != null)
@@ -54,8 +54,8 @@ public class uScriptAct_LookAt : uScriptLogic
          m_TotalTime = time;
          m_Targets   = null;
          m_Focus     = null;
-         m_RotationAxis = rotationAxis;
-         m_RotateAroundVector = rotateAroundVector;
+         m_LockAxis = lockAxis;
+         //m_RotateAroundVector = rotateAroundVector;
          
          if (typeof(GameObject) == Focus.GetType())
          {
@@ -115,13 +115,30 @@ public class uScriptAct_LookAt : uScriptLogic
          //our targets might be moving too, so recalculate their desired lookat and slerp it
          Vector3 rotationAxis = Vector3.up;
          Vector3 look = m_FocusPosition - m_StartPositions[ i ];
-         if (m_RotateAroundVector)
+         if (m_LockAxis != LockAxis.None)
          {
-            rotationAxis = m_RotationAxis;
+			
+			if( m_LockAxis == LockAxis.X )
+			{
+				rotationAxis =  new Vector3(1,0,0);
+			}
+			
+			if( m_LockAxis == LockAxis.Y )
+			{
+				rotationAxis =  new Vector3(0,1,0);
+			}
+				
+			if( m_LockAxis == LockAxis.Z )
+			{
+				rotationAxis =  new Vector3(0,0,1);
+			}
+			
+
             look.Normalize();
             Vector3 right = Vector3.Cross(look, rotationAxis);
             look = Vector3.Cross(rotationAxis, right);
          }
+			
          Quaternion q = Quaternion.LookRotation( look, rotationAxis );
          m_Targets[ i ].transform.rotation = Quaternion.Slerp( m_StartRotations[ i ], q, t );
       }
