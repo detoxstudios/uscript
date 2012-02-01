@@ -204,6 +204,8 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                   _currentScriptName = System.IO.Path.GetFileNameWithoutExtension(_currentScriptName_uScript);
                }
 
+               if (null == _currentScriptName_uScript) _currentScriptName_uScript = "";
+
                // uScript Label
                sceneName = string.Empty;
                if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(_currentScriptName_uScript))
