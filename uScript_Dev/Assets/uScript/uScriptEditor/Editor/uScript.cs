@@ -42,11 +42,11 @@ public class uScript : EditorWindow
    private ComplexData m_ComplexData = null;
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string BuildNumber { get { return "0.9.1617"; } }
+   public string BuildNumber { get { return "0.9.1654"; } }
 #if FREE_PLE_BUILD
     static string ProductName { get { return "Personal Learning Edition"; } }
 #else
-   static string ProductName { get { return "Retail Beta 12"; } }
+   static string ProductName { get { return "Retail Beta 13"; } }
 #endif
    public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    //public string LastUnityBuild { get { return "3.3"; } }
