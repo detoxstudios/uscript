@@ -1598,22 +1598,20 @@ namespace Detox.ScriptEditor
             }
          }
 
-         if ( m_LogicEventArgs.Count > 0 )
-         {
-            AddCSharpLine( "public delegate void uScriptEventHandler(object sender, LogicEventArgs args);" );
-            AddCSharpLine( "" );
 
-            AddCSharpLine( "public class " + LogicEventArgsDeclaration() + " : System.EventArgs" );
-            AddCSharpLine( "{" );
-            ++m_TabStack;
-               foreach ( ExternalEventParameter eep in  m_LogicEventArgs )
-               {
-                  Parameter p = eep.ExternalParameter;
-                  AddCSharpLine( "public " + FormatType(p.Type) + " " + p.Name + " = " + FormatValue(p.Default, p.Type) + ";" );
-               }
-            --m_TabStack;
-            AddCSharpLine( "}" );
-         }
+         AddCSharpLine( "public delegate void uScriptEventHandler(object sender, LogicEventArgs args);" );
+         AddCSharpLine( "" );
+
+         AddCSharpLine( "public class " + LogicEventArgsDeclaration() + " : System.EventArgs" );
+         AddCSharpLine( "{" );
+         ++m_TabStack;
+            foreach ( ExternalEventParameter eep in  m_LogicEventArgs )
+            {
+               Parameter p = eep.ExternalParameter;
+               AddCSharpLine( "public " + FormatType(p.Type) + " " + p.Name + " = " + FormatValue(p.Default, p.Type) + ";" );
+            }
+         --m_TabStack;
+         AddCSharpLine( "}" );
       }
 
       public string LogicEventArgsDeclaration( )

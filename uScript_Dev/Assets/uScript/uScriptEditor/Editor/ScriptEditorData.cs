@@ -596,7 +596,7 @@ namespace Detox.Data.ScriptEditor
          EventParameters = data.EventParameters;
       }
 
-      public new int Version { get { return 7; } }
+      public new int Version { get { return 8; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -705,7 +705,11 @@ namespace Detox.Data.ScriptEditor
             else
             {
                EventParameters = new Parameter[ 0 ];
-               EventArgs = "";
+            }
+
+            if (serializer.CurrentVersion < 8 && EventArgs == "" )
+            {
+               EventArgs = "System.EventArgs";
             }
          }
 
