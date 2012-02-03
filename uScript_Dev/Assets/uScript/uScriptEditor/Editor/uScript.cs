@@ -2639,6 +2639,11 @@ public class uScript : EditorWindow
       }
       DrawMenuItemShortcut("E");
 
+      if (GUILayout.Button(uScriptGUIContent.buttonScriptUpgradeNodes, uScriptGUIStyle.menuDropDownButton))
+      {
+         FileMenuItem_UpgradeDeprecatedNodes();
+      }
+
       uScriptGUI.HR();
 
       if (GUILayout.Button(uScriptGUIContent.buttonScriptsRebuildAll, uScriptGUIStyle.menuDropDownButton))
@@ -2737,6 +2742,55 @@ public class uScript : EditorWindow
    void FileMenuItem_ExportPNG()
    {
       uScriptExportPNG.Start();
+      isFileMenuOpen = false;
+   }
+
+   void FileMenuItem_UpgradeDeprecatedNodes()
+   {
+      int count = 0;
+      int skipped = 0;
+
+      foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
+      {
+         DisplayNode dn = node as DisplayNode;
+         if (dn != null)
+         {
+            if (IsNodeTypeDeprecated(dn.EntityNode) == false && m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(dn.EntityNode))
+            {
+               if ( true == m_ScriptEditorCtrl.ScriptEditor.CanUpgradeNode(dn.EntityNode) )
+               {
+                  System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
+                  if (Click != null)
+                  {
+                     count++;
+                     // clear all selected nodes first
+                     m_ScriptEditorCtrl.DeselectAll();
+                     // toggle the clicked node
+                     m_ScriptEditorCtrl.ToggleNode(dn.Guid);
+                     Click(this, new EventArgs());
+                  }
+               }
+               else
+               {
+                  skipped++;
+               }
+            }
+         }
+      }
+
+      string result = "Upgraded " + count.ToString() + " deprecated nodes.";
+
+      if (skipped > 0)
+      {
+         result += (skipped == 1 ? "  1 node was skipped." : "  " + skipped.ToString() + " nodes were skipped.");
+         result += "\nSkipped nodes will need to be handled manually.";
+         Debug.LogWarning(result + "\n");
+      }
+      else
+      {
+         Debug.Log(result + "\n");
+      }
+
       isFileMenuOpen = false;
    }
 
