@@ -38,6 +38,22 @@ public class uScriptCon_CompareGameObjects : uScriptLogic
    {
       m_CompareValue = false;
    
+      if (null == A)
+      {
+         uScriptDebug.Log("Compare GameObjects A is null", uScriptDebug.Type.Warning);
+      }
+
+      if (null == B)
+      {
+         uScriptDebug.Log("Compare GameObjects B is null", uScriptDebug.Type.Warning);
+      }
+
+      if (null == A || null == B)
+      {         
+         return;
+      }
+
+
       if (true == CompareByTag || CompareByName)
       {
          m_CompareValue = true;
