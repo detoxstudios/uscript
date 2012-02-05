@@ -4763,12 +4763,13 @@ namespace Detox.ScriptEditor
                {
                   cloned = node;
                   
-                  if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), node.Parameters) &&
-                       true == ArrayUtil.ArraysAreEqual(node.EventParameters, ArrayUtil.ToParameters(data.EventParameters)) &&
+                  //don't compare event parameters or event args when checking for an exact match
+                  //because they aren't a supported feature and are only used for nested scripts
+                  //if we support them for users in the future we'll want to add the compare
+                  if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), node.Parameters) &&                       
                        true == ArrayUtil.ArraysAreEqual(node.Inputs, ArrayUtil.ToPlugs(data.Inputs)) &&
                        true == ArrayUtil.ArraysAreEqual(node.Outputs, ArrayUtil.ToPlugs(data.Outputs)) &&                       
-                       true == ArrayUtil.ArraysAreEqual(node.Events, ArrayUtil.ToPlugs(data.Events)) &&
-                       node.EventArgs == data.EventArgs )
+                       true == ArrayUtil.ArraysAreEqual(node.Events, ArrayUtil.ToPlugs(data.Events)) )
                   {
                      exactMatch = true;
                   }
