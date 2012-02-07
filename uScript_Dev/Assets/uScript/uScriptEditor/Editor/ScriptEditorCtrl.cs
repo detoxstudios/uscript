@@ -858,7 +858,8 @@ namespace Detox.ScriptEditor
                guidsToSelect.Add( clone.Guid );
                m_Dirty = true;
             }
-
+    
+            m_FlowChart.DeselectAll();
             uScript.Instance.RegisterUndo( batchPatch );
             PatchDisplay( batchPatch, guidsToSelect );
 
