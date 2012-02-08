@@ -7,7 +7,7 @@ using System.Collections;
 [NodePath("Actions/Web/String")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Add a simple field to the form.")]
+[NodeToolTip("Add a simple field/value pair to the URL query.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#WebAppendURLQuery")]
 
