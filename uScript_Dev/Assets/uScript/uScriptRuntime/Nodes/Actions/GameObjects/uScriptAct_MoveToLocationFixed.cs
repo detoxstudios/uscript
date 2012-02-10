@@ -14,7 +14,9 @@ using System.Collections;
 [FriendlyName("Move To Location Fixed", "Moves a GameObject to a Vector3 Location.")]
 public class uScriptAct_MoveToLocationFixed : uScriptLogic
 {
-   public bool Out { get { return true; } }
+   public bool Out       { get { return true; } }
+   public bool Cancelled { get { return m_Cancelled; } }
+
    public event System.EventHandler Finished;
 
    private GameObject[] m_TargetArray;
@@ -23,7 +25,18 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
    private bool         m_TreatAsOffset;
    private float        m_Speed;
    private bool         m_Complete = true;
+   private bool         m_Cancelled;
 
+   public void Cancel(
+      GameObject[] targetArray,
+      Vector3 location,
+      bool asOffset,
+      float speed
+   )
+   {
+      m_Complete  = true;
+      m_Cancelled = true;
+   }
 
    public void In(
       [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
@@ -41,12 +54,12 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
       float speed
       )
    {
-      m_Speed = speed;
-
+      m_Speed             = speed;
       m_TreatAsOffset     = asOffset;
       m_TargetArray       = targetArray;
       m_EndingLocation    = location;
       m_Complete          = false;
+      m_Cancelled         = false;
       m_StartingLocations = new Vector3[ m_TargetArray.Length ];
 
       for ( int i = 0; i < m_TargetArray.Length; i++ )

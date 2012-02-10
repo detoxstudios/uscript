@@ -15,6 +15,8 @@ using System.Collections;
 public class uScriptAct_MoveToLocation : uScriptLogic
 {
    public bool Out { get { return true; } }
+   public bool Cancelled { get { return m_Cancelled; } }
+
    public event System.EventHandler Finished;
 
    private GameObject[] m_TargetArray;
@@ -23,6 +25,18 @@ public class uScriptAct_MoveToLocation : uScriptLogic
    private bool         m_TreatAsOffset;
    private float        m_TotalTime;
    private float        m_CurrentTime;
+   private bool         m_Cancelled;
+
+   public void Cancel(
+      GameObject[] targetArray,
+      Vector3 location,
+      bool asOffset,
+      float totalTime
+   )
+   {
+      m_Cancelled = true;
+      m_CurrentTime = m_TotalTime;
+   }
 
    public void In(
       [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
@@ -39,6 +53,7 @@ public class uScriptAct_MoveToLocation : uScriptLogic
       float totalTime
       )
    {
+      m_Cancelled   = false;
       m_TotalTime   = totalTime;
       m_CurrentTime = 0;
 

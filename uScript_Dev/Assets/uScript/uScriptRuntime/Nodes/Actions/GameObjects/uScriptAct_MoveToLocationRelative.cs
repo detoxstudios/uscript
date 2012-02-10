@@ -14,7 +14,9 @@ using System.Collections;
 [FriendlyName("Move To Location Relative", "Moves a GameObject to a Vector3 Location relative to another GameObject.")]
 public class uScriptAct_MoveToLocationRelative : uScriptLogic
 {
-   public bool Out { get { return true; } }
+   public bool Out       { get { return true; } }
+   public bool Cancelled { get { return m_Cancelled; } }
+
    public event System.EventHandler Finished;
 
    private GameObject[] m_TargetArray;
@@ -23,7 +25,19 @@ public class uScriptAct_MoveToLocationRelative : uScriptLogic
    private GameObject   m_Source;
    private float        m_TotalTime;
    private float        m_CurrentTime;
+   private bool         m_Cancelled;
 
+   public void Cancel(
+      GameObject[] targetArray,
+      Vector3 location,
+      GameObject source,
+      float totalTime
+      )
+   {
+      m_Cancelled = true;
+      m_CurrentTime = m_TotalTime;
+   }
+   
    public void In(
       [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
       GameObject[] targetArray,
@@ -40,6 +54,7 @@ public class uScriptAct_MoveToLocationRelative : uScriptLogic
    {
       if (null == m_Source) return;
 
+      m_Cancelled   = false;
       m_TotalTime   = totalTime;
       m_CurrentTime = 0;
       m_Source      = source;
