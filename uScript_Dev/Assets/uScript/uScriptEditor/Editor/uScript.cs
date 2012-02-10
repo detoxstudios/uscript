@@ -1562,7 +1562,7 @@ public class uScript : EditorWindow
                      && (e.modifiers == EventModifiers.Alt
                         || e.modifiers == EventModifiers.Control))
                   || e.keyCode == KeyCode.BackQuote
-                  || e.keyCode == KeyCode.Caret
+                  || e.keyCode == KeyCode.Backslash
                   || e.keyCode == KeyCode.Home
                   || (e.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0)
                   || (e.keyCode == KeyCode.H && (modifierKeys & Keys.Control) != 0)
@@ -1650,8 +1650,8 @@ public class uScript : EditorWindow
                }
             }
 
-            // The BackQuote key doesn't work well on the German keyboard, so support Caret as well
-            if (  (e.keyCode == KeyCode.BackQuote || e.keyCode == KeyCode.Caret)
+            // The BackQuote key doesn't work well on the German keyboard, so support Backslash as well
+            if (  (e.keyCode == KeyCode.BackQuote || e.keyCode == KeyCode.Backslash)
                   && (GUI.GetNameOfFocusedControl() == "MainView" || GUIUtility.keyboardControl == 0) )
             {
                uScriptGUI.panelsHidden = !uScriptGUI.panelsHidden;
