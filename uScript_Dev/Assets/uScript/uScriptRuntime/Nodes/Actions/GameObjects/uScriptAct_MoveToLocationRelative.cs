@@ -34,8 +34,11 @@ public class uScriptAct_MoveToLocationRelative : uScriptLogic
       float totalTime
       )
    {
-      m_Cancelled = true;
-      m_CurrentTime = m_TotalTime;
+      if (m_CurrentTime != m_TotalTime)
+      {
+         m_Cancelled = true;
+         m_CurrentTime = m_TotalTime;
+      }
    }
    
    public void In(

@@ -34,8 +34,11 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
       float speed
    )
    {
-      m_Complete  = true;
-      m_Cancelled = true;
+      if (false == m_Complete)
+      {
+         m_Complete  = true;
+         m_Cancelled = true;
+      }
    }
 
    public void In(
