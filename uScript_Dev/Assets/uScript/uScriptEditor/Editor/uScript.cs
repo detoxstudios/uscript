@@ -4263,6 +4263,8 @@ public class uScript : EditorWindow
          uniqueObjects[t.ToString()] = t;
       }
 
+      uniqueObjects[typeof(Math).ToString()] = typeof(Math);
+
       if (null != requiredTypes)
       {
          foreach (string t in requiredTypes)
