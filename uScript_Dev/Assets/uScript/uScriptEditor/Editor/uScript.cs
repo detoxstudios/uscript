@@ -40,6 +40,15 @@ public class uScript : EditorWindow
    //complex class which Unity will not serialize
    //so if it goes null I know the app domain has been rebuilt
    private ComplexData m_ComplexData = null;
+	
+	// Set product type variable. Used for update checking.
+#if FREE_PLE_BUILD
+	string ProductType = "PLE";
+#elif UNITY_STORE_BUILD
+	string ProductType = "ASSETSTORE";
+#else
+	string ProductType = "DETOXSTORE";
+#endif
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
    public string BuildNumber { get { return "0.9.1661"; } }
