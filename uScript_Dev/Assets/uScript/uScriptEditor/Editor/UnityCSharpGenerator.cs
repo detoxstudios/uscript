@@ -916,7 +916,7 @@ namespace Detox.ScriptEditor
  
       private void DeclareNamespaces( )
       {
-         AddCSharpLine( "//uScript Generated Code - Build " + uScript.Instance.BuildNumber );
+         AddCSharpLine( "//uScript Generated Code - Build " + uScript.BuildNumber );
          if ( true == m_GenerateDebugInfo )
          {
             AddCSharpLine( "//Generated with Debug Info" );

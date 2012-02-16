@@ -43,21 +43,21 @@ public class uScript : EditorWindow
 	
 	// Set product type variable. Used for update checking.
 #if FREE_PLE_BUILD
-	string ProductType = "PLE";
+	static public string ProductType = "PLE";
 #elif UNITY_STORE_BUILD
-	string ProductType = "ASSETSTORE";
+	static public string ProductType = "ASSETSTORE";
 #else
-	string ProductType = "DETOXSTORE";
+	static public string ProductType = "DETOXSTORE";
 #endif
 
    //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   public string BuildNumber { get { return "0.9.1661"; } }
+   static public string BuildNumber { get { return "0.9.1661"; } }
 #if FREE_PLE_BUILD
-    static string ProductName { get { return "Personal Learning Edition"; } }
+   static string ProductName { get { return "Personal Learning Edition"; } }
 #else
    static string ProductName { get { return "Retail Beta 13"; } }
 #endif
-   public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
+   static public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    //public string LastUnityBuild { get { return "3.3"; } }
    //public string CurrentUnityBuild { get { return "3.4"; } }
    //public string BetaUnityBuild { get { return "3.5"; } }
