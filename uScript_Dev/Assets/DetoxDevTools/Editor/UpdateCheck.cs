@@ -3,18 +3,15 @@ using UnityEditor;
 public class UpdateCheck : EditorWindow
 {
    Vector2 _scrollviewPosition;
+   UpdateNotification.Result _updateResult = UpdateNotification.Result.CheckNeeded;
 
-   string myString = "Hello World";
-   bool groupEnabled;
-   bool myBool = true;
-   float myFloat = 1.23f;
-   
    // Add menu named "My Window" to the Window menu
    [MenuItem ("Detox Tools/Internal/Check for Updates")]
    static void Init()
    {
       // Get existing open window or if none, make a new one:
-      UpdateCheck window = (UpdateCheck)EditorWindow.GetWindow (typeof (UpdateCheck));
+//      UpdateCheck window = (UpdateCheck)EditorWindow.GetWindow (typeof (UpdateCheck));
+      EditorWindow.GetWindow (typeof (UpdateCheck));
    }
    
    void OnGUI()
@@ -30,7 +27,9 @@ public class UpdateCheck : EditorWindow
 
       GUILayout.Label("uScript", EditorStyles.boldLabel);
       EditorGUI.indentLevel++;
-      EditorGUILayout.LabelField("Product", uScript.FullVersionName);
+      EditorGUILayout.LabelField("Product Build", uScript.FullVersionName);
+      EditorGUILayout.LabelField("Product Name", uScript.ProductName);
+      EditorGUILayout.LabelField("Product Type", uScript.ProductType);
       EditorGUILayout.LabelField("Current Version", uScript.BuildNumber);
       EditorGUILayout.LabelField("Latest Version", UpdateNotification.LatestVersion);
       EditorGUI.indentLevel--;
@@ -39,8 +38,18 @@ public class UpdateCheck : EditorWindow
 
       if (GUILayout.Button("Check for Updates"))
       {
-         UpdateNotification.CheckForUpdate();
+         _updateResult = UpdateNotification.CheckForUpdate();
       }
+
+      EditorGUILayout.LabelField("Result", (_updateResult == UpdateNotification.Result.CheckNeeded
+                                            ? "Latest build version is unknown"
+                                            : (_updateResult == UpdateNotification.Result.ClientBuildCurrent
+                                               ? "uScript is up to date"
+                                               : (_updateResult == UpdateNotification.Result.ClientBuildOlder
+                                                  ? "A new uScript build is available"
+                                                  : (_updateResult == UpdateNotification.Result.ClientBuildNewer
+                                                     ? "Your build is newer than latest"
+                                                     : "An update server error occurred")))));
 
       GUILayout.BeginVertical(GUI.skin.box, GUILayout.ExpandHeight(true));
       {

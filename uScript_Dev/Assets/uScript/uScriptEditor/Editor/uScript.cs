@@ -40,28 +40,32 @@ public class uScript : EditorWindow
    //complex class which Unity will not serialize
    //so if it goes null I know the app domain has been rebuilt
    private ComplexData m_ComplexData = null;
-	
-	// Set product type variable. Used for update checking.
+
+   // ###############################################################
+   // # Version Name and Version Data
+   // #
 #if FREE_PLE_BUILD
-	static public string ProductType = "PLE";
+   static public string ProductName { get { return "Personal Learning Edition"; } }
+   static public string ProductType { get { return "uScript_PLE"; } }
 #elif UNITY_STORE_BUILD
-	static public string ProductType = "ASSETSTORE";
+   static public string ProductName { get { return "Retail Beta 13"; } }
+   static public string ProductType { get { return "uScript_AssetStore"; } }
 #else
-	static public string ProductType = "DETOXSTORE";
+   static public string ProductName { get { return "Retail Beta 13"; } }
+   static public string ProductType { get { return "uScript_Retail"; } }
 #endif
 
-   //format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
+   // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
    static public string BuildNumber { get { return "0.9.1661"; } }
-#if FREE_PLE_BUILD
-   static string ProductName { get { return "Personal Learning Edition"; } }
-#else
-   static string ProductName { get { return "Retail Beta 13"; } }
-#endif
+
    static public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    //public string LastUnityBuild { get { return "3.3"; } }
    //public string CurrentUnityBuild { get { return "3.4"; } }
    //public string BetaUnityBuild { get { return "3.5"; } }
    //public DateTime ExpireDate { get { return new DateTime(2011, 11, 30); } }
+   // #
+   // ###############################################################
+
 
    public bool isLicenseAccepted = false;
 
