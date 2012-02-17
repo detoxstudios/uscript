@@ -90,6 +90,7 @@ public class uScriptAct_CameraFade : uScriptLogic
 			
 			// Create a primitive in front of the camera.
 			m_CameraPlane                         = GameObject.CreatePrimitive(PrimitiveType.Plane);
+			m_CameraPlane.collider.enabled        = false;
 			m_CameraPlane.name                    = "uScriptRuntimeGenerated_CameraFadePlane";
 			m_CameraPlane.renderer.material       = m_FadeMaterial;
 			m_CameraPlane.transform.position      = m_TargetCamera.transform.position;
