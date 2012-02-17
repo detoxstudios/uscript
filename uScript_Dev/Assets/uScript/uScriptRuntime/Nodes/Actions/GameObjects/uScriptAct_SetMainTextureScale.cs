@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Main_Texture_Scale")]
 
-[FriendlyName("Assign Material", "Applys a texture scale to the specified Material.")]
+[FriendlyName("Set Texture Scale", "Applys a texture scale to the specified Material.")]
 public class uScriptAct_SetMainTextureScale : uScriptLogic
 {
    public bool Out { get { return true; } }
