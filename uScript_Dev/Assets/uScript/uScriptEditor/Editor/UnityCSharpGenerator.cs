@@ -748,7 +748,7 @@ namespace Detox.ScriptEditor
 
             AddCSharpLine( "[NodePath(\"Graphs\")]" );
             AddCSharpLine( "[System.Serializable]" );
-            AddCSharpLine( "[FriendlyName(\""+ script.FriendlyName.Default + "\", \"" + script.Description.Default + "\")]" );
+            AddCSharpLine( "[FriendlyName(\""+ EscapeString(script.FriendlyName.Default) + "\", \"" + EscapeString(script.Description.Default) + "\")]" );
             BeginLogicClass( logicClassName );
             AddCSharpLine( "" );
 
@@ -1652,7 +1652,7 @@ namespace Detox.ScriptEditor
             //would be stuck outputting true to the parent graph everytime [Driven] is iterated            
             //It's ok if the parent hooks up to this multiple times because it creates a temp variable with the
             //returned result and uses that, it doesn't requery us for each connection
-            AddCSharpLine( "[FriendlyName(\"" + properties[i].FriendlyName + "\")]" );
+            AddCSharpLine( "[FriendlyName(\"" + EscapeString(properties[i].FriendlyName) + "\")]" );
             AddCSharpLine( "public bool " + properties[i].Name + " { get { bool b = " + outputs[i] + "; " + outputs[i] + " = false; return b;} }" );
 
             m_ExternalOutputs.Add( properties[i] );
@@ -1668,7 +1668,7 @@ namespace Detox.ScriptEditor
             //AddCSharpLine( "public delegate void uScriptEventHandler(object sender, System.EventArgs args);" );
             foreach ( Plug eventPlug in events )
             {
-               AddCSharpLine( "[FriendlyName(\"" + eventPlug.FriendlyName + "\")]" );
+               AddCSharpLine( "[FriendlyName(\"" + EscapeString(eventPlug.FriendlyName) + "\")]" );
                AddCSharpLine( "public event uScriptEventHandler " + eventPlug.Name + ";" );
 
                m_ExternalEvents.Add( eventPlug );
