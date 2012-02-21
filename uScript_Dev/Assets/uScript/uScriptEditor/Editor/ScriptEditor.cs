@@ -3823,7 +3823,9 @@ namespace Detox.ScriptEditor
          }
          //else if source isn't an array but dest is, remove the array qualifier
          //because source doesn't have to be an array to be a compatible type
-         else if ( true == destParam.Type.Contains("[]") )
+         //as long as dest isn't a local node.  If dest is a local node it has to match
+         //because that means it's a variable and not a logic/method input
+         else if ( true == destParam.Type.Contains("[]") && false == (dest is LocalNode) )
          {
             destParam.Type = destParam.Type.Replace("[]", "");
          }
