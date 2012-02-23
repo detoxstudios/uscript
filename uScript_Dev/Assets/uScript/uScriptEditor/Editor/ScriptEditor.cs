@@ -3941,45 +3941,10 @@ namespace Detox.ScriptEditor
             }
 
             m_Nodes.Add(node);
-
-            //now it's fully added - reverify our graph
-            //to make sure it's compatible with all externals
-            bool rejected = false;
-
-            //foreach ( ExternalConnection connection in Externals )
-            //{
-            //   foreach ( LinkNode link in Links )
-            //   {
-            //      if ( link.Destination.Guid == connection.Guid )
-            //      {
-            //         if ( false == BacktraceExternalOutput(link) )
-            //         {
-            //            m_Nodes.Remove( node.Guid );
-            //            rejected = true;
-            //            break;
-            //         }
-            //      }
-            //   }
-
-            //   if ( true == rejected ) break;
-            //}
-
-            if ( true == rejected )
+           
+            if ( node is ExternalConnection )
             {
-               string reason = "This link would cause an External to be linked to an immediate output and to an event in the same link chain. " +
-                               "This is not allowed because the parent script will be expecting an immediate output however the nested script will block on the event.";
-               
-               //warn instead of info because breaking this link
-               //won't be clear to the user and I want them to see the message
-               Status.Warning( reason );
-
-            }
-            else
-            {
-               if ( node is ExternalConnection )
-               {
-                  VerifyAllLinks( );
-               }
+               VerifyAllLinks( );
             }
          }
       }

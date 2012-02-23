@@ -2045,6 +2045,8 @@ namespace Detox.ScriptEditor
 
          Patch.Batch patchBatch = new Detox.Patch.Batch( "Property Changed" );
          
+         bool globalModified = false;
+
          foreach ( object o in m_PropertyGrid.SelectedObjects )
          {
             bool changed = false;
@@ -2091,14 +2093,47 @@ namespace Detox.ScriptEditor
                      //so i'm forcing a log warning
                      uScriptDebug.Log( "For a node to be exposed to the Inspector it must have a name", uScriptDebug.Type.Warning );
                   }
+                  else if (localNode.Name.Default != "")
+                  {
+                     globalModified = true;
+                  }
                }
 
+               List<LocalNode> oldGlobals = new List<LocalNode>( );
+
+               //if a global was modified
+               //it's going to modify all the other sync'ed values
+               //so grab them first to add them to the undo stack
+               if (true == globalModified)
+               {
+                  foreach (LocalNode local in m_ScriptEditor.Locals)
+                  {
+                     if (local.Guid == entityNode.Guid) continue;
+
+                     if (local.Name.Default == ((LocalNode)entityNode).Name.Default)
+                     {
+                        oldGlobals.Add(local);
+                     }
+                  }
+               }
+               
                m_ScriptEditor.AddNode( entityNode );
 
                if ( true == changed || false == oldNode.Equals(entityNode) )
                {
                   Patch.EntityNode undoParameter = new Patch.EntityNode( "Node Modified", oldNode, entityNode );
                   patchBatch.Add( undoParameter );
+
+                  if (true == globalModified)
+                  {
+                     foreach (LocalNode oldGlobal in oldGlobals)
+                     {
+                        EntityNode newGlobal = m_ScriptEditor.GetNode(oldGlobal.Guid);
+
+                        Patch.EntityNode globalUpdated = new Patch.EntityNode( "", oldGlobal, newGlobal );
+                        patchBatch.Add( globalUpdated );
+                     }
+                  }
                }
             }
             else
