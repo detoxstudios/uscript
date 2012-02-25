@@ -99,7 +99,25 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "ShowAtStartup" ] = value; }
    }
 
-   private Hashtable m_Preferences = null;  
+   public bool CheckForUpdate
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "CheckForUpdate" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "CheckForUpdate" ] = value; }
+   }
+
+   public int LastUpdateCheck
+   {
+      get { LoadIfRequired( ); return (int) m_Preferences[ "LastUpdateCheck" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "LastUpdateCheck" ] = value; }
+   }
+
+   public string IgnoreUpdateBuild
+   {
+      get { LoadIfRequired( ); return m_Preferences[ "IgnoreUpdateBuild" ] as string; }
+      set { LoadIfRequired( ); m_Preferences[ "IgnoreUpdateBuild" ] = value; }
+   }
+
+   private Hashtable m_Preferences = null;
 
    public void Revert( )
    {
@@ -135,6 +153,9 @@ public class Preferences
       if ( null == m_Preferences[ "GridColorMinor" ] )       m_Preferences[ "GridColorMinor" ]       = uScriptConfig.Style.GridColorMinor;
       if ( null == m_Preferences[ "VariableExpansion" ] )    m_Preferences[ "VariableExpansion" ]    = VariableExpansionType.Dynamic;
       if ( null == m_Preferences[ "ShowAtStartup" ] )        m_Preferences[ "ShowAtStartup" ]        = true;
+      if ( null == m_Preferences[ "CheckForUpdate" ] )       m_Preferences[ "CheckForUpdate" ]       = true;
+      if ( null == m_Preferences[ "LastUpdateCheck" ] )      m_Preferences[ "LastUpdateCheck" ]      = 0;
+      if ( null == m_Preferences[ "IgnoreUpdateBuild" ] )    m_Preferences[ "IgnoreUpdateBuild" ]    = string.Empty;
 
       if ( null == m_Preferences[ "RelativeProjectFiles" ] )     m_Preferences[ "RelativeProjectFiles" ]      = uScriptConfig.ConstantPaths.RelativePathInAssets(UnityEngine.Application.dataPath + "/uScriptProjectFiles");
       if ( null == m_Preferences[ "RelativeUserScripts" ] )      m_Preferences[ "RelativeUserScripts" ]       = uScriptConfig.ConstantPaths.RelativePathInAssets(ProjectFiles + "/uScripts");

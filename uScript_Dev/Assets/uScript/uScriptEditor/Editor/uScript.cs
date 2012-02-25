@@ -1154,6 +1154,8 @@ public class uScript : EditorWindow
          {
             WelcomeWindow.Init();
          }
+
+         UpdateNotification.StartupCheck();
       }
 
       if (m_ScriptEditorCtrl == null)

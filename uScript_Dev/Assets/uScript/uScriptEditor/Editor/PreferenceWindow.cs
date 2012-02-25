@@ -179,6 +179,17 @@ public class PreferenceWindow : EditorWindow
 
          _preferences.VariableExpansion = (Preferences.VariableExpansionType)EditorGUILayout.EnumPopup("Variable Expansion Mode", _preferences.VariableExpansion);
          _preferences.ShowAtStartup = EditorGUILayout.Toggle("Show Welcome Window at Startup", _preferences.ShowAtStartup);
+         EditorGUILayout.BeginHorizontal();
+         {
+            _preferences.CheckForUpdate = EditorGUILayout.Toggle("Check for Updates at Startup", _preferences.CheckForUpdate);
+            if (GUILayout.Button("Check Now\u00A0", GUILayout.ExpandWidth(false)))
+            {
+               UpdateNotification.ManualCheck();
+            }
+         }
+         EditorGUILayout.EndHorizontal();
+//         _preferences.LastUpdateCheck = EditorGUILayout.IntField("Last Update Check", _preferences.LastUpdateCheck);
+//         _preferences.IgnoreUpdateBuild = EditorGUILayout.TextField("Ignore Build", _preferences.IgnoreUpdateBuild);
 
          EditorGUILayout.Separator();
          EditorGUILayout.Space();
