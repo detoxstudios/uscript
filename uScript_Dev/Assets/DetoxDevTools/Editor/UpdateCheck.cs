@@ -20,6 +20,7 @@ public class UpdateCheck : EditorWindow
 
       GUILayout.Label("Unity", EditorStyles.boldLabel);
       EditorGUI.indentLevel++;
+      EditorGUILayout.LabelField("Platform", Application.platform.ToString());
       EditorGUILayout.LabelField("Version", Application.unityVersion);
       EditorGUI.indentLevel--;
 
@@ -38,7 +39,7 @@ public class UpdateCheck : EditorWindow
 
       if (GUILayout.Button("Check for Updates"))
       {
-         _updateResult = UpdateNotification.CheckForUpdate();
+         _updateResult = UpdateNotification.ManualCheck();
       }
 
       EditorGUILayout.LabelField("Result", (_updateResult == UpdateNotification.Result.CheckNeeded
