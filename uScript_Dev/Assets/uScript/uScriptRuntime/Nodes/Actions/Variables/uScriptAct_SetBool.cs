@@ -41,7 +41,7 @@ public class uScriptAct_SetBool : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

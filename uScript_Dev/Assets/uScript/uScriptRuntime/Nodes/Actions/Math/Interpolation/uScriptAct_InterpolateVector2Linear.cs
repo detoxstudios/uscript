@@ -99,7 +99,7 @@ public class uScriptAct_InterpolateVector2Linear : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
    [Driven]

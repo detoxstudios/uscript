@@ -81,7 +81,7 @@ public class uScriptAct_Particles : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

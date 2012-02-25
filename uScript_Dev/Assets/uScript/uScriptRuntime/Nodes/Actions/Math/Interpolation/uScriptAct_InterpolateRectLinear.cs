@@ -99,7 +99,7 @@ public class uScriptAct_InterpolateRectLinear : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
    [Driven]

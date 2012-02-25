@@ -75,7 +75,7 @@ public class uScriptAct_AccessListTexture2D : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

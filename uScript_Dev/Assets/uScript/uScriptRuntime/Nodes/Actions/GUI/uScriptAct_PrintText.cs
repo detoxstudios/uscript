@@ -85,7 +85,7 @@ public class uScriptAct_PrintText : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
    public void OnGUI()

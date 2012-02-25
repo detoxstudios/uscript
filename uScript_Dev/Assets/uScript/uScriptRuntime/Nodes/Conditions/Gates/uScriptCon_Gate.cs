@@ -148,7 +148,7 @@ public class uScriptCon_Gate : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

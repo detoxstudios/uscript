@@ -75,7 +75,7 @@ public class uScriptAct_AccessListFloat : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

@@ -48,7 +48,7 @@ public class uScriptAct_EscapeURL : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 

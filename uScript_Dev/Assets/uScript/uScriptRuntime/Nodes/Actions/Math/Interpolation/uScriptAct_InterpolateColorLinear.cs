@@ -99,7 +99,7 @@ public class uScriptAct_InterpolateColorLinear : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
    [Driven]

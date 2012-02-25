@@ -100,7 +100,7 @@ public class uScriptAct_InterpolateFloatLinear : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
    [Driven]

@@ -118,7 +118,7 @@ public class uScriptAct_ForEachListVector2 : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

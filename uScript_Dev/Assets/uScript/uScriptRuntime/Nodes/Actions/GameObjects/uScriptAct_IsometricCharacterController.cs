@@ -175,7 +175,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
    public void Update()

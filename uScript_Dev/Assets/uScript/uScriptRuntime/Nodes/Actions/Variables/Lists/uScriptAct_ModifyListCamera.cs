@@ -77,7 +77,7 @@ public class uScriptAct_ModifyListCamera : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

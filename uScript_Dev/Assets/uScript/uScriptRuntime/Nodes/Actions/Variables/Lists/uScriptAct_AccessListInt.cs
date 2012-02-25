@@ -75,7 +75,7 @@ public class uScriptAct_AccessListInt : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

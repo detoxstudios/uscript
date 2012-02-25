@@ -118,7 +118,7 @@ public class uScriptAct_ForEachListRect : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

@@ -75,7 +75,7 @@ public class uScriptAct_AccessListVector3 : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

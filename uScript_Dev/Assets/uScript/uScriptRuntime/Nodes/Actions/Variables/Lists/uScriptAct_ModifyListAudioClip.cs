@@ -77,7 +77,7 @@ public class uScriptAct_ModifyListAudioClip : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

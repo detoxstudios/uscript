@@ -114,7 +114,7 @@ public class uScriptCon_FloatCounter : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

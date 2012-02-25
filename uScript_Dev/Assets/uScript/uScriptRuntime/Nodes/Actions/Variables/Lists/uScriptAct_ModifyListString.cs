@@ -77,7 +77,7 @@ public class uScriptAct_ModifyListString : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

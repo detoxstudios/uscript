@@ -77,7 +77,7 @@ public class uScriptAct_ModifyListColor : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

@@ -47,7 +47,7 @@ public class uScriptAct_UnEscapeURL : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 

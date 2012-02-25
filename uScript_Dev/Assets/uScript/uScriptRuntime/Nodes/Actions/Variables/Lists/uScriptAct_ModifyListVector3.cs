@@ -77,7 +77,7 @@ public class uScriptAct_ModifyListVector3 : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

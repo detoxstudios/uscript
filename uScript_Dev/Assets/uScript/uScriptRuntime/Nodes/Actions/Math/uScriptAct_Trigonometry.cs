@@ -69,7 +69,7 @@ public class uScriptAct_Trigonometry : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

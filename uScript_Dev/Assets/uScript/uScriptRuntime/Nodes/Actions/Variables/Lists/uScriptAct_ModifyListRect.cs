@@ -77,7 +77,7 @@ public class uScriptAct_ModifyListRect : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

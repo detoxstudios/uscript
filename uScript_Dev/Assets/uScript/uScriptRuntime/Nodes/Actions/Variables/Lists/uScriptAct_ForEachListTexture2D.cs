@@ -118,7 +118,7 @@ public class uScriptAct_ForEachListTexture2D : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

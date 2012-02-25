@@ -185,7 +185,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

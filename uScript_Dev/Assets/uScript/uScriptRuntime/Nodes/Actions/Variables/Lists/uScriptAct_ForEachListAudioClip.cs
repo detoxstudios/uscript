@@ -118,7 +118,7 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

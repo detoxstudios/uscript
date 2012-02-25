@@ -59,7 +59,7 @@ public class uScriptAct_ExponentLogarithm : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

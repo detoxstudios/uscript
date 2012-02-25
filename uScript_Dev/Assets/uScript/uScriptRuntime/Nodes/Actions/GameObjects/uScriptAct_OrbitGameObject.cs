@@ -99,7 +99,7 @@ public class uScriptAct_OrbitGameObject : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
    public void Update()

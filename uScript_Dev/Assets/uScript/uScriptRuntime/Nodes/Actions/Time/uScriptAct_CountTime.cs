@@ -48,7 +48,7 @@ public class uScriptAct_CountTime : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
    public void Update()

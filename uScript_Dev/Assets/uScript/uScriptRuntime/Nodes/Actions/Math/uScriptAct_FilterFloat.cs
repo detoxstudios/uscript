@@ -57,7 +57,7 @@ public class uScriptAct_FilterFloat : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }

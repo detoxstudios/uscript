@@ -99,7 +99,7 @@ public class uScriptAct_OrbitLocation : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
    public void Update()

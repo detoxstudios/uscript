@@ -68,7 +68,7 @@ public class uScriptAct_FloatFunctions : uScriptLogic
 
 
    // ================================================================================
-   //    Miscellaneous Node Funtionality
+   //    Miscellaneous Node Functionality
    // ================================================================================
    //
 }
