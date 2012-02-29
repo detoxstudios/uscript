@@ -71,28 +71,18 @@ public class uScriptAct_LookAt : uScriptLogic
             m_FocusPosition = Vector3.forward;
          }
 
-         if ( m_TotalTime <= 0.0f )
+
+         m_Targets = Target;
+
+         m_StartRotations = new Quaternion[ m_Targets.Length ];
+         m_StartPositions = new Vector3   [ m_Targets.Length ];
+
+         for (int i = 0; i < m_Targets.Length; i++)
          {
-            foreach (GameObject currentTarget in Target)
-            {
-               if (currentTarget == null) continue;
-               currentTarget.transform.LookAt( m_FocusPosition );
-            }
-         }
-         else
-         {
-            m_Targets = Target;
+            if ( null == m_Targets[i] ) continue;
 
-            m_StartRotations = new Quaternion[ m_Targets.Length ];
-            m_StartPositions = new Vector3   [ m_Targets.Length ];
-
-            for (int i = 0; i < m_Targets.Length; i++)
-            {
-               if ( null == m_Targets[i] ) continue;
-
-               m_StartRotations[ i ] = m_Targets[ i ].transform.rotation;
-               m_StartPositions[ i ] = m_Targets[ i ].transform.position;
-            }
+            m_StartRotations[ i ] = m_Targets[ i ].transform.rotation;
+            m_StartPositions[ i ] = m_Targets[ i ].transform.position;
          }
       }
    }
@@ -102,7 +92,7 @@ public class uScriptAct_LookAt : uScriptLogic
       if ( null == m_Targets ) return;
 
       //calculate new time and clamp at 1
-      float t = m_Time / m_TotalTime;
+      float t = (m_TotalTime != 0) ? m_Time / m_TotalTime : 1.0f;
       if ( t > 1 ) t = 1;
 
       //update our focal position to the game object's latest position
@@ -115,28 +105,26 @@ public class uScriptAct_LookAt : uScriptLogic
          //our targets might be moving too, so recalculate their desired lookat and slerp it
          Vector3 rotationAxis = Vector3.up;
          Vector3 look = m_FocusPosition - m_StartPositions[ i ];
+                 
          if (m_LockAxis != LockAxis.None)
-         {
-			
-			if( m_LockAxis == LockAxis.X )
-			{
-				rotationAxis =  new Vector3(1,0,0);
-			}
-			
-			if( m_LockAxis == LockAxis.Y )
-			{
-				rotationAxis =  new Vector3(0,1,0);
-			}
-				
-			if( m_LockAxis == LockAxis.Z )
-			{
-				rotationAxis =  new Vector3(0,0,1);
-			}
-			
-
+         {	
+            if( m_LockAxis == LockAxis.X )
+            {
+               rotationAxis = Vector3.right;
+               look.x = 0;
+            }
+            else if( m_LockAxis == LockAxis.Y )
+            {
+               rotationAxis = Vector3.up;
+               look.y = 0;
+            }
+            else if( m_LockAxis == LockAxis.Z )
+            {
+               rotationAxis = Vector3.forward;
+               look.z = 0;
+            }
+         
             look.Normalize();
-            Vector3 right = Vector3.Cross(look, rotationAxis);
-            look = Vector3.Cross(rotationAxis, right);
          }
 			
          Quaternion q = Quaternion.LookRotation( look, rotationAxis );
