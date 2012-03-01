@@ -1706,7 +1706,7 @@ namespace Detox.ScriptEditor
             {
                EntityNode node = m_Script.GetNode( link.Destination.Guid );
 
-               if ( node is EntityMethod )
+               if ( node is EntityMethod || node is EntityProperty )
                {
                   if ( node.Instance.Name == link.Destination.Anchor )
                   {
