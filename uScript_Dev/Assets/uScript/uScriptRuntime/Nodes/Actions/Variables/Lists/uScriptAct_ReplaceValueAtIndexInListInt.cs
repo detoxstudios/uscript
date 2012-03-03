@@ -31,7 +31,7 @@ public class uScriptAct_ReplaceValueAtIndexInListInt : uScriptLogic
       out int[] ModifiedList
       )
 	{
-      if (TargetList.Length < Index)
+      if (TargetList.Length > Index)
       {
          TargetList[Index] = NewValue;
       }
