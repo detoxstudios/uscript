@@ -116,6 +116,8 @@ public class uScript : EditorWindow
    private Hashtable    m_EntityTypeHash = null;
    private EntityDesc []m_EntityTypes = null;
    private LogicNode  []m_LogicTypes  = null;
+   private string     []m_SzLogicTypes = null;
+   private string     []m_SzEntityTypes = null;
 
    private static Hashtable m_NodeParameterFields = new Hashtable( );
    private static Hashtable m_NodeParameterDescFields = new Hashtable( );
@@ -302,6 +304,20 @@ public class uScript : EditorWindow
       }
    }
 
+   public static string []UserTypes
+   {
+      get
+      {
+         Type t = uScript.MasterComponent.GetType("uScriptUserTypes");
+         if ( null != t ) 
+         {
+            uScriptUserTypes types = Activator.CreateInstance( t ) as uScriptUserTypes; 
+            if ( null != types ) return types.Types.Split(',');
+         }
+
+         return new string[0];
+      }
+   }
    public ScriptEditorCtrl ScriptEditorCtrl
    {
       get { return m_ScriptEditorCtrl; }
@@ -3545,12 +3561,34 @@ public class uScript : EditorWindow
       Hashtable baseEvents = new Hashtable();
       Hashtable baseProperties = new Hashtable();
 
-      Dictionary<Type, Type> uniqueNodes = new Dictionary<Type, Type>();
+      if ( null == m_SzLogicTypes )
+      {
+         uScriptDebug.Log( "Reparsing Logic Types", uScriptDebug.Type.Debug );
 
-      GatherDerivedTypes(uniqueNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptLogic));
+         Dictionary<Type, Type> uniqueNodes = new Dictionary<Type, Type>();
 
-      GatherDerivedTypes(uniqueNodes, Preferences.UserNodes, typeof(uScriptLogic));
-      GatherDerivedTypes(uniqueNodes, Preferences.NestedScripts, typeof(uScriptLogic));
+         GatherDerivedTypes(uniqueNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptLogic));
+
+         GatherDerivedTypes(uniqueNodes, Preferences.UserNodes, typeof(uScriptLogic));
+         GatherDerivedTypes(uniqueNodes, Preferences.NestedScripts, typeof(uScriptLogic));
+      
+         m_SzLogicTypes = new string[ uniqueNodes.Values.Count ];
+
+         int i = 0;
+
+         foreach ( Type t in uniqueNodes.Values )
+         {
+            m_SzLogicTypes[ i++ ] = t.ToString();
+         }
+      }
+
+      List<Type> types = new List<Type>();
+
+      foreach ( string s in m_SzLogicTypes )
+      {
+         Type t = MasterComponent.GetType(s);
+         if ( null != t ) types.Add( t );
+      }
 
       MethodInfo[] methods = typeof(uScriptLogic).GetMethods();
 
@@ -3561,16 +3599,6 @@ public class uScript : EditorWindow
             baseMethods[m.Name] = m.Name;
          }
       }
-
-      //methods = typeof(ScriptableObject).GetMethods();
-
-      //foreach (MethodInfo m in methods)
-      //{
-      //   if (true == m.IsPublic)
-      //   {
-      //      baseMethods[m.Name] = m.Name;
-      //   }
-      //}
 
       //i think these are legacy uScript support and can go away
       //but i want to wait until we're inbetween builds to risk it
@@ -3604,7 +3632,6 @@ public class uScript : EditorWindow
 
       List<LogicNode> logicNodes = new List<LogicNode>();
 
-      List<Type> types = new List<Type>(uniqueNodes.Values);
       types.Sort(TypeSorter);
 
       foreach (Type type in types)
@@ -4162,7 +4189,8 @@ public class uScript : EditorWindow
             {
                if ( false == m_EntityTypeHash.Contains(t) )
                {
-                  m_EntityTypes = null;
+                  m_EntityTypes   = null;
+                  m_SzEntityTypes = null;
                   break;
                }
             }
@@ -4170,6 +4198,8 @@ public class uScript : EditorWindow
       
          if ( null != m_EntityTypes ) return m_EntityTypes;
       }
+
+
 
       uScriptDebug.Log( "Rebuilding Entity Types", uScriptDebug.Type.Debug );
 
@@ -4254,56 +4284,193 @@ public class uScript : EditorWindow
          baseProperties[p.Name] = p.Name;
       }
 
-      List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(FindObjectsOfType(typeof(UnityEngine.Object)));
-      Dictionary<string, Type> uniqueObjects = new Dictionary<string, Type>();
-
-      Dictionary<Type, Type> eventNodes = new Dictionary<Type, Type>();
-      GatherDerivedTypes(eventNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptEvent));
-      GatherDerivedTypes(eventNodes, Preferences.UserNodes, typeof(uScriptEvent));
-
-      foreach (UnityEngine.Object o in allObjects)
+      if ( null == m_SzEntityTypes )
       {
-         //don't ignore uScriptCode because we want to reflect
-         //any public inspector properties
+         uScriptDebug.Log( "Reparsing Entity Types", uScriptDebug.Type.Debug );
 
-         //ignore our logic scripts, they are handled separately
-         if (typeof(uScriptLogic).IsAssignableFrom(o.GetType())) continue;
-         if (typeof(uScript_UndoComponent).IsAssignableFrom(o.GetType())) continue;
+         List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(FindObjectsOfType(typeof(UnityEngine.Object)));
+         Dictionary<string, Type> uniqueObjects = new Dictionary<string, Type>();
 
-         uniqueObjects[o.GetType().ToString()] = o.GetType();
-      }
+         Dictionary<Type, Type> eventNodes = new Dictionary<Type, Type>();
+         GatherDerivedTypes(eventNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptEvent));
+         GatherDerivedTypes(eventNodes, Preferences.UserNodes, typeof(uScriptEvent));
 
-      foreach (Type t in eventNodes.Values)
-      {
-         uniqueObjects[t.ToString()] = t;
-      }
-
-      uniqueObjects[typeof(Math).ToString()] = typeof(Math);
-
-      if (null != requiredTypes)
-      {
-         foreach (string t in requiredTypes)
+         foreach (UnityEngine.Object o in allObjects)
          {
-            if (true == uniqueObjects.ContainsKey(t)) continue;
+            //don't ignore uScriptCode because we want to reflect
+            //any public inspector properties
 
-            Type type = uScript.MasterComponent.GetType(t);
+            //ignore our logic scripts, they are handled separately
+            if (typeof(uScriptLogic).IsAssignableFrom(o.GetType())) continue;
+            if (typeof(uScript_UndoComponent).IsAssignableFrom(o.GetType())) continue;
 
-            if (null != type)
+            uniqueObjects[o.GetType().ToString()] = o.GetType();
+         }
+
+         foreach (Type t in eventNodes.Values)
+         {
+            uniqueObjects[t.ToString()] = t;
+         }
+
+         uniqueObjects[typeof(Math).ToString()] = typeof(Math);
+         uniqueObjects[typeof(UnityEngine.Object).ToString()] = typeof(UnityEngine.Object);
+         uniqueObjects[typeof(AnimationClip).ToString()] = typeof(AnimationClip);
+         uniqueObjects[typeof(AssetBundle).ToString()] = typeof(AssetBundle);
+         uniqueObjects[typeof(AudioClip).ToString()] = typeof(AudioClip);
+         uniqueObjects[typeof(Component).ToString()] = typeof(Component);
+         uniqueObjects[typeof(Behaviour).ToString()] = typeof(Behaviour);
+         uniqueObjects[typeof(Animation).ToString()] = typeof(Animation);
+         uniqueObjects[typeof(AudioChorusFilter).ToString()] = typeof(AudioChorusFilter);
+         uniqueObjects[typeof(AudioDistortionFilter).ToString()] = typeof(AudioDistortionFilter);
+         uniqueObjects[typeof(AudioEchoFilter).ToString()] = typeof(AudioEchoFilter);
+         uniqueObjects[typeof(AudioHighPassFilter).ToString()] = typeof(AudioHighPassFilter);
+         uniqueObjects[typeof(AudioListener).ToString()] = typeof(AudioListener);
+         uniqueObjects[typeof(AudioLowPassFilter).ToString()] = typeof(AudioLowPassFilter);
+         uniqueObjects[typeof(AudioReverbFilter).ToString()] = typeof(AudioReverbFilter);        
+         uniqueObjects[typeof(AudioReverbZone).ToString()] = typeof(AudioReverbZone);
+         uniqueObjects[typeof(AudioSource).ToString()] = typeof(AudioSource);
+         uniqueObjects[typeof(Camera).ToString()] = typeof(Camera);
+         uniqueObjects[typeof(ConstantForce).ToString()] = typeof(ConstantForce);
+         uniqueObjects[typeof(GUIElement).ToString()] = typeof(GUIElement);
+         uniqueObjects[typeof(GUIText).ToString()] = typeof(GUIText);
+         uniqueObjects[typeof(GUITexture).ToString()] = typeof(GUITexture);
+         uniqueObjects[typeof(GUILayer).ToString()] = typeof(GUILayer);
+         uniqueObjects[typeof(LensFlare).ToString()] = typeof(LensFlare);
+         uniqueObjects[typeof(Light).ToString()] = typeof(Light);         
+         uniqueObjects[typeof(MonoBehaviour).ToString()] = typeof(MonoBehaviour);
+         uniqueObjects[typeof(Terrain).ToString()] = typeof(Terrain);
+         uniqueObjects[typeof(NavMeshAgent).ToString()] = typeof(NavMeshAgent);
+         uniqueObjects[typeof(NetworkView).ToString()] = typeof(NetworkView);
+         uniqueObjects[typeof(Projector).ToString()] = typeof(Projector);
+         uniqueObjects[typeof(Skybox).ToString()] = typeof(Skybox);
+         uniqueObjects[typeof(Cloth).ToString()] = typeof(Cloth);
+         uniqueObjects[typeof(InteractiveCloth).ToString()] = typeof(InteractiveCloth);         
+         uniqueObjects[typeof(SkinnedCloth).ToString()] = typeof(SkinnedCloth);
+         uniqueObjects[typeof(Collider).ToString()] = typeof(Collider);
+         uniqueObjects[typeof(BoxCollider).ToString()] = typeof(BoxCollider);
+         uniqueObjects[typeof(CapsuleCollider).ToString()] = typeof(CapsuleCollider);
+         uniqueObjects[typeof(CharacterController).ToString()] = typeof(CharacterController);
+         uniqueObjects[typeof(MeshCollider).ToString()] = typeof(MeshCollider);
+         uniqueObjects[typeof(SphereCollider).ToString()] = typeof(SphereCollider);
+         uniqueObjects[typeof(TerrainCollider).ToString()] = typeof(TerrainCollider);
+         uniqueObjects[typeof(WheelCollider).ToString()] = typeof(WheelCollider);
+         uniqueObjects[typeof(Joint).ToString()] = typeof(Joint);
+         uniqueObjects[typeof(CharacterJoint).ToString()] = typeof(CharacterJoint);
+         uniqueObjects[typeof(ConfigurableJoint).ToString()] = typeof(ConfigurableJoint);
+         uniqueObjects[typeof(FixedJoint).ToString()] = typeof(FixedJoint);
+         uniqueObjects[typeof(HingeJoint).ToString()] = typeof(HingeJoint);
+         uniqueObjects[typeof(SpringJoint).ToString()] = typeof(SpringJoint);
+         uniqueObjects[typeof(LODGroup).ToString()] = typeof(LODGroup);
+         uniqueObjects[typeof(LightProbeGroup).ToString()] = typeof(LightProbeGroup);
+         uniqueObjects[typeof(MeshFilter).ToString()] = typeof(MeshFilter);
+         uniqueObjects[typeof(OcclusionArea).ToString()] = typeof(OcclusionArea);
+         uniqueObjects[typeof(OcclusionPortal).ToString()] = typeof(OcclusionPortal);
+         uniqueObjects[typeof(OffMeshLink).ToString()] = typeof(OffMeshLink);
+         uniqueObjects[typeof(ParticleAnimator).ToString()] = typeof(ParticleAnimator);
+         uniqueObjects[typeof(ParticleEmitter).ToString()] = typeof(ParticleEmitter);
+         uniqueObjects[typeof(ParticleSystem).ToString()] = typeof(ParticleSystem);
+         uniqueObjects[typeof(Renderer).ToString()] = typeof(Renderer);
+         uniqueObjects[typeof(ClothRenderer).ToString()] = typeof(ClothRenderer);
+         uniqueObjects[typeof(LineRenderer).ToString()] = typeof(LineRenderer);
+         uniqueObjects[typeof(MeshRenderer).ToString()] = typeof(MeshRenderer);
+         uniqueObjects[typeof(ParticleRenderer).ToString()] = typeof(ParticleRenderer);
+         uniqueObjects[typeof(ParticleSystemRenderer).ToString()] = typeof(ParticleSystemRenderer);
+         uniqueObjects[typeof(SkinnedMeshRenderer).ToString()] = typeof(SkinnedMeshRenderer);
+         uniqueObjects[typeof(TrailRenderer).ToString()] = typeof(TrailRenderer);
+         uniqueObjects[typeof(Rigidbody).ToString()] = typeof(Rigidbody);
+         uniqueObjects[typeof(TextMesh).ToString()] = typeof(TextMesh);
+         uniqueObjects[typeof(Transform).ToString()] = typeof(Transform);
+         uniqueObjects[typeof(Tree).ToString()] = typeof(Tree);
+         uniqueObjects[typeof(Flare).ToString()] = typeof(Flare);
+         uniqueObjects[typeof(UnityEngine.Font).ToString()] = typeof(UnityEngine.Font);
+         uniqueObjects[typeof(GameObject).ToString()] = typeof(GameObject);
+         uniqueObjects[typeof(LightProbes).ToString()] = typeof(LightProbes);
+         uniqueObjects[typeof(Material).ToString()] = typeof(Material);
+         uniqueObjects[typeof(ProceduralMaterial).ToString()] = typeof(ProceduralMaterial);
+         uniqueObjects[typeof(Mesh).ToString()] = typeof(Mesh);
+         uniqueObjects[typeof(NavMesh).ToString()] = typeof(NavMesh);
+         uniqueObjects[typeof(PhysicMaterial).ToString()] = typeof(PhysicMaterial);
+         uniqueObjects[typeof(QualitySettings).ToString()] = typeof(QualitySettings);
+         uniqueObjects[typeof(ScriptableObject).ToString()] = typeof(ScriptableObject);
+         uniqueObjects[typeof(GUISkin).ToString()] = typeof(GUISkin);
+         uniqueObjects[typeof(Shader).ToString()] = typeof(Shader);
+         uniqueObjects[typeof(TerrainData).ToString()] = typeof(TerrainData);
+         uniqueObjects[typeof(TextAsset).ToString()] = typeof(TextAsset);
+         uniqueObjects[typeof(Texture).ToString()] = typeof(Texture);
+         uniqueObjects[typeof(Cubemap).ToString()] = typeof(Cubemap);
+         uniqueObjects[typeof(MovieTexture).ToString()] = typeof(MovieTexture);
+         uniqueObjects[typeof(RenderTexture).ToString()] = typeof(RenderTexture);
+         uniqueObjects[typeof(Texture2D).ToString()] = typeof(Texture2D);
+         uniqueObjects[typeof(WebCamTexture).ToString()] = typeof(WebCamTexture);
+         uniqueObjects[typeof(UnityEngine.RuntimePlatform).ToString()] = typeof(UnityEngine.RuntimePlatform);
+         
+         string []userTypes = UserTypes;
+
+         foreach ( string s in userTypes )
+         {
+            string szType = s.Trim();
+            if ("" == szType) continue;
+
+            Type t = MasterComponent.GetType( szType );
+
+            if ( null != t )
             {
-               //ignore any required logic types because those
-               //get populated in PopulateLogicNodes and are not
-               //entity types
-               if (typeof(uScriptLogic).IsAssignableFrom(type)) continue;
-      
-               if (typeof(UnityEngine.Object).IsAssignableFrom(type))
+               if ( true == typeof(uScriptLogic).IsAssignableFrom(t) )
                {
-                  uniqueObjects[t] = type;
+                  uScriptDebug.Log( "uScriptLogic node " + szType + " should not be added to uScriptUserTypes, these are automatically parsed by uScript", uScriptDebug.Type.Warning );
+               }
+               else
+               {
+                  uniqueObjects[t.ToString()] = t;
+               }
+            }
+            else
+            {
+               uScriptDebug.Log( "Cannot Find uScriptUserType: " + s, uScriptDebug.Type.Warning );
+            }
+         }
+
+         if (null != requiredTypes)
+         {
+            foreach (string t in requiredTypes)
+            {
+               if (true == uniqueObjects.ContainsKey(t)) continue;
+
+               Type type = uScript.MasterComponent.GetType(t);
+
+               if (null != type)
+               {
+                  //ignore any required logic types because those
+                  //get populated in PopulateLogicNodes and are not
+                  //entity types
+                  if (typeof(uScriptLogic).IsAssignableFrom(type)) continue;
+         
+                  if (typeof(UnityEngine.Object).IsAssignableFrom(type))
+                  {
+                     uniqueObjects[t] = type;
+                  }
                }
             }
          }
+
+         m_SzEntityTypes = new string[ uniqueObjects.Values.Count ];
+
+         int i = 0;
+
+         foreach ( Type t in uniqueObjects.Values )
+         {
+            m_SzEntityTypes[ i++ ] = t.ToString();
+         }
       }
 
-      List<Type> types = new List<Type>(uniqueObjects.Values);
+      List<Type> types = new List<Type>();
+
+      foreach ( string s in m_SzEntityTypes )
+      {
+         Type t = MasterComponent.GetType( s );
+         if ( null != t ) types.Add( t );
+      }
+
       types.Sort(TypeSorter);
 
       foreach (Type t in types)
@@ -4312,8 +4479,6 @@ public class uScript : EditorWindow
 
          Reflect(t, entityDescs, baseMethods, baseEvents, baseProperties);
       }
-
-      Reflect(typeof(UnityEngine.RuntimePlatform), entityDescs, baseMethods, baseEvents, baseProperties);
 
       //consolidate like events so they appear on the same node
       EntityDesc[] descs = entityDescs.ToArray();
