@@ -720,6 +720,7 @@ namespace Detox.ScriptEditor
 //         //add a separator
 //         friendlyMenu = GetMenu(addMenu, "<hr>");
 
+
          BuildAddMenu( addMenu, typeHash );
 
          m_ContextMenuStrip.Items.AddRange( addMenu.DropDownItems.Items.ToArray( ) );
@@ -2297,6 +2298,9 @@ namespace Detox.ScriptEditor
          return subMenu;
       }
 
+      //cache add menu so we don't have to query all the types each time the context menu should be shown
+      private ToolStripMenuItem m_AddMenu = null;
+
       private void m_ContextMenuStrip_Opening(object sender, CancelEventArgs args)
       {
          m_ContextObject = null;
@@ -2305,7 +2309,6 @@ namespace Detox.ScriptEditor
 
          m_ContextMenuStrip.Items.Clear( );
 
-         ToolStripMenuItem addMenu      = new ToolStripMenuItem();
          ToolStripMenuItem copyMenu     = new ToolStripMenuItem();
          ToolStripMenuItem pasteMenu    = new ToolStripMenuItem();
          ToolStripMenuItem collapseMenu = new ToolStripMenuItem();
@@ -2317,7 +2320,15 @@ namespace Detox.ScriptEditor
          ToolStripMenuItem upgradeNode       = new ToolStripMenuItem();
          ToolStripMenuItem deleteMissingNode = new ToolStripMenuItem();
 
-         m_ContextMenuStrip.Items.Add( addMenu );
+         bool buildAddMenu = false;
+
+         if ( null == m_AddMenu )
+         {
+            buildAddMenu = true;
+            m_AddMenu = new ToolStripMenuItem( );
+         }
+
+         m_ContextMenuStrip.Items.Add( m_AddMenu );
          
          m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
 
@@ -2455,32 +2466,33 @@ namespace Detox.ScriptEditor
          }
 
 
+         if ( true == buildAddMenu )
+         {
+            m_AddMenu.Name = "m_Add";
+            m_AddMenu.Size = new Detox.Drawing.Size(152, 22);
+            m_AddMenu.Text = "Add";
 
+            ToolStripMenuItem comment  = new ToolStripMenuItem();
+            ToolStripMenuItem external = new ToolStripMenuItem();
 
-         addMenu.Name = "m_Add";
-         addMenu.Size = new Detox.Drawing.Size(152, 22);
-         addMenu.Text = "Add";
+            comment.Name = "m_AddComment";
+            comment.Size = new Detox.Drawing.Size(152, 22);
+            comment.Text = "Comment";
+            comment.Click += new System.EventHandler(m_MenuAddNode_Click);
+            comment.Tag  = new CommentNode( "" );
 
+            external.Name = "m_AddExternal";
+            external.Size = new Detox.Drawing.Size(152, 22);
+            external.Text = "External Connection";
+            external.Click += new System.EventHandler(m_MenuAddNode_Click);
+            external.Tag  = new ExternalConnection( Guid.NewGuid( ) );
 
-         ToolStripMenuItem comment  = new ToolStripMenuItem();
-         ToolStripMenuItem external = new ToolStripMenuItem();
+            m_AddMenu.DropDownItems.Add( comment );
+            m_AddMenu.DropDownItems.Add( external );
 
-         comment.Name = "m_AddComment";
-         comment.Size = new Detox.Drawing.Size(152, 22);
-         comment.Text = "Comment";
-         comment.Click += new System.EventHandler(m_MenuAddNode_Click);
-         comment.Tag  = new CommentNode( "" );
+            BuildAddMenu( m_AddMenu, null );
+         }
 
-         external.Name = "m_AddExternal";
-         external.Size = new Detox.Drawing.Size(152, 22);
-         external.Text = "External Connection";
-         external.Click += new System.EventHandler(m_MenuAddNode_Click);
-         external.Tag  = new ExternalConnection( Guid.NewGuid( ) );
-
-         addMenu.DropDownItems.Add( comment );
-         addMenu.DropDownItems.Add( external );
-
-         BuildAddMenu( addMenu, null );
 
          //see if we can create an automatic link for the user
          foreach ( Node node in m_FlowChart.Nodes )
