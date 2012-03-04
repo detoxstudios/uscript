@@ -78,6 +78,10 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
    {
       if ( true == m_Complete ) return;
 
+      //assume speed was initially authored for 30fps, 
+      //(the original node never specified but we need some baseline so we can adjust it based on framerate)
+      float speed = m_Speed * (Time.deltaTime / (1.0f / 30.0f));
+
       bool done = true;
 
       if ( true == m_TreatAsOffset )
@@ -90,7 +94,7 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
             Vector3 delta = (m_EndingLocation + m_StartingLocations[ i ]) - target.transform.position;
 
             //if we've gotten as precise as the speed will allow, stay here
-            if ( Vector3.Dot(delta, delta) < m_Speed * m_Speed ) 
+            if ( Vector3.Dot(delta, delta) < speed * speed ) 
             {
                target.transform.position = m_EndingLocation + m_StartingLocations[ i ];
             }
@@ -99,7 +103,7 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
                done  = false;
 
                delta = Vector3.Normalize( delta );
-               target.transform.position = target.transform.position + delta * m_Speed;
+               target.transform.position = target.transform.position + delta * speed;
             }
          }
       }
@@ -113,7 +117,7 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
             Vector3 delta = m_EndingLocation - target.transform.position;
 
             //if we've gotten as precise as the speed will allow, stay here
-            if ( Vector3.Dot(delta, delta) < m_Speed * m_Speed ) 
+            if ( Vector3.Dot(delta, delta) < speed * speed ) 
             {
                target.transform.position = m_EndingLocation;
             }
@@ -122,7 +126,7 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
                done  = false;
 
                delta = Vector3.Normalize( delta );
-               target.transform.position = target.transform.position + delta * m_Speed;
+               target.transform.position = target.transform.position + delta * speed;
             }
          }
       }
