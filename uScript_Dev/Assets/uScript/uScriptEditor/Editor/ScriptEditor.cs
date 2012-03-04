@@ -4542,6 +4542,7 @@ namespace Detox.ScriptEditor
             cloned = new EntityEvent( data.ComponentType, data.ComponentType, ArrayUtil.ToPlugs(data.Outputs) );
             
             bool exactMatch = false;
+            bool found      = false;
 
             foreach ( EntityDesc desc in m_EntityDescs )
             {
@@ -4552,7 +4553,8 @@ namespace Detox.ScriptEditor
                        true == ArrayUtil.ArraysAreEqual(entityEvent.Outputs, ArrayUtil.ToPlugs(data.Outputs)) )
                   {
                      cloned = entityEvent;
-                     
+                     found  = true;
+
                      if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), entityEvent.Parameters) )
                      {
                         exactMatch = true;
@@ -4566,13 +4568,20 @@ namespace Detox.ScriptEditor
                }
             }
 
-            cloned.EventArgs   = data.EventArgs;
-            cloned.Guid        = data.Guid;
-            cloned.Position    = data.Position;
-            cloned.ShowComment = new Parameter( data.ShowComment );
-            cloned.Comment     = new Parameter( data.Comment );         
-         
-            if ( false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
+            if ( true == found )
+            {
+               cloned.EventArgs   = data.EventArgs;
+               cloned.Guid        = data.Guid;
+               cloned.Position    = data.Position;
+               cloned.ShowComment = new Parameter( data.ShowComment );
+               cloned.Comment     = new Parameter( data.Comment );         
+            }
+            else
+            {
+               cloned = new EntityEvent( data );
+            }
+
+            if ( false == found || false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
             {
                //Status.Warning( "Matching EntityEvent " + data.ComponentType + " could not be found" );
                m_DeprecatedNodes[ cloned.Guid ] = cloned;
@@ -4594,6 +4603,7 @@ namespace Detox.ScriptEditor
          {
             cloned = new EntityMethod( data.ComponentType, data.Input.Name, data.Input.FriendlyName );
             bool exactMatch = false;
+            bool found      = false;
 
             //entities might have overloaded methods so we need to go through all
             //and if we don't find an exact match then just use the first potential one we come across
@@ -4608,6 +4618,7 @@ namespace Detox.ScriptEditor
                        entityMethod.Input.Name == data.Input.Name )
                   {
                      cloned = entityMethod;
+                     found  = true;
                      
                      if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(data.Parameters), entityMethod.Parameters) )
                      {
@@ -4638,12 +4649,19 @@ namespace Detox.ScriptEditor
                }
             }
 
-            cloned.Guid        = data.Guid;
-            cloned.Position    = data.Position;
-            cloned.ShowComment = new Parameter( data.ShowComment );
-            cloned.Comment     = new Parameter( data.Comment );
-            
-            if ( false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
+            if ( true == found )
+            {
+               cloned.Guid        = data.Guid;
+               cloned.Position    = data.Position;
+               cloned.ShowComment = new Parameter( data.ShowComment );
+               cloned.Comment     = new Parameter( data.Comment );
+            }
+            else
+            {
+               cloned = new EntityMethod( data );
+            }
+
+            if ( false == found || false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
             {
                //Status.Warning( "Matching EntityMethod " + data.ComponentType + " " + data.Input.Name + " could not be found" );
                m_DeprecatedNodes[ cloned.Guid ] = cloned;
@@ -4666,6 +4684,7 @@ namespace Detox.ScriptEditor
             cloned = new EntityProperty( data.Parameter.Name, data.Parameter.FriendlyName, data.ComponentType, 
                                          data.Parameter.Default, data.Parameter.Input, data.Parameter.Output );
             bool exactMatch = false;
+            bool found = false;
 
             foreach ( EntityDesc desc in m_EntityDescs )
             {
@@ -4676,6 +4695,7 @@ namespace Detox.ScriptEditor
                        entityProperty.ComponentType  == data.ComponentType )
                   {
                      cloned = entityProperty;
+                     found  = true;
                      
                      if ( true == ArrayUtil.ParametersAreCompatible(ArrayUtil.ToParameters(new Data.ScriptEditor.Parameter[]{data.Parameter}), 
                                                                     new Parameter[]{entityProperty.Parameter}) )
@@ -4693,12 +4713,19 @@ namespace Detox.ScriptEditor
                }
             }
 
-            cloned.Guid        = data.Guid;
-            cloned.Position    = data.Position;
-            cloned.ShowComment = new Parameter( data.ShowComment );
-            cloned.Comment     = new Parameter( data.Comment );
+            if ( true == found )
+            {
+               cloned.Guid        = data.Guid;
+               cloned.Position    = data.Position;
+               cloned.ShowComment = new Parameter( data.ShowComment );
+               cloned.Comment     = new Parameter( data.Comment );
+            }
+            else
+            {
+               cloned = new EntityProperty( data );
+            }
 
-            if ( false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
+            if ( false == found || false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
             {
                //Status.Warning( "Matching EntityProperty " + data.Instance.Name + " " + data.Parameter.Name + " could not be found" );
                m_DeprecatedNodes[ cloned.Guid ] = cloned;
@@ -4722,12 +4749,14 @@ namespace Detox.ScriptEditor
          {
             cloned = new LogicNode( data.Type, data.FriendlyName );
 
+            bool found = false;
             bool exactMatch = false;
    
             foreach ( LogicNode node in m_LogicNodes )
             {
                if ( node.Type == data.Type )
                {
+                  found  = true;
                   cloned = node;
                   
                   //don't compare event parameters or event args when checking for an exact match
@@ -4749,12 +4778,19 @@ namespace Detox.ScriptEditor
                }
             }
 
-            cloned.Guid       = data.Guid;
-            cloned.Position   = data.Position;
-            cloned.ShowComment= new Parameter( data.ShowComment );
-            cloned.Comment    = new Parameter( data.Comment );
+            if ( true == found )
+            {
+               cloned.Guid       = data.Guid;
+               cloned.Position   = data.Position;
+               cloned.ShowComment= new Parameter( data.ShowComment );
+               cloned.Comment    = new Parameter( data.Comment );
+            }
+            else
+            {
+               cloned = new LogicNode( data );
+            }
 
-            if ( false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
+            if ( false == found || false == exactMatch || uScript.IsNodeTypeDeprecated(cloned) )
             {
                //Status.Warning( "Matching LogicNode " + data.Type + " could not be found" );
                m_DeprecatedNodes[ cloned.Guid ] = cloned;
