@@ -2835,11 +2835,13 @@ namespace Detox.ScriptEditor
             //if we care about types, and this type isn't registered, ignore it
             if ( null != typeHash && false == typeHash.Contains(type) ) continue;
 
-            string friendlyName = uScriptConfig.Variable.FriendlyName(type);
+            //don't show uscript logic nodes as variables
+            Type t = uScript.MasterComponent.GetType( type );
+            if ( null != t && typeof(uScriptLogic).IsAssignableFrom(t) || typeof(uScriptEvent).IsAssignableFrom(t) ) continue;
 
+            string friendlyName = uScriptConfig.Variable.FriendlyName(type);
             string categoryName = uScriptConfig.Variable.Category(type);
 
-//            UnityEngine.Debug.Log("CategoryName BEFORE: " + categoryName + "/" + friendlyName + "\n");
             if ("" == categoryName)
             {
                categoryName = sceneMenu + "/Variables";
@@ -2848,8 +2850,6 @@ namespace Detox.ScriptEditor
             {
                categoryName = string.Empty;
             }
-
-//            UnityEngine.Debug.Log("CategoryName AFTER: " + categoryName + "/" + friendlyName + "\n");
 
             ToolStripMenuItem friendlyMenu = null;
             
@@ -2866,7 +2866,6 @@ namespace Detox.ScriptEditor
                else
                {
                   friendlyMenu = GetMenu(addMenu, categoryName + "/" + friendlyName.Replace("UnityEngine.", string.Empty));
-//                  friendlyMenu = GetMenu(addMenu, "Place Variable: " + friendlyName.Replace("UnityEngine.", string.Empty));
                }
             }
 

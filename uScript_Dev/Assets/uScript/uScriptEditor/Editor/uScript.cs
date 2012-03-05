@@ -311,8 +311,14 @@ public class uScript : EditorWindow
          Type t = uScript.MasterComponent.GetType("uScriptUserTypes");
          if ( null != t ) 
          {
-            uScriptUserTypes types = Activator.CreateInstance( t ) as uScriptUserTypes; 
-            if ( null != types ) return types.Types.Split(',');
+            FieldInfo p = t.GetField( "Types" );
+            if ( null != p )
+            {
+               object instance = Activator.CreateInstance( t );
+
+               object v = p.GetValue( instance );
+               if ( v is string ) return ((string)v).Split( ',' );
+            }
          }
 
          return new string[0];
@@ -3248,6 +3254,8 @@ public class uScript : EditorWindow
       CurrentScriptName = scriptEditor.Name;
 
       //brand new scriptso clear out any previous caches and undo/redo
+      ClearEntityTypes();
+      ClearLogicTypes();
       ClearChangeStack( );
       OpenFromCache( );
       
@@ -3256,6 +3264,18 @@ public class uScript : EditorWindow
       //Debug.Log("clearing" );
       uScript.SetSetting("uScript\\LastOpened", "");
       uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
+   }
+
+   private void ClearEntityTypes()
+   {
+      m_EntityTypes = null;
+      m_SzEntityTypes = null;
+   }
+   
+   private void ClearLogicTypes()
+   {
+      m_LogicTypes  = null;
+      m_SzLogicTypes = null;
    }
 
    public bool OpenScript(string fullPath)
@@ -3295,6 +3315,8 @@ public class uScript : EditorWindow
 
          //brand new scriptso clear out any previous caches and undo/redo
          ClearChangeStack( );
+         ClearEntityTypes();
+         ClearLogicTypes();
          OpenFromCache( );
 
          uScriptBackgroundProcess.ForceFileRefresh();
