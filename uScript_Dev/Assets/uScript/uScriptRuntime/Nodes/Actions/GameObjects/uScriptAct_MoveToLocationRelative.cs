@@ -27,19 +27,6 @@ public class uScriptAct_MoveToLocationRelative : uScriptLogic
    private float        m_CurrentTime;
    private bool         m_Cancelled;
 
-   public void Cancel(
-      GameObject[] targetArray,
-      Vector3 location,
-      GameObject source,
-      float totalTime
-      )
-   {
-      if (m_CurrentTime != m_TotalTime)
-      {
-         m_Cancelled = true;
-         m_CurrentTime = m_TotalTime;
-      }
-   }
    
    public void In(
       [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
@@ -85,6 +72,28 @@ public class uScriptAct_MoveToLocationRelative : uScriptLogic
          }
       }
    }
+	
+   public void Cancel(
+      [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
+      GameObject[] targetArray,
+      
+      [FriendlyName("End Location", "The ending location to move the Targets to.")]
+      Vector3 location,
+      
+      [FriendlyName("Source", "The Source GameObject which Target will move relative to.")]
+      GameObject source,
+
+      [FriendlyName("Transition Time", "Time to take to move from current position to desired position.")]
+      float totalTime
+      )
+   {
+      if (m_CurrentTime != m_TotalTime)
+      {
+         m_Cancelled = true;
+         m_CurrentTime = m_TotalTime;
+      }
+   }
+   
 
    public void Update()
    {

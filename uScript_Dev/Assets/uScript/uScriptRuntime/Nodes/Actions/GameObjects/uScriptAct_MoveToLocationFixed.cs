@@ -27,19 +27,6 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
    private bool         m_Complete = true;
    private bool         m_Cancelled;
 
-   public void Cancel(
-      GameObject[] targetArray,
-      Vector3 location,
-      bool asOffset,
-      float speed
-   )
-   {
-      if (false == m_Complete)
-      {
-         m_Complete  = true;
-         m_Cancelled = true;
-      }
-   }
 
    public void In(
       [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
@@ -73,6 +60,31 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
          m_StartingLocations[ i ] = target.transform.position;
       }
    }
+	
+	
+   public void Cancel(
+      [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
+      GameObject[] targetArray,
+      
+      [FriendlyName("End Location", "The ending location to move the Targets to.")]
+      Vector3 location,
+      
+      [FriendlyName("Use as Offset", "Whether or not to treat End Location as an offset, rather than an absolute position.")]
+      [SocketState(false, false)]
+      bool asOffset,
+      
+      [FriendlyName("Speed", "The units per second you wish your object to move.")]
+      [DefaultValue(1.0f)]
+      float speed
+   )
+   {
+      if (false == m_Complete)
+      {
+         m_Complete  = true;
+         m_Cancelled = true;
+      }
+   }
+	
 
    public void Update()
    {

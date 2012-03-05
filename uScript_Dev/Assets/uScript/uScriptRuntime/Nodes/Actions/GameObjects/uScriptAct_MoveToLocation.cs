@@ -27,20 +27,6 @@ public class uScriptAct_MoveToLocation : uScriptLogic
    private float        m_CurrentTime;
    private bool         m_Cancelled;
 
-   public void Cancel(
-      GameObject[] targetArray,
-      Vector3 location,
-      bool asOffset,
-      float totalTime
-   )
-   {
-      if (m_CurrentTime != m_TotalTime)
-      {
-         m_Cancelled = true;
-         m_CurrentTime = m_TotalTime;
-      }
-   }
-
    public void In(
       [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
       GameObject[] targetArray,
@@ -97,7 +83,27 @@ public class uScriptAct_MoveToLocation : uScriptLogic
          }
       }
    }
-
+	
+	
+   public void Cancel(
+      [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
+      GameObject[] targetArray,
+	  [FriendlyName("End Location", "The ending location to move the Targets to.")]
+      Vector3 location,
+	  [FriendlyName("Use as Offset", "Whether or not to treat End Location as an offset, rather than an absolute position.")]
+      bool asOffset,
+	  [FriendlyName("Transition Time", "Time to take to move from current position to desired position.")]
+      float totalTime
+   )
+   {
+      if (m_CurrentTime != m_TotalTime)
+      {
+         m_Cancelled = true;
+         m_CurrentTime = m_TotalTime;
+      }
+   }
+	
+	
    public void Update()
    {
       if ( m_CurrentTime == m_TotalTime ) return;
