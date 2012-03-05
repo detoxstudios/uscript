@@ -1680,41 +1680,64 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "//external parameters" );         
          foreach ( ExternalConnection external in m_Script.Externals )
          {
-            LinkNode [] links = FindLinksByDestination( external.Guid, external.Connection );
-
-            foreach ( LinkNode link in links )
+            Parameter lowestParameter = GetLowestCommonExternalParameter(external);
+            if (lowestParameter != Parameter.Empty)
             {
-               EntityNode node = m_Script.GetNode( link.Source.Guid );
-
-               foreach ( Parameter p in node.Parameters )
-               {
-                  if ( p.Name == link.Source.Anchor &&
-                       true == p.Output )
-                  {
-                     AddCSharpLine( FormatType(p.Type) + " " + CSharpName(external, p.Name) + " = " + FormatValue(p.Default, p.Type) + ";" );
-                     break;
-                  }
-               }
-
-               //only one link allowed for each external parameter output
-               break;
+               AddCSharpLine( FormatType(lowestParameter.Type) + " " + CSharpName(external) + " = " + FormatValue(lowestParameter.Default, lowestParameter.Type) + ";" );
             }
+            //LinkNode [] links = FindLinksByDestination( external.Guid, external.Connection );
 
-            links = FindLinksBySource( external.Guid, external.Connection );
+            //bool externalDeclared = false;
 
-            foreach ( LinkNode link in links )
-            {
-               EntityNode node = m_Script.GetNode( link.Destination.Guid );
+            //foreach ( LinkNode link in links )
+            //{
+            //   EntityNode node = m_Script.GetNode( link.Source.Guid );
 
-               if ( node is EntityMethod || node is EntityProperty )
-               {
-                  if ( node.Instance.Name == link.Destination.Anchor )
-                  {
-                     AddCSharpLine( FormatType(node.Instance.Type) + " " + CSharpName(external) + " = " + FormatValue(node.Instance.Default, node.Instance.Type) + ";" );
-                     break;
-                  }
-               }
-            }
+            //   foreach ( Parameter p in node.Parameters )
+            //   {
+            //      if ( p.Name == link.Source.Anchor &&
+            //           true == p.Output )
+            //      {
+            //         externalDeclared = true;
+            //         AddCSharpLine( FormatType(lowestParameter.Type) + " " + CSharpName(external) + " = " + FormatValue(lowestParameter.Default, lowestParameter.Type) + ";" );
+            //         break;
+            //      }
+            //   }
+
+            //   //only one link allowed for each external parameter output
+            //   break;
+            //}
+
+            //if (true == externalDeclared) continue;
+
+            //links = FindLinksBySource( external.Guid, external.Connection );
+
+            //foreach ( LinkNode link in links )
+            //{
+            //   EntityNode node = m_Script.GetNode( link.Destination.Guid );
+
+            //   if ( node is EntityMethod || node is EntityProperty )
+            //   {
+            //      if ( node.Instance.Name == link.Destination.Anchor )
+            //      {
+            //         AddCSharpLine( FormatType(node.Instance.Type) + " " + CSharpName(external) + " = " + FormatValue(node.Instance.Default, node.Instance.Type) + ";" );
+            //         break;
+            //      }
+            //   }
+
+            //   foreach ( Parameter p in node.Parameters )
+            //   {
+            //      if ( p.Name == link.Destination.Anchor &&
+            //           true == p.Input )
+            //      {
+            //         AddCSharpLine( FormatType(lowestType) + " " + CSharpName(external, p.Name) + " = " + FormatValue(p.Default, lowestType) + ";" );
+            //         break;
+            //      }
+            //   }
+
+            //   //only one link allowed for each external parameter output
+            //   break;
+            //}
          }
 
          AddCSharpLine( "" );
@@ -3091,11 +3114,11 @@ namespace Detox.ScriptEditor
          }
       }
 
-      string GetLowestCommonExternalType( ExternalConnection external )
+      Parameter GetLowestCommonExternalParameter( ExternalConnection external )
       {
          LinkNode []inputs = FindLinksBySource( external.Guid, external.Connection );
 
-         string type = "";
+         Parameter lowestParameter = Parameter.Empty;
 
          foreach ( LinkNode link in inputs )
          {
@@ -3105,16 +3128,35 @@ namespace Detox.ScriptEditor
             {
                if ( p.Name == link.Destination.Anchor )
                {
-                  type = p.Type;
+                  lowestParameter = p;
 
                   //if any type lacks an array, it is the lowest type
                   //so return it, otherwise keep checking
-                  if ( false == type.Contains("[]") ) return type;
+                  if ( false == lowestParameter.Type.Contains("[]") ) return lowestParameter;
                }
             }
          }
 
-         return type;
+         inputs = FindLinksByDestination( external.Guid, external.Connection );
+
+         foreach ( LinkNode link in inputs )
+         {
+            EntityNode parameterNode = m_Script.GetNode( link.Source.Guid );
+
+            foreach ( Parameter p in parameterNode.Parameters )
+            {
+               if ( p.Name == link.Source.Anchor )
+               {
+                  lowestParameter = p;
+
+                  //if any type lacks an array, it is the lowest type
+                  //so return it, otherwise keep checking
+                  if ( false == lowestParameter.Type.Contains("[]") ) return lowestParameter;
+               }
+            }
+         }
+
+         return lowestParameter;
       }
 
       void DefineExternalInput( ExternalConnection externalInput, LinkNode.Connection []connections, string args )
@@ -3155,17 +3197,23 @@ namespace Detox.ScriptEditor
                {
                   if ( p.Name == link.Destination.Anchor )
                   {
-                     string type = GetLowestCommonExternalType( external );
+                     AddCSharpLine( CSharpName(external, external.Connection) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
+                     
+                     //Parameter lowestParameter = GetLowestCommonExternalParameter( external );
+                     //string type = lowestParameter.Type;
 
-                     if ( false == type.Contains("[]") && true == p.Type.Contains("[]") )
-                     {
-                        AddCSharpLine( "if ( " + CSharpName(parameterNode, p.Name) + ".Length == 0 ) " + CSharpName(parameterNode, p.Name) + " = new " + type + "[1];" );
-                        AddCSharpLine( CSharpName(parameterNode, p.Name) + "[ 0 ] = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
-                     }
-                     else
-                     {
-                        AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
-                     }
+                     //if ( false == type.Contains("[]") && true == p.Type.Contains("[]") )
+                     //{
+                     //   AddCSharpLine( "if ( " + CSharpName(external, p.Name) + ".Length == 0 ) " + CSharpName(external, p.Name) + " = new " + type + "[1];" );
+                     //   AddCSharpLine( CSharpName(external, p.Name) + "[ 0 ] = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
+                     //   //AddCSharpLine( "if ( " + CSharpName(parameterNode, p.Name) + ".Length == 0 ) " + CSharpName(parameterNode, p.Name) + " = new " + type + "[1];" );
+                     //   //AddCSharpLine( CSharpName(parameterNode, p.Name) + "[ 0 ] = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
+                     //}
+                     //else
+                     //{
+                     //   AddCSharpLine( CSharpName(external, external.Connection) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
+                     //   //AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
+                     //}
                      SyncReferencedGameObject( parameterNode, p );
                   }
                }
@@ -3178,6 +3226,8 @@ namespace Detox.ScriptEditor
                      filledExternals[ external.Guid ] = external;
                   }
                }
+            
+               break;
             }
 
             //external connections don't have a parameter
@@ -4475,14 +4525,27 @@ namespace Detox.ScriptEditor
                   EntityNode argNode = m_Script.GetNode( link.Source.Guid );
                   
                   //check to see if any source nodes are local variables
-                  if ( argNode is LocalNode )
+                  if ( argNode is LocalNode || argNode is ExternalConnection )
                   {
-                     LocalNode localNode = (LocalNode) argNode;
-                     SyncReferencedGameObject( argNode, localNode.Value );
+                     Parameter value;
+
+                     if (argNode is LocalNode)
+                     {
+                        LocalNode localNode = (LocalNode) argNode;
+                        value = localNode.Value;
+                     }
+                     else
+                     {
+                        //external connections take on the type
+                        //they are connected to
+                        value = GetLowestCommonExternalParameter((ExternalConnection)argNode);
+                     }
+
+                     SyncReferencedGameObject( argNode, value );
                      
                      //if the local variable is an array then we need to copy the array
                      //to the next available index of the input parameter
-                     if ( localNode.Value.Type.Contains("[]") )
+                     if ( value.Type.Contains("[]") )
                      {
                         AddCSharpLine( "properties = " + CSharpName(argNode) + ";" );
 
@@ -4605,7 +4668,7 @@ namespace Detox.ScriptEditor
                   
                   //if any of those links is a local node
                   //we need to write the line for the property to refresh
-                  if ( argNode is LocalNode || argNode is OwnerConnection )
+                  if ( argNode is LocalNode || argNode is OwnerConnection || argNode is ExternalConnection )
                   {
                      if ( argNode is LocalNode )
                      {
