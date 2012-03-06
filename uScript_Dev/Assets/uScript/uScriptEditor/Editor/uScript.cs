@@ -3506,6 +3506,11 @@ public class uScript : EditorWindow
          {
             script.SceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
          }
+         else if (false == pleaseAttachMe && false == currentlyAttached)
+         {
+            //could be a save as, so make sure to clear the connection
+            script.SceneName = "";
+         }
 
          if (true == SaveScript(script, m_FullPath, generateCode, GenerateDebugInfo, false))
          {
