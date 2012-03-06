@@ -690,7 +690,7 @@ namespace Detox.ScriptEditor
                if ( m == methodName ) return true;
             }
          }
-         else
+         else if ( null != t )
          {
             if ( null != t.GetMethod(methodName) ) 
             {
@@ -1030,6 +1030,7 @@ namespace Detox.ScriptEditor
                                  AddCSharpLine( "return " + FormatValue(entityProperty.Parameter.Default, entityProperty.Parameter.Type) + ";" );
                            --m_TabStack;
                            AddCSharpLine( "}" );
+                        --m_TabStack;
                         AddCSharpLine( "}" );
                         AddCSharpLine( "" );
                      }
