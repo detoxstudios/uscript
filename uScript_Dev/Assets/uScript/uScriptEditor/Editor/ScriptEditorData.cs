@@ -966,7 +966,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterSerializer : ITypeSerializer
    {
-      public int Version { get { return 7; } }
+      public int Version { get { return 8; } }
       public string SerializableType { get { return typeof(Parameter).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -1039,6 +1039,23 @@ namespace Detox.Data.ScriptEditor
             }
          }
 
+         if ( serializer.CurrentVersion < 8 )
+         {
+            if (parameter.Type == typeof(UnityEngine.LayerMask).ToString())
+            {
+               try
+               {
+                  //convert old layer masks to bit shifted values
+                  Int32 index = Int32.Parse(parameter.Default);
+                  index = 1 << index;
+
+                  parameter.Default = index.ToString();
+               }
+               catch (Exception)
+               {}
+            }
+         }
+
          reader.Close( );
 
          return parameter;
@@ -1067,7 +1084,7 @@ namespace Detox.Data.ScriptEditor
 
    public class ParameterArraySerializer : ITypeSerializer
    {
-      public int Version { get { return 8; } }
+      public int Version { get { return 9; } }
       public string SerializableType { get { return typeof(Parameter[]).ToString( ); } }
 
       public object Load(ObjectSerializer serializer)
@@ -1144,6 +1161,22 @@ namespace Detox.Data.ScriptEditor
                }
             }
 
+            if ( serializer.CurrentVersion < 9 )
+            {
+               if (parameters[i].Type == typeof(UnityEngine.LayerMask).ToString())
+               {
+                  try
+                  {
+                     //convert old layer masks to bit shifted values
+                     Int32 index = Int32.Parse(parameters[i].Default);
+                     index = 1 << index;
+                     
+                     parameters[i].Default = index.ToString();
+                  }
+                  catch (Exception)
+                  {}
+               }
+            }
          }
 
          reader.Close( );
