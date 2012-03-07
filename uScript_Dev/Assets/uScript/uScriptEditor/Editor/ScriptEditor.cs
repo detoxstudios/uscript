@@ -1388,7 +1388,7 @@ namespace Detox.ScriptEditor
          Order = new Parameter( );
          Order.Name    = "Order";
          Order.FriendlyName = "Order";
-         Order.Default = "0";
+         Order.Default = "-1";
          Order.Type    = typeof(int).ToString( );
          Order.Input   = true;
          Order.Output  = false;
@@ -3935,6 +3935,55 @@ namespace Detox.ScriptEditor
                            node.Parameters = existing.Parameters;
                            break;
                         }
+                     }
+                  }
+               }
+            }
+
+            //sync all external connections with the same name
+            if ( node is ExternalConnection )
+            {
+               ExternalConnection externalNode = (ExternalConnection) node;
+
+               bool hasValue = "" != externalNode.Description.Default || "-1" != externalNode.Order.Default;
+
+               //if they modified an external node
+               //go through the list and update all matching nodes
+
+               //if hasValue is false then it was a new node they are placing
+               //and we don't want to use its values and clear out all the globals
+               if ( true == hasValue )
+               {
+                  List<ExternalConnection> updates = new List<ExternalConnection>( );
+
+                  foreach ( ExternalConnection clone in Externals )
+                  {
+                     //if the node has a shared name with other nodes
+                     //of that type, then update their values
+                     if ( externalNode.Name.Default == clone.Name.Default )
+                     {
+                        ExternalConnection copy = clone;
+
+                        copy.Parameters = externalNode.Parameters;
+                        updates.Add( copy );
+                     }
+                  }
+
+                  foreach ( ExternalConnection clone in updates )
+                  {
+                     m_Nodes.Add(clone);
+                  }
+               }
+               else
+               {
+                  //it's a blank node so if there is a matchine name/type
+                  //update our value
+                  foreach ( ExternalConnection existing in Externals )
+                  {
+                     if ( externalNode.Name.Default == existing.Name.Default )
+                     {
+                        node.Parameters = existing.Parameters;
+                        break;
                      }
                   }
                }

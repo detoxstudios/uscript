@@ -2071,8 +2071,7 @@ namespace Detox.ScriptEditor
                   
                   entityNode = logicNode;
                }
-
-               if (entityNode is LocalNode)
+               else if (entityNode is LocalNode)
                {
                   LocalNode localNode = (LocalNode) entityNode;
                   if ( localNode.Externaled.Default == "true" &&
@@ -2099,21 +2098,40 @@ namespace Detox.ScriptEditor
                      globalModified = true;
                   }
                }
+               else if (entityNode is ExternalConnection)
+               {
+                  globalModified = true;
+               }
 
-               List<LocalNode> oldGlobals = new List<LocalNode>( );
+               List<EntityNode> oldGlobals = new List<EntityNode>( );
 
                //if a global was modified
                //it's going to modify all the other sync'ed values
                //so grab them first to add them to the undo stack
                if (true == globalModified)
                {
-                  foreach (LocalNode local in m_ScriptEditor.Locals)
+                  if (entityNode is LocalNode)
                   {
-                     if (local.Guid == entityNode.Guid) continue;
-
-                     if (local.Name.Default == ((LocalNode)entityNode).Name.Default)
+                     foreach (LocalNode local in m_ScriptEditor.Locals)
                      {
-                        oldGlobals.Add(local);
+                        if (local.Guid == entityNode.Guid) continue;
+
+                        if (local.Name.Default == ((LocalNode)entityNode).Name.Default)
+                        {
+                           oldGlobals.Add(local);
+                        }
+                     }
+                  }
+                  else if (entityNode is ExternalConnection)
+                  {
+                     foreach (ExternalConnection external in m_ScriptEditor.Externals)
+                     {
+                        if (external.Guid == entityNode.Guid) continue;
+
+                        if (external.Name.Default == ((ExternalConnection)entityNode).Name.Default)
+                        {
+                           oldGlobals.Add(external);
+                        }
                      }
                   }
                }
@@ -2127,7 +2145,7 @@ namespace Detox.ScriptEditor
 
                   if (true == globalModified)
                   {
-                     foreach (LocalNode oldGlobal in oldGlobals)
+                     foreach (EntityNode oldGlobal in oldGlobals)
                      {
                         EntityNode newGlobal = m_ScriptEditor.GetNode(oldGlobal.Guid);
 
