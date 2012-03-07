@@ -638,7 +638,7 @@ public static class uScriptGUI
          //  9       512
          // 10      1024    TEN
 
-         value = (int)Math.Log(value, 2);
+         value = Log2((uint)value);
 
          value = EditorGUILayout.LayerField(value, GUILayout.Width(_columnValue.Width));
 
@@ -648,6 +648,18 @@ public static class uScriptGUI
       EndRow(value.GetType().ToString());
       return value;
    }
+
+   public static int Log2(uint number)
+   {
+      var isPowerOfTwo = number > 0 && (number & (number - 1)) == 0;
+      if (!isPowerOfTwo)
+      {
+         throw new ArgumentException("Not a power of two", "number");
+      }
+
+      return (int)Math.Log(number, 2);
+   }
+
 
 
    public static string TagField(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
