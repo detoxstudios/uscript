@@ -654,7 +654,8 @@ public static class uScriptGUI
       var isPowerOfTwo = number > 0 && (number & (number - 1)) == 0;
       if (!isPowerOfTwo)
       {
-         throw new ArgumentException("Not a power of two", "number");
+         return 0;
+         //throw new ArgumentException("Not a power of two", "number");
       }
 
       return (int)Math.Log(number, 2);

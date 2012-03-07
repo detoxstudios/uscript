@@ -33,11 +33,6 @@ public class uScriptAct_Raycast : uScriptLogic
       [FriendlyName("Layer Mask", "A Layer mask that is used to selectively ignore colliders when casting a ray.")]
       [SocketState(false, false)]
       LayerMask layerMask,
-      
-//      @TODO: Uncomment when array support is added
-//      [FriendlyName("Layer Masks")]
-//      [SocketState(false, false)]
-//      LayerMask[] layerMasks,
 
       [FriendlyName("Include Masked Layers", "If true, the ray will test against the masked layers, otherwise it will test against all layers excluding the masked layers.")]
       [DefaultValue(true), SocketState(false, false)]
@@ -66,8 +61,6 @@ public class uScriptAct_Raycast : uScriptLogic
       Vector3 tmpHitLocation = Vector3.zero;
       Vector3 tmpHitNormal = new Vector3(0, 1, 0);
       GameObject tmpHitObject = null;
-      // @TODO: Remove the following line when array support is added
-      LayerMask[] layerMasks = new LayerMask[] { layerMask };
  
       if (typeof(GameObject) == Start.GetType() || typeof(Vector3) == Start.GetType())
       {
@@ -112,19 +105,14 @@ public class uScriptAct_Raycast : uScriptLogic
          Vector3 finalDirection = (m_EndVector - m_StartVector).normalized;
          float castDistance = Vector3.Distance(m_StartVector, m_EndVector);
          RaycastHit hit;
-         int bitmask = 0;
          
-         foreach (LayerMask mask in layerMasks)
-         {
-            bitmask |= 1 << mask;
-         }
-         if (!include) bitmask = ~bitmask;
+         if (!include) layerMask = ~layerMask;
 
          if (true == showRay)
          {
             Debug.DrawLine(m_StartVector, m_StartVector + (finalDirection * castDistance));
          }
-         if (Physics.Raycast(m_StartVector, finalDirection, out hit, castDistance, bitmask))
+         if (Physics.Raycast(m_StartVector, finalDirection, out hit, castDistance, layerMask))
          {
             tmpHitDistance = hit.distance;
             tmpHitLocation = hit.point;

@@ -32,11 +32,6 @@ public class uScriptAct_RaycastFromCursor : uScriptLogic
       [SocketState(false, false)]
       LayerMask layerMask,
 
-//      TODO: Uncomment when array support is added
-//      [FriendlyName("Layer Masks")]
-//      [SocketState(false, false)]
-//      LayerMask[] layerMasks,
-
       [FriendlyName("Include Masked Layers", "If true, the ray will test against the masked layers, otherwise it will test against all layers excluding the masked layers.")]
       [DefaultValue(true), SocketState(false, false)]
       bool include,
@@ -65,27 +60,20 @@ public class uScriptAct_RaycastFromCursor : uScriptLogic
       Vector3 tmpHitLocation = Vector3.zero;
       Vector3 tmpHitNormal = new Vector3(0, 1, 0);
       GameObject tmpHitObject = null;
-      // TODO: Remove the following line when array support is added
-      LayerMask[] layerMasks = new LayerMask[] { layerMask };
 
       Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
 
       if (Distance <= 0) Distance = Mathf.Infinity;
       float castDistance = Distance;
       RaycastHit hit;
-      int bitmask = 0;
       
-      foreach (LayerMask mask in layerMasks)
-      {
-         bitmask |= 1 << mask;
-      }
-      if (!include) bitmask = ~bitmask;
+      if (!include) layerMask = ~layerMask;
 
       if (true == showRay)
       {
          Debug.DrawLine(ray.origin, ray.origin + (ray.direction * castDistance));
       }
-      if (Physics.Raycast(ray.origin, ray.direction, out hit, castDistance, bitmask))
+      if (Physics.Raycast(ray.origin, ray.direction, out hit, castDistance, layerMask  ))
       {
          tmpHitDistance = hit.distance;
          tmpHitLocation = hit.point;
