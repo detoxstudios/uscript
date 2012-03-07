@@ -18,32 +18,16 @@ public class uScriptAct_CombineLayerMasks : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("A", "The first variable or variable list.")]
-      int [] A,
+      [FriendlyName("A", "The first layer mask.")]
+      UnityEngine.LayerMask A,
 
-      [FriendlyName("B", "The second variable or variable list.")]
-      UnityEngine.LayerMask[] B,
+      [FriendlyName("B", "The second layer mask.")]
+      UnityEngine.LayerMask B,
 
       [FriendlyName("Result", "The LayerMask result of the operation.")]
-      out UnityEngine.LayerMask LayerMask,
-
-      [FriendlyName("Result", "The integer result of the operation.")]
-      out int IntResult
+      out UnityEngine.LayerMask LayerMask
       )
    {
-      int aTotals = 0;
-      int bTotals = 0;
-
-      foreach (int currentA in A)
-      {
-         aTotals |= currentA;
-      }
-      foreach (int currentB in B)
-      {
-         bTotals |= currentB;
-      }
-
-      IntResult = aTotals | bTotals;
-      LayerMask = IntResult;   
+      LayerMask = A | B;
    }
 }

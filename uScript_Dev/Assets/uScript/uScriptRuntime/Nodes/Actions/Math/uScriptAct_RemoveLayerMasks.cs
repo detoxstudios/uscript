@@ -12,31 +12,22 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Remove_LayerMasks")]
 
-[FriendlyName("Remove LayerMasks", "Removes multiple LayerMasks.\n\n[ A | B ]")]
+[FriendlyName("Remove LayerMasks", "Removes multiple LayerMasks.\n\n[ A & ~B ]")]
 public class uScriptAct_RemoveLayerMasks : uScriptLogic
 {
    public bool Out { get { return true; } }
 
    public void In(
       [FriendlyName("Existing Masks", "The existing layer masks.")]
-      int A,
+      UnityEngine.LayerMask A,
 
       [FriendlyName("Masks to Remove", "The masks you want removed from the Existing Mask.")]
-      UnityEngine.LayerMask[] B,
+      UnityEngine.LayerMask B,
 
       [FriendlyName("Result", "The LayerMask result of the operation.")]
-      out UnityEngine.LayerMask LayerMask,
-
-      [FriendlyName("Result", "The integer result of the operation.")]
-      out int IntResult
+      out UnityEngine.LayerMask LayerMask
       )
-   {
-      foreach (int currentB in B)
-      {
-         A &= ~currentB;
-      }
-
-      IntResult = A;
-      LayerMask = A;   
+   {      
+      LayerMask = A & ~B;   
    }
 }
