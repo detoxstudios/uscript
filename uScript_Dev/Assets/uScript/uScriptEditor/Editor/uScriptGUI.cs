@@ -626,7 +626,23 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
+         //  0         1    Default
+         //  1         2    TransparentFX
+         //  2         4    Ignore Raycast
+         //  3         8
+         //  4        16    Water
+         //  5        32
+         //  6        64
+         //  7       128
+         //  8       256
+         //  9       512
+         // 10      1024    TEN
+
+         value = (int)Math.Log(value, 2);
+
          value = EditorGUILayout.LayerField(value, GUILayout.Width(_columnValue.Width));
+
+         value = 1 << value;
       }
 
       EndRow(value.GetType().ToString());
