@@ -1134,6 +1134,15 @@ namespace Detox.ScriptEditor
 
             Point point = m_FlowChart.PointToClient( Cursor.Position );
 
+            if (true == linkTo.Type.Contains("[]"))
+            {
+               string name = uScript.FindFriendlyName(node);
+               if (false == name.Contains("List"))
+               {
+                  linkTo.Type = linkTo.Type.Replace("[]", "");
+               }
+            }
+
             LocalNode localNode = new LocalNode( "", linkTo.Type, "" );
             localNode.Position = point;
 
