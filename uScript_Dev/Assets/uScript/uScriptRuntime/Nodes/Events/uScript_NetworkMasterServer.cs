@@ -28,6 +28,7 @@ public class uScript_NetworkMasterServer : uScriptEvent
 
    public delegate void uScriptEventHandler(object sender, NetworkMasterServerEventArgs args);
 
+#if !(UNITY_FLASH)
    [FriendlyName("On Server Initialized")]
    public event uScriptEventHandler OnEvent;
 
@@ -35,4 +36,5 @@ public class uScript_NetworkMasterServer : uScriptEvent
    {
       if (OnEvent != null) OnEvent(this, new NetworkMasterServerEventArgs(mse));
    }
+#endif
 }

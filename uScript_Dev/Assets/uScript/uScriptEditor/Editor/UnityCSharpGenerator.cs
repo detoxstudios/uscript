@@ -543,7 +543,9 @@ namespace Detox.ScriptEditor
 
                   if ( false == stubCode )
                   {
+                     AddCSharpLine( "#if !(UNITY_FLASH)" );
                      AddCSharpLine( "useGUILayout = " + (NeedsGuiLayout( ) ? "true;" : "false;") );
+                     AddCSharpLine( "#endif" );
                      AddCSharpLine( "uScript.Awake( );" );
                
                      //AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );

@@ -33,6 +33,7 @@ public class uScript_NetworkSerialization : uScriptEvent
 
    public delegate void uScriptEventHandler(object sender, NetworkSerializationEventArgs args);
 
+#if !(UNITY_FLASH)
    [FriendlyName("On Serialize Network View")]
    public event uScriptEventHandler OnSerialize;
 
@@ -40,4 +41,5 @@ public class uScript_NetworkSerialization : uScriptEvent
    {
       if (OnSerialize != null) OnSerialize(this, new NetworkSerializationEventArgs(bs, info));
    }
+#endif
 }

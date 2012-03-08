@@ -13,7 +13,9 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class uScript_MasterComponent : MonoBehaviour
 {
+#if UNITY_EDITOR
    private Hashtable m_BreakpointCache = null;
+#endif
 
    //keep track of the latest master so uScripts loading
    //will know which master loaded with them for their scene infomration

@@ -48,16 +48,20 @@ public class uScript_NetworkClientConnection : uScriptEvent
    [FriendlyName("On Connected to Server")]
    public event uScriptEventHandler ConnectedToServer;
 
+#if !(UNITY_FLASH)
    [FriendlyName("On Disconnected from Server")]
    public event uScriptEventHandler DisconnectedFromServer;
-
+#endif
+   
    void OnConnectedToServer( )
    {
       if (ConnectedToServer != null) ConnectedToServer(this, new NetworkClientConnectionEventArgs());
    }
 
+#if !(UNITY_FLASH)
    void OnDisconnectedFromServer(NetworkDisconnection disconnection)
    {
       if (DisconnectedFromServer != null) DisconnectedFromServer(this, new NetworkClientConnectionEventArgs(disconnection));
    }
+#endif
 }

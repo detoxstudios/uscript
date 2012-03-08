@@ -28,6 +28,7 @@ public class uScript_NetworkInstantiate : uScriptEvent
 
    public delegate void uScriptEventHandler(object sender, NetworkInstantiateEventArgs args);
 
+#if !(UNITY_FLASH)
    [FriendlyName("On Server Initialized")]
    public event uScriptEventHandler OnInstantiate;
 
@@ -35,4 +36,5 @@ public class uScript_NetworkInstantiate : uScriptEvent
    {
       if (OnInstantiate != null) OnInstantiate(this, new NetworkInstantiateEventArgs(info));
    }
+#endif
 }

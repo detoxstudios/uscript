@@ -73,6 +73,10 @@ public class SocketState : Attribute
 {
    public bool Visible = false;
    public bool Locked  = false;
+   
+   public SocketState()
+   {
+   }
 
    public SocketState(bool visible, bool locked) 
    {

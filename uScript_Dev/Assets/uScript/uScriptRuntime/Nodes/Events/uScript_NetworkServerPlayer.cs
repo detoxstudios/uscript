@@ -28,6 +28,7 @@ public class uScript_NetworkServerPlayer : uScriptEvent
 
    public delegate void uScriptEventHandler(object sender, NetworkServerPlayerEventArgs args);
 
+#if !(UNITY_FLASH)
    [FriendlyName("On Player Connected")]
    public event uScriptEventHandler PlayerConnected;
 
@@ -43,4 +44,5 @@ public class uScript_NetworkServerPlayer : uScriptEvent
    {
       if (PlayerDisconnected != null) PlayerDisconnected(this, new NetworkServerPlayerEventArgs(netPlayer));
    }
+#endif
 }

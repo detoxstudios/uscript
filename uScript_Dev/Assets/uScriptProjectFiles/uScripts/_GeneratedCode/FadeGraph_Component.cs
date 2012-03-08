@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.1613
+//uScript Generated Code - Build 0.9.1661
 using UnityEngine;
 using System.Collections;
 
@@ -13,40 +13,22 @@ public class FadeGraph_Component : uScriptCode
    
    void Awake( )
    {
-      useGUILayout = false;
-      uScript.Awake( );
-      uScript.SetParent( this.gameObject );
-      if ( "1.CMR" != uScript_MasterComponent.Version )
-      {
-         uScriptDebug.Log( "The generated code is not compatible with your current uScript Runtime " + uScript_MasterComponent.Version, uScriptDebug.Type.Error );
-         uScript = null;
-         UnityEngine.Debug.Break();
-      }
    }
    void Start( )
    {
-      uScript.Start( );
    }
    void Update( )
    {
-      uScript.Update( );
    }
    void OnDestroy( )
    {
-      uScript.OnDestroy( );
    }
    void OnGUI( )
    {
-      uScript.OnGUI( );
    }
    #if UNITY_EDITOR
       void OnDrawGizmos( )
       {
-         {
-            GameObject gameObject;
-            gameObject = GameObject.Find( "FadePlane" ); 
-            if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_variables.png");
-         }
       }
    #endif
 }

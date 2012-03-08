@@ -28,6 +28,7 @@ public class uScript_NetworkFailedConnection : uScriptEvent
 
    public delegate void uScriptEventHandler(object sender, NetworkFailedConnectionEventArgs args);
 
+#if !(UNITY_FLASH)
    [FriendlyName("On Failed to Connect")]
    public event uScriptEventHandler FailedToConnect;
 
@@ -43,4 +44,5 @@ public class uScript_NetworkFailedConnection : uScriptEvent
    {
       if (FailedToConnectToMaster != null) FailedToConnectToMaster(this, new NetworkFailedConnectionEventArgs(error));
    }
+#endif
 }

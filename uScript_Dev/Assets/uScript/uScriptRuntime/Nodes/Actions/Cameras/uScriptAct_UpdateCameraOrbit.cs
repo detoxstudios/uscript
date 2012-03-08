@@ -39,7 +39,9 @@ public class uScriptAct_UpdateCameraOrbit : uScriptLogic
       Vector2 Movement,
       
       [FriendlyName("Speed", "Horizontal and Vertical rotation speed.")]
+#if !(UNITY_FLASH)
       [DefaultValue(typeof(Vector2), new float[]{ 2f, 2f })]
+#endif
       Vector2 Speed,
       
       [FriendlyName("Constrain Angles", "Should the rotation be constrained to a range of angles?")]
