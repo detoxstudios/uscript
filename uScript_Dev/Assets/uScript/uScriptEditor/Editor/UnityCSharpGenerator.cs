@@ -2673,6 +2673,15 @@ namespace Detox.ScriptEditor
 
          ++m_TabStack;
 
+            if ( true == m_GenerateDebugInfo )
+            {
+               AddCSharpLine( "//reset event call" );
+               AddCSharpLine( "//if it ever goes above MaxRelayCallCount before being reset" );
+               AddCSharpLine( "//then we assume it is stuck in an infinite loop" );         
+               AddCSharpLine( "if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;" );
+               AddCSharpLine( "" );
+            }
+
             int i = 0;
 
             //all we want to do for an entityevent is output the variables
