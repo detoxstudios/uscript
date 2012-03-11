@@ -81,6 +81,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ToolsDatas.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\TypeSerializers.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\UnityCSharpGenerator.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\UpdateNotification.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptBackgroundProcess.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptConfig.cs" />
