@@ -21,82 +21,130 @@ public class UpdateNotification
    private static string _latestVersion = "Unknown";
    public static string LatestVersion { get { return _latestVersion; } }
 
-   private static string _webResults = string.Empty;
-   public static string WebResponse { get { return _webResults; } }
+   private static string _webResponse = string.Empty;
+   public static string WebResponse { get { return _webResponse; } }
 
    private static Result CheckForUpdate()
    {
-      // Used to build entire result string
-      StringBuilder sb = new StringBuilder();
+      Result result = Result.CheckNeeded;
+      string resultDetails = string.Empty;
 
-      // Used on each read operation
-      byte[] buf = new byte[8192];
+      HttpWebRequest request = null;
+      HttpWebResponse response = null;
 
       // Prepare the web page we will be asking for
-      HttpWebRequest request = WebRequest.Create("http://detoxstudios.com/download/versionCheck.php"
-                                    + "?productName="+WWW.EscapeURL(uScript.ProductType)
-                                    + "&productBuild="+WWW.EscapeURL(uScript.BuildNumber)
-                                    + "&platformName="+WWW.EscapeURL(Application.platform.ToString())
-                                    + "&platformBuild="+WWW.EscapeURL(Application.unityVersion)) as HttpWebRequest;
+      request = WebRequest.Create("http://detoxstudios.com/download/versionCheck.php"
+                                 + "?productName="+WWW.EscapeURL(uScript.ProductType)
+                                 + "&productBuild="+WWW.EscapeURL(uScript.BuildNumber)
+                                 + "&platformName="+WWW.EscapeURL(Application.platform.ToString())
+                                 + "&platformBuild="+WWW.EscapeURL(Application.unityVersion)) as HttpWebRequest;
 
       // Execute the request
-      HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+      try
+      {
+         response = request.GetResponse() as HttpWebResponse;
+//         Debug.Log("Response Status Code: " + response.StatusCode.ToString() + "\n");
+      }
+      catch (WebException e)
+      {
+         // If a WebException is thrown, use the Response and Status properties
+         // of the exception to determine the response from the server.
+         result = Result.UpdateServerError;
+         _webResponse = string.Format( e.Status.ToString() );
+      }
 
       // We will read data via the response stream
-      Stream resStream = response.GetResponseStream();
-
-      string tempString = null;
-      int count = 0;
-
-      do
+      if ( response != null )
       {
-         // Fill the buffer with data
-         count = resStream.Read(buf, 0, buf.Length);
+         Stream resStream = response.GetResponseStream();
 
-         // Make sure we read some data
-         if (count != 0)
+         // Used to build entire result string
+         StringBuilder sb = new StringBuilder();
+   
+         // Used on each read operation
+         byte[] buf = new byte[8192];
+   
+   
+         string tempString = null;
+         int count = 0;
+   
+         do
          {
-            // Translate from bytes to ASCII text
-            tempString = Encoding.ASCII.GetString(buf, 0, count);
+            // Fill the buffer with data
+            count = resStream.Read(buf, 0, buf.Length);
+   
+            // Make sure we read some data
+            if (count != 0)
+            {
+               // Translate from bytes to ASCII text
+               tempString = Encoding.ASCII.GetString(buf, 0, count);
+   
+               // Continue building the string
+               sb.Append(tempString);
+            }
+         } while (count > 0); // Any more data to read?
+   
+         _latestVersion = (sb.ToString() != string.Empty ? sb.ToString() : "Unknown");
+         _webResponse = sb.ToString();
 
-            // Continue building the string
-            sb.Append(tempString);
+         // Close the streams and release the connections.  Failure to do so may
+         // cause the application to run out of connections.
+         resStream.Close();
+         response.Close();
+
+
+         // Analyze the results
+         string[] valueSegments;
+         string tmpValue;
+
+         int currentBuild;
+         int serverBuild;
+
+         // Get the current build number
+         valueSegments = uScript.BuildNumber.Split('.');
+         tmpValue = valueSegments[valueSegments.GetUpperBound(0)];
+         if (Int32.TryParse(tmpValue, out currentBuild) == false)
+         {
+            if (tmpValue == null) tmpValue = string.Empty;
+            resultDetails = string.Format("Attempted conversion of '{0}' failed.", tmpValue);
+            result = Result.UpdateServerError;
          }
-      } while (count > 0); // Any more data to read?
+   
+         // Get the server build number
+         valueSegments = _latestVersion.Split('.');
+         tmpValue = valueSegments[valueSegments.GetUpperBound(0)];
+         if (Int32.TryParse(tmpValue, out serverBuild) == false)
+         {
+            if (tmpValue == null) tmpValue = string.Empty;
+            resultDetails = string.Format("Attempted conversion of '{0}' failed.", tmpValue);
+            result = Result.UpdateServerError;
+         }
 
-      _latestVersion = (sb.ToString() != string.Empty ? sb.ToString() : "Unknown");
-      _webResults = sb.ToString();
-
-      // Return -1:UpdateAvailable, 0:Current, +1:ClientVersionNewer
-
-      string tmpValue;
-      string[] valueSegments;
-      int currentBuild;
-      int serverBuild;
-
-      valueSegments = uScript.BuildNumber.Split('.');
-      tmpValue = valueSegments[valueSegments.GetUpperBound(0)];
-      if (Int32.TryParse(tmpValue, out currentBuild) == false)
-      {
-         if (tmpValue == null) tmpValue = "";
-         Debug.LogWarning(string.Format("Attempted conversion of '{0}' failed.", tmpValue));
-         return Result.UpdateServerError;
+         if (result != Result.UpdateServerError)
+         {
+            result = (currentBuild < serverBuild
+                     ? Result.ClientBuildOlder
+                     : (currentBuild > serverBuild
+                        ? Result.ClientBuildNewer
+                        : Result.ClientBuildCurrent));
+         }
       }
 
-      valueSegments = _latestVersion.Split('.');
-      tmpValue = valueSegments[valueSegments.GetUpperBound(0)];
-      if (Int32.TryParse(tmpValue, out serverBuild) == false)
+      // Handle error results
+      if (resultDetails != string.Empty)
       {
-         if (tmpValue == null) tmpValue = "";
-         Debug.LogWarning(string.Format("Attempted conversion of '{0}' failed.", tmpValue));
-         return Result.UpdateServerError;
+         if (result == Result.UpdateServerError)
+         {
+            Debug.LogWarning( resultDetails + '\n' + "Please report this issue to support@detoxstudios.com");
+         }
+         else
+         {
+            Debug.Log( resultDetails + '\n');
+         }
       }
 
-      return (currentBuild < serverBuild
-              ? Result.ClientBuildOlder
-              : (currentBuild > serverBuild
-                 ? Result.ClientBuildNewer
-                 : Result.ClientBuildCurrent));
+      // Return success result
+      return result;
    }
 
 
@@ -166,7 +214,9 @@ public class UpdateNotification
             break;
    
          case Result.UpdateServerError:
-            msg = "An update server error occurred.\n\nPlease check again later.";
+            msg = "An update server error occurred:\n\t"
+                + _webResponse + "\n\n"
+                + "Please check again later.";
             EditorUtility.DisplayDialog("Check for Updates", msg, "Okay");
             break;
       }
