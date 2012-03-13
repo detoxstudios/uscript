@@ -4339,97 +4339,6 @@ public class uScript : EditorWindow
             uniqueObjects[t.ToString()] = t;
          }
 
-         uniqueObjects[typeof(Math).ToString()] = typeof(Math);
-         uniqueObjects[typeof(UnityEngine.Object).ToString()] = typeof(UnityEngine.Object);
-         uniqueObjects[typeof(AnimationClip).ToString()] = typeof(AnimationClip);
-         uniqueObjects[typeof(AssetBundle).ToString()] = typeof(AssetBundle);
-         uniqueObjects[typeof(AudioClip).ToString()] = typeof(AudioClip);
-         uniqueObjects[typeof(Component).ToString()] = typeof(Component);
-         uniqueObjects[typeof(Behaviour).ToString()] = typeof(Behaviour);
-         uniqueObjects[typeof(Animation).ToString()] = typeof(Animation);
-         uniqueObjects[typeof(AudioChorusFilter).ToString()] = typeof(AudioChorusFilter);
-         uniqueObjects[typeof(AudioDistortionFilter).ToString()] = typeof(AudioDistortionFilter);
-         uniqueObjects[typeof(AudioEchoFilter).ToString()] = typeof(AudioEchoFilter);
-         uniqueObjects[typeof(AudioHighPassFilter).ToString()] = typeof(AudioHighPassFilter);
-         uniqueObjects[typeof(AudioListener).ToString()] = typeof(AudioListener);
-         uniqueObjects[typeof(AudioLowPassFilter).ToString()] = typeof(AudioLowPassFilter);
-         uniqueObjects[typeof(AudioReverbFilter).ToString()] = typeof(AudioReverbFilter);        
-         uniqueObjects[typeof(AudioReverbZone).ToString()] = typeof(AudioReverbZone);
-         uniqueObjects[typeof(AudioSource).ToString()] = typeof(AudioSource);
-         uniqueObjects[typeof(Camera).ToString()] = typeof(Camera);
-         uniqueObjects[typeof(ConstantForce).ToString()] = typeof(ConstantForce);
-         uniqueObjects[typeof(GUIElement).ToString()] = typeof(GUIElement);
-         uniqueObjects[typeof(GUIText).ToString()] = typeof(GUIText);
-         uniqueObjects[typeof(GUITexture).ToString()] = typeof(GUITexture);
-         uniqueObjects[typeof(GUILayer).ToString()] = typeof(GUILayer);
-         uniqueObjects[typeof(LensFlare).ToString()] = typeof(LensFlare);
-         uniqueObjects[typeof(Light).ToString()] = typeof(Light);         
-         uniqueObjects[typeof(MonoBehaviour).ToString()] = typeof(MonoBehaviour);
-         uniqueObjects[typeof(Terrain).ToString()] = typeof(Terrain);
-         uniqueObjects[typeof(NavMeshAgent).ToString()] = typeof(NavMeshAgent);
-         uniqueObjects[typeof(NetworkView).ToString()] = typeof(NetworkView);
-         uniqueObjects[typeof(Projector).ToString()] = typeof(Projector);
-         uniqueObjects[typeof(Skybox).ToString()] = typeof(Skybox);
-         uniqueObjects[typeof(Cloth).ToString()] = typeof(Cloth);
-         uniqueObjects[typeof(InteractiveCloth).ToString()] = typeof(InteractiveCloth);         
-         uniqueObjects[typeof(SkinnedCloth).ToString()] = typeof(SkinnedCloth);
-         uniqueObjects[typeof(Collider).ToString()] = typeof(Collider);
-         uniqueObjects[typeof(BoxCollider).ToString()] = typeof(BoxCollider);
-         uniqueObjects[typeof(CapsuleCollider).ToString()] = typeof(CapsuleCollider);
-         uniqueObjects[typeof(CharacterController).ToString()] = typeof(CharacterController);
-         uniqueObjects[typeof(MeshCollider).ToString()] = typeof(MeshCollider);
-         uniqueObjects[typeof(SphereCollider).ToString()] = typeof(SphereCollider);
-         uniqueObjects[typeof(TerrainCollider).ToString()] = typeof(TerrainCollider);
-         uniqueObjects[typeof(WheelCollider).ToString()] = typeof(WheelCollider);
-         uniqueObjects[typeof(Joint).ToString()] = typeof(Joint);
-         uniqueObjects[typeof(CharacterJoint).ToString()] = typeof(CharacterJoint);
-         uniqueObjects[typeof(ConfigurableJoint).ToString()] = typeof(ConfigurableJoint);
-         uniqueObjects[typeof(FixedJoint).ToString()] = typeof(FixedJoint);
-         uniqueObjects[typeof(HingeJoint).ToString()] = typeof(HingeJoint);
-         uniqueObjects[typeof(SpringJoint).ToString()] = typeof(SpringJoint);
-         uniqueObjects[typeof(LODGroup).ToString()] = typeof(LODGroup);
-         uniqueObjects[typeof(LightProbeGroup).ToString()] = typeof(LightProbeGroup);
-         uniqueObjects[typeof(MeshFilter).ToString()] = typeof(MeshFilter);
-         uniqueObjects[typeof(OcclusionArea).ToString()] = typeof(OcclusionArea);
-         uniqueObjects[typeof(OcclusionPortal).ToString()] = typeof(OcclusionPortal);
-         uniqueObjects[typeof(OffMeshLink).ToString()] = typeof(OffMeshLink);
-         uniqueObjects[typeof(ParticleAnimator).ToString()] = typeof(ParticleAnimator);
-         uniqueObjects[typeof(ParticleEmitter).ToString()] = typeof(ParticleEmitter);
-         uniqueObjects[typeof(ParticleSystem).ToString()] = typeof(ParticleSystem);
-         uniqueObjects[typeof(Renderer).ToString()] = typeof(Renderer);
-         uniqueObjects[typeof(ClothRenderer).ToString()] = typeof(ClothRenderer);
-         uniqueObjects[typeof(LineRenderer).ToString()] = typeof(LineRenderer);
-         uniqueObjects[typeof(MeshRenderer).ToString()] = typeof(MeshRenderer);
-         uniqueObjects[typeof(ParticleRenderer).ToString()] = typeof(ParticleRenderer);
-         uniqueObjects[typeof(ParticleSystemRenderer).ToString()] = typeof(ParticleSystemRenderer);
-         uniqueObjects[typeof(SkinnedMeshRenderer).ToString()] = typeof(SkinnedMeshRenderer);
-         uniqueObjects[typeof(TrailRenderer).ToString()] = typeof(TrailRenderer);
-         uniqueObjects[typeof(Rigidbody).ToString()] = typeof(Rigidbody);
-         uniqueObjects[typeof(TextMesh).ToString()] = typeof(TextMesh);
-         uniqueObjects[typeof(Transform).ToString()] = typeof(Transform);
-         uniqueObjects[typeof(Tree).ToString()] = typeof(Tree);
-         uniqueObjects[typeof(Flare).ToString()] = typeof(Flare);
-         uniqueObjects[typeof(UnityEngine.Font).ToString()] = typeof(UnityEngine.Font);
-         uniqueObjects[typeof(GameObject).ToString()] = typeof(GameObject);
-         uniqueObjects[typeof(LightProbes).ToString()] = typeof(LightProbes);
-         uniqueObjects[typeof(Material).ToString()] = typeof(Material);
-         uniqueObjects[typeof(ProceduralMaterial).ToString()] = typeof(ProceduralMaterial);
-         uniqueObjects[typeof(Mesh).ToString()] = typeof(Mesh);
-         uniqueObjects[typeof(NavMesh).ToString()] = typeof(NavMesh);
-         uniqueObjects[typeof(PhysicMaterial).ToString()] = typeof(PhysicMaterial);
-         uniqueObjects[typeof(QualitySettings).ToString()] = typeof(QualitySettings);
-         uniqueObjects[typeof(ScriptableObject).ToString()] = typeof(ScriptableObject);
-         uniqueObjects[typeof(GUISkin).ToString()] = typeof(GUISkin);
-         uniqueObjects[typeof(Shader).ToString()] = typeof(Shader);
-         uniqueObjects[typeof(TerrainData).ToString()] = typeof(TerrainData);
-         uniqueObjects[typeof(TextAsset).ToString()] = typeof(TextAsset);
-         uniqueObjects[typeof(Texture).ToString()] = typeof(Texture);
-         uniqueObjects[typeof(Cubemap).ToString()] = typeof(Cubemap);
-         uniqueObjects[typeof(MovieTexture).ToString()] = typeof(MovieTexture);
-         uniqueObjects[typeof(RenderTexture).ToString()] = typeof(RenderTexture);
-         uniqueObjects[typeof(Texture2D).ToString()] = typeof(Texture2D);
-         uniqueObjects[typeof(WebCamTexture).ToString()] = typeof(WebCamTexture);
-         uniqueObjects[typeof(UnityEngine.RuntimePlatform).ToString()] = typeof(UnityEngine.RuntimePlatform);
          
          string []userTypes = UserTypes;
 
@@ -4457,6 +4366,35 @@ public class uScript : EditorWindow
             }
          }
 
+         string unityTypes =  "UnityEngine.Object,UnityEngine.AnimationClip,UnityEngine.AssetBundle,UnityEngine.AudioClip,UnityEngine.Component,UnityEngine.Behaviour," +
+                              "UnityEngine.Animation,UnityEngine.AudioChorusFilter,UnityEngine.AudioDistortionFilter,UnityEngine.AudioEchoFilter,UnityEngine.AudioHighPassFilter," +
+                              "UnityEngine.AudioHighPassFilter,UnityEngine.AudioListener,UnityEngine.AudioLowPassFilter,UnityEngine.AudioReverbFilter,UnityEngine.AudioReverbZone," +
+                              "UnityEngine.AudioSource,UnityEngine.Camera,UnityEngine.ConstantForce,UnityEngine.GUIElement,UnityEngine.GUIText,UnityEngine.GUITexture,UnityEngine.GUILayer,UnityEngine.LensFlare,UnityEngine.Light," +
+                              "UnityEngine.MonoBehaviour,UnityEngine.Terrain,UnityEngine.NavMeshAgent,UnityEngine.NetworkView,UnityEngine.Projector,UnityEngine.Skybox,UnityEngine.Cloth,UnityEngine.InteractiveCloth,UnityEngine.SkinnedCloth," +
+                              "UnityEngine.Collider,UnityEngine.BoxCollider,UnityEngine.CapsuleCollider,UnityEngine.CharacterController,UnityEngine.MeshCollider,UnityEngine.SphereCollider,UnityEngine.TerrainCollider," +
+                              "UnityEngine.WheelCollider,UnityEngine.Joint,UnityEngine.CharacterJoint,UnityEngine.ConfigurableJoint,UnityEngine.FixedJoint,UnityEngine.HingeJoint,UnityEngine.SpringJoint,UnityEngine.LODGroup," +
+                              "UnityEngine.LightProbeGroup,UnityEngine.MeshFilter,UnityEngine.OcclusionArea,UnityEngine.OcclusionPortal,UnityEngine.OffMeshLink,UnityEngine.ParticleAnimator,UnityEngine.ParticleEmitter," +
+                              "UnityEngine.ParticleSystem,UnityEngine.Renderer,UnityEngine.ClothRenderer,UnityEngine.LineRenderer,UnityEngine.MeshRenderer,UnityEngine.ParticleRenderer,UnityEngine.ParticleSystemRenderer," +
+                              "UnityEngine.SkinnedMeshRenderer,UnityEngine.TrailRenderer,UnityEngine.Rigidbody,UnityEngine.TextMesh,UnityEngine.Transform,UnityEngine.Tree,UnityEngine.Flare,UnityEngine.Font,UnityEngine.GameObject," +
+                              "UnityEngine.LightProbes,UnityEngine.Material,UnityEngine.ProceduralMaterial,UnityEngine.Mesh,UnityEngine.NavMesh,UnityEngine.PhysicMaterial,UnityEngine.QualitySettings,UnityEngine.ScriptableObject," +
+                              "UnityEngine.GUISkin,UnityEngine.Shader,UnityEngine.TerrainData,UnityEngine.TextAsset,UnityEngine.Texture,UnityEngine.Cubemap,UnityEngine.MovieTexture,UnityEngine.RenderTexture,UnityEngine.Texture2D,UnityEngine.WebCamTexture," +
+                              "UnityEngine.RuntimePlatform";
+
+         string []unityTypeArray = unityTypes.Split(',');
+
+         foreach ( string s in unityTypeArray )
+         {
+            string szType = s.Trim();
+            if ("" == szType) continue;
+
+            Type t = MasterComponent.GetType( szType );
+            if ( null != t ) uniqueObjects[t.ToString()] = t;
+            else
+            {
+               uScriptDebug.Log( "Cannot Find unityType: " + s, uScriptDebug.Type.Warning );
+            }
+         }
+
          if (null != requiredTypes)
          {
             foreach (string t in requiredTypes)
@@ -4479,6 +4417,8 @@ public class uScript : EditorWindow
                }
             }
          }
+
+         uniqueObjects[typeof(Math).ToString()] = typeof(Math);
 
          m_SzEntityTypes = new string[ uniqueObjects.Values.Count ];
 
