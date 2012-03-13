@@ -29,6 +29,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
    private Direction m_Strafe = Direction.None;
    private float m_TranslateSpeed = 0.0f;
    private float m_RotateSpeed = 0.0f;
+   private CharacterController m_Controller = null;
 
    private float m_LastTranslateSpeed = 0.0f;
    private float m_LastRotateSpeed = 0.0f;
@@ -64,6 +65,8 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_FilterRotation = filterRotation;
       m_TranslationFilterConstant = translationFilterConstant;
       m_RotationFilterConstant = rotationFilterConstant;
+
+      if (null != target) m_Controller = target.GetComponent<CharacterController>();
    }
 
 
@@ -81,6 +84,8 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_FilterRotation = filterRotation;
       m_TranslationFilterConstant = translationFilterConstant;
       m_RotationFilterConstant = rotationFilterConstant;
+
+      if (null != target) m_Controller = target.GetComponent<CharacterController>();
    }
 
 
@@ -98,6 +103,8 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_FilterRotation = filterRotation;
       m_TranslationFilterConstant = translationFilterConstant;
       m_RotationFilterConstant = rotationFilterConstant;
+
+      if (null != target) m_Controller = target.GetComponent<CharacterController>();
    }
 
    // Parameter Attributes are applied below in RotateLeft()
@@ -114,6 +121,8 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_FilterRotation = filterRotation;
       m_TranslationFilterConstant = translationFilterConstant;
       m_RotationFilterConstant = rotationFilterConstant;
+
+      if (null != target) m_Controller = target.GetComponent<CharacterController>();
    }
 
    // Parameter Attributes are applied below in RotateLeft()
@@ -130,6 +139,8 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_FilterRotation = filterRotation;
       m_TranslationFilterConstant = translationFilterConstant;
       m_RotationFilterConstant = rotationFilterConstant;
+
+      if (null != target) m_Controller = target.GetComponent<CharacterController>();
    }
 
    [FriendlyName("Rotate Local Left")]
@@ -171,6 +182,8 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       m_FilterRotation = filterRotation;
       m_TranslationFilterConstant = translationFilterConstant;
       m_RotationFilterConstant = rotationFilterConstant;
+
+      if (null != target) m_Controller = target.GetComponent<CharacterController>();
    }
 
 
@@ -205,25 +218,36 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
          m_Target.transform.RotateAroundLocal(Vector3.up, rotateSpeed * Time.deltaTime);
       }
 
+      Vector3 movement = Vector3.zero;
+
       // apply translation/rotation
       if (Direction.Left == m_Strafe)
       {
-         m_Target.transform.position += m_Target.transform.right * - translateSpeed * Time.deltaTime;
+         movement = m_Target.transform.right * - translateSpeed * Time.deltaTime;
       }
       else if (Direction.Right == m_Strafe)
       {
-         m_Target.transform.position += m_Target.transform.right * translateSpeed * Time.deltaTime;
+         movement = m_Target.transform.right * translateSpeed * Time.deltaTime;
       }
 
       if (Direction.Forward == m_Translate)
       {
-         m_Target.transform.position += m_Target.transform.forward * translateSpeed * Time.deltaTime;
+         movement = m_Target.transform.forward * translateSpeed * Time.deltaTime;
       }
       else if (Direction.Backward == m_Translate)
       {
-         m_Target.transform.position += m_Target.transform.forward * -translateSpeed * Time.deltaTime;
+         movement = m_Target.transform.forward * -translateSpeed * Time.deltaTime;
       }
   
+      if (null == m_Controller)
+      {
+         m_Target.transform.position += movement;
+      }
+      else
+      {
+         m_Controller.Move( movement );
+      }
+
       // done translating/rotating?
       if (!m_FilterTranslation || Mathf.Abs(translateSpeed) <= 0.01)
       {
