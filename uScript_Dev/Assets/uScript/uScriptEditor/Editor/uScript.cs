@@ -56,7 +56,7 @@ public class uScript : EditorWindow
 #endif
 
    // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   static public string BuildNumber { get { return "0.9.1718"; } }
+   static public string BuildNumber { get { return "0.9.1724"; } }
 
    static public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    //public string LastUnityBuild { get { return "3.3"; } }
