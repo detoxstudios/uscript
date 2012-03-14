@@ -4389,10 +4389,6 @@ public class uScript : EditorWindow
 
             Type t = MasterComponent.GetType( szType );
             if ( null != t ) uniqueObjects[t.ToString()] = t;
-            else
-            {
-               uScriptDebug.Log( "Cannot Find unityType: " + s, uScriptDebug.Type.Warning );
-            }
          }
 
          if (null != requiredTypes)
