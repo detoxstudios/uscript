@@ -237,14 +237,10 @@ public class UpdateNotification
 
       if (_preferences.LastUpdateCheck <= 0)
       {
-         bool enable = EditorUtility.DisplayDialog("Automatic check for uScript updates",
-               "The uScript Editor is able to check for updates once per day.\n" +
+         bool enable = EditorUtility.DisplayDialog("Automaticly check for uScript updates?",
+               "This update check will send basic, anonymous Unity and uScript information to our update server. No personally identifiable information is transmitted or collected.\n" +
                "\n" +
-               "When communicating with" +
-               " the update server, your Unity platform and version are sent along with your current" +
-               " uScript version.  No personally identifiable information is transmitted or collected.\n" +
-               "\n" +
-               "This service can be enable or disable within the uScript Preferences panel.\n",
+               "This service can be enable or disable at any time from within the uScript Preferences panel.\n",
                "Enable", "Disable");
 
          if (_preferences.CheckForUpdate != enable)
