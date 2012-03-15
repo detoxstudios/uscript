@@ -189,11 +189,11 @@ public class PreferenceWindow : EditorWindow
          }
          EditorGUILayout.EndHorizontal();
 
-         if ( uScript.Instance.IsDevelopmentBuild )
-          {
-             _preferences.LastUpdateCheck = EditorGUILayout.IntField("Last Update Check", _preferences.LastUpdateCheck);
-             _preferences.IgnoreUpdateBuild = EditorGUILayout.TextField("Ignore Build", _preferences.IgnoreUpdateBuild);
-          }
+         if (uScript.Instance.IsDevelopmentBuild)
+         {
+            _preferences.LastUpdateCheck = EditorGUILayout.IntField("Last Update Check", _preferences.LastUpdateCheck);
+            _preferences.IgnoreUpdateBuild = EditorGUILayout.TextField("Ignore Build", _preferences.IgnoreUpdateBuild);
+         }
          
 
          EditorGUILayout.Separator();

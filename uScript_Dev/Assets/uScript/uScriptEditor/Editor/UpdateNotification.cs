@@ -37,7 +37,8 @@ public class UpdateNotification
                                  + "?productName="+WWW.EscapeURL(uScript.ProductType)
                                  + "&productBuild="+WWW.EscapeURL(uScript.BuildNumber)
                                  + "&platformName="+WWW.EscapeURL(Application.platform.ToString())
-                                 + "&platformBuild="+WWW.EscapeURL(Application.unityVersion)) as HttpWebRequest;
+                                 + "&platformBuild="+WWW.EscapeURL(Application.unityVersion)
+                                 + "&platformPro="+WWW.EscapeURL(uScript.isPro.ToString())) as HttpWebRequest;
 
       // Execute the request
       try
