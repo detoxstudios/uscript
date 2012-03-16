@@ -446,6 +446,9 @@ public class uScript : EditorWindow
    {
       s_Instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
       s_Instance.Launching( );
+
+      UpdateNotification.StartupCheck();
+
    }
 
    private void Launching( )
@@ -800,6 +803,7 @@ public class uScript : EditorWindow
       }
 
       if ( null == m_ScriptEditorCtrl ) return;
+
 
 
 #if (!UNITY_STORE_BUILD)
@@ -1183,8 +1187,6 @@ public class uScript : EditorWindow
          {
             WelcomeWindow.Init();
          }
-
-         UpdateNotification.StartupCheck();
       }
 
       if (m_ScriptEditorCtrl == null)
