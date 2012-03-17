@@ -2244,7 +2244,7 @@ namespace Detox.ScriptEditor
          Events          = new Plug[ 0 ];
          m_Parameters    = new Parameter[ 0 ];
 
-         EventArgs       = "";
+         EventArgs       = "System.EventArgs";
          EventParameters = new Parameter[ 0 ];
 
          m_Position = Point.Empty; 
@@ -2287,7 +2287,7 @@ namespace Detox.ScriptEditor
          m_Guid = data.Guid;
 
          Drivens   = data.Drivens;
-         EventArgs = "";
+         EventArgs = data.EventArgs;
          
          Inputs       = ArrayUtil.ToPlugs(data.Inputs);
          Outputs      = ArrayUtil.ToPlugs(data.Outputs);

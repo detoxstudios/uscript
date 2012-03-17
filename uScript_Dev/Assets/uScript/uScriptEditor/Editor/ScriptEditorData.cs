@@ -707,7 +707,7 @@ namespace Detox.Data.ScriptEditor
                EventParameters = new Parameter[ 0 ];
             }
 
-            if (serializer.CurrentVersion < 8 && (EventArgs == null || EventArgs == "") )
+            if (EventArgs == null || EventArgs == "")
             {
                EventArgs = "System.EventArgs";
             }
