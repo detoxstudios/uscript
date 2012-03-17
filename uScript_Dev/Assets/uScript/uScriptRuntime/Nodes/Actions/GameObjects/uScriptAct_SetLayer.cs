@@ -32,10 +32,20 @@ public class uScriptAct_SetLayer : uScriptLogic
    {
 		m_ApplyToChildren = ApplyToChildren;
 		
+      int index = 0;
+      
+      if (Layer.value > 0)
+      {
+         for (index = 0; index < 32; index++ )
+         {
+            if (((Layer.value >> index) & 0x1) != 0) break;
+         }
+      }
+
       foreach (GameObject obj in Target)
 	  {
 			Transform objTrans = obj.transform;
-	     SetGameObjectLayer(objTrans, Layer.value);
+	     SetGameObjectLayer(objTrans, index);
 	  }
 		
    }

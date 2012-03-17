@@ -85,11 +85,14 @@ public class uScriptAct_LookAt : uScriptLogic
             m_StartPositions[ i ] = m_Targets[ i ].transform.position;
          }
       }
+
+      if (0 == m_TotalTime) Update();
    }
 
    public void Update()
    {
       if ( null == m_Targets ) return;
+
 
       //calculate new time and clamp at 1
       float t = (m_TotalTime != 0) ? m_Time / m_TotalTime : 1.0f;

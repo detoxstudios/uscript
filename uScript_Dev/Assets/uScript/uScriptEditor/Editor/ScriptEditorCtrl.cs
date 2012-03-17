@@ -1136,8 +1136,11 @@ namespace Detox.ScriptEditor
 
             if (true == linkTo.Type.Contains("[]"))
             {
+               //certain nodes we want to keep the array type in
+               //all the others we replace it with a scalar value
                string name = uScript.FindFriendlyName(node);
-               if (false == name.Contains("List"))
+               if (false == (name == "Split String") &&
+                   false == (name.Contains("List")))
                {
                   linkTo.Type = linkTo.Type.Replace("[]", "");
                }

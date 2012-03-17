@@ -4424,6 +4424,7 @@ public class uScript : EditorWindow
          }
 
          uniqueObjects[typeof(Math).ToString()] = typeof(Math);
+         uniqueObjects[typeof(UnityEngine.Mathf).ToString()] = typeof(UnityEngine.Mathf);
 
          m_SzEntityTypes = new string[ uniqueObjects.Values.Count ];
 
