@@ -21,16 +21,21 @@ public class uScriptAct_GetRigidbodyVelocity : uScriptLogic
       GameObject Target,
       
       [FriendlyName("Velocity", "The velocity of the rigidbody component attached to Target.")]
-      out Vector3 Velocity
-      )
+      out Vector3 Velocity,
+ 
+      [FriendlyName("Magnitude", "The magnitude of the rigidbody component attached to Target.")]
+       out float Magnitude
+   )
    {
       if (Target != null && Target.GetComponent<Rigidbody>( ))
       {
          Velocity = Target.rigidbody.velocity;
+         Magnitude = Velocity.magnitude;
       }
       else
       {
          Velocity = Vector3.zero;
+         Magnitude = 0;      
       }
    }
 }
