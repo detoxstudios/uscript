@@ -36,9 +36,9 @@ public class uScriptCon_TimedGate : uScriptLogic
 
       if (m_GateOpen)
       {
-         if (Out != null) Out(this, new System.EventArgs());
          m_GateOpen = false;
          m_TimeToTrigger = Duration;
+         if (Out != null) Out(this, new System.EventArgs());
       }
       else
       {
