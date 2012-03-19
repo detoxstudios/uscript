@@ -1688,59 +1688,25 @@ namespace Detox.ScriptEditor
             {
                AddCSharpLine( FormatType(lowestParameter.Type) + " " + CSharpName(external) + " = " + FormatValue(lowestParameter.Default, lowestParameter.Type) + ";" );
             }
-            //LinkNode [] links = FindLinksByDestination( external.Guid, external.Connection );
 
-            //bool externalDeclared = false;
+            LinkNode []links = FindLinksBySource( external.Guid, external.Connection );
 
-            //foreach ( LinkNode link in links )
-            //{
-            //   EntityNode node = m_Script.GetNode( link.Source.Guid );
+            foreach ( LinkNode link in links )
+            {
+               EntityNode node = m_Script.GetNode( link.Destination.Guid );
 
-            //   foreach ( Parameter p in node.Parameters )
-            //   {
-            //      if ( p.Name == link.Source.Anchor &&
-            //           true == p.Output )
-            //      {
-            //         externalDeclared = true;
-            //         AddCSharpLine( FormatType(lowestParameter.Type) + " " + CSharpName(external) + " = " + FormatValue(lowestParameter.Default, lowestParameter.Type) + ";" );
-            //         break;
-            //      }
-            //   }
+               if ( node is EntityMethod || node is EntityProperty )
+               {
+                  if ( node.Instance.Name == link.Destination.Anchor )
+                  {
+                     AddCSharpLine( FormatType(node.Instance.Type) + " " + CSharpName(external) + " = " + FormatValue(node.Instance.Default, node.Instance.Type) + ";" );
+                     break;
+                  }
+               }
 
-            //   //only one link allowed for each external parameter output
-            //   break;
-            //}
-
-            //if (true == externalDeclared) continue;
-
-            //links = FindLinksBySource( external.Guid, external.Connection );
-
-            //foreach ( LinkNode link in links )
-            //{
-            //   EntityNode node = m_Script.GetNode( link.Destination.Guid );
-
-            //   if ( node is EntityMethod || node is EntityProperty )
-            //   {
-            //      if ( node.Instance.Name == link.Destination.Anchor )
-            //      {
-            //         AddCSharpLine( FormatType(node.Instance.Type) + " " + CSharpName(external) + " = " + FormatValue(node.Instance.Default, node.Instance.Type) + ";" );
-            //         break;
-            //      }
-            //   }
-
-            //   foreach ( Parameter p in node.Parameters )
-            //   {
-            //      if ( p.Name == link.Destination.Anchor &&
-            //           true == p.Input )
-            //      {
-            //         AddCSharpLine( FormatType(lowestType) + " " + CSharpName(external, p.Name) + " = " + FormatValue(p.Default, lowestType) + ";" );
-            //         break;
-            //      }
-            //   }
-
-            //   //only one link allowed for each external parameter output
-            //   break;
-            //}
+               //only one link allowed for each external parameter output
+               break;
+            }
          }
 
          AddCSharpLine( "" );
@@ -3242,11 +3208,17 @@ namespace Detox.ScriptEditor
                break;
             }
 
+            //I don't think we want to set properties here
+            //because they've just entered our node
+            //and this code would then set all the properties back to the default
+            //before we've executed our code
+
+
             //external connections don't have a parameter
             //because they take on whatever parameter they link to
-            Parameter parameter = new Parameter( );
-            parameter.Name = external.Connection;
-            RefreshSetProperties( external, new Parameter[] {parameter} );
+            //Parameter parameter = new Parameter( );
+            //parameter.Name = external.Connection;
+            //RefreshSetProperties( external, new Parameter[] {parameter} );
          }
 
          foreach ( LinkNode.Connection connection in connections )
