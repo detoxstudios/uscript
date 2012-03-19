@@ -1568,6 +1568,7 @@ namespace Detox.ScriptEditor
             nodeData.Output    = Output.ToPlugData( );
             nodeData.Position.X= Position.X;
             nodeData.Position.Y= Position.Y;
+            nodeData.IsStatic  = IsStatic;
             nodeData.Guid      = Guid;
             nodeData.Parameters  = ArrayUtil.ToParameterDatas( Parameters );
 
@@ -1710,7 +1711,7 @@ namespace Detox.ScriptEditor
 
          m_Position   = data.Position; 
          m_Parameters = ArrayUtil.ToParameters( data.Parameters );
-         m_IsStatic   = false;
+         m_IsStatic   = data.IsStatic;
       }
    }
 
@@ -4704,6 +4705,7 @@ namespace Detox.ScriptEditor
                cloned.Position    = data.Position;
                cloned.ShowComment = new Parameter( data.ShowComment );
                cloned.Comment     = new Parameter( data.Comment );
+               cloned.IsStatic    = data.IsStatic;
             }
             else
             {

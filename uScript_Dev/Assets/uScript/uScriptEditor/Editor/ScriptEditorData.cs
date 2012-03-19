@@ -393,6 +393,7 @@ namespace Detox.Data.ScriptEditor
       public Plug Input;
       public Plug Output;
 
+      public bool IsStatic;
       public string ComponentType;
 
       public Parameter Instance;
@@ -408,12 +409,12 @@ namespace Detox.Data.ScriptEditor
          Instance   = data.Instance;
          Input      = data.Input;
          Output     = data.Output;
-
+         IsStatic   = data.IsStatic;
          ComponentType = data.ComponentType;
          Parameters    = data.Parameters;
       }
 
-      public new int Version { get { return 5; } }
+      public new int Version { get { return 6; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -453,6 +454,15 @@ namespace Detox.Data.ScriptEditor
          {
             ComponentType = (string) serializer.LoadNamedObject( "ComponentType" );
          }
+
+         if ( serializer.CurrentVersion < 6 )
+         {
+            IsStatic = false;
+         }
+         else
+         {
+            IsStatic = (bool) serializer.LoadNamedObject( "IsStatic" );
+         }
       }
 
       public new void Save(ObjectSerializer serializer)
@@ -464,6 +474,7 @@ namespace Detox.Data.ScriptEditor
          serializer.SaveNamedObject( "Output", Output );
          serializer.SaveNamedObject( "Parameters", Parameters );
          serializer.SaveNamedObject( "ComponentType", ComponentType );
+         serializer.SaveNamedObject( "IsStatic", IsStatic );
       }
    }
 
