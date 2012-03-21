@@ -236,6 +236,7 @@ public class UpdateNotification
       Preferences _preferences = uScript.Preferences;
       UpdateNotification.Result _updateResult = Result.CheckNeeded;
 
+      // LastUpdateCheck will be 0 when uScript it first run, or when the uScriptSettings file is removed
       if (_preferences.LastUpdateCheck <= 0)
       {
          bool enable = EditorUtility.DisplayDialog("Automaticly check for uScript updates?",
@@ -244,11 +245,9 @@ public class UpdateNotification
                "This service can be enable or disable at any time from within the uScript Preferences panel.\n",
                "Enable", "Disable");
 
-         if (_preferences.CheckForUpdate != enable)
-         {
-            _preferences.CheckForUpdate = enable;
-            _preferences.Save();
-         }
+         _preferences.LastUpdateCheck = int.Parse(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"));
+         _preferences.CheckForUpdate = enable;
+         _preferences.Save();
       }
 
       //
