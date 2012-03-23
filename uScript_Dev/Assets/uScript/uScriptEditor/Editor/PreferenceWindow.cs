@@ -146,6 +146,8 @@ public class PreferenceWindow : EditorWindow
          GUILayout.Label("CodeGeneration", EditorStyles.boldLabel);
 
          _preferences.MaximumNodeRecursionCount = (int)EditorGUILayout.IntField("Maximum Node Recursion", _preferences.MaximumNodeRecursionCount);
+         _preferences.SaveMethod = (Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", _preferences.SaveMethod);
+         uScript.Instance.GenerateDebugInfo = _preferences.SaveMethod != Preferences.SaveMethodType.Release;
 
          EditorGUILayout.Separator();
 

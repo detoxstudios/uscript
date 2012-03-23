@@ -208,9 +208,6 @@ public class uScript : EditorWindow
    Rect rectFileMenuButton = new Rect();
    Rect rectFileMenuWindow = new Rect(20, 20, 10, 10);
 
-   int _saveMethod = 1;    // 0:Quick, 1:Debug, 2:Release
-   public int SaveMethod { get { return _saveMethod; } }
-
 
    /* Palette Variables */
    String _graphListFilterText = string.Empty;
@@ -2755,7 +2752,7 @@ public class uScript : EditorWindow
             saved = SaveScript(rename);
             AssetDatabase.StopAssetEditing();
    
-            GenerateDebugInfo = _saveMethod != 2;  // "Release" is not selected
+            GenerateDebugInfo = Preferences.SaveMethod != Preferences.SaveMethodType.Release;
 
             if (saved) RefreshScript();
          }
@@ -2765,12 +2762,14 @@ public class uScript : EditorWindow
 
    void FileMenuItem_Save()
    {
-      RequestSave(_saveMethod == 0, _saveMethod == 1, false);
+      RequestSave(Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+                  Preferences.SaveMethod == Preferences.SaveMethodType.Debug, false);
    }
 
    void FileMenuItem_SaveAs()
    {
-      RequestSave(_saveMethod == 0, _saveMethod == 1, true);
+      RequestSave(Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+                  Preferences.SaveMethod == Preferences.SaveMethodType.Debug, true);
    }
 
    void FileMenuItem_QuickSave()
@@ -2887,21 +2886,23 @@ public class uScript : EditorWindow
 
             GUILayout.FlexibleSpace();
 
-            _saveMethod = uScriptGUI.ToolbarButtonGroup("Save method: ", _saveMethod, new GUIContent[] { uScriptGUIContent.buttonSaveModeQuick, uScriptGUIContent.buttonSaveModeDebug, uScriptGUIContent.buttonSaveModeRelease });
-            GenerateDebugInfo = _saveMethod != 2;  // "Release" is not selected
+            GUILayout.Label("Save Method:", uScriptGUIStyle.toolbarLabel);
+            Preferences.SaveMethodType newMethod = (Preferences.SaveMethodType)EditorGUILayout.EnumPopup(Preferences.SaveMethod, EditorStyles.toolbarDropDown, GUILayout.Width(uScriptGUI.SaveMethodPopupWidth));
+            if (newMethod != Preferences.SaveMethod)
+            {
+               Preferences.SaveMethod = newMethod;
+               Preferences.Save();
+               GenerateDebugInfo = Preferences.SaveMethod != Preferences.SaveMethodType.Release;
+            }
 
             GUILayout.FlexibleSpace();
 
-            GUIStyle style2 = new GUIStyle(EditorStyles.label);
-            style2.padding = new RectOffset(16, 4, 2, 2);
-            style2.margin = new RectOffset();
-            GUILayout.Label(FullVersionName, style2);
+            GUILayout.Label(FullVersionName, uScriptGUIStyle.toolbarLabel);
          }
          EditorGUILayout.EndHorizontal();
 
          GUILayout.BeginVertical(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
          {
-
             // Canvas
             //
             if (rect.width != 0 && rect.height != 0)

@@ -255,8 +255,15 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                   // Save button
                   if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, isScriptNew ? EditorStyles.miniButton : EditorStyles.miniButtonRight))
+//                  if (GUILayout.Button((uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick
+//                                          ? uScriptGUIContent.buttonScriptSaveQuick
+//                                          : (uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug
+//                                             ? uScriptGUIContent.buttonScriptSaveDebug
+//                                             : uScriptGUIContent.buttonScriptSaveRelease)),
+//                                       isScriptNew ? EditorStyles.miniButton : EditorStyles.miniButtonRight))
                   {
-                     uScriptInstance.RequestSave(uScriptInstance.SaveMethod == 0, uScriptInstance.SaveMethod == 1, false);
+                     uScriptInstance.RequestSave(uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+                                                 uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug, false);
                   }
                }
                GUILayout.EndHorizontal();

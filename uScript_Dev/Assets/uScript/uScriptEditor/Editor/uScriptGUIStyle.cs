@@ -135,6 +135,9 @@ public static class uScriptGUIStyle
    private static GUIStyle _listRow;
    public static GUIStyle listRow { get { return _listRow; } }
 
+   private static GUIStyle _toolbarLabel;
+   public static GUIStyle toolbarLabel { get { return _toolbarLabel; } }
+
 
 
 
@@ -398,6 +401,10 @@ public static class uScriptGUIStyle
 
       _listRow = new GUIStyle(GUIStyle.none);
       _listRow.onNormal.background = _texture_propertyRowEven;
+
+      _toolbarLabel = new GUIStyle(EditorStyles.label);
+      _toolbarLabel.padding = new RectOffset(16, 4, 2, 2);
+      _toolbarLabel.margin = new RectOffset();
    }
 
 

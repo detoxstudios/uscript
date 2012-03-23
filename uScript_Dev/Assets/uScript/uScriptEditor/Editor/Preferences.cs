@@ -8,6 +8,13 @@ public class Preferences
       AlwaysCollapsed,
       Dynamic
    }
+
+   public enum SaveMethodType
+   {
+      Quick,
+      Debug,
+      Release
+   }
    
    public string ProjectFiles 
    { 
@@ -49,6 +56,12 @@ public class Preferences
    {
       get { LoadIfRequired( ); return (int) m_Preferences[ "MaximumNodeRecursionCount" ]; }
       set { LoadIfRequired( ); m_Preferences[ "MaximumNodeRecursionCount" ] = value; }
+   }
+
+   public SaveMethodType SaveMethod
+   {
+      get { LoadIfRequired( ); return (SaveMethodType) m_Preferences[ "SaveMethod" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "SaveMethod" ] = value; }
    }
 
    public bool ShowGrid
@@ -157,12 +170,13 @@ public class Preferences
       if ( null == m_Preferences[ "LastUpdateCheck" ] )      m_Preferences[ "LastUpdateCheck" ]      = 0;
       if ( null == m_Preferences[ "IgnoreUpdateBuild" ] )    m_Preferences[ "IgnoreUpdateBuild" ]    = string.Empty;
 
-      if ( null == m_Preferences[ "RelativeProjectFiles" ] )     m_Preferences[ "RelativeProjectFiles" ]      = uScriptConfig.ConstantPaths.RelativePathInAssets(UnityEngine.Application.dataPath + "/uScriptProjectFiles");
-      if ( null == m_Preferences[ "RelativeUserScripts" ] )      m_Preferences[ "RelativeUserScripts" ]       = uScriptConfig.ConstantPaths.RelativePathInAssets(ProjectFiles + "/uScripts");
-      if ( null == m_Preferences[ "RelativeUserNodes" ] )        m_Preferences[ "RelativeUserNodes" ]         = uScriptConfig.ConstantPaths.RelativePathInAssets(ProjectFiles + "/Nodes");
-      if ( null == m_Preferences[ "RelativeNestedScripts" ] )    m_Preferences[ "RelativeNestedScripts" ]     = uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode");
-      if ( null == m_Preferences[ "RelativeGeneratedScripts" ] ) m_Preferences[ "RelativeGeneratedScripts" ]  = uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode");
-      if ( null == m_Preferences[ "MaximumNodeRecursionCount" ] )m_Preferences[ "MaximumNodeRecursionCount" ] = 1000;
+      if ( null == m_Preferences[ "RelativeProjectFiles" ] )      m_Preferences[ "RelativeProjectFiles" ]      = uScriptConfig.ConstantPaths.RelativePathInAssets(UnityEngine.Application.dataPath + "/uScriptProjectFiles");
+      if ( null == m_Preferences[ "RelativeUserScripts" ] )       m_Preferences[ "RelativeUserScripts" ]       = uScriptConfig.ConstantPaths.RelativePathInAssets(ProjectFiles + "/uScripts");
+      if ( null == m_Preferences[ "RelativeUserNodes" ] )         m_Preferences[ "RelativeUserNodes" ]         = uScriptConfig.ConstantPaths.RelativePathInAssets(ProjectFiles + "/Nodes");
+      if ( null == m_Preferences[ "RelativeNestedScripts" ] )     m_Preferences[ "RelativeNestedScripts" ]     = uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode");
+      if ( null == m_Preferences[ "RelativeGeneratedScripts" ] )  m_Preferences[ "RelativeGeneratedScripts" ]  = uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode");
+      if ( null == m_Preferences[ "MaximumNodeRecursionCount" ] ) m_Preferences[ "MaximumNodeRecursionCount" ] = 1000;
+      if ( null == m_Preferences[ "SaveMethod" ] )                m_Preferences[ "SaveMethod" ]                = 1;   // 0:Quick, 1:Debug, 2:Release
    }
    
    public void Save( )

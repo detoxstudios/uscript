@@ -1179,26 +1179,30 @@ public static class uScriptGUI
 	}
 
 
-   public static int ToolbarButtonGroup(string label, int index, GUIContent[] content)
-   {
-      if (string.IsNullOrEmpty(label) == false)
-      {
-         GUIStyle style1 = new GUIStyle(EditorStyles.label);
-         style1.padding = new RectOffset(16, 4, 2, 2);
-         style1.margin = new RectOffset();
-         GUILayout.Label(label, style1);
-      }
-
-      for (int i = 0; i < content.Length; i++)
-      {
-         if (GUILayout.Toggle(index == i, content[i], EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
-         {
-            index = i;
-         }
-      }
-
-      return index;
-   }
+//   public static int ToolbarButtonGroup(string label, int index, GUIContent[] content)
+//   {
+//      GUILayout.BeginHorizontal();
+//
+//      if (string.IsNullOrEmpty(label) == false)
+//      {
+//         GUIStyle style1 = new GUIStyle(EditorStyles.label);
+//         style1.padding = new RectOffset(16, 4, 2, 2);
+//         style1.margin = new RectOffset();
+//         GUILayout.Label(label, style1);
+//      }
+//
+//      for (int i = 0; i < content.Length; i++)
+//      {
+//         if (GUILayout.Toggle(index == i, content[i], EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+//         {
+//            index = i;
+//         }
+//      }
+//
+//      GUILayout.EndHorizontal();
+//
+//      return index;
+//   }
 
 
 
@@ -1863,6 +1867,9 @@ public static class uScriptGUI
    }
 
 
+   private static int _saveMethodPopupWidth = 0;
+   public static int SaveMethodPopupWidth { get { return _saveMethodPopupWidth; } }
+
    public static void InitPanels()
    {
       if (_panelsInitialized)
@@ -1872,10 +1879,21 @@ public static class uScriptGUI
       }
       _panelsInitialized = true;
 
+      // Get the width of the SaveMethodType options for use in the toolbarDropDown
+      foreach (string name in Enum.GetNames(typeof(Preferences.SaveMethodType)))
+      {
+         Vector2 size = EditorStyles.toolbarDropDown.CalcSize(new GUIContent(name));
+         if (size.x > _saveMethodPopupWidth)
+         {
+            _saveMethodPopupWidth = (int)size.x;
+         }
+      }
+      _saveMethodPopupWidth += 10;
+
+
+
+
 //      panelStyle = new GUIStyle();
-
-
-
 
       // Get the panel dimensions from the saved Settings or use default values
 
