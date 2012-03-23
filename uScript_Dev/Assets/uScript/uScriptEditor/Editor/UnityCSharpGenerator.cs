@@ -1225,6 +1225,10 @@ namespace Detox.ScriptEditor
          {
             return "new UnityEngine.NetworkMessageInfo( )";
          }
+         else if ( "UnityEngine.Bounds" == type )
+         {
+            return "new UnityEngine.Bounds( )";
+         }
          else if ( type.Contains("[]") )
          {
             return FormatArrayValue( stringValue, type );
