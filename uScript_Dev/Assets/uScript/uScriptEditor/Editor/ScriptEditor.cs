@@ -3000,7 +3000,7 @@ namespace Detox.ScriptEditor
          FriendlyName = new Parameter( );
          FriendlyName.Name = "FriendlyName";
          FriendlyName.FriendlyName = "Friendly Name";
-         FriendlyName.Default = name;
+         FriendlyName.Default = "Untitled";
          FriendlyName.Type    = typeof(string).ToString( );
          FriendlyName.Input   = true;
          FriendlyName.Output  = false;

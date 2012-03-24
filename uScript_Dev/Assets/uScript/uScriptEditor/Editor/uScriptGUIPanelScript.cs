@@ -189,53 +189,65 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             //    Filter the list
             //    Support foldout containers eventually
 
-            string sceneName = string.Empty;
-
-
+            string currentSceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
+            string scriptSceneName = string.Empty;
 
             //
             // Current script
             //
+            if (_currentScriptName_uScript != m_ScriptEditorCtrl.ScriptName)
+            {
+               _currentScriptName_uScript = m_ScriptEditorCtrl.ScriptName;
+               _currentScriptName = System.IO.Path.GetFileNameWithoutExtension(_currentScriptName_uScript);
+            }
+
+            if (null == _currentScriptName_uScript)
+               _currentScriptName_uScript = string.Empty;
+
+            // uScript Label
+            scriptSceneName = string.Empty;
+            if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(_currentScriptName_uScript))
+            {
+               if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[_currentScriptName_uScript].m_SceneName) == false)
+               {
+                  scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[_currentScriptName_uScript].m_SceneName;
+               }
+            }
+
+            bool isScriptNew = String.IsNullOrEmpty(_currentScriptName_uScript);
+            bool isScriptAttachToScene = (scriptSceneName == currentSceneName);
+            bool isScriptDirty = m_ScriptEditorCtrl.IsDirty;
+
+            GUILayout.Label(( (isScriptNew ? "(new)" : _currentScriptName)
+                              + (isScriptDirty ? " *" : string.Empty) ), _scriptCurrentNormal );
+
             GUILayout.BeginHorizontal();
             {
-               if (_currentScriptName_uScript != m_ScriptEditorCtrl.ScriptName)
-               {
-                  _currentScriptName_uScript = m_ScriptEditorCtrl.ScriptName;
-                  _currentScriptName = System.IO.Path.GetFileNameWithoutExtension(_currentScriptName_uScript);
-               }
+               // '\u21b3' // DOWNWARDS ARROW WITH TIP RIGHTWARDS
+               // '\u21aa' // RIGHTWARDS ARROW WITH HOOK
+               // '\u293f' // LOWER LEFT SEMICIRCULAR ANTICLOCKWISE ARROW
+               // '\u2937' // ARROW POINTING DOWNWARDS THEN CURVING RIGHTWARDS
+               GUILayout.Label(new GUIContent('\u21aa' + "\t", "Points to the scene the script is attached to."), _scriptCurrentNormal, GUILayout.ExpandWidth(false));
 
-               if (null == _currentScriptName_uScript) _currentScriptName_uScript = "";
+               GUILayout.Label(new GUIContent((scriptSceneName == string.Empty ? "(none)" : scriptSceneName),
+                                              (scriptSceneName == string.Empty
+                                                 ? "This script is not attached to any scene.  It may be used with Prefabs or as a Nested Script."
+                                                 : "The name of the scene that the script is attached to.")),
+                               (isScriptAttachToScene || scriptSceneName == string.Empty
+                                  ? _scriptCurrentNormal
+                                  : _scriptCurrentError));
+            }
+            GUILayout.EndHorizontal();
 
-               // uScript Label
-               sceneName = string.Empty;
-               if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(_currentScriptName_uScript))
-               {
-                  if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[_currentScriptName_uScript].m_SceneName) == false)
-                  {
-                     sceneName = uScriptBackgroundProcess.s_uScriptInfo[_currentScriptName_uScript].m_SceneName;
-                  }
-               }
-
-               bool isScriptNew = String.IsNullOrEmpty(_currentScriptName_uScript);
-               bool isScriptAttachToScene = (sceneName == System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene));
-               bool isScriptDirty = m_ScriptEditorCtrl.IsDirty;
-
-               GUILayout.Label(// Label
-                               ( (isScriptNew ? "(new)" : _currentScriptName)
-                                 + (isScriptDirty ? " *" : string.Empty) ),
-                               // Style
-                               (isScriptAttachToScene ? _scriptCurrentNormal : _scriptCurrentError)
-                              );
-
-               GUILayout.FlexibleSpace();
-
+            GUILayout.BeginHorizontal();
+            {
                GUILayout.BeginHorizontal(_styleButtonGroup);
                {
                   if (isScriptNew == false)
                   {
                      // Source button
                      GUI.backgroundColor = (uScriptInstance.IsStale(_currentScriptName) ? UnityEngine.Color.red : UnityEngine.Color.white);
-                     if (GUILayout.Button(uScriptGUIContent.buttonScriptSource, EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false)))
+                     if (GUILayout.Button(uScriptGUIContent.buttonScriptSource, EditorStyles.miniButtonLeft))
                      {
                         uScriptGUI.PingGeneratedScript(_currentScriptName);
                      }
@@ -254,13 +266,12 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                   }
 
                   // Save button
-                  if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, isScriptNew ? EditorStyles.miniButton : EditorStyles.miniButtonRight))
-//                  if (GUILayout.Button((uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick
-//                                          ? uScriptGUIContent.buttonScriptSaveQuick
-//                                          : (uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug
-//                                             ? uScriptGUIContent.buttonScriptSaveDebug
-//                                             : uScriptGUIContent.buttonScriptSaveRelease)),
-//                                       isScriptNew ? EditorStyles.miniButton : EditorStyles.miniButtonRight))
+                  if (GUILayout.Button((uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick
+                                          ? uScriptGUIContent.buttonScriptSaveQuick
+                                          : (uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug
+                                             ? uScriptGUIContent.buttonScriptSaveDebug
+                                             : uScriptGUIContent.buttonScriptSaveRelease)),
+                                       isScriptNew ? EditorStyles.miniButton : EditorStyles.miniButtonRight))
                   {
                      uScriptInstance.RequestSave(uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
                                                  uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug, false);
@@ -383,10 +394,10 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            }
 
                            // uScript Label
-                           sceneName = "None";
+                           scriptSceneName = "None";
                            if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName))
                            {
-                              sceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName;
+                              scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName;
                            }
 
                            if (Event.current.type == EventType.Layout)
@@ -425,7 +436,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            }
 
                            // Script Label buton
-                           if (GUI.Button(rectLabelButton, scriptName + (sceneName == "None" ? string.Empty : " (" + sceneName + ")"), (wasClicked ? _scriptListBold : _scriptListNormal)))
+                           if (GUI.Button(rectLabelButton, scriptName + (scriptSceneName == "None" ? string.Empty : " (" + scriptSceneName + ")"), (wasClicked ? _scriptListBold : _scriptListNormal)))
                            {
                               path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFileName);
 

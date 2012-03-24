@@ -604,13 +604,13 @@ public class uScript : EditorWindow
       if (!String.IsNullOrEmpty(CurrentScript))
       {
          //Debug.Log("Opening from valid script");
-         scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
+         scriptEditor = new ScriptEditor(string.Empty, PopulateEntityTypes(null), PopulateLogicTypes());
          scriptEditor.OpenFromBase64(CurrentScriptName, CurrentScript);
       }
       
       if ( null == scriptEditor )
       {
-         scriptEditor = new ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
+         scriptEditor = new ScriptEditor(string.Empty, PopulateEntityTypes(null), PopulateLogicTypes());
          //Debug.Log("no valid script");
       }
 
@@ -3244,7 +3244,7 @@ public class uScript : EditorWindow
 
    public void NewScript()
    {
-      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor("Untitled", PopulateEntityTypes(null), PopulateLogicTypes());
+      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor(string.Empty, PopulateEntityTypes(null), PopulateLogicTypes());
 
       m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor);
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
