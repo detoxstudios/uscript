@@ -227,7 +227,12 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                // '\u21aa' // RIGHTWARDS ARROW WITH HOOK
                // '\u293f' // LOWER LEFT SEMICIRCULAR ANTICLOCKWISE ARROW
                // '\u2937' // ARROW POINTING DOWNWARDS THEN CURVING RIGHTWARDS
-               GUILayout.Label(new GUIContent('\u21aa' + "\t", "Points to the scene the script is attached to."), _scriptCurrentNormal, GUILayout.ExpandWidth(false));
+               GUILayout.Label(new GUIContent((Application.platform == RuntimePlatform.OSXEditor
+                                                 ? '\u21aa'
+                                                 : '\u00bb') + "\t",
+                                              "Points to the scene the script is attached to."),
+                               _scriptCurrentNormal,
+                               GUILayout.ExpandWidth(false));
 
                GUILayout.Label(new GUIContent((scriptSceneName == string.Empty ? "(none)" : scriptSceneName),
                                               (scriptSceneName == string.Empty
