@@ -333,7 +333,7 @@ public static class uScriptGUI
    {
       SetupRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
-      EditorGUILayout.PrefixLabel(label, _styleLabel);
+      EditorGUILayout.PrefixLabel((string.IsNullOrEmpty(label) ? " " : label), _styleLabel);
       uScriptGUI.enabled = (! isReadOnly) && (! isSocketExposed || ! isLocked);
    }
 
