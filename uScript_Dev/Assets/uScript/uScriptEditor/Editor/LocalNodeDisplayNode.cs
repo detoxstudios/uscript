@@ -57,30 +57,13 @@ namespace Detox.ScriptEditor
          }
          else
          {
-            value = LocalNode.Value.Default;
-            
             if (LocalNode.Value.Type.Contains("Mask"))
             {
-               int mask;
-
-               if (true == Int32.TryParse(value, out mask))
-               {
-                  if (0 == mask) value = "None";
-                  else if (0xffffffff == mask) value = "All";
-                  else
-                  {
-                     bool isPowerOfTwo = (mask & (mask - 1)) == 0;
-                     if (true == isPowerOfTwo)
-                     {
-                        value = Math.Log(mask, 2).ToString();
-                     }
-                     else
-                     {
-                        value = "Mixed";
-                     }
-                  }
-
-               }
+               value = uScriptGUI.FormatMaskDisplay(LocalNode.Value.Default);
+            }
+            else
+            {
+               value = LocalNode.Value.Default;
             }
          }
 

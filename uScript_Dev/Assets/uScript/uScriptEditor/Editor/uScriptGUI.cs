@@ -676,6 +676,26 @@ public static class uScriptGUI
       return value;
    }
 
+   public static string FormatMaskDisplay(string value)
+   {
+      int mask;
+
+      if (true == Int32.TryParse(value, out mask))
+      {
+         if (0 == mask) return "None";
+         if (0xffffffff == (uint) mask) return "All";
+
+         bool isPowerOfTwo = (mask & (mask - 1)) == 0;
+         if (true == isPowerOfTwo)
+         {
+            return Math.Log(mask, 2).ToString();
+         }
+
+         return "Mixed";
+      }
+
+      return "Invalid Value";
+   }
 
    public static string ChoiceField(string label, string value, string[] choices, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {

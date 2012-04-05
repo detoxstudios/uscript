@@ -3230,13 +3230,22 @@ namespace Detox.ScriptEditor
                textPoint.StyleName = "socket_text";
                textPoints.Add( textPoint );
 					
+               string text;
+
                // Draw the socket value label under the socket
                if ( null != socket.DefaultValue )
                {
                   int charsForLabel = (int)(((xStep + textLength.Width) * 1.75f) / charLength);
                   charsForLabel = Math.Max( 3, charsForLabel );
 
-                  string text = Parameter.FormatArrayString( socket.DefaultValue );
+                  if (socket.Type.Contains("Mask"))
+                  {
+                     text = uScriptGUI.FormatMaskDisplay(socket.DefaultValue);
+                  }
+                  else
+                  {
+                     text = Parameter.FormatArrayString( socket.DefaultValue );
+                  }
 
                   if ( text.Length > charsForLabel ) text = text.Substring( 0, charsForLabel - 3 ) + "...";
 
