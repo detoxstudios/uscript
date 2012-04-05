@@ -62,9 +62,24 @@ namespace Detox.ScriptEditor
             if (LocalNode.Value.Type.Contains("Mask"))
             {
                int mask;
+
                if (true == Int32.TryParse(value, out mask))
                {
-                  value = Math.Log(mask, 2).ToString();
+                  if (0 == mask) value = "None";
+                  else if (0xffffffff == mask) value = "All";
+                  else
+                  {
+                     bool isPowerOfTwo = (mask & (mask - 1)) == 0;
+                     if (true == isPowerOfTwo)
+                     {
+                        value = Math.Log(mask, 2).ToString();
+                     }
+                     else
+                     {
+                        value = "Mixed";
+                     }
+                  }
+
                }
             }
          }
