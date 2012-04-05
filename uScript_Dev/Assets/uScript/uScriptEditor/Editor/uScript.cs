@@ -4291,36 +4291,6 @@ public class uScript : EditorWindow
          baseProperties[p.Name] = p.Name;
       }
 
-      foreach (MethodInfo m in typeof(UnityEngine.GameObject).GetMethods())
-      {
-         baseMethods[m.Name] = m.Name;
-      }
-
-      foreach (EventInfo e in typeof(UnityEngine.GameObject).GetEvents())
-      {
-         baseEvents[e.Name] = e.Name;
-      }
-
-      foreach (PropertyInfo p in typeof(UnityEngine.GameObject).GetProperties())
-      {
-         baseProperties[p.Name] = p.Name;
-      }
-
-      foreach (MethodInfo m in typeof(UnityEngine.Component).GetMethods())
-      {
-         baseMethods[m.Name] = m.Name;
-      }
-
-      foreach (EventInfo e in typeof(UnityEngine.Component).GetEvents())
-      {
-         baseEvents[e.Name] = e.Name;
-      }
-
-      foreach (PropertyInfo p in typeof(UnityEngine.Component).GetProperties())
-      {
-         baseProperties[p.Name] = p.Name;
-      }
-
       if ( null == m_SzEntityTypes )
       {
          uScriptDebug.Log( "Reparsing Entity Types", uScriptDebug.Type.Debug );
