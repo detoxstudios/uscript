@@ -4173,8 +4173,6 @@ public class uScript : EditorWindow
       {
          foreach (PropertyInfo p in propertyInfos)
          {
-            if (true == baseProperties.Contains(p.Name)) continue;
-
             bool isInput = p.GetSetMethod() != null;
             bool isOutput = p.GetGetMethod() != null;
 
@@ -4246,47 +4244,47 @@ public class uScript : EditorWindow
 
       List<EntityDesc> entityDescs = new List<EntityDesc>();
 
-      foreach (MethodInfo m in typeof(UnityEngine.Behaviour).GetMethods())
+      foreach (MethodInfo m in typeof(UnityEngine.Behaviour).GetMethods(BindingFlags.DeclaredOnly))
       {
          baseMethods[m.Name] = m.Name;
       }
 
-      foreach (EventInfo e in typeof(UnityEngine.Behaviour).GetEvents())
+      foreach (EventInfo e in typeof(UnityEngine.Behaviour).GetEvents(BindingFlags.DeclaredOnly))
       {
          baseEvents[e.Name] = e.Name;
       }
 
-      foreach (PropertyInfo p in typeof(UnityEngine.Behaviour).GetProperties())
+      foreach (PropertyInfo p in typeof(UnityEngine.Behaviour).GetProperties(BindingFlags.DeclaredOnly))
       {
          baseProperties[p.Name] = p.Name;
       }
 
-      foreach (MethodInfo m in typeof(UnityEngine.MonoBehaviour).GetMethods())
+      foreach (MethodInfo m in typeof(UnityEngine.MonoBehaviour).GetMethods(BindingFlags.DeclaredOnly))
       {
          baseMethods[m.Name] = m.Name;
       }
 
-      foreach (EventInfo e in typeof(UnityEngine.MonoBehaviour).GetEvents())
+      foreach (EventInfo e in typeof(UnityEngine.MonoBehaviour).GetEvents(BindingFlags.DeclaredOnly))
       {
          baseEvents[e.Name] = e.Name;
       }
 
-      foreach (PropertyInfo p in typeof(UnityEngine.MonoBehaviour).GetProperties())
+      foreach (PropertyInfo p in typeof(UnityEngine.MonoBehaviour).GetProperties(BindingFlags.DeclaredOnly))
       {
          baseProperties[p.Name] = p.Name;
       }
 
-      foreach (MethodInfo m in typeof(UnityEngine.Object).GetMethods())
+      foreach (MethodInfo m in typeof(UnityEngine.Object).GetMethods(BindingFlags.DeclaredOnly))
       {
          baseMethods[m.Name] = m.Name;
       }
 
-      foreach (EventInfo e in typeof(UnityEngine.Object).GetEvents())
+      foreach (EventInfo e in typeof(UnityEngine.Object).GetEvents(BindingFlags.DeclaredOnly))
       {
          baseEvents[e.Name] = e.Name;
       }
 
-      foreach (PropertyInfo p in typeof(UnityEngine.Object).GetProperties())
+      foreach (PropertyInfo p in typeof(UnityEngine.Object).GetProperties(BindingFlags.DeclaredOnly))
       {
          baseProperties[p.Name] = p.Name;
       }
