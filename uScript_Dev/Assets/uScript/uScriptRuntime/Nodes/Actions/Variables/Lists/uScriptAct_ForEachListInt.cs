@@ -55,12 +55,6 @@ public class uScriptAct_ForEachListInt : uScriptLogic
    public void Reset(int[] List, out int Value)
    {
       Value = 0;
-      if (m_List == null)
-      {
-         uScriptDebug.Log("For Each List (Int) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
-         return;
-      }
-
       m_List = List;
       m_CurrentIndex = 0;
       m_Done = false;

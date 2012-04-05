@@ -55,12 +55,6 @@ public class uScriptAct_ForEachListGameObject : uScriptLogic
    public void Reset(GameObject[] GameObjectList, out GameObject go)
    {
       go = null;
-      if (m_List == null)
-      {
-         uScriptDebug.Log("For Each List (GameObject) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
-         return;
-      }
-      
       m_List = GameObjectList;
       m_CurrentIndex = 0;
       m_Done = false;

@@ -55,12 +55,7 @@ public class uScriptAct_ForEachListRect : uScriptLogic
    public void Reset(Rect[] List, out Rect Value)
    {
       Value = new Rect(0,0,0,0);
-      if (m_List == null)
-      {
-         uScriptDebug.Log("For Each List (Rect) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
-         return;
-      }
-
+      
       m_List = List;
       m_CurrentIndex = 0;
       m_Done = false;

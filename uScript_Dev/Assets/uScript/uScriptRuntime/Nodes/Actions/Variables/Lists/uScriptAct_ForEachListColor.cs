@@ -55,12 +55,6 @@ public class uScriptAct_ForEachListColor : uScriptLogic
    public void Reset(Color[] List, out Color Value)
    {
       Value = UnityEngine.Color.white;
-      if (m_List == null)
-      {
-         uScriptDebug.Log("For Each List (Color) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
-         return;
-      }
-
       m_List = List;
 
       m_CurrentIndex = 0;

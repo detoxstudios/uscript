@@ -55,12 +55,6 @@ public class uScriptAct_ForEachListCamera : uScriptLogic
    public void Reset(Camera[] List, out Camera Value)
    {
       Value = null;
-      if (m_List == null)
-      {
-         uScriptDebug.Log("For Each List (Camera) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
-         return;
-      }
-
       m_List = List;
 
       m_CurrentIndex = 0;

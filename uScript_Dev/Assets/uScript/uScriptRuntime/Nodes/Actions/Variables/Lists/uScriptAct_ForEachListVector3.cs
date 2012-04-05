@@ -55,11 +55,6 @@ public class uScriptAct_ForEachListVector3 : uScriptLogic
    public void Reset(Vector3[] List, out Vector3 Value)
    {
       Value = new Vector3(0,0,0);
-      if (m_List == null)
-      {
-         uScriptDebug.Log("For Each List (Vector3) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
-         return;
-      }
 
       m_List = List;
       m_CurrentIndex = 0;

@@ -55,12 +55,6 @@ public class uScriptAct_ForEachListFloat : uScriptLogic
    public void Reset(float[] List, out float Value)
    {
       Value = 0;
-      if (m_List == null)
-      {
-         uScriptDebug.Log("For Each List (Float) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
-         return;
-      }
-
       m_List = List;
 
       m_CurrentIndex = 0;

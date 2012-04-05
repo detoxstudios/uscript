@@ -55,12 +55,7 @@ public class uScriptAct_ForEachListTexture2D : uScriptLogic
    public void Reset(Texture2D[] List, out Texture2D Value)
    {
       Value = null;
-      if (m_List == null)
-      {
-         uScriptDebug.Log("For Each List (Texture2D) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
-         return;
-      }
-
+     
       m_List = List;
       m_CurrentIndex = 0;
       m_Done = false;

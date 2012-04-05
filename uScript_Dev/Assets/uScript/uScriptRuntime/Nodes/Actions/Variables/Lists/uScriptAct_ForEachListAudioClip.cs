@@ -55,12 +55,6 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
    public void Reset(AudioClip[] List, out AudioClip Value)
    {
       Value = null;
-      if (m_List == null)
-      {
-         uScriptDebug.Log("For Each List (AudioClip) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
-         return;
-      }
-
       m_List = List;
 
       m_CurrentIndex = 0;

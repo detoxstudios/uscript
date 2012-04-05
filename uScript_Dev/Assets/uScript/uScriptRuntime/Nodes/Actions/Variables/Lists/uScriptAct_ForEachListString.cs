@@ -55,12 +55,7 @@ public class uScriptAct_ForEachListString : uScriptLogic
    public void Reset(string[] List, out string Value)
    {
       Value = null;
-      if (m_List == null)
-      {
-         uScriptDebug.Log("For Each List (String) must go through 'Manual' input before 'Resetting'.", uScriptDebug.Type.Error);
-         return;
-      }
-
+     
       m_List = List;
       m_CurrentIndex = 0;
       m_Done = false;
