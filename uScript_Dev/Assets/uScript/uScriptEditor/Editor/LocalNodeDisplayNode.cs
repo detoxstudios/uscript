@@ -58,6 +58,15 @@ namespace Detox.ScriptEditor
          else
          {
             value = LocalNode.Value.Default;
+            
+            if (LocalNode.Value.Type.Contains("Mask"))
+            {
+               int mask;
+               if (true == Int32.TryParse(value, out mask))
+               {
+                  value = Math.Log(mask, 2).ToString();
+               }
+            }
          }
 
          if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded )

@@ -4376,19 +4376,22 @@ public class uScript : EditorWindow
             }
          }
 
-         string unityTypes =  "UnityEngine.Object,UnityEngine.AnimationClip,UnityEngine.AssetBundle,UnityEngine.AudioClip,UnityEngine.Component,UnityEngine.Behaviour," +
-                              "UnityEngine.Animation,UnityEngine.AudioChorusFilter,UnityEngine.AudioDistortionFilter,UnityEngine.AudioEchoFilter,UnityEngine.AudioHighPassFilter," +
-                              "UnityEngine.AudioHighPassFilter,UnityEngine.AudioListener,UnityEngine.AudioLowPassFilter,UnityEngine.AudioReverbFilter,UnityEngine.AudioReverbZone," +
-                              "UnityEngine.AudioSource,UnityEngine.Camera,UnityEngine.ConstantForce,UnityEngine.GUIElement,UnityEngine.GUIText,UnityEngine.GUITexture,UnityEngine.GUILayer,UnityEngine.LensFlare,UnityEngine.Light," +
-                              "UnityEngine.MonoBehaviour,UnityEngine.Terrain,UnityEngine.NavMeshAgent,UnityEngine.NetworkView,UnityEngine.Projector,UnityEngine.Skybox,UnityEngine.Cloth,UnityEngine.InteractiveCloth,UnityEngine.SkinnedCloth," +
-                              "UnityEngine.Collider,UnityEngine.BoxCollider,UnityEngine.CapsuleCollider,UnityEngine.CharacterController,UnityEngine.MeshCollider,UnityEngine.SphereCollider,UnityEngine.TerrainCollider," +
-                              "UnityEngine.WheelCollider,UnityEngine.Joint,UnityEngine.CharacterJoint,UnityEngine.ConfigurableJoint,UnityEngine.FixedJoint,UnityEngine.HingeJoint,UnityEngine.SpringJoint,UnityEngine.LODGroup," +
-                              "UnityEngine.LightProbeGroup,UnityEngine.MeshFilter,UnityEngine.OcclusionArea,UnityEngine.OcclusionPortal,UnityEngine.OffMeshLink,UnityEngine.ParticleAnimator,UnityEngine.ParticleEmitter," +
-                              "UnityEngine.ParticleSystem,UnityEngine.Renderer,UnityEngine.ClothRenderer,UnityEngine.LineRenderer,UnityEngine.MeshRenderer,UnityEngine.ParticleRenderer,UnityEngine.ParticleSystemRenderer," +
-                              "UnityEngine.SkinnedMeshRenderer,UnityEngine.TrailRenderer,UnityEngine.Rigidbody,UnityEngine.TextMesh,UnityEngine.Transform,UnityEngine.Tree,UnityEngine.Flare,UnityEngine.Font,UnityEngine.GameObject," +
-                              "UnityEngine.LightProbes,UnityEngine.Material,UnityEngine.ProceduralMaterial,UnityEngine.Mesh,UnityEngine.NavMesh,UnityEngine.PhysicMaterial,UnityEngine.QualitySettings,UnityEngine.ScriptableObject," +
-                              "UnityEngine.GUISkin,UnityEngine.Shader,UnityEngine.TerrainData,UnityEngine.TextAsset,UnityEngine.Texture,UnityEngine.Cubemap,UnityEngine.MovieTexture,UnityEngine.RenderTexture,UnityEngine.Texture2D,UnityEngine.WebCamTexture," +
-                              "UnityEngine.RuntimePlatform";
+         // Don't reflect all unity types, many won't work with our reflection because
+         // our reflection is assuming if they need an Instance it's a GameObject, and that isn't always the case
+         string unityTypes =  "";
+         //"UnityEngine.Object,UnityEngine.AnimationClip,UnityEngine.AssetBundle,UnityEngine.AudioClip,UnityEngine.Component,UnityEngine.Behaviour," +
+         //"UnityEngine.Animation,UnityEngine.AudioChorusFilter,UnityEngine.AudioDistortionFilter,UnityEngine.AudioEchoFilter,UnityEngine.AudioHighPassFilter," +
+         //"UnityEngine.AudioHighPassFilter,UnityEngine.AudioListener,UnityEngine.AudioLowPassFilter,UnityEngine.AudioReverbFilter,UnityEngine.AudioReverbZone," +
+         //"UnityEngine.AudioSource,UnityEngine.Camera,UnityEngine.ConstantForce,UnityEngine.GUIElement,UnityEngine.GUIText,UnityEngine.GUITexture,UnityEngine.GUILayer,UnityEngine.LensFlare,UnityEngine.Light," +
+         //"UnityEngine.MonoBehaviour,UnityEngine.Terrain,UnityEngine.NavMeshAgent,UnityEngine.NetworkView,UnityEngine.Projector,UnityEngine.Skybox,UnityEngine.Cloth,UnityEngine.InteractiveCloth,UnityEngine.SkinnedCloth," +
+         //"UnityEngine.Collider,UnityEngine.BoxCollider,UnityEngine.CapsuleCollider,UnityEngine.CharacterController,UnityEngine.MeshCollider,UnityEngine.SphereCollider,UnityEngine.TerrainCollider," +
+         //"UnityEngine.WheelCollider,UnityEngine.Joint,UnityEngine.CharacterJoint,UnityEngine.ConfigurableJoint,UnityEngine.FixedJoint,UnityEngine.HingeJoint,UnityEngine.SpringJoint,UnityEngine.LODGroup," +
+         //"UnityEngine.LightProbeGroup,UnityEngine.MeshFilter,UnityEngine.OcclusionArea,UnityEngine.OcclusionPortal,UnityEngine.OffMeshLink,UnityEngine.ParticleAnimator,UnityEngine.ParticleEmitter," +
+         //"UnityEngine.ParticleSystem,UnityEngine.Renderer,UnityEngine.ClothRenderer,UnityEngine.LineRenderer,UnityEngine.MeshRenderer,UnityEngine.ParticleRenderer,UnityEngine.ParticleSystemRenderer," +
+         //"UnityEngine.SkinnedMeshRenderer,UnityEngine.TrailRenderer,UnityEngine.Rigidbody,UnityEngine.TextMesh,UnityEngine.Transform,UnityEngine.Tree,UnityEngine.Flare,UnityEngine.Font,UnityEngine.GameObject," +
+         //"UnityEngine.LightProbes,UnityEngine.Material,UnityEngine.ProceduralMaterial,UnityEngine.Mesh,UnityEngine.NavMesh,UnityEngine.PhysicMaterial,UnityEngine.QualitySettings,UnityEngine.ScriptableObject," +
+         //"UnityEngine.GUISkin,UnityEngine.Shader,UnityEngine.TerrainData,UnityEngine.TextAsset,UnityEngine.Texture,UnityEngine.Cubemap,UnityEngine.MovieTexture,UnityEngine.RenderTexture,UnityEngine.Texture2D,UnityEngine.WebCamTexture," +
+         //"UnityEngine.RuntimePlatform";
 
          string []unityTypeArray = unityTypes.Split(',');
 

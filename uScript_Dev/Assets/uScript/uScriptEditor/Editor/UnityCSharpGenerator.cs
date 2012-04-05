@@ -1192,6 +1192,10 @@ namespace Detox.ScriptEditor
             }
             catch ( Exception ) { return "UnityEngine.Color.black"; }
          }
+         else if ( type.Contains("Dictionary") )
+         {
+            return "new " + FormatType(type) + "( )";
+         }
          else if ( "UnityEngine.Ray" == type )
          {
             return "new UnityEngine.Ray( )";
@@ -4216,7 +4220,44 @@ namespace Detox.ScriptEditor
 
       private string FormatType(string type)
       {
-         return type.Replace( "+", "." );
+         string formatted = type.Replace( "+", "." );
+  
+         //Template type
+         if (formatted.Contains("`2["))
+         {
+            string newString = "";
+            string []values = formatted.Split( new string[]{"`2["}, StringSplitOptions.None);
+
+            foreach (string v in values)
+            {
+               string value = v + "<";
+               string newValue = value;
+
+               int i, open = 1;
+
+               for (i = 1; i < value.Length; i++)
+               {
+                  if (value[i] == ']') open--;
+                  else if (value[i] == '[') open++;
+
+                  if (0 == open) 
+                  {
+                     newValue = value.Substring(0, i);
+                     newValue += '>';
+                     
+                     if (value.Length > i + 1) newValue += value.Substring(i + 1);
+                     break;
+                  }
+               }
+
+               newString += newValue;
+            }
+         
+            //remove last alligator we appended during the foreach
+            formatted = newString.TrimEnd(new char[]{'<'});
+         }
+
+         return formatted;
       }
 
       public static string EscapeString(string s)

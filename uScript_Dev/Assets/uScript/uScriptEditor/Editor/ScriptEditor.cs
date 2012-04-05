@@ -3830,28 +3830,34 @@ namespace Detox.ScriptEditor
          {
             destParam.Type = destParam.Type.Replace("[]", "");
          }
-
-         //query unity objects which might not be loaded yet so we can't just use Type.GetType
-         Type sourceType = uScript.MasterComponent.GetType( sourceParam.Type );
-         Type destType   = uScript.MasterComponent.GetType( destParam.Type );
-
-         if ( null == destType ) 
+         
+         //if strings aren't exactly equal
+         //try and parse the type to see if they can be
+         //assigned together
+         if ( sourceParam.Type != destParam.Type )
          {
-            reason = "Type " + destParam.Type + " could not be found in the Unity system";
-            return false;
-         }
+            //query unity objects which might not be loaded yet so we can't just use Type.GetType
+            Type sourceType = uScript.MasterComponent.GetType( sourceParam.Type );
+            Type destType   = uScript.MasterComponent.GetType( destParam.Type );
 
-         if ( null == sourceType ) 
-         {
-            reason = "Type " + sourceParam.Type + " could not be found in the Unity system";
-            return false;
-         }
+            if ( null == destType ) 
+            {
+               reason = "Type " + destParam.Type + " could not be found in the Unity system";
+               return false;
+            }
 
-         //allow link if the types are compatible somewhere in the derived chain
-         if ( false == destType.IsAssignableFrom(sourceType) )
-         {
-            reason = "Type " + destType + " cannot be assigned from " + sourceType;
-            return false;
+            if ( null == sourceType ) 
+            {
+               reason = "Type " + sourceParam.Type + " could not be found in the Unity system";
+               return false;
+            }
+
+            //allow link if the types are compatible somewhere in the derived chain
+            if ( false == destType.IsAssignableFrom(sourceType) )
+            {
+               reason = "Type " + destType + " cannot be assigned from " + sourceType;
+               return false;
+            }
          }
 
          return true;
