@@ -4084,24 +4084,30 @@ public class uScript : EditorWindow
 
             if (p.GetSetMethod() != null)
             {
-               Parameter input = new Parameter();
+               //only input properties directly declared in this event
+               //are valid to be set, otherwise this gets spammed
+               //with every property of the class heirarchy
+               if (p.DeclaringType == type)
+               {
+                  Parameter input = new Parameter();
 
-               //inputs to events can never be connected because there is no source to trigger
-               //them and push in the value
-               input.State = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
-               input.Name = p.Name;
-               input.Type = p.PropertyType.ToString().Replace("&", "");
-               input.Input = true;
-               input.Output = false;
-               input.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
-               input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
+                  //inputs to events can never be connected because there is no source to trigger
+                  //them and push in the value
+                  input.State = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
+                  input.Name = p.Name;
+                  input.Type = p.PropertyType.ToString().Replace("&", "");
+                  input.Input = true;
+                  input.Output = false;
+                  input.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
+                  input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
 
-               AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
-               AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
-               AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
-               MasterComponent.AddType(p.PropertyType);
+                  AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
+                  AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
+                  AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
+                  MasterComponent.AddType(p.PropertyType);
 
-               eventInputsOutpus.Add(input);
+                  eventInputsOutpus.Add(input);
+               }
             }
          }
 
