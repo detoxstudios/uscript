@@ -4346,7 +4346,8 @@ public class uScript : EditorWindow
 
          // Don't reflect all unity types, many won't work with our reflection because
          // our reflection is assuming if they need an Instance it's a GameObject, and that isn't always the case
-         string unityTypes =  "";
+         string unityTypes =  "UnityEngine.Component";
+
          //"UnityEngine.Object,UnityEngine.AnimationClip,UnityEngine.AssetBundle,UnityEngine.AudioClip,UnityEngine.Component,UnityEngine.Behaviour," +
          //"UnityEngine.Animation,UnityEngine.AudioChorusFilter,UnityEngine.AudioDistortionFilter,UnityEngine.AudioEchoFilter,UnityEngine.AudioHighPassFilter," +
          //"UnityEngine.AudioHighPassFilter,UnityEngine.AudioListener,UnityEngine.AudioLowPassFilter,UnityEngine.AudioReverbFilter,UnityEngine.AudioReverbZone," +
