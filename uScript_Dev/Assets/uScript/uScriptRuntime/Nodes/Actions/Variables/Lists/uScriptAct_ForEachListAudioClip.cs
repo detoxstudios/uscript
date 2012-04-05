@@ -61,14 +61,8 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
          return;
       }
 
-      if (List.Length > 0)
-      {
-         m_List = List;
-      }
-      else
-      {
-         m_List = null;
-      }
+      m_List = List;
+
       m_CurrentIndex = 0;
       m_Done = false;
 
@@ -85,14 +79,8 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
    {
       if (m_List == null)
       {
-         if (List.Length > 0)
-         {
-            m_List = List;
-         }
-         else
-         {
-            m_List = null;
-         }
+         m_List = List;
+
          m_CurrentIndex = 0;
          m_Done = false;
       }

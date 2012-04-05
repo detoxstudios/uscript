@@ -49,14 +49,7 @@ public class uScriptAct_ForEachListGameObjectAuto : uScriptLogic
       out GameObject go
       )
    {
-      if (GameObjectList.Length > 0)
-      {
-         m_List = GameObjectList;
-      }
-      else
-      {
-         m_List = null;
-      }
+      m_List = GameObjectList;
       m_CurrentIndex = 0;
       m_Done = false;
 
