@@ -14,8 +14,6 @@ using System.Collections;
 [FriendlyName("Check Distance", "Checks the distance of two GameObjects against a specified distance and fires the appropriate output.")]
 public class uScriptCon_CheckDistance : uScriptLogic
 {
-   // @TODO: This node would really benifit by being able to check every tick as part of a master uScript Update() event.
-
    private bool m_Closer = false;
    private bool m_Further = false;
    private bool m_Equal = false;
@@ -31,7 +29,7 @@ public class uScriptCon_CheckDistance : uScriptLogic
                   [FriendlyName("B", "Second GameObject.")]
                   GameObject B,
 
-                  [FriendlyName("Distance", "Distance value for the test.")]
+                  [FriendlyName("Distance", "The distance value for the test.")]
                   float Distance
                   )
    {
@@ -41,7 +39,6 @@ public class uScriptCon_CheckDistance : uScriptLogic
 
       if (A != null && B != null)
       {
-         //float distance = Vector3.Distance(A.transform.position, B.transform.position);
 		 float sqrMag = (A.transform.position - B.transform.position).sqrMagnitude;
          if (sqrMag < Distance*Distance)
          {
