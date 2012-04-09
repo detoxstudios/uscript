@@ -41,12 +41,13 @@ public class uScriptCon_CheckDistance : uScriptLogic
 
       if (A != null && B != null)
       {
-         float distance = Vector3.Distance(A.transform.position, B.transform.position);
-         if (distance < Distance)
+         //float distance = Vector3.Distance(A.transform.position, B.transform.position);
+		 float sqrMag = (A.transform.position - B.transform.position).sqrMagnitude;
+         if (sqrMag < Distance*Distance)
          {
             m_Closer = true;
          }
-         else if (distance == Distance)
+         else if (sqrMag == Distance*Distance)
          {
             m_Equal = true;
          }
