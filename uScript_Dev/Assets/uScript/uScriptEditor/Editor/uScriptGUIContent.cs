@@ -95,6 +95,12 @@ public static class uScriptGUIContent
    private static GUIContent _buttonScriptSource;
    public static GUIContent buttonScriptSource { get { return _buttonScriptSource; } }
 
+   private static GUIContent _buttonScriptSourceStale;
+   public static GUIContent buttonScriptSourceStale { get { return _buttonScriptSourceStale; } }
+
+   private static GUIContent _buttonScriptSourceDebug;
+   public static GUIContent buttonScriptSourceDebug { get { return _buttonScriptSourceDebug; } }
+
    private static GUIContent _buttonScriptUpgradeNodes;
    public static GUIContent buttonScriptUpgradeNodes { get { return _buttonScriptUpgradeNodes; } }
 
@@ -152,7 +158,7 @@ public static class uScriptGUIContent
 
       _buttonScriptExportPNG        = new GUIContent("Export to PNG",         "Export the graph to a PNG image.");
       _buttonScriptLoad             = new GUIContent("Load",                  "Load this uScript.");
-      _buttonScriptNew              = new GUIContent("New",                   "Create a new uScript. The active uScript will be closed automatically.");
+      _buttonScriptNew              = new GUIContent("New",                   "Create a new uScript.  The active uScript will be closed automatically.");
       _buttonScriptOpen             = new GUIContent("Open...",               "Open a uScript using the file browser.");
       _buttonScriptReload           = new GUIContent("Reload",                "Reload this uScript.");
       _buttonScriptSave             = new GUIContent("Save",                  "Save this uScript using the specified 'save method'.");
@@ -160,7 +166,9 @@ public static class uScriptGUIContent
       _buttonScriptSaveDebug        = new GUIContent("Debug Save",            "Save the current uScript and generate debug code.");
       _buttonScriptSaveQuick        = new GUIContent("Quick Save",            "Save the current uScript without generating code.");
       _buttonScriptSaveRelease      = new GUIContent("Release Save",          "Save the current uScript and generate code.");
-      _buttonScriptSource           = new GUIContent("Source",                "Ping the source file associated with this uScript. The source code must be generated when the button is red.");
+      _buttonScriptSource           = new GUIContent("Source",                "Ping the source file associated with this uScript.");
+      _buttonScriptSourceStale      = new GUIContent("Source",                "Ping the source file associated with this uScript.  Save using Release or Debug to generate code for this script.");
+      _buttonScriptSourceDebug      = new GUIContent("Source",                "Ping the source file associated with this uScript.  This script contains Debug information.");
       _buttonScriptUpgradeNodes      = new GUIContent("Upgrade Deprecated Nodes", "Upgrade all deprecated nodes in this graph.");
 
       _buttonScriptsRebuildAll      = new GUIContent("Rebuild All uScripts",  "Rebuild all uScripts in the scene.");

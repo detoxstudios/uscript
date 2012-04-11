@@ -435,6 +435,50 @@ public class uScript : EditorWindow
    }
 
 
+
+   private Dictionary<string, bool> _debugScriptCache = new Dictionary<string, bool>();
+
+   public bool HasDebugCode(string scriptName)
+   {
+      if (_debugScriptCache.ContainsKey(scriptName))
+      {
+         return _debugScriptCache[scriptName];
+      }
+      else
+      {
+         string path = FindFile( Preferences.UserScripts, scriptName + ".uscript" );
+
+         if ( string.Empty != path )
+         {
+            ScriptEditor s = new ScriptEditor( "", null, null );
+            if ( true == s.Open(path) )
+            {
+               bool debugCode = s.SavedForDebugging;
+
+               SetDebugState( scriptName, debugCode );
+            }
+         }
+
+         // if we failed to find it, mark it as note containing debug info
+         if ( false == _debugScriptCache.ContainsKey(scriptName) )
+         {
+            SetDebugState( scriptName, false );
+         }
+
+         return _debugScriptCache[ scriptName ];
+      }
+ }
+
+   // The debug script state cache should be updated whenever a script's debug state changes, and when uScript first launches.
+   //
+   public void SetDebugState(string scriptName, bool hasDebugCode)
+   {
+      _debugScriptCache[scriptName] = hasDebugCode;
+   }
+
+
+
+
    //
    // Editor Window Initialization
    //
@@ -3529,6 +3573,7 @@ public class uScript : EditorWindow
             //
             string scriptName = System.IO.Path.GetFileNameWithoutExtension(m_FullPath);
             SetStaleState(scriptName, script.GeneratedCodeIsStale);
+            SetDebugState(scriptName, script.SavedForDebugging);
 
             m_ScriptEditorCtrl.IsDirty = false;
 

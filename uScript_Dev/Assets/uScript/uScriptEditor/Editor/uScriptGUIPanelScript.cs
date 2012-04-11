@@ -125,6 +125,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
       uScript uScriptInstance = uScript.Instance;
       ScriptEditorCtrl m_ScriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
 
+      GUIContent contentSourceButton;
 
 //      // Grab the deubgging script
 //      if (_debugScript == null)
@@ -251,13 +252,27 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                   if (isScriptNew == false)
                   {
                      // Source button
-                     GUI.backgroundColor = (uScriptInstance.IsStale(_currentScriptName) ? UnityEngine.Color.red : UnityEngine.Color.white);
-                     if (GUILayout.Button(uScriptGUIContent.buttonScriptSource, EditorStyles.miniButtonLeft))
+                     if (uScriptInstance.IsStale(_currentScriptName))
+                     {
+                        contentSourceButton = uScriptGUIContent.buttonScriptSourceStale;
+                        GUI.backgroundColor = UnityEngine.Color.red;
+                     }
+                     else if (uScriptInstance.HasDebugCode(_currentScriptName))
+                     {
+                        contentSourceButton = uScriptGUIContent.buttonScriptSourceDebug;
+                        GUI.backgroundColor = UnityEngine.Color.yellow;
+                     }
+                     else
+                     {
+                        contentSourceButton = uScriptGUIContent.buttonScriptSource;
+                     }
+
+                     if (GUILayout.Button(contentSourceButton, EditorStyles.miniButtonLeft))
                      {
                         uScriptGUI.PingGeneratedScript(_currentScriptName);
                      }
                      GUI.backgroundColor = UnityEngine.Color.white;
-   
+
                      // Reload button
                      if (GUILayout.Button(uScriptGUIContent.buttonScriptReload, EditorStyles.miniButtonMid))
                      {
@@ -422,8 +437,22 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            }
 
                            // Source button
-                           GUI.backgroundColor = (uScriptInstance.IsStale(scriptName) ? UnityEngine.Color.red : UnityEngine.Color.white);
-                           if (GUI.Button(rectSourceButton, uScriptGUIContent.buttonScriptSource, _styleMiniButtonLeft))
+                           if (uScriptInstance.IsStale(scriptName))
+                           {
+                              contentSourceButton = uScriptGUIContent.buttonScriptSourceStale;
+                              GUI.backgroundColor = UnityEngine.Color.red;
+                           }
+                           else if (uScriptInstance.HasDebugCode(scriptName))
+                           {
+                              contentSourceButton = uScriptGUIContent.buttonScriptSourceDebug;
+                              GUI.backgroundColor = UnityEngine.Color.yellow;
+                           }
+                           else
+                           {
+                              contentSourceButton = uScriptGUIContent.buttonScriptSource;
+                           }
+
+                           if (GUI.Button(rectSourceButton, contentSourceButton, _styleMiniButtonLeft))
                            {
                               uScriptGUI.PingGeneratedScript(scriptName);
                            }
@@ -517,4 +546,5 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Script);
       uScriptInstance.SetMouseRegion(uScript.MouseRegion.Scripts);
    }
+
 }
