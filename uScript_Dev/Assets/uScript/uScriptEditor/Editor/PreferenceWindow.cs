@@ -143,7 +143,7 @@ public class PreferenceWindow : EditorWindow
          //
          // Code Generation Settings
          //
-         GUILayout.Label("CodeGeneration", EditorStyles.boldLabel);
+         GUILayout.Label("Code Generation", EditorStyles.boldLabel);
 
          _preferences.MaximumNodeRecursionCount = (int)EditorGUILayout.IntField("Maximum Node Recursion", _preferences.MaximumNodeRecursionCount);
          _preferences.SaveMethod = (Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", _preferences.SaveMethod);
@@ -175,11 +175,20 @@ public class PreferenceWindow : EditorWindow
          EditorGUILayout.Separator();
 
          //
+         // Node Settings
+         //
+         GUILayout.Label("Node Settings", EditorStyles.boldLabel);
+
+         _preferences.DoubleClickBehavior = (Preferences.DoubleClickBehaviorType)EditorGUILayout.EnumPopup("Double-Click Behavior", _preferences.DoubleClickBehavior);
+         _preferences.VariableExpansion = (Preferences.VariableExpansionType)EditorGUILayout.EnumPopup("Variable Expansion Mode", _preferences.VariableExpansion);
+
+         EditorGUILayout.Separator();
+
+         //
          // Misc Settings
          //
          GUILayout.Label("Miscellaneous Settings", EditorStyles.boldLabel);
 
-         _preferences.VariableExpansion = (Preferences.VariableExpansionType)EditorGUILayout.EnumPopup("Variable Expansion Mode", _preferences.VariableExpansion);
          _preferences.ShowAtStartup = EditorGUILayout.Toggle("Show Welcome Window at Startup", _preferences.ShowAtStartup);
          EditorGUILayout.BeginHorizontal();
          {

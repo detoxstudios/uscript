@@ -2028,21 +2028,50 @@ public class uScript : EditorWindow
    {
       if (node is DisplayNode)
       {
+         //
+         // Ping the source, Open the source in the default editor, or Load the Nested Graph
+         //
+
          string currentNodeClassName = ScriptEditor.FindNodeType(((DisplayNode)node).EntityNode);
+         string currentNodeClassPath = GetClassPath(currentNodeClassName);
+         string scriptPath = FindFile( Preferences.UserScripts, currentNodeClassName + ".uscript" );
+         int assetInstanceID = 0;
 
-         string path = FindFile( Preferences.UserScripts, currentNodeClassName + ".uscript" );
-
-         if ("" != path )
+         if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.PingSource)
          {
-            // Open the nested uScript file
-            OpenScript(path);
+            // PING node source, PING script source
+            uScriptGUI.PingObject(currentNodeClassPath, typeof(TextAsset));
+         }
+         else if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.OpenSource)
+         {
+            // OPEN node source, OPEN script source
+            assetInstanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
+            AssetDatabase.OpenAsset(assetInstanceID);
+         }
+         else if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.LoadNestedGraph)
+         {
+            // PING node source, LOAD script
+            if (scriptPath == string.Empty)
+            {
+               uScriptGUI.PingObject(uScript.GetClassPath(currentNodeClassName), typeof(TextAsset));
+            }
+            else
+            {
+               OpenScript(scriptPath);
+            }
          }
          else
          {
-            // Open the source file in the default editor
-            string currentNodeClassPath = GetClassPath(currentNodeClassName);
-            int instanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
-            AssetDatabase.OpenAsset(instanceID);
+            // OPEN node source, LOAD script
+            if (scriptPath == string.Empty)
+            {
+               assetInstanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
+               AssetDatabase.OpenAsset(assetInstanceID);
+            }
+            else
+            {
+               OpenScript(scriptPath);
+            }
          }
       }
    }

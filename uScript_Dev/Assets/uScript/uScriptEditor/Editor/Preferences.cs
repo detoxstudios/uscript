@@ -2,6 +2,14 @@ using System.Collections;
 
 public class Preferences
 {
+   public enum DoubleClickBehaviorType
+   {
+      PingSource,
+      OpenSource,
+      LoadNestedGraph,
+      OpenLoadCombo
+   }
+
    public enum VariableExpansionType
    {
       AlwaysExpanded,
@@ -100,6 +108,12 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "GridColorMinor" ] = value; }       
    }
 
+   public DoubleClickBehaviorType DoubleClickBehavior
+   {
+      get { LoadIfRequired( ); return (DoubleClickBehaviorType) m_Preferences[ "DoubleClickBehavior" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "DoubleClickBehavior" ] = value; }
+   }
+
    public VariableExpansionType VariableExpansion
    {
       get { LoadIfRequired( ); return (VariableExpansionType) m_Preferences[ "VariableExpansion" ]; }
@@ -164,6 +178,7 @@ public class Preferences
       if ( null == m_Preferences[ "GridMajorLineSpacing" ] ) m_Preferences[ "GridMajorLineSpacing" ] = uScriptConfig.Style.GridMajorLineSpacing;
       if ( null == m_Preferences[ "GridColorMajor" ] )       m_Preferences[ "GridColorMajor" ]       = uScriptConfig.Style.GridColorMajor;
       if ( null == m_Preferences[ "GridColorMinor" ] )       m_Preferences[ "GridColorMinor" ]       = uScriptConfig.Style.GridColorMinor;
+      if ( null == m_Preferences[ "DoubleClickBehavior" ] )  m_Preferences[ "DoubleClickBehavior" ]  = DoubleClickBehaviorType.PingSource;
       if ( null == m_Preferences[ "VariableExpansion" ] )    m_Preferences[ "VariableExpansion" ]    = VariableExpansionType.Dynamic;
       if ( null == m_Preferences[ "ShowAtStartup" ] )        m_Preferences[ "ShowAtStartup" ]        = true;
       if ( null == m_Preferences[ "CheckForUpdate" ] )       m_Preferences[ "CheckForUpdate" ]       = true;
