@@ -6,8 +6,8 @@ public class Preferences
    {
       PingSource,
       OpenSource,
-      LoadNestedGraph,
-      OpenLoadCombo
+      LoadGraphPingSource,
+      LoadGraphOpenSource
    }
 
    public enum VariableExpansionType

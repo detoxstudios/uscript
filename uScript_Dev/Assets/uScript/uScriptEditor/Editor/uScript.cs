@@ -385,7 +385,7 @@ public class uScript : EditorWindow
    private Dictionary<string, bool> _staleScriptCache = new Dictionary<string, bool>();
 
    public bool IsStale(string scriptName)
-	{
+   {
       if (_staleScriptCache.ContainsKey(scriptName))
       {
          return _staleScriptCache[scriptName];
@@ -425,7 +425,7 @@ public class uScript : EditorWindow
 
          return _staleScriptCache[ scriptName ];
       }
-	}
+   }
 
    // The stale script state cache should be updated whenever a script's stale state changes, and when uScript first launches.
    //
@@ -535,10 +535,10 @@ public class uScript : EditorWindow
       
       foreach ( System.IO.FileInfo file in directory.GetFiles( ) )
       {
-		 if (!System.IO.File.Exists( gizmos + "/" + file.Name ))
-			{
-				System.IO.File.Copy( file.FullName, gizmos + "/" + file.Name, false );
-			}
+         if (!System.IO.File.Exists( gizmos + "/" + file.Name ))
+         {
+            System.IO.File.Copy( file.FullName, gizmos + "/" + file.Name, false );
+         }
       }
 
       //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
@@ -628,7 +628,6 @@ public class uScript : EditorWindow
                return;
             }
          
-   	
             if (DateTime.Now > ExpireDate)
             {
                uScriptDebug.Log(ProductName + " (" + BuildNumber + ") " + "has expired. Please use the free Personal Learning Edition (PLE) to continue to evaluate uScript.\n", uScriptDebug.Type.Error);
@@ -2048,7 +2047,7 @@ public class uScript : EditorWindow
             assetInstanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
             AssetDatabase.OpenAsset(assetInstanceID);
          }
-         else if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.LoadNestedGraph)
+         else if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.LoadGraphPingSource)
          {
             // PING node source, LOAD script
             if (scriptPath == string.Empty)
