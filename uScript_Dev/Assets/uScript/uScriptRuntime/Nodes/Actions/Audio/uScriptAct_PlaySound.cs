@@ -12,10 +12,11 @@ using System.Collections.Generic;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Play_Sound")]
 
-[FriendlyName("Play Sound", "Plays the specified AudioClip on the target GameObject.")]
+[FriendlyName("Play Sound", "Plays the specified AudioClip on the target GameObject. If the target GameObject does not have an existing AudioSource component, a temporary one will be created using the Unity default settings.")]
 public class uScriptAct_PlaySound : uScriptLogic
 {
    private List<AudioSource> m_AudioSources = new List<AudioSource>( );
+	private List<AudioSource> m_TempAudioSources = new List<AudioSource>( );
 
    public bool Out { get { return true; } }
 
@@ -28,7 +29,17 @@ public class uScriptAct_PlaySound : uScriptLogic
       {
          for (int i = 0; i < target.Length; i++)
          {
-            AudioSource source = target[i].AddComponent<AudioSource>();
+				AudioSource source;
+				if (null != target[i].GetComponent<AudioSource>())
+				{
+					source = target[i].GetComponent<AudioSource>();
+				}
+				else
+				{
+					source = target[i].AddComponent<AudioSource>();
+					m_TempAudioSources.Add( source );
+				}
+            
             source.clip = audioClip;
             source.volume = volume;
             source.loop = loop;
@@ -87,8 +98,13 @@ public class uScriptAct_PlaySound : uScriptLogic
          if (false == m_AudioSources[i].isPlaying)
          {
             AudioSource finishedSource = m_AudioSources[i];
-            ScriptableObject.Destroy( finishedSource );
-
+				
+				if ( m_TempAudioSources.Contains( finishedSource ) )
+				{
+					m_TempAudioSources.Remove( finishedSource );
+					ScriptableObject.Destroy( finishedSource );
+				}
+				
             m_AudioSources.RemoveAt( i );
 
             --i;
