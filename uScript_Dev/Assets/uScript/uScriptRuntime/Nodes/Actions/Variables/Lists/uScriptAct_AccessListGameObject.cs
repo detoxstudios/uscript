@@ -42,8 +42,7 @@ public class uScriptAct_AccessListGameObject : uScriptLogic
    // Parameter Attributes are applied below in AtIndex()
    public void Random(GameObject[] GameObjectList, int Index, out GameObject GameObj)
    {
-      System.Random random = new System.Random();
-      int index = random.Next(0, GameObjectList.Length);
+      int index = UnityEngine.Random.Range(0, GameObjectList.Length);
       GameObj = GameObjectList[index];
    }
  
