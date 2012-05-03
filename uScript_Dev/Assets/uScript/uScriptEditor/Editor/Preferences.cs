@@ -1,5 +1,7 @@
 using System.Collections;
 
+// Adding this comment to test SVN commit
+
 public class Preferences
 {
    public enum DoubleClickBehaviorType
