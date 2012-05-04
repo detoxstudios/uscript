@@ -163,9 +163,9 @@ public static class uScriptGUIContent
       _buttonScriptReload           = new GUIContent("Reload",                "Reload this uScript.");
       _buttonScriptSave             = new GUIContent("Save",                  "Save this uScript using the specified 'save method'.");
       _buttonScriptSaveAs           = new GUIContent("Save As...",            "Save the current uScript through the file browser using the specified 'save method'.");
-      _buttonScriptSaveDebug        = new GUIContent("Debug Save",            "Save the current uScript and generate debug code.");
-      _buttonScriptSaveQuick        = new GUIContent("Quick Save",            "Save the current uScript without generating code.");
-      _buttonScriptSaveRelease      = new GUIContent("Release Save",          "Save the current uScript and generate code.");
+      _buttonScriptSaveDebug        = new GUIContent("Save Debug",            "Save the current uScript and generate debug code.");
+      _buttonScriptSaveQuick        = new GUIContent("Save Quick",            "Save the current uScript without generating code.");
+      _buttonScriptSaveRelease      = new GUIContent("Save Release",          "Save the current uScript and generate code.");
       _buttonScriptSource           = new GUIContent("Source",                "Ping the source file associated with this uScript.");
       _buttonScriptSourceStale      = new GUIContent("Source",                "Ping the source file associated with this uScript.  Save using Release or Debug to generate code for this script.");
       _buttonScriptSourceDebug      = new GUIContent("Source",                "Ping the source file associated with this uScript.  This script contains Debug information.");
