@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Label")]
 
-[FriendlyName("Application Info", "This node allows access to application run-time data.")]
+[FriendlyName("Get Application Info", "This node allows access to application run-time data.")]
 public class uScriptAct_ApplicationInfo : uScriptLogic
 {
    public bool Out { get { return true; } }
