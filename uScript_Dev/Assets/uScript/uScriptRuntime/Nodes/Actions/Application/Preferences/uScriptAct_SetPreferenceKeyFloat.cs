@@ -4,12 +4,12 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Application")]
+[NodePath("Actions/Application/Preferences")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the value of the specified Key from the preference.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Log")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Set Preference Key (Float)", "Sets the value of the specified Key from the preference.")]
 public class uScriptAct_SetPreferenceKeyFloat : uScriptLogic

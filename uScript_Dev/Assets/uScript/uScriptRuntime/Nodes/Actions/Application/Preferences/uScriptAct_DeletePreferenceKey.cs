@@ -4,12 +4,12 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Application")]
+[NodePath("Actions/Application/Preferences")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Deletes the specified preference key if found.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Log")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Delete Preference Key", "Deletes the specified preference key if found.")]
 public class uScriptAct_DeletePreferenceKey : uScriptLogic
