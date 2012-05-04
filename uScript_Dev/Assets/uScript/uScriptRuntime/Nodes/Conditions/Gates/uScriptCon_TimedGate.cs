@@ -16,6 +16,7 @@ public class uScriptCon_TimedGate : uScriptLogic
 {
    private bool m_GateOpen = true;
    private bool m_TooSoon = false;
+   private bool m_OpenStateSet = false;
 
    private float m_TimeToTrigger;
 
@@ -29,9 +30,24 @@ public class uScriptCon_TimedGate : uScriptLogic
    public void In(
       [FriendlyName("Closed Duration", "Amount of time (in seconds) to keep the gate closed for.")]
       [DefaultValue(1f)]
-      float Duration
+      float Duration,
+		
+	  [FriendlyName("Start Open", "Setting this to true will allow the signal to pass through immediately when the node receives it's first signal instead of waiting the specified amount of time before the first signal is allowed through.")]
+      [DefaultValue(true)]
+      bool StartOpen
       )
    {
+	  if ( !m_OpenStateSet )
+	  {
+			m_GateOpen = StartOpen;
+			m_OpenStateSet = true;
+			if (!m_GateOpen)
+			{
+				m_TimeToTrigger = Duration;
+			}
+	  }
+		
+		
       m_TooSoon = false;
 
       if (m_GateOpen)
