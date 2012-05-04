@@ -34,6 +34,7 @@ public class uScriptCon_TimedGate : uScriptLogic
 		
 	  [FriendlyName("Start Open", "Setting this to true will allow the signal to pass through immediately when the node receives it's first signal instead of waiting the specified amount of time before the first signal is allowed through.")]
       [DefaultValue(true)]
+	  [SocketState(false, false)]
       bool StartOpen
       )
    {
