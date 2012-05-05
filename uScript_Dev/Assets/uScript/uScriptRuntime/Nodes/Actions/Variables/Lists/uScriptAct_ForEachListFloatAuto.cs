@@ -46,7 +46,11 @@ public class uScriptAct_ForEachListFloatAuto : uScriptLogic
       float[] List,
       
       [FriendlyName("Current Float", "The float for the current loop iteration.")]
-      out float Value
+      out float Value,
+
+      [FriendlyName("Current Index", "The index value for the current loop iteration.")]
+      [SocketState(false, false)]
+      out int currentIndex
       )
    {
       m_List = List;
@@ -54,11 +58,13 @@ public class uScriptAct_ForEachListFloatAuto : uScriptLogic
       m_Done = false;
 
       Value = 0;
+      currentIndex = m_CurrentIndex;
       if (m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             Value = m_List[m_CurrentIndex];
+            currentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
       }

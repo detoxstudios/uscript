@@ -68,7 +68,11 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
       AudioClip[] List,
 
       [FriendlyName("Current", "The item for the current loop iteration.")]
-      out AudioClip Value
+      out AudioClip Value,
+
+      [FriendlyName("Current Index", "The index value for the current loop iteration.")]
+      [SocketState(false, false)]
+      out int currentIndex
       )
    {
       if (m_List == null)
@@ -81,11 +85,13 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
 
       m_ImmediateDone = !(m_List != null && m_CurrentIndex == 0);
       Value = null;
+      currentIndex = m_CurrentIndex;
       if (m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             Value = m_List[m_CurrentIndex];
+            currentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
 

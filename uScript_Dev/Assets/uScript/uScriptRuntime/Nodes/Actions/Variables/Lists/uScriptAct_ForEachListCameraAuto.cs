@@ -46,7 +46,11 @@ public class uScriptAct_ForEachListCameraAuto : uScriptLogic
       Camera[] List,
       
       [FriendlyName("Current Camera", "The Camera for the current loop iteration.")]
-      out Camera Value
+      out Camera Value,
+
+      [FriendlyName("Current Index", "The index value for the current loop iteration.")]
+      [SocketState(false, false)]
+      out int currentIndex
       )
    {
       m_List = List;
@@ -55,11 +59,13 @@ public class uScriptAct_ForEachListCameraAuto : uScriptLogic
       m_Done = false;
 
       Value = null;
+      currentIndex = m_CurrentIndex;
       if (m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             Value = m_List[m_CurrentIndex];
+            currentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
       }

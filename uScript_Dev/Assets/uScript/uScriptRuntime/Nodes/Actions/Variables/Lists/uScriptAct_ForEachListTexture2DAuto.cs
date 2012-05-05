@@ -46,7 +46,11 @@ public class uScriptAct_ForEachListTexture2DAuto : uScriptLogic
       Texture2D[] List,
       
       [FriendlyName("Current Texture2D", "The Texture2D for the current loop iteration.")]
-      out Texture2D Value
+      out Texture2D Value,
+
+      [FriendlyName("Current Index", "The index value for the current loop iteration.")]
+      [SocketState(false, false)]
+      out int currentIndex
       )
    {
       m_List = List;
@@ -54,11 +58,13 @@ public class uScriptAct_ForEachListTexture2DAuto : uScriptLogic
       m_Done = false;
 
       Value = null;
+      currentIndex = m_CurrentIndex;
       if (m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             Value = m_List[m_CurrentIndex];
+            currentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
       }

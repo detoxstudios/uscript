@@ -67,7 +67,11 @@ public class uScriptAct_ForEachListGameObject : uScriptLogic
       GameObject[] GameObjectList,
 
       [FriendlyName("Current", "The item for the current loop iteration.")]
-      out GameObject go
+      out GameObject go,
+
+      [FriendlyName("Current Index", "The index value for the current loop iteration.")]
+      [SocketState(false, false)]
+      out int currentIndex
       )
    {
       if (m_List == null)
@@ -79,11 +83,13 @@ public class uScriptAct_ForEachListGameObject : uScriptLogic
 
       m_ImmediateDone = !(m_List != null && m_CurrentIndex == 0);
       go = null;
+      currentIndex = m_CurrentIndex;
       if (m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             go = m_List[m_CurrentIndex];
+            currentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
 

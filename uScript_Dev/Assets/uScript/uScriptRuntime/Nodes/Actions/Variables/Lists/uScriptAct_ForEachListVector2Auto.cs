@@ -46,7 +46,11 @@ public class uScriptAct_ForEachListVector2Auto : uScriptLogic
       Vector2[] List,
 
       [FriendlyName("Current Vector2", "The Vector2 for the current loop iteration.")]
-      out Vector2 Value
+      out Vector2 Value,
+
+      [FriendlyName("Current Index", "The index value for the current loop iteration.")]
+      [SocketState(false, false)]
+      out int currentIndex
       )
    {
       m_List = List;
@@ -54,11 +58,13 @@ public class uScriptAct_ForEachListVector2Auto : uScriptLogic
       m_Done = false;
 
       Value = new Vector2(0,0);
+      currentIndex = m_CurrentIndex;
       if (m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             Value = m_List[m_CurrentIndex];
+            currentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
       }

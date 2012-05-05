@@ -46,7 +46,11 @@ public class uScriptAct_ForEachListStringAuto : uScriptLogic
       string[] List,
 
       [FriendlyName("Current String", "The string for the current loop iteration.")]
-      out string Value
+      out string Value,
+
+      [FriendlyName("Current Index", "The index value for the current loop iteration.")]
+      [SocketState(false, false)]
+      out int currentIndex
       )
    {
       m_List = List;
@@ -54,11 +58,13 @@ public class uScriptAct_ForEachListStringAuto : uScriptLogic
       m_Done = false;
 
       Value = null;
+      currentIndex = m_CurrentIndex;
       if (m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             Value = m_List[m_CurrentIndex];
+            currentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
       }
