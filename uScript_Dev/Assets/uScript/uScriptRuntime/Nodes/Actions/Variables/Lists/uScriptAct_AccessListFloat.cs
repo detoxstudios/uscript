@@ -42,8 +42,7 @@ public class uScriptAct_AccessListFloat : uScriptLogic
    // Parameter Attributes are applied below in AtIndex()
    public void Random(float[] FloatList, int Index, out float Value)
    {
-      System.Random random = new System.Random();
-      int index = random.Next(0, FloatList.Length);
+      int index = UnityEngine.Random.Range(0, FloatList.Length);
       Value = FloatList[index];
    }
  

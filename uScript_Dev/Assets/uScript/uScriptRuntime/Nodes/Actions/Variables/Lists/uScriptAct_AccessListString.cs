@@ -42,8 +42,7 @@ public class uScriptAct_AccessListString : uScriptLogic
    // Parameter Attributes are applied below in AtIndex()
    public void Random(string[] StringList, int Index, out string Value)
    {
-      System.Random random = new System.Random();
-      int index = random.Next(0, StringList.Length);
+      int index = UnityEngine.Random.Range(0, StringList.Length);
       Value = StringList[index];
    }
  

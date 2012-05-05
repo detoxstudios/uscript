@@ -42,8 +42,7 @@ public class uScriptAct_AccessListVector2 : uScriptLogic
    // Parameter Attributes are applied below in AtIndex()
    public void Random(Vector2[] List, int Index, out Vector2 Value)
    {
-      System.Random random = new System.Random();
-      int index = random.Next(0, List.Length);
+      int index = UnityEngine.Random.Range(0, List.Length);
       Value = List[index];
    }
  

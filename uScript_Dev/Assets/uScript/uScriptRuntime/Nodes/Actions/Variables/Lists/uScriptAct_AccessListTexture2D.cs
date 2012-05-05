@@ -42,8 +42,7 @@ public class uScriptAct_AccessListTexture2D : uScriptLogic
    // Parameter Attributes are applied below in AtIndex()
    public void Random(Texture2D[] List, int Index, out Texture2D Value)
    {
-      System.Random random = new System.Random();
-      int index = random.Next(0, List.Length);
+      int index = UnityEngine.Random.Range(0, List.Length);
       Value = List[index];
    }
  

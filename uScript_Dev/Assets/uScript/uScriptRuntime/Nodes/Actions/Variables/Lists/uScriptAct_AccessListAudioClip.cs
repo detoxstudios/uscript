@@ -42,8 +42,7 @@ public class uScriptAct_AccessListAudioClip : uScriptLogic
    // Parameter Attributes are applied below in AtIndex()
    public void Random(AudioClip[] List, int Index, out AudioClip Value)
    {
-      System.Random random = new System.Random();
-      int index = random.Next(0, List.Length);
+      int index = UnityEngine.Random.Range(0, List.Length);
       Value = List[index];
    }
  
