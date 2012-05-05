@@ -14,12 +14,11 @@ class ImportGUITextures : AssetPostprocessor
          TextureImporterSettings textureSettings = new TextureImporterSettings();
 
          textureImporter.textureType = TextureImporterType.Advanced;
-         textureImporter.SetPlatformTextureSettings("Standalone", 512, TextureImporterFormat.AutomaticTruecolor);
-
+         textureImporter.SetPlatformTextureSettings("Standalone", 512, TextureImporterFormat.AutomaticTruecolor, 100);
          textureImporter.npotScale = TextureImporterNPOTScale.None;
          textureImporter.ReadTextureSettings(textureSettings);
          textureSettings.mipmapEnabled = false;
-
+         textureSettings.linearTexture = true;
 
          textureSettings.aniso = 0;
          textureSettings.filterMode = FilterMode.Point;
