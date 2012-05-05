@@ -1,0 +1,92 @@
+// uScript Action Node
+// (C) 2011 Detox Studios LLC
+
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+[NodePath("Actions/GameObjects")]
+
+[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeToolTip("Removes an existing Material at the specified index on the target GameObject.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+
+[FriendlyName("Remove Material", "Remove an existing Material at the specified index on the target GameObject.")]
+public class uScriptAct_RemoveMaterial : uScriptLogic
+{
+   public bool Out { get { return true; } }
+
+   public void In(
+      [FriendlyName("Target", "The GameObject(s) to remove the material from.")]
+      GameObject[] Target,
+
+      [FriendlyName("Material Index", "The index of the material you wish to remove on the Target.")]
+      int materialIndex
+      )
+   {
+
+      foreach (GameObject tmpTarget in Target)
+      {
+         if (null != tmpTarget)
+         {
+            try
+            {
+               List<Material> MatList = new List<Material>();
+               Material[] tmpMaterials = tmpTarget.renderer.materials;
+
+               // Check to make sure the specified index is in range
+               if (materialIndex < tmpMaterials.Length && materialIndex > -1)
+               {
+                  foreach (Material tmpMat in tmpMaterials)
+                  {
+                     MatList.Add(tmpMat);
+                  }
+
+                  MatList.RemoveAt(materialIndex);
+
+                  tmpTarget.renderer.materials = MatList.ToArray();
+               }
+               else
+               {
+                  uScriptDebug.Log("(Node = Remove Material) The index supplied is outside the material index range on the specified Target GameObject (" + tmpTarget.name + ").");
+               }
+
+
+            }
+            catch (System.Exception e)
+            {
+               uScriptDebug.Log("(Node = Remove Material) Could not remove the material on '" + tmpTarget.name + "'. " + e.ToString(), uScriptDebug.Type.Error);
+            }
+         }
+      }
+   }
+
+#if UNITY_EDITOR
+   public override Hashtable EditorDragDrop(object o)
+   {
+      if (typeof(Material).IsAssignableFrom(o.GetType()))
+      {
+         Material ac = (Material)o;
+
+         Hashtable hashtable = new Hashtable();
+         hashtable["Material"] = UnityEditor.AssetDatabase.GetAssetPath(ac.GetInstanceID());
+
+         return hashtable;
+      }
+      if (typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()))
+      {
+         GameObject go = (GameObject)o;
+
+         Hashtable hashtable = new Hashtable();
+         hashtable["Target"] = go.name;
+
+         return hashtable;
+      }
+
+      return null;
+   }
+#endif
+
+
+}
