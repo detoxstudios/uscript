@@ -73,14 +73,16 @@ public class uScriptAct_ForEachListTexture2DAuto : uScriptLogic
    }
  
    [Driven]
-   public bool Driven(out Texture2D Value)
+   public bool Driven(out Texture2D Value, out int CurrentIndex)
    {
       Value = null;
+      CurrentIndex = m_CurrentIndex;
       if (!m_Done && m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             Value = m_List[m_CurrentIndex];
+            CurrentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
 

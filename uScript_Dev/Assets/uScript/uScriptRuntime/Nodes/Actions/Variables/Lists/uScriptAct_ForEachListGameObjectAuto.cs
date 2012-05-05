@@ -73,14 +73,16 @@ public class uScriptAct_ForEachListGameObjectAuto : uScriptLogic
    }
  
    [Driven]
-   public bool Driven(out GameObject go)
+   public bool Driven(out GameObject go, out int CurrentIndex)
    {
       go = null;
+      CurrentIndex = m_CurrentIndex;
       if (!m_Done && m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             go = m_List[m_CurrentIndex];
+            CurrentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
 

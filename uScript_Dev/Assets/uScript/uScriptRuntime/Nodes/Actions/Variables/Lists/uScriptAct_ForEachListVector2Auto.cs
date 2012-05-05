@@ -73,14 +73,16 @@ public class uScriptAct_ForEachListVector2Auto : uScriptLogic
    }
  
    [Driven]
-   public bool Driven(out Vector2 Value)
+   public bool Driven(out Vector2 Value, out int CurrentIndex)
    {
       Value = new Vector2(0,0);
+      CurrentIndex = m_CurrentIndex;
       if (!m_Done && m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             Value = m_List[m_CurrentIndex];
+            CurrentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
 

@@ -74,14 +74,16 @@ public class uScriptAct_ForEachListColorAuto : uScriptLogic
    }
  
    [Driven]
-   public bool Driven(out Color Value)
+   public bool Driven(out Color Value, out int CurrentIndex)
    {
       Value = UnityEngine.Color.white;
+      CurrentIndex = m_CurrentIndex;
       if (!m_Done && m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             Value = m_List[m_CurrentIndex];
+            CurrentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
 

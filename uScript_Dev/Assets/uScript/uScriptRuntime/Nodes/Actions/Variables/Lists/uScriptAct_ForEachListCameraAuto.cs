@@ -74,14 +74,16 @@ public class uScriptAct_ForEachListCameraAuto : uScriptLogic
    }
  
    [Driven]
-   public bool Driven(out Camera Value)
+   public bool Driven(out Camera Value, out int CurrentIndex)
    {
       Value = null;
+      CurrentIndex = m_CurrentIndex;
       if (!m_Done && m_List != null)
       {
          if (m_CurrentIndex < m_List.Length)
          {
             Value = m_List[m_CurrentIndex];
+            CurrentIndex = m_CurrentIndex;
          }
          m_CurrentIndex++;
 
