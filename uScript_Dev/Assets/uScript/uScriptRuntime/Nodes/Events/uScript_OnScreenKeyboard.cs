@@ -13,9 +13,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#On-Screen_Keyboard_Events")]
 
-[FriendlyName("On-Screen Keyboard Events", "Fires an event signal when an on-screen keyboard event happens." +
- "\n\niOS - Supported." +
- "\nAndroid - Unsupported.")]
+[FriendlyName("On-Screen Keyboard Events", "Fires an event signal when an on-screen keyboard event happens.")]
 public class uScript_OnScreenKeyboard : uScriptEvent
 {
 #pragma warning disable 67
@@ -37,7 +35,30 @@ public class uScript_OnScreenKeyboard : uScriptEvent
 
    void Update()
    {
-#if UNITY_IPHONE
+
+#if UNITY_3_5_0
+
+   #if UNITY_IPHONE || UNITY_ANROID
+      if (!m_LastKeyboardOut)
+      {
+         if (TouchScreenKeyboard.visible)
+         {
+            if ( null != OnKeyboardSlidOut ) OnKeyboardSlidOut( this, new System.EventArgs() );     
+         }
+      }
+
+      m_LastKeyboardOut = TouchScreenKeyboard.visible;
+   #else
+      if (showLog)
+      {
+         uScriptDebug.Log("The 'On-Screen Keyboard Events' node will only work with mobile devices!", uScriptDebug.Type.Warning);
+         showLog = false;
+      }
+   #endif
+
+#else
+
+   #if UNITY_IPHONE
       if (!m_LastKeyboardOut)
       {
          if (iPhoneKeyboard.visible)
@@ -47,12 +68,16 @@ public class uScript_OnScreenKeyboard : uScriptEvent
       }
       
       m_LastKeyboardOut = iPhoneKeyboard.visible;
-#else
+   #else
       if (showLog)
       {
-         uScriptDebug.Log("The 'On-Screen Keyboard Events' node will only work with iOS devices!", uScriptDebug.Type.Warning);
+         uScriptDebug.Log("The 'On-Screen Keyboard Events' node will only work with iOS devices! Upgrade to Unity 3.5+ for Android support.", uScriptDebug.Type.Warning);
          showLog = false;
       }
+   #endif
+
 #endif
+
+
    }
 }
