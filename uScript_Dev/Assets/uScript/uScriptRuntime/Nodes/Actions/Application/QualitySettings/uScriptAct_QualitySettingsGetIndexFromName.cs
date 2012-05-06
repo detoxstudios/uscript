@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2012 Detox Studios LLC
-
+#if UNITY_3_5
 using UnityEngine;
 using System.Collections;
 
@@ -55,3 +55,4 @@ public class uScriptAct_QualitySettingsGetIndexFromName : uScriptLogic
 
    }
 }
+#endif
