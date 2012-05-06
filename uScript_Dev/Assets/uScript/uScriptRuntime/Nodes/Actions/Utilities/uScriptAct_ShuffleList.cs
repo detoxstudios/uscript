@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Utilities")]
+[NodePath("Actions/Variables/Lists")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Shuffles a list.")]
