@@ -4,14 +4,14 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Math")]
+[NodePath("Actions/Math/Vectors")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Dot product of two Vector4 variables.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Dot_Vector4")]
 
-[FriendlyName("Dot Vector4", "Dot Product of two Vector4 variables." +
+[FriendlyName("Dot (Vector4)", "Dot Product of two Vector4 variables." +
  "\n\n[ Dot(A,B) ]")]
 public class uScriptAct_DotVector4 : uScriptLogic
 {

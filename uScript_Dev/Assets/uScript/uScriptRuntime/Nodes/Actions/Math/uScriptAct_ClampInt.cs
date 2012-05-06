@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Math")]
+[NodePath("Actions/Math/Int")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Clamps an integer variable between a min and a max value and returns the result.")]

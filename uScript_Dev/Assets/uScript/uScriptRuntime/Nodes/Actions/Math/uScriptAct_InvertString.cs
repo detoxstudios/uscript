@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Math")]
+[NodePath("Actions/Math/String")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Create the inverse of characters in a string.")]

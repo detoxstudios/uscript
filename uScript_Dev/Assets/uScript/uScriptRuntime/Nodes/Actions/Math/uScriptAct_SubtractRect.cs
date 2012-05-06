@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Math")]
+[NodePath("Actions/Math/Rect")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Subtracts two Rect variables together and returns the result.")]

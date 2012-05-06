@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-[NodePath("Actions/Math")]
+[NodePath("Actions/Math/Float")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns the value of the smallest float variable.")]

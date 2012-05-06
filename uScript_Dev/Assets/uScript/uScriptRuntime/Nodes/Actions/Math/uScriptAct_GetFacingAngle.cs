@@ -4,14 +4,14 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Math")]
+[NodePath("Actions/Math/Angles")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Gets the 2D facing angle in degrees between the direction of Target A and the position of Target B.")]
-[NodeAuthor("Detox Studios LLC. Original node by SvdV on the uScript Community Forum", "http://www.detoxstudios.com")]
+[NodeToolTip("Gets the 2D facing angle in degrees between the direction of target A and the position of target B.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Get Facing Angle", "Returns the 2D angle in degrees between the direction of Target A and the position of Target B. The resulting 2D angle is how many degress must Target A turn to face Target B.")]
+[FriendlyName("Get Facing Angle", "Returns the 2D angle in degrees between the direction of target A and the position of target B. The resulting 2D angle is how many degress must target A turn to face target B.")]
 public class uScriptAct_GetFacingAngle : uScriptLogic
 {
    public bool Out { get { return true; } }
