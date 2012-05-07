@@ -52,12 +52,13 @@ public class uScriptAct_ForEachListColor : uScriptLogic
    //
    // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset(Color[] List, out Color Value)
+   public void Reset(Color[] List, out Color Value, out int currentIndex)
    {
       Value = UnityEngine.Color.white;
       m_List = List;
 
       m_CurrentIndex = 0;
+      currentIndex = m_CurrentIndex;
       m_Done = false;
 
       m_ImmediateDone = false;

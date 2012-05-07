@@ -52,12 +52,13 @@ public class uScriptAct_ForEachListTexture2D : uScriptLogic
    //
    // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset(Texture2D[] List, out Texture2D Value)
+   public void Reset(Texture2D[] List, out Texture2D Value, out int currentIndex)
    {
       Value = null;
      
       m_List = List;
       m_CurrentIndex = 0;
+      currentIndex = m_CurrentIndex;
       m_Done = false;
 
       m_ImmediateDone = false;

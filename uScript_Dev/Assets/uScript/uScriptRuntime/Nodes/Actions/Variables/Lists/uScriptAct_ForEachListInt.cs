@@ -52,11 +52,12 @@ public class uScriptAct_ForEachListInt : uScriptLogic
    //
    // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset(int[] List, out int Value)
+   public void Reset(int[] List, out int Value, out int currentIndex)
    {
       Value = 0;
       m_List = List;
       m_CurrentIndex = 0;
+      currentIndex = m_CurrentIndex;
       m_Done = false;
 
       m_ImmediateDone = false;

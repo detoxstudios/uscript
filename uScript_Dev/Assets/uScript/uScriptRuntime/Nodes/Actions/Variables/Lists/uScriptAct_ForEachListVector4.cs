@@ -52,12 +52,13 @@ public class uScriptAct_ForEachListVector4 : uScriptLogic
    //
    // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset(Vector4[] List, out Vector4 Value)
+   public void Reset(Vector4[] List, out Vector4 Value, out int currentIndex)
    {
       Value = new Vector4(0,0,0,0);
 
       m_List = List;
       m_CurrentIndex = 0;
+      currentIndex = m_CurrentIndex;
       m_Done = false;
 
       m_ImmediateDone = false;

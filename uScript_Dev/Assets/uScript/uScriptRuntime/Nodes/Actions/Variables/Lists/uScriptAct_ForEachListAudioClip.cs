@@ -52,12 +52,13 @@ public class uScriptAct_ForEachListAudioClip : uScriptLogic
    //
    // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset(AudioClip[] List, out AudioClip Value)
+   public void Reset(AudioClip[] List, out AudioClip Value, out int currentIndex)
    {
       Value = null;
       m_List = List;
 
       m_CurrentIndex = 0;
+      currentIndex = m_CurrentIndex;
       m_Done = false;
 
       m_ImmediateDone = false;

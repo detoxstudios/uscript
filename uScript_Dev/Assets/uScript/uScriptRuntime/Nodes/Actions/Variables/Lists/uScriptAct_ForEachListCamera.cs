@@ -52,12 +52,13 @@ public class uScriptAct_ForEachListCamera : uScriptLogic
    //
    // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset(Camera[] List, out Camera Value)
+   public void Reset(Camera[] List, out Camera Value, out int currentIndex)
    {
       Value = null;
       m_List = List;
 
       m_CurrentIndex = 0;
+      currentIndex = m_CurrentIndex;
       m_Done = false;
 
       m_ImmediateDone = false;

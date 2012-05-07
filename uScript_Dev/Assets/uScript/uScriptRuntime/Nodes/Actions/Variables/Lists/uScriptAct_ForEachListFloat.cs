@@ -52,12 +52,13 @@ public class uScriptAct_ForEachListFloat : uScriptLogic
    //
    // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset(float[] List, out float Value)
+   public void Reset(float[] List, out float Value, out int currentIndex)
    {
       Value = 0;
       m_List = List;
 
       m_CurrentIndex = 0;
+      currentIndex = m_CurrentIndex;
       m_Done = false;
 
       m_ImmediateDone = false;

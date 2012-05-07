@@ -52,11 +52,12 @@ public class uScriptAct_ForEachListGameObject : uScriptLogic
    //
    // Parameter Attributes are applied below in In()
    [FriendlyName("Reset")]
-   public void Reset(GameObject[] GameObjectList, out GameObject go)
+   public void Reset(GameObject[] GameObjectList, out GameObject go, out int currentIndex)
    {
       go = null;
       m_List = GameObjectList;
       m_CurrentIndex = 0;
+      currentIndex = m_CurrentIndex;
       m_Done = false;
 
       m_ImmediateDone = false;
