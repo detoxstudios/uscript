@@ -18,14 +18,14 @@ public class uScriptAct_ControlGameObjectRotate : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The Target GameObject to be moved.")]
+      [FriendlyName("Target", "The Target GameObject to be rotated.")]
       GameObject Target,
 
-      [FriendlyName("Direction", "The direction to move the target.")]
+      [FriendlyName("Direction", "The direction to rotated the target.")]
       [SocketState(false, false)]
       Direction rotateDirection,
 
-      [FriendlyName("Speed", "The speed you wish to move the target per tick. This uses a relativly small value for most cases.")]
+      [FriendlyName("Speed", "The speed you wish to rotated the target per tick. This uses a relativly small value for most cases.")]
       [DefaultValue(0.1f)]
       float Speed
       )
@@ -43,11 +43,11 @@ public class uScriptAct_ControlGameObjectRotate : uScriptLogic
                break;
 
             case Direction.Left:
-               Target.transform.Rotate(Vector3.up * Speed);
+               Target.transform.Rotate(Vector3.down * Speed);
                break;
 
             case Direction.Right:
-               Target.transform.Rotate(Vector3.down * Speed);
+               Target.transform.Rotate(Vector3.up * Speed);
                break;
 
             case Direction.TiltLeft:
