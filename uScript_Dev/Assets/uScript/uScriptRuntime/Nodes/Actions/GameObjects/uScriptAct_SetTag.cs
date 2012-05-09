@@ -18,13 +18,13 @@ public class uScriptAct_SetTag : uScriptLogic
 
    public void In(
       [FriendlyName("Target", "The GameObject(s) you wish to assign the existing tag to.")]GameObject[] Target, 
-      [FriendlyName("Tag", "The tag(s) you wish to assign to the Target GameObject(s)")] string Tag)
+      [FriendlyName("Tag", "The tag(s) you wish to assign to the Target GameObject(s)")] string Tags)
    {
       foreach (GameObject obj in Target)
       {
          if (null != obj)
          {
-            obj.tag = Tag;
+            obj.tag = Tags;
          }
       }
    }
