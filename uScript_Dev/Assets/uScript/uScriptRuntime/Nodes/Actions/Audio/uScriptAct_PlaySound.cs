@@ -29,8 +29,9 @@ public class uScriptAct_PlaySound : uScriptLogic
       {
          for (int i = 0; i < target.Length; i++)
          {
+            //Debug.Log("Sources: " + m_AudioSources.Count.ToString());
 				AudioSource source;
-				if (null != target[i].GetComponent<AudioSource>())
+            if ( null != target[i].GetComponent<AudioSource>() && target[i].GetComponent<AudioSource>().priority != 255 && target[i].GetComponent<AudioSource>().volume != 0.001f )
 				{
 					source = target[i].GetComponent<AudioSource>();
 				}
@@ -102,6 +103,12 @@ public class uScriptAct_PlaySound : uScriptLogic
 				if ( m_TempAudioSources.Contains( finishedSource ) )
 				{
 					m_TempAudioSources.Remove( finishedSource );
+
+               // Hack to figure out that this AudioSource will be removed when garbage collection gets around to it.
+               // We'll check for these unlikely combinaiton of values above to detect if using the existing AudioSource is a good idea.
+               finishedSource.priority = 255;
+               finishedSource.volume = 0.001f;
+
 					ScriptableObject.Destroy( finishedSource );
 				}
 				
