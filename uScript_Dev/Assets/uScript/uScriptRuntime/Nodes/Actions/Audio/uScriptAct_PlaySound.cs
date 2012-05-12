@@ -12,11 +12,10 @@ using System.Collections.Generic;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Play_Sound")]
 
-[FriendlyName("Play Sound", "Plays the specified AudioClip on the target GameObject. If the target GameObject does not have an existing AudioSource component, a temporary one will be created using the Unity default settings.")]
+[FriendlyName("Play Sound", "Plays the specified AudioClip on the target GameObject.")]
 public class uScriptAct_PlaySound : uScriptLogic
 {
    private List<AudioSource> m_AudioSources = new List<AudioSource>( );
-	private List<AudioSource> m_TempAudioSources = new List<AudioSource>( );
 
    public bool Out { get { return true; } }
 
@@ -29,18 +28,7 @@ public class uScriptAct_PlaySound : uScriptLogic
       {
          for (int i = 0; i < target.Length; i++)
          {
-            //Debug.Log("Sources: " + m_AudioSources.Count.ToString());
-				AudioSource source;
-            if ( null != target[i].GetComponent<AudioSource>() && target[i].GetComponent<AudioSource>().priority != 255 && target[i].GetComponent<AudioSource>().volume != 0.001f )
-				{
-					source = target[i].GetComponent<AudioSource>();
-				}
-				else
-				{
-					source = target[i].AddComponent<AudioSource>();
-					m_TempAudioSources.Add( source );
-				}
-            
+            AudioSource source = target[i].AddComponent<AudioSource>();
             source.clip = audioClip;
             source.volume = volume;
             source.loop = loop;
@@ -99,19 +87,8 @@ public class uScriptAct_PlaySound : uScriptLogic
          if (false == m_AudioSources[i].isPlaying)
          {
             AudioSource finishedSource = m_AudioSources[i];
-				
-				if ( m_TempAudioSources.Contains( finishedSource ) )
-				{
-					m_TempAudioSources.Remove( finishedSource );
+            ScriptableObject.Destroy( finishedSource );
 
-               // Hack to figure out that this AudioSource will be removed when garbage collection gets around to it.
-               // We'll check for these unlikely combinaiton of values above to detect if using the existing AudioSource is a good idea.
-               finishedSource.priority = 255;
-               finishedSource.volume = 0.001f;
-
-					ScriptableObject.Destroy( finishedSource );
-				}
-				
             m_AudioSources.RemoveAt( i );
 
             --i;
