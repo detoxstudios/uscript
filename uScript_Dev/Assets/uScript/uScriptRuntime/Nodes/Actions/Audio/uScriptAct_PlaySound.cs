@@ -12,7 +12,7 @@ using System.Collections.Generic;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Play_Sound")]
 
-[FriendlyName("Play Sound", "Plays the specified AudioClip on the target GameObject.")]
+[FriendlyName("Play Sound", "Plays the specified AudioClip on the target GameObject.\n\nNote: This node will create a new instance of an AudioSource component when playing. If you wish to play a soud using a GameObjects existing AudioSource component, please use the Play AudioSource or Play AudioSource (OneShot) nodes instead.")]
 public class uScriptAct_PlaySound : uScriptLogic
 {
    private List<AudioSource> m_AudioSources = new List<AudioSource>( );
