@@ -29,6 +29,8 @@ public class uScriptAct_ToggleComponent : uScriptLogic
 
    public bool Out { get { return true; } }
 
+   private bool turnedOn = false;
+   private bool turnedOff = false;
 
    // ================================================================================
    //    Input Sockets and Node Parameters
@@ -44,30 +46,28 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-					if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
-					{
-						if ( currentTarget.renderer != null )
-						{
-							currentTarget.renderer.enabled = true;
-						}
-					}
-					else
-					{
-					   Component comp = currentTarget.GetComponent(currentComponentName);
-		               if (comp != null)
-		               {
-		                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
-		                  {
-		                     ((Behaviour)comp).enabled = true;
-		                  }
-		                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
-		                  {
-		                     ((ParticleEmitter)comp).enabled = true;
-		                  }
-		               }
-						
-					}
-               
+               if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+               {
+                  if ( currentTarget.renderer != null )
+                  {
+                     currentTarget.renderer.enabled = true;
+                  }
+               }
+               else
+               {
+                  Component comp = currentTarget.GetComponent(currentComponentName);
+                  if (comp != null)
+                  {
+                     if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
+                     {
+                        ((Behaviour)comp).enabled = true;
+                     }
+                     else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
+                     {
+                        ((ParticleEmitter)comp).enabled = true;
+                     }
+                  }
+               }
             }
          }
       }
@@ -85,30 +85,28 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-					if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
-					{
-						if ( currentTarget.renderer != null )
-						{
-							currentTarget.renderer.enabled = false;
-						}
-					}
-					else
-					{
-					   Component comp = currentTarget.GetComponent(currentComponentName);
-		               if (comp != null)
-		               {
-		                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
-		                  {
-		                     ((Behaviour)comp).enabled = false;
-		                  }
-		                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
-		                  {
-		                     ((ParticleEmitter)comp).enabled = false;
-		                  }
-		               }
-						
-					}
-               
+               if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+               {
+                  if ( currentTarget.renderer != null )
+                  {
+                     currentTarget.renderer.enabled = false;
+                  }
+               }
+               else
+               {
+                  Component comp = currentTarget.GetComponent(currentComponentName);
+                  if (comp != null)
+                  {
+                     if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
+                     {
+                        ((Behaviour)comp).enabled = false;
+                     }
+                     else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
+                     {
+                        ((ParticleEmitter)comp).enabled = false;
+                     }
+                  }
+               }
             }
          }
       }
@@ -125,62 +123,72 @@ public class uScriptAct_ToggleComponent : uScriptLogic
       string[] ComponentName
       )
    {
+      turnedOn = false;
+      turnedOff = false;
+
       foreach (GameObject currentTarget in Target)
       {
          if (currentTarget != null)
          {
             foreach (string currentComponentName in ComponentName)
             {
-					if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
-					{
-						if ( currentTarget.renderer != null )
-						{
-							if (currentTarget.renderer.enabled)
-							{
-								currentTarget.renderer.enabled = false;
-							}
-							else
-							{
-								currentTarget.renderer.enabled = true;
-							}
-							}
-						
-					}
-					else
-					{
-					   Component comp = currentTarget.GetComponent(currentComponentName);
-		               if (comp != null)
-		               {
-		                  if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
-		                  {
-		                     if ( ((Behaviour)comp).enabled )
-		                     {
-		                        ((Behaviour)comp).enabled = false;
-		                     }
-		                     else
-		                     {
-		                        ((Behaviour)comp).enabled = true;
-		                     }
-		                  }
-		                  else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
-		                  {
-		                     if ( ((ParticleEmitter)comp).enabled )
-		                     {
-		                        ((ParticleEmitter)comp).enabled = false;
-		                     }
-		                     else
-		                     {
-		                        ((ParticleEmitter)comp).enabled = true;
-		                     }
-		                  }
-		               }
-					}
-               
+               if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+               {
+                  if ( currentTarget.renderer != null )
+                  {
+                     if (currentTarget.renderer.enabled)
+                     {
+                        currentTarget.renderer.enabled = false;
+                        turnedOff = true;
+                     }
+                     else
+                     {
+                        currentTarget.renderer.enabled = true;
+                        turnedOn = true;
+                     }
+                  }
+               }
+               else
+               {
+                  Component comp = currentTarget.GetComponent(currentComponentName);
+                  if (comp != null)
+                  {
+                     if (typeof(Behaviour).IsAssignableFrom(comp.GetType()))
+                     {
+                        if ( ((Behaviour)comp).enabled )
+                        {
+                           ((Behaviour)comp).enabled = false;
+                           turnedOff = true;
+                        }
+                        else
+                        {
+                           ((Behaviour)comp).enabled = true;
+                           turnedOn = true;
+                        }
+                     }
+                     else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
+                     {
+                        if ( ((ParticleEmitter)comp).enabled )
+                        {
+                           ((ParticleEmitter)comp).enabled = false;
+                           turnedOff = true;
+                        }
+                        else
+                        {
+                           ((ParticleEmitter)comp).enabled = true;
+                           turnedOn = true;
+                        }
+                     }
+                  }
+               }
             }
          }
       }
 
       if ( null != ToggleOut ) ToggleOut(this, new System.EventArgs());
+
+      if ( turnedOn && null != OnOut ) OnOut(this, new System.EventArgs());
+      if ( turnedOff && null != OffOut ) OffOut(this, new System.EventArgs());
    }
 
 
