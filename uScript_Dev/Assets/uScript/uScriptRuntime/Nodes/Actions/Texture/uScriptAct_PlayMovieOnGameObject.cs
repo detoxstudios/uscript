@@ -8,14 +8,14 @@ using System.Collections.Generic;
 [NodePath("Actions/Texture")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Plays the Movie Texture assigned to the material of the Target GameObject.")]
+[NodeToolTip("Plays the MovieTexture assigned to the material of the Target GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Play Movie Texture", "Plays the Movie Texture assigned to the material of the Target GameObject(s). The Finished socket will fire once ALL movies have finished playing (or when stopped)." +
+[FriendlyName("Play Movie On GameObject", "Plays the MovieTexture assigned to the material of the Target GameObject(s). The Finished socket will fire once ALL movies have finished playing (or when stopped)." +
 	"\n\nNote 1: If you wish to hear the movie's audio, you will need to put an AudioSource component on the target GameObject and have the movie's AudioClip assigned to it. Also, because Unity makes the AudioClip a 3D sound, you may need to adjust the AudioSource component's Volume Rolloff settings to hear the sound as desired." +
 	"\n\nNote 2: All instances of a GameObject with the same material will play their movie textures.")]
-public class uScriptAct_PlayTexture : uScriptLogic
+public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 {
    private List<MovieTexture> m_TargetMovies = new List<MovieTexture>( );
 	
