@@ -202,7 +202,7 @@ public static class uScriptGUIContent
       _messageCompiling = new GUIContent("The Unity Editor is compiling one or more scripts. Please wait.");
       _messagePlaying = new GUIContent("The Unity Editor is in play mode!");
 
-#if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3)
+#if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4)
       _iconHelp = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/_Help.png") as Texture2D);
       _iconInfo = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.infoicon.png") as Texture2D);
       _iconInfoSmall = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.infoicon.sml.png") as Texture2D);
