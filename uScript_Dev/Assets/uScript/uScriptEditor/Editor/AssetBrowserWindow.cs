@@ -94,8 +94,6 @@ public class AssetBrowserWindow : EditorWindow
    static GUIStyle _styleWarningMessage = null;
    static GUIStyle _styleAssetPingButton = null;
 
-   static GUIContent _contentHelpIcon = null;
-   static GUIContent _contentWarningIcon = null;
    static GUIContent _contentWarningMessage = null;
 
 
@@ -141,7 +139,7 @@ public class AssetBrowserWindow : EditorWindow
             _type = typeof(Mesh);
             break;
          case AssetType.MovieTexture:
-            _assetExtensions = new List<string> { "mov", "mpg", "mpeg", "mp4", "avi", "asf" };
+            _assetExtensions = new List<string> { "ogg", "mov", "mpg", "mpeg", "mp4", "avi", "asf" };
             _type = typeof(MovieTexture);
             break;
          case AssetType.PhysicMaterial:
@@ -171,12 +169,6 @@ public class AssetBrowserWindow : EditorWindow
       }
 
       // prepare the static content for the window
-      Texture2D icon;
-      icon = EditorGUIUtility.LoadRequired("Builtin Skins/Icons/_Help.png") as Texture2D;
-      _contentHelpIcon = new GUIContent(icon);
-
-      icon = EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.warnicon.png") as Texture2D;
-      _contentWarningIcon = new GUIContent(icon);
       _contentWarningMessage = new GUIContent("Multiple assets with the same name resolve to a single path. Unexpected results may occur when loading this resource.");
 
 
@@ -186,7 +178,6 @@ public class AssetBrowserWindow : EditorWindow
       // When the "cancel" button is clicked, the window should return the original selection information (even if invalid).
       // When the "select" button is clicked, the window should return the new selection path and name.
       // If the path is different than the original, the "Resources Path" control should be updated.
-
 
       // Get existing open window or if none, make a new one:
       window = EditorWindow.GetWindow<AssetBrowserWindow>(true, "uScript Resource Asset Browser", true) as AssetBrowserWindow;
@@ -313,13 +304,14 @@ public class AssetBrowserWindow : EditorWindow
             string typeName = System.Enum.GetName(typeof(AssetType), (int)assetType);
             GUILayout.Label("Select a " + typeName + ":", EditorStyles.boldLabel, GUILayout.ExpandWidth(true));
 
-            if (GUILayout.Button(_contentHelpIcon, GUIStyle.none, GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(uScriptGUIContent.iconHelp, GUIStyle.none, GUILayout.ExpandWidth(false)))
             {
                Help.ShowHelpPage ("file:///unity/Components/class-" + _type.Name + ".html");
             }
          }
          EditorGUILayout.EndHorizontal();
 
+         EditorGUILayout.Space();
 
 //         _maxNameWidth = 240;
 //         _maxPathWidth = 100;
@@ -393,7 +385,7 @@ public class AssetBrowserWindow : EditorWindow
             {
                EditorGUILayout.BeginHorizontal();
                {
-                  GUILayout.Label(_contentWarningIcon, GUIStyle.none);
+                  GUILayout.Label(uScriptGUIContent.iconWarning, GUIStyle.none);
                   GUILayout.Label(_contentWarningMessage, _styleWarningMessage);
                }
                EditorGUILayout.EndHorizontal();
