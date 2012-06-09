@@ -189,10 +189,10 @@ public class PreferenceWindow : EditorWindow
          //
          GUILayout.Label("Miscellaneous Settings", EditorStyles.boldLabel);
 
-         _preferences.ShowAtStartup = EditorGUILayout.Toggle("Show Welcome Window at Startup", _preferences.ShowAtStartup);
+         _preferences.ShowAtStartup = EditorGUILayout.Toggle("Show Welcome Window on Start", _preferences.ShowAtStartup);
          EditorGUILayout.BeginHorizontal();
          {
-            _preferences.CheckForUpdate = EditorGUILayout.Toggle("Check for Updates at Startup", _preferences.CheckForUpdate);
+            _preferences.CheckForUpdate = EditorGUILayout.Toggle("Check for Updates on Start", _preferences.CheckForUpdate);
             if (GUILayout.Button("Check Now\u00A0", GUILayout.ExpandWidth(false)))
             {
                UpdateNotification.ManualCheck();
