@@ -178,7 +178,7 @@ public static class uScriptGUIContent
       _buttonSaveModeQuick          = new GUIContent("Quick",                 "When saved, no code will be generated.");
       _buttonSaveModeRelease        = new GUIContent("Release",               "When saved, the generated code will be free of debug information.");
 
-      _buttonScriptExportPNG        = new GUIContent("Export to PNG",         "Export the graph to a PNG image.");
+      _buttonScriptExportPNG        = new GUIContent("Export to Image (PNG)", "Export the graph to a PNG image. The file is placed in a \"Screenshots\" folder in the root of your Unity project.");
       _buttonScriptLoad             = new GUIContent("Load",                  "Load this uScript.");
       _buttonScriptNew              = new GUIContent("New",                   "Create a new uScript.  The active uScript will be closed automatically.");
       _buttonScriptOpen             = new GUIContent("Open...",               "Open a uScript using the file browser.");
