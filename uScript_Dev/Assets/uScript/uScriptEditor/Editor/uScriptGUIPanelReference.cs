@@ -179,7 +179,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                if (node == null)
                {
                   GUILayout.Label( (m_ScriptEditorCtrl.SelectedNodes.Length == 0
-                                    ? "Select a node on the canvas to view usage and behavior information."
+                                    ? "Select a node on the canvas to view the help text for that node.\n\nFriendly Name: Use this graph property to give your graph a name that will be used when shown as a nested node in another uScript graph.\n\nDescription: Use this graph property to give this graph description help text when selected as a nested node in another uScript graph (shown here in the Reference panel)."
                                     : "Help cannot be provided when multiple nodes are selected."
                                     ), uScriptGUIStyle.panelMessage);
                }

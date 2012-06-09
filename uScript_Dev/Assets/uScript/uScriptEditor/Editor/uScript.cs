@@ -48,15 +48,15 @@ public class uScript : EditorWindow
    static public string ProductName { get { return "Personal Learning Edition"; } }
    static public string ProductType { get { return "uScript_PLE"; } }
 #elif UNITY_STORE_BUILD
-   static public string ProductName { get { return "Retail Beta 18"; } }
+   static public string ProductName { get { return "Retail Beta 19"; } }
    static public string ProductType { get { return "uScript_AssetStore"; } }
 #else
-   static public string ProductName { get { return "Retail Beta 18"; } }
+   static public string ProductName { get { return "Retail Beta 19"; } }
    static public string ProductType { get { return "uScript_Retail"; } }
 #endif
 
    // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   static public string BuildNumber { get { return "0.9.1871"; } }
+   static public string BuildNumber { get { return "0.9.1888"; } }
 
    static public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    //public string LastUnityBuild { get { return "3.3"; } }
@@ -5027,12 +5027,12 @@ public class uScript : EditorWindow
       }
       else if (type == "ExternalConnection")
       {
-         return "Use External Connections to create nested uScripts. An External Connection node" +
+         return "Use External Connections to create nested uScripts that show up as a single node in other graphs they are sued in. An External Connection node" +
             " will turn into a socket when the current uScript is used as a nested uScript inside" +
             " another uScript. The type of socket it turns into will be determined by the type of" +
-            " socket it is connected to in this uScript.\n\nTo place this uScript in another" +
-            " uScript as a nested uScript, save it and then look for it under the Scene()->Logic" +
-            " menu of the node palette or 'Add' context menu.";
+            " socket it is connected to in this uScript.\n\nTo place this uScript graph in another" +
+            " uScript as a nested node, save it and then look for it under the \"Graphs\" section" +
+            " of the Nodes Palette or 'Add' context menu.";
       }
       else if (type == "OwnerConnection")
       {
@@ -5146,19 +5146,25 @@ public class uScript : EditorWindow
       else if (type == "LocalNode")
       {
          if (p.FriendlyName == "Name")
-            return "The variable name. Variables that share the same name are automatically linked together. Once linked, changing the value of one will affect all others.";
+            return "The variable name (optional). Variables that share the same name are automatically linked together and treated as the same variable in your graph. Once linked, changing the value of one will affect all others in the graph. Variables with the same name in different graphs are NOT connected in any way. Use the \"Expose to Unity\" option below in order to access this variable as a reflected property between graphs.";
          else if (p.FriendlyName == "Value")
-            return "The variable value.";
+            return "The value of the variable. Only values supported by this variable type are allowed.";
+         else if (p.FriendlyName == "Expose to Unity")
+            return "When checked, this will expose this variable to Unity so that it will show up in the Inspector panel for this graph's component as well as allow you to access this variable from other uScript graphs as a reflected property. You must name this variable before you can use this oiption (see the Name field above). This is the equivelent of making a variable \"public\" in a script.";
       }
       else if (type == "ExternalConnection")
       {
          if (p.FriendlyName == "Name")
-            return "The connection name.";
+            return "The connection name. This name will be displayed in other graphs for this socket.";
+         if (p.FriendlyName == "Order")
+            return "The order (from left to right for variable sockets and top to bottom for input/output sockets) that the sockets will appear on the nested node in other graphs. Lower numbers have higher priority ans will draw first.";
+         if (p.FriendlyName == "Description")
+            return "The help text for each socket you wish to show up in the uScript Reference panel when users select this nested node in another graph.";
       }
       else if (type == "OwnerConnection")
       {
          if (p.FriendlyName == "Connection")
-            return "The GameObject this uScript is attached to.";
+            return "The GameObject this uScript graph is attached to. Also commonly known as \"this\" in scripting.";
       }
       else if (type == "_reflectedAction")
       {
