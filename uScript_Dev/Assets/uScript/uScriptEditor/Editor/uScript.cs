@@ -56,7 +56,7 @@ public class uScript : EditorWindow
 #endif
 
    // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   static public string BuildNumber { get { return "0.9.1888"; } }
+   static public string BuildNumber { get { return "0.9.1891"; } }
 
    static public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    //public string LastUnityBuild { get { return "3.3"; } }
@@ -5156,9 +5156,9 @@ public class uScript : EditorWindow
       {
          if (p.FriendlyName == "Name")
             return "The connection name. This name will be displayed in other graphs for this socket.";
-         if (p.FriendlyName == "Order")
-            return "The order (from left to right for variable sockets and top to bottom for input/output sockets) that the sockets will appear on the nested node in other graphs. Lower numbers have higher priority ans will draw first.";
-         if (p.FriendlyName == "Description")
+         else if (p.FriendlyName == "Order")
+            return "The order that the sockets will appear on the nested node in other graphs (from left to right for variable sockets and top to bottom for input/output sockets). Lower numbers have higher priority and will draw first.";
+         else if (p.FriendlyName == "Description")
             return "The help text for each socket you wish to show up in the uScript Reference panel when users select this nested node in another graph.";
       }
       else if (type == "OwnerConnection")
