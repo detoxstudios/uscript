@@ -513,6 +513,8 @@ namespace Detox.ScriptEditor
 
             DeclareNamespaces( );
             AddCSharpLine( "" );
+            AddCSharpLine("// This is the component script that you should assign to GameObjects to use this graph on them. Use the uScript/Graphs section of Unity's \"Component\" menu to assign this graph to a selected GameObject.");
+            AddCSharpLine("");
 
             AddCSharpLine( "[AddComponentMenu(\"uScript/Graphs/" + logicClassName + "\")]" );
             AddCSharpLine( "public class " + System.IO.Path.GetFileNameWithoutExtension(script.Name) + uScriptConfig.Files.GeneratedComponentExtension + " : uScriptCode" );
