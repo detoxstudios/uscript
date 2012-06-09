@@ -2109,7 +2109,7 @@ namespace Detox.ScriptEditor
 
                      //status updates aren't working and we have to get the build done
                      //so i'm forcing a log warning
-                     uScriptDebug.Log( "For a node to be exposed to the Inspector it must have a name", uScriptDebug.Type.Warning );
+                     uScriptDebug.Log( "For a node to be exposed to Unity it must have a name.", uScriptDebug.Type.Warning );
                   }
                   else if (localNode.Name.Default != "")
                   {
