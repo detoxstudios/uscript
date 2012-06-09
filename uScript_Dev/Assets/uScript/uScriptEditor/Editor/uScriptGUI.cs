@@ -726,22 +726,24 @@ public static class uScriptGUI
 						unityObject = ((Component)unityObject).gameObject;
 				}
 
-				//if we're building with 3.4 then check the client version
+				//if we're building with 3.4 or greater then check the client version
 				//and figure out which one to display
             #if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3)
-               //if we're not building with 3.4 then default to the old one
-               unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
-            #else
+            //if we're not building with 3.4 or greater then default to the old one
+#pragma warning disable 618
+            unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
+#pragma warning restore 618
+#else
 				if (uScript.UnityVersion < 3.4f) {
-                  #pragma warning disable 618
+#pragma warning disable 618
 					unityObject = EditorGUILayout.ObjectField (unityObject, type, GUILayout.Width (_columnValue.Width)) as UnityEngine.Object;
-                  #pragma warning restore 618
+#pragma warning restore 618
 				} else {
 					unityObject = EditorGUILayout.ObjectField (unityObject, type, true, GUILayout.Width (_columnValue.Width)) as UnityEngine.Object;
 				}
-            #endif
-   
-				// if that object (or the changed object) does exist, use it's name to update the property value
+#endif
+
+            // if that object (or the changed object) does exist, use it's name to update the property value
 				// if it doesn't exist then the 'val' will stay as what was entered into the TextField
 				if (unityObject != null) {
 					textValue = unityObject.name;
