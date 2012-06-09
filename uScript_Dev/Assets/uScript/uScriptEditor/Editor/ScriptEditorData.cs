@@ -956,8 +956,8 @@ namespace Detox.Data.ScriptEditor
                externaled.Default      = "false";
                externaled.Input        = true;
                externaled.Output       = false;
-               externaled.Name         = "Expose to Inspector";
-               externaled.FriendlyName = "Expose to Inspector";
+               externaled.Name         = "Expose to Unity";
+               externaled.FriendlyName = "Expose to Unity";
                externaled.State        = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
                externaled.Type         = typeof(bool).ToString( );
 

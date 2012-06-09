@@ -2557,8 +2557,8 @@ namespace Detox.ScriptEditor
          m_Externaled.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Externaled.Input   = true;
          m_Externaled.Output  = false;
-         m_Externaled.Name    = "Expose to Inspector";
-         m_Externaled.FriendlyName = "Expose to Inspector";
+         m_Externaled.Name    = "Expose to Unity";
+         m_Externaled.FriendlyName = "Expose to Unity";
          m_Externaled.Type    = typeof(bool).ToString( );
 
          m_Position = Point.Empty; 
