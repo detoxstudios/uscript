@@ -522,18 +522,18 @@ namespace Detox.ScriptEditor
             ++m_TabStack;
             
                AddCSharpLine( "#pragma warning disable 414" );
-               AddCSharpLine( "public " + logicClassName + " uScript = new " + logicClassName + "( ); ");
+               AddCSharpLine( "public " + logicClassName + " ExposedVariables = new " + logicClassName + "( ); ");
                AddCSharpLine( "#pragma warning restore 414" );
             
                AddCSharpLine( "" );
                
-               //any inspector variables should be also marked as public properties
+               //any named variables using the "Exposed to Unity" property should be also marked as public properties
                //so they can be get/set by other uscripts
                foreach ( LocalNode node in m_Script.UniqueLocals )
                {
                   if ( "true" == node.Externaled.Default )
                   {
-                     AddCSharpLine( "public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return uScript." + CSharpName(node) + "; } set { uScript." + CSharpName(node) + " = value; } } " );
+                     AddCSharpLine( "public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return ExposedVariables." + CSharpName(node) + "; } set { ExposedVariables." + CSharpName(node) + " = value; } } " );
                   }
                }
 
@@ -548,10 +548,10 @@ namespace Detox.ScriptEditor
                      AddCSharpLine( "#if !(UNITY_FLASH)" );
                      AddCSharpLine( "useGUILayout = " + (NeedsGuiLayout( ) ? "true;" : "false;") );
                      AddCSharpLine( "#endif" );
-                     AddCSharpLine( "uScript.Awake( );" );
+                     AddCSharpLine( "ExposedVariables.Awake( );" );
                
-                     //AddCSharpLine( "uScript = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
-                     AddCSharpLine( "uScript.SetParent( this.gameObject );" );
+                     //AddCSharpLine( "ExposedVariables = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
+                     AddCSharpLine( "ExposedVariables.SetParent( this.gameObject );" );
 
                      string version = uScript_MasterComponent.Version;
 
@@ -559,7 +559,7 @@ namespace Detox.ScriptEditor
                      AddCSharpLine( "{" );
                      ++m_TabStack;
                         AddCSharpLine( "uScriptDebug.Log( \"The generated code is not compatible with your current uScript Runtime \" + uScript_MasterComponent.Version, uScriptDebug.Type.Error );" );
-                        AddCSharpLine( "uScript = null;" );
+                        AddCSharpLine( "ExposedVariables = null;" );
                         AddCSharpLine( "UnityEngine.Debug.Break();" );
                      --m_TabStack;
                      AddCSharpLine( "}" );
@@ -574,7 +574,7 @@ namespace Detox.ScriptEditor
 
                if ( false == stubCode )
                {
-                  AddCSharpLine( "uScript.Start( );" );
+                  AddCSharpLine( "ExposedVariables.Start( );" );
                }
 
                --m_TabStack;
@@ -588,7 +588,7 @@ namespace Detox.ScriptEditor
                
                if ( false == stubCode )
                {
-                  AddCSharpLine( "uScript.Update( );" );
+                  AddCSharpLine( "ExposedVariables.Update( );" );
                }                  
 
                --m_TabStack;
@@ -600,7 +600,7 @@ namespace Detox.ScriptEditor
             
                if ( false == stubCode )
                {
-                  AddCSharpLine( "uScript.OnDestroy( );" );
+                  AddCSharpLine( "ExposedVariables.OnDestroy( );" );
                }
 
                --m_TabStack;
@@ -614,7 +614,7 @@ namespace Detox.ScriptEditor
                
                   if ( false == stubCode )
                   {
-                     AddCSharpLine( "uScript.LateUpdate( );" );
+                     AddCSharpLine( "ExposedVariables.LateUpdate( );" );
                   }
 
                   --m_TabStack;
@@ -629,7 +629,7 @@ namespace Detox.ScriptEditor
                
                   if ( false == stubCode )
                   {
-                     AddCSharpLine( "uScript.FixedUpdate( );" );
+                     AddCSharpLine( "ExposedVariables.FixedUpdate( );" );
                   }
                
                   --m_TabStack;
@@ -644,7 +644,7 @@ namespace Detox.ScriptEditor
                
                   if ( false == stubCode )
                   {
-                     AddCSharpLine( "uScript.OnGUI( );" );
+                     AddCSharpLine( "ExposedVariables.OnGUI( );" );
                   }
                
                   --m_TabStack;

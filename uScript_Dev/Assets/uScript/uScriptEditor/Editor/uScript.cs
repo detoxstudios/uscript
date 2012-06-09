@@ -5027,9 +5027,9 @@ public class uScript : EditorWindow
       }
       else if (type == "ExternalConnection")
       {
-         return "Use External Connections to create nested uScripts that show up as a single node in other graphs they are sued in. An External Connection node" +
-            " will turn into a socket when the current uScript is used as a nested uScript inside" +
-            " another uScript. The type of socket it turns into will be determined by the type of" +
+         return "Use External Connections to create nested uScript graphs that show up as a single node in other graphs they are used in. An External Connection node" +
+            " will turn into a socket when the current graph is used as a nested node inside" +
+            " other graphs. The type of socket it turns into will be determined by the type of" +
             " socket it is connected to in this uScript.\n\nTo place this uScript graph in another" +
             " uScript as a nested node, save it and then look for it under the \"Graphs\" section" +
             " of the Nodes Palette or 'Add' context menu.";
@@ -5123,8 +5123,8 @@ public class uScript : EditorWindow
       {
          switch (p.FriendlyName)
          {
-            case "Comment":            return "The comment text that will be sent to the console.";
-            case "Output Comment":     return "If True, the comment will be sent to the console.";
+            case "Comment":            return "The comment text to show above this node in uScript's canvas.";
+            case "Output Comment":     return "If True, the comment text will be sent to Unity's console window when the node fires.";
             case "Instance":           return "The GameObject instance associated with this node.";
             default:                   return p.FriendlyName;
          }
