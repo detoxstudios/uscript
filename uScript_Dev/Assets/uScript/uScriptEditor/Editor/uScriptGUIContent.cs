@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
-using System.Reflection;
+//using System.Collections.Generic;
+//using System.Reflection;
 
 //
 // This file contains a collection of custom uScript GUI content for use with uScriptEditor
@@ -123,31 +123,31 @@ public static class uScriptGUIContent
    private static GUIContent _messagePlaying;
    public static GUIContent messagePlaying { get { return _messagePlaying; } }
 
-   private static GUIContent _iconHelp;
-   public static GUIContent iconHelp { get { return _iconHelp; } }
+   private static GUIContent _iconHelp16;
+   public static GUIContent iconHelp16 { get { return _iconHelp16; } }
 
-   private static GUIContent _iconInfo;
-   public static GUIContent iconInfo { get { return _iconInfo; } }
+   private static GUIContent _iconHelp32;
+   public static GUIContent iconHelp32 { get { return _iconHelp32; } }
 
-   private static GUIContent _iconInfoSmall;
-   public static GUIContent iconInfoSmall { get { return _iconInfoSmall; } }
+   private static GUIContent _iconInfo16;
+   public static GUIContent iconInfo16 { get { return _iconInfo16; } }
 
-   private static GUIContent _iconWarning;
-   public static GUIContent iconWarning { get { return _iconWarning; } }
+   private static GUIContent _iconInfo32;
+   public static GUIContent iconInfo32 { get { return _iconInfo32; } }
 
-   private static GUIContent _iconWarningSmall;
-   public static GUIContent iconWarningSmall { get { return _iconWarningSmall; } }
+   private static GUIContent _iconWarn16;
+   public static GUIContent iconWarn16 { get { return _iconWarn16; } }
 
-   private static GUIContent _iconError;
-   public static GUIContent iconError { get { return _iconError; } }
+   private static GUIContent _iconWarn32;
+   public static GUIContent iconWarn32 { get { return _iconWarn32; } }
 
-   private static GUIContent _iconErrorSmall;
-   public static GUIContent iconErrorSmall { get { return _iconErrorSmall; } }
+   private static GUIContent _iconError16;
+   public static GUIContent iconError16 { get { return _iconError16; } }
 
+   private static GUIContent _iconError32;
+   public static GUIContent iconError32 { get { return _iconError32; } }
 
-
-
-   public static void Init ()
+   public static void Init()
    {
       if (_buttonScriptNew != null)
       {
@@ -156,75 +156,75 @@ public static class uScriptGUIContent
       }
 
       // create the objects
-      _buttonArrayAdd               = new GUIContent("+",                     "Add a new item to the end of the array.");
-      _buttonArrayClear             = new GUIContent("{ }",                   "Remove all items from the array.");
-      _buttonArrayDuplicate         = new GUIContent("C",                     "Insert a copy of this item.");
-      _buttonArrayInsert            = new GUIContent("I",                     "Insert a new item before this item.");
-      _buttonArrayRemove            = new GUIContent("R",                     "Remove this item.");
-      _buttonArraySearch            = new GUIContent(string.Empty,            "Attempt to locate a GameObject in the project Hierarchy using this string.");
+      _buttonArrayAdd = new GUIContent("+", "Add a new item to the end of the array.");
+      _buttonArrayClear = new GUIContent("{ }", "Remove all items from the array.");
+      _buttonArrayDuplicate = new GUIContent("C", "Insert a copy of this item.");
+      _buttonArrayInsert = new GUIContent("I", "Insert a new item before this item.");
+      _buttonArrayRemove = new GUIContent("R", "Remove this item.");
+      _buttonArraySearch = new GUIContent(string.Empty, "Attempt to locate a GameObject in the project Hierarchy using this string.");
 
-      _buttonListCollapse           = new GUIContent(string.Empty,            "Collapse all node categories.");
-      _buttonListExpand             = new GUIContent(string.Empty,            "Expand all node categories.");
+      _buttonListCollapse = new GUIContent(string.Empty, "Collapse all node categories.");
+      _buttonListExpand = new GUIContent(string.Empty, "Expand all node categories.");
 
-      _buttonNodeDeleteMissing      = new GUIContent(string.Empty,            "Delete this missing node.");
-      _buttonNodeFind               = new GUIContent(string.Empty,            "Center the canvas on this node.");
-      _buttonNodeSource             = new GUIContent("Source",                "Ping the source file associated with this node.");
-      _buttonNodeToggle             = new GUIContent(string.Empty,            "Toggle socket visibility on this node (Show All or Hide Unused).");
-      _buttonNodeUpgrade            = new GUIContent(string.Empty,            "Upgrade this deprecated node.");
+      _buttonNodeDeleteMissing = new GUIContent(string.Empty, "Delete this missing node.");
+      _buttonNodeFind = new GUIContent(string.Empty, "Center the canvas on this node.");
+      _buttonNodeSource = new GUIContent("Source", "Ping the source file associated with this node.");
+      _buttonNodeToggle = new GUIContent(string.Empty, "Toggle socket visibility on this node (Show All or Hide Unused).");
+      _buttonNodeUpgrade = new GUIContent(string.Empty, "Upgrade this deprecated node.");
 
-      _buttonPreferences            = new GUIContent("Preferences...",        "Opens the preferences.");
+      _buttonPreferences = new GUIContent("Preferences...", "Opens the preferences.");
 
-      _buttonSaveModeDebug          = new GUIContent("Debug",                 "When saved, the generated code will contain debug information.");
-      _buttonSaveModeQuick          = new GUIContent("Quick",                 "When saved, no code will be generated.");
-      _buttonSaveModeRelease        = new GUIContent("Release",               "When saved, the generated code will be free of debug information.");
+      _buttonSaveModeDebug = new GUIContent("Debug", "When saved, the generated code will contain debug information.");
+      _buttonSaveModeQuick = new GUIContent("Quick", "When saved, no code will be generated.");
+      _buttonSaveModeRelease = new GUIContent("Release", "When saved, the generated code will be free of debug information.");
 
-      _buttonScriptExportPNG        = new GUIContent("Export to Image (PNG)", "Export the graph to a PNG image. The file is placed in a \"Screenshots\" folder in the root of your Unity project.");
-      _buttonScriptLoad             = new GUIContent("Load",                  "Load this uScript.");
-      _buttonScriptNew              = new GUIContent("New",                   "Create a new uScript.  The active uScript will be closed automatically.");
-      _buttonScriptOpen             = new GUIContent("Open...",               "Open a uScript using the file browser.");
-      _buttonScriptReload           = new GUIContent("Reload",                "Reload this uScript.");
-      _buttonScriptSave             = new GUIContent("Save",                  "Save this uScript using the specified 'save method'.");
-      _buttonScriptSaveAs           = new GUIContent("Save As...",            "Save the current uScript through the file browser using the specified 'save method'.");
-      _buttonScriptSaveDebug        = new GUIContent("Save Debug",            "Save the current uScript and generate debug code.");
-      _buttonScriptSaveQuick        = new GUIContent("Save Quick",            "Save the current uScript without generating code.");
-      _buttonScriptSaveRelease      = new GUIContent("Save Release",          "Save the current uScript and generate code.");
-      _buttonScriptSource           = new GUIContent("Source",                "Ping the source file associated with this uScript.");
-      _buttonScriptSourceStale      = new GUIContent("Source",                "Ping the source file associated with this uScript.  Save using Release or Debug to generate code for this script.");
-      _buttonScriptSourceDebug      = new GUIContent("Source",                "Ping the source file associated with this uScript.  This script contains Debug information.");
-      _buttonScriptUpgradeNodes      = new GUIContent("Upgrade Deprecated Nodes", "Upgrade all deprecated nodes in this graph. If this graph is assigned to a specific Unity scene, please be sure that scene is open before doing this or you could loose work!");
+      _buttonScriptExportPNG = new GUIContent("Export to Image (PNG)", "Export the graph to a PNG image. The file is placed in a \"Screenshots\" folder in the root of your Unity project.");
+      _buttonScriptLoad = new GUIContent("Load", "Load this uScript.");
+      _buttonScriptNew = new GUIContent("New", "Create a new uScript.  The active uScript will be closed automatically.");
+      _buttonScriptOpen = new GUIContent("Open...", "Open a uScript using the file browser.");
+      _buttonScriptReload = new GUIContent("Reload", "Reload this uScript.");
+      _buttonScriptSave = new GUIContent("Save", "Save this uScript using the specified 'save method'.");
+      _buttonScriptSaveAs = new GUIContent("Save As...", "Save the current uScript through the file browser using the specified 'save method'.");
+      _buttonScriptSaveDebug = new GUIContent("Save Debug", "Save the current uScript and generate debug code.");
+      _buttonScriptSaveQuick = new GUIContent("Save Quick", "Save the current uScript without generating code.");
+      _buttonScriptSaveRelease = new GUIContent("Save Release", "Save the current uScript and generate code.");
+      _buttonScriptSource = new GUIContent("Source", "Ping the source file associated with this uScript.");
+      _buttonScriptSourceStale = new GUIContent("Source", "Ping the source file associated with this uScript.  Save using Release or Debug to generate code for this script.");
+      _buttonScriptSourceDebug = new GUIContent("Source", "Ping the source file associated with this uScript.  This script contains Debug information.");
+      _buttonScriptUpgradeNodes = new GUIContent("Upgrade Deprecated Nodes", "Upgrade all deprecated nodes in this graph. If this graph is assigned to a specific Unity scene, please be sure that scene is open before doing this or you could loose work!");
 
-      _buttonScriptsRebuildAll      = new GUIContent("Rebuild All uScripts",  "Rebuild all uScripts in the Unity project. For best results, have an empty/blank Unity scene loaded when performing this action. Note: this could take a while if you have many large graphs!");
+      _buttonScriptsRebuildAll = new GUIContent("Rebuild All uScripts", "Rebuild all uScripts in the Unity project. For best results, have an empty/blank Unity scene loaded when performing this action. Note: this could take a while if you have many large graphs!");
       _buttonScriptsRemoveGenerated = new GUIContent("Remove Generated Code", "Removes all the generated script files created by uScript. For best results, have an empty/blank Unity scene loaded when performing this action. Note: Your uScript graphs will not work until they have been rebuilt/re-saved!");
 
-      _buttonWebDocumentation       = new GUIContent("Online Reference",      "Open the online uScript reference in the default web browser.");
-      _buttonWebForum               = new GUIContent("Forum",                 "Open the online forum in the default web browser.");
+      _buttonWebDocumentation = new GUIContent("Online Reference", "Open the online uScript reference in the default web browser.");
+      _buttonWebForum = new GUIContent("Forum", "Open the online forum in the default web browser.");
 
       _messageCompiling = new GUIContent("The Unity Editor is compiling one or more scripts. Please wait.");
       _messagePlaying = new GUIContent("The Unity Editor is in play mode!");
 
-#if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4)
-      _iconHelp = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/_Help.png") as Texture2D);
-      _iconInfo = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.infoicon.png") as Texture2D);
-      _iconInfoSmall = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.infoicon.sml.png") as Texture2D);
-      _iconWarning = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.warnicon.png") as Texture2D);
-      _iconWarningSmall = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.warnicon.sml.png") as Texture2D);
-      _iconError = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.erroricon.png") as Texture2D);
-      _iconErrorSmall = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.erroricon.sml.png") as Texture2D);
-#else
-      // Use abhorrent reflection to access internal editor textures that were once readily available
-      _iconHelp = typeof(EditorGUIUtility).InvokeMember("IconContent", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.InvokeMethod, null, null, new object[] { "_Help" }) as GUIContent;
-
-      System.Type consoleWindow = Assembly.GetAssembly(typeof(EditorWindow)).GetType("UnityEditor.ConsoleWindow");
-      BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Static;
-
-      consoleWindow.InvokeMember("LoadIcons", flags | BindingFlags.InvokeMethod, null, null, null);
-      _iconInfo = new GUIContent(consoleWindow.GetField("iconInfo", flags).GetValue(null) as Texture2D);
-      _iconInfoSmall = new GUIContent(consoleWindow.GetField("iconInfoSmall", flags).GetValue(null) as Texture2D);
-      _iconWarning = new GUIContent(consoleWindow.GetField("iconWarn", flags).GetValue(null) as Texture2D);
-      _iconWarningSmall = new GUIContent(consoleWindow.GetField("iconWarnSmall", flags).GetValue(null) as Texture2D);
-      _iconError = new GUIContent(consoleWindow.GetField("iconError", flags).GetValue(null) as Texture2D);
-      _iconErrorSmall = new GUIContent(consoleWindow.GetField("iconErrorSmall", flags).GetValue(null) as Texture2D);
-#endif
+//#if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4)
+//      _iconHelp = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/_Help.png") as Texture2D);
+//      _iconInfo = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.infoicon.png") as Texture2D);
+//      _iconInfoSmall = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.infoicon.sml.png") as Texture2D);
+//      _iconWarning = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.warnicon.png") as Texture2D);
+//      _iconWarningSmall = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.warnicon.sml.png") as Texture2D);
+//      _iconError = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.erroricon.png") as Texture2D);
+//      _iconErrorSmall = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/console.erroricon.sml.png") as Texture2D);
+//#else
+//      // Use abhorrent reflection to access internal editor textures that were once readily available
+//      _iconHelp = typeof(EditorGUIUtility).InvokeMember("IconContent", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.InvokeMethod, null, null, new object[] { "_Help" }) as GUIContent;
+//
+//      System.Type consoleWindow = Assembly.GetAssembly(typeof(EditorWindow)).GetType("UnityEditor.ConsoleWindow");
+//      BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Static;
+//
+//      consoleWindow.InvokeMember("LoadIcons", flags | BindingFlags.InvokeMethod, null, null, null);
+//      _iconInfo = new GUIContent(consoleWindow.GetField("iconInfo", flags).GetValue(null) as Texture2D);
+//      _iconInfoSmall = new GUIContent(consoleWindow.GetField("iconInfoSmall", flags).GetValue(null) as Texture2D);
+//      _iconWarning = new GUIContent(consoleWindow.GetField("iconWarn", flags).GetValue(null) as Texture2D);
+//      _iconWarningSmall = new GUIContent(consoleWindow.GetField("iconWarnSmall", flags).GetValue(null) as Texture2D);
+//      _iconError = new GUIContent(consoleWindow.GetField("iconError", flags).GetValue(null) as Texture2D);
+//      _iconErrorSmall = new GUIContent(consoleWindow.GetField("iconErrorSmall", flags).GetValue(null) as Texture2D);
+//#endif
 
 
       // add images to the GUIContent objects
@@ -243,7 +243,8 @@ public static class uScriptGUIContent
          }
 
          // reload all custom GUI textures to match the new skin
-         string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + _currentSkin + "_";
+         string imagePath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/";
+         string skinPath = imagePath + _currentSkin + "_";
 
          _buttonArraySearch.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _buttonListCollapse.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconCollapse.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
@@ -252,10 +253,19 @@ public static class uScriptGUIContent
          _buttonNodeToggle.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniToggle.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _buttonNodeUpgrade.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniUpgrade.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _buttonNodeDeleteMissing.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniDelete.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+
+         _iconHelp16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconHelp16.png", typeof(UnityEngine.Texture2D)));
+         _iconHelp32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconHelp32.png", typeof(UnityEngine.Texture2D)));
+         _iconInfo16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconInfo16.png", typeof(UnityEngine.Texture2D)));
+         _iconInfo32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconInfo32.png", typeof(UnityEngine.Texture2D)));
+         _iconWarn16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconWarn16.png", typeof(UnityEngine.Texture2D)));
+         _iconWarn32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconWarn32.png", typeof(UnityEngine.Texture2D)));
+         _iconError16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconError16.png", typeof(UnityEngine.Texture2D)));
+         _iconError32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconError32.png", typeof(UnityEngine.Texture2D)));
       }
    }
 
-   public static void ChangeTooltip (string tooltip)
+   public static void ChangeTooltip(string tooltip)
    {
       _buttonWebDocumentation.tooltip = tooltip;
    }

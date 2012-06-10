@@ -304,7 +304,7 @@ public class AssetBrowserWindow : EditorWindow
             string typeName = System.Enum.GetName(typeof(AssetType), (int)assetType);
             GUILayout.Label("Select a " + typeName + ":", EditorStyles.boldLabel, GUILayout.ExpandWidth(true));
 
-            if (GUILayout.Button(uScriptGUIContent.iconHelp, GUIStyle.none, GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(uScriptGUIContent.iconHelp16, GUIStyle.none, GUILayout.ExpandWidth(false)))
             {
                Help.ShowHelpPage ("file:///unity/Components/class-" + _type.Name + ".html");
             }
@@ -385,7 +385,7 @@ public class AssetBrowserWindow : EditorWindow
             {
                EditorGUILayout.BeginHorizontal();
                {
-                  GUILayout.Label(uScriptGUIContent.iconWarning, GUIStyle.none);
+                  GUILayout.Label(uScriptGUIContent.iconWarn32, GUIStyle.none);
                   GUILayout.Label(_contentWarningMessage, _styleWarningMessage);
                }
                EditorGUILayout.EndHorizontal();
