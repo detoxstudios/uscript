@@ -60,7 +60,7 @@ public static class uScriptGUI
 
    public static int panelDividerThickness { get { return _panelDividerThickness; } }
 
-   public static int _panelLeftWidth = 250;
+   public static int _panelLeftWidth = 232;
 
    public static int panelLeftWidth
    {

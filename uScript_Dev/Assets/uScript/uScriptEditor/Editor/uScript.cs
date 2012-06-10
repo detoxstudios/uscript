@@ -56,7 +56,7 @@ public class uScript : EditorWindow
 #endif
 
    // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   static public string BuildNumber { get { return "0.9.1891"; } }
+   static public string BuildNumber { get { return "0.9.1894"; } }
 
    static public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    //public string LastUnityBuild { get { return "3.3"; } }
@@ -2241,7 +2241,7 @@ public class uScript : EditorWindow
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
          {
-            string[] options = new string[] { "Nodes Palette", "Graph Contents" };
+            string[] options = new string[] { "Toolbox", "Contents" };
 
             Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
 
@@ -5032,7 +5032,7 @@ public class uScript : EditorWindow
             " other graphs. The type of socket it turns into will be determined by the type of" +
             " socket it is connected to in this uScript.\n\nTo place this uScript graph in another" +
             " uScript as a nested node, save it and then look for it under the \"Graphs\" section" +
-            " of the Nodes Palette or 'Add' context menu.";
+            " of the Toolbox panel or 'Add' context menu.";
       }
       else if (type == "OwnerConnection")
       {

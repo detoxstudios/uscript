@@ -92,7 +92,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    //
    public void Init()
    {
-      _name = "Nodes Palette";
+      _name = "Toolbox";
 //      _size = 250;
 //      _region = uScriptGUI.Region.Palette;
 
@@ -154,7 +154,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
             // Graph Contents panel.  For now, use a DropDown control instead
             // of the typical Label for the panel title.
             //
-            string[] options = new string[] { "Nodes Palette", "Graph Contents" };
+            string[] options = new string[] { "Toolbox", "Contents" };
             Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
             uScript._paletteMode = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
 //            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
