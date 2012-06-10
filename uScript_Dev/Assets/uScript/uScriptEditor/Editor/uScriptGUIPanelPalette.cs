@@ -173,7 +173,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
             }
 
             GUI.SetNextControlName("PaletteFilterSearch");
-            string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.Width(100));
+            string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
 //            GUI.SetNextControlName("");
             if (_filterText != _panelFilterText)
             {

@@ -69,7 +69,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
       ScriptEditorCtrl m_ScriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
 
 //      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, _options);
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptInstance._guiPanelProperties_Width));
+      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelPropertiesWidth));
       {
          // Toolbar
          //

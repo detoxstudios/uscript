@@ -143,7 +143,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 //      _bListData_count = 0;
 
 
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptInstance._guiPanelSequence_Width));
+      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelScriptsWidth));
       {
          // Toolbar
          //
@@ -154,7 +154,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             GUILayout.FlexibleSpace();
 
             GUI.SetNextControlName ("ScriptFilterSearch" );
-            string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.Width(100));
+            string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
 //            GUI.SetNextControlName ("" );
             if (_filterText != _panelFilterText)
             {

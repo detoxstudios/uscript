@@ -57,16 +57,38 @@ public static class uScriptGUI
    }
 
    private const int _panelDividerThickness = 4;
-
    public static int panelDividerThickness { get { return _panelDividerThickness; } }
 
-   public static int _panelLeftWidth = 232;
-
+   private static int _panelLeftWidth = 200;
    public static int panelLeftWidth
    {
       get { return _panelLeftWidth; }
       set { _panelLeftWidth = value; }
    }
+
+   private static int _panelPropertiesHeight = 250;
+   public static int panelPropertiesHeight
+   {
+      get { return _panelPropertiesHeight; }
+      set { _panelPropertiesHeight = value; }
+   }
+
+   private static int _panelPropertiesWidth = 250;
+   public static int panelPropertiesWidth
+   {
+      get { return _panelPropertiesWidth; }
+      set { _panelPropertiesWidth = value; }
+   }
+
+   private static int _panelScriptsWidth = 250;
+   public static int panelScriptsWidth
+   {
+      get { return _panelScriptsWidth; }
+      set { _panelScriptsWidth = value; }
+   }
+
+
+
 
 
 
@@ -1968,3 +1990,33 @@ public static class uScriptGUI
    #endregion
 
 }
+
+
+
+/*
+public static int GetEnumIndexByName(Enum e, string name)
+{
+   // returns the first occurance of 'name' within the enum, if found;
+   // otherwise, -1
+   return Array.IndexOf(Enum.GetNames(e.GetType()), name);
+}
+
+public static int GetEnumIndexByValue(Enum e, int val)
+{
+   // returns the first occurance of the value within the enum, if found;
+   // otherwise, -1
+   return Array.IndexOf((int[])Enum.GetValues(e.GetType()), val);
+}
+
+public static string GetEnumNameByIndex(Enum e, int index)
+{
+   // returns the name of the enum element, or throws an exception
+   return Enum.GetNames(e.GetType())[index];
+}
+
+public static int GetEnumValueByIndex(Enum e, int index)
+{
+   // returns the name of the enum element, or throws an exception
+   return ((int[])Enum.GetValues(e.GetType()))[index];
+}
+*/

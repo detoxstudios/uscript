@@ -184,15 +184,6 @@ public class uScript : EditorWindow
    Rect m_NodeToolbarRect;
    public Rect NodeToolbarRect { get { return m_NodeToolbarRect; } }
 
-
-   /* uScript GUI Window Panel Layout Variables */
-
-
-   int _guiPanelProperties_Height = 250;
-   public int _guiPanelProperties_Width = 250;
-   public int _guiPanelSequence_Width = 250;
-
-
    public Rect _canvasRect;
    Vector2 _guiPanelPalette_ScrollPos;
 
@@ -1233,8 +1224,8 @@ public class uScript : EditorWindow
             position = minSize;
          }
 
-         _guiPanelProperties_Width = (int)(uScript.Instance.position.width / 3);
-         _guiPanelSequence_Width = (int)(uScript.Instance.position.width / 3);
+         uScriptGUI.panelPropertiesWidth = (int)(uScript.Instance.position.width / 3);
+         uScriptGUI.panelScriptsWidth = (int)(uScript.Instance.position.width / 3);
 
          if (Preferences.ShowAtStartup)
          {
@@ -2174,7 +2165,7 @@ public class uScript : EditorWindow
 
    void DrawGUIBottomAreas()
    {
-      EditorGUILayout.BeginHorizontal(GUILayout.Height(_guiPanelProperties_Height));
+      EditorGUILayout.BeginHorizontal(GUILayout.Height(uScriptGUI.panelPropertiesHeight));
       {
          uScriptGUIPanelProperty.Instance.Draw();
 
@@ -2272,7 +2263,7 @@ public class uScript : EditorWindow
                // This is where the Graph Contents toolbar buttons will go
 
                GUI.SetNextControlName("FilterSearch");
-               string _filterText = uScriptGUI.ToolbarSearchField(_graphListFilterText, GUILayout.Width(100));
+               string _filterText = uScriptGUI.ToolbarSearchField(_graphListFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
                GUI.SetNextControlName("");
                if (_filterText != _graphListFilterText)
                {
@@ -3241,7 +3232,7 @@ public class uScript : EditorWindow
       {
          if (m_MouseDownRegion == MouseRegion.HandleCanvas && deltaY != 0)
          {
-            _guiPanelProperties_Height -= deltaY;
+            uScriptGUI.panelPropertiesHeight -= deltaY;
             RequestRepaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandlePalette && deltaX != 0)
@@ -3251,12 +3242,12 @@ public class uScript : EditorWindow
          }
          else if (m_MouseDownRegion == MouseRegion.HandleProperties && deltaX != 0)
          {
-            _guiPanelProperties_Width += deltaX;
+            uScriptGUI.panelPropertiesWidth += deltaX;
             RequestRepaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandleReference && deltaX != 0)
          {
-            _guiPanelSequence_Width -= deltaX;
+            uScriptGUI.panelScriptsWidth -= deltaX;
             RequestRepaint();
          }
       }
