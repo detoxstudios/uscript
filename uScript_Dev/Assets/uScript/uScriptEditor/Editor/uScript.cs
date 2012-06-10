@@ -5125,7 +5125,7 @@ public class uScript : EditorWindow
          {
             case "Comment":            return "The comment text to show above this node in uScript's canvas.";
             case "Output Comment":     return "If True, the comment text will be sent to Unity's console window when the node fires.";
-            case "Instance":           return "The GameObject instance associated with this node.";
+            case "Instance":           return "The GameObject instance associated with this node. This tells uScript which specific GameObject to use that contains this specified event, property, script, trigger, collider, etc.";
             default:                   return p.FriendlyName;
          }
       }

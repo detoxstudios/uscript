@@ -12,14 +12,14 @@ using System.Collections;
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Trigger_Events")]
 
 [NodePropertiesPath("Properties/Triggers")]
-[FriendlyName("Trigger Events", "Fires an event signal when a GameObject enters, exits, or stays in a trigger.")]
+[FriendlyName("Trigger Events", "Fires an event signal when a GameObject enters, exits, or stays in a trigger. The Instance GameObject must have a collider component on it set to be a trigger. Also, only other Gameobjects with a rigidbody component will trigger this event (the instigators).")]
 public class uScript_Triggers : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, TriggerEventArgs args);
 
    public class TriggerEventArgs : System.EventArgs
    {
-      [FriendlyName("Instigator", "The GameObject that interacted with the trigger (Instance).")]
+      [FriendlyName("Instigator", "The GameObject that interacted with this GameObject's (the Instance) collider component. ")]
       [SocketState(false, false)]
       public GameObject GameObject { get { return m_GameObject; } }
       private GameObject m_GameObject;
