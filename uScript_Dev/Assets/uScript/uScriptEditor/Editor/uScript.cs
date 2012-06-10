@@ -56,7 +56,7 @@ public class uScript : EditorWindow
 #endif
 
    // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   static public string BuildNumber { get { return "0.9.1894"; } }
+   static public string BuildNumber { get { return "0.9.1898"; } }
 
    static public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    //public string LastUnityBuild { get { return "3.3"; } }
@@ -527,10 +527,23 @@ public class uScript : EditorWindow
       System.IO.Directory.CreateDirectory(Preferences.GeneratedScripts);
       System.IO.Directory.CreateDirectory(Preferences.NestedScripts);
 
-      //copy gizmos into root
+      // Move the uScriptUserTypes.cs.template file into the uScriptProjectFiles folder if one doesn't already exist.
+      string userTypesFileTemplate = uScriptConfig.ConstantPaths.Templates + "/uScriptUserTypes.cs.template";
+      string userTypesFile = uScriptConfig.ConstantPaths.SettingsPath + "/uScriptUserTypes.cs";
+      if (File.Exists(userTypesFileTemplate) && !File.Exists(userTypesFile))
+      {
+         System.IO.File.Copy(userTypesFileTemplate, userTypesFile, false);
+         AssetDatabase.Refresh();
+      }
+
+      // Create the Gizmos folder if it doesn't already exist in the project.
       string gizmos = UnityEngine.Application.dataPath + "/Gizmos";
-      System.IO.Directory.CreateDirectory( gizmos );
-      
+      if (!Directory.Exists(gizmos))
+      {
+         System.IO.Directory.CreateDirectory(gizmos);
+      }
+
+      //copy gizmos into root
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( uScriptConfig.ConstantPaths.Gizmos );
       
       foreach ( System.IO.FileInfo file in directory.GetFiles( ) )

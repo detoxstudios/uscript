@@ -746,7 +746,7 @@ public partial class uScriptConfig
    }
 
    //do not override in the preferences path, 
-   //these are accessed outside the scope of uScript.cs and out preferences file
+   //these are accessed outside the scope of uScript.cs and our preferences file
    public struct ConstantPaths
    {
       public static string SettingsPath      { get {return UnityEngine.Application.dataPath + "/uScriptProjectFiles"; } } 
@@ -756,8 +756,9 @@ public partial class uScriptConfig
       public static string uScriptNodes      { get {return RuntimeFolder   + "/Nodes";} }
       public static string GuiPath           { get {return uScriptEditor   + "/Editor/_GUI"; } }
       public static string SkinPath          { get {return GuiPath         + "/uScriptDefault"; } }
-      public static string Gizmos            { get {return uScriptEditor    + "/Editor/_Gizmos"; } }
+      public static string Gizmos            { get {return uScriptEditor   + "/Editor/_Gizmos"; } }
       public static string Screenshots       { get {return UnityEngine.Application.dataPath + "/../Screenshots"; } }
+      public static string Templates         { get {return uScriptEditor   + "/Editor/_Templates"; } }
 
       public static string RelativePath(string absolutePath)
       {
