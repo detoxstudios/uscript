@@ -1077,16 +1077,20 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( "}" );
                   AddCSharpLine( "" );
                }
-
+     
                if ( true == entityProperty.Parameter.Input )
                {
                   //as stated above, create a function which sets the entity's property to the
                   //corresponding CSharp variable's value
                   AddCSharpLine( "void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "( )" );
                   AddCSharpLine( "{" );
-                  ++m_TabStack;
-                     AddCSharpLine( entityProperty.ComponentType + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
-                  --m_TabStack;
+                  // don't allow property setter for constants
+                  if ( entityProperty.ComponentType != "UnityEngine.Mathf" )
+                  {
+                     ++m_TabStack;
+                        AddCSharpLine( entityProperty.ComponentType + "." + entityProperty.Parameter.Name + " = " + CSharpName(entityProperty, entityProperty.Parameter.Name) + ";" );               
+                     --m_TabStack;
+                  }
                   AddCSharpLine( "}" );               
                   AddCSharpLine( "" );
                }
