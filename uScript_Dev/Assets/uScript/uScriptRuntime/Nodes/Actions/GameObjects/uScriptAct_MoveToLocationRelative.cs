@@ -42,7 +42,7 @@ public class uScriptAct_MoveToLocationRelative : uScriptLogic
       float totalTime
       )
    {
-      if (null == m_Source) return;
+      if (null == source) return;
 
       m_Cancelled   = false;
       m_TotalTime   = totalTime;
