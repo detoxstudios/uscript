@@ -1180,6 +1180,15 @@ namespace Detox.ScriptEditor
 
             return "(double) " + stringValue;
          }
+		 else if ("System.Int16" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "(short) 0";
+            }
+
+            return "(int) " + stringValue;
+         }
          else if ( "System.Int32" == type )
          {
             if ( "" == stringValue )
@@ -1188,6 +1197,69 @@ namespace Detox.ScriptEditor
             }
 
             return "(int) " + stringValue;
+         }
+		 else if ("System.Int64" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "(long) 0";
+            }
+
+            return "(long) " + stringValue;
+         }
+		 else if ("System.UInt16" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "(ushort) 0";
+            }
+
+            return "(ushort) " + stringValue;
+         }
+		 else if ("System.UInt32" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "(uint) 0";
+            }
+
+            return "(uint) " + stringValue;
+         }
+		 else if ("System.UInt64" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "(ulong) 0";
+            }
+
+            return "(ulong) " + stringValue;
+         }
+		 else if ( "System.Byte" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "(byte) 0";
+            }
+
+            return "(byte) " + stringValue;
+         }
+		 else if ( "System.SByte" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "(sbyte) 0";
+            }
+
+            return "(sbyte) " + stringValue;
+         }
+		 else if ( "System.Decimal" == type )
+         {
+            if ( "" == stringValue )
+            {
+               return "(decimal) 0";
+            }
+
+            return "(decimal) " + stringValue;
          }
          else if ( "UnityEngine.Color" == type )
          {
