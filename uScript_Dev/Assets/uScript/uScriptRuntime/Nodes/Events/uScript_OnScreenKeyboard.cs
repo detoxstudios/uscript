@@ -36,7 +36,7 @@ public class uScript_OnScreenKeyboard : uScriptEvent
    void Update()
    {
 
-#if UNITY_3_5_0
+#if UNITY_3_5
 
    #if UNITY_IPHONE || UNITY_ANROID
       if (!m_LastKeyboardOut)

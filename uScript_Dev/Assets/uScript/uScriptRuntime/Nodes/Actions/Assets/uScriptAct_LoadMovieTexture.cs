@@ -1,6 +1,12 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
 
+#if (UNITY_ANDROID || UNITY_IPHONE)
+
+   // This node is not supported on iOS or Android at this time. This compiler directive is needed for the project to compile for these devices without error.
+
+#else
+
 using UnityEngine;
 using System.Collections;
 
@@ -62,4 +68,6 @@ public class uScriptAct_LoadMovieTexture : uScriptLogic
       return null;
    }
 #endif
+	
 }
+#endif

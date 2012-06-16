@@ -1,6 +1,12 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
 
+#if (UNITY_ANDROID || UNITY_IPHONE)
+
+   // This node is not supported on iOS or Android at this time. This compiler directive is needed for the project to compile for these devices without error.
+
+#else
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -150,3 +156,5 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
 #endif
 
 }
+
+#endif
