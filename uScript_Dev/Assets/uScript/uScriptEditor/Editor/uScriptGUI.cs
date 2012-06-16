@@ -73,14 +73,14 @@ public static class uScriptGUI
       set { _panelPropertiesHeight = value; }
    }
 
-   private static int _panelPropertiesWidth = 250;
+   private static int _panelPropertiesWidth = 500;
    public static int panelPropertiesWidth
    {
       get { return _panelPropertiesWidth; }
       set { _panelPropertiesWidth = value; }
    }
 
-   private static int _panelScriptsWidth = 250;
+   private static int _panelScriptsWidth = 400;
    public static int panelScriptsWidth
    {
       get { return _panelScriptsWidth; }
