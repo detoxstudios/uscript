@@ -3865,6 +3865,11 @@ namespace Detox.ScriptEditor
 
       public void AddNode(EntityNode node)
       {
+         AddNode( node, true );
+      }
+
+      public void AddNode(EntityNode node, bool verifyExternal)
+      {
          bool allow = true;
 
          if ( node is LinkNode )
@@ -3998,7 +4003,7 @@ namespace Detox.ScriptEditor
 
             m_Nodes.Add(node);
            
-            if ( node is ExternalConnection )
+            if ( node is ExternalConnection && true == verifyExternal )
             {
                VerifyAllLinks( );
             }

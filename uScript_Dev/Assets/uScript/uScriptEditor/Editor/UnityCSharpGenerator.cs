@@ -267,7 +267,7 @@ namespace Detox.ScriptEditor
                   LinkNode clone = source;
                   clone.Source.Guid = external.Guid;
 
-                  m_Script.AddNode( clone );
+                  m_Script.AddNode( clone, false );
                }
  
                foreach ( LinkNode dest in dests )
@@ -275,10 +275,12 @@ namespace Detox.ScriptEditor
                   LinkNode clone = dest;
                   clone.Destination.Guid = external.Guid;
 
-                  m_Script.AddNode( clone );
+                  m_Script.AddNode( clone, false );
                }
             }
          }
+
+         m_Script.VerifyAllLinks( );
       }
 
       private void CreateGlobalVariables( )
