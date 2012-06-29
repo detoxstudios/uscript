@@ -95,7 +95,7 @@ namespace Detox.ScriptEditor
          m_ExternalInputs     = new List<Plug>( );
          m_ExternalOutputs    = new List<Plug>( );
          m_ExternalEvents     = new List<Plug>( );
-         m_Drivens            = new List<string>( );
+         //m_Drivens            = new List<string>( );
          m_RequiredMethods    = new List<string>( );
 
          if ( null != script )
@@ -109,12 +109,12 @@ namespace Detox.ScriptEditor
                DefineExternalInput( external );
             }
 
-            Plug []properties = FindExternalOutputProperties( );
+            //Plug []properties = FindExternalOutputProperties( );
 
-            for ( int i = 0; i < properties.Length; i++ )
-            {
-               m_ExternalOutputs.Add( properties[i] );
-            }
+            //for ( int i = 0; i < properties.Length; i++ )
+            //{
+            //   m_ExternalOutputs.Add( properties[i] );
+            //}
             
             Plug []events = FindExternalEvents( );
 
@@ -126,7 +126,7 @@ namespace Detox.ScriptEditor
                }
             }
 
-            DefineExternalDrivens( );
+            //DefineExternalDrivens( );
             DeclareEventArgs( );
 
             m_RequiredMethods.Add("Start");
@@ -738,7 +738,7 @@ namespace Detox.ScriptEditor
          m_ExternalInputs     = new List<Plug>( );
          m_ExternalOutputs    = new List<Plug>( );
          m_ExternalEvents     = new List<Plug>( );
-         m_Drivens            = new List<string>( );
+        // m_Drivens            = new List<string>( );
          m_RequiredMethods    = new List<string>( );
 
          if ( null != script )
@@ -1727,25 +1727,25 @@ namespace Detox.ScriptEditor
             AddCSharpLine( "int relayCallCount = 0;" );
          }
 
-         AddCSharpLine( "//external output properties" );
-         Plug []properties = FindExternalOutputProperties( );
-         string []outputs  = FindExternalOutputs( );
+         //AddCSharpLine( "//external output properties" );
+         //Plug []properties = FindExternalOutputProperties( );
+         //string []outputs  = FindExternalOutputs( );
 
-         for ( int i = 0; i < properties.Length; i++ )
-         {
-            AddCSharpLine( "bool " + outputs[i] + " = false;" );
+         //for ( int i = 0; i < properties.Length; i++ )
+         //{
+         //   AddCSharpLine( "bool " + outputs[i] + " = false;" );
 
-            //Immediately set to false after it's retrieved.  This forces the internal nodes to set it to true on a next signal
-            //if they want to continue feeding output.  Specifically this fixes a bug with [Driven] where an externalized socket
-            //might be hooked up to a true output and, later before it in the chain, someone outputs false.  It still
-            //would be stuck outputting true to the parent graph everytime [Driven] is iterated            
-            //It's ok if the parent hooks up to this multiple times because it creates a temp variable with the
-            //returned result and uses that, it doesn't requery us for each connection
-            AddCSharpLine( "[FriendlyName(\"" + EscapeString(properties[i].FriendlyName) + "\")]" );
-            AddCSharpLine( "public bool " + properties[i].Name + " { get { bool b = " + outputs[i] + "; " + outputs[i] + " = false; return b;} }" );
+         //   //Immediately set to false after it's retrieved.  This forces the internal nodes to set it to true on a next signal
+         //   //if they want to continue feeding output.  Specifically this fixes a bug with [Driven] where an externalized socket
+         //   //might be hooked up to a true output and, later before it in the chain, someone outputs false.  It still
+         //   //would be stuck outputting true to the parent graph everytime [Driven] is iterated            
+         //   //It's ok if the parent hooks up to this multiple times because it creates a temp variable with the
+         //   //returned result and uses that, it doesn't requery us for each connection
+         //   AddCSharpLine( "[FriendlyName(\"" + EscapeString(properties[i].FriendlyName) + "\")]" );
+         //   AddCSharpLine( "public bool " + properties[i].Name + " { get { bool b = " + outputs[i] + "; " + outputs[i] + " = false; return b;} }" );
 
-            m_ExternalOutputs.Add( properties[i] );
-         }
+         //   m_ExternalOutputs.Add( properties[i] );
+         //}
          
 
          AddCSharpLine( "" );
@@ -1837,20 +1837,6 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( FormatType(parameter.Type) + " " + CSharpName(logic, parameter.Name) + ";" );
                }
             }
-
-            //I don't think these should be decalred because they should
-            //be the same as the output parameters declared above
-            //foreach ( Parameter parameter in logic.EventParameters )
-            //{
-            //   if ( true == parameter.Input )
-            //   {
-            //      AddCSharpLine( FormatType(parameter.Type) + " " + CSharpName(logic, parameter.Name) + " = " + FormatValue(parameter.Default, parameter.Type) + ";" );
-            //   }
-            //   else
-            //   {
-            //      AddCSharpLine( FormatType(parameter.Type) + " " + CSharpName(logic, parameter.Name) + ";" );
-            //   }
-            //}
 
             foreach ( Plug output in logic.Outputs )
             {
@@ -2714,7 +2700,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         DefineExternalDrivens( );
+         //DefineExternalDrivens( );
       }
 
       //create the function which the event listener will call
@@ -2757,247 +2743,270 @@ namespace Detox.ScriptEditor
          AddCSharpLine( "" );
       }
 
-      private string[] FindExternalOutputs( )
-      {
-         List<string> externalLinks = new List<string>( );
+      //private string[] FindExternalOutputs( )
+      //{
+      //   List<string> externalLinks = new List<string>( );
 
-         LinkNode [] links;
+      //   LinkNode [] links;
 
-         foreach ( ExternalConnection external in m_Script.Externals )
-         {
-            if (true == IsEventDriven(external)) continue;
+      //   foreach ( ExternalConnection external in m_Script.Externals )
+      //   {
+      //      if (true == IsEventDriven(external)) continue;
 
-            links = FindLinksByDestination( external.Guid, external.Connection );
+      //      links = FindLinksByDestination( external.Guid, external.Connection );
 
-            foreach ( LinkNode link in links )
-            {
-               EntityNode node = m_Script.GetNode( link.Source.Guid );
+      //      foreach ( LinkNode link in links )
+      //      {
+      //         EntityNode node = m_Script.GetNode( link.Source.Guid );
             
-               if ( node is EntityMethod ) 
-               {
-                  EntityMethod method = (EntityMethod) node;
+      //         if ( node is EntityMethod ) 
+      //         {
+      //            EntityMethod method = (EntityMethod) node;
 
-                  if ( link.Source.Anchor == method.Output.Name )
-                  {
-                     externalLinks.Add( CSharpExternalOutputDeclaration(external.Name.Default) );
-                  }
-               }
-               else if ( node is LogicNode ) 
-               {
-                  LogicNode logic = (LogicNode) node;
+      //            if ( link.Source.Anchor == method.Output.Name )
+      //            {
+      //               externalLinks.Add( CSharpExternalOutputDeclaration(external.Name.Default) );
+      //            }
+      //         }
+      //         else if ( node is LogicNode ) 
+      //         {
+      //            LogicNode logic = (LogicNode) node;
 
-                  foreach ( Plug output in logic.Outputs )
-                  {
-                     if ( link.Source.Anchor == output.Name )
-                     {
-                        externalLinks.Add( CSharpExternalOutputDeclaration(external.Name.Default) );
-                     }
-                  }
-               }
+      //            foreach ( Plug output in logic.Outputs )
+      //            {
+      //               if ( link.Source.Anchor == output.Name )
+      //               {
+      //                  externalLinks.Add( CSharpExternalOutputDeclaration(external.Name.Default) );
+      //               }
+      //            }
+      //         }
             
-               //only needs to be defined once, even if multiple nodes are connected to it
-               if ( externalLinks.Count > 0 )
-               {
-                  break;
-               }
-            }
-         }
+      //         //only needs to be defined once, even if multiple nodes are connected to it
+      //         if ( externalLinks.Count > 0 )
+      //         {
+      //            break;
+      //         }
+      //      }
+      //   }
 
-         return externalLinks.ToArray( );
-      }
+      //   return externalLinks.ToArray( );
+      //}
 
-      private Plug[] FindExternalOutputProperties( )
-      {
-         List<Plug> externalLinks = new List<Plug>( );
+      //private Plug[] FindExternalOutputProperties( )
+      //{
+      //   List<Plug> externalLinks = new List<Plug>( );
 
-         LinkNode [] links;
+      //   LinkNode [] links;
 
-         foreach ( ExternalConnection external in m_Script.Externals )
-         {
-            if (true == IsEventDriven(external)) continue;
+      //   foreach ( ExternalConnection external in m_Script.Externals )
+      //   {
+      //      if (true == IsEventDriven(external)) continue;
 
-            links = FindLinksByDestination( external.Guid, external.Connection );
+      //      links = FindLinksByDestination( external.Guid, external.Connection );
 
-            foreach ( LinkNode link in links )
-            {
-               EntityNode node = m_Script.GetNode( link.Source.Guid );
+      //      foreach ( LinkNode link in links )
+      //      {
+      //         EntityNode node = m_Script.GetNode( link.Source.Guid );
             
-               if ( node is EntityMethod ) 
-               {
-                  EntityMethod method = (EntityMethod) node;
+      //         if ( node is EntityMethod ) 
+      //         {
+      //            EntityMethod method = (EntityMethod) node;
 
-                  if ( link.Source.Anchor == method.Output.Name )
-                  {
-                     externalLinks.Add( CSharpExternalOutputPropertyDeclaration(external.Name.Default) );
-                  }
-               }
-               else if ( node is LogicNode ) 
-               {
-                  LogicNode logic = (LogicNode) node;
+      //            if ( link.Source.Anchor == method.Output.Name )
+      //            {
+      //               externalLinks.Add( CSharpExternalOutputPropertyDeclaration(external.Name.Default) );
+      //            }
+      //         }
+      //         else if ( node is LogicNode ) 
+      //         {
+      //            LogicNode logic = (LogicNode) node;
 
-                  foreach ( Plug output in logic.Outputs )
-                  {
-                     if ( link.Source.Anchor == output.Name )
-                     {
-                        externalLinks.Add( CSharpExternalOutputPropertyDeclaration(external.Name.Default) );
-                     }
-                  }
-               }
+      //            foreach ( Plug output in logic.Outputs )
+      //            {
+      //               if ( link.Source.Anchor == output.Name )
+      //               {
+      //                  externalLinks.Add( CSharpExternalOutputPropertyDeclaration(external.Name.Default) );
+      //               }
+      //            }
+      //         }
 
-               //only needs to be defined once, even if multiple nodes are connected to it
-               if ( externalLinks.Count > 0 )
-               {
-                  break;
-               }
-            }
-         }
+      //         //only needs to be defined once, even if multiple nodes are connected to it
+      //         if ( externalLinks.Count > 0 )
+      //         {
+      //            break;
+      //         }
+      //      }
+      //   }
 
-         return externalLinks.ToArray( );
-      }
+      //   return externalLinks.ToArray( );
+      //}
       
       private Plug[] FindExternalEvents( )
       {
          List<Plug> externalLinks = new List<Plug>( );
 
-         //LinkNode [] links;
-
          foreach ( ExternalConnection external in m_Script.Externals )
          {
-            if ( true == IsEventDriven(external) )
+            LinkNode [] links = FindLinksByDestination( external.Guid, external.Connection );
+            if (0 == links.Length) continue;
+
+            bool isEventDriven = IsEventDriven(external);
+
+            bool validEnd = false;
+
+            EntityNode sourceNode = null;
+
+            foreach ( LinkNode link in links )
+            {
+               sourceNode = m_Script.GetNode( link.Source.Guid );
+            
+               if ( sourceNode is EntityEvent ) 
+               {
+                  EntityEvent entityEvent = (EntityEvent) sourceNode;
+
+                  foreach ( Plug output in entityEvent.Outputs )
+                  {
+                     if ( link.Source.Anchor == output.Name )
+                     {
+                        validEnd = true;
+                        break;
+                     }
+                  }
+               }
+               else if ( sourceNode is EntityMethod ) 
+               {
+                  EntityMethod entityMethod = (EntityMethod) sourceNode;
+
+                  if ( link.Source.Anchor == entityMethod.Output.Name )
+                  {
+                     validEnd = true;
+                     break;
+                  }
+               }
+               else if ( sourceNode is LogicNode ) 
+               {
+                  LogicNode logic = (LogicNode) sourceNode;
+
+                  foreach ( Plug eventName in logic.Events )
+                  {
+                     if ( link.Source.Anchor == eventName.Name )
+                     {
+                        validEnd = true;
+                        break;
+                     }
+                  }
+
+                  foreach ( Plug output in logic.Outputs )
+                  {
+                     if ( link.Source.Anchor == output.Name )
+                     {
+                        validEnd = true;
+                        break;
+                     }
+                  }
+               }
+            }
+
+            if (true == validEnd)
             {
                externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default) );
             }
 
-            //links = FindLinksByDestination( external.Guid, external.Connection );
-
-            //foreach ( LinkNode link in links )
+            //if ( true == IsEventDriven(external) )
             //{
-            //   EntityNode node = m_Script.GetNode( link.Source.Guid );
-            
-            //   if ( node is EntityEvent ) 
-            //   {
-            //      EntityEvent entityEvent = (EntityEvent) node;
-
-            //      foreach ( Plug output in entityEvent.Outputs )
-            //      {
-            //         if ( link.Source.Anchor == output.Name )
-            //         {
-            //            externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default) );
-            //            break;
-            //         }
-            //      }
-            //   }
-            //   else if ( node is LogicNode ) 
-            //   {
-            //      LogicNode logic = (LogicNode) node;
-
-            //      foreach ( Plug eventName in logic.Events )
-            //      {
-            //         if ( link.Source.Anchor == eventName.Name )
-            //         {
-            //            externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default) );
-            //            break;
-            //         }
-            //      }
-            //   }
-
-            //   //only needs to be defined once, even if multiple nodes are connected to it
-            //   if ( externalLinks.Count > 0 )
-            //   {
-            //      break;
-            //   }
+            //   externalLinks.Add( CSharpExternalEventDeclaration(external.Name.Default) );
             //}
          }
 
          return externalLinks.ToArray( );
       }
       
-      //create the external function outsiders can call
-      private void DefineExternalDrivens( )
-      {
-         //all output args
-         string args = "";
+      ////create the external function outsiders can call
+      //private void DefineExternalDrivens( )
+      //{
+      //   //all output args
+      //   string args = "";
          
-         foreach ( ExternalConnection external in m_Script.Externals )
-         {
-            LinkNode []links = FindLinksByDestination( external.Guid, external.Connection );
+      //   foreach ( ExternalConnection external in m_Script.Externals )
+      //   {
+      //      LinkNode []links = FindLinksByDestination( external.Guid, external.Connection );
 
-            foreach ( LinkNode link in links )
-            {
-               EntityNode node = m_Script.GetNode( link.Source.Guid );
+      //      foreach ( LinkNode link in links )
+      //      {
+      //         EntityNode node = m_Script.GetNode( link.Source.Guid );
 
-               foreach ( Parameter p in node.Parameters )
-               {
-                  //we don't allow refs or inputs on drivens
-                  //because uScript standard doesn't allow changing of input variables
-                  //without a pulse in
-                  if ( p.Name == link.Source.Anchor )
-                  {
-                     args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ", ";
-                  }
-               }
+      //         foreach ( Parameter p in node.Parameters )
+      //         {
+      //            //we don't allow refs or inputs on drivens
+      //            //because uScript standard doesn't allow changing of input variables
+      //            //without a pulse in
+      //            if ( p.Name == link.Source.Anchor )
+      //            {
+      //               args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ", ";
+      //            }
+      //         }
 
-               //only needs to be defined once, even if multiple nodes are connected to it
-               break;
-            }
-         }
+      //         //only needs to be defined once, even if multiple nodes are connected to it
+      //         break;
+      //      }
+      //   }
 
-         //remove trailing comma from last input arg
-         if ( args != "" ) args = args.Substring( 0, args.Length - 2 );
+      //   //remove trailing comma from last input arg
+      //   if ( args != "" ) args = args.Substring( 0, args.Length - 2 );
  
-         foreach ( LogicNode logic in m_Script.Logics )
-         {
-            foreach ( string driven in logic.Drivens )
-            {
-               DefineExternalDriven( logic, driven, args );
-            }
-         }
-      }
+      //   foreach ( LogicNode logic in m_Script.Logics )
+      //   {
+      //      foreach ( string driven in logic.Drivens )
+      //      {
+      //         DefineExternalDriven( logic, driven, args );
+      //      }
+      //   }
+      //}
 
-      void DefineExternalDriven( LogicNode node, string driven, string args )
-      {
-         m_Drivens.Add( CSharpExternalDriven(node, driven) );
+      //void DefineExternalDriven( LogicNode node, string driven, string args )
+      //{
+      //   m_Drivens.Add( CSharpExternalDriven(node, driven) );
 
-         AddCSharpLine( "[Driven]" );
-         AddCSharpLine( "public bool " + CSharpExternalDriven(node, driven) + "( " + args + " )" );
-         AddCSharpLine( "{" );
-         ++m_TabStack;
+      //   AddCSharpLine( "[Driven]" );
+      //   AddCSharpLine( "public bool " + CSharpExternalDriven(node, driven) + "( " + args + " )" );
+      //   AddCSharpLine( "{" );
+      //   ++m_TabStack;
 
-            //transfer our member variables modified internally to the external call
-            foreach ( ExternalConnection external in m_Script.Externals )
-            {
-               LinkNode []outputs = FindLinksByDestination( external.Guid, external.Connection );
+      //      //transfer our member variables modified internally to the external call
+      //      foreach ( ExternalConnection external in m_Script.Externals )
+      //      {
+      //         LinkNode []outputs = FindLinksByDestination( external.Guid, external.Connection );
 
-               foreach ( LinkNode link in outputs )
-               {
-                  EntityNode parameterNode = m_Script.GetNode( link.Source.Guid );
+      //         foreach ( LinkNode link in outputs )
+      //         {
+      //            EntityNode parameterNode = m_Script.GetNode( link.Source.Guid );
 
-                  foreach ( Parameter p in parameterNode.Parameters )
-                  {
-                     if ( p.Name == link.Source.Anchor )
-                     {
-                        //external connections don't have a parameter
-                        //because they take on whatever parameter they link to
-                        Parameter parameter = new Parameter( );
-                        parameter.Name = external.Connection;
-                        parameter.Type = p.Type;
-                        SyncSlaveConnections(external, new Parameter[]{ parameter } );
+      //            foreach ( Parameter p in parameterNode.Parameters )
+      //            {
+      //               if ( p.Name == link.Source.Anchor )
+      //               {
+      //                  //external connections don't have a parameter
+      //                  //because they take on whatever parameter they link to
+      //                  Parameter parameter = new Parameter( );
+      //                  parameter.Name = external.Connection;
+      //                  parameter.Type = p.Type;
+      //                  SyncSlaveConnections(external, new Parameter[]{ parameter } );
 
-                        AddCSharpLine( CSharpExternalParameterDeclaration(external.Name.Default).Name + " = " + CSharpName(external, p.Name) + ";" );
-                     }
-                  }
+      //                  AddCSharpLine( CSharpExternalParameterDeclaration(external.Name.Default).Name + " = " + CSharpName(external, p.Name) + ";" );
+      //               }
+      //            }
 
-                  //only one link allowed for each external parameter output
-                  break;
-               }
-            }
+      //            //only one link allowed for each external parameter output
+      //            break;
+      //         }
+      //      }
 
-            AddCSharpLine( "return " + CSharpName(node, driven) + ";" );
+      //      AddCSharpLine( "return " + CSharpName(node, driven) + ";" );
 
-         --m_TabStack;
-         AddCSharpLine( "}" );
-         AddCSharpLine( "" );
-      }
+      //   --m_TabStack;
+      //   AddCSharpLine( "}" );
+      //   AddCSharpLine( "" );
+      //}
       
       //create the external function outsiders can call
       private void DefineExternalInput( ExternalConnection externalInput )
@@ -3236,13 +3245,13 @@ namespace Detox.ScriptEditor
 
          PrintDebug( externalInput );
 
-         //set all output links to false
-         string []outputLinks = FindExternalOutputs( );
+         ////set all output links to false
+         //string []outputLinks = FindExternalOutputs( );
 
-         foreach ( string s in outputLinks )
-         {
-            AddCSharpLine( s + " = false;" );
-         }
+         //foreach ( string s in outputLinks )
+         //{
+         //   AddCSharpLine( s + " = false;" );
+         //}
 
          AddCSharpLine( "" );
 
@@ -3262,22 +3271,6 @@ namespace Detox.ScriptEditor
                   if ( p.Name == link.Destination.Anchor )
                   {
                      AddCSharpLine( CSharpName(external, external.Connection) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
-                     
-                     //Parameter lowestParameter = GetLowestCommonExternalParameter( external );
-                     //string type = lowestParameter.Type;
-
-                     //if ( false == type.Contains("[]") && true == p.Type.Contains("[]") )
-                     //{
-                     //   AddCSharpLine( "if ( " + CSharpName(external, p.Name) + ".Length == 0 ) " + CSharpName(external, p.Name) + " = new " + type + "[1];" );
-                     //   AddCSharpLine( CSharpName(external, p.Name) + "[ 0 ] = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
-                     //   //AddCSharpLine( "if ( " + CSharpName(parameterNode, p.Name) + ".Length == 0 ) " + CSharpName(parameterNode, p.Name) + " = new " + type + "[1];" );
-                     //   //AddCSharpLine( CSharpName(parameterNode, p.Name) + "[ 0 ] = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
-                     //}
-                     //else
-                     //{
-                     //   AddCSharpLine( CSharpName(external, external.Connection) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
-                     //   //AddCSharpLine( CSharpName(parameterNode, p.Name) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";" );
-                     //}
                      SyncReferencedGameObject( parameterNode, p );
                   }
                }
@@ -3501,11 +3494,11 @@ namespace Detox.ScriptEditor
 
          if (true == validEnd)
          {
-            if ( false == isEventDriven )
-            {
-               AddCSharpLine( CSharpExternalOutputDeclaration(external.Name.Default) + " = true;" );
-            }
-            else
+            //if ( false == isEventDriven )
+            //{
+            //   AddCSharpLine( CSharpExternalOutputDeclaration(external.Name.Default) + " = true;" );
+            //}
+            //else
             {
                AddCSharpLine( "if ( " + CSharpExternalEventDeclaration(external.Name.Default).Name + " != null )" );
                AddCSharpLine( "{" );
