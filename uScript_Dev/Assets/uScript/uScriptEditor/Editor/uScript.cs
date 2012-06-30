@@ -44,19 +44,23 @@ public class uScript : EditorWindow
    // ###############################################################
    // # Version Name and Version Data
    // #
-#if FREE_PLE_BUILD
-   static public string ProductName { get { return "Personal Learning Edition"; } }
-   static public string ProductType { get { return "uScript_PLE"; } }
-#elif UNITY_STORE_BUILD
-   static public string ProductName { get { return "Retail Beta 20"; } }
-   static public string ProductType { get { return "uScript_AssetStore"; } }
-#else
-   static public string ProductName { get { return "Retail Beta 20"; } }
-   static public string ProductType { get { return "uScript_Retail"; } }
-#endif
 
    // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   static public string BuildNumber { get { return "0.9.1910"; } }
+   static public string BuildNumber { get { return "0.9.1921"; } }
+
+   static public string BuildName { get { return "Internal Beta 21 RC1"; } }
+   static public string BuildNamePLE { get { return "Personal Learning Edition"; } }
+
+#if FREE_PLE_BUILD
+   static public string ProductName { get { return BuildNamePLE; } }
+   static public string ProductType { get { return "uScript_PLE"; } }
+#elif UNITY_STORE_BUILD
+   static public string ProductName { get { return BuildName; } }
+   static public string ProductType { get { return "uScript_AssetStore"; } }
+#else
+   static public string ProductName { get { return BuildName; } }
+   static public string ProductType { get { return "uScript_Retail"; } }
+#endif
 
    static public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
    //public string LastUnityBuild { get { return "3.3"; } }
