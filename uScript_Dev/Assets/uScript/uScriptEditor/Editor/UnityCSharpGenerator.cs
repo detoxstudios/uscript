@@ -1442,7 +1442,7 @@ namespace Detox.ScriptEditor
 
                declaration = "new UnityEngine.Color[] {";
 
-               for ( int i = 0; i < elements.Length; i += 3 )
+               for ( int i = 0; i < elements.Length; i += 4 )
                {
                   declaration += "new UnityEngine.Color((float)" + elements[i] + ", (float)" + elements[i+1] + ", (float)" + elements[i+2] + ", (float)" + elements[i+3] + "),";
                }
