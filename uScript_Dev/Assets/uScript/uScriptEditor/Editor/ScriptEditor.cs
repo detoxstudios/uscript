@@ -2580,7 +2580,13 @@ namespace Detox.ScriptEditor
       {
          get
          {
-            return m_Nodes.Nodes;
+            List<EntityNode> nodes = new List<EntityNode>( );
+            foreach ( EntityNode n in m_Nodes.Nodes )
+            {
+               nodes.Add( n.Copy(true) );
+            }
+
+            return nodes.ToArray( );
          }
       }
 
