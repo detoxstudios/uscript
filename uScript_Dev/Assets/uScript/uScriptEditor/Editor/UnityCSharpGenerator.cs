@@ -2852,7 +2852,7 @@ namespace Detox.ScriptEditor
             LinkNode [] links = FindLinksByDestination( external.Guid, external.Connection );
             if (0 == links.Length) continue;
 
-            bool isEventDriven = IsEventDriven(external);
+            //bool isEventDriven = IsEventDriven(external);
 
             bool validEnd = false;
 
