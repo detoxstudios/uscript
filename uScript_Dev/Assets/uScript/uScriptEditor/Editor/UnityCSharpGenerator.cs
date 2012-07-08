@@ -3437,7 +3437,7 @@ namespace Detox.ScriptEditor
 
          if (0 == links.Length) return;
 
-         bool isEventDriven = IsEventDriven(external);
+         //bool isEventDriven = IsEventDriven(external);
 
          bool validEnd = false;
 
