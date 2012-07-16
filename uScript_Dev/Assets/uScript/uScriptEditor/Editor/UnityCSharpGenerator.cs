@@ -2852,8 +2852,6 @@ namespace Detox.ScriptEditor
             LinkNode [] links = FindLinksByDestination( external.Guid, external.Connection );
             if (0 == links.Length) continue;
 
-            //bool isEventDriven = IsEventDriven(external);
-
             bool validEnd = false;
 
             EntityNode sourceNode = null;
@@ -3443,10 +3441,13 @@ namespace Detox.ScriptEditor
 
          EntityNode sourceNode = null;
 
+         string sourceLinkName = "";
+
          foreach ( LinkNode link in links )
          {
             sourceNode = m_Script.GetNode( link.Source.Guid );
-         
+            sourceLinkName = link.Source.Anchor;
+
             if ( sourceNode is EntityEvent ) 
             {
                EntityEvent entityEvent = (EntityEvent) sourceNode;
@@ -3509,7 +3510,7 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( LogicEventArgsDeclaration() + " eventArgs = new " + LogicEventArgsDeclaration() + "( );" );
                   foreach ( ExternalEventParameter eep in m_LogicEventArgs )
                   {
-                     AddCSharpLine( "eventArgs." + eep.ExternalParameter.Name + " = " + CSharpName(sourceNode, eep.SourceParameter.Name) + ";");
+                     AddCSharpLine( "eventArgs." + eep.ExternalParameter.Name + " = " + CSharpName(sourceNode, sourceLinkName) + ";");
                   }
 
                   AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default).Name + "( this, eventArgs );" );
