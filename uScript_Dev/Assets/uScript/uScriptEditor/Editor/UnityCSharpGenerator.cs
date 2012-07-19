@@ -27,8 +27,13 @@ namespace Detox.ScriptEditor
 
       struct ExternalEventParameter
       {
-         public Parameter SourceParameter;
+         //pseudo parameter which hold the external name
+         //but the type information of what it's linked to
          public Parameter ExternalParameter;
+
+         //the actual external so we can reference its variable
+         //when filling the event data
+         public ExternalConnection ExternalVariableNode;
       }
 
       public Parameter[] LogicEventArgs 
@@ -279,7 +284,6 @@ namespace Detox.ScriptEditor
                }
             }
          }
-
          m_Script.VerifyAllLinks( );
       }
 
@@ -1677,7 +1681,7 @@ namespace Detox.ScriptEditor
 
                      ExternalEventParameter eep;
                      eep.ExternalParameter = clone;
-                     eep.SourceParameter = p;
+                     eep.ExternalVariableNode = external;
 
                      m_LogicEventArgs.Add(eep);
                      break;
@@ -3441,12 +3445,9 @@ namespace Detox.ScriptEditor
 
          EntityNode sourceNode = null;
 
-         string sourceLinkName = "";
-
          foreach ( LinkNode link in links )
          {
             sourceNode = m_Script.GetNode( link.Source.Guid );
-            sourceLinkName = link.Source.Anchor;
 
             if ( sourceNode is EntityEvent ) 
             {
@@ -3510,7 +3511,7 @@ namespace Detox.ScriptEditor
                   AddCSharpLine( LogicEventArgsDeclaration() + " eventArgs = new " + LogicEventArgsDeclaration() + "( );" );
                   foreach ( ExternalEventParameter eep in m_LogicEventArgs )
                   {
-                     AddCSharpLine( "eventArgs." + eep.ExternalParameter.Name + " = " + CSharpName(sourceNode, sourceLinkName) + ";");
+                     AddCSharpLine( "eventArgs." + eep.ExternalParameter.Name + " = " + CSharpName(eep.ExternalVariableNode) + ";");
                   }
 
                   AddCSharpLine( CSharpExternalEventDeclaration(external.Name.Default).Name + "( this, eventArgs );" );
