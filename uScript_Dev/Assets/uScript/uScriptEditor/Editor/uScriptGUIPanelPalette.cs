@@ -254,7 +254,10 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                      filterMatches = 0;
    
                      // Reset the temporary hot selection at the beginning of each pass
-                     _tempHotSelection = null;
+                     if (Event.current.modifiers != EventModifiers.Alt)
+                     {
+                        _tempHotSelection = null;
+                     }
    
                      // Draw all the palette items
                      foreach (PaletteMenuItem item in _paletteMenuItems)
