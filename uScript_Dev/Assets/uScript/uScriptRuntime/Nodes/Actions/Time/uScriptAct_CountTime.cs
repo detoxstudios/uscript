@@ -15,6 +15,9 @@ using System.Collections;
 public class uScriptAct_CountTime : uScriptLogic
 {
    private bool m_TimerStarted = false;
+   private bool m_GoStarted = false;
+   private bool m_GoStopped = false;
+
    private float m_TotalTime = 0F;
 
 
@@ -23,6 +26,8 @@ public class uScriptAct_CountTime : uScriptLogic
    // ================================================================================
    //
    public bool Out { get { return true; } }
+   public bool Started { get { return m_GoStarted; } }
+   public bool Stopped { get { return m_GoStopped; } }
 
 
    // ================================================================================
@@ -34,6 +39,8 @@ public class uScriptAct_CountTime : uScriptLogic
    {
       seconds = 0;
       m_TimerStarted = true;
+      m_GoStarted = true;
+      m_GoStopped = false;
    }
 
    public void Stop(
@@ -41,6 +48,9 @@ public class uScriptAct_CountTime : uScriptLogic
       out float Seconds
       )
    {
+      m_GoStarted = false;
+      m_GoStopped = true;
+
       m_TimerStarted = false;
       Seconds = m_TotalTime;
       m_TotalTime = 0F;
@@ -53,6 +63,9 @@ public class uScriptAct_CountTime : uScriptLogic
    //
    public void Update()
    {
+      m_GoStarted = false;
+      m_GoStopped = false;
+
       if (m_TimerStarted)
       {
          m_TotalTime = UnityEngine.Time.time;

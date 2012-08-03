@@ -21,7 +21,7 @@ public class uScriptAct_Toggle : uScriptLogic
    [FriendlyName("Turned On")]
    public event System.EventHandler OnOut;
 
-   [FriendlyName("Turn Off")]
+   [FriendlyName("Turned Off")]
    public event System.EventHandler OffOut;
 
    [FriendlyName("Toggled")]

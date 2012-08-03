@@ -964,6 +964,17 @@ namespace Detox.Data.ScriptEditor
                Array.Resize<Parameter>( ref Parameters, Parameters.Length + 1 );            
                Parameters[ Parameters.Length - 1 ] = externaled; 
             }
+            else
+            {
+               for (int i = 0; i < Parameters.Length; i++)
+               {
+                  if (Parameters[i].FriendlyName == "Expose to Inspector")
+                  {
+                     Parameters[i].Name = "Expose to Unity";
+                     Parameters[i].FriendlyName = "Expose to Unity";
+                  }
+               }
+            }
          }
       }
 
