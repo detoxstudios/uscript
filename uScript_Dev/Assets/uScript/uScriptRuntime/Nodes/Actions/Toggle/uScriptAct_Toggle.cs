@@ -21,7 +21,7 @@ public class uScriptAct_Toggle : uScriptLogic
    [FriendlyName("Turned On")]
    public event System.EventHandler OnOut;
 
-   [FriendlyName("Turned Off")]
+   [FriendlyName("Turn Off")]
    public event System.EventHandler OffOut;
 
    [FriendlyName("Toggled")]
@@ -44,16 +44,16 @@ public class uScriptAct_Toggle : uScriptLogic
          {
             if (IgnoreChildren)
             {
-               if (false == currentTarget.active)
+               if (false == CheckIfActive(currentTarget))
                {
-                  currentTarget.active = true;
+                  SetActiveState(currentTarget, true, IgnoreChildren);
                }
             }
             else
             {
-               if (false == currentTarget.active)
+               if (false == CheckIfActive(currentTarget))
                {
-                  currentTarget.SetActiveRecursively(true);
+                  SetActiveState(currentTarget, true, IgnoreChildren);
                }
             }
          }
@@ -72,16 +72,16 @@ public class uScriptAct_Toggle : uScriptLogic
          {
             if (IgnoreChildren)
             {
-               if (currentTarget.active)
+               if (CheckIfActive(currentTarget))
                {
-                  currentTarget.active = false;
+                  SetActiveState(currentTarget, false, IgnoreChildren);
                }
             }
             else
             {
-               if (currentTarget.active)
+               if (CheckIfActive(currentTarget))
                {
-                  currentTarget.SetActiveRecursively(false);
+                  SetActiveState(currentTarget, false, IgnoreChildren);
                }
             }
          }
@@ -95,7 +95,7 @@ public class uScriptAct_Toggle : uScriptLogic
       [FriendlyName("Target", "The Target GameObject(s) to toggle state on.")]
       GameObject[] Target,
 
-      [FriendlyName("Ignore Children", "If True, the state change will not affect the Target's children.")]
+      [FriendlyName("Ignore Children", "If True, the state change will not affect the Target's children. However, the children will still not render if their parent has been disabled.")]
       [SocketState(false, false)]
       bool IgnoreChildren
       )
@@ -106,24 +106,24 @@ public class uScriptAct_Toggle : uScriptLogic
          {
             if (IgnoreChildren)
             {
-               if (currentTarget.active)
+               if (CheckIfActive(currentTarget))
                {
-                  currentTarget.active = false;
+                  SetActiveState(currentTarget, false, IgnoreChildren);
                }
                else
                {
-                  currentTarget.active = true;
+                  SetActiveState(currentTarget, true, IgnoreChildren);
                }
             }
             else
             {
-               if (currentTarget.active)
+               if (CheckIfActive(currentTarget))
                {
-                  currentTarget.SetActiveRecursively(false);
+                  SetActiveState(currentTarget, false, IgnoreChildren);
                }
                else
                {
-                  currentTarget.SetActiveRecursively(true);
+                  SetActiveState(currentTarget, true, IgnoreChildren);
                }
             }
          }
@@ -137,4 +137,49 @@ public class uScriptAct_Toggle : uScriptLogic
    //    Miscellaneous Node Functionality
    // ================================================================================
    //
+
+   private bool CheckIfActive(GameObject go)
+   {
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
+      return go.active;
+#else
+      return go.activeInHierarchy;
+#endif
+   }
+
+
+   private void SetActiveState(GameObject go, bool State, bool IgnoreChildren)
+   {
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
+      if (IgnoreChildren)
+      {
+         go.active = State;
+      }
+      else
+      {
+         go.SetActiveRecursively(State);
+      }
+#else
+      if (IgnoreChildren)
+      {
+         go.SetActive(State);
+         Debug.Log("SetActiveState - Ignore Childrem - " + State.ToString());
+      }
+      else
+      {
+         SetAllChildren(go, State);
+         Debug.Log("SetActiveState - " + State.ToString());
+      }
+#endif
+   }
+
+   private void SetAllChildren(GameObject go, bool State)
+   {
+      foreach (Transform child in go.transform)
+      {
+         child.gameObject.SetActive(State);
+         SetAllChildren(child.gameObject, State);
+      }
+      go.SetActive(State);
+   }
 }
