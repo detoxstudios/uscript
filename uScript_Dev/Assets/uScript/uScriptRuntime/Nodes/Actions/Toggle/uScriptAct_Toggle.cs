@@ -38,7 +38,7 @@ public class uScriptAct_Toggle : uScriptLogic
    [FriendlyName("Turn On")]
    public void TurnOn(GameObject[] Target, bool IgnoreChildren)
    {
-      foreach ( GameObject currentTarget in Target)
+      foreach (GameObject currentTarget in Target)
       {
          if (currentTarget != null)
          {
@@ -59,7 +59,7 @@ public class uScriptAct_Toggle : uScriptLogic
          }
       }
 
-      if ( null != OnOut ) OnOut(this, new System.EventArgs());
+      if (null != OnOut) OnOut(this, new System.EventArgs());
    }
 
    // Parameter Attributes are applied below in Toggle()
@@ -87,7 +87,7 @@ public class uScriptAct_Toggle : uScriptLogic
          }
       }
 
-      if ( null != OffOut ) OffOut(this, new System.EventArgs());
+      if (null != OffOut) OffOut(this, new System.EventArgs());
    }
 
    [FriendlyName("Toggle")]
@@ -129,7 +129,7 @@ public class uScriptAct_Toggle : uScriptLogic
          }
       }
 
-      if ( null != ToggleOut ) ToggleOut(this, new System.EventArgs());
+      if (null != ToggleOut) ToggleOut(this, new System.EventArgs());
    }
 
 
@@ -163,23 +163,25 @@ public class uScriptAct_Toggle : uScriptLogic
       if (IgnoreChildren)
       {
          go.SetActive(State);
-         Debug.Log("SetActiveState - Ignore Childrem - " + State.ToString());
       }
       else
       {
          SetAllChildren(go, State);
-         Debug.Log("SetActiveState - " + State.ToString());
       }
 #endif
    }
 
    private void SetAllChildren(GameObject go, bool State)
    {
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
+
+#else
       foreach (Transform child in go.transform)
       {
          child.gameObject.SetActive(State);
          SetAllChildren(child.gameObject, State);
       }
       go.SetActive(State);
+#endif
    }
 }
