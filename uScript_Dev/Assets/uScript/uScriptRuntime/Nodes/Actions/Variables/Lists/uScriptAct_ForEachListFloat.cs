@@ -9,7 +9,7 @@ using System;
 [NodePath("Actions/Variables/Lists/Float")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Iterate through each float in a Float List (uScript events must drive each iteration).")]
+[NodeToolTip("Iterate through each float in a Float List (uScript events must drive each iteration). Note that the list will be stored until all items have been iterated through or Reset is hit with a new list (which can only be done using named list variables).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
