@@ -2576,6 +2576,14 @@ namespace Detox.ScriptEditor
 
       private string m_Name  = "";
 
+      public EntityNode [] DirectEntityNodes
+      {
+         get
+         {
+             return m_Nodes.Nodes;
+         }
+      }
+
       public EntityNode [] EntityNodes
       {
          get
@@ -2842,6 +2850,8 @@ namespace Detox.ScriptEditor
             }
          }
       }
+
+      private static Dictionary<string, ScriptEditorData> s_Cache = new Dictionary<string,ScriptEditorData>();
 
       OrderedHash m_Nodes = new OrderedHash();
       Hashtable m_DeprecatedNodes = new Hashtable();
@@ -3874,6 +3884,11 @@ namespace Detox.ScriptEditor
          AddNode( node, true );
       }
 
+      public void TrustedUpdate(EntityNode node)
+      {
+         m_Nodes.Add(node);
+      }
+
       public void AddNode(EntityNode node, bool verifyExternal)
       {
          bool allow = true;
@@ -4362,39 +4377,63 @@ namespace Detox.ScriptEditor
          }
       }
 
-      public bool Read(MemoryStream stream)
+      public bool Read(string cacheName, MemoryStream stream)
       {
-         BinaryReader reader = new BinaryReader( stream );
-         object data = null;
+          ScriptEditorData cachedData;
 
-         ObjectSerializer serializer = new ObjectSerializer( );
-         if ( false == serializer.Load(reader, out data) ) return false;
+          Profile p;
 
-         ScriptEditorData readData = data as ScriptEditorData;
-         if ( null == readData ) return false;
+         if (null != cacheName) cacheName = cacheName.Replace('/', '\\');
 
-         ScriptEditorData = data as ScriptEditorData;
-         
-         VerifyAllLinks( );
+         if (null != cacheName && s_Cache.TryGetValue(cacheName, out cachedData))
+         {
+            p = new Profile("Read Cache " + cacheName);
+            ScriptEditorData = cachedData as ScriptEditorData;
+         }
+         else
+         {
+            p = new Profile("Read " + cacheName);
+            BinaryReader reader = new BinaryReader( stream );
+            object data = null;
+
+            ObjectSerializer serializer = new ObjectSerializer( );
+            if ( false == serializer.Load(reader, out data) ) return false;
+
+            ScriptEditorData readData = data as ScriptEditorData;
+            if ( null == readData ) return false;
+
+            ScriptEditorData = data as ScriptEditorData;
+
+            if (null != cacheName) s_Cache[cacheName] = data as ScriptEditorData;
+             //VerifyAllLinks( );
+         }
+
+          p.End();
 
          return true;
       }
 
-      public bool Write(MemoryStream stream)
+      public bool Write(string cacheName, MemoryStream stream)
       {
          BinaryWriter writer = new BinaryWriter( stream );
 
          ObjectSerializer serializer = new ObjectSerializer( );
          if ( false == serializer.Save(writer, ScriptEditorData) ) return false;
 
+         if (null != cacheName)
+         {
+            cacheName = cacheName.Replace('/', '\\');
+            s_Cache[cacheName] = ScriptEditorData;
+         }
+
          return true;
       }
 
-      public string ToBase64( )
+      public string ToBase64(string cacheName)
       {
          MemoryStream stream = new MemoryStream( );
 
-         if ( false == Write(stream) ) 
+         if ( false == Write(cacheName, stream) ) 
          {
             Status.Error( "Could not write script data to a memory stream" );
             return null;
@@ -4407,22 +4446,24 @@ namespace Detox.ScriptEditor
          return base64;
       }
 
-      public bool OpenFromBase64(string name, string base64)
+      public bool OpenFromBase64(string cacheName, string name, string base64)
       {
          try
          {
+            Profile p = new Profile( "Open from Base64 " + cacheName );
             string contents = base64;
 
             byte[] binary = Convert.FromBase64String( contents );
 
             MemoryStream stream = new MemoryStream( binary );
-            if ( false == Read(stream) ) 
+            if ( false == Read(cacheName, stream) ) 
             {
                Status.Error( "Failed to load " + name );
                return false;
             }
 
             m_Name = name;
+            p.End();
 
             return true;
          }
@@ -4450,7 +4491,9 @@ namespace Detox.ScriptEditor
             contents = contents.Substring( start.Length );
             contents = contents.Substring( 0, contents.Length - end.Length );
 
-            return OpenFromBase64( Path.GetFileName(fullPath), contents );
+            bool result = OpenFromBase64( fullPath, Path.GetFileName(fullPath), contents );
+
+             return result;
          }
          catch (Exception e)
          {
@@ -4473,7 +4516,7 @@ namespace Detox.ScriptEditor
       {
          m_GeneratedCodeIsStale = true;
 
-         string base64 = ToBase64( );
+         string base64 = ToBase64( binaryFile );
 
          StreamWriter streamWriter = null;
          
@@ -4501,7 +4544,7 @@ namespace Detox.ScriptEditor
          m_SavedForDebugging    = saveForDebugging;
          m_GeneratedCodeIsStale = false;
 
-         string base64 = ToBase64( );
+         string base64 = ToBase64( binaryFile );
 
          StreamWriter streamWriter = null;
          

@@ -165,7 +165,9 @@ namespace Detox.ScriptEditor
       private void Initialize(ScriptEditor scriptEditor, Point location)
       {
          InitializeComponent();
-                  
+          
+          Profile p = new Profile ("Init");
+
          m_ContextObject = null;
          m_ContextCursor = Point.Empty;
 
@@ -178,10 +180,14 @@ namespace Detox.ScriptEditor
          TabText = m_ScriptEditor.Name;
 
          RebuildScript( null, true, location );
+      
+          p.End();
       }
 
       public void UpdateObjectReferences( )
       {
+         Profile block1 = new Profile ("Block1");
+
          EntityNode []nodes = m_ScriptEditor.EntityNodes;
 
          foreach ( EntityNode node in nodes )
@@ -218,27 +224,39 @@ namespace Detox.ScriptEditor
                node.Instance = p;
             }
 
+             block1.End();
+
+            Profile block2 = new Profile ("Block2");
+
             List<Parameter> parameters = new List<Parameter>( );
 
             foreach ( Parameter parameter in node.Parameters )
             {
                p = parameter;
 
-               Type type = uScript.MasterComponent.GetType( p.Type.Replace("[]", "") );
+                Profile profType = new Profile ("Gettype");
+                Type type = uScript.MasterComponent.GetType( p.Type.Replace("[]", "") );
+                profType.End();
 
+                Profile profAssign = new Profile ("Assign");
                if ( typeof(UnityEngine.GameObject).IsAssignableFrom(type) )
                {
                   //if we have a reference, look up the latest name
                   if ( p.ReferenceGuid != null )
                   {
+                     Profile ggoProf = new Profile ("GetGameObject");
                      p.Default = uScript.MasterComponent.GetGameObject( p.Default, p.ReferenceGuid );
+                    ggoProf.End();
                   }
                   else
                   {
+                     Profile ggoProf = new Profile ("GetGameObjectGuid");
                      //if we didn't have a reference, see if one is now available
                      p.ReferenceGuid = uScript.MasterComponent.GetGameObjectGuid( p.Default );
+                    ggoProf.End();
                   }
                }
+                profAssign.End();
 
                parameters.Add( p );
             }
@@ -246,8 +264,14 @@ namespace Detox.ScriptEditor
             //restore node parameters
             node.Parameters = parameters.ToArray( );
          
-            m_ScriptEditor.AddNode( node );
+            Profile profAdd = new Profile ("AddNode");
+            m_ScriptEditor.AddNode( node, false );
+            profAdd.End();
+         
+             block2.End();
          }
+
+         m_ScriptEditor.VerifyAllLinks( );
       }
 
       public Node GetPrevNode(Node node) { return GetPrevNode(node, null); }
@@ -754,7 +778,7 @@ namespace Detox.ScriptEditor
          }
 
          System.IO.MemoryStream stream = new System.IO.MemoryStream( );
-         scriptEditor.Write( stream );
+         scriptEditor.Write( null, stream );
 
          string base64 = Convert.ToBase64String( stream.GetBuffer( ) );
          base64 = "[SCRIPTEDITOR]" + base64;
@@ -774,7 +798,7 @@ namespace Detox.ScriptEditor
          byte[] binary = Convert.FromBase64String( text );
 
          ScriptEditor scriptEditor = new ScriptEditor( "", ScriptEditor.EntityDescs, ScriptEditor.LogicNodes );
-         if ( true == scriptEditor.Read( new System.IO.MemoryStream(binary)) )
+         if ( true == scriptEditor.Read( null, new System.IO.MemoryStream(binary)) )
          {
             List<Guid> guidsToSelect = new List<Guid>( );
 
@@ -1826,7 +1850,11 @@ namespace Detox.ScriptEditor
 
       public void RebuildScript( List<Guid> guidsToSelect, bool zoomExtents, Point location )
       {
-         RemoveEventHandlers( );
+         Profile p = new Profile ("Rebuild Script");
+
+         Profile block1 = new Profile ("Block 1");
+
+          RemoveEventHandlers( );
 
          float minX = Single.MaxValue, maxX = Single.MinValue, minY = Single.MaxValue, maxY = Single.MinValue;
 
@@ -1850,7 +1878,11 @@ namespace Detox.ScriptEditor
          UpdateObjectReferences( );
 
          List<LinkNode> links = new List<LinkNode>( );
+
+         block1.End();
          
+         Profile profBuildingNodes = new Profile ("Building Nodes");
+        
          foreach ( EntityNode entityNode in m_ScriptEditor.EntityNodes )
          {
             DisplayNode node = null;
@@ -1909,7 +1941,12 @@ namespace Detox.ScriptEditor
                if (node.Location.Y + node.Size.Height > maxY) maxY = node.Location.Y;
             }
          }
-         
+
+         profBuildingNodes.End();
+
+
+         Profile profBuildingLinks = new Profile ("Building Links");
+
          foreach ( LinkNode link in links )
          {
             Detox.FlowChart.Link chartLink = new Detox.FlowChart.Link( );
@@ -1946,6 +1983,10 @@ namespace Detox.ScriptEditor
             }
          }
 
+         profBuildingLinks.End();
+
+        Profile block2 = new Profile ("Block2");
+
 
          //m_FlowChart.Invalidate( );  // RefreshScript - Replaces the three calls above
 
@@ -1955,6 +1996,10 @@ namespace Detox.ScriptEditor
          OnScriptModified();
 
          AddEventHandlers( );
+
+         block2.End();
+
+         p.End( );
       }
 
       private void FlowchartNodesModified(object sender, FlowchartNodesModifiedEventArgs e)

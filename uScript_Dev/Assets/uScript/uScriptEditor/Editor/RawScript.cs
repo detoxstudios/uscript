@@ -37,6 +37,8 @@ namespace Detox.ScriptEditor
 
       public bool Load( string path )
       {
+          Profile p = new Profile( "Raw Script: " + path );
+
          ScriptEditor scriptEditor = new ScriptEditor( "", null, null );
          if ( false == scriptEditor.Open(path) ) return false;
 
@@ -51,6 +53,8 @@ namespace Detox.ScriptEditor
          {
             m_GeneratedCode.ParseExternals( scriptEditor );
          }
+
+          p.End();
 
          return true;
       }

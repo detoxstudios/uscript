@@ -62,10 +62,14 @@ public class uScriptBackgroundProcess
          string[] keys = keylist.ToArray();
          for (i = 0; i < FILES_PER_TICK && s_CurrentKeyIndex < s_uScriptInfo.Count; i++, s_CurrentKeyIndex++)
          {
+
             uScriptInfo info = s_uScriptInfo[keys[s_CurrentKeyIndex]];
+             Profile p = new Profile("Opening " + info.m_FullPath);
             Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", null, null );
             scriptEditor.Open(info.m_FullPath);
             s_uScriptInfo[keys[s_CurrentKeyIndex]] = new uScriptInfo(keys[s_CurrentKeyIndex], scriptEditor.SceneName);
+         
+             p.End();
          }
       }
    }

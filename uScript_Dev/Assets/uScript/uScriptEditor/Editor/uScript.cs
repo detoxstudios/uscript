@@ -622,6 +622,8 @@ public class uScript : EditorWindow
 
    private void OpenFromCache( )
    {
+      Profile p = new Profile( "OpenFromCache" );
+
       m_ScriptEditorCtrl = null;
 
       #if FREE_BETA_BUILD // See if expiration date and build cap should be used. Not needed for commercial version.
@@ -656,7 +658,7 @@ public class uScript : EditorWindow
       {
          //Debug.Log("Opening from valid script");
          scriptEditor = new ScriptEditor(string.Empty, PopulateEntityTypes(null), PopulateLogicTypes());
-         scriptEditor.OpenFromBase64(CurrentScriptName, CurrentScript);
+         scriptEditor.OpenFromBase64(null, CurrentScriptName, CurrentScript);
       }
       
       if ( null == scriptEditor )
@@ -690,6 +692,8 @@ public class uScript : EditorWindow
 
       //clear out all patches and cache new copy of the script
       CacheScript( );
+
+       p.End();
    }
 
    public void ApplyPatch(ScriptEditorCtrl ctrl, ScriptEditor scriptEditor, string patch)
@@ -745,7 +749,7 @@ public class uScript : EditorWindow
    public void CacheScript( )
    {
       m_Patches = new string[ 0 ];
-      CurrentScript = m_ScriptEditorCtrl.ScriptEditor.ToBase64( );
+      CurrentScript = m_ScriptEditorCtrl.ScriptEditor.ToBase64( null );
       CurrentScriptDirty = m_ScriptEditorCtrl.IsDirty;
    }
 
@@ -3340,12 +3344,12 @@ public class uScript : EditorWindow
       m_CurrentCanvasPosition = "";
 
       CurrentScriptDirty = false;
-      CurrentScript = scriptEditor.ToBase64( );
+      CurrentScript = scriptEditor.ToBase64( null );
       CurrentScriptName = scriptEditor.Name;
 
       //brand new scriptso clear out any previous caches and undo/redo
-      ClearEntityTypes();
-      ClearLogicTypes();
+      //ClearEntityTypes();
+      //ClearLogicTypes();
       ClearChangeStack( );
       OpenFromCache( );
       
@@ -3371,6 +3375,8 @@ public class uScript : EditorWindow
    public bool OpenScript(string fullPath)
    {
       if (false == AllowNewFile(true) || !System.IO.File.Exists(fullPath)) return false;
+
+       Profile p = new Profile( "OpenScript " + fullPath );
 
       Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor("", null, null);
       scriptEditor.Open(fullPath);
@@ -3400,16 +3406,18 @@ public class uScript : EditorWindow
          m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
     
          CurrentScriptDirty = false;
-         CurrentScript = scriptEditor.ToBase64( );
+         CurrentScript = scriptEditor.ToBase64( null );
          CurrentScriptName = scriptEditor.Name;
 
          //brand new scriptso clear out any previous caches and undo/redo
          ClearChangeStack( );
-         ClearEntityTypes();
-         ClearLogicTypes();
+         //ClearEntityTypes();
+         //ClearLogicTypes();
          OpenFromCache( );
 
          uScriptBackgroundProcess.ForceFileRefresh();
+      
+          p.End();
       }
       else
       {
@@ -3673,6 +3681,7 @@ public class uScript : EditorWindow
    {
       if ( null != m_LogicTypes ) return m_LogicTypes;
 
+      Debug.Log( "Rebuilding Logic Types" );
       uScriptDebug.Log( "Rebuilding Logic Types", uScriptDebug.Type.Debug );
 
       Hashtable baseMethods = new Hashtable();
