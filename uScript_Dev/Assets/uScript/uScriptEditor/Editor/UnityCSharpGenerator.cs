@@ -1252,6 +1252,17 @@ namespace Detox.ScriptEditor
                 }
                 catch (Exception) { return "new Quaternion( )"; }
             }
+            else if ("UnityEngine.Matrix4x4" == type)
+            {
+                try
+                {
+                    string[] subString = stringValue.Split(',');
+                    return "Matrix4x4.TRS( new Vector3((float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + "), " +
+                                          "new Quaternion((float)" + subString[3] + ", (float)" + subString[4] + ", (float)" + subString[5] + ", (float)" + subString[6] + "), " +
+                                          "new Vector3((float)" + subString[7] + ", (float)" + subString[8] + ", (float)" + subString[9] + "))";
+                }
+                catch (Exception) { return "new Matrix4x4( )"; }
+            }
             else if ("UnityEngine.Vector2" == type)
             {
                 try
