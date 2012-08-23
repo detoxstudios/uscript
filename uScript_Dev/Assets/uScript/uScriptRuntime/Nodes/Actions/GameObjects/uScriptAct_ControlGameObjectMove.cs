@@ -32,35 +32,41 @@ public class uScriptAct_ControlGameObjectMove : uScriptLogic
    {
       if (null != Target && Speed != 0f)
       {
+         Vector3 movement = Vector3.zero;
+
          switch (moveDirection)
          {
             case Direction.Forward:
-               Target.transform.Translate(Vector3.forward * Speed);
+               movement = Vector3.forward * Speed;
                break;
 
             case Direction.Backward:
-               Target.transform.Translate(Vector3.back * Speed);
+               movement = Vector3.back * Speed;
                break;
 
             case Direction.Left:
-               Target.transform.Translate(Vector3.left * Speed);
+               movement = Vector3.left * Speed;
                break;
 
             case Direction.Right:
-               Target.transform.Translate(Vector3.right * Speed);
+               movement = Vector3.right * Speed;
                break;
 
             case Direction.Up:
-               Target.transform.Translate(Vector3.up * Speed);
+               movement = Vector3.up * Speed;
                break;
 
             case Direction.Down:
-               Target.transform.Translate(Vector3.down * Speed);
+               movement = Vector3.down * Speed;
                break;
 
             default:
                break;
          }
+
+         CharacterController cc = Target.GetComponent<CharacterController>();
+         if (null != cc) cc.Move(movement);
+         else Target.transform.position += movement;
       }
    }
 

@@ -36,9 +36,6 @@ public class uScriptCon_ManualSwitch : uScriptLogic
       int CurrentOutput
       )
    {
-      // Check bounds on MaxOutputUsed
-      CurrentOutput = Mathf.Clamp(CurrentOutput, 1, 6);
-
       m_CurrentOutput = CurrentOutput;
 
       // Set correct output socket to true
