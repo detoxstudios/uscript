@@ -2970,8 +2970,8 @@ namespace Detox.ScriptEditor
 
       private static int MenuSorter(ToolStripItem t1, ToolStripItem t2)
       {
-         bool subItems1 = t1.Text[ t1.Text.Length - 1 ] == '.';
-         bool subItems2 = t2.Text[ t2.Text.Length - 1 ] == '.';
+         bool subItems1 = t1.Text.Length > 0 && t1.Text[ t1.Text.Length - 1 ] == '.';
+         bool subItems2 = t2.Text.Length > 0 && t2.Text[ t2.Text.Length - 1 ] == '.';
 
          if ( subItems1 == subItems2 )
          {
