@@ -46,7 +46,14 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-               if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+               if (currentComponentName.ToLower() == "collider" )
+               {
+                  if ( currentTarget.collider != null )
+                  {
+                     currentTarget.collider.enabled = false;
+                  }
+               }
+               else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
                   if ( currentTarget.renderer != null )
                   {
@@ -85,7 +92,14 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-               if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+               if (currentComponentName.ToLower() == "collider" )
+               {
+                  if ( currentTarget.collider != null )
+                  {
+                     currentTarget.collider.enabled = false;
+                  }
+               }
+               else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
                   if ( currentTarget.renderer != null )
                   {
@@ -132,7 +146,23 @@ public class uScriptAct_ToggleComponent : uScriptLogic
          {
             foreach (string currentComponentName in ComponentName)
             {
-               if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
+               if (currentComponentName.ToLower() == "collider" )
+               {
+                  if ( currentTarget.collider != null )
+                  {
+                     if (currentTarget.collider.enabled)
+                     {
+                        currentTarget.collider.enabled = false;
+                        turnedOff = true;
+                     }
+                     else
+                     {
+                        currentTarget.collider.enabled = true;
+                        turnedOn = true;
+                     }
+                  }
+               }
+               else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
                   if ( currentTarget.renderer != null )
                   {
