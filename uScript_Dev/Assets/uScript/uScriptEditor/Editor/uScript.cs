@@ -3681,7 +3681,6 @@ public class uScript : EditorWindow
    {
       if ( null != m_LogicTypes ) return m_LogicTypes;
 
-      Debug.Log( "Rebuilding Logic Types" );
       uScriptDebug.Log( "Rebuilding Logic Types", uScriptDebug.Type.Debug );
 
       Hashtable baseMethods = new Hashtable();
