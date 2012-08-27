@@ -48,10 +48,12 @@ public class uScriptAct_ToggleComponent : uScriptLogic
             {
                if (currentComponentName.ToLower() == "collider" )
                {
+#if !UNITY_3_2 && !UNITY_3_3
                   if ( currentTarget.collider != null )
                   {
                      currentTarget.collider.enabled = false;
                   }
+#endif
                }
                else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
@@ -94,10 +96,12 @@ public class uScriptAct_ToggleComponent : uScriptLogic
             {
                if (currentComponentName.ToLower() == "collider" )
                {
+#if !UNITY_3_2 && !UNITY_3_3
                   if ( currentTarget.collider != null )
                   {
                      currentTarget.collider.enabled = false;
                   }
+#endif
                }
                else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
@@ -148,6 +152,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
             {
                if (currentComponentName.ToLower() == "collider" )
                {
+#if !UNITY_3_2 && !UNITY_3_3
                   if ( currentTarget.collider != null )
                   {
                      if (currentTarget.collider.enabled)
@@ -161,6 +166,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                         turnedOn = true;
                      }
                   }
+#endif
                }
                else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
