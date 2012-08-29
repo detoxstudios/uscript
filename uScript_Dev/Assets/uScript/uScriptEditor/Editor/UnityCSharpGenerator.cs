@@ -12,13 +12,13 @@ namespace Detox.ScriptEditor
     {
         static int m_Tab;
 
-        private string m_Name;
+        //private string m_Name;
 
         System.Diagnostics.Stopwatch m_Stopwatch = new System.Diagnostics.Stopwatch();
         
         public Profile(string name)
         {
-            m_Name = name;
+            //m_Name = name;
             m_Stopwatch.Start( );
         
             ++m_Tab;
@@ -26,7 +26,7 @@ namespace Detox.ScriptEditor
 
         public void End( )
         {
-            float seconds = m_Stopwatch.ElapsedMilliseconds / 1000.0f;
+            //float seconds = m_Stopwatch.ElapsedMilliseconds / 1000.0f;
             m_Stopwatch.Stop( );
             
             --m_Tab;
