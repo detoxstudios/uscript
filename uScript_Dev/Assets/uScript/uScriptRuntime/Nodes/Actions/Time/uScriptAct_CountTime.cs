@@ -19,6 +19,7 @@ public class uScriptAct_CountTime : uScriptLogic
    private bool m_GoStopped = false;
 
    private float m_TotalTime = 0F;
+	private float m_StartTime = 0F;
 
 
    // ================================================================================
@@ -35,16 +36,20 @@ public class uScriptAct_CountTime : uScriptLogic
    // ================================================================================
    //
    // Parameter Attributes are applied below in Stop()
-   public void In(out float seconds)
+   [FriendlyName("Start")]
+   public void In(
+		[FriendlyName("Seconds", "Amount of seconds which passed since Start was called.")]
+		out float seconds)
    {
-      seconds = 0;
+      m_TotalTime = 0;
+	  seconds = m_TotalTime;
       m_TimerStarted = true;
       m_GoStarted = true;
       m_GoStopped = false;
    }
 
    public void Stop(
-      [FriendlyName("Seconds", "Amount of seconds which passed since In was called")]
+      [FriendlyName("Seconds", "Amount of seconds which passed since Start was called.")]
       out float Seconds
       )
    {
@@ -52,7 +57,7 @@ public class uScriptAct_CountTime : uScriptLogic
       m_GoStopped = true;
 
       m_TimerStarted = false;
-      Seconds = m_TotalTime;
+      Seconds = m_TotalTime - m_StartTime;
       m_TotalTime = 0F;
    }
 
@@ -70,6 +75,10 @@ public class uScriptAct_CountTime : uScriptLogic
       {
          m_TotalTime = UnityEngine.Time.time;
       }
+	  else
+	  {
+	     m_StartTime = UnityEngine.Time.time;
+	  }
    }
 
 }
