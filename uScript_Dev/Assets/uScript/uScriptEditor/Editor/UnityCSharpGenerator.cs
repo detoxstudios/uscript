@@ -1462,6 +1462,14 @@ namespace Detox.ScriptEditor
             {
                 return "new UnityEngine.ContactPoint( )";
             }
+            else if ("UnityEngine.Touch" == type)
+            {
+                return "new UnityEngine.Touch( )";
+            }
+            else if ("UnityEngine.TouchPhase" == type)
+            {
+                return "new UnityEngine.TouchPhase( )";
+            }
             else if ("UnityEngine.NetworkPlayer" == type)
             {
                 return "new UnityEngine.NetworkPlayer( )";
