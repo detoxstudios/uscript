@@ -37,7 +37,7 @@ public class uScriptAct_SphereCast : uScriptLogic
       [FriendlyName("Hit Normal", "The surface normal of the hit (if any).")] out Vector3 HitNormal
    )
    {
-      Debug.Log(layerMask.value);
+      // Debug.Log(layerMask.value);
       bool hitTrue = false;
       bool validInputs = true;
       float tmpHitDistance = 0F;
