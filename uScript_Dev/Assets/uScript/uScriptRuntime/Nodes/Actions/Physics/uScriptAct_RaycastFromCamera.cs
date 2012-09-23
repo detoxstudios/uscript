@@ -33,7 +33,7 @@ public class uScriptAct_RaycastFromCamera : uScriptLogic
       int Offset_Y,
       
       [FriendlyName("Distance", "How far out to cast the ray.")]
-      [SocketState(false, false), DefaultValue(100f)]
+      [DefaultValue(100f)]
       float Distance,
       
       [FriendlyName("Layer Mask", "A Layer mask that is used to selectively ignore colliders when casting a ray.")]
