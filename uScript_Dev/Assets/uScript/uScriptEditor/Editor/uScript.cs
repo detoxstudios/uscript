@@ -1673,7 +1673,18 @@ public class uScript : EditorWindow
                   || e.keyCode == KeyCode.LeftBracket
                   || e.keyCode == KeyCode.Alpha0
                   || e.keyCode == KeyCode.Minus
-                  || e.keyCode == KeyCode.Equals )
+                  || e.keyCode == KeyCode.Equals
+                  || e.keyCode == KeyCode.S
+                  || e.keyCode == KeyCode.V
+                  || e.keyCode == KeyCode.I
+                  || e.keyCode == KeyCode.F
+                  || e.keyCode == KeyCode.B
+                  || e.keyCode == KeyCode.G
+                  || e.keyCode == KeyCode.O
+                  || e.keyCode == KeyCode.C
+                  || e.keyCode == KeyCode.E
+                  || e.keyCode == KeyCode.L
+                  )
                {
                   e.Use();
                }
