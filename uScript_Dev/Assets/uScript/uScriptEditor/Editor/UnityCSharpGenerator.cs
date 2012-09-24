@@ -33,7 +33,7 @@ namespace Detox.ScriptEditor
             
             if (seconds > uScript.Preferences.ProfileMin)
             {
-                string tab = "";
+                string tab = "PROFILE TIMING: ";
                 for (int i = 0; i < m_Tab; i++)
                 {
                     tab += "   ";
