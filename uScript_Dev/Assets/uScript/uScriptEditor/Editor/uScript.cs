@@ -1569,10 +1569,14 @@ public class uScript : EditorWindow
                }
                else
                {
+                  Profile overall = new Profile ("BuildContextMenu");
+
                   m_ScriptEditorCtrl.BuildContextMenu();
                   BuildCanvasContextMenu(null, null);
 
                   _canvasContextMenu.ShowAsContext();
+
+                  overall.End();
 
 //                  e.Use();
 //

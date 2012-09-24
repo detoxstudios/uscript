@@ -2384,6 +2384,8 @@ namespace Detox.ScriptEditor
 
       private void m_ContextMenuStrip_Opening(object sender, CancelEventArgs args)
       {
+         Profile overall = new Profile ("m_ContextMenuStrip_Opening");
+
          m_ContextObject = null;
          m_ContextCursor = Detox.Windows.Forms.Cursor.Position;
          m_ContextCursor = m_FlowChart.PointToClient( m_ContextCursor );
@@ -2549,6 +2551,8 @@ namespace Detox.ScriptEditor
 
          if ( true == buildAddMenu )
          {
+            Profile buildAddProfile = new Profile ("BuildAddMenu");
+
             m_AddMenu.Name = "m_Add";
             m_AddMenu.Size = new Detox.Drawing.Size(152, 22);
             m_AddMenu.Text = "Add";
@@ -2572,6 +2576,8 @@ namespace Detox.ScriptEditor
             m_AddMenu.DropDownItems.Add( external );
 
             BuildAddMenu( m_AddMenu, null );
+
+            buildAddProfile.End();
          }
 
 
@@ -2752,6 +2758,8 @@ namespace Detox.ScriptEditor
                m_ContextMenuStrip.Items.Add( deleteMissingNode );
             }
          }
+
+        overall.End();
       }
 
       private void BuildAddMenu(ToolStripMenuItem addMenu, Hashtable typeHash)

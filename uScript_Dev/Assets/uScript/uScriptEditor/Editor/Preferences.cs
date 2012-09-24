@@ -78,7 +78,13 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "ShowGrid" ] = value; }       
    }
 
-   public float GridSizeVertical
+   public float ProfileMin
+   {
+      get { LoadIfRequired( ); return (float) m_Preferences[ "ProfileMin" ]; } 
+      set { LoadIfRequired( ); m_Preferences[ "ProfileMin" ] = value; }       
+   }
+
+    public float GridSizeVertical
    {
       get { LoadIfRequired( ); return (float) m_Preferences[ "GridSizeVertical" ]; } 
       set { LoadIfRequired( ); m_Preferences[ "GridSizeVertical" ] = value; }       
@@ -192,6 +198,7 @@ public class Preferences
       if ( null == m_Preferences[ "RelativeGeneratedScripts" ] )  m_Preferences[ "RelativeGeneratedScripts" ]  = uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode");
       if ( null == m_Preferences[ "MaximumNodeRecursionCount" ] ) m_Preferences[ "MaximumNodeRecursionCount" ] = 1000;
       if ( null == m_Preferences[ "SaveMethod" ] )                m_Preferences[ "SaveMethod" ]                = 1;   // 0:Quick, 1:Debug, 2:Release
+      if ( null == m_Preferences[ "ProfileMin" ] )                m_Preferences[ "ProfileMin" ]                = float.MaxValue;
    }
    
    public void Save( )
