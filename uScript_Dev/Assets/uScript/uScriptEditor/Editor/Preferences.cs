@@ -78,6 +78,12 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "ShowGrid" ] = value; }       
    }
 
+   public bool Profiling
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "Profiling" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "Profiling" ] = value; }
+   }
+
    public float ProfileMin
    {
       get { LoadIfRequired( ); return (float) m_Preferences[ "ProfileMin" ]; } 
@@ -198,7 +204,8 @@ public class Preferences
       if ( null == m_Preferences[ "RelativeGeneratedScripts" ] )  m_Preferences[ "RelativeGeneratedScripts" ]  = uScriptConfig.ConstantPaths.RelativePathInAssets(UserScripts + "/_GeneratedCode");
       if ( null == m_Preferences[ "MaximumNodeRecursionCount" ] ) m_Preferences[ "MaximumNodeRecursionCount" ] = 1000;
       if ( null == m_Preferences[ "SaveMethod" ] )                m_Preferences[ "SaveMethod" ]                = 1;   // 0:Quick, 1:Debug, 2:Release
-      if ( null == m_Preferences[ "ProfileMin" ] )                m_Preferences[ "ProfileMin" ]                = float.MaxValue;
+      if ( null == m_Preferences[ "ProfileMin" ] )                m_Preferences[ "ProfileMin" ]                = 1f;
+      if ( null == m_Preferences[ "Profiling" ] )                 m_Preferences[ "Profiling" ]                 = false;
    }
    
    public void Save( )

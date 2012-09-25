@@ -11,6 +11,9 @@ public class PreferenceWindow : EditorWindow
    const int _minGridMajorSpacing = 1;
    const int _maxGridMagicSpacing = 10;
 
+   const float _minProfileTime = 0.01f;
+   const float _maxProfileTime = 10f;
+
    RectOffset _padding = new RectOffset(16, 16, 8, 16);
 
    GUIStyle _styleWindow;
@@ -152,15 +155,6 @@ public class PreferenceWindow : EditorWindow
          EditorGUILayout.Separator();
 
          //
-         // Panel Settings
-         //
-         GUILayout.Label("Panel Settings", EditorStyles.boldLabel);
-
-         _preferences.DrawPanelsOnUpdate = EditorGUILayout.Toggle("Draw Panels During Update", _preferences.DrawPanelsOnUpdate);
-
-         EditorGUILayout.Separator();
-
-         //
          // Grid Settings
          //
          GUILayout.Label("Grid Settings", EditorStyles.boldLabel);
@@ -185,6 +179,27 @@ public class PreferenceWindow : EditorWindow
          EditorGUILayout.Separator();
 
          //
+         // Performance and Profiling Settings
+         //
+         GUILayout.Label("Performance Settings", EditorStyles.boldLabel);
+
+         _preferences.DrawPanelsOnUpdate = EditorGUILayout.Toggle("Draw Panels During Update", _preferences.DrawPanelsOnUpdate);
+
+         EditorGUILayout.BeginHorizontal();
+         {
+            _preferences.Profiling = EditorGUILayout.Toggle("Profiling [time threshold]", _preferences.Profiling, GUILayout.Width(220));
+
+            GUI.enabled = _preferences.Profiling;
+            EditorGUIUtility.LookLikeControls(0, 30);
+            _preferences.ProfileMin = Mathf.Min(_maxProfileTime, Mathf.Max(_minProfileTime, EditorGUILayout.FloatField(_preferences.ProfileMin)));
+            EditorGUIUtility.LookLikeControls(_labelWidth, _valueWidth);
+            GUI.enabled = true;
+         }
+         EditorGUILayout.EndHorizontal();
+
+         EditorGUILayout.Separator();
+
+         //
          // Misc Settings
          //
          GUILayout.Label("Miscellaneous Settings", EditorStyles.boldLabel);
@@ -205,7 +220,7 @@ public class PreferenceWindow : EditorWindow
             _preferences.LastUpdateCheck = EditorGUILayout.IntField("Last Update Check", _preferences.LastUpdateCheck);
             _preferences.IgnoreUpdateBuild = EditorGUILayout.TextField("Ignore Build", _preferences.IgnoreUpdateBuild);
          }
-         
+
 
          EditorGUILayout.Separator();
          EditorGUILayout.Space();
