@@ -25,6 +25,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
    public static uScriptGUIPanelProperty Instance { get { return _instance; } }
    private uScriptGUIPanelProperty() { Init(); }
 
+   private int _selectedNodeCount = 0;
 
    //
    // Members specific to this panel class
@@ -68,6 +69,8 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
       uScript uScriptInstance = uScript.Instance;
       ScriptEditorCtrl m_ScriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
 
+      _selectedNodeCount = uScript.Instance.ScriptEditorCtrl.SelectedNodes.Length;
+
 //      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, _options);
       EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelPropertiesWidth));
       {
@@ -82,6 +85,10 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
          if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
          {
             DrawHiddenNotification();
+         }
+         else if (_selectedNodeCount > uScript.Preferences.PropertyPanelNodeLimit)
+         {
+            DrawExcessiveNodesNotification();
          }
          else
          {
@@ -118,6 +125,30 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Property);
       uScriptInstance.SetMouseRegion(uScript.MouseRegion.Properties);
+   }
+
+   private void DrawExcessiveNodesNotification()
+   {
+      int limit = uScript.Preferences.PropertyPanelNodeLimit;
+
+      string message = "The " + _name + " panel is configured to show the properties of ";
+      if (limit == 1)
+      {
+         message += "a single selected node";
+      }
+      else
+      {
+         message += "no more than " + limit.ToString() + " selected nodes";
+      }
+      message += ", but there are currently " + _selectedNodeCount.ToString() + " nodes selected."
+         + "\n\nThe limit can be modified via the Preferences panel, although increasing the limit "
+         + "may adversely affect performance.";
+
+      EditorGUILayout.BeginScrollView(Vector2.zero, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+      {
+         GUILayout.Label(message, uScriptGUIStyle.panelMessage);
+      }
+      EditorGUILayout.EndScrollView();
    }
 
 }

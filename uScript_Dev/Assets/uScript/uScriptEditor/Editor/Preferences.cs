@@ -156,6 +156,12 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "IgnoreUpdateBuild" ] = value; }
    }
 
+   public int PropertyPanelNodeLimit
+   {
+      get { LoadIfRequired( ); return (int) m_Preferences[ "PropertyPanelNodeLimit" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "PropertyPanelNodeLimit" ] = value; }
+   }
+
    private Hashtable m_Preferences = null;
 
    public void Revert( )
@@ -166,11 +172,11 @@ public class Preferences
 
       LoadDefaultsIfRequired( );
    }
-   
+
    public void Load( )
    {
       Hashtable preferences = uScript.GetSetting( "Preferences" ) as Hashtable;
-      
+
       if ( null == preferences )
       {
          preferences = new Hashtable( );
@@ -206,15 +212,16 @@ public class Preferences
       if ( null == m_Preferences[ "SaveMethod" ] )                m_Preferences[ "SaveMethod" ]                = 1;   // 0:Quick, 1:Debug, 2:Release
       if ( null == m_Preferences[ "ProfileMin" ] )                m_Preferences[ "ProfileMin" ]                = 1f;
       if ( null == m_Preferences[ "Profiling" ] )                 m_Preferences[ "Profiling" ]                 = false;
+      if ( null == m_Preferences[ "PropertyPanelNodeLimit" ] )    m_Preferences[ "PropertyPanelNodeLimit" ]    = 1;
    }
-   
+
    public void Save( )
    {
       LoadIfRequired( );
 
       uScript.SetSetting( "Preferences", new Hashtable(m_Preferences) );
    }
-   
+
    private void LoadIfRequired( )
    {
       if ( null == m_Preferences )

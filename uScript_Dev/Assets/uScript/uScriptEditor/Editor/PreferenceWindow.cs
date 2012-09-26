@@ -14,6 +14,9 @@ public class PreferenceWindow : EditorWindow
    const float _minProfileTime = 0.01f;
    const float _maxProfileTime = 10f;
 
+   const int _minPropertyPanelNodes = 1;
+   const int _maxPropertyPanelNodes = 20;
+
    RectOffset _padding = new RectOffset(16, 16, 8, 16);
 
    GUIStyle _styleWindow;
@@ -197,6 +200,8 @@ public class PreferenceWindow : EditorWindow
          }
          EditorGUILayout.EndHorizontal();
 
+         _preferences.PropertyPanelNodeLimit = Mathf.Min(_maxPropertyPanelNodes, Mathf.Max(_minPropertyPanelNodes, EditorGUILayout.IntField("Property Panel Node Limit", _preferences.PropertyPanelNodeLimit)));
+
          EditorGUILayout.Separator();
 
          //
@@ -262,10 +267,5 @@ public class PreferenceWindow : EditorWindow
       {
          _position = GUILayoutUtility.GetLastRect();
       }
-   }
-
-
-   void Update()
-   {
    }
 }
