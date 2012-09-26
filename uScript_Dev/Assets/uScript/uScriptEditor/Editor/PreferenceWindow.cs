@@ -17,6 +17,9 @@ public class PreferenceWindow : EditorWindow
    const int _minPropertyPanelNodes = 1;
    const int _maxPropertyPanelNodes = 20;
 
+   const int _minRecursion = 100;
+   const int _maxRecursion = 10000;
+
    RectOffset _padding = new RectOffset(16, 16, 8, 16);
 
    GUIStyle _styleWindow;
@@ -151,7 +154,7 @@ public class PreferenceWindow : EditorWindow
          //
          GUILayout.Label("Code Generation", EditorStyles.boldLabel);
 
-         _preferences.MaximumNodeRecursionCount = (int)EditorGUILayout.IntField("Maximum Node Recursion", _preferences.MaximumNodeRecursionCount);
+         _preferences.MaximumNodeRecursionCount = Mathf.Min(_maxRecursion, Mathf.Max(_minRecursion, EditorGUILayout.IntField("Maximum Node Recursion", _preferences.MaximumNodeRecursionCount)));
          _preferences.SaveMethod = (Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", _preferences.SaveMethod);
          uScript.Instance.GenerateDebugInfo = _preferences.SaveMethod != Preferences.SaveMethodType.Release;
 
