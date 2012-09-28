@@ -224,7 +224,8 @@ public class uScript : EditorWindow
    {
       get
       {
-         return GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+         return uScript_MasterComponent.LatestMaster;
+         //return GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
       }
    }
 
@@ -234,7 +235,7 @@ public class uScript : EditorWindow
    {
       get
       {
-         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+         GameObject uScriptMaster = MasterObject;//GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
          if (null == uScriptMaster)
          {
             uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Debug);
@@ -257,7 +258,7 @@ public class uScript : EditorWindow
    {
       get
       {
-         GameObject uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+         GameObject uScriptMaster = MasterObject;//GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
          if (null == uScriptMaster)
          {
             uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Debug);
@@ -552,7 +553,7 @@ public class uScript : EditorWindow
       //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
       //we don't save the fully qualified type name which is required to return types of assemblies not loaded
       List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(GameObject.FindObjectsOfType(typeof(UnityEngine.Object)));
-
+        
       foreach (UnityEngine.Object o in allObjects)
       {
          MasterComponent.AddType(o.GetType());

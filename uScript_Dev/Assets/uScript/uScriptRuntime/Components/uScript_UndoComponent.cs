@@ -14,6 +14,11 @@ public class uScript_UndoComponent : MonoBehaviour
 #if UNITY_EDITOR
    [HideInInspector]
    public int    UndoNumber = 0;
+   public static uScript_UndoComponent LatestUndoComponent;
 #endif
 
+   public void Awake( )
+   {
+      LatestUndoComponent = this;
+   }
 }
