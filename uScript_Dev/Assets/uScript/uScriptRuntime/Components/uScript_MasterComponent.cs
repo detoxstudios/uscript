@@ -17,10 +17,33 @@ public class uScript_MasterComponent : MonoBehaviour
    private Hashtable m_BreakpointCache = null;
 #endif
 
+   private static GameObject m_LatestMaster;
+   private static uScript_MasterComponent m_LatestMasterComponent;
+   
    //keep track of the latest master so uScripts loading
    //will know which master loaded with them for their scene infomration
-   public static GameObject LatestMaster = null;
-   public static uScript_MasterComponent LatestMasterComponent = null;
+   public static GameObject LatestMaster 
+   {
+       get 
+       { 
+           if (null == m_LatestMaster) m_LatestMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName); 
+           return m_LatestMaster;
+       }
+   }
+
+   public static uScript_MasterComponent LatestMasterComponent
+   {
+       get
+       {
+            if (null == m_LatestMasterComponent) 
+            {
+                if (null != LatestMaster) m_LatestMasterComponent = LatestMaster.GetComponent<uScript_MasterComponent>();
+            }
+
+           return m_LatestMasterComponent;
+       }
+   }
+
 
 #if FREE_PLE_BUILD
    public static string Version = "1.PLE";
@@ -34,8 +57,8 @@ public class uScript_MasterComponent : MonoBehaviour
 
    public void Awake( )
    {
-      LatestMaster = this.gameObject;
-      LatestMasterComponent = this;
+      m_LatestMaster = this.gameObject;
+      m_LatestMasterComponent = this;
 
 #if FREE_PLE_BUILD
       // Initialize the Watermark variable
