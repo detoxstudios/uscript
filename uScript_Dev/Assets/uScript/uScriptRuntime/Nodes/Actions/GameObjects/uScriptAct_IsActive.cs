@@ -27,6 +27,10 @@ public class uScriptAct_IsActive : uScriptLogic
       GameObject Target
       )
    {
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
       m_IsActive = Target.active;
+#else
+		m_IsActive = Target.activeSelf;
+#endif
    }
 }

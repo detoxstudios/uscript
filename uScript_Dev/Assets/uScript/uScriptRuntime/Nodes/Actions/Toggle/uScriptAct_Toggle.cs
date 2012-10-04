@@ -140,7 +140,7 @@ public class uScriptAct_Toggle : uScriptLogic
 
    private bool CheckIfActive(GameObject go)
    {
-#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
       return go.active;
 #else
       return go.activeInHierarchy;
@@ -150,7 +150,7 @@ public class uScriptAct_Toggle : uScriptLogic
 
    private void SetActiveState(GameObject go, bool State, bool IgnoreChildren)
    {
-#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
       if (IgnoreChildren)
       {
          go.active = State;
@@ -173,7 +173,7 @@ public class uScriptAct_Toggle : uScriptLogic
 
    private void SetAllChildren(GameObject go, bool State)
    {
-#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
 
 #else
       foreach (Transform child in go.transform)
