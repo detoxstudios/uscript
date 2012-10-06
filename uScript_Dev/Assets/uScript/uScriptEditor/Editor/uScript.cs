@@ -132,13 +132,13 @@ public class uScript : EditorWindow
    private Node _nodeClicked = null;
    public Node NodeClicked { get { return _nodeClicked; } set { _nodeClicked = value; } }
 
-   // This allows you to set the ifdef here but use this infor in other clases by calling - uScript.Instance.IsDevelopmentBuild
+   // This allows you to set the ifdef here but use this info in other clases by calling - uScript.Instance.IsDevelopmentBuild
 #if DEVELOPMENT_BUILD
     private bool _isDevelopmentBuild = true;
 #else
    private bool _isDevelopmentBuild = false;
 #endif
-   public bool IsDevelopmentBuild { get { return _isDevelopmentBuild; } set { _isDevelopmentBuild = value; } }
+   public bool IsDevelopmentBuild { get { return _isDevelopmentBuild; } }
 
 
    //   private double m_RefreshTimestamp = -1.0;
@@ -831,9 +831,6 @@ public class uScript : EditorWindow
    void Awake()
    {
       EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
-
-      _statusbarMessage = "Unity " + (isPro ? "Pro" : "Indie") + " (version " + Application.unityVersion + ")";
-
       m_ForceCodeValidation = true;
    }
 
@@ -2227,37 +2224,44 @@ public class uScript : EditorWindow
          _statusbarMessage = GUI.tooltip;
       }
 
-      // Get mouse position and region
-      string extraDetails = ((int)e.mousePosition.x).ToString() + ", "
-                            + ((int)e.mousePosition.y).ToString()
-                            + " (" + _mouseRegion.ToString() + ")";
-
-      // Get button state
-      if (Control.MouseButtons.Buttons != 0)
+      if (uScript.Instance.IsDevelopmentBuild == false)
       {
-         extraDetails = (Control.MouseButtons.Buttons == MouseButtons.Left ? "Left-Click"
-                         : Control.MouseButtons.Buttons == MouseButtons.Middle ? "Middle-Click"
-                         : "Right-Click")
-                        + " :: " + extraDetails;
-      }
-
-      // Get modifiers
-      if (e.modifiers != 0)
-      {
-         extraDetails = e.modifiers.ToString().Replace(",", " +")
-                        + (Control.MouseButtons.Buttons != 0 ? " + " : " :: ")
-                        + extraDetails;
-      }
-
-//      extraDetails = "Counter: " + (int)(counter++ / 50) + " - " + extraDetails;
-
-      EditorGUILayout.BeginHorizontal();
-      {
-//         GUILayout.Label(GUIUtility.keyboardControl + "\t\t" + _statusbarMessage, GUILayout.ExpandWidth(true));
          GUILayout.Label(_statusbarMessage, GUILayout.ExpandWidth(true));
-         GUILayout.Label(extraDetails, GUILayout.ExpandWidth(false));
       }
-      EditorGUILayout.EndHorizontal();
+      else
+      {
+         // Get mouse position and region
+         string extraDetails = ((int)e.mousePosition.x).ToString() + ", "
+                               + ((int)e.mousePosition.y).ToString()
+                               + " (" + _mouseRegion.ToString() + ")";
+
+         // Get button state
+         if (Control.MouseButtons.Buttons != 0)
+         {
+            extraDetails = (Control.MouseButtons.Buttons == MouseButtons.Left ? "Left-Click"
+                            : Control.MouseButtons.Buttons == MouseButtons.Middle ? "Middle-Click"
+                            : "Right-Click")
+                           + " :: " + extraDetails;
+         }
+
+         // Get modifiers
+         if (e.modifiers != 0)
+         {
+            extraDetails = e.modifiers.ToString().Replace(",", " +")
+                           + (Control.MouseButtons.Buttons != 0 ? " + " : " :: ")
+                           + extraDetails;
+         }
+
+//         extraDetails = "Counter: " + (int)(counter++ / 50) + " - " + extraDetails;
+
+         EditorGUILayout.BeginHorizontal();
+         {
+            GUILayout.Label("#" + GUIUtility.keyboardControl + "\t\t" + _statusbarMessage, GUILayout.ExpandWidth(true));
+//            GUILayout.Label(_statusbarMessage, GUILayout.ExpandWidth(true));
+            GUILayout.Label(extraDetails, GUILayout.ExpandWidth(false));
+         }
+         EditorGUILayout.EndHorizontal();
+      }
    }
 
 
