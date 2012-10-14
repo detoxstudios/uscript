@@ -1158,6 +1158,8 @@ namespace Detox.ScriptEditor
 
             Point point = m_FlowChart.PointToClient( Cursor.Position );
 
+            List<Guid> guidsToSelect = new List<Guid>();
+
             if (true == linkTo.Type.Contains("[]"))
             {
                //certain nodes we want to keep the array type in
@@ -1178,6 +1180,7 @@ namespace Detox.ScriptEditor
 
             LocalNode localNode = new LocalNode( "", linkTo.Type, "" );
             localNode.Position = point;
+            guidsToSelect.Add( localNode.Guid );
 
             m_ScriptEditor.AddNode( localNode );
             batchPatch.Add( new Detox.Patch.EntityNode("", null, localNode) );
@@ -1186,7 +1189,7 @@ namespace Detox.ScriptEditor
 
             string reason;
 
-            //if we can't like from->to try linking the other way (to->from)
+            //if we can't link from->to try linking the other way (to->from)
             if ( false == m_ScriptEditor.VerifyLink(linkNode, out reason) )
             {
                linkNode = new LinkNode( node.Guid, linkTo.Name, localNode.Guid, localNode.Value.Name );
@@ -1207,7 +1210,7 @@ namespace Detox.ScriptEditor
             m_Dirty = true;
 
             uScript.Instance.RegisterUndo( batchPatch );
-            PatchDisplay( batchPatch );
+            PatchDisplay( batchPatch, guidsToSelect );
          }
       }
 
@@ -1290,6 +1293,7 @@ namespace Detox.ScriptEditor
          MenuItem item = sender as MenuItem;
          EntityNode entityNode;
          Point offset = new Point(0, 0);
+         List<Guid> guidsToSelect = new List<Guid>();
 
          Patch.Batch batchPatch = new Patch.Batch( "Add" );
 
@@ -1333,6 +1337,7 @@ namespace Detox.ScriptEditor
       
                m_ScriptEditor.AddNode( entityNode );
                batchPatch.Add( new Patch.EntityNode( "", null, entityNode.Copy(true)) );
+               guidsToSelect.Add( entityNode.Guid );
 
                m_Dirty = true;
                
@@ -1395,7 +1400,7 @@ namespace Detox.ScriptEditor
                entityNode = clone;
             }
 
-
+            guidsToSelect.Add( entityNode.Guid );
             m_ScriptEditor.AddNode( entityNode );
             batchPatch.Add( new Patch.EntityNode( "", null, entityNode.Copy(true)) );
             
@@ -1405,7 +1410,7 @@ namespace Detox.ScriptEditor
          if ( true == batchPatch.HasPatches )
          {
             uScript.Instance.RegisterUndo( batchPatch );
-            PatchDisplay( batchPatch );
+            PatchDisplay( batchPatch, guidsToSelect );
 
             //RebuildScript( null );
          }
@@ -1503,6 +1508,7 @@ namespace Detox.ScriptEditor
          if ( locals.Count > 0 )
          {
             int i;
+            List<Guid> guidsToSelect = new List<Guid>();
 
             //figure out if all the selected nodes are the same type
             string type = locals[ 0 ].Value.Type.Replace( "[]", "" );
@@ -1537,6 +1543,7 @@ namespace Detox.ScriptEditor
             listNode.Value = value;
 
             listNode.Position = new Point( m_ContextCursor.X, m_ContextCursor.Y );
+            guidsToSelect.Add( listNode.Guid );
          
             //find everyone connected to us
             //and everyone we are connected to
@@ -1602,7 +1609,7 @@ namespace Detox.ScriptEditor
             }
 
             uScript.Instance.RegisterUndo( patchBatch );
-            PatchDisplay( patchBatch );
+            PatchDisplay( patchBatch, guidsToSelect );
             //RebuildScript( null );
          }
       }
@@ -1632,7 +1639,9 @@ namespace Detox.ScriptEditor
 
          Patch.EntityNode patchNode = new Detox.Patch.EntityNode("Add", null, entityNode);
          uScript.Instance.RegisterUndo( patchNode );
-         PatchDisplay( patchNode );
+         List<Guid> guidsToSelect = new List<Guid>();
+         guidsToSelect.Add( entityNode.Guid );
+         PatchDisplay( patchNode, guidsToSelect );
          
          //RebuildScript( null );
       }
