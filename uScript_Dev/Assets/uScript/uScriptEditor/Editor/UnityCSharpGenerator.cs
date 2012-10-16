@@ -1778,6 +1778,22 @@ namespace Detox.ScriptEditor
             {
                 declaration = "new UnityEngine.ContactPoint[ " + elements.Length + " ]"; ;
             }
+            else if ("UnityEngine.Texture2D[]" == type)
+            {
+                declaration = "new UnityEngine.Texture2D[ " + elements.Length + " ]"; ;
+            }
+            else if ("UnityEngine.AudioClip[]" == type)
+            {
+                declaration = "new UnityEngine.AudioClip[ " + elements.Length + " ]"; ;
+            }
+            else if ("UnityEngine.AnimationClip[]" == type)
+            {
+                declaration = "new UnityEngine.AnimationClip[ " + elements.Length + " ]"; ;
+            }
+            else if ("UnityEngine.Material[]" == type)
+            {
+                declaration = "new UnityEngine.Material[ " + elements.Length + " ]"; ;
+            }
             else
             {
                 try
