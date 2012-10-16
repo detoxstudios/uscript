@@ -1983,7 +1983,11 @@ namespace Detox.ScriptEditor
 
             AddCSharpLine("");
             AddCSharpLine("//local nodes");
-            foreach (LocalNode local in m_Script.UniqueLocals)
+            
+            LocalNode [] locals = m_Script.UniqueLocals;
+            Array.Sort(locals, LocalComparer);
+
+            foreach (LocalNode local in locals)
             {
                 string prefix = "true" == local.Externaled.Default ? "public " : "";
 
@@ -5062,6 +5066,14 @@ namespace Detox.ScriptEditor
         private string UpdateEditorValuesDeclaration()
         {
             return "UpdateEditorValues( )";
+        }
+
+        private int LocalComparer(LocalNode a, LocalNode b)
+        {
+            string sa = CSharpName(a);
+            string sb = CSharpName(b);
+
+            return String.Compare(sa, sb);
         }
     }
 }
