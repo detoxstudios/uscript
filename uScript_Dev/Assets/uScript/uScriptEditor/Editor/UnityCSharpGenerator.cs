@@ -1782,6 +1782,10 @@ namespace Detox.ScriptEditor
             {
                 declaration = "new UnityEngine.Texture2D[ " + elements.Length + " ]"; ;
             }
+            else if ("UnityEngine.Touch[]" == type)
+            {
+                declaration = "new UnityEngine.Touch[ " + elements.Length + " ]"; ;
+            }
             else if ("UnityEngine.AudioClip[]" == type)
             {
                 declaration = "new UnityEngine.AudioClip[ " + elements.Length + " ]"; ;
