@@ -663,6 +663,31 @@ namespace Detox.ScriptEditor
                 --m_TabStack;
                 AddCSharpLine("}");
 
+                AddCSharpLine("void OnEnable( )");
+                AddCSharpLine("{");
+                ++m_TabStack;
+
+                if (false == stubCode)
+                {
+                    AddCSharpLine("ExposedVariables.OnEnable( );");
+                }
+
+                --m_TabStack;
+                AddCSharpLine("}");
+
+                AddCSharpLine("void OnDisable( )");
+                AddCSharpLine("{");
+                ++m_TabStack;
+
+                if (false == stubCode)
+                {
+                    AddCSharpLine("ExposedVariables.OnDisable( );");
+                }
+
+                --m_TabStack;
+                AddCSharpLine("}");
+
+                
                 //always do update because the unity hooks
                 //and drivens are valdiated there
                 AddCSharpLine("void Update( )");
@@ -919,6 +944,36 @@ namespace Detox.ScriptEditor
                 if (false == stubCode)
                 {
                     DefineStartInitialization();
+                }
+
+                --m_TabStack;
+                AddCSharpLine("}");
+                AddCSharpLine("");
+
+                if (false == m_RequiredMethods.Contains("OnEnable")) m_RequiredMethods.Add("OnEnable");
+
+                AddCSharpLine("public void OnEnable()");
+                AddCSharpLine("{");
+                ++m_TabStack;
+
+                if (false == stubCode)
+                {
+                    DefineOnEnable();
+                }
+
+                --m_TabStack;
+                AddCSharpLine("}");
+                AddCSharpLine("");
+
+                if (false == m_RequiredMethods.Contains("OnDisable")) m_RequiredMethods.Add("OnDisable");
+
+                AddCSharpLine("public void OnDisable()");
+                AddCSharpLine("{");
+                ++m_TabStack;
+
+                if (false == stubCode)
+                {
+                    DefineOnDisable();
                 }
 
                 --m_TabStack;
@@ -1903,6 +1958,8 @@ namespace Detox.ScriptEditor
             AddCSharpLine("GameObject parentGameObject = null;");
             AddCSharpLine("uScript_GUI " + OnGuiListenerName() + " = null; ");
 
+            AddCSharpLine("bool m_RegisteredForEvents = false;");
+
             if (true == m_GenerateDebugInfo)
             {
                 AddCSharpLine("delegate void ContinueExecution();");
@@ -2100,13 +2157,38 @@ namespace Detox.ScriptEditor
             }
         }
 
+        private void DefineOnEnable()
+        {
+            AddCSharpLine(CSharpSyncUnityHooksDeclaration() + ";");
+            AddCSharpLine("m_RegisteredForEvents = true;");
+
+            //for each logic node, create an script specific instance
+            foreach (LogicNode logicNode in m_Script.Logics)
+            {
+                if (NeedsMethod(logicNode, "OnEnable"))
+                {
+                    AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnEnable( );");
+                }
+            }
+        }
+
+        private void DefineOnDisable()
+        {
+            //for each logic node, create an script specific instance
+            foreach (LogicNode logicNode in m_Script.Logics)
+            {
+                if (NeedsMethod(logicNode, "OnDisable"))
+                {
+                    AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnDisable( );");
+                }
+            }
+
+            AddCSharpLine(CSharpUnregisterEventListenersDeclaration() + ";");
+            AddCSharpLine("m_RegisteredForEvents = false;");
+        }
+
         private void DefineStartInitialization()
         {
-            //make sure all components we plan to reference
-            //have been placed in their local variables
-            AddCSharpLine(CSharpSyncUnityHooksDeclaration() + ";");
-            AddCSharpLine("");
-
             //for each logic node, create an script specific instance
             foreach (LogicNode logicNode in m_Script.Logics)
             {
@@ -2197,8 +2279,6 @@ namespace Detox.ScriptEditor
         private void DefineOnDestroy()
         {
             Profile p = new Profile("DefineOnDestroy");
-
-            AddCSharpLine(CSharpUnregisterEventListenersDeclaration() + ";");
 
             //for each logic node event, register event listeners with it
             foreach (LogicNode logicNode in m_Script.Logics)
@@ -2462,7 +2542,7 @@ namespace Detox.ScriptEditor
                     {
                         if (values[i].Trim() == "") continue;
 
-                        AddCSharpLine("if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )");
+                        AddCSharpLine("if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] || false == m_RegisteredForEvents )");
                         AddCSharpLine("{");
                         ++m_TabStack;
 
@@ -2509,7 +2589,7 @@ namespace Detox.ScriptEditor
                     {
                         if (values[i].Trim() == "") continue;
 
-                        AddCSharpLine("if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] )");
+                        AddCSharpLine("if ( null == " + CSharpName(node, parameter.Name) + "[" + i + "] || false == m_RegisteredForEvents )");
                         AddCSharpLine("{");
                         ++m_TabStack;
 
@@ -2546,7 +2626,7 @@ namespace Detox.ScriptEditor
             {
                 if (true == fillNulls && parameter.Default != "")
                 {
-                    AddCSharpLine("if ( null == " + CSharpName(node, parameter.Name) + " )");
+                    AddCSharpLine("if ( null == " + CSharpName(node, parameter.Name) + " || false == m_RegisteredForEvents )");
                     AddCSharpLine("{");
                     ++m_TabStack;
 
@@ -2578,7 +2658,7 @@ namespace Detox.ScriptEditor
             {
                 if (true == fillNulls && true == node is OwnerConnection)
                 {
-                    AddCSharpLine("if ( null == " + CSharpName(node, parameter.Name) + " )");
+                    AddCSharpLine("if ( null == " + CSharpName(node, parameter.Name) + " || false == m_RegisteredForEvents )");
                     AddCSharpLine("{");
                     ++m_TabStack;
                     AddCSharpLine(CSharpName(node, parameter.Name) + " = parentGameObject;");
@@ -2588,7 +2668,7 @@ namespace Detox.ScriptEditor
                 }
                 else if (true == fillNulls && parameter.Default != "")
                 {
-                    AddCSharpLine("if ( null == " + CSharpName(node, parameter.Name) + " )");
+                    AddCSharpLine("if ( null == " + CSharpName(node, parameter.Name) + " || false == m_RegisteredForEvents )");
                     AddCSharpLine("{");
                     ++m_TabStack;
 
@@ -2822,6 +2902,7 @@ namespace Detox.ScriptEditor
                 m_CSharpString += newCode;
 
                 AddCSharpLine("}");
+            
             }
         
             p.End();
@@ -4561,16 +4642,16 @@ namespace Detox.ScriptEditor
         //so i have a manual list here of methods which are external inputs should not be called
         private string RemoveReflectionConflicts(string methodName)
         {
-            if (methodName == "Start") return "_" + methodName;
-            if (methodName == "Update") return "_" + methodName;
-            if (methodName == "OnGUI") return "_" + methodName;
-            if (methodName == "Awake") return "_" + methodName;
-
+            if (methodName == "Start")      return "_" + methodName;
+            if (methodName == "Update")     return "_" + methodName;
+            if (methodName == "OnGUI")      return "_" + methodName;
+            if (methodName == "Awake")      return "_" + methodName;
+            if (methodName == "OnDisable")  return "_" + methodName;
+            if (methodName == "OnEnable")   return "_" + methodName;
+            
             //we no longer derive from ScriptableObject
             //so these aren't a concern
             //if ( methodName == "OnDestroy" )   return "_" + methodName;
-            //if ( methodName == "OnDisable" )   return "_" + methodName;
-            //if ( methodName == "OnEnable" )    return "_" + methodName;
             //if ( methodName == "LateUpdate" )  return "_" + methodName;
             //if ( methodName == "FixedUpdate" ) return "_" + methodName;
 
