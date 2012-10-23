@@ -3439,6 +3439,7 @@ namespace Detox.ScriptEditor
          {
             UnityEditor.Handles.color = UnityEngine.Color.yellow;
             radius = 16;
+            m_Ctrl.CenterOnNode( this );
          }
 
          radius *= ZoomScale;
