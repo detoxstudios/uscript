@@ -3918,15 +3918,31 @@ namespace Detox.ScriptEditor
                   
                   if ( false == hasValue )
                   {
-                     //if it already exists see if the externaled
-                     //value changed, this would mean it's been updated
+                     //if it already exists and the name matches the currently existing one 
+                     //then see if the externaled value changed, this would mean it's been updated
                      //even if the value is blank
                      if ( true == m_Nodes.Contains(node.Guid) )
                      {
                         LocalNode clone = (LocalNode) m_Nodes.Get(node.Guid);
-                        hasValue = clone.Externaled != localNode.Externaled;
+                        if (clone.Name == localNode.Name)
+                        {
+                           hasValue = clone.Externaled != localNode.Externaled;
+                        }
                      }
                   }
+
+                  if ( true == hasValue )
+                  {
+                     //if the name doesn't match the preexisting one then they're typing in a new name
+                     //and we don't want it to copy it's values across in case there is a name collision
+                     //with a different node as they type
+                     if ( true == m_Nodes.Contains(node.Guid) )
+                     {
+                        LocalNode clone = (LocalNode) m_Nodes.Get(node.Guid);
+                        hasValue = clone.Name == localNode.Name;
+                     }
+                  }
+
 
                   //if they modified a local node
                   //go through the list and update all matching nodes
