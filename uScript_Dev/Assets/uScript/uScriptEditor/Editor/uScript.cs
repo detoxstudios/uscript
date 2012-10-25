@@ -4111,6 +4111,17 @@ public class uScript : EditorWindow
          if (false == m.IsPublic) continue;
          if (true == baseMethods.Contains(m.Name)) continue;
 
+          if (false == m.IsStatic)
+          {
+              // The generated code assumes Instance is a GameObject
+              // and then it does Instance.GetComponent<t>();
+              // so if it isn't a component type we'll get compile errors
+              // this v1 fix is to not reflect nodes which don't have a compatible type
+             if (false == typeof(UnityEngine.Component).IsAssignableFrom(type) &&
+                 false == typeof(MonoBehaviour).IsAssignableFrom(type))
+                 continue;
+          }
+
          ParameterInfo[] parameterInfos = m.GetParameters();
 
          EntityMethod entityMethod = new EntityMethod(type.ToString(), m.Name, FindFriendlyName(m.Name, m.GetCustomAttributes(false)));
@@ -4407,7 +4418,7 @@ public class uScript : EditorWindow
       if ( null == m_SzEntityTypes )
       {
          uScriptDebug.Log( "Reparsing Entity Types", uScriptDebug.Type.Debug );
-
+          
          List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(FindObjectsOfType(typeof(UnityEngine.Object)));
          Dictionary<string, Type> uniqueObjects = new Dictionary<string, Type>();
 
@@ -4537,7 +4548,7 @@ public class uScript : EditorWindow
       foreach (Type t in types)
       {
          if (t == typeof(uScript_MasterComponent)) continue;
-
+         
          Reflect(t, entityDescs, baseMethods, baseEvents, baseProperties);
       }
 
