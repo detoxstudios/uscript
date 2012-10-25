@@ -3924,26 +3924,19 @@ namespace Detox.ScriptEditor
                      if ( true == m_Nodes.Contains(node.Guid) )
                      {
                         LocalNode clone = (LocalNode) m_Nodes.Get(node.Guid);
-                        if (clone.Name == localNode.Name)
-                        {
-                           hasValue = clone.Externaled != localNode.Externaled;
-                        }
+                        hasValue = clone.Externaled != localNode.Externaled;
                      }
                   }
 
-                  if ( true == hasValue )
+                  //if the name doesn't match the preexisting one then they're typing in a new name
+                  //and we don't want it to copy it's values across in case there is a name collision
+                  //with a different node as they type
+                  if ( true == hasValue && true == m_Nodes.Contains(node.Guid) )
                   {
-                     //if the name doesn't match the preexisting one then they're typing in a new name
-                     //and we don't want it to copy it's values across in case there is a name collision
-                     //with a different node as they type
-                     if ( true == m_Nodes.Contains(node.Guid) )
-                     {
-                        LocalNode clone = (LocalNode) m_Nodes.Get(node.Guid);
-                        hasValue = clone.Name == localNode.Name;
-                     }
+                     LocalNode clone = (LocalNode) m_Nodes.Get(node.Guid);
+                     hasValue = clone.Name == localNode.Name;
                   }
-
-
+ 
                   //if they modified a local node
                   //go through the list and update all matching nodes
 
