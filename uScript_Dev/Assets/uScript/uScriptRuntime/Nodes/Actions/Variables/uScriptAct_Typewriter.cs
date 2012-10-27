@@ -48,14 +48,14 @@ public class uScriptAct_Typewriter : uScriptLogic
       [DefaultValue(0.2f)]
       float delayTime,
 
-      [FriendlyName("Skip Delay", "The time delay between characters that will be use if the node receives a signal on its Skip input socket. Set to 0 if you want the string to finish typing instantly.")]
+      [FriendlyName("Skip Delay", "The time delay between characters that will be used if the node receives a signal on its Skip input socket. Set to 0 if you want the string to finish typing instantly.")]
       [DefaultValue(0.05f)]
       float skipDelayTime,
 
-      [FriendlyName("Output", "The new string containing the characters from the old string. This string is updated as each character is 'typed'. Use this variable with the Character Typed output socket to update your UI as each character is added to this string variable.")]
+      [FriendlyName("Output", "The new string containing the characters from the original target string. This string is updated as each character is 'typed'. Use this variable with the Character Typed output socket to update your UI as each character is added to this string variable.")]
       out string Output,
 
-      [FriendlyName("Current Character", "The current string character the typewriter is currently on.")]
+      [FriendlyName("Current Character", "The current character in the target string that the typewriter is currently on.")]
       [SocketState(false, false)]
       out string currentCharacter
       )
@@ -106,14 +106,14 @@ public class uScriptAct_Typewriter : uScriptLogic
       [DefaultValue(0.2f)]
       float delayTime,
 
-      [FriendlyName("Skip Delay", "The time delay between characters that will be use if the node receives a signal on its Skip input socket. Set to 0 if you want the string to finish typing instantly.")]
+      [FriendlyName("Skip Delay", "The time delay between characters that will be used if the node receives a signal on its Skip input socket. Set to 0 if you want the string to finish typing instantly.")]
       [DefaultValue(0.05f)]
       float skipDelayTime,
 
-      [FriendlyName("Output", "The new string containing the characters from the old string. This string is updated as each character is 'typed'. Use this variable with the Character Typed output socket to update your UI as each character is added to this string variable.")]
+      [FriendlyName("Output", "The new string containing the characters from the orginial target string. This string is updated as each character is 'typed'. Use this variable with the Character Typed output socket to update your UI as each character is added to this string variable.")]
       out string Output,
 
-      [FriendlyName("Current Character", "The current string character the typewriter is currently on.")]
+      [FriendlyName("Current Character", "The current character in the target string that the typewriter is currently on.")]
       [SocketState(false, false)]
       out string currentCharacter
       )
