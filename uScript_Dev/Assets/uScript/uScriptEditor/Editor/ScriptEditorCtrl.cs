@@ -1210,7 +1210,7 @@ namespace Detox.ScriptEditor
             m_Dirty = true;
 
             uScript.Instance.RegisterUndo( batchPatch );
-            PatchDisplay( batchPatch, guidsToSelect );
+            PatchDisplay( batchPatch, guidsToSelect, true );
          }
       }
 
@@ -1410,7 +1410,7 @@ namespace Detox.ScriptEditor
          if ( true == batchPatch.HasPatches )
          {
             uScript.Instance.RegisterUndo( batchPatch );
-            PatchDisplay( batchPatch, guidsToSelect );
+            PatchDisplay( batchPatch, guidsToSelect, true );
 
             //RebuildScript( null );
          }
@@ -1609,7 +1609,7 @@ namespace Detox.ScriptEditor
             }
 
             uScript.Instance.RegisterUndo( patchBatch );
-            PatchDisplay( patchBatch, guidsToSelect );
+            PatchDisplay( patchBatch, guidsToSelect, true );
             //RebuildScript( null );
          }
       }
@@ -1716,15 +1716,25 @@ namespace Detox.ScriptEditor
 
       public void PatchDisplay( Patch.PatchData patch )
       {
-         PatchDisplay( patch, null );
+         PatchDisplay( patch, null, false );
       }
 
       private void PatchDisplay( Patch.PatchData patch, List<Guid> guidsToSelect )
       {
+         PatchDisplay( patch, guidsToSelect, false );
+      }
+
+      private void PatchDisplay( Patch.PatchData patch, List<Guid> guidsToSelect, bool deselectAll )
+      {
          RemoveEventHandlers( );
 
          patch.Apply( this );
-
+   
+         if ( deselectAll )
+         {
+            m_FlowChart.DeselectAll();
+         }
+         
          if ( null != guidsToSelect )
          {
             m_FlowChart.SelectNodes( guidsToSelect.ToArray( ) );
