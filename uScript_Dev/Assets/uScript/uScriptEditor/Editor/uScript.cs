@@ -2256,7 +2256,9 @@ public class uScript : EditorWindow
 
          EditorGUILayout.BeginHorizontal();
          {
-            GUILayout.Label("#" + GUIUtility.keyboardControl + "\t\t" + _statusbarMessage, GUILayout.ExpandWidth(true));
+            GUILayout.Label("#" + GUIUtility.keyboardControl
+               + "\t\t[" + GUI.GetNameOfFocusedControl() + "]"
+               + "\t\t" + _statusbarMessage, GUILayout.ExpandWidth(true));
 //            GUILayout.Label(_statusbarMessage, GUILayout.ExpandWidth(true));
             GUILayout.Label(extraDetails, GUILayout.ExpandWidth(false));
          }
