@@ -1652,8 +1652,8 @@ public class uScript : EditorWindow
             {
                m_PressedKey = e.keyCode;
             }
-
-            if ("MainView" == GUI.GetNameOfFocusedControl() || GUIUtility.keyboardControl == 0)
+   
+            if (GUIUtility.keyboardControl == 0)
             {
                if (  (e.keyCode == KeyCode.F
                      && (e.modifiers == EventModifiers.Alt
@@ -1693,7 +1693,7 @@ public class uScript : EditorWindow
             }
             break;
          case EventType.KeyUp:
-            if ("MainView" == GUI.GetNameOfFocusedControl())
+            if (GUIUtility.keyboardControl == 0)
             {
                if (e.keyCode == KeyCode.F
                    && (e.modifiers == EventModifiers.Alt
@@ -1763,7 +1763,7 @@ public class uScript : EditorWindow
 
             // The BackQuote key doesn't work well on the German keyboard, so support Backslash as well
             if (  (e.keyCode == KeyCode.BackQuote || e.keyCode == KeyCode.Backslash)
-                  && (GUI.GetNameOfFocusedControl() == "MainView" || GUIUtility.keyboardControl == 0) )
+                  && GUIUtility.keyboardControl == 0 )
             {
                uScriptGUI.panelsHidden = !uScriptGUI.panelsHidden;
 
