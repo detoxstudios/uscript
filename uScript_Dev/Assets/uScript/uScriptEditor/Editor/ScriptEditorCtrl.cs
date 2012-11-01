@@ -2204,7 +2204,22 @@ namespace Detox.ScriptEditor
 
                         if (local.Name.Default == ((LocalNode)entityNode).Name.Default)
                         {
-                           oldGlobals.Add(local);
+                           if (local.Value.Type == ((LocalNode)entityNode).Value.Type)
+                           {
+                               oldGlobals.Add(local);
+                           }
+                           else
+                           {
+                               Parameter name = ((LocalNode)entityNode).Name;
+                               name.Default = "";
+
+                               LocalNode ln = (LocalNode) entityNode;
+                               ln.Name = name;
+                               
+                               entityNode = ln;
+
+                               uScriptDebug.Log( "Nodes with different types cannot share the same global name.", uScriptDebug.Type.Warning );
+                           }
                         }
                      }
                   }
