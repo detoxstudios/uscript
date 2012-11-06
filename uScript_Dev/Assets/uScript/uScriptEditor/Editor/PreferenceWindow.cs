@@ -223,12 +223,12 @@ public class PreferenceWindow : EditorWindow
          }
          EditorGUILayout.EndHorizontal();
 
-         if (uScript.Instance.IsDevelopmentBuild)
+         // Add some development fields for debugging and testing
+         if (uScript.IsDevelopmentBuild)
          {
             _preferences.LastUpdateCheck = EditorGUILayout.IntField("Last Update Check", _preferences.LastUpdateCheck);
             _preferences.IgnoreUpdateBuild = EditorGUILayout.TextField("Ignore Build", _preferences.IgnoreUpdateBuild);
          }
-
 
          EditorGUILayout.Separator();
          EditorGUILayout.Space();

@@ -132,13 +132,13 @@ public class uScript : EditorWindow
    private Node _nodeClicked = null;
    public Node NodeClicked { get { return _nodeClicked; } set { _nodeClicked = value; } }
 
-   // This allows you to set the ifdef here but use this info in other clases by calling - uScript.Instance.IsDevelopmentBuild
+   // This allows you to set the ifdef here but use this info in other clases by calling - uScript.IsDevelopmentBuild
 #if DEVELOPMENT_BUILD
-    private bool _isDevelopmentBuild = true;
+    private static bool _isDevelopmentBuild = true;
 #else
-   private bool _isDevelopmentBuild = false;
+   private static bool _isDevelopmentBuild = false;
 #endif
-   public bool IsDevelopmentBuild { get { return _isDevelopmentBuild; } }
+   public static bool IsDevelopmentBuild { get { return _isDevelopmentBuild; } }
 
 
    //   private double m_RefreshTimestamp = -1.0;
@@ -2224,7 +2224,7 @@ public class uScript : EditorWindow
          _statusbarMessage = GUI.tooltip;
       }
 
-      if (uScript.Instance.IsDevelopmentBuild == false)
+      if (uScript.IsDevelopmentBuild == false)
       {
          GUILayout.Label(_statusbarMessage, GUILayout.ExpandWidth(true));
       }
