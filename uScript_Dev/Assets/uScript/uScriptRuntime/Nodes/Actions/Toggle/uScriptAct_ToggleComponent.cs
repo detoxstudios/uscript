@@ -75,6 +75,10 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                      {
                         ((ParticleEmitter)comp).enabled = true;
                      }
+							else if (typeof(LineRenderer).IsAssignableFrom(comp.GetType()))
+                     {
+                        ((LineRenderer)comp).enabled = true;
+                     }
                   }
                }
             }
@@ -122,6 +126,10 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                      else if (typeof(ParticleEmitter).IsAssignableFrom(comp.GetType()))
                      {
                         ((ParticleEmitter)comp).enabled = false;
+                     }
+					 else if (typeof(LineRenderer).IsAssignableFrom(comp.GetType()))
+                     {
+                        ((LineRenderer)comp).enabled = false;
                      }
                   }
                }
@@ -212,6 +220,19 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                         else
                         {
                            ((ParticleEmitter)comp).enabled = true;
+                           turnedOn = true;
+                        }
+                     }
+					 else if (typeof(LineRenderer).IsAssignableFrom(comp.GetType()))
+                     {
+                        if ( ((LineRenderer)comp).enabled )
+                        {
+                           ((LineRenderer)comp).enabled = false;
+                           turnedOff = true;
+                        }
+                        else
+                        {
+                           ((LineRenderer)comp).enabled = true;
                            turnedOn = true;
                         }
                      }
