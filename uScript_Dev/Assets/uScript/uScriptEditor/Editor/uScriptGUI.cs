@@ -43,6 +43,7 @@ public static class uScriptGUI
 //   static Dictionary<string, object> _modifiedValue = new Dictionary<string, object>();
 
    static string _nodeKey = string.Empty;
+   static int _nodeCount;
    static int _propertyCount;
    static bool _isPropertyRowEven = false;
    static bool _panelsHidden;
@@ -123,6 +124,7 @@ public static class uScriptGUI
       _columnValue = new Column(col2, 220);
       _columnType = new Column(col3, 0);
 
+      _nodeCount = 0;
       _propertyCount = 0;
 
       columnOffset = offset;
@@ -218,12 +220,12 @@ public static class uScriptGUI
       GUILayout.EndHorizontal();
    }
    
-   public static bool BeginProperty(string label, Node node)
+   public static bool BeginPropertyList(string label, Node node)
    {
       ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
 
-      _propertyCount++;
-      _nodeKey = node != null ? node.Guid.ToString() : "";
+      _nodeCount++;
+      _nodeKey = node != null ? node.Guid.ToString() : "UNKNOWN";
       if (false == _foldoutExpanded.ContainsKey(_nodeKey))
       {
          _foldoutExpanded[_nodeKey] = true;
@@ -246,6 +248,12 @@ public static class uScriptGUI
                //            label += "\t\t--- DEPRECATED: UPDATED OR REPLACE ---";
                //            label += "\t\t--- DEPRECATED ---";
             }
+         }
+
+         // Add the node key for development builds
+         if (uScript.IsDevelopmentBuild)
+         {
+            label += "\t\t[" + _nodeKey + "]";
          }
 
          _foldoutExpanded[_nodeKey] = GUILayout.Toggle(_foldoutExpanded[_nodeKey], label, uScriptGUIStyle.nodeButtonLeft);
@@ -319,7 +327,7 @@ public static class uScriptGUI
       return _foldoutExpanded[_nodeKey];
    }
 
-   public static void EndProperty()
+   public static void EndPropertyList()
    {
       if (_foldoutExpanded[_nodeKey])
       {
@@ -379,6 +387,8 @@ public static class uScriptGUI
       uScriptGUI.enabled = true;
       GUILayout.Label(type, _styleType);
       EditorGUILayout.EndHorizontal();
+
+      _propertyCount++;
    }
 
    private static bool IsFieldUsable(bool isSocketExposed, bool isLocked, bool isReadOnly)
@@ -402,7 +412,6 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         GUI.SetNextControlName(label);
          value = EditorGUILayout.IntField(value, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
       }
 
@@ -416,7 +425,6 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         GUI.SetNextControlName(label);
          value = EditorGUILayout.FloatField(value, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
       }
 
@@ -430,7 +438,6 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         GUI.SetNextControlName(label);
          value = EditorGUILayout.TextField(value, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
       }
 
@@ -444,7 +451,6 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         GUI.SetNextControlName(label);
          value = EditorGUILayout.TextArea(value, GUILayout.Width(_columnValue.Width));
       }
 
@@ -458,7 +464,6 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         GUI.SetNextControlName(label);
          value = GUILayout.Toggle(value, GUIContent.none, uScriptGUIStyle.propertyBoolField, GUILayout.Width(_columnValue.Width));
       }
 
@@ -470,7 +475,6 @@ public static class uScriptGUI
    {
       BeginStaticRow(label, ref isSocketExposed, isLocked, true);
 
-      GUI.SetNextControlName(label);
       EditorGUILayout.TextField(text, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
 
       EndRow("");
@@ -482,7 +486,6 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         GUI.SetNextControlName(label);
          value = EditorGUILayout.ColorField(value, GUILayout.Width(_columnValue.Width));
       }
 
@@ -515,9 +518,7 @@ public static class uScriptGUI
          int w = (_columnValue.Width - spacing) / 2;
          int p = (_columnValue.Width - spacing) % (w * 2);
 
-         GUI.SetNextControlName(label + ".x");
          value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         GUI.SetNextControlName(label + ".y");
          value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
       }
 
@@ -1403,7 +1404,6 @@ public static class uScriptGUI
       {
          Vector2 buttonSize = style.CalcSize(new GUIContent("Browse"));
 
-         GUI.SetNextControlName(label);
          assetPath = EditorGUILayout.TextField(assetPath, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width - 4 - buttonSize.x));
 
          uScriptGUI.enabled = !AssetBrowserWindow.isOpen;
@@ -1480,6 +1480,11 @@ public static class uScriptGUI
       }
    }
 
+   private static int GetControlIDHashCode(string suffix = "")
+   {
+      string controlID = _nodeKey + "[" + _propertyCount.ToString() + "]" + suffix;
+      return controlID.GetHashCode();
+   }
 
 
 

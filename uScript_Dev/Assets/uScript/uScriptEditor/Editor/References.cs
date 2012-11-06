@@ -167,7 +167,7 @@ namespace Detox.Windows.Forms
             {
                Detox.FlowChart.Node node = parameters.EntityNode != null ? uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid) : null;
 
-               if (uScriptGUI.BeginProperty(parameters.Description, node))
+               if (uScriptGUI.BeginPropertyList(parameters.Description, node))
                {
                   foreach ( Parameter p in parameters.Parameters )
                   {
@@ -404,7 +404,7 @@ namespace Detox.Windows.Forms
 
                   parameters.Parameters = updatedParameters.ToArray( );
                }
-               uScriptGUI.EndProperty();
+               uScriptGUI.EndPropertyList();
             }
          }
 
