@@ -1,7 +1,8 @@
-//uScript Generated Code - Build 0.9.1848
+//uScript Generated Code - Build 0.9.1993
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [NodePath("Graphs")]
 [System.Serializable]
@@ -12,12 +13,12 @@ public class uScript_StressTest : uScriptLogic
    #pragma warning disable 414
    GameObject parentGameObject = null;
    uScript_GUI thisScriptsOnGuiListener = null; 
+   bool m_RegisteredForEvents = false;
    delegate void ContinueExecution();
    ContinueExecution m_ContinueExecution;
    bool m_Breakpoint = false;
    const int MaxRelayCallCount = 1000;
    int relayCallCount = 0;
-   //external output properties
    
    //externally exposed events
    
@@ -26,16 +27,14 @@ public class uScript_StressTest : uScriptLogic
    //local nodes
    UnityEngine.GameObject local_0_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_0_UnityEngine_GameObject_previous = null;
-   System.String local_2_System_String = "Area Damage";
-   System.Int32 local_5_System_Int32 = (int) 0;
-   UnityEngine.GameObject local_6_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_6_UnityEngine_GameObject_previous = null;
-   System.Int32 local_9_System_Int32 = (int) 0;
+   UnityEngine.GameObject local_105_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_105_UnityEngine_GameObject_previous = null;
+   System.Int32 local_113_System_Int32 = (int) 0;
+   System.String local_119_System_String = "Ogre";
    System.Boolean local_15_System_Boolean = (bool) false;
    UnityEngine.GameObject local_17_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_17_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_Cover3_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_Cover3_UnityEngine_GameObject_previous = null;
+   System.String local_2_System_String = "Area Damage";
    System.Boolean local_22_System_Boolean = (bool) false;
    System.Single local_25_System_Single = (float) 3;
    UnityEngine.GameObject local_26_UnityEngine_GameObject = null;
@@ -46,26 +45,28 @@ public class uScript_StressTest : uScriptLogic
    UnityEngine.GameObject local_45_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_45_UnityEngine_GameObject_previous = null;
    System.Int32 local_49_System_Int32 = (int) 0;
+   System.Int32 local_5_System_Int32 = (int) 0;
    System.Int32 local_53_System_Int32 = (int) 0;
    UnityEngine.GameObject local_54_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_54_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_Cover1_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_Cover1_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_6_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_6_UnityEngine_GameObject_previous = null;
    UnityEngine.GameObject local_69_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_69_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_Cover2_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_Cover2_UnityEngine_GameObject_previous = null;
    System.String local_86_System_String = "";
    UnityEngine.GameObject local_88_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_88_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_Monster_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_Monster_UnityEngine_GameObject_previous = null;
+   System.Int32 local_9_System_Int32 = (int) 0;
    UnityEngine.GameObject local_94_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_94_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_105_UnityEngine_GameObject = null;
-   UnityEngine.GameObject local_105_UnityEngine_GameObject_previous = null;
-   System.Int32 local_113_System_Int32 = (int) 0;
-   System.String local_119_System_String = "Ogre";
+   UnityEngine.GameObject local_Cover1_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_Cover1_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_Cover2_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_Cover2_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_Cover3_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_Cover3_UnityEngine_GameObject_previous = null;
+   UnityEngine.GameObject local_Monster_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_Monster_UnityEngine_GameObject_previous = null;
    
    //owner nodes
    
@@ -413,7 +414,7 @@ public class uScript_StressTest : uScriptLogic
    
    void SyncEventListeners( )
    {
-      if ( null == event_UnityEngine_GameObject_Instance_92 )
+      if ( null == event_UnityEngine_GameObject_Instance_92 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_92 = uScript_MasterComponent.LatestMaster;
          if ( null != event_UnityEngine_GameObject_Instance_92 )
@@ -431,7 +432,7 @@ public class uScript_StressTest : uScriptLogic
             }
          }
       }
-      if ( null == event_UnityEngine_GameObject_Instance_106 )
+      if ( null == event_UnityEngine_GameObject_Instance_106 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_106 = uScript_MasterComponent.LatestMaster;
          if ( null != event_UnityEngine_GameObject_Instance_106 )
@@ -524,8 +525,18 @@ public class uScript_StressTest : uScriptLogic
    
    public void Start()
    {
+   }
+   
+   public void OnEnable()
+   {
       SyncUnityHooks( );
-      
+      m_RegisteredForEvents = true;
+   }
+   
+   public void OnDisable()
+   {
+      UnregisterEventListeners( );
+      m_RegisteredForEvents = false;
    }
    
    public void Update()
@@ -564,7 +575,6 @@ public class uScript_StressTest : uScriptLogic
    
    public void OnDestroy()
    {
-      UnregisterEventListeners( );
       logic_uScriptAct_PlaySound_uScriptAct_PlaySound_55.Finished -= uScriptAct_PlaySound_Finished_55;
       logic_uScriptAct_Toggle_uScriptAct_Toggle_70.OnOut -= uScriptAct_Toggle_OnOut_70;
       logic_uScriptAct_Toggle_uScriptAct_Toggle_70.OffOut -= uScriptAct_Toggle_OffOut_70;
@@ -2162,18 +2172,6 @@ public class uScript_StressTest : uScriptLogic
       {
          uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Play Sound.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
-   }
-   
-   [Driven]
-   public bool DrivenDelay_63(  )
-   {
-      return logic_uScriptAct_Delay_DrivenDelay_63;
-   }
-   
-   [Driven]
-   public bool DrivenDelay_64(  )
-   {
-      return logic_uScriptAct_Delay_DrivenDelay_64;
    }
    
    private void UpdateEditorValues( )

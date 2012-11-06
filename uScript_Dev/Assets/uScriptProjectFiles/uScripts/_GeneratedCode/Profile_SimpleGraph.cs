@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.1986
+//uScript Generated Code - Build 0.9.1993
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -13,6 +13,7 @@ public class Profile_SimpleGraph : uScriptLogic
    #pragma warning disable 414
    GameObject parentGameObject = null;
    uScript_GUI thisScriptsOnGuiListener = null; 
+   bool m_RegisteredForEvents = false;
    delegate void ContinueExecution();
    ContinueExecution m_ContinueExecution;
    bool m_Breakpoint = false;
@@ -53,7 +54,7 @@ public class Profile_SimpleGraph : uScriptLogic
    
    void SyncEventListeners( )
    {
-      if ( null == event_UnityEngine_GameObject_Instance_4 )
+      if ( null == event_UnityEngine_GameObject_Instance_4 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_4 = uScript_MasterComponent.LatestMaster;
          if ( null != event_UnityEngine_GameObject_Instance_4 )
@@ -100,8 +101,18 @@ public class Profile_SimpleGraph : uScriptLogic
    
    public void Start()
    {
+   }
+   
+   public void OnEnable()
+   {
       SyncUnityHooks( );
-      
+      m_RegisteredForEvents = true;
+   }
+   
+   public void OnDisable()
+   {
+      UnregisterEventListeners( );
+      m_RegisteredForEvents = false;
    }
    
    public void Update()
@@ -127,7 +138,6 @@ public class Profile_SimpleGraph : uScriptLogic
    
    public void OnDestroy()
    {
-      UnregisterEventListeners( );
    }
    
    void Instance_uScriptStart_4(object o, System.EventArgs e)

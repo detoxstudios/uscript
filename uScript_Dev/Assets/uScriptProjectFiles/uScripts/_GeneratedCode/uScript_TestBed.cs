@@ -1,7 +1,8 @@
-//uScript Generated Code - Build 0.9.1848
+//uScript Generated Code - Build 0.9.1993
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [NodePath("Graphs")]
 [System.Serializable]
@@ -12,20 +13,20 @@ public class uScript_TestBed : uScriptLogic
    #pragma warning disable 414
    GameObject parentGameObject = null;
    uScript_GUI thisScriptsOnGuiListener = null; 
+   bool m_RegisteredForEvents = false;
    delegate void ContinueExecution();
    ContinueExecution m_ContinueExecution;
    bool m_Breakpoint = false;
    const int MaxRelayCallCount = 1000;
    int relayCallCount = 0;
-   //external output properties
    
    //externally exposed events
    
    //external parameters
    
    //local nodes
-   System.Single local_2_System_Single = (float) 90;
    System.Single local_12_System_Single = (float) 2;
+   System.Single local_2_System_Single = (float) 90;
    
    //owner nodes
    
@@ -149,11 +150,11 @@ public class uScript_TestBed : uScriptLogic
    void SyncUnityHooks( )
    {
       SyncEventListeners( );
-      if ( null == property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 )
+      if ( null == property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 || false == m_RegisteredForEvents )
       {
          property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 = GameObject.Find( "Main Camera" ) as UnityEngine.GameObject;
       }
-      if ( null == property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 )
+      if ( null == property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 || false == m_RegisteredForEvents )
       {
          property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 = GameObject.Find( "Main Camera" ) as UnityEngine.GameObject;
       }
@@ -161,7 +162,7 @@ public class uScript_TestBed : uScriptLogic
    
    void SyncEventListeners( )
    {
-      if ( null == event_UnityEngine_GameObject_Instance_3 )
+      if ( null == event_UnityEngine_GameObject_Instance_3 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_3 = uScript_MasterComponent.LatestMaster;
          if ( null != event_UnityEngine_GameObject_Instance_3 )
@@ -179,7 +180,7 @@ public class uScript_TestBed : uScriptLogic
             }
          }
       }
-      if ( null == event_UnityEngine_GameObject_Instance_11 )
+      if ( null == event_UnityEngine_GameObject_Instance_11 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_11 = uScript_MasterComponent.LatestMaster;
          if ( null != event_UnityEngine_GameObject_Instance_11 )
@@ -243,8 +244,18 @@ public class uScript_TestBed : uScriptLogic
    
    public void Start()
    {
+   }
+   
+   public void OnEnable()
+   {
       SyncUnityHooks( );
-      
+      m_RegisteredForEvents = true;
+   }
+   
+   public void OnDisable()
+   {
+      UnregisterEventListeners( );
+      m_RegisteredForEvents = false;
    }
    
    public void Update()
@@ -278,7 +289,6 @@ public class uScript_TestBed : uScriptLogic
    
    public void OnDestroy()
    {
-      UnregisterEventListeners( );
    }
    
    void Instance_KeyEvent_3(object o, System.EventArgs e)
@@ -630,18 +640,6 @@ public class uScript_TestBed : uScriptLogic
       {
          uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Log.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
-   }
-   
-   [Driven]
-   public bool Driven_4(  )
-   {
-      return logic_uScriptAct_InterpolateFloatLinear_Driven_4;
-   }
-   
-   [Driven]
-   public bool DrivenDelay_7(  )
-   {
-      return logic_uScriptAct_Delay_DrivenDelay_7;
    }
    
    private void UpdateEditorValues( )

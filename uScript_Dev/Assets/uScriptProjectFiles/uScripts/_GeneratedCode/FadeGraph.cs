@@ -1,7 +1,8 @@
-//uScript Generated Code - Build 0.9.1848
+//uScript Generated Code - Build 0.9.1993
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [NodePath("Graphs")]
 [System.Serializable]
@@ -12,28 +13,28 @@ public class FadeGraph : uScriptLogic
    #pragma warning disable 414
    GameObject parentGameObject = null;
    uScript_GUI thisScriptsOnGuiListener = null; 
+   bool m_RegisteredForEvents = false;
    delegate void ContinueExecution();
    ContinueExecution m_ContinueExecution;
    bool m_Breakpoint = false;
    const int MaxRelayCallCount = 1000;
    int relayCallCount = 0;
-   //external output properties
    
    //externally exposed events
    
    //external parameters
    
    //local nodes
-   System.Single local_8_System_Single = (float) 0;
-   UnityEngine.Color local_FadeColor_UnityEngine_Color = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
+   public UnityEngine.Material FadeMaterial = null;
    System.Single local_11_System_Single = (float) 0;
    UnityEngine.Color local_12_UnityEngine_Color = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
+   System.String local_19_System_String = "Health:";
+   System.String local_25_System_String = "";
+   System.Single local_8_System_Single = (float) 0;
+   UnityEngine.Color local_FadeColor_UnityEngine_Color = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
    UnityEngine.GameObject local_FadeGO_UnityEngine_GameObject = null;
    UnityEngine.GameObject local_FadeGO_UnityEngine_GameObject_previous = null;
-   System.String local_19_System_String = "Health:";
    System.Single local_PlayerHealth_System_Single = (float) 100;
-   System.String local_25_System_String = "";
-   public UnityEngine.Material FadeMaterial = null;
    
    //owner nodes
    
@@ -182,7 +183,7 @@ public class FadeGraph : uScriptLogic
    void SyncUnityHooks( )
    {
       SyncEventListeners( );
-      if ( null == logic_uScriptAct_CameraFade_TargetCamera_14 )
+      if ( null == logic_uScriptAct_CameraFade_TargetCamera_14 || false == m_RegisteredForEvents )
       {
          GameObject gameObject = GameObject.Find( "Main Camera" );
          if ( null != gameObject )
@@ -190,7 +191,7 @@ public class FadeGraph : uScriptLogic
             logic_uScriptAct_CameraFade_TargetCamera_14 = gameObject.GetComponent<UnityEngine.Camera>();
          }
       }
-      if ( null == logic_uScriptAct_CameraFade_TargetCamera_30 )
+      if ( null == logic_uScriptAct_CameraFade_TargetCamera_30 || false == m_RegisteredForEvents )
       {
          GameObject gameObject = GameObject.Find( "Main Camera" );
          if ( null != gameObject )
@@ -198,7 +199,7 @@ public class FadeGraph : uScriptLogic
             logic_uScriptAct_CameraFade_TargetCamera_30 = gameObject.GetComponent<UnityEngine.Camera>();
          }
       }
-      if ( null == local_FadeGO_UnityEngine_GameObject )
+      if ( null == local_FadeGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          local_FadeGO_UnityEngine_GameObject = GameObject.Find( "FadePlane" ) as UnityEngine.GameObject;
       }
@@ -215,7 +216,7 @@ public class FadeGraph : uScriptLogic
    
    void SyncEventListeners( )
    {
-      if ( null == event_UnityEngine_GameObject_Instance_0 )
+      if ( null == event_UnityEngine_GameObject_Instance_0 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_0 = uScript_MasterComponent.LatestMaster;
          if ( null != event_UnityEngine_GameObject_Instance_0 )
@@ -233,7 +234,7 @@ public class FadeGraph : uScriptLogic
             }
          }
       }
-      if ( null == event_UnityEngine_GameObject_Instance_16 )
+      if ( null == event_UnityEngine_GameObject_Instance_16 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_16 = uScript_MasterComponent.LatestMaster;
          if ( null != event_UnityEngine_GameObject_Instance_16 )
@@ -309,8 +310,18 @@ public class FadeGraph : uScriptLogic
    
    public void Start()
    {
+   }
+   
+   public void OnEnable()
+   {
       SyncUnityHooks( );
-      
+      m_RegisteredForEvents = true;
+   }
+   
+   public void OnDisable()
+   {
+      UnregisterEventListeners( );
+      m_RegisteredForEvents = false;
    }
    
    public void Update()
@@ -360,7 +371,6 @@ public class FadeGraph : uScriptLogic
    
    public void OnDestroy()
    {
-      UnregisterEventListeners( );
    }
    
    public void OnGUI()
@@ -1080,42 +1090,6 @@ public class FadeGraph : uScriptLogic
          uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Camera Fade.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
    }
-   [Driven]
-   public bool DrivenDelay_1(  )
-   {
-      return logic_uScriptAct_Delay_DrivenDelay_1;
-   }
-   
-   [Driven]
-   public bool Driven_9(  )
-   {
-      return logic_uScriptAct_InterpolateFloatLinear_Driven_9;
-   }
-   
-   [Driven]
-   public bool DrivenFade_14(  )
-   {
-      return logic_uScriptAct_CameraFade_DrivenFade_14;
-   }
-   
-   [Driven]
-   public bool DrivenDelay_28(  )
-   {
-      return logic_uScriptAct_Delay_DrivenDelay_28;
-   }
-   
-   [Driven]
-   public bool DrivenDelay_29(  )
-   {
-      return logic_uScriptAct_Delay_DrivenDelay_29;
-   }
-   
-   [Driven]
-   public bool DrivenFade_30(  )
-   {
-      return logic_uScriptAct_CameraFade_DrivenFade_30;
-   }
-   
    private void UpdateEditorValues( )
    {
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "FadeGraph.uscript:8", local_8_System_Single);

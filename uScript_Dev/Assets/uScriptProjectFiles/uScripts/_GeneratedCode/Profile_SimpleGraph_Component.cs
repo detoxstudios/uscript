@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.1986
+//uScript Generated Code - Build 0.9.1993
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +30,14 @@ public class Profile_SimpleGraph_Component : uScriptCode
    void Start( )
    {
       ExposedVariables.Start( );
+   }
+   void OnEnable( )
+   {
+      ExposedVariables.OnEnable( );
+   }
+   void OnDisable( )
+   {
+      ExposedVariables.OnDisable( );
    }
    void Update( )
    {
