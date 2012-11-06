@@ -1480,7 +1480,7 @@ public static class uScriptGUI
       }
    }
 
-   private static int GetControlIDHashCode(string suffix = "")
+   private static int GetControlIDHashCode(string suffix)
    {
       string controlID = _nodeKey + "[" + _propertyCount.ToString() + "]" + suffix;
       return controlID.GetHashCode();
