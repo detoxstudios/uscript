@@ -21,10 +21,15 @@ public class uScript_Global : uScriptEvent
    [FriendlyName("On Graph Start")]
    public event uScriptEventHandler uScriptStart;
 
+   private bool m_Sent = false;
+
    //can't perform in Start because we aren't guaranteed
    //all the listeners are registered
-   void Start()
+   void Update()
    {
+      if ( true == m_Sent ) return;
+
+      m_Sent = true;
       if ( uScriptStart != null ) uScriptStart(this, new System.EventArgs());
    }
 }
