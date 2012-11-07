@@ -239,7 +239,7 @@ public class UpdateNotification
       // LastUpdateCheck will be 0 when uScript it first run, or when the uScriptSettings file is removed
       if (_preferences.LastUpdateCheck <= 0)
       {
-         bool enable = EditorUtility.DisplayDialog("Automaticly check for uScript updates?",
+         bool enable = EditorUtility.DisplayDialog("Automatically check for uScript updates?",
                "This update check will send basic, anonymous Unity and uScript information to our update server. No personally identifiable information is transmitted or collected.\n" +
                "\n" +
                "This service can be enable or disable at any time from within the uScript Preferences panel.\n",
