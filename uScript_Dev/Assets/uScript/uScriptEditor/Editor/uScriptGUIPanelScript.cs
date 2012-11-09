@@ -36,15 +36,13 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
    string _clickedControl = string.Empty;
 
    string _currentScriptName = string.Empty;
-   string _currentScriptName_uScript = string.Empty;
+   string _currentScriptFileName = string.Empty;
 
    GUIStyle _styleButtonGroup = null;
-
-   GUIStyle _scriptCurrentNormal = null;
-   GUIStyle _scriptCurrentError = null;
-   GUIStyle _scriptListNormal = null;
-   GUIStyle _scriptListBold = null;
-
+   GUIStyle _styleCurrentScriptNormal = null;
+   GUIStyle _styleCurrentScriptError = null;
+   GUIStyle _styleScriptListNormal = null;
+   GUIStyle _styleScriptListBold = null;
    GUIStyle _styleMiniButtonLeft = null;
    GUIStyle _styleMiniButtonRight = null;
 
@@ -81,17 +79,17 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 //      _region = uScriptGUI.Region.Script;
 
       // Setup the custom GUI styles
-      _scriptCurrentNormal = new GUIStyle(EditorStyles.boldLabel);
+      _styleCurrentScriptNormal = new GUIStyle(EditorStyles.boldLabel);
 
-      _scriptCurrentError = new GUIStyle(_scriptCurrentNormal);
-      _scriptCurrentError.normal.textColor = UnityEngine.Color.red;
+      _styleCurrentScriptError = new GUIStyle(_styleCurrentScriptNormal);
+      _styleCurrentScriptError.normal.textColor = UnityEngine.Color.red;
 
-      _scriptListNormal = new GUIStyle(EditorStyles.label);
-      _scriptListNormal.margin = new RectOffset(4, 4, 1, 1);
-      _scriptListNormal.padding = new RectOffset(2, 2, 0, 0);
+      _styleScriptListNormal = new GUIStyle(EditorStyles.label);
+      _styleScriptListNormal.margin = new RectOffset(4, 4, 1, 1);
+      _styleScriptListNormal.padding = new RectOffset(2, 2, 0, 0);
 
-      _scriptListBold = new GUIStyle(_scriptListNormal);
-      _scriptListBold.fontStyle = FontStyle.Bold;
+      _styleScriptListBold = new GUIStyle(_styleScriptListNormal);
+      _styleScriptListBold.fontStyle = FontStyle.Bold;
 
       _styleMiniButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
       _styleMiniButtonLeft.margin = new RectOffset(4, 0, 1, 1);
@@ -149,13 +147,12 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label("uScripts", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 
             GUILayout.FlexibleSpace();
 
             GUI.SetNextControlName ("ScriptFilterSearch" );
             string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
-//            GUI.SetNextControlName ("" );
             if (_filterText != _panelFilterText)
             {
                // Drop focus if the user inserted a newline (hit enter)
@@ -196,31 +193,33 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             //
             // Current script
             //
-            if (_currentScriptName_uScript != m_ScriptEditorCtrl.ScriptName)
+            if (_currentScriptFileName != m_ScriptEditorCtrl.ScriptName)
             {
-               _currentScriptName_uScript = m_ScriptEditorCtrl.ScriptName;
-               _currentScriptName = System.IO.Path.GetFileNameWithoutExtension(_currentScriptName_uScript);
+               _currentScriptFileName = m_ScriptEditorCtrl.ScriptName;
+               _currentScriptName = System.IO.Path.GetFileNameWithoutExtension(_currentScriptFileName);
             }
 
-            if (null == _currentScriptName_uScript)
-               _currentScriptName_uScript = string.Empty;
+            if (null == _currentScriptFileName)
+            {
+               _currentScriptFileName = string.Empty;
+            }
 
             // uScript Label
             scriptSceneName = string.Empty;
-            if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(_currentScriptName_uScript))
+            if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(_currentScriptFileName))
             {
-               if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[_currentScriptName_uScript].m_SceneName) == false)
+               if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[_currentScriptFileName].m_SceneName) == false)
                {
-                  scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[_currentScriptName_uScript].m_SceneName;
+                  scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[_currentScriptFileName].m_SceneName;
                }
             }
 
-            bool isScriptNew = String.IsNullOrEmpty(_currentScriptName_uScript);
+            bool isScriptNew = String.IsNullOrEmpty(_currentScriptFileName);
             bool isScriptAttachToScene = (scriptSceneName == currentSceneName);
             bool isScriptDirty = m_ScriptEditorCtrl.IsDirty;
 
             GUILayout.Label(( (isScriptNew ? "(new)" : _currentScriptName)
-                              + (isScriptDirty ? " *" : string.Empty) ), _scriptCurrentNormal );
+                              + (isScriptDirty ? " *" : string.Empty) ), _styleCurrentScriptNormal );
 
             GUILayout.BeginHorizontal();
             {
@@ -232,7 +231,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                                                  ? '\u21aa'
                                                  : '\u00bb') + "\t",
                                               "Points to the scene the script is attached to."),
-                               _scriptCurrentNormal,
+                               _styleCurrentScriptNormal,
                                GUILayout.ExpandWidth(false));
 
                GUILayout.Label(new GUIContent((scriptSceneName == string.Empty ? "(none)" : scriptSceneName),
@@ -240,8 +239,8 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                                                  ? "This script is not attached to any scene.  It may be used with Prefabs or as a Nested Script."
                                                  : "The name of the scene that the script is attached to.")),
                                (isScriptAttachToScene || scriptSceneName == string.Empty
-                                  ? _scriptCurrentNormal
-                                  : _scriptCurrentError));
+                                  ? _styleCurrentScriptNormal
+                                  : _styleCurrentScriptError));
             }
             GUILayout.EndHorizontal();
 
@@ -276,7 +275,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                      // Reload button
                      if (GUILayout.Button(uScriptGUIContent.buttonScriptReload, EditorStyles.miniButtonMid))
                      {
-                        string path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, _currentScriptName_uScript);
+                        string path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, _currentScriptFileName);
    
                         if (path != string.Empty)
                         {
@@ -470,7 +469,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            }
 
                            // Script Label buton
-                           if (GUI.Button(rectLabelButton, scriptName + (scriptSceneName == "None" ? string.Empty : " (" + scriptSceneName + ")"), (wasClicked ? _scriptListBold : _scriptListNormal)))
+                           if (GUI.Button(rectLabelButton, scriptName + (scriptSceneName == "None" ? string.Empty : " (" + scriptSceneName + ")"), (wasClicked ? _styleScriptListBold : _styleScriptListNormal)))
                            {
                               path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFileName);
 
