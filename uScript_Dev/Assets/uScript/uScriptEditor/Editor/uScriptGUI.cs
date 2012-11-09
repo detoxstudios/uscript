@@ -855,7 +855,8 @@ public static class uScriptGUI
       BeginFoldoutRow(label, ref isSocketExposed, isLocked, isReadOnly, ref isExpanded);
 
       // Display the array info, readonly, socketUsed, or an empty area
-      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      bool isFieldUsable = IsFieldUsable(isSocketExposed, isLocked, isReadOnly);
+      if (isFieldUsable)
       {
          GUILayout.Label("... (" + array.Length + " item" + (array.Length == 1 ? string.Empty : "s") + ")", _styleLabel, GUILayout.Width(_columnValue.Width));
 
@@ -885,7 +886,7 @@ public static class uScriptGUI
       //
       // The array size
       //
-      if (isExpanded)
+      if (isExpanded && isFieldUsable)
       {
          bool hideSocket = false;
 
