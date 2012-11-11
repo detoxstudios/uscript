@@ -307,6 +307,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
       if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScriptGUI.panelLeftWidth)
       {
+         // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
          uScriptGUI.panelLeftWidth = (int)uScript.Instance.paletteRect.width;
       }
 

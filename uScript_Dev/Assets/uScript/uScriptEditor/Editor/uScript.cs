@@ -89,6 +89,10 @@ public class uScript : EditorWindow
    private MouseRegion _mouseRegion = MouseRegion.Outside;
    private MouseRegion _mouseRegionUpdate = MouseRegion.Outside;
    private MouseRegion m_MouseDownRegion = MouseRegion.Outside;
+   public MouseRegion MouseDownRegion {
+      get { return m_MouseDownRegion; }
+      set { m_MouseDownRegion = value; }
+   }
 
    public Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
@@ -486,6 +490,12 @@ public class uScript : EditorWindow
 
       UpdateNotification.StartupCheck();
 
+   }
+   
+   // call to force release the mouse and stop a drag operation
+   public void ForceReleaseMouse()
+   {
+      m_MouseDown = false;
    }
 
    private void Launching( )
@@ -1836,6 +1846,10 @@ public class uScript : EditorWindow
                   }
 
                   m_MouseDown = true;
+
+                  // reset drag variables
+                  lastMouseX = (int)e.mousePosition.x;
+                  lastMouseY = (int)e.mousePosition.y;
                }
 
                // update the mouse move position whenever there's a click in case we were previously outside the window
@@ -2186,7 +2200,14 @@ public class uScript : EditorWindow
 
    void DrawGUIBottomAreas()
    {
-      EditorGUILayout.BeginHorizontal(GUILayout.Height(uScriptGUI.panelPropertiesHeight));
+      Rect rect = EditorGUILayout.BeginHorizontal(GUILayout.Height(uScriptGUI.panelPropertiesHeight));
+      if ( rect.height != 0.0f && rect.height != (float)uScriptGUI.panelPropertiesHeight )
+      {
+         // if we didn't get the height we requested, we must have hit a limit, stop dragging and reset the height
+         uScriptGUI.panelPropertiesHeight = (int)rect.height;
+         m_MouseDownRegion = MouseRegion.Canvas;
+         ForceReleaseMouse();
+      }
       {
          uScriptGUIPanelProperty.Instance.Draw();
 
@@ -3226,7 +3247,7 @@ public class uScript : EditorWindow
 
    static int lastMouseX = 0;
    static int lastMouseY = 0;
-
+   
    public void OnMouseMove()
    {
 //      Debug.Log("OnMouseMove()\n");
