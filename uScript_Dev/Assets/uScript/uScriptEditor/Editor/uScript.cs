@@ -762,6 +762,7 @@ public class uScript : EditorWindow
       m_Patches = new string[ 0 ];
       CurrentScript = m_ScriptEditorCtrl.ScriptEditor.ToBase64( null );
       CurrentScriptDirty = m_ScriptEditorCtrl.IsDirty;
+      CurrentScriptName = m_ScriptEditorCtrl.Name;     
    }
 
    static public object GetSetting(string key)
@@ -3658,6 +3659,13 @@ public class uScript : EditorWindow
             // When a file is saved (regardless of method), we should updated the
             // Dictionary cache for that script.
             //
+            
+            //script was saved under a new name, refresh the control
+             if (script.Name != m_ScriptEditorCtrl.Name)
+            {
+                m_ScriptEditorCtrl = new Detox.ScriptEditor.ScriptEditorCtrl(script);
+            }
+
             string scriptName = System.IO.Path.GetFileNameWithoutExtension(m_FullPath);
             SetStaleState(scriptName, script.GeneratedCodeIsStale);
             SetDebugState(scriptName, script.SavedForDebugging);
@@ -3665,7 +3673,7 @@ public class uScript : EditorWindow
             m_ScriptEditorCtrl.IsDirty = false;
 
             CacheScript( );
-
+            
             if (true == pleaseAttachMe)
             {
                AssetDatabase.Refresh();
