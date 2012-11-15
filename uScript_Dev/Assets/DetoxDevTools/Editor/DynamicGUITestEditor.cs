@@ -1,11 +1,11 @@
 using UnityEditor;
 using UnityEngine;
 
-public class ControlNameTestEditor : EditorWindow
+public class DynamicGUITestEditor : EditorWindow
 {
-	static private ControlNameTestEditor _instance = null;
+	static private DynamicGUITestEditor _instance = null;
 
-	static public ControlNameTestEditor Instance
+	static public DynamicGUITestEditor Instance
 	{
 		get
 		{
@@ -20,7 +20,7 @@ public class ControlNameTestEditor : EditorWindow
 	[MenuItem ("Detox Tools/Internal/Dynamic GUI Test Editor &%g")]
 	private static void Init()
 	{
-		_instance = (ControlNameTestEditor)EditorWindow.GetWindow(typeof(ControlNameTestEditor), true, "Dynamic GUI Test Editor");
+		_instance = (DynamicGUITestEditor)EditorWindow.GetWindow(typeof(DynamicGUITestEditor), true, "Dynamic GUI Test Editor");
       Vector2 panelSize = new Vector2(256, 224);
       _instance.minSize = panelSize;
       _instance.maxSize = panelSize;
