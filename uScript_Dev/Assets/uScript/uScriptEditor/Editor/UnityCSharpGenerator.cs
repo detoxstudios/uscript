@@ -2275,6 +2275,7 @@ namespace Detox.ScriptEditor
             AddCSharpLine("{");
             ++m_TabStack;
                 AddCSharpLine(CSharpSyncUnityHooksDeclaration() + ";");
+                AddCSharpLine("m_RegisteredForEvents = true;");
             --m_TabStack;
             AddCSharpLine("}");
 
@@ -2283,8 +2284,6 @@ namespace Detox.ScriptEditor
             AddCSharpLine("//so we need to verify all our event listeners are registered");
             AddCSharpLine(CSharpSyncEventListenersDeclaration() + ";");
             AddCSharpLine("");
-
-            AddCSharpLine("m_RegisteredForEvents = true;");
 
             foreach (LogicNode logicNode in m_Script.Logics)
             {
