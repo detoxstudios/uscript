@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 [NodePath("Actions/Variables/Lists/GameObject")]
 
-[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Modify a list by specifying a specific slot number (index) in the list.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
