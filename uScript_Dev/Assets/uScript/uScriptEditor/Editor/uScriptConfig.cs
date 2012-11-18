@@ -733,6 +733,8 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(UnityEngine.RaycastHit), "RaycastHit", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Rect), "Rect", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Rect[]), "Rect List", "Variables/Lists" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Transform), "Transform", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Transform[]), "Transform List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Texture2D), "Texture2D", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Texture2D[]), "Texture2D List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Vector2), "Vector2", "Variables" ),
