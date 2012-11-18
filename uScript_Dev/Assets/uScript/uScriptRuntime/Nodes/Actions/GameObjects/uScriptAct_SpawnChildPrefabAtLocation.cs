@@ -6,22 +6,14 @@ using System.Collections;
 
 [NodePath("Actions/GameObjects")]
 
-[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
+[NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Create an instance of a Prefab as a child of the parent GameObject at the specified spawn point.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Spawn_Prefab_At_Location")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Spawn Child Prefab At Location", "Create (instantiate) an instance of a Prefab as a child of the parent GameObject at the specified Vector3 location at runtime (must be in the Resources folder structure).")]
 public class uScriptAct_SpawnChildPrefabAtLocation : uScriptLogic
 {
-   // @TODO: Needed functionality includes:
-   // 1. Ability to spawn multiple Prefabs at once with an optional delay between spawns.
-   // 2. Ability to put spawned object into a GameObject variable or list.
-   // 3. Ability to set multiple spawn point locations.
-   // 4. Ability to set a Vector3 location in option of GameObject location.
-   // 5. Multiple inputs (Spawn Prefab, Enable, Disable, and Toggle).
-   // 6. Logic to check for a legal spawn collision check before doing a spwan Prefab (would have Aborted out).
-   // 7. Would it be better to have another master uScript script to hold an array of prefabs to spawn (instead of Resources folder)? Both?
 
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
    private bool m_FinishedSpawning = false;
@@ -50,7 +42,7 @@ public class uScriptAct_SpawnChildPrefabAtLocation : uScriptLogic
       [SocketState(false, false)]
       string SpawnedName,
 		
-		[FriendlyName("Parent", "The parent GameObject.")]
+		[FriendlyName("Parent", "The parent GameObject you wish the newly spawned GameObject to be a child of. If left blank, the spawned GameObject will have no parent.")]
       GameObject Parent,
 
 // The offset from the Spawn Point to spawn prefab(s) from.
