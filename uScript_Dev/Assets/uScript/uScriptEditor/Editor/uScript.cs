@@ -328,6 +328,12 @@ public class uScript : EditorWindow
          return new string[0];
       }
    }
+   
+   public bool AllowKeyInput()
+   {
+      return (UnityVersion <= 3.5f && "MainView" == GUI.GetNameOfFocusedControl()) || GUIUtility.keyboardControl == 0;
+   }
+   
    public ScriptEditorCtrl ScriptEditorCtrl
    {
       get { return m_ScriptEditorCtrl; }
@@ -1602,45 +1608,45 @@ public class uScript : EditorWindow
          case EventType.ValidateCommand:
             if (e.commandName == "Copy")
             {
-               if (m_ScriptEditorCtrl.CanCopy && "MainView" == GUI.GetNameOfFocusedControl())
+               if (m_ScriptEditorCtrl.CanCopy && AllowKeyInput())
                {
                   e.Use();
                }
             }
             else if (e.commandName == "Cut")
             {
-               if (m_ScriptEditorCtrl.CanCopy && "MainView" == GUI.GetNameOfFocusedControl())
+               if (m_ScriptEditorCtrl.CanCopy && AllowKeyInput())
                {
                   e.Use();
                }
             }
-            else if (e.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl())
+            else if (e.commandName == "Paste" && AllowKeyInput())
             {
                if (m_ScriptEditorCtrl.CanPaste)
                {
                   e.Use();
                }
             }
-            else if (e.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl())
+            else if (e.commandName == "SelectAll" && AllowKeyInput())
             {
                e.Use();
             }
             break;
 
          case EventType.ExecuteCommand:
-            if (e.commandName == "Copy" && "MainView" == GUI.GetNameOfFocusedControl())
+            if (e.commandName == "Copy" && AllowKeyInput())
             {
                m_WantsCopy = true;
             }
-            else if (e.commandName == "Cut" && "MainView" == GUI.GetNameOfFocusedControl())
+            else if (e.commandName == "Cut" && AllowKeyInput())
             {
                m_WantsCut = true;
             }
-            else if (e.commandName == "Paste" && "MainView" == GUI.GetNameOfFocusedControl())
+            else if (e.commandName == "Paste" && AllowKeyInput())
             {
                m_WantsPaste = true;
             }
-            else if (e.commandName == "SelectAll" && "MainView" == GUI.GetNameOfFocusedControl())
+            else if (e.commandName == "SelectAll" && AllowKeyInput())
             {
                m_SelectAllNodes = true;
             }
@@ -1664,7 +1670,7 @@ public class uScript : EditorWindow
                m_PressedKey = e.keyCode;
             }
    
-            if ((UnityVersion <= 3.5f && "MainView" == GUI.GetNameOfFocusedControl()) || GUIUtility.keyboardControl == 0)
+            if (AllowKeyInput())
             {
                if (  (e.keyCode == KeyCode.F
                      && (e.modifiers == EventModifiers.Alt
@@ -1704,7 +1710,7 @@ public class uScript : EditorWindow
             }
             break;
          case EventType.KeyUp:
-            if ((UnityVersion <= 3.5f && "MainView" == GUI.GetNameOfFocusedControl()) || (UnityVersion >= 4.0f && GUIUtility.keyboardControl == 0))
+            if (AllowKeyInput())
             {
                if (e.keyCode == KeyCode.F
                    && (e.modifiers == EventModifiers.Alt
@@ -1774,7 +1780,7 @@ public class uScript : EditorWindow
 
             // The BackQuote key doesn't work well on the German keyboard, so support Backslash as well
             if (  (e.keyCode == KeyCode.BackQuote || e.keyCode == KeyCode.Backslash)
-                  && ((UnityVersion <= 3.5f && "MainView" == GUI.GetNameOfFocusedControl()) || (UnityVersion >= 4.0f && GUIUtility.keyboardControl == 0 )))
+                  && AllowKeyInput())
             {
                uScriptGUI.panelsHidden = !uScriptGUI.panelsHidden;
 
