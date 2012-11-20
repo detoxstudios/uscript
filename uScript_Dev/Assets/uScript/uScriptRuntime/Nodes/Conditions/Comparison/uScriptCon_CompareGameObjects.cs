@@ -33,19 +33,27 @@ public class uScriptCon_CompareGameObjects : uScriptLogic
 
       [FriendlyName("Compare By Name", "Whether or not to compare the GameObjects' names instead of the objects themselves.")]
       [SocketState(false, false)]
-      bool CompareByName
+      bool CompareByName,
+
+      [FriendlyName("Report Null", "Whether or not to report null GameObjects in the console.")]
+      [SocketState(false, false)]
+      [DefaultValue(true)]
+      bool ReportNull
       )
    {
       m_CompareValue = false;
-   
-      if (null == A)
-      {
-         uScriptDebug.Log("Compare GameObjects A is null", uScriptDebug.Type.Warning);
-      }
 
-      if (null == B)
+      if (ReportNull)
       {
-         uScriptDebug.Log("Compare GameObjects B is null", uScriptDebug.Type.Warning);
+         if (null == A)
+         {
+            uScriptDebug.Log("Compare GameObjects A is null", uScriptDebug.Type.Warning);
+         }
+   
+         if (null == B)
+         {
+            uScriptDebug.Log("Compare GameObjects B is null", uScriptDebug.Type.Warning);
+         }
       }
 
       if (null == A || null == B)
