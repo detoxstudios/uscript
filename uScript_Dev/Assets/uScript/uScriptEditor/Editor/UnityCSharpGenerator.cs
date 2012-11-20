@@ -2788,6 +2788,7 @@ namespace Detox.ScriptEditor
                     if (values[i].Trim() == "") continue;
 
                     SetupEventListeners(CSharpName(node, parameter.Name) + "[" + i + "]", node, false);
+                    AddCSharpLine(CSharpName(node, parameter.Name) + "[" + i + "] = null;");
                 }
             }
             else if (true == componentArrayType.IsAssignableFrom(nodeType))
@@ -2817,6 +2818,7 @@ namespace Detox.ScriptEditor
                     if (values[i].Trim() == "") continue;
 
                     SetupEventListeners(CSharpName(node, parameter.Name) + "[" + i + "]", node, false);
+                    AddCSharpLine(CSharpName(node, parameter.Name) + "[" + i + "] = null;");
                 }
 
                 --m_TabStack;
@@ -2825,18 +2827,21 @@ namespace Detox.ScriptEditor
             else if (true == componentType.IsAssignableFrom(nodeType))
             {
                 SetupEventListeners(CSharpName(node, parameter.Name), node, false);
+                AddCSharpLine(CSharpName(node, parameter.Name) + " = null;");
             }
             else if (true == gameObjectType.IsAssignableFrom(nodeType))
             {
                 if (true == node is OwnerConnection)
                 {
                     SetupEventListeners(CSharpName(node, parameter.Name), node, false);
+                    AddCSharpLine(CSharpName(node, parameter.Name) + " = null;");
                 }
                 else if (parameter.Default != "")
                 {
                     if (false == node is LocalNode)
                     {
                         SetupEventListeners(CSharpName(node, parameter.Name), node, false);
+                        AddCSharpLine(CSharpName(node, parameter.Name) + " = null;");
                     }
                 }
 
@@ -2847,6 +2852,8 @@ namespace Detox.ScriptEditor
                 if (true == node is LocalNode)
                 {
                     SetupEventListeners(CSharpName(node, parameter.Name), node, false);
+                    AddCSharpLine(CSharpName(node, parameter.Name) + " = null;");
+                    AddCSharpLine(PreviousName(node, parameter.Name) + " = null;");
                 }
             }
         
