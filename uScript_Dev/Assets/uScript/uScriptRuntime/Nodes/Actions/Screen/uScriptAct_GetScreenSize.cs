@@ -18,11 +18,17 @@ public class uScriptAct_GetScreenSize : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Width", "Returns the width of the screen size in pixels.")]
+      [FriendlyName("Width", "Returns the width of the screen size in pixels as an integer.")]
       out int ScreenWidth,
       
-      [FriendlyName("Height", "Returns the height of the screen size in pixels.")]
+      [FriendlyName("Height", "Returns the height of the screen size in pixels as an integer.")]
       out int ScreenHeight,
+      
+      [FriendlyName("Float Width", "Returns the width of the screen size in pixels as a float.")]
+      out float fScreenWidth,
+      
+      [FriendlyName("Float Height", "Returns the height of the screen size in pixels as a float.")]
+      out float fScreenHeight,
       
       [FriendlyName("Screen Rect", "Returns the screen size as a Rect variable.")]
       [SocketState(false, false)]
@@ -38,6 +44,8 @@ public class uScriptAct_GetScreenSize : uScriptLogic
 
       ScreenWidth = Screen.width;
       ScreenHeight = Screen.height;
+      fScreenWidth = (float)Screen.width;
+      fScreenHeight = (float)Screen.height;
       ScreenRect = scrnSize;
       ScreenCenter = scrnCenter;
       
