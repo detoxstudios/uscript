@@ -46,59 +46,31 @@ public static class uScriptGUI
    static int _nodeCount;
    static int _propertyCount;
    static bool _isPropertyRowEven = false;
-   static bool _panelsHidden;
 
-   public static bool panelsHidden
-   {
-      get { return _panelsHidden; }
-      set
-      {
-         _panelsHidden = value;
-      }
-   }
+   static Dictionary<int, string> controlIDList = new Dictionary<int, string>();
+   static int focusedControlID = -1;
 
-   private const int _panelDividerThickness = 4;
-   public static int panelDividerThickness { get { return _panelDividerThickness; } }
+   public static int panelDividerThickness { get; private set; }
 
-   private static int _panelLeftWidth = 200;
-   public static int panelLeftWidth
-   {
-      get { return _panelLeftWidth; }
-      set { _panelLeftWidth = value; }
-   }
+   public static int panelLeftWidth { get; set; }
 
-   private static int _panelPropertiesHeight = 250;
-   public static int panelPropertiesHeight
-   {
-      get { return _panelPropertiesHeight; }
-      set { _panelPropertiesHeight = value; }
-   }
+   public static int panelPropertiesHeight { get; set; }
 
-   private static int _panelPropertiesWidth = 500;
-   public static int panelPropertiesWidth
-   {
-      get { return _panelPropertiesWidth; }
-      set { _panelPropertiesWidth = value; }
-   }
+   public static int panelPropertiesWidth { get; set; }
 
-   private static int _panelScriptsWidth = 400;
-   public static int panelScriptsWidth
-   {
-      get { return _panelScriptsWidth; }
-      set { _panelScriptsWidth = value; }
-   }
+   public static int panelScriptsWidth { get; set; }
 
+   public static bool panelsHidden { get; set; }
 
+   public static int SaveMethodPopupWidth { get; private set; }
 
+   public static string WatchedControlName { get; set; }
 
-
-
-
-   //
-   // Enables and disables the GUI. Call this instead of GUI.enabled
-   // when the state needs to change during OnGUI, especially during
-   // the uScriptGUI custom control calls.
-   //
+   /// <summary>
+   /// Enables and disables the GUI. Call this instead of GUI.enabled
+   /// when the state needs to change during OnGUI, especially during
+   /// the uScriptGUI custom control calls.
+   /// </summary>
    public static bool enabled
    {
       get { return GUI.enabled; }
@@ -109,6 +81,32 @@ public static class uScriptGUI
                                 && !instance.isPreferenceWindowOpen
                                 && !instance.isContextMenuOpen
                                 && !instance.isFileMenuOpen : false);
+      }
+   }
+
+   public static void MonitorGUIControlFocusChanges()
+   {
+      if (GUIUtility.keyboardControl != focusedControlID)
+      {
+         if (controlIDList.ContainsKey(focusedControlID))
+         {
+            string oldControlName = controlIDList[focusedControlID];
+
+//            string newName = "UNKNOWN";
+//            if (controlIDList.ContainsKey(GUIUtility.keyboardControl))
+//            {
+//               newName = controlIDList[GUIUtility.keyboardControl];
+//            }
+//            Debug.Log("FOCUS CHANGED: \t" + focusedControlID.ToString() + " (" + oldName + ") -> " + GUIUtility.keyboardControl.ToString() + " (" + newName + ")\n");
+
+            // When specific fields lose focus, send out an event
+            if (oldControlName == WatchedControlName)
+            {
+               Debug.Log("The control lost focus: " + focusedControlID.ToString() + " (\"" + WatchedControlName + "\")\n");
+            }
+         }
+
+         focusedControlID = GUIUtility.keyboardControl;
       }
    }
 
@@ -426,6 +424,76 @@ public static class uScriptGUI
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          value = EditorGUILayout.FloatField(value, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+      }
+
+      EndRow(value.GetType().ToString());
+      return value;
+   }
+
+   public static string VariableNameField(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         // Rebuild the functionality of the Unity TextField so that we can
+         // assign the ControlID ourselves, and keep track if it for later use
+
+         // Use reflection to access some internal or sealed members from
+         // EditorGUI ... why Unity? Why?
+         Type type = typeof(EditorGUI);
+         BindingFlags bindingFlags = BindingFlags.NonPublic | BindingFlags.Static;
+         FieldInfo fi;
+         MethodInfo mi;
+         PropertyInfo pi;
+
+         type = typeof(EditorGUI);
+         fi = type.GetField("kNumberW", bindingFlags);
+         float minWidth = (float)fi.GetValue(null);
+         float maxWidth;
+
+         // Unity 3.x uses a FIELD, whereas Unity 4.x uses a PROPERTY. Ugh.
+         type = typeof(EditorGUILayout);
+         if (uScript.UnityVersion < 4.0f)
+         {
+            fi = type.GetField("kLabelFloatMaxW", bindingFlags);
+            maxWidth = (float)fi.GetValue(null);
+         }
+         else
+         {
+            pi = type.GetProperty("kLabelFloatMaxW", bindingFlags);
+            maxWidth = (float)pi.GetValue(null, null);
+         }
+
+         GUIStyle style = uScriptGUIStyle.propertyTextField;
+         Rect position = GUILayoutUtility.GetRect(minWidth, maxWidth, 16f, 16f, style, GUILayout.Width(_columnValue.Width));
+         string controlName = GetControlName();
+         int id = GUIUtility.GetControlID(controlName.GetHashCode(), FocusType.Keyboard, position);
+         bool flag = false;
+
+         type = typeof(EditorGUI);
+         fi = type.GetField("s_RecycledEditor", bindingFlags);
+         object[] parameters = new object[]
+         {
+            fi.GetValue(null),                  // RecycledTextEditor editor
+            id,                                 // int id
+            EditorGUI.IndentedRect(position),   // Rect position
+            value,                              // string text
+            style,                              // GUIStyle style
+            null,                               // string allowedLetters
+            flag,                               // out bool changed
+            false,                              // bool reset
+            false,                              // bool multiline
+            false                               // bool passwordField
+         };
+
+         mi = typeof(EditorGUI).GetMethod("DoTextField", bindingFlags);
+         value = (string)mi.Invoke(null, parameters);
+
+         // Associate the id with the control name
+         controlIDList[id] = controlName;
+
+         WatchedControlName = uScriptGUI.GetControlName();
       }
 
       EndRow(value.GetType().ToString());
@@ -1481,10 +1549,24 @@ public static class uScriptGUI
       }
    }
 
-   private static int GetControlIDHashCode(string suffix)
+   private static int GetControlID()
    {
-      string controlID = _nodeKey + "[" + _propertyCount.ToString() + "]" + suffix;
-      return controlID.GetHashCode();
+      return GetControlID(string.Empty);
+   }
+
+   private static int GetControlID(string suffix)
+   {
+      return GetControlName(suffix).GetHashCode();
+   }
+
+   public static string GetControlName()
+   {
+      return GetControlName(string.Empty);
+   }
+
+   private static string GetControlName(string suffix)
+   {
+      return (_nodeKey + "[" + _propertyCount.ToString() + "]" + suffix);
    }
 
 
@@ -1919,9 +2001,6 @@ public static class uScriptGUI
    }
 
 
-   private static int _saveMethodPopupWidth = 0;
-
-   public static int SaveMethodPopupWidth { get { return _saveMethodPopupWidth; } }
 
    public static void InitPanels()
    {
@@ -1936,19 +2015,22 @@ public static class uScriptGUI
       foreach (string name in Enum.GetNames(typeof(Preferences.SaveMethodType)))
       {
          Vector2 size = EditorStyles.toolbarDropDown.CalcSize(new GUIContent(name));
-         if (size.x > _saveMethodPopupWidth)
+         if (size.x > SaveMethodPopupWidth)
          {
-            _saveMethodPopupWidth = (int)size.x;
+            SaveMethodPopupWidth = (int)size.x;
          }
       }
-      _saveMethodPopupWidth += 10;
-
-
-
+      SaveMethodPopupWidth += 10;
 
 //      panelStyle = new GUIStyle();
 
       // Get the panel dimensions from the saved Settings or use default values
+      // TODO: Load these from the previous session if the data exists, but provide a way to reset, if necessary
+      panelDividerThickness = 4;
+      panelLeftWidth = 200;
+      panelPropertiesHeight = 250;
+      panelPropertiesWidth = 500;
+      panelScriptsWidth = 400;
 
 //      Rect rectArea = new Rect(0, 0, uScript.Instance.position.width, uScript.Instance.position.height /* - statusbarHeight */);
 
@@ -1996,33 +2078,3 @@ public static class uScriptGUI
    #endregion
 
 }
-
-
-
-/*
-public static int GetEnumIndexByName(Enum e, string name)
-{
-   // returns the first occurance of 'name' within the enum, if found;
-   // otherwise, -1
-   return Array.IndexOf(Enum.GetNames(e.GetType()), name);
-}
-
-public static int GetEnumIndexByValue(Enum e, int val)
-{
-   // returns the first occurance of the value within the enum, if found;
-   // otherwise, -1
-   return Array.IndexOf((int[])Enum.GetValues(e.GetType()), val);
-}
-
-public static string GetEnumNameByIndex(Enum e, int index)
-{
-   // returns the name of the enum element, or throws an exception
-   return Enum.GetNames(e.GetType())[index];
-}
-
-public static int GetEnumValueByIndex(Enum e, int index)
-{
-   // returns the name of the enum element, or throws an exception
-   return ((int[])Enum.GetValues(e.GetType()))[index];
-}
-*/

@@ -364,7 +364,14 @@ namespace Detox.Windows.Forms
                            }
                            else
                            {
-                              val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                              if (p.FriendlyName == "Name")
+                              {
+                                 val = uScriptGUI.VariableNameField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                              }
+                              else
+                              {
+                                 val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                              }
                            }
                         }
                      }

@@ -1325,6 +1325,8 @@ public class uScript : EditorWindow
          // The user should not be able to input during this process
          //
          uScriptExportPNG.ProcessImageExport();
+
+         uScriptGUI.MonitorGUIControlFocusChanges();
       }
 
 
