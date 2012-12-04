@@ -1150,7 +1150,11 @@ namespace Detox.ScriptEditor
                             AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
                             AddCSharpLine("{");
                             ++m_TabStack;
-                            AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                            if (entityProperty.ComponentType != "UnityEngine.GameObject")
+                                AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                            else
+                                AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ";");
+                            
                             AddCSharpLine("if ( null != component )");
                             AddCSharpLine("{");
                             ++m_TabStack;
@@ -1183,7 +1187,11 @@ namespace Detox.ScriptEditor
                             AddCSharpLine("void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "( )");
                             AddCSharpLine("{");
                             ++m_TabStack;
-                            AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                            if (entityProperty.ComponentType != "UnityEngine.GameObject")
+                                AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                            else
+                                AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ";");
+
                             AddCSharpLine("if ( null != component )");
                             AddCSharpLine("{");
                             ++m_TabStack;
@@ -1219,7 +1227,11 @@ namespace Detox.ScriptEditor
                                 AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
                                 AddCSharpLine("{");
                                 ++m_TabStack;
-                                AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                                if (entityProperty.ComponentType != "UnityEngine.GameObject")
+                                    AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                                else
+                                    AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ";");
+
                                 AddCSharpLine("if ( null != component )");
                                 AddCSharpLine("{");
                                 ++m_TabStack;
@@ -1252,7 +1264,11 @@ namespace Detox.ScriptEditor
                                 AddCSharpLine("void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "( )");
                                 AddCSharpLine("{");
                                 ++m_TabStack;
-                                AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                                if (entityProperty.ComponentType != "UnityEngine.GameObject")
+                                    AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                                else
+                                    AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ";");
+
                                 AddCSharpLine("if ( null != component )");
                                 AddCSharpLine("{");
                                 ++m_TabStack;
