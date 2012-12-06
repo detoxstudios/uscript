@@ -188,6 +188,9 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
                _panelFilterText = _filterText;
                FilterPaletteMenuItems();
+
+               _paletteFoldoutToggle = _panelFilterText != string.Empty;
+               ExpandPaletteMenuItemFoldouts(_paletteFoldoutToggle);
             }
          }
          EditorGUILayout.EndHorizontal();
