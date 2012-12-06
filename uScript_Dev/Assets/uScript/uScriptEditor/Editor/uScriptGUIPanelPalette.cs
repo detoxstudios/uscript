@@ -184,10 +184,10 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                }
 
                // Trim leading whitespace
-               _filterText = _filterText.TrimStart(new char[] { ' ' });
+               _filterText = _filterText.TrimStart();
 
                _panelFilterText = _filterText;
-               FilterPaletteMenuItems();
+               FilterToolboxMenuItems();
 
                _paletteFoldoutToggle = _panelFilterText != string.Empty;
                ExpandPaletteMenuItemFoldouts(_paletteFoldoutToggle);
@@ -465,37 +465,53 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    }
 
 
-   private void FilterPaletteMenuItems()
+   private void FilterToolboxMenuItems()
    {
       foreach (PaletteMenuItem item in _paletteMenuItems)
       {
-         item.Hidden = FilterPaletteMenuItem(item, false);
+         item.Hidden = FilterToolboxMenuItem(item, false);
       }
    }
 
 
-   private bool FilterPaletteMenuItem(PaletteMenuItem paletteMenuItem, bool shouldForceVisible)
+   /// <summary>Filters the toolbox menu item, hiding it if any words in the search query were not found in the item's Name.</summary>
+   /// <returns>True if the parent or item should be hidden, otherwise False</returns>
+   /// <param name='paletteMenuItem'>The Toolbox menu item to examine.</param>
+   /// <param name='shouldForceVisible'>When True, the menu item will always be visible.</param>
+   private bool FilterToolboxMenuItem(PaletteMenuItem paletteMenuItem, bool shouldForceVisible)
    {
-      // return TRUE if the parent or item should be hidden
-      if (shouldForceVisible || paletteMenuItem.Name.ToLower().Contains(_panelFilterText.ToLower()))
+      bool matchFound = true;
+      string[] words = _panelFilterText.ToLower().Split();
+
+      // The user can now enter keywords in any order to find matches
+      foreach (string word in words)
       {
-         // filter matched, so this and all children should be visible
+         if (paletteMenuItem.Name.ToLower().Contains(word) == false)
+         {
+            matchFound = false;
+            break;
+         }
+      }
+
+      if (shouldForceVisible || matchFound)
+      {
+         // This and all children should be visible
          if (paletteMenuItem.Items != null)
          {
             foreach (PaletteMenuItem item in paletteMenuItem.Items)
             {
-               item.Hidden = FilterPaletteMenuItem(item, true);
+               item.Hidden = FilterToolboxMenuItem(item, true);
             }
          }
          return false;
       }
       else if (paletteMenuItem.Items != null)
       {
-         // check each child to see if this should be visible
+         // Check each child to see if this should be visible
          bool shouldHideParent = true;
          foreach (PaletteMenuItem item in paletteMenuItem.Items)
          {
-            item.Hidden = FilterPaletteMenuItem(item, false);
+            item.Hidden = FilterToolboxMenuItem(item, false);
             if (item.Hidden == false)
             {
                shouldHideParent = false;
