@@ -907,6 +907,8 @@ namespace Detox.ScriptEditor
                     AddCSharpLine("");
                     DefineSyncUnityHooks();
                     AddCSharpLine("");
+                    DefineRegisterForUnityHooks();
+                    AddCSharpLine("");
                     DefineSyncEventListeners();
                     AddCSharpLine("");
                     DefineUnregisterEventListeners();
@@ -2195,7 +2197,7 @@ namespace Detox.ScriptEditor
 
         private void DefineOnEnable()
         {
-            AddCSharpLine(CSharpSyncUnityHooksDeclaration() + ";");
+            AddCSharpLine(CSharpRegisterForUnityHooksDeclaration() + ";");
             AddCSharpLine("m_RegisteredForEvents = true;");
 
             //for each logic node, create an script specific instance
@@ -2287,16 +2289,6 @@ namespace Detox.ScriptEditor
 
                 AddCSharpLine(UpdateEditorValuesDeclaration() + ";");
             }
-
-            AddCSharpLine("");
-
-            //AddCSharpLine("if (false == m_RegisteredForEvents)");
-            //AddCSharpLine("{");
-            //++m_TabStack;
-            //    AddCSharpLine(CSharpSyncUnityHooksDeclaration() + ";");
-            //    AddCSharpLine("m_RegisteredForEvents = true;");
-            //--m_TabStack;
-            //AddCSharpLine("}");
 
             AddCSharpLine("");
             AddCSharpLine("//other scripts might have added GameObjects with event scripts");
@@ -2453,6 +2445,72 @@ namespace Detox.ScriptEditor
         
             profile.End();
         }
+
+        private void DefineRegisterForUnityHooks()
+        {
+            Profile profile = new Profile("DefineRegisterForUnityHooks");
+
+            AddCSharpLine("void " + CSharpRegisterForUnityHooksDeclaration());
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            //get any references to components currently available
+            //which we haven't filled out yet
+            foreach (EntityMethod entityMethod in m_Script.Methods)
+            {
+                if (false == entityMethod.IsStatic)
+                {
+                    if (entityMethod.Instance.Default != "")
+                    {
+                        FillComponent(false, entityMethod, entityMethod.Instance);
+                    }
+                }
+
+                foreach (Parameter p in entityMethod.Parameters)
+                {
+                    if (false == p.Input) continue;
+                    FillComponent(false, entityMethod, p);
+                }
+            }
+
+            AddCSharpLine(CSharpSyncEventListenersDeclaration() + ";");
+
+            foreach (EntityProperty entityProperty in m_Script.Properties)
+            {
+                if (false == entityProperty.IsStatic)
+                {
+                    if (entityProperty.Instance.Default != "")
+                    {
+                        FillComponent(false, entityProperty, entityProperty.Instance);
+                    }
+                }
+            }
+
+            foreach (LogicNode logicNode in m_Script.Logics)
+            {
+                foreach (Parameter p in logicNode.Parameters)
+                {
+                    if (false == p.Input) continue;
+                    FillComponent(false, logicNode, p);
+                }
+            }
+
+            foreach (LocalNode localNode in m_Script.UniqueLocals)
+            {
+                FillComponent(false, localNode, localNode.Value);
+            }
+
+            foreach (OwnerConnection ownerNode in m_Script.Owners)
+            {
+                FillComponent(false, ownerNode, ownerNode.Connection);
+            }
+
+            --m_TabStack;
+            AddCSharpLine("}");
+        
+            profile.End();
+        }
+
 
         public void DefineSyncEventListeners()
         {
@@ -2751,7 +2809,7 @@ namespace Detox.ScriptEditor
                 if (true == node is LocalNode)
                 {
                     AddCSharpLine("//if our game object reference was changed then we need to reset event listeners");
-                    AddCSharpLine("if ( " + PreviousName(node, parameter.Name) + " != " + CSharpName(node, parameter.Name) + " )");
+                    AddCSharpLine("if ( " + PreviousName(node, parameter.Name) + " != " + CSharpName(node, parameter.Name) + " || false == m_RegisteredForEvents )");
                     AddCSharpLine("{");
                     ++m_TabStack;
 
@@ -2807,7 +2865,6 @@ namespace Detox.ScriptEditor
                     if (values[i].Trim() == "") continue;
 
                     SetupEventListeners(CSharpName(node, parameter.Name) + "[" + i + "]", node, false);
-                    AddCSharpLine(CSharpName(node, parameter.Name) + "[" + i + "] = null;");
                 }
             }
             else if (true == componentArrayType.IsAssignableFrom(nodeType))
@@ -2837,7 +2894,6 @@ namespace Detox.ScriptEditor
                     if (values[i].Trim() == "") continue;
 
                     SetupEventListeners(CSharpName(node, parameter.Name) + "[" + i + "]", node, false);
-                    AddCSharpLine(CSharpName(node, parameter.Name) + "[" + i + "] = null;");
                 }
 
                 --m_TabStack;
@@ -2846,43 +2902,24 @@ namespace Detox.ScriptEditor
             else if (true == componentType.IsAssignableFrom(nodeType))
             {
                 SetupEventListeners(CSharpName(node, parameter.Name), node, false);
-                AddCSharpLine(CSharpName(node, parameter.Name) + " = null;");
             }
             else if (true == gameObjectType.IsAssignableFrom(nodeType))
             {
                 if (true == node is OwnerConnection)
                 {
                     SetupEventListeners(CSharpName(node, parameter.Name), node, false);
-                    AddCSharpLine(CSharpName(node, parameter.Name) + " = null;");
                 }
                 else if (parameter.Default != "")
                 {
                     if (false == node is LocalNode)
                     {
                         SetupEventListeners(CSharpName(node, parameter.Name), node, false);
-                        AddCSharpLine(CSharpName(node, parameter.Name) + " = null;");
                     }
                 }
 
                 if (true == node is LocalNode)
                 {
                     SetupEventListeners(CSharpName(node, parameter.Name), node, false);
-
-                    // Don't set variables to null if they use Inspector values
-                    // they need to stay valid
-                    if ("true" != ((LocalNode)node).Externaled.Default)
-                    {
-                        AddCSharpLine(CSharpName(node, parameter.Name) + " = null;");
-                    }
-                    else
-                    {
-                        AddCSharpLine("//don't set current instance to null because it's set by the Inspector");
-                        AddCSharpLine("//but set previous to null so upon activating again it'll register for the events");
-                    }
-
-                    // however set previous ones to null which forces a reregister
-                    // of the events
-                    AddCSharpLine(PreviousName(node, parameter.Name) + " = null;");
                 }
             }
         
@@ -4689,6 +4726,11 @@ namespace Detox.ScriptEditor
         private string CSharpSyncUnityHooksDeclaration()
         {
             return "SyncUnityHooks( )";
+        }
+
+        private string CSharpRegisterForUnityHooksDeclaration()
+        {
+            return "RegisterForUnityHooks( )";
         }
 
         private string CSharpUnregisterEventListenersDeclaration()
