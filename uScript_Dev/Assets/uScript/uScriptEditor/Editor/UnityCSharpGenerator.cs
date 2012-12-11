@@ -2861,14 +2861,24 @@ namespace Detox.ScriptEditor
                     }
                 }
 
-                //if it's a variable node linked to us
-                //then we need to go a few steps further to see if its contents
-                //have been modified at runtime.  if they have then
-                //we need to register new event listeners
                 if (true == node is LocalNode)
                 {
                     SetupEventListeners(CSharpName(node, parameter.Name), node, false);
-                    AddCSharpLine(CSharpName(node, parameter.Name) + " = null;");
+
+                    // Don't set variables to null if they use Inspector values
+                    // they need to stay valid
+                    if ("true" != ((LocalNode)node).Externaled.Default)
+                    {
+                        AddCSharpLine(CSharpName(node, parameter.Name) + " = null;");
+                    }
+                    else
+                    {
+                        AddCSharpLine("//don't set current instance to null because it's set by the Inspector");
+                        AddCSharpLine("//but set previous to null so upon activating again it'll register for the events");
+                    }
+
+                    // however set previous ones to null which forces a reregister
+                    // of the events
                     AddCSharpLine(PreviousName(node, parameter.Name) + " = null;");
                 }
             }
