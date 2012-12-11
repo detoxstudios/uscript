@@ -2195,6 +2195,9 @@ namespace Detox.ScriptEditor
 
         private void DefineOnEnable()
         {
+            AddCSharpLine(CSharpSyncUnityHooksDeclaration() + ";");
+            AddCSharpLine("m_RegisteredForEvents = true;");
+
             //for each logic node, create an script specific instance
             foreach (LogicNode logicNode in m_Script.Logics)
             {
@@ -2287,13 +2290,13 @@ namespace Detox.ScriptEditor
 
             AddCSharpLine("");
 
-            AddCSharpLine("if (false == m_RegisteredForEvents)");
-            AddCSharpLine("{");
-            ++m_TabStack;
-                AddCSharpLine(CSharpSyncUnityHooksDeclaration() + ";");
-                AddCSharpLine("m_RegisteredForEvents = true;");
-            --m_TabStack;
-            AddCSharpLine("}");
+            //AddCSharpLine("if (false == m_RegisteredForEvents)");
+            //AddCSharpLine("{");
+            //++m_TabStack;
+            //    AddCSharpLine(CSharpSyncUnityHooksDeclaration() + ";");
+            //    AddCSharpLine("m_RegisteredForEvents = true;");
+            //--m_TabStack;
+            //AddCSharpLine("}");
 
             AddCSharpLine("");
             AddCSharpLine("//other scripts might have added GameObjects with event scripts");
