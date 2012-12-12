@@ -2802,6 +2802,29 @@ namespace Detox.ScriptEditor
                     AddCSharpLine("}");
                 }
 
+                //if we're not supposed to fill nulls we need to make sure
+                //the event listeners get re-registered
+                if (false == fillNulls && false == node is LocalNode)
+                {
+                    string currentCode = SetCode("");
+
+                    ++m_TabStack;
+                    SetupEventListeners(CSharpName(node, parameter.Name), node, true);
+                    --m_TabStack;
+
+                    string newCode = SetCode(currentCode);
+                    if (newCode != "")
+                    {
+                        AddCSharpLine("//reset event listeners if needed");
+                        AddCSharpLine("//this isn't a variable node so it should only be called once per enabling of the script");
+                        AddCSharpLine("//if it's called twice there would be a double event registration (which is an error)");
+                        AddCSharpLine("if ( false == m_RegisteredForEvents )");
+                        AddCSharpLine("{");
+                            m_CSharpString += newCode;
+                        AddCSharpLine("}");
+                    }
+                }
+
                 //if it's a variable node linked to us
                 //then we need to go a few steps further to see if its contents
                 //have been modified at runtime.  if they have then
