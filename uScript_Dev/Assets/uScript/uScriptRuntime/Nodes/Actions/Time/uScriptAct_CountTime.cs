@@ -10,6 +10,7 @@ using System.Collections;
 [NodeToolTip( "Counts the amount of time that elapses between starting and stopping.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Count_Time")]
+[NodeDeprecated()]
 
 [FriendlyName("Count Time", "Counts the amount of time that elapses between starting and stopping.")]
 public class uScriptAct_CountTime : uScriptLogic
