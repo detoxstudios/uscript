@@ -1,19 +1,16 @@
 // uScript Action Node
-// (C) 2011 Detox Studios LLC
-
+// (C) 2012 Detox Studios LLC
 using UnityEngine;
 using System.Collections;
 
-using System.Reflection;
-
 [NodePath("Actions/GUI/Controls")]
 
-[NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Shows a GUI Label on the screen.")]
+[NodeCopyright("Copyright 2012 by Detox Studios LLC")]
+[NodeToolTip("Shows a GUI Label on the screen using Unity's automatic layout system.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUILayout_Label")]
 
-[FriendlyName("GUILayout Label", "Shows a GUI Label on the screen.")]
+[FriendlyName("GUILayout Label", "Shows a GUI Label on the screen using Unity's automatic layout system.")]
 public class uScriptAct_GUILayoutLabel : uScriptLogic
 {
    public bool Out { get { return true; } }
@@ -21,22 +18,22 @@ public class uScriptAct_GUILayoutLabel : uScriptLogic
    public void In(
       [FriendlyName("Text", "Text to display on the label.")]
       string Text,
-      
+
       [FriendlyName("Texture", "Texture to display on the label.")]
       [SocketState(false, false)]
       Texture Texture,
       
-      [FriendlyName("Tooltip", "The tool tip to display when the label is being hovered over.")]
+      [FriendlyName("Tooltip", "The tooltip associated with this control.")]
       [DefaultValue(""), SocketState(false, false)]
       string Tooltip,
 
       [FriendlyName("Style", "The style to use. If left out, the \"label\" style from the current GUISkin is used.")]
       [DefaultValue(""), SocketState(false, false)]
-      string guiStyle,
+      string Style,
 
       [FriendlyName("Options", "An optional list of layout parameters.  Any values passed in here will override settings defined by the style.")]
       [SocketState(false, false)]
-      GUILayoutOption[] options,
+      GUILayoutOption[] Options,
 
       [FriendlyName("Control Name", "The name which will be assigned to the control.")]
       [DefaultValue(""), SocketState(false, false)]
@@ -44,13 +41,13 @@ public class uScriptAct_GUILayoutLabel : uScriptLogic
       )
    {
       GUIContent content = new GUIContent(Text, Texture, Tooltip);
-      GUIStyle style = (string.IsNullOrEmpty(guiStyle) ? GUI.skin.label : GUI.skin.GetStyle(guiStyle));
+      GUIStyle style = (string.IsNullOrEmpty(Style) ? GUI.skin.label : GUI.skin.GetStyle(Style));
 
-      if (!string.IsNullOrEmpty(ControlName))
+      if (string.IsNullOrEmpty(ControlName) == false)
       {
          GUI.SetNextControlName(ControlName);
       }
 
-      GUILayout.Label(content, style, options);
+      GUILayout.Label(content, style, Options);
    }
 }
