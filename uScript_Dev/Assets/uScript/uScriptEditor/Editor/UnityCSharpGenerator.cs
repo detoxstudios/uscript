@@ -1506,6 +1506,15 @@ namespace Detox.ScriptEditor
 
                 return "(decimal) " + stringValue;
             }
+            else if ("UnityEngine.GUILayoutOption" == type)
+            {
+               try
+               {
+                  string[] tokens = stringValue.Split(':');
+                  return "GUILayout." + tokens[0] + "(" + tokens[1] + ")";
+               }
+               catch (Exception) { return "GUILayout.Width(0)"; }
+            }
             else if ("UnityEngine.Color" == type)
             {
                 try
@@ -1684,6 +1693,24 @@ namespace Detox.ScriptEditor
                     declaration += "}";
                 }
                 catch (Exception) { declaration = "new Rect[0]"; }
+            }
+            else if ("UnityEngine.GUILayoutOption[]" == type)
+            {
+               try
+               {
+                  declaration = "new UnityEngine.GUILayoutOption[] { ";
+
+                  for (int i = 0; i < elements.Length; i++)
+                  {
+                     string[] tokens = elements[i].Split(':');
+                     declaration += "GUILayout." + tokens[0] + "(" + tokens[1] + "), ";
+                  }
+
+                  if (elements.Length > 0) declaration = declaration.Substring(0, declaration.Length - 2);
+
+                  declaration += " }";
+               }
+               catch (Exception) { declaration = "new GUILayoutOption[0]"; }
             }
             else if ("UnityEngine.Color[]" == type)
             {

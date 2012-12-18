@@ -726,6 +726,8 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(UnityEngine.AudioClip[]), "AudioClip List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.GameObject), "GameObject", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.GameObject[]), "GameObject List", "Variables/Lists" ),
+            new uScriptConfigBlock( typeof(UnityEngine.GUILayoutOption), "GUILayoutOption", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.GUILayoutOption[]), "GUILayoutOption List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(uScript_Lerper.LoopType), "Loop Type", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Material), "Material", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Quaternion), "Quaternion", "Variables" ),

@@ -161,6 +161,35 @@ namespace Detox.ScriptEditor
             }
             catch { return new bool[0]; }
          }
+
+         if ( t == typeof(GUILayoutOption[]).ToString() )
+         {
+            try
+            {
+               GUILayoutOption[] array = new GUILayoutOption[ values.Length ];
+
+               for ( int i = 0; i < array.Length; i++ )
+               {
+                  string[] tokens = values[i].Split(':');
+
+                  if (tokens[1] == "true")
+                  {
+                     tokens[1] = "1";
+                  }
+                  else if (tokens[1] == "false")
+                  {
+                     tokens[1] = "0";
+                  }
+
+                  int optionValue = int.Parse(tokens[1]);
+                  array[i] = uScriptGUI.CreateGUILayoutOption(tokens[0], optionValue);
+               }
+
+               return array;
+            }
+            catch  { return new GUILayoutOption[0]; }
+         }
+
          if ( t == typeof(UnityEngine.Color[]).ToString() )
          {
             try
@@ -180,6 +209,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new UnityEngine.Color[0]; }
          }
+
          if ( t == typeof(float[]).ToString() )
          {
             try
@@ -195,6 +225,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new float[0]; }
          }
+
          if ( t == typeof(int[]).ToString() )
          {
             try
@@ -210,6 +241,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new int[0]; }
          }
+
          if ( t == typeof(Vector2[]).ToString() )
          {
             try
@@ -229,6 +261,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new Vector2[0]; }
          }
+
          if ( t == typeof(Vector3[]).ToString() )
          {
             try
@@ -248,6 +281,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new Vector3[0]; }
          }
+
          if ( t == typeof(Vector4[]).ToString() )
          {
             try
@@ -267,6 +301,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new Vector4[0]; }
          }
+
          if ( t == typeof(Rect[]).ToString() )
          {
             try
@@ -286,6 +321,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new Rect[0]; }
          }
+
          if ( t == typeof(Quaternion[]).ToString() )
          {
             try
@@ -305,6 +341,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new Quaternion[0]; }
          }
+
          if ( t == typeof(LayerMask[]).ToString() )
          {
             try
@@ -320,6 +357,7 @@ namespace Detox.ScriptEditor
             }
             catch { return new LayerMask[0]; }
          }
+         
          if ( t == typeof(String[]).ToString() )
          {
             try
@@ -399,6 +437,37 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
+
+         if ( t == typeof(GUILayoutOption[]).ToString() )
+         {
+            try
+            {
+               GUILayoutOption[] array = (GUILayoutOption[]) values;
+               if (array.Length > 0) result = Parameter.ArrayDelimeter.ToString();
+
+               foreach (GUILayoutOption a in array)
+               {
+                  int optionIndex, optionValue;
+                  uScriptGUI.DeconstructGUILayoutOption(a, out optionIndex, out optionValue);
+                  string optionDisplayName = uScriptGUI.GUILayoutOption_DisplayNames[optionIndex];
+
+                  if (optionDisplayName == "ExpandWidth" || optionDisplayName == "ExpandHeight")
+                  {
+                     result += optionDisplayName + ":" + (optionValue != 0 ? "true" : "false") + Parameter.ArrayDelimeter;
+                  }
+                  else
+                  {
+                     result += optionDisplayName + ":" + optionValue.ToString() + Parameter.ArrayDelimeter;
+                  }
+               }
+
+               if (result.Length > 0) result = result.Substring(0, result.Length - 1);
+
+               return result;
+            }
+            catch { return ""; }
+         }
+
          if ( t == typeof(UnityEngine.Color[]).ToString() )
          {
             try
@@ -638,11 +707,39 @@ namespace Detox.ScriptEditor
                return ParseArray( Type, Default );
             }
 
-
             if ( Type == typeof(bool).ToString( ) )
             {
                return "true" == Default;
             }
+
+            if ( Type == typeof(GUILayoutOption).ToString() )
+            {
+               try
+               {
+                  string[] tokens = Default.Split(':');
+                  int value = (tokens[1] == "true" ? 1 : (tokens[1] == "false" ? 0 : int.Parse(tokens[1])));
+
+                  switch (tokens[0])
+                  {
+                     case "Width": return GUILayout.Width(value);
+                     case "Height": return GUILayout.Height(value);
+                     case "MinWidth": return GUILayout.MinWidth(value);
+                     case "MaxWidth": return GUILayout.MaxWidth(value);
+                     case "MinHeight": return GUILayout.MinHeight(value);
+                     case "MaxHeight": return GUILayout.MaxHeight(value);
+                     case "ExpandWidth": return GUILayout.ExpandWidth(value != 0);
+                     case "ExpandHeight": return GUILayout.ExpandHeight(value != 0);
+                     default:
+                        Debug.LogError("Unknown GUILayoutOption.Type value: \"" + tokens[0] + "\"\n");
+                        break;
+                  }
+               }
+               catch
+               {
+                  return GUILayout.Width(0);
+               }
+            }
+
             if ( Type == typeof(UnityEngine.Color).ToString( ) )
             {
                try
@@ -655,6 +752,7 @@ namespace Detox.ScriptEditor
                   return new UnityEngine.Color(0, 0, 0);
                }
             }
+
             if ( Type == typeof(float).ToString( )  )
             {
                try
@@ -666,6 +764,7 @@ namespace Detox.ScriptEditor
                   return 0.0f;
                }
             }
+
             if ( Type == typeof(int).ToString( )  )
             {
                try
@@ -677,6 +776,7 @@ namespace Detox.ScriptEditor
                   return 0.0f;
                }
             }
+
             if ( Type == typeof(Vector2).ToString( )  )
             {
                try
@@ -689,6 +789,7 @@ namespace Detox.ScriptEditor
                   return new Vector2(0, 0);
                }
             }
+
             if ( Type == typeof(Vector3).ToString( )  )
             {
                try
@@ -701,6 +802,7 @@ namespace Detox.ScriptEditor
                   return new Vector3(0, 0, 0);
                }
             }
+
             if ( Type == typeof(Vector4).ToString( )  )
             {
                try
@@ -714,6 +816,7 @@ namespace Detox.ScriptEditor
                   return new Vector4(0, 0, 0, 0);
                }
             }
+
             if ( Type == typeof(Rect).ToString( )  )
             {
                try
@@ -727,6 +830,7 @@ namespace Detox.ScriptEditor
                   return new Rect(0, 0, 0, 0);
                }
             }
+
             if ( Type == typeof(Quaternion).ToString( )  )
             {
                try
@@ -740,6 +844,7 @@ namespace Detox.ScriptEditor
                   return new Quaternion(0, 0, 0, 0);
                }
             }
+
             if ( Type == typeof(LayerMask).ToString( )  )
             {
                try
@@ -751,6 +856,7 @@ namespace Detox.ScriptEditor
                   return (UnityEngine.LayerMask)0;
                }
             }
+
             if ( Type == typeof(String).ToString( ) )
             {
                return Default;
@@ -802,6 +908,7 @@ namespace Detox.ScriptEditor
                Default = ArrayToString( Type, value );
                return;
             }
+
             if ( Type == typeof(bool).ToString( ) )  
             {
                try
@@ -814,16 +921,19 @@ namespace Detox.ScriptEditor
                }
                return;
             }
+
             if ( Type == typeof(float).ToString( )  )
             {
                Default = "" + value;
                return;
             }
+
             if ( Type == typeof(int).ToString( ) )
             {
                Default = "" + value;
                return;
             }
+
             if ( Type == typeof(Vector2).ToString( )  )
             {
                try
@@ -837,6 +947,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
+
             if ( Type == typeof(Vector3).ToString( )  )
             {
                try
@@ -850,6 +961,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
+
             if ( Type == typeof(Vector4).ToString( )  )
             {
                try
@@ -863,6 +975,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
+
             if ( Type == typeof(Rect).ToString( )  )
             {
                try
@@ -876,6 +989,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
+            
             if ( Type == typeof(Quaternion).ToString( )  )
             {
                try
@@ -889,6 +1003,51 @@ namespace Detox.ScriptEditor
                }
                return;
             }
+
+            if ( Type == typeof(GUILayoutOption).ToString() )
+            {
+               try
+               {
+                  GUILayoutOption option = (GUILayoutOption)value;
+
+                  string optionEnumName = string.Empty;
+                  int optionValue = 0;
+
+                  FieldInfo[] fields = option.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+                  foreach (FieldInfo field in fields)
+                  {
+                     if (field.Name == "type")
+                     {
+                        optionEnumName = field.GetValue(option).ToString();
+                     }
+                     else if (field.Name == "value")
+                     {
+                        optionValue = Convert.ToInt32(field.GetValue(option));
+                     }
+                  }
+
+                  int optionEnumIndex = Array.IndexOf(uScriptGUI.GUILayoutOption_EnumNames, optionEnumName);
+                  if (optionEnumIndex == -1)
+                  {
+                     throw new System.MissingMemberException("Unable to identify the GUILayoutOption type member");
+                  }
+
+                  if (optionEnumName == "stretchWidth" || optionEnumName == "stretchHeight")
+                  {
+                     Default = uScriptGUI.GUILayoutOption_DisplayNames[optionEnumIndex] + ":" + (optionValue != 0 ? "true" : "false");
+                  }
+                  else
+                  {
+                     Default = uScriptGUI.GUILayoutOption_DisplayNames[optionEnumIndex] + ":" + optionValue.ToString();
+                  }
+               }
+               catch
+               {
+                  Default = "Width:0";
+               }
+               return;
+            }
+
             if ( Type == typeof(UnityEngine.Color).ToString( ) )
             {
                try
@@ -902,6 +1061,7 @@ namespace Detox.ScriptEditor
                }
                return;
             }
+
             if ( Type == typeof(String).ToString( )  )
             {
                Default = value.ToString( );
@@ -917,6 +1077,7 @@ namespace Detox.ScriptEditor
                   uScript.MasterComponent.AddType(eType);
                }
             }
+            
             if ( eType != null && typeof(System.Enum).IsAssignableFrom(eType) )
             {
                Default = value.ToString();

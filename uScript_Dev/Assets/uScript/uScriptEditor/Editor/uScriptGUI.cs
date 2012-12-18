@@ -576,6 +576,196 @@ public static class uScriptGUI
       return value;
    }
 
+   public static GUILayoutOption GUILayoutOptionField(string label, GUILayoutOption value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   {
+      BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+
+      if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+      {
+         int spacing = 4; // 4 * 1
+         int w = (_columnValue.Width - spacing) / 2;
+         int p = (_columnValue.Width - spacing) % (w * 2);
+
+         int optionIndex, optionValue;
+         DeconstructGUILayoutOption(value, out optionIndex, out optionValue);
+
+         optionIndex = EditorGUILayout.Popup(optionIndex, GUILayoutOption_DisplayNames, GUILayout.Width(w));
+
+         string optionName = GUILayoutOption_DisplayNames[optionIndex];
+         if (optionName == "ExpandWidth" || optionName == "ExpandHeight")
+         {
+            bool optionBool = optionValue != 0;
+            optionBool = GUILayout.Toggle(optionBool, GUIContent.none, uScriptGUIStyle.propertyBoolField, GUILayout.Width(w + p));
+            optionValue = (optionBool ? 1 : 0);
+         }
+         else
+         {
+            optionValue = Math.Max(0, EditorGUILayout.IntField(optionValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p)));
+         }
+
+         value = CreateGUILayoutOption(optionIndex, optionValue);
+      }
+
+      EndRow("GUILayoutOption");
+      return value;
+   }
+
+   /// <summary>Creates a GUILayoutOption object using the specified parameters.</summary>
+   /// <returns>A GUILayoutOption object.</returns>
+   /// <param name='optionIndex'>The GUILayoutOption enumeration index.</param>
+   /// <param name='optionValue'>The GUILayoutOption value as an integer.</param>
+   private static GUILayoutOption CreateGUILayoutOption(int optionIndex, int optionValue)
+   {
+      return CreateGUILayoutOption(GUILayoutOption_DisplayNames[optionIndex], optionValue);
+   }
+
+   public static GUILayoutOption CreateGUILayoutOption(string optionName, int optionValue)
+   {
+      switch (optionName)
+      {
+         case "Width": return GUILayout.Width(optionValue);
+         case "Height": return GUILayout.Height(optionValue);
+         case "MinWidth": return GUILayout.MinWidth(optionValue);
+         case "MaxWidth": return GUILayout.MaxWidth(optionValue);
+         case "MinHeight": return GUILayout.MinHeight(optionValue);
+         case "MaxHeight": return GUILayout.MaxHeight(optionValue);
+         case "ExpandWidth": return GUILayout.ExpandWidth(optionValue != 0);
+         case "ExpandHeight": return GUILayout.ExpandHeight(optionValue != 0);
+      }
+      Debug.LogError("Unhandled option type: " + optionName + "\n");
+      return null;
+   }
+
+   /// <summary>Deconstructs the specified GUILayoutOption object into individual variables.</summary>
+   /// <returns>True if the deconstruction succeeded, False otherwise.</returns>
+   /// <param name='option'>The GUILayoutOption object to split.</param>
+   /// <param name='optionIndex'>The GUILayoutOption enumeration index.</param>
+   /// <param name='optionValue'>The GUILayoutOption value as an integer.</param>
+   public static bool DeconstructGUILayoutOption(GUILayoutOption option, out int optionIndex, out int optionValue)
+   {
+      string optionType = string.Empty;
+      optionIndex = 0;
+      optionValue = 0;
+
+      FieldInfo[] fields = option.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+
+      // should have two fields "type" and "value"
+      foreach (FieldInfo field in fields)
+      {
+         switch (field.Name)
+         {
+            case "type":
+               optionType = field.GetValue(option).ToString();
+               break;
+
+            case "value":
+               optionValue = Convert.ToInt32(field.GetValue(option));
+               break;
+
+            default:
+               Debug.LogError("Unknown field found in GUILayoutOption!\n");
+               break;
+         }
+      }
+
+      optionIndex = Array.IndexOf(GUILayoutOption_EnumNames, optionType);
+      if (optionIndex == -1)
+      {
+         optionIndex = 0;
+         optionValue = 0;
+         return false;
+      }
+
+      return true;
+   }
+
+   static Type _guiLayoutOption_EnumType = null;
+   private static Type GUILayoutOption_EnumType
+   {
+      get
+      {
+         if (_guiLayoutOption_EnumType == null)
+         {
+            GUILayoutOption option = GUILayout.Width(0);
+            FieldInfo[] fields = option.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+
+            // should have two fields "type" and "value"
+            foreach (FieldInfo field in fields)
+            {
+               if (field.Name == "type")
+               {
+                  _guiLayoutOption_EnumType = field.GetValue(option).GetType();
+               }
+            }
+         }
+         return _guiLayoutOption_EnumType;
+      }
+   }
+
+   static string[] _guiLayoutOption_EnumOptions = null;
+   /// <summary>Returns a string array containing the enumeration name of each selectable GUILayoutOption.Type option.</summary>
+   public static string[] GUILayoutOption_EnumNames
+   {
+      get
+      {
+         if (_guiLayoutOption_EnumOptions == null)
+         {
+            // Filter out all unnecessary options
+            List<string> names = new List<string>();
+            foreach(string option in Enum.GetNames(GUILayoutOption_EnumType))
+            {
+               switch (option)
+               {
+                  case "fixedWidth":
+                  case "fixedHeight":
+                  case "minWidth":
+                  case "maxWidth":
+                  case "minHeight":
+                  case "maxHeight":
+                  case "stretchWidth":
+                  case "stretchHeight":
+                     names.Add(option);
+                     break;
+               }
+            }
+            _guiLayoutOption_EnumOptions = names.ToArray();
+         }
+         return _guiLayoutOption_EnumOptions;
+      }
+   }
+
+   static string[] _guiLayoutOption_DisplayNames = null;
+   /// <summary>Returns a string array containing the display name of each selectable GUILayoutOption.Type option.</summary>
+   public static string[] GUILayoutOption_DisplayNames
+   {
+      get
+      {
+         if (_guiLayoutOption_DisplayNames == null)
+         {
+            List<string> names = new List<string>();
+            foreach(string option in GUILayoutOption_EnumNames)
+            {
+               switch (option)
+               {
+                  case "fixedWidth": names.Add("Width"); break;
+                  case "fixedHeight": names.Add("Height"); break;
+                  case "minWidth": names.Add("MinWidth"); break;
+                  case "maxWidth": names.Add("MaxWidth"); break;
+                  case "minHeight": names.Add("MinHeight"); break;
+                  case "maxHeight": names.Add("MaxHeight"); break;
+                  case "stretchWidth": names.Add("ExpandWidth"); break;
+                  case "stretchHeight": names.Add("ExpandHeight"); break;
+                  default:
+                     Debug.LogError("Unhandled GUILayoutOption.Type value: \"" + option + "\"\n");
+                     break;
+               }
+            }
+            _guiLayoutOption_DisplayNames = names.ToArray();
+         }
+         return _guiLayoutOption_DisplayNames;
+      }
+   }
+
    public static Vector2 Vector2Field(string label, Vector2 value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
@@ -936,8 +1126,11 @@ public static class uScriptGUI
          if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayAdd, uScriptGUIStyle.propertyArrayTextButton))
          {
             GUIUtility.keyboardControl = 0;
-            // Special conversion case for strings
-            array = ArrayAppend<T>(array, (typeof(T) == typeof(string) ? (T)(object)string.Empty : default(T)));
+            // Special conversion case for strings and GUILayoutOption objects
+            T element =  (typeof(T) == typeof(string) ? (T)(object)string.Empty
+               : (typeof(T) == typeof(GUILayoutOption) ? (T)(object)GUILayout.Width(0)
+                  : default(T)));
+            array = ArrayAppend<T>(array, element);
          }
 
          btnRect.x -= 18;
@@ -966,7 +1159,7 @@ public static class uScriptGUI
          for (int i = 0; i < array.Length; i++)
          {
             T entry = default(T);
-            
+
             if (i < array.Length)
             {
                entry = array[i];
@@ -1052,7 +1245,11 @@ public static class uScriptGUI
       if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayInsert, uScriptGUIStyle.propertyArrayTextButton))
       {
          GUIUtility.keyboardControl = 0;
-         array = ArrayInsert<T>(array, index, default(T));
+         // Special conversion case for strings and GUILayoutOption objects
+         T element =  (typeof(T) == typeof(string) ? (T)(object)string.Empty
+            : (typeof(T) == typeof(GUILayoutOption) ? (T)(object)GUILayout.Width(0)
+               : default(T)));
+         array = ArrayInsert<T>(array, index, element);
       }
 //      }
 
@@ -1118,7 +1315,6 @@ public static class uScriptGUI
                }
 
                uScriptGUI.enabled = true;
-               ;
             }
             EditorGUILayout.EndHorizontal();
          }
@@ -1134,6 +1330,34 @@ public static class uScriptGUI
       else if (value is System.Enum)
       {
          t = EditorGUILayout.EnumPopup((System.Enum)t, GUILayout.Width(_columnValue.Width));
+      }
+      else if (value is GUILayoutOption)
+      {
+         int spacing = 4; // 4 * 1
+         int w = (_columnValue.Width - spacing) / 2;
+         int p = (_columnValue.Width - spacing) % (w * 2);
+
+         int optionIndex, optionValue;
+         DeconstructGUILayoutOption((GUILayoutOption)t, out optionIndex, out optionValue);
+
+         optionIndex = EditorGUILayout.Popup(optionIndex, GUILayoutOption_DisplayNames, GUILayout.Width(w));
+
+         string optionName = GUILayoutOption_DisplayNames[optionIndex];
+         if (optionName == "ExpandWidth" || optionName == "ExpandHeight")
+         {
+            bool optionBool = optionValue != 0;
+            optionBool = GUILayout.Toggle(optionBool, GUIContent.none, uScriptGUIStyle.propertyBoolField, GUILayout.Width(w + p));
+            optionValue = (optionBool ? 1 : 0);
+         }
+         else
+         {
+            int indent = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = 0;
+            optionValue = Math.Max(0, EditorGUILayout.IntField(optionValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p)));
+            EditorGUI.indentLevel = indent;
+         }
+
+         t = CreateGUILayoutOption(optionIndex, optionValue);
       }
       else if (value is Color)
       {

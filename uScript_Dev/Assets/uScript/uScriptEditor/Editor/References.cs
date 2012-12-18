@@ -279,6 +279,14 @@ namespace Detox.Windows.Forms
                         {
                            val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color) val, ref isSocketExposed, isLocked, isReadOnly);
                         }
+                        else if ( val.GetType() == typeof(GUILayoutOption[]) )
+                        {
+                           val = uScriptGUI.ArrayFoldout<GUILayoutOption>(p.FriendlyName, (GUILayoutOption[])val, ref isSocketExposed, isLocked, isReadOnly);
+                        }
+                        else if ( val.GetType() == typeof(GUILayoutOption) )
+                        {
+                           val = uScriptGUI.GUILayoutOptionField(p.FriendlyName, (GUILayoutOption)val, ref isSocketExposed, isLocked, isReadOnly);
+                        }
                         else if ( val.GetType() == typeof(UnityEngine.LayerMask[]) )
                         {
                            val = uScriptGUI.ArrayFoldout<UnityEngine.LayerMask>(p.FriendlyName, (UnityEngine.LayerMask[]) val, ref isSocketExposed, isLocked, isReadOnly);
