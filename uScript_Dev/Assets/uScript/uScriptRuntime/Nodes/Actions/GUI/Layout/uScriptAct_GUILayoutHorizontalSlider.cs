@@ -17,7 +17,7 @@ public class uScriptAct_GUILayoutHorizontalSlider : uScriptLogic
 
    public void In(
       [FriendlyName("Value", "The value the slider shows. This determines the position of the draggable thumb.")]
-      float StartValue,
+      ref float Value,
 
       [FriendlyName("Left Value", "The value at the left end of the slider.")]
       [DefaultValue(0f), SocketState(false, false)]
@@ -41,10 +41,7 @@ public class uScriptAct_GUILayoutHorizontalSlider : uScriptLogic
 
       [FriendlyName("Control Name", "The name which will be assigned to the control.")]
       [DefaultValue(""), SocketState(false, false)]
-      string ControlName,
-
-      [FriendlyName("Value", "The new value of the slider.")]
-      out float Value
+      string ControlName
       )
    {
       GUIStyle sliderStyle = (string.IsNullOrEmpty(SliderStyle) ? GUI.skin.horizontalSlider : GUI.skin.GetStyle(SliderStyle));
@@ -55,6 +52,6 @@ public class uScriptAct_GUILayoutHorizontalSlider : uScriptLogic
          GUI.SetNextControlName(ControlName);
       }
 
-      Value = GUILayout.HorizontalSlider(StartValue, LeftValue, RightValue, sliderStyle, thumbStyle, Options);
+      Value = GUILayout.HorizontalSlider(Value, LeftValue, RightValue, sliderStyle, thumbStyle, Options);
    }
 }

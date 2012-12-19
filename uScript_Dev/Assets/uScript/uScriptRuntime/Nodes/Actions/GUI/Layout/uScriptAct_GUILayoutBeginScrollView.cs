@@ -23,7 +23,7 @@ public class uScriptAct_GUILayoutBeginScrollView : uScriptLogic
    public void In(
       [FriendlyName("Scroll Position", "The position to use display.")]
       [SocketState(false, false)]
-      Vector2 StartScrollPosition,
+      ref Vector2 ScrollPosition,
 
       [FriendlyName("Always Show Horizontal", "If False, the scrollbar is only shown when the content inside the ScrollView is wider than the scrollview itself.")]
       [SocketState(false, false)]
@@ -47,17 +47,13 @@ public class uScriptAct_GUILayoutBeginScrollView : uScriptLogic
 
       [FriendlyName("Options", "An optional list of layout parameters.  Any values passed in here will override settings defined by the style.")]
       [SocketState(false, false)]
-      GUILayoutOption[] Options,
-
-      [FriendlyName("Scroll Position", "The new position of the scroll bar.")]
-      [SocketState(false, false)]
-      out Vector2 ScrollPosition
+      GUILayoutOption[] Options
       )
    {
       GUIStyle style = (string.IsNullOrEmpty(Style) ? GUI.skin.scrollView : GUI.skin.GetStyle(Style));
       GUIStyle horizontalScrollbarStyle = (string.IsNullOrEmpty(Style) ? GUI.skin.horizontalScrollbar : GUI.skin.GetStyle(HorizontalScrollbarStyle));
       GUIStyle verticalScrollbarStyle = (string.IsNullOrEmpty(Style) ? GUI.skin.verticalScrollbar : GUI.skin.GetStyle(VerticalScrollbarStyle));
 
-      ScrollPosition = GUILayout.BeginScrollView(StartScrollPosition, AlwaysShowHorizontal, AlwaysShowVertical, horizontalScrollbarStyle, verticalScrollbarStyle, style, Options);
+      ScrollPosition = GUILayout.BeginScrollView(ScrollPosition, AlwaysShowHorizontal, AlwaysShowVertical, horizontalScrollbarStyle, verticalScrollbarStyle, style, Options);
    }
 }

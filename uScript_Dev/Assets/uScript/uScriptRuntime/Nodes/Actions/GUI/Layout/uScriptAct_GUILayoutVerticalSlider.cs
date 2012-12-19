@@ -17,7 +17,7 @@ public class uScriptAct_GUILayoutVerticalSlider : uScriptLogic
 
    public void In(
       [FriendlyName("Value", "The value the slider shows. This determines the position of the draggable thumb.")]
-      float StartValue,
+      ref float Value,
 
       [FriendlyName("Top Value", "The value at the top end of the slider.")]
       [DefaultValue(0f), SocketState(false, false)]
@@ -41,10 +41,7 @@ public class uScriptAct_GUILayoutVerticalSlider : uScriptLogic
 
       [FriendlyName("Control Name", "The name which will be assigned to the control.")]
       [DefaultValue(""), SocketState(false, false)]
-      string ControlName,
-
-      [FriendlyName("Value", "The new value of the slider.")]
-      out float Value
+      string ControlName
       )
    {
       GUIStyle sliderStyle = (string.IsNullOrEmpty(SliderStyle) ? GUI.skin.verticalSlider : GUI.skin.GetStyle(SliderStyle));
@@ -55,6 +52,6 @@ public class uScriptAct_GUILayoutVerticalSlider : uScriptLogic
          GUI.SetNextControlName(ControlName);
       }
 
-      Value = GUILayout.VerticalSlider(StartValue, TopValue, BottomValue, sliderStyle, thumbStyle, Options);
+      Value = GUILayout.VerticalSlider(Value, TopValue, BottomValue, sliderStyle, thumbStyle, Options);
    }
 }
