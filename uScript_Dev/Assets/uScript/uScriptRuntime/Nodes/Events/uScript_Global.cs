@@ -21,15 +21,29 @@ public class uScript_Global : uScriptEvent
    [FriendlyName("On Graph Start")]
    public event uScriptEventHandler uScriptStart;
 
-   private bool m_Sent = false;
+   [FriendlyName("On Graph Late Start")]
+   public event uScriptEventHandler uScriptLateStart;
+
+   private bool m_UpdateSent = false;
+   private bool m_LateUpdateSent = false;
 
    //can't perform in Start because we aren't guaranteed
    //all the listeners are registered
    void Update()
    {
-      if ( true == m_Sent ) return;
+      if ( true == m_UpdateSent ) return;
       
-      m_Sent = true;
+      m_UpdateSent = true;
       if ( uScriptStart != null ) uScriptStart(this, new System.EventArgs());
+   }
+
+    //can't perform in Start because we aren't guaranteed
+   //all the listeners are registered
+   void LateUpdate()
+   {
+      if ( true == m_LateUpdateSent ) return;
+      
+      m_LateUpdateSent = true;
+      if ( uScriptLateStart != null ) uScriptLateStart(this, new System.EventArgs());
    }
 }
