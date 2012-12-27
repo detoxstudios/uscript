@@ -69,16 +69,12 @@ public class DefaultValue : Attribute
 }
 
 [AttributeUsage(AttributeTargets.ReturnValue | AttributeTargets.Parameter | AttributeTargets.Property)]
-public class SocketState : Attribute
+public class SocketStateAttribute : Attribute
 {
    public bool Visible = false;
    public bool Locked  = false;
    
-   public SocketState()
-   {
-   }
-
-   public SocketState(bool visible, bool locked) 
+   public SocketStateAttribute(bool visible, bool locked)
    {
       Visible = visible;
       Locked  = locked;

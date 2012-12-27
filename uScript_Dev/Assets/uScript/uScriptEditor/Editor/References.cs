@@ -759,6 +759,11 @@ namespace Detox.Windows.Forms
       public const int Alt     = 1 << 1;
       public const int Shift   = 1 << 2;
 
+      public const int ControlAlt      = Control + Alt;
+      public const int ControlShift    = Control + Shift;
+      public const int AltShift        = Alt + Shift;
+      public const int ControlAltShift = Control + Alt + Shift;
+
       public bool Contains(int key)
       {
          return 0 != (key & Pressed);

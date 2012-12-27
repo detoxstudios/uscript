@@ -1465,6 +1465,12 @@ public class uScript : EditorWindow
    {
       Event e = Event.current;
 
+      int modifierKeys = 0;
+
+      if (Event.current.alt) modifierKeys |= Keys.Alt;
+      if (Event.current.shift) modifierKeys |= Keys.Shift;
+      if (Event.current.control || Event.current.command) modifierKeys |= Keys.Control;
+
       switch (e.type)
       {
          case EventType.ContextClick:
@@ -1472,36 +1478,42 @@ public class uScript : EditorWindow
             break;
 
          case EventType.KeyDown:
+            e.Use();
+            break;
+
          case EventType.KeyUp:
-            switch (e.keyCode)
+            if (modifierKeys == Keys.None || modifierKeys == Keys.Alt)
             {
-               case KeyCode.Escape:
-                  isFileMenuOpen = false;
-                  break;
-               case KeyCode.N:
-                  FileMenuItem_New();
-                  break;
-               case KeyCode.O:
-                  FileMenuItem_Open();
-                  break;
-               case KeyCode.S:
-                  FileMenuItem_Save();
-                  break;
-               case KeyCode.A:
-                  FileMenuItem_SaveAs();
-                  break;
-               case KeyCode.Q:
-                  FileMenuItem_QuickSave();
-                  break;
-               case KeyCode.D:
-                  FileMenuItem_DebugSave();
-                  break;
-               case KeyCode.R:
-                  FileMenuItem_ReleaseSave();
-                  break;
-               case KeyCode.E:
-                  FileMenuItem_ExportPNG();
-                  break;
+               switch (e.keyCode)
+               {
+                  case KeyCode.Escape:
+                     isFileMenuOpen = false;
+                     break;
+                  case KeyCode.N:
+                     FileMenuItem_New();
+                     break;
+                  case KeyCode.O:
+                     FileMenuItem_Open();
+                     break;
+                  case KeyCode.S:
+                     FileMenuItem_Save();
+                     break;
+                  case KeyCode.A:
+                     FileMenuItem_SaveAs();
+                     break;
+                  case KeyCode.Q:
+                     FileMenuItem_QuickSave();
+                     break;
+                  case KeyCode.D:
+                     FileMenuItem_DebugSave();
+                     break;
+                  case KeyCode.R:
+                     FileMenuItem_ReleaseSave();
+                     break;
+                  case KeyCode.E:
+                     FileMenuItem_ExportPNG();
+                     break;
+               }
             }
             e.Use();
             break;
@@ -1657,6 +1669,7 @@ public class uScript : EditorWindow
          // drag events
          case EventType.DragExited:
             break;
+
          case EventType.DragPerform:
          case EventType.DragUpdated:
             // update mouse position
@@ -1674,136 +1687,292 @@ public class uScript : EditorWindow
    
             if (AllowKeyInput())
             {
-               if (  (e.keyCode == KeyCode.F
-                     && (e.modifiers == EventModifiers.Alt
-                        || e.modifiers == EventModifiers.Control))
-                  || (e.keyCode == KeyCode.S
-                     && (e.modifiers == EventModifiers.Alt
-                        || e.modifiers == EventModifiers.Control))
-                  || e.keyCode == KeyCode.BackQuote
-                  || e.keyCode == KeyCode.Backslash
-                  || e.keyCode == KeyCode.Home
-                  || (e.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0)
-                  || (e.keyCode == KeyCode.H && (modifierKeys & Keys.Control) != 0)
-                  || (e.keyCode == KeyCode.W && (modifierKeys & Keys.Control) != 0)
-                  || e.keyCode == KeyCode.Delete
-                  || e.keyCode == KeyCode.Backspace
-                  || e.keyCode == KeyCode.Escape
-                  || e.keyCode == KeyCode.F1
-                  || e.keyCode == KeyCode.RightBracket
-                  || e.keyCode == KeyCode.LeftBracket
-                  || e.keyCode == KeyCode.Alpha0
-                  || e.keyCode == KeyCode.Minus
-                  || e.keyCode == KeyCode.Equals
-                  || e.keyCode == KeyCode.S
-                  || e.keyCode == KeyCode.V
-                  || e.keyCode == KeyCode.I
-                  || e.keyCode == KeyCode.F
-                  || e.keyCode == KeyCode.B
-                  || e.keyCode == KeyCode.G
-                  || e.keyCode == KeyCode.O
-                  || e.keyCode == KeyCode.C
-                  || e.keyCode == KeyCode.E
-                  || e.keyCode == KeyCode.L
-                  )
+               // Check for valid shortcut keys, and eat the KeyDown
+               // event to avoid the "invalid key" beep on Mac.
+
+               if (modifierKeys == Keys.Control)
                {
-                  e.Use();
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.F:   // Open File Menu
+                     case KeyCode.G:   // Toggle grid visibility
+                     case KeyCode.H:   // Position graph at (0, 0)
+                     case KeyCode.W:   // Close uScript Editor window
+                        e.Use();
+                        break;
+                  }
+               }
+               else if (modifierKeys == Keys.Alt)
+               {
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.A:   // Save As ...
+                     case KeyCode.D:   // Debug Save
+                     case KeyCode.E:   // Export PNG
+                     case KeyCode.F:   // Open File Menu
+                     case KeyCode.N:   // New uScript graph
+                     case KeyCode.O:   // Open uScript graph
+                     case KeyCode.Q:   // Quick Save
+                     case KeyCode.R:   // Release Save
+                     case KeyCode.S:   // Save
+                        e.Use();
+                        break;
+                  }
+               }
+//               else if (modifierKeys == Keys.Shift)
+//               {
+//               }
+//               else if (modifierKeys == Keys.ControlAlt)
+//               {
+//               }
+//               else if (modifierKeys == Keys.ControlShift)
+//               {
+//               }
+//               else if (modifierKeys == Keys.AltShift)
+//               {
+//               }
+//               else if (modifierKeys == Keys.ControlAltShift)
+//               {
+//               }
+               else // (modifierKeys == Keys.None)
+               {
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.F1:              // Open uScript online documentation
+                     case KeyCode.Backspace:       // Delete graph selection
+                     case KeyCode.Delete:          // Delete graph selection
+                     case KeyCode.Escape:          // Drop graph selection
+                     case KeyCode.Home:            // Position graph at (0, 0)
+                     case KeyCode.LeftBracket:     // Position graph at previous Event node
+                     case KeyCode.RightBracket:    // Position graph at next Event node
+                     case KeyCode.BackQuote:       // Toggle panel visibility
+                     case KeyCode.Backslash:       // Toggle panel visibility
+                     case KeyCode.Alpha0:          // Zoom graph default
+                     case KeyCode.Minus:           // Zoom graph out
+                     case KeyCode.Equals:          // Zoom graph in
+                     case KeyCode.B:               // (onMouseUp) Place Bool variable node
+                     case KeyCode.C:               // (onMouseUp) Place Comment
+                     case KeyCode.E:               // (onMouseUp) Place External variable node
+                     case KeyCode.F:               // (onMouseUp) Place Float variable node
+                     case KeyCode.G:               // (onMouseUp) Place GameObject variable node
+                     case KeyCode.I:               // (onMouseUp) Place Int variable node
+                     case KeyCode.L:               // (onMouseUp) Place Log action node
+                     case KeyCode.O:               // (onMouseUp) Place Object variable node
+                     case KeyCode.S:               // (onMouseUp) Place String variable node
+                     case KeyCode.V:               // (onMouseUp) Place Vector3 variable node
+                        e.Use();
+                        break;
+                  }
                }
             }
             break;
+
          case EventType.KeyUp:
             if (AllowKeyInput())
             {
-               if (e.keyCode == KeyCode.F
-                   && (e.modifiers == EventModifiers.Alt
-                       || e.modifiers == EventModifiers.Control
-//                       || e.modifiers == EventModifiers.Command
-                      )
-                  )
+               if (modifierKeys == Keys.Control)
                {
-                  isFileMenuOpen = true;
-                  e.Use();
-               }
-               else if (e.keyCode == KeyCode.Delete || e.keyCode == KeyCode.Backspace)
-               {
-                  m_ScriptEditorCtrl.DeleteSelectedNodes();
-               }
-               else if (e.keyCode == KeyCode.Home || (e.keyCode == KeyCode.H && (modifierKeys & Keys.Control) != 0))
-               {
-                  // re-center the graph
-                  if (m_ScriptEditorCtrl != null)
+                  switch (e.keyCode)
                   {
-                     m_ScriptEditorCtrl.RebuildScript(null, true);
+                     case KeyCode.F:
+                        //
+                        // Open File Menu
+                        //
+                        isFileMenuOpen = true;
+                        break;
+
+                     case KeyCode.G:
+                        //
+                        // Toggle grid visibility
+                        //
+                        Preferences.ShowGrid = !Preferences.ShowGrid;
+                        Preferences.Save();
+                        break;
+
+                     case KeyCode.H:
+                        //
+                        // Position graph at (0, 0)
+                        //
+                        if (m_ScriptEditorCtrl != null)
+                        {
+                           m_ScriptEditorCtrl.RebuildScript(null, true);
+                        }
+                        break;
+
+                     case KeyCode.W:
+                        //
+                        // Close uScript Editor window
+                        //
+                        this.Close();
+                        break;
                   }
                }
-               else if (e.keyCode == KeyCode.W && (modifierKeys & Keys.Control) != 0)
+               else if (modifierKeys == Keys.Alt)
                {
-                  // close the window
-                  this.Close();
-               }
-               else if (e.keyCode == KeyCode.Escape)
-               {
-                  m_ScriptEditorCtrl.DeselectAll();
-               }
-               else if (e.keyCode == KeyCode.F1)
-               {
-                  Help.BrowseURL("http://www.uscript.net/docs/index.php?title=Main_Page");
-               }
-               else if (e.keyCode == KeyCode.G && (modifierKeys & Keys.Control) != 0)
-               {
-                  Preferences.ShowGrid = !Preferences.ShowGrid;
-                  Preferences.Save();
-               }
-               else if (e.keyCode == KeyCode.RightBracket)
-               {
-                  m_FocusedNode = m_ScriptEditorCtrl.GetNextNode(m_FocusedNode, typeof(EntityEventDisplayNode));
-                  if (m_FocusedNode != null) m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
-               }
-               else if (e.keyCode == KeyCode.LeftBracket)
-               {
-                  m_FocusedNode = m_ScriptEditorCtrl.GetPrevNode(m_FocusedNode, typeof(EntityEventDisplayNode));
-                  if (m_FocusedNode != null) m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
-               }
-               else if (e.keyCode == KeyCode.Alpha0)
-               {
-                  m_MapScale = 1.0f;
-               }
-               else if (e.keyCode == KeyCode.Minus)
-               {
-                  m_MapScale = Mathf.Max(m_MapScale - 0.1f, 0.1f);
-               }
-               else if (e.keyCode == KeyCode.Equals)
-               {
-                  m_MapScale = Mathf.Min(m_MapScale + 0.1f, 1.0f);
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.A:
+                        FileMenuItem_SaveAs();
+                        break;
 
-                  if ( 1 == m_MapScale ) m_MapScale = 1.0f;
-               }
-            }
+                     case KeyCode.D:
+                        FileMenuItem_DebugSave();
+                        break;
 
-            // The BackQuote key doesn't work well on the German keyboard, so support Backslash as well
-            if (  (e.keyCode == KeyCode.BackQuote || e.keyCode == KeyCode.Backslash)
-                  && AllowKeyInput())
-            {
-               uScriptGUI.panelsHidden = !uScriptGUI.panelsHidden;
+                     case KeyCode.E:
+                        FileMenuItem_ExportPNG();
+                        break;
 
-               // FIXME: When toggled while the mouse is down, the canvas often shifts around.
-               if (uScriptGUI.panelsHidden)
-               {
-//                  m_ScriptEditorCtrl.FlowChart.Location.X += (int)_canvasRect.x;
-                  m_ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
-                  m_ScriptEditorCtrl.RebuildScript(null, false);
+                     case KeyCode.F:
+                        isFileMenuOpen = true;
+                        break;
+
+                     case KeyCode.N:
+                        FileMenuItem_New();
+                        break;
+
+                     case KeyCode.O:
+                        FileMenuItem_Open();
+                        break;
+
+                     case KeyCode.Q:
+                        FileMenuItem_QuickSave();
+                        break;
+
+                     case KeyCode.R:
+                        FileMenuItem_ReleaseSave();
+                        break;
+
+                     case KeyCode.S:
+                        FileMenuItem_Save();
+                        break;
+                  }
                }
-               else
+//               else if (modifierKeys == Keys.Shift)
+//               {
+//               }
+//               else if (modifierKeys == Keys.ControlAlt)
+//               {
+//               }
+//               else if (modifierKeys == Keys.ControlShift)
+//               {
+//               }
+//               else if (modifierKeys == Keys.AltShift)
+//               {
+//               }
+//               else if (modifierKeys == Keys.ControlAltShift)
+//               {
+//               }
+               else // (modifierKeys == Keys.None)
                {
-//                  m_ScriptEditorCtrl.FlowChart.Location.X -= (int)_canvasRect.x;
-                  m_ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
-                  m_ScriptEditorCtrl.RebuildScript(null, false);
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.F1:
+                        //
+                        // Open uScript online documentation
+                        //
+                        Help.BrowseURL("http://www.uscript.net/docs/index.php?title=Main_Page");
+                        break;
+
+                     case KeyCode.Backspace:
+                     case KeyCode.Delete:
+                        //
+                        // Delete graph selection
+                        //
+                        m_ScriptEditorCtrl.DeleteSelectedNodes();
+                        break;
+
+                     case KeyCode.Escape:
+                        //
+                        // Drop graph selection
+                        //
+                        m_ScriptEditorCtrl.DeselectAll();
+                        break;
+
+                     case KeyCode.Home:
+                        //
+                        // Position graph at (0, 0)
+                        //
+                        if (m_ScriptEditorCtrl != null)
+                        {
+                           m_ScriptEditorCtrl.RebuildScript(null, true);
+                        }
+                        break;
+
+                     case KeyCode.LeftBracket:
+                        //
+                        // Position graph at previous Event node
+                        //
+                        m_FocusedNode = m_ScriptEditorCtrl.GetPrevNode(m_FocusedNode, typeof(EntityEventDisplayNode));
+                        if (m_FocusedNode != null)
+                        {
+                           m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
+                        }
+                        break;
+
+                     case KeyCode.RightBracket:
+                        //
+                        // Position graph at next Event node
+                        //
+                        m_FocusedNode = m_ScriptEditorCtrl.GetNextNode(m_FocusedNode, typeof(EntityEventDisplayNode));
+                        if (m_FocusedNode != null)
+                        {
+                           m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
+                        }
+                        break;
+
+                     case KeyCode.BackQuote:
+                     case KeyCode.Backslash:
+                        //
+                        // Toggle panel visibility
+                        //
+                        //    The BackQuote key doesn't work well on the German keyboard,
+                        //    so support Backslash as well.
+                        //
+                        uScriptGUI.panelsHidden = !uScriptGUI.panelsHidden;
+
+                        // FIXME: When toggled while the mouse is down, the canvas often shifts around.
+                        if (uScriptGUI.panelsHidden)
+                        {
+                           // m_ScriptEditorCtrl.FlowChart.Location.X += (int)_canvasRect.x;
+                           m_ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
+                           m_ScriptEditorCtrl.RebuildScript(null, false);
+                        }
+                        else
+                        {
+                           // m_ScriptEditorCtrl.FlowChart.Location.X -= (int)_canvasRect.x;
+                           m_ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
+                           m_ScriptEditorCtrl.RebuildScript(null, false);
+                        }
+                        break;
+
+                     case KeyCode.Alpha0:
+                        //
+                        // Zoom graph default
+                        //
+                        m_MapScale = 1.0f;
+                        break;
+
+                     case KeyCode.Minus:
+                        //
+                        // Zoom graph out
+                        //
+                        m_MapScale = Mathf.Max(m_MapScale - 0.1f, 0.1f);
+                        break;
+
+                     case KeyCode.Equals:
+                        //
+                        // Zoom graph in
+                        //
+                        m_MapScale = Mathf.Min(m_MapScale + 0.1f, 1.0f);
+                        break;
+                  }
                }
             }
 
             m_PressedKey = KeyCode.None;
 
-            //keep key events from going to the rest of unity
+            // Keep key events from going to the rest of Unity
             e.Use();
             break;
 
@@ -1944,6 +2113,7 @@ public class uScript : EditorWindow
             m_MouseDownOverCanvas = false;
             m_MouseDown = false;
             break;
+
          case EventType.ScrollWheel:
             if (_canvasRect.Contains(e.mousePosition))
             {
@@ -2759,84 +2929,90 @@ public class uScript : EditorWindow
       }
 
       Rect r = GUILayoutUtility.GetLastRect();
-      Vector2 v = EditorStyles.boldLabel.CalcSize(new GUIContent(shortcut));
+      Vector2 v = EditorStyles.miniButton.CalcSize(new GUIContent("ALT+W"));
 
       // place the string at the left inside edge of the previous rect
-      r = new Rect(r.x + r.width - 20 + ((12 - v.x) / 2), r.y + 2, v.x, v.y);
+      r = new Rect(r.x + r.width - v.x - 8, r.y + ((int)(r.height - v.y) / 2), v.x, v.y);
 
-//      Debug.Log("Shortcut: '" + shortcut + "' is " + v.x + "px wide\n");
-      GUI.Label(r, shortcut, EditorStyles.boldLabel);
+      GUI.Label(r, shortcut, EditorStyles.miniButton);
    }
 
 
    void DrawFileMenuWindow(int windowID)
    {
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptNew, uScriptGUIStyle.menuDropDownButton))
+      Vector2 v1 = uScriptGUIStyle.menuDropDownButton.CalcSize(uScriptGUIContent.buttonScriptExportPNG);
+      Vector2 v2 = EditorStyles.miniButton.CalcSize(new GUIContent("ALT+W"));
+
+      GUILayout.BeginVertical(GUILayout.Width(v1.x + 16 + v2.x));
       {
-         FileMenuItem_New();
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptNew, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_New();
+         }
+         DrawMenuItemShortcut("ALT+N");
+   
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptOpen, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_Open();
+         }
+         DrawMenuItemShortcut("ALT+O");
+   
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_Save();
+         }
+         DrawMenuItemShortcut("ALT+S");
+   
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveAs, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_SaveAs();
+         }
+         DrawMenuItemShortcut("ALT+A");
+   
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveQuick, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_QuickSave();
+         }
+         DrawMenuItemShortcut("ALT+Q");
+   
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveDebug, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_DebugSave();
+         }
+         DrawMenuItemShortcut("ALT+D");
+   
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveRelease, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_ReleaseSave();
+         }
+         DrawMenuItemShortcut("ALT+R");
+   
+         uScriptGUI.HR();
+   
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptExportPNG, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_ExportPNG();
+         }
+         DrawMenuItemShortcut("ALT+E");
+
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptUpgradeNodes, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_UpgradeDeprecatedNodes();
+         }
+   
+         uScriptGUI.HR();
+   
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptsRebuildAll, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_RebuildAll();
+         }
+   
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptsRemoveGenerated, uScriptGUIStyle.menuDropDownButton))
+         {
+            FileMenuItem_Clean();
+         }
       }
-      DrawMenuItemShortcut("N");
-
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptOpen, uScriptGUIStyle.menuDropDownButton))
-      {
-         FileMenuItem_Open();
-      }
-      DrawMenuItemShortcut("O");
-
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, uScriptGUIStyle.menuDropDownButton))
-      {
-         FileMenuItem_Save();
-      }
-      DrawMenuItemShortcut("S");
-
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveAs, uScriptGUIStyle.menuDropDownButton))
-      {
-         FileMenuItem_SaveAs();
-      }
-      DrawMenuItemShortcut("A");
-
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveQuick, uScriptGUIStyle.menuDropDownButton))
-      {
-         FileMenuItem_QuickSave();
-      }
-      DrawMenuItemShortcut("Q");
-
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveDebug, uScriptGUIStyle.menuDropDownButton))
-      {
-         FileMenuItem_DebugSave();
-      }
-      DrawMenuItemShortcut("D");
-
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveRelease, uScriptGUIStyle.menuDropDownButton))
-      {
-         FileMenuItem_ReleaseSave();
-      }
-      DrawMenuItemShortcut("R");
-
-      uScriptGUI.HR();
-
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptExportPNG, uScriptGUIStyle.menuDropDownButton))
-      {
-         FileMenuItem_ExportPNG();
-      }
-      DrawMenuItemShortcut("E");
-
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptUpgradeNodes, uScriptGUIStyle.menuDropDownButton))
-      {
-         FileMenuItem_UpgradeDeprecatedNodes();
-      }
-
-      uScriptGUI.HR();
-
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptsRebuildAll, uScriptGUIStyle.menuDropDownButton))
-      {
-         FileMenuItem_RebuildAll();
-      }
-
-      if (GUILayout.Button(uScriptGUIContent.buttonScriptsRemoveGenerated, uScriptGUIStyle.menuDropDownButton))
-      {
-         FileMenuItem_Clean();
-      }
+      GUILayout.EndVertical();
    }
 
    void FileMenuItem_New()
@@ -4802,9 +4978,9 @@ public class uScript : EditorWindow
       {
          foreach (object a in attributes)
          {
-            if (a is SocketState)
+            if (a is SocketStateAttribute)
             {
-               SocketState s = (SocketState)a;
+               SocketStateAttribute s = (SocketStateAttribute)a;
 
                Parameter.VisibleState state = Parameter.VisibleState.Visible;
 
