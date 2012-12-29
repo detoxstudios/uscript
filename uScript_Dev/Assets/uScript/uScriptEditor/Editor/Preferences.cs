@@ -132,6 +132,12 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "VariableExpansion" ] = value; }
    }
 
+   public bool GridSnap
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "GridSnap" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "GridSnap" ] = value; }
+   }
+
    public bool ShowAtStartup
    {
       get { LoadIfRequired( ); return (bool) m_Preferences[ "ShowAtStartup" ]; }
@@ -198,6 +204,7 @@ public class Preferences
       if ( null == m_Preferences[ "GridColorMinor" ] )       m_Preferences[ "GridColorMinor" ]       = uScriptConfig.Style.GridColorMinor;
       if ( null == m_Preferences[ "DoubleClickBehavior" ] )  m_Preferences[ "DoubleClickBehavior" ]  = DoubleClickBehaviorType.PingSource;
       if ( null == m_Preferences[ "VariableExpansion" ] )    m_Preferences[ "VariableExpansion" ]    = VariableExpansionType.Dynamic;
+      if ( null == m_Preferences[ "GridSnap" ] )             m_Preferences[ "GridSnap" ]             = false;
       if ( null == m_Preferences[ "ShowAtStartup" ] )        m_Preferences[ "ShowAtStartup" ]        = true;
       if ( null == m_Preferences[ "CheckForUpdate" ] )       m_Preferences[ "CheckForUpdate" ]       = true;
       if ( null == m_Preferences[ "LastUpdateCheck" ] )      m_Preferences[ "LastUpdateCheck" ]      = 0;

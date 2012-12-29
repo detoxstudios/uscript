@@ -645,6 +645,11 @@ namespace Detox.FlowChart
                   foreach ( Node selectedNode in SelectedNodes )
                   {
                      selectedNode.NodeMove( );
+
+                     if (uScript.Preferences.GridSnap)
+                     {
+                        uScript.Instance.SnapNodeToGrid(selectedNode);
+                     }
                   }
                }
                else if ( true == m_NodeMouseSizing )

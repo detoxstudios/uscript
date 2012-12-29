@@ -181,6 +181,7 @@ public class PreferenceWindow : EditorWindow
 
          _preferences.DoubleClickBehavior = (Preferences.DoubleClickBehaviorType)EditorGUILayout.EnumPopup("Double-Click Behavior", _preferences.DoubleClickBehavior);
          _preferences.VariableExpansion = (Preferences.VariableExpansionType)EditorGUILayout.EnumPopup("Variable Expansion Mode", _preferences.VariableExpansion);
+         _preferences.GridSnap = EditorGUILayout.Toggle("Snap to Grid", _preferences.GridSnap);
 
          EditorGUILayout.Separator();
 

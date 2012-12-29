@@ -42,4 +42,14 @@ public static class uScriptUtility
    {
       return ((int[])Enum.GetValues(e.GetType()))[index];
    }
+
+   /// <summary>Rounds a numer to the nearest multiple.</summary>
+   /// <returns>The rounded number.</returns>
+   /// <param name='number'>The number to round.</param>
+   /// <param name='multiple'>The multiple.</param>
+   public static int RoundToMultiple(int number, int multiple)
+   {
+      return ((multiple / 2 + number) / multiple) * multiple;
+   }
+   
 }

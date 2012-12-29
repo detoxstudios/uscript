@@ -1706,6 +1706,7 @@ public class uScript : EditorWindow
                {
                   switch (e.keyCode)
                   {
+                     case KeyCode.End: // Snap selected nodes to grid
                      case KeyCode.A:   // Save As ...
                      case KeyCode.D:   // Debug Save
                      case KeyCode.E:   // Export PNG
@@ -1811,6 +1812,10 @@ public class uScript : EditorWindow
                {
                   switch (e.keyCode)
                   {
+                     case KeyCode.End:
+                        SnapSelectdNodesToGrid();
+                        break;
+
                      case KeyCode.A:
                         FileMenuItem_SaveAs();
                         break;
@@ -5565,4 +5570,25 @@ public class uScript : EditorWindow
       return string.Empty;
    }
 
+   public void SnapNodeToGrid(Node node)
+   {
+      node.Location.X = uScriptUtility.RoundToMultiple(node.Location.X, (int)Preferences.GridSizeHorizontal);
+      node.Location.Y = uScriptUtility.RoundToMultiple(node.Location.Y, (int)Preferences.GridSizeVertical);
+   }
+
+   public void SnapSelectdNodesToGrid()
+   {
+      foreach (Node node in m_ScriptEditorCtrl.FlowChart.SelectedNodes)
+      {
+         SnapNodeToGrid(node);
+      }
+   }
+
+   public void SnapAllNodesToGrid()
+   {
+      foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
+      {
+         SnapNodeToGrid(node);
+      }
+   }
 }
