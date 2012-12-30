@@ -166,11 +166,25 @@ public class PreferenceWindow : EditorWindow
          GUILayout.Label("Grid Settings", EditorStyles.boldLabel);
 
          _preferences.ShowGrid = EditorGUILayout.Toggle("Show Grid", _preferences.ShowGrid);
-         _preferences.GridSizeVertical = Mathf.Min(_maxGridSize, Mathf.Max(_minGridSize, EditorGUILayout.FloatField("Grid Size Vertical", _preferences.GridSizeVertical)));
-         _preferences.GridSizeHorizontal = Mathf.Min(_maxGridSize, Mathf.Max(_minGridSize, EditorGUILayout.FloatField("Grid Size Horizontal", _preferences.GridSizeHorizontal)));
-         _preferences.GridMajorLineSpacing = Mathf.Min(_maxGridMagicSpacing, Mathf.Max(_minGridMajorSpacing, EditorGUILayout.IntField("Grid Major Line Spacing", _preferences.GridMajorLineSpacing)));
-         _preferences.GridColorMajor = EditorGUILayout.ColorField("Grid Color Major", _preferences.GridColorMajor);
-         _preferences.GridColorMinor = EditorGUILayout.ColorField("Grid Color Minor", _preferences.GridColorMinor);
+         EditorGUILayout.BeginHorizontal();
+         {
+            _preferences.GridSizeHorizontal = Mathf.Min(_maxGridSize, Mathf.Max(_minGridSize, EditorGUILayout.IntField("Grid Size (horizontal, vertical)", (int)_preferences.GridSizeHorizontal, GUILayout.Width(_styleWindow.fixedWidth - 67))));
+            GUILayout.Space(3);
+            EditorGUIUtility.LookLikeControls(0, 30);
+            _preferences.GridSizeVertical = Mathf.Min(_maxGridSize, Mathf.Max(_minGridSize, EditorGUILayout.IntField((int)_preferences.GridSizeVertical)));
+            EditorGUIUtility.LookLikeControls(_labelWidth, _valueWidth);
+         }
+         EditorGUILayout.EndHorizontal();
+         _preferences.GridMajorLineSpacing = Mathf.Min(_maxGridMagicSpacing, Mathf.Max(_minGridMajorSpacing, EditorGUILayout.IntField("Subdivisions", _preferences.GridMajorLineSpacing)));
+         EditorGUILayout.BeginHorizontal();
+         {
+            _preferences.GridColorMajor = EditorGUILayout.ColorField("Line Color (major, minor)", _preferences.GridColorMajor, GUILayout.Width(_styleWindow.fixedWidth - 67));
+            GUILayout.Space(3);
+            EditorGUIUtility.LookLikeControls(0, 30);
+            _preferences.GridColorMinor = EditorGUILayout.ColorField(_preferences.GridColorMinor);
+            EditorGUIUtility.LookLikeControls(_labelWidth, _valueWidth);
+         }
+         EditorGUILayout.EndHorizontal();
 
          EditorGUILayout.Separator();
 
