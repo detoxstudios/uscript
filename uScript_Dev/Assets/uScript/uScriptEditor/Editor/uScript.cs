@@ -1813,7 +1813,7 @@ public class uScript : EditorWindow
                   switch (e.keyCode)
                   {
                      case KeyCode.End:
-                        SnapSelectdNodesToGrid();
+                        SnapSelectedNodesToGrid();
                         break;
 
                      case KeyCode.A:
@@ -5576,7 +5576,7 @@ public class uScript : EditorWindow
       node.Location.Y = uScriptUtility.RoundToMultiple(node.Location.Y, (int)Preferences.GridSizeVertical);
    }
 
-   public void SnapSelectdNodesToGrid()
+   public void SnapSelectedNodesToGrid()
    {
       foreach (Node node in m_ScriptEditorCtrl.FlowChart.SelectedNodes)
       {
