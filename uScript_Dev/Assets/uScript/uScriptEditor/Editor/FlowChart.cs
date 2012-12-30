@@ -648,7 +648,7 @@ namespace Detox.FlowChart
 
                      if (uScript.Preferences.GridSnap)
                      {
-                        uScript.Instance.SnapNodeToGrid(selectedNode);
+                        selectedNode.GridSnap( );
                      }
                   }
                }
@@ -1529,6 +1529,32 @@ namespace Detox.FlowChart
          
          return 0;
       }
+
+      private void SnapNodesToGrid(Node[] nodes)
+      {
+         List<Node> modifiedNodes = new List<Node>( );
+
+         foreach (Node node in nodes)
+         {
+            if (node.GridSnap())
+            {
+               modifiedNodes.Add(node);
+            }
+         }
+
+         OnNodesModified( modifiedNodes.ToArray( ) );
+      }
+
+      public void SnapSelectedNodesToGrid()
+      {
+         SnapNodesToGrid(SelectedNodes);
+      }
+
+      public void SnapAllNodesToGrid()
+      {
+         SnapNodesToGrid(Nodes);
+      }
+
    }
 
    public class Link
@@ -1776,6 +1802,29 @@ namespace Detox.FlowChart
          
          if ( Size.Width  < uScriptConfig.MinResizeX  ) Size.Width = uScriptConfig.MinResizeX;
          if ( Size.Height < uScriptConfig.MinResizeY )  Size.Height = uScriptConfig.MinResizeY;
+      }
+
+      /// <summary>Snap the node to the grid.  This method returns True, if the node was repositioned, otherwise False.</summary>
+      /// <returns>True, if the node was repositioned, otherwise False.</returns>
+      public bool GridSnap( )
+      {
+         bool result = false;
+         int x = uScriptUtility.RoundToMultiple(Location.X, (int)uScript.Preferences.GridSizeHorizontal);
+         int y = uScriptUtility.RoundToMultiple(Location.Y, (int)uScript.Preferences.GridSizeVertical);
+   
+         if (Location.X != x)
+         {
+            Location.X = x;
+            result = true;
+         }
+
+         if (Location.Y != y)
+         {
+            Location.Y = y;
+            result = true;
+         }
+   
+         return result;
       }
 
       public AnchorPoint GetAnchorPoint(string name)
