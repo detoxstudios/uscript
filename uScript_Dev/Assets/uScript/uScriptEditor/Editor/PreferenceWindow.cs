@@ -8,8 +8,8 @@ public class PreferenceWindow : EditorWindow
 
    const int _minGridSize = 8;
    const int _maxGridSize = 100;
-   const int _minGridMajorSpacing = 1;
-   const int _maxGridMagicSpacing = 10;
+   const int _minGridSubdivisions = 1;
+   const int _maxGridSubdivisions = 10;
 
    const float _minProfileTime = 0.01f;
    const float _maxProfileTime = 10f;
@@ -166,16 +166,8 @@ public class PreferenceWindow : EditorWindow
          GUILayout.Label("Grid Settings", EditorStyles.boldLabel);
 
          _preferences.ShowGrid = EditorGUILayout.Toggle("Show Grid", _preferences.ShowGrid);
-         EditorGUILayout.BeginHorizontal();
-         {
-            _preferences.GridSizeHorizontal = Mathf.Min(_maxGridSize, Mathf.Max(_minGridSize, EditorGUILayout.IntField("Grid Size (horizontal, vertical)", (int)_preferences.GridSizeHorizontal, GUILayout.Width(_styleWindow.fixedWidth - 67))));
-            GUILayout.Space(3);
-            EditorGUIUtility.LookLikeControls(0, 30);
-            _preferences.GridSizeVertical = Mathf.Min(_maxGridSize, Mathf.Max(_minGridSize, EditorGUILayout.IntField((int)_preferences.GridSizeVertical)));
-            EditorGUIUtility.LookLikeControls(_labelWidth, _valueWidth);
-         }
-         EditorGUILayout.EndHorizontal();
-         _preferences.GridMajorLineSpacing = Mathf.Min(_maxGridMagicSpacing, Mathf.Max(_minGridMajorSpacing, EditorGUILayout.IntField("Subdivisions", _preferences.GridMajorLineSpacing)));
+         _preferences.GridSize = Mathf.Min(_maxGridSize, Mathf.Max(_minGridSize, EditorGUILayout.IntField("Grid Size", _preferences.GridSize)));
+         _preferences.GridSubdivisions = Mathf.Min(_maxGridSubdivisions, Mathf.Max(_minGridSubdivisions, EditorGUILayout.IntField("Subdivisions", _preferences.GridSubdivisions)));
          EditorGUILayout.BeginHorizontal();
          {
             _preferences.GridColorMajor = EditorGUILayout.ColorField("Line Color (major, minor)", _preferences.GridColorMajor, GUILayout.Width(_styleWindow.fixedWidth - 67));

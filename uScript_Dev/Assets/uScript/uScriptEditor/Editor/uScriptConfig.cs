@@ -153,11 +153,10 @@ public abstract class uScriptStyle
    public abstract int OutputOnlyPointOffset { get; }
    public abstract int IOSocketLabelVerticalOffset { get; }
    public abstract int IOSocketLabelHorizontalOffset { get; }
-   public abstract float GridSizeVertical   { get; }
-   public abstract float GridSizeHorizontal { get; }
+   public abstract int GridSize { get; }
+   public abstract int GridSubdivisions { get; }
    public abstract Color GridColorMajor { get; }
    public abstract Color GridColorMinor { get; }
-   public abstract int GridMajorLineSpacing { get; }
    public abstract bool ShowGrid { get; }
 }
 
@@ -693,9 +692,8 @@ public class uScriptDefaultStyle : uScriptStyle
 
    //background grid size
    public override bool ShowGrid { get { return true; } }
-   public override float GridSizeVertical   { get { return 20; } }
-   public override float GridSizeHorizontal { get { return 20; } }
-   public override int GridMajorLineSpacing   { get { return 4; } }
+   public override int GridSize { get { return 20; } }
+   public override int GridSubdivisions { get { return 4; } }
    public override Color GridColorMajor { get { return new Color((87/255f), (96/255f), (110/255f)); } }
    public override Color GridColorMinor { get { return new Color((95/255f), (103/255f), (118/255f)); } }
 }

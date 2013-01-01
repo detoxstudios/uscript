@@ -90,22 +90,16 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "ProfileMin" ] = value; }       
    }
 
-    public float GridSizeVertical
+   public int GridSize
    {
-      get { LoadIfRequired( ); return (float) m_Preferences[ "GridSizeVertical" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "GridSizeVertical" ] = value; }       
+      get { LoadIfRequired( ); return (int) m_Preferences[ "GridSize" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "GridSize" ] = value; }
    }
 
-   public float GridSizeHorizontal
+   public int GridSubdivisions
    {
-      get { LoadIfRequired( ); return (float) m_Preferences[ "GridSizeHorizontal" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "GridSizeHorizontal" ] = value; }       
-   }
-
-   public int GridMajorLineSpacing
-   {
-      get { LoadIfRequired( ); return (int) m_Preferences[ "GridMajorLineSpacing" ]; } 
-      set { LoadIfRequired( ); m_Preferences[ "GridMajorLineSpacing" ] = value; }       
+      get { LoadIfRequired( ); return (int) m_Preferences[ "GridSubdivisions" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "GridSubdivisions" ] = value; }
    }
 
    public UnityEngine.Color GridColorMajor
@@ -197,9 +191,8 @@ public class Preferences
    {
       if ( null == m_Preferences[ "DrawPanelsOnUpdate" ] )   m_Preferences[ "DrawPanelsOnUpdate" ]   = false;
       if ( null == m_Preferences[ "ShowGrid" ] )             m_Preferences[ "ShowGrid" ]             = uScriptConfig.Style.ShowGrid;
-      if ( null == m_Preferences[ "GridSizeVertical" ] )     m_Preferences[ "GridSizeVertical" ]     = uScriptConfig.Style.GridSizeVertical;
-      if ( null == m_Preferences[ "GridSizeHorizontal" ] )   m_Preferences[ "GridSizeHorizontal" ]   = uScriptConfig.Style.GridSizeHorizontal;
-      if ( null == m_Preferences[ "GridMajorLineSpacing" ] ) m_Preferences[ "GridMajorLineSpacing" ] = uScriptConfig.Style.GridMajorLineSpacing;
+      if ( null == m_Preferences[ "GridSize" ] )             m_Preferences[ "GridSize" ]             = uScriptConfig.Style.GridSize;
+      if ( null == m_Preferences[ "GridSubdivisions" ] )     m_Preferences[ "GridSubdivisions" ]     = uScriptConfig.Style.GridSubdivisions;
       if ( null == m_Preferences[ "GridColorMajor" ] )       m_Preferences[ "GridColorMajor" ]       = uScriptConfig.Style.GridColorMajor;
       if ( null == m_Preferences[ "GridColorMinor" ] )       m_Preferences[ "GridColorMinor" ]       = uScriptConfig.Style.GridColorMinor;
       if ( null == m_Preferences[ "DoubleClickBehavior" ] )  m_Preferences[ "DoubleClickBehavior" ]  = DoubleClickBehaviorType.PingSource;

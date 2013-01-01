@@ -1157,33 +1157,27 @@ namespace Detox.FlowChart
          {
             float g;
     
-            float gridSizeVertical   = uScript.Preferences.GridSizeVertical;
-            float gridSizeHorizontal = uScript.Preferences.GridSizeHorizontal;
-            int vertical   = (int) Math.Floor(gridSizeVertical);
-            int horizontal = (int) Math.Floor(gridSizeHorizontal);
+            int gridSize = uScript.Preferences.GridSize;
 
-            float offsetX = Location.X % vertical;
-            float offsetY = Location.Y % horizontal;
-            int gridMajorLineSpacing = (int)uScript.Preferences.GridMajorLineSpacing;
+            float offsetX = Location.X % gridSize;
+            float offsetY = Location.Y % gridSize;
+            int gridSubdivisions = (int)uScript.Preferences.GridSubdivisions;
 
-            int majorGridPixelOffset = Location.Y % (horizontal * gridMajorLineSpacing);
-            int majorGridSpacing = majorGridPixelOffset / horizontal;
-
-            offsetX += gridSizeVertical   - vertical;
-            offsetY += gridSizeHorizontal - horizontal;
+            int majorGridPixelOffset = Location.Y % (gridSize * gridSubdivisions);
+            int majorGridSpacing = majorGridPixelOffset / gridSize;
 
             Vector3 startGrid = new Vector3( offsetX, offsetY );
             Vector3 endGrid   = new Vector3( uScript.Instance.NodeWindowRect.width, offsetY );
 
-            //finally flip it because our location we modded with will be negative
-            int gridMajorLineCount = - majorGridSpacing;
+            // Finally flip it because our location we modded with will be negative
+            int gridSubdivisionCount = - majorGridSpacing;
 
-            for ( g = 0; g < uScript.Instance.NodeWindowRect.height; g += gridSizeHorizontal )
+            for ( g = 0; g < uScript.Instance.NodeWindowRect.height; g += gridSize )
             {
-               if ( gridMajorLineCount == gridMajorLineSpacing )
+               if ( gridSubdivisionCount == gridSubdivisions )
                {
                   Handles.color = uScript.Preferences.GridColorMajor;
-                  gridMajorLineCount = 0;
+                  gridSubdivisionCount = 0;
                }
                else
                {
@@ -1192,27 +1186,27 @@ namespace Detox.FlowChart
 
                Handles.DrawLine( startGrid, endGrid );
 
-               startGrid.y += gridSizeHorizontal;
-               endGrid.y += gridSizeHorizontal;
+               startGrid.y += gridSize;
+               endGrid.y += gridSize;
 
-               gridMajorLineCount++;
+               gridSubdivisionCount++;
             }
 
             startGrid = new Vector3( offsetX, offsetY );
             endGrid   = new Vector3( offsetX, uScript.Instance.NodeWindowRect.height );
 
-            majorGridPixelOffset = Location.X % (vertical * gridMajorLineSpacing);
-            majorGridSpacing = majorGridPixelOffset / vertical;
+            majorGridPixelOffset = Location.X % (gridSize * gridSubdivisions);
+            majorGridSpacing = majorGridPixelOffset / gridSize;
 
-            //finally flip it because our location we modded with will be negative
-            gridMajorLineCount = - majorGridSpacing;
+            // Finally flip it because our location we modded with will be negative
+            gridSubdivisionCount = - majorGridSpacing;
 
-            for ( g = 0; g < uScript.Instance.NodeWindowRect.width; g += uScript.Preferences.GridSizeVertical )
+            for ( g = 0; g < uScript.Instance.NodeWindowRect.width; g += uScript.Preferences.GridSize )
             {
-               if ( gridMajorLineCount == gridMajorLineSpacing )
+               if ( gridSubdivisionCount == gridSubdivisions )
                {
                   Handles.color = uScript.Preferences.GridColorMajor;
-                  gridMajorLineCount = 0;
+                  gridSubdivisionCount = 0;
                }
                else
                {
@@ -1221,10 +1215,10 @@ namespace Detox.FlowChart
 
                Handles.DrawLine( startGrid, endGrid );
 
-               startGrid.x += gridSizeVertical;
-               endGrid.x += gridSizeVertical;
+               startGrid.x += gridSize;
+               endGrid.x += gridSize;
 
-               gridMajorLineCount++;
+               gridSubdivisionCount++;
             }
          }
 
@@ -1809,8 +1803,8 @@ namespace Detox.FlowChart
       public bool GridSnap( )
       {
          bool result = false;
-         int x = uScriptUtility.RoundToMultiple(Location.X, (int)uScript.Preferences.GridSizeHorizontal);
-         int y = uScriptUtility.RoundToMultiple(Location.Y, (int)uScript.Preferences.GridSizeVertical);
+         int x = uScriptUtility.RoundToMultiple(Location.X, uScript.Preferences.GridSize);
+         int y = uScriptUtility.RoundToMultiple(Location.Y, uScript.Preferences.GridSize);
    
          if (Location.X != x)
          {
