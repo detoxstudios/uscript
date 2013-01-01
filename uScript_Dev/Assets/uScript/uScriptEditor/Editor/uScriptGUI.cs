@@ -102,7 +102,7 @@ public static class uScriptGUI
             // When specific fields lose focus, send out an event
             if (oldControlName == WatchedControlName)
             {
-               uScriptDebug.Log("The control lost focus: " + focusedControlID.ToString() + " (\"" + WatchedControlName + "\")\n");
+               uScriptDebug.Log("The control lost focus: " + focusedControlID.ToString() + " (\"" + WatchedControlName + "\")\n", uScriptDebug.Type.Debug);
             }
          }
 
