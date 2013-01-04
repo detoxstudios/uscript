@@ -1172,15 +1172,18 @@ namespace Detox.ScriptEditor
 
                //a better way to do this would be to query node properties
                //but i'm not adding all of that now
-               if ( false == (name == "Split String") &&
-                    false == (name.Contains("List")) &&
-                    false == (name == "On Collision") &&
-                    false == (name == "Get GameObjects By Tag") &&
-                    false == (name == "Get Children By Tag") &&
-                    false == (name == "Get Animations") &&
-                    false == (name == "Get All Children") )
+               if (name != ScriptEditor.FindNodeType(node))
                {
-                  linkTo.Type = linkTo.Type.Replace("[]", "");
+                  if ( false == (name == "Split String") &&
+                       false == (name.Contains("List")) &&
+                       false == (name == "On Collision") &&
+                       false == (name == "Get GameObjects By Tag") &&
+                       false == (name == "Get Children By Tag") &&
+                       false == (name == "Get Animations") &&
+                       false == (name == "Get All Children") )
+                  {
+                     linkTo.Type = linkTo.Type.Replace("[]", "");
+                  }
                }
             }
 

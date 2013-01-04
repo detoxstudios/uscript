@@ -1569,6 +1569,10 @@ namespace Detox.ScriptEditor
             {
                 return "new UnityEngine.NetworkMessageInfo( )";
             }
+            else if ("UnityEngine.AnimatorStateInfo" == type)
+            {
+                return "new UnityEngine.AnimatorStateInfo( )";
+            }
             else if ("UnityEngine.Bounds" == type)
             {
                 return "new UnityEngine.Bounds( )";
