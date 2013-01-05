@@ -45,11 +45,7 @@ public class uScriptAct_GUILayoutSelectionGrid : uScriptLogic
 
       [FriendlyName("Options", "An optional list of layout parameters.  Any values passed in here will override settings defined by the style.")]
       [SocketState(false, false)]
-      GUILayoutOption[] Options,
-
-      [FriendlyName("Control Name", "Name to give to this text area GUI control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName
+      GUILayoutOption[] Options
    )
    {
       List<GUIContent> content = new List<GUIContent>();
@@ -79,11 +75,6 @@ public class uScriptAct_GUILayoutSelectionGrid : uScriptLogic
       }
 
       GUIStyle style = (string.IsNullOrEmpty(Style) ? GUI.skin.button : GUI.skin.GetStyle(Style));
-
-      if (string.IsNullOrEmpty(ControlName) == false)
-      {
-         GUI.SetNextControlName(ControlName);
-      }
 
       m_Changed = false;
       int value = GUILayout.SelectionGrid(Value, content.ToArray(), xCount, style, Options);

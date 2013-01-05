@@ -54,10 +54,6 @@ public class uScriptAct_GUIButton : uScriptLogic
       [FriendlyName("Texture", "The background image to use for the button.")]
       Texture2D Texture,
       
-      [FriendlyName("Control Name", "Name to give to this button GUI control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName,
-      
       [FriendlyName("Tool Tip", "The tool tip to display when the button is being hovered over.")]
       [DefaultValue(""), SocketState(false, false)]
       string ToolTip,
@@ -86,8 +82,6 @@ public class uScriptAct_GUIButton : uScriptLogic
       GUIContent content = new GUIContent(Text, Texture, ToolTip);
       bool buttonDown = false;
       
-      if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);            
-
       if (string.IsNullOrEmpty(guiStyle))
       {
          buttonDown = GUI.RepeatButton(Position, content);

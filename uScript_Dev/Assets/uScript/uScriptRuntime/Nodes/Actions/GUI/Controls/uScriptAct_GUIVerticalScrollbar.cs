@@ -35,17 +35,11 @@ public class uScriptAct_GUIVerticalScrollbar : uScriptLogic
       [DefaultValue(1), SocketState(false, false)]
       float bottomValue,
       
-      [FriendlyName("Control Name", "Name to give to this label GUI control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName,
-
       [FriendlyName("GUI Style", "The name of a custom GUI style to use when displaying this label.")]
       [DefaultValue(""), SocketState(false, false)]
       string guiStyle
       )
    {
-      if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);
-
       if (string.IsNullOrEmpty(guiStyle))
       {
          GUI.VerticalScrollbar(Position, Value, Size, topValue, bottomValue);

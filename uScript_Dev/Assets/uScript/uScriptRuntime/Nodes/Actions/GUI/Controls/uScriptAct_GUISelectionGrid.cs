@@ -38,10 +38,6 @@ public class uScriptAct_GUISelectionGrid : uScriptLogic
       [DefaultValue(50)]
       int xCount,
       
-      [FriendlyName("Control Name", "Name to give to this text area GUI control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName,
-
       [FriendlyName("GUI Style", "The name of a custom GUI style to use when displaying this text aera.")]
       [DefaultValue(""), SocketState(false, false)]
       string guiStyle
@@ -49,8 +45,6 @@ public class uScriptAct_GUISelectionGrid : uScriptLogic
    {
       int value;
       m_Changed = false;
-
-      if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);
 
       if (string.IsNullOrEmpty(guiStyle))
       {

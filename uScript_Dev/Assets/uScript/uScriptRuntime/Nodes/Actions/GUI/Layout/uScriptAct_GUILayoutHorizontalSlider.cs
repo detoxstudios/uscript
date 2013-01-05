@@ -37,20 +37,11 @@ public class uScriptAct_GUILayoutHorizontalSlider : uScriptLogic
 
       [FriendlyName("Options", "An optional list of layout parameters.  Any values passed in here will override settings defined by the style.")]
       [SocketState(false, false)]
-      GUILayoutOption[] Options,
-
-      [FriendlyName("Control Name", "The name which will be assigned to the control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName
+      GUILayoutOption[] Options
       )
    {
       GUIStyle sliderStyle = (string.IsNullOrEmpty(SliderStyle) ? GUI.skin.horizontalSlider : GUI.skin.GetStyle(SliderStyle));
       GUIStyle thumbStyle = (string.IsNullOrEmpty(ThumbStyle) ? GUI.skin.horizontalSliderThumb : GUI.skin.GetStyle(ThumbStyle));
-
-      if (string.IsNullOrEmpty(ControlName) == false)
-      {
-         GUI.SetNextControlName(ControlName);
-      }
 
       Value = GUILayout.HorizontalSlider(Value, LeftValue, RightValue, sliderStyle, thumbStyle, Options);
    }

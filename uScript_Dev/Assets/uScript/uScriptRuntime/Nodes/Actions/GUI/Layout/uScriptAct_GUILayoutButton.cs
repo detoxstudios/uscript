@@ -60,10 +60,6 @@ public class uScriptAct_GUILayoutButton : uScriptLogic
       [SocketState(false, false)]
       GUILayoutOption[] Options,
 
-      [FriendlyName("Control Name", "The name which will be assigned to the control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName,
-
       [FriendlyName("Unique Identifier", "If the same node is used to represent multiple buttons, specify a unique identifier.")]
       [DefaultValue(0), SocketState(false, false)]
       int identifier
@@ -89,11 +85,6 @@ public class uScriptAct_GUILayoutButton : uScriptLogic
       GUIStyle style = (string.IsNullOrEmpty(Style) ? GUI.skin.button : GUI.skin.GetStyle(Style));
 
       bool buttonDown = false;
-
-      if (string.IsNullOrEmpty(ControlName) == false)
-      {
-         GUI.SetNextControlName(ControlName);
-      }
 
       buttonDown = GUILayout.RepeatButton(content, style, Options);
 

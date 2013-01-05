@@ -23,10 +23,6 @@ public class uScriptAct_GUITexture : uScriptLogic
       [FriendlyName("Texture", "The background image to use for the texture.")]
       Texture2D Texture,
 
-      [FriendlyName("Control Name", "Name to give to this texture GUI control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName,
-
       [FriendlyName("Scale Mode", "The scale mode to use when drawing the texture.")]
       ScaleMode scaleMode,
 
@@ -39,7 +35,6 @@ public class uScriptAct_GUITexture : uScriptLogic
       float aspect
       )
    {
-      if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);            
       GUI.DrawTexture(Position, Texture, scaleMode, alphaBlend, aspect);
    }
 }

@@ -33,10 +33,6 @@ public class uScriptAct_GUIToggle : uScriptLogic
       [FriendlyName("Texture", "The background image to use for the toggle.")]
       Texture2D Texture,
       
-      [FriendlyName("Control Name", "Name to give to this toggle GUI control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName,
-      
       [FriendlyName("Tool Tip", "The tool tip to display when the toggle is being hovered over.")]
       [DefaultValue(""), SocketState(false, false)]
       string ToolTip,
@@ -50,8 +46,6 @@ public class uScriptAct_GUIToggle : uScriptLogic
       bool value = false;
       m_Changed = false;
       
-      if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);            
-
       if (string.IsNullOrEmpty(guiStyle))
       {
          value = GUI.Toggle(Position, Value, content);

@@ -33,20 +33,11 @@ public class uScriptAct_GUILayoutLabel : uScriptLogic
 
       [FriendlyName("Options", "An optional list of layout parameters.  Any values passed in here will override settings defined by the style.")]
       [SocketState(false, false)]
-      GUILayoutOption[] Options,
-
-      [FriendlyName("Control Name", "The name which will be assigned to the control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName
+      GUILayoutOption[] Options
       )
    {
       GUIContent content = new GUIContent(Text, Texture, Tooltip);
       GUIStyle style = (string.IsNullOrEmpty(Style) ? GUI.skin.label : GUI.skin.GetStyle(Style));
-
-      if (string.IsNullOrEmpty(ControlName) == false)
-      {
-         GUI.SetNextControlName(ControlName);
-      }
 
       GUILayout.Label(content, style, Options);
    }

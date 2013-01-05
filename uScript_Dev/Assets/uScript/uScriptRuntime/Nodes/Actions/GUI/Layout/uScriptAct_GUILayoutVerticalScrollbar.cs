@@ -37,19 +37,10 @@ public class uScriptAct_GUILayoutVerticalScrollbar : uScriptLogic
 
       [FriendlyName("Options", "An optional list of layout parameters.  Any values passed in here will override settings defined by the style.")]
       [SocketState(false, false)]
-      GUILayoutOption[] Options,
-
-      [FriendlyName("Control Name", "The name which will be assigned to the control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName
+      GUILayoutOption[] Options
       )
    {
       GUIStyle scrollbarStyle = (string.IsNullOrEmpty(Style) ? GUI.skin.verticalScrollbar : GUI.skin.GetStyle(Style));
-
-      if (string.IsNullOrEmpty(ControlName) == false)
-      {
-         GUI.SetNextControlName(ControlName);
-      }
 
       Value = GUILayout.VerticalScrollbar(Value, ThumbSize, TopValue, BottomValue, scrollbarStyle, Options);
    }

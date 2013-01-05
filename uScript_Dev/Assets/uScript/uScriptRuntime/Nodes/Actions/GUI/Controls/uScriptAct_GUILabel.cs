@@ -26,10 +26,6 @@ public class uScriptAct_GUILabel : uScriptLogic
       [FriendlyName("Texture", "The background image to use for the label.")]
       Texture Texture,
       
-      [FriendlyName("Control Name", "Name to give to this label GUI control.")]
-      [DefaultValue(""), SocketState(false, false)]
-      string ControlName,
-      
       [FriendlyName("Tool Tip", "The tool tip to display when the label is being hovered over.")]
       [DefaultValue(""), SocketState(false, false)]
       string ToolTip,
@@ -40,8 +36,6 @@ public class uScriptAct_GUILabel : uScriptLogic
       )
    {
       GUIContent content = new GUIContent(Text, Texture, ToolTip);
-
-      if (!string.IsNullOrEmpty(ControlName)) GUI.SetNextControlName(ControlName);            
 
       if (string.IsNullOrEmpty(guiStyle))
       {
