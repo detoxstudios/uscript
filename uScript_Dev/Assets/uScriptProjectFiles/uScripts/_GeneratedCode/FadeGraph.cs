@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.1993
+//uScript Generated Code - Build 0.9.2123
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -204,7 +204,21 @@ public class FadeGraph : uScriptLogic
          local_FadeGO_UnityEngine_GameObject = GameObject.Find( "FadePlane" ) as UnityEngine.GameObject;
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject )
+      if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_FadeGO_UnityEngine_GameObject_previous = local_FadeGO_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+   }
+   
+   void RegisterForUnityHooks( )
+   {
+      SyncEventListeners( );
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -310,11 +324,14 @@ public class FadeGraph : uScriptLogic
    
    public void Start()
    {
+      SyncUnityHooks( );
+      m_RegisteredForEvents = true;
+      
    }
    
    public void OnEnable()
    {
-      SyncUnityHooks( );
+      RegisterForUnityHooks( );
       m_RegisteredForEvents = true;
    }
    
@@ -339,6 +356,7 @@ public class FadeGraph : uScriptLogic
          return;
       }
       UpdateEditorValues( );
+      
       //other scripts might have added GameObjects with event scripts
       //so we need to verify all our event listeners are registered
       SyncEventListeners( );
@@ -484,7 +502,7 @@ public class FadeGraph : uScriptLogic
          {
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject )
+               if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -551,7 +569,7 @@ public class FadeGraph : uScriptLogic
             index = 0;
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject )
+               if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   

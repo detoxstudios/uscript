@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.1993
+//uScript Generated Code - Build 0.9.2123
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -52,6 +52,11 @@ public class Profile_SimpleGraph : uScriptLogic
       SyncEventListeners( );
    }
    
+   void RegisterForUnityHooks( )
+   {
+      SyncEventListeners( );
+   }
+   
    void SyncEventListeners( )
    {
       if ( null == event_UnityEngine_GameObject_Instance_4 || false == m_RegisteredForEvents )
@@ -101,11 +106,14 @@ public class Profile_SimpleGraph : uScriptLogic
    
    public void Start()
    {
+      SyncUnityHooks( );
+      m_RegisteredForEvents = true;
+      
    }
    
    public void OnEnable()
    {
-      SyncUnityHooks( );
+      RegisterForUnityHooks( );
       m_RegisteredForEvents = true;
    }
    
@@ -130,6 +138,7 @@ public class Profile_SimpleGraph : uScriptLogic
          return;
       }
       UpdateEditorValues( );
+      
       //other scripts might have added GameObjects with event scripts
       //so we need to verify all our event listeners are registered
       SyncEventListeners( );

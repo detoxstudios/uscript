@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.1993
+//uScript Generated Code - Build 0.9.2123
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -276,7 +276,7 @@ public class uScript_StressTest : uScriptLogic
    {
       SyncEventListeners( );
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_0_UnityEngine_GameObject_previous != local_0_UnityEngine_GameObject )
+      if ( local_0_UnityEngine_GameObject_previous != local_0_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -285,7 +285,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject )
+      if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -294,7 +294,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_17_UnityEngine_GameObject_previous != local_17_UnityEngine_GameObject )
+      if ( local_17_UnityEngine_GameObject_previous != local_17_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -303,7 +303,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_Cover3_UnityEngine_GameObject_previous != local_Cover3_UnityEngine_GameObject )
+      if ( local_Cover3_UnityEngine_GameObject_previous != local_Cover3_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -312,7 +312,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_26_UnityEngine_GameObject_previous != local_26_UnityEngine_GameObject )
+      if ( local_26_UnityEngine_GameObject_previous != local_26_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -321,7 +321,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_35_UnityEngine_GameObject_previous != local_35_UnityEngine_GameObject )
+      if ( local_35_UnityEngine_GameObject_previous != local_35_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -330,7 +330,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject )
+      if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -339,7 +339,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_54_UnityEngine_GameObject_previous != local_54_UnityEngine_GameObject )
+      if ( local_54_UnityEngine_GameObject_previous != local_54_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -348,7 +348,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject )
+      if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -357,7 +357,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_69_UnityEngine_GameObject_previous != local_69_UnityEngine_GameObject )
+      if ( local_69_UnityEngine_GameObject_previous != local_69_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -366,7 +366,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject )
+      if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -375,7 +375,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_88_UnityEngine_GameObject_previous != local_88_UnityEngine_GameObject )
+      if ( local_88_UnityEngine_GameObject_previous != local_88_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -384,7 +384,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject )
+      if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -393,7 +393,7 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_94_UnityEngine_GameObject_previous != local_94_UnityEngine_GameObject )
+      if ( local_94_UnityEngine_GameObject_previous != local_94_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -402,7 +402,147 @@ public class uScript_StressTest : uScriptLogic
          //setup new listeners
       }
       //if our game object reference was changed then we need to reset event listeners
-      if ( local_105_UnityEngine_GameObject_previous != local_105_UnityEngine_GameObject )
+      if ( local_105_UnityEngine_GameObject_previous != local_105_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_105_UnityEngine_GameObject_previous = local_105_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+   }
+   
+   void RegisterForUnityHooks( )
+   {
+      SyncEventListeners( );
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_0_UnityEngine_GameObject_previous != local_0_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_0_UnityEngine_GameObject_previous = local_0_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_6_UnityEngine_GameObject_previous = local_6_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_17_UnityEngine_GameObject_previous != local_17_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_17_UnityEngine_GameObject_previous = local_17_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_Cover3_UnityEngine_GameObject_previous != local_Cover3_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_Cover3_UnityEngine_GameObject_previous = local_Cover3_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_26_UnityEngine_GameObject_previous != local_26_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_26_UnityEngine_GameObject_previous = local_26_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_35_UnityEngine_GameObject_previous != local_35_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_35_UnityEngine_GameObject_previous = local_35_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_45_UnityEngine_GameObject_previous = local_45_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_54_UnityEngine_GameObject_previous != local_54_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_54_UnityEngine_GameObject_previous = local_54_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_Cover1_UnityEngine_GameObject_previous = local_Cover1_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_69_UnityEngine_GameObject_previous != local_69_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_69_UnityEngine_GameObject_previous = local_69_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_Cover2_UnityEngine_GameObject_previous = local_Cover2_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_88_UnityEngine_GameObject_previous != local_88_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_88_UnityEngine_GameObject_previous = local_88_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_Monster_UnityEngine_GameObject_previous = local_Monster_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_94_UnityEngine_GameObject_previous != local_94_UnityEngine_GameObject || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         local_94_UnityEngine_GameObject_previous = local_94_UnityEngine_GameObject;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( local_105_UnityEngine_GameObject_previous != local_105_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          //tear down old listeners
          
@@ -525,11 +665,14 @@ public class uScript_StressTest : uScriptLogic
    
    public void Start()
    {
+      SyncUnityHooks( );
+      m_RegisteredForEvents = true;
+      
    }
    
    public void OnEnable()
    {
-      SyncUnityHooks( );
+      RegisterForUnityHooks( );
       m_RegisteredForEvents = true;
    }
    
@@ -554,6 +697,7 @@ public class uScript_StressTest : uScriptLogic
          return;
       }
       UpdateEditorValues( );
+      
       //other scripts might have added GameObjects with event scripts
       //so we need to verify all our event listeners are registered
       SyncEventListeners( );
@@ -819,7 +963,7 @@ public class uScript_StressTest : uScriptLogic
             index = 0;
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover3_UnityEngine_GameObject_previous != local_Cover3_UnityEngine_GameObject )
+               if ( local_Cover3_UnityEngine_GameObject_previous != local_Cover3_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1146,7 +1290,7 @@ public class uScript_StressTest : uScriptLogic
             index = 0;
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject )
+               if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1213,7 +1357,7 @@ public class uScript_StressTest : uScriptLogic
             index = 0;
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject )
+               if ( local_Monster_UnityEngine_GameObject_previous != local_Monster_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1298,7 +1442,7 @@ public class uScript_StressTest : uScriptLogic
             index = 0;
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject )
+               if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1315,7 +1459,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject )
+               if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1357,7 +1501,7 @@ public class uScript_StressTest : uScriptLogic
             index = 0;
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject )
+               if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1374,7 +1518,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject )
+               if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1416,7 +1560,7 @@ public class uScript_StressTest : uScriptLogic
             index = 0;
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject )
+               if ( local_Cover1_UnityEngine_GameObject_previous != local_Cover1_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1433,7 +1577,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject )
+               if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1650,7 +1794,7 @@ public class uScript_StressTest : uScriptLogic
             index = 0;
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_94_UnityEngine_GameObject_previous != local_94_UnityEngine_GameObject )
+               if ( local_94_UnityEngine_GameObject_previous != local_94_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1667,7 +1811,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_88_UnityEngine_GameObject_previous != local_88_UnityEngine_GameObject )
+               if ( local_88_UnityEngine_GameObject_previous != local_88_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1684,7 +1828,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject )
+               if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1701,7 +1845,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_105_UnityEngine_GameObject_previous != local_105_UnityEngine_GameObject )
+               if ( local_105_UnityEngine_GameObject_previous != local_105_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1718,7 +1862,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_26_UnityEngine_GameObject_previous != local_26_UnityEngine_GameObject )
+               if ( local_26_UnityEngine_GameObject_previous != local_26_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1767,7 +1911,7 @@ public class uScript_StressTest : uScriptLogic
             index = 0;
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_35_UnityEngine_GameObject_previous != local_35_UnityEngine_GameObject )
+               if ( local_35_UnityEngine_GameObject_previous != local_35_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1784,7 +1928,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_69_UnityEngine_GameObject_previous != local_69_UnityEngine_GameObject )
+               if ( local_69_UnityEngine_GameObject_previous != local_69_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1801,7 +1945,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_0_UnityEngine_GameObject_previous != local_0_UnityEngine_GameObject )
+               if ( local_0_UnityEngine_GameObject_previous != local_0_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1818,7 +1962,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_17_UnityEngine_GameObject_previous != local_17_UnityEngine_GameObject )
+               if ( local_17_UnityEngine_GameObject_previous != local_17_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1835,7 +1979,7 @@ public class uScript_StressTest : uScriptLogic
             
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject )
+               if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
@@ -1878,7 +2022,7 @@ public class uScript_StressTest : uScriptLogic
             index = 0;
             {
                //if our game object reference was changed then we need to reset event listeners
-               if ( local_54_UnityEngine_GameObject_previous != local_54_UnityEngine_GameObject )
+               if ( local_54_UnityEngine_GameObject_previous != local_54_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
                   //tear down old listeners
                   
