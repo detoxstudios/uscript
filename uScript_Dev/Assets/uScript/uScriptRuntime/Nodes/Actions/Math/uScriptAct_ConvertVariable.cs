@@ -23,6 +23,9 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       [FriendlyName("Int Value", "The Target variable represented as an integer.")]
       out int IntValue,
       
+      [FriendlyName("Int 64 Value", "The Target variable represented as a System.Int64.")]
+      out System.Int64 Int64Value,
+      
       [FriendlyName("Float Value", "The Target variable represented as a floating-point value.")]
       out float FloatValue,
       
@@ -37,6 +40,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       )
    {
       int tempIntValue = 0;
+      System.Int64 tempInt64Value = 0;
       float tempFloatValue = 0F;
       string tempStringValue = Target.ToString();
       bool tempBooleanValue = false;
@@ -50,6 +54,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          if (tmpTarget != null)
          {
             tempIntValue = 1;
+            tempInt64Value = 1;
             tempFloatValue = 1F;
             tempBooleanValue = true;
             tempStringValue = tmpTarget.name;
@@ -57,6 +62,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          else
          {
             tempIntValue = 0;
+            tempInt64Value = 0;
             tempFloatValue = 0F;
             tempBooleanValue = false;
             tempStringValue = "null";
@@ -67,6 +73,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       else if (Target is System.Enum)
       {
          tempIntValue = (int)Target;
+         tempInt64Value = (System.Int64)Target;
          tempFloatValue = tempIntValue;
          tempBooleanValue = tempIntValue == 0 ? false : true;
          tempStringValue = Target.ToString();
@@ -80,6 +87,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          if (tmpTarget.ToString() == "(0.0, 0.0)")
          {
             tempIntValue = 0;
+            tempInt64Value = 0;
             tempFloatValue = 0F;
             tempBooleanValue = false;
             tempStringValue = tmpTarget.ToString();
@@ -87,6 +95,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          else
          {
             tempIntValue = 1;
+            tempInt64Value = 1;
             tempFloatValue = 1F;
             tempBooleanValue = true;
             tempStringValue = tmpTarget.ToString();
@@ -102,6 +111,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          if (tmpTarget.ToString() == "(0.0, 0.0, 0.0)")
          {
             tempIntValue = 0;
+            tempInt64Value = 0;
             tempFloatValue = 0F;
             tempBooleanValue = false;
             tempStringValue = tmpTarget.ToString();
@@ -109,6 +119,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          else
          {
             tempIntValue = 1;
+            tempInt64Value = 1;
             tempFloatValue = 1F;
             tempBooleanValue = true;
             tempStringValue = tmpTarget.ToString();
@@ -123,6 +134,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          if (tmpTarget.ToString() == "(0.0, 0.0, 0.0, 0.0)")
          {
             tempIntValue = 0;
+            tempInt64Value = 0;
             tempFloatValue = 0F;
             tempBooleanValue = false;
             tempStringValue = tmpTarget.ToString();
@@ -130,6 +142,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          else
          {
             tempIntValue = 1;
+            tempInt64Value = 1;
             tempFloatValue = 1F;
             tempBooleanValue = true;
             tempStringValue = tmpTarget.ToString();
@@ -144,6 +157,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          if (tmpTarget == "")
          {
             tempIntValue = 0;
+            tempInt64Value = 0;
             tempFloatValue = 0F;
             tempBooleanValue = false;
             tempStringValue = tmpTarget;
@@ -168,6 +182,17 @@ public class uScriptAct_ConvertVariable : uScriptLogic
             else
             {
                tempIntValue = 1;
+            }
+
+            System.Int64 int64Number = 1;
+            bool canConvertInt64 = System.Int64.TryParse(tmpTarget, out int64Number);
+            if (canConvertInt64)
+            {
+               tempInt64Value = int64Number;
+            }
+            else
+            {
+               tempInt64Value = 1;
             }
 
             float floatNumber = 1F;
@@ -196,6 +221,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          if (tmpTarget == "")
          {
             tempIntValue = 0;
+            tempInt64Value = 0;
             tempFloatValue = 0F;
             tempBooleanValue = false;
             tempStringValue = tmpTarget;
@@ -211,6 +237,17 @@ public class uScriptAct_ConvertVariable : uScriptLogic
             else
             {
                tempIntValue = 1;
+            }
+
+            System.Int64 int64Number = 1;
+            bool canConvertInt64 = System.Int64.TryParse(tmpTarget, out int64Number);
+            if (canConvertInt64)
+            {
+               tempInt64Value = int64Number;
+            }
+            else
+            {
+               tempInt64Value = 1;
             }
 
             float floatNumber = 1F;
@@ -237,6 +274,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          if (tmpTarget == 0)
          {
             tempIntValue = 0;
+            tempInt64Value = 0;
             tempFloatValue = 0F;
             tempBooleanValue = false;
             tempStringValue = tmpTarget.ToString();
@@ -244,6 +282,30 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          else
          {
             tempIntValue = tmpTarget;
+            tempInt64Value = System.Convert.ToInt64(tmpTarget);
+            tempFloatValue = System.Convert.ToSingle(tmpTarget);
+            tempBooleanValue = true;
+            tempStringValue = tmpTarget.ToString();
+         }
+      }
+
+      // Convert from Int64
+      else if (typeof(System.Int64) == Target.GetType())
+      {
+         System.Int64 tmpTarget = (System.Int64)Target;
+
+         if (tmpTarget == 0)
+         {
+            tempIntValue = 0;
+            tempInt64Value = 0;
+            tempFloatValue = 0F;
+            tempBooleanValue = false;
+            tempStringValue = tmpTarget.ToString();
+         }
+         else
+         {
+            tempIntValue = System.Convert.ToInt32(tmpTarget);
+            tempInt64Value = tmpTarget;
             tempFloatValue = System.Convert.ToSingle(tmpTarget);
             tempBooleanValue = true;
             tempStringValue = tmpTarget.ToString();
@@ -258,6 +320,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          if (tmpTarget == 0)
          {
             tempIntValue = 0;
+            tempInt64Value = 0;
             tempFloatValue = 0F;
             tempBooleanValue = false;
             tempStringValue = tmpTarget.ToString();
@@ -265,6 +328,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          else
          {
             tempIntValue = System.Convert.ToInt32(tmpTarget);
+            tempInt64Value = System.Convert.ToInt64(tmpTarget);
             tempFloatValue = tmpTarget;
             tempBooleanValue = true;
             tempStringValue = tmpTarget.ToString();
@@ -279,6 +343,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          if (tmpTarget == true)
          {
             tempIntValue = 1;
+            tempInt64Value = 1;
             tempFloatValue = 1F;
             tempBooleanValue = true;
             tempStringValue = "True";
@@ -286,6 +351,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          else
          {
             tempIntValue = 0;
+            tempInt64Value = 0;
             tempFloatValue = 0F;
             tempBooleanValue = false;
             tempStringValue = "False";
@@ -294,6 +360,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
 
       // Output results
       IntValue = tempIntValue;
+      Int64Value = tempInt64Value;
       FloatValue = tempFloatValue;
       StringValue = tempStringValue;
       BooleanValue = tempBooleanValue;
