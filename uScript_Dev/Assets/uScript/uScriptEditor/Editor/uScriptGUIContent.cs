@@ -51,9 +51,6 @@ public static class uScriptGUIContent
    private static GUIContent _buttonNodeUpgrade;
    public static GUIContent buttonNodeUpgrade { get { return _buttonNodeUpgrade; } }
 
-   private static GUIContent _buttonPreferences;
-   public static GUIContent buttonPreferences { get { return _buttonPreferences; } }
-
    private static GUIContent _buttonSaveModeDebug;
    public static GUIContent buttonSaveModeDebug { get { return _buttonSaveModeDebug; } }
 
@@ -146,7 +143,13 @@ public static class uScriptGUIContent
 
    private static GUIContent _iconError32;
    public static GUIContent iconError32 { get { return _iconError32; } }
+ 
+   public static GUIContent ButtonFileMenu { get; private set; }
+   public static GUIContent ButtonGridSnap { get; private set; }
+   public static GUIContent ButtonPreferences { get; private set; }
 
+   public static GUIContent[] SaveMethodList { get; private set; }
+   
    public static void Init()
    {
       if (_buttonScriptNew != null)
@@ -172,8 +175,6 @@ public static class uScriptGUIContent
       _buttonNodeToggle = new GUIContent(string.Empty, "Toggle socket visibility on this node (Show All or Hide Unused).");
       _buttonNodeUpgrade = new GUIContent(string.Empty, "Upgrade this deprecated node.");
 
-      _buttonPreferences = new GUIContent("Preferences...", "Opens the preferences.");
-
       _buttonSaveModeDebug = new GUIContent("Debug", "When saved, the generated code will contain debug information.");
       _buttonSaveModeQuick = new GUIContent("Quick", "When saved, no code will be generated.");
       _buttonSaveModeRelease = new GUIContent("Release", "When saved, the generated code will be free of debug information.");
@@ -192,6 +193,17 @@ public static class uScriptGUIContent
       _buttonScriptSourceStale = new GUIContent("Source", "Ping the source file associated with this uScript.  Save using Release or Debug to generate code for this script.");
       _buttonScriptSourceDebug = new GUIContent("Source", "Ping the source file associated with this uScript.  This script contains Debug information.");
       _buttonScriptUpgradeNodes = new GUIContent("Upgrade Deprecated Nodes", "Upgrade all deprecated nodes in this graph. If this graph is assigned to a specific Unity scene, please be sure that scene is open before doing this or you could loose work!");
+
+      ButtonFileMenu = new GUIContent("File Menu", "Opens the file menu.");
+      ButtonGridSnap = new GUIContent("Grid Snap", "Toggles grid snapping.");
+      ButtonPreferences = new GUIContent("Preferences...", "Opens the preferences.");
+
+      SaveMethodList = new GUIContent[]
+      {
+         new GUIContent("Quick Save", "When saved, no code will be generated."),
+         new GUIContent("Debug Save", "When saved, the generated code will contain debug information."),
+         new GUIContent("Release Save", "When saved, the generated code will be free of debug information.")
+      };
 
       _buttonScriptsRebuildAll = new GUIContent("Rebuild All uScripts", "Rebuild all uScripts in the Unity project. For best results, have an empty/blank Unity scene loaded when performing this action. Note: this could take a while if you have many large graphs!");
       _buttonScriptsRemoveGenerated = new GUIContent("Remove Generated Code", "Removes all the generated script files created by uScript. For best results, have an empty/blank Unity scene loaded when performing this action. Note: Your uScript graphs will not work until they have been rebuilt/re-saved!");

@@ -502,6 +502,7 @@ public class uScript : EditorWindow
    public void ForceReleaseMouse()
    {
       m_MouseDown = false;
+      m_MouseDownOverCanvas = false;
    }
 
    private void Launching( )
@@ -1711,6 +1712,7 @@ public class uScript : EditorWindow
                      case KeyCode.D:   // Debug Save
                      case KeyCode.E:   // Export PNG
                      case KeyCode.F:   // Open File Menu
+                     case KeyCode.G:   // Toggle grid snapping
                      case KeyCode.N:   // New uScript graph
                      case KeyCode.O:   // Open uScript graph
                      case KeyCode.Q:   // Quick Save
@@ -1720,21 +1722,21 @@ public class uScript : EditorWindow
                         break;
                   }
                }
-//               else if (modifierKeys == Keys.Shift)
-//               {
-//               }
-//               else if (modifierKeys == Keys.ControlAlt)
-//               {
-//               }
-//               else if (modifierKeys == Keys.ControlShift)
-//               {
-//               }
-//               else if (modifierKeys == Keys.AltShift)
-//               {
-//               }
-//               else if (modifierKeys == Keys.ControlAltShift)
-//               {
-//               }
+               else if (modifierKeys == Keys.Shift)
+               {
+               }
+               else if (modifierKeys == Keys.ControlAlt)
+               {
+               }
+               else if (modifierKeys == Keys.ControlShift)
+               {
+               }
+               else if (modifierKeys == Keys.AltShift)
+               {
+               }
+               else if (modifierKeys == Keys.ControlAltShift)
+               {
+               }
                else // (modifierKeys == Keys.None)
                {
                   switch (e.keyCode)
@@ -1831,7 +1833,12 @@ public class uScript : EditorWindow
                      case KeyCode.F:
                         isFileMenuOpen = true;
                         break;
-
+        
+                     case KeyCode.G:
+                        Preferences.GridSnap = !Preferences.GridSnap;
+                        Preferences.Save();
+                        break;
+                        
                      case KeyCode.N:
                         FileMenuItem_New();
                         break;
@@ -1853,21 +1860,21 @@ public class uScript : EditorWindow
                         break;
                   }
                }
-//               else if (modifierKeys == Keys.Shift)
-//               {
-//               }
-//               else if (modifierKeys == Keys.ControlAlt)
-//               {
-//               }
-//               else if (modifierKeys == Keys.ControlShift)
-//               {
-//               }
-//               else if (modifierKeys == Keys.AltShift)
-//               {
-//               }
-//               else if (modifierKeys == Keys.ControlAltShift)
-//               {
-//               }
+               else if (modifierKeys == Keys.Shift)
+               {
+               }
+               else if (modifierKeys == Keys.ControlAlt)
+               {
+               }
+               else if (modifierKeys == Keys.ControlShift)
+               {
+               }
+               else if (modifierKeys == Keys.AltShift)
+               {
+               }
+               else if (modifierKeys == Keys.ControlAltShift)
+               {
+               }
                else // (modifierKeys == Keys.None)
                {
                   switch (e.keyCode)
@@ -2058,6 +2065,7 @@ public class uScript : EditorWindow
             }
             break;
          case EventType.MouseUp:
+//            Debug.Log("MouseUp ...\n\tm_MouseDown (" + m_MouseDown + "), m_MouseDownOverCanvas (" + m_MouseDownOverCanvas + ")");
             if (m_MouseDown && m_MouseDownOverCanvas)
             {
                m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
@@ -2073,45 +2081,48 @@ public class uScript : EditorWindow
                if (!uScriptGUI.panelsHidden) m_MouseUpArgs.X -= uScriptGUI.panelLeftWidth;
                m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
-               if (m_PressedKey == KeyCode.S)
+               if (modifierKeys == Keys.None)
                {
-                  m_AddVariableNode = "System.String";
-               }
-               else if (m_PressedKey == KeyCode.V)
-               {
-                  m_AddVariableNode = "UnityEngine.Vector3";
-               }
-               else if (m_PressedKey == KeyCode.I)
-               {
-                  m_AddVariableNode = "System.Int32";
-               }
-               else if (m_PressedKey == KeyCode.F)
-               {
-                  m_AddVariableNode = "System.Single";
-               }
-               else if (m_PressedKey == KeyCode.B)
-               {
-                  m_AddVariableNode = "System.Boolean";
-               }
-               else if (m_PressedKey == KeyCode.G)
-               {
-                  m_AddVariableNode = "UnityEngine.GameObject";
-               }
-               else if (m_PressedKey == KeyCode.O)
-               {
-                  m_AddVariableNode = "UnityEngine.Object";
-               }
-               else if (m_PressedKey == KeyCode.C)
-               {
-                  m_AddVariableNode = "Comment";
-               }
-               else if (m_PressedKey == KeyCode.E)
-               {
-                  m_AddVariableNode = "External";
-               }
-               else if (m_PressedKey == KeyCode.L)
-               {
-                  m_AddVariableNode = "Log";
+                  if (m_PressedKey == KeyCode.S)
+                  {
+                     m_AddVariableNode = "System.String";
+                  }
+                  else if (m_PressedKey == KeyCode.V)
+                  {
+                     m_AddVariableNode = "UnityEngine.Vector3";
+                  }
+                  else if (m_PressedKey == KeyCode.I)
+                  {
+                     m_AddVariableNode = "System.Int32";
+                  }
+                  else if (m_PressedKey == KeyCode.F)
+                  {
+                     m_AddVariableNode = "System.Single";
+                  }
+                  else if (m_PressedKey == KeyCode.B)
+                  {
+                     m_AddVariableNode = "System.Boolean";
+                  }
+                  else if (m_PressedKey == KeyCode.G)
+                  {
+                     m_AddVariableNode = "UnityEngine.GameObject";
+                  }
+                  else if (m_PressedKey == KeyCode.O)
+                  {
+                     m_AddVariableNode = "UnityEngine.Object";
+                  }
+                  else if (m_PressedKey == KeyCode.C)
+                  {
+                     m_AddVariableNode = "Comment";
+                  }
+                  else if (m_PressedKey == KeyCode.E)
+                  {
+                     m_AddVariableNode = "External";
+                  }
+                  else if (m_PressedKey == KeyCode.L)
+                  {
+                     m_AddVariableNode = "Log";
+                  }
                }
             }
             m_MouseDownRegion = MouseRegion.Outside;
@@ -3177,6 +3188,8 @@ public class uScript : EditorWindow
 
    void DrawGUIContent()
    {
+      int toolbarSpaceWidth = 16;
+      
       Rect rect = EditorGUILayout.BeginVertical();
       {
          // Toolbar
@@ -3188,7 +3201,7 @@ public class uScript : EditorWindow
                m_NodeToolbarRect = toolbarRect;
             }
 
-            isFileMenuOpen = GUILayout.Toggle(isFileMenuOpen, "File Menu", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
+            isFileMenuOpen = GUILayout.Toggle(isFileMenuOpen, uScriptGUIContent.ButtonFileMenu, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
             if (Event.current.type == EventType.Repaint)
             {
                rectFileMenuButton = GUILayoutUtility.GetLastRect();
@@ -3196,22 +3209,36 @@ public class uScript : EditorWindow
                rectFileMenuWindow.y = rectFileMenuButton.y + rectFileMenuButton.height;
             }
 
-            if (GUILayout.Button(uScriptGUIContent.buttonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(uScriptGUIContent.ButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                PreferenceWindow.Init();
             }
 
             GUILayout.FlexibleSpace();
+            GUILayout.Space(16);
 
-            GUILayout.Label("Save Method:", uScriptGUIStyle.toolbarLabel);
-            Preferences.SaveMethodType newMethod = (Preferences.SaveMethodType)EditorGUILayout.EnumPopup(Preferences.SaveMethod, EditorStyles.toolbarDropDown, GUILayout.Width(uScriptGUI.SaveMethodPopupWidth));
-            if (newMethod != Preferences.SaveMethod)
+            int saveMethod = (int)Preferences.SaveMethod;
+            saveMethod = GUILayout.Toolbar(saveMethod, uScriptGUIContent.SaveMethodList, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
+            if (saveMethod != (int)Preferences.SaveMethod)
             {
-               Preferences.SaveMethod = newMethod;
+               Preferences.SaveMethod = (Preferences.SaveMethodType)saveMethod;
                Preferences.Save();
                GenerateDebugInfo = Preferences.SaveMethod != Preferences.SaveMethodType.Release;
             }
+            
+            // The toolbarButton style doesn't have a right edge, so looks wrong when used
+            // with the Toolbar control, so Draw a Box instead of the standard Space.
+            GUILayout.Box(GUIContent.none, EditorStyles.toolbarButton, GUILayout.Width(toolbarSpaceWidth));
+//            GUILayout.Space(toolbarSpaceWidth);
 
+            bool newSnapValue = GUILayout.Toggle(Preferences.GridSnap, uScriptGUIContent.ButtonGridSnap, EditorStyles.toolbarButton);
+            if (newSnapValue != Preferences.GridSnap)
+            {
+               Preferences.GridSnap = newSnapValue;
+               Preferences.Save();
+            }
+            
+            GUILayout.Space(16);
             GUILayout.FlexibleSpace();
 
             GUILayout.Label(FullVersionName, uScriptGUIStyle.toolbarLabel);

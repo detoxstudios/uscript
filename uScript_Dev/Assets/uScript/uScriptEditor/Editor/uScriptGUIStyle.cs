@@ -403,7 +403,7 @@ public static class uScriptGUIStyle
       _listRow.onNormal.background = _texture_propertyRowEven;
 
       _toolbarLabel = new GUIStyle(EditorStyles.label);
-      _toolbarLabel.padding = new RectOffset(16, 4, 2, 2);
+      _toolbarLabel.padding = new RectOffset(4, 4, 2, 2);
       _toolbarLabel.margin = new RectOffset();
    }
 
