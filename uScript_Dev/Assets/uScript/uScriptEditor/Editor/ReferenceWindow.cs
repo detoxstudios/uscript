@@ -43,7 +43,7 @@ public class ReferenceWindow : EditorWindow
 
    public void OnGUI()
    {
-      if (isFirstRun || isProSkin != EditorGUIUtility.isProSkin)
+      if (isFirstRun)
       {
          isFirstRun = false;
 
@@ -56,66 +56,20 @@ public class ReferenceWindow : EditorWindow
          // Force the window to a position relative to the uScript window
 //         base.position = new Rect(uScript.Instance.position.x + 50, uScript.Instance.position.y + 50, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-         // Setup the custom styles for this window
-         styleWindow = new GUIStyle();
-         styleWindow.fixedHeight = base.minSize.y;
-         styleWindow.fixedWidth = base.minSize.x;
-         styleWindow.padding = new RectOffset(32, 32, 16, 32);
-
-         stylePanelIcon = new GUIStyle();
-         stylePanelIcon.padding = new RectOffset(0, 32, 0, 0);
-         stylePanelIcon.stretchWidth = false;
-
-         stylePanelTitle = new GUIStyle();
-         stylePanelTitle.fontSize = 32;
-         stylePanelTitle.fontStyle = FontStyle.Bold;
-         stylePanelTitle.normal.textColor = EditorStyles.boldLabel.normal.textColor;
-
-         stylePanelDescription = GUI.skin.GetStyle("WordWrappedLabel");
-
-         styleCommandSection = new GUIStyle();
-         styleCommandSection.margin = new RectOffset(8, 8, 0, 16);
-         styleCommandSection.stretchWidth = true;
-
-         styleCommandSectionDescription = new GUIStyle(EditorStyles.label);
-         styleCommandSectionDescription.margin = new RectOffset(4, 4, 4, 16);
-         styleCommandSectionDescription.padding = new RectOffset(3, 3, 1, 0);
-         styleCommandSectionDescription.wordWrap = true;
-
-         styleCommandKey = new GUIStyle(EditorStyles.miniButton);
-         styleCommandKey.margin = new RectOffset(0, 0, 2, 2);
-         styleCommandKey.stretchWidth = false;
-
-         styleCommandMouse = new GUIStyle(EditorStyles.boldLabel);
-         styleCommandMouse.margin = new RectOffset(0, 0, 2, 2);
-         styleCommandMouse.stretchWidth = false;
-
-         styleCommandContext = new GUIStyle(EditorStyles.label);
-         styleCommandContext.margin = new RectOffset(2, 2, 2, 2);
-         styleCommandContext.stretchWidth = false;
-
-         styleCommandOr = new GUIStyle(EditorStyles.label);
-         styleCommandOr.fontStyle = FontStyle.Italic;
-         styleCommandOr.margin = new RectOffset(8, 8, 2, 2);
-         styleCommandOr.stretchWidth = false;
-
-         styleCommandPlus = new GUIStyle(EditorStyles.label);
-         styleCommandPlus.margin = new RectOffset(0, 0, 2, 2);
-         styleCommandPlus.stretchWidth = false;
-
-         contentPanelIcon = new GUIContent(UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/iconWelcomeLogo.png", typeof(UnityEngine.Texture)) as UnityEngine.Texture);
-         contentPanelTitle = new GUIContent("Quick Command Reference");
-         contentPanelDescription = new GUIContent("This is summary of the various commands available to you while using the uScript Editor.");
-
-         minWidthKey = (int)Mathf.Max(styleCommandKey.CalcSize(new GUIContent("W")).x, styleCommandKey.CalcSize(new GUIContent("=")).x);
-         minWidthModifierKey = (int)styleCommandKey.CalcSize(new GUIContent("SHIFT")).x;
-
-         ApplySkinDifferences();
+         // Make sure the skin is set at least once
+         isProSkin = !EditorGUIUtility.isProSkin;
 
          if (isWindows)
          {
             window.Focus();
          }
+      }
+
+      if (isProSkin != EditorGUIUtility.isProSkin)
+      {
+         isProSkin = EditorGUIUtility.isProSkin;
+
+         UpdateCustomStyles();
       }
 
       // Apply an content offset, because for some reason,
@@ -415,10 +369,63 @@ public class ReferenceWindow : EditorWindow
       EditorGUILayout.EndHorizontal();
    }
 
-   private void ApplySkinDifferences()
+   private void UpdateCustomStyles()
    {
-      isProSkin = EditorGUIUtility.isProSkin;
+      // Setup the custom styles for this window
+      styleWindow = new GUIStyle();
+      styleWindow.fixedHeight = base.minSize.y;
+      styleWindow.fixedWidth = base.minSize.x;
+      styleWindow.padding = new RectOffset(32, 32, 16, 32);
 
+      stylePanelIcon = new GUIStyle();
+      stylePanelIcon.padding = new RectOffset(0, 32, 0, 0);
+      stylePanelIcon.stretchWidth = false;
+
+      stylePanelTitle = new GUIStyle();
+      stylePanelTitle.fontSize = 32;
+      stylePanelTitle.fontStyle = FontStyle.Bold;
+      stylePanelTitle.normal.textColor = EditorStyles.boldLabel.normal.textColor;
+
+      stylePanelDescription = GUI.skin.GetStyle("WordWrappedLabel");
+
+      styleCommandSection = new GUIStyle();
+      styleCommandSection.margin = new RectOffset(8, 8, 0, 16);
+      styleCommandSection.stretchWidth = true;
+
+      styleCommandSectionDescription = new GUIStyle(EditorStyles.label);
+      styleCommandSectionDescription.margin = new RectOffset(4, 4, 4, 16);
+      styleCommandSectionDescription.padding = new RectOffset(3, 3, 1, 0);
+      styleCommandSectionDescription.wordWrap = true;
+
+      styleCommandKey = new GUIStyle(EditorStyles.miniButton);
+      styleCommandKey.margin = new RectOffset(0, 0, 2, 2);
+      styleCommandKey.stretchWidth = false;
+
+      styleCommandMouse = new GUIStyle(EditorStyles.boldLabel);
+      styleCommandMouse.margin = new RectOffset(0, 0, 2, 2);
+      styleCommandMouse.stretchWidth = false;
+
+      styleCommandContext = new GUIStyle(EditorStyles.label);
+      styleCommandContext.margin = new RectOffset(2, 2, 2, 2);
+      styleCommandContext.stretchWidth = false;
+
+      styleCommandOr = new GUIStyle(EditorStyles.label);
+      styleCommandOr.fontStyle = FontStyle.Italic;
+      styleCommandOr.margin = new RectOffset(8, 8, 2, 2);
+      styleCommandOr.stretchWidth = false;
+
+      styleCommandPlus = new GUIStyle(EditorStyles.label);
+      styleCommandPlus.margin = new RectOffset(0, 0, 2, 2);
+      styleCommandPlus.stretchWidth = false;
+
+      contentPanelIcon = new GUIContent(UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/iconWelcomeLogo.png", typeof(UnityEngine.Texture)) as UnityEngine.Texture);
+      contentPanelTitle = new GUIContent("Quick Command Reference");
+      contentPanelDescription = new GUIContent("This is summary of the various commands available to you while using the uScript Editor.");
+
+      minWidthKey = (int)Mathf.Max(styleCommandKey.CalcSize(new GUIContent("W")).x, styleCommandKey.CalcSize(new GUIContent("=")).x);
+      minWidthModifierKey = (int)styleCommandKey.CalcSize(new GUIContent("SHIFT")).x;
+
+      // Apply skin and platform variations
       if (isProSkin)
       {
          styleCommandKey.padding = (isWindows ? new RectOffset(4, 7, 2, 2) : new RectOffset(5, 7, 1, 3));
