@@ -11,6 +11,7 @@ public class ReferenceWindow : EditorWindow
    const int WINDOW_HEIGHT = 640;
    Vector2 scrollviewPosition;
    bool isWindows = false;
+   bool isProSkin = false;
    int minWidthKey = 0;
    int minWidthModifierKey = 0;
 
@@ -42,7 +43,7 @@ public class ReferenceWindow : EditorWindow
 
    public void OnGUI()
    {
-      if (isFirstRun)
+      if (isFirstRun || isProSkin != EditorGUIUtility.isProSkin)
       {
          isFirstRun = false;
 
@@ -83,7 +84,6 @@ public class ReferenceWindow : EditorWindow
 
          styleCommandKey = new GUIStyle(EditorStyles.miniButton);
          styleCommandKey.margin = new RectOffset(0, 0, 2, 2);
-         styleCommandKey.padding = (isWindows ? new RectOffset(4, 7, 2, 2) : EditorStyles.miniButton.padding);
          styleCommandKey.stretchWidth = false;
 
          styleCommandMouse = new GUIStyle(EditorStyles.boldLabel);
@@ -109,6 +109,8 @@ public class ReferenceWindow : EditorWindow
 
          minWidthKey = (int)Mathf.Max(styleCommandKey.CalcSize(new GUIContent("W")).x, styleCommandKey.CalcSize(new GUIContent("=")).x);
          minWidthModifierKey = (int)styleCommandKey.CalcSize(new GUIContent("SHIFT")).x;
+
+         ApplySkinDifferences();
 
          if (isWindows)
          {
@@ -411,6 +413,20 @@ public class ReferenceWindow : EditorWindow
          }
       }
       EditorGUILayout.EndHorizontal();
+   }
+
+   private void ApplySkinDifferences()
+   {
+      isProSkin = EditorGUIUtility.isProSkin;
+
+      if (isProSkin)
+      {
+         styleCommandKey.padding = (isWindows ? new RectOffset(4, 7, 2, 2) : new RectOffset(5, 7, 1, 3));
+      }
+      else
+      {
+         styleCommandKey.padding = (isWindows ? new RectOffset(4, 7, 2, 2) : new RectOffset(5, 7, 2, 2));
+      }
    }
 
 }
