@@ -152,6 +152,11 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                Help.BrowseURL("http://uscript.net/forum");
             }
 
+            if (GUILayout.Button("?", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            {
+               ReferenceWindow.Init();
+            }
+
             uScriptGUI.enabled = true;
          }
          EditorGUILayout.EndHorizontal();
