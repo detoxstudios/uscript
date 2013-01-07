@@ -14,8 +14,14 @@ using System.Collections;
 [FriendlyName("Destroy", "Destroys the target GameObject.")]
 public class uScriptAct_Destroy : uScriptLogic
 {
+   bool m_GuaranteedOneTick = false;
+   bool m_ObjectsDestroyed = false;
+   private float m_DelayTime = 0.0f;
 
    public bool Out { get { return true; } }
+
+   [FriendlyName("Objects Destroyed")]
+   public bool ObjectsDestroyed { get { return m_ObjectsDestroyed; } }
 
    public void In(
       [FriendlyName("Target", "The target GameObject(s) to destroy.")]
@@ -26,6 +32,11 @@ public class uScriptAct_Destroy : uScriptLogic
       float DelayTime
       )
    {
+      m_ObjectsDestroyed = false;
+      m_GuaranteedOneTick = false;
+
+      m_DelayTime = Time.time + DelayTime;
+
       if (DelayTime > 0F)
       {
          foreach (GameObject currentTarget in Target)
@@ -46,5 +57,29 @@ public class uScriptAct_Destroy : uScriptLogic
             }
          }
       }
+   }
+
+   [Driven]
+   public bool WaitOneTick()
+   {
+      if (Time.time <= m_DelayTime) return true;
+
+      //we don't know if the first time will be called
+      //in the same update as In, so the first time return
+      if (false == m_GuaranteedOneTick) 
+      {
+         m_GuaranteedOneTick = true;
+         return true;
+      }
+      
+      //next return true that objects were destroyed
+      //because we know one tick went by
+      if (false == m_ObjectsDestroyed)
+      {
+         m_ObjectsDestroyed = true;
+         return true;
+      }
+
+      return false;
    }
 }
