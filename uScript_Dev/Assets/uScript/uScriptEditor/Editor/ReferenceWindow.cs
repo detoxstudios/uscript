@@ -33,7 +33,7 @@ public class ReferenceWindow : EditorWindow
    public static void Init()
    {
       // Get existing open window or if none, make a new one:
-      window = EditorWindow.GetWindow<ReferenceWindow>(true, "uScript Keyboard Shortcut Reference", true) as ReferenceWindow;
+      window = EditorWindow.GetWindow<ReferenceWindow>(true, "uScript Quick Command Reference", true) as ReferenceWindow;
       window.isFirstRun = true;   // unnecessary, but we'll get a warning that 'window' is unused, otherwise
    }
 
@@ -71,7 +71,7 @@ public class ReferenceWindow : EditorWindow
          styleCommandSection.margin = new RectOffset(8, 8, 0, 16);
          styleCommandSection.stretchWidth = true;
 
-         styleCommandSectionDescription = new GUIStyle();
+         styleCommandSectionDescription = new GUIStyle(EditorStyles.label);
          styleCommandSectionDescription.margin = new RectOffset(4, 4, 4, 16);
          styleCommandSectionDescription.padding = new RectOffset(3, 3, 1, 0);
          styleCommandSectionDescription.wordWrap = true;
@@ -287,12 +287,6 @@ public class ReferenceWindow : EditorWindow
          GUILayout.Label("Some nodes can be quickly placed on the graph by holding the associated key and clicking the"
             + " left mouse button where you wish the node to appear.", styleCommandSectionDescription);
 
-         uScriptGUIStyle.Information(GUI.skin.textArea);
-         uScriptGUIStyle.Information(GUI.skin.label);
-         
-         uScriptGUIStyle.Information(styleCommandSectionDescription);
-         
-
          DrawCommand("Bool variable", ".Hold_B+.click_LMB");
          DrawCommand("Float variable", ".Hold_F+.click_LMB");
          DrawCommand("GameObject variable", ".Hold_G+.click_LMB");
@@ -309,7 +303,7 @@ public class ReferenceWindow : EditorWindow
       }
       EditorGUILayout.EndVertical();
    }
-   
+
    /// <summary>Display the formatted input action and command summary.</summary>
    /// <param name='action'>The action description.</param>
    /// <param name='cmds'>Parameter list of commands. Each string represents compound input that may contain keyboard and mouse actions, as well as context. Contextual information should be preceeded by an underscore.</param>
