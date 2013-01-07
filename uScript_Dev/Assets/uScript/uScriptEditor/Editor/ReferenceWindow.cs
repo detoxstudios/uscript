@@ -9,7 +9,10 @@ public class ReferenceWindow : EditorWindow
    // Layout parameters
    const int WINDOW_WIDTH = 700;
    const int WINDOW_HEIGHT = 640;
-   private Vector2 scrollviewPosition;
+   Vector2 scrollviewPosition;
+   bool isWindows = false;
+   int minWidthKey = 0;
+   int minWidthModifierKey = 0;
 
    // Custom Content
    GUIContent contentPanelIcon;
@@ -43,8 +46,10 @@ public class ReferenceWindow : EditorWindow
       {
          isFirstRun = false;
 
+         isWindows = Application.platform == RuntimePlatform.WindowsEditor;
+
          // Set the min and max window dimensions to prevent resizing
-         base.minSize = new Vector2(WINDOW_WIDTH, WINDOW_HEIGHT);
+         base.minSize = new Vector2(WINDOW_WIDTH + (isWindows ? 40 : 0), WINDOW_HEIGHT);
          base.maxSize = base.minSize;
 
          // Force the window to a position relative to the uScript window
@@ -52,19 +57,19 @@ public class ReferenceWindow : EditorWindow
 
          // Setup the custom styles for this window
          styleWindow = new GUIStyle();
-         styleWindow.fixedHeight = WINDOW_HEIGHT;
-         styleWindow.fixedWidth = WINDOW_WIDTH;
+         styleWindow.fixedHeight = base.minSize.y;
+         styleWindow.fixedWidth = base.minSize.x;
          styleWindow.padding = new RectOffset(32, 32, 16, 32);
-            
+
          stylePanelIcon = new GUIStyle();
          stylePanelIcon.padding = new RectOffset(0, 32, 0, 0);
          stylePanelIcon.stretchWidth = false;
-            
+
          stylePanelTitle = new GUIStyle();
          stylePanelTitle.fontSize = 32;
          stylePanelTitle.fontStyle = FontStyle.Bold;
          stylePanelTitle.normal.textColor = EditorStyles.boldLabel.normal.textColor;
-            
+
          stylePanelDescription = GUI.skin.GetStyle("WordWrappedLabel");
 
          styleCommandSection = new GUIStyle();
@@ -78,30 +83,34 @@ public class ReferenceWindow : EditorWindow
 
          styleCommandKey = new GUIStyle(EditorStyles.miniButton);
          styleCommandKey.margin = new RectOffset(0, 0, 2, 2);
+         styleCommandKey.padding = (isWindows ? new RectOffset(4, 7, 2, 2) : EditorStyles.miniButton.padding);
          styleCommandKey.stretchWidth = false;
-         
+
          styleCommandMouse = new GUIStyle(EditorStyles.boldLabel);
          styleCommandMouse.margin = new RectOffset(0, 0, 2, 2);
          styleCommandMouse.stretchWidth = false;
-         
+
          styleCommandContext = new GUIStyle(EditorStyles.label);
          styleCommandContext.margin = new RectOffset(2, 2, 2, 2);
          styleCommandContext.stretchWidth = false;
-         
+
          styleCommandOr = new GUIStyle(EditorStyles.label);
          styleCommandOr.fontStyle = FontStyle.Italic;
          styleCommandOr.margin = new RectOffset(8, 8, 2, 2);
          styleCommandOr.stretchWidth = false;
-         
+
          styleCommandPlus = new GUIStyle(EditorStyles.label);
          styleCommandPlus.margin = new RectOffset(0, 0, 2, 2);
          styleCommandPlus.stretchWidth = false;
-         
+
          contentPanelIcon = new GUIContent(UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/iconWelcomeLogo.png", typeof(UnityEngine.Texture)) as UnityEngine.Texture);
          contentPanelTitle = new GUIContent("Quick Command Reference");
          contentPanelDescription = new GUIContent("This is summary of the various commands available to you while using the uScript Editor.");
 
-         if (Application.platform == RuntimePlatform.WindowsEditor)
+         minWidthKey = (int)Mathf.Max(styleCommandKey.CalcSize(new GUIContent("W")).x, styleCommandKey.CalcSize(new GUIContent("=")).x);
+         minWidthModifierKey = (int)styleCommandKey.CalcSize(new GUIContent("SHIFT")).x;
+
+         if (isWindows)
          {
             window.Focus();
          }
@@ -141,13 +150,13 @@ public class ReferenceWindow : EditorWindow
       }
       EditorGUILayout.EndVertical();
    }
- 
+
    private void DrawPanelHeader()
    {
       EditorGUILayout.BeginHorizontal();
       {
          GUILayout.Label(contentPanelIcon, stylePanelIcon);
-            
+
          EditorGUILayout.BeginVertical();
          {
             GUILayout.Label(contentPanelTitle, stylePanelTitle);
@@ -198,7 +207,7 @@ public class ReferenceWindow : EditorWindow
       }
       EditorGUILayout.EndVertical();
    }
-   
+
    private void DrawCommands_Canvas()
    {
       EditorGUILayout.BeginVertical(styleCommandSection);
@@ -207,28 +216,28 @@ public class ReferenceWindow : EditorWindow
 
          DrawCommand("Pan Canvas", ".Hold_ALT+LMB_.then drag");
          DrawCommand(string.Empty, "or_.Hold_MMB_.then drag");
-         
+
          EditorGUILayout.Space();
-         
+
          DrawCommand("Center graph at origin (0, 0)", ".Press_Home", ".Press_CTRL+H");
          DrawCommand("Center graph on next Event node", ".Press_]");
          DrawCommand("Center graph on previous Event node", ".Press_[");
-         
+
          EditorGUILayout.Space();
-         
+
          DrawCommand("Toggle grid visibility", ".Press_CTRL+G");
          DrawCommand("Toggle grid snapping", ".Press_ALT+G");
          DrawCommand("Snap selected nodes to grid", ".Press_ALT+End");
-         
+
          EditorGUILayout.Space();
-         
+
          DrawCommand("Reset Zoom to 100%", ".Press_0");
          DrawCommand("Zoom Out by 10%", ".Press_-", ".Scroll_MouseWheel_.down");
          DrawCommand("Zoom In by 10%", ".Press_=", ".Scroll_MouseWheel_.up");
       }
       EditorGUILayout.EndVertical();
    }
-   
+
    private void DrawCommands_Node()
    {
       EditorGUILayout.BeginVertical(styleCommandSection);
@@ -237,25 +246,25 @@ public class ReferenceWindow : EditorWindow
 
          DrawCommand("New node selection", ".Click_LMB_.on node");
          DrawCommand(string.Empty, "or_.Hold_LMB_.on canvas and drag over node(s)");
-         
+
          EditorGUILayout.Space();
-         
+
          DrawCommand("Add to selection", ".Hold_SHIFT+LMB_.on canvas and drag over node(s)");
          DrawCommand("Remove from selection", ".Hold_CTRL+LMB_.on canvas and drag over node(s)");
          DrawCommand("Toggle node selection", ".Press_SHIFT+LMB_.on node");
-         
+
          EditorGUILayout.Space();
 
          DrawCommand("Move selection", ".Hold_LMB_.on selected node and drag");
-         
+
          EditorGUILayout.Space();
-         
+
          DrawCommand("Delete node selection", ".Press_Delete", ".Press_Backspace");
          DrawCommand("Drop node selection", ".Press_Escape", ".Click_LMB_.on canvas");
       }
       EditorGUILayout.EndVertical();
    }
-   
+
    private void DrawCommands_FileAccess()
    {
       EditorGUILayout.BeginVertical(styleCommandSection);
@@ -277,7 +286,7 @@ public class ReferenceWindow : EditorWindow
       }
       EditorGUILayout.EndVertical();
    }
-   
+
    private void DrawCommands_NodePlacement()
    {
       EditorGUILayout.BeginVertical(styleCommandSection);
@@ -309,8 +318,7 @@ public class ReferenceWindow : EditorWindow
    /// <param name='cmds'>Parameter list of commands. Each string represents compound input that may contain keyboard and mouse actions, as well as context. Contextual information should be preceeded by an underscore.</param>
    private void DrawCommand(string action, params string[] cmds)
    {
-      int labelWidth = 10;
-      int labelWidthMin = (int)EditorStyles.miniButton.CalcSize(new GUIContent("=")).x;
+      int labelWidth = 0;
 
       GUIStyle labelStyle = styleCommandKey;
 
@@ -384,19 +392,19 @@ public class ReferenceWindow : EditorWindow
                      || part == "SHIFT"
                      || part == "ALT")
                   {
-                     labelWidth = 40;
+                     labelWidth = minWidthModifierKey;
                   }
                   else
                   {
-                     labelWidth = (int)Mathf.Max(labelWidthMin, labelStyle.CalcSize(new GUIContent(part)).x);
+                     labelWidth = (int)Mathf.Max(minWidthKey, labelStyle.CalcSize(new GUIContent(part)).x);
                   }
-                  
+
                   // Update key modifier when on Mac
-                  if (part == "CTRL" && Application.platform == RuntimePlatform.OSXEditor)
+                  if (part == "CTRL" && isWindows == false)
                   {
                      part = "CMD";
                   }
-                  
+
                   GUILayout.Label(part, labelStyle, GUILayout.Width(labelWidth));
                }
             }
