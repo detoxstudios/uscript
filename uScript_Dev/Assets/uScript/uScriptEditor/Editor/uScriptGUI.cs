@@ -16,6 +16,15 @@ using Detox.FlowChart;
 
 public static class uScriptGUI
 {
+   public const string keyEscape = "\u238B";
+   public const string keyShift = "\u21E7";
+   public const string keyControl = "\u2303";
+   public const string keyOption = "\u2325";
+   public const string keyCommand = "\u2318";
+   public const string keyDelete = "\u2326";
+   public const string keyBackspace = "\u232B";
+   public const string keyReturn = "\u23CE";
+
    struct Column
    {
       public string Label;

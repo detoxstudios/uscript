@@ -2935,8 +2935,6 @@ public class uScript : EditorWindow
    }
 
 
-
-
    void DrawMenuItemShortcut(string shortcut)
    {
       if (string.IsNullOrEmpty(shortcut))
@@ -2944,64 +2942,68 @@ public class uScript : EditorWindow
          return;
       }
 
+      string modifier = (Application.platform == RuntimePlatform.WindowsEditor ? "Alt+" : uScriptGUI.keyOption);
+
       Rect r = GUILayoutUtility.GetLastRect();
-      Vector2 v = EditorStyles.miniButton.CalcSize(new GUIContent("ALT+W"));
+      Vector2 v = uScriptGUIStyle.menuDropDownButtonShortcut.CalcSize(new GUIContent(modifier + "W"));
 
       // place the string at the left inside edge of the previous rect
       r = new Rect(r.x + r.width - v.x - 8, r.y + ((int)(r.height - v.y) / 2), v.x, v.y);
 
-      GUI.Label(r, shortcut, EditorStyles.miniButton);
+      GUI.Label(r, shortcut, uScriptGUIStyle.menuDropDownButtonShortcut);
    }
 
 
    void DrawFileMenuWindow(int windowID)
    {
-      Vector2 v1 = uScriptGUIStyle.menuDropDownButton.CalcSize(uScriptGUIContent.buttonScriptExportPNG);
-      Vector2 v2 = EditorStyles.miniButton.CalcSize(new GUIContent("ALT+W"));
+      string modifier = (Application.platform == RuntimePlatform.WindowsEditor ? "Alt+" : uScriptGUI.keyOption);
 
-      GUILayout.BeginVertical(GUILayout.Width(v1.x + 16 + v2.x));
+      Vector2 v1 = uScriptGUIStyle.menuDropDownButton.CalcSize(uScriptGUIContent.buttonScriptExportPNG);
+      Vector2 v2 = uScriptGUIStyle.menuDropDownButtonShortcut.CalcSize(new GUIContent(modifier + "W"));
+
+      GUILayout.BeginVertical(GUILayout.Width(v1.x + 32 + v2.x));
       {
          if (GUILayout.Button(uScriptGUIContent.buttonScriptNew, uScriptGUIStyle.menuDropDownButton))
          {
             FileMenuItem_New();
          }
-         DrawMenuItemShortcut("ALT+N");
+         DrawMenuItemShortcut(modifier + "N");
    
          if (GUILayout.Button(uScriptGUIContent.buttonScriptOpen, uScriptGUIStyle.menuDropDownButton))
          {
             FileMenuItem_Open();
          }
-         DrawMenuItemShortcut("ALT+O");
+         DrawMenuItemShortcut(modifier + "O");
    
          if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, uScriptGUIStyle.menuDropDownButton))
          {
             FileMenuItem_Save();
          }
-         DrawMenuItemShortcut("ALT+S");
+         DrawMenuItemShortcut(modifier + "S");
    
          if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveAs, uScriptGUIStyle.menuDropDownButton))
          {
             FileMenuItem_SaveAs();
          }
-         DrawMenuItemShortcut("ALT+A");
+         DrawMenuItemShortcut(modifier + "A");
    
          if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveQuick, uScriptGUIStyle.menuDropDownButton))
          {
             FileMenuItem_QuickSave();
          }
-         DrawMenuItemShortcut("ALT+Q");
+         DrawMenuItemShortcut(modifier + "Q");
    
          if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveDebug, uScriptGUIStyle.menuDropDownButton))
          {
             FileMenuItem_DebugSave();
          }
-         DrawMenuItemShortcut("ALT+D");
+         DrawMenuItemShortcut(modifier + "D");
    
          if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveRelease, uScriptGUIStyle.menuDropDownButton))
          {
             FileMenuItem_ReleaseSave();
          }
-         DrawMenuItemShortcut("ALT+R");
+         DrawMenuItemShortcut(modifier + "R");
    
          uScriptGUI.HR();
    
@@ -3009,7 +3011,7 @@ public class uScript : EditorWindow
          {
             FileMenuItem_ExportPNG();
          }
-         DrawMenuItemShortcut("ALT+E");
+         DrawMenuItemShortcut(modifier + "E");
 
          if (GUILayout.Button(uScriptGUIContent.buttonScriptUpgradeNodes, uScriptGUIStyle.menuDropDownButton))
          {

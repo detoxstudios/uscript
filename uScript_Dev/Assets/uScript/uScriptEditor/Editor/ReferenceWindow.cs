@@ -7,13 +7,12 @@ public class ReferenceWindow : EditorWindow
    bool isFirstRun = false;
 
    // Layout parameters
-   const int WINDOW_WIDTH = 700;
+   const int WINDOW_WIDTH = 730;
    const int WINDOW_HEIGHT = 640;
    Vector2 scrollviewPosition;
    bool isWindows = false;
    bool isProSkin = false;
    int minWidthKey = 0;
-   int minWidthModifierKey = 0;
 
    // Custom Content
    GUIContent contentPanelIcon;
@@ -50,7 +49,7 @@ public class ReferenceWindow : EditorWindow
          isWindows = Application.platform == RuntimePlatform.WindowsEditor;
 
          // Set the min and max window dimensions to prevent resizing
-         base.minSize = new Vector2(WINDOW_WIDTH + (isWindows ? 40 : 0), WINDOW_HEIGHT);
+         base.minSize = new Vector2(WINDOW_WIDTH, WINDOW_HEIGHT);
          base.maxSize = base.minSize;
 
          // Force the window to a position relative to the uScript window
@@ -150,15 +149,15 @@ public class ReferenceWindow : EditorWindow
 
          EditorGUILayout.Space();
 
-         DrawCommand("Cut", ".Press_CTRL+X");
-         DrawCommand("Copy", ".Press_CTRL+C");
-         DrawCommand("Paste", ".Press_CTRL+V");
-         DrawCommand("Undo", ".Press_CTRL+Z");
-         DrawCommand("Redo", ".Press_CTRL+Y");
+         DrawCommand("Cut", ".Press_Ctrl+X");
+         DrawCommand("Copy", ".Press_Ctrl+C");
+         DrawCommand("Paste", ".Press_Ctrl+V");
+         DrawCommand("Undo", ".Press_Ctrl+Z");
+         DrawCommand("Redo", ".Press_Ctrl+Y");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Close uScript Editor window", ".Press_CTRL+W");
+         DrawCommand("Close uScript Editor window", ".Press_Ctrl+W");
          DrawCommand("Context Menu", ".Click_RMB");
       }
       EditorGUILayout.EndVertical();
@@ -170,20 +169,20 @@ public class ReferenceWindow : EditorWindow
       {
          GUILayout.Label("Canvas Commands", uScriptGUIStyle.referenceName);
 
-         DrawCommand("Pan Canvas", ".Hold_ALT+LMB_.then drag");
+         DrawCommand("Pan Canvas", ".Hold_Alt+LMB_.then drag");
          DrawCommand(string.Empty, "or_.Hold_MMB_.then drag");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Center graph at origin (0, 0)", ".Press_Home", ".Press_CTRL+H");
+         DrawCommand("Center graph at origin (0, 0)", ".Press_Home", ".Press_Ctrl+H");
          DrawCommand("Center graph on next Event node", ".Press_]");
          DrawCommand("Center graph on previous Event node", ".Press_[");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Toggle grid visibility", ".Press_CTRL+G");
-         DrawCommand("Toggle grid snapping", ".Press_ALT+G");
-         DrawCommand("Snap selected nodes to grid", ".Press_ALT+End");
+         DrawCommand("Toggle grid visibility", ".Press_Ctrl+G");
+         DrawCommand("Toggle grid snapping", ".Press_Alt+G");
+         DrawCommand("Snap selected nodes to grid", ".Press_Alt+End");
 
          EditorGUILayout.Space();
 
@@ -205,9 +204,9 @@ public class ReferenceWindow : EditorWindow
 
          EditorGUILayout.Space();
 
-         DrawCommand("Add to selection", ".Hold_SHIFT+LMB_.on canvas and drag over node(s)");
-         DrawCommand("Remove from selection", ".Hold_CTRL+LMB_.on canvas and drag over node(s)");
-         DrawCommand("Toggle node selection", ".Press_SHIFT+LMB_.on node");
+         DrawCommand("Add to selection", ".Hold_Shift+LMB_.on canvas and drag over node(s)");
+         DrawCommand("Remove from selection", ".Hold_Ctrl+LMB_.on canvas and drag over node(s)");
+         DrawCommand("Toggle node selection", ".Press_Shift+LMB_.on node");
 
          EditorGUILayout.Space();
 
@@ -227,18 +226,18 @@ public class ReferenceWindow : EditorWindow
       {
          GUILayout.Label("File Menu Commands", uScriptGUIStyle.referenceName);
 
-         DrawCommand("Open File Menu", ".Press_ALT+F", ".Press_CTRL+F");
+         DrawCommand("Open File Menu", ".Press_Alt+F", ".Press_Ctrl+F");
 
          EditorGUILayout.Space();
 
-         DrawCommand("New uScript graph", ".Press_ALT+N");
-         DrawCommand("Open uScript graph ...", ".Press_ALT+O");
-         DrawCommand("Save", ".Press_ALT+S");
-         DrawCommand("Save As ...", ".Press_ALT+A");
-         DrawCommand("Save Quick", ".Press_ALT+Q");
-         DrawCommand("Save Debug", ".Press_ALT+D");
-         DrawCommand("Save Release", ".Press_ALT+R");
-         DrawCommand("Export graph to Image (PNG)", ".Press_ALT+E");
+         DrawCommand("New uScript graph", ".Press_Alt+N");
+         DrawCommand("Open uScript graph ...", ".Press_Alt+O");
+         DrawCommand("Save", ".Press_Alt+S");
+         DrawCommand("Save As ...", ".Press_Alt+A");
+         DrawCommand("Save Quick", ".Press_Alt+Q");
+         DrawCommand("Save Debug", ".Press_Alt+D");
+         DrawCommand("Save Release", ".Press_Alt+R");
+         DrawCommand("Export graph to Image (PNG)", ".Press_Alt+E");
       }
       EditorGUILayout.EndVertical();
    }
@@ -274,8 +273,6 @@ public class ReferenceWindow : EditorWindow
    /// <param name='cmds'>Parameter list of commands. Each string represents compound input that may contain keyboard and mouse actions, as well as context. Contextual information should be preceeded by an underscore.</param>
    private void DrawCommand(string action, params string[] cmds)
    {
-      int labelWidth = 0;
-
       GUIStyle labelStyle = styleCommandKey;
 
       EditorGUILayout.BeginHorizontal();
@@ -343,23 +340,11 @@ public class ReferenceWindow : EditorWindow
                      labelStyle = styleCommandKey;
                   }
 
-                  // Determine label width
-                  if (part == "CTRL"
-                     || part == "SHIFT"
-                     || part == "ALT")
-                  {
-                     labelWidth = minWidthModifierKey;
-                  }
-                  else
-                  {
-                     labelWidth = (int)Mathf.Max(minWidthKey, labelStyle.CalcSize(new GUIContent(part)).x);
-                  }
+                  // Format command keys for Mac
+                  part = ApplyMacFormatting(part);
 
-                  // Update key modifier when on Mac
-                  if (part == "CTRL" && isWindows == false)
-                  {
-                     part = "CMD";
-                  }
+                  // Determine label width
+                  int labelWidth = (int)Mathf.Max(minWidthKey, labelStyle.CalcSize(new GUIContent(part)).x);
 
                   GUILayout.Label(part, labelStyle, GUILayout.Width(labelWidth));
                }
@@ -367,6 +352,46 @@ public class ReferenceWindow : EditorWindow
          }
       }
       EditorGUILayout.EndHorizontal();
+   }
+
+   private string ApplyMacFormatting(string key)
+   {
+      if (isWindows == false)
+      {
+         // Update key modifier when on Mac
+         if (key == "Ctrl")
+         {
+            key = "Command";
+         }
+
+         switch (key)
+         {
+            case "Escape":
+               return uScriptGUI.keyEscape + " Escape";
+
+            case "Shift":
+               return uScriptGUI.keyShift + " Shift";
+
+            case "Ctrl":
+               return uScriptGUI.keyControl + " Control";
+
+            case "Alt":
+               return uScriptGUI.keyOption + " Option";
+
+            case "Command":
+               return uScriptGUI.keyCommand + " Command";
+
+            case "Delete":
+               return uScriptGUI.keyDelete + " Delete";
+
+            case "Backspace":
+               return uScriptGUI.keyBackspace + " Delete";
+
+            case "Return":
+               return uScriptGUI.keyReturn + " Return";
+         }
+      }
+      return key;
    }
 
    private void UpdateCustomStyles()
@@ -423,7 +448,6 @@ public class ReferenceWindow : EditorWindow
       contentPanelDescription = new GUIContent("This is summary of the various commands available to you while using the uScript Editor.");
 
       minWidthKey = (int)Mathf.Max(styleCommandKey.CalcSize(new GUIContent("W")).x, styleCommandKey.CalcSize(new GUIContent("=")).x);
-      minWidthModifierKey = (int)styleCommandKey.CalcSize(new GUIContent("SHIFT")).x;
 
       // Apply skin and platform variations
       if (isProSkin)

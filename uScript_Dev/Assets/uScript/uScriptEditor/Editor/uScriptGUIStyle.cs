@@ -81,6 +81,8 @@ public static class uScriptGUIStyle
    private static GUIStyle _menuDropDownButton;
    public static GUIStyle menuDropDownButton { get { return _menuDropDownButton; } }
 
+   public static GUIStyle menuDropDownButtonShortcut { get; private set; }
+
    private static GUIStyle _menuContextWindow;
    public static GUIStyle menuContextWindow { get { return _menuContextWindow; } }
 
@@ -315,6 +317,12 @@ public static class uScriptGUIStyle
       _menuDropDownButton.border = EditorStyles.toolbarButton.border;
       _menuDropDownButton.margin = new RectOffset();
       _menuDropDownButton.padding = new RectOffset(8, 8, 4, 4);
+
+      menuDropDownButtonShortcut = new GUIStyle(EditorStyles.largeLabel);
+      menuDropDownButtonShortcut.name = "menuDropDownButtonShortcut";
+      menuDropDownButtonShortcut.fontStyle = FontStyle.Bold;
+      menuDropDownButtonShortcut.margin = new RectOffset();
+      menuDropDownButtonShortcut.padding = new RectOffset();
 
       _menuContextWindow = new GUIStyle(GUI.skin.window);
       _menuContextWindow.normal.background = _texture_windowMenuContext;
