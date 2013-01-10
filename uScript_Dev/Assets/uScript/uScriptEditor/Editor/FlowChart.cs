@@ -1295,6 +1295,7 @@ namespace Detox.FlowChart
                   break;
                }
 
+               node.ZoomScale = Zoom;
                node.OnPaint(e);
             }
          }

@@ -3459,9 +3459,14 @@ namespace Detox.ScriptEditor
             {
                PaintBreakpoint( );
             }
+            else
+            {
+               m_CenteredOnBP = false;
+            }
          }
       }
-
+  
+      private bool m_CenteredOnBP = false;
       protected void PaintBreakpoint( )
       {
          UnityEngine.Color color = UnityEditor.Handles.color;
@@ -3473,7 +3478,11 @@ namespace Detox.ScriptEditor
          {
             UnityEditor.Handles.color = UnityEngine.Color.yellow;
             radius = 16;
-            m_Ctrl.CenterOnNode( this );
+            if ( !m_CenteredOnBP )
+            {
+               m_Ctrl.CenterOnNode( this );
+            }
+            m_CenteredOnBP = true;
          }
 
          radius *= ZoomScale;
