@@ -16,9 +16,10 @@ public class uScriptAct_Destroy : uScriptLogic
 {
    bool m_GuaranteedOneTick = false;
    bool m_ObjectsDestroyed = false;
+   bool m_Out = false;
    private float m_DelayTime = 0.0f;
 
-   public bool Out { get { return true; } }
+   public bool Out { get { return m_Out; } }
 
    [FriendlyName("Objects Destroyed")]
    public bool ObjectsDestroyed { get { return m_ObjectsDestroyed; } }
@@ -32,6 +33,7 @@ public class uScriptAct_Destroy : uScriptLogic
       float DelayTime
       )
    {
+      m_Out = true;
       m_ObjectsDestroyed = false;
       m_GuaranteedOneTick = false;
 
@@ -62,6 +64,8 @@ public class uScriptAct_Destroy : uScriptLogic
    [Driven]
    public bool WaitOneTick()
    {
+      m_Out = false;
+
       if (Time.time <= m_DelayTime) return true;
 
       //we don't know if the first time will be called
