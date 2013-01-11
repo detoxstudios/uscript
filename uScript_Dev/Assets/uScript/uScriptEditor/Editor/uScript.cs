@@ -46,10 +46,10 @@ public class uScript : EditorWindow
    // #
 
    // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   static public string BuildNumber { get { return "0.9.2123"; } }
+   static public string BuildNumber { get { return "0.9.2170"; } }
 
-   static public string BuildName { get { return "Professional (Retail Beta 32)"; } }
-   static public string BuildNamePLE { get { return "Personal Learning Edition (Retail Beta 32)"; } }
+   static public string BuildName { get { return "Professional (Retail Beta 33)"; } }
+   static public string BuildNamePLE { get { return "Personal Learning Edition (Retail Beta 33)"; } }
 
 #if FREE_PLE_BUILD
    static public string ProductName { get { return BuildNamePLE; } }
@@ -62,7 +62,7 @@ public class uScript : EditorWindow
    static public string ProductType { get { return "uScript_Retail"; } }
 #endif
 
-   static public string FullVersionName { get { return ProductName + " (" + BuildNumber + ")"; } }
+   static public string FullVersionName { get { return ProductName + " (v" + BuildNumber + ")"; } }
    //public string LastUnityBuild { get { return "3.3"; } }
    //public string CurrentUnityBuild { get { return "3.4"; } }
    //public string BetaUnityBuild { get { return "3.5"; } }
