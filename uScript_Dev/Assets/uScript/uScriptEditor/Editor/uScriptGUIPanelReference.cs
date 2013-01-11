@@ -9,25 +9,27 @@ using System.IO;
 using Detox.ScriptEditor;
 using Detox.FlowChart;
 
-
-
-
 public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 {
    //
    // Singleton pattern
    //
    static readonly uScriptGUIPanelReference _instance = new uScriptGUIPanelReference();
+
    public static uScriptGUIPanelReference Instance { get { return _instance; } }
-   private uScriptGUIPanelReference() { Init(); }
+
+   private uScriptGUIPanelReference()
+   {
+      Init();
+   }
 
 
    //
    // Members specific to this panel class
    //
    private string currentNodeClassName = string.Empty;
-
    private EntityNode _hotSelection = null;
+
    public EntityNode hotSelection { set { _hotSelection = value; } }
 
 
@@ -41,12 +43,12 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 //      _region = uScriptGUI.Region.Reference;
    }
 
-   public void Update()
-   {
-      //
-      // Called whenever member data should be updated
-      //
-   }
+//   public void Update()
+//   {
+//      //
+//      // Called whenever member data should be updated
+//      //
+//   }
 
    public override void Draw()
    {
@@ -58,15 +60,11 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       uScript uScriptInstance = uScript.Instance;
       ScriptEditorCtrl m_ScriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
 
-
-
-
-
       // Setup the strings for the button
-      string helpButtonTooltip   = string.Empty;
-      string helpButtonURL       = string.Empty;
+      string helpButtonTooltip = string.Empty;
+      string helpButtonURL = string.Empty;
 
-      string nodeType            = string.Empty;
+      string nodeType = string.Empty;
 
       EntityNode node = null;
 
@@ -89,8 +87,8 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          if (m_ScriptEditorCtrl.SelectedNodes.Length != 1)
          {
             currentNodeClassName = string.Empty;
-            helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
-            helpButtonURL       = "http://www.uscript.net/docs/";
+            helpButtonTooltip = "Open the online uScript reference in the default web browser.";
+            helpButtonURL = "http://www.uscript.net/docs/";
          }
          else
          {
@@ -115,11 +113,6 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          helpButtonTooltip += " (" + helpButtonURL + ")";
       }
 
-
-
-
-
-
 //      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, _options);
       EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
       {
@@ -140,7 +133,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
             uScriptGUI.enabled = (string.IsNullOrEmpty(helpButtonURL) == false);
 
             uScriptGUIContent.ChangeTooltip(helpButtonTooltip);
-            if ( GUILayout.Button( uScriptGUIContent.buttonWebDocumentation, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false) ) )
+            if (GUILayout.Button(uScriptGUIContent.buttonWebDocumentation, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                Help.BrowseURL(helpButtonURL);
             }
@@ -183,14 +176,11 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
                if (node == null)
                {
-                  GUILayout.Label( (m_ScriptEditorCtrl.SelectedNodes.Length == 0
-                                    ? "Select a node on the canvas to view the help text for that node.\n\nFriendly Name: Use this graph property to give this graph a name that will be used when shown as a nested node in other uScript graphs.\n\nDescription: Use this graph property to give this graph description help text when selected as a nested node in other uScript graphs (shown here in the Reference panel)."
-                                    : "Help cannot be provided when multiple nodes are selected."
-                                    ), uScriptGUIStyle.panelMessage);
+                  DrawGraphReferenceContent();
                }
                else
                {
-                  DrawReferenceContent(node, nodeType, _hotSelection != null);
+                  DrawNodeReferenceContent(node, nodeType, _hotSelection != null);
                }
             }
             EditorGUILayout.EndScrollView();
@@ -199,15 +189,221 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       EditorGUILayout.EndVertical();
 
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Reference);
-      uScriptInstance.SetMouseRegion( uScript.MouseRegion.Reference );
+      uScriptInstance.SetMouseRegion(uScript.MouseRegion.Reference);
    }
 
+   private void DrawFormattedParameter(Parameter p)
+   {
+      DrawFormattedParameter(p, string.Empty);
+   }
 
+   private void DrawFormattedParameter(Parameter p, string nodeType)
+   {
+      DrawFormattedParameter(p.FriendlyName,
+         uScriptConfig.Variable.FriendlyName(p.Type).Replace("UnityEngine.", string.Empty) + (p.Input && p.Output ? " (In/Out)" : p.Output ? " (out)" : string.Empty),
+         uScript.FindParameterDescription(nodeType, p));
+   }
 
+   private void DrawFormattedParameter(string name, string type, string description)
+   {
+      GUILayout.BeginHorizontal();
+      {
+         // Icon
+         GUILayout.Space(24);
 
-   //
-   //
-   //
+         //
+         GUILayout.BeginVertical();
+         {
+            // Parameter name and type
+            GUILayout.Label(name + ":", uScriptGUIStyle.referenceName);
+            GUI.Label(GUILayoutUtility.GetLastRect(), type, uScriptGUIStyle.referenceInfo);
+
+            // Parameter description
+            GUILayout.Label(description, uScriptGUIStyle.referenceDesc);
+         }
+         GUILayout.EndVertical();
+      }
+      GUILayout.EndHorizontal();
+   }
+
+   private void DrawGraphDetails()
+   {
+      GUIStyle styleBox = new GUIStyle(GUI.skin.box);
+      styleBox.name = "uScript_ReferenceGraphDetailBox";
+      styleBox.margin = new RectOffset(24, 24, 16, 16);
+      styleBox.padding = new RectOffset(4, 4, 4, 4);
+
+      GUIStyle styleLabel = new GUIStyle(EditorStyles.boldLabel);
+      styleLabel.name = "uScript_ReferenceGraphDetailLabel";
+      styleLabel.fixedWidth = 60;
+      styleLabel.margin = EditorStyles.label.margin;
+      styleLabel.margin = new RectOffset();
+      styleLabel.padding = new RectOffset(2, 2, 2, 3);
+      styleLabel.stretchWidth = false;
+//         styleLabel.normal.background = GUI.skin.box.normal.background;
+//         styleLabel.border = GUI.skin.box.border;
+
+//      uScriptGUIStyle.Information(styleLabel, 4);
+
+      GUIStyle styleValue = new GUIStyle(EditorStyles.label);
+      styleValue.name = "uScript_ReferenceGraphDetailValue";
+      styleValue.margin = new RectOffset(12, 0, 0, 0);
+      styleValue.padding = new RectOffset(2, 2, 2, 3);
+      styleValue.stretchWidth = false;
+//         styleValue.normal.background = GUI.skin.box.normal.background;
+//         styleValue.border = GUI.skin.box.border;
+
+      GUIStyle styleAlert = new GUIStyle(EditorStyles.boldLabel);
+      styleAlert.name = "uScript_ReferenceGraphDetailAlert";
+      styleAlert.margin = new RectOffset(12, 0, 0, 0);
+      styleAlert.padding = new RectOffset(2, 2, 2, 3);
+      styleAlert.normal.textColor = Color.red;
+      styleAlert.wordWrap = true;
+//         styleAlert.normal.background = GUI.skin.box.normal.background;
+//         styleAlert.border = GUI.skin.box.border;
+
+      ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
+
+      EditorGUILayout.BeginVertical(styleBox);
+      {
+         EditorGUILayout.BeginHorizontal();
+         {
+            GUILayout.Label("Nodes: ", styleLabel);
+
+            string value = m_ScriptEditorCtrl.FlowChart.Nodes.Length.ToString();
+            GUILayout.Label(value, styleValue);
+
+            EditorGUILayout.BeginVertical();
+            {
+               if (m_ScriptEditorCtrl.FlowChart.SelectedNodes.Length > 0)
+               {
+                  value = "(" + m_ScriptEditorCtrl.FlowChart.SelectedNodes.Length.ToString() + " selected)";
+                  GUILayout.Label(value, styleValue);
+               }
+
+               if (m_ScriptEditorCtrl.ScriptEditor.DeprecatedNodes.Length > 0)
+               {
+                  int deprecatedNodes = m_ScriptEditorCtrl.ScriptEditor.DeprecatedNodes.Length;
+                  value = "This graph contains " + deprecatedNodes.ToString() + " deprecated node" + (deprecatedNodes > 1 ? "s" : "") + ", which should be updated or replaced.";
+                  GUILayout.Label(value, styleAlert);
+               }
+            }
+            EditorGUILayout.EndVertical();
+         }
+         EditorGUILayout.EndHorizontal();
+         EditorGUILayout.BeginHorizontal();
+         {
+            GUILayout.Label("Links: ", styleLabel);
+            string value = m_ScriptEditorCtrl.FlowChart.Links.Length.ToString();
+            GUILayout.Label(value, styleValue);
+
+            if (m_ScriptEditorCtrl.FlowChart.SelectedLinks.Length > 0)
+            {
+               value = "(" + m_ScriptEditorCtrl.FlowChart.SelectedLinks.Length.ToString() + " selected)";
+               GUILayout.Label(value, styleValue);
+            }
+         }
+         EditorGUILayout.EndHorizontal();
+
+         if (m_ScriptEditorCtrl.ScriptEditor.Externals.Length != 0)
+         {
+            EditorGUILayout.BeginHorizontal();
+            {
+               GUILayout.Label("Externals: ", styleLabel);
+               GUILayout.Label(m_ScriptEditorCtrl.ScriptEditor.Externals.Length.ToString(), styleValue);
+            }
+            EditorGUILayout.EndHorizontal();
+         }
+      }
+      EditorGUILayout.EndVertical();
+   }
+
+   void DrawGraphReferenceContent()
+   {
+      ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
+
+      // Graph name
+      string graphName = m_ScriptEditorCtrl.ScriptName;
+
+      int index = graphName.ToLower().LastIndexOf(".uscript");
+      if (index >= 0)
+      {
+         graphName = graphName.Remove(index);
+      }
+
+      if (string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptEditor.FriendlyName.Default) == false)
+      {
+         graphName = m_ScriptEditorCtrl.ScriptEditor.FriendlyName.Default + "  (" + graphName + ")";
+      }
+
+      GUILayout.Label(graphName, uScriptGUIStyle.referenceName);
+
+      // General reference description
+      GUILayout.Label("Select a node on the canvas to view the help text for that node.", uScriptGUIStyle.referenceDesc);
+
+      DrawGraphDetails();
+
+      if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
+      {
+         GUILayout.Label("Help cannot be provided when multiple nodes are selected.", uScriptGUIStyle.panelMessage);
+         return;
+      }
+
+      // Display an "Friendly Name" and "Description" parameters
+      DrawFormattedParameter(m_ScriptEditorCtrl.ScriptEditor.FriendlyName);
+      DrawFormattedParameter(m_ScriptEditorCtrl.ScriptEditor.Description);
+   }
+
+   void DrawNodeReferenceContent(EntityNode node, string nodeType, bool isHotSelection)
+   {
+      // For now, display the following text if this is a hot selection
+      if (isHotSelection)
+      {
+         GUILayout.Label("HOT TIP:", EditorStyles.boldLabel);
+      }
+
+      // Node name
+      string nodeName = uScript.FindNodeName(nodeType, node);
+      GUILayout.Label(nodeName, uScriptGUIStyle.referenceName);
+
+      // Identify reflected nodes
+      if (nodeName.StartsWith("Reflected "))
+      {
+         nodeType = "_reflected" + (nodeName.EndsWith(" action") ? "Action" : "Property");
+      }
+
+//      // Node palette location
+//      r = GUILayoutUtility.GetLastRect();
+//      GUI.Label(r, "PATH", uScriptGUIStyle.referenceInfo);
+
+      // Node description
+      GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceDesc);
+
+      // Display the dynamic parameters
+      foreach (Parameter p in node.Parameters)
+      {
+         DrawFormattedParameter(p, nodeType);
+      }
+
+      // Display an "ShowComment" parameter if necessary
+      if (node.ShowComment.Input)
+      {
+         DrawFormattedParameter(node.ShowComment);
+      }
+
+      // Display an "Comment" parameter if necessary
+      if (node.Comment.Input)
+      {
+         DrawFormattedParameter(node.Comment);
+      }
+
+      // Display an "Instance" parameter if necessary
+      if (node.Instance.Input)
+      {
+         DrawFormattedParameter(node.Instance);
+      }
+   }
+
    string GetNodeType(EntityNode node)
    {
       string nodeType = ScriptEditor.FindNodeType(node);
@@ -233,456 +429,4 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       }
       return nodeType;
    }
-
-
-   //
-   // Draws all the GUI controls necessary to display the reference information
-   //
-   void DrawReferenceContent(EntityNode node, string nodeType, bool isHotSelection)
-   {
-      // Expected array format 3+(3*n) in length:
-      //
-      //    Name           // "Node Name"
-      //    Desc           // "This is the node description."
-      //    Path           // "Actions > Assets"
-      //
-      //    [0] ParamName  // "Parameter Name"
-      //        ParamDesc  // "This is the parameter description."
-      //        ParamType  // "String (out)"
-      //
-      //    [1] Param...
-
-//      string[] data = Parameter.StringToArray(uScript.FindNodeReferenceData(nodeType, node));
-//
-//      if (data.Length == 0 || data.Length % 3 != 0)
-//      {
-//         Debug.LogError("The node reference data length is invalid: " + data.Length + "\n");
-//         return;
-//      }
-
-
-      // For now, display the following text if this is a hot selection
-      if (isHotSelection)
-      {
-         GUILayout.Label("HOT TIP:", EditorStyles.boldLabel);
-      }
-
-      Rect r;
-
-      // Node name
-      string nodeName = uScript.FindNodeName(nodeType, node);
-      GUILayout.Label(nodeName, uScriptGUIStyle.referenceName);
-
-      // Identify reflected nodes
-      if (nodeName.StartsWith("Reflected "))
-      {
-         nodeType = "_reflected" + (nodeName.EndsWith(" action") ? "Action" : "Property");
-      }
-
-//      // Node palette location
-//      r = GUILayoutUtility.GetLastRect();
-//      GUI.Label(r, "PATH", uScriptGUIStyle.referenceInfo);
-
-      // Node description
-      GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceDesc);
-
-      // Display the dynamic parameters
-      foreach (Parameter p in node.Parameters)
-      {
-         // Parameter block
-         GUILayout.BeginHorizontal();
-         {
-            // Icon
-            GUILayout.Space(24);
-
-            //
-            GUILayout.BeginVertical();
-            {
-               // Parameter name and type
-               GUILayout.Label(p.FriendlyName + ":", uScriptGUIStyle.referenceName);
-               r = GUILayoutUtility.GetLastRect();
-               GUI.Label(r, uScriptConfig.Variable.FriendlyName(p.Type).Replace("UnityEngine.", string.Empty) + (p.Input && p.Output ? " (In/Out)" : p.Output  ? " (out)" : string.Empty), uScriptGUIStyle.referenceInfo);
-
-               // Parameter description
-               GUILayout.Label(uScript.FindParameterDescription(nodeType, p), uScriptGUIStyle.referenceDesc);
-            }
-            GUILayout.EndVertical();
-         }
-         GUILayout.EndHorizontal();
-      }
-
-      // Display an "ShowComment" parameter if necessary
-      if (node.ShowComment.Input)
-      {
-         // Parameter block
-         GUILayout.BeginHorizontal();
-         {
-            // Icon
-            GUILayout.Space(24);
-
-            //
-            GUILayout.BeginVertical();
-            {
-               // Parameter name and type
-               GUILayout.Label(node.ShowComment.FriendlyName + ":", uScriptGUIStyle.referenceName);
-               r = GUILayoutUtility.GetLastRect();
-               GUI.Label(r, uScriptConfig.Variable.FriendlyName(node.ShowComment.Type).Replace("UnityEngine.", string.Empty), uScriptGUIStyle.referenceInfo);
-
-               // Parameter description
-               GUILayout.Label(uScript.FindParameterDescription(string.Empty, node.ShowComment), uScriptGUIStyle.referenceDesc);
-            }
-            GUILayout.EndVertical();
-         }
-         GUILayout.EndHorizontal();
-      }
-
-      // Display an "Comment" parameter if necessary
-      if (node.Comment.Input)
-      {
-         // Parameter block
-         GUILayout.BeginHorizontal();
-         {
-            // Icon
-            GUILayout.Space(24);
-
-            //
-            GUILayout.BeginVertical();
-            {
-               // Parameter name and type
-               GUILayout.Label(node.Comment.FriendlyName + ":", uScriptGUIStyle.referenceName);
-               r = GUILayoutUtility.GetLastRect();
-               GUI.Label(r, uScriptConfig.Variable.FriendlyName(node.Comment.Type).Replace("UnityEngine.", string.Empty), uScriptGUIStyle.referenceInfo);
-
-               // Parameter description
-               GUILayout.Label(uScript.FindParameterDescription(string.Empty, node.Comment), uScriptGUIStyle.referenceDesc);
-            }
-            GUILayout.EndVertical();
-         }
-         GUILayout.EndHorizontal();
-      }
-
-      // Display an "Instance" parameter if necessary
-      if (node.Instance.Input)
-      {
-         // Parameter block
-         GUILayout.BeginHorizontal();
-         {
-            // Icon
-            GUILayout.Space(24);
-
-            //
-            GUILayout.BeginVertical();
-            {
-               // Parameter name and type
-               GUILayout.Label(node.Instance.FriendlyName + ":", uScriptGUIStyle.referenceName);
-               r = GUILayoutUtility.GetLastRect();
-               GUI.Label(r, uScriptConfig.Variable.FriendlyName(node.Instance.Type).Replace("UnityEngine.", string.Empty), uScriptGUIStyle.referenceInfo);
-
-               // Parameter description
-               GUILayout.Label(uScript.FindParameterDescription(string.Empty, node.Instance), uScriptGUIStyle.referenceDesc);
-            }
-            GUILayout.EndVertical();
-         }
-         GUILayout.EndHorizontal();
-      }
-
-
-//      uScriptGUI.HR();
-//
-//      int dataIndex = 0;
-//
-//      // Node name and palette location
-//      GUILayout.Label(data[dataIndex++], uScriptGUIStyle.referenceName);
-//      r = GUILayoutUtility.GetLastRect();
-//      GUI.Label(r, data[dataIndex++], uScriptGUIStyle.referenceInfo);
-//
-//      // Node description
-//      GUILayout.Label(data[dataIndex++], uScriptGUIStyle.referenceDesc);
-//
-//      while (dataIndex < data.Length)
-//      {
-//         // Parameter block
-//         GUILayout.BeginHorizontal();
-//         {
-//            // Icon
-//            GUILayout.Space(24);
-//
-//            //
-//            GUILayout.BeginVertical();
-//            {
-//               // Parameter name and type
-//               GUILayout.Label(data[dataIndex++] + ":", uScriptGUIStyle.referenceName);
-//               r = GUILayoutUtility.GetLastRect();
-//               GUI.Label(r, data[dataIndex++], uScriptGUIStyle.referenceInfo);
-//
-//               // Parameter description
-//               GUILayout.Label(data[dataIndex++], uScriptGUIStyle.referenceDesc);
-//            }
-//            GUILayout.EndVertical();
-//         }
-//         GUILayout.EndHorizontal();
-//      }
-//
-//
-//      uScriptGUI.HR();
-//
-//
-//      // For now, display the original description text
-//      GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceText);
-   }
-
-
-
-
-/*
-   private void Old_Draw()
-   {
-//      if (data == null)
-//      {
-//         UnityEngine.Debug.LogWarning("ReferencePanel() received null data.\n");
-//      }
-//      else if (Type != uScriptGUI.PanelType.Reference)
-//      {
-//         UnityEngine.Debug.LogWarning("ReferencePanel() received bad data: " + Type + "\n");
-//      }
-
-
-      // Panel background
-      GUI.BeginGroup(PanelPosition, uScriptGUIStyle.panelBox);
-      {
-         // Draw toolbar
-         GUI.BeginGroup(ToolbarPosition, EditorStyles.toolbar);
-         {
-            GUIContent content = new GUIContent("Reference");
-            Rect rect = new Rect();
-            Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(content);
-            rect.width = size.x;
-            rect.height = size.y;
-
-            GUI.Label(rect, content, uScriptGUIStyle.panelTitle);
-//            int index = EditorGUI.Popup(uScriptGUI._panelTitlesRect, (int)Type, uScriptGUI._panelTitles, uScriptGUIStyle.panelTitleDropDown);
-//
-//            if (index != (int)Type)
-//            {
-//               Debug.LogWarning("The user attempted to change the panel type, but this functionality has not been implemented yet.\n");
-//            }
-
-
-//            // disable the button if there is no target URL
-//            uScriptGUI.enabled = (helpButtonURL != string.Empty);
-//            if (GUI.Button(toolbarButton, uScriptGUIContent.toolbarButtonOnlineReference, EditorStyles.toolbarButton))
-//            {
-//               Help.BrowseURL(helpButtonURL);
-//            }
-//            uScriptGUI.enabled = true;
-         }
-         GUI.EndGroup();
-
-         ScrollviewOffset = GUI.BeginScrollView(ScrollviewPosition, ScrollviewOffset, ContentPosition, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar);
-         {
-            ControlData control = ContentControls[0];
-
-            // prevent the help TextArea from getting focus
-            GUI.SetNextControlName(control.name);
-            GUI.TextArea(control.rect, control.content.text, uScriptGUIStyle.referenceText);
-            if (GUI.GetNameOfFocusedControl() == control.name)
-            {
-               GUIUtility.keyboardControl = 0;
-            }
-         }
-         GUI.EndScrollView();
-      }
-      GUI.EndGroup();
-
-//      uScript.SetMouseRegion( MouseRegion.Reference );//, 3, 3, -6, -3 );
-   }
-*/
-
-
-
-//   private static void InitReferencePanel(Rect rect)
-//   {
-//      // Local variables
-////      PanelData data = new PanelData(uScriptGUI.PanelType.Reference, rect);
-//      ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
-//      Vector2 tempCalculatedContentSize = Vector2.zero;
-//      GUIContent control;
-//      Rect controlRect;
-//
-//
-//      // Toolbar controls
-//
-//      // This Online Reference toolbar button is unlike most others in that it has a dynamic tooltip
-//      string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
-//      string helpButtonURL       = "http://www.uscript.net/wiki/";
-//
-//      if ( m_ScriptEditorCtrl.SelectedNodes.Length == 1)
-//      {
-//         helpButtonURL = uScript.FindNodeHelp(uScript.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
-//         if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
-//         {
-//            helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
-//         }
-//      }
-//      helpButtonTooltip += " (" + helpButtonURL + ")";
-//
-//      uScriptGUIContent.ChangeTooltip(uScriptGUIContent.ContentID.OnlineReference, helpButtonTooltip);
-//
-//      controlRect = new Rect();
-//      tempCalculatedContentSize = EditorStyles.toolbarButton.CalcSize(uScriptGUIContent.toolbarButtonOnlineReference);
-//      controlRect.width = tempCalculatedContentSize.x;
-//      controlRect.height = tempCalculatedContentSize.y;
-//      controlRect.x = rect.width - controlRect.width - 8;
-//
-//
-//      ToolbarControls.Add(new ControlData("toolbarButton", "controlName", controlRect, uScriptGUIContent.toolbarButtonOnlineReference));
-//
-//      // Content controls
-//      control = new GUIContent();
-//      if (m_ScriptEditorCtrl.SelectedNodes.Length < 1)
-//      {
-//         control.text = "Select a node on the canvas to view usage and behavior information.";
-//      }
-//      else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
-//      {
-//         control.text = "Help cannot be provided when multiple nodes are selected.";
-//      }
-//      else if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
-//      {
-//         control.text = uScript.FindNodeDescription(uScript.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
-//      }
-//
-//      // Calculate the control dimensions
-//      float height = uScriptGUIStyle.referenceText.CalcHeight(control, rect.width - 2);
-//      if (height <= rect.height - uScriptGUI._panelTitlesRect.height + 4)
-//      {
-//         // The content is not tall enough to require the vertical scrollbar
-//         controlRect.width = rect.width - 2;
-//         controlRect.height = height;
-//      }
-//      else
-//      {
-//         // The content width should be decreased to accomodate the vertical scrollbar,
-//         // otherwise the horizontal scrollbar will also appear (and we don't want that)
-//         controlRect.width = rect.width - 2 - 20;
-//         controlRect.height = uScriptGUIStyle.referenceText.CalcHeight(control, rect.width - 2 - 20);
-//      }
-//      ContentControls.Add(new uScriptGUI.ControlData("textArea", "helpTextArea", controlRect, control));
-//
-//      // Update the ContentPosition
-//      ContentPosition = new Rect(controlRect);
-//
-//      // Store the results
-//      _panelData.Add(PanelID.Bottom2, data);
-//   }
-
-/*
-
-   public void Init()
-   {
-      // Local variables
-//      PanelData data = new PanelData(uScriptGUI.PanelType.Reference, rect);
-      ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
-      Vector2 tempCalculatedContentSize = Vector2.zero;
-      GUIContent control;
-      Rect controlRect;
-
-
-
-      _toolbarPosition = new Rect(1, 1, _panelPosition.width-2, uScriptGUI._panelTitlesRect.height);
-//      _toolbarControls = new List<ControlData>();
-
-      _scrollviewPosition = new Rect(_toolbarPosition.x,
-                                     _toolbarPosition.y + _toolbarPosition.height,
-                                     _toolbarPosition.width,
-                                     _panelPosition.height - _toolbarPosition.y - _toolbarPosition.height - 1);
-
-      // Toolbar controls
-
-      // This Online Reference toolbar button is unlike most others in that it has a dynamic tooltip
-      string helpButtonTooltip   = "Open the online uScript reference in the default web browser.";
-      string helpButtonURL       = "http://www.uscript.net/wiki/";
-
-      if ( m_ScriptEditorCtrl.SelectedNodes.Length == 1)
-      {
-         helpButtonURL = uScript.FindNodeHelp(uScript.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
-         if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
-         {
-            helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
-         }
-      }
-      helpButtonTooltip += " (" + helpButtonURL + ")";
-
-      uScriptGUIContent.ChangeTooltip(uScriptGUIContent.ContentID.OnlineReference, helpButtonTooltip);
-
-      controlRect = new Rect();
-      tempCalculatedContentSize = EditorStyles.toolbarButton.CalcSize(uScriptGUIContent.toolbarButtonOnlineReference);
-      controlRect.width = tempCalculatedContentSize.x;
-      controlRect.height = tempCalculatedContentSize.y;
-      controlRect.x = _panelPosition.width - controlRect.width - 8;
-
-
-      ToolbarControls.Add(new ControlData("toolbarButton", "controlName", controlRect, uScriptGUIContent.toolbarButtonOnlineReference));
-
-      // Content controls
-      control = new GUIContent();
-      if (m_ScriptEditorCtrl.SelectedNodes.Length < 1)
-      {
-         control.text = "Select a node on the canvas to view usage and behavior information.";
-      }
-      else if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
-      {
-         control.text = "Help cannot be provided when multiple nodes are selected.";
-      }
-      else if (m_ScriptEditorCtrl.SelectedNodes[0] != null)
-      {
-         control.text = uScript.FindNodeDescription(uScript.FindNodeType(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode));
-      }
-
-      // Calculate the control dimensions
-      float height = uScriptGUIStyle.referenceText.CalcHeight(control, _panelPosition.width - 2);
-      if (height <= _panelPosition.height - uScriptGUI._panelTitlesRect.height + 4)
-      {
-         // The content is not tall enough to require the vertical scrollbar
-         controlRect.width = _panelPosition.width - 2;
-         controlRect.height = height;
-      }
-      else
-      {
-         // The content width should be decreased to accomodate the vertical scrollbar,
-         // otherwise the horizontal scrollbar will also appear (and we don't want that)
-         controlRect.width = _panelPosition.width - 2 - 20;
-         controlRect.height = uScriptGUIStyle.referenceText.CalcHeight(control, _panelPosition.width - 2 - 20);
-      }
-      ContentControls.Add(new ControlData("textArea", "helpTextArea", controlRect, control));
-
-      // Update the ContentPosition
-      ContentPosition = new Rect(controlRect);
-//
-//      // Store the results
-//      _panelData.Add(PanelID.Bottom2, data);
-   }
-
-   public void Update()
-   {
-//      if (_panelPosition != rect)
-//      {
-//         // Did the size change, or just the coords?
-//         if (_panelPosition.width != rect.width || _panelPosition.height != rect.height)
-//         {
-//            // The dimensions changed, so recalculate the contents
-//            Debug.Log("REFERENCE PANEL - Update(" + rect + ", " + forceUpdate +" ) - RecalculateContents()\n");
-//            Init();
-//         }
-//         else
-//         {
-//            // Only the panel coordinates changed, so just update its position
-//            Debug.Log("REFERENCE PANEL - Update(" + rect + ", " + forceUpdate +" ) - UpdatePosition()\n");
-//         }
-//         _panelPosition = rect;
-//      }
-   }
-*/
-
-
 }

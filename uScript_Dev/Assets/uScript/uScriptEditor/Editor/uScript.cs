@@ -5422,6 +5422,8 @@ public class uScript : EditorWindow
             case "Comment":            return "The comment text to show above this node in uScript's canvas.";
             case "Output Comment":     return "If True, the comment text will be sent to Unity's console window when the node fires.";
             case "Instance":           return "The GameObject instance associated with this node. This tells uScript which specific GameObject to use that contains this specified event, property, script, trigger, collider, etc.";
+            case "Friendly Name":      return "Use this graph property to give this graph a name that will be used when shown as a nested node in other uScript graphs.";
+            case "Description":        return "Use this graph property to give this graph description help text when selected as a nested node in other uScript graphs (shown here in the Reference panel).";
             default:                   return p.FriendlyName;
          }
       }

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEditor;
-//using System.Collections;
-//using System.Collections.Generic;
+using System.Collections.Generic;
 
 //
 // This file contains a collection of custom uScript GUI styles for use with uScriptEditor
@@ -139,9 +138,6 @@ public static class uScriptGUIStyle
 
    private static GUIStyle _toolbarLabel;
    public static GUIStyle toolbarLabel { get { return _toolbarLabel; } }
-
-
-
 
    static Texture2D _texture_propertyRowEven = null;
 
@@ -415,37 +411,203 @@ public static class uScriptGUIStyle
       _toolbarLabel.margin = new RectOffset();
    }
 
-
-   static public void Information(GUIStyle style)
+   static public void CustomSkinStyles()
    {
-      Debug.Log(style.name + ":"
-                + "\n\t margin: \t\t\t\t" + style.margin
-                + "\t\t alignment: \t\t\t" + style.alignment
+      string result = "These are the custom styles defined in the current skin (" + GUI.skin.name + "):\n";
+      for (int i = 0; i < GUI.skin.customStyles.Length; i++)
+      {
+         result += "\t" + i.ToString("000") + ": \"" + GUI.skin.customStyles[i].name + "\"\n";
+      }
+      Debug.Log(result);
+   }
 
-                + "\n\t padding: \t\t\t" + style.padding
-                + "\t\t font: \t\t\t\t\t" + style.font
+   private class StyleInformationItem
+   {
+      public string Label { get; private set; }
+      public string Value { get; private set; }
 
-                + "\n\t fixedHeight: \t\t" + style.fixedHeight
-                + "\t\t\t\t\t\t\t\t\t\t fontSize: \t\t\t" + style.fontSize
+      public int LabelWidth { get; private set; }
+      public int ValueWidth { get; private set; }
 
-                + "\n\t fixedWidth: \t\t" + style.fixedWidth
-                + "\t\t\t\t\t\t\t\t\t\t fontStyle: \t\t\t" + style.fontStyle
+      public StyleInformationItem(string name, object value)
+      {
+         Label = (string.IsNullOrEmpty(name) ? name : name + ": \t");
+         Value = value.ToString() + "\t\t";
 
-                + "\n\t stretchHeight: \t" + style.stretchHeight
-                + "\t\t\t\t\t\t\t\t\t imagePosition: \t" + style.imagePosition
+         GUIStyle style = GUIStyle.none;
 
-                + "\n\t stretchWidth: \t\t" + style.stretchWidth
-                + "\t\t\t\t\t\t\t\t\t lineHeight: \t\t\t" + style.lineHeight
+         LabelWidth = (int)style.CalcSize(new GUIContent(Label)).x;
+         ValueWidth = (int)style.CalcSize(new GUIContent(Value)).x;
+      }
+   }
 
-                + "\n\t border: \t\t\t\t" + style.border
-                + "\t\t wordWrap: \t\t\t" + style.wordWrap
 
-                + "\n\t overflow: \t\t\t" + style.overflow
 
-                + "\n\t clipping: \t\t\t" + style.clipping
+   static public void Information(GUIStyle style, int columns)
+   {
+      if (style == null)
+      {
+         return;
+      }
 
-                + "\n\t contentOffset: \t" + style.contentOffset
+      columns = Mathf.Max(1, Mathf.Min(5, columns));
 
+      List<StyleInformationItem> items = new List<StyleInformationItem>();
+
+      if (columns == 2)
+      {
+         items.Add(new StyleInformationItem("margin", style.margin));
+         items.Add(new StyleInformationItem("font", style.font));
+
+         items.Add(new StyleInformationItem("padding", style.padding));
+         items.Add(new StyleInformationItem("fontSize", style.fontSize));
+
+         items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
+         items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
+
+         items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
+         items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
+
+         items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
+         items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
+
+         items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
+         items.Add(new StyleInformationItem("alignment", style.alignment));
+
+         items.Add(new StyleInformationItem("clipping", style.clipping));
+         items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
+
+         items.Add(new StyleInformationItem("overflow", style.overflow));
+         items.Add(new StyleInformationItem("border", style.border));
+
+         items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+      }
+      else if (columns == 3)
+      {
+         items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
+         items.Add(new StyleInformationItem("margin", style.margin));
+         items.Add(new StyleInformationItem("font", style.font));
+
+         items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
+         items.Add(new StyleInformationItem("padding", style.padding));
+         items.Add(new StyleInformationItem("fontSize", style.fontSize));
+
+         items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
+         items.Add(new StyleInformationItem("border", style.border));
+         items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
+
+         items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
+         items.Add(new StyleInformationItem("overflow", style.overflow));
+         items.Add(new StyleInformationItem("alignment", style.alignment));
+
+         items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+         items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
+         items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
+
+         items.Add(new StyleInformationItem(string.Empty, string.Empty));
+         items.Add(new StyleInformationItem("clipping", style.clipping));
+         items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
+      }
+      else if (columns == 4)
+      {
+         items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
+         items.Add(new StyleInformationItem("margin", style.margin));
+         items.Add(new StyleInformationItem("alignment", style.alignment));
+         items.Add(new StyleInformationItem("font", style.font));
+
+         items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
+         items.Add(new StyleInformationItem("padding", style.padding));
+         items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
+         items.Add(new StyleInformationItem("fontSize", style.fontSize));
+
+         items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
+         items.Add(new StyleInformationItem("border", style.border));
+         items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
+         items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
+
+         items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
+         items.Add(new StyleInformationItem("overflow", style.overflow));
+         items.Add(new StyleInformationItem("clipping", style.clipping));
+         items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
+
+         items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+      }
+      else if (columns == 5)
+      {
+         items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
+         items.Add(new StyleInformationItem("margin", style.margin));
+         items.Add(new StyleInformationItem("alignment", style.alignment));
+         items.Add(new StyleInformationItem("font", style.font));
+         items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+
+         items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
+         items.Add(new StyleInformationItem("padding", style.padding));
+         items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
+         items.Add(new StyleInformationItem("fontSize", style.fontSize));
+         items.Add(new StyleInformationItem(string.Empty, string.Empty));
+
+         items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
+         items.Add(new StyleInformationItem("border", style.border));
+         items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
+         items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
+         items.Add(new StyleInformationItem(string.Empty, string.Empty));
+
+         items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth + "\t"));
+         items.Add(new StyleInformationItem("overflow", style.overflow));
+         items.Add(new StyleInformationItem("clipping", style.clipping));
+         items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
+      }
+      else
+      {
+         items.Add(new StyleInformationItem("margin", style.margin));
+         items.Add(new StyleInformationItem("padding", style.padding));
+         items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
+         items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
+         items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
+         items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
+         items.Add(new StyleInformationItem("font", style.font));
+         items.Add(new StyleInformationItem("fontSize", style.fontSize));
+         items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
+         items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
+         items.Add(new StyleInformationItem("alignment", style.alignment));
+         items.Add(new StyleInformationItem("border", style.border));
+         items.Add(new StyleInformationItem("clipping", style.clipping));
+         items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+         items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
+         items.Add(new StyleInformationItem("overflow", style.overflow));
+         items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
+      }
+
+      string result = "Style Information: \"" + style.name + "\":";
+
+      int[] columnLabelWidth = new int[columns];
+      int[] columnValueWidth = new int[columns];
+
+      float tabWidth = new GUIStyle().CalcSize(new GUIContent("\t")).x;
+
+      int index = 0;
+      foreach (StyleInformationItem item in items)
+      {
+         int column = index++ % columns;
+         columnLabelWidth[column] = Mathf.Max(columnLabelWidth[column], item.LabelWidth);
+         columnValueWidth[column] = Mathf.Max(columnValueWidth[column], item.ValueWidth);
+      }
+
+      index = 0;
+      foreach (StyleInformationItem item in items)
+      {
+         int column = index++ % columns;
+
+         if (column == 0)
+         {
+            result += "\n\t";
+         }
+
+         result += item.Label + new string('\t', Mathf.CeilToInt((columnLabelWidth[column] - item.LabelWidth) / tabWidth));
+         result += item.Value + new string('\t', Mathf.CeilToInt((columnValueWidth[column] - item.ValueWidth) / tabWidth));
+      }
+
+      Debug.Log(result
                 + "\n\t isHeightDependantOnWidth: \t\t\t" + style.isHeightDependantOnWidth
 
                 + "\n\t states:\t normal( " + style.normal.background + ", " + style.normal.textColor + " )"
@@ -455,5 +617,4 @@ public static class uScriptGUIStyle
                 + "\n"
                );
    }
-
 }
