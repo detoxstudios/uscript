@@ -73,6 +73,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\PreferenceWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\RawScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\References.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\ReferenceWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ScriptEditor.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ScriptEditorCtrl.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ScriptEditorData.cs" />
