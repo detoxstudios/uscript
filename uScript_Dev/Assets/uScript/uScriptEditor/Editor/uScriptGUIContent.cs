@@ -42,6 +42,8 @@ public static class uScriptGUIContent
    private static GUIContent _buttonNodeFind;
    public static GUIContent buttonNodeFind { get { return _buttonNodeFind; } }
 
+   public static GUIContent buttonNodeFindDeprecated { get; private set; }
+
    private static GUIContent _buttonNodeSource;
    public static GUIContent buttonNodeSource { get { return _buttonNodeSource; } }
 
@@ -171,6 +173,7 @@ public static class uScriptGUIContent
 
       _buttonNodeDeleteMissing = new GUIContent(string.Empty, "Delete this missing node.");
       _buttonNodeFind = new GUIContent(string.Empty, "Center the canvas on this node.");
+      buttonNodeFindDeprecated = new GUIContent(string.Empty, "Center the canvas on the next deprecated node.");
       _buttonNodeSource = new GUIContent("Source", "Ping the source file associated with this node.");
       _buttonNodeToggle = new GUIContent(string.Empty, "Toggle socket visibility on this node (Show All or Hide Unused).");
       _buttonNodeUpgrade = new GUIContent(string.Empty, "Upgrade this deprecated node.");
@@ -262,6 +265,7 @@ public static class uScriptGUIContent
          _buttonListCollapse.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconCollapse.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _buttonListExpand.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconExpand.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _buttonNodeFind.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         buttonNodeFindDeprecated.image = _buttonNodeFind.image;
          _buttonNodeToggle.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniToggle.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _buttonNodeUpgrade.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniUpgrade.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          _buttonNodeDeleteMissing.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniDelete.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;

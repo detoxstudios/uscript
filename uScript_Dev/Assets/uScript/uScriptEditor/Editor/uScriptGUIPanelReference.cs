@@ -32,6 +32,8 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
    public EntityNode hotSelection { set { _hotSelection = value; } }
 
+    private Node _focusedNode = null;
+    
 
    //
    // Methods common to the panel classes
@@ -228,92 +230,88 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
    private void DrawGraphDetails()
    {
-      GUIStyle styleBox = new GUIStyle(GUI.skin.box);
-      styleBox.name = "uScript_ReferenceGraphDetailBox";
-      styleBox.margin = new RectOffset(24, 24, 16, 16);
-      styleBox.padding = new RectOffset(4, 4, 4, 4);
-
-      GUIStyle styleLabel = new GUIStyle(EditorStyles.boldLabel);
-      styleLabel.name = "uScript_ReferenceGraphDetailLabel";
-      styleLabel.fixedWidth = 60;
-      styleLabel.margin = EditorStyles.label.margin;
-      styleLabel.margin = new RectOffset();
-      styleLabel.padding = new RectOffset(2, 2, 2, 3);
-      styleLabel.stretchWidth = false;
-//         styleLabel.normal.background = GUI.skin.box.normal.background;
-//         styleLabel.border = GUI.skin.box.border;
-
-//      uScriptGUIStyle.Information(styleLabel, 4);
-
-      GUIStyle styleValue = new GUIStyle(EditorStyles.label);
-      styleValue.name = "uScript_ReferenceGraphDetailValue";
-      styleValue.margin = new RectOffset(12, 0, 0, 0);
-      styleValue.padding = new RectOffset(2, 2, 2, 3);
-      styleValue.stretchWidth = false;
-//         styleValue.normal.background = GUI.skin.box.normal.background;
-//         styleValue.border = GUI.skin.box.border;
-
-      GUIStyle styleAlert = new GUIStyle(EditorStyles.boldLabel);
-      styleAlert.name = "uScript_ReferenceGraphDetailAlert";
-      styleAlert.margin = new RectOffset(12, 0, 0, 0);
-      styleAlert.padding = new RectOffset(2, 2, 2, 3);
-      styleAlert.normal.textColor = Color.red;
-      styleAlert.wordWrap = true;
-//         styleAlert.normal.background = GUI.skin.box.normal.background;
-//         styleAlert.border = GUI.skin.box.border;
-
       ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
 
-      EditorGUILayout.BeginVertical(styleBox);
+      EditorGUILayout.BeginVertical(uScriptGUIStyle.referenceDetailBox);
       {
          EditorGUILayout.BeginHorizontal();
          {
-            GUILayout.Label("Nodes: ", styleLabel);
-
-            string value = m_ScriptEditorCtrl.FlowChart.Nodes.Length.ToString();
-            GUILayout.Label(value, styleValue);
+            GUILayout.Label("Graph contains:", uScriptGUIStyle.referenceDetailTitle);
 
             EditorGUILayout.BeginVertical();
             {
-               if (m_ScriptEditorCtrl.FlowChart.SelectedNodes.Length > 0)
-               {
-                  value = "(" + m_ScriptEditorCtrl.FlowChart.SelectedNodes.Length.ToString() + " selected)";
-                  GUILayout.Label(value, styleValue);
-               }
+               int count;
+               int countMax = Math.Max(m_ScriptEditorCtrl.FlowChart.Nodes.Length, m_ScriptEditorCtrl.FlowChart.Links.Length);
+               float countWidth = uScriptGUIStyle.referenceDetailValue.CalcSize(new GUIContent(countMax.ToString())).x;
+               float labelWidth = uScriptGUIStyle.referenceDetailLabel.CalcSize(new GUIContent("nodes")).x + 12;
 
-               if (m_ScriptEditorCtrl.ScriptEditor.DeprecatedNodes.Length > 0)
+               EditorGUILayout.BeginHorizontal();
                {
-                  int deprecatedNodes = m_ScriptEditorCtrl.ScriptEditor.DeprecatedNodes.Length;
-                  value = "This graph contains " + deprecatedNodes.ToString() + " deprecated node" + (deprecatedNodes > 1 ? "s" : "") + ", which should be updated or replaced.";
-                  GUILayout.Label(value, styleAlert);
+                  if (m_ScriptEditorCtrl.ScriptEditor.DeprecatedNodes.Length > 0)
+                  {
+                     count = m_ScriptEditorCtrl.ScriptEditor.DeprecatedNodes.Length;
+
+                     GUILayout.Label(count.ToString(), uScriptGUIStyle.referenceDetailAlertValue, GUILayout.Width(countWidth));
+                     GUILayout.Label("deprecated " + (count == 1 ? "node" : "nodes") + ", which should be updated or replaced.", uScriptGUIStyle.referenceDetailAlertLabel);
+
+                     if (GUILayout.Button(uScriptGUIContent.buttonNodeFindDeprecated, uScriptGUIStyle.referenceButtonIcon))
+                     {
+                        _focusedNode = m_ScriptEditorCtrl.GetNextDeprecatedNode(_focusedNode);
+                        if (_focusedNode != null)
+                        {
+                           m_ScriptEditorCtrl.CenterOnNode(_focusedNode);
+                        }
+                     }
+
+                     if (GUILayout.Button(" Fix All ", uScriptGUIStyle.referenceButtonText))
+                     {
+                        List<DisplayNode> nodes = new List<DisplayNode>();
+                        foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
+                        {
+                           nodes.Add((DisplayNode)node);
+                        }
+                        m_ScriptEditorCtrl.UpgradeDeprecatedNodes(nodes.ToArray());
+                     }
+
+                     GUILayout.FlexibleSpace();
+                  }
                }
+               EditorGUILayout.EndHorizontal();
+
+               EditorGUILayout.BeginHorizontal();
+               {
+                  count = m_ScriptEditorCtrl.FlowChart.Nodes.Length;
+
+                  GUILayout.Label(count.ToString(), uScriptGUIStyle.referenceDetailValue);
+
+                  GUILayout.Label((count == 1 ? "node" : "nodes"), uScriptGUIStyle.referenceDetailLabel, GUILayout.Width(labelWidth));
+
+                  if (m_ScriptEditorCtrl.FlowChart.SelectedNodes.Length > 0)
+                  {
+                     string label = "(" + m_ScriptEditorCtrl.FlowChart.SelectedNodes.Length.ToString() + " selected)";
+                     GUILayout.Label(label, uScriptGUIStyle.referenceDetailLabel);
+                  }
+               }
+               EditorGUILayout.EndHorizontal();
+
+               EditorGUILayout.BeginHorizontal();
+               {
+                  string value = m_ScriptEditorCtrl.FlowChart.Links.Length.ToString();
+                  GUILayout.Label(value, uScriptGUIStyle.referenceDetailValue);
+
+                  GUILayout.Label((count == 1 ? "link" : "links"), uScriptGUIStyle.referenceDetailLabel, GUILayout.Width(labelWidth));
+
+                  if (m_ScriptEditorCtrl.FlowChart.SelectedLinks.Length > 0)
+                  {
+                     value = "(" + m_ScriptEditorCtrl.FlowChart.SelectedLinks.Length.ToString() + " selected)";
+                     GUILayout.Label(value, uScriptGUIStyle.referenceDetailLabel);
+                  }
+               }
+               EditorGUILayout.EndHorizontal();
             }
             EditorGUILayout.EndVertical();
          }
          EditorGUILayout.EndHorizontal();
-         EditorGUILayout.BeginHorizontal();
-         {
-            GUILayout.Label("Links: ", styleLabel);
-            string value = m_ScriptEditorCtrl.FlowChart.Links.Length.ToString();
-            GUILayout.Label(value, styleValue);
-
-            if (m_ScriptEditorCtrl.FlowChart.SelectedLinks.Length > 0)
-            {
-               value = "(" + m_ScriptEditorCtrl.FlowChart.SelectedLinks.Length.ToString() + " selected)";
-               GUILayout.Label(value, styleValue);
-            }
-         }
-         EditorGUILayout.EndHorizontal();
-
-         if (m_ScriptEditorCtrl.ScriptEditor.Externals.Length != 0)
-         {
-            EditorGUILayout.BeginHorizontal();
-            {
-               GUILayout.Label("Externals: ", styleLabel);
-               GUILayout.Label(m_ScriptEditorCtrl.ScriptEditor.Externals.Length.ToString(), styleValue);
-            }
-            EditorGUILayout.EndHorizontal();
-         }
       }
       EditorGUILayout.EndVertical();
    }

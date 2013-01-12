@@ -108,7 +108,17 @@ public static class uScriptGUIStyle
 
    private static GUIStyle _referenceDesc;
    public static GUIStyle referenceDesc { get { return _referenceDesc; } }
-
+   
+   public static GUIStyle referenceButtonIcon { get; private set; }
+   public static GUIStyle referenceButtonText { get; private set; }
+ 
+   public static GUIStyle referenceDetailBox { get; private set; }
+   public static GUIStyle referenceDetailTitle { get; private set; }
+   public static GUIStyle referenceDetailLabel { get; private set; }
+   public static GUIStyle referenceDetailValue { get; private set; }
+   public static GUIStyle referenceDetailAlertLabel { get; private set; }
+   public static GUIStyle referenceDetailAlertValue { get; private set; }
+   
    private static GUIStyle _propertyRowOdd;
    public static GUIStyle propertyRowOdd { get { return _propertyRowOdd; } }
 
@@ -356,6 +366,64 @@ public static class uScriptGUIStyle
       _underline.border = new RectOffset(0, 0, 0, 2);
       _underline.padding = new RectOffset(0, 0, 2, 2);
 
+      referenceButtonIcon = new GUIStyle(EditorStyles.miniButton);
+      referenceButtonIcon.name = "uScript_referenceButtonIcon";
+      referenceButtonIcon.alignment = TextAnchor.MiddleCenter;
+      referenceButtonIcon.imagePosition = ImagePosition.ImageOnly;
+      referenceButtonIcon.padding = new RectOffset();
+      referenceButtonIcon.margin = new RectOffset( 4, 4, 0, 0 );
+      referenceButtonIcon.fixedHeight = 20;
+      referenceButtonIcon.fixedWidth = 20;
+
+      referenceButtonText = new GUIStyle(EditorStyles.miniButton);
+      referenceButtonText.name = "uScript_referenceButtonText";
+      referenceButtonText.alignment = TextAnchor.MiddleCenter;
+      referenceButtonText.padding = new RectOffset( 3, 6, 2, 4 );
+      referenceButtonText.margin = new RectOffset( 4, 4, 0, 0 );
+      referenceButtonText.fontSize = 11;
+      referenceButtonText.fixedHeight = 20;
+  
+      referenceDetailBox = new GUIStyle(GUI.skin.box);
+      referenceDetailBox.name = "uScript_referenceDetailBox";
+      referenceDetailBox.margin = new RectOffset(24, 24, 16, 16);
+      referenceDetailBox.padding = new RectOffset(4, 4, 4, 4);
+
+      referenceDetailTitle = new GUIStyle(EditorStyles.boldLabel);
+      referenceDetailTitle.name = "uScript_referenceDetailTitle";
+      referenceDetailTitle.margin = EditorStyles.label.margin;
+      referenceDetailTitle.margin = new RectOffset(0, 12, 0, 0);
+      referenceDetailTitle.padding = new RectOffset(2, 2, 2, 3);
+      referenceDetailTitle.stretchWidth = false;
+//      referenceDetailTitle.normal.background = GUI.skin.box.normal.background;
+//      referenceDetailTitle.border = GUI.skin.box.border;
+
+      referenceDetailLabel = new GUIStyle(EditorStyles.boldLabel);
+      referenceDetailLabel.name = "uScript_referenceDetailLabel";
+      referenceDetailLabel.margin = new RectOffset();
+      referenceDetailLabel.padding = new RectOffset(2, 2, 2, 3);
+      referenceDetailLabel.stretchWidth = false;
+//      referenceDetailLabel.normal.background = GUI.skin.box.normal.background;
+//      referenceDetailLabel.border = GUI.skin.box.border;
+
+      referenceDetailValue = new GUIStyle(referenceDetailLabel);
+      referenceDetailValue.name = "uScript_referenceDetailValue";
+      referenceDetailValue.alignment = TextAnchor.MiddleRight;
+
+      referenceDetailAlertLabel = new GUIStyle(EditorStyles.boldLabel);
+      referenceDetailAlertLabel.name = "uScript_referenceDetailAlertLabel";
+      referenceDetailAlertLabel.margin = new RectOffset();
+      referenceDetailAlertLabel.padding = new RectOffset(2, 2, 2, 3);
+      referenceDetailAlertLabel.normal.textColor = Color.red;
+      referenceDetailAlertLabel.wordWrap = true;
+//      referenceDetailAlertLabel.normal.background = GUI.skin.box.normal.background;
+//      referenceDetailAlertLabel.border = GUI.skin.box.border;
+
+      referenceDetailAlertValue = new GUIStyle(referenceDetailAlertLabel);
+      referenceDetailAlertValue.name = "uScript_referenceDetailAlertValue";
+      referenceDetailAlertValue.alignment = TextAnchor.MiddleRight;
+
+      
+      
       _referenceName = new GUIStyle(EditorStyles.boldLabel);
       _referenceName.name = "referenceName";
       _referenceName.normal.background = _texture_underline;
