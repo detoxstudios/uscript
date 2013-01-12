@@ -329,6 +329,49 @@ namespace Detox.ScriptEditor
          return m_FlowChart.Nodes[retIndex];
       }
 
+      public Node GetNextDeprecatedNode(Node node)
+      {
+         int i;
+         int retIndex = -1;
+         
+         Node[] nodes = m_FlowChart.Nodes;
+
+         for (i = 0; i < nodes.Length; i++)
+         {
+            if (node == nodes[i] || (node == null && i == 0))
+            {
+               bool found = false;
+               int index = (node == null ? 0 : i);
+
+               do
+               {
+                  if (index == nodes.Length - 1)
+                  {
+                     index = 0;
+                  }
+                  else
+                  {
+                     index++;
+                  }
+
+                  if (((DisplayNode)nodes[index]).Deprecated)
+                  {
+                     retIndex = index;
+                     found = true;
+                  }
+               } while (!found && index != i);
+               
+               break;
+            }
+         }
+         
+         if (retIndex == -1)
+         {
+             return null;
+         }
+         return nodes[retIndex];
+      }
+
       public Node GetNextNode(Node node) { return GetNextNode(node, null); }
       public Node GetNextNode(Node node, Type filterType)
       {
@@ -1427,14 +1470,26 @@ namespace Detox.ScriptEditor
 
       public void m_MenuUpgradeNode_Click(object sender, EventArgs e)
       {
+         UpgradeDeprecatedNodes(SelectedNodes);
+      }
+  
+      public void UpgradeDeprecatedNodes(DisplayNode[] nodes)
+      {
          Patch.Batch batchPatch = new Detox.Patch.Batch( "Upgrade Node" );
 
-         foreach ( DisplayNode node in SelectedNodes )
+         int countTotal = 0;
+         int countFixed = 0;
+
+         foreach ( DisplayNode node in nodes )
          {
             if ( true == node.Deprecated )
             {
+               countTotal++;
+               
                if ( true == m_ScriptEditor.CanUpgradeNode(node.EntityNode) )
                {
+                  countFixed++;
+                  
                   EntityNode oldNode = node.EntityNode.Copy( true );
 
                   m_ScriptEditor.UpgradeNode( node.EntityNode );
@@ -1452,6 +1507,14 @@ namespace Detox.ScriptEditor
          uScript.Instance.RegisterUndo( batchPatch );
          PatchDisplay( batchPatch );
 
+         string result = countFixed.ToString() + (countFixed == 1 ? " node was" : " nodes were") + " successfully upgraded.";
+         int countRemaining = countTotal - countFixed;
+         if (countRemaining > 0)
+         {
+            result += "\n" + countRemaining.ToString() + (countRemaining == 1 ? " node" : " nodes") + " could not be upgraded and need to be manually replaced.";
+         }
+         uScriptDebug.Log(result, (countRemaining > 0 ? uScriptDebug.Type.Warning : uScriptDebug.Type.Message));
+         
          //RebuildScript( null );
       }
 
