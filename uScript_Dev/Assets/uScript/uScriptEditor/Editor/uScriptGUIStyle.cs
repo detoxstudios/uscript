@@ -12,152 +12,113 @@ public static class uScriptGUIStyle
    static string _currentSkin = string.Empty;
    static bool _stylesInitialized = false;
 
-   private static GUIStyle _paletteToolbarButton;
-   public static GUIStyle paletteToolbarButton { get { return _paletteToolbarButton; } }
+   public static GUIStyle paletteToolbarButton { get; private set; }
 
-   private static GUIStyle _paletteFoldout;
-   public static GUIStyle paletteFoldout { get { return _paletteFoldout; } }
+   public static GUIStyle paletteFoldout { get; private set; }
 
-   private static GUIStyle _paletteButton;
-   public static GUIStyle paletteButton { get { return _paletteButton; } }
+   public static GUIStyle paletteButton { get; private set; }
 
-   private static GUIStyle _panelBox;
-   public static GUIStyle panelBox { get { return _panelBox; } }
+   public static GUIStyle panelBox { get; private set; }
 
-   private static GUIStyle _panelHR;
-   public static GUIStyle panelHR { get { return _panelHR; } }
+   public static GUIStyle panelHR { get; private set; }
 
-   private static GUIStyle _panelTitle;
-   public static GUIStyle panelTitle { get { return _panelTitle; } }
+   public static GUIStyle panelTitle { get; private set; }
 
-   private static GUIStyle _panelTitleDropDown;
-   public static GUIStyle panelTitleDropDown { get { return _panelTitleDropDown; } }
+   public static GUIStyle panelTitleDropDown { get; private set; }
 
-   private static GUIStyle _referenceText;
-   public static GUIStyle referenceText { get { return _referenceText; } }
+   public static GUIStyle referenceText { get; private set; }
 
-   private static GUIStyle _columnHeader;
-   public static GUIStyle columnHeader { get { return _columnHeader; } }
+   public static GUIStyle columnHeader { get; private set; }
 
-   public static readonly int columnHeaderHeight = 16;
+   public static GUIStyle hDivider { get; private set; }
 
-   private static GUIStyle _hDivider;
-   public static GUIStyle hDivider { get { return _hDivider; } }
+   public static GUIStyle vDivider { get; private set; }
 
-   private static GUIStyle _vDivider;
-   public static GUIStyle vDivider { get { return _vDivider; } }
+   public static GUIStyle vScrollbar { get; private set; }
 
-   private static GUIStyle _vScrollbar;
-   public static GUIStyle vScrollbar { get { return _vScrollbar; } }
+   public static GUIStyle hScrollbar { get; private set; }
 
-   private static GUIStyle _hScrollbar;
-   public static GUIStyle hScrollbar { get { return _hScrollbar; } }
+   public static GUIStyle vColumnScrollbar { get; private set; }
 
-   private static GUIStyle _vColumnScrollbar;
-   public static GUIStyle vColumnScrollbar { get { return _vColumnScrollbar; } }
+   public static GUIStyle hColumnScrollbar { get; private set; }
 
-   private static GUIStyle _hColumnScrollbar;
-   public static GUIStyle hColumnScrollbar { get { return _hColumnScrollbar; } }
+   public static GUIStyle columnScrollView { get; private set; }
 
-   private static GUIStyle _columnScrollView;
-   public static GUIStyle columnScrollView { get { return _columnScrollView; } }
+   public static GUIStyle nodeButtonLeft { get; private set; }
 
-   private static GUIStyle _nodeButtonLeft;
-   public static GUIStyle nodeButtonLeft { get { return _nodeButtonLeft; } }
+   public static GUIStyle nodeButtonMiddle { get; private set; }
 
-   private static GUIStyle _nodeButtonMiddle;
-   public static GUIStyle nodeButtonMiddle { get { return _nodeButtonMiddle; } }
+   public static GUIStyle nodeButtonRight { get; private set; }
 
-   private static GUIStyle _nodeButtonRight;
-   public static GUIStyle nodeButtonRight { get { return _nodeButtonRight; } }
+   public static GUIStyle nodeFavoriteBadge { get; private set; }
 
-   private static GUIStyle _contextMenu;
-   public static GUIStyle ContextMenu { get { return _contextMenu; } }
+   public static GUIStyle contextMenu { get; private set; }
 
-   private static GUIStyle _menuDropDownWindow;
-   public static GUIStyle menuDropDownWindow { get { return _menuDropDownWindow; } }
+   public static GUIStyle menuDropDownWindow { get; private set; }
 
-   private static GUIStyle _menuDropDownButton;
-   public static GUIStyle menuDropDownButton { get { return _menuDropDownButton; } }
+   public static GUIStyle menuDropDownButton { get; private set; }
 
    public static GUIStyle menuDropDownButtonShortcut { get; private set; }
 
-   private static GUIStyle _menuContextWindow;
-   public static GUIStyle menuContextWindow { get { return _menuContextWindow; } }
+   public static GUIStyle menuContextWindow { get; private set; }
 
-   private static GUIStyle _menuContextButton;
-   public static GUIStyle menuContextButton { get { return _menuContextButton; } }
+   public static GUIStyle menuContextButton { get; private set; }
 
-   private static GUIStyle _panelMessage;
-   public static GUIStyle panelMessage { get { return _panelMessage; } }
+   public static GUIStyle panelMessage { get; private set; }
 
-   private static GUIStyle _panelMessageBold;
-   public static GUIStyle panelMessageBold { get { return _panelMessageBold; } }
+   public static GUIStyle panelMessageBold { get; private set; }
 
-   private static GUIStyle _panelMessageError;
-   public static GUIStyle panelMessageError { get { return _panelMessageError; } }
+   public static GUIStyle panelMessageError { get; private set; }
 
-   private static GUIStyle _underline;
-   public static GUIStyle underline { get { return _underline; } }
+   public static GUIStyle underline { get; private set; }
 
-   private static GUIStyle _referenceName;
-   public static GUIStyle referenceName { get { return _referenceName; } }
+   public static GUIStyle referenceName { get; private set; }
 
-   private static GUIStyle _referenceInfo;
-   public static GUIStyle referenceInfo { get { return _referenceInfo; } }
+   public static GUIStyle referenceInfo { get; private set; }
 
-   private static GUIStyle _referenceDesc;
-   public static GUIStyle referenceDesc { get { return _referenceDesc; } }
-   
+   public static GUIStyle referenceDesc { get; private set; }
+
    public static GUIStyle referenceButtonIcon { get; private set; }
+
    public static GUIStyle referenceButtonText { get; private set; }
- 
+
    public static GUIStyle referenceDetailBox { get; private set; }
+
    public static GUIStyle referenceDetailTitle { get; private set; }
+
    public static GUIStyle referenceDetailLabel { get; private set; }
+
    public static GUIStyle referenceDetailValue { get; private set; }
+
    public static GUIStyle referenceDetailAlertLabel { get; private set; }
+
    public static GUIStyle referenceDetailAlertValue { get; private set; }
-   
-   private static GUIStyle _propertyRowOdd;
-   public static GUIStyle propertyRowOdd { get { return _propertyRowOdd; } }
 
-   private static GUIStyle _propertyRowEven;
-   public static GUIStyle propertyRowEven { get { return _propertyRowEven; } }
+   public static GUIStyle propertyRowOdd { get; private set; }
 
-   private static GUIStyle _propertyTextField;
-   public static GUIStyle propertyTextField { get { return _propertyTextField; } }
+   public static GUIStyle propertyRowEven { get; private set; }
 
-   private static GUIStyle _propertyBoolField;
-   public static GUIStyle propertyBoolField { get { return _propertyBoolField; } }
+   public static GUIStyle propertyTextField { get; private set; }
 
-   private static GUIStyle _propertyArrayIconButton;
-   public static GUIStyle propertyArrayIconButton { get { return _propertyArrayIconButton; } }
+   public static GUIStyle propertyBoolField { get; private set; }
 
-   private static GUIStyle _propertyArrayTextButton;
-   public static GUIStyle propertyArrayTextButton { get { return _propertyArrayTextButton; } }
+   public static GUIStyle propertyArrayIconButton { get; private set; }
 
-   private static GUIStyle _scriptRowOdd;
-   public static GUIStyle scriptRowOdd { get { return _scriptRowOdd; } }
+   public static GUIStyle propertyArrayTextButton { get; private set; }
 
-   private static GUIStyle _scriptRowEven;
-   public static GUIStyle scriptRowEven { get { return _scriptRowEven; } }
+   public static GUIStyle scriptRowOdd { get; private set; }
 
-   private static GUIStyle _listRow;
-   public static GUIStyle listRow { get { return _listRow; } }
+   public static GUIStyle scriptRowEven { get; private set; }
 
-   private static GUIStyle _toolbarLabel;
-   public static GUIStyle toolbarLabel { get { return _toolbarLabel; } }
+   public static GUIStyle listRow { get; private set; }
 
+   public static GUIStyle toolbarLabel { get; private set; }
+
+   public static readonly int columnHeaderHeight = 16;
    static Texture2D _texture_propertyRowEven = null;
-
    static Texture2D _texture_windowMenuDropDown = null;
    static Texture2D _texture_windowMenuContext = null;
-
    static Texture2D _texture_underline = null;
-
-
-
 
    public static void Init()
    {
@@ -195,134 +156,143 @@ public static class uScriptGUIStyle
 
       _stylesInitialized = true;
 
-      _paletteToolbarButton = new GUIStyle(EditorStyles.toolbarButton);
-      _paletteToolbarButton.margin = new RectOffset(12, 6, 0, 0);
+      paletteToolbarButton = new GUIStyle(EditorStyles.toolbarButton);
+      paletteToolbarButton.margin = new RectOffset(12, 6, 0, 0);
 
-      _paletteFoldout = new GUIStyle(EditorStyles.foldout);
-      _paletteFoldout.padding = new RectOffset(12, 4, 2, 2);
-      _paletteFoldout.margin = new RectOffset(4, 4, 0, 0);
+      paletteFoldout = new GUIStyle(EditorStyles.foldout);
+      paletteFoldout.padding = new RectOffset(12, 4, 2, 2);
+      paletteFoldout.margin = new RectOffset(4, 4, 0, 0);
 
-      _paletteButton = new GUIStyle(GUI.skin.button);
-      _paletteButton.alignment = TextAnchor.UpperLeft;
-      _paletteButton.padding = new RectOffset( 4, 4, 2, 2 );
-      _paletteButton.margin = new RectOffset( 4, 4, 0, 0 );
-      _paletteButton.active.textColor = UnityEngine.Color.white;
+      paletteButton = new GUIStyle(GUI.skin.button);
+      paletteButton.alignment = TextAnchor.UpperLeft;
+      paletteButton.padding = new RectOffset(4, 4, 2, 2);
+      paletteButton.margin = new RectOffset(4, 4, 0, 0);
+      paletteButton.active.textColor = UnityEngine.Color.white;
 
-      _panelBox = new GUIStyle(GUI.skin.box);
-      _panelBox.name = "panelBox";
-      _panelBox.padding = new RectOffset(1, 1, 1, 1);
-      _panelBox.margin = new RectOffset(0, 0, 0, 0);
+      panelBox = new GUIStyle(GUI.skin.box);
+      panelBox.name = "panelBox";
+      panelBox.padding = new RectOffset(1, 1, 1, 1);
+      panelBox.margin = new RectOffset(0, 0, 0, 0);
 
-      _panelHR = new GUIStyle(GUI.skin.box);
-      _panelHR.name = "panelHR";
-      _panelHR.padding = new RectOffset(1, 1, 1, 1);
-      _panelHR.margin = new RectOffset(8, 8, 8, 6);
-      _panelHR.border = new RectOffset(0, 0, 1, 1);
+      panelHR = new GUIStyle(GUI.skin.box);
+      panelHR.name = "panelHR";
+      panelHR.padding = new RectOffset(1, 1, 1, 1);
+      panelHR.margin = new RectOffset(8, 8, 8, 6);
+      panelHR.border = new RectOffset(0, 0, 1, 1);
 
-      _panelTitle = new GUIStyle(EditorStyles.boldLabel);
-      _panelTitle.name = "panelTitle";
-      _panelTitle.margin = new RectOffset(4, 4, 0, 0);
+      panelTitle = new GUIStyle(EditorStyles.boldLabel);
+      panelTitle.name = "panelTitle";
+      panelTitle.margin = new RectOffset(4, 4, 0, 0);
 
-      _panelTitleDropDown = new GUIStyle(EditorStyles.toolbarDropDown);
-      _panelTitleDropDown.name = "panelTitleDropDown";
-      _panelTitleDropDown.font = EditorStyles.boldLabel.font;
-      _panelTitleDropDown.padding = new RectOffset(6, 12, 1, 3);
+      panelTitleDropDown = new GUIStyle(EditorStyles.toolbarDropDown);
+      panelTitleDropDown.name = "panelTitleDropDown";
+      panelTitleDropDown.font = EditorStyles.boldLabel.font;
+      panelTitleDropDown.padding = new RectOffset(6, 12, 1, 3);
 
-      _referenceText = new GUIStyle(GUI.skin.label);
-      _referenceText.name = "referenceText";
-      _referenceText.wordWrap = true;
-      _referenceText.stretchWidth = true;
-      _referenceText.stretchHeight = true;
+      referenceText = new GUIStyle(GUI.skin.label);
+      referenceText.name = "referenceText";
+      referenceText.wordWrap = true;
+      referenceText.stretchWidth = true;
+      referenceText.stretchHeight = true;
 
-      _columnHeader = new GUIStyle(EditorStyles.toolbarButton);
-      _columnHeader.name = "columnHeader";
-      _columnHeader.normal.background = _columnHeader.onNormal.background;
-      _columnHeader.fontStyle = FontStyle.Bold;
-      _columnHeader.alignment = TextAnchor.MiddleLeft;
-      _columnHeader.padding = new RectOffset(5, 8, 0, 0);
-      _columnHeader.fixedHeight = columnHeaderHeight;
-      _columnHeader.contentOffset = new Vector2(0, -1);
+      columnHeader = new GUIStyle(EditorStyles.toolbarButton);
+      columnHeader.name = "columnHeader";
+      columnHeader.normal.background = columnHeader.onNormal.background;
+      columnHeader.fontStyle = FontStyle.Bold;
+      columnHeader.alignment = TextAnchor.MiddleLeft;
+      columnHeader.padding = new RectOffset(5, 8, 0, 0);
+      columnHeader.fixedHeight = columnHeaderHeight;
+      columnHeader.contentOffset = new Vector2(0, -1);
 
-      _hDivider = new GUIStyle(GUI.skin.box);
-      _hDivider.name = "hDivider";
-      _hDivider.margin = new RectOffset(0, 0, 0, 0);
-      _hDivider.padding = new RectOffset(0, 0, 0, 0);
-      _hDivider.border = new RectOffset(0, 0, 0, 0);
-      _hDivider.normal.background = null;
+      hDivider = new GUIStyle(GUI.skin.box);
+      hDivider.name = "hDivider";
+      hDivider.margin = new RectOffset(0, 0, 0, 0);
+      hDivider.padding = new RectOffset(0, 0, 0, 0);
+      hDivider.border = new RectOffset(0, 0, 0, 0);
+      hDivider.normal.background = null;
 
-      _vDivider = new GUIStyle(GUI.skin.box);
-      _vDivider.name = "vDivider";
-      _vDivider.margin = new RectOffset(0, 0, 0, 0);
-      _vDivider.padding = new RectOffset(0, 0, 0, 0);
-      _vDivider.border = new RectOffset(0, 0, 0, 0);
-      _vDivider.normal.background = null;
+      vDivider = new GUIStyle(GUI.skin.box);
+      vDivider.name = "vDivider";
+      vDivider.margin = new RectOffset(0, 0, 0, 0);
+      vDivider.padding = new RectOffset(0, 0, 0, 0);
+      vDivider.border = new RectOffset(0, 0, 0, 0);
+      vDivider.normal.background = null;
 
-      _vScrollbar = new GUIStyle(GUI.skin.verticalScrollbar);
-      // _vScrollbar.name = "vScrollbar";                // DO NOT RENAME
-      _vScrollbar.margin = new RectOffset();
+      vScrollbar = new GUIStyle(GUI.skin.verticalScrollbar);
+      // vScrollbar.name = "vScrollbar";                // DO NOT RENAME
+      vScrollbar.margin = new RectOffset();
 
-      _hScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar);
-      // _hScrollbar.name = "hScrollbar";                // DO NOT RENAME
-      _hScrollbar.margin = new RectOffset();
+      hScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar);
+      // hScrollbar.name = "hScrollbar";                // DO NOT RENAME
+      hScrollbar.margin = new RectOffset();
 
-      _vColumnScrollbar = new GUIStyle(_vScrollbar);
-      // _vColumnScrollbar.name = "vColumnScrollbar";    // DO NOT RENAME
-      _vColumnScrollbar.normal.background = _columnHeader.normal.background;
-      _vColumnScrollbar.overflow = new RectOffset();
+      vColumnScrollbar = new GUIStyle(vScrollbar);
+      // vColumnScrollbar.name = "vColumnScrollbar";    // DO NOT RENAME
+      vColumnScrollbar.normal.background = columnHeader.normal.background;
+      vColumnScrollbar.overflow = new RectOffset();
 
-      _hColumnScrollbar = new GUIStyle(_hScrollbar);
-      // _hColumnScrollbar.name = "hColumnScrollbar";    // DO NOT RENAME
-      _hColumnScrollbar.fixedHeight = 0;
+      hColumnScrollbar = new GUIStyle(hScrollbar);
+      // hColumnScrollbar.name = "hColumnScrollbar";    // DO NOT RENAME
+      hColumnScrollbar.fixedHeight = 0;
 
-      _columnScrollView = new GUIStyle(GUI.skin.box);
-      _columnScrollView.name = "columnScrollView";
-      _columnScrollView.margin = new RectOffset(4, 4, 3, 0);
+      columnScrollView = new GUIStyle(GUI.skin.box);
+      columnScrollView.name = "columnScrollView";
+      columnScrollView.margin = new RectOffset(4, 4, 3, 0);
 
-      _nodeButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
-      _nodeButtonLeft.name = "nodeButtonLeft";
-      _nodeButtonLeft.alignment = TextAnchor.UpperLeft;
-      _nodeButtonLeft.padding = new RectOffset( 4, 4, 2, 4 );
-      _nodeButtonLeft.margin = new RectOffset( 4, 0, 0, 0 );
-      _nodeButtonLeft.overflow = new RectOffset( 0, 0, 0, 2 );
-      _nodeButtonLeft.fontSize = 11;
+      nodeButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
+      nodeButtonLeft.name = "nodeButtonLeft";
+      nodeButtonLeft.alignment = TextAnchor.UpperLeft;
+      nodeButtonLeft.padding = new RectOffset(4, 4, 2, 4);
+      nodeButtonLeft.margin = new RectOffset(4, 0, 0, 0);
+      nodeButtonLeft.overflow = new RectOffset(0, 0, 0, 2);
+      nodeButtonLeft.fontSize = 11;
 
-      _nodeButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid);
-      _nodeButtonMiddle.name = "nodeButtonMiddle";
-      _nodeButtonMiddle.alignment = TextAnchor.MiddleCenter;
-      _nodeButtonMiddle.padding = new RectOffset( 0, 0, 2, 4 );
-      _nodeButtonMiddle.margin = new RectOffset( 0, 0, 0, 0 );
-      _nodeButtonMiddle.overflow = new RectOffset( 0, 0, 0, 2 );
-      _nodeButtonMiddle.fontSize = 11;
-      _nodeButtonMiddle.fixedHeight = 18;
-      _nodeButtonMiddle.contentOffset = new Vector2(0, 1);
+      nodeButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid);
+      nodeButtonMiddle.name = "nodeButtonMiddle";
+      nodeButtonMiddle.alignment = TextAnchor.MiddleCenter;
+      nodeButtonMiddle.padding = new RectOffset(0, 0, 2, 4);
+      nodeButtonMiddle.margin = new RectOffset(0, 0, 0, 0);
+      nodeButtonMiddle.overflow = new RectOffset(0, 0, 0, 2);
+      nodeButtonMiddle.fontSize = 11;
+      nodeButtonMiddle.fixedHeight = 18;
+      nodeButtonMiddle.contentOffset = new Vector2(0, 1);
 
-      _nodeButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
-      _nodeButtonRight.name = "nodeButtonRight";
-      _nodeButtonRight.alignment = TextAnchor.UpperCenter;
-      _nodeButtonRight.padding = new RectOffset( 0, 0, 2, 4 );
-      _nodeButtonRight.margin = new RectOffset( 0, 4, 0, 0 );
-      _nodeButtonRight.overflow = new RectOffset( 0, 0, 0, 2 );
-      _nodeButtonRight.fontSize = 11;
-      _nodeButtonRight.fixedHeight = 19;
-      _nodeButtonRight.contentOffset = new Vector2(-1, 1);
+      nodeButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
+      nodeButtonRight.name = "nodeButtonRight";
+      nodeButtonRight.alignment = TextAnchor.UpperCenter;
+      nodeButtonRight.padding = new RectOffset(0, 0, 2, 4);
+      nodeButtonRight.margin = new RectOffset(0, 4, 0, 0);
+      nodeButtonRight.overflow = new RectOffset(0, 0, 0, 2);
+      nodeButtonRight.fontSize = 11;
+      nodeButtonRight.fixedHeight = 19;
+      nodeButtonRight.contentOffset = new Vector2(-1, 1);
 
-      _contextMenu = new GUIStyle(EditorStyles.toolbarButton);
+      nodeFavoriteBadge = new GUIStyle("CN CountBadge");
+      nodeFavoriteBadge.name = "uScript_nodeFavoriteBadge";
+      nodeFavoriteBadge.alignment = TextAnchor.MiddleCenter;
+      nodeFavoriteBadge.fixedHeight = 0;
+      nodeFavoriteBadge.margin = new RectOffset(3, 0, 0, 0);
+      nodeFavoriteBadge.overflow = new RectOffset(0, 0, 0, 1);
+      nodeFavoriteBadge.padding = new RectOffset(6, 8, 1, 3);
+      nodeFavoriteBadge.stretchWidth = false;
 
-      _menuDropDownWindow = new GUIStyle(GUI.skin.window);
-      _menuDropDownWindow.normal.background = _texture_windowMenuDropDown;
-      _menuDropDownWindow.onNormal.background = _texture_windowMenuDropDown;
-      _menuDropDownWindow.border = new RectOffset(10, 10, 4, 10);
-      _menuDropDownWindow.padding = new RectOffset(0, 0, 0, 4);
-      _menuDropDownWindow.overflow = new RectOffset(6, 6, 0, 6);
-      _menuDropDownWindow.contentOffset = Vector2.zero;
+      contextMenu = new GUIStyle(EditorStyles.toolbarButton);
 
-      _menuDropDownButton = new GUIStyle(EditorStyles.largeLabel);
-      _menuDropDownButton.name = "menuDropDownButton";
-      _menuDropDownButton.active.background = EditorStyles.toolbarButton.onActive.background;
-      _menuDropDownButton.hover.background = EditorStyles.toolbarButton.onNormal.background;
-      _menuDropDownButton.border = EditorStyles.toolbarButton.border;
-      _menuDropDownButton.margin = new RectOffset();
-      _menuDropDownButton.padding = new RectOffset(8, 8, 4, 4);
+      menuDropDownWindow = new GUIStyle(GUI.skin.window);
+      menuDropDownWindow.normal.background = _texture_windowMenuDropDown;
+      menuDropDownWindow.onNormal.background = _texture_windowMenuDropDown;
+      menuDropDownWindow.border = new RectOffset(10, 10, 4, 10);
+      menuDropDownWindow.padding = new RectOffset(0, 0, 0, 4);
+      menuDropDownWindow.overflow = new RectOffset(6, 6, 0, 6);
+      menuDropDownWindow.contentOffset = Vector2.zero;
+
+      menuDropDownButton = new GUIStyle(EditorStyles.largeLabel);
+      menuDropDownButton.name = "menuDropDownButton";
+      menuDropDownButton.active.background = EditorStyles.toolbarButton.onActive.background;
+      menuDropDownButton.hover.background = EditorStyles.toolbarButton.onNormal.background;
+      menuDropDownButton.border = EditorStyles.toolbarButton.border;
+      menuDropDownButton.margin = new RectOffset();
+      menuDropDownButton.padding = new RectOffset(8, 8, 4, 4);
 
       menuDropDownButtonShortcut = new GUIStyle(EditorStyles.largeLabel);
       menuDropDownButtonShortcut.name = "menuDropDownButtonShortcut";
@@ -330,59 +300,59 @@ public static class uScriptGUIStyle
       menuDropDownButtonShortcut.margin = new RectOffset();
       menuDropDownButtonShortcut.padding = new RectOffset();
 
-      _menuContextWindow = new GUIStyle(GUI.skin.window);
-      _menuContextWindow.normal.background = _texture_windowMenuContext;
-      _menuContextWindow.onNormal.background = _texture_windowMenuContext;
-      _menuContextWindow.border = new RectOffset(10, 10, 10, 10);
-      _menuContextWindow.padding = new RectOffset(0, 0, 4, 4);
-      _menuContextWindow.overflow = new RectOffset(6, 6, 6, 6);
-      _menuContextWindow.contentOffset = Vector2.zero;
+      menuContextWindow = new GUIStyle(GUI.skin.window);
+      menuContextWindow.normal.background = _texture_windowMenuContext;
+      menuContextWindow.onNormal.background = _texture_windowMenuContext;
+      menuContextWindow.border = new RectOffset(10, 10, 10, 10);
+      menuContextWindow.padding = new RectOffset(0, 0, 4, 4);
+      menuContextWindow.overflow = new RectOffset(6, 6, 6, 6);
+      menuContextWindow.contentOffset = Vector2.zero;
 
-      _menuContextButton = new GUIStyle(EditorStyles.largeLabel);
-      _menuContextButton.name = "menuDropDownButton";
-      _menuContextButton.active.background = EditorStyles.toolbarButton.onActive.background;
-      _menuContextButton.hover.background = EditorStyles.toolbarButton.onNormal.background;
-      _menuContextButton.border = EditorStyles.toolbarButton.border;
-      _menuContextButton.margin = new RectOffset();
-      _menuContextButton.padding = new RectOffset(8, 8, 4, 4);
+      menuContextButton = new GUIStyle(EditorStyles.largeLabel);
+      menuContextButton.name = "menuDropDownButton";
+      menuContextButton.active.background = EditorStyles.toolbarButton.onActive.background;
+      menuContextButton.hover.background = EditorStyles.toolbarButton.onNormal.background;
+      menuContextButton.border = EditorStyles.toolbarButton.border;
+      menuContextButton.margin = new RectOffset();
+      menuContextButton.padding = new RectOffset(8, 8, 4, 4);
 
-      _panelMessage = new GUIStyle(GUI.skin.label);
-      _panelMessage.wordWrap = true;
-      _panelMessage.padding = new RectOffset(16, 16, 16, 16);
+      panelMessage = new GUIStyle(GUI.skin.label);
+      panelMessage.wordWrap = true;
+      panelMessage.padding = new RectOffset(16, 16, 16, 16);
 
-      _panelMessageBold = new GUIStyle(EditorStyles.boldLabel);
-      _panelMessageBold.alignment = TextAnchor.MiddleCenter;
-      _panelMessageBold.wordWrap = true;
-      _panelMessageBold.padding = new RectOffset(16, 16, 16, 16);
+      panelMessageBold = new GUIStyle(EditorStyles.boldLabel);
+      panelMessageBold.alignment = TextAnchor.MiddleCenter;
+      panelMessageBold.wordWrap = true;
+      panelMessageBold.padding = new RectOffset(16, 16, 16, 16);
 
-      _panelMessageError = new GUIStyle(GUI.skin.box);
-      _panelMessageError.normal.textColor = EditorStyles.boldLabel.normal.textColor;
-      _panelMessageError.font = EditorStyles.boldLabel.font;
-      _panelMessageError.wordWrap = true;
-      _panelMessageError.stretchWidth = true;
+      panelMessageError = new GUIStyle(GUI.skin.box);
+      panelMessageError.normal.textColor = EditorStyles.boldLabel.normal.textColor;
+      panelMessageError.font = EditorStyles.boldLabel.font;
+      panelMessageError.wordWrap = true;
+      panelMessageError.stretchWidth = true;
 
-      _underline = new GUIStyle(EditorStyles.boldLabel);
-      _underline.normal.background = _texture_underline;
-      _underline.border = new RectOffset(0, 0, 0, 2);
-      _underline.padding = new RectOffset(0, 0, 2, 2);
+      underline = new GUIStyle(EditorStyles.boldLabel);
+      underline.normal.background = _texture_underline;
+      underline.border = new RectOffset(0, 0, 0, 2);
+      underline.padding = new RectOffset(0, 0, 2, 2);
 
       referenceButtonIcon = new GUIStyle(EditorStyles.miniButton);
       referenceButtonIcon.name = "uScript_referenceButtonIcon";
       referenceButtonIcon.alignment = TextAnchor.MiddleCenter;
       referenceButtonIcon.imagePosition = ImagePosition.ImageOnly;
       referenceButtonIcon.padding = new RectOffset();
-      referenceButtonIcon.margin = new RectOffset( 4, 4, 0, 0 );
+      referenceButtonIcon.margin = new RectOffset(4, 4, 0, 0);
       referenceButtonIcon.fixedHeight = 20;
       referenceButtonIcon.fixedWidth = 20;
 
       referenceButtonText = new GUIStyle(EditorStyles.miniButton);
       referenceButtonText.name = "uScript_referenceButtonText";
       referenceButtonText.alignment = TextAnchor.MiddleCenter;
-      referenceButtonText.padding = new RectOffset( 3, 6, 2, 4 );
-      referenceButtonText.margin = new RectOffset( 4, 4, 0, 0 );
+      referenceButtonText.padding = new RectOffset(3, 6, 2, 4);
+      referenceButtonText.margin = new RectOffset(4, 4, 0, 0);
       referenceButtonText.fontSize = 11;
       referenceButtonText.fixedHeight = 20;
-  
+
       referenceDetailBox = new GUIStyle(GUI.skin.box);
       referenceDetailBox.name = "uScript_referenceDetailBox";
       referenceDetailBox.margin = new RectOffset(24, 24, 16, 16);
@@ -422,61 +392,61 @@ public static class uScriptGUIStyle
       referenceDetailAlertValue.name = "uScript_referenceDetailAlertValue";
       referenceDetailAlertValue.alignment = TextAnchor.MiddleRight;
 
-      
-      
-      _referenceName = new GUIStyle(EditorStyles.boldLabel);
-      _referenceName.name = "referenceName";
-      _referenceName.normal.background = _texture_underline;
-      _referenceName.border = new RectOffset(0, 0, 0, 2);
-      _referenceName.padding = new RectOffset(0, 0, 2, 2);
 
-      _referenceInfo = new GUIStyle(EditorStyles.miniLabel);
-      _referenceInfo.name = "referenceInfo";
-      _referenceInfo.alignment = TextAnchor.LowerRight;
-      _referenceInfo.padding = new RectOffset(0, 0, 3, 2);
 
-      _referenceDesc = new GUIStyle(EditorStyles.label);
-      _referenceDesc.name = "referenceDesc";
-      _referenceDesc.padding = new RectOffset(0, 0, 0, 3);
-      _referenceDesc.stretchHeight = false;
-      _referenceDesc.stretchWidth = true;
-      _referenceDesc.wordWrap = true;
+      referenceName = new GUIStyle(EditorStyles.boldLabel);
+      referenceName.name = "referenceName";
+      referenceName.normal.background = _texture_underline;
+      referenceName.border = new RectOffset(0, 0, 0, 2);
+      referenceName.padding = new RectOffset(0, 0, 2, 2);
 
-      _propertyTextField = new GUIStyle(EditorStyles.textField);
-      _propertyTextField.margin = new RectOffset(4, 4, 2, 2);
+      referenceInfo = new GUIStyle(EditorStyles.miniLabel);
+      referenceInfo.name = "referenceInfo";
+      referenceInfo.alignment = TextAnchor.LowerRight;
+      referenceInfo.padding = new RectOffset(0, 0, 3, 2);
 
-      _propertyBoolField = new GUIStyle(EditorStyles.toggle);
-      _propertyBoolField.margin = new RectOffset(4, 4, 1, 1);
+      referenceDesc = new GUIStyle(EditorStyles.label);
+      referenceDesc.name = "referenceDesc";
+      referenceDesc.padding = new RectOffset(0, 0, 0, 3);
+      referenceDesc.stretchHeight = false;
+      referenceDesc.stretchWidth = true;
+      referenceDesc.wordWrap = true;
 
-      _propertyArrayIconButton = new GUIStyle(EditorStyles.miniButton);
-      _propertyArrayIconButton.margin = new RectOffset(4, 4, 2, 2);
-      _propertyArrayIconButton.padding = new RectOffset(3, 3, 2, 2);
-      _propertyArrayIconButton.stretchWidth = false;
+      propertyTextField = new GUIStyle(EditorStyles.textField);
+      propertyTextField.margin = new RectOffset(4, 4, 2, 2);
 
-      _propertyArrayTextButton = new GUIStyle(EditorStyles.miniButton);
-      _propertyArrayTextButton.fontStyle = FontStyle.Bold;
-      _propertyArrayTextButton.padding = new RectOffset(0, 2, 1, 1);
-      _propertyArrayTextButton.contentOffset = new Vector2(0, 1);
-      _propertyArrayTextButton.alignment = TextAnchor.UpperCenter;
+      propertyBoolField = new GUIStyle(EditorStyles.toggle);
+      propertyBoolField.margin = new RectOffset(4, 4, 1, 1);
 
-      _propertyRowOdd = new GUIStyle(GUIStyle.none);
-      _propertyRowOdd.fixedHeight = 20;
+      propertyArrayIconButton = new GUIStyle(EditorStyles.miniButton);
+      propertyArrayIconButton.margin = new RectOffset(4, 4, 2, 2);
+      propertyArrayIconButton.padding = new RectOffset(3, 3, 2, 2);
+      propertyArrayIconButton.stretchWidth = false;
 
-      _propertyRowEven = new GUIStyle(_propertyRowOdd);
-      _propertyRowEven.normal.background = _texture_propertyRowEven;
+      propertyArrayTextButton = new GUIStyle(EditorStyles.miniButton);
+      propertyArrayTextButton.fontStyle = FontStyle.Bold;
+      propertyArrayTextButton.padding = new RectOffset(0, 2, 1, 1);
+      propertyArrayTextButton.contentOffset = new Vector2(0, 1);
+      propertyArrayTextButton.alignment = TextAnchor.UpperCenter;
 
-      _scriptRowOdd = new GUIStyle(GUIStyle.none);
-      _scriptRowOdd.fixedHeight = 17;
+      propertyRowOdd = new GUIStyle(GUIStyle.none);
+      propertyRowOdd.fixedHeight = 20;
 
-      _scriptRowEven = new GUIStyle(_scriptRowOdd);
-      _scriptRowEven.normal.background = _texture_propertyRowEven;
+      propertyRowEven = new GUIStyle(propertyRowOdd);
+      propertyRowEven.normal.background = _texture_propertyRowEven;
 
-      _listRow = new GUIStyle(GUIStyle.none);
-      _listRow.onNormal.background = _texture_propertyRowEven;
+      scriptRowOdd = new GUIStyle(GUIStyle.none);
+      scriptRowOdd.fixedHeight = 17;
 
-      _toolbarLabel = new GUIStyle(EditorStyles.label);
-      _toolbarLabel.padding = new RectOffset(4, 4, 2, 2);
-      _toolbarLabel.margin = new RectOffset();
+      scriptRowEven = new GUIStyle(scriptRowOdd);
+      scriptRowEven.normal.background = _texture_propertyRowEven;
+
+      listRow = new GUIStyle(GUIStyle.none);
+      listRow.onNormal.background = _texture_propertyRowEven;
+
+      toolbarLabel = new GUIStyle(EditorStyles.label);
+      toolbarLabel.padding = new RectOffset(4, 4, 2, 2);
+      toolbarLabel.margin = new RectOffset();
    }
 
    static public void CustomSkinStyles()
@@ -492,9 +462,11 @@ public static class uScriptGUIStyle
    private class StyleInformationItem
    {
       public string Label { get; private set; }
+
       public string Value { get; private set; }
 
       public int LabelWidth { get; private set; }
+
       public int ValueWidth { get; private set; }
 
       public StyleInformationItem(string name, object value)

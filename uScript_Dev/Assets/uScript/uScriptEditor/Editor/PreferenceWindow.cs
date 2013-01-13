@@ -141,7 +141,7 @@ public class PreferenceWindow : EditorWindow
          string path = uScriptConfig.ConstantPaths.RelativePath(_preferences.UserScripts);
          if (path.Length > 64) path = path.Substring(0, 64) + "...";
 
-         if (GUILayout.Button(path, uScriptGUIStyle.ContextMenu))
+         if (GUILayout.Button(path, uScriptGUIStyle.contextMenu))
          {
             path = EditorUtility.OpenFolderPanel("uScript Project Files", _preferences.UserScripts, "");
             if ("" != path) _preferences.UserScripts = path;
