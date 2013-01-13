@@ -216,6 +216,13 @@ public class ReferenceWindow : EditorWindow
 
          DrawCommand("Delete node selection", ".Press_Delete", ".Press_Backspace");
          DrawCommand("Drop node selection", ".Press_Escape", ".Click_LMB_.on canvas");
+
+         EditorGUILayout.Space();
+
+         DrawCommand("Collapse selected nodes", ".Press_<", ".Press_Shift+,");
+         DrawCommand("Expand selected nodes", ".Press_>", ".Press_Shift+.");
+         DrawCommand("Collapse all nodes", ".Press_Alt+<", ".Press_Shift+Alt+,");
+         DrawCommand("Expand all nodes", ".Press_Alt+>", ".Press_Shift+Alt+.");
       }
       EditorGUILayout.EndVertical();
    }
@@ -264,6 +271,13 @@ public class ReferenceWindow : EditorWindow
          DrawCommand("Comment", ".Hold_C+.click_LMB");
          DrawCommand("External Connection", ".Hold_E+.click_LMB");
          DrawCommand("Log action", ".Hold_L+.click_LMB");
+
+         EditorGUILayout.Space();
+
+         for (int i = 1; i < 10; i++)
+         {
+            DrawCommand("Favorite " + i.ToString(), ".Hold_" + i.ToString() + "+.click_LMB");
+         }
       }
       EditorGUILayout.EndVertical();
    }

@@ -969,6 +969,16 @@ namespace Detox.ScriptEditor
          m_ClipboardText = text.Substring( "[SCRIPTEDITOR]".Length );
       }
 
+      public void ExpandAllNodes()
+      {
+         ExpandNodes( null );
+      }
+
+      public void ExpandSelectedNodes()
+      {
+         ExpandNodes( m_FlowChart.SelectedNodes );
+      }
+
       private void ExpandNodes( Node [] nodes )
       {
          if ( null == nodes ) nodes = m_FlowChart.Nodes;
@@ -1019,6 +1029,16 @@ namespace Detox.ScriptEditor
          PatchDisplay( batchPatch );
 
          //RebuildScript( null );
+      }
+
+      public void CollapseAllNodes()
+      {
+         CollapseNodes( null );
+      }
+
+      public void CollapseSelectedNodes()
+      {
+         CollapseNodes( m_FlowChart.SelectedNodes );
       }
 
       private void CollapseNodes( Node [] nodes )
@@ -1118,22 +1138,22 @@ namespace Detox.ScriptEditor
 
       private void m_MenuExpand_Click(object sender, EventArgs e)
       {
-         ExpandNodes( m_FlowChart.SelectedNodes );
+         ExpandSelectedNodes();
       }
 
       private void m_MenuCollapse_Click(object sender, EventArgs e)
       {
-         CollapseNodes( m_FlowChart.SelectedNodes );
+         CollapseSelectedNodes();
       }
 
       private void m_MenuExpandAll_Click(object sender, EventArgs e)
       {
-         ExpandNodes( null );
+         ExpandAllNodes();
       }
 
       private void m_MenuCollapseAll_Click(object sender, EventArgs e)
       {
-         CollapseNodes( null );
+         CollapseSelectedNodes();
       }
 
       private void m_MenuSelectActive_Click(object sender, EventArgs e)

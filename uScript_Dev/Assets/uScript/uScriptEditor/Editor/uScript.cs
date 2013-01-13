@@ -1751,23 +1751,32 @@ public class uScript : EditorWindow
                {
                   switch (e.keyCode)
                   {
-                     case KeyCode.End: // Snap selected nodes to grid
-                     case KeyCode.A:   // Save As ...
-                     case KeyCode.D:   // Debug Save
-                     case KeyCode.E:   // Export PNG
-                     case KeyCode.F:   // Open File Menu
-                     case KeyCode.G:   // Toggle grid snapping
-                     case KeyCode.N:   // New uScript graph
-                     case KeyCode.O:   // Open uScript graph
-                     case KeyCode.Q:   // Quick Save
-                     case KeyCode.R:   // Release Save
-                     case KeyCode.S:   // Save
+                     case KeyCode.Greater:   // Expand All
+                     case KeyCode.Less:      // Collapse All
+                     case KeyCode.End:       // Snap selected nodes to grid
+                     case KeyCode.A:         // Save As ...
+                     case KeyCode.D:         // Debug Save
+                     case KeyCode.E:         // Export PNG
+                     case KeyCode.F:         // Open File Menu
+                     case KeyCode.G:         // Toggle grid snapping
+                     case KeyCode.N:         // New uScript graph
+                     case KeyCode.O:         // Open uScript graph
+                     case KeyCode.Q:         // Quick Save
+                     case KeyCode.R:         // Release Save
+                     case KeyCode.S:         // Save
                         e.Use();
                         break;
                   }
                }
                else if (modifierKeys == Keys.Shift)
                {
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.Period: // Expand Selection
+                     case KeyCode.Comma:  // Collapse Selection
+                        e.Use();
+                        break;
+                  }
                }
                else if (modifierKeys == Keys.ControlAlt)
                {
@@ -1777,6 +1786,13 @@ public class uScript : EditorWindow
                }
                else if (modifierKeys == Keys.AltShift)
                {
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.Period: // Expand All
+                     case KeyCode.Comma:  // Collapse All
+                        e.Use();
+                        break;
+                  }
                }
                else if (modifierKeys == Keys.ControlAltShift)
                {
@@ -1788,6 +1804,8 @@ public class uScript : EditorWindow
                      case KeyCode.F1:              // Open uScript online documentation
                      case KeyCode.Backspace:       // Delete graph selection
                      case KeyCode.Delete:          // Delete graph selection
+                     case KeyCode.Greater:         // Expand Selection
+                     case KeyCode.Less:            // Collapse Selection
                      case KeyCode.Escape:          // Drop graph selection
                      case KeyCode.Home:            // Position graph at (0, 0)
                      case KeyCode.LeftBracket:     // Position graph at previous Event node
@@ -1867,6 +1885,14 @@ public class uScript : EditorWindow
                {
                   switch (e.keyCode)
                   {
+                     case KeyCode.Greater:
+                        m_ScriptEditorCtrl.ExpandAllNodes();
+                        break;
+
+                     case KeyCode.Less:
+                        m_ScriptEditorCtrl.CollapseAllNodes();
+                        break;
+
                      case KeyCode.End:
                         m_ScriptEditorCtrl.FlowChart.SnapSelectedNodesToGrid();
                         break;
@@ -1915,6 +1941,16 @@ public class uScript : EditorWindow
                }
                else if (modifierKeys == Keys.Shift)
                {
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.Period:
+                        m_ScriptEditorCtrl.ExpandSelectedNodes();
+                        break;
+
+                     case KeyCode.Comma:
+                        m_ScriptEditorCtrl.CollapseSelectedNodes();
+                        break;
+                  }
                }
                else if (modifierKeys == Keys.ControlAlt)
                {
@@ -1924,6 +1960,16 @@ public class uScript : EditorWindow
                }
                else if (modifierKeys == Keys.AltShift)
                {
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.Period:
+                        m_ScriptEditorCtrl.ExpandAllNodes();
+                        break;
+
+                     case KeyCode.Comma:
+                        m_ScriptEditorCtrl.CollapseAllNodes();
+                        break;
+                  }
                }
                else if (modifierKeys == Keys.ControlAltShift)
                {
@@ -1945,6 +1991,14 @@ public class uScript : EditorWindow
                         // Delete graph selection
                         //
                         m_ScriptEditorCtrl.DeleteSelectedNodes();
+                        break;
+
+                     case KeyCode.Greater:
+                        m_ScriptEditorCtrl.ExpandSelectedNodes();
+                        break;
+
+                     case KeyCode.Less:
+                        m_ScriptEditorCtrl.CollapseSelectedNodes();
                         break;
 
                      case KeyCode.Escape:
