@@ -71,7 +71,6 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
       _selectedNodeCount = uScript.Instance.ScriptEditorCtrl.SelectedNodes.Length;
 
-//      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, _options);
       Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelPropertiesWidth));
       if ( rect.width != 0.0f && rect.width != (float)uScriptGUI.panelPropertiesWidth )
       {
@@ -105,13 +104,10 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
             {
                uScriptGUI.BeginColumns("Property", "Value", "Type", _scrollviewOffset, _svRect);
                {
-//                  resourcePath = uScriptGUI.ResourcePathField(resourcePath, ref tmpBool, false, false);
-//                  assetPath = uScriptGUI.AssetPathField(assetType, assetPath, ref tmpBool, false, false);
-
-//                  tmpArray = uScriptGUI.ArrayFoldout<int>("Int Array", tmpArray, ref tmpBool, false, false);
-//                  uScriptGUI.Separator();
-
-                  if (m_ScriptEditorCtrl != null) m_ScriptEditorCtrl.PropertyGrid.OnPaint();
+                  if (m_ScriptEditorCtrl != null)
+                  {
+                     m_ScriptEditorCtrl.PropertyGrid.OnPaint();
+                  }
                }
                uScriptGUI.EndColumns();
             }

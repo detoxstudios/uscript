@@ -48,7 +48,10 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    private Rect buttonRect;
    int listItem_rowCount;
    int listItem_rowWidth;
-
+ 
+   bool _editFavorites = false;
+   
+   
    private static Dictionary<string, bool> _paletteMenuItemFoldout = new Dictionary<string, bool>();
 
    private List<PaletteMenuItem> _paletteMenuItems;
@@ -124,7 +127,17 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 //         padding.normal.background = GUI.skin.box.normal.background;
 //         padding.border = GUI.skin.box.border;
       }
-
+  
+      
+      string[] favoriteNodes = uScript.Preferences.FavoriteNodes;
+      int favoriteNodeCount = 0;
+      foreach (string favorite in favoriteNodes)
+      {
+         if (string.IsNullOrEmpty(favorite) == false)
+         {
+            favoriteNodeCount++;
+         }
+      }
 
 
 
@@ -144,170 +157,237 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 //      _debug_BottomCount = 0;
 
 
-      uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelLeftWidth));
+      uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.panelLeftWidth));
       {
-         // Toolbar
-         //
-         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
+         uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
          {
-            // Unlike standard panels, this panel shares the same area as the
-            // Graph Contents panel.  For now, use a DropDown control instead
-            // of the typical Label for the panel title.
+            // Toolbar
             //
-            string[] options = new string[] { "Toolbox", "Contents" };
-            Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
-            uScript._paletteMode = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
-//            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
-
-            GUILayout.FlexibleSpace();
-
-            // Toggle hierarchy foldouts
-            bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
-                                                   (_paletteFoldoutToggle ? uScriptGUIContent.buttonListCollapse : uScriptGUIContent.buttonListExpand),
-                                                   uScriptGUIStyle.paletteToolbarButton,
-                                                   GUILayout.ExpandWidth(false));
-            if (_paletteFoldoutToggle != newToggleState)
+            EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
             {
-               _paletteFoldoutToggle = newToggleState;
-               ExpandPaletteMenuItemFoldouts(_paletteFoldoutToggle);
-            }
-
-            GUI.SetNextControlName("PaletteFilterSearch");
-            string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
-//            GUI.SetNextControlName("");
-            if (_filterText != _panelFilterText)
-            {
-               // Drop focus if the user inserted a newline (hit enter)
-               if (_filterText.Contains("\n"))
-               {
-                  GUIUtility.keyboardControl = 0;
-               }
-
-               // Trim leading whitespace
-               _filterText = _filterText.TrimStart();
-
-               _panelFilterText = _filterText;
-               FilterToolboxMenuItems();
-
-               _paletteFoldoutToggle = _panelFilterText != string.Empty;
-               ExpandPaletteMenuItemFoldouts(_paletteFoldoutToggle);
-            }
-         }
-         EditorGUILayout.EndHorizontal();
-
-
-         if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
-         {
-            DrawHiddenNotification();
-         }
-         else
-         {
-            // Draw the contents
-            //
-
-
-            // Node list
-            //
-            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
-            {
-//               // Debug
-//               if (debugScript.svOffset != _scrollviewOffset)
-//               {
-//                  Debug.Log("Offset delta: " + (_scrollviewOffset.y - debugScript.svOffset.y).ToString() + ", Event: " + Event.current.type.ToString() + "\n");
-//               }
-//               _debugScript.svOffset = _scrollviewOffset;
-
-
-               // Commonly used variables
-               listItem_rowCount = 0;
-               listItem_rowWidth = 0;
-
-               // Apply the filter and determine how many items will be drawn.
+               // Unlike standard panels, this panel shares the same area as the
+               // Graph Contents panel.  For now, use a DropDown control instead
+               // of the typical Label for the panel title.
                //
-               if (_paletteMenuItems == null)
+               string[] options = new string[] { "Toolbox", "Contents" };
+               Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
+               uScript._paletteMode = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
+   //            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+   
+               GUILayout.FlexibleSpace();
+   
+               // Toggle hierarchy foldouts
+               bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
+                                                      (_paletteFoldoutToggle ? uScriptGUIContent.buttonListCollapse : uScriptGUIContent.buttonListExpand),
+                                                      uScriptGUIStyle.paletteToolbarButton,
+                                                      GUILayout.ExpandWidth(false));
+               if (_paletteFoldoutToggle != newToggleState)
                {
-                  GUILayout.Label("\n\tERROR:\n\n\t\tFailed to initialize the node palette!", EditorStyles.boldLabel);
+                  _paletteFoldoutToggle = newToggleState;
+                  ExpandPaletteMenuItemFoldouts(_paletteFoldoutToggle);
                }
-               else
+   
+               GUI.SetNextControlName("PaletteFilterSearch");
+               string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
+   //            GUI.SetNextControlName("");
+               if (_filterText != _panelFilterText)
                {
-                  foreach (PaletteMenuItem item in _paletteMenuItems)
+                  // Drop focus if the user inserted a newline (hit enter)
+                  if (_filterText.Contains("\n"))
                   {
-                     DetermineListStats(item);
+                     GUIUtility.keyboardControl = 0;
                   }
    
-                  // Draw the padding box to establish the row width (excluding scrollbar)
-                  // and force the scrollview content height
-                  //
-                  GUILayout.Box(string.Empty, _stylePadding, GUILayout.Height(Math.Max(0, ROW_HEIGHT * listItem_rowCount - 10)), GUILayout.Width(listItem_rowWidth));
-                  GUILayout.Box(string.Empty, _stylePadding, GUILayout.Height(10), GUILayout.ExpandWidth(true));
+                  // Trim leading whitespace
+                  _filterText = _filterText.TrimStart();
    
-                  // Prepare to draw each row of the filtered list
+                  _panelFilterText = _filterText;
+                  FilterToolboxMenuItems();
+   
+                  _paletteFoldoutToggle = _panelFilterText != string.Empty;
+                  ExpandPaletteMenuItemFoldouts(_paletteFoldoutToggle);
+               }
+            }
+            EditorGUILayout.EndHorizontal();
+
+            if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
+            {
+               DrawHiddenNotification();
+            }
+            else
+            {
+               // Draw the contents
+               //
+   
+   
+               // Node list
+               //
+               _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
+               {
+   //               // Debug
+   //               if (debugScript.svOffset != _scrollviewOffset)
+   //               {
+   //                  Debug.Log("Offset delta: " + (_scrollviewOffset.y - debugScript.svOffset.y).ToString() + ", Event: " + Event.current.type.ToString() + "\n");
+   //               }
+   //               _debugScript.svOffset = _scrollviewOffset;
+   
+   
+                  // Commonly used variables
+                  listItem_rowCount = 0;
+                  listItem_rowWidth = 0;
+   
+                  // Apply the filter and determine how many items will be drawn.
                   //
-                  // From this point on, the contents of the scrollview should
-                  // never use GUILayout, so we can safely skip EventType.Layout.
-                  //
-                  if (Event.current.type != EventType.Layout)
+                  if (_paletteMenuItems == null)
                   {
-                     // Make sure the we get the width of the last GUILayout.Box
-                     // just in case it is wider than the widest button below
-                     listItem_rowWidth = Math.Max(listItem_rowWidth, (int)GUILayoutUtility.GetLastRect().width);
-   
-                     // Reset some variables we'll use later
-                     buttonRect = new Rect(0, 0, 0, ROW_HEIGHT);
-                     filterMatches = 0;
-   
-                     // Reset the temporary hot selection at the beginning of each pass
-                     if (Event.current.modifiers != EventModifiers.Alt)
-                     {
-                        _tempHotSelection = null;
-                     }
-   
-                     // Draw all the palette items
+                     GUILayout.Label("\n\tERROR:\n\n\t\tFailed to initialize the node palette!", EditorStyles.boldLabel);
+                  }
+                  else
+                  {
                      foreach (PaletteMenuItem item in _paletteMenuItems)
                      {
-                        if (DrawPaletteMenu(item))
-                        {
-                           filterMatches++;
-                        }
+                        DetermineListStats(item);
                      }
-   
-                     // Check here for possible repaint needed for hot tips
-                     if (_hotSelection != _tempHotSelection)
+      
+                     // Draw the padding box to establish the row width (excluding scrollbar)
+                     // and force the scrollview content height
+                     //
+                     GUILayout.Box(string.Empty, _stylePadding, GUILayout.Height(Math.Max(0, ROW_HEIGHT * listItem_rowCount - 10)), GUILayout.Width(listItem_rowWidth));
+                     GUILayout.Box(string.Empty, _stylePadding, GUILayout.Height(10), GUILayout.ExpandWidth(true));
+      
+                     // Prepare to draw each row of the filtered list
+                     //
+                     // From this point on, the contents of the scrollview should
+                     // never use GUILayout, so we can safely skip EventType.Layout.
+                     //
+                     if (Event.current.type != EventType.Layout)
                      {
-                        _hotSelection = _tempHotSelection;
-                        uScript.RequestRepaint();
+                        // Make sure the we get the width of the last GUILayout.Box
+                        // just in case it is wider than the widest button below
+                        listItem_rowWidth = Math.Max(listItem_rowWidth, (int)GUILayoutUtility.GetLastRect().width);
+      
+                        // Reset some variables we'll use later
+                        buttonRect = new Rect(0, 0, 0, ROW_HEIGHT);
+                        filterMatches = 0;
+      
+                        // Reset the temporary hot selection at the beginning of each pass
+                        if (Event.current.modifiers != EventModifiers.Alt)
+                        {
+                           _tempHotSelection = null;
+                        }
+      
+                        // Draw all the palette items
+                        foreach (PaletteMenuItem item in _paletteMenuItems)
+                        {
+                           if (DrawPaletteMenu(item))
+                           {
+                              filterMatches++;
+                           }
+                        }
+      
+                        // Check here for possible repaint needed for hot tips
+                        if (_hotSelection != _tempHotSelection)
+                        {
+                           _hotSelection = _tempHotSelection;
+                           uScript.RequestRepaint();
+                        }
+      
                      }
-   
+      
+                     // Display a message if no filter matches were found.
+                     //
+                     // The filterMatches variable is reset to zero right before the menu items are
+                     // drawn when Event.current.type != EventType.Layout
+                     //
+                     if (filterMatches == 0)
+                     {
+                        GUILayout.Label("The search found no matches!", uScriptGUIStyle.panelMessageBold);
+                     }
                   }
    
-                  // Display a message if no filter matches were found.
-                  //
-                  // The filterMatches variable is reset to zero right before the menu items are
-                  // drawn when Event.current.type != EventType.Layout
-                  //
-                  if (filterMatches == 0)
+   //               // Debug
+   //               _debugScript.Top = new Vector2(_debug_TopCount, _debug_TopHeight);
+   //               _debugScript.Middle = new Vector2(_debug_MiddleCount, _debug_MiddleHeight);
+   //               _debugScript.Bottom = new Vector2(_debug_BottomCount, _debug_BottomHeight);
+               }
+               EditorGUILayout.EndScrollView();
+   
+               if (Event.current.type == EventType.Repaint)
+               {
+                  _scrollviewRect = GUILayoutUtility.GetLastRect();
+               }
+   
+               _isMouseOverScrollview = _scrollviewRect.Contains(Event.current.mousePosition);
+            }
+         }
+         EditorGUILayout.EndVertical();
+      
+         if (favoriteNodeCount > 0)
+         {
+            GUILayout.Space(uScriptGUI.panelDividerThickness);
+     
+            EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+            {
+               EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
+               {
+                  GUILayout.Label("Favorite Nodes", uScriptGUIStyle.panelTitle);
+                  _editFavorites = GUILayout.Toggle(_editFavorites, "Edit", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
+               }
+               EditorGUILayout.EndHorizontal();
+               
+               
+     
+               EditorGUILayout.BeginScrollView(Vector2.zero, GUILayout.Height(favoriteNodeCount * ROW_HEIGHT + 2));
+               {
+                  float badgeWidth = uScriptGUIStyle.nodeFavoriteBadge.CalcSize(new GUIContent("0")).x;
+
+                  Rect rect = new Rect(0, 0, 0, ROW_HEIGHT);
+                  
+                  for (int i = 0; i < favoriteNodes.Length; i++)
                   {
-                     GUILayout.Label("The search found no matches!", uScriptGUIStyle.panelMessageBold);
+                     if (string.IsNullOrEmpty(favoriteNodes[i]) == false)
+                     {
+                        rect.x = 4;
+                        rect.width = badgeWidth;
+                        
+                        GUI.Label(rect, (i+1).ToString(), uScriptGUIStyle.nodeFavoriteBadge);
+                        
+                        rect.x += badgeWidth + 4;
+                        rect.width = (listItem_rowWidth - rect.x - 4);
+   
+                        GUI.color = (_editFavorites ? UnityEngine.Color.red : UnityEngine.Color.white);
+                        
+                        string nodeType = favoriteNodes[i];
+//                        EntityNode node = uScriptInstance.ScriptEditorCtrl.g;
+//                        nodeName = uScript.FindNodeName(nodeName, node);
+                        
+                        if (GUI.Button(rect, nodeType, uScriptGUIStyle.paletteButton))
+                        {
+                           if (_editFavorites)
+                           {
+                              uScript.Preferences.UpdateFavoriteNode(i + 1, string.Empty);
+                           }
+                           else
+                           {
+                              uScript.Instance.PlaceNodeOnCanvas(nodeType, false);
+                           }
+                        }
+   
+                        GUI.color = UnityEngine.Color.white;
+                        
+                        rect.y += ROW_HEIGHT;
+                     }
                   }
                }
-
-//               // Debug
-//               _debugScript.Top = new Vector2(_debug_TopCount, _debug_TopHeight);
-//               _debugScript.Middle = new Vector2(_debug_MiddleCount, _debug_MiddleHeight);
-//               _debugScript.Bottom = new Vector2(_debug_BottomCount, _debug_BottomHeight);
+               EditorGUILayout.EndScrollView();
             }
-            EditorGUILayout.EndScrollView();
-
-            if (Event.current.type == EventType.Repaint)
-            {
-               _scrollviewRect = GUILayoutUtility.GetLastRect();
-            }
-
-            _isMouseOverScrollview = _scrollviewRect.Contains(Event.current.mousePosition);
+            EditorGUILayout.EndVertical();
          }
       }
       EditorGUILayout.EndVertical();
-
+      
+      
+      
       if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScriptGUI.panelLeftWidth)
       {
          // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
@@ -408,7 +488,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
             }
             else
             {
-               // This is should be a folding menu item that contains more buttons
+               // This is a folding menu item that contains more buttons
                _paletteMenuItemFoldout[item.Path] = GUI.Toggle(buttonRect, _paletteMenuItemFoldout[item.Path], item.Name, uScriptGUIStyle.paletteFoldout);
             }
          }

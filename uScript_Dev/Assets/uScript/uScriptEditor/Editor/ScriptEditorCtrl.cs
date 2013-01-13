@@ -1696,6 +1696,36 @@ namespace Detox.ScriptEditor
          return null;
       }
 
+      public EntityNode GetEventNode(string type)
+      {
+         foreach (EntityDesc entityDesc in m_ScriptEditor.EntityDescs)
+         {
+            if (entityDesc.Type == type)
+            {
+               foreach (EntityEvent entityEvent in entityDesc.Events)
+               {
+                  if (entityEvent.ComponentType == type) return entityEvent.Copy( false );
+               }
+            }
+         }
+         return null;
+      }
+
+      public EntityNode GetMethodNode(string type, string method)
+      {
+         foreach (EntityDesc entityDesc in m_ScriptEditor.EntityDescs)
+         {
+            if (entityDesc.Type == type)
+            {
+               foreach (EntityMethod entityMethod in entityDesc.Methods)
+               {
+                  if (entityMethod.Input.Name == method) return entityMethod.Copy( false );
+               }
+            }
+         }
+         return null;
+      }
+
       public void AddVariableNode(EntityNode entityNode)
       {
          entityNode.Position = new Point( m_ContextCursor.X, m_ContextCursor.Y );

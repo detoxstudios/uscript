@@ -2196,37 +2196,37 @@ namespace Detox.ScriptEditor
          FriendlyType  = friendlyType;
          ComponentType = componentType;
 
-         m_Instance.Name         = "Instance";
-         m_Instance.ReferenceGuid = "";
-         m_Instance.State = Parameter.VisibleState.Visible;
-         m_Instance.FriendlyName = "Instance";
-         m_Instance.Type    = typeof(UnityEngine.GameObject).ToString( );
-         m_Instance.Input   = true;
-         m_Instance.Output  = false;
-         m_Instance.Default = "";
+         m_Instance.Name            = "Instance";
+         m_Instance.ReferenceGuid   = "";
+         m_Instance.State           = Parameter.VisibleState.Visible;
+         m_Instance.FriendlyName    = "Instance";
+         m_Instance.Type            = typeof(UnityEngine.GameObject).ToString( );
+         m_Instance.Input           = true;
+         m_Instance.Output          = false;
+         m_Instance.Default         = "";
 
-         m_Guid   = Guid.NewGuid( ); 
+         m_Guid = Guid.NewGuid( );
          
          m_Position = Point.Empty; 
          m_Parameters  = new Parameter[ 0 ];
 
-         m_ShowComment = new Parameter( );
-         m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         m_ShowComment              = new Parameter( );
+         m_ShowComment.State        = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_ShowComment.Name         = "Output Comment";
          m_ShowComment.FriendlyName = "Output Comment";
-         m_ShowComment.Default = "false";
-         m_ShowComment.Type    = typeof(bool).ToString( );
-         m_ShowComment.Input   = true;
-         m_ShowComment.Output  = false;
+         m_ShowComment.Default      = "false";
+         m_ShowComment.Type         = typeof(bool).ToString( );
+         m_ShowComment.Input        = true;
+         m_ShowComment.Output       = false;
 
-         m_Comment = new Parameter( );
-         m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
-         m_Comment.Name          = "Comment";
-         m_Comment.FriendlyName  = "Comment";
-         m_Comment.Default = "";
-         m_Comment.Type    = typeof(String).ToString( );
-         m_Comment.Input   = true;
-         m_Comment.Output  = false;
+         m_Comment                  = new Parameter( );
+         m_Comment.State            = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         m_Comment.Name             = "Comment";
+         m_Comment.FriendlyName     = "Comment";
+         m_Comment.Default          = "";
+         m_Comment.Type             = typeof(String).ToString( );
+         m_Comment.Input            = true;
+         m_Comment.Output           = false;
 
          EventArgs = "System.EventArgs";
          m_IsStatic= false;

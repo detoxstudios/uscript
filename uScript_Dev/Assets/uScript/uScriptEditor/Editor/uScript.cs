@@ -112,7 +112,8 @@ public class uScript : EditorWindow
    public float m_MapScale = 1.0f;
    private Point m_ZoomPoint = new Point( 0, 0 );
 
-   private String m_AddVariableNode = "";
+   private String _pendingNodeType = "";
+   private bool _pendingNodeUsesMousePosition = false;
    private KeyCode m_PressedKey = KeyCode.None;
 
    private string m_FullPath = "";
@@ -1049,29 +1050,72 @@ public class uScript : EditorWindow
          m_ScriptEditorCtrl.PasteFromClipboard(Point.Empty);
          m_WantsPaste = false;
       }
-      if (m_ScriptEditorCtrl != null && !String.IsNullOrEmpty(m_AddVariableNode))
+      if (m_ScriptEditorCtrl != null && !String.IsNullOrEmpty(_pendingNodeType))
       {
-         if (m_AddVariableNode == "Comment")
+         m_ScriptEditorCtrl.DeselectAll();
+
+         string[] nodeType = _pendingNodeType.Split(':');
+         EntityNode entityNode = null;
+         Point canvasPosition = (_pendingNodeUsesMousePosition
+            ? Detox.Windows.Forms.Cursor.Position
+            : new Point((int)(NodeWindowRect.width * 0.5f), (int)(NodeWindowRect.height * 0.5f))); // viewport center
+
+         switch (nodeType[0])
          {
-            m_ScriptEditorCtrl.ContextCursor = Detox.Windows.Forms.Cursor.Position;
-            m_ScriptEditorCtrl.AddVariableNode(new CommentNode(""));
+            case "CommentNode":
+               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
+               entityNode = new CommentNode("");
+               break;
+
+            case "ExternalConnection":
+               m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 28, canvasPosition.Y - 28);
+               entityNode = new ExternalConnection(Guid.NewGuid());
+               break;
+
+            case "LocalNode":
+               m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 28, canvasPosition.Y - 28);
+               entityNode = new LocalNode("", nodeType[1], "");
+               break;
+
+            case "LogicNode":
+               m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 10, canvasPosition.Y - 10);
+               entityNode = m_ScriptEditorCtrl.GetLogicNode(nodeType[1]);
+               break;
+
+            case "EntityEvent":
+               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
+               entityNode = m_ScriptEditorCtrl.GetEventNode(nodeType[1]);
+               break;
+
+//            case "EntityProperty":
+//               Debug.Log("Attempting to place a LogicNode: \"" + nodeType[1] + "\"\n");
+//               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
+//               entityNode = m_ScriptEditorCtrl.GetEventNode(nodeType[1]);
+//               break;
+//
+            case "EntityMethod":
+//               Debug.Log("Attempting to place a EntityMethod: \"" + nodeType[1] + "\"\n");
+               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
+               entityNode = m_ScriptEditorCtrl.GetMethodNode(nodeType[1], nodeType[2]);
+               break;
+
+//            case "OwnerConnection":
+//               Debug.Log("Attempting to place a LogicNode: \"" + nodeType[1] + "\"\n");
+//               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
+//               entityNode = m_ScriptEditorCtrl.GetEventNode(nodeType[1]);
+//               break;
          }
-         else if (m_AddVariableNode == "External")
+
+         if (entityNode != null)
          {
-            m_ScriptEditorCtrl.ContextCursor = new Point(Detox.Windows.Forms.Cursor.Position.X - 28, Detox.Windows.Forms.Cursor.Position.Y - 28);
-            m_ScriptEditorCtrl.AddVariableNode(new ExternalConnection(Guid.NewGuid()));
-         }
-         else if (m_AddVariableNode == "Log")
-         {
-            m_ScriptEditorCtrl.ContextCursor = new Point(Detox.Windows.Forms.Cursor.Position.X - 10, Detox.Windows.Forms.Cursor.Position.Y - 10);
-            m_ScriptEditorCtrl.AddVariableNode(m_ScriptEditorCtrl.GetLogicNode("uScriptAct_Log"));
+            m_ScriptEditorCtrl.AddVariableNode(entityNode);
          }
          else
          {
-            m_ScriptEditorCtrl.ContextCursor = new Point(Detox.Windows.Forms.Cursor.Position.X - 28, Detox.Windows.Forms.Cursor.Position.Y - 28);
-            m_ScriptEditorCtrl.AddVariableNode(new LocalNode("", m_AddVariableNode, ""));
+            uScriptDebug.Log("Attempt to create node type failed: \"" + _pendingNodeType + "\"", uScriptDebug.Type.Error);
          }
-         m_AddVariableNode = "";
+
+         _pendingNodeType = "";
       }
 
       if (_requestedCloseMap)
@@ -1750,9 +1794,18 @@ public class uScript : EditorWindow
                      case KeyCode.RightBracket:    // Position graph at next Event node
                      case KeyCode.BackQuote:       // Toggle panel visibility
                      case KeyCode.Backslash:       // Toggle panel visibility
-                     case KeyCode.Alpha0:          // Zoom graph default
                      case KeyCode.Minus:           // Zoom graph out
                      case KeyCode.Equals:          // Zoom graph in
+                     case KeyCode.Alpha0:          // Zoom graph default
+                     case KeyCode.Alpha1:          // (onMouseUp) Place FavoriteNode1
+                     case KeyCode.Alpha2:          // (onMouseUp) Place FavoriteNode2
+                     case KeyCode.Alpha3:          // (onMouseUp) Place FavoriteNode3
+                     case KeyCode.Alpha4:          // (onMouseUp) Place FavoriteNode4
+                     case KeyCode.Alpha5:          // (onMouseUp) Place FavoriteNode5
+                     case KeyCode.Alpha6:          // (onMouseUp) Place FavoriteNode6
+                     case KeyCode.Alpha7:          // (onMouseUp) Place FavoriteNode7
+                     case KeyCode.Alpha8:          // (onMouseUp) Place FavoriteNode8
+                     case KeyCode.Alpha9:          // (onMouseUp) Place FavoriteNode9
                      case KeyCode.B:               // (onMouseUp) Place Bool variable node
                      case KeyCode.C:               // (onMouseUp) Place Comment
                      case KeyCode.E:               // (onMouseUp) Place External variable node
@@ -2085,43 +2138,79 @@ public class uScript : EditorWindow
                {
                   if (m_PressedKey == KeyCode.S)
                   {
-                     m_AddVariableNode = "System.String";
+                     PlaceNodeOnCanvas("LocalNode:System.String", true);
                   }
                   else if (m_PressedKey == KeyCode.V)
                   {
-                     m_AddVariableNode = "UnityEngine.Vector3";
+                     PlaceNodeOnCanvas("LocalNode:UnityEngine.Vector3", true);
                   }
                   else if (m_PressedKey == KeyCode.I)
                   {
-                     m_AddVariableNode = "System.Int32";
+                     PlaceNodeOnCanvas("LocalNode:System.Int32", true);
                   }
                   else if (m_PressedKey == KeyCode.F)
                   {
-                     m_AddVariableNode = "System.Single";
+                     PlaceNodeOnCanvas("LocalNode:System.Single", true);
                   }
                   else if (m_PressedKey == KeyCode.B)
                   {
-                     m_AddVariableNode = "System.Boolean";
+                     PlaceNodeOnCanvas("LocalNode:System.Boolean", true);
                   }
                   else if (m_PressedKey == KeyCode.G)
                   {
-                     m_AddVariableNode = "UnityEngine.GameObject";
+                     PlaceNodeOnCanvas("LocalNode:UnityEngine.GameObject", true);
                   }
                   else if (m_PressedKey == KeyCode.O)
                   {
-                     m_AddVariableNode = "UnityEngine.Object";
+                     PlaceNodeOnCanvas("LocalNode:UnityEngine.Object", true);
                   }
                   else if (m_PressedKey == KeyCode.C)
                   {
-                     m_AddVariableNode = "Comment";
+                     PlaceNodeOnCanvas("CommentNode", true);
                   }
                   else if (m_PressedKey == KeyCode.E)
                   {
-                     m_AddVariableNode = "External";
+                     PlaceNodeOnCanvas("ExternalConnection", true);
                   }
                   else if (m_PressedKey == KeyCode.L)
                   {
-                     m_AddVariableNode = "Log";
+                     PlaceNodeOnCanvas("LogicNode:uScriptAct_Log", true);
+                  }
+                  else if (m_PressedKey == KeyCode.Alpha1)
+                  {
+                     PlaceNodeOnCanvas(Preferences.FavoriteNode1, true);
+                  }
+                  else if (m_PressedKey == KeyCode.Alpha2)
+                  {
+                     PlaceNodeOnCanvas(Preferences.FavoriteNode2, true);
+                  }
+                  else if (m_PressedKey == KeyCode.Alpha3)
+                  {
+                     PlaceNodeOnCanvas(Preferences.FavoriteNode3, true);
+                  }
+                  else if (m_PressedKey == KeyCode.Alpha4)
+                  {
+                     PlaceNodeOnCanvas(Preferences.FavoriteNode4, true);
+                  }
+                  else if (m_PressedKey == KeyCode.Alpha5)
+                  {
+                     PlaceNodeOnCanvas(Preferences.FavoriteNode5, true);
+                  }
+                  else if (m_PressedKey == KeyCode.Alpha6)
+                  {
+                     PlaceNodeOnCanvas(Preferences.FavoriteNode6, true);
+                  }
+                  else if (m_PressedKey == KeyCode.Alpha7)
+                  {
+                     PlaceNodeOnCanvas(Preferences.FavoriteNode7, true);
+                  }
+                  else if (m_PressedKey == KeyCode.Alpha8)
+                  {
+                     PlaceNodeOnCanvas(Preferences.FavoriteNode8, true);
+                  }
+                  else if (m_PressedKey == KeyCode.Alpha9)
+                  {
+                     PlaceNodeOnCanvas(Preferences.FavoriteNode9, true);
                   }
                }
             }
@@ -2161,10 +2250,11 @@ public class uScript : EditorWindow
       }
    }
 
-
-
-
-
+   public void PlaceNodeOnCanvas(string nodeType, bool useMousePosition)
+   {
+      _pendingNodeType = nodeType;
+      _pendingNodeUsesMousePosition = useMousePosition;
+   }
 
    public void DrawPopups()
    {
