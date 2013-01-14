@@ -362,45 +362,8 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
       // Node name
       string nodeName = uScript.FindNodeName(nodeType, node);
-      
       GUILayout.Label(nodeName, uScriptGUIStyle.referenceName);
       
-      // Favorite
-      Rect r = GUILayoutUtility.GetLastRect();
-//      GUI.Label(r, "PATH", uScriptGUIStyle.referenceInfo);
-      
-      
-      string favoriteNodeType = GetCompoundNodeType(node);
-      string[] favoriteNodes = uScript.Preferences.FavoriteNodes;
-      int favoriteIndex = Array.IndexOf(favoriteNodes, favoriteNodeType) + 1;
-
-      string[] favoriteOptions = new string[] { "-", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-      GUIStyle favoriteStyle = GUI.skin.GetStyle("CN CountBadge");
-
-      r.xMin = r.xMax - favoriteStyle.CalcSize(new GUIContent("0")).x;
-
-      // TODO: Use a GUI.Popup instead and place it in the upper left corner, not attached to the Name label
-      //       or better yet, add it to the node foldout in the Property panel.
-      int newIndex = EditorGUI.Popup(r, favoriteIndex, favoriteOptions, "CN CountBadge");
-      if (newIndex != favoriteIndex)
-      {
-         if (favoriteIndex == 0)
-         {
-//            Debug.Log("UPDATE FAVORITE " + newIndex.ToString() + " to \"" + favoriteNodeType + "\"\n");
-            uScript.Preferences.UpdateFavoriteNode(newIndex, favoriteNodeType);
-         }
-         else if (newIndex == 0)
-         {
-//            Debug.Log("CLEAR FAVORITE " + favoriteIndex.ToString() + "\n");
-            uScript.Preferences.UpdateFavoriteNode(favoriteIndex, string.Empty);
-         }
-         else
-         {
-//            Debug.Log("SWAP FAVORITES " + favoriteIndex.ToString() + " and " + newIndex.ToString() + "\n");
-            uScript.Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
-         }
-      }
-
       // Identify reflected nodes
       if (nodeName.StartsWith("Reflected "))
       {
@@ -410,6 +373,13 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 //      // Node palette location
 //      r = GUILayoutUtility.GetLastRect();
 //      GUI.Label(r, "PATH", uScriptGUIStyle.referenceInfo);
+
+      // GUI.skin.customStyles:
+      //    "GUIEditor.BreadcrumbLeft"
+      //    "GUIEditor.BreadcrumbMid"
+
+//   328: "RL DragHandle"
+
 
       // Node description
       GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceDesc);
@@ -463,45 +433,5 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          }
       }
       return nodeType;
-   }
-   
-   string GetCompoundNodeType(EntityNode node)
-   {
-      if (node is EntityEvent)
-      {
-         return "EntityEvent:" + ((EntityEvent)node).ComponentType;
-      }
-      else if (node is LogicNode)
-      {
-         return "LogicNode:" + ((LogicNode)node).Type;
-      }
-      else if (node is EntityProperty)
-      {
-         return "EntityProperty:" + ((EntityProperty)node).ComponentType;
-      }
-      else if (node is EntityMethod)
-      {
-         EntityMethod entity = (EntityMethod)node;
-         return "EntityMethod:" + entity.ComponentType + ":" + entity.Input.Name;
-      }
-      else if (node is LocalNode)
-      {
-         return "LocalNode:" + ((LocalNode)node).Value.Type;
-      }
-      else if (node is CommentNode)
-      {
-         return "CommentNode";
-      }
-      else if (node is ExternalConnection)
-      {
-         return "ExternalConnection";
-      }
-      else if (node is OwnerConnection)
-      {
-         return "OwnerConnection";
-      }
-
-      uScriptDebug.Log("Unhandled node type: \"" + node.ToString() + "\"", uScriptDebug.Type.Error);
-      return string.Empty;
    }
 }

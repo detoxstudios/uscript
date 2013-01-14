@@ -969,6 +969,11 @@ namespace Detox.ScriptEditor
          m_ClipboardText = text.Substring( "[SCRIPTEDITOR]".Length );
       }
 
+      public void ExpandNode(Node node)
+      {
+         ExpandNodes( new Node[] { node } );
+      }
+
       public void ExpandAllNodes()
       {
          ExpandNodes( null );
@@ -1029,6 +1034,11 @@ namespace Detox.ScriptEditor
          PatchDisplay( batchPatch );
 
          //RebuildScript( null );
+      }
+
+      public void CollapseNode(Node node)
+      {
+         CollapseNodes( new Node[] { node } );
       }
 
       public void CollapseAllNodes()

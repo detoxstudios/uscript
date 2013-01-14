@@ -55,7 +55,6 @@ public static class uScriptGUI
    static int _nodeCount;
    static int _propertyCount;
    static bool _isPropertyRowEven = false;
-
    static Dictionary<int, string> controlIDList = new Dictionary<int, string>();
    static int focusedControlID = -1;
 
@@ -229,7 +228,8 @@ public static class uScriptGUI
    
    public static bool BeginPropertyList(string label, Node node)
    {
-      ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
+      ScriptEditorCtrl scriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
+      EntityNode entityNode = null;
 
       _nodeCount++;
       _nodeKey = node != null ? node.Guid.ToString() : "UNKNOWN";
@@ -237,6 +237,8 @@ public static class uScriptGUI
       {
          _foldoutExpanded[_nodeKey] = true;
       }
+
+      bool isFoldoutExpanded = _foldoutExpanded[_nodeKey];
 
       GUILayout.BeginHorizontal();
       {
@@ -248,7 +250,9 @@ public static class uScriptGUI
 
          if (null != node)
          {
-            if (uScript.IsNodeTypeDeprecated(((DisplayNode)node).EntityNode) || m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(((DisplayNode)node).EntityNode))
+            entityNode = ((DisplayNode)node).EntityNode;
+
+            if (uScript.IsNodeTypeDeprecated(entityNode) || scriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(entityNode))
             {
                GUI.color = new UnityEngine.Color(1, 0.5f, 1, 1);
                uScriptGUIStyle.nodeButtonLeft.normal.textColor = UnityEngine.Color.white;
@@ -257,71 +261,170 @@ public static class uScriptGUI
             }
          }
 
-         // Add the node key for development builds
+         //
+         // Socket segment
+         //
+         GUILayout.Box(GUIContent.none, uScriptGUIStyle.propertyButtonLeft);
+
+         // Display socket toggle, if appropriate
+         if (isFoldoutExpanded)
+         {
+            if (node != null)
+            {
+               int expandCount = 0;
+               int collapseCount = 0;
+
+               foreach (Parameter p in entityNode.Parameters)
+               {
+                  if (scriptEditorCtrl.CanExpandParameter(p))
+                  {
+                     expandCount++;
+                  }
+                  else if (scriptEditorCtrl.CanCollapseParameter(node.Guid, p))
+                  {
+                     collapseCount++;
+                  }
+               }
+
+               if (scriptEditorCtrl.CanExpandParameter(entityNode.Instance))
+               {
+                  expandCount++;
+               }
+               else if (scriptEditorCtrl.CanCollapseParameter(node.Guid, entityNode.Instance))
+               {
+                  collapseCount++;
+               }
+
+               if (expandCount != 0 || collapseCount != 0)
+               {
+                  bool oldToggle = (collapseCount > 0);
+
+                  if (expandCount > 0 && collapseCount > 0)
+                  {
+                     EditorGUI.showMixedValue = true;
+                  }
+
+                  Rect toggleRect = GUILayoutUtility.GetLastRect();
+                  toggleRect.x += 3;
+                  toggleRect.y += 1;
+                  toggleRect.width = 20;
+                  toggleRect.height = 20;
+      
+                  bool newToggle = GUI.Toggle(toggleRect, oldToggle, GUIContent.none, (EditorGUI.showMixedValue ? "ToggleMixed" : "Toggle"));
+                  if (oldToggle != newToggle)
+                  {
+                     if (newToggle)
+                     {
+                        scriptEditorCtrl.ExpandNode(node);
+                     }
+                     else
+                     {
+                        scriptEditorCtrl.CollapseNode(node);
+                     }
+                  }
+
+                  EditorGUI.showMixedValue = false;
+               }
+            }
+         }
+
+         //
+         // Name segment
+         //
          if (uScript.IsDevelopmentBuild)
          {
+            // Add the node key for development builds
             label += "\t\t[" + _nodeKey + "]";
          }
 
-         _foldoutExpanded[_nodeKey] = GUILayout.Toggle(_foldoutExpanded[_nodeKey], label, uScriptGUIStyle.nodeButtonLeft);
-
-         GUI.color = tmpColor;
-         uScriptGUIStyle.nodeButtonLeft.normal.textColor = textColor;
+         isFoldoutExpanded = GUILayout.Toggle(isFoldoutExpanded, label,
+            (node == null
+               ? uScriptGUIStyle.propertyButtonRightName
+               : uScriptGUIStyle.propertyButtonMiddleName)
+            );
 
          //
-         // Deprecation button
+         // Node buttons
          //
          if (null != node)
          {
-            if (uScript.IsNodeTypeDeprecated(((DisplayNode)node).EntityNode) == false && m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(((DisplayNode)node).EntityNode))
+            //
+            // Deprecation button
+            //
+            if (uScript.IsNodeTypeDeprecated(entityNode) == false && scriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(entityNode))
             {
-               if (true == m_ScriptEditorCtrl.ScriptEditor.CanUpgradeNode(((DisplayNode)node).EntityNode))
+               if (true == scriptEditorCtrl.ScriptEditor.CanUpgradeNode(entityNode))
                {
-                  if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+                  if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.propertyButtonMiddleDeprecated))
                   {
-                     System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
+                     System.EventHandler Click = new System.EventHandler(scriptEditorCtrl.m_MenuUpgradeNode_Click);
                      if (Click != null)
                      {
                         // clear all selected nodes first
-                        m_ScriptEditorCtrl.DeselectAll();
+                        scriptEditorCtrl.DeselectAll();
                         // toggle the clicked node
-                        m_ScriptEditorCtrl.ToggleNode(node.Guid);
+                        scriptEditorCtrl.ToggleNode(node.Guid);
                         Click(null, new EventArgs());
                      }
                   }
                }
                else
                {
-                  if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+                  if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.propertyButtonMiddleDeprecated))
                   {
-                     System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
+                     System.EventHandler Click = new System.EventHandler(scriptEditorCtrl.m_MenuDeleteMissingNode_Click);
                      if (Click != null)
                      {
                         // clear all selected nodes first
-                        m_ScriptEditorCtrl.DeselectAll();
+                        scriptEditorCtrl.DeselectAll();
                         // toggle the clicked node
-                        m_ScriptEditorCtrl.ToggleNode(node.Guid);
+                        scriptEditorCtrl.ToggleNode(node.Guid);
                         Click(null, new EventArgs());
                      }
                   }
                }
             }
-         }
-//         //
-//         // Toggle Sockets button
-//         //
-//         if (GUILayout.Button(uScriptGUIContent.listMiniToggle, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
-//         {
-////            m_ScriptEditorCtrl.ToggleNodeSockets(node);
-//         }
 
-         //
-         // Search button
-         //
-         if (GUILayout.Button(uScriptGUIContent.buttonNodeFind, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
-         {
-            m_ScriptEditorCtrl.CenterOnNode(node);
-         }
+            //
+            // Favorite button
+            //
+            string favoriteNodeType = uScript.GetCompoundNodeType(entityNode);
+            string[] favoriteNodes = uScript.Preferences.FavoriteNodes;
+            int favoriteIndex = Array.IndexOf(favoriteNodes, favoriteNodeType) + 1;
+
+            int newIndex = EditorGUILayout.Popup(favoriteIndex, uScriptGUIContent.favoriteOptions, uScriptGUIStyle.propertyButtonMiddleFavorite, GUILayout.Width(30));
+            if (newIndex != favoriteIndex)
+            {
+               if (favoriteIndex == 0)
+               {
+                  uScript.Preferences.UpdateFavoriteNode(newIndex, favoriteNodeType);
+               }
+               else if (newIndex == 0)
+               {
+                  uScript.Preferences.UpdateFavoriteNode(favoriteIndex, string.Empty);
+               }
+               else
+               {
+                  uScript.Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
+               }
+            }
+
+            // Favorite star
+            Rect popupRect = GUILayoutUtility.GetLastRect();
+
+            GUI.Label(popupRect, new GUIContent("\u2605"), uScriptGUIStyle.propertyButtonMiddleFavoriteStar);
+
+            //
+            // Search button
+            //
+            if (GUILayout.Button(uScriptGUIContent.buttonNodeFind, uScriptGUIStyle.propertyButtonRightSearch))
+            {
+               scriptEditorCtrl.CenterOnNode(node);
+            }
+
+            GUI.color = tmpColor;
+            uScriptGUIStyle.nodeButtonLeft.normal.textColor = textColor;
+         }  // Node buttons
       }
       GUILayout.EndHorizontal();
 
@@ -331,7 +434,10 @@ public static class uScriptGUI
       // begin the first property of each node as an "odd" row
       _isPropertyRowEven = false;
 
-      return _foldoutExpanded[_nodeKey];
+      // store the foldout state for future use
+      _foldoutExpanded[_nodeKey] = isFoldoutExpanded;
+
+      return isFoldoutExpanded;
    }
 
    public static void EndPropertyList()
@@ -632,14 +738,29 @@ public static class uScriptGUI
    {
       switch (optionName)
       {
-         case "Width": return GUILayout.Width(optionValue);
-         case "Height": return GUILayout.Height(optionValue);
-         case "MinWidth": return GUILayout.MinWidth(optionValue);
-         case "MaxWidth": return GUILayout.MaxWidth(optionValue);
-         case "MinHeight": return GUILayout.MinHeight(optionValue);
-         case "MaxHeight": return GUILayout.MaxHeight(optionValue);
-         case "ExpandWidth": return GUILayout.ExpandWidth(optionValue != 0);
-         case "ExpandHeight": return GUILayout.ExpandHeight(optionValue != 0);
+         case "Width":
+            return GUILayout.Width(optionValue);
+
+         case "Height":
+            return GUILayout.Height(optionValue);
+
+         case "MinWidth":
+            return GUILayout.MinWidth(optionValue);
+
+         case "MaxWidth":
+            return GUILayout.MaxWidth(optionValue);
+
+         case "MinHeight":
+            return GUILayout.MinHeight(optionValue);
+
+         case "MaxHeight":
+            return GUILayout.MaxHeight(optionValue);
+
+         case "ExpandWidth":
+            return GUILayout.ExpandWidth(optionValue != 0);
+
+         case "ExpandHeight":
+            return GUILayout.ExpandHeight(optionValue != 0);
       }
       Debug.LogError("Unhandled option type: " + optionName + "\n");
       return null;
@@ -689,6 +810,7 @@ public static class uScriptGUI
    }
 
    static Type _guiLayoutOption_EnumType = null;
+
    private static Type GUILayoutOption_EnumType
    {
       get
@@ -721,7 +843,7 @@ public static class uScriptGUI
          {
             // Filter out all unnecessary options
             List<string> names = new List<string>();
-            foreach(string option in Enum.GetNames(GUILayoutOption_EnumType))
+            foreach (string option in Enum.GetNames(GUILayoutOption_EnumType))
             {
                switch (option)
                {
@@ -752,18 +874,42 @@ public static class uScriptGUI
          if (_guiLayoutOption_DisplayNames == null)
          {
             List<string> names = new List<string>();
-            foreach(string option in GUILayoutOption_EnumNames)
+            foreach (string option in GUILayoutOption_EnumNames)
             {
                switch (option)
                {
-                  case "fixedWidth": names.Add("Width"); break;
-                  case "fixedHeight": names.Add("Height"); break;
-                  case "minWidth": names.Add("MinWidth"); break;
-                  case "maxWidth": names.Add("MaxWidth"); break;
-                  case "minHeight": names.Add("MinHeight"); break;
-                  case "maxHeight": names.Add("MaxHeight"); break;
-                  case "stretchWidth": names.Add("ExpandWidth"); break;
-                  case "stretchHeight": names.Add("ExpandHeight"); break;
+                  case "fixedWidth":
+                     names.Add("Width");
+                     break;
+
+                  case "fixedHeight":
+                     names.Add("Height");
+                     break;
+
+                  case "minWidth":
+                     names.Add("MinWidth");
+                     break;
+
+                  case "maxWidth":
+                     names.Add("MaxWidth");
+                     break;
+
+                  case "minHeight":
+                     names.Add("MinHeight");
+                     break;
+
+                  case "maxHeight":
+                     names.Add("MaxHeight");
+                     break;
+
+                  case "stretchWidth":
+                     names.Add("ExpandWidth");
+                     break;
+
+                  case "stretchHeight":
+                     names.Add("ExpandHeight");
+                     break;
+
                   default:
                      Debug.LogError("Unhandled GUILayoutOption.Type value: \"" + option + "\"\n");
                      break;
@@ -1009,8 +1155,7 @@ public static class uScriptGUI
             try
             {
                newEnum = (System.Enum)System.Enum.Parse(value.GetType(), userText);
-            }
-            catch
+            } catch
             {
                newEnum = (System.Enum)value;
             }
@@ -1136,7 +1281,7 @@ public static class uScriptGUI
          {
             GUIUtility.keyboardControl = 0;
             // Special conversion case for strings and GUILayoutOption objects
-            T element =  (typeof(T) == typeof(string) ? (T)(object)string.Empty
+            T element = (typeof(T) == typeof(string) ? (T)(object)string.Empty
                : (typeof(T) == typeof(GUILayoutOption) ? (T)(object)GUILayout.Width(0)
                   : default(T)));
             array = ArrayAppend<T>(array, element);
@@ -1255,7 +1400,7 @@ public static class uScriptGUI
       {
          GUIUtility.keyboardControl = 0;
          // Special conversion case for strings and GUILayoutOption objects
-         T element =  (typeof(T) == typeof(string) ? (T)(object)string.Empty
+         T element = (typeof(T) == typeof(string) ? (T)(object)string.Empty
             : (typeof(T) == typeof(GUILayoutOption) ? (T)(object)GUILayout.Width(0)
                : default(T)));
          array = ArrayInsert<T>(array, index, element);

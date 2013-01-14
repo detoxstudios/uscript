@@ -5745,4 +5745,44 @@ public class uScript : EditorWindow
       return string.Empty;
    }
 
+   public static string GetCompoundNodeType(EntityNode node)
+   {
+      if (node is EntityEvent)
+      {
+         return "EntityEvent:" + ((EntityEvent)node).ComponentType;
+      }
+      else if (node is LogicNode)
+      {
+         return "LogicNode:" + ((LogicNode)node).Type;
+      }
+      else if (node is EntityProperty)
+      {
+         return "EntityProperty:" + ((EntityProperty)node).ComponentType;
+      }
+      else if (node is EntityMethod)
+      {
+         EntityMethod entity = (EntityMethod)node;
+         return "EntityMethod:" + entity.ComponentType + ":" + entity.Input.Name;
+      }
+      else if (node is LocalNode)
+      {
+         return "LocalNode:" + ((LocalNode)node).Value.Type;
+      }
+      else if (node is CommentNode)
+      {
+         return "CommentNode";
+      }
+      else if (node is ExternalConnection)
+      {
+         return "ExternalConnection";
+      }
+      else if (node is OwnerConnection)
+      {
+         return "OwnerConnection";
+      }
+
+      uScriptDebug.Log("Unhandled node type: \"" + node.ToString() + "\"", uScriptDebug.Type.Error);
+      return string.Empty;
+   }
+
 }

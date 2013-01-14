@@ -70,7 +70,31 @@ public static class uScriptGUIStyle
 
    public static GUIStyle panelMessageError { get; private set; }
 
-   public static GUIStyle underline { get; private set; }
+   public static GUIStyle propertyButtonLeft { get; private set; }
+
+   public static GUIStyle propertyButtonMiddleDeprecated { get; private set; }
+
+   public static GUIStyle propertyButtonMiddleFavorite { get; private set; }
+
+   public static GUIStyle propertyButtonMiddleFavoriteStar { get; private set; }
+
+   public static GUIStyle propertyButtonMiddleName { get; private set; }
+
+   public static GUIStyle propertyButtonRightSearch { get; private set; }
+
+   public static GUIStyle propertyButtonRightName { get; private set; }
+
+   public static GUIStyle propertyArrayIconButton { get; private set; }
+
+   public static GUIStyle propertyArrayTextButton { get; private set; }
+
+   public static GUIStyle propertyBoolField { get; private set; }
+
+   public static GUIStyle propertyRowOdd { get; private set; }
+
+   public static GUIStyle propertyRowEven { get; private set; }
+
+   public static GUIStyle propertyTextField { get; private set; }
 
    public static GUIStyle referenceName { get; private set; }
 
@@ -94,18 +118,6 @@ public static class uScriptGUIStyle
 
    public static GUIStyle referenceDetailAlertValue { get; private set; }
 
-   public static GUIStyle propertyRowOdd { get; private set; }
-
-   public static GUIStyle propertyRowEven { get; private set; }
-
-   public static GUIStyle propertyTextField { get; private set; }
-
-   public static GUIStyle propertyBoolField { get; private set; }
-
-   public static GUIStyle propertyArrayIconButton { get; private set; }
-
-   public static GUIStyle propertyArrayTextButton { get; private set; }
-
    public static GUIStyle scriptRowOdd { get; private set; }
 
    public static GUIStyle scriptRowEven { get; private set; }
@@ -113,6 +125,8 @@ public static class uScriptGUIStyle
    public static GUIStyle listRow { get; private set; }
 
    public static GUIStyle toolbarLabel { get; private set; }
+
+   public static GUIStyle underline { get; private set; }
 
    public static readonly int columnHeaderHeight = 16;
    static Texture2D _texture_propertyRowEven = null;
@@ -411,6 +425,49 @@ public static class uScriptGUIStyle
       referenceDesc.stretchHeight = false;
       referenceDesc.stretchWidth = true;
       referenceDesc.wordWrap = true;
+
+      propertyButtonLeft = new GUIStyle("ButtonLeft");
+      propertyButtonLeft.name = "uScript_propertyButtonLeft";
+      propertyButtonLeft.fixedHeight = 20;
+      propertyButtonLeft.fixedWidth = 20;
+      propertyButtonLeft.fontStyle = FontStyle.Bold;
+      propertyButtonLeft.margin = new RectOffset(4, 0, 0, 0);
+
+      propertyButtonMiddleDeprecated = new GUIStyle("ButtonMid");
+      propertyButtonMiddleDeprecated.name = "uScript_propertyButtonMiddleDeprecated";
+      propertyButtonMiddleDeprecated.fixedHeight = 20;
+      propertyButtonMiddleDeprecated.fontStyle = FontStyle.Bold;
+      propertyButtonMiddleDeprecated.margin = new RectOffset();
+
+      propertyButtonMiddleFavorite = new GUIStyle(propertyButtonMiddleDeprecated);
+      propertyButtonMiddleFavorite.name = "uScript_propertyButtonMiddleFavorite";
+      propertyButtonMiddleFavorite.contentOffset = new Vector2(6, 0);
+      propertyButtonMiddleFavorite.fixedWidth = 30;
+
+      propertyButtonMiddleFavoriteStar = new GUIStyle(EditorStyles.largeLabel);
+      propertyButtonMiddleFavoriteStar.name = "uScript_propertyButtonMiddleFavoriteStar";
+      propertyButtonMiddleFavoriteStar.padding = new RectOffset(4, 4, 0, 0);
+      propertyButtonMiddleFavoriteStar.fontSize = 15;
+
+      propertyButtonMiddleName = new GUIStyle(propertyButtonMiddleDeprecated);
+      propertyButtonMiddleName.name = "uScript_propertyButtonMiddleName";
+      propertyButtonMiddleName.alignment = TextAnchor.MiddleLeft;
+      propertyButtonMiddleName.fixedWidth = 0;
+      propertyButtonMiddleName.contentOffset = Vector2.zero;
+
+      propertyButtonRightSearch = new GUIStyle("ButtonRight");
+      propertyButtonRightSearch.name = "uScript_propertyButtonRightSearch";
+      propertyButtonRightSearch.fixedHeight = 20;
+      propertyButtonRightSearch.fixedWidth = 20;
+      propertyButtonRightSearch.fontStyle = FontStyle.Bold;
+      propertyButtonRightSearch.margin = new RectOffset(0, 4, 0, 0);
+      propertyButtonRightSearch.padding = new RectOffset();
+
+      propertyButtonRightName = new GUIStyle(propertyButtonRightSearch);
+      propertyButtonRightName.name = "uScript_propertyButtonRightName";
+      propertyButtonRightName.alignment = TextAnchor.MiddleLeft;
+      propertyButtonRightName.fixedWidth = 0;
+      propertyButtonRightName.padding = ((GUIStyle)"ButtonRight").padding;
 
       propertyTextField = new GUIStyle(EditorStyles.textField);
       propertyTextField.margin = new RectOffset(4, 4, 2, 2);

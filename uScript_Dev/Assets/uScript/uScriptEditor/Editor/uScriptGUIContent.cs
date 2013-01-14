@@ -116,6 +116,8 @@ public static class uScriptGUIContent
    private static GUIContent _buttonWebForum;
    public static GUIContent buttonWebForum { get { return _buttonWebForum; } }
 
+   public static string[] favoriteOptions { get; private set; }
+
    private static GUIContent _messageCompiling;
    public static GUIContent messageCompiling { get { return _messageCompiling; } }
 
@@ -213,6 +215,8 @@ public static class uScriptGUIContent
 
       _buttonWebDocumentation = new GUIContent("Online Reference", "Open the online uScript reference in the default web browser.");
       _buttonWebForum = new GUIContent("Forum", "Open the online forum in the default web browser.");
+
+      favoriteOptions = new string[] { "-", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
       _messageCompiling = new GUIContent("The Unity Editor is compiling one or more scripts. Please wait.");
       _messagePlaying = new GUIContent("The Unity Editor is in play mode!");
