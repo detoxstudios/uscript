@@ -13,15 +13,19 @@ using Detox.Windows.Forms;
 //using Detox.Data.Tools;
 using System.Linq;
 
-
 public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 {
    //
    // Singleton pattern
    //
    static readonly uScriptGUIPanelPalette _instance = new uScriptGUIPanelPalette();
+
    public static uScriptGUIPanelPalette Instance { get { return _instance; } }
-   private uScriptGUIPanelPalette() { Init(); }
+
+   private uScriptGUIPanelPalette()
+   {
+      Init();
+   }
 
 
    //
@@ -31,7 +35,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    // Toolbar
    public string _panelFilterText = string.Empty;
    bool _paletteFoldoutToggle = false;
-
    int filterMatches;
 
    // Scrollview
@@ -42,18 +45,11 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    const int ROW_HEIGHT = 17;
    const int BUTTON_INDENT = 12;
    const int BUTTON_PADDING = 4;
-
    GUIStyle _stylePadding;
-
    private Rect buttonRect;
    int listItem_rowCount;
    int listItem_rowWidth;
- 
-   bool _editFavorites = false;
-   
-   
    private static Dictionary<string, bool> _paletteMenuItemFoldout = new Dictionary<string, bool>();
-
    private List<PaletteMenuItem> _paletteMenuItems;
    public class PaletteMenuItem : Detox.Windows.Forms.MenuItem
    {
@@ -120,9 +116,9 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       uScript uScriptInstance = uScript.Instance;
 
       // Initialize the style used for scrollview "padding"
-      if ( _stylePadding == null )
+      if (_stylePadding == null)
       {
-         _stylePadding = new GUIStyle( GUIStyle.none );
+         _stylePadding = new GUIStyle(GUIStyle.none);
          _stylePadding.stretchWidth = true;
 //         padding.normal.background = GUI.skin.box.normal.background;
 //         padding.border = GUI.skin.box.border;
@@ -172,7 +168,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                string[] options = new string[] { "Toolbox", "Contents" };
                Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
                uScript._paletteMode = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
-   //            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+               //            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
    
                GUILayout.FlexibleSpace();
    
@@ -189,7 +185,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    
                GUI.SetNextControlName("PaletteFilterSearch");
                string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
-   //            GUI.SetNextControlName("");
+               //            GUI.SetNextControlName("");
                if (_filterText != _panelFilterText)
                {
                   // Drop focus if the user inserted a newline (hit enter)
@@ -224,12 +220,12 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                //
                _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
                {
-   //               // Debug
-   //               if (debugScript.svOffset != _scrollviewOffset)
-   //               {
-   //                  Debug.Log("Offset delta: " + (_scrollviewOffset.y - debugScript.svOffset.y).ToString() + ", Event: " + Event.current.type.ToString() + "\n");
-   //               }
-   //               _debugScript.svOffset = _scrollviewOffset;
+                  //               // Debug
+                  //               if (debugScript.svOffset != _scrollviewOffset)
+                  //               {
+                  //                  Debug.Log("Offset delta: " + (_scrollviewOffset.y - debugScript.svOffset.y).ToString() + ", Event: " + Event.current.type.ToString() + "\n");
+                  //               }
+                  //               _debugScript.svOffset = _scrollviewOffset;
    
    
                   // Commonly used variables
@@ -305,10 +301,10 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                      }
                   }
    
-   //               // Debug
-   //               _debugScript.Top = new Vector2(_debug_TopCount, _debug_TopHeight);
-   //               _debugScript.Middle = new Vector2(_debug_MiddleCount, _debug_MiddleHeight);
-   //               _debugScript.Bottom = new Vector2(_debug_BottomCount, _debug_BottomHeight);
+                  //               // Debug
+                  //               _debugScript.Top = new Vector2(_debug_TopCount, _debug_TopHeight);
+                  //               _debugScript.Middle = new Vector2(_debug_MiddleCount, _debug_MiddleHeight);
+                  //               _debugScript.Bottom = new Vector2(_debug_BottomCount, _debug_BottomHeight);
                }
                EditorGUILayout.EndScrollView();
    
@@ -321,65 +317,96 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
             }
          }
          EditorGUILayout.EndVertical();
-      
+
          if (favoriteNodeCount > 0)
          {
             GUILayout.Space(uScriptGUI.panelDividerThickness);
-     
+
+            bool favoritesPanelExpanded = uScript.Preferences.ExpandFavoritePanel;
+
             EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
             {
                EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
                {
                   GUILayout.Label("Favorite Nodes", uScriptGUIStyle.panelTitle);
-                  _editFavorites = GUILayout.Toggle(_editFavorites, "Edit", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
-               }
-               EditorGUILayout.EndHorizontal();
-               
-               
-     
-               EditorGUILayout.BeginScrollView(Vector2.zero, GUILayout.Height(favoriteNodeCount * ROW_HEIGHT + 2));
-               {
-                  float badgeWidth = uScriptGUIStyle.nodeFavoriteBadge.CalcSize(new GUIContent("0")).x;
 
-                  Rect rect = new Rect(0, 0, 0, ROW_HEIGHT);
-                  
-                  for (int i = 0; i < favoriteNodes.Length; i++)
+                  if (favoritesPanelExpanded == false)
                   {
-                     if (string.IsNullOrEmpty(favoriteNodes[i]) == false)
-                     {
-                        rect.x = 4;
-                        rect.width = badgeWidth;
-                        
-                        GUI.Label(rect, (i+1).ToString(), uScriptGUIStyle.nodeFavoriteBadge);
-                        
-                        rect.x += badgeWidth + 4;
-                        rect.width = (listItem_rowWidth - rect.x - 4);
-   
-                        GUI.color = (_editFavorites ? UnityEngine.Color.red : UnityEngine.Color.white);
-                        
-                        string nodeType = favoriteNodes[i];
-//                        EntityNode node = uScriptInstance.ScriptEditorCtrl.g;
-//                        nodeName = uScript.FindNodeName(nodeName, node);
-                        
-                        if (GUI.Button(rect, nodeType, uScriptGUIStyle.paletteButton))
-                        {
-                           if (_editFavorites)
-                           {
-                              uScript.Preferences.UpdateFavoriteNode(i + 1, string.Empty);
-                           }
-                           else
-                           {
-                              uScript.Instance.PlaceNodeOnCanvas(nodeType, false);
-                           }
-                        }
-   
-                        GUI.color = UnityEngine.Color.white;
-                        
-                        rect.y += ROW_HEIGHT;
-                     }
+                     Rect rect = GUILayoutUtility.GetLastRect();
+                     rect.x = rect.width + 8;
+                     rect.y -= 1;
+                     rect.height += 4;
+                     GUI.Label(rect, "(" + favoriteNodeCount.ToString() + ")", uScriptGUIStyle.toolbarLabel);
+                  }
+
+                  GUILayout.FlexibleSpace();
+
+                  if (GUILayout.Button((favoritesPanelExpanded ? uScriptGUIContent.favoritePanelCollapse
+                     : uScriptGUIContent.favoritePanelExpand), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+                  {
+                     favoritesPanelExpanded = !favoritesPanelExpanded;
+                     uScript.Preferences.ExpandFavoritePanel = favoritesPanelExpanded;
+                     uScript.Preferences.Save();
                   }
                }
-               EditorGUILayout.EndScrollView();
+               EditorGUILayout.EndHorizontal();
+
+               if (favoritesPanelExpanded)
+               {
+                  // We're using 9 for (buttonMargin * 2 + buttonVerticalOverflow)
+                  EditorGUILayout.BeginScrollView(Vector2.zero, GUILayout.Height(favoriteNodeCount * ROW_HEIGHT + 9));
+                  {
+                     // We're using 5 for (buttonMargin + buttonVerticalOverflow)
+                     Rect rect = new Rect(0, 5, 0, ROW_HEIGHT);
+                     
+                     for (int i = 0; i < favoriteNodes.Length; i++)
+                     {
+                        if (string.IsNullOrEmpty(favoriteNodes[i]) == false)
+                        {
+                           // Favorite number
+                           rect.x = uScriptGUIStyle.nodeButtonFavoriteNumber.margin.left;
+                           rect.width = uScriptGUIStyle.nodeButtonFavoriteNumber.fixedWidth;
+
+                           int favoriteIndex = i + 1;
+                           string favoriteType = favoriteNodes[i];
+
+                           int newIndex = EditorGUI.Popup(rect, favoriteIndex, uScriptGUIContent.favoriteOptions, uScriptGUIStyle.nodeButtonFavoriteNumber);
+                           if (newIndex != favoriteIndex)
+                           {
+                              if (newIndex == 0)
+                              {
+                                 uScript.Preferences.UpdateFavoriteNode(favoriteIndex, string.Empty);
+                              }
+                              else
+                              {
+                                 uScript.Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
+                              }
+                           }
+
+                           // Favorite name
+                           EntityNode entityNode = uScript.Instance.ScriptEditorCtrl.ScriptEditor.CreateEntityNode(favoriteType);
+                           string nodeName = (entityNode == null ? favoriteType : uScript.FindNodeName(uScript.GetNodeType(entityNode), entityNode));
+                           nodeName = favoriteType;
+
+                           rect.x += rect.width;
+                           rect.width = (listItem_rowWidth - rect.x - uScriptGUIStyle.nodeButtonFavoriteName.margin.right);
+
+                           //                        EntityNode node = uScriptInstance.ScriptEditorCtrl.g;
+                           //                        nodeName = uScript.FindNodeName(nodeName, node);
+                           
+                           if (GUI.Button(rect, nodeName, uScriptGUIStyle.nodeButtonFavoriteName))
+                           {
+                              uScript.Instance.PlaceNodeOnCanvas(favoriteType, false);
+                           }
+      
+                           GUI.color = UnityEngine.Color.white;
+                           
+                           rect.y += ROW_HEIGHT;
+                        }
+                     }
+                  }
+                  EditorGUILayout.EndScrollView();
+               }
             }
             EditorGUILayout.EndVertical();
          }
@@ -397,7 +424,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Palette);
       uScriptInstance.SetMouseRegion(uScript.MouseRegion.Palette);
    }
-
 
    private bool DetermineListStats(PaletteMenuItem item)
    {
@@ -438,7 +464,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
       return true;
    }
-
 
    private bool DrawPaletteMenu(PaletteMenuItem item)
    {
@@ -511,7 +536,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       //
 
       // Handle mouse hovering
-      if ( _isMouseOverScrollview && buttonRect.Contains(Event.current.mousePosition) )
+      if (_isMouseOverScrollview && buttonRect.Contains(Event.current.mousePosition))
       {
          _tempHotSelection = item.Tag as EntityNode;
       }
@@ -543,7 +568,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          _paletteMenuItemFoldout[key] = state;
       }
    }
-
 
    private void FilterToolboxMenuItems()
    {
@@ -604,7 +628,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       // has no children and wasn't a match
       return true;
    }
-
 
    public void BuildPaletteMenu()
    {

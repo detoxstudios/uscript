@@ -162,6 +162,12 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "PropertyPanelNodeLimit" ] = value; }
    }
 
+   public bool ExpandFavoritePanel
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "ExpandFavoritePanel" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "ExpandFavoritePanel" ] = value; }
+   }
+
    public string FavoriteNode1
    {
       get { LoadIfRequired( ); return m_Preferences[ "FavoriteNode1" ] as string; }
@@ -307,6 +313,8 @@ public class Preferences
       if ( null == m_Preferences[ "ProfileMin" ] )                m_Preferences[ "ProfileMin" ]                = 1f;
       if ( null == m_Preferences[ "Profiling" ] )                 m_Preferences[ "Profiling" ]                 = false;
       if ( null == m_Preferences[ "PropertyPanelNodeLimit" ] )    m_Preferences[ "PropertyPanelNodeLimit" ]    = 1;
+
+      if ( null == m_Preferences[ "ExpandFavoritePanel" ] )       m_Preferences[ "ExpandFavoritePanel" ]       = true;
 
       if ( null == m_Preferences[ "FavoriteNode1" ] ) m_Preferences[ "FavoriteNode1" ] = string.Empty;
       if ( null == m_Preferences[ "FavoriteNode2" ] ) m_Preferences[ "FavoriteNode2" ] = string.Empty;

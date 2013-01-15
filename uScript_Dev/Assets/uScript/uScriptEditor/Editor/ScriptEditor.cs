@@ -4502,6 +4502,55 @@ namespace Detox.ScriptEditor
          return node;
       }
 
+      /// <summary>This method of node creation requires a tokenized string parameter associated with the desired node.</summary>
+      /// <returns>the new EntityNode or null.</returns>
+      /// <param name='nodeType'>The tokenized string loosely formatted as "category:type:subtype".</param>
+      public EntityNode CreateEntityNode(string nodeType)
+      {
+         EntityNode entityNode = null;
+
+         string[] nodeTypeSegments = nodeType.Split(':');
+         switch (nodeTypeSegments[0])
+         {
+            case "CommentNode":
+               entityNode = new CommentNode("");
+               break;
+
+            case "EntityEvent":
+               entityNode = uScript.Instance.ScriptEditorCtrl.GetEventNode(nodeTypeSegments[1]);
+               break;
+
+            case "EntityMethod":
+   //               Debug.Log("Attempting to place a EntityMethod: \"" + nodeType[1] + "\"\n");
+               entityNode = uScript.Instance.ScriptEditorCtrl.GetMethodNode(nodeTypeSegments[1], nodeTypeSegments[2]);
+               break;
+
+   //            case "EntityProperty":
+   //               Debug.Log("Attempting to place a LogicNode: \"" + nodeType[1] + "\"\n");
+   //               entityNode = uScript.Instance.ScriptEditorCtrl.GetEventNode(nodeType[1]);
+   //               break;
+   //
+            case "ExternalConnection":
+               entityNode = new ExternalConnection(Guid.NewGuid());
+               break;
+
+            case "LocalNode":
+               entityNode = new LocalNode("", nodeTypeSegments[1], "");
+               break;
+
+            case "LogicNode":
+               entityNode = uScript.Instance.ScriptEditorCtrl.GetLogicNode(nodeTypeSegments[1]);
+               break;
+   
+   //            case "OwnerConnection":
+   //               Debug.Log("Attempting to place a LogicNode: \"" + nodeType[1] + "\"\n");
+   //               entityNode = uScript.Instance.ScriptEditorCtrl.GetEventNode(nodeType[1]);
+   //               break;
+         }
+   
+         return entityNode;
+      }
+
       public ScriptEditorData ScriptEditorData
       {
          get 

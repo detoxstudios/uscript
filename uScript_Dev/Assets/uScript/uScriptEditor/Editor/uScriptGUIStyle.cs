@@ -44,13 +44,15 @@ public static class uScriptGUIStyle
 
    public static GUIStyle columnScrollView { get; private set; }
 
+   public static GUIStyle nodeButtonFavoriteNumber { get; private set; }
+
+   public static GUIStyle nodeButtonFavoriteName { get; private set; }
+
    public static GUIStyle nodeButtonLeft { get; private set; }
 
    public static GUIStyle nodeButtonMiddle { get; private set; }
 
    public static GUIStyle nodeButtonRight { get; private set; }
-
-   public static GUIStyle nodeFavoriteBadge { get; private set; }
 
    public static GUIStyle contextMenu { get; private set; }
 
@@ -281,14 +283,20 @@ public static class uScriptGUIStyle
       nodeButtonRight.fixedHeight = 19;
       nodeButtonRight.contentOffset = new Vector2(-1, 1);
 
-      nodeFavoriteBadge = new GUIStyle("CN CountBadge");
-      nodeFavoriteBadge.name = "uScript_nodeFavoriteBadge";
-      nodeFavoriteBadge.alignment = TextAnchor.MiddleCenter;
-      nodeFavoriteBadge.fixedHeight = 0;
-      nodeFavoriteBadge.margin = new RectOffset(3, 0, 0, 0);
-      nodeFavoriteBadge.overflow = new RectOffset(0, 0, 0, 1);
-      nodeFavoriteBadge.padding = new RectOffset(6, 8, 1, 3);
-      nodeFavoriteBadge.stretchWidth = false;
+      nodeButtonFavoriteNumber = new GUIStyle("ButtonLeft");
+      nodeButtonFavoriteNumber.name = "uScript_nodeButtonFavoriteNumber";
+      nodeButtonFavoriteNumber.fixedWidth = 20;
+      nodeButtonFavoriteNumber.fontStyle = FontStyle.Bold;
+      nodeButtonFavoriteNumber.overflow = new RectOffset(0, 0, 1, 1);
+      nodeButtonFavoriteNumber.margin = new RectOffset(4, 0, 0, 0);
+
+      nodeButtonFavoriteName = new GUIStyle("ButtonRight");
+      nodeButtonFavoriteName.name = "uScript_nodeButtonFavoriteName";
+      nodeButtonFavoriteName.alignment = TextAnchor.MiddleLeft;
+      nodeButtonFavoriteName.contentOffset = new Vector2(0, -1);
+      nodeButtonFavoriteName.margin = new RectOffset(0, 4, 0, 0);
+      nodeButtonFavoriteName.overflow = new RectOffset(0, 0, 1, 1);
+      nodeButtonFavoriteName.padding = new RectOffset(6, 6, 2, 2);
 
       contextMenu = new GUIStyle(EditorStyles.toolbarButton);
 

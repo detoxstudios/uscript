@@ -78,7 +78,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       if (_hotSelection != null)
       {
          node = _hotSelection;
-         nodeType = GetNodeType(node);
+         nodeType = uScript.GetNodeType(node);
 
          currentNodeClassName = string.Empty;
          helpButtonURL = string.Empty;
@@ -98,7 +98,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
             if (node != null)
             {
-               nodeType = GetNodeType(node);
+               nodeType = uScript.GetNodeType(node);
 
                string newNodeClassName = ScriptEditor.FindNodeType(node);
                if (newNodeClassName != currentNodeClassName)
@@ -108,7 +108,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                }
 
                helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
-               helpButtonURL = uScript.FindNodeHelp(GetNodeType(node), node);
+               helpButtonURL = uScript.FindNodeHelp(uScript.GetNodeType(node), node);
             }
          }
 
@@ -409,29 +409,4 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       }
    }
 
-   string GetNodeType(EntityNode node)
-   {
-      string nodeType = ScriptEditor.FindNodeType(node);
-      if (string.IsNullOrEmpty(nodeType))
-      {
-         // other node types...
-         if (node is CommentNode)
-         {
-            nodeType = "CommentNode";
-         }
-         else if (node is ExternalConnection)
-         {
-            nodeType = "ExternalConnection";
-         }
-         else if (node is OwnerConnection)
-         {
-            nodeType = "OwnerConnection";
-         }
-         else if (node is LocalNode)
-         {
-            nodeType = "LocalNode";
-         }
-      }
-      return nodeType;
-   }
 }

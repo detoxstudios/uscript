@@ -116,6 +116,9 @@ public class uScript : EditorWindow
    private bool _pendingNodeUsesMousePosition = false;
    private KeyCode m_PressedKey = KeyCode.None;
 
+   bool _requestedCloseMap = false;
+   Point _requestCanvasLocation = Point.Empty;
+
    private string m_FullPath = "";
    private string m_CurrentCanvasPosition = "";
    private bool m_ForceCodeValidation = false;
@@ -1050,69 +1053,46 @@ public class uScript : EditorWindow
          m_ScriptEditorCtrl.PasteFromClipboard(Point.Empty);
          m_WantsPaste = false;
       }
+
+      // Process any pending node creation request
       if (m_ScriptEditorCtrl != null && !String.IsNullOrEmpty(_pendingNodeType))
       {
          m_ScriptEditorCtrl.DeselectAll();
 
-         string[] nodeType = _pendingNodeType.Split(':');
-         EntityNode entityNode = null;
          Point canvasPosition = (_pendingNodeUsesMousePosition
             ? Detox.Windows.Forms.Cursor.Position
             : new Point((int)(NodeWindowRect.width * 0.5f), (int)(NodeWindowRect.height * 0.5f))); // viewport center
 
-         switch (nodeType[0])
+         string[] nodeTypeSegments = _pendingNodeType.Split(':');
+         switch (nodeTypeSegments[0])
          {
-            case "CommentNode":
-               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
-               entityNode = new CommentNode("");
-               break;
-
             case "ExternalConnection":
-               m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 28, canvasPosition.Y - 28);
-               entityNode = new ExternalConnection(Guid.NewGuid());
-               break;
-
             case "LocalNode":
+            case "OwnerConnection":
                m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 28, canvasPosition.Y - 28);
-               entityNode = new LocalNode("", nodeType[1], "");
                break;
 
             case "LogicNode":
-               m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 10, canvasPosition.Y - 10);
-               entityNode = m_ScriptEditorCtrl.GetLogicNode(nodeType[1]);
-               break;
-
             case "EntityEvent":
-               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
-               entityNode = m_ScriptEditorCtrl.GetEventNode(nodeType[1]);
-               break;
-
-//            case "EntityProperty":
-//               Debug.Log("Attempting to place a LogicNode: \"" + nodeType[1] + "\"\n");
-//               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
-//               entityNode = m_ScriptEditorCtrl.GetEventNode(nodeType[1]);
-//               break;
-//
             case "EntityMethod":
-//               Debug.Log("Attempting to place a EntityMethod: \"" + nodeType[1] + "\"\n");
-               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
-               entityNode = m_ScriptEditorCtrl.GetMethodNode(nodeType[1], nodeType[2]);
+               m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 10, canvasPosition.Y - 10);
                break;
 
-//            case "OwnerConnection":
-//               Debug.Log("Attempting to place a LogicNode: \"" + nodeType[1] + "\"\n");
-//               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
-//               entityNode = m_ScriptEditorCtrl.GetEventNode(nodeType[1]);
-//               break;
+            case "EntityProperty":
+            case "CommentNode":
+            default:
+               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
+               break;
          }
 
-         if (entityNode != null)
+         EntityNode entityNode = m_ScriptEditorCtrl.ScriptEditor.CreateEntityNode(_pendingNodeType);
+         if (entityNode == null)
          {
-            m_ScriptEditorCtrl.AddVariableNode(entityNode);
+            uScriptDebug.Log("Attempt to create node type failed: \"" + _pendingNodeType + "\"", uScriptDebug.Type.Error);
          }
          else
          {
-            uScriptDebug.Log("Attempt to create node type failed: \"" + _pendingNodeType + "\"", uScriptDebug.Type.Error);
+            m_ScriptEditorCtrl.AddVariableNode(entityNode);
          }
 
          _pendingNodeType = "";
@@ -1158,13 +1138,6 @@ public class uScript : EditorWindow
 //         Debug.Log("Repaint\n");
       }
    }
-
-
-   bool _requestedCloseMap = false;
-   Point _requestCanvasLocation = Point.Empty;
-
-
-
 
    //
    // Canvas Context Menu
@@ -3347,7 +3320,7 @@ public class uScript : EditorWindow
                m_NodeToolbarRect = toolbarRect;
             }
 
-            isFileMenuOpen = GUILayout.Toggle(isFileMenuOpen, uScriptGUIContent.ButtonFileMenu, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
+            isFileMenuOpen = GUILayout.Toggle(isFileMenuOpen, uScriptGUIContent.buttonFileMenu, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
             if (Event.current.type == EventType.Repaint)
             {
                rectFileMenuButton = GUILayoutUtility.GetLastRect();
@@ -3355,7 +3328,7 @@ public class uScript : EditorWindow
                rectFileMenuWindow.y = rectFileMenuButton.y + rectFileMenuButton.height;
             }
 
-            if (GUILayout.Button(uScriptGUIContent.ButtonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(uScriptGUIContent.buttonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                PreferenceWindow.Init();
             }
@@ -3364,7 +3337,7 @@ public class uScript : EditorWindow
             GUILayout.Space(16);
 
             int saveMethod = (int)Preferences.SaveMethod;
-            saveMethod = GUILayout.Toolbar(saveMethod, uScriptGUIContent.SaveMethodList, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
+            saveMethod = GUILayout.Toolbar(saveMethod, uScriptGUIContent.saveMethodList, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
             if (saveMethod != (int)Preferences.SaveMethod)
             {
                Preferences.SaveMethod = (Preferences.SaveMethodType)saveMethod;
@@ -3377,7 +3350,7 @@ public class uScript : EditorWindow
             GUILayout.Box(GUIContent.none, EditorStyles.toolbarButton, GUILayout.Width(toolbarSpaceWidth));
 //            GUILayout.Space(toolbarSpaceWidth);
 
-            bool newSnapValue = GUILayout.Toggle(Preferences.GridSnap, uScriptGUIContent.ButtonGridSnap, EditorStyles.toolbarButton);
+            bool newSnapValue = GUILayout.Toggle(Preferences.GridSnap, uScriptGUIContent.buttonGridSnap, EditorStyles.toolbarButton);
             if (newSnapValue != Preferences.GridSnap)
             {
                Preferences.GridSnap = newSnapValue;
@@ -5783,6 +5756,32 @@ public class uScript : EditorWindow
 
       uScriptDebug.Log("Unhandled node type: \"" + node.ToString() + "\"", uScriptDebug.Type.Error);
       return string.Empty;
+   }
+
+   public static string GetNodeType(EntityNode node)
+   {
+      string nodeType = ScriptEditor.FindNodeType(node);
+      if (string.IsNullOrEmpty(nodeType))
+      {
+         // other node types...
+         if (node is CommentNode)
+         {
+            nodeType = "CommentNode";
+         }
+         else if (node is ExternalConnection)
+         {
+            nodeType = "ExternalConnection";
+         }
+         else if (node is OwnerConnection)
+         {
+            nodeType = "OwnerConnection";
+         }
+         else if (node is LocalNode)
+         {
+            nodeType = "LocalNode";
+         }
+      }
+      return nodeType;
    }
 
 }
