@@ -677,7 +677,7 @@ namespace Detox.FlowChart
                }
             }
 
-            // @FIXME : Repaints even when the mouse is stationary
+            // FIXME: Repaints even when the mouse is stationary
             Invalidate( );  // Node MouseDrag
          }
          else if (e.Button == MouseButtons.Middle || (e.Button == MouseButtons.Left && true == Control.ModifierKeys.Contains(Keys.Alt)))
@@ -998,7 +998,7 @@ namespace Detox.FlowChart
          if ( true == InMoveMode )
          {
             OnLocationChanged( );
-            // @FIXME : Repaints even when the mouse is stationary
+            // FIXME: Repaints even when the mouse is stationary
             Invalidate( );  // Canvas MouseDrag
          }
          else
@@ -1015,7 +1015,7 @@ namespace Detox.FlowChart
                   RunMarqueeSelect( );
                }
 
-               // @FIXME : Repaints even when the mouse is stationary
+               // FIXME: Repaints even when the mouse is stationary
                Invalidate( );  // Marquee MouseDrag
             }
             else if ( true == m_NodeMouseTracking )

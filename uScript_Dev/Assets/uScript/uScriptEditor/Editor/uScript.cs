@@ -2462,7 +2462,7 @@ public class uScript : EditorWindow
       }
       OnGUI_DrawStatusbar();
 
-      // @TODO: This bool flag could be removed if the GUI is repainted after the canvas stops panning
+      // TODO: This bool flag could be removed if the GUI is repainted after the canvas stops panning
       if (_wasMoving)
       {
          _wasMoving = false;
@@ -2698,7 +2698,7 @@ public class uScript : EditorWindow
                   }
                }
 
-               // @TODO: clean up this code
+               // TODO: clean up this code
 
                foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
                {

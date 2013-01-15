@@ -131,7 +131,7 @@ public abstract class uScriptGUIPanel
 //         if (_size != value)
 //         {
 //            _size = value;
-//            // @TODO - Save the new value in preferences
+//            // TODO - Save the new value in preferences
 //            UpdatePanelLayoutOptions();
 //         }
 //      }

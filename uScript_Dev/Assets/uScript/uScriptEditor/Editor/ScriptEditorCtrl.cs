@@ -2205,10 +2205,10 @@ namespace Detox.ScriptEditor
 
          foreach ( Node node in m_FlowChart.SelectedNodes )
          {
-            //TODO
-            //instead of parsing the node, the display node type should be 
-            //aware of what it wants to send to the property grid
-            //and could fill the parameters itself
+            // TODO: Auto-populate property grid parameters
+            //          Instead of parsing the node, the display node type should be
+            //          aware of what it wants to send to the property grid
+            //          and could fill the parameters itself
             EntityNode entityNode = ((DisplayNode)node).EntityNode;
 
             string name = node.Name;
@@ -2726,6 +2726,7 @@ namespace Detox.ScriptEditor
             ToolStripMenuItem comment  = new ToolStripMenuItem();
             ToolStripMenuItem external = new ToolStripMenuItem();
 
+            // ZZZ: ContextMenu - Comment and ExternalConnection are added
             comment.Name = "m_AddComment";
             comment.Size = new Detox.Drawing.Size(152, 22);
             comment.Text = "Comment";

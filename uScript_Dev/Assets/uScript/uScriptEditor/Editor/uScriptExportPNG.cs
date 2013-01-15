@@ -360,7 +360,7 @@ public static class uScriptExportPNG
          byte[] bytes = _texture.EncodeToPNG();
          UnityEngine.Object.DestroyImmediate(_texture);
 
-      // @TODO : Make sure the folder exists.
+         // TODO : Make sure the folder exists.
          System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.Screenshots);
 
          // Write the file in the project folder
