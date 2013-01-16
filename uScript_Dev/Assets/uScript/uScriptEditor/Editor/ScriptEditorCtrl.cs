@@ -3199,8 +3199,6 @@ namespace Detox.ScriptEditor
          }
 
          return String.Join("[", tokens);
-
-         return type;
       }
 
       public string GetMethodSignature(EntityNode node)
