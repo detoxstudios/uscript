@@ -2726,7 +2726,6 @@ namespace Detox.ScriptEditor
             ToolStripMenuItem comment  = new ToolStripMenuItem();
             ToolStripMenuItem external = new ToolStripMenuItem();
 
-            // ZZZ: ContextMenu - Comment and ExternalConnection are added
             comment.Name = "m_AddComment";
             comment.Size = new Detox.Drawing.Size(152, 22);
             comment.Text = "Comment";
@@ -2956,7 +2955,7 @@ namespace Detox.ScriptEditor
                   if ( true == uScript.IsNodeTypeDeprecated(e) ) continue;
 
                   //guaranteed always at least one output from the reflection code
-                  if ( false == signatures.Contains(e.FriendlyType) ) 
+                  if ( false == signatures.Contains(e.FriendlyType) )
                   {
                      signatures[ e.FriendlyType ] = new List<EntityEvent>( );
                   }
@@ -2977,7 +2976,7 @@ namespace Detox.ScriptEditor
 
                      foreach ( EntityEvent m in events )
                      {
-                        ToolStripItem item = subMenu.DropDownItems.Add( m.FriendlyType + BuildSignature(m)  );
+                        ToolStripItem item = subMenu.DropDownItems.Add( m.FriendlyType + GetMethodSignature(m)  );
                         item.Tag = m;
 
                         item.Click += new System.EventHandler(m_MenuAddNode_Click);
@@ -3009,7 +3008,7 @@ namespace Detox.ScriptEditor
                {
                   if ( true == uScript.IsNodeTypeDeprecated(e) ) continue;
 
-                  if ( false == signatures.Contains(e.Input.FriendlyName) ) 
+                  if ( false == signatures.Contains(e.Input.FriendlyName) )
                   {
                      signatures[ e.Input.FriendlyName ] = new List<EntityMethod>( );
                   }
@@ -3030,7 +3029,7 @@ namespace Detox.ScriptEditor
 
                      foreach ( EntityMethod m in methods )
                      {
-                        ToolStripItem item = subMenu.DropDownItems.Add( m.Input.FriendlyName + BuildSignature(m)  );
+                        ToolStripItem item = subMenu.DropDownItems.Add( m.Input.FriendlyName + GetMethodSignature(m)  );
                         item.Tag = m;
 
                         item.Click += new System.EventHandler(m_MenuAddNode_Click);
@@ -3139,7 +3138,7 @@ namespace Detox.ScriptEditor
             friendlyMenu.Tag = new OwnerConnection( Guid.NewGuid( ) );
             friendlyMenu.Click += new System.EventHandler(m_MenuAddNode_Click);
          }
-         
+
          ReformatMenu( addMenu );
       }
 
@@ -3177,31 +3176,48 @@ namespace Detox.ScriptEditor
          item.DropDownItems.Items.Sort( MenuSorter );
       }
 
-      private string BuildSignature(EntityNode node)
+      public string GetTypeAlias(string type)
+      {
+         switch (type)
+         {
+            case "System.String":   return "string";
+            case "System.SByte":    return "sbyte";
+            case "System.Byte":     return "byte";
+            case "System.Int16":    return "short";
+            case "System.UInt16":   return "ushort";
+            case "System.Int32":    return "int";
+            case "System.UInt32":   return "uint";
+            case "System.Int64":    return "long";
+            case "System.UInt64":   return "ulong";
+            case "System.Char":     return "char";
+            case "System.Single":   return "float";
+            case "System.Double":   return "double";
+            case "System.Boolean":  return "bool";
+            case "System.Decimal":  return "decimal";
+         }
+         return type;
+      }
+
+      public string GetMethodSignature(EntityNode node)
       {
          if ( node is EntityMethod )
          {
             if ( 0 == node.Parameters.Length ) return "";
 
             string sig = "(";
-            
+
             foreach ( Parameter p in node.Parameters )
             {
-               sig += "[";
                if ( true == p.Input && true == p.Output )
                {
-                  sig += "in/out";
-               }
-               else if ( true == p.Input )
-               {
-                  sig += "in";
+                  sig += "ref ";
                }
                else if ( true == p.Output )
                {
-                  sig += "out";
+                  sig += "out ";
                }
 
-               sig += "]" + p.Name + ", ";
+               sig += GetTypeAlias(p.Type) + ", ";
             }
 
             if ( node.Parameters.Length > 0 )
