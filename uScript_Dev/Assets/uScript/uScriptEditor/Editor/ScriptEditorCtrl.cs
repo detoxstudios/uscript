@@ -3178,51 +3178,74 @@ namespace Detox.ScriptEditor
 
       public string GetTypeAlias(string type)
       {
-         switch (type)
+         string[] tokens = type.Split('[');
+
+         switch (tokens[0])
          {
-            case "System.String":   return "string";
-            case "System.SByte":    return "sbyte";
-            case "System.Byte":     return "byte";
-            case "System.Int16":    return "short";
-            case "System.UInt16":   return "ushort";
-            case "System.Int32":    return "int";
-            case "System.UInt32":   return "uint";
-            case "System.Int64":    return "long";
-            case "System.UInt64":   return "ulong";
-            case "System.Char":     return "char";
-            case "System.Single":   return "float";
-            case "System.Double":   return "double";
-            case "System.Boolean":  return "bool";
-            case "System.Decimal":  return "decimal";
+            case "System.Byte":     tokens[0] = "byte";     break;
+            case "System.SByte":    tokens[0] = "sbyte";    break;
+            case "System.Int16":    tokens[0] = "short";    break;
+            case "System.UInt16":   tokens[0] = "ushort";   break;
+            case "System.Int32":    tokens[0] = "int";      break;
+            case "System.UInt32":   tokens[0] = "uint";     break;
+            case "System.Int64":    tokens[0] = "long";     break;
+            case "System.UInt64":   tokens[0] = "ulong";    break;
+            case "System.Single":   tokens[0] = "float";    break;
+            case "System.Double":   tokens[0] = "double";   break;
+            case "System.Decimal":  tokens[0] = "decimal";  break;
+            case "System.Boolean":  tokens[0] = "bool";     break;
+            case "System.Char":     tokens[0] = "char";     break;
+            case "System.String":   tokens[0] = "string";   break;
          }
+
+         return String.Join("[", tokens);
+
          return type;
       }
 
       public string GetMethodSignature(EntityNode node)
       {
-         if ( node is EntityMethod )
+         if (node is EntityMethod)
          {
-            if ( 0 == node.Parameters.Length ) return "";
+            int parameterCount = node.Parameters.Length;
+
+            if (parameterCount == 0)
+            {
+               return string.Empty;
+            }
 
             string sig = "(";
 
-            foreach ( Parameter p in node.Parameters )
+            for (int i = 0; i < parameterCount; i++)
             {
-               if ( true == p.Input && true == p.Output )
-               {
-                  sig += "ref ";
-               }
-               else if ( true == p.Output )
-               {
-                  sig += "out ";
-               }
+               Parameter p = node.Parameters[i];
 
-               sig += GetTypeAlias(p.Type) + ", ";
-            }
+               // last parameter is the return type
+               if (i == parameterCount - 1 && p.Output && p.Name == "Return")
+               {
+                  sig += ") : " + GetTypeAlias(p.Type);
+                  return sig;
+               }
+               else
+               {
+                  if (i > 0)
+                  {
+                     sig += ", ";
+                  }
 
-            if ( node.Parameters.Length > 0 )
-            {
-               sig = sig.Substring( 0, sig.Length - 2 );
+//                  sig += p.Name + " : ";
+
+                  if ( true == p.Input && true == p.Output )
+                  {
+                     sig += "ref ";
+                  }
+                  else if ( true == p.Output )
+                  {
+                     sig += "out ";
+                  }
+
+                  sig += GetTypeAlias(p.Type);
+               }
             }
 
             sig += ")";
