@@ -56,14 +56,14 @@ public class uScriptCon_CompareGameObjects : uScriptLogic
          }
       }
 
-      if (null == A || null == B)
-      {         
-         return;
-      }
-
 
       if (true == CompareByTag || CompareByName)
       {
+          if (null == A || null == B)
+          {         
+             return;
+          }
+
          m_CompareValue = true;
    
          if (true == CompareByTag)
@@ -77,7 +77,10 @@ public class uScriptCon_CompareGameObjects : uScriptLogic
       }
       else
       {
-         m_CompareValue = A.GetInstanceID() == B.GetInstanceID();
+         if ( null == A && null == B)
+            m_CompareValue = true;
+         else if (null != A && null != B)
+            m_CompareValue = A.GetInstanceID() == B.GetInstanceID();
       }
    }
 }
