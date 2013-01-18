@@ -103,7 +103,7 @@ namespace Detox.ScriptEditor
       public PropertyGrid PropertyGrid { get { return m_PropertyGrid; } }
 
       private ScriptEditor m_ScriptEditor = null;
-      public ScriptEditor ScriptEditor 
+      public ScriptEditor ScriptEditor
       { 
          get { return m_ScriptEditor; } 
       }
@@ -3176,7 +3176,7 @@ namespace Detox.ScriptEditor
          item.DropDownItems.Items.Sort( MenuSorter );
       }
 
-      public string GetTypeAlias(string type)
+      public static string GetTypeAlias(string type)
       {
          string[] tokens = type.Split('[');
 
@@ -3201,7 +3201,7 @@ namespace Detox.ScriptEditor
          return String.Join("[", tokens);
       }
 
-      public string GetMethodSignature(EntityNode node)
+      public static string GetMethodSignature(EntityNode node)
       {
          if (node is EntityMethod)
          {
@@ -3250,12 +3250,12 @@ namespace Detox.ScriptEditor
 
             return sig;
          }
-         else if ( node is EntityEvent )
+         else if (node is EntityEvent)
          {
             //guaranteed from reflection code to have at least one output
             return "(" + ((EntityEvent)node).Outputs[0].FriendlyName + ")";
          }
-      
+
          return "";
       }
    }

@@ -388,7 +388,7 @@ public static class uScriptGUI
             //
             // Favorite button
             //
-            string favoriteNodeType = uScript.GetCompoundNodeType(entityNode);
+            string favoriteNodeType = uScript.GetNodeSignature(entityNode);
             string[] favoriteNodes = uScript.Preferences.FavoriteNodes;
             int favoriteIndex = Array.IndexOf(favoriteNodes, favoriteNodeType) + 1;
 
@@ -407,6 +407,8 @@ public static class uScriptGUI
                {
                   uScript.Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
                }
+
+               uScriptGUIPanelPalette.Instance.BuildFavoritesMenu();
             }
 
             // Favorite star
@@ -1096,9 +1098,14 @@ public static class uScriptGUI
       if (true == Int32.TryParse(value, out mask))
       {
          if (0 == mask)
+         {
             return "None";
+         }
+         
          if (0xffffffff == (uint)mask)
+         {
             return "All";
+         }
 
          bool isPowerOfTwo = (mask & (mask - 1)) == 0;
          if (true == isPowerOfTwo)
@@ -1155,7 +1162,8 @@ public static class uScriptGUI
             try
             {
                newEnum = (System.Enum)System.Enum.Parse(value.GetType(), userText);
-            } catch
+            }
+            catch
             {
                newEnum = (System.Enum)value;
             }
@@ -1214,7 +1222,9 @@ public static class uScriptGUI
             {
                type = typeof(GameObject);
                if (null != unityObject)
+               {
                   unityObject = ((Component)unityObject).gameObject;
+               }
             }
 
             //if we're building with 3.4 or greater then check the client version
@@ -2058,7 +2068,7 @@ public static class uScriptGUI
 //
 //      DrawStatusbar();
 //
-//      // @TODO: This bool flag could be removed if the GUI is repainted after the canvas stops panning
+//      // TODO: This bool flag could be removed if the GUI is repainted after the canvas stops panning
 ////      if (_wasMoving)
 ////      {
 ////         _wasMoving = false;

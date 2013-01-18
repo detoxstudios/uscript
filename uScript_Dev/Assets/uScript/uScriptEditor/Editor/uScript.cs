@@ -112,7 +112,7 @@ public class uScript : EditorWindow
    public float m_MapScale = 1.0f;
    private Point m_ZoomPoint = new Point( 0, 0 );
 
-   private String _pendingNodeType = "";
+   private String _pendingNodeSignature = "";
    private bool _pendingNodeUsesMousePosition = false;
    private KeyCode m_PressedKey = KeyCode.None;
 
@@ -1055,7 +1055,7 @@ public class uScript : EditorWindow
       }
 
       // Process any pending node creation request
-      if (m_ScriptEditorCtrl != null && !String.IsNullOrEmpty(_pendingNodeType))
+      if (m_ScriptEditorCtrl != null && !String.IsNullOrEmpty(_pendingNodeSignature))
       {
          m_ScriptEditorCtrl.DeselectAll();
 
@@ -1063,39 +1063,36 @@ public class uScript : EditorWindow
             ? Detox.Windows.Forms.Cursor.Position
             : new Point((int)(NodeWindowRect.width * 0.5f), (int)(NodeWindowRect.height * 0.5f))); // viewport center
 
-         string[] nodeTypeSegments = _pendingNodeType.Split(':');
-         switch (nodeTypeSegments[0])
-         {
-            case "ExternalConnection":
-            case "LocalNode":
-            case "OwnerConnection":
-               m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 28, canvasPosition.Y - 28);
-               break;
-
-            case "LogicNode":
-            case "EntityEvent":
-            case "EntityMethod":
-               m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 10, canvasPosition.Y - 10);
-               break;
-
-            case "EntityProperty":
-            case "CommentNode":
-            default:
-               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
-               break;
-         }
-
-         EntityNode entityNode = m_ScriptEditorCtrl.ScriptEditor.CreateEntityNode(_pendingNodeType);
+         EntityNode entityNode = uScriptGUIPanelPalette.Instance.GetToolboxNode(_pendingNodeSignature);
          if (entityNode == null)
          {
-            uScriptDebug.Log("Attempt to create node type failed: \"" + _pendingNodeType + "\"", uScriptDebug.Type.Error);
+            uScriptDebug.Log("Attempt to create node type failed. Signature not recognized: \"" + _pendingNodeSignature + "\"", uScriptDebug.Type.Error);
          }
          else
          {
+            // Apply an offset appropriate for the node type
+            if (entityNode is LocalNode
+               || entityNode is ExternalConnection
+               || entityNode is OwnerConnection)
+            {
+               m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 28, canvasPosition.Y - 28);
+            }
+            else if (entityNode is LogicNode
+               || entityNode is EntityEvent
+               || entityNode is EntityMethod
+               || entityNode is EntityProperty)
+            {
+               m_ScriptEditorCtrl.ContextCursor = new Point(canvasPosition.X - 10, canvasPosition.Y - 10);
+            }
+            else
+            {
+               m_ScriptEditorCtrl.ContextCursor = canvasPosition;
+            }
+
             m_ScriptEditorCtrl.AddVariableNode(entityNode);
          }
 
-         _pendingNodeType = "";
+         _pendingNodeSignature = "";
       }
 
       if (_requestedCloseMap)
@@ -2165,31 +2162,31 @@ public class uScript : EditorWindow
                {
                   if (m_PressedKey == KeyCode.S)
                   {
-                     PlaceNodeOnCanvas("LocalNode:System.String", true);
+                     PlaceNodeOnCanvas("string", true);
                   }
                   else if (m_PressedKey == KeyCode.V)
                   {
-                     PlaceNodeOnCanvas("LocalNode:UnityEngine.Vector3", true);
+                     PlaceNodeOnCanvas("UnityEngine.Vector3", true);
                   }
                   else if (m_PressedKey == KeyCode.I)
                   {
-                     PlaceNodeOnCanvas("LocalNode:System.Int32", true);
+                     PlaceNodeOnCanvas("int", true);
                   }
                   else if (m_PressedKey == KeyCode.F)
                   {
-                     PlaceNodeOnCanvas("LocalNode:System.Single", true);
+                     PlaceNodeOnCanvas("float", true);
                   }
                   else if (m_PressedKey == KeyCode.B)
                   {
-                     PlaceNodeOnCanvas("LocalNode:System.Boolean", true);
+                     PlaceNodeOnCanvas("bool", true);
                   }
                   else if (m_PressedKey == KeyCode.G)
                   {
-                     PlaceNodeOnCanvas("LocalNode:UnityEngine.GameObject", true);
+                     PlaceNodeOnCanvas("UnityEngine.GameObject", true);
                   }
                   else if (m_PressedKey == KeyCode.O)
                   {
-                     PlaceNodeOnCanvas("LocalNode:UnityEngine.Object", true);
+                     PlaceNodeOnCanvas("UnityEngine.Object", true);
                   }
                   else if (m_PressedKey == KeyCode.C)
                   {
@@ -2201,7 +2198,7 @@ public class uScript : EditorWindow
                   }
                   else if (m_PressedKey == KeyCode.L)
                   {
-                     PlaceNodeOnCanvas("LogicNode:uScriptAct_Log", true);
+                     PlaceNodeOnCanvas("uScriptAct_Log", true);
                   }
                   else if (m_PressedKey == KeyCode.Alpha1)
                   {
@@ -2277,9 +2274,12 @@ public class uScript : EditorWindow
       }
    }
 
-   public void PlaceNodeOnCanvas(string nodeType, bool useMousePosition)
+   /// <summary>Notifies uScript that a node should be created and placed the node on canvas.</summary>
+   /// <param name='nodeSignature'>The unique node signature as generated by uScript.GetNodeSignature().</param>
+   /// <param name='useMousePosition'>When True, the mouse position will be used as the node's initial canvas location.</param>
+   public void PlaceNodeOnCanvas(string nodeSignature, bool useMousePosition)
    {
-      _pendingNodeType = nodeType;
+      _pendingNodeSignature = nodeSignature;
       _pendingNodeUsesMousePosition = useMousePosition;
    }
 
@@ -5491,7 +5491,7 @@ public class uScript : EditorWindow
       if (uscriptType != null)
       {
          object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return "";
+         if (null == attributes) return "Z";
 
          foreach (object a in attributes)
          {
@@ -5521,9 +5521,19 @@ public class uScript : EditorWindow
          }
       }
 
-      return "";
-   }
+      string entityType = "method";
+      if (node is EntityProperty)
+      {
+         entityType = "property";
+      }
+      else if (node is EntityEvent)
+      {
+         entityType = "event";
+      }
 
+      return "This node appears to have been generated by reflection. It allows access to the \"" + uScript.GetNodeSignature(node) + "\" " + entityType + "."
+         + "\n\nPlease refer to the appropriate resource, such as MSDN or the Unity Script Reference, for usage and behavior information.";
+   }
 
    public static string FindParameterDescription(string type, Parameter p)
    {
@@ -5718,70 +5728,61 @@ public class uScript : EditorWindow
       return string.Empty;
    }
 
-   public static string GetCompoundNodeType(EntityNode node)
+   /// <summary>Get the unique signature for the specified EntityNode.</summary>
+   /// <returns>The node signature.</returns>
+   /// <param name='node'>The node to analyze.</param>
+   public static string GetNodeSignature(EntityNode node)
    {
-      if (node is EntityEvent)
+      if (node is CommentNode
+         || node is ExternalConnection
+         || node is OwnerConnection)
       {
-         return "EntityEvent:" + ((EntityEvent)node).ComponentType;
-      }
-      else if (node is LogicNode)
-      {
-         return "LogicNode:" + ((LogicNode)node).Type;
-      }
-      else if (node is EntityProperty)
-      {
-         return "EntityProperty:" + ((EntityProperty)node).ComponentType;
-      }
-      else if (node is EntityMethod)
-      {
-         EntityMethod entity = (EntityMethod)node;
-         return "EntityMethod:" + entity.ComponentType + ":" + entity.Input.Name;
-      }
-      else if (node is LocalNode)
-      {
-         return "LocalNode:" + ((LocalNode)node).Value.Type;
-      }
-      else if (node is CommentNode)
-      {
-         return "CommentNode";
-      }
-      else if (node is ExternalConnection)
-      {
-         return "ExternalConnection";
-      }
-      else if (node is OwnerConnection)
-      {
-         return "OwnerConnection";
+         return node.GetType().Name;
       }
 
-      uScriptDebug.Log("Unhandled node type: \"" + node.ToString() + "\"", uScriptDebug.Type.Error);
+      if (node is LocalNode)
+      {
+         return ScriptEditorCtrl.GetTypeAlias(((LocalNode)node).Value.Type);
+      }
+
+      if (node is EntityEvent)
+      {
+         // TODO: Do reflected events nodes need to have their signature included?
+         return ((EntityEvent)node).ComponentType;
+      }
+
+      if (node is EntityMethod)
+      {
+         EntityMethod m = (EntityMethod)node;
+         return m.ComponentType + "." + m.Input.Name + ScriptEditorCtrl.GetMethodSignature(m);
+      }
+
+      if (node is EntityProperty)
+      {
+         EntityProperty p = (EntityProperty)node;
+         return p.ComponentType + "." + p.Parameter.Name;
+      }
+
+      if (node is LogicNode)
+      {
+         return ((LogicNode)node).Type;
+      }
+
+      uScriptDebug.Log("Cannot generate node signature. Unhandled EntityNode type: " + node.GetType().ToString(), uScriptDebug.Type.Error);
       return string.Empty;
    }
 
    public static string GetNodeType(EntityNode node)
    {
-      string nodeType = ScriptEditor.FindNodeType(node);
-      if (string.IsNullOrEmpty(nodeType))
+      if (node is CommentNode
+         || node is ExternalConnection
+         || node is OwnerConnection
+         || node is LocalNode)
       {
-         // other node types...
-         if (node is CommentNode)
-         {
-            nodeType = "CommentNode";
-         }
-         else if (node is ExternalConnection)
-         {
-            nodeType = "ExternalConnection";
-         }
-         else if (node is OwnerConnection)
-         {
-            nodeType = "OwnerConnection";
-         }
-         else if (node is LocalNode)
-         {
-            nodeType = "LocalNode";
-         }
+         return node.GetType().Name;
       }
-      return nodeType;
+
+      return ScriptEditor.FindNodeType(node);
    }
 
 }

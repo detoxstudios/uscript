@@ -51,6 +51,10 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    int listItem_rowWidth;
    private static Dictionary<string, bool> _paletteMenuItemFoldout = new Dictionary<string, bool>();
    private List<PaletteMenuItem> _paletteMenuItems;
+   private List<PaletteMenuItem> _favoriteMenuItems;
+
+   public static int paletteMenuItemCount { get; private set; }
+
    public class PaletteMenuItem : Detox.Windows.Forms.MenuItem
    {
       public String Name;
@@ -125,15 +129,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       }
   
       
-      string[] favoriteNodes = uScript.Preferences.FavoriteNodes;
-      int favoriteNodeCount = 0;
-      foreach (string favorite in favoriteNodes)
-      {
-         if (string.IsNullOrEmpty(favorite) == false)
-         {
-            favoriteNodeCount++;
-         }
-      }
 
 
 
@@ -169,7 +164,12 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
                uScript._paletteMode = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
                //            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
-   
+
+               if (uScript.IsDevelopmentBuild)
+               {
+                  GUILayout.Label("(" + paletteMenuItemCount.ToString() + " items)", uScriptGUIStyle.toolbarLabel);
+               }
+
                GUILayout.FlexibleSpace();
    
                // Toggle hierarchy foldouts
@@ -318,6 +318,16 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          }
          EditorGUILayout.EndVertical();
 
+
+         int favoriteNodeCount = 0;
+         foreach (PaletteMenuItem item in _favoriteMenuItems)
+         {
+            if (item != null && item.Tag != null)
+            {
+               favoriteNodeCount++;
+            }
+         }
+
          if (favoriteNodeCount > 0)
          {
             GUILayout.Space(uScriptGUI.panelDividerThickness);
@@ -358,17 +368,18 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                   {
                      // We're using 5 for (buttonMargin + buttonVerticalOverflow)
                      Rect rect = new Rect(0, 5, 0, ROW_HEIGHT);
-                     
-                     for (int i = 0; i < favoriteNodes.Length; i++)
+
+                     for (int i = 0; i < _favoriteMenuItems.Count; i++)
                      {
-                        if (string.IsNullOrEmpty(favoriteNodes[i]) == false)
+                        PaletteMenuItem menuItem = _favoriteMenuItems[i];
+
+                        if (menuItem != null)  // && menuItem.Tag != null)
                         {
                            // Favorite number
                            rect.x = uScriptGUIStyle.nodeButtonFavoriteNumber.margin.left;
                            rect.width = uScriptGUIStyle.nodeButtonFavoriteNumber.fixedWidth;
 
                            int favoriteIndex = i + 1;
-                           string favoriteType = favoriteNodes[i];
 
                            int newIndex = EditorGUI.Popup(rect, favoriteIndex, uScriptGUIContent.favoriteOptions, uScriptGUIStyle.nodeButtonFavoriteNumber);
                            if (newIndex != favoriteIndex)
@@ -381,26 +392,37 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                               {
                                  uScript.Preferences.SwapFavoriteNodes(favoriteIndex, newIndex);
                               }
+
+                              uScriptGUIPanelPalette.Instance.BuildFavoritesMenu();
                            }
 
                            // Favorite name
-                           EntityNode entityNode = uScript.Instance.ScriptEditorCtrl.ScriptEditor.CreateEntityNode(favoriteType);
-                           string nodeName = (entityNode == null ? favoriteType : uScript.FindNodeName(uScript.GetNodeType(entityNode), entityNode));
-                           nodeName = favoriteType;
+                           string nodeName = menuItem.Name;
 
                            rect.x += rect.width;
                            rect.width = (listItem_rowWidth - rect.x - uScriptGUIStyle.nodeButtonFavoriteName.margin.right);
 
-                           //                        EntityNode node = uScriptInstance.ScriptEditorCtrl.g;
-                           //                        nodeName = uScript.FindNodeName(nodeName, node);
-                           
+                           if (menuItem.Tag == null)
+                           {
+                              GUI.color = new UnityEngine.Color(1, 0.5f, 0.5f, 1);
+                           }
+
                            if (GUI.Button(rect, nodeName, uScriptGUIStyle.nodeButtonFavoriteName))
                            {
-                              uScript.Instance.PlaceNodeOnCanvas(favoriteType, false);
+                              if (menuItem.Tag == null)
+                              {
+                                 uScriptDebug.Log("The node associated with this Favorite shortcut was not found in the Toolbox.\n\t"
+                                    + "It may have pointed to a reflected object that no longer exists in the scene.", uScriptDebug.Type.Warning);
+                              }
+                              else
+                              {
+                                 string nodeSignature = uScript.GetNodeSignature((EntityNode)menuItem.Tag);
+                                 uScript.Instance.PlaceNodeOnCanvas(nodeSignature, false);
+                              }
                            }
-      
+
                            GUI.color = UnityEngine.Color.white;
-                           
+
                            rect.y += ROW_HEIGHT;
                         }
                      }
@@ -577,7 +599,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       }
    }
 
-
    /// <summary>Filters the toolbox menu item, hiding it if any words in the search query were not found in the item's Name.</summary>
    /// <returns>True if the parent or item should be hidden, otherwise False</returns>
    /// <param name='paletteMenuItem'>The Toolbox menu item to examine.</param>
@@ -629,9 +650,68 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       return true;
    }
 
+   public PaletteMenuItem GetToolboxMenuItem(string nodeSignature)
+   {
+      PaletteMenuItem menuItem = null;
+
+      foreach (PaletteMenuItem item in _paletteMenuItems)
+      {
+         menuItem = GetToolboxMenuItem(nodeSignature, item);
+         if (menuItem != null)
+         {
+            return menuItem;
+         }
+      }
+
+      return null;
+   }
+
+   private PaletteMenuItem GetToolboxMenuItem(string nodeSignature, PaletteMenuItem currentMenuItem)
+   {
+      if (currentMenuItem == null)
+      {
+         return null;
+      }
+
+      if (currentMenuItem.Items != null && currentMenuItem.Items.Count > 0)
+      {
+         PaletteMenuItem menuItem = null;
+
+         foreach (PaletteMenuItem item in currentMenuItem.Items)
+         {
+            menuItem = GetToolboxMenuItem(nodeSignature, item);
+            if (menuItem != null)
+            {
+               return menuItem;
+            }
+         }
+      }
+      else if (currentMenuItem.Tag != null
+         && uScript.GetNodeSignature((EntityNode)currentMenuItem.Tag) == nodeSignature)
+      {
+         return currentMenuItem;
+      }
+
+      return null;
+   }
+
+   public EntityNode GetToolboxNode(string nodeSignature)
+   {
+      PaletteMenuItem menuItem = GetToolboxMenuItem(nodeSignature);
+      if (menuItem != null)
+      {
+         return ((EntityNode)menuItem.Tag).Copy(false);
+      }
+
+      return null;
+   }
+
+
    public void BuildPaletteMenu()
    {
       BuildPaletteMenu(null, null, string.Empty);
+
+      BuildFavoritesMenu();
    }
 
    private void BuildPaletteMenu(ToolStripItem contextMenuItem, PaletteMenuItem paletteMenuItem, string paletteMenuItemParent)
@@ -691,9 +771,12 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          {
             // This is a menu item
             paletteMenuItem.Name = contextMenuItem.Text.Replace("&", "");
+            paletteMenuItem.Path = (string.IsNullOrEmpty(paletteMenuItemParent) ? string.Empty : paletteMenuItemParent + "/") + paletteMenuItem.Name;
             paletteMenuItem.Tooltip = uScript.FindNodeToolTip(ScriptEditor.FindNodeType(contextMenuItem.Tag as EntityNode));
             paletteMenuItem.Click = contextMenuItem.Click;
             paletteMenuItem.Tag = contextMenuItem.Tag;
+
+            paletteMenuItemCount++;
          }
       }
       else
@@ -702,4 +785,44 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       }
    }
 
+   public void BuildFavoritesMenu()
+   {
+      if (_favoriteMenuItems == null)
+      {
+         _favoriteMenuItems = new List<PaletteMenuItem>(9);
+         for (int i = 0; i < 9; i++)
+         {
+            _favoriteMenuItems.Add(null);
+         }
+      }
+
+      for (int i = 0; i < 9; i++)
+      {
+         string nodeSignature = uScript.Preferences.GetFavoriteNode(i + 1);
+
+         if (string.IsNullOrEmpty(nodeSignature))
+         {
+            _favoriteMenuItems[i] = null;
+         }
+         else
+         {
+            if (_favoriteMenuItems[i] == null
+               || uScript.GetNodeSignature((EntityNode)_favoriteMenuItems[i].Tag) != nodeSignature)
+            {
+               _favoriteMenuItems[i] = GetToolboxMenuItem(nodeSignature);
+
+               // TODO: Don't use the actual palette menu item, duplicate it instead
+               //       Then update the name for EntityMethod, EntityProperty, and perhaps other nodes
+
+               if (_favoriteMenuItems[i] == null)
+               {
+                  // If the menu item is still null, the nodeSignature was not found.
+                  // Create a dummy favorite menu item to inform the user.
+                  _favoriteMenuItems[i] = new PaletteMenuItem();
+                  _favoriteMenuItems[i].Name = nodeSignature;
+               }
+            }
+         }
+      }
+   }
 }

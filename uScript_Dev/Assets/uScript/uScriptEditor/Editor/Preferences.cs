@@ -230,6 +230,17 @@ public class Preferences
       }
    }
 
+   public string GetFavoriteNode(int number)
+   {
+      if (number < 1 || number > 9)
+      {
+         uScriptDebug.Log("An invalid Favorite number was specified: " + number.ToString(), uScriptDebug.Type.Error);
+         return string.Empty;
+      }
+
+      return m_Preferences["FavoriteNode" + number.ToString()] as string;
+   }
+
    public void UpdateFavoriteNode(int number, string value)
    {
       if (number < 1 || number > 9)

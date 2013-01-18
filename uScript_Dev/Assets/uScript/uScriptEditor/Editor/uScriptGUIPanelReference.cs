@@ -33,7 +33,11 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
    public EntityNode hotSelection { set { _hotSelection = value; } }
 
    private Node _focusedNode = null;
-    
+
+   // Node variables
+   private string _nodeSignature = string.Empty;
+   private uScriptGUIPanelPalette.PaletteMenuItem _toolboxMenuItem = null;
+   private string _toolboxPath = string.Empty;
 
    //
    // Methods common to the panel classes
@@ -66,8 +70,6 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       string helpButtonTooltip = string.Empty;
       string helpButtonURL = string.Empty;
 
-      string nodeType = string.Empty;
-
       EntityNode node = null;
 
 
@@ -78,7 +80,6 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       if (_hotSelection != null)
       {
          node = _hotSelection;
-         nodeType = uScript.GetNodeType(node);
 
          currentNodeClassName = string.Empty;
          helpButtonURL = string.Empty;
@@ -98,8 +99,6 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
             if (node != null)
             {
-               nodeType = uScript.GetNodeType(node);
-
                string newNodeClassName = ScriptEditor.FindNodeType(node);
                if (newNodeClassName != currentNodeClassName)
                {
@@ -182,7 +181,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                }
                else
                {
-                  DrawNodeReferenceContent(node, nodeType, _hotSelection != null);
+                  DrawNodeReferenceContent(node);
                }
             }
             EditorGUILayout.EndScrollView();
@@ -352,36 +351,66 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       DrawFormattedParameter(m_ScriptEditorCtrl.ScriptEditor.Description);
    }
 
-   void DrawNodeReferenceContent(EntityNode node, string nodeType, bool isHotSelection)
+   void DrawNodeReferenceContent(EntityNode node)
    {
-      // For now, display the following text if this is a hot selection
-      if (isHotSelection)
+      string nodeSignature = uScript.GetNodeSignature(node);
+
+      if (_nodeSignature != nodeSignature)
       {
-         GUILayout.Label("HOT TIP:", EditorStyles.boldLabel);
+         _nodeSignature = nodeSignature;
+
+         _toolboxMenuItem = uScriptGUIPanelPalette.Instance.GetToolboxMenuItem(nodeSignature);
+
+         _toolboxPath = _toolboxMenuItem.Path;
+         int lastSeparatorIndex = _toolboxPath.LastIndexOf('/');
+         if (lastSeparatorIndex < 0)
+         {
+            _toolboxPath = string.Empty;
+         }
+         else
+         {
+            _toolboxPath = _toolboxPath.Substring(0, lastSeparatorIndex).Replace("/", " > ");
+         }
       }
 
-      // Node name
-      string nodeName = uScript.FindNodeName(nodeType, node);
-      GUILayout.Label(nodeName, uScriptGUIStyle.referenceName);
-      
-      // Identify reflected nodes
-      if (nodeName.StartsWith("Reflected "))
+      Rect rectNameRow = EditorGUILayout.BeginHorizontal();
       {
-         nodeType = "_reflected" + (nodeName.EndsWith(" action") ? "Action" : "Property");
+         // Node name
+         string nodeName = _toolboxMenuItem.Name; // uScript.FindNodeName(nodeType, node);
+         GUILayout.Label(nodeName, uScriptGUIStyle.referenceName);
+
+         // Node breadcrumbs
+         if (Event.current.type != EventType.Layout && string.IsNullOrEmpty(_toolboxPath) == false)
+         {
+            Vector2 sizeNameLabel = uScriptGUIStyle.referenceName.CalcSize(new GUIContent(nodeName));
+
+            GUIContent toolboxPath = new GUIContent(_toolboxPath);
+            while (toolboxPath.text != string.Empty
+               && rectNameRow.width < sizeNameLabel.x + 32 + uScriptGUIStyle.referenceInfo.CalcSize(toolboxPath).x)
+            {
+               int lastSeparatorIndex = toolboxPath.text.LastIndexOf(" > ");
+               if (lastSeparatorIndex < 0)
+               {
+                  toolboxPath.text = string.Empty;
+               }
+               else
+               {
+                  toolboxPath.text = toolboxPath.text.Substring(0, lastSeparatorIndex + 2);
+               }
+            }
+
+            if (toolboxPath.text != _toolboxPath)
+            {
+               toolboxPath.text += " ...";
+            }
+
+            GUI.Label(rectNameRow, toolboxPath, uScriptGUIStyle.referenceInfo);
+         }
       }
-
-//      // Node palette location
-//      r = GUILayoutUtility.GetLastRect();
-//      GUI.Label(r, "PATH", uScriptGUIStyle.referenceInfo);
-
-      // GUI.skin.customStyles:
-      //    "GUIEditor.BreadcrumbLeft"
-      //    "GUIEditor.BreadcrumbMid"
-
-//   328: "RL DragHandle"
-
+      EditorGUILayout.EndHorizontal();
 
       // Node description
+      string nodeType = uScript.GetNodeType(node);
       GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceDesc);
 
       // Display the dynamic parameters
