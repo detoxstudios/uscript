@@ -842,7 +842,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          string nodeSignature = uScript.Preferences.GetFavoriteNode(i + 1);
 
          PaletteMenuItem item = GetToolboxMenuItem(nodeSignature);
-         favoritePopupOptions[i + 1] = (i + 1).ToString() + "\t" + (item != null ? item.Name : "-");
+         favoritePopupOptions[i + 1] = (i + 1).ToString() + "    " + (item != null ? item.Name : "-");
 
          if (string.IsNullOrEmpty(nodeSignature))
          {
