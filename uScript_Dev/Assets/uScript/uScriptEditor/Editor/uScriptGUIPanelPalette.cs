@@ -52,6 +52,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    private static Dictionary<string, bool> _paletteMenuItemFoldout = new Dictionary<string, bool>();
    private List<PaletteMenuItem> _paletteMenuItems;
    private List<PaletteMenuItem> _favoriteMenuItems;
+   public string[] favoritePopupOptions;
 
    public static int paletteMenuItemCount { get; private set; }
 
@@ -165,24 +166,22 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                uScript._paletteMode = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
                //            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 
-               if (uScript.IsDevelopmentBuild)
-               {
-                  GUILayout.Label("(" + paletteMenuItemCount.ToString() + " items)", uScriptGUIStyle.toolbarLabel);
-               }
+//               if (uScript.IsDevelopmentBuild)
+//               {
+//                  GUILayout.Label("(" + paletteMenuItemCount.ToString() + " items)", uScriptGUIStyle.toolbarLabel);
+//               }
 
                GUILayout.FlexibleSpace();
-   
+
                // Toggle hierarchy foldouts
-               bool newToggleState = GUILayout.Toggle(_paletteFoldoutToggle,
-                                                      (_paletteFoldoutToggle ? uScriptGUIContent.buttonListCollapse : uScriptGUIContent.buttonListExpand),
-                                                      uScriptGUIStyle.paletteToolbarButton,
-                                                      GUILayout.ExpandWidth(false));
-               if (_paletteFoldoutToggle != newToggleState)
+               GUIContent toggleContent = (_paletteFoldoutToggle ? uScriptGUIContent.buttonListCollapse : uScriptGUIContent.buttonListExpand);
+               bool toggle = GUILayout.Toggle(_paletteFoldoutToggle, toggleContent, uScriptGUIStyle.paletteToolbarFoldoutButton, GUILayout.ExpandWidth(false));
+               if (_paletteFoldoutToggle != toggle)
                {
-                  _paletteFoldoutToggle = newToggleState;
+                  _paletteFoldoutToggle = toggle;
                   ExpandPaletteMenuItemFoldouts(_paletteFoldoutToggle);
                }
-   
+
                GUI.SetNextControlName("PaletteFilterSearch");
                string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
                //            GUI.SetNextControlName("");
@@ -318,56 +317,90 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          }
          EditorGUILayout.EndVertical();
 
+         DrawFavoritesPanel();
+      }
+      EditorGUILayout.EndVertical();
+      
+      if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScriptGUI.panelLeftWidth)
+      {
+         // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
+         uScriptGUI.panelLeftWidth = (int)uScript.Instance.paletteRect.width;
+      }
 
-         int favoriteNodeCount = 0;
-         foreach (PaletteMenuItem item in _favoriteMenuItems)
+//      uScriptGUI.DefineRegion(uScriptGUI.Region.Palette);
+      uScriptInstance.SetMouseRegion(uScript.MouseRegion.Palette);
+   }
+
+
+   private void DrawFavoritesPanel()
+   {
+      int favoriteNodeCount = 0;
+      foreach (PaletteMenuItem item in _favoriteMenuItems)
+      {
+         if (item != null && item.Tag != null)
          {
-            if (item != null && item.Tag != null)
-            {
-               favoriteNodeCount++;
-            }
+            favoriteNodeCount++;
          }
+      }
 
-         if (favoriteNodeCount > 0)
+      if (favoriteNodeCount > 0)
+      {
+         GUILayout.Space(uScriptGUI.panelDividerThickness);
+
+         bool isPanelExpanded = uScript.Preferences.ExpandFavoritePanel;
+
+         EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
          {
-            GUILayout.Space(uScriptGUI.panelDividerThickness);
-
-            bool favoritesPanelExpanded = uScript.Preferences.ExpandFavoritePanel;
-
-            EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+            EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
             {
-               EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
+               GUILayout.Label("Favorites", uScriptGUIStyle.panelTitle);
+
+//               if (favoritesPanelExpanded == false)
+//               {
+//                  int buttonWidth = (int)uScriptGUIStyle.favoriteButtonMiddle.CalcSize(new GUIContent("0")).x;
+//                  for (int i = 0; i < _favoriteMenuItems.Count; i++)
+//                  {
+//                     GUIStyle buttonStyle = (i == 0
+//                                             ? uScriptGUIStyle.favoriteButtonLeft
+//                                             : (i == _favoriteMenuItems.Count - 1
+//                                                ? uScriptGUIStyle.favoriteButtonRight
+//                                                : uScriptGUIStyle.favoriteButtonMiddle));
+//
+//                     if (_favoriteMenuItems[i] == null)
+//                     {
+//                        GUI.color = new UnityEngine.Color(0.9f, 0.9f, 0.9f, 1);
+//                        GUILayout.Label("-", buttonStyle, GUILayout.Width(buttonWidth));
+//                        GUI.color = UnityEngine.Color.white;
+//                     }
+//                     else if (GUILayout.Button((i + 1).ToString(), buttonStyle, GUILayout.Width(buttonWidth)))
+//                     {
+//                        CreateNode((EntityNode)_favoriteMenuItems[i].Tag);
+//                     }
+//                  }
+//               }
+
+               GUIContent toggleContent = (isPanelExpanded ? uScriptGUIContent.buttonListCollapse : uScriptGUIContent.buttonListExpand);
+               bool toggle = GUILayout.Toggle(isPanelExpanded, toggleContent, uScriptGUIStyle.favoriteButtonFoldout, GUILayout.ExpandWidth(false));
+               if (isPanelExpanded != toggle)
                {
-                  GUILayout.Label("Favorite Nodes", uScriptGUIStyle.panelTitle);
+                  isPanelExpanded = toggle;
+                  uScript.Preferences.ExpandFavoritePanel = isPanelExpanded;
+                  uScript.Preferences.Save();
+               }
+            }
+            EditorGUILayout.EndHorizontal();
 
-                  if (favoritesPanelExpanded == false)
-                  {
-                     Rect rect = GUILayoutUtility.GetLastRect();
-                     rect.x = rect.width + 8;
-                     rect.y -= 1;
-                     rect.height += 4;
-                     GUI.Label(rect, "(" + favoriteNodeCount.ToString() + ")", uScriptGUIStyle.toolbarLabel);
-                  }
-
+            if (isPanelExpanded)
+            {
+               // We're using 9 for (buttonMargin * 2 + buttonVerticalOverflow)
+               Rect areaRect = EditorGUILayout.BeginVertical(GUILayout.Height(favoriteNodeCount * ROW_HEIGHT + 9));
+               {
                   GUILayout.FlexibleSpace();
 
-                  if (GUILayout.Button((favoritesPanelExpanded ? uScriptGUIContent.favoritePanelCollapse
-                     : uScriptGUIContent.favoritePanelExpand), EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
-                  {
-                     favoritesPanelExpanded = !favoritesPanelExpanded;
-                     uScript.Preferences.ExpandFavoritePanel = favoritesPanelExpanded;
-                     uScript.Preferences.Save();
-                  }
-               }
-               EditorGUILayout.EndHorizontal();
-
-               if (favoritesPanelExpanded)
-               {
-                  // We're using 9 for (buttonMargin * 2 + buttonVerticalOverflow)
-                  EditorGUILayout.BeginScrollView(Vector2.zero, GUILayout.Height(favoriteNodeCount * ROW_HEIGHT + 9));
+                  if (Event.current.type != EventType.Layout)
                   {
                      // We're using 5 for (buttonMargin + buttonVerticalOverflow)
-                     Rect rect = new Rect(0, 5, 0, ROW_HEIGHT);
+                     Rect rowRect = new Rect(areaRect.x, areaRect.y + 5, 0, ROW_HEIGHT);
 
                      for (int i = 0; i < _favoriteMenuItems.Count; i++)
                      {
@@ -376,12 +409,12 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                         if (menuItem != null)  // && menuItem.Tag != null)
                         {
                            // Favorite number
-                           rect.x = uScriptGUIStyle.nodeButtonFavoriteNumber.margin.left;
-                           rect.width = uScriptGUIStyle.nodeButtonFavoriteNumber.fixedWidth;
+                           rowRect.x = uScriptGUIStyle.favoriteButtonNumber.margin.left;
+                           rowRect.width = uScriptGUIStyle.favoriteButtonNumber.fixedWidth;
 
                            int favoriteIndex = i + 1;
 
-                           int newIndex = EditorGUI.Popup(rect, favoriteIndex, uScriptGUIContent.favoriteOptions, uScriptGUIStyle.nodeButtonFavoriteNumber);
+                           int newIndex = EditorGUI.Popup(rowRect, favoriteIndex, favoritePopupOptions, uScriptGUIStyle.favoriteButtonNumber);
                            if (newIndex != favoriteIndex)
                            {
                               if (newIndex == 0)
@@ -399,52 +432,46 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                            // Favorite name
                            string nodeName = menuItem.Name;
 
-                           rect.x += rect.width;
-                           rect.width = (listItem_rowWidth - rect.x - uScriptGUIStyle.nodeButtonFavoriteName.margin.right);
+                           rowRect.x += rowRect.width;
+                           rowRect.width = (areaRect.width - rowRect.x - uScriptGUIStyle.favoriteButtonName.margin.right);
 
                            if (menuItem.Tag == null)
                            {
                               GUI.color = new UnityEngine.Color(1, 0.5f, 0.5f, 1);
                            }
-
-                           if (GUI.Button(rect, nodeName, uScriptGUIStyle.nodeButtonFavoriteName))
+   
+                           if (GUI.Button(rowRect, nodeName, uScriptGUIStyle.favoriteButtonName))
                            {
-                              if (menuItem.Tag == null)
-                              {
-                                 uScriptDebug.Log("The node associated with this Favorite shortcut was not found in the Toolbox.\n\t"
-                                    + "It may have pointed to a reflected object that no longer exists in the scene.", uScriptDebug.Type.Warning);
-                              }
-                              else
-                              {
-                                 string nodeSignature = uScript.GetNodeSignature((EntityNode)menuItem.Tag);
-                                 uScript.Instance.PlaceNodeOnCanvas(nodeSignature, false);
-                              }
+                              CreateNode((EntityNode)menuItem.Tag);
                            }
-
+   
                            GUI.color = UnityEngine.Color.white;
-
-                           rect.y += ROW_HEIGHT;
+   
+                           rowRect.y += ROW_HEIGHT;
                         }
                      }
                   }
-                  EditorGUILayout.EndScrollView();
                }
+               EditorGUILayout.EndVertical();
             }
-            EditorGUILayout.EndVertical();
          }
+         EditorGUILayout.EndVertical();
       }
-      EditorGUILayout.EndVertical();
-      
-      
-      
-      if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScriptGUI.panelLeftWidth)
-      {
-         // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
-         uScriptGUI.panelLeftWidth = (int)uScript.Instance.paletteRect.width;
-      }
+   }
 
-//      uScriptGUI.DefineRegion(uScriptGUI.Region.Palette);
-      uScriptInstance.SetMouseRegion(uScript.MouseRegion.Palette);
+
+   private void CreateNode(EntityNode node)
+   {
+      if (node == null)
+      {
+         uScriptDebug.Log("The node associated with this Favorite shortcut was not found in the Toolbox.\n\t"
+            + "It may have pointed to a reflected object that no longer exists in the scene.", uScriptDebug.Type.Warning);
+      }
+      else
+      {
+         string nodeSignature = uScript.GetNodeSignature((EntityNode)node);
+         uScript.Instance.PlaceNodeOnCanvas(nodeSignature, false);
+      }
    }
 
    private bool DetermineListStats(PaletteMenuItem item)
@@ -652,6 +679,11 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
    public PaletteMenuItem GetToolboxMenuItem(string nodeSignature)
    {
+      if (_paletteMenuItems == null)
+      {
+         return null;
+      }
+
       PaletteMenuItem menuItem = null;
 
       foreach (PaletteMenuItem item in _paletteMenuItems)
@@ -789,6 +821,8 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    {
       if (_favoriteMenuItems == null)
       {
+         favoritePopupOptions = new string[10];
+
          _favoriteMenuItems = new List<PaletteMenuItem>(9);
          for (int i = 0; i < 9; i++)
          {
@@ -796,9 +830,14 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          }
       }
 
+      favoritePopupOptions[0] = "-";
+
       for (int i = 0; i < 9; i++)
       {
          string nodeSignature = uScript.Preferences.GetFavoriteNode(i + 1);
+
+         PaletteMenuItem item = GetToolboxMenuItem(nodeSignature);
+         favoritePopupOptions[i + 1] = (i + 1).ToString() + "\t" + (item != null ? item.Name : "-");
 
          if (string.IsNullOrEmpty(nodeSignature))
          {

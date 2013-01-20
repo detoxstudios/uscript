@@ -89,8 +89,6 @@ public static class uScriptGUIContent
 
    public static GUIContent buttonWebForum { get; private set; }
 
-   public static string[] favoriteOptions { get; private set; }
-
    public static GUIContent favoritePanelCollapse { get; private set; }
 
    public static GUIContent favoritePanelExpand { get; private set; }
@@ -179,7 +177,6 @@ public static class uScriptGUIContent
       buttonWebDocumentation = new GUIContent("Online Reference", "Open the online uScript reference in the default web browser.");
       buttonWebForum = new GUIContent("Forum", "Open the online forum in the default web browser.");
 
-      favoriteOptions = new string[] { "-", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
       favoritePanelCollapse = new GUIContent(string.Empty, "Collapse this list.");
       favoritePanelExpand = new GUIContent(string.Empty, "Expand this list.");
 

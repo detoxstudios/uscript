@@ -12,7 +12,7 @@ public static class uScriptGUIStyle
    static string _currentSkin = string.Empty;
    static bool _stylesInitialized = false;
 
-   public static GUIStyle paletteToolbarButton { get; private set; }
+   public static GUIStyle paletteToolbarFoldoutButton { get; private set; }
 
    public static GUIStyle paletteFoldout { get; private set; }
 
@@ -44,9 +44,17 @@ public static class uScriptGUIStyle
 
    public static GUIStyle columnScrollView { get; private set; }
 
-   public static GUIStyle nodeButtonFavoriteNumber { get; private set; }
+   public static GUIStyle favoriteButtonFoldout { get; private set; }
 
-   public static GUIStyle nodeButtonFavoriteName { get; private set; }
+   public static GUIStyle favoriteButtonNumber { get; private set; }
+
+   public static GUIStyle favoriteButtonName { get; private set; }
+
+   public static GUIStyle favoriteButtonLeft { get; private set; }
+
+   public static GUIStyle favoriteButtonMiddle { get; private set; }
+
+   public static GUIStyle favoriteButtonRight { get; private set; }
 
    public static GUIStyle nodeButtonLeft { get; private set; }
 
@@ -172,8 +180,9 @@ public static class uScriptGUIStyle
 
       _stylesInitialized = true;
 
-      paletteToolbarButton = new GUIStyle(EditorStyles.toolbarButton);
-      paletteToolbarButton.margin = new RectOffset(12, 6, 0, 0);
+      paletteToolbarFoldoutButton = new GUIStyle(EditorStyles.toolbarButton);
+      paletteToolbarFoldoutButton.margin = new RectOffset(0, 6, 0, 0);
+      paletteToolbarFoldoutButton.padding = new RectOffset(2, 2, 0, 0);
 
       paletteFoldout = new GUIStyle(EditorStyles.foldout);
       paletteFoldout.padding = new RectOffset(12, 4, 2, 2);
@@ -203,6 +212,7 @@ public static class uScriptGUIStyle
       panelTitleDropDown = new GUIStyle(EditorStyles.toolbarDropDown);
       panelTitleDropDown.name = "panelTitleDropDown";
       panelTitleDropDown.font = EditorStyles.boldLabel.font;
+      panelTitleDropDown.margin = new RectOffset(0, 0, 0, 0);
       panelTitleDropDown.padding = new RectOffset(6, 12, 1, 3);
 
       referenceText = new GUIStyle(GUI.skin.label);
@@ -283,20 +293,42 @@ public static class uScriptGUIStyle
       nodeButtonRight.fixedHeight = 19;
       nodeButtonRight.contentOffset = new Vector2(-1, 1);
 
-      nodeButtonFavoriteNumber = new GUIStyle("ButtonLeft");
-      nodeButtonFavoriteNumber.name = "uScript_nodeButtonFavoriteNumber";
-      nodeButtonFavoriteNumber.fixedWidth = 20;
-      nodeButtonFavoriteNumber.fontStyle = FontStyle.Bold;
-      nodeButtonFavoriteNumber.overflow = new RectOffset(0, 0, 1, 1);
-      nodeButtonFavoriteNumber.margin = new RectOffset(4, 0, 0, 0);
+      favoriteButtonFoldout = new GUIStyle(EditorStyles.toolbarButton);
+      favoriteButtonFoldout.name = "uScript_favoriteButtonFoldout";
+      favoriteButtonFoldout.margin = new RectOffset(0, 0, 0, 0);
+      favoriteButtonFoldout.padding = new RectOffset(2, 2, 0, 0);
 
-      nodeButtonFavoriteName = new GUIStyle("ButtonRight");
-      nodeButtonFavoriteName.name = "uScript_nodeButtonFavoriteName";
-      nodeButtonFavoriteName.alignment = TextAnchor.MiddleLeft;
-      nodeButtonFavoriteName.contentOffset = new Vector2(0, -1);
-      nodeButtonFavoriteName.margin = new RectOffset(0, 4, 0, 0);
-      nodeButtonFavoriteName.overflow = new RectOffset(0, 0, 1, 1);
-      nodeButtonFavoriteName.padding = new RectOffset(6, 6, 2, 2);
+      favoriteButtonName = new GUIStyle("ButtonRight");
+      favoriteButtonName.name = "uScript_favoriteButtonName";
+      favoriteButtonName.alignment = TextAnchor.MiddleLeft;
+      favoriteButtonName.contentOffset = new Vector2(0, -1);
+      favoriteButtonName.margin = new RectOffset(0, 4, 0, 0);
+      favoriteButtonName.overflow = new RectOffset(0, 0, 1, 1);
+      favoriteButtonName.padding = new RectOffset(6, 6, 2, 2);
+
+      favoriteButtonNumber = new GUIStyle("ButtonLeft");
+      favoriteButtonNumber.name = "uScript_favoriteButtonNumber";
+      favoriteButtonNumber.alignment = TextAnchor.MiddleLeft;
+      favoriteButtonNumber.fixedWidth = 20;
+      favoriteButtonNumber.fontStyle = FontStyle.Bold;
+      favoriteButtonNumber.overflow = new RectOffset(0, 0, 1, 1);
+      favoriteButtonNumber.margin = new RectOffset(4, 0, 0, 0);
+      favoriteButtonNumber.padding = new RectOffset(7, 6, 1, 3);
+
+      favoriteButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
+      favoriteButtonLeft.name = "uScript_favoriteButtonLeft";
+      favoriteButtonLeft.margin = new RectOffset(4, 0, 1, 1);
+      favoriteButtonLeft.padding = new RectOffset(4, 4, 2, 2);
+
+      favoriteButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid);
+      favoriteButtonMiddle.name = "uScript_favoriteButtonMiddle";
+      favoriteButtonMiddle.margin = new RectOffset(0, 0, 1, 1);
+      favoriteButtonMiddle.padding = new RectOffset(4, 4, 2, 2);
+
+      favoriteButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
+      favoriteButtonRight.name = "uScript_favoriteButtonRight";
+      favoriteButtonRight.margin = new RectOffset(0, 4, 1, 1);
+      favoriteButtonRight.padding = new RectOffset(4, 4, 2, 2);
 
       contextMenu = new GUIStyle(EditorStyles.toolbarButton);
 
@@ -414,8 +446,6 @@ public static class uScriptGUIStyle
       referenceDetailAlertValue.name = "uScript_referenceDetailAlertValue";
       referenceDetailAlertValue.alignment = TextAnchor.MiddleRight;
 
-
-
       referenceName = new GUIStyle(EditorStyles.boldLabel);
       referenceName.name = "referenceName";
       referenceName.normal.background = _texture_underline;
@@ -449,8 +479,10 @@ public static class uScriptGUIStyle
 
       propertyButtonMiddleFavorite = new GUIStyle(propertyButtonMiddleDeprecated);
       propertyButtonMiddleFavorite.name = "uScript_propertyButtonMiddleFavorite";
+      propertyButtonMiddleFavorite.alignment = TextAnchor.MiddleLeft;
       propertyButtonMiddleFavorite.contentOffset = new Vector2(6, 0);
       propertyButtonMiddleFavorite.fixedWidth = 30;
+      propertyButtonMiddleFavorite.padding = new RectOffset(12, 6, 2, 3);
 
       propertyButtonMiddleFavoriteStar = new GUIStyle(EditorStyles.largeLabel);
       propertyButtonMiddleFavoriteStar.name = "uScript_propertyButtonMiddleFavoriteStar";
@@ -546,7 +578,10 @@ public static class uScriptGUIStyle
       }
    }
 
-
+   static public void Information(GUIStyle style)
+   {
+      Information(style, 5);
+   }
 
    static public void Information(GUIStyle style, int columns)
    {

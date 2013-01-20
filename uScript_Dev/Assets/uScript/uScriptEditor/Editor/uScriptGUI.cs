@@ -392,7 +392,7 @@ public static class uScriptGUI
             string[] favoriteNodes = uScript.Preferences.FavoriteNodes;
             int favoriteIndex = Array.IndexOf(favoriteNodes, favoriteNodeType) + 1;
 
-            int newIndex = EditorGUILayout.Popup(favoriteIndex, uScriptGUIContent.favoriteOptions, uScriptGUIStyle.propertyButtonMiddleFavorite, GUILayout.Width(30));
+            int newIndex = EditorGUILayout.Popup(favoriteIndex, uScriptGUIPanelPalette.Instance.favoritePopupOptions, uScriptGUIStyle.propertyButtonMiddleFavorite, GUILayout.Width(30));
             if (newIndex != favoriteIndex)
             {
                if (favoriteIndex == 0)
