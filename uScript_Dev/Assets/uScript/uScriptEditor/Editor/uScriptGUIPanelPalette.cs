@@ -824,25 +824,23 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
    public void BuildFavoritesMenu()
    {
+      int maxNumFavorites = 9;
+
       if (_favoriteMenuItems == null)
       {
-         favoritePopupOptions = new string[10];
-
-         _favoriteMenuItems = new List<PaletteMenuItem>(9);
-         for (int i = 0; i < 9; i++)
+         _favoriteMenuItems = new List<PaletteMenuItem>(maxNumFavorites);
+         for (int i = 0; i < maxNumFavorites; i++)
          {
             _favoriteMenuItems.Add(null);
          }
+
+         favoritePopupOptions = new string[maxNumFavorites + 1];
+         favoritePopupOptions[0] = "-";
       }
 
-      favoritePopupOptions[0] = "-";
-
-      for (int i = 0; i < 9; i++)
+      for (int i = 0; i < maxNumFavorites; i++)
       {
          string nodeSignature = uScript.Preferences.GetFavoriteNode(i + 1);
-
-         PaletteMenuItem item = GetToolboxMenuItem(nodeSignature);
-         favoritePopupOptions[i + 1] = (i + 1).ToString() + "    " + (item != null ? item.Name : "-");
 
          if (string.IsNullOrEmpty(nodeSignature))
          {
@@ -863,10 +861,16 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                   // If the menu item is still null, the nodeSignature was not found.
                   // Create a dummy favorite menu item to inform the user.
                   _favoriteMenuItems[i] = new PaletteMenuItem();
-                  _favoriteMenuItems[i].Name = nodeSignature;
+                  _favoriteMenuItems[i].Name = "(\u2718) " + nodeSignature;
                }
             }
          }
       }
+
+      for (int i = 0; i < maxNumFavorites; i++)
+      {
+         favoritePopupOptions[i + 1] = (i + 1).ToString() + "    " + (_favoriteMenuItems[i] == null ? "-" : _favoriteMenuItems[i].Name);
+      }
+
    }
 }
