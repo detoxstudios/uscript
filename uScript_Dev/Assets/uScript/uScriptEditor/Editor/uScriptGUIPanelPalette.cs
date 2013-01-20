@@ -340,7 +340,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       int favoriteNodeCount = 0;
       foreach (PaletteMenuItem item in _favoriteMenuItems)
       {
-         if (item != null && item.Tag != null)
+         if (item != null)
          {
             favoriteNodeCount++;
          }
@@ -405,6 +405,8 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                      // We're using 5 for (buttonMargin + buttonVerticalOverflow)
                      Rect rowRect = new Rect(areaRect.x, areaRect.y + 5, 0, ROW_HEIGHT);
 
+                     int popupWidth = (int)uScriptGUIStyle.favoriteButtonNumber.CalcSize(new GUIContent("0")).x;
+
                      for (int i = 0; i < _favoriteMenuItems.Count; i++)
                      {
                         PaletteMenuItem menuItem = _favoriteMenuItems[i];
@@ -413,7 +415,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                         {
                            // Favorite number
                            rowRect.x = uScriptGUIStyle.favoriteButtonNumber.margin.left;
-                           rowRect.width = uScriptGUIStyle.favoriteButtonNumber.fixedWidth;
+                           rowRect.width = popupWidth;
 
                            int favoriteIndex = i + 1;
 

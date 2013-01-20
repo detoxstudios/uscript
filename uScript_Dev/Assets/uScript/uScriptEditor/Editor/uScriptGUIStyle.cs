@@ -309,7 +309,6 @@ public static class uScriptGUIStyle
       favoriteButtonNumber = new GUIStyle("ButtonLeft");
       favoriteButtonNumber.name = "uScript_favoriteButtonNumber";
       favoriteButtonNumber.alignment = TextAnchor.MiddleLeft;
-      favoriteButtonNumber.fixedWidth = 20;
       favoriteButtonNumber.fontStyle = FontStyle.Bold;
       favoriteButtonNumber.overflow = new RectOffset(0, 0, 1, 1);
       favoriteButtonNumber.margin = new RectOffset(4, 0, 0, 0);

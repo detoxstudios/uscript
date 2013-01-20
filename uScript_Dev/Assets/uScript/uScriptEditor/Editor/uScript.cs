@@ -5768,7 +5768,10 @@ public class uScript : EditorWindow
          return ((LogicNode)node).Type;
       }
 
-      uScriptDebug.Log("Cannot generate node signature. Unhandled EntityNode type: " + node.GetType().ToString(), uScriptDebug.Type.Error);
+      if (node != null)
+      {
+         uScriptDebug.Log("Cannot generate node signature. Unhandled EntityNode type: " + node.GetType().ToString(), uScriptDebug.Type.Error);
+      }
       return string.Empty;
    }
 

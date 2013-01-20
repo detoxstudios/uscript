@@ -361,7 +361,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
          _toolboxMenuItem = uScriptGUIPanelPalette.Instance.GetToolboxMenuItem(nodeSignature);
 
-         _toolboxPath = _toolboxMenuItem.Path;
+         _toolboxPath = (_toolboxMenuItem != null ? _toolboxMenuItem.Path : string.Empty);
          int lastSeparatorIndex = _toolboxPath.LastIndexOf('/');
          if (lastSeparatorIndex < 0)
          {
@@ -376,7 +376,15 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       Rect rectNameRow = EditorGUILayout.BeginHorizontal();
       {
          // Node name
-         string nodeName = _toolboxMenuItem.Name; // uScript.FindNodeName(nodeType, node);
+         string nodeName;
+         if (_toolboxMenuItem == null)
+         {
+            nodeName = uScript.FindNodeName(uScript.GetNodeType(node), node);
+         }
+         else
+         {
+            nodeName = _toolboxMenuItem.Name;
+         }
          GUILayout.Label(nodeName, uScriptGUIStyle.referenceName);
 
          // Node breadcrumbs
