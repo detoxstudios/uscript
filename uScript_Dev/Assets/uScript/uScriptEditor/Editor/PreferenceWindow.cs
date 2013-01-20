@@ -196,6 +196,8 @@ public class PreferenceWindow : EditorWindow
          //
          GUILayout.Label("Performance Settings", EditorStyles.boldLabel);
 
+         _preferences.AutoExpandToolbox = EditorGUILayout.Toggle("Auto-Expand Toolbox on Search", _preferences.AutoExpandToolbox);
+
          _preferences.DrawPanelsOnUpdate = EditorGUILayout.Toggle("Draw Panels During Update", _preferences.DrawPanelsOnUpdate);
 
          EditorGUILayout.BeginHorizontal();

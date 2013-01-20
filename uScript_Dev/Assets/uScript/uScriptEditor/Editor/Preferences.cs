@@ -54,6 +54,12 @@ public class Preferences
       set { LoadIfRequired( ); m_Preferences[ "RelativeNestedScripts" ] = uScriptConfig.ConstantPaths.RelativePathInAssets(value); }
    }
 
+   public bool AutoExpandToolbox
+   {
+      get { LoadIfRequired( ); return (bool) m_Preferences[ "AutoExpandToolbox" ]; }
+      set { LoadIfRequired( ); m_Preferences[ "AutoExpandToolbox" ] = value; }
+   }
+
    public bool DrawPanelsOnUpdate
    {
       get { LoadIfRequired( ); return (bool) m_Preferences[ "DrawPanelsOnUpdate" ]; }
@@ -300,6 +306,7 @@ public class Preferences
 
    private void LoadDefaultsIfRequired( )
    {
+      if ( null == m_Preferences[ "AutoExpandToolbox" ] )    m_Preferences[ "AutoExpandToolbox" ]    = true;
       if ( null == m_Preferences[ "DrawPanelsOnUpdate" ] )   m_Preferences[ "DrawPanelsOnUpdate" ]   = false;
       if ( null == m_Preferences[ "ShowGrid" ] )             m_Preferences[ "ShowGrid" ]             = uScriptConfig.Style.ShowGrid;
       if ( null == m_Preferences[ "GridSize" ] )             m_Preferences[ "GridSize" ]             = uScriptConfig.Style.GridSize;
