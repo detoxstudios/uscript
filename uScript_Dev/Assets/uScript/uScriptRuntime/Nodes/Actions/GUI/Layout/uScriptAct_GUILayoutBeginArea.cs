@@ -22,7 +22,7 @@ public class uScriptAct_GUILayoutBeginArea : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Text", "Position and size of the area.")]
+      [FriendlyName("Position", "Position and size of the area.")]
       [SocketState(true, false)]
       Rect Position,
 
