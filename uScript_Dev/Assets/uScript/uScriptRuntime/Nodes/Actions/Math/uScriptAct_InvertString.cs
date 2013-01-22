@@ -39,7 +39,14 @@ public class uScriptAct_InvertString : uScriptLogic
    private static string ReverseString(string s)
    {
       char[] gnirts = s.ToCharArray();
-      System.Array.Reverse(gnirts);
+      int length = gnirts.Length;
+      int halfLength = length / 2;
+      for (int i = 0; i < halfLength; i++)
+      {
+         char temp = gnirts[i];
+         gnirts[i] = gnirts[length - i - 1];
+         gnirts[length - i - 1] = temp;
+      }
       return new string(gnirts);
    }
 }

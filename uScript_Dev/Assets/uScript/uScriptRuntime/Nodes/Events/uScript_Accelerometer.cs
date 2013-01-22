@@ -1,6 +1,12 @@
 // uScript uScript_Accelerometer.cs
 // (C) 2010 Detox Studios LLC
 
+#if (UNITY_FLASH)
+
+   // This node is not supported on Flash at this time. This compiler directive is needed for the project to compile for these devices without error.
+
+#else
+
 using UnityEngine;
 using System.Collections;
 
@@ -46,3 +52,5 @@ public class uScript_Accelerometer : uScriptEvent
       }
    }
 }
+
+#endif

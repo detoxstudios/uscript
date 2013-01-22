@@ -5301,7 +5301,9 @@ namespace Detox.ScriptEditor
             AddCSharpLine(UpdateEditorValuesDeclaration() + ";");
             AddCSharpLine("UnityEngine.Debug.Log(\"uScript BREAK Node:\" + name + \" ((Time: \" + Time.time + \"\");");
             AddCSharpLine("UnityEngine.Debug.Break();");
+            AddCSharpLine("#if (!UNITY_FLASH)");
             AddCSharpLine("m_ContinueExecution = new ContinueExecution(method);");
+            AddCSharpLine("#endif");
             AddCSharpLine("m_Breakpoint = true;");
             AddCSharpLine("return true;");
             --m_TabStack;

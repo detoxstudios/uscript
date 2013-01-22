@@ -1,3 +1,4 @@
+#if (!UNITY_FLASH)
 using UnityEngine;
 using System.Collections;
 using System.IO;
@@ -48,3 +49,5 @@ public class GetWatermarkData : MonoBehaviour
 
   
 }
+
+#endif
