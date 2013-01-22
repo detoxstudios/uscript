@@ -73,7 +73,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       else if (Target is System.Enum)
       {
          tempIntValue = (int)Target;
-         tempInt64Value = (System.Int64)Target;
+         tempInt64Value = (System.Int64)tempIntValue;
          tempFloatValue = tempIntValue;
          tempBooleanValue = tempIntValue == 0 ? false : true;
          tempStringValue = Target.ToString();
