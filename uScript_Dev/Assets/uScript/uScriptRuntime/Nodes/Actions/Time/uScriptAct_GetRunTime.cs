@@ -18,10 +18,15 @@ public class uScriptAct_GetRunTime : uScriptLogic
 
    public void In(
       [FriendlyName("Run Time", "Outputs the total number of seconds the game has been running.")]
-      out float RunTime
+      out float RunTime,
+
+      [FriendlyName("Fixed Run Time", "Outputs the fixed total number of seconds the game has been running.")]
+      [SocketState(false, false)]
+      out float FixedRunTime
       )
    {
       RunTime = Time.time;
+      FixedRunTime = Time.fixedTime;
 
    }
 }
