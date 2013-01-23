@@ -1575,6 +1575,8 @@ public class uScript : EditorWindow
    void OnGUI_HandleInput_Canvas()
    {
       Event e = Event.current;
+      
+      if ( e == null ) { Control.ModifierKeys.Pressed = 0; return; }
 
       int modifierKeys = 0;
 
