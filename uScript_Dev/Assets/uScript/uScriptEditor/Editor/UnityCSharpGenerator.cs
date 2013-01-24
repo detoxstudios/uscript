@@ -2086,24 +2086,26 @@ namespace Detox.ScriptEditor
             {
                AddCSharpLine(FormatType(lowestParameter.Type) + " " + CSharpName(external) + " = " + FormatValue(lowestParameter.Default, lowestParameter.Type) + ";");
             }
-
-            LinkNode[] links = FindLinksBySource(external.Guid, external.Connection);
-
-            foreach (LinkNode link in links)
+            else
             {
-               EntityNode node = m_Script.GetNode(link.Destination.Guid);
+               LinkNode[] links = FindLinksBySource(external.Guid, external.Connection);
 
-               if (node is EntityMethod || node is EntityProperty)
+               foreach (LinkNode link in links)
                {
-                  if (node.Instance.Name == link.Destination.Anchor)
-                  {
-                     AddCSharpLine(FormatType(node.Instance.Type) + " " + CSharpName(external) + " = " + FormatValue(node.Instance.Default, node.Instance.Type) + ";");
-                     break;
-                  }
-               }
+                  EntityNode node = m_Script.GetNode(link.Destination.Guid);
 
-               //only one link allowed for each external parameter output
-               break;
+                  if (node is EntityMethod || node is EntityProperty)
+                  {
+                     if (node.Instance.Name == link.Destination.Anchor)
+                     {
+                        AddCSharpLine(FormatType(node.Instance.Type) + " " + CSharpName(external) + " = " + FormatValue(node.Instance.Default, node.Instance.Type) + ";");
+                        break;
+                     }
+                  }
+
+                  //only one link allowed for each external parameter output
+                  break;
+               }
             }
          }
 
