@@ -297,23 +297,40 @@ public static class uScriptGUI
 
                if (expandCount != 0 || collapseCount != 0)
                {
-                  bool oldToggle = (collapseCount > 0);
+                  Rect toggleRect = GUILayoutUtility.GetLastRect();
+                  toggleRect.x += 3;
+                  toggleRect.y += 1;
+                  toggleRect.width = 20;
+                  toggleRect.height = 20;
+
+                  bool toggleState = (collapseCount > 0);
 
                   if (expandCount > 0 && collapseCount > 0)
                   {
                      EditorGUI.showMixedValue = true;
                   }
 
-                  Rect toggleRect = GUILayoutUtility.GetLastRect();
-                  toggleRect.x += 3;
-                  toggleRect.y += 1;
-                  toggleRect.width = 20;
-                  toggleRect.height = 20;
-      
-                  bool newToggle = GUI.Toggle(toggleRect, oldToggle, GUIContent.none, (EditorGUI.showMixedValue ? "ToggleMixed" : "Toggle"));
-                  if (oldToggle != newToggle)
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
+                  // The "ToggleMixed" style does not exist in Unity 3.x
+                  GUIStyle toggleStyle = GUI.skin.toggle;
+#else
+                  GUIStyle toggleStyle = (EditorGUI.showMixedValue ? "ToggleMixed" : GUI.skin.toggle);
+#endif
+                  GUI.changed = false;
+                  
+                  toggleState = GUI.Toggle(toggleRect, toggleState, GUIContent.none, toggleStyle);
+                  if (GUI.changed)
                   {
-                     if (newToggle)
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
+                     // When showing a mixed value on Unity 3.x, the toggle returns True when pressed.
+                     // It returns False on Unity 4.x.
+                     if (EditorGUI.showMixedValue)
+                     {
+                        toggleState = !toggleState;
+                     }
+#endif
+
+                     if (toggleState)
                      {
                         scriptEditorCtrl.ExpandNode(node);
                      }
