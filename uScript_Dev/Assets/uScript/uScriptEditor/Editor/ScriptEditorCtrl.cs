@@ -1541,7 +1541,7 @@ namespace Detox.ScriptEditor
          int countRemaining = countTotal - countFixed;
          if (countRemaining > 0)
          {
-            result += "\n" + countRemaining.ToString() + (countRemaining == 1 ? " node" : " nodes") + " could not be upgraded and need to be manually replaced.";
+            result += "\n" + countRemaining.ToString() + (countRemaining == 1 ? " node" : " nodes") + " could not be upgraded and must be manually replaced.";
          }
          uScriptDebug.Log(result, (countRemaining > 0 ? uScriptDebug.Type.Warning : uScriptDebug.Type.Message));
          

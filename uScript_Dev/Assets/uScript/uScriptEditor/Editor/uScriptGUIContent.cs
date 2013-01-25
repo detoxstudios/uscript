@@ -39,6 +39,8 @@ public static class uScriptGUIContent
 
    public static GUIContent buttonNodeFindDeprecated { get; private set; }
 
+   public static GUIContent buttonNodeFixAllDeprecated { get; private set; }
+   
    public static GUIContent buttonNodeSource { get; private set; }
 
    public static GUIContent buttonNodeToggle { get; private set; }
@@ -113,6 +115,8 @@ public static class uScriptGUIContent
 
    public static GUIContent messagePlaying { get; private set; }
 
+   public static GUIContent toolboxBreadcrumbs { get; private set; }
+
    public static GUIContent[] saveMethodList { get; private set; }
    
    public static void Init()
@@ -137,6 +141,7 @@ public static class uScriptGUIContent
       buttonNodeDeleteMissing = new GUIContent(string.Empty, "Delete this missing node.");
       buttonNodeFind = new GUIContent(string.Empty, "Center the canvas on this node.");
       buttonNodeFindDeprecated = new GUIContent(string.Empty, "Center the canvas on the next deprecated node.");
+      buttonNodeFixAllDeprecated = new GUIContent("Fix All", "Upgrade all deprecated nodes in this graph. If this graph is assigned to a specific Unity scene, please be sure that scene is open before doing this or you could loose work!");
       buttonNodeSource = new GUIContent("Source", "Ping the source file associated with this node.");
       buttonNodeToggle = new GUIContent(string.Empty, "Toggle socket visibility on this node (Show All or Hide Unused).");
       buttonNodeUpgrade = new GUIContent(string.Empty, "Upgrade this deprecated node.");
@@ -182,6 +187,8 @@ public static class uScriptGUIContent
 
       messageCompiling = new GUIContent("The Unity Editor is compiling one or more scripts. Please wait.");
       messagePlaying = new GUIContent("The Unity Editor is in play mode!");
+
+      toolboxBreadcrumbs = new GUIContent(string.Empty, "Search for this node in the Toolbox.");
 
 //#if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4)
 //      iconHelp = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/_Help.png") as Texture2D);
@@ -247,6 +254,8 @@ public static class uScriptGUIContent
          iconWarn32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconWarn32.png", typeof(UnityEngine.Texture2D)));
          iconError16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconError16.png", typeof(UnityEngine.Texture2D)));
          iconError32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconError32.png", typeof(UnityEngine.Texture2D)));
+
+         toolboxBreadcrumbs.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
       }
    }
 

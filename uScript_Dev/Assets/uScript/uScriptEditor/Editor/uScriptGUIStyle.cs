@@ -74,6 +74,8 @@ public static class uScriptGUIStyle
 
    public static GUIStyle menuContextButton { get; private set; }
 
+   public static GUIStyle outline { get; private set; }
+
    public static GUIStyle panelMessage { get; private set; }
 
    public static GUIStyle panelMessageBold { get; private set; }
@@ -106,9 +108,9 @@ public static class uScriptGUIStyle
 
    public static GUIStyle propertyTextField { get; private set; }
 
-   public static GUIStyle referenceName { get; private set; }
-
    public static GUIStyle referenceInfo { get; private set; }
+
+   public static GUIStyle referenceName { get; private set; }
 
    public static GUIStyle referenceDesc { get; private set; }
 
@@ -369,6 +371,13 @@ public static class uScriptGUIStyle
       menuContextButton.margin = new RectOffset();
       menuContextButton.padding = new RectOffset(8, 8, 4, 4);
 
+      outline = new GUIStyle(GUI.skin.box);
+      outline.name = "uScript_outline";
+      outline.margin = new RectOffset();
+      outline.padding = new RectOffset();
+      outline.stretchHeight = false;
+      outline.stretchWidth = false;
+
       panelMessage = new GUIStyle(GUI.skin.label);
       panelMessage.wordWrap = true;
       panelMessage.padding = new RectOffset(16, 16, 16, 16);
@@ -413,8 +422,7 @@ public static class uScriptGUIStyle
 
       referenceDetailTitle = new GUIStyle(EditorStyles.boldLabel);
       referenceDetailTitle.name = "uScript_referenceDetailTitle";
-      referenceDetailTitle.margin = EditorStyles.label.margin;
-      referenceDetailTitle.margin = new RectOffset(0, 12, 0, 0);
+      referenceDetailTitle.margin = new RectOffset();
       referenceDetailTitle.padding = new RectOffset(2, 2, 2, 3);
       referenceDetailTitle.stretchWidth = false;
 //      referenceDetailTitle.normal.background = GUI.skin.box.normal.background;
@@ -431,6 +439,9 @@ public static class uScriptGUIStyle
       referenceDetailValue = new GUIStyle(referenceDetailLabel);
       referenceDetailValue.name = "uScript_referenceDetailValue";
       referenceDetailValue.alignment = TextAnchor.MiddleRight;
+      referenceDetailValue.margin = new RectOffset(12, 0, 0, 0);
+//      referenceDetailValue.normal.background = GUI.skin.box.normal.background;
+//      referenceDetailValue.border = GUI.skin.box.border;
 
       referenceDetailAlertLabel = new GUIStyle(EditorStyles.boldLabel);
       referenceDetailAlertLabel.name = "uScript_referenceDetailAlertLabel";
@@ -444,6 +455,9 @@ public static class uScriptGUIStyle
       referenceDetailAlertValue = new GUIStyle(referenceDetailAlertLabel);
       referenceDetailAlertValue.name = "uScript_referenceDetailAlertValue";
       referenceDetailAlertValue.alignment = TextAnchor.MiddleRight;
+      referenceDetailAlertValue.margin = new RectOffset(12, 0, 0, 0);
+//      referenceDetailAlertValue.normal.background = GUI.skin.box.normal.background;
+//      referenceDetailAlertValue.border = GUI.skin.box.border;
 
       referenceName = new GUIStyle(EditorStyles.boldLabel);
       referenceName.name = "referenceName";
@@ -452,7 +466,7 @@ public static class uScriptGUIStyle
       referenceName.padding = new RectOffset(0, 0, 2, 2);
 
       referenceInfo = new GUIStyle(EditorStyles.miniLabel);
-      referenceInfo.name = "referenceInfo";
+      referenceInfo.name = "uScript_referenceInfo";
       referenceInfo.alignment = TextAnchor.LowerRight;
       referenceInfo.padding = new RectOffset(0, 0, 3, 2);
 
@@ -553,6 +567,12 @@ public static class uScriptGUIStyle
          result += "\t" + i.ToString("000") + ": \"" + GUI.skin.customStyles[i].name + "\"\n";
       }
       Debug.Log(result);
+
+      // "PaneOptions"
+      // "AnimationEventTooltip"
+      // "DropDownButton"
+      // "SearchTextField"
+      // "ToolbarSearchTextField"
    }
 
    private class StyleInformationItem

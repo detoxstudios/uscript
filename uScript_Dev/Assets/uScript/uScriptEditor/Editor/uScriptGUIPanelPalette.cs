@@ -184,7 +184,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
                GUI.SetNextControlName("PaletteFilterSearch");
                string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
-               //            GUI.SetNextControlName("");
+
                if (_filterText != _panelFilterText)
                {
                   // Drop focus if the user inserted a newline (hit enter)
@@ -196,14 +196,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                   // Trim leading whitespace
                   _filterText = _filterText.TrimStart();
    
-                  _panelFilterText = _filterText;
-                  FilterToolboxMenuItems();
-
-                  if (uScript.Preferences.AutoExpandToolbox)
-                  {
-                     _paletteFoldoutToggle = _panelFilterText != string.Empty;
-                     ExpandPaletteMenuItemFoldouts(_paletteFoldoutToggle);
-                  }
+                  FilterToolboxMenuItems(_filterText, false);
                }
             }
             EditorGUILayout.EndHorizontal();
@@ -623,11 +616,19 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       }
    }
 
-   private void FilterToolboxMenuItems()
+   public void FilterToolboxMenuItems(string filterText, bool forceExpandToolbox)
    {
+      _panelFilterText = filterText;
+
       foreach (PaletteMenuItem item in _paletteMenuItems)
       {
          item.Hidden = FilterToolboxMenuItem(item, false);
+      }
+
+      if (uScript.Preferences.AutoExpandToolbox || forceExpandToolbox)
+      {
+         _paletteFoldoutToggle = _panelFilterText != string.Empty;
+         ExpandPaletteMenuItemFoldouts(_paletteFoldoutToggle);
       }
    }
 
