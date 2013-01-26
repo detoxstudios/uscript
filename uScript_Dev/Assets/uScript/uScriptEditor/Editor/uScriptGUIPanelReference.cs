@@ -146,7 +146,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                Help.BrowseURL("http://uscript.net/forum");
             }
 
-            if (GUILayout.Button("?", EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(uScriptGUIContent.commandReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                ReferenceWindow.Init();
             }

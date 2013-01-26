@@ -40,7 +40,7 @@ public static class uScriptGUIContent
    public static GUIContent buttonNodeFindDeprecated { get; private set; }
 
    public static GUIContent buttonNodeFixAllDeprecated { get; private set; }
-   
+
    public static GUIContent buttonNodeSource { get; private set; }
 
    public static GUIContent buttonNodeToggle { get; private set; }
@@ -90,6 +90,8 @@ public static class uScriptGUIContent
    public static GUIContent buttonWebDocumentation { get; private set; }
 
    public static GUIContent buttonWebForum { get; private set; }
+
+   public static GUIContent commandReference { get; private set; }
 
    public static GUIContent favoritePanelCollapse { get; private set; }
 
@@ -182,6 +184,8 @@ public static class uScriptGUIContent
       buttonWebDocumentation = new GUIContent("Online Reference", "Open the online uScript reference in the default web browser.");
       buttonWebForum = new GUIContent("Forum", "Open the online forum in the default web browser.");
 
+      commandReference = new GUIContent(string.Empty, "Open the Quick Command Reference window.");
+
       favoritePanelCollapse = new GUIContent(string.Empty, "Collapse this list.");
       favoritePanelExpand = new GUIContent(string.Empty, "Expand this list.");
 
@@ -242,6 +246,8 @@ public static class uScriptGUIContent
          buttonNodeToggle.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniToggle.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          buttonNodeUpgrade.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniUpgrade.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
          buttonNodeDeleteMissing.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniDelete.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+
+         commandReference.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconKeyboard.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
 
          favoritePanelCollapse.image = buttonListCollapse.image;
          favoritePanelExpand.image = buttonListExpand.image;
