@@ -1249,9 +1249,7 @@ public class uScript : EditorWindow
       // Store the current event locally since it is reference so frequently
       Event e = Event.current;
 
-      //
       // Make sure the initial window size it not too small
-      //
       if (_firstRun)
       {
          _firstRun = false;
@@ -1276,7 +1274,17 @@ public class uScript : EditorWindow
          return;
       }
 
-      //must be done in OnGUI rather than on demand
+      // Drop keyboard focus from the active control if anything else is clicked
+      if (e.type == EventType.MouseDown)
+      {
+         if (GUIUtility.hotControl != GUIUtility.keyboardControl)
+         {
+            GUIUtility.keyboardControl = 0;
+            this.Repaint();
+         }
+      }
+
+      // Must be done in OnGUI rather than on demand
       m_ScriptEditorCtrl.ParseClipboardData( );
 
       GUI.enabled = isLicenseAccepted && !isPreferenceWindowOpen;
