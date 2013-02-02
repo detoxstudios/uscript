@@ -17,12 +17,11 @@ public class uScriptAct_GUISelectionGrid : uScriptLogic
 /*
    TODO: Add support for passing Texture[] and GUIContent[] to the buttons
 */
+   public bool Out { get { return true; } }
 
    [FriendlyName("Changed")]
    public bool Changed { get { return m_Changed; } }
    private bool m_Changed = false;
-
-   public bool Out { get { return true; } }
 
    public void In(
       [FriendlyName("Selected", "The index of the selected grid button.")]

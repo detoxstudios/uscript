@@ -14,12 +14,12 @@ using System.Collections;
 [FriendlyName("GUI Toggle", "Shows a GUIToggle on the screen and allows responses when changed.")]
 public class uScriptAct_GUIToggle : uScriptLogic
 {
+   public bool Out { get { return true; } }
+
    [FriendlyName("Changed")]
    public bool Changed { get { return m_Changed; } }
    private bool m_Changed = false;
-
-   public bool Out { get { return true; } }
-
+    
    public void In(
       [FriendlyName("Value", "The value of this toggle.")]
       ref bool Value,

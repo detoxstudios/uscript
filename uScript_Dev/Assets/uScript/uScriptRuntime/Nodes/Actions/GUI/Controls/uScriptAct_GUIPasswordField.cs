@@ -14,11 +14,11 @@ using System.Collections;
 [FriendlyName("GUI Password Field", "Shows a GUIPasswordField on the screen and allows getting/setting of its string contents and repsonses to changed event.")]
 public class uScriptAct_GUIPasswordField : uScriptLogic
 {
+   public bool Out { get { return true; } }
+
    [FriendlyName("Changed")]
    public bool Changed { get { return m_Changed; } }
    private bool m_Changed = false;
-
-   public bool Out { get { return true; } }
 
    public void In(
       [FriendlyName("Value", "The value of this text field.")]
