@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2123
+//uScript Generated Code - Build 0.9.2215
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -456,6 +456,8 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("eb7ef601-e1b7-40d7-a4d0-ae30ced8afde", "Delay", Relay_In_1)) return; 
          {
+            {
+            }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_1.In(logic_uScriptAct_Delay_Duration_1);
          logic_uScriptAct_Delay_DrivenDelay_1 = true;
@@ -479,6 +481,8 @@ public class FadeGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
          }
          logic_uScriptAct_Delay_DrivenDelay_1 = logic_uScriptAct_Delay_uScriptAct_Delay_1.DrivenDelay();
          if ( true == logic_uScriptAct_Delay_DrivenDelay_1 )
@@ -501,18 +505,28 @@ public class FadeGraph : uScriptLogic
          if (true == CheckDebugBreak("6f2fb82a-2c88-420a-a5b2-8f3688ee83b2", "Get Material", Relay_In_2)) return; 
          {
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
                {
-                  //tear down old listeners
-                  
-                  local_FadeGO_UnityEngine_GameObject_previous = local_FadeGO_UnityEngine_GameObject;
-                  
-                  //setup new listeners
+                  //if our game object reference was changed then we need to reset event listeners
+                  if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
+                  {
+                     //tear down old listeners
+                     
+                     local_FadeGO_UnityEngine_GameObject_previous = local_FadeGO_UnityEngine_GameObject;
+                     
+                     //setup new listeners
+                  }
                }
+               logic_uScriptAct_GetGameObjectMaterial_Target_2 = local_FadeGO_UnityEngine_GameObject;
+               
             }
-            logic_uScriptAct_GetGameObjectMaterial_Target_2 = local_FadeGO_UnityEngine_GameObject;
-            
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_GetGameObjectMaterial_uScriptAct_GetGameObjectMaterial_2.In(logic_uScriptAct_GetGameObjectMaterial_Target_2, logic_uScriptAct_GetGameObjectMaterial_MaterialIndex_2, out logic_uScriptAct_GetGameObjectMaterial_targetMaterial_2, out logic_uScriptAct_GetGameObjectMaterial_materialColor_2, out logic_uScriptAct_GetGameObjectMaterial_materialName_2);
          local_FadeColor_UnityEngine_Color = logic_uScriptAct_GetGameObjectMaterial_materialColor_2;
@@ -537,10 +551,18 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("86e8c8f8-f78e-4f22-8a0f-30b7c4bb6fb8", "Set Color Alpha", Relay_In_4)) return; 
          {
-            logic_uScriptAct_SetColorAlpha_Value_4 = local_FadeColor_UnityEngine_Color;
-            
-            logic_uScriptAct_SetColorAlpha_Alpha_4 = local_11_System_Single;
-            
+            {
+               logic_uScriptAct_SetColorAlpha_Value_4 = local_FadeColor_UnityEngine_Color;
+               
+            }
+            {
+               logic_uScriptAct_SetColorAlpha_Alpha_4 = local_11_System_Single;
+               
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_SetColorAlpha_uScriptAct_SetColorAlpha_4.In(logic_uScriptAct_SetColorAlpha_Value_4, logic_uScriptAct_SetColorAlpha_Alpha_4, logic_uScriptAct_SetColorAlpha_Use8bitRange_4, out logic_uScriptAct_SetColorAlpha_TargetColor_4);
          local_12_UnityEngine_Color = logic_uScriptAct_SetColorAlpha_TargetColor_4;
@@ -565,27 +587,28 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("f9e8a542-8cb9-49c0-af02-6fedaa3a6ec8", "Assign Material Color", Relay_In_5)) return; 
          {
-            int index;
-            index = 0;
             {
-               //if our game object reference was changed then we need to reset event listeners
-               if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
+               List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
                {
-                  //tear down old listeners
-                  
-                  local_FadeGO_UnityEngine_GameObject_previous = local_FadeGO_UnityEngine_GameObject;
-                  
-                  //setup new listeners
+                  //if our game object reference was changed then we need to reset event listeners
+                  if ( local_FadeGO_UnityEngine_GameObject_previous != local_FadeGO_UnityEngine_GameObject || false == m_RegisteredForEvents )
+                  {
+                     //tear down old listeners
+                     
+                     local_FadeGO_UnityEngine_GameObject_previous = local_FadeGO_UnityEngine_GameObject;
+                     
+                     //setup new listeners
+                  }
                }
+               properties.Add(local_FadeGO_UnityEngine_GameObject);
+               logic_uScriptAct_AssignMaterialColor_Target_5 = properties.ToArray();
             }
-            if ( logic_uScriptAct_AssignMaterialColor_Target_5.Length <= index)
             {
-               System.Array.Resize(ref logic_uScriptAct_AssignMaterialColor_Target_5, index + 1);
+               logic_uScriptAct_AssignMaterialColor_MatColor_5 = local_12_UnityEngine_Color;
+               
             }
-            logic_uScriptAct_AssignMaterialColor_Target_5[ index++ ] = local_FadeGO_UnityEngine_GameObject;
-            
-            logic_uScriptAct_AssignMaterialColor_MatColor_5 = local_12_UnityEngine_Color;
-            
+            {
+            }
          }
          logic_uScriptAct_AssignMaterialColor_uScriptAct_AssignMaterialColor_5.In(logic_uScriptAct_AssignMaterialColor_Target_5, logic_uScriptAct_AssignMaterialColor_MatColor_5, logic_uScriptAct_AssignMaterialColor_MatChannel_5);
          
@@ -604,8 +627,18 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("144af89c-f91c-4294-a390-686c53872f60", "Get Components (Color)", Relay_In_7)) return; 
          {
-            logic_uScriptAct_GetComponentsColor_InputColor_7 = local_FadeColor_UnityEngine_Color;
-            
+            {
+               logic_uScriptAct_GetComponentsColor_InputColor_7 = local_FadeColor_UnityEngine_Color;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_GetComponentsColor_uScriptAct_GetComponentsColor_7.In(logic_uScriptAct_GetComponentsColor_InputColor_7, out logic_uScriptAct_GetComponentsColor_Red_7, out logic_uScriptAct_GetComponentsColor_Green_7, out logic_uScriptAct_GetComponentsColor_Blue_7, out logic_uScriptAct_GetComponentsColor_Alpha_7);
          local_8_System_Single = logic_uScriptAct_GetComponentsColor_Alpha_7;
@@ -630,8 +663,22 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("5021645e-5e4d-45e0-9b94-ee091b4abaee", "Interpolate Float Linear", Relay_Begin_9)) return; 
          {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
-            
+            {
+               logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Begin(logic_uScriptAct_InterpolateFloatLinear_startValue_9, logic_uScriptAct_InterpolateFloatLinear_endValue_9, logic_uScriptAct_InterpolateFloatLinear_time_9, logic_uScriptAct_InterpolateFloatLinear_loopType_9, logic_uScriptAct_InterpolateFloatLinear_loopDelay_9, logic_uScriptAct_InterpolateFloatLinear_loopCount_9, out logic_uScriptAct_InterpolateFloatLinear_currentValue_9);
          logic_uScriptAct_InterpolateFloatLinear_Driven_9 = true;
@@ -657,8 +704,22 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("5021645e-5e4d-45e0-9b94-ee091b4abaee", "Interpolate Float Linear", Relay_Stop_9)) return; 
          {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
-            
+            {
+               logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Stop(logic_uScriptAct_InterpolateFloatLinear_startValue_9, logic_uScriptAct_InterpolateFloatLinear_endValue_9, logic_uScriptAct_InterpolateFloatLinear_time_9, logic_uScriptAct_InterpolateFloatLinear_loopType_9, logic_uScriptAct_InterpolateFloatLinear_loopDelay_9, logic_uScriptAct_InterpolateFloatLinear_loopCount_9, out logic_uScriptAct_InterpolateFloatLinear_currentValue_9);
          logic_uScriptAct_InterpolateFloatLinear_Driven_9 = true;
@@ -684,8 +745,22 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("5021645e-5e4d-45e0-9b94-ee091b4abaee", "Interpolate Float Linear", Relay_Resume_9)) return; 
          {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
-            
+            {
+               logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Resume(logic_uScriptAct_InterpolateFloatLinear_startValue_9, logic_uScriptAct_InterpolateFloatLinear_endValue_9, logic_uScriptAct_InterpolateFloatLinear_time_9, logic_uScriptAct_InterpolateFloatLinear_loopType_9, logic_uScriptAct_InterpolateFloatLinear_loopDelay_9, logic_uScriptAct_InterpolateFloatLinear_loopCount_9, out logic_uScriptAct_InterpolateFloatLinear_currentValue_9);
          logic_uScriptAct_InterpolateFloatLinear_Driven_9 = true;
@@ -710,8 +785,22 @@ public class FadeGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
-            
+            {
+               logic_uScriptAct_InterpolateFloatLinear_startValue_9 = local_8_System_Single;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_InterpolateFloatLinear_Driven_9 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_9.Driven(out logic_uScriptAct_InterpolateFloatLinear_currentValue_9);
          if ( true == logic_uScriptAct_InterpolateFloatLinear_Driven_9 )
@@ -734,8 +823,22 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("d29ba26d-00a2-4feb-8344-4705b1fdef21", "Camera Fade", Relay_In_14)) return; 
          {
-            logic_uScriptAct_CameraFade_FadeMaterial_14 = FadeMaterial;
-            
+            {
+            }
+            {
+            }
+            {
+               logic_uScriptAct_CameraFade_FadeMaterial_14 = FadeMaterial;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_CameraFade_uScriptAct_CameraFade_14.In(logic_uScriptAct_CameraFade_TargetCamera_14, logic_uScriptAct_CameraFade_Direction_14, logic_uScriptAct_CameraFade_FadeMaterial_14, logic_uScriptAct_CameraFade_FadeTime_14, logic_uScriptAct_CameraFade_HoldTime_14, logic_uScriptAct_CameraFade_ColorOverride_14, logic_uScriptAct_CameraFade_FadeColor_14);
          logic_uScriptAct_CameraFade_DrivenFade_14 = true;
@@ -765,8 +868,22 @@ public class FadeGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
-            logic_uScriptAct_CameraFade_FadeMaterial_14 = FadeMaterial;
-            
+            {
+            }
+            {
+            }
+            {
+               logic_uScriptAct_CameraFade_FadeMaterial_14 = FadeMaterial;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_CameraFade_DrivenFade_14 = logic_uScriptAct_CameraFade_uScriptAct_CameraFade_14.DrivenFade();
          if ( true == logic_uScriptAct_CameraFade_DrivenFade_14 )
@@ -809,21 +926,20 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("7aef1b47-5fd6-4317-9811-7d9756744c9f", "Concatenate", Relay_In_17)) return; 
          {
-            int index;
-            index = 0;
-            if ( logic_uScriptAct_Concatenate_A_17.Length <= index)
             {
-               System.Array.Resize(ref logic_uScriptAct_Concatenate_A_17, index + 1);
+               List<System.Object> properties = new List<System.Object>();
+               properties.Add(local_19_System_String);
+               logic_uScriptAct_Concatenate_A_17 = properties.ToArray();
             }
-            logic_uScriptAct_Concatenate_A_17[ index++ ] = local_19_System_String;
-            
-            index = 0;
-            if ( logic_uScriptAct_Concatenate_B_17.Length <= index)
             {
-               System.Array.Resize(ref logic_uScriptAct_Concatenate_B_17, index + 1);
+               List<System.Object> properties = new List<System.Object>();
+               properties.Add(local_PlayerHealth_System_Single);
+               logic_uScriptAct_Concatenate_B_17 = properties.ToArray();
             }
-            logic_uScriptAct_Concatenate_B_17[ index++ ] = local_PlayerHealth_System_Single;
-            
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_Concatenate_uScriptAct_Concatenate_17.In(logic_uScriptAct_Concatenate_A_17, logic_uScriptAct_Concatenate_B_17, logic_uScriptAct_Concatenate_Separator_17, out logic_uScriptAct_Concatenate_Result_17);
          local_25_System_String = logic_uScriptAct_Concatenate_Result_17;
@@ -848,8 +964,22 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("7ad5f849-e329-4618-a824-d6878000c3c8", "Print Text", Relay_ShowLabel_18)) return; 
          {
-            logic_uScriptAct_PrintText_Text_18 = local_25_System_String;
-            
+            {
+               logic_uScriptAct_PrintText_Text_18 = local_25_System_String;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_PrintText_uScriptAct_PrintText_18.ShowLabel(logic_uScriptAct_PrintText_Text_18, logic_uScriptAct_PrintText_FontSize_18, logic_uScriptAct_PrintText_FontStyle_18, logic_uScriptAct_PrintText_FontColor_18, logic_uScriptAct_PrintText_textAnchor_18, logic_uScriptAct_PrintText_EdgePadding_18, logic_uScriptAct_PrintText_time_18);
          
@@ -868,8 +998,22 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("7ad5f849-e329-4618-a824-d6878000c3c8", "Print Text", Relay_HideLabel_18)) return; 
          {
-            logic_uScriptAct_PrintText_Text_18 = local_25_System_String;
-            
+            {
+               logic_uScriptAct_PrintText_Text_18 = local_25_System_String;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_PrintText_uScriptAct_PrintText_18.HideLabel(logic_uScriptAct_PrintText_Text_18, logic_uScriptAct_PrintText_FontSize_18, logic_uScriptAct_PrintText_FontStyle_18, logic_uScriptAct_PrintText_FontColor_18, logic_uScriptAct_PrintText_textAnchor_18, logic_uScriptAct_PrintText_EdgePadding_18, logic_uScriptAct_PrintText_time_18);
          
@@ -888,8 +1032,12 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("893b97c0-8bb5-4289-a2e2-4ec5590b17da", "Compare Float", Relay_In_21)) return; 
          {
-            logic_uScriptCon_CompareFloat_A_21 = local_PlayerHealth_System_Single;
-            
+            {
+               logic_uScriptCon_CompareFloat_A_21 = local_PlayerHealth_System_Single;
+               
+            }
+            {
+            }
          }
          logic_uScriptCon_CompareFloat_uScriptCon_CompareFloat_21.In(logic_uScriptCon_CompareFloat_A_21, logic_uScriptCon_CompareFloat_B_21);
          
@@ -918,6 +1066,10 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("62b02c6d-cf0e-48e4-bf82-380e15ee82f3", "Set Float", Relay_In_23)) return; 
          {
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_SetFloat_uScriptAct_SetFloat_23.In(logic_uScriptAct_SetFloat_Value_23, out logic_uScriptAct_SetFloat_Target_23);
          local_PlayerHealth_System_Single = logic_uScriptAct_SetFloat_Target_23;
@@ -942,6 +1094,12 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("5e5ac3a4-d16e-47c6-b090-13906a1a3adf", "Log", Relay_In_26)) return; 
          {
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_Log_uScriptAct_Log_26.In(logic_uScriptAct_Log_Prefix_26, logic_uScriptAct_Log_Target_26, logic_uScriptAct_Log_Postfix_26);
          
@@ -960,6 +1118,12 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("2ce20e8e-8c2b-4af9-883e-fbf525f34490", "Log", Relay_In_27)) return; 
          {
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_Log_uScriptAct_Log_27.In(logic_uScriptAct_Log_Prefix_27, logic_uScriptAct_Log_Target_27, logic_uScriptAct_Log_Postfix_27);
          
@@ -978,6 +1142,8 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("d30eb30b-81a6-47ee-b3e0-5b7ab3e934b9", "Delay", Relay_In_28)) return; 
          {
+            {
+            }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_28.In(logic_uScriptAct_Delay_Duration_28);
          logic_uScriptAct_Delay_DrivenDelay_28 = true;
@@ -1001,6 +1167,8 @@ public class FadeGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
          }
          logic_uScriptAct_Delay_DrivenDelay_28 = logic_uScriptAct_Delay_uScriptAct_Delay_28.DrivenDelay();
          if ( true == logic_uScriptAct_Delay_DrivenDelay_28 )
@@ -1022,6 +1190,8 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("bcae7323-6b05-489a-8718-7f77c9147ff2", "Delay", Relay_In_29)) return; 
          {
+            {
+            }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_29.In(logic_uScriptAct_Delay_Duration_29);
          logic_uScriptAct_Delay_DrivenDelay_29 = true;
@@ -1045,6 +1215,8 @@ public class FadeGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
          }
          logic_uScriptAct_Delay_DrivenDelay_29 = logic_uScriptAct_Delay_uScriptAct_Delay_29.DrivenDelay();
          if ( true == logic_uScriptAct_Delay_DrivenDelay_29 )
@@ -1066,8 +1238,22 @@ public class FadeGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("3b2dbc02-fd07-4c1e-908f-5ac3c0eab76d", "Camera Fade", Relay_In_30)) return; 
          {
-            logic_uScriptAct_CameraFade_FadeMaterial_30 = FadeMaterial;
-            
+            {
+            }
+            {
+            }
+            {
+               logic_uScriptAct_CameraFade_FadeMaterial_30 = FadeMaterial;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_CameraFade_uScriptAct_CameraFade_30.In(logic_uScriptAct_CameraFade_TargetCamera_30, logic_uScriptAct_CameraFade_Direction_30, logic_uScriptAct_CameraFade_FadeMaterial_30, logic_uScriptAct_CameraFade_FadeTime_30, logic_uScriptAct_CameraFade_HoldTime_30, logic_uScriptAct_CameraFade_ColorOverride_30, logic_uScriptAct_CameraFade_FadeColor_30);
          logic_uScriptAct_CameraFade_DrivenFade_30 = true;
@@ -1091,8 +1277,22 @@ public class FadeGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
-            logic_uScriptAct_CameraFade_FadeMaterial_30 = FadeMaterial;
-            
+            {
+            }
+            {
+            }
+            {
+               logic_uScriptAct_CameraFade_FadeMaterial_30 = FadeMaterial;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_CameraFade_DrivenFade_30 = logic_uScriptAct_CameraFade_uScriptAct_CameraFade_30.DrivenFade();
          if ( true == logic_uScriptAct_CameraFade_DrivenFade_30 )
@@ -1145,7 +1345,9 @@ public class FadeGraph : uScriptLogic
             UpdateEditorValues( );
             UnityEngine.Debug.Log("uScript BREAK Node:" + name + " ((Time: " + Time.time + "");
             UnityEngine.Debug.Break();
+            #if (!UNITY_FLASH)
             m_ContinueExecution = new ContinueExecution(method);
+            #endif
             m_Breakpoint = true;
             return true;
          }

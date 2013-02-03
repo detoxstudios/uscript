@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2123
+//uScript Generated Code - Build 0.9.2215
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -330,6 +330,12 @@ public class uScript_TestBed : uScriptLogic
       {
          if (true == CheckDebugBreak("9061bbcf-989b-47bc-9ee7-d19d367ea7fc", "Log", Relay_In_1)) return; 
          {
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_Log_uScriptAct_Log_1.In(logic_uScriptAct_Log_Prefix_1, logic_uScriptAct_Log_Target_1, logic_uScriptAct_Log_Postfix_1);
          
@@ -354,12 +360,26 @@ public class uScript_TestBed : uScriptLogic
       {
          if (true == CheckDebugBreak("0a48f829-e1fd-4dbe-8cf3-ca4d95516b83", "Interpolate Float Linear", Relay_Begin_4)) return; 
          {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
-            
-            logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
-            
-            logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-            
+            {
+               logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+               
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
+               
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Begin(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
          logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
@@ -391,12 +411,26 @@ public class uScript_TestBed : uScriptLogic
       {
          if (true == CheckDebugBreak("0a48f829-e1fd-4dbe-8cf3-ca4d95516b83", "Interpolate Float Linear", Relay_Stop_4)) return; 
          {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
-            
-            logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
-            
-            logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-            
+            {
+               logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+               
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
+               
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Stop(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
          logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
@@ -428,12 +462,26 @@ public class uScript_TestBed : uScriptLogic
       {
          if (true == CheckDebugBreak("0a48f829-e1fd-4dbe-8cf3-ca4d95516b83", "Interpolate Float Linear", Relay_Resume_4)) return; 
          {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
-            
-            logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
-            
-            logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-            
+            {
+               logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+               
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
+               
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Resume(logic_uScriptAct_InterpolateFloatLinear_startValue_4, logic_uScriptAct_InterpolateFloatLinear_endValue_4, logic_uScriptAct_InterpolateFloatLinear_time_4, logic_uScriptAct_InterpolateFloatLinear_loopType_4, logic_uScriptAct_InterpolateFloatLinear_loopDelay_4, logic_uScriptAct_InterpolateFloatLinear_loopCount_4, out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
          logic_uScriptAct_InterpolateFloatLinear_Driven_4 = true;
@@ -464,12 +512,26 @@ public class uScript_TestBed : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
-            logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
-            
-            logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
-            
-            logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
-            
+            {
+               logic_uScriptAct_InterpolateFloatLinear_startValue_4 = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5_Get_Refresh( );
+               
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinear_endValue_4 = local_2_System_Single;
+               
+            }
+            {
+               logic_uScriptAct_InterpolateFloatLinear_time_4 = local_12_System_Single;
+               
+            }
+            {
+            }
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_InterpolateFloatLinear_Driven_4 = logic_uScriptAct_InterpolateFloatLinear_uScriptAct_InterpolateFloatLinear_4.Driven(out logic_uScriptAct_InterpolateFloatLinear_currentValue_4);
          if ( true == logic_uScriptAct_InterpolateFloatLinear_Driven_4 )
@@ -497,6 +559,12 @@ public class uScript_TestBed : uScriptLogic
       {
          if (true == CheckDebugBreak("e3b57dd2-4d1a-4a84-a45e-5d4b480e824e", "Log", Relay_In_6)) return; 
          {
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_Log_uScriptAct_Log_6.In(logic_uScriptAct_Log_Prefix_6, logic_uScriptAct_Log_Target_6, logic_uScriptAct_Log_Postfix_6);
          
@@ -515,6 +583,8 @@ public class uScript_TestBed : uScriptLogic
       {
          if (true == CheckDebugBreak("659ae927-4929-4f20-8025-80248a31f8ec", "Delay", Relay_In_7)) return; 
          {
+            {
+            }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_7.In(logic_uScriptAct_Delay_Duration_7);
          logic_uScriptAct_Delay_DrivenDelay_7 = true;
@@ -539,6 +609,8 @@ public class uScript_TestBed : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
          }
          logic_uScriptAct_Delay_DrivenDelay_7 = logic_uScriptAct_Delay_uScriptAct_Delay_7.DrivenDelay();
          if ( true == logic_uScriptAct_Delay_DrivenDelay_7 )
@@ -561,6 +633,8 @@ public class uScript_TestBed : uScriptLogic
       {
          if (true == CheckDebugBreak("edf9632f-802e-4615-bf97-d6ad68f799a4", "Input Events Filter", Relay_In_8)) return; 
          {
+            {
+            }
          }
          logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8.In(logic_uScriptAct_OnInputEventFilter_KeyCode_8);
          
@@ -589,14 +663,15 @@ public class uScript_TestBed : uScriptLogic
       {
          if (true == CheckDebugBreak("62d6f1b5-1f7b-4741-a423-c905124dcf4e", "Log", Relay_In_9)) return; 
          {
-            int index;
-            index = 0;
-            if ( logic_uScriptAct_Log_Target_9.Length <= index)
             {
-               System.Array.Resize(ref logic_uScriptAct_Log_Target_9, index + 1);
             }
-            logic_uScriptAct_Log_Target_9[ index++ ] = property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Get_Refresh( );
-            
+            {
+               List<System.Object> properties = new List<System.Object>();
+               properties.Add(property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Get_Refresh());
+               logic_uScriptAct_Log_Target_9 = properties.ToArray();
+            }
+            {
+            }
          }
          logic_uScriptAct_Log_uScriptAct_Log_9.In(logic_uScriptAct_Log_Prefix_9, logic_uScriptAct_Log_Target_9, logic_uScriptAct_Log_Postfix_9);
          
@@ -615,6 +690,12 @@ public class uScript_TestBed : uScriptLogic
       {
          if (true == CheckDebugBreak("e0ceb012-83cf-4636-bb53-5e1455f5b7a9", "Log", Relay_In_10)) return; 
          {
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_Log_uScriptAct_Log_10.In(logic_uScriptAct_Log_Prefix_10, logic_uScriptAct_Log_Target_10, logic_uScriptAct_Log_Postfix_10);
          
@@ -639,6 +720,12 @@ public class uScript_TestBed : uScriptLogic
       {
          if (true == CheckDebugBreak("5838aa42-5d2f-476d-be47-63069498b80c", "Log", Relay_In_13)) return; 
          {
+            {
+            }
+            {
+            }
+            {
+            }
          }
          logic_uScriptAct_Log_uScriptAct_Log_13.In(logic_uScriptAct_Log_Prefix_13, logic_uScriptAct_Log_Target_13, logic_uScriptAct_Log_Postfix_13);
          
@@ -676,7 +763,9 @@ public class uScript_TestBed : uScriptLogic
             UpdateEditorValues( );
             UnityEngine.Debug.Log("uScript BREAK Node:" + name + " ((Time: " + Time.time + "");
             UnityEngine.Debug.Break();
+            #if (!UNITY_FLASH)
             m_ContinueExecution = new ContinueExecution(method);
+            #endif
             m_Breakpoint = true;
             return true;
          }

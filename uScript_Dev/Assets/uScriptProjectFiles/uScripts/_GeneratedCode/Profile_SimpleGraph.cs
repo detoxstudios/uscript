@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2123
+//uScript Generated Code - Build 0.9.2215
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -167,14 +167,15 @@ public class Profile_SimpleGraph : uScriptLogic
       {
          if (true == CheckDebugBreak("f9a81570-a110-4a3e-b2df-447f6dc45ed3", "Log", Relay_In_0)) return; 
          {
-            int index;
-            index = 0;
-            if ( logic_uScriptAct_Log_Target_0.Length <= index)
             {
-               System.Array.Resize(ref logic_uScriptAct_Log_Target_0, index + 1);
             }
-            logic_uScriptAct_Log_Target_0[ index++ ] = local_1_System_String;
-            
+            {
+               List<System.Object> properties = new List<System.Object>();
+               properties.Add(local_1_System_String);
+               logic_uScriptAct_Log_Target_0 = properties.ToArray();
+            }
+            {
+            }
          }
          logic_uScriptAct_Log_uScriptAct_Log_0.In(logic_uScriptAct_Log_Prefix_0, logic_uScriptAct_Log_Target_0, logic_uScriptAct_Log_Postfix_0);
          
@@ -214,7 +215,9 @@ public class Profile_SimpleGraph : uScriptLogic
             UpdateEditorValues( );
             UnityEngine.Debug.Log("uScript BREAK Node:" + name + " ((Time: " + Time.time + "");
             UnityEngine.Debug.Break();
+            #if (!UNITY_FLASH)
             m_ContinueExecution = new ContinueExecution(method);
+            #endif
             m_Breakpoint = true;
             return true;
          }
