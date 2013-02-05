@@ -51,7 +51,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
 #if !UNITY_3_2 && !UNITY_3_3
                   if ( currentTarget.collider != null )
                   {
-                     currentTarget.collider.enabled = false;
+                     currentTarget.collider.enabled = true;
                   }
 #endif
                }
