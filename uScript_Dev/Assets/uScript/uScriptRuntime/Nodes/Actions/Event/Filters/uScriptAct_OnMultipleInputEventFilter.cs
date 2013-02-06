@@ -18,11 +18,11 @@ public class uScriptAct_OnMultipleInputEventFilter : uScriptLogic
    public bool m_InputDown = false;
    public bool m_InputUp = false;
 
-   [FriendlyName("Input Held")]
-   public bool KeyHeld { get { return m_InputHeld; } }
-
    [FriendlyName("Input Down")]
    public bool KeyDown { get { return m_InputDown; } }
+
+   [FriendlyName("Input Held")]
+   public bool KeyHeld { get { return m_InputHeld; } }
 
    [FriendlyName("Input Up")]
    public bool KeyUp { get { return m_InputUp; } }
