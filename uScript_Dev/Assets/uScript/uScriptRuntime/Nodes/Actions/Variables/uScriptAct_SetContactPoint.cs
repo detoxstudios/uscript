@@ -24,6 +24,7 @@ public class uScriptAct_SetContactPoint : uScriptLogic
       out ContactPoint Target
       )
    {
+#if !UNITY_FLASH
       if ( Value.GetType() != typeof(ContactPoint) )
       {
          uScriptDebug.Log( "Set ContactPoint: Value is not a ContactPoint!", uScriptDebug.Type.Error );
@@ -31,7 +32,10 @@ public class uScriptAct_SetContactPoint : uScriptLogic
       }
       else
       {
+#endif
          Target = (ContactPoint) Value;
+#if !UNITY_FLASH
       }
+#endif
    }
 }

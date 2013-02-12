@@ -1,6 +1,12 @@
 // uScript Action Node
 // (C) 2010 Detox Studios LLC
 
+#if (UNITY_FLASH)
+
+   // This node is not supported on Flash at this time. This compiler directive is needed for the project to compile for these devices without error.
+
+#else
+
 using UnityEngine;
 using System.Collections;
 
@@ -367,3 +373,5 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       Vector3Value = tempVector3Value;
    }
 }
+
+#endif

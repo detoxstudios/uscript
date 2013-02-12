@@ -45,6 +45,10 @@ public class uScript_CustomEventVector4 : uScriptEvent
  
    void CustomEvent(uScriptCustomEvent.CustomEventData cEventData)
    {
-      if ( OnCustomEventVector4 != null && cEventData.EventData != null && cEventData.EventData.GetType() == typeof(UnityEngine.Vector4) ) OnCustomEventVector4( this, new CustomEventVector4Args(cEventData.EventName, (Vector4)cEventData.EventData, cEventData.Sender) ); 
+      if ( OnCustomEventVector4 != null && cEventData.EventData != null
+#if !UNITY_FLASH
+        && cEventData.EventData.GetType() == typeof(UnityEngine.Vector4)
+#endif
+         ) OnCustomEventVector4( this, new CustomEventVector4Args(cEventData.EventName, (Vector4)cEventData.EventData, cEventData.Sender) ); 
    }	   
 }

@@ -28,6 +28,7 @@ public class uScriptAct_ConvertListToString : uScriptLogic
       string tempString = "";
       if (Target.Length > 0)
       {
+#if !UNITY_FLASH
          if (Target[0].GetType() == typeof(string))
          {
             int counter = 0;
@@ -64,6 +65,7 @@ public class uScriptAct_ConvertListToString : uScriptLogic
          }
          else
          {
+#endif
             int counter = 0;
             foreach (var item in Target)
             {
@@ -91,8 +93,9 @@ public class uScriptAct_ConvertListToString : uScriptLogic
                }
                counter++;
             }
-
+#if !UNITY_FLASH
          }
+#endif
 
          Result = tempString;
       }

@@ -57,6 +57,7 @@ public class uScriptAct_LookAt : uScriptLogic
          m_LockAxis = lockAxis;
          //m_RotateAroundVector = rotateAroundVector;
          
+#if !UNITY_FLASH
          if (typeof(GameObject) == Focus.GetType())
          {
             m_Focus = (GameObject) Focus;
@@ -68,8 +69,11 @@ public class uScriptAct_LookAt : uScriptLogic
          }
          else
          {
+#endif
             m_FocusPosition = Vector3.forward;
+#if !UNITY_FLASH
          }
+#endif
 
 
          m_Targets = Target;

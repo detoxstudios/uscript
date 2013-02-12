@@ -45,6 +45,10 @@ public class uScript_CustomEventColor : uScriptEvent
  
    void CustomEvent(uScriptCustomEvent.CustomEventData cEventData)
    {
-      if ( OnCustomEventColor != null && cEventData.EventData != null && cEventData.EventData.GetType() == typeof(UnityEngine.Color) ) OnCustomEventColor( this, new CustomEventColorArgs(cEventData.EventName, (UnityEngine.Color)cEventData.EventData, cEventData.Sender) ); 
+      if ( OnCustomEventColor != null && cEventData.EventData != null
+#if !UNITY_FLASH
+        && cEventData.EventData.GetType() == typeof(UnityEngine.Color)
+#endif
+         ) OnCustomEventColor( this, new CustomEventColorArgs(cEventData.EventName, (UnityEngine.Color)cEventData.EventData, cEventData.Sender) ); 
    }	
 }

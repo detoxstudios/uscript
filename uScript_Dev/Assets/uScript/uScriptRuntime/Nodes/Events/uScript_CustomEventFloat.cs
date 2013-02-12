@@ -45,6 +45,10 @@ public class uScript_CustomEventFloat : uScriptEvent
  
    void CustomEvent(uScriptCustomEvent.CustomEventData cEventData)
    {
-      if ( OnCustomEventFloat != null && cEventData.EventData != null && cEventData.EventData.GetType() == typeof(System.Single) ) OnCustomEventFloat( this, new CustomEventFloatArgs(cEventData.EventName, (float)cEventData.EventData, cEventData.Sender) ); 
+      if ( OnCustomEventFloat != null && cEventData.EventData != null
+#if !UNITY_FLASH
+        && cEventData.EventData.GetType() == typeof(System.Single)
+#endif
+         ) OnCustomEventFloat( this, new CustomEventFloatArgs(cEventData.EventName, (float)cEventData.EventData, cEventData.Sender) ); 
    }	
 }

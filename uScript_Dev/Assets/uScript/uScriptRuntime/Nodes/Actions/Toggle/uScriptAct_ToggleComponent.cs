@@ -64,6 +64,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                }
                else
                {
+#if !UNITY_FLASH
                   Component comp = currentTarget.GetComponent(currentComponentName);
                   if (comp != null)
                   {
@@ -80,6 +81,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                         ((LineRenderer)comp).enabled = true;
                      }
                   }
+#endif
                }
             }
          }
@@ -116,6 +118,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                }
                else
                {
+#if !UNITY_FLASH
                   Component comp = currentTarget.GetComponent(currentComponentName);
                   if (comp != null)
                   {
@@ -132,6 +135,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                         ((LineRenderer)comp).enabled = false;
                      }
                   }
+#endif
                }
             }
          }
@@ -194,6 +198,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                }
                else
                {
+#if !UNITY_FLASH
                   Component comp = currentTarget.GetComponent(currentComponentName);
                   if (comp != null)
                   {
@@ -237,6 +242,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                         }
                      }
                   }
+#endif
                }
             }
          }
