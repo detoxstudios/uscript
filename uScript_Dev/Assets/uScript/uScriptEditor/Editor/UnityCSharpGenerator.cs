@@ -1163,7 +1163,7 @@ namespace Detox.ScriptEditor
                      if (true == isArray)
                      {
                         string type = entityProperty.Parameter.Type.Replace("[]", "");
-                        AddCSharpLine("return new List<" + type + ">(component." + entityProperty.Parameter.Name + ").ToArray();");
+                        AddCSharpLine("return new List<" + FormatType(type) + ">(component." + entityProperty.Parameter.Name + ").ToArray();");
                      }
                      else
                      {
@@ -1200,7 +1200,7 @@ namespace Detox.ScriptEditor
                      if (true == isArray)
                      {
                         string type = entityProperty.Parameter.Type.Replace("[]", "");
-                        AddCSharpLine("component." + entityProperty.Parameter.Name + " = new List<" + type + ">(" + CSharpName(entityProperty, entityProperty.Parameter.Name) + ").ToArray();");
+                        AddCSharpLine("component." + entityProperty.Parameter.Name + " = new List<" + FormatType(type) + ">(" + CSharpName(entityProperty, entityProperty.Parameter.Name) + ").ToArray();");
                      }
                      else
                      {
@@ -1240,7 +1240,7 @@ namespace Detox.ScriptEditor
                         if (true == isArray)
                         {
                            string type = entityProperty.Parameter.Type.Replace("[]", "");
-                           AddCSharpLine("return new List<" + type + ">(component." + entityProperty.Parameter.Name + ").ToArray();");
+                           AddCSharpLine("return new List<" + FormatType(type) + ">(component." + entityProperty.Parameter.Name + ").ToArray();");
                         }
                         else
                         {
@@ -1277,7 +1277,7 @@ namespace Detox.ScriptEditor
                         if (true == isArray)
                         {
                            string type = entityProperty.Parameter.Type.Replace("[]", "");
-                           AddCSharpLine("component." + entityProperty.Parameter.Name + " = new List<" + type + ">(" + CSharpName(entityProperty, entityProperty.Parameter.Name) + ").ToArray();");
+                           AddCSharpLine("component." + entityProperty.Parameter.Name + " = new List<" + FormatType(type) + ">(" + CSharpName(entityProperty, entityProperty.Parameter.Name) + ").ToArray();");
                         }
                         else
                         {
@@ -5150,7 +5150,7 @@ namespace Detox.ScriptEditor
             string newCode = SetCode(currentCode);
 
             if (true == needsProperties)
-               AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
+               AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + FormatType(parameter.Type.Replace("[]", "")) + ">();");
 
             m_CSharpString += newCode;
 
