@@ -5066,7 +5066,7 @@ namespace Detox.ScriptEditor
                         //to the next available index of the input parameter
                         if (entityProperty.Parameter.Type.Contains("[]"))
                         {
-                           AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + ");");
+                           AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
                            //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
                            //AddCSharpLine("properties = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
 
