@@ -4603,10 +4603,17 @@ namespace Detox.ScriptEditor
          string formatted = type.Replace("+", ".");
 
          //Template type
+         string replace = null;
+
          if (formatted.Contains("`2["))
+            replace = "`2[";
+         else if (formatted.Contains("`1["))
+             replace = "`1[";
+
+         if (null != replace)
          {
             string newString = "";
-            string[] values = formatted.Split(new string[] { "`2[" }, StringSplitOptions.None);
+            string[] values = formatted.Split(new string[] { replace }, StringSplitOptions.None);
 
             foreach (string v in values)
             {
@@ -4636,6 +4643,7 @@ namespace Detox.ScriptEditor
             //remove last alligator we appended during the foreach
             formatted = newString.TrimEnd(new char[] { '<' });
          }
+
 
          return formatted;
       }
@@ -5150,7 +5158,7 @@ namespace Detox.ScriptEditor
             string newCode = SetCode(currentCode);
 
             if (true == needsProperties)
-               AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + FormatType(parameter.Type.Replace("[]", "")) + ">();");
+               AddCSharpLine("List<" + FormatType(parameter.Type.Replace("[]", "")) + "> properties = new List<" + FormatType(parameter.Type.Replace("[]", "")) + ">();");
 
             m_CSharpString += newCode;
 
