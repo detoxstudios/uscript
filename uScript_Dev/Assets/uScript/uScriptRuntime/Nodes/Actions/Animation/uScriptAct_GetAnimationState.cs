@@ -7,8 +7,8 @@ using System.Collections;
 [NodePath("Actions/Animation")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Returns the machine's IP address as a string")]
-[NodeAuthor("Detox Studios LLC. Original node by xzlashed on the uScript Community Forum", "http://www.detoxstudios.com")]
+[NodeToolTip("Returns AnimationState properties of the specified animation.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
 [FriendlyName("Get Animation State", "Returns AnimationState properties of the specified animation attached to the target GameObject.")]
