@@ -27,7 +27,12 @@ public class uScriptAct_ControlGameObjectMove : uScriptLogic
 
       [FriendlyName("Speed", "The speed you wish to move the target per tick. This uses a relativly small value for most cases.")]
       [DefaultValue(0.01f)]
-      float Speed
+      float Speed,
+		
+	  [FriendlyName("Use Local", "Move the GameObject in local coordinates. Not used if the GameObject is using a component called CharacterController.")]
+      [SocketState(false, false)]
+	  [DefaultValue(false)]
+      bool useLocal
       )
    {
       if (null != Target && Speed != 0f)
@@ -65,8 +70,22 @@ public class uScriptAct_ControlGameObjectMove : uScriptLogic
          }
 
          CharacterController cc = Target.GetComponent<CharacterController>();
-         if (null != cc) cc.Move(movement);
-         else Target.transform.position += movement;
+         if (null != cc)
+		 {
+			cc.Move(movement);
+		 }
+         else
+		 {
+			if (useLocal)
+			{
+				Target.transform.localPosition += movement;
+			}
+			else
+			{
+				Target.transform.position += movement;
+			}
+			
+		 }
       }
    }
 

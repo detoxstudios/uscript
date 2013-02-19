@@ -27,7 +27,12 @@ public class uScriptAct_ControlGameObjectRotate : uScriptLogic
 
       [FriendlyName("Speed", "The speed you wish to rotated the target per tick. This uses a relativly small value for most cases.")]
       [DefaultValue(0.1f)]
-      float Speed
+      float Speed,
+		
+	  [FriendlyName("Use Local", "Rotate the GameObject in local coordinates.")]
+      [SocketState(false, false)]
+	  [DefaultValue(false)]
+      bool useLocal
       )
    {
       if (null != Target && Speed != 0f)
@@ -35,27 +40,69 @@ public class uScriptAct_ControlGameObjectRotate : uScriptLogic
          switch (rotateDirection)
          {
             case Direction.Forward:
-               Target.transform.Rotate(Vector3.left * Speed);
+				if(useLocal)
+				{
+					Target.transform.Rotate(Vector3.left * Speed, Space.Self);
+				}
+				else
+				{
+					Target.transform.Rotate(Vector3.left * Speed);
+				}
                break;
 
             case Direction.Backward:
-               Target.transform.Rotate(Vector3.right * Speed);
+				if(useLocal)
+				{
+					Target.transform.Rotate(Vector3.right * Speed, Space.Self );
+				}
+				else
+				{
+					Target.transform.Rotate(Vector3.right * Speed);
+				}
                break;
 
             case Direction.Left:
-               Target.transform.Rotate(Vector3.down * Speed);
+				if(useLocal)
+				{
+					Target.transform.Rotate(Vector3.down * Speed, Space.Self);
+				}
+				else
+				{
+					Target.transform.Rotate(Vector3.down * Speed);
+				}
                break;
 
             case Direction.Right:
-               Target.transform.Rotate(Vector3.up * Speed);
+				if(useLocal)
+				{
+					Target.transform.Rotate(Vector3.up * Speed, Space.Self);
+				}
+				else
+				{
+					Target.transform.Rotate(Vector3.up * Speed);
+				}
                break;
 
             case Direction.TiltLeft:
-               Target.transform.Rotate(Vector3.forward * Speed);
+				if(useLocal)
+				{
+					Target.transform.Rotate(Vector3.forward * Speed, Space.Self);
+				}
+				else
+				{
+					Target.transform.Rotate(Vector3.forward * Speed);
+				}
                break;
 
             case Direction.TiltRight:
-               Target.transform.Rotate(Vector3.back * Speed);
+				if(useLocal)
+				{
+					Target.transform.Rotate(Vector3.back * Speed, Space.Self);
+				}
+				else
+				{
+					Target.transform.Rotate(Vector3.back * Speed);
+				}
                break;
 
             default:
