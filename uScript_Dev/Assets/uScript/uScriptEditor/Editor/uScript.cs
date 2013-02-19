@@ -1275,7 +1275,7 @@ public class uScript : EditorWindow
       }
 
       // Drop keyboard focus from the active control if anything else is clicked
-      if (e.type == EventType.MouseDown)
+      if (e.type == EventType.MouseUp)
       {
          if (GUIUtility.hotControl != GUIUtility.keyboardControl)
          {
