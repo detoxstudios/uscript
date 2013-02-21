@@ -1548,6 +1548,10 @@ namespace Detox.ScriptEditor
          {
             return "new UnityEngine.Touch( )";
          }
+         else if ("UnityEngine.Plane" == type)
+         {
+            return "new UnityEngine.Plane( )";
+         }
          else if ("UnityEngine.TouchPhase" == type)
          {
             return "new UnityEngine.TouchPhase( )";
@@ -1834,6 +1838,10 @@ namespace Detox.ScriptEditor
          else if ("UnityEngine.Touch[]" == type)
          {
             declaration = "new UnityEngine.Touch[ " + elements.Length + " ]";
+         }
+         else if ("UnityEngine.Plane[]" == type)
+         {
+            declaration = "new UnityEngine.Plane[ " + elements.Length + " ]";
          }
          else if ("UnityEngine.AudioClip[]" == type)
          {
@@ -4978,7 +4986,20 @@ namespace Detox.ScriptEditor
 
                      if (value.Type.Contains("[]"))
                      {
-                        AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
+                        if (value.Type == parameter.Type)
+                        {
+                           AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
+                        }
+                        else
+                        {
+                           AddCSharpLine("foreach (" + FormatType(value.Type) + " _fet in " + CSharpName(argNode) + ")");
+                           AddCSharpLine("{");
+                           ++m_TabStack;
+                              AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
+                           --m_TabStack;
+                           AddCSharpLine("}");
+                        }
+
                         //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
                         //AddCSharpLine("properties = " + CSharpName(argNode) + ";");
 
@@ -5004,7 +5025,7 @@ namespace Detox.ScriptEditor
                      }
                      else
                      {
-                        AddCSharpLine("properties.Add(" + CSharpName(argNode) + ");");
+                        AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
                         //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
 
                         ////make sure our input array is large enough to hold another value
@@ -5030,7 +5051,7 @@ namespace Detox.ScriptEditor
                   if (argNode is OwnerConnection)
                   {
                      //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
-                     AddCSharpLine("properties.Add(" + CSharpName(argNode) + ");");
+                     AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
                      //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
 
                      ////make sure our input array is large enough to hold another value
@@ -5066,7 +5087,21 @@ namespace Detox.ScriptEditor
                         //to the next available index of the input parameter
                         if (entityProperty.Parameter.Type.Contains("[]"))
                         {
-                           AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                           if (entityProperty.Parameter.Type == parameter.Type)
+                           {
+                              AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                           }
+                           else
+                           {
+                              AddCSharpLine("foreach (" + FormatType(entityProperty.Parameter.Type) + " _fet in " + CSharpRefreshGetPropertyDeclaration(entityProperty) + ")");
+                              AddCSharpLine("{");
+                              ++m_TabStack;
+                                 AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
+                              --m_TabStack;
+                              AddCSharpLine("}");
+                           }
+                           
+                           
                            //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
                            //AddCSharpLine("properties = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
 
@@ -5090,7 +5125,7 @@ namespace Detox.ScriptEditor
                         }
                         else
                         {
-                           AddCSharpLine("properties.Add(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                           AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
                            //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
 
                            ////make sure our input array is large enough to hold another value
