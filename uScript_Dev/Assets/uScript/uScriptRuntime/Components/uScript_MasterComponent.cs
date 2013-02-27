@@ -13,6 +13,8 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class uScript_MasterComponent : MonoBehaviour
 {
+   public bool UseAsMaster = false;
+
 #if UNITY_EDITOR
    private Hashtable m_BreakpointCache = null;
 #endif
@@ -24,11 +26,33 @@ public class uScript_MasterComponent : MonoBehaviour
    //will know which master loaded with them for their scene infomration
    public static GameObject LatestMaster 
    {
-       get 
-       { 
-           if (null == m_LatestMaster) m_LatestMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName); 
-           return m_LatestMaster;
-       }
+      get 
+      { 
+         if (null == m_LatestMaster) 
+         {
+            GameObject[] gos = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+            foreach (GameObject g in gos)
+            {
+               if (g.name != uScriptRuntimeConfig.MasterObjectName)
+                  continue;
+
+               uScript_MasterComponent c = g.GetComponent<uScript_MasterComponent>();
+               
+               //if the name matches, it has a master component, and our master is null
+               //or this one is set to override then use it
+               if (null != c && (m_LatestMaster == null || c.UseAsMaster == true))
+               {
+                  m_LatestMaster = g;
+   
+                  //if we found one marked to be the master, we can stop searching
+                  if (c.UseAsMaster == true)
+                     break;
+               }
+            }
+         }
+
+         return m_LatestMaster;
+      }
    }
 
    public static uScript_MasterComponent LatestMasterComponent
@@ -57,8 +81,11 @@ public class uScript_MasterComponent : MonoBehaviour
 
    public void Awake( )
    {
-      m_LatestMaster = this.gameObject;
-      m_LatestMasterComponent = this;
+      if (null == m_LatestMaster || true == this.UseAsMaster)
+      {
+         m_LatestMaster = this.gameObject;
+         m_LatestMasterComponent = this;
+      }
 
 #if FREE_PLE_BUILD
       // Initialize the Watermark variable
