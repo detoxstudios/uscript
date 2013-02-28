@@ -92,6 +92,21 @@ public static class uScriptGUI
       }
    }
 
+
+   public static bool isProSkin
+   {
+      get
+      {
+#if (UNITY_3_2 || UNITY_3_3 || UNITY_3_4)
+         // The isProSkin property was introduced in Unity 3.5 API
+         return (GUI.skin.name == "SceneGUISkin");
+#else
+         return EditorGUIUtility.isProSkin;
+#endif
+      }
+   }
+
+
    public static void MonitorGUIControlFocusChanges()
    {
       if (GUIUtility.keyboardControl != focusedControlID)
