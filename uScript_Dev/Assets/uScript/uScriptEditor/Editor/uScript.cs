@@ -1275,14 +1275,14 @@ public class uScript : EditorWindow
       }
 
       // Drop keyboard focus from the active control if anything else is clicked
-      if (e.type == EventType.MouseUp)
-      {
-         if (GUIUtility.hotControl != GUIUtility.keyboardControl)
-         {
-            GUIUtility.keyboardControl = 0;
-            this.Repaint();
-         }
-      }
+//      if (e.type == EventType.MouseUp)
+//      {
+//         if (GUIUtility.hotControl != GUIUtility.keyboardControl)
+//         {
+//            GUIUtility.keyboardControl = 0;
+//            this.Repaint();
+//         }
+//      }
 
       // Must be done in OnGUI rather than on demand
       m_ScriptEditorCtrl.ParseClipboardData( );
