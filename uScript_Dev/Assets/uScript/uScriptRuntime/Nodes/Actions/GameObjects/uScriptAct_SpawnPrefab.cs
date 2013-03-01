@@ -14,7 +14,7 @@ using System.Collections;
 [FriendlyName("Spawn Prefab", "Create (instantiate) an instance of a Prefab at the specified spawn point GameObject at runtime (must be in the Resources folder structure).")]
 public class uScriptAct_SpawnPrefab : uScriptLogic
 {
-   // @TODO: Needed functionality includes:
+   // TODO: Needed functionality includes:
    // 1. Ability to spawn multiple Prefabs at once with an optional delay between spawns.
    // 2. Ability to put spawned object into a GameObject variable or list.
    // 3. Ability to set multiple spawn point locations.

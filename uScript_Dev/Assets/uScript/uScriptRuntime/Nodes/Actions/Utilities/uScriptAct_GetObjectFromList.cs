@@ -27,7 +27,7 @@ public class uScriptAct_GetObjectFromList : uScriptLogic
       out object item
       )
    {
-      // @TODO: There is no range checking here.
+      // TODO: There is no range checking here.
       item = list[ index ];
    }
 }

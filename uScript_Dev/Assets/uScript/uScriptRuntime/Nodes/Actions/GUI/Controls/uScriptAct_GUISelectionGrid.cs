@@ -14,9 +14,7 @@ using System.Collections;
 [FriendlyName("GUI Selection Grid", "Make a grid of buttons.")]
 public class uScriptAct_GUISelectionGrid : uScriptLogic
 {
-/*
-   TODO: Add support for passing Texture[] and GUIContent[] to the buttons
-*/
+   // TODO: Add support for passing Texture[] and GUIContent[] to the buttons
    public bool Out { get { return true; } }
 
    [FriendlyName("Changed")]

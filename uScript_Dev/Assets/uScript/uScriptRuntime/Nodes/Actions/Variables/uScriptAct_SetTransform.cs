@@ -24,7 +24,7 @@ public class uScriptAct_SetTransform : uScriptLogic
       out Transform TargetTransform
       )
    {
-      // @TODO: I'm worried this won't assign the correct object.
+      // TODO: I'm worried this won't assign the correct object.
       // uScript might need to be using InstanceIDs instead of by the name?
 
       TargetTransform = Value;

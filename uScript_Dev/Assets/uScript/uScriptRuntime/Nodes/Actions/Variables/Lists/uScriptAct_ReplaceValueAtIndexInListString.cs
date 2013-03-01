@@ -31,10 +31,12 @@ public class uScriptAct_ReplaceValueAtIndexInListString : uScriptLogic
       out string[] ModifiedList
       )
 	{
-      if (TargetList.Length > Index)
+      if (Index < 0 || Index >= TargetList.Length)
       {
-         TargetList[Index] = NewValue;
+         Debug.LogError("The specified index (" + Index.ToString() + ") is out of range for the target list!\n");
       }
+
+      TargetList[Index] = NewValue;
 
       ModifiedList = TargetList;
 	}	

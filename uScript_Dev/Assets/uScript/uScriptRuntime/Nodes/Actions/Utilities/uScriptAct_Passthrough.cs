@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Pass", "Dummy node that just allows the signal to pass through. This can bu useful for routing connection lines in your graph.")]
+[FriendlyName("Pass", "Dummy node that just allows the signal to pass through. This can be useful for routing connection lines in your graph.")]
 public class uScriptAct_Passthrough : uScriptLogic
 {
    public bool Out { get { return true; } }
