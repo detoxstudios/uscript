@@ -730,7 +730,7 @@ namespace Detox.ScriptEditor
                      case "ExpandWidth": return GUILayout.ExpandWidth(value != 0);
                      case "ExpandHeight": return GUILayout.ExpandHeight(value != 0);
                      default:
-                        Debug.LogError("Unknown GUILayoutOption.Type value: \"" + tokens[0] + "\"\n");
+                        uScriptDebug.Log("Unknown GUILayoutOption.Type value: \"" + tokens[0] + "\"\n", uScriptDebug.Type.Error);
                         break;
                   }
                }

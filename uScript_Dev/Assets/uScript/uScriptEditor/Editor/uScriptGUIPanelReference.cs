@@ -124,6 +124,12 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          {
             GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 
+//            GUIStyle style = new GUIStyle(GUI.skin.label);
+//            style.richText = true;
+//            style.normal.textColor = UnityEngine.Color.white;
+//
+//            GUILayout.Label(("HELLO: " + "bold".Bold().Color(UnityEngine.Color.cyan) + ", " + "italic".Italic() + ", " + "bold and italic".BoldItalic() + ", <color=black>black</color>, <color=white>white</color>, <color=green>red</color>, " + "red".Red() + ", " + "green".Green() + ", <color=blue>blue</color>, " + "blue".Blue() + ", <color=#F70>uScript</color> XXX").Black(), style);
+
             uScriptGUI.enabled = (string.IsNullOrEmpty(currentNodeClassName) == false);
 
             if (GUILayout.Button(uScriptGUIContent.buttonNodeSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))

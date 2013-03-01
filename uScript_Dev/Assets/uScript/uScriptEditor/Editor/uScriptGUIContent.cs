@@ -11,8 +11,6 @@ using UnityEditor;
 
 public static class uScriptGUIContent
 {
-   static string _currentSkin = string.Empty;
-
    public static GUIContent buttonArrayAdd { get; private set; }
 
    public static GUIContent buttonArrayClear { get; private set; }
@@ -120,7 +118,7 @@ public static class uScriptGUIContent
    public static GUIContent toolboxBreadcrumbs { get; private set; }
 
    public static GUIContent[] saveMethodList { get; private set; }
-   
+
    public static void Init()
    {
       if (buttonScriptNew != null)
@@ -219,54 +217,77 @@ public static class uScriptGUIContent
 //#endif
 
 
-      // add images to the GUIContent objects
-      if (_currentSkin != GUI.skin.name)
-      {
-         // the skin has been changed
-         _currentSkin = GUI.skin.name;
+      // Add images to the GUIContent objects
+      // Reload all custom GUI textures to match the new skin
+      string imagePath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/";
+      string skinPath = imagePath + (uScriptGUI.isProSkin ? "DarkSkin" : "LightSkin") + "_";
 
-         if (_currentSkin == "SceneGUISkin")
-         {
-            _currentSkin = "DarkSkin";
-         }
-         else if (_currentSkin == "InspectorGUISkin")
-         {
-            _currentSkin = "LightSkin";
-         }
+      buttonArraySearch.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      buttonListCollapse.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconExpand.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      buttonListExpand.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconCollapse.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      buttonNodeFind.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      buttonNodeFindDeprecated.image = buttonNodeFind.image;
+      buttonNodeToggle.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniToggle.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      buttonNodeUpgrade.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniUpgrade.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      buttonNodeDeleteMissing.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniDelete.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
 
-         // reload all custom GUI textures to match the new skin
-         string imagePath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/";
-         string skinPath = imagePath + _currentSkin + "_";
+      commandReference.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconKeyboard.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
 
-         buttonArraySearch.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         buttonListCollapse.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconExpand.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         buttonListExpand.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconCollapse.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         buttonNodeFind.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         buttonNodeFindDeprecated.image = buttonNodeFind.image;
-         buttonNodeToggle.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniToggle.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         buttonNodeUpgrade.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniUpgrade.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         buttonNodeDeleteMissing.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconMiniDelete.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      favoritePanelCollapse.image = buttonListCollapse.image;
+      favoritePanelExpand.image = buttonListExpand.image;
 
-         commandReference.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconKeyboard.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      iconHelp16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconHelp16.png", typeof(UnityEngine.Texture2D)));
+      iconHelp32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconHelp32.png", typeof(UnityEngine.Texture2D)));
+      iconInfo16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconInfo16.png", typeof(UnityEngine.Texture2D)));
+      iconInfo32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconInfo32.png", typeof(UnityEngine.Texture2D)));
+      iconWarn16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconWarn16.png", typeof(UnityEngine.Texture2D)));
+      iconWarn32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconWarn32.png", typeof(UnityEngine.Texture2D)));
+      iconError16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconError16.png", typeof(UnityEngine.Texture2D)));
+      iconError32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconError32.png", typeof(UnityEngine.Texture2D)));
 
-         favoritePanelCollapse.image = buttonListCollapse.image;
-         favoritePanelExpand.image = buttonListExpand.image;
-
-         iconHelp16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconHelp16.png", typeof(UnityEngine.Texture2D)));
-         iconHelp32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconHelp32.png", typeof(UnityEngine.Texture2D)));
-         iconInfo16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconInfo16.png", typeof(UnityEngine.Texture2D)));
-         iconInfo32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconInfo32.png", typeof(UnityEngine.Texture2D)));
-         iconWarn16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconWarn16.png", typeof(UnityEngine.Texture2D)));
-         iconWarn32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconWarn32.png", typeof(UnityEngine.Texture2D)));
-         iconError16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconError16.png", typeof(UnityEngine.Texture2D)));
-         iconError32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(imagePath + "iconError32.png", typeof(UnityEngine.Texture2D)));
-
-         toolboxBreadcrumbs.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-      }
+      toolboxBreadcrumbs.image = AssetDatabase.LoadAssetAtPath(skinPath + "iconSearch.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
    }
 
    public static void ChangeTooltip(string tooltip)
    {
       buttonWebDocumentation.tooltip = tooltip;
    }
+
+//   public static GUIContent IconContent(string name)
+//   {
+//      // internal static GUIContent IconContent(string name)
+//
+//      MethodInfo mi = typeof(EditorGUIUtility).GetMethod("IconContent",
+//                                                         BindingFlags.Static | BindingFlags.NonPublic,
+//                                                         null,
+//                                                         new System.Type[] { typeof(string) },
+//                                                         null);
+//      if (mi != null)
+//      {
+//         return (GUIContent)mi.Invoke(null, new object[] { (string)name });
+//      }
+//
+//      uScriptDebug.Log("Could not find IconContent named \"" + name + "\".", uScriptDebug.Type.Error);
+//      return null;
+//   }
+//
+//   public static GUIContent TextContent(string name)
+//   {
+//      // internal static GUIContent TextContent(string name)
+//
+//      MethodInfo mi = typeof(EditorGUIUtility).GetMethod("TextContent",
+//                                                         BindingFlags.Static | BindingFlags.NonPublic,
+//                                                         null,
+//                                                         new System.Type[] { typeof(string) },
+//                                                         null);
+//      if (mi != null)
+//      {
+//         return (GUIContent)mi.Invoke(null, new object[] { (string)name });
+//      }
+//
+//      uScriptDebug.Log("Could not find TextContent named \"" + name + "\".", uScriptDebug.Type.Error);
+//      return null;
+//   }
+
+
 }

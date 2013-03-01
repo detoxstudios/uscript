@@ -7,9 +7,10 @@ using System.Collections.Generic;
 // _______________________________________________________________________________________
 //
 
+// TODO: Move associated GUIStyle properties from uScriptGUIStyle to a subclass of the type where they are utilizied
+
 public static class uScriptGUIStyle
 {
-   static string _currentSkin = string.Empty;
    static bool _stylesInitialized = false;
 
    public static GUIStyle paletteToolbarFoldoutButton { get; private set; }
@@ -148,37 +149,18 @@ public static class uScriptGUIStyle
 
    public static void Init()
    {
-      if (_stylesInitialized && _currentSkin == GUI.skin.name)
+      if (_stylesInitialized)
       {
          // The styles have already been initialized
          return;
       }
 
-      if (_currentSkin != GUI.skin.name)
-      {
-         // the skin has been changed
-         _currentSkin = GUI.skin.name;
-
-         // the skin names were different in pre-3.5 Unity builds, so override if necessary
-         if (_currentSkin == "SceneGUISkin")
-         {
-            _currentSkin = "DarkSkin";
-         }
-         else if (_currentSkin == "InspectorGUISkin")
-         {
-            _currentSkin = "LightSkin";
-         }
-
-         // reload all custom GUI textures to match the new skin
-         string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + _currentSkin + "_";
-         _texture_windowMenuDropDown = AssetDatabase.LoadAssetAtPath(skinPath + "MenuDropDown.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         _texture_windowMenuContext = AssetDatabase.LoadAssetAtPath(skinPath + "MenuContext.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         _texture_underline = AssetDatabase.LoadAssetAtPath(skinPath + "Underline.png", typeof(UnityEngine.Texture2D)) as Texture2D;
-         _texture_propertyRowEven = AssetDatabase.LoadAssetAtPath(skinPath + "LineItem.png", typeof(UnityEngine.Texture2D)) as Texture2D;
-
-         // update the current skin again to replace any overridden skin name from pre-3.5 Unity builds.
-         _currentSkin = GUI.skin.name;
-      }
+      // Reload all custom GUI textures to match the new skin
+      string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + (uScriptGUI.isProSkin ? "DarkSkin" : "LightSkin") + "_";
+      _texture_windowMenuDropDown = AssetDatabase.LoadAssetAtPath(skinPath + "MenuDropDown.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      _texture_windowMenuContext = AssetDatabase.LoadAssetAtPath(skinPath + "MenuContext.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      _texture_underline = AssetDatabase.LoadAssetAtPath(skinPath + "Underline.png", typeof(UnityEngine.Texture2D)) as Texture2D;
+      _texture_propertyRowEven = AssetDatabase.LoadAssetAtPath(skinPath + "LineItem.png", typeof(UnityEngine.Texture2D)) as Texture2D;
 
       _stylesInitialized = true;
 
@@ -559,12 +541,14 @@ public static class uScriptGUIStyle
       toolbarLabel.margin = new RectOffset();
    }
 
-   static public void CustomSkinStyles()
+   static public void CustomSkinStyles(EditorSkin editorSkin)
    {
-      string result = "These are the custom styles defined in the current skin (" + GUI.skin.name + "):\n";
-      for (int i = 0; i < GUI.skin.customStyles.Length; i++)
+      GUISkin skin = EditorGUIUtility.GetBuiltinSkin(editorSkin);
+
+      string result = "These are the custom styles defined in the skin (" + skin.name + "):\n";
+      for (int i = 0; i < skin.customStyles.Length; i++)
       {
-         result += "\t" + i.ToString("000") + ": \"" + GUI.skin.customStyles[i].name + "\"\n";
+         result += "\t" + i.ToString("000") + ": \"" + skin.customStyles[i].name + "\"\n";
       }
       Debug.Log(result);
 
