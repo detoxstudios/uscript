@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,7 +34,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.XML" />
     <Reference Include="System.Core" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
@@ -48,6 +47,7 @@
     <Reference Include="UnityScript">
       <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Mono/lib/mono/unity/UnityScript.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\uScript\uScriptEditor\Editor\AnimData.cs" />
@@ -97,6 +97,11 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIStyle.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptUtility.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\WelcomeWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Ellipsis.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListView.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewColumn.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItem.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItemData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="uScriptRuntime_DLL.csproj">
