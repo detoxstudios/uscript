@@ -3511,6 +3511,15 @@ namespace Detox.ScriptEditor
                   if (false == lowestParameter.Type.Contains("[]")) return lowestParameter;
                }
             }
+
+            if (parameterNode.Instance.Name == link.Destination.Anchor)
+            {
+               lowestParameter = parameterNode.Instance;
+
+                //if any type lacks an array, it is the lowest type
+                //so return it, otherwise keep checking
+                if (false == lowestParameter.Type.Contains("[]")) return lowestParameter;
+            }
          }
 
          inputs = FindLinksByDestination(external.Guid, external.Connection);
