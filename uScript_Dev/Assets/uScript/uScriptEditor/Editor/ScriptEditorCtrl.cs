@@ -745,10 +745,10 @@ namespace Detox.ScriptEditor
          }
 
          // are we a game object?
-#if UNITY_4_0
-         return typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) && ((UnityEngine.GameObject)o).activeSelf;
-#else
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
          return typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) && ((UnityEngine.GameObject)o).active;
+#else
+         return typeof(UnityEngine.GameObject).IsAssignableFrom(o.GetType()) && ((UnityEngine.GameObject)o).activeSelf;
 #endif
       }
       
