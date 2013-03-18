@@ -372,14 +372,15 @@ namespace Detox.Windows.Forms
                            }
                            else
                            {
-                              if (p.FriendlyName == "Name")
-                              {
-                                 val = uScriptGUI.VariableNameField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
-                              }
-                              else
-                              {
+// TODO: Unity 4.1 has problems with the VariableNameField control, so disable it until it is actually needed.
+//                              if (p.FriendlyName == "Name")
+//                              {
+//                                 val = uScriptGUI.VariableNameField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+//                              }
+//                              else
+//                              {
                                  val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
-                              }
+//                              }
                            }
                         }
                      }

@@ -648,6 +648,8 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
+         // FIXME: Unity 4.1 has issues here as well, which should be fixed before this control is used.  See: http://uscript.net/forum/viewtopic.php?f=11&t=2434
+
          // Rebuild the functionality of the Unity TextField so that we can
          // assign the ControlID ourselves, and keep track if it for later use
 
