@@ -1870,18 +1870,19 @@ namespace Detox.Editor.GUI
 #endif
 
             // TODO: These probably should be moved to uScriptGUIPanelScriptNew where the custom item renderer is located
-            uScriptGUIPanelScriptNew panel = uScriptGUIPanelScriptNew.Instance;
-            if (panel == null)
-            {
-               Debug.Log("PANEL INSTANCE IS NULL\n");
-            }
-
-            if (panel.Textures == null)
-            {
-               Debug.Log("PANEL TEXTURES ARE NULL\n");
-            }
-
-            Dictionary<string, Texture2D> textures = panel.Textures;
+//            uScriptGUIPanelScriptNew panel = uScriptGUIPanelScriptNew.Instance;
+//            if (panel == null)
+//            {
+//               Debug.Log("PANEL INSTANCE IS NULL\n");
+//            }
+//
+//            if (panel.Textures == null)
+//            {
+//               Debug.Log("PANEL TEXTURES ARE NULL\n");
+//            }
+//
+//            Dictionary<string, Texture2D> textures = panel.Textures;
+            Dictionary<string, Texture2D> textures = null;
             if (textures != null)
             {
                iconScript = textures["iconScript"];
