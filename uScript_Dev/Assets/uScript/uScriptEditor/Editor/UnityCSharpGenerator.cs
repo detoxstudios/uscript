@@ -5001,7 +5001,7 @@ namespace Detox.ScriptEditor
                         }
                         else
                         {
-                           AddCSharpLine("foreach (" + FormatType(value.Type) + " _fet in " + CSharpName(argNode) + ")");
+                           AddCSharpLine("foreach (" + FormatType(value.Type.Replace("[]", "")) + " _fet in " + CSharpName(argNode) + ")");
                            AddCSharpLine("{");
                            ++m_TabStack;
                               AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
@@ -5102,7 +5102,7 @@ namespace Detox.ScriptEditor
                            }
                            else
                            {
-                              AddCSharpLine("foreach (" + FormatType(entityProperty.Parameter.Type) + " _fet in " + CSharpRefreshGetPropertyDeclaration(entityProperty) + ")");
+                              AddCSharpLine("foreach (" + FormatType(entityProperty.Parameter.Type.Replace("[]", "")) + " _fet in " + CSharpRefreshGetPropertyDeclaration(entityProperty) + ")");
                               AddCSharpLine("{");
                               ++m_TabStack;
                                  AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
