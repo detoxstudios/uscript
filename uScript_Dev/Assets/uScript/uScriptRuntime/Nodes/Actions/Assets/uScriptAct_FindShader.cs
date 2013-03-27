@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Assign_Shader")]
 
-[FriendlyName("Assign Shader", "Finds a shader with the given name.")]
+[FriendlyName("Find Shader", "Finds a shader with the given name.")]
 public class uScriptAct_FindShader : uScriptLogic
 {
    public bool Out { get { return true; } }

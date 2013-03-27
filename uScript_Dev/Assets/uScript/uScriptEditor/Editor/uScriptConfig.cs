@@ -728,6 +728,7 @@ public partial class uScriptConfig
             new uScriptConfigBlock( typeof(UnityEngine.GUILayoutOption[]), "GUILayoutOption List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(uScript_Lerper.LoopType), "Loop Type", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Material), "Material", "Variables" ),
+            new uScriptConfigBlock( typeof(UnityEngine.Material[]), "Material List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(UnityEngine.Quaternion), "Quaternion", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.Ray), "Ray", "Variables" ),
             new uScriptConfigBlock( typeof(UnityEngine.RaycastHit), "RaycastHit", "Variables" ),
