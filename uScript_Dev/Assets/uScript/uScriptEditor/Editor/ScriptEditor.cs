@@ -4075,27 +4075,27 @@ namespace Detox.ScriptEditor
 
                if ( true == isGlobal )
                {
-                  bool hasValue = ("" != localNode.Value.Default);
+                  //Assume we do not propagate it to the other nodes
+                  bool propagateValue = false;//("" != localNode.Value.Default);
                   
-                  if ( false == hasValue )
-                  {
-                     //if it already exists and the name matches the currently existing one 
-                     //then see if the externaled value changed, this would mean it's been updated
-                     //even if the value is blank
-                     if ( true == m_Nodes.Contains(node.Guid) )
-                     {
-                        LocalNode clone = (LocalNode) m_Nodes.Get(node.Guid);
-                        hasValue = clone.Externaled != localNode.Externaled;
-                     }
-                  }
+                  //if ( false == hasValue )
+                  //{
+                  //   ////if it already exists and the name matches the currently existing one 
+                  //   ////then see if the externaled value changed, this would mean it's been updated
+                  //   ////even if the value is blank
+                  //   //if ( true == m_Nodes.Contains(node.Guid) )
+                  //   //{
+                  //   //   LocalNode clone = (LocalNode) m_Nodes.Get(node.Guid);
+                  //   //   hasValue = clone.Externaled != localNode.Externaled;
+                  //   //}
+                  //}
 
-                  //if the name doesn't match the preexisting one then they're typing in a new name
-                  //and we don't want it to copy it's values across in case there is a name collision
-                  //with a different node as they type
-                  if ( true == hasValue && true == m_Nodes.Contains(node.Guid) )
+                  //if it's not a new node and this update hasn't changed the name
+                  //then something else about it changed so propagate the value
+                  if ( true == m_Nodes.Contains(node.Guid) )
                   {
                      LocalNode clone = (LocalNode) m_Nodes.Get(node.Guid);
-                     hasValue = clone.Name == localNode.Name;
+                     propagateValue = clone.Name == localNode.Name;
                   }
  
                   //if they modified a local node
@@ -4103,7 +4103,7 @@ namespace Detox.ScriptEditor
 
                   //if hasValue is false then it was a new node they are placing
                   //and we don't want to use its values and clear out all the globals
-                  if ( true == hasValue )
+                  if ( true == propagateValue )
                   {
                      List<LocalNode> updates = new List<LocalNode>( );
 
