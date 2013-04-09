@@ -48,6 +48,18 @@ public class uScriptAct_IsComponentActive : uScriptLogic
          {
             m_IsActive = ((ParticleEmitter)comp).enabled;
          }
+         else if (typeof(Collider).IsAssignableFrom(comp.GetType()))
+         {
+            m_IsActive = ((Collider)comp).enabled;
+         }
+         else if (typeof(Collider).IsAssignableFrom(comp.GetType()))
+         {
+            m_IsActive = ((Collider)comp).enabled;
+         }
+         else
+         {
+             uScriptDebug.Log("Unrecognized component type: " + component, uScriptDebug.Type.Error);
+         }
       }
    }
 }
