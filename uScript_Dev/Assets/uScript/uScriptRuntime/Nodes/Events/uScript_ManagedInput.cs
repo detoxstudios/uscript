@@ -72,14 +72,13 @@ public class uScript_ManagedInput : uScriptEvent
       [SocketState(false, false)]
       public float MouseScrollWheel { get { return _MouseScrollWheel; } }
 
-      [FriendlyName("Window Shake X", "Horizontal window movement delta.")]
+      [FriendlyName("Window Shake X", "Horizontal window movement delta. Only supported in Unity 3.5 (returns 0.0 in Unity 4).")]
       [SocketState(false, false)]
       public float WindowShakeX { get { return _WindowShakeX; } }
 
-      [FriendlyName("Window Shake Y", "Vertical window movement delta.")]
+      [FriendlyName("Window Shake Y", "Vertical window movement delta. Only supported in Unity 3.5 (returns 0.0 in Unity 4).")]
       [SocketState(false, false)]
       public float WindowShakeY { get { return _WindowShakeY; } }
-
 
       public CustomEventBoolArgs()
       {
@@ -96,8 +95,15 @@ public class uScript_ManagedInput : uScriptEvent
          _MouseY = Input.GetAxis("Mouse Y");
          _MouseScrollWheel = Input.GetAxis("Mouse ScrollWheel");
 
+#if UNITY_3_5
+         // WindowShake support was dropped in Unity 4.
          _WindowShakeX = Input.GetAxis("Window Shake X");
          _WindowShakeY = Input.GetAxis("Window Shake Y");
+#else
+         // Just return 0.0 when using Unity 4.
+         _WindowShakeX = 0f;
+         _WindowShakeY = 0f;
+#endif
       }
    }
 

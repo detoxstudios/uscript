@@ -58,7 +58,7 @@ public class uScript_OnScreenKeyboard : uScriptEvent
 
 #else
 
-   #if UNITY_IPHONE
+#if UNITY_IPHONE || UNITY_ANDROID
       if (!m_LastKeyboardOut)
       {
          if (iPhoneKeyboard.visible)
@@ -68,10 +68,10 @@ public class uScript_OnScreenKeyboard : uScriptEvent
       }
       
       m_LastKeyboardOut = iPhoneKeyboard.visible;
-   #else
+#else
       if (showLog)
       {
-         uScriptDebug.Log("The 'On-Screen Keyboard Events' node will only work with iOS devices! Upgrade to Unity 3.5+ for Android support.", uScriptDebug.Type.Warning);
+         uScriptDebug.Log("The 'On-Screen Keyboard Events' node will only work with iOS and Android devices!", uScriptDebug.Type.Warning);
          showLog = false;
       }
    #endif
