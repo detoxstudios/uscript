@@ -46,6 +46,9 @@ public class uScriptAct_CaptureScreenshot : uScriptLogic
       out string FileSaved
       )
    {
+		
+	  bool _leadingSlash = false;
+		
       //Remove any slashes from the filename.
       FileName = FileName.Replace("/", "");
       FileName = FileName.Replace("\\", "");
@@ -55,10 +58,11 @@ public class uScriptAct_CaptureScreenshot : uScriptLogic
          //Replace any back slashes with forward ones
          Path = Path.Replace("\\", "/");
 
-         // Strip Path leading slash if it exists
+         // Detect leading slash if it exists
          if (Path.StartsWith("/"))
          {
-            Path = Path.Remove(0,1);
+			_leadingSlash = true;
+            //Path = Path.Remove(0,1);
          }
 
          // Strip Path ending slash if it exists
@@ -71,6 +75,11 @@ public class uScriptAct_CaptureScreenshot : uScriptLogic
 
          if (RelativeToDataFolder)
          {
+			if (_leadingSlash)
+			{
+				Path = Path.Remove(0,1);
+			}
+			
             Path = Application.dataPath + "/" + Path;
          }
 
