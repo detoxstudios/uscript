@@ -4,6 +4,8 @@
 using UnityEngine;
 using System.Collections;
 
+[NodeAutoAssignMasterInstance(true)]
+
 [NodePath("Events/Network Events")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
