@@ -56,6 +56,10 @@ public class uScriptAct_IsComponentActive : uScriptLogic
          {
             m_IsActive = ((Collider)comp).enabled;
          }
+         else if (typeof(MeshRenderer).IsAssignableFrom(comp.GetType()))
+         {
+            m_IsActive = ((MeshRenderer)comp).enabled;
+         }
          else
          {
              uScriptDebug.Log("Unrecognized component type: " + component, uScriptDebug.Type.Error);
