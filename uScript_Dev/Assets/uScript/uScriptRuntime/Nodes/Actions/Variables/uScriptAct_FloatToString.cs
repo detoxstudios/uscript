@@ -68,7 +68,7 @@ public class uScriptAct_FloatToString : uScriptLogic
    )
    {
       string format = CustomFormat;
-#if (!UNITY_FLASH)
+#if (!UNITY_FLASH && !UNITY_WEBPLAYER)
       System.Globalization.CultureInfo ci = System.Globalization.CultureInfo.CreateSpecificCulture(CustomCulture);
 #endif
 
@@ -106,7 +106,7 @@ public class uScriptAct_FloatToString : uScriptLogic
          }
       }
 
-#if (!UNITY_FLASH)
+#if (!UNITY_FLASH && !UNITY_WEBPLAYER)
       Result = Target.ToString(format, ci);
 #else
 	  Result = Target.ToString();

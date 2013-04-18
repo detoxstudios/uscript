@@ -70,7 +70,7 @@ public class uScriptAct_IntToString : uScriptLogic
    )
    {
       string format = CustomFormat;
-#if (!UNITY_FLASH)
+#if (!UNITY_FLASH && !UNITY_WEBPLAYER)
       System.Globalization.CultureInfo ci = System.Globalization.CultureInfo.CreateSpecificCulture(CustomCulture);
 #endif
       if (string.IsNullOrEmpty(format))
@@ -111,7 +111,7 @@ public class uScriptAct_IntToString : uScriptLogic
          }
       }
 
-#if (!UNITY_FLASH)
+#if (!UNITY_FLASH && !UNITY_WEBPLAYER)
 		Result = Target.ToString(format, ci);
 #else
 		Result = Target.ToString();
