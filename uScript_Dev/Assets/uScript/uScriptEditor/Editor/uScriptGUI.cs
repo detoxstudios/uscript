@@ -25,6 +25,18 @@ public static class uScriptGUI
    public const string keyBackspace = "\u232B";
    public const string keyReturn = "\u23CE";
 
+   public const string imagePath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/";
+
+   public static string GetImagePath(string imageName)
+   {
+      return imagePath + imageName + ".png";
+   }
+
+   public static string GetSkinnedImagePath(string imageName)
+   {
+      return GetImagePath((uScriptGUI.isProSkin ? "DarkSkin" : "LightSkin") + "_" + imageName);
+   }
+
    struct Column
    {
       public string Label;
