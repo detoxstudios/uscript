@@ -81,9 +81,9 @@ public class ReferenceWindow : EditorWindow
 
          GUILayout.Space(16);
 
-         EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+         EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
          {
-            scrollviewPosition = EditorGUILayout.BeginScrollView(scrollviewPosition, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+            scrollviewPosition = EditorGUILayout.BeginScrollView(scrollviewPosition, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
             {
                DrawCommands_Editor();
                DrawCommands_FileAccess();
@@ -139,7 +139,7 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginVertical(styleCommandSection);
       {
-         GUILayout.Label("Editor Commands", uScriptGUIStyle.referenceName);
+         GUILayout.Label("Editor Commands", uScriptGUIStyle.ReferenceName);
 
          DrawCommand("Online uScript documentation", ".Press_F1");
 
@@ -167,7 +167,7 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginVertical(styleCommandSection);
       {
-         GUILayout.Label("Canvas Commands", uScriptGUIStyle.referenceName);
+         GUILayout.Label("Canvas Commands", uScriptGUIStyle.ReferenceName);
 
          DrawCommand("Pan Canvas", ".Hold_Alt+LMB_.then drag");
          DrawCommand(string.Empty, "or_.Hold_MMB_.then drag");
@@ -197,7 +197,7 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginVertical(styleCommandSection);
       {
-         GUILayout.Label("Node Commands", uScriptGUIStyle.referenceName);
+         GUILayout.Label("Node Commands", uScriptGUIStyle.ReferenceName);
 
          DrawCommand("New node selection", ".Click_LMB_.on node");
          DrawCommand(string.Empty, "or_.Hold_LMB_.on canvas and drag over node(s)");
@@ -231,7 +231,7 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginVertical(styleCommandSection);
       {
-         GUILayout.Label("File Menu Commands", uScriptGUIStyle.referenceName);
+         GUILayout.Label("File Menu Commands", uScriptGUIStyle.ReferenceName);
 
          DrawCommand("Open File Menu", ".Press_Alt+F", ".Press_Ctrl+F");
 
@@ -253,7 +253,7 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginVertical(styleCommandSection);
       {
-         GUILayout.Label("Quick Node Placement Commands", uScriptGUIStyle.referenceName);
+         GUILayout.Label("Quick Node Placement Commands", uScriptGUIStyle.ReferenceName);
 
          GUILayout.Label("Some nodes can be quickly placed on the graph by holding the associated key and clicking the"
             + " left mouse button where you wish the node to appear.", styleCommandSectionDescription);

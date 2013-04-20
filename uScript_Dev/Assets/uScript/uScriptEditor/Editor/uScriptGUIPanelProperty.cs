@@ -71,7 +71,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
       _selectedNodeCount = uScript.Instance.ScriptEditorCtrl.SelectedNodes.Length;
 
-      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelPropertiesWidth));
+      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.panelPropertiesWidth));
       if ( rect.width != 0.0f && rect.width != (float)uScriptGUI.panelPropertiesWidth )
       {
          // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
@@ -84,7 +84,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+            GUILayout.Label(_name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
          }
          EditorGUILayout.EndHorizontal();
 
@@ -100,7 +100,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
          {
             // Node list
             //
-            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
             {
                uScriptGUI.BeginColumns("Property", "Value", "Type", _scrollviewOffset, _svRect);
                {
@@ -147,9 +147,9 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
          + "\n\nThe limit can be modified via the Preferences panel, although increasing the limit "
          + "may adversely affect performance.";
 
-      EditorGUILayout.BeginScrollView(Vector2.zero, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+      EditorGUILayout.BeginScrollView(Vector2.zero, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
       {
-         GUILayout.Label(message, uScriptGUIStyle.panelMessage);
+         GUILayout.Label(message, uScriptGUIStyle.PanelMessage);
       }
       EditorGUILayout.EndScrollView();
    }

@@ -234,7 +234,7 @@ public class AssetBrowserWindow : EditorWindow
          _styleListItem_Odd.contentOffset = new Vector2(0, 0);
 
          _styleListItem_Even = new GUIStyle(_styleListItem_Odd);
-         _styleListItem_Even.normal.background = uScriptGUIStyle.propertyRowEven.normal.background;
+         _styleListItem_Even.normal.background = uScriptGUIStyle.PropertyRowEven.normal.background;
 
          _styleListItemPath = new GUIStyle(_styleListItem_Odd);
          _styleListItemPath.fontStyle = FontStyle.Normal;
@@ -245,7 +245,7 @@ public class AssetBrowserWindow : EditorWindow
          _styleCloseButton = new GUIStyle(GUI.skin.button);
          _styleCloseButton.fixedWidth = (_windowFixedWidth - 20) * 0.5f;
 
-         _styleWarningMessage = new GUIStyle(uScriptGUIStyle.referenceText);
+         _styleWarningMessage = new GUIStyle(uScriptGUIStyle.ReferenceText);
          _styleWarningMessage.margin = new RectOffset(4, 4, 0, 0);
          _styleWarningMessage.padding = new RectOffset(0, 0, 2, 8);
 
@@ -285,7 +285,7 @@ public class AssetBrowserWindow : EditorWindow
          // List header
          uScriptGUI.HideScrollbars();
          _svHeaderPosition.x = _svListPosition.x;
-         EditorGUILayout.BeginScrollView(_svHeaderPosition, false, false, uScriptGUIStyle.hColumnScrollbar, uScriptGUIStyle.vColumnScrollbar, _styleListHeader, GUILayout.Height(uScriptGUIStyle.columnHeaderHeight));
+         EditorGUILayout.BeginScrollView(_svHeaderPosition, false, false, uScriptGUIStyle.HorizontalColumnScrollbar, uScriptGUIStyle.VerticalColumnScrollbar, _styleListHeader, GUILayout.Height(uScriptGUIStyle.ColumnHeaderHeight));
          {
             DrawColumns();
          }
@@ -293,7 +293,7 @@ public class AssetBrowserWindow : EditorWindow
          uScriptGUI.ShowScrollbars();
 
          // List content
-         _svListPosition = EditorGUILayout.BeginScrollView(_svListPosition, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, _styleListView, GUILayout.Height(_svFixedHeight));
+         _svListPosition = EditorGUILayout.BeginScrollView(_svListPosition, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, _styleListView, GUILayout.Height(_svFixedHeight));
          {
             foreach (KeyValuePair<string, AssetParts> kvp in _assetParts)
             {
@@ -486,7 +486,7 @@ public class AssetBrowserWindow : EditorWindow
    private void DrawColumns()
    {
       // Block out an area for the column header using GUILayout
-      GUILayout.Label(string.Empty, GUIStyle.none, GUILayout.Height(uScriptGUIStyle.columnHeaderHeight), GUILayout.Width(_listItemWidth));
+      GUILayout.Label(string.Empty, GUIStyle.none, GUILayout.Height(uScriptGUIStyle.ColumnHeaderHeight), GUILayout.Width(_listItemWidth));
 
       // The columns have a margin of 4. Margins of adjacent cells overlap, so the spacing
       // betweem columns is the width of the largest margin, not the sum.
@@ -503,13 +503,13 @@ public class AssetBrowserWindow : EditorWindow
       // Finally, the left margin of the left column, and the right margin of the right column
       // is excluded when positioning the GUI elements, since the offset is automatically applied.
 
-      Rect r = new Rect(0, 0, (_maxNameWidth + _columnPadding + 4), uScriptGUIStyle.columnHeaderHeight);
-      GUI.Label(r, "Asset Name", uScriptGUIStyle.columnHeader);
+      Rect r = new Rect(0, 0, (_maxNameWidth + _columnPadding + 4), uScriptGUIStyle.ColumnHeaderHeight);
+      GUI.Label(r, "Asset Name", uScriptGUIStyle.ColumnHeader);
 
       // This right-most column should appear to have an expanded width
       r.x += (_maxNameWidth + _columnPadding + 4);
       r.width = Mathf.Max(_maxPathWidth, _styleWindow.fixedWidth);
-      GUI.Label(r, "Resource Path", uScriptGUIStyle.columnHeader);
+      GUI.Label(r, "Resource Path", uScriptGUIStyle.ColumnHeader);
    }
 
 }

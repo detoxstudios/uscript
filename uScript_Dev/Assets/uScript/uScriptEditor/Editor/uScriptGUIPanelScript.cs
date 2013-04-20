@@ -140,7 +140,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 //      _mListData_count = 0;
 //      _bListData_count = 0;
 
-      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelScriptsWidth));
+      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.panelScriptsWidth));
       if ( rect.width != 0.0f && rect.width != (float)uScriptGUI.panelScriptsWidth )
       {
          // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
@@ -160,7 +160,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
          //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+            GUILayout.Label(_name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
 
             GUILayout.FlexibleSpace();
 
@@ -329,7 +329,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
             uScriptGUI.HR();
 
 
-            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
             {
 //               // Debug
 //               if (debugScript.svOffset != _scrollviewOffset)
@@ -422,7 +422,7 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            // Draw the row background
                            if (isListRowEven && Event.current.type == EventType.Repaint)
                            {
-                              uScriptGUIStyle.listRow.Draw(rowRect, false, false, true, false);
+                              uScriptGUIStyle.ListRow.Draw(rowRect, false, false, true, false);
                            }
 
                            // uScript Label

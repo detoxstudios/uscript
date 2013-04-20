@@ -182,9 +182,9 @@ public abstract class uScriptGUIPanel
       string message =
          "The " + _name + " panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
 
-      EditorGUILayout.BeginScrollView(Vector2.zero, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+      EditorGUILayout.BeginScrollView(Vector2.zero, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
       {
-         GUILayout.Label(message, uScriptGUIStyle.panelMessage);
+         GUILayout.Label(message, uScriptGUIStyle.PanelMessage);
       }
       EditorGUILayout.EndScrollView();
    }

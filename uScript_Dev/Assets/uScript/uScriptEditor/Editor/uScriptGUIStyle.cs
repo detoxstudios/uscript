@@ -14,7 +14,7 @@ using UnityEngine;
 // TODO: Move associated GUIStyle properties from uScriptGUIStyle to a subclass of the type where they are utilizied
 public static class uScriptGUIStyle
 {
-   public static readonly int columnHeaderHeight = 16;
+   public static readonly int ColumnHeaderHeight = 16;
 
    static uScriptGUIStyle()
    {
@@ -23,19 +23,19 @@ public static class uScriptGUIStyle
       var textureWindowMenuContext = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("MenuContext"), typeof(Texture2D)) as Texture2D;
       var textureWindowMenuDropDown = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("MenuDropDown"), typeof(Texture2D)) as Texture2D;
 
-      paletteToolbarFoldoutButton = new GUIStyle(EditorStyles.toolbarButton)
+      PaletteToolbarFoldoutButton = new GUIStyle(EditorStyles.toolbarButton)
       {
          margin = new RectOffset(0, 6, 0, 0),
          padding = new RectOffset(2, 2, 0, 0)
       };
 
-      paletteFoldout = new GUIStyle(EditorStyles.foldout)
+      PaletteFoldout = new GUIStyle(EditorStyles.foldout)
       {
          padding = new RectOffset(12, 4, 2, 2),
          margin = new RectOffset(4, 4, 0, 0)
       };
 
-      paletteButton = new GUIStyle(GUI.skin.button)
+      PaletteButton = new GUIStyle(GUI.skin.button)
       {
          alignment = TextAnchor.UpperLeft,
          padding = new RectOffset(4, 4, 2, 2),
@@ -43,14 +43,14 @@ public static class uScriptGUIStyle
          active = { textColor = Color.white }
       };
 
-      panelBox = new GUIStyle(GUI.skin.box)
+      PanelBox = new GUIStyle(GUI.skin.box)
       {
          name = "panelBox",
          padding = new RectOffset(1, 1, 1, 1),
          margin = new RectOffset(0, 0, 0, 0)
       };
 
-      panelHR = new GUIStyle(GUI.skin.box)
+      PanelHR = new GUIStyle(GUI.skin.box)
       {
          name = "panelHR",
          padding = new RectOffset(1, 1, 1, 1),
@@ -58,9 +58,9 @@ public static class uScriptGUIStyle
          border = new RectOffset(0, 0, 1, 1)
       };
 
-      panelTitle = new GUIStyle(EditorStyles.boldLabel) { name = "panelTitle", margin = new RectOffset(4, 4, 0, 0) };
+      PanelTitle = new GUIStyle(EditorStyles.boldLabel) { name = "panelTitle", margin = new RectOffset(4, 4, 0, 0) };
 
-      panelTitleDropDown = new GUIStyle(EditorStyles.toolbarDropDown)
+      PanelTitleDropDown = new GUIStyle(EditorStyles.toolbarDropDown)
       {
          name = "panelTitleDropDown",
          font = EditorStyles.boldLabel.font,
@@ -68,7 +68,7 @@ public static class uScriptGUIStyle
          padding = new RectOffset(6, 12, 1, 3)
       };
 
-      referenceText = new GUIStyle(GUI.skin.label)
+      ReferenceText = new GUIStyle(GUI.skin.label)
       {
          name = "referenceText",
          wordWrap = true,
@@ -76,18 +76,18 @@ public static class uScriptGUIStyle
          stretchHeight = true
       };
 
-      columnHeader = new GUIStyle(EditorStyles.toolbarButton)
+      ColumnHeader = new GUIStyle(EditorStyles.toolbarButton)
       {
          name = "columnHeader",
          fontStyle = FontStyle.Bold,
          alignment = TextAnchor.MiddleLeft,
          padding = new RectOffset(5, 8, 0, 0),
-         fixedHeight = columnHeaderHeight,
+         fixedHeight = ColumnHeaderHeight,
          contentOffset = new Vector2(0, -1)
       };
-      columnHeader.normal.background = columnHeader.onNormal.background;
+      ColumnHeader.normal.background = ColumnHeader.onNormal.background;
 
-      hDivider = new GUIStyle(GUI.skin.box)
+      HorizontalDivider = new GUIStyle(GUI.skin.box)
       {
          name = "hDivider",
          margin = new RectOffset(0, 0, 0, 0),
@@ -96,7 +96,7 @@ public static class uScriptGUIStyle
          normal = { background = null }
       };
 
-      vDivider = new GUIStyle(GUI.skin.box)
+      VerticalDivider = new GUIStyle(GUI.skin.box)
       {
          name = "vDivider",
          margin = new RectOffset(0, 0, 0, 0),
@@ -106,24 +106,24 @@ public static class uScriptGUIStyle
       };
 
       // vScrollbar.name = "vScrollbar";                // DO NOT RENAME
-      vScrollbar = new GUIStyle(GUI.skin.verticalScrollbar) { margin = new RectOffset() };
+      VerticalScrollbar = new GUIStyle(GUI.skin.verticalScrollbar) { margin = new RectOffset() };
 
       // hScrollbar.name = "hScrollbar";                // DO NOT RENAME
-      hScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar) { margin = new RectOffset() };
+      HorizontalScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar) { margin = new RectOffset() };
 
       // vColumnScrollbar.name = "vColumnScrollbar";    // DO NOT RENAME
-      vColumnScrollbar = new GUIStyle(vScrollbar)
+      VerticalColumnScrollbar = new GUIStyle(VerticalScrollbar)
       {
-         normal = { background = columnHeader.normal.background },
+         normal = { background = ColumnHeader.normal.background },
          overflow = new RectOffset()
       };
 
       // hColumnScrollbar.name = "hColumnScrollbar";    // DO NOT RENAME
-      hColumnScrollbar = new GUIStyle(hScrollbar) { fixedHeight = 0 };
+      HorizontalColumnScrollbar = new GUIStyle(HorizontalScrollbar) { fixedHeight = 0 };
 
-      columnScrollView = new GUIStyle(GUI.skin.box) { name = "columnScrollView", margin = new RectOffset(4, 4, 3, 0) };
+      ColumnScrollView = new GUIStyle(GUI.skin.box) { name = "columnScrollView", margin = new RectOffset(4, 4, 3, 0) };
 
-      nodeButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft)
+      NodeButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft)
       {
          name = "nodeButtonLeft",
          alignment = TextAnchor.UpperLeft,
@@ -133,7 +133,7 @@ public static class uScriptGUIStyle
          fontSize = 11
       };
 
-      nodeButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid)
+      NodeButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid)
       {
          name = "nodeButtonMiddle",
          alignment = TextAnchor.MiddleCenter,
@@ -145,7 +145,7 @@ public static class uScriptGUIStyle
          contentOffset = new Vector2(0, 1)
       };
 
-      nodeButtonRight = new GUIStyle(EditorStyles.miniButtonRight)
+      NodeButtonRight = new GUIStyle(EditorStyles.miniButtonRight)
       {
          name = "nodeButtonRight",
          alignment = TextAnchor.UpperCenter,
@@ -157,14 +157,14 @@ public static class uScriptGUIStyle
          contentOffset = new Vector2(-1, 1)
       };
 
-      favoriteButtonFoldout = new GUIStyle(EditorStyles.toolbarButton)
+      FavoriteButtonFoldout = new GUIStyle(EditorStyles.toolbarButton)
       {
          name = "uScript_favoriteButtonFoldout",
          margin = new RectOffset(0, 0, 0, 0),
          padding = new RectOffset(2, 2, 0, 0)
       };
 
-      favoriteButtonName = new GUIStyle("ButtonRight")
+      FavoriteButtonName = new GUIStyle("ButtonRight")
       {
          name = "uScript_favoriteButtonName",
          alignment = TextAnchor.MiddleLeft,
@@ -174,7 +174,7 @@ public static class uScriptGUIStyle
          padding = new RectOffset(6, 6, 2, 2)
       };
 
-      favoriteButtonNumber = new GUIStyle("ButtonLeft")
+      FavoriteButtonNumber = new GUIStyle("ButtonLeft")
       {
          name = "uScript_favoriteButtonNumber",
          alignment = TextAnchor.MiddleLeft,
@@ -184,30 +184,30 @@ public static class uScriptGUIStyle
          padding = new RectOffset(7, 6, 1, 3)
       };
 
-      favoriteButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft)
+      FavoriteButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft)
       {
          name = "uScript_favoriteButtonLeft",
          margin = new RectOffset(4, 0, 1, 1),
          padding = new RectOffset(4, 4, 2, 2)
       };
 
-      favoriteButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid)
+      FavoriteButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid)
       {
          name = "uScript_favoriteButtonMiddle",
          margin = new RectOffset(0, 0, 1, 1),
          padding = new RectOffset(4, 4, 2, 2)
       };
 
-      favoriteButtonRight = new GUIStyle(EditorStyles.miniButtonRight)
+      FavoriteButtonRight = new GUIStyle(EditorStyles.miniButtonRight)
       {
          name = "uScript_favoriteButtonRight",
          margin = new RectOffset(0, 4, 1, 1),
          padding = new RectOffset(4, 4, 2, 2)
       };
 
-      contextMenu = new GUIStyle(EditorStyles.toolbarButton);
+      ContextMenu = new GUIStyle(EditorStyles.toolbarButton);
 
-      menuDropDownWindow = new GUIStyle(GUI.skin.window)
+      MenuDropDownWindow = new GUIStyle(GUI.skin.window)
       {
          normal = { background = textureWindowMenuDropDown },
          onNormal = { background = textureWindowMenuDropDown },
@@ -217,7 +217,7 @@ public static class uScriptGUIStyle
          contentOffset = Vector2.zero
       };
 
-      menuDropDownButton = new GUIStyle(EditorStyles.largeLabel)
+      MenuDropDownButton = new GUIStyle(EditorStyles.largeLabel)
       {
          name = "menuDropDownButton",
          active = { background = EditorStyles.toolbarButton.onActive.background },
@@ -227,7 +227,7 @@ public static class uScriptGUIStyle
          padding = new RectOffset(8, 8, 4, 4)
       };
 
-      menuDropDownButtonShortcut = new GUIStyle(EditorStyles.largeLabel)
+      MenuDropDownButtonShortcut = new GUIStyle(EditorStyles.largeLabel)
       {
          name = "menuDropDownButtonShortcut",
          fontStyle = FontStyle.Bold,
@@ -235,7 +235,7 @@ public static class uScriptGUIStyle
          padding = new RectOffset()
       };
 
-      menuContextWindow = new GUIStyle(GUI.skin.window)
+      MenuContextWindow = new GUIStyle(GUI.skin.window)
       {
          normal = { background = textureWindowMenuContext },
          onNormal = { background = textureWindowMenuContext },
@@ -245,7 +245,7 @@ public static class uScriptGUIStyle
          contentOffset = Vector2.zero
       };
 
-      menuContextButton = new GUIStyle(EditorStyles.largeLabel)
+      MenuContextButton = new GUIStyle(EditorStyles.largeLabel)
       {
          name = "menuDropDownButton",
          active = { background = EditorStyles.toolbarButton.onActive.background },
@@ -255,7 +255,7 @@ public static class uScriptGUIStyle
          padding = new RectOffset(8, 8, 4, 4)
       };
 
-      outline = new GUIStyle(GUI.skin.box)
+      Outline = new GUIStyle(GUI.skin.box)
       {
          name = "uScript_outline",
          margin = new RectOffset(),
@@ -264,16 +264,16 @@ public static class uScriptGUIStyle
          stretchWidth = false
       };
 
-      panelMessage = new GUIStyle(GUI.skin.label) { wordWrap = true, padding = new RectOffset(16, 16, 16, 16) };
+      PanelMessage = new GUIStyle(GUI.skin.label) { wordWrap = true, padding = new RectOffset(16, 16, 16, 16) };
 
-      panelMessageBold = new GUIStyle(EditorStyles.boldLabel)
+      PanelMessageBold = new GUIStyle(EditorStyles.boldLabel)
       {
          alignment = TextAnchor.MiddleCenter,
          wordWrap = true,
          padding = new RectOffset(16, 16, 16, 16)
       };
 
-      panelMessageError = new GUIStyle(GUI.skin.box)
+      PanelMessageError = new GUIStyle(GUI.skin.box)
       {
          normal = { textColor = EditorStyles.boldLabel.normal.textColor },
          font = EditorStyles.boldLabel.font,
@@ -281,14 +281,14 @@ public static class uScriptGUIStyle
          stretchWidth = true
       };
 
-      underline = new GUIStyle(EditorStyles.boldLabel)
+      Underline = new GUIStyle(EditorStyles.boldLabel)
       {
          normal = { background = textureUnderline },
          border = new RectOffset(0, 0, 0, 2),
          padding = new RectOffset(0, 0, 2, 2)
       };
 
-      referenceButtonIcon = new GUIStyle(EditorStyles.miniButton)
+      ReferenceButtonIcon = new GUIStyle(EditorStyles.miniButton)
       {
          name = "uScript_referenceButtonIcon",
          alignment = TextAnchor.MiddleCenter,
@@ -299,7 +299,7 @@ public static class uScriptGUIStyle
          fixedWidth = 20
       };
 
-      referenceButtonText = new GUIStyle(EditorStyles.miniButton)
+      ReferenceButtonText = new GUIStyle(EditorStyles.miniButton)
       {
          name = "uScript_referenceButtonText",
          alignment = TextAnchor.MiddleCenter,
@@ -309,14 +309,14 @@ public static class uScriptGUIStyle
          fixedHeight = 20
       };
 
-      referenceDetailBox = new GUIStyle(GUI.skin.box)
+      ReferenceDetailBox = new GUIStyle(GUI.skin.box)
       {
          name = "uScript_referenceDetailBox",
          margin = new RectOffset(24, 24, 16, 16),
          padding = new RectOffset(4, 4, 4, 4)
       };
 
-      referenceDetailTitle = new GUIStyle(EditorStyles.boldLabel)
+      ReferenceDetailTitle = new GUIStyle(EditorStyles.boldLabel)
       {
          name = "uScript_referenceDetailTitle",
          margin = new RectOffset(),
@@ -324,7 +324,7 @@ public static class uScriptGUIStyle
          stretchWidth = false
       };
 
-      referenceDetailLabel = new GUIStyle(EditorStyles.boldLabel)
+      ReferenceDetailLabel = new GUIStyle(EditorStyles.boldLabel)
       {
          name = "uScript_referenceDetailLabel",
          margin = new RectOffset(),
@@ -332,14 +332,14 @@ public static class uScriptGUIStyle
          stretchWidth = false
       };
 
-      referenceDetailValue = new GUIStyle(referenceDetailLabel)
+      ReferenceDetailValue = new GUIStyle(ReferenceDetailLabel)
       {
          name = "uScript_referenceDetailValue",
          alignment = TextAnchor.MiddleRight,
          margin = new RectOffset(12, 0, 0, 0)
       };
 
-      referenceDetailAlertLabel = new GUIStyle(EditorStyles.boldLabel)
+      ReferenceDetailAlertLabel = new GUIStyle(EditorStyles.boldLabel)
       {
          name = "uScript_referenceDetailAlertLabel",
          margin = new RectOffset(),
@@ -348,14 +348,14 @@ public static class uScriptGUIStyle
          wordWrap = true
       };
 
-      referenceDetailAlertValue = new GUIStyle(referenceDetailAlertLabel)
+      ReferenceDetailAlertValue = new GUIStyle(ReferenceDetailAlertLabel)
       {
          name = "uScript_referenceDetailAlertValue",
          alignment = TextAnchor.MiddleRight,
          margin = new RectOffset(12, 0, 0, 0)
       };
 
-      referenceName = new GUIStyle(EditorStyles.boldLabel)
+      ReferenceName = new GUIStyle(EditorStyles.boldLabel)
       {
          name = "referenceName",
          normal = { background = textureUnderline },
@@ -363,14 +363,14 @@ public static class uScriptGUIStyle
          padding = new RectOffset(0, 0, 2, 2)
       };
 
-      referenceInfo = new GUIStyle(EditorStyles.miniLabel)
+      ReferenceInfo = new GUIStyle(EditorStyles.miniLabel)
       {
          name = "uScript_referenceInfo",
          alignment = TextAnchor.LowerRight,
          padding = new RectOffset(0, 0, 3, 2)
       };
 
-      referenceDesc = new GUIStyle(EditorStyles.label)
+      ReferenceDesc = new GUIStyle(EditorStyles.label)
       {
          name = "referenceDesc",
          padding = new RectOffset(0, 0, 0, 3),
@@ -379,7 +379,7 @@ public static class uScriptGUIStyle
          wordWrap = true
       };
 
-      propertyButtonLeft = new GUIStyle("ButtonLeft")
+      PropertyButtonLeft = new GUIStyle("ButtonLeft")
       {
          name = "uScript_propertyButtonLeft",
          fixedHeight = 20,
@@ -388,7 +388,7 @@ public static class uScriptGUIStyle
          margin = new RectOffset(4, 0, 0, 0)
       };
 
-      propertyButtonMiddleDeprecated = new GUIStyle("ButtonMid")
+      PropertyButtonMiddleDeprecated = new GUIStyle("ButtonMid")
       {
          name = "uScript_propertyButtonMiddleDeprecated",
          fixedHeight = 20,
@@ -396,7 +396,7 @@ public static class uScriptGUIStyle
          margin = new RectOffset()
       };
 
-      propertyButtonMiddleFavorite = new GUIStyle(propertyButtonMiddleDeprecated)
+      PropertyButtonMiddleFavorite = new GUIStyle(PropertyButtonMiddleDeprecated)
       {
          name = "uScript_propertyButtonMiddleFavorite",
          alignment = TextAnchor.MiddleLeft,
@@ -405,14 +405,14 @@ public static class uScriptGUIStyle
          padding = new RectOffset(12, 6, 2, 3)
       };
 
-      propertyButtonMiddleFavoriteStar = new GUIStyle(EditorStyles.largeLabel)
+      PropertyButtonMiddleFavoriteStar = new GUIStyle(EditorStyles.largeLabel)
       {
          name = "uScript_propertyButtonMiddleFavoriteStar",
          padding = new RectOffset(4, 4, 0, 0),
          fontSize = 15
       };
 
-      propertyButtonMiddleName = new GUIStyle(propertyButtonMiddleDeprecated)
+      PropertyButtonMiddleName = new GUIStyle(PropertyButtonMiddleDeprecated)
       {
          name = "uScript_propertyButtonMiddleName",
          alignment = TextAnchor.MiddleLeft,
@@ -420,7 +420,7 @@ public static class uScriptGUIStyle
          contentOffset = Vector2.zero
       };
 
-      propertyButtonRightSearch = new GUIStyle("ButtonRight")
+      PropertyButtonRightSearch = new GUIStyle("ButtonRight")
       {
          name = "uScript_propertyButtonRightSearch",
          fixedHeight = 20,
@@ -430,7 +430,7 @@ public static class uScriptGUIStyle
          padding = new RectOffset()
       };
 
-      propertyButtonRightName = new GUIStyle(propertyButtonRightSearch)
+      PropertyButtonRightName = new GUIStyle(PropertyButtonRightSearch)
       {
          name = "uScript_propertyButtonRightName",
          alignment = TextAnchor.MiddleLeft,
@@ -438,18 +438,18 @@ public static class uScriptGUIStyle
          padding = ((GUIStyle)"ButtonRight").padding
       };
 
-      propertyTextField = new GUIStyle(EditorStyles.textField) { margin = new RectOffset(4, 4, 2, 2) };
+      PropertyTextField = new GUIStyle(EditorStyles.textField) { margin = new RectOffset(4, 4, 2, 2) };
 
-      propertyBoolField = new GUIStyle(EditorStyles.toggle) { margin = new RectOffset(4, 4, 1, 1) };
+      PropertyBoolField = new GUIStyle(EditorStyles.toggle) { margin = new RectOffset(4, 4, 1, 1) };
 
-      propertyArrayIconButton = new GUIStyle(EditorStyles.miniButton)
+      PropertyArrayIconButton = new GUIStyle(EditorStyles.miniButton)
       {
          margin = new RectOffset(4, 4, 2, 2),
          padding = new RectOffset(3, 3, 2, 2),
          stretchWidth = false
       };
 
-      propertyArrayTextButton = new GUIStyle(EditorStyles.miniButton)
+      PropertyArrayTextButton = new GUIStyle(EditorStyles.miniButton)
       {
          fontStyle = FontStyle.Bold,
          padding = new RectOffset(0, 2, 1, 1),
@@ -457,150 +457,150 @@ public static class uScriptGUIStyle
          alignment = TextAnchor.UpperCenter
       };
 
-      propertyRowOdd = new GUIStyle(GUIStyle.none) { fixedHeight = 20 };
+      PropertyRowOdd = new GUIStyle(GUIStyle.none) { fixedHeight = 20 };
 
-      propertyRowEven = new GUIStyle(propertyRowOdd) { normal = { background = texturePropertyRowEven } };
+      PropertyRowEven = new GUIStyle(PropertyRowOdd) { normal = { background = texturePropertyRowEven } };
 
-      scriptRowOdd = new GUIStyle(GUIStyle.none) { fixedHeight = 17 };
+      ScriptRowOdd = new GUIStyle(GUIStyle.none) { fixedHeight = 17 };
 
-      scriptRowEven = new GUIStyle(scriptRowOdd) { normal = { background = texturePropertyRowEven } };
+      ScriptRowEven = new GUIStyle(ScriptRowOdd) { normal = { background = texturePropertyRowEven } };
 
-      listRow = new GUIStyle(GUIStyle.none) { onNormal = { background = texturePropertyRowEven } };
+      ListRow = new GUIStyle(GUIStyle.none) { onNormal = { background = texturePropertyRowEven } };
 
-      toolbarLabel = new GUIStyle(EditorStyles.label)
+      ToolbarLabel = new GUIStyle(EditorStyles.label)
       {
          padding = new RectOffset(4, 4, 2, 2),
          margin = new RectOffset()
       };
    }
 
-   public static GUIStyle paletteToolbarFoldoutButton { get; private set; }
+   public static GUIStyle PaletteToolbarFoldoutButton { get; private set; }
 
-   public static GUIStyle paletteFoldout { get; private set; }
+   public static GUIStyle PaletteFoldout { get; private set; }
 
-   public static GUIStyle paletteButton { get; private set; }
+   public static GUIStyle PaletteButton { get; private set; }
 
-   public static GUIStyle panelBox { get; private set; }
+   public static GUIStyle PanelBox { get; private set; }
 
-   public static GUIStyle panelHR { get; private set; }
+   public static GUIStyle PanelHR { get; private set; }
 
-   public static GUIStyle panelTitle { get; private set; }
+   public static GUIStyle PanelTitle { get; private set; }
 
-   public static GUIStyle panelTitleDropDown { get; private set; }
+   public static GUIStyle PanelTitleDropDown { get; private set; }
 
-   public static GUIStyle referenceText { get; private set; }
+   public static GUIStyle ReferenceText { get; private set; }
 
-   public static GUIStyle columnHeader { get; private set; }
+   public static GUIStyle ColumnHeader { get; private set; }
 
-   public static GUIStyle hDivider { get; private set; }
+   public static GUIStyle HorizontalDivider { get; private set; }
 
-   public static GUIStyle vDivider { get; private set; }
+   public static GUIStyle VerticalDivider { get; private set; }
 
-   public static GUIStyle vScrollbar { get; private set; }
+   public static GUIStyle VerticalScrollbar { get; private set; }
 
-   public static GUIStyle hScrollbar { get; private set; }
+   public static GUIStyle HorizontalScrollbar { get; private set; }
 
-   public static GUIStyle vColumnScrollbar { get; private set; }
+   public static GUIStyle VerticalColumnScrollbar { get; private set; }
 
-   public static GUIStyle hColumnScrollbar { get; private set; }
+   public static GUIStyle HorizontalColumnScrollbar { get; private set; }
 
-   public static GUIStyle columnScrollView { get; private set; }
+   public static GUIStyle ColumnScrollView { get; private set; }
 
-   public static GUIStyle favoriteButtonFoldout { get; private set; }
+   public static GUIStyle FavoriteButtonFoldout { get; private set; }
 
-   public static GUIStyle favoriteButtonNumber { get; private set; }
+   public static GUIStyle FavoriteButtonNumber { get; private set; }
 
-   public static GUIStyle favoriteButtonName { get; private set; }
+   public static GUIStyle FavoriteButtonName { get; private set; }
 
-   public static GUIStyle favoriteButtonLeft { get; private set; }
+   public static GUIStyle FavoriteButtonLeft { get; private set; }
 
-   public static GUIStyle favoriteButtonMiddle { get; private set; }
+   public static GUIStyle FavoriteButtonMiddle { get; private set; }
 
-   public static GUIStyle favoriteButtonRight { get; private set; }
+   public static GUIStyle FavoriteButtonRight { get; private set; }
 
-   public static GUIStyle nodeButtonLeft { get; private set; }
+   public static GUIStyle NodeButtonLeft { get; private set; }
 
-   public static GUIStyle nodeButtonMiddle { get; private set; }
+   public static GUIStyle NodeButtonMiddle { get; private set; }
 
-   public static GUIStyle nodeButtonRight { get; private set; }
+   public static GUIStyle NodeButtonRight { get; private set; }
 
-   public static GUIStyle contextMenu { get; private set; }
+   public static GUIStyle ContextMenu { get; private set; }
 
-   public static GUIStyle menuDropDownWindow { get; private set; }
+   public static GUIStyle MenuDropDownWindow { get; private set; }
 
-   public static GUIStyle menuDropDownButton { get; private set; }
+   public static GUIStyle MenuDropDownButton { get; private set; }
 
-   public static GUIStyle menuDropDownButtonShortcut { get; private set; }
+   public static GUIStyle MenuDropDownButtonShortcut { get; private set; }
 
-   public static GUIStyle menuContextWindow { get; private set; }
+   public static GUIStyle MenuContextWindow { get; private set; }
 
-   public static GUIStyle menuContextButton { get; private set; }
+   public static GUIStyle MenuContextButton { get; private set; }
 
-   public static GUIStyle outline { get; private set; }
+   public static GUIStyle Outline { get; private set; }
 
-   public static GUIStyle panelMessage { get; private set; }
+   public static GUIStyle PanelMessage { get; private set; }
 
-   public static GUIStyle panelMessageBold { get; private set; }
+   public static GUIStyle PanelMessageBold { get; private set; }
 
-   public static GUIStyle panelMessageError { get; private set; }
+   public static GUIStyle PanelMessageError { get; private set; }
 
-   public static GUIStyle propertyButtonLeft { get; private set; }
+   public static GUIStyle PropertyButtonLeft { get; private set; }
 
-   public static GUIStyle propertyButtonMiddleDeprecated { get; private set; }
+   public static GUIStyle PropertyButtonMiddleDeprecated { get; private set; }
 
-   public static GUIStyle propertyButtonMiddleFavorite { get; private set; }
+   public static GUIStyle PropertyButtonMiddleFavorite { get; private set; }
 
-   public static GUIStyle propertyButtonMiddleFavoriteStar { get; private set; }
+   public static GUIStyle PropertyButtonMiddleFavoriteStar { get; private set; }
 
-   public static GUIStyle propertyButtonMiddleName { get; private set; }
+   public static GUIStyle PropertyButtonMiddleName { get; private set; }
 
-   public static GUIStyle propertyButtonRightSearch { get; private set; }
+   public static GUIStyle PropertyButtonRightSearch { get; private set; }
 
-   public static GUIStyle propertyButtonRightName { get; private set; }
+   public static GUIStyle PropertyButtonRightName { get; private set; }
 
-   public static GUIStyle propertyArrayIconButton { get; private set; }
+   public static GUIStyle PropertyArrayIconButton { get; private set; }
 
-   public static GUIStyle propertyArrayTextButton { get; private set; }
+   public static GUIStyle PropertyArrayTextButton { get; private set; }
 
-   public static GUIStyle propertyBoolField { get; private set; }
+   public static GUIStyle PropertyBoolField { get; private set; }
 
-   public static GUIStyle propertyRowOdd { get; private set; }
+   public static GUIStyle PropertyRowOdd { get; private set; }
 
-   public static GUIStyle propertyRowEven { get; private set; }
+   public static GUIStyle PropertyRowEven { get; private set; }
 
-   public static GUIStyle propertyTextField { get; private set; }
+   public static GUIStyle PropertyTextField { get; private set; }
 
-   public static GUIStyle referenceInfo { get; private set; }
+   public static GUIStyle ReferenceInfo { get; private set; }
 
-   public static GUIStyle referenceName { get; private set; }
+   public static GUIStyle ReferenceName { get; private set; }
 
-   public static GUIStyle referenceDesc { get; private set; }
+   public static GUIStyle ReferenceDesc { get; private set; }
 
-   public static GUIStyle referenceButtonIcon { get; private set; }
+   public static GUIStyle ReferenceButtonIcon { get; private set; }
 
-   public static GUIStyle referenceButtonText { get; private set; }
+   public static GUIStyle ReferenceButtonText { get; private set; }
 
-   public static GUIStyle referenceDetailBox { get; private set; }
+   public static GUIStyle ReferenceDetailBox { get; private set; }
 
-   public static GUIStyle referenceDetailTitle { get; private set; }
+   public static GUIStyle ReferenceDetailTitle { get; private set; }
 
-   public static GUIStyle referenceDetailLabel { get; private set; }
+   public static GUIStyle ReferenceDetailLabel { get; private set; }
 
-   public static GUIStyle referenceDetailValue { get; private set; }
+   public static GUIStyle ReferenceDetailValue { get; private set; }
 
-   public static GUIStyle referenceDetailAlertLabel { get; private set; }
+   public static GUIStyle ReferenceDetailAlertLabel { get; private set; }
 
-   public static GUIStyle referenceDetailAlertValue { get; private set; }
+   public static GUIStyle ReferenceDetailAlertValue { get; private set; }
 
-   public static GUIStyle scriptRowOdd { get; private set; }
+   public static GUIStyle ScriptRowOdd { get; private set; }
 
-   public static GUIStyle scriptRowEven { get; private set; }
+   public static GUIStyle ScriptRowEven { get; private set; }
 
-   public static GUIStyle listRow { get; private set; }
+   public static GUIStyle ListRow { get; private set; }
 
-   public static GUIStyle toolbarLabel { get; private set; }
+   public static GUIStyle ToolbarLabel { get; private set; }
 
-   public static GUIStyle underline { get; private set; }
+   public static GUIStyle Underline { get; private set; }
 
    public static void Init()
    {

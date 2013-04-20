@@ -658,7 +658,7 @@ namespace Detox.Editor.GUI
 //            Debug.Log("FIRST:\t" + _firstVisibleRow.ToString() + "\nLAST:\t\t" + _lastVisibleRow.ToString());
             }
 
-            _listPosition = EditorGUILayout.BeginScrollView(_listPosition, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+            _listPosition = EditorGUILayout.BeginScrollView(_listPosition, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
             {
                int totalVisibleRows = CountTotalVisibleRows(_items);
                if (TotalVisibleItems != totalVisibleRows)

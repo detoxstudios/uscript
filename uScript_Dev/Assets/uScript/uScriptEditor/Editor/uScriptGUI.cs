@@ -175,7 +175,7 @@ public static class uScriptGUI
          _styleType.margin.left = 6;
       }
     
-      GUILayout.Label(string.Empty, new GUIStyle(), GUILayout.Height(uScriptGUIStyle.columnHeaderHeight));
+      GUILayout.Label(string.Empty, new GUIStyle(), GUILayout.Height(uScriptGUIStyle.ColumnHeaderHeight));
    }
 
    public static void EndColumns()
@@ -200,20 +200,20 @@ public static class uScriptGUI
       // is excluded when positioning the GUI elements, since the offset is automatically applied.
 
       // First column - Checkbox
-      GUI.Label(new Rect(x, y, _columnEnabled.Width + 4 + 2, uScriptGUIStyle.columnHeaderHeight), _columnEnabled.Label, uScriptGUIStyle.columnHeader);
+      GUI.Label(new Rect(x, y, _columnEnabled.Width + 4 + 2, uScriptGUIStyle.ColumnHeaderHeight), _columnEnabled.Label, uScriptGUIStyle.ColumnHeader);
       x += _columnEnabled.Width + 2;
 
       // Interior column - Property name
-      GUI.Label(new Rect(x, y, _columnLabel.Width + 4, uScriptGUIStyle.columnHeaderHeight), _columnLabel.Label, uScriptGUIStyle.columnHeader);
+      GUI.Label(new Rect(x, y, _columnLabel.Width + 4, uScriptGUIStyle.ColumnHeaderHeight), _columnLabel.Label, uScriptGUIStyle.ColumnHeader);
       x += _columnLabel.Width + 4;
 
       // Interior column - Property value
-      GUI.Label(new Rect(x, y, _columnValue.Width + 4, uScriptGUIStyle.columnHeaderHeight), _columnValue.Label, uScriptGUIStyle.columnHeader);
+      GUI.Label(new Rect(x, y, _columnValue.Width + 4, uScriptGUIStyle.ColumnHeaderHeight), _columnValue.Label, uScriptGUIStyle.ColumnHeader);
       x += _columnValue.Width + 4;
 
       // Last column - Property type
       // This right-most column should appear to have an expanded width
-      GUI.Label(new Rect(x, y, svRect.width, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, uScriptGUIStyle.columnHeader);
+      GUI.Label(new Rect(x, y, svRect.width, uScriptGUIStyle.ColumnHeaderHeight), _columnType.Label, uScriptGUIStyle.ColumnHeader);
 //      GUI.Label(new Rect(x, y, _columnType.Width + 4 + 2, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, style);
 //      GUI.Label(new Rect(x, y, svRect.width - _columnLabel.Width - _columnValue.Width - 22 + columnOffset.x, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, style);
 
@@ -245,7 +245,7 @@ public static class uScriptGUI
 
    public static void HR()
    {
-      GUILayout.BeginHorizontal(uScriptGUIStyle.panelHR, GUILayout.ExpandWidth(true));
+      GUILayout.BeginHorizontal(uScriptGUIStyle.PanelHR, GUILayout.ExpandWidth(true));
       {
       }
       GUILayout.EndHorizontal();
@@ -271,7 +271,7 @@ public static class uScriptGUI
          // Foldout
          //
          UnityEngine.Color tmpColor = GUI.color;
-         UnityEngine.Color textColor = uScriptGUIStyle.nodeButtonLeft.normal.textColor;
+         UnityEngine.Color textColor = uScriptGUIStyle.NodeButtonLeft.normal.textColor;
 
          if (null != node)
          {
@@ -280,7 +280,7 @@ public static class uScriptGUI
             if (uScript.IsNodeTypeDeprecated(entityNode) || scriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(entityNode))
             {
                GUI.color = new UnityEngine.Color(1, 0.5f, 1, 1);
-               uScriptGUIStyle.nodeButtonLeft.normal.textColor = UnityEngine.Color.white;
+               uScriptGUIStyle.NodeButtonLeft.normal.textColor = UnityEngine.Color.white;
                //            label += "\t\t--- DEPRECATED: UPDATED OR REPLACE ---";
                //            label += "\t\t--- DEPRECATED ---";
             }
@@ -289,7 +289,7 @@ public static class uScriptGUI
          //
          // Socket segment
          //
-         GUILayout.Box(GUIContent.none, uScriptGUIStyle.propertyButtonLeft);
+         GUILayout.Box(GUIContent.none, uScriptGUIStyle.PropertyButtonLeft);
 
 #if UNITY_3_5 || UNITY_3_6
          // EditorGUI.showMixedValue was introduced in Unity 3.5
@@ -444,8 +444,8 @@ public static class uScriptGUI
 
          isFoldoutExpanded = GUILayout.Toggle(isFoldoutExpanded, label,
             (node == null
-               ? uScriptGUIStyle.propertyButtonRightName
-               : uScriptGUIStyle.propertyButtonMiddleName)
+               ? uScriptGUIStyle.PropertyButtonRightName
+               : uScriptGUIStyle.PropertyButtonMiddleName)
             );
 
          //
@@ -460,7 +460,7 @@ public static class uScriptGUI
             {
                if (true == scriptEditorCtrl.ScriptEditor.CanUpgradeNode(entityNode))
                {
-                  if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.propertyButtonMiddleDeprecated))
+                  if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.PropertyButtonMiddleDeprecated))
                   {
                      System.EventHandler Click = new System.EventHandler(scriptEditorCtrl.m_MenuUpgradeNode_Click);
                      if (Click != null)
@@ -475,7 +475,7 @@ public static class uScriptGUI
                }
                else
                {
-                  if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.propertyButtonMiddleDeprecated))
+                  if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.PropertyButtonMiddleDeprecated))
                   {
                      System.EventHandler Click = new System.EventHandler(scriptEditorCtrl.m_MenuDeleteMissingNode_Click);
                      if (Click != null)
@@ -497,7 +497,7 @@ public static class uScriptGUI
             string[] favoriteNodes = uScript.Preferences.FavoriteNodes;
             int favoriteIndex = Array.IndexOf(favoriteNodes, favoriteNodeType) + 1;
 
-            int newIndex = EditorGUILayout.Popup(favoriteIndex, uScriptGUIPanelPalette.Instance.favoritePopupOptions, uScriptGUIStyle.propertyButtonMiddleFavorite, GUILayout.Width(30));
+            int newIndex = EditorGUILayout.Popup(favoriteIndex, uScriptGUIPanelPalette.Instance.favoritePopupOptions, uScriptGUIStyle.PropertyButtonMiddleFavorite, GUILayout.Width(30));
             if (newIndex != favoriteIndex)
             {
                if (favoriteIndex == 0)
@@ -519,18 +519,18 @@ public static class uScriptGUI
             // Favorite star
             Rect popupRect = GUILayoutUtility.GetLastRect();
 
-            GUI.Label(popupRect, new GUIContent("\u2605"), uScriptGUIStyle.propertyButtonMiddleFavoriteStar);
+            GUI.Label(popupRect, new GUIContent("\u2605"), uScriptGUIStyle.PropertyButtonMiddleFavoriteStar);
 
             //
             // Search button
             //
-            if (GUILayout.Button(uScriptGUIContent.buttonNodeFind, uScriptGUIStyle.propertyButtonRightSearch))
+            if (GUILayout.Button(uScriptGUIContent.buttonNodeFind, uScriptGUIStyle.PropertyButtonRightSearch))
             {
                scriptEditorCtrl.CenterOnNode(node);
             }
 
             GUI.color = tmpColor;
-            uScriptGUIStyle.nodeButtonLeft.normal.textColor = textColor;
+            uScriptGUIStyle.NodeButtonLeft.normal.textColor = textColor;
          }  // Node buttons
       }
       GUILayout.EndHorizontal();
@@ -580,7 +580,7 @@ public static class uScriptGUI
 
    static void SetupRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      EditorGUILayout.BeginHorizontal((_isPropertyRowEven ? uScriptGUIStyle.propertyRowEven : uScriptGUIStyle.propertyRowOdd));
+      EditorGUILayout.BeginHorizontal((_isPropertyRowEven ? uScriptGUIStyle.PropertyRowEven : uScriptGUIStyle.PropertyRowOdd));
       _isPropertyRowEven = !_isPropertyRowEven;
 
       if (isSocketExposed == false && isLocked)
@@ -615,7 +615,7 @@ public static class uScriptGUI
    {
       if ((isSocketExposed && isLocked) || isReadOnly)
       {
-         EditorGUILayout.TextField(isReadOnly ? "(read-only)" : "(socket used)", uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+         EditorGUILayout.TextField(isReadOnly ? "(read-only)" : "(socket used)", uScriptGUIStyle.PropertyTextField, GUILayout.Width(_columnValue.Width));
          return false;
       }
       return true;
@@ -632,7 +632,7 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         value = EditorGUILayout.IntField(value, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+         value = EditorGUILayout.IntField(value, uScriptGUIStyle.PropertyTextField, GUILayout.Width(_columnValue.Width));
       }
 
       EndRow(value.GetType().ToString());
@@ -645,7 +645,7 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         value = EditorGUILayout.FloatField(value, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+         value = EditorGUILayout.FloatField(value, uScriptGUIStyle.PropertyTextField, GUILayout.Width(_columnValue.Width));
       }
 
       EndRow(value.GetType().ToString());
@@ -689,7 +689,7 @@ public static class uScriptGUI
             maxWidth = (float)pi.GetValue(null, null);
          }
 
-         GUIStyle style = uScriptGUIStyle.propertyTextField;
+         GUIStyle style = uScriptGUIStyle.PropertyTextField;
          Rect position = GUILayoutUtility.GetRect(minWidth, maxWidth, 16f, 16f, style, GUILayout.Width(_columnValue.Width));
          string controlName = GetControlName();
          int id = GUIUtility.GetControlID(controlName.GetHashCode(), FocusType.Keyboard, position);
@@ -730,7 +730,7 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         value = EditorGUILayout.TextField(value, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+         value = EditorGUILayout.TextField(value, uScriptGUIStyle.PropertyTextField, GUILayout.Width(_columnValue.Width));
       }
 
       EndRow(value.GetType().ToString());
@@ -756,7 +756,7 @@ public static class uScriptGUI
 
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
-         value = GUILayout.Toggle(value, GUIContent.none, uScriptGUIStyle.propertyBoolField, GUILayout.Width(_columnValue.Width));
+         value = GUILayout.Toggle(value, GUIContent.none, uScriptGUIStyle.PropertyBoolField, GUILayout.Width(_columnValue.Width));
       }
 
       EndRow(value.GetType().ToString());
@@ -767,7 +767,7 @@ public static class uScriptGUI
    {
       BeginStaticRow(label, ref isSocketExposed, isLocked, true);
 
-      EditorGUILayout.TextField(text, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+      EditorGUILayout.TextField(text, uScriptGUIStyle.PropertyTextField, GUILayout.Width(_columnValue.Width));
 
       EndRow("");
    }
@@ -819,12 +819,12 @@ public static class uScriptGUI
          if (optionName == "ExpandWidth" || optionName == "ExpandHeight")
          {
             bool optionBool = optionValue != 0;
-            optionBool = GUILayout.Toggle(optionBool, GUIContent.none, uScriptGUIStyle.propertyBoolField, GUILayout.Width(w + p));
+            optionBool = GUILayout.Toggle(optionBool, GUIContent.none, uScriptGUIStyle.PropertyBoolField, GUILayout.Width(w + p));
             optionValue = (optionBool ? 1 : 0);
          }
          else
          {
-            optionValue = Math.Max(0, EditorGUILayout.IntField(optionValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p)));
+            optionValue = Math.Max(0, EditorGUILayout.IntField(optionValue, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p)));
          }
 
          value = CreateGUILayoutOption(optionIndex, optionValue);
@@ -1040,8 +1040,8 @@ public static class uScriptGUI
          int w = (_columnValue.Width - spacing) / 2;
          int p = (_columnValue.Width - spacing) % (w * 2);
 
-         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
       }
 
       EndRow(value.GetType().ToString() + " [X, Y]");
@@ -1057,9 +1057,9 @@ public static class uScriptGUI
          int spacing = 8; // 4 * 2
          int w = (_columnValue.Width - spacing) / 3;
          int p = (_columnValue.Width - spacing) % (w * 3);
-         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.z = EditorGUILayout.FloatField(value.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.z = EditorGUILayout.FloatField(value.z, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
       }
 
       EndRow(value.GetType().ToString() + " [X, Y, Z]");
@@ -1075,10 +1075,10 @@ public static class uScriptGUI
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.z = EditorGUILayout.FloatField(value.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.w = EditorGUILayout.FloatField(value.w, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.z = EditorGUILayout.FloatField(value.z, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.w = EditorGUILayout.FloatField(value.w, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
       }
 
       EndRow(value.GetType().ToString() + " [X, Y, Z, W]");
@@ -1094,10 +1094,10 @@ public static class uScriptGUI
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.width = EditorGUILayout.FloatField(value.width, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.height = EditorGUILayout.FloatField(value.height, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.width = EditorGUILayout.FloatField(value.width, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.height = EditorGUILayout.FloatField(value.height, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
       }
 
       EndRow(value.GetType().ToString() + " [X, Y, W, H]");
@@ -1113,10 +1113,10 @@ public static class uScriptGUI
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.z = EditorGUILayout.FloatField(value.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         value.w = EditorGUILayout.FloatField(value.w, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.z = EditorGUILayout.FloatField(value.z, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         value.w = EditorGUILayout.FloatField(value.w, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
       }
 
       EndRow(value.GetType().ToString() + " [X, Y, Z, W]");
@@ -1261,7 +1261,7 @@ public static class uScriptGUI
          if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
             //first show the text field and get back the same (or changed value)
-            string userText = EditorGUILayout.TextField(textValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+            string userText = EditorGUILayout.TextField(textValue, uScriptGUIStyle.PropertyTextField, GUILayout.Width(_columnValue.Width));
             System.Enum newEnum;
 
             //try and turn the text field value back into an enum, if it doesn't work
@@ -1394,7 +1394,7 @@ public static class uScriptGUI
          btnRect.width = 18;
          btnRect.height = 16;
 
-         if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayAdd, uScriptGUIStyle.propertyArrayTextButton))
+         if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayAdd, uScriptGUIStyle.PropertyArrayTextButton))
          {
             GUIUtility.keyboardControl = 0;
             // Special conversion case for strings and GUILayoutOption objects
@@ -1406,7 +1406,7 @@ public static class uScriptGUI
 
          btnRect.x -= 18;
 
-         if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayClear, uScriptGUIStyle.propertyArrayTextButton))
+         if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayClear, uScriptGUIStyle.PropertyArrayTextButton))
          {
             GUIUtility.keyboardControl = 0;
             array = new T[]{};
@@ -1497,7 +1497,7 @@ public static class uScriptGUI
 //            uScript.RequestRepaint();
 //         }
 
-      if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayRemove, uScriptGUIStyle.propertyArrayTextButton))
+      if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayRemove, uScriptGUIStyle.PropertyArrayTextButton))
       {
          GUIUtility.keyboardControl = 0;
          array = ArrayRemove<T>(array, index);
@@ -1505,7 +1505,7 @@ public static class uScriptGUI
 
       btnRect.x -= 18;
 
-      if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayDuplicate, uScriptGUIStyle.propertyArrayTextButton))
+      if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayDuplicate, uScriptGUIStyle.PropertyArrayTextButton))
       {
          GUIUtility.keyboardControl = 0;
          array = ArrayInsert<T>(array, index, array[index]);
@@ -1513,7 +1513,7 @@ public static class uScriptGUI
 
       btnRect.x -= 18;
 
-      if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayInsert, uScriptGUIStyle.propertyArrayTextButton))
+      if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayInsert, uScriptGUIStyle.PropertyArrayTextButton))
       {
          GUIUtility.keyboardControl = 0;
          // Special conversion case for strings and GUILayoutOption objects
@@ -1529,11 +1529,11 @@ public static class uScriptGUI
 
       if (value is int)
       {
-         t = EditorGUILayout.IntField((int)t, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+         t = EditorGUILayout.IntField((int)t, uScriptGUIStyle.PropertyTextField, GUILayout.Width(_columnValue.Width));
       }
       else if (value is float)
       {
-         t = EditorGUILayout.FloatField((float)t, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+         t = EditorGUILayout.FloatField((float)t, uScriptGUIStyle.PropertyTextField, GUILayout.Width(_columnValue.Width));
       }
       else if (value is string)
       {
@@ -1541,7 +1541,7 @@ public static class uScriptGUI
          {
             EditorGUILayout.BeginHorizontal(GUILayout.Width(_columnValue.Width));
             {
-               t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.propertyTextField, GUILayout.ExpandWidth(true));
+               t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.PropertyTextField, GUILayout.ExpandWidth(true));
 
                Rect r = GUILayoutUtility.GetLastRect();
 
@@ -1571,7 +1571,7 @@ public static class uScriptGUI
 
                uScriptGUI.enabled = (string.IsNullOrEmpty((string)t) == false);
 
-               if (GUILayout.Button(uScriptGUIContent.buttonArraySearch, uScriptGUIStyle.propertyArrayIconButton))
+               if (GUILayout.Button(uScriptGUIContent.buttonArraySearch, uScriptGUIStyle.PropertyArrayIconButton))
                {
                   GUIUtility.keyboardControl = 0;
                   GameObject go = GameObject.Find((string)t);
@@ -1591,12 +1591,12 @@ public static class uScriptGUI
          }
          else
          {
-            t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+            t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.PropertyTextField, GUILayout.Width(_columnValue.Width));
          }
       }
       else if (value is bool)
       {
-         t = GUILayout.Toggle((bool)t, GUIContent.none, uScriptGUIStyle.propertyBoolField, GUILayout.Width(_columnValue.Width));
+         t = GUILayout.Toggle((bool)t, GUIContent.none, uScriptGUIStyle.PropertyBoolField, GUILayout.Width(_columnValue.Width));
       }
       else if (value is System.Enum)
       {
@@ -1617,14 +1617,14 @@ public static class uScriptGUI
          if (optionName == "ExpandWidth" || optionName == "ExpandHeight")
          {
             bool optionBool = optionValue != 0;
-            optionBool = GUILayout.Toggle(optionBool, GUIContent.none, uScriptGUIStyle.propertyBoolField, GUILayout.Width(w + p));
+            optionBool = GUILayout.Toggle(optionBool, GUIContent.none, uScriptGUIStyle.PropertyBoolField, GUILayout.Width(w + p));
             optionValue = (optionBool ? 1 : 0);
          }
          else
          {
             int indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
-            optionValue = Math.Max(0, EditorGUILayout.IntField(optionValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p)));
+            optionValue = Math.Max(0, EditorGUILayout.IntField(optionValue, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p)));
             EditorGUI.indentLevel = indent;
          }
 
@@ -1642,8 +1642,8 @@ public static class uScriptGUI
          int w = (_columnValue.Width - spacing) / 2;
          int p = (_columnValue.Width - spacing) % (w * 2);
 
-         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
          typeFormat = " [X, Y]";
 
          t = val;
@@ -1655,9 +1655,9 @@ public static class uScriptGUI
          int spacing = 8; // 4 * 2
          int w = (_columnValue.Width - spacing) / 3;
          int p = (_columnValue.Width - spacing) % (w * 3);
-         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.z = EditorGUILayout.FloatField(val.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.z = EditorGUILayout.FloatField(val.z, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
          typeFormat = " [X, Y, Z]";
 
          t = val;
@@ -1669,10 +1669,10 @@ public static class uScriptGUI
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.z = EditorGUILayout.FloatField(val.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.w = EditorGUILayout.FloatField(val.w, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.z = EditorGUILayout.FloatField(val.z, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.w = EditorGUILayout.FloatField(val.w, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
          typeFormat = " [X, Y, Z, W]";
 
          t = val;
@@ -1684,10 +1684,10 @@ public static class uScriptGUI
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.width = EditorGUILayout.FloatField(val.width, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.height = EditorGUILayout.FloatField(val.height, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.width = EditorGUILayout.FloatField(val.width, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.height = EditorGUILayout.FloatField(val.height, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
          typeFormat = " [X, Y, W, H]";
 
          t = val;
@@ -1699,10 +1699,10 @@ public static class uScriptGUI
          int spacing = 12; // 4 * 3
          int w = (_columnValue.Width - spacing) / 4;
          int p = (_columnValue.Width - spacing) % (w * 4);
-         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.z = EditorGUILayout.FloatField(val.z, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         val.w = EditorGUILayout.FloatField(val.w, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         val.x = EditorGUILayout.FloatField(val.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.y = EditorGUILayout.FloatField(val.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.z = EditorGUILayout.FloatField(val.z, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         val.w = EditorGUILayout.FloatField(val.w, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
          typeFormat = " [X, Y, Z, W]";
 
          t = val;
@@ -1968,7 +1968,7 @@ public static class uScriptGUI
       {
          Vector2 buttonSize = style.CalcSize(new GUIContent("Browse"));
 
-         assetPath = EditorGUILayout.TextField(assetPath, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width - 4 - buttonSize.x));
+         assetPath = EditorGUILayout.TextField(assetPath, uScriptGUIStyle.PropertyTextField, GUILayout.Width(_columnValue.Width - 4 - buttonSize.x));
 
          uScriptGUI.enabled = !AssetBrowserWindow.isOpen;
 
@@ -2082,9 +2082,9 @@ public static class uScriptGUI
 
    public static void DebugBox(Rect rect, Color color, string text)
    {
-      var textureDebugBox = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("DebugBox"), typeof(Texture2D)) as Texture2D;
+      var texture = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("DebugBox"), typeof(Texture2D)) as Texture2D;
 
-      var debugBox = new GUIStyle(EditorStyles.miniLabel)
+      var style = new GUIStyle(EditorStyles.miniLabel)
       {
          name = "uScript_debugBox",
          margin = new RectOffset(),
@@ -2093,13 +2093,13 @@ public static class uScriptGUI
          clipping = TextClipping.Clip,
          alignment = TextAnchor.MiddleCenter,
          ////normal = { background = textureDebugBox, textColor = Color.white }
-         normal = { background = textureDebugBox }
+         normal = { background = texture }
       };
 
       var originalColor = GUI.color;
 
       GUI.color = color;
-      GUI.Box(rect, text, debugBox);
+      GUI.Box(rect, text, style);
       GUI.color = originalColor;
    }
 

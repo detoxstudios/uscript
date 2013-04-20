@@ -151,7 +151,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
       uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.panelLeftWidth));
       {
-         uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+         uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
          {
             // Toolbar
             //
@@ -162,8 +162,8 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                // of the typical Label for the panel title.
                //
                string[] options = new string[] { "Toolbox", "Contents" };
-               Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
-               uScript._paletteMode = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
+               Vector2 size = uScriptGUIStyle.PanelTitleDropDown.CalcSize(new GUIContent(options[1]));
+               uScript._paletteMode = EditorGUILayout.Popup(uScript._paletteMode, options, uScriptGUIStyle.PanelTitleDropDown, GUILayout.Width(size.x));
                //            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 
 //               if (uScript.IsDevelopmentBuild)
@@ -175,7 +175,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
                // Toggle hierarchy foldouts
                GUIContent toggleContent = (_paletteFoldoutToggle ? uScriptGUIContent.buttonListCollapse : uScriptGUIContent.buttonListExpand);
-               bool toggle = GUILayout.Toggle(_paletteFoldoutToggle, toggleContent, uScriptGUIStyle.paletteToolbarFoldoutButton, GUILayout.ExpandWidth(false));
+               bool toggle = GUILayout.Toggle(_paletteFoldoutToggle, toggleContent, uScriptGUIStyle.PaletteToolbarFoldoutButton, GUILayout.ExpandWidth(false));
                if (_paletteFoldoutToggle != toggle)
                {
                   _paletteFoldoutToggle = toggle;
@@ -213,7 +213,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    
                // Node list
                //
-               _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
+               _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview", GUILayout.ExpandWidth(true));
                {
                   //               // Debug
                   //               if (debugScript.svOffset != _scrollviewOffset)
@@ -292,7 +292,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                      //
                      if (filterMatches == 0)
                      {
-                        GUILayout.Label("The search found no matches!", uScriptGUIStyle.panelMessageBold);
+                        GUILayout.Label("The search found no matches!", uScriptGUIStyle.PanelMessageBold);
                      }
                   }
 
@@ -480,11 +480,11 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
          bool isPanelExpanded = uScript.Preferences.ExpandFavoritePanel;
 
-         EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+         EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
          {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
             {
-               GUILayout.Label("Favorites", uScriptGUIStyle.panelTitle);
+               GUILayout.Label("Favorites", uScriptGUIStyle.PanelTitle);
 
 //               if (favoritesPanelExpanded == false)
 //               {
@@ -511,7 +511,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 //               }
 
                GUIContent toggleContent = (isPanelExpanded ? uScriptGUIContent.buttonListCollapse : uScriptGUIContent.buttonListExpand);
-               bool toggle = GUILayout.Toggle(isPanelExpanded, toggleContent, uScriptGUIStyle.favoriteButtonFoldout, GUILayout.ExpandWidth(false));
+               bool toggle = GUILayout.Toggle(isPanelExpanded, toggleContent, uScriptGUIStyle.FavoriteButtonFoldout, GUILayout.ExpandWidth(false));
                if (isPanelExpanded != toggle)
                {
                   isPanelExpanded = toggle;
@@ -533,7 +533,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                      // We're using 5 for (buttonMargin + buttonVerticalOverflow)
                      Rect rowRect = new Rect(areaRect.x, areaRect.y + 5, 0, ROW_HEIGHT);
 
-                     int popupWidth = (int)uScriptGUIStyle.favoriteButtonNumber.CalcSize(new GUIContent("0")).x;
+                     int popupWidth = (int)uScriptGUIStyle.FavoriteButtonNumber.CalcSize(new GUIContent("0")).x;
 
                      for (int i = 0; i < _favoriteMenuItems.Count; i++)
                      {
@@ -542,12 +542,12 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                         if (menuItem != null)  // && menuItem.Tag != null)
                         {
                            // Favorite number
-                           rowRect.x = uScriptGUIStyle.favoriteButtonNumber.margin.left;
+                           rowRect.x = uScriptGUIStyle.FavoriteButtonNumber.margin.left;
                            rowRect.width = popupWidth;
 
                            int favoriteIndex = i + 1;
 
-                           int newIndex = EditorGUI.Popup(rowRect, favoriteIndex, favoritePopupOptions, uScriptGUIStyle.favoriteButtonNumber);
+                           int newIndex = EditorGUI.Popup(rowRect, favoriteIndex, favoritePopupOptions, uScriptGUIStyle.FavoriteButtonNumber);
                            if (newIndex != favoriteIndex)
                            {
                               if (newIndex == 0)
@@ -566,14 +566,14 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                            string nodeName = menuItem.Name;
 
                            rowRect.x += rowRect.width;
-                           rowRect.width = (areaRect.width - rowRect.x - uScriptGUIStyle.favoriteButtonName.margin.right);
+                           rowRect.width = (areaRect.width - rowRect.x - uScriptGUIStyle.FavoriteButtonName.margin.right);
 
                            if (menuItem.Tag == null)
                            {
                               GUI.color = new UnityEngine.Color(1, 0.5f, 0.5f, 1);
                            }
    
-                           if (GUI.Button(rowRect, nodeName, uScriptGUIStyle.favoriteButtonName))
+                           if (GUI.Button(rowRect, nodeName, uScriptGUIStyle.FavoriteButtonName))
                            {
                               CreateNode((EntityNode)menuItem.Tag);
                            }
@@ -619,7 +619,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          // This is a simple menu item
          if (item.width == 0)
          {
-            item.width = (int)uScriptGUIStyle.paletteButton.CalcSize(new GUIContent(item.Name)).x;
+            item.width = (int)uScriptGUIStyle.PaletteButton.CalcSize(new GUIContent(item.Name)).x;
          }
       }
       else
@@ -627,7 +627,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          // This is should be a folding menu item that contains more buttons
          if (item.width == 0)
          {
-            item.width = (int)uScriptGUIStyle.paletteFoldout.CalcSize(new GUIContent(item.Name)).x;
+            item.width = (int)uScriptGUIStyle.PaletteFoldout.CalcSize(new GUIContent(item.Name)).x;
          }
 
          if (_paletteMenuItemFoldout[item.Path])
@@ -675,7 +675,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
             if (item.Items == null)
             {
                // This is a simple menu item
-               if (GUI.Button(buttonRect, new GUIContent(item.Name, item.Tooltip), uScriptGUIStyle.paletteButton))
+               if (GUI.Button(buttonRect, new GUIContent(item.Name, item.Tooltip), uScriptGUIStyle.PaletteButton))
                {
                   if (item.Click != null)
                   {
@@ -696,7 +696,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
             else
             {
                // This is a folding menu item that contains more buttons
-               _paletteMenuItemFoldout[item.Path] = GUI.Toggle(buttonRect, _paletteMenuItemFoldout[item.Path], item.Name, uScriptGUIStyle.paletteFoldout);
+               _paletteMenuItemFoldout[item.Path] = GUI.Toggle(buttonRect, _paletteMenuItemFoldout[item.Path], item.Name, uScriptGUIStyle.PaletteFoldout);
             }
          }
          else

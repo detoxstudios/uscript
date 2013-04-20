@@ -115,14 +115,14 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
       }
 
 //      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, _options);
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+      EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
       {
          // Toolbar
          //
 //         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label(_name, uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+            GUILayout.Label(_name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
 
 //            GUIStyle style = new GUIStyle(GUI.skin.label);
 //            style.richText = true;
@@ -170,13 +170,13 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          {
             // Selection description
             //
-            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview");
+            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
             {
                if ((m_ScriptEditorCtrl.SelectedNodes.Length == 1) && (m_ScriptEditorCtrl.SelectedNodes[0] != null))
                {
                   if (uScript.IsNodeTypeDeprecated(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode) || m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode))
                   {
-                     GUILayout.Box("SELECTED NODE IS DEPRECATED: UPDATE OR REPLACE", uScriptGUIStyle.panelMessageError);
+                     GUILayout.Box("SELECTED NODE IS DEPRECATED: UPDATE OR REPLACE", uScriptGUIStyle.PanelMessageError);
                   }
                }
 
@@ -221,11 +221,11 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          GUILayout.BeginVertical();
          {
             // Parameter name and type
-            GUILayout.Label(name + ":", uScriptGUIStyle.referenceName);
-            GUI.Label(GUILayoutUtility.GetLastRect(), type, uScriptGUIStyle.referenceInfo);
+            GUILayout.Label(name + ":", uScriptGUIStyle.ReferenceName);
+            GUI.Label(GUILayoutUtility.GetLastRect(), type, uScriptGUIStyle.ReferenceInfo);
 
             // Parameter description
-            GUILayout.Label(description, uScriptGUIStyle.referenceDesc);
+            GUILayout.Label(description, uScriptGUIStyle.ReferenceDesc);
          }
          GUILayout.EndVertical();
       }
@@ -236,35 +236,35 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
    {
       ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
 
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.referenceDetailBox);
+      EditorGUILayout.BeginVertical(uScriptGUIStyle.ReferenceDetailBox);
       {
          int count;
-         float titleWidth = uScriptGUIStyle.referenceDetailTitle.CalcSize(new GUIContent("Graph contains:")).x;
+         float titleWidth = uScriptGUIStyle.ReferenceDetailTitle.CalcSize(new GUIContent("Graph contains:")).x;
          float countWidth;
          float labelWidth;
 
          EditorGUILayout.BeginHorizontal();
          {
-            GUILayout.Label("Graph contains:", uScriptGUIStyle.referenceDetailTitle, GUILayout.Width(titleWidth));
+            GUILayout.Label("Graph contains:", uScriptGUIStyle.ReferenceDetailTitle, GUILayout.Width(titleWidth));
 
             EditorGUILayout.BeginVertical();
             {
                int countMax = Math.Max(m_ScriptEditorCtrl.FlowChart.Nodes.Length, m_ScriptEditorCtrl.FlowChart.Links.Length);
-               countWidth = uScriptGUIStyle.referenceDetailValue.CalcSize(new GUIContent(countMax.ToString())).x;
-               labelWidth = uScriptGUIStyle.referenceDetailLabel.CalcSize(new GUIContent("nodes")).x + 12;
+               countWidth = uScriptGUIStyle.ReferenceDetailValue.CalcSize(new GUIContent(countMax.ToString())).x;
+               labelWidth = uScriptGUIStyle.ReferenceDetailLabel.CalcSize(new GUIContent("nodes")).x + 12;
 
                EditorGUILayout.BeginHorizontal();
                {
                   count = m_ScriptEditorCtrl.FlowChart.Nodes.Length;
 
-                  GUILayout.Label(count.ToString(), uScriptGUIStyle.referenceDetailValue, GUILayout.Width(countWidth));
+                  GUILayout.Label(count.ToString(), uScriptGUIStyle.ReferenceDetailValue, GUILayout.Width(countWidth));
 
-                  GUILayout.Label((count == 1 ? "node" : "nodes"), uScriptGUIStyle.referenceDetailLabel, GUILayout.Width(labelWidth));
+                  GUILayout.Label((count == 1 ? "node" : "nodes"), uScriptGUIStyle.ReferenceDetailLabel, GUILayout.Width(labelWidth));
 
                   if (m_ScriptEditorCtrl.FlowChart.SelectedNodes.Length > 0)
                   {
                      string label = "(" + m_ScriptEditorCtrl.FlowChart.SelectedNodes.Length.ToString() + " selected)";
-                     GUILayout.Label(label, uScriptGUIStyle.referenceDetailLabel);
+                     GUILayout.Label(label, uScriptGUIStyle.ReferenceDetailLabel);
                   }
                }
                EditorGUILayout.EndHorizontal();
@@ -272,14 +272,14 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                EditorGUILayout.BeginHorizontal();
                {
                   string value = m_ScriptEditorCtrl.FlowChart.Links.Length.ToString();
-                  GUILayout.Label(value, uScriptGUIStyle.referenceDetailValue);
+                  GUILayout.Label(value, uScriptGUIStyle.ReferenceDetailValue);
 
-                  GUILayout.Label((count == 1 ? "link" : "links"), uScriptGUIStyle.referenceDetailLabel, GUILayout.Width(labelWidth));
+                  GUILayout.Label((count == 1 ? "link" : "links"), uScriptGUIStyle.ReferenceDetailLabel, GUILayout.Width(labelWidth));
 
                   if (m_ScriptEditorCtrl.FlowChart.SelectedLinks.Length > 0)
                   {
                      value = "(" + m_ScriptEditorCtrl.FlowChart.SelectedLinks.Length.ToString() + " selected)";
-                     GUILayout.Label(value, uScriptGUIStyle.referenceDetailLabel);
+                     GUILayout.Label(value, uScriptGUIStyle.ReferenceDetailLabel);
                   }
                }
                EditorGUILayout.EndHorizontal();
@@ -297,7 +297,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                {
                   GUILayout.FlexibleSpace();
 
-                  if (GUILayout.Button(uScriptGUIContent.buttonNodeFindDeprecated, uScriptGUIStyle.referenceButtonIcon))
+                  if (GUILayout.Button(uScriptGUIContent.buttonNodeFindDeprecated, uScriptGUIStyle.ReferenceButtonIcon))
                   {
                      _focusedNode = m_ScriptEditorCtrl.GetNextDeprecatedNode(_focusedNode);
                      if (_focusedNode != null)
@@ -306,7 +306,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                      }
                   }
 
-                  if (GUILayout.Button(uScriptGUIContent.buttonNodeFixAllDeprecated, uScriptGUIStyle.referenceButtonText))
+                  if (GUILayout.Button(uScriptGUIContent.buttonNodeFixAllDeprecated, uScriptGUIStyle.ReferenceButtonText))
                   {
                      List<DisplayNode> nodes = new List<DisplayNode>();
                      foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
@@ -318,8 +318,8 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                }
                EditorGUILayout.EndHorizontal();
 
-               GUILayout.Label(count.ToString(), uScriptGUIStyle.referenceDetailAlertValue, GUILayout.Width(countWidth));
-               GUILayout.Label("deprecated " + (count == 1 ? "node" : "nodes") + " must be updated or replaced.", uScriptGUIStyle.referenceDetailAlertLabel);
+               GUILayout.Label(count.ToString(), uScriptGUIStyle.ReferenceDetailAlertValue, GUILayout.Width(countWidth));
+               GUILayout.Label("deprecated " + (count == 1 ? "node" : "nodes") + " must be updated or replaced.", uScriptGUIStyle.ReferenceDetailAlertLabel);
             }
             EditorGUILayout.EndHorizontal();
          }
@@ -345,16 +345,16 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          graphName = m_ScriptEditorCtrl.ScriptEditor.FriendlyName.Default + "  (" + graphName + ")";
       }
 
-      GUILayout.Label(graphName, uScriptGUIStyle.referenceName);
+      GUILayout.Label(graphName, uScriptGUIStyle.ReferenceName);
 
       // General reference description
-      GUILayout.Label("Select a node on the canvas to view the help text for that node.", uScriptGUIStyle.referenceDesc);
+      GUILayout.Label("Select a node on the canvas to view the help text for that node.", uScriptGUIStyle.ReferenceDesc);
 
       DrawGraphDetails();
 
       if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
       {
-         GUILayout.Label("Help cannot be provided when multiple nodes are selected.", uScriptGUIStyle.panelMessage);
+         GUILayout.Label("Help cannot be provided when multiple nodes are selected.", uScriptGUIStyle.PanelMessage);
          return;
       }
 
@@ -397,18 +397,18 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          {
             nodeName = _toolboxMenuItem.Name;
          }
-         GUILayout.Label(nodeName, uScriptGUIStyle.referenceName);
+         GUILayout.Label(nodeName, uScriptGUIStyle.ReferenceName);
 
          // Node breadcrumbs
          if (Event.current.type != EventType.Layout && string.IsNullOrEmpty(_toolboxPath) == false)
          {
-            Vector2 sizeNameLabel = uScriptGUIStyle.referenceName.CalcSize(new GUIContent(nodeName));
+            Vector2 sizeNameLabel = uScriptGUIStyle.ReferenceName.CalcSize(new GUIContent(nodeName));
 
             GUIContent toolboxPath = uScriptGUIContent.toolboxBreadcrumbs;
             toolboxPath.text = _toolboxPath;
 
             while (toolboxPath.text != string.Empty
-               && rectNameRow.width < sizeNameLabel.x + 32 + uScriptGUIStyle.referenceInfo.CalcSize(toolboxPath).x)
+               && rectNameRow.width < sizeNameLabel.x + 32 + uScriptGUIStyle.ReferenceInfo.CalcSize(toolboxPath).x)
             {
                int lastSeparatorIndex = toolboxPath.text.LastIndexOf(" > ");
                if (lastSeparatorIndex < 0)
@@ -426,9 +426,9 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                toolboxPath.text += (toolboxPath.text == string.Empty ? "..." : " ...");
             }
 
-            rectNameRow.xMin = rectNameRow.xMax - uScriptGUIStyle.referenceInfo.CalcSize(toolboxPath).x;
+            rectNameRow.xMin = rectNameRow.xMax - uScriptGUIStyle.ReferenceInfo.CalcSize(toolboxPath).x;
 
-            if (GUI.Button(rectNameRow, toolboxPath, uScriptGUIStyle.referenceInfo))
+            if (GUI.Button(rectNameRow, toolboxPath, uScriptGUIStyle.ReferenceInfo))
             {
                GUI.FocusControl("PaletteFilterSearch");
                uScriptGUIPanelPalette.Instance.FilterToolboxMenuItems(nodeName, true);
@@ -441,7 +441,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
       // Node description
       string nodeType = uScript.GetNodeType(node);
-      GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.referenceDesc);
+      GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.ReferenceDesc);
 
       // Display the dynamic parameters
       foreach (Parameter p in node.Parameters)

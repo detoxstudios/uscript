@@ -2332,7 +2332,7 @@ public class uScript : EditorWindow
                rectContextMenuWindow.y = (_canvasRect.yMin + _paddingAroundContextMenu);
             }
 
-            Rect tmpRect = GUILayout.Window("ContextMenu".GetHashCode(), rectContextMenuWindow, DrawContextMenuWindow, string.Empty, uScriptGUIStyle.menuContextWindow);
+            Rect tmpRect = GUILayout.Window("ContextMenu".GetHashCode(), rectContextMenuWindow, DrawContextMenuWindow, string.Empty, uScriptGUIStyle.MenuContextWindow);
             if (Event.current.type == EventType.Repaint)
             {
                rectContextMenuWindow = tmpRect;
@@ -2340,7 +2340,7 @@ public class uScript : EditorWindow
          }
          else if (isFileMenuOpen)
          {
-            rectFileMenuWindow = GUILayout.Window("FileMenu".GetHashCode(), rectFileMenuWindow, DrawFileMenuWindow, string.Empty, uScriptGUIStyle.menuDropDownWindow);
+            rectFileMenuWindow = GUILayout.Window("FileMenu".GetHashCode(), rectFileMenuWindow, DrawFileMenuWindow, string.Empty, uScriptGUIStyle.MenuDropDownWindow);
          }
       }
       EndWindows();
@@ -2548,12 +2548,12 @@ public class uScript : EditorWindow
 
    void DrawGUIHorizontalDivider()
    {
-      GUILayout.Box("", uScriptGUIStyle.hDivider, GUILayout.Height(uScriptGUI.panelDividerThickness), GUILayout.ExpandWidth(true));
+      GUILayout.Box("", uScriptGUIStyle.HorizontalDivider, GUILayout.Height(uScriptGUI.panelDividerThickness), GUILayout.ExpandWidth(true));
    }
 
    void DrawGUIVerticalDivider()
    {
-      GUILayout.Box("", uScriptGUIStyle.vDivider, GUILayout.Width(uScriptGUI.panelDividerThickness), GUILayout.ExpandHeight(true));
+      GUILayout.Box("", uScriptGUIStyle.VerticalDivider, GUILayout.Width(uScriptGUI.panelDividerThickness), GUILayout.ExpandHeight(true));
    }
 
 //   int counter = 0;
@@ -2612,7 +2612,7 @@ public class uScript : EditorWindow
 
    void DrawGraphContentsPanel()
    {
-      paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.Width(uScriptGUI.panelLeftWidth));
+      paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.panelLeftWidth));
       {
          // Toolbar
          //
@@ -2620,9 +2620,9 @@ public class uScript : EditorWindow
          {
             string[] options = new string[] { "Toolbox", "Contents" };
 
-            Vector2 size = uScriptGUIStyle.panelTitleDropDown.CalcSize(new GUIContent(options[1]));
+            Vector2 size = uScriptGUIStyle.PanelTitleDropDown.CalcSize(new GUIContent(options[1]));
 
-            _paletteMode = EditorGUILayout.Popup(_paletteMode, options, uScriptGUIStyle.panelTitleDropDown, GUILayout.Width(size.x));
+            _paletteMode = EditorGUILayout.Popup(_paletteMode, options, uScriptGUIStyle.PanelTitleDropDown, GUILayout.Width(size.x));
 
             //            GUILayout.Label("Nodes", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
 
@@ -2666,7 +2666,7 @@ public class uScript : EditorWindow
             string message =
                "The " + (_paletteMode == 0 ? "Node Palette" : "Graph Contents") + " panel is not drawn while the canvas is updated.\n\nThe drawing can be enabled via the Preferences panel, although canvas performance may be affected.";
 
-            GUILayout.Label(message, uScriptGUIStyle.panelMessage, GUILayout.ExpandHeight(true));
+            GUILayout.Label(message, uScriptGUIStyle.PanelMessage, GUILayout.ExpandHeight(true));
          }
          else
          {
@@ -2780,7 +2780,7 @@ public class uScript : EditorWindow
                   }
                }
 
-               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, "scrollview", GUILayout.ExpandWidth(true));
+               _guiPanelPalette_ScrollPos = EditorGUILayout.BeginScrollView(_guiPanelPalette_ScrollPos, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview", GUILayout.ExpandWidth(true));
                {
                   GUIContent nodeButtonContent = new GUIContent(string.Empty, "Click to select node. Shift-click to toggle the selection.");
 
@@ -2791,7 +2791,7 @@ public class uScript : EditorWindow
                         // The category contains at least one item to show
 
                         // This is should be a folding menu item that contains more buttons
-                        GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.paletteFoldout);
+                        GUIStyle tmpStyle = new GUIStyle(uScriptGUIStyle.PaletteFoldout);
                         tmpStyle.margin = new RectOffset(tmpStyle.margin.left + (0 * 12), 0, 0, 0);
 
                         _foldoutsGraphContent[kvpCategory.Key] = GUILayout.Toggle(_foldoutsGraphContent[kvpCategory.Key], kvpCategory.Key, tmpStyle);
@@ -2859,16 +2859,16 @@ public class uScript : EditorWindow
 
 
                                     UnityEngine.Color tmpColor = GUI.color;
-                                    UnityEngine.Color textColor = uScriptGUIStyle.nodeButtonLeft.normal.textColor;
+                                    UnityEngine.Color textColor = uScriptGUIStyle.NodeButtonLeft.normal.textColor;
 
                                     if (IsNodeTypeDeprecated(dn.EntityNode) || m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(dn.EntityNode))
                                     {
                                        GUI.color = new UnityEngine.Color(1, 0.5f, 1, 1);
-                                       uScriptGUIStyle.nodeButtonLeft.normal.textColor = UnityEngine.Color.white;
+                                       uScriptGUIStyle.NodeButtonLeft.normal.textColor = UnityEngine.Color.white;
                                     }
 
                                     bool selected = dn.Selected;
-                                    selected = GUILayout.Toggle(selected, nodeButtonContent, uScriptGUIStyle.nodeButtonLeft);
+                                    selected = GUILayout.Toggle(selected, nodeButtonContent, uScriptGUIStyle.NodeButtonLeft);
                                     if (selected != dn.Selected)
                                     {
                                        // is the shift key modifier being used?
@@ -2883,14 +2883,14 @@ public class uScript : EditorWindow
 
 
                                     GUI.color = tmpColor;
-                                    uScriptGUIStyle.nodeButtonLeft.normal.textColor = textColor;
+                                    uScriptGUIStyle.NodeButtonLeft.normal.textColor = textColor;
 
 
                                     if (IsNodeTypeDeprecated(dn.EntityNode) == false && m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(dn.EntityNode))
                                     {
                                        if ( true == m_ScriptEditorCtrl.ScriptEditor.CanUpgradeNode(dn.EntityNode) )
                                        {
-                                          if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+                                          if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.NodeButtonMiddle, GUILayout.Width(20)))
                                           {
                                              System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
                                              if (Click != null)
@@ -2905,7 +2905,7 @@ public class uScript : EditorWindow
                                        }
                                        else
                                        {
-                                          if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.nodeButtonMiddle, GUILayout.Width(20)))
+                                          if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.NodeButtonMiddle, GUILayout.Width(20)))
                                           {
                                              System.EventHandler Click = new System.EventHandler(m_ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
                                              if (Click != null)
@@ -2920,7 +2920,7 @@ public class uScript : EditorWindow
                                        }
                                     }
 
-                                    if (GUILayout.Button(uScriptGUIContent.buttonNodeFind, uScriptGUIStyle.nodeButtonRight, GUILayout.Width(20)))
+                                    if (GUILayout.Button(uScriptGUIContent.buttonNodeFind, uScriptGUIStyle.NodeButtonRight, GUILayout.Width(20)))
                                     {
                                        uScript.Instance.ScriptEditorCtrl.CenterOnNode(uScript.Instance.ScriptEditorCtrl.GetNode(dn.Guid));
                                     }
@@ -2935,7 +2935,7 @@ public class uScript : EditorWindow
 
                   if (filterMatches == 0)
                   {
-                     GUILayout.Label("The search found no matches!", uScriptGUIStyle.panelMessageBold);
+                     GUILayout.Label("The search found no matches!", uScriptGUIStyle.PanelMessageBold);
                   }
                }
                EditorGUILayout.EndScrollView();
@@ -3072,12 +3072,12 @@ public class uScript : EditorWindow
       string modifier = (Application.platform == RuntimePlatform.WindowsEditor ? "Alt+" : uScriptGUI.keyOption);
 
       Rect r = GUILayoutUtility.GetLastRect();
-      Vector2 v = uScriptGUIStyle.menuDropDownButtonShortcut.CalcSize(new GUIContent(modifier + "W"));
+      Vector2 v = uScriptGUIStyle.MenuDropDownButtonShortcut.CalcSize(new GUIContent(modifier + "W"));
 
       // place the string at the left inside edge of the previous rect
       r = new Rect(r.x + r.width - v.x - 8, r.y + ((int)(r.height - v.y) / 2), v.x, v.y);
 
-      GUI.Label(r, shortcut, uScriptGUIStyle.menuDropDownButtonShortcut);
+      GUI.Label(r, shortcut, uScriptGUIStyle.MenuDropDownButtonShortcut);
    }
 
 
@@ -3085,48 +3085,48 @@ public class uScript : EditorWindow
    {
       string modifier = (Application.platform == RuntimePlatform.WindowsEditor ? "Alt+" : uScriptGUI.keyOption);
 
-      Vector2 v1 = uScriptGUIStyle.menuDropDownButton.CalcSize(uScriptGUIContent.buttonScriptExportPNG);
-      Vector2 v2 = uScriptGUIStyle.menuDropDownButtonShortcut.CalcSize(new GUIContent(modifier + "W"));
+      Vector2 v1 = uScriptGUIStyle.MenuDropDownButton.CalcSize(uScriptGUIContent.buttonScriptExportPNG);
+      Vector2 v2 = uScriptGUIStyle.MenuDropDownButtonShortcut.CalcSize(new GUIContent(modifier + "W"));
 
       GUILayout.BeginVertical(GUILayout.Width(v1.x + 32 + v2.x));
       {
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptNew, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptNew, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_New();
          }
          DrawMenuItemShortcut(modifier + "N");
    
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptOpen, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptOpen, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_Open();
          }
          DrawMenuItemShortcut(modifier + "O");
    
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_Save();
          }
          DrawMenuItemShortcut(modifier + "S");
    
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveAs, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveAs, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_SaveAs();
          }
          DrawMenuItemShortcut(modifier + "A");
    
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveQuick, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveQuick, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_QuickSave();
          }
          DrawMenuItemShortcut(modifier + "Q");
    
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveDebug, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveDebug, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_DebugSave();
          }
          DrawMenuItemShortcut(modifier + "D");
    
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveRelease, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveRelease, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_ReleaseSave();
          }
@@ -3134,25 +3134,25 @@ public class uScript : EditorWindow
    
          uScriptGUI.HR();
    
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptExportPNG, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptExportPNG, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_ExportPNG();
          }
          DrawMenuItemShortcut(modifier + "E");
 
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptUpgradeNodes, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptUpgradeNodes, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_UpgradeDeprecatedNodes();
          }
    
          uScriptGUI.HR();
    
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptsRebuildAll, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptsRebuildAll, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_RebuildAll();
          }
    
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptsRemoveGenerated, uScriptGUIStyle.menuDropDownButton))
+         if (GUILayout.Button(uScriptGUIContent.buttonScriptsRemoveGenerated, uScriptGUIStyle.MenuDropDownButton))
          {
             FileMenuItem_Clean();
          }
@@ -3370,7 +3370,7 @@ public class uScript : EditorWindow
             GUILayout.Space(16);
             GUILayout.FlexibleSpace();
 
-            GUILayout.Label(FullVersionName, uScriptGUIStyle.toolbarLabel);
+            GUILayout.Label(FullVersionName, uScriptGUIStyle.ToolbarLabel);
          }
          EditorGUILayout.EndHorizontal();
 
@@ -3388,7 +3388,7 @@ public class uScript : EditorWindow
 
             GUI.SetNextControlName("MainView");
 
-            _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptGUIStyle.hScrollbar, uScriptGUIStyle.vScrollbar, style, GUILayout.ExpandWidth(true));
+            _guiContentScrollPos = EditorGUILayout.BeginScrollView(_guiContentScrollPos, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, style, GUILayout.ExpandWidth(true));
             {
                // Get the bounding area of all nodes on the canvas, plus 64px to
                // allow for 32px padding around the edges.  This will allow the
@@ -3469,7 +3469,7 @@ public class uScript : EditorWindow
             }
             else
             {
-               if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.menuContextButton))
+               if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.MenuContextButton))
                {
                   m_CurrentMenu = item;
                   break;
@@ -3539,7 +3539,7 @@ public class uScript : EditorWindow
 
       foreach (ToolStripItem item in menuItem.DropDownItems.Items)
       {
-         if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.menuContextButton))
+         if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.MenuContextButton))
          {
             m_CurrentMenu = item;
             rectContextMenuWindow.width = 10;

@@ -295,7 +295,7 @@ public sealed class uScriptGUIPanelScriptNew: uScriptGUIPanel
 
    private void DrawDirectoryPanel()
    {
-      Rect rectPanel = EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, GUILayout.ExpandHeight(true));
+      Rect rectPanel = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.ExpandHeight(true));
       {
 //         Event e = Event.current;
 //
@@ -363,7 +363,7 @@ public sealed class uScriptGUIPanelScriptNew: uScriptGUIPanel
    {
       EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
       {
-         GUILayout.Label("uScript Directory", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+         GUILayout.Label("uScript Directory", uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
 
          GUILayout.FlexibleSpace();
 
@@ -516,7 +516,7 @@ public sealed class uScriptGUIPanelScriptNew: uScriptGUIPanel
    {
       ScriptEditorCtrl m_ScriptEditorCtrl = _uScriptInstance.ScriptEditorCtrl;
    
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox);
+      EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
       {
          // Update the panel in the following manner:
          //
@@ -563,7 +563,7 @@ public sealed class uScriptGUIPanelScriptNew: uScriptGUIPanel
          // Toolbar
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label("Current Graph", uScriptGUIStyle.panelTitle, GUILayout.ExpandWidth(true));
+            GUILayout.Label("Current Graph", uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
 
             GUILayout.FlexibleSpace();
 
