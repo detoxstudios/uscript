@@ -1,13 +1,11 @@
-using UnityEngine;
-using UnityEditor;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using System.IO;
-
-using Detox.ScriptEditor;
 using Detox.FlowChart;
+using Detox.ScriptEditor;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 //
 // This file contains a collection of custom uScript GUI controls for use with uScriptEditor
@@ -2066,6 +2064,44 @@ public static class uScriptGUI
       return (_nodeKey + "[" + _propertyCount.ToString() + "]" + suffix);
    }
 
+
+   public static void DebugBox(Rect rect)
+   {
+      DebugBox(rect, Color.black, string.Empty);
+   }
+
+   public static void DebugBox(Rect rect, Color color)
+   {
+      DebugBox(rect, color, string.Empty);
+   }
+
+   public static void DebugBox(Rect rect, string text)
+   {
+      DebugBox(rect, Color.black, text);
+   }
+
+   public static void DebugBox(Rect rect, Color color, string text)
+   {
+      var textureDebugBox = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("DebugBox"), typeof(Texture2D)) as Texture2D;
+
+      var debugBox = new GUIStyle(EditorStyles.miniLabel)
+      {
+         name = "uScript_debugBox",
+         margin = new RectOffset(),
+         border = new RectOffset(1, 1, 1, 1),
+         ////clipping = TextClipping.Overflow,
+         clipping = TextClipping.Clip,
+         alignment = TextAnchor.MiddleCenter,
+         ////normal = { background = textureDebugBox, textColor = Color.white }
+         normal = { background = textureDebugBox }
+      };
+
+      var originalColor = GUI.color;
+
+      GUI.color = color;
+      GUI.Box(rect, text, debugBox);
+      GUI.color = originalColor;
+   }
 
 
 //               EditorGUILayout.Separator();
