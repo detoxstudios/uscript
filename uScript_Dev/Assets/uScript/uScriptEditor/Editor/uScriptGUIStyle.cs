@@ -1,17 +1,478 @@
-using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="uScriptGUIStyle.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   This file contains a collection of custom uScript GUI styles for use with uScriptEditor
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-//
-// This file contains a collection of custom uScript GUI styles for use with uScriptEditor
-// _______________________________________________________________________________________
-//
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
 // TODO: Move associated GUIStyle properties from uScriptGUIStyle to a subclass of the type where they are utilizied
-
 public static class uScriptGUIStyle
 {
-   static bool _stylesInitialized = false;
+   public static readonly int columnHeaderHeight = 16;
+
+   static uScriptGUIStyle()
+   {
+      var texturePropertyRowEven = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("LineItem"), typeof(Texture2D)) as Texture2D;
+      var textureUnderline = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("Underline"), typeof(Texture2D)) as Texture2D;
+      var textureWindowMenuContext = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("MenuContext"), typeof(Texture2D)) as Texture2D;
+      var textureWindowMenuDropDown = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("MenuDropDown"), typeof(Texture2D)) as Texture2D;
+
+      paletteToolbarFoldoutButton = new GUIStyle(EditorStyles.toolbarButton)
+      {
+         margin = new RectOffset(0, 6, 0, 0),
+         padding = new RectOffset(2, 2, 0, 0)
+      };
+
+      paletteFoldout = new GUIStyle(EditorStyles.foldout)
+      {
+         padding = new RectOffset(12, 4, 2, 2),
+         margin = new RectOffset(4, 4, 0, 0)
+      };
+
+      paletteButton = new GUIStyle(GUI.skin.button)
+      {
+         alignment = TextAnchor.UpperLeft,
+         padding = new RectOffset(4, 4, 2, 2),
+         margin = new RectOffset(4, 4, 0, 0),
+         active = { textColor = Color.white }
+      };
+
+      panelBox = new GUIStyle(GUI.skin.box)
+      {
+         name = "panelBox",
+         padding = new RectOffset(1, 1, 1, 1),
+         margin = new RectOffset(0, 0, 0, 0)
+      };
+
+      panelHR = new GUIStyle(GUI.skin.box)
+      {
+         name = "panelHR",
+         padding = new RectOffset(1, 1, 1, 1),
+         margin = new RectOffset(8, 8, 8, 6),
+         border = new RectOffset(0, 0, 1, 1)
+      };
+
+      panelTitle = new GUIStyle(EditorStyles.boldLabel) { name = "panelTitle", margin = new RectOffset(4, 4, 0, 0) };
+
+      panelTitleDropDown = new GUIStyle(EditorStyles.toolbarDropDown)
+      {
+         name = "panelTitleDropDown",
+         font = EditorStyles.boldLabel.font,
+         margin = new RectOffset(0, 0, 0, 0),
+         padding = new RectOffset(6, 12, 1, 3)
+      };
+
+      referenceText = new GUIStyle(GUI.skin.label)
+      {
+         name = "referenceText",
+         wordWrap = true,
+         stretchWidth = true,
+         stretchHeight = true
+      };
+
+      columnHeader = new GUIStyle(EditorStyles.toolbarButton)
+      {
+         name = "columnHeader",
+         fontStyle = FontStyle.Bold,
+         alignment = TextAnchor.MiddleLeft,
+         padding = new RectOffset(5, 8, 0, 0),
+         fixedHeight = columnHeaderHeight,
+         contentOffset = new Vector2(0, -1)
+      };
+      columnHeader.normal.background = columnHeader.onNormal.background;
+
+      hDivider = new GUIStyle(GUI.skin.box)
+      {
+         name = "hDivider",
+         margin = new RectOffset(0, 0, 0, 0),
+         padding = new RectOffset(0, 0, 0, 0),
+         border = new RectOffset(0, 0, 0, 0),
+         normal = { background = null }
+      };
+
+      vDivider = new GUIStyle(GUI.skin.box)
+      {
+         name = "vDivider",
+         margin = new RectOffset(0, 0, 0, 0),
+         padding = new RectOffset(0, 0, 0, 0),
+         border = new RectOffset(0, 0, 0, 0),
+         normal = { background = null }
+      };
+
+      // vScrollbar.name = "vScrollbar";                // DO NOT RENAME
+      vScrollbar = new GUIStyle(GUI.skin.verticalScrollbar) { margin = new RectOffset() };
+
+      // hScrollbar.name = "hScrollbar";                // DO NOT RENAME
+      hScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar) { margin = new RectOffset() };
+
+      // vColumnScrollbar.name = "vColumnScrollbar";    // DO NOT RENAME
+      vColumnScrollbar = new GUIStyle(vScrollbar)
+      {
+         normal = { background = columnHeader.normal.background },
+         overflow = new RectOffset()
+      };
+
+      // hColumnScrollbar.name = "hColumnScrollbar";    // DO NOT RENAME
+      hColumnScrollbar = new GUIStyle(hScrollbar) { fixedHeight = 0 };
+
+      columnScrollView = new GUIStyle(GUI.skin.box) { name = "columnScrollView", margin = new RectOffset(4, 4, 3, 0) };
+
+      nodeButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft)
+      {
+         name = "nodeButtonLeft",
+         alignment = TextAnchor.UpperLeft,
+         padding = new RectOffset(4, 4, 2, 4),
+         margin = new RectOffset(4, 0, 0, 0),
+         overflow = new RectOffset(0, 0, 0, 2),
+         fontSize = 11
+      };
+
+      nodeButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid)
+      {
+         name = "nodeButtonMiddle",
+         alignment = TextAnchor.MiddleCenter,
+         padding = new RectOffset(0, 0, 2, 4),
+         margin = new RectOffset(0, 0, 0, 0),
+         overflow = new RectOffset(0, 0, 0, 2),
+         fontSize = 11,
+         fixedHeight = 18,
+         contentOffset = new Vector2(0, 1)
+      };
+
+      nodeButtonRight = new GUIStyle(EditorStyles.miniButtonRight)
+      {
+         name = "nodeButtonRight",
+         alignment = TextAnchor.UpperCenter,
+         padding = new RectOffset(0, 0, 2, 4),
+         margin = new RectOffset(0, 4, 0, 0),
+         overflow = new RectOffset(0, 0, 0, 2),
+         fontSize = 11,
+         fixedHeight = 19,
+         contentOffset = new Vector2(-1, 1)
+      };
+
+      favoriteButtonFoldout = new GUIStyle(EditorStyles.toolbarButton)
+      {
+         name = "uScript_favoriteButtonFoldout",
+         margin = new RectOffset(0, 0, 0, 0),
+         padding = new RectOffset(2, 2, 0, 0)
+      };
+
+      favoriteButtonName = new GUIStyle("ButtonRight")
+      {
+         name = "uScript_favoriteButtonName",
+         alignment = TextAnchor.MiddleLeft,
+         contentOffset = new Vector2(0, -1),
+         margin = new RectOffset(0, 4, 0, 0),
+         overflow = new RectOffset(0, 0, 1, 1),
+         padding = new RectOffset(6, 6, 2, 2)
+      };
+
+      favoriteButtonNumber = new GUIStyle("ButtonLeft")
+      {
+         name = "uScript_favoriteButtonNumber",
+         alignment = TextAnchor.MiddleLeft,
+         fontStyle = FontStyle.Bold,
+         overflow = new RectOffset(0, 0, 1, 1),
+         margin = new RectOffset(4, 0, 0, 0),
+         padding = new RectOffset(7, 6, 1, 3)
+      };
+
+      favoriteButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft)
+      {
+         name = "uScript_favoriteButtonLeft",
+         margin = new RectOffset(4, 0, 1, 1),
+         padding = new RectOffset(4, 4, 2, 2)
+      };
+
+      favoriteButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid)
+      {
+         name = "uScript_favoriteButtonMiddle",
+         margin = new RectOffset(0, 0, 1, 1),
+         padding = new RectOffset(4, 4, 2, 2)
+      };
+
+      favoriteButtonRight = new GUIStyle(EditorStyles.miniButtonRight)
+      {
+         name = "uScript_favoriteButtonRight",
+         margin = new RectOffset(0, 4, 1, 1),
+         padding = new RectOffset(4, 4, 2, 2)
+      };
+
+      contextMenu = new GUIStyle(EditorStyles.toolbarButton);
+
+      menuDropDownWindow = new GUIStyle(GUI.skin.window)
+      {
+         normal = { background = textureWindowMenuDropDown },
+         onNormal = { background = textureWindowMenuDropDown },
+         border = new RectOffset(10, 10, 4, 10),
+         padding = new RectOffset(0, 0, 0, 4),
+         overflow = new RectOffset(6, 6, 0, 6),
+         contentOffset = Vector2.zero
+      };
+
+      menuDropDownButton = new GUIStyle(EditorStyles.largeLabel)
+      {
+         name = "menuDropDownButton",
+         active = { background = EditorStyles.toolbarButton.onActive.background },
+         hover = { background = EditorStyles.toolbarButton.onNormal.background },
+         border = EditorStyles.toolbarButton.border,
+         margin = new RectOffset(),
+         padding = new RectOffset(8, 8, 4, 4)
+      };
+
+      menuDropDownButtonShortcut = new GUIStyle(EditorStyles.largeLabel)
+      {
+         name = "menuDropDownButtonShortcut",
+         fontStyle = FontStyle.Bold,
+         margin = new RectOffset(),
+         padding = new RectOffset()
+      };
+
+      menuContextWindow = new GUIStyle(GUI.skin.window)
+      {
+         normal = { background = textureWindowMenuContext },
+         onNormal = { background = textureWindowMenuContext },
+         border = new RectOffset(10, 10, 10, 10),
+         padding = new RectOffset(0, 0, 4, 4),
+         overflow = new RectOffset(6, 6, 6, 6),
+         contentOffset = Vector2.zero
+      };
+
+      menuContextButton = new GUIStyle(EditorStyles.largeLabel)
+      {
+         name = "menuDropDownButton",
+         active = { background = EditorStyles.toolbarButton.onActive.background },
+         hover = { background = EditorStyles.toolbarButton.onNormal.background },
+         border = EditorStyles.toolbarButton.border,
+         margin = new RectOffset(),
+         padding = new RectOffset(8, 8, 4, 4)
+      };
+
+      outline = new GUIStyle(GUI.skin.box)
+      {
+         name = "uScript_outline",
+         margin = new RectOffset(),
+         padding = new RectOffset(),
+         stretchHeight = false,
+         stretchWidth = false
+      };
+
+      panelMessage = new GUIStyle(GUI.skin.label) { wordWrap = true, padding = new RectOffset(16, 16, 16, 16) };
+
+      panelMessageBold = new GUIStyle(EditorStyles.boldLabel)
+      {
+         alignment = TextAnchor.MiddleCenter,
+         wordWrap = true,
+         padding = new RectOffset(16, 16, 16, 16)
+      };
+
+      panelMessageError = new GUIStyle(GUI.skin.box)
+      {
+         normal = { textColor = EditorStyles.boldLabel.normal.textColor },
+         font = EditorStyles.boldLabel.font,
+         wordWrap = true,
+         stretchWidth = true
+      };
+
+      underline = new GUIStyle(EditorStyles.boldLabel)
+      {
+         normal = { background = textureUnderline },
+         border = new RectOffset(0, 0, 0, 2),
+         padding = new RectOffset(0, 0, 2, 2)
+      };
+
+      referenceButtonIcon = new GUIStyle(EditorStyles.miniButton)
+      {
+         name = "uScript_referenceButtonIcon",
+         alignment = TextAnchor.MiddleCenter,
+         imagePosition = ImagePosition.ImageOnly,
+         padding = new RectOffset(),
+         margin = new RectOffset(4, 4, 0, 0),
+         fixedHeight = 20,
+         fixedWidth = 20
+      };
+
+      referenceButtonText = new GUIStyle(EditorStyles.miniButton)
+      {
+         name = "uScript_referenceButtonText",
+         alignment = TextAnchor.MiddleCenter,
+         padding = new RectOffset(3, 6, 2, 4),
+         margin = new RectOffset(4, 4, 0, 0),
+         fontSize = 11,
+         fixedHeight = 20
+      };
+
+      referenceDetailBox = new GUIStyle(GUI.skin.box)
+      {
+         name = "uScript_referenceDetailBox",
+         margin = new RectOffset(24, 24, 16, 16),
+         padding = new RectOffset(4, 4, 4, 4)
+      };
+
+      referenceDetailTitle = new GUIStyle(EditorStyles.boldLabel)
+      {
+         name = "uScript_referenceDetailTitle",
+         margin = new RectOffset(),
+         padding = new RectOffset(2, 2, 2, 3),
+         stretchWidth = false
+      };
+
+      referenceDetailLabel = new GUIStyle(EditorStyles.boldLabel)
+      {
+         name = "uScript_referenceDetailLabel",
+         margin = new RectOffset(),
+         padding = new RectOffset(2, 2, 2, 3),
+         stretchWidth = false
+      };
+
+      referenceDetailValue = new GUIStyle(referenceDetailLabel)
+      {
+         name = "uScript_referenceDetailValue",
+         alignment = TextAnchor.MiddleRight,
+         margin = new RectOffset(12, 0, 0, 0)
+      };
+
+      referenceDetailAlertLabel = new GUIStyle(EditorStyles.boldLabel)
+      {
+         name = "uScript_referenceDetailAlertLabel",
+         margin = new RectOffset(),
+         padding = new RectOffset(2, 2, 2, 3),
+         normal = { textColor = Color.red },
+         wordWrap = true
+      };
+
+      referenceDetailAlertValue = new GUIStyle(referenceDetailAlertLabel)
+      {
+         name = "uScript_referenceDetailAlertValue",
+         alignment = TextAnchor.MiddleRight,
+         margin = new RectOffset(12, 0, 0, 0)
+      };
+
+      referenceName = new GUIStyle(EditorStyles.boldLabel)
+      {
+         name = "referenceName",
+         normal = { background = textureUnderline },
+         border = new RectOffset(0, 0, 0, 2),
+         padding = new RectOffset(0, 0, 2, 2)
+      };
+
+      referenceInfo = new GUIStyle(EditorStyles.miniLabel)
+      {
+         name = "uScript_referenceInfo",
+         alignment = TextAnchor.LowerRight,
+         padding = new RectOffset(0, 0, 3, 2)
+      };
+
+      referenceDesc = new GUIStyle(EditorStyles.label)
+      {
+         name = "referenceDesc",
+         padding = new RectOffset(0, 0, 0, 3),
+         stretchHeight = false,
+         stretchWidth = true,
+         wordWrap = true
+      };
+
+      propertyButtonLeft = new GUIStyle("ButtonLeft")
+      {
+         name = "uScript_propertyButtonLeft",
+         fixedHeight = 20,
+         fixedWidth = 20,
+         fontStyle = FontStyle.Bold,
+         margin = new RectOffset(4, 0, 0, 0)
+      };
+
+      propertyButtonMiddleDeprecated = new GUIStyle("ButtonMid")
+      {
+         name = "uScript_propertyButtonMiddleDeprecated",
+         fixedHeight = 20,
+         fontStyle = FontStyle.Bold,
+         margin = new RectOffset()
+      };
+
+      propertyButtonMiddleFavorite = new GUIStyle(propertyButtonMiddleDeprecated)
+      {
+         name = "uScript_propertyButtonMiddleFavorite",
+         alignment = TextAnchor.MiddleLeft,
+         contentOffset = new Vector2(6, 0),
+         fixedWidth = 30,
+         padding = new RectOffset(12, 6, 2, 3)
+      };
+
+      propertyButtonMiddleFavoriteStar = new GUIStyle(EditorStyles.largeLabel)
+      {
+         name = "uScript_propertyButtonMiddleFavoriteStar",
+         padding = new RectOffset(4, 4, 0, 0),
+         fontSize = 15
+      };
+
+      propertyButtonMiddleName = new GUIStyle(propertyButtonMiddleDeprecated)
+      {
+         name = "uScript_propertyButtonMiddleName",
+         alignment = TextAnchor.MiddleLeft,
+         fixedWidth = 0,
+         contentOffset = Vector2.zero
+      };
+
+      propertyButtonRightSearch = new GUIStyle("ButtonRight")
+      {
+         name = "uScript_propertyButtonRightSearch",
+         fixedHeight = 20,
+         fixedWidth = 20,
+         fontStyle = FontStyle.Bold,
+         margin = new RectOffset(0, 4, 0, 0),
+         padding = new RectOffset()
+      };
+
+      propertyButtonRightName = new GUIStyle(propertyButtonRightSearch)
+      {
+         name = "uScript_propertyButtonRightName",
+         alignment = TextAnchor.MiddleLeft,
+         fixedWidth = 0,
+         padding = ((GUIStyle)"ButtonRight").padding
+      };
+
+      propertyTextField = new GUIStyle(EditorStyles.textField) { margin = new RectOffset(4, 4, 2, 2) };
+
+      propertyBoolField = new GUIStyle(EditorStyles.toggle) { margin = new RectOffset(4, 4, 1, 1) };
+
+      propertyArrayIconButton = new GUIStyle(EditorStyles.miniButton)
+      {
+         margin = new RectOffset(4, 4, 2, 2),
+         padding = new RectOffset(3, 3, 2, 2),
+         stretchWidth = false
+      };
+
+      propertyArrayTextButton = new GUIStyle(EditorStyles.miniButton)
+      {
+         fontStyle = FontStyle.Bold,
+         padding = new RectOffset(0, 2, 1, 1),
+         contentOffset = new Vector2(0, 1),
+         alignment = TextAnchor.UpperCenter
+      };
+
+      propertyRowOdd = new GUIStyle(GUIStyle.none) { fixedHeight = 20 };
+
+      propertyRowEven = new GUIStyle(propertyRowOdd) { normal = { background = texturePropertyRowEven } };
+
+      scriptRowOdd = new GUIStyle(GUIStyle.none) { fixedHeight = 17 };
+
+      scriptRowEven = new GUIStyle(scriptRowOdd) { normal = { background = texturePropertyRowEven } };
+
+      listRow = new GUIStyle(GUIStyle.none) { onNormal = { background = texturePropertyRowEven } };
+
+      toolbarLabel = new GUIStyle(EditorStyles.label)
+      {
+         padding = new RectOffset(4, 4, 2, 2),
+         margin = new RectOffset()
+      };
+   }
 
    public static GUIStyle paletteToolbarFoldoutButton { get; private set; }
 
@@ -141,415 +602,20 @@ public static class uScriptGUIStyle
 
    public static GUIStyle underline { get; private set; }
 
-   public static readonly int columnHeaderHeight = 16;
-   static Texture2D _texture_propertyRowEven = null;
-   static Texture2D _texture_windowMenuDropDown = null;
-   static Texture2D _texture_windowMenuContext = null;
-   static Texture2D _texture_underline = null;
-
    public static void Init()
    {
-      if (_stylesInitialized)
-      {
-         // The styles have already been initialized
-         return;
-      }
-
-      // Reload all custom GUI textures to match the new skin
-      string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + (uScriptGUI.isProSkin ? "DarkSkin" : "LightSkin") + "_";
-      _texture_windowMenuDropDown = AssetDatabase.LoadAssetAtPath(skinPath + "MenuDropDown.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-      _texture_windowMenuContext = AssetDatabase.LoadAssetAtPath(skinPath + "MenuContext.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-      _texture_underline = AssetDatabase.LoadAssetAtPath(skinPath + "Underline.png", typeof(UnityEngine.Texture2D)) as Texture2D;
-      _texture_propertyRowEven = AssetDatabase.LoadAssetAtPath(skinPath + "LineItem.png", typeof(UnityEngine.Texture2D)) as Texture2D;
-
-      _stylesInitialized = true;
-
-      paletteToolbarFoldoutButton = new GUIStyle(EditorStyles.toolbarButton);
-      paletteToolbarFoldoutButton.margin = new RectOffset(0, 6, 0, 0);
-      paletteToolbarFoldoutButton.padding = new RectOffset(2, 2, 0, 0);
-
-      paletteFoldout = new GUIStyle(EditorStyles.foldout);
-      paletteFoldout.padding = new RectOffset(12, 4, 2, 2);
-      paletteFoldout.margin = new RectOffset(4, 4, 0, 0);
-
-      paletteButton = new GUIStyle(GUI.skin.button);
-      paletteButton.alignment = TextAnchor.UpperLeft;
-      paletteButton.padding = new RectOffset(4, 4, 2, 2);
-      paletteButton.margin = new RectOffset(4, 4, 0, 0);
-      paletteButton.active.textColor = UnityEngine.Color.white;
-
-      panelBox = new GUIStyle(GUI.skin.box);
-      panelBox.name = "panelBox";
-      panelBox.padding = new RectOffset(1, 1, 1, 1);
-      panelBox.margin = new RectOffset(0, 0, 0, 0);
-
-      panelHR = new GUIStyle(GUI.skin.box);
-      panelHR.name = "panelHR";
-      panelHR.padding = new RectOffset(1, 1, 1, 1);
-      panelHR.margin = new RectOffset(8, 8, 8, 6);
-      panelHR.border = new RectOffset(0, 0, 1, 1);
-
-      panelTitle = new GUIStyle(EditorStyles.boldLabel);
-      panelTitle.name = "panelTitle";
-      panelTitle.margin = new RectOffset(4, 4, 0, 0);
-
-      panelTitleDropDown = new GUIStyle(EditorStyles.toolbarDropDown);
-      panelTitleDropDown.name = "panelTitleDropDown";
-      panelTitleDropDown.font = EditorStyles.boldLabel.font;
-      panelTitleDropDown.margin = new RectOffset(0, 0, 0, 0);
-      panelTitleDropDown.padding = new RectOffset(6, 12, 1, 3);
-
-      referenceText = new GUIStyle(GUI.skin.label);
-      referenceText.name = "referenceText";
-      referenceText.wordWrap = true;
-      referenceText.stretchWidth = true;
-      referenceText.stretchHeight = true;
-
-      columnHeader = new GUIStyle(EditorStyles.toolbarButton);
-      columnHeader.name = "columnHeader";
-      columnHeader.normal.background = columnHeader.onNormal.background;
-      columnHeader.fontStyle = FontStyle.Bold;
-      columnHeader.alignment = TextAnchor.MiddleLeft;
-      columnHeader.padding = new RectOffset(5, 8, 0, 0);
-      columnHeader.fixedHeight = columnHeaderHeight;
-      columnHeader.contentOffset = new Vector2(0, -1);
-
-      hDivider = new GUIStyle(GUI.skin.box);
-      hDivider.name = "hDivider";
-      hDivider.margin = new RectOffset(0, 0, 0, 0);
-      hDivider.padding = new RectOffset(0, 0, 0, 0);
-      hDivider.border = new RectOffset(0, 0, 0, 0);
-      hDivider.normal.background = null;
-
-      vDivider = new GUIStyle(GUI.skin.box);
-      vDivider.name = "vDivider";
-      vDivider.margin = new RectOffset(0, 0, 0, 0);
-      vDivider.padding = new RectOffset(0, 0, 0, 0);
-      vDivider.border = new RectOffset(0, 0, 0, 0);
-      vDivider.normal.background = null;
-
-      vScrollbar = new GUIStyle(GUI.skin.verticalScrollbar);
-      // vScrollbar.name = "vScrollbar";                // DO NOT RENAME
-      vScrollbar.margin = new RectOffset();
-
-      hScrollbar = new GUIStyle(GUI.skin.horizontalScrollbar);
-      // hScrollbar.name = "hScrollbar";                // DO NOT RENAME
-      hScrollbar.margin = new RectOffset();
-
-      vColumnScrollbar = new GUIStyle(vScrollbar);
-      // vColumnScrollbar.name = "vColumnScrollbar";    // DO NOT RENAME
-      vColumnScrollbar.normal.background = columnHeader.normal.background;
-      vColumnScrollbar.overflow = new RectOffset();
-
-      hColumnScrollbar = new GUIStyle(hScrollbar);
-      // hColumnScrollbar.name = "hColumnScrollbar";    // DO NOT RENAME
-      hColumnScrollbar.fixedHeight = 0;
-
-      columnScrollView = new GUIStyle(GUI.skin.box);
-      columnScrollView.name = "columnScrollView";
-      columnScrollView.margin = new RectOffset(4, 4, 3, 0);
-
-      nodeButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
-      nodeButtonLeft.name = "nodeButtonLeft";
-      nodeButtonLeft.alignment = TextAnchor.UpperLeft;
-      nodeButtonLeft.padding = new RectOffset(4, 4, 2, 4);
-      nodeButtonLeft.margin = new RectOffset(4, 0, 0, 0);
-      nodeButtonLeft.overflow = new RectOffset(0, 0, 0, 2);
-      nodeButtonLeft.fontSize = 11;
-
-      nodeButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid);
-      nodeButtonMiddle.name = "nodeButtonMiddle";
-      nodeButtonMiddle.alignment = TextAnchor.MiddleCenter;
-      nodeButtonMiddle.padding = new RectOffset(0, 0, 2, 4);
-      nodeButtonMiddle.margin = new RectOffset(0, 0, 0, 0);
-      nodeButtonMiddle.overflow = new RectOffset(0, 0, 0, 2);
-      nodeButtonMiddle.fontSize = 11;
-      nodeButtonMiddle.fixedHeight = 18;
-      nodeButtonMiddle.contentOffset = new Vector2(0, 1);
-
-      nodeButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
-      nodeButtonRight.name = "nodeButtonRight";
-      nodeButtonRight.alignment = TextAnchor.UpperCenter;
-      nodeButtonRight.padding = new RectOffset(0, 0, 2, 4);
-      nodeButtonRight.margin = new RectOffset(0, 4, 0, 0);
-      nodeButtonRight.overflow = new RectOffset(0, 0, 0, 2);
-      nodeButtonRight.fontSize = 11;
-      nodeButtonRight.fixedHeight = 19;
-      nodeButtonRight.contentOffset = new Vector2(-1, 1);
-
-      favoriteButtonFoldout = new GUIStyle(EditorStyles.toolbarButton);
-      favoriteButtonFoldout.name = "uScript_favoriteButtonFoldout";
-      favoriteButtonFoldout.margin = new RectOffset(0, 0, 0, 0);
-      favoriteButtonFoldout.padding = new RectOffset(2, 2, 0, 0);
-
-      favoriteButtonName = new GUIStyle("ButtonRight");
-      favoriteButtonName.name = "uScript_favoriteButtonName";
-      favoriteButtonName.alignment = TextAnchor.MiddleLeft;
-      favoriteButtonName.contentOffset = new Vector2(0, -1);
-      favoriteButtonName.margin = new RectOffset(0, 4, 0, 0);
-      favoriteButtonName.overflow = new RectOffset(0, 0, 1, 1);
-      favoriteButtonName.padding = new RectOffset(6, 6, 2, 2);
-
-      favoriteButtonNumber = new GUIStyle("ButtonLeft");
-      favoriteButtonNumber.name = "uScript_favoriteButtonNumber";
-      favoriteButtonNumber.alignment = TextAnchor.MiddleLeft;
-      favoriteButtonNumber.fontStyle = FontStyle.Bold;
-      favoriteButtonNumber.overflow = new RectOffset(0, 0, 1, 1);
-      favoriteButtonNumber.margin = new RectOffset(4, 0, 0, 0);
-      favoriteButtonNumber.padding = new RectOffset(7, 6, 1, 3);
-
-      favoriteButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
-      favoriteButtonLeft.name = "uScript_favoriteButtonLeft";
-      favoriteButtonLeft.margin = new RectOffset(4, 0, 1, 1);
-      favoriteButtonLeft.padding = new RectOffset(4, 4, 2, 2);
-
-      favoriteButtonMiddle = new GUIStyle(EditorStyles.miniButtonMid);
-      favoriteButtonMiddle.name = "uScript_favoriteButtonMiddle";
-      favoriteButtonMiddle.margin = new RectOffset(0, 0, 1, 1);
-      favoriteButtonMiddle.padding = new RectOffset(4, 4, 2, 2);
-
-      favoriteButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
-      favoriteButtonRight.name = "uScript_favoriteButtonRight";
-      favoriteButtonRight.margin = new RectOffset(0, 4, 1, 1);
-      favoriteButtonRight.padding = new RectOffset(4, 4, 2, 2);
-
-      contextMenu = new GUIStyle(EditorStyles.toolbarButton);
-
-      menuDropDownWindow = new GUIStyle(GUI.skin.window);
-      menuDropDownWindow.normal.background = _texture_windowMenuDropDown;
-      menuDropDownWindow.onNormal.background = _texture_windowMenuDropDown;
-      menuDropDownWindow.border = new RectOffset(10, 10, 4, 10);
-      menuDropDownWindow.padding = new RectOffset(0, 0, 0, 4);
-      menuDropDownWindow.overflow = new RectOffset(6, 6, 0, 6);
-      menuDropDownWindow.contentOffset = Vector2.zero;
-
-      menuDropDownButton = new GUIStyle(EditorStyles.largeLabel);
-      menuDropDownButton.name = "menuDropDownButton";
-      menuDropDownButton.active.background = EditorStyles.toolbarButton.onActive.background;
-      menuDropDownButton.hover.background = EditorStyles.toolbarButton.onNormal.background;
-      menuDropDownButton.border = EditorStyles.toolbarButton.border;
-      menuDropDownButton.margin = new RectOffset();
-      menuDropDownButton.padding = new RectOffset(8, 8, 4, 4);
-
-      menuDropDownButtonShortcut = new GUIStyle(EditorStyles.largeLabel);
-      menuDropDownButtonShortcut.name = "menuDropDownButtonShortcut";
-      menuDropDownButtonShortcut.fontStyle = FontStyle.Bold;
-      menuDropDownButtonShortcut.margin = new RectOffset();
-      menuDropDownButtonShortcut.padding = new RectOffset();
-
-      menuContextWindow = new GUIStyle(GUI.skin.window);
-      menuContextWindow.normal.background = _texture_windowMenuContext;
-      menuContextWindow.onNormal.background = _texture_windowMenuContext;
-      menuContextWindow.border = new RectOffset(10, 10, 10, 10);
-      menuContextWindow.padding = new RectOffset(0, 0, 4, 4);
-      menuContextWindow.overflow = new RectOffset(6, 6, 6, 6);
-      menuContextWindow.contentOffset = Vector2.zero;
-
-      menuContextButton = new GUIStyle(EditorStyles.largeLabel);
-      menuContextButton.name = "menuDropDownButton";
-      menuContextButton.active.background = EditorStyles.toolbarButton.onActive.background;
-      menuContextButton.hover.background = EditorStyles.toolbarButton.onNormal.background;
-      menuContextButton.border = EditorStyles.toolbarButton.border;
-      menuContextButton.margin = new RectOffset();
-      menuContextButton.padding = new RectOffset(8, 8, 4, 4);
-
-      outline = new GUIStyle(GUI.skin.box);
-      outline.name = "uScript_outline";
-      outline.margin = new RectOffset();
-      outline.padding = new RectOffset();
-      outline.stretchHeight = false;
-      outline.stretchWidth = false;
-
-      panelMessage = new GUIStyle(GUI.skin.label);
-      panelMessage.wordWrap = true;
-      panelMessage.padding = new RectOffset(16, 16, 16, 16);
-
-      panelMessageBold = new GUIStyle(EditorStyles.boldLabel);
-      panelMessageBold.alignment = TextAnchor.MiddleCenter;
-      panelMessageBold.wordWrap = true;
-      panelMessageBold.padding = new RectOffset(16, 16, 16, 16);
-
-      panelMessageError = new GUIStyle(GUI.skin.box);
-      panelMessageError.normal.textColor = EditorStyles.boldLabel.normal.textColor;
-      panelMessageError.font = EditorStyles.boldLabel.font;
-      panelMessageError.wordWrap = true;
-      panelMessageError.stretchWidth = true;
-
-      underline = new GUIStyle(EditorStyles.boldLabel);
-      underline.normal.background = _texture_underline;
-      underline.border = new RectOffset(0, 0, 0, 2);
-      underline.padding = new RectOffset(0, 0, 2, 2);
-
-      referenceButtonIcon = new GUIStyle(EditorStyles.miniButton);
-      referenceButtonIcon.name = "uScript_referenceButtonIcon";
-      referenceButtonIcon.alignment = TextAnchor.MiddleCenter;
-      referenceButtonIcon.imagePosition = ImagePosition.ImageOnly;
-      referenceButtonIcon.padding = new RectOffset();
-      referenceButtonIcon.margin = new RectOffset(4, 4, 0, 0);
-      referenceButtonIcon.fixedHeight = 20;
-      referenceButtonIcon.fixedWidth = 20;
-
-      referenceButtonText = new GUIStyle(EditorStyles.miniButton);
-      referenceButtonText.name = "uScript_referenceButtonText";
-      referenceButtonText.alignment = TextAnchor.MiddleCenter;
-      referenceButtonText.padding = new RectOffset(3, 6, 2, 4);
-      referenceButtonText.margin = new RectOffset(4, 4, 0, 0);
-      referenceButtonText.fontSize = 11;
-      referenceButtonText.fixedHeight = 20;
-
-      referenceDetailBox = new GUIStyle(GUI.skin.box);
-      referenceDetailBox.name = "uScript_referenceDetailBox";
-      referenceDetailBox.margin = new RectOffset(24, 24, 16, 16);
-      referenceDetailBox.padding = new RectOffset(4, 4, 4, 4);
-
-      referenceDetailTitle = new GUIStyle(EditorStyles.boldLabel);
-      referenceDetailTitle.name = "uScript_referenceDetailTitle";
-      referenceDetailTitle.margin = new RectOffset();
-      referenceDetailTitle.padding = new RectOffset(2, 2, 2, 3);
-      referenceDetailTitle.stretchWidth = false;
-//      referenceDetailTitle.normal.background = GUI.skin.box.normal.background;
-//      referenceDetailTitle.border = GUI.skin.box.border;
-
-      referenceDetailLabel = new GUIStyle(EditorStyles.boldLabel);
-      referenceDetailLabel.name = "uScript_referenceDetailLabel";
-      referenceDetailLabel.margin = new RectOffset();
-      referenceDetailLabel.padding = new RectOffset(2, 2, 2, 3);
-      referenceDetailLabel.stretchWidth = false;
-//      referenceDetailLabel.normal.background = GUI.skin.box.normal.background;
-//      referenceDetailLabel.border = GUI.skin.box.border;
-
-      referenceDetailValue = new GUIStyle(referenceDetailLabel);
-      referenceDetailValue.name = "uScript_referenceDetailValue";
-      referenceDetailValue.alignment = TextAnchor.MiddleRight;
-      referenceDetailValue.margin = new RectOffset(12, 0, 0, 0);
-//      referenceDetailValue.normal.background = GUI.skin.box.normal.background;
-//      referenceDetailValue.border = GUI.skin.box.border;
-
-      referenceDetailAlertLabel = new GUIStyle(EditorStyles.boldLabel);
-      referenceDetailAlertLabel.name = "uScript_referenceDetailAlertLabel";
-      referenceDetailAlertLabel.margin = new RectOffset();
-      referenceDetailAlertLabel.padding = new RectOffset(2, 2, 2, 3);
-      referenceDetailAlertLabel.normal.textColor = Color.red;
-      referenceDetailAlertLabel.wordWrap = true;
-//      referenceDetailAlertLabel.normal.background = GUI.skin.box.normal.background;
-//      referenceDetailAlertLabel.border = GUI.skin.box.border;
-
-      referenceDetailAlertValue = new GUIStyle(referenceDetailAlertLabel);
-      referenceDetailAlertValue.name = "uScript_referenceDetailAlertValue";
-      referenceDetailAlertValue.alignment = TextAnchor.MiddleRight;
-      referenceDetailAlertValue.margin = new RectOffset(12, 0, 0, 0);
-//      referenceDetailAlertValue.normal.background = GUI.skin.box.normal.background;
-//      referenceDetailAlertValue.border = GUI.skin.box.border;
-
-      referenceName = new GUIStyle(EditorStyles.boldLabel);
-      referenceName.name = "referenceName";
-      referenceName.normal.background = _texture_underline;
-      referenceName.border = new RectOffset(0, 0, 0, 2);
-      referenceName.padding = new RectOffset(0, 0, 2, 2);
-
-      referenceInfo = new GUIStyle(EditorStyles.miniLabel);
-      referenceInfo.name = "uScript_referenceInfo";
-      referenceInfo.alignment = TextAnchor.LowerRight;
-      referenceInfo.padding = new RectOffset(0, 0, 3, 2);
-
-      referenceDesc = new GUIStyle(EditorStyles.label);
-      referenceDesc.name = "referenceDesc";
-      referenceDesc.padding = new RectOffset(0, 0, 0, 3);
-      referenceDesc.stretchHeight = false;
-      referenceDesc.stretchWidth = true;
-      referenceDesc.wordWrap = true;
-
-      propertyButtonLeft = new GUIStyle("ButtonLeft");
-      propertyButtonLeft.name = "uScript_propertyButtonLeft";
-      propertyButtonLeft.fixedHeight = 20;
-      propertyButtonLeft.fixedWidth = 20;
-      propertyButtonLeft.fontStyle = FontStyle.Bold;
-      propertyButtonLeft.margin = new RectOffset(4, 0, 0, 0);
-
-      propertyButtonMiddleDeprecated = new GUIStyle("ButtonMid");
-      propertyButtonMiddleDeprecated.name = "uScript_propertyButtonMiddleDeprecated";
-      propertyButtonMiddleDeprecated.fixedHeight = 20;
-      propertyButtonMiddleDeprecated.fontStyle = FontStyle.Bold;
-      propertyButtonMiddleDeprecated.margin = new RectOffset();
-
-      propertyButtonMiddleFavorite = new GUIStyle(propertyButtonMiddleDeprecated);
-      propertyButtonMiddleFavorite.name = "uScript_propertyButtonMiddleFavorite";
-      propertyButtonMiddleFavorite.alignment = TextAnchor.MiddleLeft;
-      propertyButtonMiddleFavorite.contentOffset = new Vector2(6, 0);
-      propertyButtonMiddleFavorite.fixedWidth = 30;
-      propertyButtonMiddleFavorite.padding = new RectOffset(12, 6, 2, 3);
-
-      propertyButtonMiddleFavoriteStar = new GUIStyle(EditorStyles.largeLabel);
-      propertyButtonMiddleFavoriteStar.name = "uScript_propertyButtonMiddleFavoriteStar";
-      propertyButtonMiddleFavoriteStar.padding = new RectOffset(4, 4, 0, 0);
-      propertyButtonMiddleFavoriteStar.fontSize = 15;
-
-      propertyButtonMiddleName = new GUIStyle(propertyButtonMiddleDeprecated);
-      propertyButtonMiddleName.name = "uScript_propertyButtonMiddleName";
-      propertyButtonMiddleName.alignment = TextAnchor.MiddleLeft;
-      propertyButtonMiddleName.fixedWidth = 0;
-      propertyButtonMiddleName.contentOffset = Vector2.zero;
-
-      propertyButtonRightSearch = new GUIStyle("ButtonRight");
-      propertyButtonRightSearch.name = "uScript_propertyButtonRightSearch";
-      propertyButtonRightSearch.fixedHeight = 20;
-      propertyButtonRightSearch.fixedWidth = 20;
-      propertyButtonRightSearch.fontStyle = FontStyle.Bold;
-      propertyButtonRightSearch.margin = new RectOffset(0, 4, 0, 0);
-      propertyButtonRightSearch.padding = new RectOffset();
-
-      propertyButtonRightName = new GUIStyle(propertyButtonRightSearch);
-      propertyButtonRightName.name = "uScript_propertyButtonRightName";
-      propertyButtonRightName.alignment = TextAnchor.MiddleLeft;
-      propertyButtonRightName.fixedWidth = 0;
-      propertyButtonRightName.padding = ((GUIStyle)"ButtonRight").padding;
-
-      propertyTextField = new GUIStyle(EditorStyles.textField);
-      propertyTextField.margin = new RectOffset(4, 4, 2, 2);
-
-      propertyBoolField = new GUIStyle(EditorStyles.toggle);
-      propertyBoolField.margin = new RectOffset(4, 4, 1, 1);
-
-      propertyArrayIconButton = new GUIStyle(EditorStyles.miniButton);
-      propertyArrayIconButton.margin = new RectOffset(4, 4, 2, 2);
-      propertyArrayIconButton.padding = new RectOffset(3, 3, 2, 2);
-      propertyArrayIconButton.stretchWidth = false;
-
-      propertyArrayTextButton = new GUIStyle(EditorStyles.miniButton);
-      propertyArrayTextButton.fontStyle = FontStyle.Bold;
-      propertyArrayTextButton.padding = new RectOffset(0, 2, 1, 1);
-      propertyArrayTextButton.contentOffset = new Vector2(0, 1);
-      propertyArrayTextButton.alignment = TextAnchor.UpperCenter;
-
-      propertyRowOdd = new GUIStyle(GUIStyle.none);
-      propertyRowOdd.fixedHeight = 20;
-
-      propertyRowEven = new GUIStyle(propertyRowOdd);
-      propertyRowEven.normal.background = _texture_propertyRowEven;
-
-      scriptRowOdd = new GUIStyle(GUIStyle.none);
-      scriptRowOdd.fixedHeight = 17;
-
-      scriptRowEven = new GUIStyle(scriptRowOdd);
-      scriptRowEven.normal.background = _texture_propertyRowEven;
-
-      listRow = new GUIStyle(GUIStyle.none);
-      listRow.onNormal.background = _texture_propertyRowEven;
-
-      toolbarLabel = new GUIStyle(EditorStyles.label);
-      toolbarLabel.padding = new RectOffset(4, 4, 2, 2);
-      toolbarLabel.margin = new RectOffset();
    }
 
-   static public void CustomSkinStyles(EditorSkin editorSkin)
+   public static void CustomSkinStyles(EditorSkin editorSkin)
    {
-      GUISkin skin = EditorGUIUtility.GetBuiltinSkin(editorSkin);
+      var skin = EditorGUIUtility.GetBuiltinSkin(editorSkin);
+      var result = "These are the custom styles defined in the skin (" + skin.name + "):\n";
 
-      string result = "These are the custom styles defined in the skin (" + skin.name + "):\n";
-      for (int i = 0; i < skin.customStyles.Length; i++)
+      for (var i = 0; i < skin.customStyles.Length; i++)
       {
          result += "\t" + i.ToString("000") + ": \"" + skin.customStyles[i].name + "\"\n";
       }
+
       Debug.Log(result);
 
       // "PaneOptions"
@@ -559,34 +625,12 @@ public static class uScriptGUIStyle
       // "ToolbarSearchTextField"
    }
 
-   private class StyleInformationItem
-   {
-      public string Label { get; private set; }
-
-      public string Value { get; private set; }
-
-      public int LabelWidth { get; private set; }
-
-      public int ValueWidth { get; private set; }
-
-      public StyleInformationItem(string name, object value)
-      {
-         Label = (string.IsNullOrEmpty(name) ? name : name + ": \t");
-         Value = value.ToString() + "\t\t";
-
-         GUIStyle style = GUIStyle.none;
-
-         LabelWidth = (int)style.CalcSize(new GUIContent(Label)).x;
-         ValueWidth = (int)style.CalcSize(new GUIContent(Value)).x;
-      }
-   }
-
-   static public void Information(GUIStyle style)
+   public static void Information(GUIStyle style)
    {
       Information(style, 5);
    }
 
-   static public void Information(GUIStyle style, int columns)
+   public static void Information(GUIStyle style, int columns)
    {
       if (style == null)
       {
@@ -595,169 +639,207 @@ public static class uScriptGUIStyle
 
       columns = Mathf.Max(1, Mathf.Min(5, columns));
 
-      List<StyleInformationItem> items = new List<StyleInformationItem>();
+      var items = new List<StyleInformationItem>();
 
-      if (columns == 2)
+      switch (columns)
       {
-         items.Add(new StyleInformationItem("margin", style.margin));
-         items.Add(new StyleInformationItem("font", style.font));
+         case 2:
+            // Items are laid out in two columns
+            items.Add(new StyleInformationItem("margin", style.margin));
+            items.Add(new StyleInformationItem("font", style.font));
 
-         items.Add(new StyleInformationItem("padding", style.padding));
-         items.Add(new StyleInformationItem("fontSize", style.fontSize));
+            // --
+            items.Add(new StyleInformationItem("padding", style.padding));
+            items.Add(new StyleInformationItem("fontSize", style.fontSize));
 
-         items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
-         items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
+            // --
+            items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
+            items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
 
-         items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
-         items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
+            // --
+            items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
+            items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
 
-         items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
-         items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
+            // --
+            items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
+            items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
 
-         items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
-         items.Add(new StyleInformationItem("alignment", style.alignment));
+            // --
+            items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
+            items.Add(new StyleInformationItem("alignment", style.alignment));
 
-         items.Add(new StyleInformationItem("clipping", style.clipping));
-         items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
+            // --
+            items.Add(new StyleInformationItem("clipping", style.clipping));
+            items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
 
-         items.Add(new StyleInformationItem("overflow", style.overflow));
-         items.Add(new StyleInformationItem("border", style.border));
+            // --
+            items.Add(new StyleInformationItem("overflow", style.overflow));
+            items.Add(new StyleInformationItem("border", style.border));
 
-         items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+            // --
+            items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+            break;
+         case 3:
+            items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
+            items.Add(new StyleInformationItem("margin", style.margin));
+            items.Add(new StyleInformationItem("font", style.font));
+
+            // --
+            items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
+            items.Add(new StyleInformationItem("padding", style.padding));
+            items.Add(new StyleInformationItem("fontSize", style.fontSize));
+
+            // --
+            items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
+            items.Add(new StyleInformationItem("border", style.border));
+            items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
+
+            // --
+            items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
+            items.Add(new StyleInformationItem("overflow", style.overflow));
+            items.Add(new StyleInformationItem("alignment", style.alignment));
+
+            // --
+            items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+            items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
+            items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
+
+            // --
+            items.Add(new StyleInformationItem(string.Empty, string.Empty));
+            items.Add(new StyleInformationItem("clipping", style.clipping));
+            items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
+            break;
+         case 4:
+            items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
+            items.Add(new StyleInformationItem("margin", style.margin));
+            items.Add(new StyleInformationItem("alignment", style.alignment));
+            items.Add(new StyleInformationItem("font", style.font));
+
+            // --
+            items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
+            items.Add(new StyleInformationItem("padding", style.padding));
+            items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
+            items.Add(new StyleInformationItem("fontSize", style.fontSize));
+
+            // --
+            items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
+            items.Add(new StyleInformationItem("border", style.border));
+            items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
+            items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
+
+            // --
+            items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
+            items.Add(new StyleInformationItem("overflow", style.overflow));
+            items.Add(new StyleInformationItem("clipping", style.clipping));
+            items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
+
+            // --
+            items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+            break;
+         case 5:
+            items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
+            items.Add(new StyleInformationItem("margin", style.margin));
+            items.Add(new StyleInformationItem("alignment", style.alignment));
+            items.Add(new StyleInformationItem("font", style.font));
+            items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+
+            // --
+            items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
+            items.Add(new StyleInformationItem("padding", style.padding));
+            items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
+            items.Add(new StyleInformationItem("fontSize", style.fontSize));
+            items.Add(new StyleInformationItem(string.Empty, string.Empty));
+
+            // --
+            items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
+            items.Add(new StyleInformationItem("border", style.border));
+            items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
+            items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
+            items.Add(new StyleInformationItem(string.Empty, string.Empty));
+
+            // --
+            items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth + "\t"));
+            items.Add(new StyleInformationItem("overflow", style.overflow));
+            items.Add(new StyleInformationItem("clipping", style.clipping));
+            items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
+            break;
+         default:
+            items.Add(new StyleInformationItem("margin", style.margin));
+            items.Add(new StyleInformationItem("padding", style.padding));
+            items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
+            items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
+            items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
+            items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
+            items.Add(new StyleInformationItem("font", style.font));
+            items.Add(new StyleInformationItem("fontSize", style.fontSize));
+            items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
+            items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
+            items.Add(new StyleInformationItem("alignment", style.alignment));
+            items.Add(new StyleInformationItem("border", style.border));
+            items.Add(new StyleInformationItem("clipping", style.clipping));
+            items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
+            items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
+            items.Add(new StyleInformationItem("overflow", style.overflow));
+            items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
+            break;
       }
-      else if (columns == 3)
+
+      var result = "Style Information: \"" + style.name + "\":";
+
+      var columnLabelWidths = new int[columns];
+      var columnValueWidths = new int[columns];
+
+      var tabWidth = new GUIStyle().CalcSize(new GUIContent("\t")).x;
+
+      var index = 0;
+      foreach (var item in items)
       {
-         items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
-         items.Add(new StyleInformationItem("margin", style.margin));
-         items.Add(new StyleInformationItem("font", style.font));
-
-         items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
-         items.Add(new StyleInformationItem("padding", style.padding));
-         items.Add(new StyleInformationItem("fontSize", style.fontSize));
-
-         items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
-         items.Add(new StyleInformationItem("border", style.border));
-         items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
-
-         items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
-         items.Add(new StyleInformationItem("overflow", style.overflow));
-         items.Add(new StyleInformationItem("alignment", style.alignment));
-
-         items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
-         items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
-         items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
-
-         items.Add(new StyleInformationItem(string.Empty, string.Empty));
-         items.Add(new StyleInformationItem("clipping", style.clipping));
-         items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
-      }
-      else if (columns == 4)
-      {
-         items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
-         items.Add(new StyleInformationItem("margin", style.margin));
-         items.Add(new StyleInformationItem("alignment", style.alignment));
-         items.Add(new StyleInformationItem("font", style.font));
-
-         items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
-         items.Add(new StyleInformationItem("padding", style.padding));
-         items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
-         items.Add(new StyleInformationItem("fontSize", style.fontSize));
-
-         items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
-         items.Add(new StyleInformationItem("border", style.border));
-         items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
-         items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
-
-         items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
-         items.Add(new StyleInformationItem("overflow", style.overflow));
-         items.Add(new StyleInformationItem("clipping", style.clipping));
-         items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
-
-         items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
-      }
-      else if (columns == 5)
-      {
-         items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
-         items.Add(new StyleInformationItem("margin", style.margin));
-         items.Add(new StyleInformationItem("alignment", style.alignment));
-         items.Add(new StyleInformationItem("font", style.font));
-         items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
-
-         items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
-         items.Add(new StyleInformationItem("padding", style.padding));
-         items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
-         items.Add(new StyleInformationItem("fontSize", style.fontSize));
-         items.Add(new StyleInformationItem(string.Empty, string.Empty));
-
-         items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
-         items.Add(new StyleInformationItem("border", style.border));
-         items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
-         items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
-         items.Add(new StyleInformationItem(string.Empty, string.Empty));
-
-         items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth + "\t"));
-         items.Add(new StyleInformationItem("overflow", style.overflow));
-         items.Add(new StyleInformationItem("clipping", style.clipping));
-         items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
-      }
-      else
-      {
-         items.Add(new StyleInformationItem("margin", style.margin));
-         items.Add(new StyleInformationItem("padding", style.padding));
-         items.Add(new StyleInformationItem("fixedHeight", style.fixedHeight));
-         items.Add(new StyleInformationItem("fixedWidth", style.fixedWidth));
-         items.Add(new StyleInformationItem("stretchHeight", style.stretchHeight));
-         items.Add(new StyleInformationItem("stretchWidth", style.stretchWidth));
-         items.Add(new StyleInformationItem("font", style.font));
-         items.Add(new StyleInformationItem("fontSize", style.fontSize));
-         items.Add(new StyleInformationItem("fontStyle", style.fontStyle));
-         items.Add(new StyleInformationItem("lineHeight", style.lineHeight));
-         items.Add(new StyleInformationItem("alignment", style.alignment));
-         items.Add(new StyleInformationItem("border", style.border));
-         items.Add(new StyleInformationItem("clipping", style.clipping));
-         items.Add(new StyleInformationItem("contentOffset", style.contentOffset));
-         items.Add(new StyleInformationItem("imagePosition", style.imagePosition));
-         items.Add(new StyleInformationItem("overflow", style.overflow));
-         items.Add(new StyleInformationItem("wordWrap", style.wordWrap));
-      }
-
-      string result = "Style Information: \"" + style.name + "\":";
-
-      int[] columnLabelWidth = new int[columns];
-      int[] columnValueWidth = new int[columns];
-
-      float tabWidth = new GUIStyle().CalcSize(new GUIContent("\t")).x;
-
-      int index = 0;
-      foreach (StyleInformationItem item in items)
-      {
-         int column = index++ % columns;
-         columnLabelWidth[column] = Mathf.Max(columnLabelWidth[column], item.LabelWidth);
-         columnValueWidth[column] = Mathf.Max(columnValueWidth[column], item.ValueWidth);
+         var column = index++ % columns;
+         columnLabelWidths[column] = Mathf.Max(columnLabelWidths[column], item.LabelWidth);
+         columnValueWidths[column] = Mathf.Max(columnValueWidths[column], item.ValueWidth);
       }
 
       index = 0;
-      foreach (StyleInformationItem item in items)
+      foreach (var item in items)
       {
-         int column = index++ % columns;
+         var column = index++ % columns;
 
          if (column == 0)
          {
             result += "\n\t";
          }
 
-         result += item.Label + new string('\t', Mathf.CeilToInt((columnLabelWidth[column] - item.LabelWidth) / tabWidth));
-         result += item.Value + new string('\t', Mathf.CeilToInt((columnValueWidth[column] - item.ValueWidth) / tabWidth));
+         result += item.Label + new string('\t', Mathf.CeilToInt((columnLabelWidths[column] - item.LabelWidth) / tabWidth));
+         result += item.Value + new string('\t', Mathf.CeilToInt((columnValueWidths[column] - item.ValueWidth) / tabWidth));
       }
 
       Debug.Log(result
                 + "\n\t isHeightDependantOnWidth: \t\t\t" + style.isHeightDependantOnWidth
-
                 + "\n\t states:\t normal( " + style.normal.background + ", " + style.normal.textColor + " )"
                 + "\n\t\t\t\t hover( " + style.hover.background + ", " + style.hover.textColor + " )"
                 + "\n\t\t\t\t active( " + style.active.background + ", " + style.active.textColor + " )"
-                + "\n\t\t\t\t focused( " + style.focused.background + ", " + style.focused.textColor + " )"
-                + "\n"
-               );
+                + "\n\t\t\t\t focused( " + style.focused.background + ", " + style.focused.textColor + " )" + "\n");
+   }
+
+   private class StyleInformationItem
+   {
+      public StyleInformationItem(string name, object value)
+      {
+         this.Label = string.IsNullOrEmpty(name) ? name : name + ": \t";
+         this.Value = value + "\t\t";
+
+         var style = GUIStyle.none;
+
+         this.LabelWidth = (int)style.CalcSize(new GUIContent(this.Label)).x;
+         this.ValueWidth = (int)style.CalcSize(new GUIContent(this.Value)).x;
+      }
+
+      public string Label { get; private set; }
+
+      public string Value { get; private set; }
+
+      public int LabelWidth { get; private set; }
+
+      public int ValueWidth { get; private set; }
    }
 }
