@@ -148,13 +148,6 @@ public class uScript : EditorWindow
 #endif
    public static bool IsDevelopmentBuild { get { return _isDevelopmentBuild; } }
 
-
-   //   private double m_RefreshTimestamp = -1.0;
-
-   // Used for double-click hack in uScripts panel
-   private double clickTime;
-   //   private double doubleClickTime = 0.3;
-
    bool _wasHierarchyChanged = false;
 
    private bool m_CanvasDragging = false;
@@ -201,11 +194,6 @@ public class uScript : EditorWindow
 
    public Vector2 _guiContentScrollPos;
 
-   Vector2 _guiPanelProperties_ScrollPos;
-
-   Vector2 _guiHelpScrollPos;
-
-
    Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
 
    Rect rectFileMenuButton = new Rect();
@@ -214,12 +202,6 @@ public class uScript : EditorWindow
 
    /* Palette Variables */
    String _graphListFilterText = string.Empty;
-
-
-   //
-   // Sub-Sequence variables
-   //
-   Vector2 _guiPanelSequence_ScrollPos;
 
    //
    // Statusbar Variables
@@ -3434,15 +3416,10 @@ public class uScript : EditorWindow
 
 
    // TEMP Variables for testing the new property grid methods
-   Rect _svRect;
-
-   KeyCode[] _arrayKeyCode;
-   bool _arrayFoldoutBool;
 
    public static int _paletteMode = 0;
    bool _wasMoving = false;
 
-   Vector2 _scrollNewProperties;
    // END TEMP Variables
 
 
