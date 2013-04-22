@@ -243,14 +243,29 @@ public static class uScriptGUI
 
    // === Methods ====================================================================
 
+   // TODO: Remove when no longer needed
    public static string GetImagePath(string imageName)
    {
       return string.Format("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/{0}.png", imageName);
    }
 
+   // TODO: Remove when no longer needed
    public static string GetSkinnedImagePath(string imageName)
    {
       return GetImagePath(string.Format("{0}_{1}", IsProSkin ? "DarkSkin" : "LightSkin", imageName));
+   }
+
+   public static Texture2D GetTexture(string textureName)
+   {
+      return
+         AssetDatabase.LoadAssetAtPath(
+            string.Format("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/{0}.png", textureName),
+            typeof(Texture2D)) as Texture2D;
+   }
+
+   public static Texture2D GetSkinnedTexture(string textureName)
+   {
+      return GetTexture(string.Format("{0}_{1}", IsProSkin ? "DarkSkin" : "LightSkin", textureName));
    }
 
    /// <summary>Deconstructs the specified GUILayoutOption object into individual variables.</summary>
@@ -312,7 +327,7 @@ public static class uScriptGUI
 
    public static void DebugBox(Rect rect, Color color, string text)
    {
-      var texture = AssetDatabase.LoadAssetAtPath(GetImagePath("DebugBox"), typeof(Texture2D)) as Texture2D;
+      var texture = GetTexture("DebugBox");
 
       var style = new GUIStyle(EditorStyles.miniLabel)
       {

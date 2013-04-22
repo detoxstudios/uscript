@@ -217,30 +217,30 @@ public static class uScriptGUIContent
 //      iconErrorSmall = new GUIContent(consoleWindow.GetField("iconErrorSmall", flags).GetValue(null) as Texture2D);
 //#endif
 
-      buttonArraySearch.image = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("iconMiniSearch"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-      buttonListCollapse.image = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("iconExpand"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-      buttonListExpand.image = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("iconCollapse"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-      buttonNodeFind.image = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("iconMiniSearch"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      buttonArraySearch.image = uScriptGUI.GetSkinnedTexture("iconMiniSearch");
+      buttonListCollapse.image = uScriptGUI.GetSkinnedTexture("iconExpand");
+      buttonListExpand.image = uScriptGUI.GetSkinnedTexture("iconCollapse");
+      buttonNodeFind.image = uScriptGUI.GetSkinnedTexture("iconMiniSearch");
       buttonNodeFindDeprecated.image = buttonNodeFind.image;
-      buttonNodeToggle.image = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("iconMiniToggle"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-      buttonNodeUpgrade.image = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("iconMiniUpgrade"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-      buttonNodeDeleteMissing.image = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("iconMiniDelete"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      buttonNodeToggle.image = uScriptGUI.GetSkinnedTexture("iconMiniToggle");
+      buttonNodeUpgrade.image = uScriptGUI.GetSkinnedTexture("iconMiniUpgrade");
+      buttonNodeDeleteMissing.image = uScriptGUI.GetSkinnedTexture("iconMiniDelete");
 
-      commandReference.image = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("iconKeyboard"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      commandReference.image = uScriptGUI.GetSkinnedTexture("iconKeyboard");
 
       favoritePanelCollapse.image = buttonListCollapse.image;
       favoritePanelExpand.image = buttonListExpand.image;
 
-      iconHelp16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconHelp16"), typeof(UnityEngine.Texture2D)));
-      iconHelp32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconHelp32"), typeof(UnityEngine.Texture2D)));
-      iconInfo16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconInfo16"), typeof(UnityEngine.Texture2D)));
-      iconInfo32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconInfo32"), typeof(UnityEngine.Texture2D)));
-      iconWarn16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconWarn16"), typeof(UnityEngine.Texture2D)));
-      iconWarn32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconWarn32"), typeof(UnityEngine.Texture2D)));
-      iconError16 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconError16"), typeof(UnityEngine.Texture2D)));
-      iconError32 = new GUIContent((Texture2D)AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconError32"), typeof(UnityEngine.Texture2D)));
+      iconHelp16 = new GUIContent(uScriptGUI.GetTexture("iconHelp16"));
+      iconHelp32 = new GUIContent(uScriptGUI.GetTexture("iconHelp32"));
+      iconInfo16 = new GUIContent(uScriptGUI.GetTexture("iconInfo16"));
+      iconInfo32 = new GUIContent(uScriptGUI.GetTexture("iconInfo32"));
+      iconWarn16 = new GUIContent(uScriptGUI.GetTexture("iconWarn16"));
+      iconWarn32 = new GUIContent(uScriptGUI.GetTexture("iconWarn32"));
+      iconError16 = new GUIContent(uScriptGUI.GetTexture("iconError16"));
+      iconError32 = new GUIContent(uScriptGUI.GetTexture("iconError32"));
 
-      toolboxBreadcrumbs.image = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("iconSearch"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+      toolboxBreadcrumbs.image = uScriptGUI.GetSkinnedTexture("iconSearch");
    }
 
    public static void ChangeTooltip(string tooltip)

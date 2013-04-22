@@ -457,7 +457,7 @@ public class ReferenceWindow : EditorWindow
       styleCommandPlus.margin = new RectOffset(0, 0, 2, 2);
       styleCommandPlus.stretchWidth = false;
 
-      contentPanelIcon = new GUIContent(UnityEditor.AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconWelcomeLogo"), typeof(UnityEngine.Texture)) as UnityEngine.Texture);
+      contentPanelIcon = new GUIContent(uScriptGUI.GetTexture("iconWelcomeLogo"));
       contentPanelTitle = new GUIContent("Quick Command Reference");
       contentPanelDescription = new GUIContent("This is summary of the various commands available to you while using the uScript Editor.");
 

@@ -18,10 +18,10 @@ public static class uScriptGUIStyle
 
    static uScriptGUIStyle()
    {
-      var texturePropertyRowEven = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("LineItem"), typeof(Texture2D)) as Texture2D;
-      var textureUnderline = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("Underline"), typeof(Texture2D)) as Texture2D;
-      var textureWindowMenuContext = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("MenuContext"), typeof(Texture2D)) as Texture2D;
-      var textureWindowMenuDropDown = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("MenuDropDown"), typeof(Texture2D)) as Texture2D;
+      var texturePropertyRowEven = uScriptGUI.GetSkinnedTexture("LineItem");
+      var textureUnderline = uScriptGUI.GetSkinnedTexture("Underline");
+      var textureWindowMenuContext = uScriptGUI.GetSkinnedTexture("MenuContext");
+      var textureWindowMenuDropDown = uScriptGUI.GetSkinnedTexture("MenuDropDown");
 
       PaletteToolbarFoldoutButton = new GUIStyle(EditorStyles.toolbarButton)
       {
