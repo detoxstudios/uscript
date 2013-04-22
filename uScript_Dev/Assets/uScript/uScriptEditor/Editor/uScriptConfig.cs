@@ -708,7 +708,7 @@ public partial class uScriptConfig
          {
             // Variables
             new uScriptConfigBlock( typeof(System.Boolean), "Bool", "Variables" ),
-            new uScriptConfigBlock( typeof(System.Boolean[]), "Bool List", "Variables" ),
+            new uScriptConfigBlock( typeof(System.Boolean[]), "Bool List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(System.Int32), "Int", "Variables" ),
             new uScriptConfigBlock( typeof(System.Int32[]), "Int List", "Variables/Lists" ),
             new uScriptConfigBlock( typeof(System.Single), "Float", "Variables" ),
