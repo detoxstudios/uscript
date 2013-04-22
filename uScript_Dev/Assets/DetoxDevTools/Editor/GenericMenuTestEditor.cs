@@ -1,20 +1,21 @@
-//using Detox.Drawing;
-using Detox.Editor.GUI;
-//using Detox.FlowChart;
-using Detox.ScriptEditor;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Detox Studios, LLC" file="GenericMenuTestEditor.cs">
+//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Editor window for testing the performance of GenericMenu initialization.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-//using System.Reflection;
+using System.Globalization;
+
+using UnityEditor;
 
 using UnityEngine;
-using UnityEditor;
 
 public class GenericMenuTestEditor : EditorWindow
 {
-   private static GenericMenuTestEditor _window;
+   private static GenericMenuTestEditor window;
 
    private GenericMenu genericMenu;
    
@@ -30,28 +31,41 @@ public class GenericMenuTestEditor : EditorWindow
    {
       get
       {
-         if (_window == null)
+         if (window == null)
          {
             Init();
          }
-         return _window;
+
+         return window;
       }
    }
 
-   [MenuItem ("Test/GenericMenu Test Editor")]
-   static void Init()
+   [MenuItem("Test/GenericMenu Test Editor")]
+   private static void Init()
    {
       // Get existing open window or if none, make a new one:
-      _window = EditorWindow.GetWindow(typeof(GenericMenuTestEditor), false, "Menu Test") as GenericMenuTestEditor;
-      _window.minSize = new Vector2(320, 240);
+      window = GetWindow(typeof(GenericMenuTestEditor), false, "Menu Test") as GenericMenuTestEditor;
+      if (window != null)
+      {
+         window.minSize = new Vector2(320, 240);
+      }
    }
- 
-   void OnGUI()
+
+   private static void GenericMenuCallback(object obj)
+   {
+      Debug.Log(string.Format("CLICKED: {0}\n", obj));
+   }
+
+   private void OnGUI()
    {
       if (this.clickZoneStyle == null)
       {
-         this.clickZoneStyle = new GUIStyle(GUI.skin.box);
-         this.clickZoneStyle.margin = new RectOffset(16, 16, 16, 16);
+         this.clickZoneStyle = new GUIStyle(GUI.skin.box)
+         {
+            margin = new RectOffset(16, 16, 16, 16),
+            normal = { textColor = EditorStyles.label.normal.textColor },
+            fontStyle = FontStyle.Bold
+         };
       }
 
       this.menuSizeA = EditorGUILayout.IntSlider("Size of Menu A", this.menuSizeA, 1, 20);
@@ -61,14 +75,18 @@ public class GenericMenuTestEditor : EditorWindow
       this.shouldRebuildMenu = EditorGUILayout.Toggle("Rebuild menu each time", this.shouldRebuildMenu);
 
       var totalMenuSize = this.menuSizeA * this.menuSizeB * this.menuSizeC;
-      GUILayout.Label("The context menu will contain " + totalMenuSize.ToString() + " items");
-      
-      GUILayout.Box("Right-click here to open the context menu".ToUpper(),
-         this.clickZoneStyle, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
-      
+
+      GUILayout.Label(string.Format("The context menu will contain {0} items", totalMenuSize.ToString(CultureInfo.InvariantCulture)));
+
+      GUILayout.Box(
+         "\nRight-click here to\nopen the context menu".ToUpper(),
+         this.clickZoneStyle,
+         GUILayout.ExpandWidth(true),
+         GUILayout.ExpandHeight(true));
+
       if (Event.current.type != EventType.Layout)
       {
-         Rect rect = GUILayoutUtility.GetLastRect();
+         var rect = GUILayoutUtility.GetLastRect();
          
          if (Event.current.type == EventType.ContextClick && rect.Contains(Event.current.mousePosition))
          {
@@ -76,7 +94,7 @@ public class GenericMenuTestEditor : EditorWindow
             
             if (this.shouldRebuildMenu || this.genericMenu == null || this.genericMenu.GetItemCount() != totalMenuSize)
             {
-               BuildMenu();
+               this.BuildMenu();
             }
             
             this.genericMenu.ShowAsContext();
@@ -99,17 +117,11 @@ public class GenericMenuTestEditor : EditorWindow
                var itemC = "c" + menuC.ToString("00");
                var text = string.Format("ITEM {0}/ITEM {1}/ITEM {2}", itemA, itemB, itemC);
 
-               this.genericMenu.AddItem(new GUIContent(text), false, this.GenericMenuCallback, text);
+               this.genericMenu.AddItem(new GUIContent(text), false, GenericMenuCallback, text);
             }
          }
       }
       
-      Debug.Log("New GenericMenu contains " + this.genericMenu.GetItemCount().ToString() + " items.\n");
+      Debug.Log(string.Format("New GenericMenu contains {0} items.\n", this.genericMenu.GetItemCount().ToString(CultureInfo.InvariantCulture)));
    }
- 
-   private void GenericMenuCallback(object obj)
-   {
-      Debug.Log("CLICKED: " + obj.ToString() + "\n");
-   }
-   
 }
