@@ -241,7 +241,7 @@ public class WelcomeWindow : EditorWindow
          public Item(string icon, string label, string text, string url)
          {
             // TODO: Replace the LoadAssetAtPath call with the call from uScriptGUI
-            this.Icon = new GUIContent(AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + icon + ".png", typeof(Texture)) as Texture);
+            this.Icon = new GUIContent(AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath(icon), typeof(Texture)) as Texture);
             this.Label = new GUIContent(label);
             this.Text = new GUIContent(text);
             this.URL = url;

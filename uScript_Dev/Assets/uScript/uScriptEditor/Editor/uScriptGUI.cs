@@ -27,16 +27,14 @@ public static class uScriptGUI
 {
    // === Constants ==================================================================
 
-   public const string keyEscape = "\u238B";
-   public const string keyShift = "\u21E7";
-   public const string keyControl = "\u2303";
-   public const string keyOption = "\u2325";
-   public const string keyCommand = "\u2318";
-   public const string keyDelete = "\u2326";
-   public const string keyBackspace = "\u232B";
-   public const string keyReturn = "\u23CE";
-
-   public const string imagePath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/";
+   public const string KeyEscape = "\u238B";
+   public const string KeyShift = "\u21E7";
+   public const string KeyControl = "\u2303";
+   public const string KeyOption = "\u2325";
+   public const string KeyCommand = "\u2318";
+   public const string KeyDelete = "\u2326";
+   public const string KeyBackspace = "\u232B";
+   public const string KeyReturn = "\u23CE";
 
    // How much deep to scan. (of course you can also pass it to the method)
    private const int MaximumFolderRecursioDepth = 12;
@@ -284,7 +282,7 @@ public static class uScriptGUI
 
    public static string GetImagePath(string imageName)
    {
-      return imagePath + imageName + ".png";
+      return string.Format("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/{0}.png", imageName);
    }
 
    public static string GetSkinnedImagePath(string imageName)

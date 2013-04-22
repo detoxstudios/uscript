@@ -3051,7 +3051,7 @@ public class uScript : EditorWindow
          return;
       }
 
-      string modifier = (Application.platform == RuntimePlatform.WindowsEditor ? "Alt+" : uScriptGUI.keyOption);
+      string modifier = (Application.platform == RuntimePlatform.WindowsEditor ? "Alt+" : uScriptGUI.KeyOption);
 
       Rect r = GUILayoutUtility.GetLastRect();
       Vector2 v = uScriptGUIStyle.MenuDropDownButtonShortcut.CalcSize(new GUIContent(modifier + "W"));
@@ -3065,7 +3065,7 @@ public class uScript : EditorWindow
 
    void DrawFileMenuWindow(int windowID)
    {
-      string modifier = (Application.platform == RuntimePlatform.WindowsEditor ? "Alt+" : uScriptGUI.keyOption);
+      string modifier = (Application.platform == RuntimePlatform.WindowsEditor ? "Alt+" : uScriptGUI.KeyOption);
 
       Vector2 v1 = uScriptGUIStyle.MenuDropDownButton.CalcSize(uScriptGUIContent.buttonScriptExportPNG);
       Vector2 v2 = uScriptGUIStyle.MenuDropDownButtonShortcut.CalcSize(new GUIContent(modifier + "W"));

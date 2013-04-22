@@ -721,17 +721,14 @@ public sealed class uScriptGUIPanelScriptNew: uScriptGUIPanel
          WrongScene = new GUIContent("This uScript file was previously attached to a different Unity Scene.  "
             + "It may not be compatible with the current Unity Scene, and may not run correctly, if edited while this scene is open.");
 
-         string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/";
-
-         iconScript = AssetDatabase.LoadAssetAtPath(skinPath + "iconScriptFile01.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-         iconScriptNested = AssetDatabase.LoadAssetAtPath(skinPath + "iconScriptFile02.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         iconScript = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconScriptFile01"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         iconScriptNested = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconScriptFile02"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
 
          iconSourceDebug = null;
          iconSourceMissing = null;
          iconSourceRelease = null;
 
-         skinPath += (uScriptGUI.isProSkin ? "DarkSkin" : "LightSkin") + "_";
-         iconUnityScene = AssetDatabase.LoadAssetAtPath(skinPath + "UnityScene.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+         iconUnityScene = AssetDatabase.LoadAssetAtPath(uScriptGUI.GetSkinnedImagePath("UnityScene"), typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
       }
    }
 

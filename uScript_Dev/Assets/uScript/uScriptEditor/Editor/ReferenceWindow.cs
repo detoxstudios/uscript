@@ -381,28 +381,28 @@ public class ReferenceWindow : EditorWindow
          switch (key)
          {
             case "Escape":
-               return uScriptGUI.keyEscape + " Escape";
+               return uScriptGUI.KeyEscape + " Escape";
 
             case "Shift":
-               return uScriptGUI.keyShift + " Shift";
+               return uScriptGUI.KeyShift + " Shift";
 
             case "Ctrl":
-               return uScriptGUI.keyControl + " Control";
+               return uScriptGUI.KeyControl + " Control";
 
             case "Alt":
-               return uScriptGUI.keyOption + " Option";
+               return uScriptGUI.KeyOption + " Option";
 
             case "Command":
-               return uScriptGUI.keyCommand + " Command";
+               return uScriptGUI.KeyCommand + " Command";
 
             case "Delete":
-               return uScriptGUI.keyDelete + " Delete";
+               return uScriptGUI.KeyDelete + " Delete";
 
             case "Backspace":
-               return uScriptGUI.keyBackspace + " Delete";
+               return uScriptGUI.KeyBackspace + " Delete";
 
             case "Return":
-               return uScriptGUI.keyReturn + " Return";
+               return uScriptGUI.KeyReturn + " Return";
          }
       }
       return key;
@@ -457,7 +457,7 @@ public class ReferenceWindow : EditorWindow
       styleCommandPlus.margin = new RectOffset(0, 0, 2, 2);
       styleCommandPlus.stretchWidth = false;
 
-      contentPanelIcon = new GUIContent(UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/iconWelcomeLogo.png", typeof(UnityEngine.Texture)) as UnityEngine.Texture);
+      contentPanelIcon = new GUIContent(UnityEditor.AssetDatabase.LoadAssetAtPath(uScriptGUI.GetImagePath("iconWelcomeLogo"), typeof(UnityEngine.Texture)) as UnityEngine.Texture);
       contentPanelTitle = new GUIContent("Quick Command Reference");
       contentPanelDescription = new GUIContent("This is summary of the various commands available to you while using the uScript Editor.");
 
