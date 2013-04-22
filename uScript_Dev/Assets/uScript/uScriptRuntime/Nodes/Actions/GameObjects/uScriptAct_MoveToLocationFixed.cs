@@ -90,9 +90,7 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
    {
       if ( true == m_Complete ) return;
 
-      //assume speed was initially authored for 30fps, 
-      //(the original node never specified but we need some baseline so we can adjust it based on framerate)
-      float speed = m_Speed * (Time.deltaTime / (1.0f / 30.0f));
+      float speed = m_Speed * Time.deltaTime;
 
       bool done = true;
 
