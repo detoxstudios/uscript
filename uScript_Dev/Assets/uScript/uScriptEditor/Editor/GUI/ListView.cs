@@ -1951,7 +1951,7 @@ namespace Detox.Editor.GUI
          public CustomStyle()
          {
             // Reload all custom GUI textures to match the new skin
-            string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + (uScriptGUI.isProSkin ? "DarkSkin" : "LightSkin") + "_";
+            string skinPath = "Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/" + (uScriptGUI.IsProSkin ? "DarkSkin" : "LightSkin") + "_";
 
             rowEven = new GUIStyle();
             rowOdd = new GUIStyle();

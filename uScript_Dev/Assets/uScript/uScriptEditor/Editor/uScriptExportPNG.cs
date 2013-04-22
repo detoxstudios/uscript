@@ -116,7 +116,7 @@ public static class uScriptExportPNG
          //
          _originalCanvasLocation = _uScript.ScriptEditorCtrl.FlowChart.Location;
          _originalMapScale = _uScript.m_MapScale;
-         _originalPanelState = uScriptGUI.panelsHidden;
+         _originalPanelState = uScriptGUI.PanelsHidden;
 
 //         // Clear the debug GUI output
 //         _debugOutput = new List<string>();
@@ -141,8 +141,8 @@ public static class uScriptExportPNG
          // Hide the panels if they are currently visible
          if (_originalPanelState == false)
          {
-            uScriptGUI.panelsHidden = true;
-            _uScript.ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
+            uScriptGUI.PanelsHidden = true;
+            _uScript.ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
             _uScript.ScriptEditorCtrl.RebuildScript(null, false);
          }
 
@@ -158,8 +158,8 @@ public static class uScriptExportPNG
          //
          if (_originalPanelState == false)
          {
-            uScriptGUI.panelsHidden = false;
-            _uScript.ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
+            uScriptGUI.PanelsHidden = false;
+            _uScript.ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
             _uScript.ScriptEditorCtrl.RebuildScript(null, false);
          }
          _uScript.m_MapScale = _originalMapScale;

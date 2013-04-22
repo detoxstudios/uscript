@@ -1242,8 +1242,8 @@ public class uScript : EditorWindow
             position = minSize;
          }
 
-         uScriptGUI.panelPropertiesWidth = (int)(uScript.Instance.position.width / 3);
-         uScriptGUI.panelScriptsWidth = (int)(uScript.Instance.position.width / 3);
+         uScriptGUI.PanelPropertiesWidth = (int)(uScript.Instance.position.width / 3);
+         uScriptGUI.PanelScriptsWidth = (int)(uScript.Instance.position.width / 3);
 
          if (Preferences.ShowAtStartup)
          {
@@ -1378,7 +1378,7 @@ public class uScript : EditorWindow
 
          m_MouseUpArgs.Button = button;
          m_MouseUpArgs.X = (int)(e.mousePosition.x);
-         if (!uScriptGUI.panelsHidden) m_MouseUpArgs.X -= uScriptGUI.panelLeftWidth;
+         if (!uScriptGUI.PanelsHidden) m_MouseUpArgs.X -= uScriptGUI.PanelLeftWidth;
          m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
          m_MouseDownRegion = MouseRegion.Outside;
@@ -2010,19 +2010,19 @@ public class uScript : EditorWindow
                         //    The BackQuote key doesn't work well on the German keyboard,
                         //    so support Backslash as well.
                         //
-                        uScriptGUI.panelsHidden = !uScriptGUI.panelsHidden;
+                        uScriptGUI.PanelsHidden = !uScriptGUI.PanelsHidden;
 
                         // FIXME: When toggled while the mouse is down, the canvas often shifts around.
-                        if (uScriptGUI.panelsHidden)
+                        if (uScriptGUI.PanelsHidden)
                         {
                            // m_ScriptEditorCtrl.FlowChart.Location.X += (int)_canvasRect.x;
-                           m_ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
+                           m_ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
                            m_ScriptEditorCtrl.RebuildScript(null, false);
                         }
                         else
                         {
                            // m_ScriptEditorCtrl.FlowChart.Location.X -= (int)_canvasRect.x;
-                           m_ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.panelLeftWidth + uScriptGUI.panelDividerThickness;
+                           m_ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
                            m_ScriptEditorCtrl.RebuildScript(null, false);
                         }
                         break;
@@ -2078,7 +2078,7 @@ public class uScript : EditorWindow
 
                      m_MouseDownArgs.Button = button;
                      m_MouseDownArgs.X = (int)(e.mousePosition.x);
-                     if (!uScriptGUI.panelsHidden) m_MouseDownArgs.X -= uScriptGUI.panelLeftWidth;
+                     if (!uScriptGUI.PanelsHidden) m_MouseDownArgs.X -= uScriptGUI.PanelLeftWidth;
                      m_MouseDownArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
                      m_MouseDownOverCanvas = true;
@@ -2147,7 +2147,7 @@ public class uScript : EditorWindow
 
                m_MouseUpArgs.Button = button;
                m_MouseUpArgs.X = (int)(e.mousePosition.x);
-               if (!uScriptGUI.panelsHidden) m_MouseUpArgs.X -= uScriptGUI.panelLeftWidth;
+               if (!uScriptGUI.PanelsHidden) m_MouseUpArgs.X -= uScriptGUI.PanelLeftWidth;
                m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
                if (modifierKeys == Keys.None)
@@ -2444,7 +2444,7 @@ public class uScript : EditorWindow
       // Draw the various GUI panels
       //
       DrawGUITopAreas();
-      if (!uScriptGUI.panelsHidden)
+      if (!uScriptGUI.PanelsHidden)
       {
          DrawGUIHorizontalDivider();
 
@@ -2466,7 +2466,7 @@ public class uScript : EditorWindow
    {
       EditorGUILayout.BeginHorizontal();
       {
-         if (!uScriptGUI.panelsHidden)
+         if (!uScriptGUI.PanelsHidden)
          {
             // If the palette contents have been updated, update the linear palette control list
             //    Any foldout has been toggled
@@ -2504,11 +2504,11 @@ public class uScript : EditorWindow
 
    void DrawGUIBottomAreas()
    {
-      Rect rect = EditorGUILayout.BeginHorizontal(GUILayout.Height(uScriptGUI.panelPropertiesHeight));
-      if ( rect.height != 0.0f && rect.height != (float)uScriptGUI.panelPropertiesHeight )
+      Rect rect = EditorGUILayout.BeginHorizontal(GUILayout.Height(uScriptGUI.PanelPropertiesHeight));
+      if ( rect.height != 0.0f && rect.height != (float)uScriptGUI.PanelPropertiesHeight )
       {
          // if we didn't get the height we requested, we must have hit a limit, stop dragging and reset the height
-         uScriptGUI.panelPropertiesHeight = (int)rect.height;
+         uScriptGUI.PanelPropertiesHeight = (int)rect.height;
          m_MouseDownRegion = MouseRegion.Canvas;
          ForceReleaseMouse();
       }
@@ -2530,12 +2530,12 @@ public class uScript : EditorWindow
 
    void DrawGUIHorizontalDivider()
    {
-      GUILayout.Box("", uScriptGUIStyle.HorizontalDivider, GUILayout.Height(uScriptGUI.panelDividerThickness), GUILayout.ExpandWidth(true));
+      GUILayout.Box("", uScriptGUIStyle.HorizontalDivider, GUILayout.Height(uScriptGUI.PanelDividerThickness), GUILayout.ExpandWidth(true));
    }
 
    void DrawGUIVerticalDivider()
    {
-      GUILayout.Box("", uScriptGUIStyle.VerticalDivider, GUILayout.Width(uScriptGUI.panelDividerThickness), GUILayout.ExpandHeight(true));
+      GUILayout.Box("", uScriptGUIStyle.VerticalDivider, GUILayout.Width(uScriptGUI.PanelDividerThickness), GUILayout.ExpandHeight(true));
    }
 
 //   int counter = 0;
@@ -2594,7 +2594,7 @@ public class uScript : EditorWindow
 
    void DrawGraphContentsPanel()
    {
-      paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.panelLeftWidth));
+      paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelLeftWidth));
       {
          // Toolbar
          //
@@ -2926,9 +2926,9 @@ public class uScript : EditorWindow
       }
       EditorGUILayout.EndVertical();
 
-      if ((int)paletteRect.width != 0 && (int)paletteRect.width != uScriptGUI.panelLeftWidth)
+      if ((int)paletteRect.width != 0 && (int)paletteRect.width != uScriptGUI.PanelLeftWidth)
       {
-         uScriptGUI.panelLeftWidth = (int)paletteRect.width;
+         uScriptGUI.PanelLeftWidth = (int)paletteRect.width;
       }
    }
 
@@ -2988,7 +2988,7 @@ public class uScript : EditorWindow
 
    bool HiddenRegion(MouseRegion region)
    {
-      if (!uScriptGUI.panelsHidden) return false;
+      if (!uScriptGUI.PanelsHidden) return false;
 
       return region != uScript.MouseRegion.Canvas && region != uScript.MouseRegion.Outside;
    }
@@ -3602,26 +3602,26 @@ public class uScript : EditorWindow
       m_MouseMoveArgs.Y += (int)_canvasRect.y;
 
       // check for divider draggging
-      if (GUI.enabled && !uScriptGUI.panelsHidden && m_MouseDown)
+      if (GUI.enabled && !uScriptGUI.PanelsHidden && m_MouseDown)
       {
          if (m_MouseDownRegion == MouseRegion.HandleCanvas && deltaY != 0)
          {
-            uScriptGUI.panelPropertiesHeight -= deltaY;
+            uScriptGUI.PanelPropertiesHeight -= deltaY;
             RequestRepaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandlePalette && deltaX != 0)
          {
-            uScriptGUI.panelLeftWidth += deltaX;
+            uScriptGUI.PanelLeftWidth += deltaX;
             RequestRepaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandleProperties && deltaX != 0)
          {
-            uScriptGUI.panelPropertiesWidth += deltaX;
+            uScriptGUI.PanelPropertiesWidth += deltaX;
             RequestRepaint();
          }
          else if (m_MouseDownRegion == MouseRegion.HandleReference && deltaX != 0)
          {
-            uScriptGUI.panelScriptsWidth -= deltaX;
+            uScriptGUI.PanelScriptsWidth -= deltaX;
             RequestRepaint();
          }
       }

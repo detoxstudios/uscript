@@ -449,7 +449,7 @@ namespace Detox.ScriptEditor
                {
                   int optionIndex, optionValue;
                   uScriptGUI.DeconstructGUILayoutOption(a, out optionIndex, out optionValue);
-                  string optionDisplayName = uScriptGUI.GUILayoutOption_DisplayNames[optionIndex];
+                  string optionDisplayName = uScriptGUI.GUILayoutOptionDisplayNames[optionIndex];
 
                   if (optionDisplayName == "ExpandWidth" || optionDisplayName == "ExpandHeight")
                   {
@@ -1026,7 +1026,7 @@ namespace Detox.ScriptEditor
                      }
                   }
 
-                  int optionEnumIndex = Array.IndexOf(uScriptGUI.GUILayoutOption_EnumNames, optionEnumName);
+                  int optionEnumIndex = Array.IndexOf(uScriptGUI.GUILayoutOptionEnumNames, optionEnumName);
                   if (optionEnumIndex == -1)
                   {
                      throw new System.MissingMemberException("Unable to identify the GUILayoutOption type member");
@@ -1034,11 +1034,11 @@ namespace Detox.ScriptEditor
 
                   if (optionEnumName == "stretchWidth" || optionEnumName == "stretchHeight")
                   {
-                     Default = uScriptGUI.GUILayoutOption_DisplayNames[optionEnumIndex] + ":" + (optionValue != 0 ? "true" : "false");
+                     Default = uScriptGUI.GUILayoutOptionDisplayNames[optionEnumIndex] + ":" + (optionValue != 0 ? "true" : "false");
                   }
                   else
                   {
-                     Default = uScriptGUI.GUILayoutOption_DisplayNames[optionEnumIndex] + ":" + optionValue.ToString();
+                     Default = uScriptGUI.GUILayoutOptionDisplayNames[optionEnumIndex] + ":" + optionValue.ToString();
                   }
                }
                catch

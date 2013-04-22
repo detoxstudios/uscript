@@ -56,7 +56,7 @@ public class ReferenceWindow : EditorWindow
 //         base.position = new Rect(uScript.Instance.position.x + 50, uScript.Instance.position.y + 50, WINDOW_WIDTH, WINDOW_HEIGHT);
 
          // Make sure the skin is set at least once
-         isProSkin = !uScriptGUI.isProSkin;
+         isProSkin = !uScriptGUI.IsProSkin;
 
          if (isWindows)
          {
@@ -64,9 +64,9 @@ public class ReferenceWindow : EditorWindow
          }
       }
 
-      if (isProSkin != uScriptGUI.isProSkin)
+      if (isProSkin != uScriptGUI.IsProSkin)
       {
-         isProSkin = uScriptGUI.isProSkin;
+         isProSkin = uScriptGUI.IsProSkin;
 
          UpdateCustomStyles();
       }

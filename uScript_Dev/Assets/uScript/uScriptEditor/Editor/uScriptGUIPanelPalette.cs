@@ -149,7 +149,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 //      _debug_BottomCount = 0;
 
 
-      uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.panelLeftWidth));
+      uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(GUILayout.Width(uScriptGUI.PanelLeftWidth));
       {
          uScript.Instance.paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
          {
@@ -452,10 +452,10 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       }
       EditorGUILayout.EndVertical();
       
-      if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScriptGUI.panelLeftWidth)
+      if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScriptGUI.PanelLeftWidth)
       {
          // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
-         uScriptGUI.panelLeftWidth = (int)uScript.Instance.paletteRect.width;
+         uScriptGUI.PanelLeftWidth = (int)uScript.Instance.paletteRect.width;
       }
 
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Palette);
@@ -476,7 +476,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 
       if (favoriteNodeCount > 0)
       {
-         GUILayout.Space(uScriptGUI.panelDividerThickness);
+         GUILayout.Space(uScriptGUI.PanelDividerThickness);
 
          bool isPanelExpanded = uScript.Preferences.ExpandFavoritePanel;
 

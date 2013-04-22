@@ -140,18 +140,18 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 //      _mListData_count = 0;
 //      _bListData_count = 0;
 
-      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.panelScriptsWidth));
-      if ( rect.width != 0.0f && rect.width != (float)uScriptGUI.panelScriptsWidth )
+      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelScriptsWidth));
+      if ( rect.width != 0.0f && rect.width != (float)uScriptGUI.PanelScriptsWidth )
       {
          // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
-         uScriptGUI.panelScriptsWidth = (int)rect.width;
+         uScriptGUI.PanelScriptsWidth = (int)rect.width;
          uScript.Instance.MouseDownRegion = uScript.MouseRegion.Canvas;
          uScript.Instance.ForceReleaseMouse();
       }
       else if ( rect.x + rect.width > uScript.Instance.position.width )
       {
          // panel is growing off the edge of the window, bring it back in and stop dragging
-         uScriptGUI.panelScriptsWidth = (int)(uScript.Instance.position.width - rect.x);
+         uScriptGUI.PanelScriptsWidth = (int)(uScript.Instance.position.width - rect.x);
          uScript.Instance.MouseDownRegion = uScript.MouseRegion.Canvas;
          uScript.Instance.ForceReleaseMouse();
       }

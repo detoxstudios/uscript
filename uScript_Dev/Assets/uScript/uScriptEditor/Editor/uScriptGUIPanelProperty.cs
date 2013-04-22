@@ -71,11 +71,11 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
       _selectedNodeCount = uScript.Instance.ScriptEditorCtrl.SelectedNodes.Length;
 
-      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.panelPropertiesWidth));
-      if ( rect.width != 0.0f && rect.width != (float)uScriptGUI.panelPropertiesWidth )
+      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelPropertiesWidth));
+      if ( rect.width != 0.0f && rect.width != (float)uScriptGUI.PanelPropertiesWidth )
       {
          // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
-         uScriptGUI.panelPropertiesWidth = (int)rect.width;
+         uScriptGUI.PanelPropertiesWidth = (int)rect.width;
          uScript.Instance.MouseDownRegion = uScript.MouseRegion.Canvas;
          uScript.Instance.ForceReleaseMouse();
       }

@@ -79,17 +79,17 @@ public static class uScriptGUI
 
    // === Properties =================================================================
 
-   public static int panelDividerThickness { get; private set; }
+   public static int PanelDividerThickness { get; private set; }
 
-   public static int panelLeftWidth { get; set; }
+   public static int PanelLeftWidth { get; set; }
 
-   public static int panelPropertiesHeight { get; set; }
+   public static int PanelPropertiesHeight { get; set; }
 
-   public static int panelPropertiesWidth { get; set; }
+   public static int PanelPropertiesWidth { get; set; }
 
-   public static int panelScriptsWidth { get; set; }
+   public static int PanelScriptsWidth { get; set; }
 
-   public static bool panelsHidden { get; set; }
+   public static bool PanelsHidden { get; set; }
 
    public static int SaveMethodPopupWidth { get; private set; }
 
@@ -100,7 +100,7 @@ public static class uScriptGUI
    /// be called instead of GUI.enabled when the state needs to change during OnGUI,
    /// especially during the uScriptGUI custom control calls.
    /// </summary>
-   public static bool enabled
+   public static bool Enabled
    {
       get
       {
@@ -114,7 +114,7 @@ public static class uScriptGUI
       }
    }
 
-   public static bool isProSkin
+   public static bool IsProSkin
    {
       get
       {
@@ -127,50 +127,10 @@ public static class uScriptGUI
       }
    }
 
-   /// <summary>Deconstructs the specified GUILayoutOption object into individual variables.</summary>
-   /// <returns>True if the deconstruction succeeded, False otherwise.</returns>
-   /// <param name='option'>The GUILayoutOption object to split.</param>
-   /// <param name='optionIndex'>The GUILayoutOption enumeration index.</param>
-   /// <param name='optionValue'>The GUILayoutOption value as an integer.</param>
-   public static bool DeconstructGUILayoutOption(GUILayoutOption option, out int optionIndex, out int optionValue)
-   {
-      var optionType = string.Empty;
-      optionValue = 0;
-
-      var fields = option.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
-
-      // should have two fields "type" and "value"
-      foreach (var field in fields)
-      {
-         switch (field.Name)
-         {
-            case "type":
-               optionType = field.GetValue(option).ToString();
-               break;
-
-            case "value":
-               optionValue = Convert.ToInt32(field.GetValue(option));
-               break;
-
-            default:
-               Debug.LogError("Unknown field found in GUILayoutOption!\n");
-               break;
-         }
-      }
-
-      optionIndex = Array.IndexOf(GUILayoutOption_EnumNames, optionType);
-      if (optionIndex == -1)
-      {
-         optionIndex = 0;
-         optionValue = 0;
-         return false;
-      }
-
-      return true;
-   }
-
-   /// <summary>Returns a string array containing the enumeration name of each selectable GUILayoutOption.Type option.</summary>
-   public static string[] GUILayoutOption_EnumNames
+   /// <summary>
+   /// Gets a string array containing the enumeration name of each selectable GUILayoutOption.Type option.
+   /// </summary>
+   public static string[] GUILayoutOptionEnumNames
    {
       get
       {
@@ -178,7 +138,7 @@ public static class uScriptGUI
          {
             // Filter out all unnecessary options
             var names = new List<string>();
-            foreach (var option in Enum.GetNames(GUILayoutOption_EnumType))
+            foreach (var option in Enum.GetNames(GUILayoutOptionEnumType))
             {
                switch (option)
                {
@@ -197,19 +157,22 @@ public static class uScriptGUI
 
             guiLayoutOptionEnumOptions = names.ToArray();
          }
+
          return guiLayoutOptionEnumOptions;
       }
    }
 
-   /// <summary>Returns a string array containing the display name of each selectable GUILayoutOption.Type option.</summary>
-   public static string[] GUILayoutOption_DisplayNames
+   /// <summary>
+   /// Gets a string array containing the display name of each selectable GUILayoutOption.Type option.
+   /// </summary>
+   public static string[] GUILayoutOptionDisplayNames
    {
       get
       {
          if (guiLayoutOptionDisplayNames == null)
          {
             var names = new List<string>();
-            foreach (var option in GUILayoutOption_EnumNames)
+            foreach (var option in GUILayoutOptionEnumNames)
             {
                switch (option)
                {
@@ -258,7 +221,7 @@ public static class uScriptGUI
       }
    }
 
-   private static Type GUILayoutOption_EnumType
+   private static Type GUILayoutOptionEnumType
    {
       get
       {
@@ -287,7 +250,49 @@ public static class uScriptGUI
 
    public static string GetSkinnedImagePath(string imageName)
    {
-      return GetImagePath(string.Format("{0}_{1}", isProSkin ? "DarkSkin" : "LightSkin", imageName));
+      return GetImagePath(string.Format("{0}_{1}", IsProSkin ? "DarkSkin" : "LightSkin", imageName));
+   }
+
+   /// <summary>Deconstructs the specified GUILayoutOption object into individual variables.</summary>
+   /// <returns>True if the deconstruction succeeded, False otherwise.</returns>
+   /// <param name='option'>The GUILayoutOption object to split.</param>
+   /// <param name='optionIndex'>The GUILayoutOption enumeration index.</param>
+   /// <param name='optionValue'>The GUILayoutOption value as an integer.</param>
+   public static bool DeconstructGUILayoutOption(GUILayoutOption option, out int optionIndex, out int optionValue)
+   {
+      var optionType = string.Empty;
+      optionValue = 0;
+
+      var fields = option.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+
+      // should have two fields "type" and "value"
+      foreach (var field in fields)
+      {
+         switch (field.Name)
+         {
+            case "type":
+               optionType = field.GetValue(option).ToString();
+               break;
+
+            case "value":
+               optionValue = Convert.ToInt32(field.GetValue(option));
+               break;
+
+            default:
+               Debug.LogError("Unknown field found in GUILayoutOption!\n");
+               break;
+         }
+      }
+
+      optionIndex = Array.IndexOf(GUILayoutOptionEnumNames, optionType);
+      if (optionIndex == -1)
+      {
+         optionIndex = 0;
+         optionValue = 0;
+         return false;
+      }
+
+      return true;
    }
 
    public static void DebugBox(Rect rect)
@@ -438,7 +443,7 @@ public static class uScriptGUI
 
          assetPath = EditorGUILayout.TextField(assetPath, uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width - 4 - buttonSize.x));
 
-         enabled = !AssetBrowserWindow.isOpen;
+         Enabled = !AssetBrowserWindow.isOpen;
 
          if (GUILayout.Button("Browse", style, GUILayout.Width(buttonSize.x)))
          {
@@ -463,7 +468,7 @@ public static class uScriptGUI
             AssetBrowserWindow.assetFilePath = string.Empty;
          }
 
-         enabled = true;
+         Enabled = true;
       }
 
       EndRow(assetPath.GetType().ToString());
@@ -1109,9 +1114,9 @@ public static class uScriptGUI
 
          DeconstructGUILayoutOption(value, out optionIndex, out optionValue);
 
-         optionIndex = EditorGUILayout.Popup(optionIndex, GUILayoutOption_DisplayNames, GUILayout.Width(w));
+         optionIndex = EditorGUILayout.Popup(optionIndex, GUILayoutOptionDisplayNames, GUILayout.Width(w));
 
-         var optionName = GUILayoutOption_DisplayNames[optionIndex];
+         var optionName = GUILayoutOptionDisplayNames[optionIndex];
          if (optionName == "ExpandWidth" || optionName == "ExpandHeight")
          {
             var optionBool = optionValue != 0;
@@ -1710,7 +1715,7 @@ public static class uScriptGUI
                   }
                }
 
-               enabled = string.IsNullOrEmpty((string)t) == false;
+               Enabled = string.IsNullOrEmpty((string)t) == false;
 
                if (GUILayout.Button(uScriptGUIContent.buttonArraySearch, uScriptGUIStyle.PropertyArrayIconButton))
                {
@@ -1729,7 +1734,7 @@ public static class uScriptGUI
                   }
                }
 
-               enabled = true;
+               Enabled = true;
             }
 
             EditorGUILayout.EndHorizontal();
@@ -1758,9 +1763,9 @@ public static class uScriptGUI
 
          DeconstructGUILayoutOption((GUILayoutOption)t, out optionIndex, out optionValue);
 
-         optionIndex = EditorGUILayout.Popup(optionIndex, GUILayoutOption_DisplayNames, GUILayout.Width(w));
+         optionIndex = EditorGUILayout.Popup(optionIndex, GUILayoutOptionDisplayNames, GUILayout.Width(w));
 
-         string optionName = GUILayoutOption_DisplayNames[optionIndex];
+         string optionName = GUILayoutOptionDisplayNames[optionIndex];
          if (optionName == "ExpandWidth" || optionName == "ExpandHeight")
          {
             bool optionBool = optionValue != 0;
@@ -1955,7 +1960,7 @@ public static class uScriptGUI
 
    private static void BeginFoldoutRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly, ref bool isExpanded)
    {
-      SetupRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      SetupRow(ref isSocketExposed, isLocked, isReadOnly);
 
       if (isSocketExposed && (isLocked || isReadOnly))
       {
@@ -1966,19 +1971,21 @@ public static class uScriptGUI
          isExpanded = GUILayout.Toggle(isExpanded, label, EditorStyles.foldout, GUILayout.Width(columnLabel.Width - 3));
       }
 
-      enabled = (!isReadOnly) && (!isSocketExposed || !isLocked);
+      Enabled = (!isReadOnly) && (!isSocketExposed || !isLocked);
    }
 
    private static void BeginStaticRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
-      SetupRow(label, ref isSocketExposed, isLocked, isReadOnly);
+      SetupRow(ref isSocketExposed, isLocked, isReadOnly);
 
       EditorGUILayout.PrefixLabel(string.IsNullOrEmpty(label) ? " " : label, styleLabel);
-      enabled = (!isReadOnly) && (!isSocketExposed || !isLocked);
+      Enabled = (!isReadOnly) && (!isSocketExposed || !isLocked);
    }
 
-   private static void SetupRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   private static void SetupRow(ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
+      // TODO: isReadOnly is not used. Investigate why and remove if not needed.
+
       EditorGUILayout.BeginHorizontal(isPropertyRowEven ? uScriptGUIStyle.PropertyRowEven : uScriptGUIStyle.PropertyRowOdd);
       isPropertyRowEven = !isPropertyRowEven;
 
@@ -1988,9 +1995,9 @@ public static class uScriptGUI
       }
       else
       {
-         enabled = false == isLocked;
+         Enabled = false == isLocked;
          isSocketExposed = GUILayout.Toggle(isSocketExposed, string.Empty, styleEnabled, GUILayout.Width(columnEnabled.Width));
-         enabled = true;
+         Enabled = true;
       }
 
       // Display the column label
@@ -2003,7 +2010,7 @@ public static class uScriptGUI
       var v = styleType.CalcSize(new GUIContent(type));
       columnType.Width = Mathf.Max(columnType.Width, (int)v.x);
 
-      enabled = true;
+      Enabled = true;
       GUILayout.Label(type, styleType);
       EditorGUILayout.EndHorizontal();
 
@@ -2053,14 +2060,14 @@ public static class uScriptGUI
    /// <param name='optionValue'>The GUILayoutOption value as an integer.</param>
    private static GUILayoutOption CreateGUILayoutOption(int optionIndex, int optionValue)
    {
-      return CreateGUILayoutOption(GUILayoutOption_DisplayNames[optionIndex], optionValue);
+      return CreateGUILayoutOption(GUILayoutOptionDisplayNames[optionIndex], optionValue);
    }
 
    // === Structs ====================================================================
 
-   struct Column
+   private struct Column
    {
-      public string Label;
+      public readonly string Label;
       public int Width;
 
       public Column(string label, int width)
@@ -2147,21 +2154,21 @@ public static class uScriptGUI
       Statusbar
    }
 
-   private static Region _region = Region.Outside;
-
-   public static Region CurrentRegion
-   {
-      get { return _region; }
-      set { _region = value; }
-   }
+   public static Region CurrentRegion { get; set; }
 
 //   private static Region m_MouseDownRegion = Region.Outside;
 
-   private static Dictionary<Region, Rect> _regions = new Dictionary<Region, Rect>();
+   private static Dictionary<Region, Rect> regions = new Dictionary<Region, Rect>();
 
-   public static Dictionary<Region, Rect> Regions { get { return _regions; } }
+   public static Dictionary<Region, Rect> Regions
+   {
+      get
+      {
+         return regions;
+      }
+   }
 
-//   public static readonly int PanelDividerSize = 4;
+   //   public static readonly int PanelDividerSize = 4;
 //   public static bool PanelsHidden = false;
 //   private static GUIStyle panelStyle = GUIStyle.none;
 //   private static GUIStyle boxStyle;
@@ -2493,11 +2500,11 @@ public static class uScriptGUI
 
       // Get the panel dimensions from the saved Settings or use default values
       // TODO: Load these from the previous session if the data exists, but provide a way to reset, if necessary
-      panelDividerThickness = 4;
-      panelLeftWidth = 200;
-      panelPropertiesHeight = 250;
-      panelPropertiesWidth = 500;
-      panelScriptsWidth = 400;
+      PanelDividerThickness = 4;
+      PanelLeftWidth = 200;
+      PanelPropertiesHeight = 250;
+      PanelPropertiesWidth = 500;
+      PanelScriptsWidth = 400;
 
 //      Rect rectArea = new Rect(0, 0, uScript.Instance.position.width, uScript.Instance.position.height /* - statusbarHeight */);
 

@@ -130,14 +130,14 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 //
 //            GUILayout.Label(("HELLO: " + "bold".Bold().Color(UnityEngine.Color.cyan) + ", " + "italic".Italic() + ", " + "bold and italic".BoldItalic() + ", <color=black>black</color>, <color=white>white</color>, <color=green>red</color>, " + "red".Red() + ", " + "green".Green() + ", <color=blue>blue</color>, " + "blue".Blue() + ", <color=#F70>uScript</color> XXX").Black(), style);
 
-            uScriptGUI.enabled = (string.IsNullOrEmpty(currentNodeClassName) == false);
+            uScriptGUI.Enabled = (string.IsNullOrEmpty(currentNodeClassName) == false);
 
             if (GUILayout.Button(uScriptGUIContent.buttonNodeSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                uScriptGUI.PingObject(uScript.GetClassPath(currentNodeClassName), typeof(TextAsset));
             }
 
-            uScriptGUI.enabled = (string.IsNullOrEmpty(helpButtonURL) == false);
+            uScriptGUI.Enabled = (string.IsNullOrEmpty(helpButtonURL) == false);
 
             uScriptGUIContent.ChangeTooltip(helpButtonTooltip);
             if (GUILayout.Button(uScriptGUIContent.buttonWebDocumentation, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
@@ -145,7 +145,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                Help.BrowseURL(helpButtonURL);
             }
 
-            uScriptGUI.enabled = (_hotSelection == null);
+            uScriptGUI.Enabled = (_hotSelection == null);
 
             if (GUILayout.Button(uScriptGUIContent.buttonWebForum, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
@@ -157,7 +157,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
                ReferenceWindow.Init();
             }
 
-            uScriptGUI.enabled = true;
+            uScriptGUI.Enabled = true;
          }
          EditorGUILayout.EndHorizontal();
 
