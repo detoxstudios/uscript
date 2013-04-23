@@ -1,3 +1,12 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Detox Studios, LLC" file="uScript.cs">
+//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   The primary uScript ediotr logic.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 #define DEVELOPMENT_BUILD // Allows us to wrap features in progress. Used along with other BUILD settings.
 
 #define UNITY_STORE_BUILD //Don't forget LicenseWindow.cs
@@ -5,26 +14,22 @@
 //#define FREE_PLE_BUILD // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
 //#define FREE_BETA_BUILD
 
-using UnityEngine;
-using UnityEditor;
-using Detox.ScriptEditor;
-using Detox.Data.Tools;
-using Detox.Windows.Forms;
 using System;
-using System.Linq;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+
+using Detox.Data.Tools;
 using Detox.Drawing;
 using Detox.FlowChart;
+using Detox.ScriptEditor;
+using Detox.Windows.Forms;
 
-using System.IO;
-using System.Collections.ObjectModel;
+using UnityEditor;
 
-public class ComplexData
-{
-}
-
+using UnityEngine;
 
 public class uScript : EditorWindow
 {
@@ -1118,43 +1123,42 @@ public class uScript : EditorWindow
       }
    }
 
-   //
    // Canvas Context Menu
-   //
-   GenericMenu _canvasContextMenu = new GenericMenu();
+   private GenericMenu _canvasContextMenu;
 
-   private void BuildCanvasContextMenu(ToolStripItem contextMenuItem, string path)
+   private void BuildCanvasContextMenu(ToolStripItem toolStripItem, string path)
    {
       GUIContent content;
 
-      if (contextMenuItem == null || string.IsNullOrEmpty(path))
+      if (toolStripItem == null || string.IsNullOrEmpty(path))
       {
-         //
          // Create a new context menu, destroying the old one
-         //
-         _canvasContextMenu = new GenericMenu();
+         this._canvasContextMenu = new GenericMenu();
 
-         foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
+         foreach (var item in this.m_ScriptEditorCtrl.ContextMenu.Items.Items)
          {
-            if (item is ToolStripMenuItem)
+            var toolStripMenuItem = item as ToolStripMenuItem;
+            if (toolStripMenuItem != null)
             {
-               ToolStripMenuItem menuItem = item as ToolStripMenuItem;
-
-               if (menuItem.DropDownItems.Items.Count > 0)
+               if (toolStripMenuItem.DropDownItems.Items.Count > 0)
                {
                   // This is the parent of a submenu
-                  foreach (ToolStripItem subitem in menuItem.DropDownItems.Items)
+                  var itemPath = string.Format("{0}/", toolStripMenuItem.Text.Replace("...", string.Empty));
+
+                  foreach (var itemChild in toolStripMenuItem.DropDownItems.Items)
                   {
-                     BuildCanvasContextMenu(subitem, item.Text.Replace("...", string.Empty) + "/");
+                     this.BuildCanvasContextMenu(itemChild, itemPath);
                   }
                }
                else
                {
                   // This is a menu item
-                  content = new GUIContent(item.Text.Replace("&", string.Empty),
-                                           FindNodeToolTip(ScriptEditor.FindNodeType(item.Tag as EntityNode)));
+                  content = new GUIContent(toolStripMenuItem.Text.Replace("&", string.Empty));
+                  //content = new GUIContent(
+                  //   toolStripMenuItem.Text.Replace("&", string.Empty),
+                  //   FindNodeToolTip(ScriptEditor.FindNodeType(toolStripMenuItem.Tag as EntityNode)));
 
-                  _canvasContextMenu.AddItem(content, false, ContextMenuCallback, item);
+                  this._canvasContextMenu.AddItem(content, false, ContextMenuCallback, toolStripMenuItem);
                }
             }
             else
@@ -1162,54 +1166,53 @@ public class uScript : EditorWindow
                if (item.Text == "<hr>")
                {
                   // This is a separator
-                  _canvasContextMenu.AddSeparator("");
+                  this._canvasContextMenu.AddSeparator(string.Empty);
                }
             }
-
-//            // We can support disabled items, but the ScriptEditorCtrl doesn't at the moment
-//            _canvasContextMenu.AddDisabledItem(new GUIContent("DisabledItem"));
          }
       }
-      else if (!(contextMenuItem is ToolStripSeparator))
+      else if (!(toolStripItem is ToolStripSeparator))
       {
-         if ((contextMenuItem is ToolStripMenuItem) && ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items.Count > 0)
+         var toolStripMenuItem = toolStripItem as ToolStripMenuItem;
+         if (toolStripMenuItem != null && toolStripMenuItem.DropDownItems.Items.Count > 0)
          {
             // There are sub items
-            string parent = contextMenuItem.Text.Replace("...", string.Empty);
+            var itemPath = path + toolStripMenuItem.Text.Replace("...", string.Empty) + "/";
 
-            foreach (ToolStripItem item in ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items)
+            foreach (var itemChild in toolStripMenuItem.DropDownItems.Items)
             {
-               BuildCanvasContextMenu(item, path + parent + "/");
+               this.BuildCanvasContextMenu(itemChild, itemPath);
             }
          }
          else
          {
-            content = new GUIContent(path + contextMenuItem.Text.Replace("&", string.Empty),
-                                     FindNodeToolTip(ScriptEditor.FindNodeType(contextMenuItem.Tag as EntityNode)));
+            //content = new GUIContent(
+            //   path + toolStripItem.Text.Replace("&", string.Empty),
+            //   FindNodeToolTip(ScriptEditor.FindNodeType(toolStripItem.Tag as EntityNode)));
+            content = new GUIContent(path + toolStripItem.Text.Replace("&", string.Empty));
 
-            _canvasContextMenu.AddItem(content, false, ContextMenuCallback, contextMenuItem);
+            this._canvasContextMenu.AddItem(content, false, ContextMenuCallback, toolStripItem);
          }
       }
       else
       {
-         uScriptDebug.Log("The contextMenuItem (" + contextMenuItem.Text + ") is a " + contextMenuItem.GetType() + " and is unhandled!\n", uScriptDebug.Type.Warning);
+         uScriptDebug.Log(string.Format("The toolStripItem ({0}) is a {1} and is unhandled!\n", toolStripItem.Text, toolStripItem.GetType()), uScriptDebug.Type.Warning);
       }
    }
 
-
-   private void ContextMenuCallback(object obj)
+   private static void ContextMenuCallback(object obj)
    {
-      ToolStripItem item = obj as ToolStripItem;
+      var toolStripItem = obj as ToolStripItem;
 
-      if (item == null)
+      if (toolStripItem == null)
       {
          Debug.LogError("The context menu callback received an invalid data\n");
       }
       else
       {
-         if (item.Click != null)
+         if (toolStripItem.Click != null)
          {
-            item.Click(item, new EventArgs());
+            toolStripItem.Click(toolStripItem, new EventArgs());
          }
          else
          {
@@ -1584,33 +1587,31 @@ public class uScript : EditorWindow
          // command events
 
          case EventType.ContextClick:
-            //
             // Display the canvas context menu only when the
             // mouse is over the canvas when the event occurs
-            //
-            if (_canvasRect.Contains(e.mousePosition))
+            if (this._canvasRect.Contains(e.mousePosition))
             {
                // Use the new context menu in Unity 3.4 and higher
-
-               if ( UnityVersion < 3.4f )
+               if (UnityVersion < 3.4f)
                {
-                  m_ScriptEditorCtrl.BuildContextMenu();
+                  this.m_ScriptEditorCtrl.BuildContextMenu();
+
                   uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
 
-                  m_ContextX = (int)e.mousePosition.x;
-                  m_ContextY = (int)(e.mousePosition.y - _canvasRect.yMin);
+                  this.m_ContextX = (int)e.mousePosition.x;
+                  this.m_ContextY = (int)(e.mousePosition.y - this._canvasRect.yMin);
 
-//                  //refresh screen so context menu shows up
-//                  RequestRepaint();
+                  //// refresh screen so context menu shows up
+                  //RequestRepaint();
                }
                else
                {
-                  Profile overall = new Profile ("BuildContextMenu");
+                  Profile overall = new Profile("BuildContextMenu");
 
-                  m_ScriptEditorCtrl.BuildContextMenu();
-                  BuildCanvasContextMenu(null, null);
+                  this.m_ScriptEditorCtrl.BuildContextMenu();
+                  this.BuildCanvasContextMenu(null, null);
 
-                  _canvasContextMenu.ShowAsContext();
+                  this._canvasContextMenu.ShowAsContext();
 
                   overall.End();
 
@@ -1624,6 +1625,7 @@ public class uScript : EditorWindow
 //                  }
                }
             }
+
             break;
 
          case EventType.ValidateCommand:
@@ -5775,4 +5777,8 @@ public class uScript : EditorWindow
       return ScriptEditor.FindNodeType(node);
    }
 
+}
+
+public class ComplexData
+{
 }
