@@ -21,8 +21,6 @@ using UnityEditor;
 
 using UnityEngine;
 
-using Object = UnityEngine.Object;
-
 public static class uScriptGUI
 {
    // === Constants ==================================================================
@@ -257,10 +255,9 @@ public static class uScriptGUI
 
    public static Texture2D GetTexture(string textureName)
    {
-      return
-         AssetDatabase.LoadAssetAtPath(
-            string.Format("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/{0}.png", textureName),
-            typeof(Texture2D)) as Texture2D;
+      return AssetDatabase.LoadAssetAtPath(
+         string.Format("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/{0}.png", textureName),
+         typeof(Texture2D)) as Texture2D;
    }
 
    public static Texture2D GetSkinnedTexture(string textureName)
@@ -1461,7 +1458,7 @@ public static class uScriptGUI
       return value;
    }
 
-   public static string ObjectField(string label, Object value, Type type, string textValue, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+   public static string ObjectField(string label, UnityEngine.Object value, Type type, string textValue, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
    {
       EditorGUILayout.BeginVertical();
       {
