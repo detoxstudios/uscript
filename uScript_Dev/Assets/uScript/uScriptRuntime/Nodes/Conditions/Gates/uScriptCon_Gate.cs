@@ -130,9 +130,16 @@ public class uScriptCon_Gate : uScriptLogic
       )
    {
       m_GateOpen = !m_GateOpen;
-      IsOpen = m_GateOpen;
-	  m_UseStartOpen = false;
-
+		
+		// Turn off the StartOpen if it was on and force the GateOpen state.
+	  if (m_UseStartOpen)
+	  {
+		  m_UseStartOpen = false;
+		  m_GateOpen = false;
+	  }
+		
+	  IsOpen = m_GateOpen;
+	  
       // Decided if AutoCloseCount should be used by the gate if the toggle opened the gate.
       if (m_GateOpen)
       {
