@@ -82,18 +82,7 @@ public class uScriptAct_SetGameObjectRotation : uScriptLogic
          }
          else
          {
-            //unity applies eulers as x then y then z
-            //so i'm attempting to do the same through quaternions based on the object's local angle axis
-            Quaternion qx = Quaternion.AngleAxis( euler.x, currentTarget.transform.right );
-            Quaternion qy = Quaternion.AngleAxis( euler.y, currentTarget.transform.up );
-            Quaternion qz = Quaternion.AngleAxis( euler.z, currentTarget.transform.forward );
-         
-            //quaternion multiplication is reversed A rotation followed by B rotation is B*A
-            //so I was x followed by y followed by z
-            //q = y * x  (x followed by y)
-            //q = z * q  (xy followed by z)
-            eq = qy * qx;
-            eq = qz * eq;
+            eq = currentTarget.transform.rotation * Quaternion.Euler( euler );
          }
 
          if (true == AsOffset) 
