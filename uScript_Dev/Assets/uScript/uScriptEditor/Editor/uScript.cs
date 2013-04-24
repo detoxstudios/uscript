@@ -1579,13 +1579,9 @@ public class uScript : EditorWindow
 
       Control.ModifierKeys.Pressed = modifierKeys;
 
-      //
       // handle normal canvas controls
-      //
       switch (e.type)
       {
-         // command events
-
          case EventType.ContextClick:
             // Display the canvas context menu only when the
             // mouse is over the canvas when the event occurs
@@ -1600,9 +1596,6 @@ public class uScript : EditorWindow
 
                   this.m_ContextX = (int)e.mousePosition.x;
                   this.m_ContextY = (int)(e.mousePosition.y - this._canvasRect.yMin);
-
-                  //// refresh screen so context menu shows up
-                  //RequestRepaint();
                }
                else
                {
@@ -1615,15 +1608,15 @@ public class uScript : EditorWindow
 
                   overall.End();
 
-//                  e.Use();
-//
-//                  // stupid hack to prevent the "canvasDragging" behavior
-//                  if (m_MouseDown)
-//                  {
-//                     m_MouseDownRegion = MouseRegion.Reference;
-//                     m_MouseDown = false;
-//                  }
+                  //// stupid hack to prevent the "canvasDragging" behavior
+                  //if (m_MouseDown)
+                  //{
+                  //   m_MouseDownRegion = MouseRegion.Reference;
+                  //   m_MouseDown = false;
+                  //}
                }
+
+               e.Use();
             }
 
             break;
@@ -2420,46 +2413,42 @@ public class uScript : EditorWindow
       }
    }
 
-
-   void DrawMainGUI()
+   private void DrawMainGUI()
    {
-      uScriptGUIContent.Init();
-      uScriptGUIStyle.Init();
       uScriptGUI.InitPanels();
 
       // Notify the user when the editor is in play mode, since any changes
       // made to the uScript will be lost when exiting the mode.
-      //
       if (Application.isPlaying)
       {
-         ShowNotification(uScriptGUIContent.messagePlaying);
+         this.ShowNotification(uScriptGUIContent.messagePlaying);
       }
       else if (EditorApplication.isCompiling)
       {
-         ShowNotification(uScriptGUIContent.messageCompiling);
+         this.ShowNotification(uScriptGUIContent.messageCompiling);
       }
       else
       {
-         RemoveNotification();
+         this.RemoveNotification();
       }
 
       // Draw the various GUI panels
-      //
-      DrawGUITopAreas();
+      this.DrawGUITopAreas();
       if (!uScriptGUI.PanelsHidden)
       {
-         DrawGUIHorizontalDivider();
+         this.DrawGUIHorizontalDivider();
 
-         SetMouseRegion(MouseRegion.HandleCanvas);//, 1, -3, -1, 6 );
+         this.SetMouseRegion(MouseRegion.HandleCanvas); //, 1, -3, -1, 6 );
 
-         DrawGUIBottomAreas();
+         this.DrawGUIBottomAreas();
       }
-      OnGUI_DrawStatusbar();
+
+      this.OnGUI_DrawStatusbar();
 
       // TODO: This bool flag could be removed if the GUI is repainted after the canvas stops panning
-      if (_wasMoving)
+      if (this._wasMoving)
       {
-         _wasMoving = false;
+         this._wasMoving = false;
          RequestRepaint();
       }
    }
