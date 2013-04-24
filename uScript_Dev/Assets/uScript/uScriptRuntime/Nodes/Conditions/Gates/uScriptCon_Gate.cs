@@ -36,6 +36,7 @@ public class uScriptCon_Gate : uScriptLogic
    // Parameter Attributes are applied below in Toggle()
    public void In(bool StartOpen, int AutoCloseCount, out bool IsOpen)
    {
+		
       // Initially open the Gate if OpenGate is true.
       if (StartOpen && m_UseStartOpen)
       {
@@ -109,6 +110,7 @@ public class uScriptCon_Gate : uScriptLogic
    public void Close(bool StartOpen, int AutoCloseCount, out bool IsOpen)
    {
       m_GateOpen = false;
+	  m_UseStartOpen = false;
       IsOpen = m_GateOpen;
    }
 
@@ -129,6 +131,7 @@ public class uScriptCon_Gate : uScriptLogic
    {
       m_GateOpen = !m_GateOpen;
       IsOpen = m_GateOpen;
+	  m_UseStartOpen = false;
 
       // Decided if AutoCloseCount should be used by the gate if the toggle opened the gate.
       if (m_GateOpen)
