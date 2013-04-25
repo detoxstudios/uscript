@@ -34,7 +34,7 @@ public class uScriptAct_SetRandomVector2 : uScriptLogic
       float MaxY,
       
       [FriendlyName("Target Vector2", "The Vector2 variable that gets set.")]
-      out Vector3 TargetVector2
+      out Vector2 TargetVector2
       )
    {
       // Make sure we don't have min > max (or other way around)
