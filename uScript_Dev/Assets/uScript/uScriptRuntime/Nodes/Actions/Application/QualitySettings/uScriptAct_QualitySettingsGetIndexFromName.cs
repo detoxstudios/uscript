@@ -25,13 +25,10 @@ public class uScriptAct_QualitySettingsGetIndexFromName : uScriptLogic
       {
          int currentIndex = 0;
          bool matchFound = false;
-         Debug.Log("Input Name: " + qualityName);
          foreach (string currentName in QualitySettings.names)
          {
-            Debug.Log("Current Name: " + currentName);
             if (currentName == qualityName)
             {
-               Debug.Log("Found!");
                matchFound = true;
                break;
             }
