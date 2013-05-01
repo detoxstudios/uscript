@@ -12,6 +12,7 @@ using System.Collections;
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Interpolate_Int_Linear")]
 
 [FriendlyName("Interpolate Int Linear", "Linearly interpolate an int over time.")]
+[NodeDeprecated(typeof(uScriptAct_InterpolateIntLinearSmooth))]
 public class uScriptAct_InterpolateIntLinear : uScriptLogic
 {
    private int m_Start;
@@ -39,7 +40,7 @@ public class uScriptAct_InterpolateIntLinear : uScriptLogic
    // Parameter Attributes are applied below in Resume()
    public void Begin(int startValue, int endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, int loopCount, out int currentValue)
    {
-      m_Lerper.Set( time, loopType, loopDelay, loopCount );
+      m_Lerper.Set( time, loopType, loopDelay, false, loopCount );
 
       m_Start      = startValue;
       m_LastValue  = startValue;

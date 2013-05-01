@@ -11,9 +11,8 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Interpolate_Vector3_Linear")]
 
-[FriendlyName("Interpolate Vector3 Linear", "Linearly interpolate a Vector3 over time.")]
-[NodeDeprecated(typeof(uScriptAct_InterpolateVector3LinearSmooth))]
-public class uScriptAct_InterpolateVector3Linear : uScriptLogic
+[FriendlyName("Interpolate Vector3 Linear (Smooth)", "Linearly interpolate a Vector3 over time.")]
+public class uScriptAct_InterpolateVector3LinearSmooth : uScriptLogic
 { 
    private Vector3 m_Start;
    private Vector3 m_End;
@@ -38,9 +37,9 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
    // ================================================================================
    //
    // Parameter Attributes are applied below in Resume()
-   public void Begin(Vector3 startValue, Vector3 endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, int loopCount, out Vector3 currentValue)
+   public void Begin(Vector3 startValue, Vector3 endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, bool smooth, int loopCount, out Vector3 currentValue)
    {
-      m_Lerper.Set( time, loopType, loopDelay, false, loopCount );
+      m_Lerper.Set( time, loopType, loopDelay, smooth, loopCount );
 
       m_Start      = startValue;
       m_LastValue  = startValue;
@@ -52,7 +51,7 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
    }
 
    // Parameter Attributes are applied below in Resume()
-   public void Stop(Vector3 startValue, Vector3 endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, int loopCount, out Vector3 currentValue)
+   public void Stop(Vector3 startValue, Vector3 endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, bool smooth, int loopCount, out Vector3 currentValue)
    {
       m_Lerper.Stop( );
 
@@ -80,6 +79,10 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
       [FriendlyName("Loop Delay", "Time delay (in seconds) between loops.")]
       [SocketState(false, false)]
       float loopDelay,
+
+      [FriendlyName("Smooth", "Ease in and out of interpolation.")]
+      [SocketState(false, false)]
+      bool smooth,
 
       [FriendlyName("Loop Count", "Number of times to loop. For infinite looping, use -1 or connect the out socket of this node to its own in and use any positive value.")]
       [DefaultValue(-1), SocketState(false, false)]

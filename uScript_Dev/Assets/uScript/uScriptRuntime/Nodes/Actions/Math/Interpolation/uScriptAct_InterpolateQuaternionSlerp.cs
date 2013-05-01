@@ -12,6 +12,7 @@ using System.Collections;
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Interpolate_Quaternion_Slerp")]
 
 [FriendlyName("Interpolate Quaternion Slerp", "Spherical Linear Interpolation of a Quaternion over time.")]
+[NodeDeprecated(typeof(uScriptAct_InterpolateQuaternionSlerpSmooth))]
 public class uScriptAct_InterpolateQuaternionSlerp : uScriptLogic
 { 
    private Quaternion m_Start;
@@ -39,7 +40,7 @@ public class uScriptAct_InterpolateQuaternionSlerp : uScriptLogic
    // Parameter Attributes are applied below in Resume()
    public void Begin(Quaternion startValue, Quaternion endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, int loopCount, out Quaternion currentValue)
    {
-      m_Lerper.Set( time, loopType, loopDelay, loopCount );
+      m_Lerper.Set( time, loopType, loopDelay, false, loopCount );
 
       m_Start      = startValue;
       m_LastValue  = startValue;

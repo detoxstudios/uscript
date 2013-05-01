@@ -12,6 +12,7 @@ using System.Collections;
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Interpolate_Color_Linear")]
 
 [FriendlyName("Interpolate Color Linear", "Linearly interpolate a color over time.")]
+[NodeDeprecated(typeof(uScriptAct_InterpolateColorLinearSmooth))]
 public class uScriptAct_InterpolateColorLinear : uScriptLogic
 { 
    private Color m_Start;
@@ -39,7 +40,7 @@ public class uScriptAct_InterpolateColorLinear : uScriptLogic
    // Parameter Attributes are applied below in Resume()
    public void Begin(Color startValue, Color endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, int loopCount, out Color currentValue)
    {
-      m_Lerper.Set( time, loopType, loopDelay, loopCount );
+      m_Lerper.Set( time, loopType, loopDelay, false, loopCount );
 
       m_Start      = startValue;
       m_LastValue  = startValue;

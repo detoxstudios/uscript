@@ -12,6 +12,7 @@ using System.Collections;
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Interpolate_Vector4_Linear")]
 
 [FriendlyName("Interpolate Vector4 Linear", "Linearly interpolate a Vector4 over time.")]
+[NodeDeprecated(typeof(uScriptAct_InterpolateVector4LinearSmooth))]
 public class uScriptAct_InterpolateVector4Linear : uScriptLogic
 { 
    private Vector4 m_Start;
@@ -39,7 +40,7 @@ public class uScriptAct_InterpolateVector4Linear : uScriptLogic
    // Parameter Attributes are applied below in Resume()
    public void Begin(Vector4 startValue, Vector4 endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, int loopCount, out Vector4 currentValue)
    {
-      m_Lerper.Set( time, loopType, loopDelay, loopCount );
+      m_Lerper.Set( time, loopType, loopDelay, false, loopCount );
 
       m_Start      = startValue;
       m_LastValue  = startValue;

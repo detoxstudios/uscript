@@ -7,17 +7,16 @@ using System.Collections;
 [NodePath("Actions/Math/Interpolation")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Linearly interpolate a Vector3 over time.")]
+[NodeToolTip("Linearly interpolate a color over time.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Interpolate_Vector3_Linear")]
+[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Interpolate_Color_Linear")]
 
-[FriendlyName("Interpolate Vector3 Linear", "Linearly interpolate a Vector3 over time.")]
-[NodeDeprecated(typeof(uScriptAct_InterpolateVector3LinearSmooth))]
-public class uScriptAct_InterpolateVector3Linear : uScriptLogic
+[FriendlyName("Interpolate Color Linear (Smooth)", "Linearly interpolate a color over time.")]
+public class uScriptAct_InterpolateColorLinearSmooth : uScriptLogic
 { 
-   private Vector3 m_Start;
-   private Vector3 m_End;
-   private Vector3 m_LastValue;
+   private Color m_Start;
+   private Color m_End;
+   private Color m_LastValue;
    private bool m_Began = false;
 
    private uScript_Lerper m_Lerper = new uScript_Lerper( );
@@ -31,16 +30,16 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
    public bool Stopped       { get { return m_Lerper.AllowStoppedOutput; } }
    public bool Interpolating { get { return m_Lerper.AllowInterpolatingOutput; } }
    public bool Finished      { get { return m_Lerper.AllowFinishedOutput; } }
-   
+
 
    // ================================================================================
    //    Input Sockets and Node Parameters
    // ================================================================================
    //
    // Parameter Attributes are applied below in Resume()
-   public void Begin(Vector3 startValue, Vector3 endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, int loopCount, out Vector3 currentValue)
+   public void Begin(Color startValue, Color endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, bool smooth, int loopCount, out Color currentValue)
    {
-      m_Lerper.Set( time, loopType, loopDelay, false, loopCount );
+      m_Lerper.Set( time, loopType, loopDelay, smooth, loopCount );
 
       m_Start      = startValue;
       m_LastValue  = startValue;
@@ -52,7 +51,7 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
    }
 
    // Parameter Attributes are applied below in Resume()
-   public void Stop(Vector3 startValue, Vector3 endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, int loopCount, out Vector3 currentValue)
+   public void Stop(Color startValue, Color endValue, float time, uScript_Lerper.LoopType loopType, float loopDelay, bool smooth, int loopCount, out Color currentValue)
    {
       m_Lerper.Stop( );
 
@@ -65,10 +64,10 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
 
    public void Resume(
       [FriendlyName("Start Value", "Starting value to interpolate from.")]
-      Vector3 startValue,
+      Color startValue,
 
       [FriendlyName("End Value", "Ending value to interpolate to.")]
-      Vector3 endValue,
+      Color endValue,
 
       [FriendlyName("Time", "Time to take to complete the interpolation (in seconds).")]
       float time,
@@ -81,12 +80,16 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
       [SocketState(false, false)]
       float loopDelay,
 
+      [FriendlyName("Smooth", "Ease in and out of interpolation.")]
+      [SocketState(false, false)]
+      bool smooth,
+
       [FriendlyName("Loop Count", "Number of times to loop. For infinite looping, use -1 or connect the out socket of this node to its own in and use any positive value.")]
       [DefaultValue(-1), SocketState(false, false)]
       int loopCount,
 
       [FriendlyName("Output Value", "Current interpolated value.")]
-      out Vector3 currentValue
+      out Color currentValue
       )
    {
       m_Lerper.Resume( );
@@ -104,7 +107,7 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
    // ================================================================================
    //
    [Driven]
-   public bool Driven(out Vector3 currentValue)
+   public bool Driven(out Color currentValue)
    {
       float t;
 
@@ -112,7 +115,7 @@ public class uScriptAct_InterpolateVector3Linear : uScriptLogic
 
       if ( isRunning )
       {
-         m_LastValue = Vector3.Lerp( m_Start, m_End, t );
+         m_LastValue = Color.Lerp( m_Start, m_End, t );
       }
 
       currentValue = m_LastValue;

@@ -22,6 +22,7 @@ public class uScript_Lerper
    private float m_LoopRestartCountdown;
    private bool  m_IsReversed;
    private bool  m_Running;
+   private bool  m_Smooth;
 
    private LoopType m_LoopType;   
 
@@ -30,13 +31,14 @@ public class uScript_Lerper
    public bool  AllowInterpolatingOutput;
    public bool  AllowFinishedOutput;
    
-   public void Set( float time, LoopType loopType, float loopDelay, int loopCount )
+   public void Set( float time, LoopType loopType, float loopDelay, bool smooth, int loopCount )
    {
       m_CurrentTime   = 0;
       m_TotalTime     = time;
       m_LoopIteration = 0;
       m_LoopDelay     = loopDelay;
       m_LoopRestartCountdown = 0;
+      m_Smooth = smooth;
       m_Running = true;
 
       AllowInterpolatingOutput = false;
@@ -95,7 +97,9 @@ public class uScript_Lerper
       currentTime = 1.0f;
       if (m_TotalTime != 0.0f)
       {
-         currentTime = m_CurrentTime / m_TotalTime;         
+         currentTime = m_CurrentTime / m_TotalTime;
+         if ( true == m_Smooth )
+             currentTime = Mathf.SmoothStep(0, 1, currentTime);
       }
 
       //either we're still running or the loop restart countdown hit 0
