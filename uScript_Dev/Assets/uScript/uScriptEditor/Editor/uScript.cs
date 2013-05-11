@@ -3642,13 +3642,29 @@ public class uScript : EditorWindow
       {
          int result;
 
-         if (true == allowCancel)
+         string titleName = "";
+         string graphName = "";
+         string msgContent = "";
+         if (m_ScriptEditorCtrl.ScriptEditor.Name.IsNotNullOrEmpty())
          {
-            result = EditorUtility.DisplayDialogComplex("Save File?", m_ScriptEditorCtrl.ScriptEditor.Name + " has been modified, would you like to save?", "Yes", "No", "Cancel");
+            titleName = "Save File?";
+            graphName = m_ScriptEditorCtrl.ScriptEditor.Name;
+            msgContent = " has been modified, would you like to save?";
          }
          else
          {
-            bool yes = EditorUtility.DisplayDialog("Save File?", m_ScriptEditorCtrl.ScriptEditor.Name + " has been modified, would you like to save?", "Yes", "No");
+            titleName = "Save New File?";
+            graphName = "A new graph";
+            msgContent = " has been modified, would you like to save?";
+         }
+
+         if (true == allowCancel)
+         {
+            result = EditorUtility.DisplayDialogComplex(titleName, graphName + msgContent, "Yes", "No", "Cancel");
+         }
+         else
+         {
+            bool yes = EditorUtility.DisplayDialog(titleName, graphName + msgContent, "Yes", "No");
 
             if (true == yes) result = 0;
             else result = 1;
