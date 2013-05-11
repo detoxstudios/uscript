@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -101,6 +101,7 @@ public class GameWheel_Metagame : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_14 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_14 = (float) 0;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_14 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_14 = true;
    bool logic_uScriptAct_Delay_AfterDelay_14 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_14 = false;
@@ -1102,8 +1103,10 @@ public class GameWheel_Metagame : uScriptLogic
                logic_uScriptAct_Delay_Duration_14 = local_64_System_Single;
                
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_14.In(logic_uScriptAct_Delay_Duration_14);
+         logic_uScriptAct_Delay_uScriptAct_Delay_14.In(logic_uScriptAct_Delay_Duration_14, logic_uScriptAct_Delay_SingleFrame_14);
          logic_uScriptAct_Delay_DrivenDelay_14 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -1128,6 +1131,8 @@ public class GameWheel_Metagame : uScriptLogic
             {
                logic_uScriptAct_Delay_Duration_14 = local_64_System_Single;
                
+            }
+            {
             }
          }
          logic_uScriptAct_Delay_DrivenDelay_14 = logic_uScriptAct_Delay_uScriptAct_Delay_14.DrivenDelay();
@@ -1656,12 +1661,12 @@ public class GameWheel_Metagame : uScriptLogic
          {
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_35_System_Int32);
+               properties.Add((System.Int32)local_35_System_Int32);
                logic_uScriptAct_AddInt_A_33 = properties.ToArray();
             }
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_Score_System_Int32);
+               properties.Add((System.Int32)local_Score_System_Int32);
                logic_uScriptAct_AddInt_B_33 = properties.ToArray();
             }
             {
@@ -1725,12 +1730,12 @@ public class GameWheel_Metagame : uScriptLogic
          {
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_36_System_Int32);
+               properties.Add((System.Int32)local_36_System_Int32);
                logic_uScriptAct_AddInt_A_39 = properties.ToArray();
             }
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_Score_System_Int32);
+               properties.Add((System.Int32)local_Score_System_Int32);
                logic_uScriptAct_AddInt_B_39 = properties.ToArray();
             }
             {
@@ -1758,12 +1763,12 @@ public class GameWheel_Metagame : uScriptLogic
          {
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_45_System_Int32);
+               properties.Add((System.Int32)local_45_System_Int32);
                logic_uScriptAct_AddInt_A_42 = properties.ToArray();
             }
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_Score_System_Int32);
+               properties.Add((System.Int32)local_Score_System_Int32);
                logic_uScriptAct_AddInt_B_42 = properties.ToArray();
             }
             {
@@ -1827,12 +1832,12 @@ public class GameWheel_Metagame : uScriptLogic
          {
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_49_System_Int32);
+               properties.Add((System.Int32)local_49_System_Int32);
                logic_uScriptAct_AddInt_A_48 = properties.ToArray();
             }
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_Score_System_Int32);
+               properties.Add((System.Int32)local_Score_System_Int32);
                logic_uScriptAct_AddInt_B_48 = properties.ToArray();
             }
             {
@@ -1898,7 +1903,7 @@ public class GameWheel_Metagame : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_GOName_System_String);
+               properties.Add((System.Object)local_GOName_System_String);
                logic_uScriptAct_Log_Target_54 = properties.ToArray();
             }
             {
@@ -1953,12 +1958,12 @@ public class GameWheel_Metagame : uScriptLogic
          {
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_59_System_String);
+               properties.Add((System.Object)local_59_System_String);
                logic_uScriptAct_Concatenate_A_57 = properties.ToArray();
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_Score_System_Int32);
+               properties.Add((System.Object)local_Score_System_Int32);
                logic_uScriptAct_Concatenate_B_57 = properties.ToArray();
             }
             {

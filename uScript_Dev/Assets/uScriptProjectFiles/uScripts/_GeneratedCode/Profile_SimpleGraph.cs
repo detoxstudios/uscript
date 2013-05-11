@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -171,7 +171,7 @@ public class Profile_SimpleGraph : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_1_System_String);
+               properties.Add((System.Object)local_1_System_String);
                logic_uScriptAct_Log_Target_0 = properties.ToArray();
             }
             {

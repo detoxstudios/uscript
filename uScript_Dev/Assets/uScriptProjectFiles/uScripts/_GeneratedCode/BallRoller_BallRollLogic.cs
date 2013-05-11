@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -86,14 +86,14 @@ public class BallRoller_BallRollLogic : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_8 = UnityEngine.KeyCode.S;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_8 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_8 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_8 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_8 = true;
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_12 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_12 = UnityEngine.KeyCode.W;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_12 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_12 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_12 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_12 = true;
    //pointer to script instanced logic node
    uScriptAct_SetGameObjectEulerAngles logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_13 = new uScriptAct_SetGameObjectEulerAngles( );
@@ -161,8 +161,8 @@ public class BallRoller_BallRollLogic : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_22 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_22 = UnityEngine.KeyCode.D;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_22 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_22 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_22 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_22 = true;
    //pointer to script instanced logic node
    uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_23 = new uScriptAct_AddVector3( );
@@ -184,14 +184,14 @@ public class BallRoller_BallRollLogic : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_37 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_37 = UnityEngine.KeyCode.C;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_37 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_37 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_37 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_37 = true;
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_38 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_38 = UnityEngine.KeyCode.A;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_38 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_38 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_38 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_38 = true;
    //pointer to script instanced logic node
    uScriptAct_SetBool logic_uScriptAct_SetBool_uScriptAct_SetBool_41 = new uScriptAct_SetBool( );
@@ -239,8 +239,8 @@ public class BallRoller_BallRollLogic : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_54 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_54 = UnityEngine.KeyCode.Space;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_54 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_54 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_54 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_54 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareGameObjects logic_uScriptCon_CompareGameObjects_uScriptCon_CompareGameObjects_60 = new uScriptCon_CompareGameObjects( );
@@ -1539,7 +1539,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_30_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_30_UnityEngine_GameObject);
                logic_uScriptAct_SetGameObjectEulerAngles_Target_13 = properties.ToArray();
             }
             {
@@ -1602,7 +1602,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_9_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_9_UnityEngine_GameObject);
                logic_uScriptAct_LookAt_Target_14 = properties.ToArray();
             }
             {
@@ -1644,12 +1644,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_16_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_16_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_15 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_6_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_6_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_15 = properties.ToArray();
             }
             {
@@ -1707,7 +1707,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_29_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_29_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_17 = properties.ToArray();
             }
             {
@@ -1749,7 +1749,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_29_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_29_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_17 = properties.ToArray();
             }
             {
@@ -1791,7 +1791,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_29_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_29_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_17 = properties.ToArray();
             }
             {
@@ -2028,12 +2028,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_35_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_35_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_21 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_40_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_40_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_21 = properties.ToArray();
             }
             {
@@ -2089,12 +2089,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_32_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_32_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_23 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_Camera_Offset_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_Camera_Offset_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_23 = properties.ToArray();
             }
             {
@@ -2157,12 +2157,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_10_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_10_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_27 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_46_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_46_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_27 = properties.ToArray();
             }
             {
@@ -2307,12 +2307,12 @@ public class BallRoller_BallRollLogic : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_11_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_11_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_42 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_31_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_31_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_42 = properties.ToArray();
             }
             {
@@ -2403,7 +2403,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_Attach_Camera_System_Boolean);
+               properties.Add((System.Object)local_Attach_Camera_System_Boolean);
                logic_uScriptAct_Log_Target_48 = properties.ToArray();
             }
             {
@@ -2439,7 +2439,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_30_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_30_UnityEngine_GameObject);
                logic_uScriptAct_SetGameObjectPosition_Target_49 = properties.ToArray();
             }
             {

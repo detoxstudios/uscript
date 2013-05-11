@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -504,7 +504,7 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_10_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_10_UnityEngine_GameObject);
                logic_uScriptAct_SetGameObjectPosition_Target_9 = properties.ToArray();
             }
             {

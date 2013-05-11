@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -94,8 +94,8 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_15 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_15 = UnityEngine.KeyCode.C;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_15 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_15 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_15 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_15 = true;
    //pointer to script instanced logic node
    uScriptAct_SetBool logic_uScriptAct_SetBool_uScriptAct_SetBool_16 = new uScriptAct_SetBool( );
@@ -873,7 +873,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_11_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_11_UnityEngine_GameObject);
                logic_uScriptAct_SetGameObjectEulerAngles_Target_4 = properties.ToArray();
             }
             {
@@ -936,7 +936,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_3_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_3_UnityEngine_GameObject);
                logic_uScriptAct_LookAt_Target_5 = properties.ToArray();
             }
             {
@@ -1035,12 +1035,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_12_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_12_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_7 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_Camera_Offset_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_Camera_Offset_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_7 = properties.ToArray();
             }
             {
@@ -1188,7 +1188,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_Attach_Camera_System_Boolean);
+               properties.Add((System.Object)local_Attach_Camera_System_Boolean);
                logic_uScriptAct_Log_Target_19 = properties.ToArray();
             }
             {
@@ -1224,7 +1224,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_11_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_11_UnityEngine_GameObject);
                logic_uScriptAct_SetGameObjectPosition_Target_20 = properties.ToArray();
             }
             {
@@ -1552,12 +1552,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          {
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_31_System_String);
+               properties.Add((System.Object)local_31_System_String);
                logic_uScriptAct_Concatenate_A_29 = properties.ToArray();
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_CoinTotal_System_Int32);
+               properties.Add((System.Object)local_CoinTotal_System_Int32);
                logic_uScriptAct_Concatenate_B_29 = properties.ToArray();
             }
             {
@@ -1598,12 +1598,12 @@ public class CoinCollection_MetagameLogic : uScriptLogic
          {
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_CoinValue_System_Int32);
+               properties.Add((System.Int32)local_CoinValue_System_Int32);
                logic_uScriptAct_AddInt_A_37 = properties.ToArray();
             }
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_CoinTotal_System_Int32);
+               properties.Add((System.Int32)local_CoinTotal_System_Int32);
                logic_uScriptAct_AddInt_B_37 = properties.ToArray();
             }
             {
@@ -1697,7 +1697,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_44_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_44_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_42 = properties.ToArray();
             }
             {
@@ -1739,7 +1739,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_44_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_44_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_42 = properties.ToArray();
             }
             {
@@ -1781,7 +1781,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_44_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_44_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_42 = properties.ToArray();
             }
             {
@@ -1835,7 +1835,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_45_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_45_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_43 = properties.ToArray();
             }
             {
@@ -1877,7 +1877,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_45_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_45_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_43 = properties.ToArray();
             }
             {
@@ -1919,7 +1919,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_45_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_45_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_43 = properties.ToArray();
             }
             {

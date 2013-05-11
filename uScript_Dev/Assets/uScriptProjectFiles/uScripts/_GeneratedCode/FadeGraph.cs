@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -42,6 +42,7 @@ public class FadeGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_1 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_1 = (float) 1;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_1 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_1 = true;
    bool logic_uScriptAct_Delay_AfterDelay_1 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_1 = false;
@@ -147,12 +148,14 @@ public class FadeGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_28 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_28 = (float) 2;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_28 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_28 = true;
    bool logic_uScriptAct_Delay_AfterDelay_28 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_28 = false;
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_29 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_29 = (float) 2;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_29 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_29 = true;
    bool logic_uScriptAct_Delay_AfterDelay_29 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_29 = false;
@@ -458,8 +461,10 @@ public class FadeGraph : uScriptLogic
          {
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_1.In(logic_uScriptAct_Delay_Duration_1);
+         logic_uScriptAct_Delay_uScriptAct_Delay_1.In(logic_uScriptAct_Delay_Duration_1, logic_uScriptAct_Delay_SingleFrame_1);
          logic_uScriptAct_Delay_DrivenDelay_1 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -481,6 +486,8 @@ public class FadeGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
          }
@@ -600,7 +607,7 @@ public class FadeGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_FadeGO_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_FadeGO_UnityEngine_GameObject);
                logic_uScriptAct_AssignMaterialColor_Target_5 = properties.ToArray();
             }
             {
@@ -928,12 +935,12 @@ public class FadeGraph : uScriptLogic
          {
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_19_System_String);
+               properties.Add((System.Object)local_19_System_String);
                logic_uScriptAct_Concatenate_A_17 = properties.ToArray();
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_PlayerHealth_System_Single);
+               properties.Add((System.Object)local_PlayerHealth_System_Single);
                logic_uScriptAct_Concatenate_B_17 = properties.ToArray();
             }
             {
@@ -1144,8 +1151,10 @@ public class FadeGraph : uScriptLogic
          {
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_28.In(logic_uScriptAct_Delay_Duration_28);
+         logic_uScriptAct_Delay_uScriptAct_Delay_28.In(logic_uScriptAct_Delay_Duration_28, logic_uScriptAct_Delay_SingleFrame_28);
          logic_uScriptAct_Delay_DrivenDelay_28 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -1167,6 +1176,8 @@ public class FadeGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
          }
@@ -1192,8 +1203,10 @@ public class FadeGraph : uScriptLogic
          {
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_29.In(logic_uScriptAct_Delay_Duration_29);
+         logic_uScriptAct_Delay_uScriptAct_Delay_29.In(logic_uScriptAct_Delay_Duration_29, logic_uScriptAct_Delay_SingleFrame_29);
          logic_uScriptAct_Delay_DrivenDelay_29 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -1215,6 +1228,8 @@ public class FadeGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
          }

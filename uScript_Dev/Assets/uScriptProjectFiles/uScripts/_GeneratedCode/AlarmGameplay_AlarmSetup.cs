@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -404,7 +404,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_7_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_7_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_1 = properties.ToArray();
             }
             {
@@ -446,7 +446,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_16_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_16_UnityEngine_GameObject);
                logic_uScriptAct_Rotate_Target_2 = properties.ToArray();
             }
             {
@@ -547,7 +547,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_7_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_7_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_5 = properties.ToArray();
             }
             {
@@ -632,7 +632,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_14_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_14_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_16_UnityEngine_GameObject_previous != local_16_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -644,12 +644,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_16_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_16_UnityEngine_GameObject);
                logic_uScriptAct_ToggleComponent_Target_6 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_9_System_String);
+               properties.Add((System.String)local_9_System_String);
                logic_uScriptAct_ToggleComponent_ComponentName_6 = properties.ToArray();
             }
          }
@@ -683,7 +683,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_14_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_14_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_16_UnityEngine_GameObject_previous != local_16_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -695,12 +695,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_16_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_16_UnityEngine_GameObject);
                logic_uScriptAct_ToggleComponent_Target_6 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_9_System_String);
+               properties.Add((System.String)local_9_System_String);
                logic_uScriptAct_ToggleComponent_ComponentName_6 = properties.ToArray();
             }
          }
@@ -734,7 +734,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_14_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_14_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_16_UnityEngine_GameObject_previous != local_16_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -746,12 +746,12 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_16_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_16_UnityEngine_GameObject);
                logic_uScriptAct_ToggleComponent_Target_6 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_9_System_String);
+               properties.Add((System.String)local_9_System_String);
                logic_uScriptAct_ToggleComponent_ComponentName_6 = properties.ToArray();
             }
          }
@@ -905,7 +905,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_14_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_14_UnityEngine_GameObject);
                logic_uScriptAct_Rotate_Target_22 = properties.ToArray();
             }
             {

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -60,14 +60,15 @@ public class uScript_TestBed : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_7 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_7 = (float) 1;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_7 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_7 = true;
    bool logic_uScriptAct_Delay_AfterDelay_7 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_7 = false;
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_8 = UnityEngine.KeyCode.A;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_8 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_8 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_8 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_8 = true;
    //pointer to script instanced logic node
    uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_9 = new uScriptAct_Log( );
@@ -585,8 +586,10 @@ public class uScript_TestBed : uScriptLogic
          {
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_7.In(logic_uScriptAct_Delay_Duration_7);
+         logic_uScriptAct_Delay_uScriptAct_Delay_7.In(logic_uScriptAct_Delay_Duration_7, logic_uScriptAct_Delay_SingleFrame_7);
          logic_uScriptAct_Delay_DrivenDelay_7 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -609,6 +612,8 @@ public class uScript_TestBed : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
          }
@@ -667,7 +672,7 @@ public class uScript_TestBed : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Get_Refresh());
+               properties.Add((System.Object)property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0_Get_Refresh());
                logic_uScriptAct_Log_Target_9 = properties.ToArray();
             }
             {

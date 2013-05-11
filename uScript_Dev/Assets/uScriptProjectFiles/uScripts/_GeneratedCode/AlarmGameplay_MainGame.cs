@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -74,8 +74,8 @@ public class AlarmGameplay_MainGame : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_13 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_13 = UnityEngine.KeyCode.H;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_13 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_13 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_13 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_13 = true;
    //pointer to script instanced logic node
    uScriptAct_LoadAudioClip logic_uScriptAct_LoadAudioClip_uScriptAct_LoadAudioClip_15 = new uScriptAct_LoadAudioClip( );

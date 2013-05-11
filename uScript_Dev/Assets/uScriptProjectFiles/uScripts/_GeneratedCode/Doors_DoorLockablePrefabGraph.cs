@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -91,6 +91,7 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_11 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_11 = (float) 3;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_11 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_11 = true;
    bool logic_uScriptAct_Delay_AfterDelay_11 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_11 = false;
@@ -169,6 +170,7 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_39 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_39 = (float) 3;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_39 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_39 = true;
    bool logic_uScriptAct_Delay_AfterDelay_39 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_39 = false;
@@ -633,7 +635,7 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_46_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_46_UnityEngine_GameObject);
                logic_uScriptAct_AssignMaterialColor_Target_2 = properties.ToArray();
             }
             {
@@ -684,7 +686,7 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Door_L_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Door_L_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_5 = properties.ToArray();
             }
             {
@@ -801,7 +803,7 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Door_R_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Door_R_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_9 = properties.ToArray();
             }
             {
@@ -832,8 +834,10 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
          {
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_11.In(logic_uScriptAct_Delay_Duration_11);
+         logic_uScriptAct_Delay_uScriptAct_Delay_11.In(logic_uScriptAct_Delay_Duration_11, logic_uScriptAct_Delay_SingleFrame_11);
          logic_uScriptAct_Delay_DrivenDelay_11 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -855,6 +859,8 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
          }
@@ -1276,7 +1282,7 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Door_L_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Door_L_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_38 = properties.ToArray();
             }
             {
@@ -1307,8 +1313,10 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
          {
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_39.In(logic_uScriptAct_Delay_Duration_39);
+         logic_uScriptAct_Delay_uScriptAct_Delay_39.In(logic_uScriptAct_Delay_Duration_39, logic_uScriptAct_Delay_SingleFrame_39);
          logic_uScriptAct_Delay_DrivenDelay_39 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -1330,6 +1338,8 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
          }
@@ -1379,7 +1389,7 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Door_R_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Door_R_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_44 = properties.ToArray();
             }
             {

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -129,8 +129,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_14 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_14 = UnityEngine.KeyCode.UpArrow;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_14 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_14 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_14 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_14 = true;
    //pointer to script instanced logic node
    uScriptAct_PrintText logic_uScriptAct_PrintText_uScriptAct_PrintText_17 = new uScriptAct_PrintText( );
@@ -199,8 +199,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_28 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_28 = UnityEngine.KeyCode.LeftArrow;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_28 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_28 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_28 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_28 = true;
    //pointer to script instanced logic node
    uScriptAct_Destroy logic_uScriptAct_Destroy_uScriptAct_Destroy_31 = new uScriptAct_Destroy( );
@@ -212,8 +212,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_39 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_39 = UnityEngine.KeyCode.W;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_39 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_39 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_39 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_39 = true;
    //pointer to script instanced logic node
    uScriptAct_IsometricCharacterController logic_uScriptAct_IsometricCharacterController_uScriptAct_IsometricCharacterController_41 = new uScriptAct_IsometricCharacterController( );
@@ -247,8 +247,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_51 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_51 = UnityEngine.KeyCode.DownArrow;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_51 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_51 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_51 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_51 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareInt logic_uScriptCon_CompareInt_uScriptCon_CompareInt_53 = new uScriptCon_CompareInt( );
@@ -263,6 +263,7 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_55 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_55 = (float) 0;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_55 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_55 = true;
    bool logic_uScriptAct_Delay_AfterDelay_55 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_55 = false;
@@ -276,8 +277,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_57 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_57 = UnityEngine.KeyCode.S;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_57 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_57 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_57 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_57 = true;
    //pointer to script instanced logic node
    uScriptAct_Concatenate logic_uScriptAct_Concatenate_uScriptAct_Concatenate_58 = new uScriptAct_Concatenate( );
@@ -306,6 +307,7 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_64 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_64 = (float) 0;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_64 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_64 = true;
    bool logic_uScriptAct_Delay_AfterDelay_64 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_64 = false;
@@ -319,8 +321,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_69 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_69 = UnityEngine.KeyCode.Space;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_69 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_69 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_69 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_69 = true;
    //pointer to script instanced logic node
    uScriptAct_SetBool logic_uScriptAct_SetBool_uScriptAct_SetBool_74 = new uScriptAct_SetBool( );
@@ -351,8 +353,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_83 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_83 = UnityEngine.KeyCode.LeftShift;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_83 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_83 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_83 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_83 = true;
    //pointer to script instanced logic node
    uScriptAct_SetFloat logic_uScriptAct_SetFloat_uScriptAct_SetFloat_84 = new uScriptAct_SetFloat( );
@@ -362,8 +364,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_85 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_85 = UnityEngine.KeyCode.Space;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_85 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_85 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_85 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_85 = true;
    //pointer to script instanced logic node
    uScriptAct_SetComponentsVector3 logic_uScriptAct_SetComponentsVector3_uScriptAct_SetComponentsVector3_88 = new uScriptAct_SetComponentsVector3( );
@@ -402,8 +404,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_107 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_107 = UnityEngine.KeyCode.RightShift;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_107 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_107 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_107 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_107 = true;
    //pointer to script instanced logic node
    uScriptAct_PrintText logic_uScriptAct_PrintText_uScriptAct_PrintText_108 = new uScriptAct_PrintText( );
@@ -466,8 +468,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_123 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_123 = UnityEngine.KeyCode.RightArrow;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_123 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_123 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_123 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_123 = true;
    //pointer to script instanced logic node
    uScriptAct_ScaleVector3 logic_uScriptAct_ScaleVector3_uScriptAct_ScaleVector3_126 = new uScriptAct_ScaleVector3( );
@@ -508,8 +510,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_136 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_136 = UnityEngine.KeyCode.D;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_136 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_136 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_136 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_136 = true;
    //pointer to script instanced logic node
    uScriptAct_GetComponentsVector3 logic_uScriptAct_GetComponentsVector3_uScriptAct_GetComponentsVector3_137 = new uScriptAct_GetComponentsVector3( );
@@ -554,8 +556,8 @@ public class FireBot_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_154 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_154 = UnityEngine.KeyCode.A;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_154 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_154 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_154 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_154 = true;
    
    //event nodes
@@ -2101,7 +2103,7 @@ public class FireBot_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_66_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_66_UnityEngine_GameObject);
                logic_uScriptAct_Destroy_Target_31 = properties.ToArray();
             }
             {
@@ -2137,7 +2139,7 @@ public class FireBot_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_66_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_66_UnityEngine_GameObject);
                logic_uScriptAct_Destroy_Target_31 = properties.ToArray();
             }
             {
@@ -2681,8 +2683,10 @@ public class FireBot_Gameplay : uScriptLogic
                logic_uScriptAct_Delay_Duration_55 = local_35_System_Single;
                
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_55.In(logic_uScriptAct_Delay_Duration_55);
+         logic_uScriptAct_Delay_uScriptAct_Delay_55.In(logic_uScriptAct_Delay_Duration_55, logic_uScriptAct_Delay_SingleFrame_55);
          logic_uScriptAct_Delay_DrivenDelay_55 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -2707,6 +2711,8 @@ public class FireBot_Gameplay : uScriptLogic
             {
                logic_uScriptAct_Delay_Duration_55 = local_35_System_Single;
                
+            }
+            {
             }
          }
          logic_uScriptAct_Delay_DrivenDelay_55 = logic_uScriptAct_Delay_uScriptAct_Delay_55.DrivenDelay();
@@ -2788,7 +2794,7 @@ public class FireBot_Gameplay : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_Points_String_System_String);
+               properties.Add((System.Object)local_Points_String_System_String);
                logic_uScriptAct_Concatenate_B_58 = properties.ToArray();
             }
             {
@@ -2907,8 +2913,10 @@ public class FireBot_Gameplay : uScriptLogic
                logic_uScriptAct_Delay_Duration_64 = local_3_System_Single;
                
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_64.In(logic_uScriptAct_Delay_Duration_64);
+         logic_uScriptAct_Delay_uScriptAct_Delay_64.In(logic_uScriptAct_Delay_Duration_64, logic_uScriptAct_Delay_SingleFrame_64);
          logic_uScriptAct_Delay_DrivenDelay_64 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -2934,6 +2942,8 @@ public class FireBot_Gameplay : uScriptLogic
                logic_uScriptAct_Delay_Duration_64 = local_3_System_Single;
                
             }
+            {
+            }
          }
          logic_uScriptAct_Delay_DrivenDelay_64 = logic_uScriptAct_Delay_uScriptAct_Delay_64.DrivenDelay();
          if ( true == logic_uScriptAct_Delay_DrivenDelay_64 )
@@ -2957,12 +2967,12 @@ public class FireBot_Gameplay : uScriptLogic
          {
             {
                List<System.Single> properties = new List<System.Single>();
-               properties.Add(local_116_System_Single);
+               properties.Add((System.Single)local_116_System_Single);
                logic_uScriptAct_AddFloat_A_65 = properties.ToArray();
             }
             {
                List<System.Single> properties = new List<System.Single>();
-               properties.Add(local_45_System_Single);
+               properties.Add((System.Single)local_45_System_Single);
                logic_uScriptAct_AddFloat_B_65 = properties.ToArray();
             }
             {
@@ -2999,16 +3009,16 @@ public class FireBot_Gameplay : uScriptLogic
          logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_69.In(logic_uScriptAct_OnInputEventFilter_KeyCode_69);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_69.KeyHeld;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_69.KeyDown;
+         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_69.KeyDown;
+         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_69.KeyHeld;
          
          if ( test_0 == true )
          {
-            Relay_In_49();
+            Relay_In_5();
          }
          if ( test_1 == true )
          {
-            Relay_In_5();
+            Relay_In_49();
          }
       }
       else
@@ -3148,7 +3158,7 @@ public class FireBot_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_118_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_118_UnityEngine_GameObject);
                logic_uScriptAct_SetGameObjectPosition_Target_75 = properties.ToArray();
             }
             {
@@ -3280,17 +3290,17 @@ public class FireBot_Gameplay : uScriptLogic
          logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_83.In(logic_uScriptAct_OnInputEventFilter_KeyCode_83);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_83.KeyHeld;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_83.KeyDown;
+         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_83.KeyDown;
+         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_83.KeyHeld;
          bool test_2 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_83.KeyUp;
          
          if ( test_0 == true )
          {
-            Relay_In_117();
+            Relay_True_80();
          }
          if ( test_1 == true )
          {
-            Relay_True_80();
+            Relay_In_117();
          }
          if ( test_2 == true )
          {
@@ -3405,12 +3415,12 @@ public class FireBot_Gameplay : uScriptLogic
          {
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_96_System_Int32);
+               properties.Add((System.Int32)local_96_System_Int32);
                logic_uScriptAct_AddInt_A_89 = properties.ToArray();
             }
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_Points_System_Int32);
+               properties.Add((System.Int32)local_Points_System_Int32);
                logic_uScriptAct_AddInt_B_89 = properties.ToArray();
             }
             {
@@ -3550,17 +3560,17 @@ public class FireBot_Gameplay : uScriptLogic
          logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_107.In(logic_uScriptAct_OnInputEventFilter_KeyCode_107);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_107.KeyHeld;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_107.KeyDown;
+         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_107.KeyDown;
+         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_107.KeyHeld;
          bool test_2 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_107.KeyUp;
          
          if ( test_0 == true )
          {
-            Relay_In_117();
+            Relay_True_80();
          }
          if ( test_1 == true )
          {
-            Relay_True_80();
+            Relay_In_117();
          }
          if ( test_2 == true )
          {
@@ -3648,7 +3658,7 @@ public class FireBot_Gameplay : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_Points_System_Int32);
+               properties.Add((System.Object)local_Points_System_Int32);
                logic_uScriptAct_Concatenate_B_109 = properties.ToArray();
             }
             {
@@ -4201,7 +4211,7 @@ public class FireBot_Gameplay : uScriptLogic
             }
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_151_System_Int32);
+               properties.Add((System.Int32)local_151_System_Int32);
                logic_uScriptAct_AddInt_B_138 = properties.ToArray();
             }
             {

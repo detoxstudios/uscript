@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -95,6 +95,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_11 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_11 = (float) 3;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_11 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_11 = true;
    bool logic_uScriptAct_Delay_AfterDelay_11 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_11 = false;
@@ -109,6 +110,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_17 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_17 = (float) 3;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_17 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_17 = true;
    bool logic_uScriptAct_Delay_AfterDelay_17 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_17 = false;
@@ -459,7 +461,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Door_L_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Door_L_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_0 = properties.ToArray();
             }
             {
@@ -610,7 +612,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Door_L_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Door_L_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_6 = properties.ToArray();
             }
             {
@@ -745,7 +747,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Door_R_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Door_R_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_9 = properties.ToArray();
             }
             {
@@ -776,8 +778,10 @@ public class Doors_DoorPrefabGraph : uScriptLogic
          {
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_11.In(logic_uScriptAct_Delay_Duration_11);
+         logic_uScriptAct_Delay_uScriptAct_Delay_11.In(logic_uScriptAct_Delay_Duration_11, logic_uScriptAct_Delay_SingleFrame_11);
          logic_uScriptAct_Delay_DrivenDelay_11 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -799,6 +803,8 @@ public class Doors_DoorPrefabGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
          }
@@ -848,7 +854,7 @@ public class Doors_DoorPrefabGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Door_R_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Door_R_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_12 = properties.ToArray();
             }
             {
@@ -879,8 +885,10 @@ public class Doors_DoorPrefabGraph : uScriptLogic
          {
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_17.In(logic_uScriptAct_Delay_Duration_17);
+         logic_uScriptAct_Delay_uScriptAct_Delay_17.In(logic_uScriptAct_Delay_Duration_17, logic_uScriptAct_Delay_SingleFrame_17);
          logic_uScriptAct_Delay_DrivenDelay_17 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -902,6 +910,8 @@ public class Doors_DoorPrefabGraph : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
          }

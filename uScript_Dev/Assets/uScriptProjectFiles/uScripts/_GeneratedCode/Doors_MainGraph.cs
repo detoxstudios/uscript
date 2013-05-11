@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -77,6 +77,7 @@ public class Doors_MainGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_2 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_2 = (float) 0;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_2 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_2 = true;
    bool logic_uScriptAct_Delay_AfterDelay_2 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_2 = false;
@@ -246,6 +247,7 @@ public class Doors_MainGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_72 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_72 = (float) 0;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_72 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_72 = true;
    bool logic_uScriptAct_Delay_AfterDelay_72 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_72 = false;
@@ -1544,7 +1546,7 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_62_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_62_UnityEngine_GameObject);
                logic_uScriptAct_MoveToLocation_targetArray_1 = properties.ToArray();
             }
             {
@@ -1588,7 +1590,7 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_62_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_62_UnityEngine_GameObject);
                logic_uScriptAct_MoveToLocation_targetArray_1 = properties.ToArray();
             }
             {
@@ -1623,8 +1625,10 @@ public class Doors_MainGraph : uScriptLogic
                logic_uScriptAct_Delay_Duration_2 = local_50_System_Single;
                
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_2.In(logic_uScriptAct_Delay_Duration_2);
+         logic_uScriptAct_Delay_uScriptAct_Delay_2.In(logic_uScriptAct_Delay_Duration_2, logic_uScriptAct_Delay_SingleFrame_2);
          logic_uScriptAct_Delay_DrivenDelay_2 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -1650,6 +1654,8 @@ public class Doors_MainGraph : uScriptLogic
                logic_uScriptAct_Delay_Duration_2 = local_50_System_Single;
                
             }
+            {
+            }
          }
          logic_uScriptAct_Delay_DrivenDelay_2 = logic_uScriptAct_Delay_uScriptAct_Delay_2.DrivenDelay();
          if ( true == logic_uScriptAct_Delay_DrivenDelay_2 )
@@ -1673,12 +1679,12 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(property_position_Detox_ScriptEditor_Parameter_position_48_Get_Refresh());
+               properties.Add((UnityEngine.Vector3)property_position_Detox_ScriptEditor_Parameter_position_48_Get_Refresh());
                logic_uScriptAct_AddVector3_A_5 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_51_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_51_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_5 = properties.ToArray();
             }
             {
@@ -2026,7 +2032,7 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_70_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_70_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_15 = properties.ToArray();
             }
             {
@@ -2159,7 +2165,7 @@ public class Doors_MainGraph : uScriptLogic
                      }
                   }
                }
-               properties.Add(local_6_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_6_UnityEngine_GameObject);
                logic_uScriptAct_Destroy_Target_24 = properties.ToArray();
             }
             {
@@ -2234,7 +2240,7 @@ public class Doors_MainGraph : uScriptLogic
                      }
                   }
                }
-               properties.Add(local_6_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_6_UnityEngine_GameObject);
                logic_uScriptAct_Destroy_Target_24 = properties.ToArray();
             }
             {
@@ -2613,12 +2619,12 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(property_position_Detox_ScriptEditor_Parameter_position_61_Get_Refresh());
+               properties.Add((UnityEngine.Vector3)property_position_Detox_ScriptEditor_Parameter_position_61_Get_Refresh());
                logic_uScriptAct_AddVector3_A_37 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_11_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_11_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_37 = properties.ToArray();
             }
             {
@@ -2673,7 +2679,7 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_44_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_44_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_38 = properties.ToArray();
             }
             {
@@ -2704,12 +2710,12 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(property_position_Detox_ScriptEditor_Parameter_position_23_Get_Refresh());
+               properties.Add((UnityEngine.Vector3)property_position_Detox_ScriptEditor_Parameter_position_23_Get_Refresh());
                logic_uScriptAct_AddVector3_A_41 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_69_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_69_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_41 = properties.ToArray();
             }
             {
@@ -2926,12 +2932,12 @@ public class Doors_MainGraph : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(property_position_Detox_ScriptEditor_Parameter_position_79_Get_Refresh());
+               properties.Add((UnityEngine.Vector3)property_position_Detox_ScriptEditor_Parameter_position_79_Get_Refresh());
                logic_uScriptAct_AddVector3_A_55 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_81_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_81_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_55 = properties.ToArray();
             }
             {
@@ -3064,8 +3070,10 @@ public class Doors_MainGraph : uScriptLogic
                logic_uScriptAct_Delay_Duration_72 = local_14_System_Single;
                
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_72.In(logic_uScriptAct_Delay_Duration_72);
+         logic_uScriptAct_Delay_uScriptAct_Delay_72.In(logic_uScriptAct_Delay_Duration_72, logic_uScriptAct_Delay_SingleFrame_72);
          logic_uScriptAct_Delay_DrivenDelay_72 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -3090,6 +3098,8 @@ public class Doors_MainGraph : uScriptLogic
             {
                logic_uScriptAct_Delay_Duration_72 = local_14_System_Single;
                
+            }
+            {
             }
          }
          logic_uScriptAct_Delay_DrivenDelay_72 = logic_uScriptAct_Delay_uScriptAct_Delay_72.DrivenDelay();
@@ -3138,7 +3148,7 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_36_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_36_UnityEngine_GameObject);
                logic_uScriptAct_MoveToLocation_targetArray_73 = properties.ToArray();
             }
             {
@@ -3182,7 +3192,7 @@ public class Doors_MainGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_36_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_36_UnityEngine_GameObject);
                logic_uScriptAct_MoveToLocation_targetArray_73 = properties.ToArray();
             }
             {

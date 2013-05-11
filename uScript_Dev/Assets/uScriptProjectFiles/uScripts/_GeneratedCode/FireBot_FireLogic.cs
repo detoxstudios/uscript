@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -53,6 +53,7 @@ public class FireBot_FireLogic : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_1 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_1 = (float) 0;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_1 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_1 = true;
    bool logic_uScriptAct_Delay_AfterDelay_1 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_1 = false;
@@ -459,8 +460,10 @@ public class FireBot_FireLogic : uScriptLogic
                logic_uScriptAct_Delay_Duration_1 = local_Time_Till_Spawn_System_Single;
                
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_1.In(logic_uScriptAct_Delay_Duration_1);
+         logic_uScriptAct_Delay_uScriptAct_Delay_1.In(logic_uScriptAct_Delay_Duration_1, logic_uScriptAct_Delay_SingleFrame_1);
          logic_uScriptAct_Delay_DrivenDelay_1 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -485,6 +488,8 @@ public class FireBot_FireLogic : uScriptLogic
             {
                logic_uScriptAct_Delay_Duration_1 = local_Time_Till_Spawn_System_Single;
                
+            }
+            {
             }
          }
          logic_uScriptAct_Delay_DrivenDelay_1 = logic_uScriptAct_Delay_uScriptAct_Delay_1.DrivenDelay();
@@ -688,7 +693,7 @@ public class FireBot_FireLogic : uScriptLogic
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add(owner_Connection_21);
+               properties.Add((UnityEngine.GameObject)owner_Connection_21);
                logic_uScriptAct_Destroy_Target_25 = properties.ToArray();
             }
             {
@@ -713,7 +718,7 @@ public class FireBot_FireLogic : uScriptLogic
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add(owner_Connection_21);
+               properties.Add((UnityEngine.GameObject)owner_Connection_21);
                logic_uScriptAct_Destroy_Target_25 = properties.ToArray();
             }
             {

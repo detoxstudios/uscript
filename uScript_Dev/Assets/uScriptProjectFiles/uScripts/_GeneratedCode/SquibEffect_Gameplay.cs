@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -149,8 +149,8 @@ public class SquibEffect_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_39 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_39 = UnityEngine.KeyCode.None;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_39 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_39 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_39 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_39 = true;
    //pointer to script instanced logic node
    uScriptAct_SpawnPrefabAtLocation logic_uScriptAct_SpawnPrefabAtLocation_uScriptAct_SpawnPrefabAtLocation_42 = new uScriptAct_SpawnPrefabAtLocation( );
@@ -236,8 +236,8 @@ public class SquibEffect_Gameplay : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_70 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_70 = UnityEngine.KeyCode.Mouse1;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_70 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_70 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_70 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_70 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareBool logic_uScriptCon_CompareBool_uScriptCon_CompareBool_75 = new uScriptCon_CompareBool( );
@@ -1021,12 +1021,12 @@ public class SquibEffect_Gameplay : uScriptLogic
          {
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_33_System_String);
+               properties.Add((System.Object)local_33_System_String);
                logic_uScriptAct_Concatenate_A_27 = properties.ToArray();
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_Grenades_On_Hand_System_Int32);
+               properties.Add((System.Object)local_Grenades_On_Hand_System_Int32);
                logic_uScriptAct_Concatenate_B_27 = properties.ToArray();
             }
             {
@@ -1543,12 +1543,12 @@ public class SquibEffect_Gameplay : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_2_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_2_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_63 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_74_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_74_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_63 = properties.ToArray();
             }
             {
@@ -1596,7 +1596,7 @@ public class SquibEffect_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_62_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_62_UnityEngine_GameObject);
                logic_uScriptAct_Destroy_Target_68 = properties.ToArray();
             }
             {
@@ -1634,7 +1634,7 @@ public class SquibEffect_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_62_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_62_UnityEngine_GameObject);
                logic_uScriptAct_Destroy_Target_68 = properties.ToArray();
             }
             {
@@ -1849,7 +1849,7 @@ public class SquibEffect_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_85_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_85_UnityEngine_GameObject);
                logic_uScriptAct_Destroy_Target_84 = properties.ToArray();
             }
             {
@@ -1892,7 +1892,7 @@ public class SquibEffect_Gameplay : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_85_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_85_UnityEngine_GameObject);
                logic_uScriptAct_Destroy_Target_84 = properties.ToArray();
             }
             {
@@ -1922,12 +1922,12 @@ public class SquibEffect_Gameplay : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_93_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_93_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_88 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_RayHitLocation_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_RayHitLocation_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_88 = properties.ToArray();
             }
             {

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -1028,12 +1028,12 @@ public class SimpleUI_Logic : uScriptLogic
          {
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_24_System_String);
+               properties.Add((System.Object)local_24_System_String);
                logic_uScriptAct_Concatenate_A_21 = properties.ToArray();
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(property_position_Detox_ScriptEditor_Parameter_position_25_Get_Refresh());
+               properties.Add((System.Object)property_position_Detox_ScriptEditor_Parameter_position_25_Get_Refresh());
                logic_uScriptAct_Concatenate_B_21 = properties.ToArray();
             }
             {

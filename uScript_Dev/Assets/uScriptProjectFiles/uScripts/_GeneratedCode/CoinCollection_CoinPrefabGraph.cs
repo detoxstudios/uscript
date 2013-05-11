@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -465,7 +465,7 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add(owner_Connection_3);
+               properties.Add((UnityEngine.GameObject)owner_Connection_3);
                logic_uScriptAct_Rotate_Target_1 = properties.ToArray();
             }
             {
@@ -756,7 +756,7 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add(owner_Connection_20);
+               properties.Add((UnityEngine.GameObject)owner_Connection_20);
                logic_uScriptAct_Destroy_Target_19 = properties.ToArray();
             }
             {
@@ -781,7 +781,7 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
-               properties.Add(owner_Connection_20);
+               properties.Add((UnityEngine.GameObject)owner_Connection_20);
                logic_uScriptAct_Destroy_Target_19 = properties.ToArray();
             }
             {

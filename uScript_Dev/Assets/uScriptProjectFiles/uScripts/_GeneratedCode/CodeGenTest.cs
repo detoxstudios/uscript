@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -636,8 +636,8 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_141 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_141 = UnityEngine.KeyCode.Escape;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_141 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_141 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_141 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_141 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEvent logic_uScriptAct_SendCustomEvent_uScriptAct_SendCustomEvent_142 = new uScriptAct_SendCustomEvent( );
@@ -730,8 +730,8 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_165 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_165 = UnityEngine.KeyCode.Backspace;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_165 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_165 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_165 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_165 = true;
    //pointer to script instanced logic node
    uScriptAct_LoadAudioClip logic_uScriptAct_LoadAudioClip_uScriptAct_LoadAudioClip_166 = new uScriptAct_LoadAudioClip( );
@@ -808,8 +808,8 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_193 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_193 = UnityEngine.KeyCode.Caret;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_193 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_193 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_193 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_193 = true;
    //pointer to script instanced logic node
    uScriptAct_PlayAnimation logic_uScriptAct_PlayAnimation_uScriptAct_PlayAnimation_195 = new uScriptAct_PlayAnimation( );
@@ -979,8 +979,8 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_226 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_226 = UnityEngine.KeyCode.None;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_226 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_226 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_226 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_226 = true;
    //pointer to script instanced logic node
    uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_227 = new uScriptAct_PlaySound( );
@@ -1246,6 +1246,7 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_265 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_265 = (float) 0;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_265 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_265 = true;
    bool logic_uScriptAct_Delay_AfterDelay_265 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_265 = false;
@@ -1298,8 +1299,8 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_276 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_276 = UnityEngine.KeyCode.None;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_276 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_276 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_276 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_276 = true;
    //pointer to script instanced logic node
    uScriptAct_Toggle logic_uScriptAct_Toggle_uScriptAct_Toggle_277 = new uScriptAct_Toggle( );
@@ -1576,7 +1577,7 @@ public class CodeGenTest : uScriptLogic
    System.Single logic_uScriptAct_SetRandomVector2_MaxX_329 = (float) 1;
    System.Single logic_uScriptAct_SetRandomVector2_MinY_329 = (float) 0;
    System.Single logic_uScriptAct_SetRandomVector2_MaxY_329 = (float) 1;
-   UnityEngine.Vector3 logic_uScriptAct_SetRandomVector2_TargetVector2_329;
+   UnityEngine.Vector2 logic_uScriptAct_SetRandomVector2_TargetVector2_329;
    bool logic_uScriptAct_SetRandomVector2_Out_329 = true;
    //pointer to script instanced logic node
    uScriptAct_SetVector2 logic_uScriptAct_SetVector2_uScriptAct_SetVector2_330 = new uScriptAct_SetVector2( );
@@ -1667,8 +1668,8 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_346 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_346 = UnityEngine.KeyCode.None;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_346 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_346 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_346 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_346 = true;
    //pointer to script instanced logic node
    uScriptAct_AssignMaterial logic_uScriptAct_AssignMaterial_uScriptAct_AssignMaterial_348 = new uScriptAct_AssignMaterial( );
@@ -1999,8 +2000,8 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_395 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_395 = UnityEngine.KeyCode.None;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_395 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_395 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_395 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_395 = true;
    //pointer to script instanced logic node
    uScriptAct_InterpolateColorLinear logic_uScriptAct_InterpolateColorLinear_uScriptAct_InterpolateColorLinear_397 = new uScriptAct_InterpolateColorLinear( );
@@ -2143,8 +2144,8 @@ public class CodeGenTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_409 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_409 = UnityEngine.KeyCode.None;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_409 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_409 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_409 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_409 = true;
    //pointer to script instanced logic node
    uScriptAct_AddFloat logic_uScriptAct_AddFloat_uScriptAct_AddFloat_411 = new uScriptAct_AddFloat( );
@@ -6563,7 +6564,7 @@ public class CodeGenTest : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_Named_Variable_System_String);
+               properties.Add((System.Object)local_Named_Variable_System_String);
                logic_uScriptAct_Log_Target_2 = properties.ToArray();
             }
             {
@@ -9755,17 +9756,17 @@ public class CodeGenTest : uScriptLogic
          logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_141.In(logic_uScriptAct_OnInputEventFilter_KeyCode_141);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_141.KeyHeld;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_141.KeyDown;
+         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_141.KeyDown;
+         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_141.KeyHeld;
          bool test_2 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_141.KeyUp;
          
          if ( test_0 == true )
          {
-            Relay_In_153();
+            Relay_SendCustomEvent_142();
          }
          if ( test_1 == true )
          {
-            Relay_SendCustomEvent_142();
+            Relay_In_153();
          }
          if ( test_2 == true )
          {
@@ -10192,7 +10193,10 @@ public class CodeGenTest : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.AddRange(local_Camera_List_UnityEngine_CameraArray);
+               foreach (UnityEngine.Camera _fet in local_Camera_List_UnityEngine_CameraArray)
+               {
+                  properties.Add((System.Object) _fet);
+               }
                logic_uScriptAct_Log_Target_162 = properties.ToArray();
             }
             {
@@ -11260,7 +11264,7 @@ public class CodeGenTest : uScriptLogic
                      }
                   }
                }
-               properties.Add(local_MasterGO_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_MasterGO_UnityEngine_GameObject);
                logic_uScriptAct_PlayAnimation_Target_195 = properties.ToArray();
             }
             {
@@ -11866,7 +11870,7 @@ public class CodeGenTest : uScriptLogic
                      }
                   }
                }
-               properties.Add(local_MasterGO_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_MasterGO_UnityEngine_GameObject);
                logic_uScriptAct_RewindAnimation_Target_197 = properties.ToArray();
             }
             {
@@ -12466,7 +12470,7 @@ public class CodeGenTest : uScriptLogic
                      }
                   }
                }
-               properties.Add(local_MasterGO_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_MasterGO_UnityEngine_GameObject);
                logic_uScriptAct_StopAnimation_Target_198 = properties.ToArray();
             }
             {
@@ -13202,17 +13206,17 @@ public class CodeGenTest : uScriptLogic
          logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_226.In(logic_uScriptAct_OnInputEventFilter_KeyCode_226);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_226.KeyHeld;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_226.KeyDown;
+         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_226.KeyDown;
+         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_226.KeyHeld;
          bool test_2 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_226.KeyUp;
          
          if ( test_0 == true )
          {
-            Relay_In_258();
+            Relay_In_228();
          }
          if ( test_1 == true )
          {
-            Relay_In_228();
+            Relay_In_258();
          }
          if ( test_2 == true )
          {
@@ -14519,8 +14523,10 @@ public class CodeGenTest : uScriptLogic
          {
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_265.In(logic_uScriptAct_Delay_Duration_265);
+         logic_uScriptAct_Delay_uScriptAct_Delay_265.In(logic_uScriptAct_Delay_Duration_265, logic_uScriptAct_Delay_SingleFrame_265);
          logic_uScriptAct_Delay_DrivenDelay_265 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -14547,6 +14553,8 @@ public class CodeGenTest : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
          }
@@ -14796,17 +14804,17 @@ public class CodeGenTest : uScriptLogic
          logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_276.In(logic_uScriptAct_OnInputEventFilter_KeyCode_276);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_276.KeyHeld;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_276.KeyDown;
+         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_276.KeyDown;
+         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_276.KeyHeld;
          bool test_2 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_276.KeyUp;
          
          if ( test_0 == true )
          {
-            Relay_TurnOn_277();
+            Relay_Toggle_277();
          }
          if ( test_1 == true )
          {
-            Relay_Toggle_277();
+            Relay_TurnOn_277();
          }
          if ( test_2 == true )
          {
@@ -15527,7 +15535,7 @@ public class CodeGenTest : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_296_UnityEngine_Color);
+               properties.Add((System.Object)local_296_UnityEngine_Color);
                logic_uScriptAct_Log_Target_295 = properties.ToArray();
             }
             {
@@ -15660,7 +15668,7 @@ public class CodeGenTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_303_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_303_UnityEngine_GameObject);
                logic_uScriptAct_SetRandomGameObject_ObjectSet_300 = properties.ToArray();
             }
             {
@@ -16740,17 +16748,17 @@ public class CodeGenTest : uScriptLogic
          logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_346.In(logic_uScriptAct_OnInputEventFilter_KeyCode_346);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_346.KeyHeld;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_346.KeyDown;
+         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_346.KeyDown;
+         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_346.KeyHeld;
          bool test_2 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_346.KeyUp;
          
          if ( test_0 == true )
          {
-            Relay_In_348();
+            Relay_In_359();
          }
          if ( test_1 == true )
          {
-            Relay_In_359();
+            Relay_In_348();
          }
          if ( test_2 == true )
          {
@@ -17407,7 +17415,7 @@ public class CodeGenTest : uScriptLogic
                      }
                   }
                }
-               properties.Add(local_MasterGO_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_MasterGO_UnityEngine_GameObject);
                logic_uScriptAct_AttachScript_Target_351 = properties.ToArray();
             }
             {
@@ -18967,7 +18975,7 @@ public class CodeGenTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_392_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_392_UnityEngine_GameObject);
                logic_uScriptAct_Teleport_Target_391 = properties.ToArray();
             }
             {
@@ -19029,17 +19037,17 @@ public class CodeGenTest : uScriptLogic
          logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_395.In(logic_uScriptAct_OnInputEventFilter_KeyCode_395);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
-         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_395.KeyHeld;
-         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_395.KeyDown;
+         bool test_0 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_395.KeyDown;
+         bool test_1 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_395.KeyHeld;
          bool test_2 = logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_395.KeyUp;
          
          if ( test_0 == true )
          {
-            Relay_Resume_397();
+            Relay_Begin_397();
          }
          if ( test_1 == true )
          {
-            Relay_Begin_397();
+            Relay_Resume_397();
          }
          if ( test_2 == true )
          {
@@ -22835,7 +22843,7 @@ public class CodeGenTest : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(owner_Connection_460);
+               properties.Add((System.Object)owner_Connection_460);
                logic_CodeGenTest_Nested_Int_Name_Test_458 = properties.ToArray();
             }
             {
@@ -23130,7 +23138,7 @@ public class CodeGenTest : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_470_UnityEngine_AudioClip);
+               properties.Add((System.Object)local_470_UnityEngine_AudioClip);
                logic_uScriptAct_Log_Target_469 = properties.ToArray();
             }
             {
@@ -23155,7 +23163,7 @@ public class CodeGenTest : uScriptLogic
          {
             {
                List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.Add(local_470_UnityEngine_AudioClip);
+               properties.Add((UnityEngine.AudioClip)local_470_UnityEngine_AudioClip);
                logic_uScriptAct_IsInListAudioClip_Target_471 = properties.ToArray();
             }
             {
@@ -23189,7 +23197,7 @@ public class CodeGenTest : uScriptLogic
          {
             {
                List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.Add(local_470_UnityEngine_AudioClip);
+               properties.Add((UnityEngine.AudioClip)local_470_UnityEngine_AudioClip);
                logic_uScriptAct_ModifyListAudioClip_Target_472 = properties.ToArray();
             }
             {
@@ -23225,7 +23233,7 @@ public class CodeGenTest : uScriptLogic
          {
             {
                List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.Add(local_470_UnityEngine_AudioClip);
+               properties.Add((UnityEngine.AudioClip)local_470_UnityEngine_AudioClip);
                logic_uScriptAct_ModifyListAudioClip_Target_472 = properties.ToArray();
             }
             {
@@ -23261,7 +23269,7 @@ public class CodeGenTest : uScriptLogic
          {
             {
                List<UnityEngine.AudioClip> properties = new List<UnityEngine.AudioClip>();
-               properties.Add(local_470_UnityEngine_AudioClip);
+               properties.Add((UnityEngine.AudioClip)local_470_UnityEngine_AudioClip);
                logic_uScriptAct_ModifyListAudioClip_Target_472 = properties.ToArray();
             }
             {
@@ -23340,7 +23348,10 @@ public class CodeGenTest : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.AddRange(local_477_UnityEngine_AudioClipArray);
+               foreach (UnityEngine.AudioClip _fet in local_477_UnityEngine_AudioClipArray)
+               {
+                  properties.Add((System.Object) _fet);
+               }
                logic_uScriptAct_Log_Target_478 = properties.ToArray();
             }
             {
@@ -23512,7 +23523,7 @@ public class CodeGenTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_485_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_485_UnityEngine_GameObject);
                logic_uScriptAct_SetParent_Target_486 = properties.ToArray();
             }
             {

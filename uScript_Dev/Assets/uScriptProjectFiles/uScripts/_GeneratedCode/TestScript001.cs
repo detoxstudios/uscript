@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -117,8 +117,8 @@ public class TestScript001 : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_1 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_1 = UnityEngine.KeyCode.Return;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_1 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_1 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_1 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_1 = true;
    //pointer to script instanced logic node
    uScriptAct_GUILayoutBeginHorizontal logic_uScriptAct_GUILayoutBeginHorizontal_uScriptAct_GUILayoutBeginHorizontal_10 = new uScriptAct_GUILayoutBeginHorizontal( );
@@ -3269,7 +3269,7 @@ public class TestScript001 : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_62_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_62_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_59 = properties.ToArray();
             }
             {
@@ -3311,7 +3311,7 @@ public class TestScript001 : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_62_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_62_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_59 = properties.ToArray();
             }
             {
@@ -3353,7 +3353,7 @@ public class TestScript001 : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_62_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_62_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_59 = properties.ToArray();
             }
             {
@@ -3548,7 +3548,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_68_System_Boolean);
+               properties.Add((System.Object)local_68_System_Boolean);
                logic_uScriptAct_Log_Target_69 = properties.ToArray();
             }
             {
@@ -3619,7 +3619,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<UnityEngine.GUILayoutOption> properties = new List<UnityEngine.GUILayoutOption>();
-               properties.Add(local_139_UnityEngine_GUILayoutOption);
+               properties.Add((UnityEngine.GUILayoutOption)local_139_UnityEngine_GUILayoutOption);
                logic_uScriptAct_GUILayoutBeginHorizontal_Options_71 = properties.ToArray();
             }
          }
@@ -4027,7 +4027,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_85_System_String);
+               properties.Add((System.Object)local_85_System_String);
                logic_uScriptAct_Log_Target_86 = properties.ToArray();
             }
             {
@@ -4054,7 +4054,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_85_System_String);
+               properties.Add((System.Object)local_85_System_String);
                logic_uScriptAct_Log_Target_87 = properties.ToArray();
             }
             {
@@ -4081,7 +4081,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_85_System_String);
+               properties.Add((System.Object)local_85_System_String);
                logic_uScriptAct_Log_Target_88 = properties.ToArray();
             }
             {
@@ -4108,7 +4108,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_85_System_String);
+               properties.Add((System.Object)local_85_System_String);
                logic_uScriptAct_Log_Target_89 = properties.ToArray();
             }
             {
@@ -4135,7 +4135,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_85_System_String);
+               properties.Add((System.Object)local_85_System_String);
                logic_uScriptAct_Log_Target_90 = properties.ToArray();
             }
             {
@@ -4446,12 +4446,12 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_listIndex_System_Int32);
+               properties.Add((System.Int32)local_listIndex_System_Int32);
                logic_uScriptAct_AddInt_A_101 = properties.ToArray();
             }
             {
                List<System.Int32> properties = new List<System.Int32>();
-               properties.Add(local_102_System_Int32);
+               properties.Add((System.Int32)local_102_System_Int32);
                logic_uScriptAct_AddInt_B_101 = properties.ToArray();
             }
             {
@@ -4568,7 +4568,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_93_System_String);
+               properties.Add((System.Object)local_93_System_String);
                logic_uScriptAct_Log_Target_106 = properties.ToArray();
             }
             {
@@ -4595,8 +4595,8 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_93_System_String);
-               properties.Add(local_listIndex_System_Int32);
+               properties.Add((System.Object)local_93_System_String);
+               properties.Add((System.Object)local_listIndex_System_Int32);
                logic_uScriptAct_Log_Target_107 = properties.ToArray();
             }
             {
@@ -4628,7 +4628,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_93_System_String);
+               properties.Add((System.Object)local_93_System_String);
                logic_uScriptAct_Log_Target_108 = properties.ToArray();
             }
             {
@@ -4655,7 +4655,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_93_System_String);
+               properties.Add((System.Object)local_93_System_String);
                logic_uScriptAct_Log_Target_109 = properties.ToArray();
             }
             {
@@ -4716,7 +4716,7 @@ public class TestScript001 : uScriptLogic
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_113_System_String);
+               properties.Add((System.Object)local_113_System_String);
                logic_uScriptAct_Log_Target_114 = properties.ToArray();
             }
             {
@@ -8204,7 +8204,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<System.Single> properties = new List<System.Single>();
-               properties.Add(local_floatValue_System_Single);
+               properties.Add((System.Single)local_floatValue_System_Single);
                logic_uScriptAct_MultiplyFloat_A_307 = properties.ToArray();
             }
             {
@@ -8545,7 +8545,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_321 = properties.ToArray();
             }
             {
@@ -8576,7 +8576,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_321 = properties.ToArray();
             }
             {
@@ -8607,7 +8607,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_321 = properties.ToArray();
             }
             {
@@ -8638,7 +8638,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_322 = properties.ToArray();
             }
             {
@@ -8674,7 +8674,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_322 = properties.ToArray();
             }
             {
@@ -8710,7 +8710,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_322 = properties.ToArray();
             }
             {
@@ -8746,7 +8746,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_325 = properties.ToArray();
             }
             {
@@ -8782,7 +8782,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_325 = properties.ToArray();
             }
             {
@@ -8818,7 +8818,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_325 = properties.ToArray();
             }
             {
@@ -8882,7 +8882,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_327 = properties.ToArray();
             }
             {
@@ -8918,7 +8918,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_327 = properties.ToArray();
             }
             {
@@ -8954,7 +8954,7 @@ public class TestScript001 : uScriptLogic
          {
             {
                List<UnityEngine.Texture2D> properties = new List<UnityEngine.Texture2D>();
-               properties.Add(local_assetTexture_UnityEngine_Texture2D);
+               properties.Add((UnityEngine.Texture2D)local_assetTexture_UnityEngine_Texture2D);
                logic_uScriptAct_ModifyListTexture2D_Target_327 = properties.ToArray();
             }
             {

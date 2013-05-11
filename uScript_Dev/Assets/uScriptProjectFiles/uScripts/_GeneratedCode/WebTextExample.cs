@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -1126,12 +1126,12 @@ public class WebTextExample : uScriptLogic
          {
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_URL_System_String);
+               properties.Add((System.Object)local_URL_System_String);
                logic_uScriptAct_Concatenate_A_21 = properties.ToArray();
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_29_System_String);
+               properties.Add((System.Object)local_29_System_String);
                logic_uScriptAct_Concatenate_B_21 = properties.ToArray();
             }
             {
@@ -1164,12 +1164,12 @@ public class WebTextExample : uScriptLogic
          {
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_URL_System_String);
+               properties.Add((System.Object)local_URL_System_String);
                logic_uScriptAct_Concatenate_A_22 = properties.ToArray();
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_33_System_String);
+               properties.Add((System.Object)local_33_System_String);
                logic_uScriptAct_Concatenate_B_22 = properties.ToArray();
             }
             {
@@ -1197,7 +1197,7 @@ public class WebTextExample : uScriptLogic
          {
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_URL_System_String);
+               properties.Add((System.Object)local_URL_System_String);
                logic_uScriptAct_Concatenate_A_23 = properties.ToArray();
             }
             {

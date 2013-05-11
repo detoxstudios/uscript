@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -445,12 +445,12 @@ public class FollowCamera : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_11_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_11_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_4 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_9_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_9_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_4 = properties.ToArray();
             }
             {
@@ -481,12 +481,12 @@ public class FollowCamera : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_8_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_8_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_5 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_7_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_7_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_5 = properties.ToArray();
             }
             {
@@ -551,12 +551,12 @@ public class FollowCamera : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_13_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_13_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_16 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_24_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_24_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_16 = properties.ToArray();
             }
             {
@@ -587,12 +587,12 @@ public class FollowCamera : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_23_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_23_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_17 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_15_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_15_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_17 = properties.ToArray();
             }
             {

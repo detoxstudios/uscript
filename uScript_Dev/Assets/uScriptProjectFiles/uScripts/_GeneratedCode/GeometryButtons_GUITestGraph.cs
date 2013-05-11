@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -68,14 +68,14 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_9 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_9 = UnityEngine.KeyCode.DownArrow;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_9 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_9 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_9 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_9 = true;
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_10 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_10 = UnityEngine.KeyCode.LeftArrow;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_10 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_10 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_10 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_10 = true;
    //pointer to script instanced logic node
    uScriptAct_ToggleComponent logic_uScriptAct_ToggleComponent_uScriptAct_ToggleComponent_11 = new uScriptAct_ToggleComponent( );
@@ -99,8 +99,8 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_13 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_13 = UnityEngine.KeyCode.UpArrow;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_13 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_13 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_13 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_13 = true;
    //pointer to script instanced logic node
    uScriptAct_PrintText logic_uScriptAct_PrintText_uScriptAct_PrintText_17 = new uScriptAct_PrintText( );
@@ -125,8 +125,8 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_22 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_22 = UnityEngine.KeyCode.RightArrow;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_22 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_22 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_22 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_22 = true;
    //pointer to script instanced logic node
    uScriptAct_PrintText logic_uScriptAct_PrintText_uScriptAct_PrintText_24 = new uScriptAct_PrintText( );
@@ -894,12 +894,12 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_4_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
                logic_uScriptAct_ToggleComponent_Target_0 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_23_System_String);
+               properties.Add((System.String)local_23_System_String);
                logic_uScriptAct_ToggleComponent_ComponentName_0 = properties.ToArray();
             }
          }
@@ -933,12 +933,12 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_4_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
                logic_uScriptAct_ToggleComponent_Target_0 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_23_System_String);
+               properties.Add((System.String)local_23_System_String);
                logic_uScriptAct_ToggleComponent_ComponentName_0 = properties.ToArray();
             }
          }
@@ -972,12 +972,12 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_4_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
                logic_uScriptAct_ToggleComponent_Target_0 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_23_System_String);
+               properties.Add((System.String)local_23_System_String);
                logic_uScriptAct_ToggleComponent_ComponentName_0 = properties.ToArray();
             }
          }
@@ -1252,12 +1252,12 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_4_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
                logic_uScriptAct_ToggleComponent_Target_11 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_23_System_String);
+               properties.Add((System.String)local_23_System_String);
                logic_uScriptAct_ToggleComponent_ComponentName_11 = properties.ToArray();
             }
          }
@@ -1291,12 +1291,12 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_4_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
                logic_uScriptAct_ToggleComponent_Target_11 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_23_System_String);
+               properties.Add((System.String)local_23_System_String);
                logic_uScriptAct_ToggleComponent_ComponentName_11 = properties.ToArray();
             }
          }
@@ -1330,12 +1330,12 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_4_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_4_UnityEngine_GameObject);
                logic_uScriptAct_ToggleComponent_Target_11 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_23_System_String);
+               properties.Add((System.String)local_23_System_String);
                logic_uScriptAct_ToggleComponent_ComponentName_11 = properties.ToArray();
             }
          }

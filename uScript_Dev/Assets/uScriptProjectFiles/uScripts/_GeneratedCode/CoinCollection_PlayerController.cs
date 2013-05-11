@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -55,8 +55,8 @@ public class CoinCollection_PlayerController : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_0 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_0 = UnityEngine.KeyCode.A;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_0 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_0 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_0 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_0 = true;
    //pointer to script instanced logic node
    uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_2 = new uScriptAct_AddVector3( );
@@ -67,8 +67,8 @@ public class CoinCollection_PlayerController : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_3 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_3 = UnityEngine.KeyCode.Space;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_3 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_3 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_3 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_3 = true;
    //pointer to script instanced logic node
    uScriptAct_AddForce logic_uScriptAct_AddForce_uScriptAct_AddForce_7 = new uScriptAct_AddForce( );
@@ -121,8 +121,8 @@ public class CoinCollection_PlayerController : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_25 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_25 = UnityEngine.KeyCode.W;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_25 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_25 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_25 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_25 = true;
    //pointer to script instanced logic node
    uScriptAct_AddForce logic_uScriptAct_AddForce_uScriptAct_AddForce_27 = new uScriptAct_AddForce( );
@@ -135,8 +135,8 @@ public class CoinCollection_PlayerController : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_28 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_28 = UnityEngine.KeyCode.D;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_28 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_28 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_28 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_28 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareGameObjects logic_uScriptCon_CompareGameObjects_uScriptCon_CompareGameObjects_30 = new uScriptCon_CompareGameObjects( );
@@ -170,8 +170,8 @@ public class CoinCollection_PlayerController : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_37 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_37 = UnityEngine.KeyCode.S;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_37 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_37 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_37 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_37 = true;
    //pointer to script instanced logic node
    uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_40 = new uScriptAct_AddVector3( );
@@ -867,12 +867,12 @@ public class CoinCollection_PlayerController : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_14_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_14_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_2 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_24_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_24_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_2 = properties.ToArray();
             }
             {
@@ -988,12 +988,12 @@ public class CoinCollection_PlayerController : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_38_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_38_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_12 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_1_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_1_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_12 = properties.ToArray();
             }
             {
@@ -1078,7 +1078,7 @@ public class CoinCollection_PlayerController : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_21_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_21_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_15 = properties.ToArray();
             }
             {
@@ -1120,7 +1120,7 @@ public class CoinCollection_PlayerController : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_21_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_21_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_15 = properties.ToArray();
             }
             {
@@ -1162,7 +1162,7 @@ public class CoinCollection_PlayerController : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_21_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_21_UnityEngine_GameObject);
                logic_uScriptAct_PlaySound_target_15 = properties.ToArray();
             }
             {
@@ -1284,12 +1284,12 @@ public class CoinCollection_PlayerController : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_33_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_33_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_20 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_9_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_9_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_20 = properties.ToArray();
             }
             {
@@ -1646,12 +1646,12 @@ public class CoinCollection_PlayerController : uScriptLogic
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_22_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_22_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_A_40 = properties.ToArray();
             }
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
-               properties.Add(local_8_UnityEngine_Vector3);
+               properties.Add((UnityEngine.Vector3)local_8_UnityEngine_Vector3);
                logic_uScriptAct_AddVector3_B_40 = properties.ToArray();
             }
             {

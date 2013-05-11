@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -131,12 +131,14 @@ public class uScript_StressTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_63 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_63 = (float) 0;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_63 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_63 = true;
    bool logic_uScriptAct_Delay_AfterDelay_63 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_63 = false;
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_64 = new uScriptAct_Delay( );
    System.Single logic_uScriptAct_Delay_Duration_64 = (float) 0;
+   System.Boolean logic_uScriptAct_Delay_SingleFrame_64 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_64 = true;
    bool logic_uScriptAct_Delay_AfterDelay_64 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_64 = false;
@@ -191,8 +193,8 @@ public class uScript_StressTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_80 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_80 = UnityEngine.KeyCode.None;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_80 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_80 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_80 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_80 = true;
    //pointer to script instanced logic node
    uScriptAct_LookAt logic_uScriptAct_LookAt_uScriptAct_LookAt_83 = new uScriptAct_LookAt( );
@@ -235,8 +237,8 @@ public class uScript_StressTest : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_109 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_109 = UnityEngine.KeyCode.None;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_109 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_109 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_109 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_109 = true;
    //pointer to script instanced logic node
    uScriptCon_IntCounter logic_uScriptCon_IntCounter_uScriptCon_IntCounter_110 = new uScriptCon_IntCounter( );
@@ -1004,7 +1006,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Cover3_UnityEngine_GameObject);
+               properties.Add((System.Object)local_Cover3_UnityEngine_GameObject);
                logic_uScriptAct_Log_Target_28 = properties.ToArray();
             }
             {
@@ -1262,8 +1264,10 @@ public class uScript_StressTest : uScriptLogic
                logic_uScriptAct_Delay_Duration_63 = local_25_System_Single;
                
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_63.In(logic_uScriptAct_Delay_Duration_63);
+         logic_uScriptAct_Delay_uScriptAct_Delay_63.In(logic_uScriptAct_Delay_Duration_63, logic_uScriptAct_Delay_SingleFrame_63);
          logic_uScriptAct_Delay_DrivenDelay_63 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -1294,6 +1298,8 @@ public class uScript_StressTest : uScriptLogic
                logic_uScriptAct_Delay_Duration_63 = local_25_System_Single;
                
             }
+            {
+            }
          }
          logic_uScriptAct_Delay_DrivenDelay_63 = logic_uScriptAct_Delay_uScriptAct_Delay_63.DrivenDelay();
          if ( true == logic_uScriptAct_Delay_DrivenDelay_63 )
@@ -1321,8 +1327,10 @@ public class uScript_StressTest : uScriptLogic
          {
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_Delay_uScriptAct_Delay_64.In(logic_uScriptAct_Delay_Duration_64);
+         logic_uScriptAct_Delay_uScriptAct_Delay_64.In(logic_uScriptAct_Delay_Duration_64, logic_uScriptAct_Delay_SingleFrame_64);
          logic_uScriptAct_Delay_DrivenDelay_64 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -1344,6 +1352,8 @@ public class uScript_StressTest : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
          }
@@ -1380,12 +1390,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Monster_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Monster_UnityEngine_GameObject);
                logic_uScriptAct_DestroyComponent_Target_65 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_2_System_String);
+               properties.Add((System.String)local_2_System_String);
                logic_uScriptAct_DestroyComponent_ComponentName_65 = properties.ToArray();
             }
             {
@@ -1450,12 +1460,12 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Monster_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Monster_UnityEngine_GameObject);
                logic_uScriptAct_DestroyComponent_Target_68 = properties.ToArray();
             }
             {
                List<System.String> properties = new List<System.String>();
-               properties.Add(local_34_System_String);
+               properties.Add((System.String)local_34_System_String);
                logic_uScriptAct_DestroyComponent_ComponentName_68 = properties.ToArray();
             }
             {
@@ -1532,7 +1542,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Cover1_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Cover1_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1544,7 +1554,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Cover2_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Cover2_UnityEngine_GameObject);
                logic_uScriptAct_Toggle_Target_70 = properties.ToArray();
             }
             {
@@ -1585,7 +1595,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Cover1_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Cover1_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1597,7 +1607,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Cover2_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Cover2_UnityEngine_GameObject);
                logic_uScriptAct_Toggle_Target_70 = properties.ToArray();
             }
             {
@@ -1638,7 +1648,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Cover1_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Cover1_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_Cover2_UnityEngine_GameObject_previous != local_Cover2_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1650,7 +1660,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_Cover2_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_Cover2_UnityEngine_GameObject);
                logic_uScriptAct_Toggle_Target_70 = properties.ToArray();
             }
             {
@@ -1910,7 +1920,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_94_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_94_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_88_UnityEngine_GameObject_previous != local_88_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1922,7 +1932,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_88_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_88_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_45_UnityEngine_GameObject_previous != local_45_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1934,7 +1944,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_45_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_45_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_105_UnityEngine_GameObject_previous != local_105_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1946,7 +1956,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_105_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_105_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_26_UnityEngine_GameObject_previous != local_26_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -1958,7 +1968,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_26_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_26_UnityEngine_GameObject);
                logic_uScriptAct_LookAt_Target_83 = properties.ToArray();
             }
             {
@@ -2010,7 +2020,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_35_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_35_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_69_UnityEngine_GameObject_previous != local_69_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2022,7 +2032,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_69_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_69_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_0_UnityEngine_GameObject_previous != local_0_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2034,7 +2044,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_0_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_0_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_17_UnityEngine_GameObject_previous != local_17_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2046,7 +2056,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_17_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_17_UnityEngine_GameObject);
                {
                   //if our game object reference was changed then we need to reset event listeners
                   if ( local_6_UnityEngine_GameObject_previous != local_6_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -2058,7 +2068,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_6_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_6_UnityEngine_GameObject);
                logic_uScriptAct_LookAt_Target_89 = properties.ToArray();
             }
             {
@@ -2104,7 +2114,7 @@ public class uScript_StressTest : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_54_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_54_UnityEngine_GameObject);
                logic_uScriptAct_Teleport_Target_96 = properties.ToArray();
             }
             {
@@ -2193,12 +2203,12 @@ public class uScript_StressTest : uScriptLogic
          {
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_119_System_String);
+               properties.Add((System.Object)local_119_System_String);
                logic_uScriptAct_Concatenate_A_107 = properties.ToArray();
             }
             {
                List<System.Object> properties = new List<System.Object>();
-               properties.Add(local_9_System_Int32);
+               properties.Add((System.Object)local_9_System_Int32);
                logic_uScriptAct_Concatenate_B_107 = properties.ToArray();
             }
             {

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -126,8 +126,8 @@ public class DrawBox_Graph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_36 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_36 = UnityEngine.KeyCode.Mouse0;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_36 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_36 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_36 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_36 = true;
    
    //event nodes

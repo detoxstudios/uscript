@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -408,7 +408,7 @@ public class TeleportCube_TeleportGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_2_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_2_UnityEngine_GameObject);
                logic_uScriptAct_Teleport_Target_1 = properties.ToArray();
             }
             {
@@ -476,7 +476,7 @@ public class TeleportCube_TeleportGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_9_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_9_UnityEngine_GameObject);
                logic_uScriptAct_MoveToLocation_targetArray_4 = properties.ToArray();
             }
             {
@@ -518,7 +518,7 @@ public class TeleportCube_TeleportGraph : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_9_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_9_UnityEngine_GameObject);
                logic_uScriptAct_MoveToLocation_targetArray_4 = properties.ToArray();
             }
             {

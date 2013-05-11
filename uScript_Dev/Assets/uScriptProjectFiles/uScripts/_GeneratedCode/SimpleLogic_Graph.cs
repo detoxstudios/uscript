@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -42,8 +42,8 @@ public class SimpleLogic_Graph : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_3 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_3 = UnityEngine.KeyCode.Mouse1;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_3 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_3 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_3 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_3 = true;
    //pointer to script instanced logic node
    uScriptAct_SwitchCameras logic_uScriptAct_SwitchCameras_uScriptAct_SwitchCameras_5 = new uScriptAct_SwitchCameras( );

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2215
+//uScript Generated Code - Build 0.9.2275
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -48,26 +48,26 @@ public class FollowCamera_Character : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_8 = UnityEngine.KeyCode.W;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_8 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_8 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_8 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_8 = true;
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_10 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_10 = UnityEngine.KeyCode.S;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_10 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_10 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_10 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_10 = true;
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_12 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_12 = UnityEngine.KeyCode.D;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_12 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_12 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_12 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_12 = true;
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_14 = new uScriptAct_OnInputEventFilter( );
    UnityEngine.KeyCode logic_uScriptAct_OnInputEventFilter_KeyCode_14 = UnityEngine.KeyCode.A;
-   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_14 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyDown_14 = true;
+   bool logic_uScriptAct_OnInputEventFilter_KeyHeld_14 = true;
    bool logic_uScriptAct_OnInputEventFilter_KeyUp_14 = true;
    //pointer to script instanced logic node
    uScriptAct_IsometricCharacterController logic_uScriptAct_IsometricCharacterController_uScriptAct_IsometricCharacterController_15 = new uScriptAct_IsometricCharacterController( );
@@ -670,7 +670,7 @@ public class FollowCamera_Character : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_5_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_5_UnityEngine_GameObject);
                logic_FollowCamera_Camera_0 = properties.ToArray();
             }
          }
@@ -740,7 +740,7 @@ public class FollowCamera_Character : uScriptLogic
                      //setup new listeners
                   }
                }
-               properties.Add(local_5_UnityEngine_GameObject);
+               properties.Add((UnityEngine.GameObject)local_5_UnityEngine_GameObject);
                logic_FollowCamera_Camera_0 = properties.ToArray();
             }
          }
