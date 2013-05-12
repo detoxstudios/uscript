@@ -620,7 +620,7 @@ public static class uScriptGUI
       // This right-most column should appear to have an expanded width
       GUI.Label(new Rect(x, y, svRect.width, uScriptGUIStyle.ColumnHeaderHeight), columnType.Label, uScriptGUIStyle.ColumnHeader);
       //      GUI.Label(new Rect(x, y, _columnType.Width + 4 + 2, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, style);
-      //      GUI.Label(new Rect(x, y, svRect.width - _columnLabel.Width - _columnValue.Width - 22 + columnOffset.x, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, style);
+      //      GUI.Label(new Rect(x, y, svRect.width - _columnLabel.Width - columnValue.Width - 22 + columnOffset.x, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, style);
 
       // Update control focus changes
 
@@ -1299,12 +1299,12 @@ public static class uScriptGUI
       if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
       {
          //int spacing = 12; // 4 * 3
-         //int w = (_columnValue.Width - spacing) / 4;
-         //int p = (_columnValue.Width - spacing) % (w * 4);
-         //value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         //value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         //value.width = EditorGUILayout.FloatField(value.width, uScriptGUIStyle.propertyTextField, GUILayout.Width(w));
-         //value.height = EditorGUILayout.FloatField(value.height, uScriptGUIStyle.propertyTextField, GUILayout.Width(w + p));
+         //int w = (columnValue.Width - spacing) / 4;
+         //int p = (columnValue.Width - spacing) % (w * 4);
+         //value.x = EditorGUILayout.FloatField(value.x, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         //value.y = EditorGUILayout.FloatField(value.y, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         //value.width = EditorGUILayout.FloatField(value.width, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w));
+         //value.height = EditorGUILayout.FloatField(value.height, uScriptGUIStyle.PropertyTextField, GUILayout.Width(w + p));
 
          value = EditorGUILayout.EnumPopup(value, GUILayout.Width(columnValue.Width));
       }
@@ -1467,7 +1467,7 @@ public static class uScriptGUI
          if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
 #if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3)
-               textValue = EditorGUILayout.TextField(textValue, uScriptGUIStyle.propertyTextField, GUILayout.Width(_columnValue.Width));
+               textValue = EditorGUILayout.TextField(textValue, uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width));
       
                EndRow(textValue.GetType().ToString());
 
@@ -1496,7 +1496,7 @@ public static class uScriptGUI
 #if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3)
             //if we're not building with 3.4 or greater then default to the old one
 #pragma warning disable 618
-            unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(_columnValue.Width)) as UnityEngine.Object;
+            unityObject = EditorGUILayout.ObjectField(unityObject, type, GUILayout.Width(columnValue.Width)) as UnityEngine.Object;
 #pragma warning restore 618
 #else
             if (uScript.UnityVersion < 3.4f)
