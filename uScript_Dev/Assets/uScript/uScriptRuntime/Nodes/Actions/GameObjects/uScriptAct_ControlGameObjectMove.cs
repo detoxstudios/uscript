@@ -42,27 +42,27 @@ public class uScriptAct_ControlGameObjectMove : uScriptLogic
          switch (moveDirection)
          {
             case Direction.Forward:
-               movement = Vector3.forward * Speed;
+               movement = useLocal ? Target.transform.forward * Speed : Vector3.forward * Speed;
                break;
 
             case Direction.Backward:
-               movement = Vector3.back * Speed;
+               movement = useLocal ? Target.transform.forward * -Speed : Vector3.back * Speed;
                break;
 
             case Direction.Left:
-               movement = Vector3.left * Speed;
+               movement = useLocal ? Target.transform.right * -Speed : Vector3.left * Speed;
                break;
 
             case Direction.Right:
-               movement = Vector3.right * Speed;
+               movement = useLocal ? Target.transform.right * Speed : Vector3.right * Speed;
                break;
 
             case Direction.Up:
-               movement = Vector3.up * Speed;
+               movement = useLocal ? Target.transform.up * Speed : Vector3.up * Speed;
                break;
 
             case Direction.Down:
-               movement = Vector3.down * Speed;
+               movement = useLocal ? Target.transform.up * - Speed : Vector3.down * Speed;
                break;
 
             default:
