@@ -40,7 +40,7 @@ public class GenericMenuTestEditor : EditorWindow
       }
    }
 
-   [MenuItem("Test/GenericMenu Test Editor")]
+   [MenuItem("Tools/Detox Studios/Internal/GenericMenu Test Editor")]
    private static void Init()
    {
       // Get existing open window or if none, make a new one:

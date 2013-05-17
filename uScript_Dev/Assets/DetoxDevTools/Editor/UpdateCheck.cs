@@ -6,7 +6,7 @@ public class UpdateCheck : EditorWindow
    UpdateNotification.Result _updateResult = UpdateNotification.Result.CheckNeeded;
 
    // Add menu named "My Window" to the Window menu
-   [MenuItem ("Detox Tools/Internal/Check for Updates")]
+   [MenuItem("Tools/Detox Studios/Internal/Check for Updates")]
    static void Init()
    {
       // Get existing open window or if none, make a new one:
