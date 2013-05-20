@@ -1253,7 +1253,9 @@ namespace Detox.ScriptEditor
                        false == (name == "Get GameObjects By Tag") &&
                        false == (name == "Get Children By Tag") &&
                        false == (name == "Get Animations") &&
-                       false == (name == "Get All Children") )
+                       false == (name == "Get All Children") && 
+                       false == (name == "Get Children By Name") 
+                  )
                   {
                      linkTo.Type = linkTo.Type.Replace("[]", "");
                   }
