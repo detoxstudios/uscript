@@ -13,6 +13,7 @@
 //#define DETOX_STORE_BUILD //Don't forget LicenseWindow.cs
 //#define FREE_PLE_BUILD // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
 //#define FREE_BETA_BUILD
+//#define BASIC_BUILD
 
 using System;
 using System.Collections;
@@ -130,11 +131,14 @@ public class uScript : EditorWindow
 
    private Detox.FlowChart.Node m_FocusedNode = null;
 
+#if !BASIC_BUILD
    private Hashtable    m_EntityTypeHash = null;
    private EntityDesc []m_EntityTypes = null;
+   private string     []m_SzEntityTypes = null;
+#endif
+
    private LogicNode  []m_LogicTypes  = null;
    private string     []m_SzLogicTypes = null;
-   private string     []m_SzEntityTypes = null;
 
    private static Hashtable m_NodeParameterFields = new Hashtable( );
    private static Hashtable m_NodeParameterDescFields = new Hashtable( );
@@ -3735,8 +3739,10 @@ public class uScript : EditorWindow
 
    private void ClearEntityTypes()
    {
+#if !BASIC_BUILD
       m_EntityTypes = null;
       m_SzEntityTypes = null;
+#endif
    }
    
    private void ClearLogicTypes()
@@ -4702,6 +4708,9 @@ public class uScript : EditorWindow
 
    private EntityDesc[] PopulateEntityTypes(string[] requiredTypes)
    {
+      #if BASIC_BUILD
+         return new EntityDesc[0];
+      #else
       if ( null != m_EntityTypes ) 
       {
          if ( null != requiredTypes )
@@ -4959,6 +4968,7 @@ public class uScript : EditorWindow
       }
 
       return m_EntityTypes;
+   #endif
    }
 
    public string AutoAssignInstance(EntityNode entityNode)
