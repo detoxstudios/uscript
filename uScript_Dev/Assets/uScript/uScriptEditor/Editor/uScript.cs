@@ -9,11 +9,11 @@
 
 #define DEVELOPMENT_BUILD // Allows us to wrap features in progress. Used along with other BUILD settings.
 
-#define UNITY_STORE_BUILD //Don't forget LicenseWindow.cs
+//#define UNITY_STORE_BUILD //Don't forget LicenseWindow.cs
 //#define DETOX_STORE_BUILD //Don't forget LicenseWindow.cs
 //#define FREE_PLE_BUILD // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
 //#define FREE_BETA_BUILD
-//#define BASIC_BUILD
+#define BASIC_BUILD
 
 using System;
 using System.Collections;
@@ -56,6 +56,7 @@ public class uScript : EditorWindow
 
    static public string BuildName { get { return "Professional (Retail Beta 38)"; } }
    static public string BuildNamePLE { get { return "Personal Learning Edition (Retail Beta 38)"; } }
+   static public string BuildNameBasic { get { return "Basic (Retail Beta 38)"; } }
 
 #if FREE_PLE_BUILD
    static public string ProductName { get { return BuildNamePLE; } }
@@ -63,6 +64,9 @@ public class uScript : EditorWindow
 #elif UNITY_STORE_BUILD
    static public string ProductName { get { return BuildName; } }
    static public string ProductType { get { return "uScript_AssetStore"; } }
+#elif BASIC_BUILD
+   static public string ProductName { get { return BuildNameBasic; } }
+   static public string ProductType { get { return "uScript_Basic"; } }
 #else
    static public string ProductName { get { return BuildName; } }
    static public string ProductType { get { return "uScript_Retail"; } }
