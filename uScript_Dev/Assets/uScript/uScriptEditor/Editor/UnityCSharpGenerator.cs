@@ -1532,6 +1532,10 @@ namespace Detox.ScriptEditor
          {
             return "new UnityEngine.Ray( )";
          }
+         else if ("UnityEngine.Resolution" == type)
+         {
+            return "new UnityEngine.Resolution( )";
+         }
          else if ("UnityEngine.JointDrive" == type)
          {
             return "new UnityEngine.JointDrive( )";

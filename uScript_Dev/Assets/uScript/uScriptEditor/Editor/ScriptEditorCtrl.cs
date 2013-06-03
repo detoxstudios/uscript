@@ -1254,6 +1254,7 @@ namespace Detox.ScriptEditor
                        false == (name == "Get Children By Tag") &&
                        false == (name == "Get Animations") &&
                        false == (name == "Get All Children") && 
+                       false == (name == "Get Resolutions") && 
                        false == (name == "Get Children By Name") 
                   )
                   {

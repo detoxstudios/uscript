@@ -368,10 +368,15 @@ namespace Detox.ScriptEditor
                {
                   array[ i ] = values[i];
                }
-
+               
                return array;
             }
             catch { return new String[0]; }
+         }
+
+         if ( t == typeof(Resolution[]).ToString() )
+         {
+            return new Resolution[0];
          }
 
          System.Type eType = uScript.MasterComponent.GetType(t.Replace("[]", ""));
@@ -676,6 +681,11 @@ namespace Detox.ScriptEditor
             }
             catch { return ""; }
          }
+         if (t == typeof(Resolution[]).ToString() )
+         {
+            return "";
+         }
+
          if ( t == typeof(object[]).ToString() )
          {
             try
