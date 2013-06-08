@@ -3,17 +3,17 @@
 //   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
-//   The primary uScript ediotr logic.
+//   The primary uScript editor logic.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 #define DEVELOPMENT_BUILD // Allows us to wrap features in progress. Used along with other BUILD settings.
 
-//#define UNITY_STORE_BUILD //Don't forget LicenseWindow.cs
+#define UNITY_STORE_BUILD //Don't forget LicenseWindow.cs
 //#define DETOX_STORE_BUILD //Don't forget LicenseWindow.cs
 //#define FREE_PLE_BUILD // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
 //#define FREE_BETA_BUILD
-#define BASIC_BUILD
+//#define BASIC_BUILD
 
 using System;
 using System.Collections;
@@ -52,11 +52,11 @@ public class uScript : EditorWindow
    // #
 
    // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   static public string BuildNumber { get { return "0.9.2275"; } }
+   static public string BuildNumber { get { return "0.9.2346"; } }
 
-   static public string BuildName { get { return "Professional (Retail Beta 38)"; } }
-   static public string BuildNamePLE { get { return "Personal Learning Edition (Retail Beta 38)"; } }
-   static public string BuildNameBasic { get { return "Basic (Retail Beta 38)"; } }
+   static public string BuildName { get { return "Professional (Retail Beta 39)"; } }
+   static public string BuildNamePLE { get { return "Personal Learning Edition (Retail Beta 39)"; } }
+   static public string BuildNameBasic { get { return "Basic (Retail Beta 39)"; } }
 
 #if FREE_PLE_BUILD
    static public string ProductName { get { return BuildNamePLE; } }
