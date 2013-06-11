@@ -19,6 +19,6 @@ public class uScriptAct_GetResolutions : uScriptLogic
       )
    {
       resolutions = Screen.resolutions;
-      Debug.Log("returning " + resolutions.Length);
+      //Debug.Log("returning " + resolutions.Length);
    }
 }
