@@ -1,282 +1,152 @@
-using UnityEditor;
-using UnityEngine;
-using System.Collections;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UpdateNotification.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the UpdateNotification type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Net;
 using System.Text;
 
+using UnityEditor;
+
+using UnityEngine;
+
 public class UpdateNotification
 {
-   public enum Result
+   private static UpdateStatus updateStatus;
+
+   public enum UpdateStatus
    {
-      CheckNeeded,
+      None,
       ClientBuildCurrent,
       ClientBuildNewer,
       ClientBuildOlder,
+      UpdateClientError,
       UpdateServerError
    }
 
-   private static string _latestVersion = "Unknown";
-   public static string LatestVersion { get { return _latestVersion; } }
+   public static string LatestVersion { get; private set; }
 
-   private static string _webResponse = string.Empty;
-   public static string WebResponse { get { return _webResponse; } }
+   public static string WebResponse { get; private set; }
 
-   private static Result CheckForUpdate()
-   {
-      Result result = Result.CheckNeeded;
-      string resultDetails = string.Empty;
-
-      HttpWebRequest request = null;
-      HttpWebResponse response = null;
-
-      // Prepare the web page we will be asking for
-      request = WebRequest.Create("http://detoxstudios.com/download/versionCheck.php"
-                                 + "?productName="+WWW.EscapeURL(uScript.ProductType)
-                                 + "&productBuild="+WWW.EscapeURL(uScript.BuildNumber)
-                                 + "&platformName="+WWW.EscapeURL(Application.platform.ToString())
-                                 + "&platformBuild="+WWW.EscapeURL(Application.unityVersion)
-                                 + "&platformPro="+WWW.EscapeURL(uScript.isPro.ToString())) as HttpWebRequest;
-
-      // Execute the request
-      try
-      {
-         response = request.GetResponse() as HttpWebResponse;
-//         Debug.Log("Response Status Code: " + response.StatusCode.ToString() + "\n");
-      }
-      catch (WebException e)
-      {
-         // If a WebException is thrown, use the Response and Status properties
-         // of the exception to determine the response from the server.
-         result = Result.UpdateServerError;
-         _webResponse = string.Format( e.Status.ToString() );
-      }
-
-      // We will read data via the response stream
-      if ( response != null )
-      {
-         Stream resStream = response.GetResponseStream();
-
-         // Used to build entire result string
-         StringBuilder sb = new StringBuilder();
-   
-         // Used on each read operation
-         byte[] buf = new byte[8192];
-   
-   
-         string tempString = null;
-         int count = 0;
-   
-         do
-         {
-            // Fill the buffer with data
-            count = resStream.Read(buf, 0, buf.Length);
-   
-            // Make sure we read some data
-            if (count != 0)
-            {
-               // Translate from bytes to ASCII text
-               tempString = Encoding.ASCII.GetString(buf, 0, count);
-   
-               // Continue building the string
-               sb.Append(tempString);
-            }
-         } while (count > 0); // Any more data to read?
-   
-         _latestVersion = (sb.ToString() != string.Empty ? sb.ToString() : "Unknown");
-         _webResponse = sb.ToString();
-
-         // Close the streams and release the connections.  Failure to do so may
-         // cause the application to run out of connections.
-         resStream.Close();
-         response.Close();
-
-
-         // Analyze the results
-         string[] valueSegments;
-         string tmpValue;
-
-         int currentBuild;
-         int serverBuild;
-
-         // Get the current build number
-         valueSegments = uScript.BuildNumber.Split('.');
-         tmpValue = valueSegments[valueSegments.GetUpperBound(0)];
-         if (Int32.TryParse(tmpValue, out currentBuild) == false)
-         {
-            if (tmpValue == null) tmpValue = string.Empty;
-            resultDetails = string.Format("Attempted conversion of '{0}' failed.", tmpValue);
-            result = Result.UpdateServerError;
-         }
-   
-         // Get the server build number
-         valueSegments = _latestVersion.Split('.');
-         tmpValue = valueSegments[valueSegments.GetUpperBound(0)];
-         if (Int32.TryParse(tmpValue, out serverBuild) == false)
-         {
-            if (tmpValue == null) tmpValue = string.Empty;
-            resultDetails = string.Format("Attempted conversion of '{0}' failed.", tmpValue);
-            result = Result.UpdateServerError;
-         }
-
-         if (result != Result.UpdateServerError)
-         {
-            result = (currentBuild < serverBuild
-                     ? Result.ClientBuildOlder
-                     : (currentBuild > serverBuild
-                        ? Result.ClientBuildNewer
-                        : Result.ClientBuildCurrent));
-         }
-      }
-
-      // Handle error results
-      if (resultDetails != string.Empty)
-      {
-         if (result == Result.UpdateServerError)
-         {
-            Debug.LogWarning( resultDetails + '\n' + "Please report this issue to support@detoxstudios.com");
-         }
-         else
-         {
-            Debug.Log( resultDetails + '\n');
-         }
-      }
-
-      // Return success result
-      return result;
-   }
-
-
-
-
-   public static Result ManualCheck()
+   public static UpdateStatus ManualCheck()
    {
       // Perform a manual update check, even if the system is disabled
-//      Debug.Log("Performing a manual update check ...\n");
+      const string CheckForUpdates = "Check for Updates";
+      const string Okay = "Okay";
 
-      UpdateNotification.Result _updateResult;
-      _updateResult = UpdateNotification.CheckForUpdate();
+      var updateResult = CheckServerForUpdate();
 
       // Inform them of the results
-      string msg = string.Empty;
-      bool isAssetStoreProduct = uScript.ProductType == "uScript_AssetStore";
+      string msg;
+      var isAssetStoreProduct = uScript.ProductType == "uScript_AssetStore";
 
-      switch (_updateResult)
+      var yourVersion = string.Format("\tYour version: \t{0}\n", uScript.BuildNumber);
+      var latestVersion = string.Format("\tLatest version: \t{0}\n", LatestVersion);
+
+      switch (updateResult)
       {
-         case Result.ClientBuildCurrent:
-            msg = "The uScript Editor is up to date.\n"
-                + "\n"
-                + "\tCurrent version: \t" + uScript.BuildNumber + "\n";
-            EditorUtility.DisplayDialog("Check for Updates", msg, "Okay");
+         case UpdateStatus.ClientBuildCurrent:
+            msg = string.Format("The uScript Editor you are currently using is up to date.\n\n{0}", yourVersion);
+            EditorUtility.DisplayDialog(CheckForUpdates, msg, Okay);
             break;
 
-         case Result.ClientBuildNewer:
-            msg = "The uScript Editor is newer than the version publicly available.\n"
-                + "\n"
-                + "\tCurrent version: \t" + uScript.BuildNumber + "\n"
-                + "\tLatest version: \t\t" + UpdateNotification.LatestVersion + "\n";
-            EditorUtility.DisplayDialog("Check for Updates", msg, "Okay");
+         case UpdateStatus.ClientBuildNewer:
+            msg = string.Format("The uScript Editor you are currently using is newer than the version publicly available.\n\n{0}{1}", yourVersion, latestVersion);
+            EditorUtility.DisplayDialog(CheckForUpdates, msg, Okay);
             break;
-   
-         case Result.ClientBuildOlder:
-            if (isAssetStoreProduct)
-            {
-               msg = "A new version of uScript has been uploaded to the Unity Asset Store, "
-                   + "and should be available for download.\n";
-            }
-            else
-            {
-               msg = "There is a new version of uScript available for download from the "
-                   + "Detox Studios website.\n";
-            }
-            msg += "\n"
-                 + "\tCurrent version: \t" + uScript.BuildNumber + "\n"
-                 + "\tLatest version: \t\t" + UpdateNotification.LatestVersion + "\n";
-   
-            bool prompt = EditorUtility.DisplayDialog("uScript Update Available!", msg,
-                           (isAssetStoreProduct ? "Open Asset Store" : "Open Download Page"),
-                           "Okay");
 
-            // ... which will:
+         case UpdateStatus.ClientBuildOlder:
+            msg = isAssetStoreProduct
+                  ? "A new version of uScript has been uploaded to the Unity Asset Store, and should be available for download."
+                  : "There is a new version of uScript available for download from the Detox Studios website.";
+            msg = string.Format("{0}\n\n{1}{2}", msg, yourVersion, latestVersion);
+
+            var prompt = EditorUtility.DisplayDialog(
+               "uScript Update Available!",
+               msg,
+               isAssetStoreProduct ? "Open Asset Store" : "Open Download Page",
+               Okay);
+
             if (prompt)
             {
-               // "Open Download Page"
                if (isAssetStoreProduct)
                {
-                  UnityEditorInternal.AssetStore.Open("http://u3d.as/content/1808");
+                  UnityEditorInternal.AssetStore.Open("com.unity3d.kharma:content/1808");
                }
                else
                {
                   Application.OpenURL("http://detoxstudios.com/products/uscript/download/");
                }
             }
+
             break;
-   
-         case Result.UpdateServerError:
-            msg = "An update server error occurred:\n\t"
-                + _webResponse + "\n\n"
-                + "Please check again later.";
-            EditorUtility.DisplayDialog("Check for Updates", msg, "Okay");
+
+         case UpdateStatus.UpdateClientError:
+            msg = string.Format("The client experienced an error:\n\t{0}\n\nPlease report this issue to the Detox support team.", WebResponse);
+            EditorUtility.DisplayDialog(CheckForUpdates, msg, Okay);
+            break;
+
+         case UpdateStatus.UpdateServerError:
+            msg = string.Format("An update server error occurred:\n\t{0}\n\nPlease check again later.", WebResponse);
+            EditorUtility.DisplayDialog(CheckForUpdates, msg, Okay);
             break;
       }
 
-      return _updateResult;
+      return updateResult;
    }
 
-
-
-
-   public static Result StartupCheck()
+   public static UpdateStatus StartupCheck()
    {
-      //
       // Introduce the user to the update system on the first launch
-      //
-      Preferences _preferences = uScript.Preferences;
-      UpdateNotification.Result _updateResult = Result.CheckNeeded;
+      var preferences = uScript.Preferences;
+      var updateResult = UpdateStatus.None;
 
       // LastUpdateCheck will be 0 when uScript it first run, or when the uScriptSettings file is removed
-      if (_preferences.LastUpdateCheck <= 0)
+      if (preferences.LastUpdateCheck <= 0)
       {
-         bool enable = EditorUtility.DisplayDialog("Automatically check for uScript updates?",
-               "This update check will send basic, anonymous Unity and uScript information to our update server. No personally identifiable information is transmitted or collected.\n" +
-               "\n" +
-               "This service can be enable or disable at any time from within the uScript Preferences panel.\n",
-               "Enable", "Disable");
+         const string Message = "This update check will send basic, anonymous Unity and uScript information to our update server. No personally identifiable information is transmitted or collected.\n\nThis service can be enable or disable at any time from within the uScript Preferences panel.\n";
 
-         _preferences.LastUpdateCheck = int.Parse(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"));
-         _preferences.CheckForUpdate = enable;
-         _preferences.Save();
+         var enable = EditorUtility.DisplayDialog(
+            "Automatically check for uScript updates?",
+            Message,
+            "Enable",
+            "Disable");
+
+         preferences.LastUpdateCheck = int.Parse(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"));
+         preferences.CheckForUpdate = enable;
+         preferences.Save();
       }
 
-      //
       // If the update system is enabled, we *might* check for update availability
-      //
-      if (_preferences.CheckForUpdate)
+      if (preferences.CheckForUpdate)
       {
          // Only check once per day
-         int today = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-         if (_preferences.LastUpdateCheck < today)
+         var today = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+         if (preferences.LastUpdateCheck < today)
          {
 //            Debug.Log("Performing an update check ...\n");
 
-            _updateResult = UpdateNotification.CheckForUpdate();
+            updateResult = CheckServerForUpdate();
 
             // Update the date so we won't check again until tomorrow
-            _preferences.LastUpdateCheck = today;
-            _preferences.Save();
+            preferences.LastUpdateCheck = today;
+            preferences.Save();
 
             // Inform the user of a new version only if they did not previously
             // choose to skip the update
-            if (_updateResult == UpdateNotification.Result.ClientBuildOlder
-//               || _updateResult == UpdateNotification.Result.ClientBuildCurrent
-               && _preferences.IgnoreUpdateBuild != UpdateNotification.LatestVersion)
+            if (updateResult == UpdateStatus.ClientBuildOlder
+//               || _updateResult == UpdateNotification.UpdateStatus.ClientBuildCurrent
+               && preferences.IgnoreUpdateBuild != LatestVersion)
             {
 //               Debug.Log("\tNew version detected!\n");
 
-               string msg = string.Empty;
-               bool isAssetStoreProduct = uScript.ProductType == "uScript_AssetStore";
+               string msg;
+               var isAssetStoreProduct = uScript.ProductType == "uScript_AssetStore";
 
                if (isAssetStoreProduct)
                {
@@ -288,25 +158,27 @@ public class UpdateNotification
                   msg = "There is a new version of uScript available for download from the "
                       + "Detox Studios website.\n";
                }
-               msg += "\n"
-                    + "\tCurrent version: \t" + uScript.BuildNumber + "\n"
-                    + "\tLatest version: \t\t" + UpdateNotification.LatestVersion
-                    + "\n";
 
+               msg += "\n"
+                    + "\tYour version: \t" + uScript.BuildNumber + "\n"
+                    + "\tLatest version: \t\t" + LatestVersion
+                    + "\n";
 
                // display a dialog with the following options
                //    Skip this Update
                //    Remind Again in 7 Days
                //    Open Download Page
 
-               int prompt = EditorUtility.DisplayDialogComplex("uScript Update Available!", msg,
-                              (isAssetStoreProduct ? "Open Asset Store" : "Open Download Page"),
-                              "Skip this Update", "Remind in 7 Days");
+               var prompt = EditorUtility.DisplayDialogComplex(
+                  "uScript Update Available!",
+                  msg,
+                  isAssetStoreProduct ? "Open Asset Store" : "Open Download Page",
+                  "Skip this Update",
+                  "Remind in 7 Days");
 
                // ... which will:
                if (prompt == 0)
                {
-                  // "Open Download Page"
                   if (isAssetStoreProduct)
                   {
                      UnityEditorInternal.AssetStore.Open("http://u3d.as/content/1808");
@@ -318,20 +190,225 @@ public class UpdateNotification
                }
                else if (prompt == 1)
                {
-                  // "Skip this update"
-                  _preferences.IgnoreUpdateBuild = UpdateNotification.LatestVersion;
-                  _preferences.Save();
+                  preferences.IgnoreUpdateBuild = LatestVersion;
+                  preferences.Save();
                }
                else
                {
-                  // "Remind Again in 7 Days"
-                  _preferences.LastUpdateCheck = int.Parse(DateTime.Now.AddDays(7).ToString("yyyyMMdd"));
-                  _preferences.Save();
+                  preferences.LastUpdateCheck = int.Parse(DateTime.Now.AddDays(7).ToString("yyyyMMdd"));
+                  preferences.Save();
                }
             }
          }
       }
-      return _updateResult;
+
+      return updateResult;
    }
 
+   /// <summary>
+   /// Checks with the server to see if an update is available, using the client's current build information for comparison.
+   /// </summary>
+   /// <returns>The result of the check.</returns>
+   private static UpdateStatus CheckServerForUpdate()
+   {
+      var httpWebRequest = CreateWebRequest();
+      if (httpWebRequest != null)
+      {
+         var httpWebResponse = SubmitWebRequest(httpWebRequest);
+         if (httpWebResponse != null)
+         {
+            if (ProcessWebResponse(httpWebResponse) == UpdateStatus.None)
+            {
+               // Release the connections.  Failure to do so may cause the application to run out of connections.
+               httpWebResponse.Close();
+
+               // Analyze the results
+               int currentBuild;
+               int serverBuild;
+
+               var errorMessage = string.Empty;
+
+               // Get the current build number
+               var valueSegments = uScript.BuildNumber.Split('.');
+               var tmpValue = valueSegments[valueSegments.GetUpperBound(0)];
+               if (int.TryParse(tmpValue, out currentBuild) == false)
+               {
+                  if (tmpValue == null)
+                  {
+                     tmpValue = string.Empty;
+                  }
+
+                  errorMessage = string.Format("Attempted conversion of '{0}' failed.", tmpValue);
+                  updateStatus = UpdateStatus.UpdateServerError;
+               }
+
+               // Get the server build number
+               //         valueSegments = latestVersion.Split('.');
+               valueSegments = LatestVersion.Split('.');
+               tmpValue = valueSegments[valueSegments.GetUpperBound(0)];
+               if (int.TryParse(tmpValue, out serverBuild) == false)
+               {
+                  if (tmpValue == null)
+                  {
+                     tmpValue = string.Empty;
+                  }
+
+                  errorMessage = string.Format("Attempted conversion of '{0}' failed.", tmpValue);
+                  updateStatus = UpdateStatus.UpdateServerError;
+               }
+
+               if (updateStatus != UpdateStatus.UpdateServerError)
+               {
+                  updateStatus = currentBuild < serverBuild
+                              ? UpdateStatus.ClientBuildOlder
+                              : (currentBuild > serverBuild
+                                    ? UpdateStatus.ClientBuildNewer
+                                    : UpdateStatus.ClientBuildCurrent);
+               }
+
+               // Handle error results
+               if (errorMessage != string.Empty)
+               {
+                  if (updateStatus == UpdateStatus.UpdateServerError)
+                  {
+                     Debug.LogWarning(
+                        string.Format("{0}\nPlease report this issue to support@detoxstudios.com", errorMessage));
+                  }
+                  else
+                  {
+                     Debug.Log(string.Format("{0}\n", errorMessage));
+                  }
+               }
+            }
+         }
+      }
+
+      // Return success result
+      return updateStatus;
+   }
+
+   private static WebRequest CreateWebRequest()
+   {
+      updateStatus = UpdateStatus.None;
+      WebResponse = null;
+
+      WebRequest httpWebRequest = null;
+
+      try
+      {
+         httpWebRequest =
+            WebRequest.Create(
+               string.Format(
+                  "http://detoxstudios.com/download/versionCheck.php?productName={0}&productBuild={1}&platformName={2}&platformBuild={3}&platformPro={4}",
+                  WWW.EscapeURL(uScript.ProductType),
+                  WWW.EscapeURL(uScript.BuildNumber),
+                  WWW.EscapeURL(Application.platform.ToString()),
+                  WWW.EscapeURL(Application.unityVersion),
+                  WWW.EscapeURL(uScript.IsUnityPro.ToString()))) as HttpWebRequest;
+      }
+      catch (Exception e)
+      {
+         WebResponse = string.Format(e.Message);
+      }
+
+      if (httpWebRequest == null)
+      {
+         if (string.IsNullOrEmpty(WebResponse))
+         {
+            WebResponse = string.Format("Failed to create web request.");
+         }
+
+         updateStatus = UpdateStatus.UpdateClientError;
+      }
+
+      return httpWebRequest;
+   }
+
+   private static UpdateStatus ProcessWebResponse(WebResponse httpWebResponse)
+   {
+      System.IO.Stream responseStream = null;
+
+      try
+      {
+         responseStream = httpWebResponse.GetResponseStream();
+      }
+      catch (Exception e)
+      {
+         WebResponse = string.Format(e.Message);
+      }
+
+      if (responseStream == null)
+      {
+         if (string.IsNullOrEmpty(WebResponse))
+         {
+            WebResponse = string.Format("Failed to get a response stream.");
+         }
+
+         updateStatus = UpdateStatus.UpdateServerError;
+      }
+      else
+      {
+         // Used to build entire result string
+         var sb = new StringBuilder();
+
+         // Used on each read operation
+         var buf = new byte[8192];
+
+         int count;
+
+         do
+         {
+            // Fill the buffer with data
+            count = responseStream.Read(buf, 0, buf.Length);
+
+            // Make sure we read some data
+            if (count == 0)
+            {
+               continue;
+            }
+
+            // Translate from bytes to ASCII text
+            var tempString = Encoding.ASCII.GetString(buf, 0, count);
+
+            // Continue building the string
+            sb.Append(tempString);
+         }
+         while (count > 0); // Any more data to read?
+
+         LatestVersion = sb.ToString() != string.Empty ? sb.ToString() : "Unknown";
+         WebResponse = sb.ToString();
+
+         // Close the stream.  Failure to do so may cause the application to run out of connections.
+         responseStream.Close();
+      }
+
+      return updateStatus;
+   }
+
+   private static HttpWebResponse SubmitWebRequest(WebRequest httpWebRequest)
+   {
+      HttpWebResponse httpWebResponse = null;
+
+      try
+      {
+         httpWebResponse = httpWebRequest.GetResponse() as HttpWebResponse;
+      }
+      catch (WebException e)
+      {
+         // If a WebException is thrown, use the Response and Status properties of the exception to determine the response from the server.
+         WebResponse = string.Format(e.Status.ToString());
+      }
+
+      if (httpWebResponse == null)
+      {
+         if (string.IsNullOrEmpty(WebResponse))
+         {
+            WebResponse = string.Format("Failed to get a web response.");
+         }
+
+         updateStatus = UpdateStatus.UpdateServerError;
+      }
+
+      return httpWebResponse;
+   }
 }

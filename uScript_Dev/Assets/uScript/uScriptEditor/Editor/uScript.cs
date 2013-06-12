@@ -851,11 +851,17 @@ public class uScript : EditorWindow
       m_ForceCodeValidation = true;
    }
 
-
-   public static bool isPro
+   public static bool IsUnityPro
    {
       // Test for Unity Pro - Unity 3.1 Indie does not support RenderTextures
-      get { return SystemInfo.supportsRenderTextures; }
+      get
+      {
+#if (UNITY_3_5 || UNITY_4_0)
+         return SystemInfo.supportsRenderTextures;
+#else
+         return Application.HasProLicense();
+#endif
+      }
    }
 
    private string m_CurrentBreakpoint = "";
