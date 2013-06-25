@@ -897,7 +897,8 @@ public class uScript : EditorWindow
       isLicenseAccepted = true;
 #endif
 
-      if ( EditorApplication.isPlaying )
+
+       if ( EditorApplication.isPlaying )
       {
          //if the current breakpoint has changed we need to repaint
          //so the node visuals are properly reflected
@@ -921,6 +922,7 @@ public class uScript : EditorWindow
          //when they last undid
          UndoComponent.UndoNumber = m_UndoNumber;
       }
+
 
       // Update the reference panel with the node palette's hot selection.
       uScriptGUIPanelReference.Instance.hotSelection = uScriptGUIPanelPalette.Instance._hotSelection;
@@ -1034,8 +1036,14 @@ public class uScript : EditorWindow
 
       if (_wasHierarchyChanged)
       {
-         _wasHierarchyChanged = false;
-         OpenFromCache( );
+         //Unity calls HierarchyChanged all the time
+         //while the app is playing, we need to ignore this
+         //so uscript isn't constantly being reopened.
+         if (false == Application.isPlaying)
+         {
+             _wasHierarchyChanged = false;
+            OpenFromCache( );
+         }
       }
 
       if (true == m_WantsCopy)
@@ -1096,7 +1104,7 @@ public class uScript : EditorWindow
          _pendingNodeSignature = "";
       }
 
-      if (_requestedCloseMap)
+       if (_requestedCloseMap)
       {
          _requestedCloseMap = false;
 
