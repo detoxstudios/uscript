@@ -1,7 +1,7 @@
-//#define UNITY_STORE_PRO
+#define UNITY_STORE_PRO
 //#define UNITY_STORE_BASIC
 //#define DETOX_STORE_PRO
-#define DETOX_STORE_BASIC
+//#define DETOX_STORE_BASIC
 //#define DETOX_STORE_PLE
 //#define CLOSED_BETA
 
