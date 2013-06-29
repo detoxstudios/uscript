@@ -7,13 +7,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-#define DEVELOPMENT_BUILD // Allows us to wrap features in progress. Used along with other BUILD settings.
+//#define DEVELOPMENT_BUILD // Allows us to wrap features in progress. Used along with other BUILD settings.
 
-#define UNITY_STORE_BUILD //Don't forget LicenseWindow.cs
-//#define DETOX_STORE_BUILD //Don't forget LicenseWindow.cs
-//#define FREE_PLE_BUILD // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
-//#define FREE_BETA_BUILD
-//#define BASIC_BUILD
+//#define UNITY_STORE_PRO //Don't forget LicenseWindow.cs
+//#define UNITY_STORE_BASIC //Don't forget LicenseWindow.cs
+//#define DETOX_STORE_PRO //Don't forget LicenseWindow.cs
+#define DETOX_STORE_BASIC //Don't forget LicenseWindow.cs
+//#define DETOX_STORE_PLE // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
+//#define CLOSED_BETA
+
+
 
 using System;
 using System.Collections;
@@ -58,13 +61,13 @@ public class uScript : EditorWindow
    static public string BuildNamePLE { get { return "Personal Learning Edition (Retail Beta 40)"; } }
    static public string BuildNameBasic { get { return "Basic (Retail Beta 40)"; } }
 
-#if FREE_PLE_BUILD
+#if DETOX_STORE_PLE
    static public string ProductName { get { return BuildNamePLE; } }
    static public string ProductType { get { return "uScript_PLE"; } }
-#elif UNITY_STORE_BUILD
+#elif UNITY_STORE_PRO
    static public string ProductName { get { return BuildName; } }
    static public string ProductType { get { return "uScript_AssetStore"; } }
-#elif BASIC_BUILD
+#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
    static public string ProductName { get { return BuildNameBasic; } }
    static public string ProductType { get { return "uScript_Basic"; } }
 #else
@@ -135,7 +138,9 @@ public class uScript : EditorWindow
 
    private Detox.FlowChart.Node m_FocusedNode = null;
 
-#if !BASIC_BUILD
+#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
+
+#else
    private Hashtable    m_EntityTypeHash = null;
    private EntityDesc []m_EntityTypes = null;
    private string     []m_SzEntityTypes = null;
@@ -643,7 +648,7 @@ public class uScript : EditorWindow
 
       m_ScriptEditorCtrl = null;
 
-      #if FREE_BETA_BUILD // See if expiration date and build cap should be used. Not needed for commercial version.
+      #if CLOSED_BETA // See if expiration date and build cap should be used. Not needed for commercial version.
        {
             //if ( Application.unityVersion == RequiredUnityBuild || Application.unityVersion == RequiredUnityBetaBuild || Application.unityVersion == RequiredUnityBetaBuildPrevious )
             if (Application.unityVersion.Contains(LastUnityBuild) || Application.unityVersion.Contains(CurrentUnityBuild))
@@ -855,11 +860,11 @@ public class uScript : EditorWindow
    {
       // Test for Unity Pro - Unity 3.1 Indie does not support RenderTextures
       get
-      {
-#if (UNITY_3_5 || UNITY_4_0)
+       {
+#if (UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_4_0)
          return SystemInfo.supportsRenderTextures;
 #else
-         return Application.HasProLicense();
+           return Application.HasProLicense();
 #endif
       }
    }
@@ -879,7 +884,7 @@ public class uScript : EditorWindow
 
 
 
-#if (!UNITY_STORE_BUILD)
+#if !(UNITY_STORE_PRO || UNITY_STORE_BASIC)
       // Initialize the LicenseWindow here if needed. Doing it during OnGUI may
       // cause issues, such as null exception errors and reports that OnGUI calls
       // are being made outside of OnGUI.
@@ -3757,7 +3762,9 @@ public class uScript : EditorWindow
 
    private void ClearEntityTypes()
    {
-#if !BASIC_BUILD
+#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
+       
+#else
       m_EntityTypes = null;
       m_SzEntityTypes = null;
 #endif
@@ -4726,9 +4733,12 @@ public class uScript : EditorWindow
 
    private EntityDesc[] PopulateEntityTypes(string[] requiredTypes)
    {
-      #if BASIC_BUILD
-         return new EntityDesc[0];
-      #else
+
+#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
+
+       return new EntityDesc[0];
+
+#else
       if ( null != m_EntityTypes ) 
       {
          if ( null != requiredTypes )
@@ -4986,7 +4996,7 @@ public class uScript : EditorWindow
       }
 
       return m_EntityTypes;
-   #endif
+#endif
    }
 
    public string AutoAssignInstance(EntityNode entityNode)

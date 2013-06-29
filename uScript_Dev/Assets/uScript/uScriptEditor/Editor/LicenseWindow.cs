@@ -1,10 +1,11 @@
-#define UNITY_STORE_BUILD
-//#define DETOX_STORE_BUILD
-//#define DETOX_STORE_BASIC_BUILD
-//#define FREE_PLE_BUILD
-//#define FREE_BETA_BUILD
+//#define UNITY_STORE_PRO
+//#define UNITY_STORE_BASIC
+//#define DETOX_STORE_PRO
+#define DETOX_STORE_BASIC
+//#define DETOX_STORE_PLE
+//#define CLOSED_BETA
 
-#if !(UNITY_STORE_BUILD)
+#if !(UNITY_STORE_PRO || UNITY_STORE_BASIC)
 
 using UnityEditor;
 using UnityEngine;
@@ -256,13 +257,13 @@ Should you have any questions concerning this EULA, or if you desire to contact 
                // prevent the help TextArea from getting focus
                GUI.SetNextControlName("EULA");
 
-#if DETOX_STORE_BUILD
+#if DETOX_STORE_PRO
                GUILayout.TextArea(_licenseText, uScriptGUIStyle.ReferenceText);
-#elif FREE_BETA_BUILD
+#elif CLOSED_BETA
                GUILayout.TextArea(_licenseText, uScriptGUIStyle.ReferenceText);
-#elif FREE_PLE_BUILD
+#elif DETOX_STORE_PLE
                GUILayout.TextArea(_licenseTextPLE, uScriptGUIStyle.ReferenceText);
-#elif DETOX_STORE_BASIC_BUILD
+#elif DETOX_STORE_BASIC
                GUILayout.TextArea(_licenseTextBasic, uScriptGUIStyle.ReferenceText);
 #endif
                if (GUI.GetNameOfFocusedControl() == "EULA")

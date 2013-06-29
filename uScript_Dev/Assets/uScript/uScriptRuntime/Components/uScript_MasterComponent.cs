@@ -2,7 +2,7 @@
 // (C) 2011 Detox Studios LLC
 // Desc: The master uScript component. This class is also used as a data transport class between the uScript window and the uScriptBackgroundProcess.
 
-//#define FREE_PLE_BUILD
+//#define DETOX_STORE_PLE
 
 using UnityEngine;
 using System;
@@ -69,7 +69,7 @@ public class uScript_MasterComponent : MonoBehaviour
    }
 
 
-#if FREE_PLE_BUILD
+#if DETOX_STORE_PLE
    public static string Version = "1.PLE";
 
    // This created the Texture2D variable and stores the watermark bytes in string format created by the watermark tool
@@ -87,7 +87,7 @@ public class uScript_MasterComponent : MonoBehaviour
          m_LatestMasterComponent = this;
       }
 
-#if FREE_PLE_BUILD
+#if DETOX_STORE_PLE
       // Initialize the Watermark variable
       WatermarkTexture = new Texture2D(256, 64, TextureFormat.RGBA32, false);
 
@@ -195,7 +195,7 @@ public class uScript_MasterComponent : MonoBehaviour
 #endif
 //END BREAKPOINTS
 
-#if FREE_PLE_BUILD
+#if DETOX_STORE_PLE
    void OnGUI()
    {
       // Draw the PLE watermark
