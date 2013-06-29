@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-//#define DEVELOPMENT_BUILD // Allows us to wrap features in progress. Used along with other BUILD settings.
+#define DEVELOPMENT_BUILD // Allows us to wrap features in progress. Used along with other BUILD settings.
 
 //#define UNITY_STORE_PRO //Don't forget LicenseWindow.cs
 //#define UNITY_STORE_BASIC //Don't forget LicenseWindow.cs
@@ -55,7 +55,7 @@ public class uScript : EditorWindow
    // #
 
    // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   static public string BuildNumber { get { return "0.9.2357"; } }
+   static public string BuildNumber { get { return "0.9.2359"; } }
 
    static public string BuildName { get { return "Professional (Retail Beta 40)"; } }
    static public string BuildNamePLE { get { return "Personal Learning Edition (Retail Beta 40)"; } }

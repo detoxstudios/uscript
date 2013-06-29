@@ -2,7 +2,7 @@
 // (C) 2010 Detox Studios LLC
 // Desc: uScript's configuration file. Edit settings here to configure the uScript visual scripting tool.
 
-//#define ENABLE_DEBUG_LOG
+#define ENABLE_DEBUG_LOG
 
 // Build reminders:
 // 2. Increment build number
