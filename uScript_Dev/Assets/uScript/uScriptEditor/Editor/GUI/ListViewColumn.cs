@@ -1,96 +1,141 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ListViewColumn.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the ListViewColumn type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Detox.Editor.GUI
 {
    using System;
-   using System.Collections;
+
    using UnityEngine;
 
    public class ListViewColumn
    {
       // Constant Fields
-      private const int MIN_WIDTH = 20;
-      private const int MAX_WIDTH = 2000;
+      private const int AbsoluteMinWidth = 20;
+      private const int AbsoluteMaxWidth = 2000;
 
       // Fields
-      private int _maxWidth;
-      private int _minWidth;
-      private int _width;
-      private Rect _position;
+      private int maxWidth;
+      private int minWidth;
+      private float width;
 
       // Constructors
-      public ListViewColumn(string name, GUIContent content, int width, int minWidth, int maxWidth, bool isResizeable)
+      public ListViewColumn(string id)
       {
-         Name = name;
-
-         Content = (content != null ? content : GUIContent.none);
-
-         MinWidth = minWidth;
-         MaxWidth = maxWidth;
-         Width = (width == 0 ? MaxWidth : width);
-         IsResizeable = isResizeable;
+         this.ID = id;
       }
 
-      // Finalizers (Destructors)
-
-      // Delegates
-
-      // Events
-
       // Enums
-
-      // Interfaces
+      public enum LayoutMethodOption
+      {
+         Fixed,
+         Fluid,
+         Custom
+      }
 
       // Properties
-      public GUIContent Content { get; private set; }
+      public GUIContent Content { get; set; }
+
+      public bool IsSelectable { get; set; }
 
       public bool IsSortDescending { get; set; }
-      public bool IsResizeable { get; set; }
 
-//      public ListView ListView { get; private set; }
+      public bool IsSortDirectionFixed { get; set; }
+
+      public bool IsFixed
+      {
+         get
+         {
+            return this.LayoutMethod == LayoutMethodOption.Fixed;
+         }
+      }
+
+      public bool IsFluid
+      {
+         get
+         {
+            return this.LayoutMethod == LayoutMethodOption.Fluid;
+         }
+      }
+
+      public bool IsResizeable
+      {
+         get
+         {
+            return this.LayoutMethod == LayoutMethodOption.Custom;
+         }
+      }
+
+      ////public ListView ListView { get; private set; }
+
+      public LayoutMethodOption LayoutMethod { get; set; }
 
       public int MaxWidth
       {
-         get { return _maxWidth; }
+         get
+         {
+            return this.maxWidth;
+         }
+
          set
          {
-            _maxWidth = Math.Min(value, MAX_WIDTH);
-            if (_minWidth > _maxWidth)
+            this.maxWidth = Math.Min(value, AbsoluteMaxWidth);
+            if (this.minWidth > this.maxWidth)
             {
-               MinWidth = _maxWidth;
+               this.MinWidth = this.maxWidth;
+            }
+            else
+            {
+               this.Width = this.width;
             }
          }
       }
 
       public int MinWidth
       {
-         get { return _minWidth; }
+         get
+         {
+            return this.minWidth;
+         }
+
          set
          {
-            _minWidth = Math.Max(value, MIN_WIDTH);
-            if (_maxWidth < _minWidth)
+            this.minWidth = Math.Max(value, AbsoluteMinWidth);
+            if (this.maxWidth < this.minWidth)
             {
-               MaxWidth = _minWidth;
+               this.MaxWidth = this.minWidth;
+            }
+            else
+            {
+               this.Width = this.width;
             }
          }
       }
 
-      public string Name { get; private set; }
+      public string ID { get; private set; }
 
-      public Rect Position
+      public Rect Position { get; set; }
+
+      public float Width
       {
-         get { return _position; }
-         set { _position = value; }
-      }
+         get
+         {
+            return this.width;
+         }
 
-      public bool Selectable { get; set; }
-
-      public int Width
-      {
-         get { return _width; }
          set
          {
-            _width = Math.Max(MinWidth, Math.Min(MaxWidth, value));
+            //this.width = Math.Max(this.MinWidth, Math.Min(this.MaxWidth, value));
+            this.width = Math.Max(this.MinWidth, value);
          }
       }
+
+      public float DynamicWidth { get; set; }
 
       // Indexers
 
@@ -99,7 +144,6 @@ namespace Detox.Editor.GUI
       // Structs
 
       // Classes
-
 
       // TODO: setup flags or an enum to handle
       //    STRETCH, FIXED_WIDTH, RESIZABLE, LOCK-RIGHT (or have a property for this ... LastColumnIsRightJustified)
@@ -118,5 +162,4 @@ namespace Detox.Editor.GUI
 
       // TODO: Add support for expanded width on the right-most column
    }
-
 }
