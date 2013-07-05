@@ -21,6 +21,8 @@ using UnityEditor;
 
 using UnityEngine;
 
+using Object = System.Object;
+
 public static class uScriptGUI
 {
    // === Constants ==================================================================
@@ -488,6 +490,11 @@ public static class uScriptGUI
       return assetPath;
    }
 
+   public static bool IsGeneratedScriptMissing(string scriptName)
+   {
+      return uScript.GetAssetInstanceID(scriptName, typeof(TextAsset)) == -1;
+   }
+
    public static bool PingObject(string path, Type type)
    {
       var instanceID = uScript.GetAssetInstanceID(path, type);
@@ -500,17 +507,97 @@ public static class uScriptGUI
       return true;
    }
 
-   public static void PingGeneratedScript(string scriptName)
+   public static bool PingGeneratedScript(string scriptName)
    {
-      var scriptPath = uScript.Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6) + "/" + scriptName + ".cs";
-      if (PingObject(scriptPath, typeof(TextAsset)) == false)
+      var assetPath = uScript.Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6) + "/" + scriptName + ".cs";
+      if (PingObject(assetPath, typeof(TextAsset)) == false)
       {
          // Whenever the user presses the "Source" button for a given script in the uScripts Panel,
          // if the source file is not found (because it was deleted while uScript was running),
          // the Dictionary cache should be updated for that script.
          uScript.Instance.SetStaleState(scriptName, true);
+         return false;
       }
+
+      return true;
    }
+
+   public static bool PingScene(string assetPath)
+   {
+      var obj = AssetDatabase.LoadMainAssetAtPath(assetPath);
+      if (obj == null)
+      {
+         Debug.LogWarning("Could not find \"" + assetPath + "\"\n");
+         return false;
+      }
+
+      EditorGUIUtility.PingObject(obj.GetInstanceID());
+      return true;
+   }
+
+
+   public static bool PingScript(string assetPath)
+   {
+      assetPath = uScript.Preferences.UserScripts.Substring(Application.dataPath.Length - 6) + "/" + assetPath;
+      var obj = AssetDatabase.LoadMainAssetAtPath(assetPath);
+      if (obj == null)
+      {
+         Debug.LogWarning("Could not find \"" + assetPath + "\"\n");
+         return false;
+      }
+
+      EditorGUIUtility.PingObject(obj.GetInstanceID());
+      return true;
+   }
+
+   public static string FixSlashes(string s)
+   {
+      // This may not longer be needed. When did Unity switch to using only fowardslashes?
+      const string ForwardSlash = "/";
+      const string BackSlash = "\\";
+
+      return s.Replace(BackSlash, ForwardSlash);
+   }
+
+   /// <summary>
+   /// Given a path to a file system object, remove everything in the path above the project Assets folder. The resulting path should work better with the Unity API.
+   /// </summary>
+   /// <param name="pathName"></param>
+   /// <returns></returns>
+   public static string GetRelativeAssetPath(string pathName)
+   {
+      //dataPath uses forward slashes on all platforms now
+      return FixSlashes(pathName).Replace(Application.dataPath, "Assets");
+   }
+
+   /// <summary>
+   /// Given a directory and a search filter, return a list of file references. This function may not work well with file system "hard links"
+   /// </summary>
+   /// <param name="directoryInfo"></param>
+   /// <param name="searchFor"></param>
+   /// <returns></returns>
+   public static List<FileInfo> GetFilesFromDirectory(DirectoryInfo directoryInfo, string searchFor)
+   {
+      var files = directoryInfo.GetFiles(searchFor).ToList();
+
+      // Recurse sub-directories
+      var directories = directoryInfo.GetDirectories();
+      foreach (var di in directories)
+      {
+         files.AddRange(GetFilesFromDirectory(di, searchFor));
+      }
+
+      return files;
+   }
+
+
+
+
+
+
+
+
+
 
    public static string GetControlName()
    {
@@ -2516,7 +2603,7 @@ public static class uScriptGUI
       PanelLeftWidth = 200;
       PanelPropertiesHeight = 250;
       PanelPropertiesWidth = 500;
-      PanelScriptsWidth = 400;
+      PanelScriptsWidth = 250;
 
 //      Rect rectArea = new Rect(0, 0, uScript.Instance.position.width, uScript.Instance.position.height /* - statusbarHeight */);
 

@@ -1249,13 +1249,17 @@ public class uScript : EditorWindow
       }
    }
 
-
-   void OnHierarchyChange()
+   internal void OnHierarchyChange()
    {
       _wasHierarchyChanged = true;
       uScriptGUIPanelPalette.Instance._panelFilterText = string.Empty;
    }
 
+   internal void OnProjectChange()
+   {
+      Detox.Editor.GUI.PanelScript.Instance.RefreshSourceState();
+      Detox.Editor.GUI.PanelScript.Instance.RebuildListContents();
+   }
 
    void OnGUI()
    {
@@ -2542,7 +2546,8 @@ public class uScript : EditorWindow
          DrawGUIVerticalDivider();
          SetMouseRegion(MouseRegion.HandleReference);//, -3, 3, 6, -3 );
 
-         uScriptGUIPanelScript.Instance.Draw();
+//         uScriptGUIPanelScript.Instance.Draw();
+         Detox.Editor.GUI.PanelScript.Instance.Draw();
       }
       EditorGUILayout.EndHorizontal();
    }
