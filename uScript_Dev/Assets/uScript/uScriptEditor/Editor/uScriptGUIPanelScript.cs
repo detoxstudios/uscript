@@ -1,238 +1,197 @@
-using UnityEngine;
-using UnityEditor;
-using System;
-using System.Collections;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="uScriptGUIPanelScript.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the uScriptGUIPanelScript type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 using System.Collections.Generic;
-using System.Reflection;
 
-using Detox.Drawing;
-using Detox.FlowChart;
-using Detox.ScriptEditor;
+using UnityEditor;
 
-//using Detox.Data.Tools;
-//using Detox.Windows.Forms;
-//using System.Linq;
+using UnityEngine;
 
-
-
-
-public sealed class uScriptGUIPanelScript: uScriptGUIPanel
+public sealed class uScriptGUIPanelScript : uScriptGUIPanel
 {
-   //
-   // Singleton pattern
-   //
-   static readonly uScriptGUIPanelScript _instance = new uScriptGUIPanelScript();
-   public static uScriptGUIPanelScript Instance { get { return _instance; } }
-   private uScriptGUIPanelScript() { Init(); }
+   private const double DoubleClickTime = 0.5; // default in Windows OS is 500ms
+   private const int RowHeight = 17;
+   private const int ButtonHeight = 15;
+   private const int ButtonPadding = 4;
 
+   private static uScriptGUIPanelScript instance = new uScriptGUIPanelScript();
+   private static Rect scrollviewRect;
+   private static float previousRowWidth;
 
-   //
-   // Members specific to this panel class
-   //
-   string _panelFilterText = string.Empty;
+   private string panelFilterText = string.Empty;
 
-   const double _doubleClickTime = 0.5; // default in Windows OS is 500ms
-   double _clickTime;
-   string _clickedControl = string.Empty;
+   private double clickTime;
+   private string clickedControl = string.Empty;
 
-   string _currentScriptName = string.Empty;
-   string _currentScriptFileName = string.Empty;
+   private string currentScriptName = string.Empty;
+   private string currentScriptFileName = string.Empty;
 
-   GUIStyle _styleButtonGroup = null;
-   GUIStyle _styleCurrentScriptNormal = null;
-   GUIStyle _styleCurrentScriptError = null;
-   GUIStyle _styleScriptListNormal = null;
-   GUIStyle _styleScriptListBold = null;
-   GUIStyle _styleMiniButtonLeft = null;
-   GUIStyle _styleMiniButtonRight = null;
+   private GUIStyle styleButtonGroup;
+   private GUIStyle styleCurrentScriptNormal;
+   private GUIStyle styleCurrentScriptError;
+   private GUIStyle styleScriptListNormal;
+   private GUIStyle styleScriptListBold;
+   private GUIStyle styleMiniButtonLeft;
+   private GUIStyle styleMiniButtonRight;
 
-   static Rect _scrollviewRect = new Rect();
+   private int widthButtonSource;
+   private int widthButtonLoad;
 
-   static float _previousRowWidth = 0;
+   private uScriptGUIPanelScript()
+   {
+      this.Init();
+   }
 
-   int _widthButtonSource;
-   int _widthButtonLoad;
+   public static uScriptGUIPanelScript Instance
+   {
+      get
+      {
+         return instance;
+      }
+   }
 
-   const int ROW_HEIGHT = 17;
-   const int BUTTON_HEIGHT = 15;
-   const int BUTTON_PADDING = 4;
-
-//   float _tListData_count;
-//   float _tListData_height;
-
-//   float _mListData_count;
-//   float _mListData_height;
-
-//   float _bListData_count;
-//   float _bListData_height;
-
-//   LocalTestDebug _debugScript;
-
-
-   //
-   // Methods common to the panel classes
-   //
    public void Init()
    {
-      _name = "uScripts";
+      this._name = "uScripts";
 //      _size = 150;
 //      _region = uScriptGUI.Region.Script;
 
-      // Setup the custom GUI styles
-      _styleCurrentScriptNormal = new GUIStyle(EditorStyles.boldLabel);
+      this.styleCurrentScriptNormal = new GUIStyle(EditorStyles.boldLabel);
 
-      _styleCurrentScriptError = new GUIStyle(_styleCurrentScriptNormal);
-      _styleCurrentScriptError.normal.textColor = UnityEngine.Color.red;
+      this.styleCurrentScriptError = new GUIStyle(this.styleCurrentScriptNormal)
+      {
+         normal = { textColor = Color.red }
+      };
 
-      _styleScriptListNormal = new GUIStyle(EditorStyles.label);
-      _styleScriptListNormal.margin = new RectOffset(4, 4, 1, 1);
-      _styleScriptListNormal.padding = new RectOffset(2, 2, 0, 0);
+      this.styleScriptListNormal = new GUIStyle(EditorStyles.label)
+      {
+         margin = new RectOffset(4, 4, 1, 1),
+         padding = new RectOffset(2, 2, 0, 0)
+      };
 
-      _styleScriptListBold = new GUIStyle(_styleScriptListNormal);
-      _styleScriptListBold.fontStyle = FontStyle.Bold;
+      this.styleScriptListBold = new GUIStyle(this.styleScriptListNormal) { fontStyle = FontStyle.Bold };
 
-      _styleMiniButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
-      _styleMiniButtonLeft.margin = new RectOffset(4, 0, 1, 1);
+      this.styleMiniButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft) { margin = new RectOffset(4, 0, 1, 1) };
 
-      _styleMiniButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
-      _styleMiniButtonRight.margin = new RectOffset(0, 4, 1, 1);
+      this.styleMiniButtonRight = new GUIStyle(EditorStyles.miniButtonRight) { margin = new RectOffset(0, 4, 1, 1) };
 
-      _styleButtonGroup = new GUIStyle();
-      _styleButtonGroup.margin.top = 2;
+      this.styleButtonGroup = new GUIStyle { margin = { top = 2 } };
 
       // Get the width of the buttons, since the content
       // under Windows has a different size then under Mac
-      _widthButtonSource = (int)_styleMiniButtonLeft.CalcSize(uScriptGUIContent.buttonNodeSource).x;
-      _widthButtonLoad = (int)_styleMiniButtonRight.CalcSize(uScriptGUIContent.buttonScriptLoad).x;
+      this.widthButtonSource = (int)this.styleMiniButtonLeft.CalcSize(uScriptGUIContent.buttonNodeSource).x;
+      this.widthButtonLoad = (int)this.styleMiniButtonRight.CalcSize(uScriptGUIContent.buttonScriptLoad).x;
    }
 
    public void Update()
    {
-      //
       // Called whenever member data should be updated
-      //
    }
 
    public override void Draw()
    {
-      //
       // Called during OnGUI()
-      //
 
       // Local references to uScript
-      uScript uScriptInstance = uScript.Instance;
-      ScriptEditorCtrl m_ScriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
+      var uScriptInstance = uScript.Instance;
+      var scriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
 
-      GUIContent contentSourceButton;
-
-//      // Grab the deubgging script
-//      if (_debugScript == null)
-//      {
-//         _debugScript = GameObject.Find("_uScript").GetComponent(typeof(LocalTestDebug)) as LocalTestDebug;
-//      }
-//      _debugScript.Top = Vector2.zero;
-//      _debugScript.Middle = Vector2.zero;
-//      _debugScript.Bottom = Vector2.zero;
-//      _debugScript.svRect = _scrollviewRect;
-//
-//      // Update debug data
-//      _tListData_count = 0;
-//      _mListData_count = 0;
-//      _bListData_count = 0;
-
-      Rect rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelScriptsWidth));
-      if ( rect.width != 0.0f && rect.width != (float)uScriptGUI.PanelScriptsWidth )
+      var rect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelScriptsWidth));
+      if ((int)rect.width != 0 && (int)rect.width != uScriptGUI.PanelScriptsWidth)
       {
          // if we didn't get the width we requested, we must have hit a limit, stop dragging and reset the width
          uScriptGUI.PanelScriptsWidth = (int)rect.width;
          uScript.Instance.MouseDownRegion = uScript.MouseRegion.Canvas;
          uScript.Instance.ForceReleaseMouse();
       }
-      else if ( rect.x + rect.width > uScript.Instance.position.width )
+      else if (rect.x + rect.width > uScript.Instance.position.width)
       {
          // panel is growing off the edge of the window, bring it back in and stop dragging
          uScriptGUI.PanelScriptsWidth = (int)(uScript.Instance.position.width - rect.x);
          uScript.Instance.MouseDownRegion = uScript.MouseRegion.Canvas;
          uScript.Instance.ForceReleaseMouse();
       }
+
       {
          // Toolbar
-         //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label(_name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
+            GUILayout.Label(this._name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
 
             GUILayout.FlexibleSpace();
 
-            GUI.SetNextControlName ("ScriptFilterSearch" );
-            string _filterText = uScriptGUI.ToolbarSearchField(_panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
-            if (_filterText != _panelFilterText)
+            GUI.SetNextControlName("ScriptFilterSearch");
+
+            var filterText = uScriptGUI.ToolbarSearchField(this.panelFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
+            if (filterText != this.panelFilterText)
             {
                // Drop focus if the user inserted a newline (hit enter)
-               if (_filterText.Contains("\n"))
+               if (filterText.Contains("\n"))
                {
                   GUIUtility.keyboardControl = 0;
                }
 
                // Trim leading whitespace
-               _filterText = _filterText.TrimStart( new char[] { ' ' } );
+               filterText = filterText.TrimStart(new[] { ' ' });
 
-               _panelFilterText = _filterText;
+               this.panelFilterText = filterText;
             }
          }
+
          EditorGUILayout.EndHorizontal();
 
          if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
          {
-            DrawHiddenNotification();
+            this.DrawHiddenNotification();
          }
          else
          {
             // Update the panel in the following manner:
-            //
             //    Display the current active script first
             //    List the scene the script is associated with
             //    List error messages
-            //
             //    Display some type of separator
-            //
             //    Display all other scripts in the project (except the active script)
             //    Filter the list
             //    Support foldout containers eventually
 
-            string currentSceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
-            string scriptSceneName = string.Empty;
+            var currentSceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
 
-            //
             // Current script
-            //
-            if (_currentScriptFileName != m_ScriptEditorCtrl.ScriptName)
+            if (this.currentScriptFileName != scriptEditorCtrl.ScriptName)
             {
-               _currentScriptFileName = m_ScriptEditorCtrl.ScriptName;
-               _currentScriptName = System.IO.Path.GetFileNameWithoutExtension(_currentScriptFileName);
+               this.currentScriptFileName = scriptEditorCtrl.ScriptName;
+               this.currentScriptName = System.IO.Path.GetFileNameWithoutExtension(this.currentScriptFileName);
             }
 
-            if (null == _currentScriptFileName)
+            if (null == this.currentScriptFileName)
             {
-               _currentScriptFileName = string.Empty;
+               this.currentScriptFileName = string.Empty;
             }
 
             // uScript Label
-            scriptSceneName = string.Empty;
-            if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(_currentScriptFileName))
+            string scriptSceneName = string.Empty;
+            if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(this.currentScriptFileName))
             {
-               if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[_currentScriptFileName].m_SceneName) == false)
+               if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[this.currentScriptFileName].m_SceneName) == false)
                {
-                  scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[_currentScriptFileName].m_SceneName;
+                  scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[this.currentScriptFileName].m_SceneName;
                }
             }
 
-            bool isScriptNew = String.IsNullOrEmpty(_currentScriptFileName);
-            bool isScriptAttachToScene = (scriptSceneName == currentSceneName);
-            bool isScriptDirty = m_ScriptEditorCtrl.IsDirty;
+            var isScriptNew = string.IsNullOrEmpty(this.currentScriptFileName);
+            var isScriptAttachToScene = scriptSceneName == currentSceneName;
+            var isScriptDirty = scriptEditorCtrl.IsDirty;
 
-            GUILayout.Label(( (isScriptNew ? "(new)" : _currentScriptName)
-                              + (isScriptDirty ? " *" : string.Empty) ), _styleCurrentScriptNormal );
+            GUILayout.Label(
+               (isScriptNew ? "(new)" : this.currentScriptName) + (isScriptDirty ? " *" : string.Empty),
+               this.styleCurrentScriptNormal);
 
             GUILayout.BeginHorizontal();
             {
@@ -240,39 +199,44 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                // '\u21aa' // RIGHTWARDS ARROW WITH HOOK
                // '\u293f' // LOWER LEFT SEMICIRCULAR ANTICLOCKWISE ARROW
                // '\u2937' // ARROW POINTING DOWNWARDS THEN CURVING RIGHTWARDS
-               GUILayout.Label(new GUIContent((Application.platform == RuntimePlatform.OSXEditor
-                                                 ? '\u21aa'
-                                                 : '\u00bb') + "\t",
-                                              "Points to the scene the script is attached to."),
-                               _styleCurrentScriptNormal,
-                               GUILayout.ExpandWidth(false));
+               GUILayout.Label(
+                  new GUIContent(
+                     (Application.platform == RuntimePlatform.OSXEditor ? '\u21aa' : '\u00bb') + "\t",
+                     "Points to the scene the script is attached to."),
+                     this.styleCurrentScriptNormal,
+                     GUILayout.ExpandWidth(false));
 
-               GUILayout.Label(new GUIContent((scriptSceneName == string.Empty ? "(none)" : scriptSceneName),
-                                              (scriptSceneName == string.Empty
-                                                 ? "This script is not attached to any scene.  It may be used with Prefabs or as a Nested Script."
-                                                 : "The name of the scene that the script is attached to.")),
-                               (isScriptAttachToScene || scriptSceneName == string.Empty
-                                  ? _styleCurrentScriptNormal
-                                  : _styleCurrentScriptError));
+               var text = scriptSceneName == string.Empty ? "(none)" : scriptSceneName;
+               var tooltip = scriptSceneName == string.Empty
+                  ? "This script is not attached to any scene.  It may be used with Prefabs or as a Nested Script."
+                  : "The name of the scene that the script is attached to.";
+               var style = isScriptAttachToScene || scriptSceneName == string.Empty
+                  ? this.styleCurrentScriptNormal
+                  : this.styleCurrentScriptError;
+
+               GUILayout.Label(new GUIContent(text, tooltip), style);
             }
+
             GUILayout.EndHorizontal();
+
+            GUIContent contentSourceButton;
 
             GUILayout.BeginHorizontal();
             {
-               GUILayout.BeginHorizontal(_styleButtonGroup);
+               GUILayout.BeginHorizontal(this.styleButtonGroup);
                {
                   if (isScriptNew == false)
                   {
                      // Source button
-                     if (uScriptInstance.IsStale(_currentScriptName))
+                     if (uScriptInstance.IsStale(this.currentScriptName))
                      {
                         contentSourceButton = uScriptGUIContent.buttonScriptSourceStale;
-                        GUI.backgroundColor = UnityEngine.Color.red;
+                        GUI.backgroundColor = Color.red;
                      }
-                     else if (uScriptInstance.HasDebugCode(_currentScriptName))
+                     else if (uScriptInstance.HasDebugCode(this.currentScriptName))
                      {
                         contentSourceButton = uScriptGUIContent.buttonScriptSourceDebug;
-                        GUI.backgroundColor = UnityEngine.Color.yellow;
+                        GUI.backgroundColor = Color.yellow;
                      }
                      else
                      {
@@ -281,14 +245,15 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                      if (GUILayout.Button(contentSourceButton, EditorStyles.miniButtonLeft))
                      {
-                        uScriptGUI.PingGeneratedScript(_currentScriptName);
+                        uScriptGUI.PingGeneratedScript(this.currentScriptName);
                      }
-                     GUI.backgroundColor = UnityEngine.Color.white;
+
+                     GUI.backgroundColor = Color.white;
 
                      // Reload button
                      if (GUILayout.Button(uScriptGUIContent.buttonScriptReload, EditorStyles.miniButtonMid))
                      {
-                        string path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, _currentScriptFileName);
+                        var path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, this.currentScriptFileName);
    
                         if (path != string.Empty)
                         {
@@ -298,124 +263,101 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                   }
 
                   // Save button
-                  if (GUILayout.Button((uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick
-                                          ? uScriptGUIContent.buttonScriptSaveQuick
-                                          : (uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug
-                                             ? uScriptGUIContent.buttonScriptSaveDebug
-                                             : uScriptGUIContent.buttonScriptSaveRelease)),
-                                       isScriptNew ? EditorStyles.miniButton : EditorStyles.miniButtonRight))
+                  if (
+                     GUILayout.Button(
+                        uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick
+                           ? uScriptGUIContent.buttonScriptSaveQuick
+                           : (uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug
+                              ? uScriptGUIContent.buttonScriptSaveDebug
+                              : uScriptGUIContent.buttonScriptSaveRelease),
+                        isScriptNew ? EditorStyles.miniButton : EditorStyles.miniButtonRight))
                   {
-                     uScriptInstance.RequestSave(uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
-                                                 uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug, false);
+                     uScriptInstance.RequestSave(
+                        uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+                        uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
+                        false);
                   }
                }
+
                GUILayout.EndHorizontal();
             }
+
             GUILayout.EndHorizontal();
 
-
             //  It should turn red when you load a script that belongs to an unloaded scene
-            //
             // Load a scene that has scripts associated with it.
             // Goto uscript and load associated script (all is well, not red).
             // make dirty and save (script turns red.  it shouldn't).
-            //
             // Consider losing the red altogether
 
-
-            //
             // Spacer
-            //
             uScriptGUI.HR();
 
-
-            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
+            this._scrollviewOffset = EditorGUILayout.BeginScrollView(this._scrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
             {
-//               // Debug
-//               if (debugScript.svOffset != _scrollviewOffset)
-//               {
-//                  Debug.Log("Offset delta: " + (_scrollviewOffset.y - debugScript.svOffset.y).ToString() + ", Event: " + Event.current.type.ToString() + "\n");
-//               }
-//               _debugScript.svOffset = _scrollviewOffset;
-
-
-               // Commonly used variables
-               List<string> keylist = new List<string>();
+               var keylist = new List<string>();
                keylist.AddRange(uScriptBackgroundProcess.s_uScriptInfo.Keys);
-               string[] keys = keylist.ToArray();
+               var keys = keylist.ToArray();
 
-               string scriptName = string.Empty;
-               int listItem_count = 0;
-               int listItem_yMin = 0;
-               int listItem_yMax = 0;
-               bool isListRowEven = false;
-
+               string scriptName;
+               var listItemCount = 0;
+               var isListRowEven = false;
 
                // Apply the filter and determine how many items will be drawn.
-               //
-               foreach (string scriptFileName in keys)
+               foreach (var scriptFileName in keys)
                {
                   scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFileName);
 
-                  if (scriptName != _currentScriptName                                 // is not the loaded script
-                      && (String.IsNullOrEmpty(_panelFilterText)                       // there is no filter text
-                          || scriptName.ToLower().Contains(_panelFilterText.ToLower()) // or the filter text matches the scriptName
-                         )
-                     )
+                  // is not the loaded script
+                  // there is no filter text
+                  // or the filter text matches the scriptName
+                  if (scriptName != this.currentScriptName
+                      && (string.IsNullOrEmpty(this.panelFilterText)
+                          || scriptName.ToLower().Contains(this.panelFilterText.ToLower())))
                   {
-                     listItem_count++;
+                     listItemCount++;
                   }
                }
 
                // Draw the padding box to establish the row width (excluding scrollbar)
                // and force the scrollview content height
-               //
-               GUIStyle padding = new GUIStyle(GUIStyle.none);
-               padding.stretchWidth = true;
-//               padding.margin = new RectOffset();
+               var padding = new GUIStyle(GUIStyle.none) { stretchWidth = true };
 
-               GUILayout.Box(string.Empty, padding, GUILayout.Height(ROW_HEIGHT * listItem_count));
+               GUILayout.Box(string.Empty, padding, GUILayout.Height(RowHeight * listItemCount));
                if (Event.current.type == EventType.Repaint)
                {
-                  _previousRowWidth = GUILayoutUtility.GetLastRect().width;
+                  previousRowWidth = GUILayoutUtility.GetLastRect().width;
                }
 
-
                // Prepare to draw each row of the filtered list
-               //
-               Rect rowRect = new Rect(0, 0, _previousRowWidth, ROW_HEIGHT);
-               listItem_count = 0;
+               var rowRect = new Rect(0, 0, previousRowWidth, RowHeight);
+               listItemCount = 0;
 
                // The following button rect are initialized in this specific
                // order, because later initializations refer to earlier ones.
-               Rect rectLoadButton = new Rect(_previousRowWidth - _widthButtonLoad - BUTTON_PADDING, 1, _widthButtonLoad, BUTTON_HEIGHT);
-               Rect rectSourceButton = new Rect(rectLoadButton.x - _widthButtonSource, 1, _widthButtonSource, BUTTON_HEIGHT);
-               Rect rectLabelButton = new Rect(BUTTON_PADDING, 1, _previousRowWidth - _widthButtonSource - _widthButtonLoad - (BUTTON_PADDING * 3), ROW_HEIGHT);
+               var rectLoadButton = new Rect(previousRowWidth - this.widthButtonLoad - ButtonPadding, 1, this.widthButtonLoad, ButtonHeight);
+               var rectSourceButton = new Rect(rectLoadButton.x - this.widthButtonSource, 1, this.widthButtonSource, ButtonHeight);
+               var rectLabelButton = new Rect(ButtonPadding, 1, previousRowWidth - this.widthButtonSource - this.widthButtonLoad - (ButtonPadding * 3), RowHeight);
 
-               foreach (string scriptFileName in keys)
+               foreach (var scriptFileName in keys)
                {
                   scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFileName);
-                  listItem_yMin = ROW_HEIGHT * listItem_count;
-                  listItem_yMax = listItem_yMin + ROW_HEIGHT;
+                  var listItemMinY = RowHeight * listItemCount;
+                  var listItemMaxY = listItemMinY + RowHeight;
 
-                  if (scriptName != _currentScriptName                                 // is not the loaded script
-                      && (String.IsNullOrEmpty(_panelFilterText)                       // there is no filter text
-                          || scriptName.ToLower().Contains(_panelFilterText.ToLower()) // or the filter text matches the scriptName
-                         )
-                     )
+                  // Check that:
+                  // is not the loaded script
+                  // there is no filter text
+                  // or the filter text matches the scriptName
+                  if (scriptName != this.currentScriptName
+                      && (string.IsNullOrEmpty(this.panelFilterText)
+                          || scriptName.ToLower().Contains(this.panelFilterText.ToLower())))
                   {
-                     if (_scrollviewOffset.y <= listItem_yMax)
+                     if (_scrollviewOffset.y <= listItemMaxY)
                      {
                         // draw
-                        if (_scrollviewOffset.y + _scrollviewRect.height > listItem_yMin)
+                        if (_scrollviewOffset.y + scrollviewRect.height > listItemMinY)
                         {
-//                           _mListData_count++;
-//                           _mListData_height = listItem_yMax - 0 - _tListData_height;
-
-                           //
-                           // draw the row normally
-                           //
-
                            // the script path
                            string path = null;
 
@@ -439,9 +381,9 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
 
                            // prepare for double-click
                            bool wasClicked = false;
-                           if (_clickedControl == scriptName)
+                           if (this.clickedControl == scriptName)
                            {
-                              if ((EditorApplication.timeSinceStartup - _clickTime) < _doubleClickTime)
+                              if ((EditorApplication.timeSinceStartup - this.clickTime) < DoubleClickTime)
                               {
                                  wasClicked = true;
                                  uScript.RequestRepaint();
@@ -452,28 +394,32 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            if (uScriptInstance.IsStale(scriptName))
                            {
                               contentSourceButton = uScriptGUIContent.buttonScriptSourceStale;
-                              GUI.backgroundColor = UnityEngine.Color.red;
+                              GUI.backgroundColor = Color.red;
                            }
                            else if (uScriptInstance.HasDebugCode(scriptName))
                            {
                               contentSourceButton = uScriptGUIContent.buttonScriptSourceDebug;
-                              GUI.backgroundColor = UnityEngine.Color.yellow;
+                              GUI.backgroundColor = Color.yellow;
                            }
                            else
                            {
                               contentSourceButton = uScriptGUIContent.buttonScriptSource;
                            }
 
-                           if (GUI.Button(rectSourceButton, contentSourceButton, _styleMiniButtonLeft))
+                           if (GUI.Button(rectSourceButton, contentSourceButton, this.styleMiniButtonLeft))
                            {
                               uScriptGUI.PingGeneratedScript(scriptName);
                            }
-                           GUI.backgroundColor = UnityEngine.Color.white;
+
+                           GUI.backgroundColor = Color.white;
 
                            // Load button
-                           if (GUI.Button(rectLoadButton, uScriptGUIContent.buttonScriptLoad, _styleMiniButtonRight))
+                           if (GUI.Button(rectLoadButton, uScriptGUIContent.buttonScriptLoad, this.styleMiniButtonRight))
                            {
-                              if ( null == path ) path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFileName);
+                              if (null == path)
+                              {
+                                 path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFileName);
+                              }
 
                               if (false == string.IsNullOrEmpty(path))
                               {
@@ -482,14 +428,14 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                            }
 
                            // Script Label buton
-                           if (GUI.Button(rectLabelButton, scriptName + (scriptSceneName == "None" ? string.Empty : " (" + scriptSceneName + ")"), (wasClicked ? _styleScriptListBold : _styleScriptListNormal)))
+                           if (GUI.Button(rectLabelButton, scriptName + (scriptSceneName == "None" ? string.Empty : " (" + scriptSceneName + ")"), wasClicked ? this.styleScriptListBold : this.styleScriptListNormal))
                            {
                               path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, scriptFileName);
 
                               if (wasClicked)
                               {
                                  // double-click
-                                 _clickTime = EditorApplication.timeSinceStartup - _clickTime; // prevents multiple double-clicks
+                                 this.clickTime = EditorApplication.timeSinceStartup - this.clickTime; // prevents multiple double-clicks
                                  if (false == string.IsNullOrEmpty(path))
                                  {
                                     uScriptInstance.OpenScript(path);
@@ -498,65 +444,44 @@ public sealed class uScriptGUIPanelScript: uScriptGUIPanel
                               else
                               {
                                  // single-click
-                                 _clickTime = EditorApplication.timeSinceStartup;
-                                 _clickedControl = scriptName;
+                                 this.clickTime = EditorApplication.timeSinceStartup;
+                                 this.clickedControl = scriptName;
                               }
                            }
                         }
-//                        else
-//                        {
-//                           // skip the items below the viewable area
-//                           _bListData_count++;
-//                           _bListData_height = listItem_yMax - 0 - _tListData_height - _mListData_height;
-//                        }
                      }
-//                     else
-//                     {
-//                        // skip the items above the viewable area
-//                        _tListData_count++;
-//                        _tListData_height = listItem_yMax - 0;
-//                     }
-
-
-//                     // Debug
-//                     _debugScript.Top = new Vector2(_tListData_count, _tListData_height);
-//                     _debugScript.Middle = new Vector2(_mListData_count, _mListData_height);
-//                     _debugScript.Bottom = new Vector2(_bListData_count, _bListData_height);
-
 
                      // Prepare for the next row
-                     listItem_count++;
+                     listItemCount++;
                      isListRowEven = !isListRowEven;
-                     rowRect.y += ROW_HEIGHT;
+                     rowRect.y += RowHeight;
 
-                     rectLabelButton.y += ROW_HEIGHT;
-                     rectLoadButton.y += ROW_HEIGHT;
-                     rectSourceButton.y += ROW_HEIGHT;
+                     rectLabelButton.y += RowHeight;
+                     rectLoadButton.y += RowHeight;
+                     rectSourceButton.y += RowHeight;
                   }
                }
 
                // Display a message if there were no matches
-               if (listItem_count == 0)
+               if (listItemCount == 0)
                {
-                  GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
-                  style.alignment = TextAnchor.MiddleCenter;
+                  var style = new GUIStyle(EditorStyles.boldLabel) { alignment = TextAnchor.MiddleCenter };
                   GUILayout.Label("The search found no matches!", style);
                }
             }
+
             EditorGUILayout.EndScrollView();
 
             if (Event.current.type == EventType.Repaint)
             {
-               _scrollviewRect = GUILayoutUtility.GetLastRect();
+               scrollviewRect = GUILayoutUtility.GetLastRect();
             }
-
-//            _isMouseOverScrollview = _scrollviewRect.Contains(Event.current.mousePosition);
          }
       }
+
       EditorGUILayout.EndVertical();
 
 //      uScriptGUI.DefineRegion(uScriptGUI.Region.Script);
       uScriptInstance.SetMouseRegion(uScript.MouseRegion.Scripts);
    }
-
 }

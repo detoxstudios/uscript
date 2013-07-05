@@ -307,100 +307,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 //                     EditorGUILayout.EndHorizontal();
 //                  }
 
-
-
-
-//                  string[] icons = new string[]
-//                  {
-//                     "AboutWindow.MainHeader",
-//                     "AgeiaLogo",
-//                     "animationvisibilitytoggleoff",
-//                     "animationvisibilitytoggleon",
-//                     "boo Script Icon",
-//                     "cs Script Icon",
-//                     "editicon.sml",
-////                     "GameObject Large",
-//                     "Icon Dropdown",
-//                     "js Script Icon",
-////                     "model Large",
-//                     "MonoLogo",
-//                     "MoveTool On",
-//                     "MoveTool",
-//                     "PauseButton Anim",
-//                     "PauseButton On",
-//                     "PauseButton",
-//                     "PlayButton Anim",
-//                     "PlayButton On",
-//                     "PlayButton",
-//                     "PlayButtonProfile Anim",
-//                     "PlayButtonProfile On",
-//                     "PlayButtonProfile",
-//                     "preAudioPlayOff",
-//                     "preAudioPlayOn",
-////                     "Prefab Large",
-//                     "PreTextureAlpha",
-//                     "PreTextureMipMapHigh",
-//                     "PreTextureMipMapLow",
-//                     "PreTextureRGB",
-//                     "Profiler.NextFrame",
-//                     "Profiler.PrevFrame",
-//                     "RotateTool On",
-//                     "RotateTool",
-//                     "ScaleTool On",
-//                     "ScaleTool",
-//                     "SceneviewAudio",
-//                     "SceneviewFx",
-//                     "SceneviewLighting",
-//                     "SettingsIcon",
-//                     "Shader Icon",
-//                     "StepButton Anim",
-//                     "StepButton On",
-//                     "StepButton",
-//                     "TextAsset Icon",
-//                     "TreeEditor.AddBranches",
-//                     "TreeEditor.AddLeaves",
-//                     "TreeEditor.Duplicate",
-//                     "TreeEditor.Refresh",
-//                     "TreeEditor.Trash",
-//                     "tree_icon",
-//                     "tree_icon_branch",
-//                     "tree_icon_branch_frond",
-//                     "tree_icon_frond",
-//                     "tree_icon_leaf",
-//                     "UnityLogo",
-//                     "ViewToolMove On",
-//                     "ViewToolMove",
-//                     "ViewToolOrbit On",
-//                     "ViewToolOrbit",
-//                     "ViewToolZoom On",
-//                     "ViewToolZoom",
-//                     "WelcomeScreen.AssetStoreLogo",
-//                     "WelcomeScreen.MainHeader",
-//                     "WelcomeScreen.UnityAnswersLogo",
-//                     "WelcomeScreen.UnityBasicsLogo",
-//                     "WelcomeScreen.UnityForumLogo",
-//                     "WelcomeScreen.VideoTutLogo",
-////                     "_Folder",
-//                     "_Help",
-//                     "_Popup"
-//                  };
-//
-//                  foreach (string icon in icons)
-//                  {
-//                     EditorGUILayout.BeginHorizontal();
-//                     GUIContent content = uScriptGUIContent.IconContent(icon);
-//                     if (content == null)
-//                     {
-//                        GUILayout.Space(20);
-//                     }
-//                     else
-//                     {
-//                        GUILayout.Box(content, GUILayout.Width(20), GUILayout.Height(20));
-//                     }
-//                     GUILayout.Label(icon);
-//                     EditorGUILayout.EndHorizontal();
-//                  }
-
 //                  EditorGUILayout.BeginHorizontal();
 //                  GUIContent content = uScriptGUIContent.TextContent("Scene");
 //                  GUILayout.Toggle(false, content, GUILayout.Width(50), GUILayout.Height(20));
@@ -408,7 +314,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 //                  GUILayout.Box(content.image, GUILayout.Width(20), GUILayout.Height(20));
 //                  GUILayout.Label(content.text);
 //                  EditorGUILayout.EndHorizontal();
-
 
 //                  List<GUIStyle> styles = new List<GUIStyle>();
 //                  styles.Add("IN Foldout");
