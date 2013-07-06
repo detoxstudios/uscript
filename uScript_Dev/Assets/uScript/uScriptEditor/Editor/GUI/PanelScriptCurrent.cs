@@ -485,18 +485,13 @@ namespace Detox.Editor.GUI
                   uScriptGUI.GetTexture("iconScriptStatusUnknown"),
                   "No source file was found. Save using Release or Debug to generate code for this script.");
 
-               MessageNoScene = new GUIContent("This script is not attached to any scene.  It may be used with Prefabs or as a Nested Script.");
+               MessageNoScene = new GUIContent("This script is not attached to any scene. It may be used with Prefabs or as a Nested Script.");
                MessageWrongScene = new GUIContent("This uScript file was previously attached to a different Unity Scene. It may not be compatible with the current Unity Scene, and may not run correctly, if edited while this scene is open.");
 
                //IconScriptFile = uScriptGUI.GetTexture("iconScriptFile01");
                IconScriptLogo = uScriptGUI.GetTexture("iconScriptFile02");
                IconSourceType = EditorGUIUtility.FindTexture("cs Script Icon");
                IconUnityScene = uScriptGUI.GetSkinnedTexture("UnityScene");
-
-               // PaneOptions
-               // DropDownButton
-               // SettingsIcon
-               // Icon Dropdown
             }
 
             public static GUIContent ButtonScriptSourceDebug { get; private set; }
