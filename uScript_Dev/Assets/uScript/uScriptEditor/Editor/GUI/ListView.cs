@@ -1968,8 +1968,8 @@ namespace Detox.Editor.GUI
          {
             // Attempt to get the built-in folder icon
 #if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
-         iconFolder = EditorGUIUtility.FindTexture("_Folder");
-         iconFolderEmpty = iconFolder;
+            this.IconFolder = EditorGUIUtility.FindTexture("_Folder");
+            this.IconFolderEmpty = this.IconFolder;
 #else
             //System.Reflection.Assembly asm = typeof(UnityEditorInternal.AssetStore).Assembly;
             //if (asm != null)
