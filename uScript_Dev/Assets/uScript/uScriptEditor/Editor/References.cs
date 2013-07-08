@@ -643,7 +643,7 @@ namespace Detox.Windows.Forms
 
          for ( i = controls.Length - 1; i >= 0; i-- )
          {
-			   Control control = controls[i];
+            Control control = controls[i];
 
             if ( true == control.OnMouseDown(e) )
             {
