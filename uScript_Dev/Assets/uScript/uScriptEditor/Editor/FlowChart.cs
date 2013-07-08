@@ -282,7 +282,7 @@ namespace Detox.FlowChart
             foreach ( Link link in m_Links )
             {
                if ( link.Source.Node == oldNode ) link.Source.Node = node;
-               else if ( link.Destination.Node == oldNode ) link.Destination.Node = node;
+               if ( link.Destination.Node == oldNode ) link.Destination.Node = node;
             }
          }
 
