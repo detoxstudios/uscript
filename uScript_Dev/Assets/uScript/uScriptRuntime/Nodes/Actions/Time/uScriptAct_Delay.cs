@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Delay")]
 
-[FriendlyName("Delay", "Delays execution of a script but can also fire off an immediate response.\n\nNOTE: each time a signal is recieved on the In socket, the delay node will reset its countdown (start over). This can cause the Delayed Out socket to never fire if it is recieving signals on the In socket faster than the Duration specified.\n\nIf you are looking for a time-based filter for something that sends out a signal each tick (like On Update), you should use the Timed Gate node instead.")]
+[FriendlyName("Delay", "Delays execution of a signal but can also fire off an immediate response. Use the Stop socket to cancel a delayed signal from being fired when the specified delay time has been reached.\n\nNOTE: each time a signal is recieved on the In socket, the delay node will reset its countdown (start over). This can cause the Delayed Out socket to never fire if it is recieving signals on the In socket faster than the Duration specified.\n\nIf you are looking for a time-based filter for something that sends out a signal each tick (like On Update), you should use the Timed Gate node instead.")]
 public class uScriptAct_Delay : uScriptLogic
 {
    private float m_TimeToTrigger;

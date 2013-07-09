@@ -15,6 +15,7 @@
 //#define DETOX_STORE_BASIC //Don't forget LicenseWindow.cs
 //#define DETOX_STORE_PLE // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
 //#define CLOSED_BETA
+//#define ENABLE_ANALYTICS
 
 
 
@@ -4045,7 +4046,11 @@ public class uScript : EditorWindow
                AssetDatabase.Refresh();
                AttachToMasterGO(m_FullPath);
             }
-
+				
+#if ENABLE_ANALYTICS
+			GetGraphAnalyticsData(script);
+#endif
+				
             return true;
          }
          else
@@ -4056,6 +4061,49 @@ public class uScript : EditorWindow
 
       return false;
    }
+	
+	/// <summary>
+	/// Gets the graph's node analytics data. This code is part of a side project by Scott to potentially store locally node data for an entire Unity project for things like node deletion on project building to remove unused nodes and such.
+	/// </summary>
+	/// <param name='script'>
+	/// The graph you want to grab all the node data for.
+	/// </param>
+    void GetGraphAnalyticsData(Detox.ScriptEditor.ScriptEditor script)
+	{
+		// Create list of unique nodes used and their quantity used on the graph:
+		Dictionary<string, KeyValuePair<string, int>> nodesUsed = new Dictionary<string, KeyValuePair<string, int>>();
+		
+		// Get all the Action nodes:
+		foreach (Detox.ScriptEditor.LogicNode node in script.Logics)
+		{
+			if (nodesUsed.ContainsKey(node.FriendlyName))
+			{
+				KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Action", nodesUsed[node.FriendlyName].Value + 1);
+				nodesUsed[node.FriendlyName] = tmpPair;
+			}
+			else
+			{
+				KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Action", 1);
+				nodesUsed.Add(node.FriendlyName, tmpPair);
+			}
+		}
+		
+		// Get all the Event nodes:
+		foreach (Detox.ScriptEditor.EntityEvent node in script.Events)
+		{	
+			if (nodesUsed.ContainsKey(node.FriendlyType))
+			{
+				KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Event", nodesUsed[node.FriendlyType].Value + 1);
+				nodesUsed[node.FriendlyType] = tmpPair;
+			}
+			else
+			{
+				KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Event", 1);
+				nodesUsed.Add(node.FriendlyType, tmpPair);
+			}
+		}
+		
+	}
 
    void AttachToMasterGO(String path)
    {
