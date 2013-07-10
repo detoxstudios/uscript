@@ -18,6 +18,8 @@ public class uScriptAct_Delay : uScriptLogic
    private bool m_DelayedOut;
    private bool m_ImmediateOut;
    private bool m_ForceStop = false;
+   private bool m_Stopped = false;
+   private bool m_FireStoppedSocket = false;
    private bool m_SingleFrame = false;
 
    [FriendlyName("Immediate")]
@@ -25,6 +27,9 @@ public class uScriptAct_Delay : uScriptLogic
 
    [FriendlyName("After Delay")]
    public bool AfterDelay { get { return m_DelayedOut; } }
+	
+	[FriendlyName("Stopped")]
+   public bool Stopped { get { return m_FireStoppedSocket; } }
 
    [FriendlyName("In")]
    public void In(
@@ -38,7 +43,9 @@ public class uScriptAct_Delay : uScriptLogic
    {
       m_ImmediateOut = true;
       m_DelayedOut = false;
+	  m_FireStoppedSocket = false;
       m_ForceStop = false;
+	  m_Stopped = false;
       m_SingleFrame = SingleFrame;
       m_TimeToTrigger = Duration;
       if (m_SingleFrame) m_TimeToTrigger = 1.0f;
@@ -56,17 +63,25 @@ public class uScriptAct_Delay : uScriptLogic
    {
 
       m_ForceStop = true;
+	  m_Stopped   = false;
+      
    }
 
    [Driven]
    public bool DrivenDelay()
    {
-      if (true == m_ForceStop) return false;
-         
-      m_ImmediateOut = false;
-      m_DelayedOut = false;
+		m_ImmediateOut = false;
+      	m_DelayedOut = false;
+		m_FireStoppedSocket = false;
 
-      if (m_SingleFrame)
+      if (true == m_ForceStop && false == m_Stopped)
+	  {
+	     m_Stopped = true;
+		 m_FireStoppedSocket = true;
+		 return true;
+	  } 
+      
+      if (m_SingleFrame && !m_ForceStop)
       {
          if (m_TimeToTrigger > 0.0f)
          {
@@ -80,7 +95,7 @@ public class uScriptAct_Delay : uScriptLogic
 
          return true;
       }
-      else if (m_TimeToTrigger > 0)
+      else if (m_TimeToTrigger > 0 && !m_ForceStop)
       {
          m_TimeToTrigger -= UnityEngine.Time.deltaTime;
 
