@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Position")]
 
-[FriendlyName("Set Position", "Sets the position (Vector3) of a GameObject as world coordinates.")]
+[FriendlyName("Set Position", "Sets the position (Vector3) of a GameObject as world or local coordinates.")]
 public class uScriptAct_SetGameObjectPosition : uScriptLogic
 {
 
@@ -26,7 +26,12 @@ public class uScriptAct_SetGameObjectPosition : uScriptLogic
 
       [FriendlyName("As Offset", "Whether or not to use Position as an offset from the Target GameObjects' position(s).")]
       [SocketState(false, false)]
-      bool AsOffset
+      bool AsOffset,
+
+      [FriendlyName("As Local", "Whether or not to set the local (instead of world) position(s) of the Target GameObjects'.")]
+      [SocketState(false, false)]
+	  [DefaultValue(false)]
+      bool AsLocal
       )
    {
       foreach ( GameObject currentTarget in Target )
@@ -35,11 +40,25 @@ public class uScriptAct_SetGameObjectPosition : uScriptLogic
          {
             if (AsOffset)
             {
-               currentTarget.transform.position += Position;
+			   if (AsLocal)
+			   {
+                  currentTarget.transform.localPosition += Position;
+			   }
+			   else
+			   {
+                  currentTarget.transform.position += Position;
+			   }
             }
             else
             {
-               currentTarget.transform.position = Position;
+			   if (AsLocal)
+			   {
+                  currentTarget.transform.localPosition = Position;
+			   }
+			   else
+			   {
+                  currentTarget.transform.position = Position;
+			   }
             }
          }
       }
