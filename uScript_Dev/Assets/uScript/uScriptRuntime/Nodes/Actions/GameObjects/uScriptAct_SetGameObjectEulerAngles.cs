@@ -7,11 +7,11 @@ using System.Collections;
 [NodePath("Actions/GameObjects/Movement")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
-[NodeToolTip("Sets the world coordinates euler angle rotation of a GameObject.")]
+[NodeToolTip("Sets the world or local coordinates euler angle rotation of a GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Set Euler Angles", "Sets the world coordinates euler angle rotation of a GameObject by specifing the X, Y, and Z axis in degrees.")]
+[FriendlyName("Set Euler Angles", "Sets the world or local coordinates euler angle rotation of a GameObject by specifing the X, Y, and Z axis in degrees.")]
 public class uScriptAct_SetGameObjectEulerAngles : uScriptLogic
 {
 
@@ -40,7 +40,12 @@ public class uScriptAct_SetGameObjectEulerAngles : uScriptLogic
 
       [FriendlyName("Preserve Z Axis", "Whether or not to preserve the current Z Axis Euler angle.")]
       [SocketState(false, false)]
-      bool PreserveZ_Axis
+      bool PreserveZ_Axis,
+
+      [FriendlyName("As Local", "Whether or not to set the local (instead of world) Euler angles of the Target GameObjects'.")]
+      [SocketState(false, false)]
+      [DefaultValue(false)]
+      bool AsLocal
       )
    {
       if (!PreserveX_Axis)
@@ -84,12 +89,27 @@ public class uScriptAct_SetGameObjectEulerAngles : uScriptLogic
 
       foreach (GameObject currentTarget in Target)
       {
-         Vector3 angles = currentTarget.transform.eulerAngles;
+         Vector3 angles;
+         if (AsLocal)
+         {
+            angles = currentTarget.transform.localEulerAngles;
+         }
+         else
+         {
+            angles = currentTarget.transform.eulerAngles;
+         }
          Vector3 rotationVector = new Vector3(angles.x, angles.y, angles.z);
          if (!PreserveX_Axis) rotationVector.x = X_Axis;
          if (!PreserveY_Axis) rotationVector.y = Y_Axis;
          if (!PreserveZ_Axis) rotationVector.z = Z_Axis;
-         currentTarget.transform.eulerAngles = rotationVector;
+         if (AsLocal)
+         {
+            currentTarget.transform.localEulerAngles = rotationVector;
+         }
+         else
+         {
+            currentTarget.transform.eulerAngles = rotationVector;
+         }
       }
    }
 }
