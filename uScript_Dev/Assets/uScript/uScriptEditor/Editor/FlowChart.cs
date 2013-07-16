@@ -1277,7 +1277,7 @@ namespace Detox.FlowChart
          {
             Node node = Controls[i] as Node;
             node.ZoomScale = Zoom;
-            if (node.IsVisible(visibleRect))
+            if (node.IsVisible(visibleRect) || uScript.Instance.BuildingScreenshot)
             {
                visibleList.Add(node);
                visibleHash[ node.Guid ] = node;

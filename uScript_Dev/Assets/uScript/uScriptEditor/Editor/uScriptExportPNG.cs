@@ -126,6 +126,7 @@ public static class uScriptExportPNG
 
          // Disable user input
          _isExporting = true;
+         _uScript.BuildingScreenshot = true;
 
          Debug.Log("Exporting the graph to PNG ... This could take a while.\n");
 
@@ -379,6 +380,7 @@ public static class uScriptExportPNG
       {
          _uScript.RemoveNotification();
          _isExporting = false;
+         _uScript.BuildingScreenshot = false;
          _phase = ExportPhase.Idle;
       }
 

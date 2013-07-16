@@ -219,6 +219,7 @@ public class uScript : EditorWindow
    Rect rectFileMenuButton = new Rect();
    Rect rectFileMenuWindow = new Rect(20, 20, 10, 10);
 
+   public bool BuildingScreenshot = false;
 
    /* Palette Variables */
    String _graphListFilterText = string.Empty;
