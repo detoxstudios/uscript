@@ -29,8 +29,8 @@ namespace Detox.Editor
       private static string destinationFileName;
       private static Rect graphBounds;
 
-      //   static List<string> _debugOutput;
-      //   static GUIStyle _debugBoxStyle;
+      //static List<string> debugOutput;
+      //static GUIStyle debugBoxStyle;
 
       private static uScript uScriptInstance;
 
@@ -72,6 +72,8 @@ namespace Detox.Editor
 
       public static bool IsExporting { get; private set; }
 
+      // === Methods ====================================================================
+
       public static void Start()
       {
          phase = ExportPhase.Initiate;
@@ -88,10 +90,10 @@ namespace Detox.Editor
             return;
          }
 
-         //      if (_phase != ExportPhase.Idle)
-         //      {
-         //         Debug.Log("PNG Export - " + _phase.ToString() + "\n");
-         //      }
+         //if (phase != ExportPhase.Idle)
+         //{
+         //   Debug.Log("PNG Export - " + phase.ToString() + "\n");
+         //}
 
          // Handle the current phase
          if (phase == ExportPhase.Idle)
@@ -107,9 +109,9 @@ namespace Detox.Editor
             originalMapScale = uScriptInstance.m_MapScale;
             originalPanelState = uScriptGUI.PanelsHidden;
 
-            //         // Clear the debug GUI output
-            //         _debugOutput = new List<string>();
-            //         _debugOutput.Add("Export to PNG");
+            //// Clear the debug GUI output
+            //debugOutput = new List<string>();
+            //debugOutput.Add("Export to PNG");
 
             destinationFileName = System.IO.Path.GetFileNameWithoutExtension(uScriptInstance.CurrentScriptName) + "_"
                                   + DateTime.Now.ToString("yyyyMMdd_HHmmssff");
@@ -238,15 +240,15 @@ namespace Detox.Editor
             //         Debug.Log("About to create texture " + _graphBounds.width + " x " + _graphBounds.height + "\n");
             texture = new Texture2D((int)graphBounds.width, (int)graphBounds.height, TextureFormat.RGB24, false);
 
-            //         // Display debug information for the graph
-            //         _debugOutput.Add( "\tCanvas Size:\t\t\t" + _viewportWidth.ToString() + ", " + _viewportHeight.ToString() );
-            //         _debugOutput.Add( "\tCanvas Locatiion\t\t" + (-_originalCanvasLocation.X).ToString() + ", " + (-_originalCanvasLocation.Y).ToString() );
-            //
-            //         _debugOutput.Add( string.Empty );
-            //         _debugOutput.Add( "Graph:" );
-            //         _debugOutput.Add( "\tTotal Segments:\t" + _segmentColumns.ToString() + ", " + _segmentRows.ToString() );
-            //         _debugOutput.Add( "\tTotal Size:\t\t\t" + _graphBounds.width.ToString() + ", " + _graphBounds.height.ToString() );
-            //         _debugOutput.Add( "\tOverflow Size:\t\t" + _segmentColumnOverflow.ToString() + ", " + _segmentRowOverflow.ToString() );
+            //// Display debug information for the graph
+            //debugOutput.Add("\tCanvas Size:\t\t\t" + viewportWidth.ToString() + ", " + viewportHeight);
+            //debugOutput.Add("\tCanvas Locatiion\t\t" + (-originalCanvasLocation.X) + ", " + (-originalCanvasLocation.Y));
+
+            //debugOutput.Add(string.Empty);
+            //debugOutput.Add("Graph:");
+            //debugOutput.Add("\tTotal Segments:\t" + segmentColumns + ", " + segmentRows);
+            //debugOutput.Add("\tTotal Size:\t\t\t" + graphBounds.width + ", " + graphBounds.height);
+            //debugOutput.Add("\tOverflow Size:\t\t" + segmentColumnOverflow + ", " + segmentRowOverflow);
 
             var msg = segmentColumns * segmentRows > 1 ? string.Format("\tStitching together {0} canvas snapshots ...", segmentColumns * segmentRows) : string.Empty;
 
@@ -307,18 +309,18 @@ namespace Detox.Editor
          }
          else if (phase == ExportPhase.CaptureSegmentImage)
          {
-            //         _debugOutput.Add( string.Empty );
-            //         _debugOutput.Add( "Segment:\t\t" + _segmentColumn.ToString() + ", " + _segmentRow.ToString() );
-            //         _debugOutput.Add( "\tOffset:\t\t" + _segmentX.ToString() + ", " + _segmentY.ToString() );
-            //         _debugOutput.Add( "\tLocation:\t" + (-uScriptInstance.ScriptEditorCtrl.FlowChart.Location.X).ToString() + ", " + (-uScriptInstance.ScriptEditorCtrl.FlowChart.Location.Y).ToString() );
-            //         _debugOutput.Add( "\tSize:\t\t\t" + _segmentWidth.ToString() + ", " + _segmentHeight.ToString() );
-            //
-            //         DisplayDebugInformation();
-            //         Debug.Log( "Read\tX: " + _viewportX.ToString()
-            //                    + ", Y: " + (_viewportY + (_viewportHeight - _segmentHeight)).ToString()
-            //                    + ", W: " + (_segmentWidth + 1).ToString()
-            //                    + ", H: " + _segmentHeight.ToString()
-            //                    + "\nWrite\tX: " + _segmentX.ToString()  + ", Y: " + _segmentY.ToString());
+            //debugOutput.Add(string.Empty);
+            //debugOutput.Add("Segment:\t\t" + segmentColumn + ", " + segmentRow);
+            //debugOutput.Add("\tOffset:\t\t" + segmentX + ", " + segmentY.ToString());
+            //debugOutput.Add("\tLocation:\t" + (-uScriptInstance.ScriptEditorCtrl.FlowChart.Location.X) + ", " + (-uScriptInstance.ScriptEditorCtrl.FlowChart.Location.Y));
+            //debugOutput.Add("\tSize:\t\t\t" + segmentWidth + ", " + segmentHeight);
+
+            //DisplayDebugInformation();
+            //Debug.Log("Read\tX: " + viewportX
+            //           + ", Y: " + (viewportY + (viewportHeight - segmentHeight))
+            //           + ", W: " + (segmentWidth + 1)
+            //           + ", H: " + segmentHeight
+            //           + "\nWrite\tX: " + segmentX + ", Y: " + segmentY);
 
             // Read segment contents from the screen and store them in the texture
             texture.ReadPixels(
@@ -326,7 +328,7 @@ namespace Detox.Editor
                   viewportX,
                   viewportY + (viewportHeight - segmentHeight),
                   segmentWidth,
-                  //                                        _segmentWidth + 1,
+                  //segmentWidth + 1,
                   segmentHeight),
                segmentX,
                segmentY);
@@ -376,39 +378,39 @@ namespace Detox.Editor
       ///// This method is temporary.  It is used to display debug information on each segment.
       ///// It might eventually be used to display some optional script information on the finished export.
       ///// </summary>
-      //   static void DisplayDebugInformation()
+      //private static void DisplayDebugInformation()
+      //{
+      //   if (debugBoxStyle == null)
       //   {
-      //      if (_debugBoxStyle == null)
-      //      {
-      //         UnityEngine.Color color = UnityEngine.Color.white;
-      //
-      //         Texture2D texture = new Texture2D( 4, 4 );
-      //         for (int y = 0; y < 4; y++)
-      //            for (int x = 0; x < 4; x++)
-      //               texture.SetPixel( x, y, color );
-      //
-      //         color = new UnityEngine.Color(0, 0, 0, 0.5f);
-      //         texture.SetPixel( 1, 1, color );
-      //         texture.SetPixel( 1, 2, color );
-      //         texture.SetPixel( 2, 1, color );
-      //         texture.SetPixel( 2, 2, color );
-      //         texture.Apply();
-      //
-      //         _debugBoxStyle = new GUIStyle( GUI.skin.box );
-      //         _debugBoxStyle.border = new RectOffset(2, 2, 2, 2);
-      //         _debugBoxStyle.normal.background = texture;
-      //      }
-      //
-      //      GUI.BeginGroup(new Rect(0, 17, 250, _debugOutput.Count() * 15 + 10), _debugBoxStyle);
-      //      {
-      //         for (int i = 0; i < _debugOutput.Count(); i++)
-      //         {
-      //            GUI.Label(new Rect(10, 4 + (15 * i), 380, 15), _debugOutput[i], EditorStyles.whiteLabel);
-      //         }
-      //      }
-      //      GUI.EndGroup();
-      //
-      //      GUI.Box( _graphBounds, string.Empty );
+      //      UnityEngine.Color color = UnityEngine.Color.white;
+
+      //      Texture2D texture = new Texture2D(4, 4);
+      //      for (int y = 0; y < 4; y++)
+      //         for (int x = 0; x < 4; x++)
+      //            texture.SetPixel(x, y, color);
+
+      //      color = new UnityEngine.Color(0, 0, 0, 0.5f);
+      //      texture.SetPixel(1, 1, color);
+      //      texture.SetPixel(1, 2, color);
+      //      texture.SetPixel(2, 1, color);
+      //      texture.SetPixel(2, 2, color);
+      //      texture.Apply();
+
+      //      debugBoxStyle = new GUIStyle(GUI.skin.box);
+      //      debugBoxStyle.border = new RectOffset(2, 2, 2, 2);
+      //      debugBoxStyle.normal.background = texture;
       //   }
+
+      //   GUI.BeginGroup(new Rect(0, 17, 250, debugOutput.Count() * 15 + 10), debugBoxStyle);
+      //   {
+      //      for (int i = 0; i < debugOutput.Count(); i++)
+      //      {
+      //         GUI.Label(new Rect(10, 4 + (15 * i), 380, 15), debugOutput[i], EditorStyles.whiteLabel);
+      //      }
+      //   }
+      //   GUI.EndGroup();
+
+      //   GUI.Box(graphBounds, string.Empty);
+      //}
    }
 }
