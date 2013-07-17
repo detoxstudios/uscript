@@ -37,14 +37,14 @@ namespace Detox.FlowChart
       private Point m_MoveBoundariesStart = Point.Empty;
 
       private float m_PrevZoom = 1.0f;
-      
+
       //we have a separate Zoom we use instead of
       //ZoomScale because we don't want the flowchart itself to zoom
       //we only want to zoom the children
       public float Zoom = 1.0f;
-      public Point ZoomPoint 
+      public Point ZoomPoint
       {
-         set 
+         set
          {
             //this changes the top/left location
             //of the graph so it appears the scaling
@@ -87,20 +87,20 @@ namespace Detox.FlowChart
          }
       }
 
-      public bool InMoveMode 
-      { 
-         get 
-         { 
+      public bool InMoveMode
+      {
+         get
+         {
             return ((Control.MouseButtons == MouseButtons.Left && Control.ModifierKeys == Keys.Alt) ||
                     (Control.MouseButtons == MouseButtons.Middle)) &&
                    true == m_AllowPanning;
-         } 
+         }
       }
 
       public FlowChartCtrl( )
       {
          InitializeComponent( );
-      
+
          m_StyleHash = new Hashtable( );
 
          for (int i = 0; i < uScriptConfig.VariableStyleTypes.Length; i++)
@@ -116,7 +116,7 @@ namespace Detox.FlowChart
          if ( true == m_NodeMouseTracking )     return true;
          if ( true == m_NodeMouseSizing )       return true;
          if ( Point.Empty != m_StartMarquee )   return true;
-            
+
          return false;
       }
 
@@ -187,9 +187,9 @@ namespace Detox.FlowChart
 
       private void InitializeComponent()
       {
-         // 
+         //
          // FlowChartCtrl
-         // 
+         //
          this.BackColor = Detox.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
          this.DoubleBuffered = true;
          this.Name = "FlowChartCtrl";
@@ -288,7 +288,7 @@ namespace Detox.FlowChart
 
          Controls.Insert( index, node );
       }
-      
+
       public void SelectNodes(Guid []guids)
       {
          foreach ( Guid guid in guids )
@@ -336,7 +336,7 @@ namespace Detox.FlowChart
       {
          Controls.Remove( (Node) m_Nodes[ guid ] );
          m_Nodes.Remove( guid );
-      
+
          List<Link> links = new List<Link>( m_Links );
 
          foreach ( Link link in links )
@@ -352,24 +352,24 @@ namespace Detox.FlowChart
          {
             m_StartLinkNode   = null;
          }
-            
+
          //Invalidate( );  // ??
       }
 
       private bool LinkInRect(Link link, Rectangle rect)
       {
-         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width), 
+         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width),
                                   (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height) );
-   
+
          start  = link.Source.Node.PointToScreen( start );
          start  = this.PointToClient( start );
 
-         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width), 
+         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width),
                                 (int) (link.Destination.Anchor.Y / 100.0f * link.Destination.Node.ZoomSize.Height) );
-   
+
          end  = link.Destination.Node.PointToScreen( end );
          end  = this.PointToClient( end );
-   
+
          //is starting point within rect
          if ( start.X >= rect.Left && start.X <= rect.Right &&
               start.Y >= rect.Top  && start.Y <= rect.Bottom  )
@@ -393,15 +393,15 @@ namespace Detox.FlowChart
          //(in actuality it's slightly curved w/ bezier rendering)
          //but in my tests so far, this is still accurate enough
 
-         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width), 
+         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width),
                                   (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height) );
-   
+
          start  = link.Source.Node.PointToScreen( start );
          start  = this.PointToClient( start );
-         
-         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width), 
+
+         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width),
                                 (int) (link.Destination.Anchor.Y / 100.0f * link.Destination.Node.ZoomSize.Height) );
-   
+
          end  = link.Destination.Node.PointToScreen( end );
          end  = this.PointToClient( end );
 
@@ -410,7 +410,7 @@ namespace Detox.FlowChart
 
          //projection position on link ray
          Point delta = new Point( end.X - start.X, end.Y - start.Y );
-         
+
          float magnitude = (float) Math.Sqrt( delta.X * delta.X + delta.Y * delta.Y );
          if ( 0 == magnitude ) return false;
 
@@ -457,7 +457,7 @@ namespace Detox.FlowChart
             m_AllowPanning = true;
          }
          m_FCMouseDownPoint = Detox.Windows.Forms.Cursor.Position;
-         
+
          if ( e.Button == MouseButtons.Left )
          {
             m_MoveBoundariesStart = Detox.Windows.Forms.Cursor.Position;
@@ -477,7 +477,7 @@ namespace Detox.FlowChart
             Link clickedLink = null;
             bool linkClicked = node.RenderDepth < FlowChartCtrl.LinkRenderDepth ? MouseOverLink(out clickedLink) : false;
             bool selectionSetModified = false;
-    
+
             if (linkClicked && clickedLink != null)
             {
                //change selection state
@@ -506,7 +506,7 @@ namespace Detox.FlowChart
                   selectionSetModified = true;
                }
             }
-            
+
             m_MoveBoundariesStart = Detox.Windows.Forms.Cursor.Position;
 
             //use the parent's position
@@ -517,7 +517,7 @@ namespace Detox.FlowChart
             position = node.PointToClient( position );
 
             AnchorPoint anchorPoint = new AnchorPoint( );
-            bool pointSourced = false; 
+            bool pointSourced = false;
             bool selectionSetChanged = false;
 
             if ( true == node.PointInAnchorPoint(position, ref anchorPoint) )
@@ -535,11 +535,11 @@ namespace Detox.FlowChart
                // Node was clicked
                uScript.Instance.NodeClicked = node;
             }
-            
+
             if ( true == selectionSetModified && false == pointSourced ) return;
 
             if ( false == pointSourced && false == m_NodeMouseTracking )
-            {                  
+            {
                //change selection state
                if (!node.Selected && false == Control.ModifierKeys.Contains(Keys.Shift))
                {
@@ -562,7 +562,7 @@ namespace Detox.FlowChart
                   node.Selected = !node.Selected;
                   selectionSetChanged = true;
                }
-   
+
                if ( true == node.CanResize )
                {
                   if ( position.X > node.ZoomSize.Width  - uScriptConfig.ResizeTexture.width &&
@@ -580,7 +580,7 @@ namespace Detox.FlowChart
                   }
                }
                else
-               {   
+               {
                   if ( true == m_NodeMouseSizing )
                   {
                      foreach ( Node selectedNode in SelectedNodes )
@@ -609,7 +609,7 @@ namespace Detox.FlowChart
             if ( true == selectionSetChanged )
             {
                OnSelectionModified( );
-   
+
                Invalidate( );  // Node MouseDown
             }
          }
@@ -639,7 +639,7 @@ namespace Detox.FlowChart
                   }
                   m_NodeMouseTracking = true;
                }
-   
+
                if ( true == m_NodeMouseTracking )
                {
                   foreach ( Node selectedNode in SelectedNodes )
@@ -655,7 +655,7 @@ namespace Detox.FlowChart
                else if ( true == m_NodeMouseSizing )
                {
                   Node node = sender as Node;
-                  
+
                   //see comments in NodeMouseDown for why we have this if/else
                   if ( false == node.Selected )
                   {
@@ -709,7 +709,7 @@ namespace Detox.FlowChart
          {
             List<Node> modifiedNodes = new List<Node>( );
             Link createdLink = null;
-   
+
             //if we were moving the node
             //simply finish moving it, don't unselect anything
             if ( true == m_NodeMouseTracking || true == m_NodeMouseSizing  )
@@ -727,20 +727,20 @@ namespace Detox.FlowChart
                   }
                }
             }
-   
+
             m_NodeMouseTracking = false;
             m_NodeMouseSizing   = false;
-   
+
             if ( null != m_StartLinkNode )
             {
                Point position = Detox.Windows.Forms.Cursor.Position;
-   
+
                AnchorPoint hitPoint = new AnchorPoint( );
-   
+
                foreach ( Control c in Controls )
                {
                   Node node = c as Node;
-   
+
                   if ( null != node )
                   {
                      Point localPosition = node.PointToClient( position );
@@ -751,7 +751,7 @@ namespace Detox.FlowChart
                         {
                            AnchorPoint sourceAnchor, destAnchor;
                            Node sourceNode, destNode;
-   
+
                            //default to start is output and dest is input
                            if ( true == m_LinkStartAnchor.Output && true == hitPoint.Input )
                            {
@@ -767,9 +767,9 @@ namespace Detox.FlowChart
                               sourceAnchor = hitPoint;
                               destAnchor   = m_LinkStartAnchor;
                            }
-      
+
                            bool exists = false;
-   
+
                            //make sure it doesn't already exist
                            foreach ( Link existing in m_Links )
                            {
@@ -782,31 +782,31 @@ namespace Detox.FlowChart
                                  break;
                               }
                            }
-   
+
                            if ( false == exists )
                            {
                               Link link = new Link( sourceNode, sourceAnchor.Name, destNode, destAnchor.Name );
                               m_Links.Add( link );
-   
+
                               createdLink = link;
                            }
-   
+
                            break;
                         }
                      }
                   }
                }
             }
-   
+
             m_StartLinkNode = null;
-   
+
             if ( null != createdLink )
             {
                OnLinkCreated( createdLink );
             }
-   
+
             OnNodesModified( modifiedNodes.ToArray( ) );
-   
+
             Invalidate( );  // Node (and link) MouseUp
          }
          else if (e.Button == MouseButtons.Middle || (e.Button == MouseButtons.Left && true == Control.ModifierKeys.Contains(Keys.Alt)))
@@ -815,9 +815,9 @@ namespace Detox.FlowChart
             FlowChartCtrl_MouseUp(sender, e);
          }
       }
-      
+
       private void FlowChartCtrl_MouseUp(object sender, MouseEventArgs e)
-      {      
+      {
          if ( e.Button != MouseButtons.Left && e.Button != MouseButtons.Middle ) return;
 
          bool selectionSetModified = false;
@@ -848,7 +848,7 @@ namespace Detox.FlowChart
          {
             Link clickedLink = null;
             bool linkClicked = MouseOverLink(out clickedLink);
-    
+
             if (linkClicked && clickedLink != null)
             {
                //change selection state
@@ -877,7 +877,7 @@ namespace Detox.FlowChart
                   selectionSetModified = true;
                }
             }
-            
+
             //they let up the mouse without moving the canvas
             //and they weren't marquee selecting
             //so deselect everything
@@ -891,12 +891,12 @@ namespace Detox.FlowChart
                      {
                         node.Selected = false;
                      }
-   
+
                      foreach ( Link link in SelectedLinks )
                      {
                         link.Selected = false;
                      }
-   
+
                      selectionSetModified = true;
                   }
                }
@@ -915,7 +915,7 @@ namespace Detox.FlowChart
 
          Invalidate( );  // Canvas MouseUp
       }
-      
+
       private bool MouseOverLink(out Link retLink)
       {
          Point position = PointToClient( Detox.Windows.Forms.Cursor.Position );
@@ -943,7 +943,7 @@ namespace Detox.FlowChart
 
          int startY = Math.Min( m_StartMarquee.Y, position.Y );
          int endY   = Math.Max( m_StartMarquee.Y, position.Y );
-      
+
          Rectangle rect = new Rectangle( startX, startY, endX - startX, endY - startY );
 
          // If no control or shift key, unselect the rest
@@ -1097,8 +1097,8 @@ namespace Detox.FlowChart
          if ( position.Y > 0 ) position.Y = 0;
 
          //clamp bottom right
-         if ( position.X + Bounds.Width  < Parent.Bounds.Right  ) position.X += Parent.Bounds.Right  - ( position.X + Bounds.Width); 
-         if ( position.Y + Bounds.Height < Parent.Bounds.Bottom ) position.Y += Parent.Bounds.Bottom - ( position.Y + Bounds.Height); 
+         if ( position.X + Bounds.Width  < Parent.Bounds.Right  ) position.X += Parent.Bounds.Right  - ( position.X + Bounds.Width);
+         if ( position.Y + Bounds.Height < Parent.Bounds.Bottom ) position.Y += Parent.Bounds.Bottom - ( position.Y + Bounds.Height);
 
          Location = position;
       }
@@ -1112,8 +1112,8 @@ namespace Detox.FlowChart
          if ( position.Y > 0 ) position.Y = 0;
 
          //clamp bottom right
-         if ( position.X + Bounds.Width  < Parent.Bounds.Right  ) position.X += Parent.Bounds.Right  - ( position.X + Bounds.Width); 
-         if ( position.Y + Bounds.Height < Parent.Bounds.Bottom ) position.Y += Parent.Bounds.Bottom - ( position.Y + Bounds.Height); 
+         if ( position.X + Bounds.Width  < Parent.Bounds.Right  ) position.X += Parent.Bounds.Right  - ( position.X + Bounds.Width);
+         if ( position.Y + Bounds.Height < Parent.Bounds.Bottom ) position.Y += Parent.Bounds.Bottom - ( position.Y + Bounds.Height);
 
          Location = position;
       }
@@ -1156,7 +1156,7 @@ namespace Detox.FlowChart
          if ( 1.0f == Zoom && uScript.Preferences.ShowGrid == true )
          {
             float g;
-    
+
             int gridSize = uScript.Preferences.GridSize;
 
             float offsetX = Location.X % gridSize;
@@ -1230,9 +1230,9 @@ namespace Detox.FlowChart
             PointF position = new PointF(Detox.Windows.Forms.Cursor.Position.X, Detox.Windows.Forms.Cursor.Position.Y);
             position = this.PointToClient( position );
 
-            PointF start = new PointF( (m_LinkStartAnchor.X / 100.0f * m_StartLinkNode.Size.Width), 
+            PointF start = new PointF( (m_LinkStartAnchor.X / 100.0f * m_StartLinkNode.Size.Width),
                                        (m_LinkStartAnchor.Y / 100.0f * m_StartLinkNode.Size.Height) );
-      
+
             start  = m_StartLinkNode.PointToScreen( start );
             start  = PointToClient( start );
 
@@ -1244,18 +1244,18 @@ namespace Detox.FlowChart
 
             end.X += Location.X;
             end.Y += Location.Y;
-            
+
             //control point 1
             //is 25% of the X length and only 10% of the Y length
-            PointF control1 = new PointF( 
-               (start.X + (end.X - start.X) * .25f), 
-               (start.Y + (end.Y - start.Y) * .10f) ); 
+            PointF control1 = new PointF(
+               (start.X + (end.X - start.X) * .25f),
+               (start.Y + (end.Y - start.Y) * .10f) );
 
             //control point 2
             //is 75% of the X length and 90% of the Y length
-            PointF control2 = new PointF( 
-               (start.X + (end.X - start.X) * .75f), 
-               (start.Y + (end.Y - start.Y) * .90f) ); 
+            PointF control2 = new PointF(
+               (start.X + (end.X - start.X) * .75f),
+               (start.Y + (end.Y - start.Y) * .90f) );
 
             // New socket links
             Handles.color = new UnityEngine.Color( selectedPen.Color.FR, selectedPen.Color.FG, selectedPen.Color.FB );
@@ -1264,10 +1264,10 @@ namespace Detox.FlowChart
                                  Handles.color, uScriptConfig.lineTexture, selectedPen.Width );
             // The end of the new socket link
             UnityEngine.GUI.Box( new UnityEngine.Rect(end.X - uScriptConfig.PointerLineEnd.width / 2, end.Y - uScriptConfig.PointerLineEnd.height / 2,
-                                 uScriptConfig.PointerLineEnd.width, uScriptConfig.PointerLineEnd.height), 
+                                 uScriptConfig.PointerLineEnd.width, uScriptConfig.PointerLineEnd.height),
                                  uScriptConfig.PointerLineEnd);
          }
-         
+
          int i;
          List<Control> visibleList = new List<Control>();
          Hashtable visibleHash = new Hashtable();
@@ -1277,13 +1277,13 @@ namespace Detox.FlowChart
          {
             Node node = Controls[i] as Node;
             node.ZoomScale = Zoom;
-            if (node.IsVisible(visibleRect) || uScript.Instance.BuildingScreenshot)
+            if (node.IsVisible(visibleRect) || Detox.Editor.ExportPNG.IsExporting)
             {
                visibleList.Add(node);
                visibleHash[ node.Guid ] = node;
             }
          }
-         
+
          // render pre-link nodes
          for (i = 0; i < visibleList.Count; i++)
          {
@@ -1305,47 +1305,47 @@ namespace Detox.FlowChart
          {
             //ignore links which don't have visible nodes
             //drawing these lines taxes performance
-            if ( false == visibleHash.Contains(link.Source.Node.Guid) && 
-                 false == visibleHash.Contains(link.Destination.Node.Guid) ) 
+            if ( false == visibleHash.Contains(link.Source.Node.Guid) &&
+                 false == visibleHash.Contains(link.Destination.Node.Guid) )
             {
                continue;
             }
 
-            PointF start = new PointF( link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width, 
+            PointF start = new PointF( link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width,
                                        link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height );
-      
+
             start  = link.Source.Node.PointToScreen( start );
             start  = PointToClient( start );
 
             start.X += Location.X;
             start.Y += Location.Y;
 
-            PointF end = new PointF( link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width, 
+            PointF end = new PointF( link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width,
                                      link.Destination.Anchor.Y / 100.0f * link.Destination.Node.ZoomSize.Height );
-      
+
             end  = link.Destination.Node.PointToScreen( end );
             end  = PointToClient( end );
 
             end.X += Location.X;
             end.Y += Location.Y;
-            
+
             //control point 1
             //is 25% of the X length and only 10% of the Y length
-            PointF control1 = new PointF( 
-               (start.X + (end.X - start.X) * .25f), 
-               (start.Y + (end.Y - start.Y) * .10f) ); 
+            PointF control1 = new PointF(
+               (start.X + (end.X - start.X) * .25f),
+               (start.Y + (end.Y - start.Y) * .10f) );
 
             //control point 2
             //is 75% of the X length and 90% of the Y length
-            PointF control2 = new PointF( 
-               (start.X + (end.X - start.X) * .75f), 
-               (start.Y + (end.Y - start.Y) * .90f) ); 
+            PointF control2 = new PointF(
+               (start.X + (end.X - start.X) * .75f),
+               (start.Y + (end.Y - start.Y) * .90f) );
 
             if ( true == link.Selected )
             {
                Handles.color = new UnityEngine.Color( selectedPen.Color.FR, selectedPen.Color.FG, selectedPen.Color.FB );
-               Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0), 
-                                   new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0), 
+               Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0),
+                                   new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0),
                                     Handles.color, uScriptConfig.lineTexture, selectedPen.Width );
             }
             else
@@ -1354,13 +1354,13 @@ namespace Detox.FlowChart
 
                // check source node type first
                string styleName = link.Source.Node.UnselectedStyleName;
-             
+
                object value = m_StyleHash[styleName];
-               if ( null == value ) 
+               if ( null == value )
                {
                   // didn't find source node style, try the destination
                   styleName = link.Destination.Node.UnselectedStyleName;
-                  value = m_StyleHash[styleName];                  
+                  value = m_StyleHash[styleName];
                }
 
                if ( null != value )
@@ -1390,8 +1390,8 @@ namespace Detox.FlowChart
                   Handles.color = new UnityEngine.Color(pen.Color.FR, pen.Color.FG, pen.Color.FB);
                }
 
-               Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0), 
-                                   new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0), 
+               Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0),
+                                   new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0),
                                    Handles.color, uScriptConfig.lineTexture, lineWidth );
             }
          }
@@ -1424,7 +1424,7 @@ namespace Detox.FlowChart
 
             endX += Location.X;
             endY += Location.Y;
-               
+
             e.Graphics.DrawRectangle( pen, startX, startY, endX - startX, endY - startY );
          }
 
@@ -1449,7 +1449,7 @@ namespace Detox.FlowChart
 
          m_Links.Add( link );
       }
-      
+
       public void DeleteLink(Guid sourceGuid, string sourceName, Guid destGuid, string destName)
       {
          int index = -1;
@@ -1477,7 +1477,7 @@ namespace Detox.FlowChart
       {
          Node n1 = c1 as Node;
          Node n2 = c2 as Node;
-         
+
          // comments should always go to the back
          if (n1.StyleName.Contains("comment"))
          {
@@ -1511,7 +1511,7 @@ namespace Detox.FlowChart
          {
             return -1;
          }
-         
+
          // if neither node is selected, use render depth
          if (n1.RenderDepth < n2.RenderDepth)
          {
@@ -1521,7 +1521,7 @@ namespace Detox.FlowChart
          {
             return 1;
          }
-         
+
          return 0;
       }
 
@@ -1572,7 +1572,7 @@ namespace Detox.FlowChart
       {
          Source      = new Connection( );
          Destination = new Connection( );
-      
+
          Tag = null;
       }
 
@@ -1585,7 +1585,7 @@ namespace Detox.FlowChart
          Source.AnchorName  = startAnchor;
          Destination.Node   = end;
          Destination.AnchorName = endAnchor;
-      
+
          Tag = null;
       }
    }
@@ -1604,7 +1604,7 @@ namespace Detox.FlowChart
       public bool CanSource;
       public Region Region;
    }
-         
+
    public struct TextPoint
    {
       public string StyleName;
@@ -1636,10 +1636,10 @@ namespace Detox.FlowChart
       public bool CanResize = false;
 
       protected bool m_Selected = false;
-      virtual public bool Selected 
+      virtual public bool Selected
       {
          get { return m_Selected; }
-         set 
+         set
          {
             if (m_Selected != value)
             {
@@ -1691,7 +1691,7 @@ namespace Detox.FlowChart
       public virtual void PreparePoints( )
       {
       }
-		
+
       public virtual bool IsVisible( Rectangle visibleRect )
       {
          Point location = PointToScreen( new Point(0,0) );
@@ -1699,19 +1699,19 @@ namespace Detox.FlowChart
          float leftSide  = location.X;
          float rightSide = location.X + ZoomSize.Width;
 
-         if (rightSide < visibleRect.X || leftSide > visibleRect.Right) 
+         if (rightSide < visibleRect.X || leftSide > visibleRect.Right)
          {
             return false;
          }
-         
+
          float topSide = location.Y;
          float bottomSide = location.Y + ZoomSize.Height;
-         
+
          if (bottomSide < visibleRect.Y || topSide > visibleRect.Bottom )
          {
             return false;
          }
-         
+
          return true;
       }
 
@@ -1753,7 +1753,7 @@ namespace Detox.FlowChart
 
          Point p = PointToScreen( new Point(0, 0) );
          p = this.Parent.PointToClient( p );
-         
+
          m_MouseOffset = new Detox.Drawing.Point( (int) ((position.X - p.X)), (int) ((position.Y - p.Y)));
       }
 
@@ -1779,9 +1779,9 @@ namespace Detox.FlowChart
          //accounting for zoom factor must take place in screen space
          p.X = (int) (p.X / ZoomScale);
          p.Y = (int) (p.Y / ZoomScale);
-         
+
          p = this.Parent.PointToClient( p );
-   
+
          Location = p;
       }
 
@@ -1794,7 +1794,7 @@ namespace Detox.FlowChart
          Point position = Detox.Windows.Forms.Cursor.Position;
 
          Size = new Detox.Drawing.Size(m_ResizeOffset.Width + position.X - m_MouseOffset.X, m_ResizeOffset.Height + position.Y - m_MouseOffset.Y );
-         
+
          if ( Size.Width  < uScriptConfig.MinResizeX  ) Size.Width = uScriptConfig.MinResizeX;
          if ( Size.Height < uScriptConfig.MinResizeY )  Size.Height = uScriptConfig.MinResizeY;
       }
@@ -1806,7 +1806,7 @@ namespace Detox.FlowChart
          bool result = false;
          int x = uScriptUtility.RoundToMultiple(Location.X, uScript.Preferences.GridSize);
          int y = uScriptUtility.RoundToMultiple(Location.Y, uScript.Preferences.GridSize);
-   
+
          if (Location.X != x)
          {
             Location.X = x;
@@ -1818,7 +1818,7 @@ namespace Detox.FlowChart
             Location.Y = y;
             result = true;
          }
-   
+
          return result;
       }
 
@@ -1838,16 +1838,16 @@ namespace Detox.FlowChart
          set { m_AnchorPoints = value; }
       }
 
-      protected TextPoint [] TextPoints 
-      { 
-         get { return m_TextPoints; } 
+      protected TextPoint [] TextPoints
+      {
+         get { return m_TextPoints; }
          set { m_TextPoints = value; }
       }
 
       private TextPoint [] m_TextPoints = new TextPoint[ 0 ];
 
       public override void OnPaint(PaintEventArgs e)
-      {         
+      {
          base.OnPaint(e);
 
          Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
@@ -1868,7 +1868,7 @@ namespace Detox.FlowChart
                Handles.color = uScriptConfig.GetStyleColor(StyleName);
 
                Handles.DrawSolidDisc(new Vector3(nodeRect.X + nodeRect.Width / 2, nodeRect.Y + nodeRect.Height / 2, 0), new Vector3(0, 0, -1), nodeRect.Width / 2.0f);
-            
+
                Handles.color = color;
             }
             else
@@ -1879,13 +1879,13 @@ namespace Detox.FlowChart
          else
          {
             e.Graphics.FillRectangle(StyleName, nodeRect, Name, this);
-   
+
             FlowChartCtrl flowChart = Parent as FlowChartCtrl;
 
             Point position = Detox.Windows.Forms.Cursor.Position;
             position = PointToClient( position );
 
-            
+
             for ( int i = 0; i < AnchorPoints.Length; i++ )
             {
                AnchorPoint point = m_AnchorPoints[ i ];
@@ -1965,7 +1965,7 @@ namespace Detox.FlowChart
    public class FlowchartNodesModifiedEventArgs : EventArgs
    {
       private Node[] m_Nodes;
-      public  Node[] Nodes 
+      public  Node[] Nodes
       { get { return m_Nodes; } }
 
       public FlowchartNodesModifiedEventArgs(Node []nodes)
@@ -1992,7 +1992,7 @@ namespace Detox.FlowChart
    public class FlowchartLinkCreatedEventArgs : EventArgs
    {
       private Link m_Link;
-      public  Link Link 
+      public  Link Link
       { get { return m_Link; } }
 
       public FlowchartLinkCreatedEventArgs(Link link)

@@ -219,8 +219,6 @@ public class uScript : EditorWindow
    Rect rectFileMenuButton = new Rect();
    Rect rectFileMenuWindow = new Rect(20, 20, 10, 10);
 
-   public bool BuildingScreenshot = false;
-
    /* Palette Variables */
    String _graphListFilterText = string.Empty;
 
@@ -1366,7 +1364,7 @@ public class uScript : EditorWindow
          //
          // The user should not be able to input during this process
          //
-         uScriptExportPNG.ProcessImageExport();
+         Detox.Editor.ExportPNG.ProcessImageExport();
 
          uScriptGUI.MonitorGUIControlFocusChanges();
       }
@@ -3254,7 +3252,7 @@ public class uScript : EditorWindow
 
    void FileMenuItem_ExportPNG()
    {
-      uScriptExportPNG.Start();
+      Detox.Editor.ExportPNG.Start();
       isFileMenuOpen = false;
    }
 
@@ -4047,11 +4045,11 @@ public class uScript : EditorWindow
                AssetDatabase.Refresh();
                AttachToMasterGO(m_FullPath);
             }
-				
+            
 #if ENABLE_ANALYTICS
-			GetGraphAnalyticsData(script);
+         GetGraphAnalyticsData(script);
 #endif
-				
+            
             return true;
          }
          else
@@ -4062,49 +4060,49 @@ public class uScript : EditorWindow
 
       return false;
    }
-	
-	/// <summary>
-	/// Gets the graph's node analytics data. This code is part of a side project by Scott to potentially store locally node data for an entire Unity project for things like node deletion on project building to remove unused nodes and such.
-	/// </summary>
-	/// <param name='script'>
-	/// The graph you want to grab all the node data for.
-	/// </param>
+   
+   /// <summary>
+   /// Gets the graph's node analytics data. This code is part of a side project by Scott to potentially store locally node data for an entire Unity project for things like node deletion on project building to remove unused nodes and such.
+   /// </summary>
+   /// <param name='script'>
+   /// The graph you want to grab all the node data for.
+   /// </param>
     void GetGraphAnalyticsData(Detox.ScriptEditor.ScriptEditor script)
-	{
-		// Create list of unique nodes used and their quantity used on the graph:
-		Dictionary<string, KeyValuePair<string, int>> nodesUsed = new Dictionary<string, KeyValuePair<string, int>>();
-		
-		// Get all the Action nodes:
-		foreach (Detox.ScriptEditor.LogicNode node in script.Logics)
-		{
-			if (nodesUsed.ContainsKey(node.FriendlyName))
-			{
-				KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Action", nodesUsed[node.FriendlyName].Value + 1);
-				nodesUsed[node.FriendlyName] = tmpPair;
-			}
-			else
-			{
-				KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Action", 1);
-				nodesUsed.Add(node.FriendlyName, tmpPair);
-			}
-		}
-		
-		// Get all the Event nodes:
-		foreach (Detox.ScriptEditor.EntityEvent node in script.Events)
-		{	
-			if (nodesUsed.ContainsKey(node.FriendlyType))
-			{
-				KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Event", nodesUsed[node.FriendlyType].Value + 1);
-				nodesUsed[node.FriendlyType] = tmpPair;
-			}
-			else
-			{
-				KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Event", 1);
-				nodesUsed.Add(node.FriendlyType, tmpPair);
-			}
-		}
-		
-	}
+   {
+      // Create list of unique nodes used and their quantity used on the graph:
+      Dictionary<string, KeyValuePair<string, int>> nodesUsed = new Dictionary<string, KeyValuePair<string, int>>();
+      
+      // Get all the Action nodes:
+      foreach (Detox.ScriptEditor.LogicNode node in script.Logics)
+      {
+         if (nodesUsed.ContainsKey(node.FriendlyName))
+         {
+            KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Action", nodesUsed[node.FriendlyName].Value + 1);
+            nodesUsed[node.FriendlyName] = tmpPair;
+         }
+         else
+         {
+            KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Action", 1);
+            nodesUsed.Add(node.FriendlyName, tmpPair);
+         }
+      }
+      
+      // Get all the Event nodes:
+      foreach (Detox.ScriptEditor.EntityEvent node in script.Events)
+      {	
+         if (nodesUsed.ContainsKey(node.FriendlyType))
+         {
+            KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Event", nodesUsed[node.FriendlyType].Value + 1);
+            nodesUsed[node.FriendlyType] = tmpPair;
+         }
+         else
+         {
+            KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Event", 1);
+            nodesUsed.Add(node.FriendlyType, tmpPair);
+         }
+      }
+      
+   }
 
    void AttachToMasterGO(String path)
    {
