@@ -29,12 +29,16 @@ public class uScriptAct_IsInListVector2 : uScriptLogic
       Vector2[] Target,
       
       [FriendlyName("Vector2 List", "The Vector2 List to check.")]
-      ref Vector2[] List
+      ref Vector2[] List,
+
+      [FriendlyName("Found Index", "The index in the Vector2 List that Target is at (-1 if not found or multiple Targets are specified).")]
+      out int Index
       )
    {
       List<Vector2> list = new List<Vector2>(List);
       
       m_InList = false;
+      Index = -1;
       foreach (Vector2 target in Target)
       {
          if (!list.Contains(target))
@@ -45,5 +49,11 @@ public class uScriptAct_IsInListVector2 : uScriptLogic
       
       // if we get here, all items were in the list
       m_InList = true;
+
+      // if there is only 1 target, return its index in the list
+      if (Target.Length == 1)
+      {
+         Index = list.IndexOf(Target[0]);
+      }
    }
 }

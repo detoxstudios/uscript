@@ -29,12 +29,16 @@ public class uScriptAct_IsInListCamera : uScriptLogic
       Camera[] Target,
       
       [FriendlyName("Camera List", "The Camera List to check.")]
-      ref Camera[] List
+      ref Camera[] List,
+
+      [FriendlyName("Found Index", "The index in the Camera List that Target is at (-1 if not found or multiple Targets are specified).")]
+      out int Index
       )
    {
       List<Camera> list = new List<Camera>(List);
       
       m_InList = false;
+      Index = -1;
       foreach (Camera target in Target)
       {
          if (!list.Contains(target))
@@ -45,5 +49,11 @@ public class uScriptAct_IsInListCamera : uScriptLogic
       
       // if we get here, all items were in the list
       m_InList = true;
+
+      // if there is only 1 target, return its index in the list
+      if (Target.Length == 1)
+      {
+         Index = list.IndexOf(Target[0]);
+      }
    }
 }

@@ -29,12 +29,16 @@ public class uScriptAct_IsInListMaterial : uScriptLogic
       Material[] Target,
 
       [FriendlyName("Material List", "The Material List to check.")]
-      ref Material[] List
+      ref Material[] List,
+
+      [FriendlyName("Found Index", "The index in the Material List that Target is at (-1 if not found or multiple Targets are specified).")]
+      out int Index
       )
    {
       List<Material> list = new List<Material>(List);
       
       m_InList = false;
+      Index = -1;
       foreach (Material target in Target)
       {
          if (!list.Contains(target))
@@ -45,5 +49,11 @@ public class uScriptAct_IsInListMaterial : uScriptLogic
       
       // if we get here, all items were in the list
       m_InList = true;
+
+      // if there is only 1 target, return its index in the list
+      if (Target.Length == 1)
+      {
+         Index = list.IndexOf(Target[0]);
+      }
    }
 }

@@ -29,12 +29,16 @@ public class uScriptAct_IsInListRect : uScriptLogic
       Rect[] Target,
       
       [FriendlyName("Rect List", "The Rect List to check.")]
-      ref Rect[] List
+      ref Rect[] List,
+
+      [FriendlyName("Found Index", "The index in the Rect List that Target is at (-1 if not found or multiple Targets are specified).")]
+      out int Index
       )
    {
       List<Rect> list = new List<Rect>(List);
       
       m_InList = false;
+      Index = -1;
       foreach (Rect target in Target)
       {
          if (!list.Contains(target))
@@ -45,5 +49,11 @@ public class uScriptAct_IsInListRect : uScriptLogic
       
       // if we get here, all items were in the list
       m_InList = true;
+
+      // if there is only 1 target, return its index in the list
+      if (Target.Length == 1)
+      {
+         Index = list.IndexOf(Target[0]);
+      }
    }
 }

@@ -29,12 +29,16 @@ public class uScriptAct_IsInListGameObject : uScriptLogic
       GameObject[] Target,
 
       [FriendlyName("GameObject List", "The GameObject List to check.")]
-      ref GameObject[] GameObjectList
+      ref GameObject[] GameObjectList,
+
+      [FriendlyName("Found Index", "The index in the GameObject List that Target is at (-1 if not found or multiple Targets are specified).")]
+      out int Index
       )
    {
       List<GameObject> list = new List<GameObject>(GameObjectList);
       
       m_InList = false;
+      Index = -1;
       foreach(GameObject target in Target)
       {
          if (!list.Contains(target))
@@ -45,5 +49,11 @@ public class uScriptAct_IsInListGameObject : uScriptLogic
       
       // if we get here, all items were in the list
       m_InList = true;
+
+      // if there is only 1 target, return its index in the list
+      if (Target.Length == 1)
+      {
+         Index = list.IndexOf(Target[0]);
+      }
    }
 }
