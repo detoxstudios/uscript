@@ -156,7 +156,7 @@ namespace Assets.Editor
          //}
 
          // Read graph files from subfolders
-         var fileNames = GetFileList(uScript.Preferences.UserScripts, "*.uscript");
+         var fileNames = uScript.GetGraphPaths();
 
          // Build the flat list of scripts
          foreach (var filename in fileNames)
@@ -168,43 +168,6 @@ namespace Assets.Editor
          //this.listView.RebuildListHierarchy();
       }
 
-      public static IEnumerable<string> GetFileList(string baseDir, string searchPattern)
-      {
-         var directories = new List<string>();
-         var files = new List<string>();
-
-         directories.Add(baseDir);
-
-         while (directories.Count > 0)
-         {
-            string directory = directories[0];
-            directories.RemoveAt(0);
-
-            try
-            {
-               files.AddRange(Directory.GetFiles(directory, searchPattern).Select(fileName => fileName.Replace('\\', '/')));
-
-               //foreach (string fileName in Directory.GetFiles(directory, searchPattern))
-               //{
-               //   files.Add(fileName.Replace('\\', '/'));
-               //}
-            }
-            catch (Exception e)
-            {
-               uScriptDebug.Log(string.Format("Unable to access directory: \"{0}\"\n{1}", directory, e), uScriptDebug.Type.Error);
-               return files;
-            }
-
-            directories.AddRange(Directory.GetDirectories(directory).Select(directoryName => directoryName.Replace('\\', '/')));
-
-            //foreach (string directoryName in Directory.GetDirectories(directory))
-            //{
-            //   directories.Add(directoryName.Replace('\\', '/'));
-            //}
-         }
-
-         return files;
-      }
 
 
 

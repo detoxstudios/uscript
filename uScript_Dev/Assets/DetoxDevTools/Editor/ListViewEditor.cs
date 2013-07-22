@@ -29,7 +29,7 @@ public class ListViewEditor : EditorWindow
    }
 
    [MenuItem("Tools/Detox Studios/Internal/ListView Editor &%l")]
-   private static void Init()
+   internal static void Init()
    {
       // Get existing open window or if none, make a new one:
       editorWindow = EditorWindow.GetWindow(typeof(ListViewEditor), false, "ListView Editor") as ListViewEditor;
@@ -39,7 +39,7 @@ public class ListViewEditor : EditorWindow
       }
    }
 
-   void OnGUI()
+   internal void OnGUI()
    {
       // Clear keyboard focus from search panels and other text fields, if necessary
       if (Event.current.type == EventType.MouseUp)
@@ -93,8 +93,8 @@ public class ListViewEditor : EditorWindow
 //      }
    }
 
-   void OnProjectChange()
+   internal void OnProjectChange()
    {
-      PanelScript.Instance.RebuildListContents();
+      PanelScript.Instance.OnProjectChange();
    }
 }
