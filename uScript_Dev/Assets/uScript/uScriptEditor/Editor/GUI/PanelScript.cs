@@ -10,6 +10,7 @@
 namespace Detox.Editor.GUI
 {
    using UnityEditor;
+
    using UnityEngine;
 
    public sealed partial class PanelScript : uScriptGUIPanel
@@ -19,9 +20,11 @@ namespace Detox.Editor.GUI
       // === Fields =====================================================================
 
       private static PanelScript instance;
+
       private static uScript uScriptInstance;
 
       private PanelScriptCurrent panelScriptCurrent;
+
       private PanelScriptList panelScriptList;
 
       // === Constructors ===============================================================
@@ -91,21 +94,56 @@ namespace Detox.Editor.GUI
          this.panelScriptCurrent = new PanelScriptCurrent();
          this.panelScriptList = new PanelScriptList();
 
-         this.RebuildListContents();
-      }
-
-      public void RebuildListContents()
-      {
          this.panelScriptList.RebuildListContents();
       }
 
       public void RefreshSourceState()
       {
+         // TODO: Remove this when there are no more references in code.
+      }
+
+      public void RebuildListContents()
+      {
+         // TODO: Remove this when there are no more references in code.
+         this.OnProjectChange();
+      }
+
+      public void OnProjectChange()
+      {
+         this.panelScriptList.RebuildListContents();
          this.panelScriptCurrent.RefreshSourceState();
       }
 
       // === Structs ====================================================================
 
       // === Classes ====================================================================
+      public static class SourceStateContent
+      {
+         static SourceStateContent()
+         {
+            Release = new GUIContent(
+               uScriptGUI.GetTexture("iconScriptStatusRelease"), "Ping the source file associated with this uScript.");
+
+            Debug = new GUIContent(
+               uScriptGUI.GetTexture("iconScriptStatusDebug"),
+               string.Format("{0} This script contains Debug information.", Release.tooltip));
+
+            Stale = new GUIContent(
+               uScriptGUI.GetTexture("iconScriptStatusMissing"),
+               string.Format("{0} Save using Release or Debug to generate code for this script.", Release.tooltip));
+
+            Missing = new GUIContent(
+               uScriptGUI.GetTexture("iconScriptStatusUnknown"),
+               "No source file was found. Save using Release or Debug to generate code for this script.");
+         }
+
+         public static GUIContent Debug { get; private set; }
+
+         public static GUIContent Missing { get; private set; }
+
+         public static GUIContent Release { get; private set; }
+
+         public static GUIContent Stale { get; private set; }
+      }
    }
 }

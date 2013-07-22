@@ -36,7 +36,7 @@ namespace Detox.Editor.GUI
 
       public List<ListViewItem> Children { get; set; }
 
-      public int ClickCount { get; private set; }
+      public int ClickCount { get; set; }
 
       public int Depth { get; set; }
 
@@ -95,6 +95,15 @@ namespace Detox.Editor.GUI
 
       public virtual void Draw(ref Rect itemRowRect)
       {
+         // TODO: TOP PRIORITY ... Delegate this to the subclass ListViewItemScript
+         // All row drawing should take place there, including the foldouts, selected highlights, and column cells.
+         // Mouse input related to row selection and GUI buttons should be handled there as well.
+
+         // TODO: This method should be abstract and required to be implemented by subclasses.
+
+
+
+
          var rect = new Rect(itemRowRect);
          itemRowRect.height += this.Height;
 

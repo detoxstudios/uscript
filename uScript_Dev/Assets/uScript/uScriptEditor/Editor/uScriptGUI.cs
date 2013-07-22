@@ -535,20 +535,106 @@ public static class uScriptGUI
       return true;
    }
 
+   private static Dictionary<string, string> scenePaths;
 
-   public static bool PingScript(string assetPath)
+
+   public static void GetScenePaths()
    {
+      // TODO: Replace this logic, because it's slow. If we stored the full scene path with the script, this wouldn't be needed.
+
+      scenePaths = new Dictionary<string, string>();
+
+      // get every single one of the files in the Assets folder.
+      var files = uScriptGUI.GetFilesFromDirectory(new System.IO.DirectoryInfo(Application.dataPath), "*.unity");
+
+      foreach (var fi in files)
+      {
+         if (fi.Name.StartsWith("."))
+         {
+            // Unity ignores dotfiles
+            continue;
+         }
+
+         var obj = AssetDatabase.LoadMainAssetAtPath(uScriptGUI.GetRelativeAssetPath(fi.FullName));
+         var path = AssetDatabase.GetAssetPath(obj);
+         var name = System.IO.Path.GetFileNameWithoutExtension(path);
+
+         System.Diagnostics.Debug.Assert(name != null, "name != null");
+
+         if (scenePaths.ContainsKey(name))
+         {
+            Debug.LogWarning("The project contains multiple scenes with the same name: \"" + name + "\".\n");
+         }
+
+         scenePaths.Add(name, path);
+      }
+   }
+
+   public static void PingProjectGraph(string assetPath)
+   {
+      if (string.IsNullOrEmpty(assetPath))
+      {
+         return;
+      }
+
+      // Applies the uScriptProjectFiles path.
+      // For example, "foobar.uscript" -> "Assets/uScriptProjectFiles/uScripts/foobar.uscript"
       assetPath = uScript.Preferences.UserScripts.Substring(Application.dataPath.Length - 6) + "/" + assetPath;
+
       var obj = AssetDatabase.LoadMainAssetAtPath(assetPath);
       if (obj == null)
       {
          Debug.LogWarning("Could not find \"" + assetPath + "\"\n");
-         return false;
+      }
+      else
+      {
+         EditorGUIUtility.PingObject(obj.GetInstanceID());
+      }
+   }
+
+   public static void PingProjectScene(string scenePath)
+   {
+      // TODO: return true when successful, false otherwise.
+      // TODO: inline PingScene()
+
+      if (scenePaths == null)
+      {
+         GetScenePaths();
       }
 
-      EditorGUIUtility.PingObject(obj.GetInstanceID());
-      return true;
+      System.Diagnostics.Debug.Assert(scenePaths != null, "scenePaths should not be null here!");
+
+      if (string.IsNullOrEmpty(scenePath))
+      {
+         return;
+      }
+
+      if (scenePaths.ContainsKey(scenePath))
+      {
+         if (PingScene(scenePaths[scenePath]) == false)
+         {
+            Debug.LogWarning("Could not find the scene asset in the Project.\n");
+         }
+      }
+      else
+      {
+         Debug.LogWarning("The scene does not appear to exist in the project: \"" + scenePath + "\".\n");
+      }
    }
+
+   public static bool PingProjectScript(string scriptName)
+   {
+      // TODO: inline PingGeneratedScript()
+      return PingGeneratedScript(scriptName);
+   }
+
+
+
+
+
+
+
+
 
    public static string FixSlashes(string s)
    {
@@ -2603,7 +2689,7 @@ public static class uScriptGUI
       PanelLeftWidth = 200;
       PanelPropertiesHeight = 250;
       PanelPropertiesWidth = 500;
-      PanelScriptsWidth = 250;
+      PanelScriptsWidth = 300;
 
 //      Rect rectArea = new Rect(0, 0, uScript.Instance.position.width, uScript.Instance.position.height /* - statusbarHeight */);
 

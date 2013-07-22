@@ -9,8 +9,6 @@
 
 namespace Detox.Editor.GUI
 {
-   using System.Collections.Generic;
-
    using Detox.ScriptEditor;
 
    using UnityEditor;
@@ -27,22 +25,15 @@ namespace Detox.Editor.GUI
 
          private static ScriptEditorCtrl scriptEditorCtrl;
 
-         private static Dictionary<string, string> scenePaths;
-
          private string currentSceneName = string.Empty;
-         private string scriptFileName = string.Empty;
-         private string scriptName = string.Empty;
-         private string scriptSceneName = string.Empty;
+
+         private string graphFile = string.Empty;
+         private string graphFileName = string.Empty;
+         private string graphSceneName = string.Empty;
 
          private bool sourceMissing;
 
          // === Constructors ===============================================================
-
-         public PanelScriptCurrent()
-         {
-            //uScriptInstance = uScript.Instance;
-            //scriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
-         }
 
          // === Properties =================================================================
 
@@ -71,7 +62,7 @@ namespace Detox.Editor.GUI
                }
             }
 
-            this.DrawScriptName();
+            this.DrawGraphName();
             this.DrawSceneName();
             this.DrawSceneMessage();
 
@@ -82,91 +73,22 @@ namespace Detox.Editor.GUI
 
          public void RefreshSourceState()
          {
-            this.sourceMissing = uScriptGUI.IsGeneratedScriptMissing(this.scriptName);
-
-            GetScenePaths();
-         }
-
-         private static void GetScenePaths()
-         {
-            // TODO: Replace this logic, because it's slow. If we stored the full scene path with the script, this wouldn't be needed.
-
-            scenePaths = new Dictionary<string, string>();
-
-            // get every single one of the files in the Assets folder.
-            var files = uScriptGUI.GetFilesFromDirectory(new System.IO.DirectoryInfo(Application.dataPath), "*.unity");
-
-            foreach (var fi in files)
-            {
-               if (fi.Name.StartsWith("."))
-               {
-                  // Unity ignores dotfiles
-                  continue;
-               }
-
-               var obj = AssetDatabase.LoadMainAssetAtPath(uScriptGUI.GetRelativeAssetPath(fi.FullName));
-               var path = AssetDatabase.GetAssetPath(obj);
-               var name = System.IO.Path.GetFileNameWithoutExtension(path);
-
-               System.Diagnostics.Debug.Assert(name != null, "name != null");
-
-               if (scenePaths.ContainsKey(name))
-               {
-                  Debug.LogWarning("The project contains multiple scenes with the same name: \"" + name + "\".\n");
-               }
-
-               scenePaths.Add(name, path);
-            }
-         }
-
-         private void CommandSceneAttach()
-         {
-         }
-
-         private void CommandSceneDetach()
-         {
+            this.sourceMissing = uScriptGUI.IsGeneratedScriptMissing(this.graphFileName);
          }
 
          private void CommandSceneLocate()
          {
-            if (scenePaths == null)
-            {
-               GetScenePaths();
-            }
-
-            System.Diagnostics.Debug.Assert(scenePaths != null, "scenePaths should not be null here!");
-
-            if (string.IsNullOrEmpty(this.scriptSceneName))
-            {
-               return;
-            }
-
-            if (scenePaths.ContainsKey(this.scriptSceneName))
-            {
-               if (uScriptGUI.PingScene(scenePaths[this.scriptSceneName]) == false)
-               {
-                  Debug.LogWarning("Could not find the scene asset in the Project.\n");
-               }
-            }
-            else
-            {
-               Debug.LogWarning("The scene does not appear to exist in the project: \"" + this.scriptSceneName + "\".\n");
-            }
+            uScriptGUI.PingProjectScene(this.graphSceneName);
          }
 
          private void CommandScriptLocate()
          {
-            if (string.IsNullOrEmpty(scriptEditorCtrl.ScriptName))
-            {
-               return;
-            }
-
-            uScriptGUI.PingScript(scriptEditorCtrl.ScriptName);
+            uScriptGUI.PingProjectGraph(scriptEditorCtrl.ScriptName);
          }
 
          private void CommandScriptReload()
          {
-            var path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, this.scriptFileName);
+            var path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, this.graphFile);
             if (path != string.Empty)
             {
                uScriptInstance.OpenScript(path);
@@ -206,11 +128,7 @@ namespace Detox.Editor.GUI
 
          private void CommandSourceLocate()
          {
-            this.sourceMissing = uScriptGUI.PingGeneratedScript(this.scriptName) == false;
-         }
-
-         private void CommandSourceRemove()
-         {
+            this.sourceMissing = uScriptGUI.PingProjectScript(this.graphFileName) == false;
          }
 
          private void ContextMenuCreate(Rect rect)
@@ -243,7 +161,7 @@ namespace Detox.Editor.GUI
             menu.AddSeparator(string.Empty);
 
             // SCENE
-            if (string.IsNullOrEmpty(this.scriptSceneName))
+            if (string.IsNullOrEmpty(this.graphSceneName))
             {
                menu.AddDisabledItem(new GUIContent("Scene/Locate in Project"));
             }
@@ -252,9 +170,9 @@ namespace Detox.Editor.GUI
                menu.AddItem(new GUIContent("Scene/Locate in Project"), false, this.CommandSceneLocate);
             }
 
-            menu.AddDisabledItem(new GUIContent("Scene/Attach to Script"));
+            //menu.AddDisabledItem(new GUIContent("Scene/Attach to Script"));
             //menu.AddItem(new GUIContent("Scene/Attach to Script"), false, this.CommandSceneAttach);
-            menu.AddDisabledItem(new GUIContent("Scene/Detach from Script"));
+            //menu.AddDisabledItem(new GUIContent("Scene/Detach from Script"));
             //menu.AddItem(new GUIContent("Scene/Detach from Script"), false, this.CommandSceneDetach);
             menu.AddSeparator(string.Empty);
             
@@ -262,12 +180,12 @@ namespace Detox.Editor.GUI
             if (this.sourceMissing)
             {
                menu.AddDisabledItem(new GUIContent("Source/Locate in Project"));
-               menu.AddDisabledItem(new GUIContent("Source/Remove from Project"));
+               //menu.AddDisabledItem(new GUIContent("Source/Remove from Project"));
             }
             else
             {
                menu.AddItem(new GUIContent("Source/Locate in Project"), false, this.CommandSourceLocate);
-               menu.AddDisabledItem(new GUIContent("Source/Remove from Project"));
+               //menu.AddDisabledItem(new GUIContent("Source/Remove from Project"));
                //menu.AddItem(new GUIContent("Source/Remove from Project"), false, this.CommandSourceRemove);
             }
 
@@ -283,13 +201,49 @@ namespace Detox.Editor.GUI
             Event.current.Use();
          }
 
+         private void DrawGraphName()
+         {
+            GUILayout.Label(GUIContent.none, GUILayout.Height(Content.IconScriptLogo.height));
+
+            // No GUILayout beyong this point, and ignore all non-left mouse clicks
+            if (Event.current.type == EventType.Layout || (Event.current.isMouse && Event.current.button != 0))
+            {
+               return;
+            }
+
+            var nameRect = GUILayoutUtility.GetLastRect();
+
+            // Script Icon
+            GUI.Label(nameRect, Content.IconScriptLogo, GUIStyle.none);
+
+            nameRect.xMin += Content.IconScriptLogo.width + 4;
+
+            System.Diagnostics.Debug.Assert(scriptEditorCtrl != null, "scriptEditorCtrl is null");
+
+            var friendlyName = string.IsNullOrEmpty(scriptEditorCtrl.ScriptEditor.FriendlyName.Default)
+               ? this.graphFileName
+               : scriptEditorCtrl.ScriptEditor.FriendlyName.Default;
+
+            var label = string.Format(
+               "{0}{1}",
+               string.IsNullOrEmpty(this.graphFile) ? "(new)" : friendlyName,
+               scriptEditorCtrl.IsDirty ? " *" : string.Empty);
+
+            // Script Name
+            if (GUI.Button(
+               nameRect, Ellipsis.Compact(label, Style.ButtonScriptName, nameRect, Ellipsis.Format.Middle), Style.ButtonScriptName))
+            {
+               this.CommandScriptLocate();
+            }
+         }
+
          private void DrawSceneMessage()
          {
-            if (this.scriptSceneName == string.Empty)
+            if (this.graphSceneName == string.Empty)
             {
                GUILayout.Label(Content.MessageNoScene, Style.ScriptMessage);
             }
-            else if (this.scriptSceneName != this.currentSceneName)
+            else if (this.graphSceneName != this.currentSceneName)
             {
                GUILayout.Label(Content.MessageWrongScene, Style.ScriptMessage);
             }
@@ -319,18 +273,13 @@ namespace Detox.Editor.GUI
             GUI.DrawTexture(commandRect, Content.IconSourceType, ScaleMode.ScaleToFit);
 
             // State icon
-            //if (this.IsScriptNew)
-            //{
-            //   this.sourceMissing = true;
-            //}
-
             var stateButtonContent = this.sourceMissing
-               ? Content.ButtonScriptSourceMissing
-               : (uScriptInstance.IsStale(this.scriptName)
-                  ? Content.ButtonScriptSourceStale
-                  : (uScriptInstance.HasDebugCode(this.scriptName)
-                     ? Content.ButtonScriptSourceDebug
-                     : Content.ButtonScriptSourceRelease));
+               ? SourceStateContent.Missing
+               : (uScriptInstance.IsStale(this.graphFileName)
+                  ? SourceStateContent.Stale
+                  : (uScriptInstance.HasDebugCode(this.graphFileName)
+                     ? SourceStateContent.Debug
+                     : SourceStateContent.Release));
 
             commandRect.x += commandRect.width;
             commandRect.width = stateButtonContent.image.width + 2;
@@ -348,46 +297,15 @@ namespace Detox.Editor.GUI
 
             // Scene name
             sceneRect.xMin += Content.IconUnityScene.width + 4;
-            var label = string.IsNullOrEmpty(this.scriptSceneName) ? "(none)" : this.scriptSceneName;
-            var isScriptAttachToScene = this.scriptSceneName == this.currentSceneName;
+            var label = string.IsNullOrEmpty(this.graphSceneName) ? "(none)" : this.graphSceneName;
+            var isScriptAttachToScene = this.graphSceneName == this.currentSceneName;
 
             if (GUI.Button(
                sceneRect,
                Ellipsis.Compact(label, Style.ButtonSceneName, sceneRect, Ellipsis.Format.Middle),
-               isScriptAttachToScene || this.scriptSceneName == string.Empty ? Style.ButtonSceneName : Style.ButtonSceneNameError))
+               isScriptAttachToScene || this.graphSceneName == string.Empty ? Style.ButtonSceneName : Style.ButtonSceneNameError))
             {
                this.CommandSceneLocate();
-            }
-         }
-
-         private void DrawScriptName()
-         {
-            GUILayout.Label(GUIContent.none, GUILayout.Height(Content.IconScriptLogo.height));
-
-            // No GUILayout beyong this point, and ignore all non-left mouse clicks
-            if (Event.current.type == EventType.Layout || (Event.current.isMouse && Event.current.button != 0))
-            {
-               return;
-            }
-
-            var nameRect = GUILayoutUtility.GetLastRect();
-
-            // Script Icon
-            GUI.Label(nameRect, Content.IconScriptLogo, GUIStyle.none);
-
-            nameRect.xMin += Content.IconScriptLogo.width + 4;
-
-            System.Diagnostics.Debug.Assert(scriptEditorCtrl != null, "scriptEditorCtrl is null");
-            var label = string.Format(
-               "{0}{1}",
-               string.IsNullOrEmpty(this.scriptFileName) ? "(new)" : this.scriptName,
-               scriptEditorCtrl.IsDirty ? " *" : string.Empty);
-
-            // Script Name
-            if (GUI.Button(
-               nameRect, Ellipsis.Compact(label, Style.ButtonScriptName, nameRect, Ellipsis.Format.Middle), Style.ButtonScriptName))
-            {
-               this.CommandScriptLocate();
             }
          }
 
@@ -435,26 +353,27 @@ namespace Detox.Editor.GUI
 
          private void EvaluateScriptSceneData()
          {
-            if (this.scriptFileName != scriptEditorCtrl.ScriptName)
+            if (this.graphFile != scriptEditorCtrl.ScriptName)
             {
-               this.scriptFileName = scriptEditorCtrl.ScriptName;
-               this.scriptName = System.IO.Path.GetFileNameWithoutExtension(this.scriptFileName);
+               this.graphFile = scriptEditorCtrl.ScriptName;
                this.sourceMissing = false;
             }
 
-            if (string.IsNullOrEmpty(this.scriptFileName))
+            if (string.IsNullOrEmpty(this.graphFile))
             {
-               this.scriptFileName = string.Empty;
+               this.graphFile = string.Empty;
                this.sourceMissing = true;
             }
 
-            this.scriptSceneName = scriptEditorCtrl.ScriptEditor.SceneName;
+            this.graphFileName = System.IO.Path.GetFileNameWithoutExtension(this.graphFile);
 
-            //if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(this.scriptFileName))
+            this.graphSceneName = scriptEditorCtrl.ScriptEditor.SceneName;
+
+            //if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(this.graphFile))
             //{
-            //   if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[this.scriptFileName].m_SceneName) == false)
+            //   if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[this.graphFile].m_SceneName) == false)
             //   {
-            //      this.scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[this.scriptFileName].m_SceneName;
+            //      this.graphSceneName = uScriptBackgroundProcess.s_uScriptInfo[this.graphFile].m_SceneName;
             //   }
             //}
 
@@ -469,22 +388,6 @@ namespace Detox.Editor.GUI
          {
             static Content()
             {
-               ButtonScriptSourceRelease = new GUIContent(
-                  uScriptGUI.GetTexture("iconScriptStatusRelease"),
-                  "Ping the source file associated with this uScript.");
-               
-               ButtonScriptSourceDebug = new GUIContent(
-                  uScriptGUI.GetTexture("iconScriptStatusDebug"),
-                  ButtonScriptSourceRelease.tooltip + " This script contains Debug information.");
-
-               ButtonScriptSourceStale = new GUIContent(
-                  uScriptGUI.GetTexture("iconScriptStatusMissing"),
-                  ButtonScriptSourceRelease.tooltip + " Save using Release or Debug to generate code for this script.");
-
-               ButtonScriptSourceMissing = new GUIContent(
-                  uScriptGUI.GetTexture("iconScriptStatusUnknown"),
-                  "No source file was found. Save using Release or Debug to generate code for this script.");
-
                MessageNoScene = new GUIContent("This script is not attached to any scene. It may be used with Prefabs or as a Nested Script.");
                MessageWrongScene = new GUIContent("This uScript file was previously attached to a different Unity Scene. It may not be compatible with the current Unity Scene, and may not run correctly, if edited while this scene is open.");
 
@@ -493,14 +396,6 @@ namespace Detox.Editor.GUI
                IconSourceType = EditorGUIUtility.FindTexture("cs Script Icon");
                IconUnityScene = uScriptGUI.GetSkinnedTexture("UnityScene");
             }
-
-            public static GUIContent ButtonScriptSourceDebug { get; private set; }
-
-            public static GUIContent ButtonScriptSourceMissing { get; private set; }
-
-            public static GUIContent ButtonScriptSourceRelease { get; private set; }
-
-            public static GUIContent ButtonScriptSourceStale { get; private set; }
 
             public static Texture2D IconScriptLogo { get; private set; }
 

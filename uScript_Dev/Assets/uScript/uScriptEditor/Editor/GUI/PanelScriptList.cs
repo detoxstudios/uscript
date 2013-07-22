@@ -21,6 +21,14 @@ namespace Detox.Editor.GUI
    {
       private class PanelScriptList
       {
+         // FriendlyName   - User-specified friendly name
+         // GraphName      - <name>
+         // GraphPath      - <path>/<name>.<extention>
+         // SceneName      - <name>
+         // ScenePath      - <path>/<name>.<extention>
+         // SourceState
+         // SourcePath
+
          // TODO: The default ListViewItem renderer should first draw the row, followed by each
          //       column using specified Rects. Each column will look for a property with a name
          //       that matches the column ID.  If one is found, the property value is printed as
@@ -58,7 +66,7 @@ namespace Detox.Editor.GUI
             uScriptInstance = uScript.Instance;
 
             //this.listView = new ListView(ListViewEditor.Instance, typeof(ListViewItem_Script));
-            this.listView = new ListView(uScript.Instance)
+            this.listView = new ListView(uScript.Instance, typeof(ListViewItemScript))
             {
                ForceHorizontalColumnFit = true,
                ShowColumnHeaders = true,
@@ -140,7 +148,7 @@ namespace Detox.Editor.GUI
             }
 
             // Read graph files from subfolders
-            var fileNames = GetFileList(uScript.Preferences.UserScripts, "*.uscript");
+            var fileNames = uScript.GetGraphPaths();
 
             // Build the flat list of scripts
             foreach (var filename in fileNames)
@@ -148,46 +156,10 @@ namespace Detox.Editor.GUI
                this.listView.AddItem(filename.Replace(uScript.Preferences.UserScripts + "/", string.Empty));
             }
 
+            // TODO: pull the scene and source data here for each script
+
             // Mark the hierarchy dirty so that the hierarchy can be rebuilt and filtering and sorting can be applied
             this.listView.RebuildListHierarchy();
-         }
-
-         private static IEnumerable<string> GetFileList(string baseDir, string searchPattern)
-         {
-            var directories = new List<string>();
-            var files = new List<string>();
-
-            directories.Add(baseDir);
-
-            while (directories.Count > 0)
-            {
-               string directory = directories[0];
-               directories.RemoveAt(0);
-
-               try
-               {
-                  files.AddRange(Directory.GetFiles(directory, searchPattern).Select(fileName => fileName.Replace('\\', '/')));
-
-                  //foreach (string fileName in Directory.GetFiles(directory, searchPattern))
-                  //{
-                  //   files.Add(fileName.Replace('\\', '/'));
-                  //}
-               }
-               catch (Exception e)
-               {
-                  uScriptDebug.Log(string.Format("Unable to access directory: \"{0}\"\n{1}", directory, e), uScriptDebug.Type.Error);
-                  return files;
-               }
-
-               directories.AddRange(Directory.GetDirectories(directory).Select(directoryName => directoryName.Replace('\\', '/')));
-
-               //foreach (string directoryName in Directory.GetDirectories(directory))
-               //{
-               //   directories.Add(directoryName.Replace('\\', '/'));
-               //}
-            }
-
-            return files;
          }
 
          private void CreateColumns()
@@ -287,12 +259,13 @@ namespace Detox.Editor.GUI
 
          // === Classes ====================================================================
 
+         // TODO: REMOVE THE FOLLOWING:
 
-
-
-
-
-
+         // ================================================================================
+         // ================================================================================
+         // === Everything from here down is old and should eventually be removed ==========
+         // ================================================================================
+         // ================================================================================
 
          private static class Style
          {
@@ -361,7 +334,7 @@ namespace Detox.Editor.GUI
             if (this.currentScriptFileName != scriptEditorCtrl.ScriptName)
             {
                this.currentScriptFileName = scriptEditorCtrl.ScriptName;
-               this.currentScriptName = System.IO.Path.GetFileNameWithoutExtension(this.currentScriptFileName);
+               this.currentScriptName = Path.GetFileNameWithoutExtension(this.currentScriptFileName);
             }
 
             if (null == this.currentScriptFileName)
@@ -394,7 +367,7 @@ namespace Detox.Editor.GUI
                // Apply the filter and determine how many items will be drawn.
                foreach (var scriptFileName in keys)
                {
-                  scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFileName);
+                  scriptName = Path.GetFileNameWithoutExtension(scriptFileName);
 
                   // is not the loaded script
                   // there is no filter text
@@ -437,7 +410,7 @@ namespace Detox.Editor.GUI
 
                foreach (var scriptFileName in keys)
                {
-                  scriptName = System.IO.Path.GetFileNameWithoutExtension(scriptFileName);
+                  scriptName = Path.GetFileNameWithoutExtension(scriptFileName);
                   var listItemMinY = RowHeight * listItemCount;
                   var listItemMaxY = listItemMinY + RowHeight;
 
