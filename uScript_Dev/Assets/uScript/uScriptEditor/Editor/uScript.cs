@@ -28,7 +28,6 @@ using System.Reflection;
 
 using Detox.Data.Tools;
 using Detox.Drawing;
-using Detox.Editor.GUI;
 using Detox.FlowChart;
 using Detox.ScriptEditor;
 using Detox.Windows.Forms;
@@ -2556,7 +2555,7 @@ public sealed partial class uScript : EditorWindow
          SetMouseRegion(MouseRegion.HandleReference);//, -3, 3, 6, -3 );
 
 //         uScriptGUIPanelScript.Instance.Draw();
-         PanelScript.Instance.Draw();
+         Detox.Editor.GUI.PanelScript.Instance.Draw();
       }
       EditorGUILayout.EndHorizontal();
    }

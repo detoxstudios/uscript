@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 
 using Detox.ScriptEditor;
 
@@ -17,40 +18,32 @@ public sealed partial class uScript
 {
    public static string FindNodeAuthorName(string type)
    {
-      Type uscriptType = MasterComponent.GetType(type);
+      var uScriptType = MasterComponent.GetType(type);
 
-      if (uscriptType != null)
+      if (uScriptType != null)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return "";
+         var attributes = uScriptType.GetCustomAttributes(false);
 
-         foreach (object a in attributes)
+         foreach (var a in attributes.OfType<NodeAuthor>())
          {
-            if (a is NodeAuthor)
-            {
-               return ((NodeAuthor)a).Value;
-            }
+            return a.Value;
          }
       }
 
-      return "";
+      return string.Empty;
    }
 
    public static string FindNodeAuthorURL(string type)
    {
-      Type uscriptType = MasterComponent.GetType(type);
+      var uScriptType = MasterComponent.GetType(type);
 
-      if (uscriptType != null)
+      if (uScriptType != null)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return string.Empty;
+         var attributes = uScriptType.GetCustomAttributes(false);
 
-         foreach (object a in attributes)
+         foreach (var a in attributes.OfType<NodeAuthor>())
          {
-            if (a is NodeAuthor)
-            {
-               return ((NodeAuthor)a).URL;
-            }
+            return a.URL;
          }
       }
 
@@ -59,20 +52,13 @@ public sealed partial class uScript
 
    public static bool FindNodeAutoAssignMasterInstance(string type)
    {
-      Type uscriptType = MasterComponent.GetType(type);
+      var uScriptType = MasterComponent.GetType(type);
 
-      if (uscriptType != null)
+      if (uScriptType != null)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return false;
+         var attributes = uScriptType.GetCustomAttributes(false);
 
-         foreach (object a in attributes)
-         {
-            if (a is NodeAutoAssignMasterInstance)
-            {
-               return ((NodeAutoAssignMasterInstance)a).Value;
-            }
-         }
+         return attributes.OfType<NodeAutoAssignMasterInstance>().Select(a => a.Value).FirstOrDefault();
       }
 
       return false;
@@ -80,120 +66,126 @@ public sealed partial class uScript
 
    public static string FindNodeCopyright(string type)
    {
-      Type uscriptType = MasterComponent.GetType(type);
+      var uScriptType = MasterComponent.GetType(type);
 
-      if (uscriptType != null)
+      if (uScriptType != null)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return "";
+         var attributes = uScriptType.GetCustomAttributes(false);
 
-         foreach (object a in attributes)
+         foreach (var a in attributes.OfType<NodeCopyright>())
          {
-            if (a is NodeCopyright)
-            {
-               return ((NodeCopyright)a).Value;
-            }
+            return a.Value;
          }
       }
 
-      return "";
+      return string.Empty;
    }
-   
+
    public static string FindNodeDescription(string type, EntityNode node)
    {
-      // check non-logic, non-event types first...
-      // structs can't have attributes, so we have to specify this information here, explicitly
+      // Check non-logic, non-event types first...
+      // Structs can't have attributes, so we have to specify this information here, explicitly
       if (type == "CommentNode")
       {
-         return "Use a comment box to comment or hint at what a particular block of uScript nodes" +
-            " does. Comment boxes can be resized so that they surround the nodes that they are" +
-            " referencing.\n\nTo resize a comment box, drag the bottom-right corner of the comment" +
-            " box or set its width/height properties explicitly in the Properties panel.";
+         return "Use a comment box to comment or hint at what a particular block of uScript nodes"
+                + " does. Comment boxes can be resized so that they surround the nodes that they are"
+                + " referencing.\n\nTo resize a comment box, drag the bottom-right corner of the comment"
+                + " box or set its width/height properties explicitly in the Properties panel.";
       }
-      else if (type == "ExternalConnection")
+
+      if (type == "ExternalConnection")
       {
-         return "Use External Connections to create nested uScript graphs that show up as a single node in other graphs they are used in. An External Connection node" +
-            " will turn into a socket when the current graph is used as a nested node inside" +
-            " other graphs. The type of socket it turns into will be determined by the type of" +
-            " socket it is connected to in this uScript.\n\nTo place this uScript graph in another" +
-            " uScript as a nested node, save it and then look for it under the \"Graphs\" section" +
-            " of the Toolbox panel or 'Add' context menu.";
+         return "Use External Connections to create nested uScript graphs that show up as a single"
+                + " node in other graphs they are used in. An External Connection node"
+                + " will turn into a socket when the current graph is used as a nested node inside"
+                + " other graphs. The type of socket it turns into will be determined by the type of"
+                + " socket it is connected to in this uScript.\n\nTo place this uScript graph in another"
+                + " uScript as a nested node, save it and then look for it under the \"Graphs\" section"
+                + " of the Toolbox panel or 'Add' context menu.";
       }
-      else if (type == "OwnerConnection")
+
+      if (type == "OwnerConnection")
       {
-         return "Owner GameObject variables are a special kind of GameObject variable. They" +
-            " represent the GameObject that this uScript is attached to.";
+         return "Owner GameObject variables are a special kind of GameObject variable. They"
+                + " represent the GameObject that this uScript is attached to.";
       }
-      else if (type == "LocalNode")
+
+      if (type == "LocalNode")
       {
-         LocalNode variable = (LocalNode)node;
-         string friendlyType = uScriptConfig.Variable.FriendlyName(variable.Value.Type);
+         var variable = (LocalNode)node;
+         var friendlyType = uScriptConfig.Variable.FriendlyName(variable.Value.Type);
 
          switch (friendlyType)
          {
             case "Bool":
                return "A Boolean variable, which stores the value of True or False.";
+
             case "Color":
-               return "A Color variable. The color is defined in RGB color space and contains an Alpha (opacity) channel.";
+               return
+                  "A Color variable. The color is defined in RGB color space and contains an Alpha (opacity) channel.";
+
             case "Float":
                return "A floating-point variable may store a real number (e.g., 1.234, 5.0, -3.21).";
+
             case "Int":
                return "An integer variable may store a whole number (e.g., 1, 0, -3).";
+
             case "Vector2":
                return "A Vector2 variable represents a 2-dimensional point in space (x,y).";
+
             case "Vector3":
                return "A Vector3 variable represents a 3-dimensional point or direction in space (x,y,z).";
+
             case "Vector4":
-               return "A Vector4 variable represents a 3-dimensional point or direction in space with an additional 'W' component (x,y,z,w).";
+               return
+                  "A Vector4 variable represents a 3-dimensional point or direction in space with an additional 'W' component (x,y,z,w).";
+
             case "Rect":
                return "A Rect variable represents a 2-dimensional position (x,y) and an area (width, height).";
+
             case "Quaternion":
                return "A Quaternion variable stores a quaternion representation of a rotation in space.";
+
             case "GameObject":
-               return "A GameObject variable that stores a refernce to a GameObject in the scene.\n\nNote that if a GameObject is being used as a node's input parameter, it is set by name and when this is done, it must be unique in the scene.";
+               return "A GameObject variable that stores a refernce to a GameObject in the scene.\n\n"
+                      + "Note that if a GameObject is being used as a node's input parameter, it is set"
+                      + " by name and when this is done, it must be unique in the scene.";
+
             case "String":
                return "A String variable, which stores text data.";
+
             default:
                return "Use variables to store data in your uScript.";
          }
       }
 
-      Type uscriptType = MasterComponent.GetType(type);
+      var uScriptType = MasterComponent.GetType(type);
 
-      if (uscriptType != null)
+      if (uScriptType != null)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return "Z";
+         var attributes = uScriptType.GetCustomAttributes(false);
 
-         foreach (object a in attributes)
+         foreach (var a in attributes.OfType<FriendlyNameAttribute>().Where(a => a.Desc != string.Empty))
          {
-            if (a is FriendlyNameAttribute)
-            {
-               if (((FriendlyNameAttribute)a).Desc != String.Empty)
-               {
-                  return ((FriendlyNameAttribute)a).Desc;
-               }
-            }
+            return a.Desc;
          }
 
-         foreach (object a in attributes)
+         foreach (var a in attributes.OfType<NodeDescription>())
          {
-            if (a is NodeDescription)
-            {
-               return ((NodeDescription)a).Value;
-            }
+            return a.Value;
          }
       }
-      //if type was null it could be a nested script
       else if (node is LogicNode)
       {
+         // This could be a nested script due to the null uScriptType
+
          if (m_RawDescription.Contains(((LogicNode)node).Type))
          {
             return m_RawDescription[((LogicNode)node).Type] as string;
          }
       }
 
-      string entityType = "method";
+      var entityType = "method";
       if (node is EntityProperty)
       {
          entityType = "property";
@@ -203,8 +195,13 @@ public sealed partial class uScript
          entityType = "event";
       }
 
-      return "This node appears to have been generated by reflection. It allows access to the " + entityType + " \"" + GetNodeSignature(node) + "\"."
-         + "\n\nPlease refer to the appropriate resource, such as MSDN or the Unity Script Reference, for usage and behavior information.";
+      return
+         string.Format(
+            "This node appears to have been generated by reflection. It allows access to the {0} \"{1}\"."
+            + "\n\nPlease refer to the appropriate resource, such as MSDN or the"
+            + " Unity Script Reference, for usage and behavior information.",
+            entityType,
+            GetNodeSignature(node));
    }
 
    public static string FindNodeHelp(string type, EntityNode node)
@@ -215,32 +212,31 @@ public sealed partial class uScript
       {
          return "http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Comment_Node";
       }
-      else if (type == "ExternalConnection")
+
+      if (type == "ExternalConnection")
       {
          return "http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#External_Connection";
       }
-      else if (type == "LocalNode")
+
+      if (type == "LocalNode")
       {
          return "http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Variable_Nodes";
       }
-      else if (type == "OwnerConnection")
+
+      if (type == "OwnerConnection")
       {
          return "http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Owner_Variable";
       }
 
-      Type uscriptType = MasterComponent.GetType(type);
+      var uScriptType = MasterComponent.GetType(type);
 
-      if (uscriptType != null)
+      if (uScriptType != null)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return string.Empty;
+         var attributes = uScriptType.GetCustomAttributes(false);
 
-         foreach (object a in attributes)
+         foreach (var a in attributes.OfType<NodeHelp>())
          {
-            if (a is NodeHelp)
-            {
-               return ((NodeHelp)a).Value;
-            }
+            return a.Value;
          }
       }
 
@@ -249,10 +245,10 @@ public sealed partial class uScript
 
    //public static string FindNodeLicense(string type)
    //{
-   //   Type uscriptType = uScript.MasterComponent.GetType(type);
-   //   if (uscriptType != null)
+   //   Type uScriptType = uScript.MasterComponent.GetType(type);
+   //   if (uScriptType != null)
    //   {
-   //      object[] attributes = uscriptType.GetCustomAttributes(false);
+   //      object[] attributes = uScriptType.GetCustomAttributes(false);
    //      if (null == attributes) return "";
    //      foreach (object a in attributes)
    //      {
@@ -274,61 +270,58 @@ public sealed partial class uScript
       {
          return "Comment";
       }
-      else if (type == "ExternalConnection")
+
+      if (type == "ExternalConnection")
       {
          return "External Connection";
       }
-      else if (type == "OwnerConnection")
+
+      if (type == "OwnerConnection")
       {
          return "Owner GameObject";
       }
-      else if (type == "LocalNode")
+
+      if (type == "LocalNode")
       {
-         return uScriptConfig.Variable.FriendlyName(((LocalNode)node).Value.Type).Replace("UnityEngine.", String.Empty);
+         return uScriptConfig.Variable.FriendlyName(((LocalNode)node).Value.Type).Replace("UnityEngine.", string.Empty);
       }
 
-      Type uscriptType = MasterComponent.GetType(type);
+      var uScriptType = MasterComponent.GetType(type);
 
-      if (uscriptType != null)
+      if (uScriptType != null)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         foreach (object a in attributes)
+         var attributes = uScriptType.GetCustomAttributes(false);
+         foreach (var a in attributes.OfType<FriendlyNameAttribute>())
          {
-            if (a is FriendlyNameAttribute)
-            {
-               return ((FriendlyNameAttribute)a).Name;
-            }
+            return a.Name;
          }
       }
 
       // If there is no name at this point, the node is likely reflected
       if (node is EntityMethod)
       {
-         return "Reflected " + type.Replace("UnityEngine.", String.Empty) + " action";
-      }
-      else if (node is EntityProperty)
-      {
-         return "Reflected " + type.Replace("UnityEngine.", String.Empty) + " property";
+         return string.Format("Reflected {0} action", type.Replace("UnityEngine.", string.Empty));
       }
 
-      return String.Empty;
+      if (node is EntityProperty)
+      {
+         return string.Format("Reflected {0} property", type.Replace("UnityEngine.", string.Empty));
+      }
+
+      return string.Empty;
    }
 
    public static string FindNodePath(string defaultCategory, string type)
    {
-      Type uscriptType = MasterComponent.GetType(type);
+      var uScriptType = MasterComponent.GetType(type);
 
-      if (uscriptType != null)
+      if (uScriptType != null)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return "";
+         var attributes = uScriptType.GetCustomAttributes(false);
 
-         foreach (object a in attributes)
+         foreach (var a in attributes.OfType<NodePath>())
          {
-            if (a is NodePath)
-            {
-               return ((NodePath)a).Value;
-            }
+            return a.Value;
          }
       }
 
@@ -337,19 +330,15 @@ public sealed partial class uScript
 
    public static string FindNodePropertiesPath(string defaultCategory, string type)
    {
-      Type uscriptType = MasterComponent.GetType(type);
+      var uScriptType = MasterComponent.GetType(type);
 
-      if (uscriptType != null)
+      if (uScriptType != null)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return "";
+         var attributes = uScriptType.GetCustomAttributes(false);
 
-         foreach (object a in attributes)
+         foreach (var a in attributes.OfType<NodePropertiesPath>())
          {
-            if (a is NodePropertiesPath)
-            {
-               return ((NodePropertiesPath)a).Value;
-            }
+            return a.Value;
          }
       }
 
@@ -358,23 +347,19 @@ public sealed partial class uScript
 
    public static string FindNodeToolTip(string type)
    {
-      Type uscriptType = MasterComponent.GetType(type);
+      var uScriptType = MasterComponent.GetType(type);
 
-      if (uscriptType != null)
+      if (uScriptType != null)
       {
-         object[] attributes = uscriptType.GetCustomAttributes(false);
-         if (null == attributes) return "";
+         var attributes = uScriptType.GetCustomAttributes(false);
 
-         foreach (object a in attributes)
+         foreach (var a in attributes.OfType<NodeToolTip>())
          {
-            if (a is NodeToolTip)
-            {
-               return ((NodeToolTip)a).Value;
-            }
+            return a.Value;
          }
       }
 
-      return "";
+      return string.Empty;
    }
 
    /// <summary>Get the unique signature for the specified EntityNode.</summary>
@@ -402,14 +387,14 @@ public sealed partial class uScript
 
       if (node is EntityMethod)
       {
-         EntityMethod m = (EntityMethod)node;
-         return m.ComponentType + "." + m.Input.Name + ScriptEditorCtrl.GetMethodSignature(m);
+         var m = (EntityMethod)node;
+         return string.Format("{0}.{1}{2}", m.ComponentType, m.Input.Name, ScriptEditorCtrl.GetMethodSignature(m));
       }
 
       if (node is EntityProperty)
       {
-         EntityProperty p = (EntityProperty)node;
-         return p.ComponentType + "." + p.Parameter.Name;
+         var p = (EntityProperty)node;
+         return string.Format("{0}.{1}", p.ComponentType, p.Parameter.Name);
       }
 
       if (node is LogicNode)
@@ -419,9 +404,10 @@ public sealed partial class uScript
 
       if (node != null)
       {
-         uScriptDebug.Log("Cannot generate node signature. Unhandled EntityNode type: " + node.GetType().ToString(), uScriptDebug.Type.Error);
+         uScriptDebug.Log("Cannot generate node signature. Unhandled EntityNode type: " + node.GetType(), uScriptDebug.Type.Error);
       }
-      return String.Empty;
+
+      return string.Empty;
    }
 
    public static string GetNodeType(EntityNode node)
@@ -436,45 +422,39 @@ public sealed partial class uScript
 
    public static Type GetNodeUpgradeType(EntityNode node)
    {
-      string type = ScriptEditor.FindNodeType(node);
-      if ("" == type) return null;
-
-      Type uscriptType = MasterComponent.GetType(type);
-      if (null == uscriptType) return null;
-
-      object[] attributes = uscriptType.GetCustomAttributes(false);
-      if (null == attributes) return null;
-
-      foreach (object a in attributes)
+      var type = ScriptEditor.FindNodeType(node);
+      if (type == string.Empty)
       {
-         if (a is NodeDeprecated)
-         {
-            return ((NodeDeprecated)a).UpgradeType;
-         }
+         return null;
       }
 
-      return null;
+      var uScriptType = MasterComponent.GetType(type);
+      if (uScriptType == null)
+      {
+         return null;
+      }
+
+      var attributes = uScriptType.GetCustomAttributes(false);
+
+      return attributes.OfType<NodeDeprecated>().Select(a => a.UpgradeType).FirstOrDefault();
    }
 
    public static bool IsNodeTypeDeprecated(EntityNode node)
    {
-      string type = ScriptEditor.FindNodeType(node);
-      if ("" == type) return false;
-
-      Type uscriptType = MasterComponent.GetType(type);
-      if (null == uscriptType) return false;
-
-      object[] attributes = uscriptType.GetCustomAttributes(false);
-      if (null == attributes) return false;
-
-      foreach (object a in attributes)
+      var type = ScriptEditor.FindNodeType(node);
+      if (type == string.Empty)
       {
-         if (a is NodeDeprecated)
-         {
-            return true;
-         }
+         return false;
       }
 
-      return false;
+      var uScriptType = MasterComponent.GetType(type);
+      if (uScriptType == null)
+      {
+         return false;
+      }
+
+      var attributes = uScriptType.GetCustomAttributes(false);
+
+      return attributes.OfType<NodeDeprecated>().Any();
    }
 }
