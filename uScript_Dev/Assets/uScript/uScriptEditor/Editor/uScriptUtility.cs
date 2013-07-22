@@ -1,24 +1,27 @@
-using System;
-using System.Collections.Generic;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="uScriptUtility.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   This file contains a collection of utility classes for use with uScript.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-//
-// This file contains a collection of utility classes for use with uScript
-// _______________________________________________________________________
-//
+using System;
 
 public static class uScriptUtility
 {
    /// <summary>Gets the index of an enumeration by name.</summary>
-   /// <returns>The first occurance of 'name' within the enum, if found; otherwise, -1.</returns>
-   /// <param name='e'>The enumeration type.</param>
-   /// <param name='name'>The name of the enumeration.</param>
+   /// <returns>The first occurrence of the specified name within the enumeration, if found; otherwise, -1.</returns>
+   /// <param name="e">The enumeration type.</param>
+   /// <param name="name">The name of the enumeration.</param>
    public static int GetEnumIndexByName(Enum e, string name)
    {
       return Array.IndexOf(Enum.GetNames(e.GetType()), name);
    }
 
    /// <summary>Gets the index of an enumeration by value.</summary>
-   /// <returns>The first occurance of the value within the enum, if found; otherwise, -1.</returns>
+   /// <returns>The first occurrence of the value within the enumeration, if found; otherwise, -1.</returns>
    /// <param name='e'>The enumeration type.</param>
    /// <param name='val'>The value to search for.</param>
    public static int GetEnumIndexByValue(Enum e, int val)
@@ -57,9 +60,6 @@ public static class uScriptUtility
 
 public static class uScriptExtensions
 {
-
-
-
    public static void Information(this UnityEngine.GUIStyle style, int columns)
    {
       uScriptGUIStyle.Information(style, columns);
@@ -311,10 +311,8 @@ public static class StringExtensions
 //      System.Net.Mail.MailAddress senderAddress = new System.Net.Mail.MailAddress(sender);
 //      System.Net.Mail.MailAddress recipientAddress = new System.Net.Mail.MailAddress(recipient);
 //      System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage(senderAddress.Address, recipientAddress.Address, subject, body);
-//
 //      System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
 //      client.Credentials = new System.Net.NetworkCredential();
-//
 //      try
 //      {
 //         client.Send(message);
@@ -325,7 +323,6 @@ public static class StringExtensions
 //         UnityEngine.Debug.Log("Mail was not sent!".NewLine());
 //         throw new Exception("Could not send mail from: " + sender + " to: " + recipient + " thru smtp server: " + server + "\n\n" + e.Message, e);
 //      }
-//
 //      return true;
 //   }
    #endregion
@@ -341,14 +338,10 @@ public static class StringExtensions
 //   // replaces the truncated string to a ...
 //   const string suffix = "...";
 //   string truncatedString = text;
-//
 //   if (maxLength <= 0) return truncatedString;
 //   int strLength = maxLength - suffix.Length;
-//
 //   if (strLength <= 0) return truncatedString;
-//
 //   if (text == null || text.Length <= maxLength) return truncatedString;
-//
 //   truncatedString = text.Substring(0, strLength);
 //   truncatedString = truncatedString.TrimEnd();
 //   truncatedString += suffix;
