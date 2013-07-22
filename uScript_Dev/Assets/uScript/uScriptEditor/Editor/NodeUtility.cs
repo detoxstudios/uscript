@@ -3,7 +3,7 @@
 //   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the PanelScript type.
+//   Defines static methods for retrieving Node metadata and testing node states or conditions.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
