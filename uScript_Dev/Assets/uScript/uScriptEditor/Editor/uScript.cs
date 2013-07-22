@@ -1262,11 +1262,8 @@ public sealed partial class uScript : EditorWindow
 
    internal void OnProjectChange()
    {
-      Detox.Editor.GUI.PanelScript.Instance.RefreshSourceState();
-      Detox.Editor.GUI.PanelScript.Instance.RebuildListContents();
-
-      // uScriptGUI.GetScenePaths();
-      // PanelScript.Instance.OnProjectChange();
+      uScriptGUI.GetScenePaths();
+      Detox.Editor.GUI.PanelScript.Instance.OnProjectChange();
    }
 
    void OnGUI()

@@ -97,17 +97,6 @@ namespace Detox.Editor.GUI
          this.panelScriptList.RebuildListContents();
       }
 
-      public void RefreshSourceState()
-      {
-         // TODO: Remove this when there are no more references in code.
-      }
-
-      public void RebuildListContents()
-      {
-         // TODO: Remove this when there are no more references in code.
-         this.OnProjectChange();
-      }
-
       public void OnProjectChange()
       {
          this.panelScriptList.RebuildListContents();

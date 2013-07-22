@@ -219,9 +219,9 @@ namespace Detox.Editor.GUI
          // Draw column cells in the order of the columns
          rect = this.Position;
 
-         var isMouseOverRow = this.Position.Contains(e.mousePosition);
+         //var isMouseOverRow = this.Position.Contains(e.mousePosition);
          //var isAltKeyDown = e.modifiers == EventModifiers.Alt;
-         var isAltKeyDown = e.alt;
+         //var isAltKeyDown = e.alt;
 
          //if (isMouseOverRow)
          //{
@@ -497,6 +497,7 @@ namespace Detox.Editor.GUI
 
             Foldout = new GUIStyle("IN Foldout");
 
+            // TODO: Look into "PR Row" availability. Reported as unknown on Win with pro skin
             Row = new GUIStyle("PR Row") { contentOffset = new Vector2(0, -1) };
 
             Label = new GUIStyle(EditorStyles.label)
