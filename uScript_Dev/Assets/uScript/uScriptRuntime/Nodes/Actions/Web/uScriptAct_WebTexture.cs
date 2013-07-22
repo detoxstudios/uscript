@@ -60,14 +60,7 @@ public class uScriptAct_WebTexture : uScriptLogic
       _OutFinished = false;
       _OutError = false;
 
-      if (Form == null)
-      {
-         _www = new WWW(URL);
-      }
-      else
-      {
-         _www = new WWW(URL, Form);
-      }
+      this._www = Form == null ? new WWW(URL) : new WWW(URL, Form);
 
       Result = null;
       Error = string.Empty;
@@ -90,13 +83,16 @@ public class uScriptAct_WebTexture : uScriptLogic
       {
          if (_www.isDone)
          {
-            Result = _www.texture;
             _OutFinished = true;
 
             if (_www.error != null)
             {
                Error = _www.error;
                _OutError = true;
+            }
+            else
+            {
+               Result = _www.texture;
             }
          }
          return true;

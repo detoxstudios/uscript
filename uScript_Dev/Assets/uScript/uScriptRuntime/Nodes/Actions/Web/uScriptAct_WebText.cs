@@ -53,21 +53,13 @@ public class uScriptAct_WebText : uScriptLogic
 
       [FriendlyName("Error", "Returns an error message if there was an error during the download.")]
       [SocketState(false, false)]
-      out string Error
-      )
+      out string Error)
    {
       _Out = true;
       _OutFinished = false;
       _OutError = false;
 
-      if (Form == null)
-      {
-         _www = new WWW(URL);
-      }
-      else
-      {
-         _www = new WWW(URL, Form);
-      }
+      this._www = Form == null ? new WWW(URL) : new WWW(URL, Form);
 
       Result = string.Empty;
       Error = string.Empty;
@@ -90,13 +82,16 @@ public class uScriptAct_WebText : uScriptLogic
       {
          if (_www.isDone)
          {
-            Result = _www.text;
             _OutFinished = true;
 
             if (_www.error != null)
             {
                Error = _www.error;
                _OutError = true;
+            }
+            else
+            {
+               Result = _www.text;
             }
          }
          return true;
