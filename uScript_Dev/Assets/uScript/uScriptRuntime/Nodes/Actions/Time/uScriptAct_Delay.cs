@@ -95,11 +95,11 @@ public class uScriptAct_Delay : uScriptLogic
 
          return true;
       }
-      else if (m_TimeToTrigger > 0 && !m_ForceStop)
+      else if (m_TimeToTrigger >= 0 && !m_ForceStop)
       {
          m_TimeToTrigger -= UnityEngine.Time.deltaTime;
 
-         if (m_TimeToTrigger <= 0)
+         if (m_TimeToTrigger < 0)
          {
             m_DelayedOut = true;
          }
