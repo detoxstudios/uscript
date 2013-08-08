@@ -49,6 +49,7 @@ public class uScriptAct_Delay : uScriptLogic
       m_SingleFrame = SingleFrame;
       m_TimeToTrigger = Duration;
       if (m_SingleFrame) m_TimeToTrigger = 1.0f;
+      if (Duration < 0) uScriptDebug.Log("Negative value supplied for delay. After Delay socket will not fire.");
    }
 
    [FriendlyName("Stop")]

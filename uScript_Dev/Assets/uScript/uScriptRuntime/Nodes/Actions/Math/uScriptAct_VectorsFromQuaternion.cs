@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Vectors_From_Quaternion")]
 
-[FriendlyName("Vectors From Quaternion", "Converts a quaternion into forward and up vectors.")]
+[FriendlyName("Vectors From Quaternion", "Converts a quaternion into forward, up, and right vectors.")]
 public class uScriptAct_VectorsFromQuaternion : uScriptLogic
 {
    public bool Out { get { return true; } }
@@ -24,11 +24,16 @@ public class uScriptAct_VectorsFromQuaternion : uScriptLogic
       out Vector3 forward,
       
       [FriendlyName("Up Vector", "The up vector component of the quaternion.")]
-      out Vector3 up
+      out Vector3 up,
+      
+      [FriendlyName("Right Vector", "The right vector component of the quaternion.")]
+      [SocketState(false, false)]
+      out Vector3 right
       )
    {
       Matrix4x4 mat = Matrix4x4.TRS(Vector3.zero, quaternion, Vector3.one);
       forward = (Vector3)mat.GetColumn(2);
       up = (Vector3)mat.GetColumn(1);
+      right = (Vector3)mat.GetColumn(0);
    }
 }
