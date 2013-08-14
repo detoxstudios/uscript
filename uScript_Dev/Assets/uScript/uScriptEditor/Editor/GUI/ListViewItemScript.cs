@@ -9,6 +9,8 @@
 
 namespace Detox.Editor.GUI
 {
+   using System;
+
    using UnityEditor;
 
    using UnityEngine;
@@ -19,14 +21,20 @@ namespace Detox.Editor.GUI
 
       // === Fields =====================================================================
 
+      private string sceneName;
+
+      private string scenePath;
+
+      private string sourcePath;
+
       // === Constructors ===============================================================
 
       public ListViewItemScript(ListView listView, string path)
          : base(listView, path)
       {
-         this.SourceState = 0;
-         this.SceneName = string.Empty;
-         this.FriendlyName = string.Empty;
+//         this.SourceState = 0;
+//         this.SceneName = null;
+//         this.FriendlyName = null;
       }
 
       // === Finalizers =================================================================
@@ -37,24 +45,57 @@ namespace Detox.Editor.GUI
 
       // === Enums ======================================================================
 
-      public enum State
-      {
-         Missing,
-         Stale,
-         Debug,
-         Release
-      }
-      // === Interfaces =================================================================
-
       // === Properties =================================================================
 
-      public string FriendlyName { get; set; }
+      public string FriendlyName
+      {
+         get
+         {
+            return string.IsNullOrEmpty(uScriptBackgroundProcess.GraphInfoList[this.Path].GraphName)
+               ? this.Name
+               : uScriptBackgroundProcess.GraphInfoList[this.Path].GraphName;
+         }
+      }
 
-      public string SceneName { get; set; }
+      public string SceneName
+      {
+         get
+         {
+            return uScriptBackgroundProcess.GraphInfoList.ContainsKey(this.Path) == false
+                   || string.IsNullOrEmpty(uScriptBackgroundProcess.GraphInfoList[this.Path].SceneName)
+               ? string.Empty
+               : uScriptBackgroundProcess.GraphInfoList[this.Path].SceneName;
+         }
+      }
 
-      public State SourceState { get; set; }
+      public string ScenePath { get; set; }
 
+      public GraphInfo.State SourceState
+      {
+         get
+         {
+            return uScriptBackgroundProcess.GraphInfoList.ContainsKey(this.Path) == false
+               ? GraphInfo.State.Missing
+               : uScriptBackgroundProcess.GraphInfoList[this.Path].SourceState;
+         }
+      }
 
+      public string SourcePath
+      {
+         get
+         {
+            if (this.sourcePath == null)
+            {
+               this.sourcePath = string.Empty;
+               Debug.Log(this.Name + ": " + this.sourcePath + "\n");
+            }
+
+            return this.sourcePath;
+         }
+      }
+
+      // GraphName      - <name>
+      // GraphPath      - <path>/<name>.<extention>
 
       // === Indexers ===================================================================
 
@@ -68,9 +109,44 @@ namespace Detox.Editor.GUI
          // Draw row background (alternate and selected)
          if (isRepaint)
          {
-            if (this.Selected)
+            //if (this.Selected)
+            //{
+            //   Style.RowEven.Draw(this.Position, GUIContent.none, false, false, true, false);
+            //   //Style.RowEven.Draw(this.Position, GUIContent.none, false, false, true, this.ListView.HasFocus);
+            //   //Debug.Log("FOCUS\n");
+            //}
+            //else
+            //{
+            //   Debug.Log("NO FOCUS\n");
+            //}
+
+            DrawRowBackground(this.ListView, this.Position, this.Selected);
+         }
+
+         //var rect = new Rect(itemRowRect);
+         //itemRowRect.height = this.Height;
+
+         //Debug.Log("ITEM:\t" + this.Path + "\n\t\t\t" + this.FriendlyName + ", " + this.SceneName + ", " + this.SourceState + ", " + itemRowRect + "\n");
+
+         // All row drawing should take place there, including the foldouts, selected highlights, and column cells.
+         // Mouse input related to row selection and GUI buttons should be handled there as well.
+
+         Rect rect;
+         itemRowRect.height += this.Height;
+
+         // Context menu must go before any buttons that will appear in the region
+         if (e.type == EventType.ContextClick || (e.type == EventType.MouseUp && e.button == 1))
+         {
+            var mousePosition = new Vector2(e.mousePosition.x, e.mousePosition.y);
+
+            rect = this.Position;
+            rect.yMin = Math.Max(rect.yMin, this.ListView.ListOffset.y);
+            rect.yMax = Math.Min(rect.yMax, this.ListView.ListOffset.y + this.ListView.ListPosition.height);
+
+            if (rect.Contains(mousePosition))
             {
-               Style.Row.Draw(this.Position, GUIContent.none, false, false, true, this.ListView.HasFocus);
+               //Debug.Log("CLICK POINT:\t" + mousePosition + "\t\tITEM: " + this.Position.yMin + "-" + (this.Position.yMax - 1) + ", " + this.Name + "\n" + "ACTUAL:\t\t\t" + e.mousePosition + "\t\tSCROLLVIEW: " + this.ListView.ListOffset);
+               this.ContextMenuCreate(new Rect(e.mousePosition.x, e.mousePosition.y, 0, 0));
             }
          }
 
@@ -80,31 +156,10 @@ namespace Detox.Editor.GUI
 
 
 
-
-
-
-
-
-
-         //var rect = new Rect(itemRowRect);
-         //itemRowRect.height = this.Height;
-
-         //Debug.Log("ITEM:\t" + this.Path + "\n\t\t\t" + this.FriendlyName + ", " + this.SceneName + ", " + this.SourceState + ", " + itemRowRect + "\n");
-
-
-         // All row drawing should take place there, including the foldouts, selected highlights, and column cells.
-         // Mouse input related to row selection and GUI buttons should be handled there as well.
-
-
-         var rect = new Rect(itemRowRect);
-         itemRowRect.height += this.Height;
-
-
          //         this.height = (int)this.style.label.fixedHeight;
 
          //Debug.Log("Default ListViewItem renderer: " + itemRowRect.ToString() + "\n"
          //            + "ROW: " + this._listView.ItemRow.ToString() + ", RECT: " + itemRowRect.ToString() + "\n");
-
 
          //if (this.HasVisibleChildren)
          //{
@@ -145,8 +200,6 @@ namespace Detox.Editor.GUI
          //   {
          //      this.ListView.HandleMouseInput(this);
          //   }
-
-
 
          //   //var rectToggle = this.Position;
          //   //rectToggle.xMin = 2 + (this.Depth * indentWidth);
@@ -206,16 +259,6 @@ namespace Detox.Editor.GUI
 
          ////uScriptGUI.DebugBox(this.Position, Color.blue, this.Name);
 
-
-
-
-
-
-
-
-
-
-
          // Draw column cells in the order of the columns
          rect = this.Position;
 
@@ -271,36 +314,131 @@ namespace Detox.Editor.GUI
          //    Keyboard
       }
 
-      private static void CommandSceneLocate(string scenePath)
+      private static void DrawRowBackground(ListView listView, Rect position, bool selected)
       {
-         uScriptGUI.PingProjectScene(scenePath);
+         //this.ListView.ItemRowEven = !this.ListView.ItemRowEven;
+         var style = listView.ItemRowEven ? Style.RowEven : Style.RowOdd;
+         // position, isHover, isActive, on, hasKeyboardFocus
+         style.Draw(position, false, false, selected, listView.HasFocus);
       }
 
-      private void CommandDirectoryLocate(string directory)
+      private void CommandDirectoryCollapse()
+      {
+         this.Expanded = false;
+      }
+
+      private void CommandDirectoryExpand()
+      {
+         this.Expanded = true;
+      }
+
+      private void CommandDirectoryLocate()
       {
          // Foldout paths duplicate the folder name at the end, so remove it (e.g., "foo/bar/bar" -> "foo/bar")
-         uScriptGUI.PingProjectGraph(directory.Substring(0, directory.LastIndexOf("/", System.StringComparison.Ordinal)));
+         uScriptGUI.PingProjectGraph(this.Path.Substring(0, this.Path.LastIndexOf("/", System.StringComparison.Ordinal)));
       }
 
-      private void CommandScriptLocate(string scriptPath)
+      private void CommandGraphLoad()
       {
-         uScriptGUI.PingProjectGraph(scriptPath);
+         var path = uScript.Instance.FindFile(uScript.Preferences.UserScripts, this.Path);
+         if (path != string.Empty)
+         {
+            uScript.Instance.OpenScript(path);
+         }
       }
 
-      private void CommandSourceLocate(string scriptName)
+      private void CommandGraphLocate()
       {
-         if (uScriptGUI.PingProjectScript(scriptName) == false)
+         uScriptGUI.PingProjectGraph(this.Path);
+      }
+
+      private void CommandSceneLocate()
+      {
+         uScriptGUI.PingProjectScene(this.SceneName);
+      }
+
+      private void CommandSourceLocate()
+      {
+         // TODO: Update the source state
+         uScriptGUI.PingProjectScript(this.Name);
+      }
+
+      private void ContextMenuCreate(Rect rect)
+      {
+         var menu = new GenericMenu();
+
+         if (this.HasChildren)
          {
-            this.SourceState = State.Missing;
+            if (this.Expanded)
+            {
+               menu.AddItem(new GUIContent("Collapse Folder"), false, this.CommandDirectoryCollapse);
+            }
+            else
+            {
+               menu.AddItem(new GUIContent("Expand Folder"), false, this.CommandDirectoryExpand);
+            }
+
+            menu.AddItem(new GUIContent("Locate Folder"), false, this.CommandDirectoryLocate);
          }
-         else if (this.SourceState == State.Missing)
+         else
          {
-            this.SourceState = uScript.Instance.IsStale(scriptName)
-               ? State.Stale
-               : uScript.Instance.HasDebugCode(scriptName)
-                  ? State.Debug
-                  : State.Release;
+            // GRAPH
+            var currentGraph = System.IO.Path.GetFileNameWithoutExtension(uScript.Instance.ScriptEditorCtrl.ScriptName) == this.Name;
+            if (currentGraph)
+            {
+               // TODO: Consider adding Save commands for the current graph
+               if (uScript.Instance.ScriptEditorCtrl.IsDirty)
+               {
+                  menu.AddItem(new GUIContent("Reload Graph"), false, this.CommandGraphLoad);
+               }
+               else
+               {
+                  menu.AddDisabledItem(new GUIContent("Reload Graph"));
+               }
+            }
+            else
+            {
+               menu.AddItem(new GUIContent("Load Graph"), false, this.CommandGraphLoad);
+            }
+            menu.AddItem(new GUIContent("Locate Graph"), false, this.CommandGraphLocate);
+
+            menu.AddSeparator(string.Empty);
+
+            // SCENE
+            if (string.IsNullOrEmpty(this.SceneName))
+            {
+               menu.AddDisabledItem(new GUIContent("Locate Scene"));
+            }
+            else
+            {
+               menu.AddItem(new GUIContent("Locate Scene"), false, this.CommandSceneLocate);
+            }
+
+            menu.AddSeparator(string.Empty);
+
+            // SOURCE
+            if (this.SourceState == GraphInfo.State.Missing)
+            {
+               menu.AddDisabledItem(new GUIContent("Locate Source"));
+               //menu.AddDisabledItem(new GUIContent("Remove Source"));
+            }
+            else
+            {
+               menu.AddItem(new GUIContent("Locate Source"), false, this.CommandSourceLocate);
+               //menu.AddDisabledItem(new GUIContent("Remove Source"));
+            }
          }
+
+         if (rect.width > 0)
+         {
+            menu.DropDown(rect);
+         }
+         else
+         {
+            menu.ShowAsContext();
+         }
+
+         Event.current.Use();
       }
 
       private void DrawColumnGraph(Rect rect)
@@ -308,11 +446,15 @@ namespace Detox.Editor.GUI
          var e = Event.current;
          var indentWidth = Style.Foldout.padding.left;
 
+         var labelStyle = PanelScript.ShowLabelIcons
+            ? this.Selected ? Style.IconLabelSelected : Style.IconLabel
+            : this.Selected ? Style.TextLabelSelected : Style.TextLabel;
+
          if (this.HasVisibleChildren)
          {
             var rectToggle = rect;
-            rectToggle.xMin = 2 + (this.Depth * indentWidth);
-            rectToggle.width = 20;
+            rectToggle.xMin += 2 + (this.Depth * indentWidth);
+            rectToggle.width = 12;
 
             this.Expanded = GUI.Toggle(rectToggle, this.Expanded, GUIContent.none, Style.Foldout);
 
@@ -326,19 +468,19 @@ namespace Detox.Editor.GUI
 
             if (e.modifiers == EventModifiers.Alt)
             {
-               if (GUI.Button(rect, Ellipsis.Compact(this.Name, Style.Label, rect, Ellipsis.Format.Middle), Style.Label))
+               if (GUI.Button(rect, Ellipsis.Compact(this.Name, labelStyle, rect, Ellipsis.Format.Middle), labelStyle))
                {
-                  this.CommandDirectoryLocate(this.Path);
+                  this.CommandDirectoryLocate();
                }
             }
             else
             {
-               GUI.Label(rect, Ellipsis.Compact(this.Name, Style.Label, rect, Ellipsis.Format.Middle), Style.Label);
+               GUI.Label(rect, Ellipsis.Compact(this.Name, labelStyle, rect, Ellipsis.Format.Middle), labelStyle);
             }
          }
          else
          {
-            rect.xMin = 2 + (this.Depth * indentWidth);
+            rect.xMin += 2 + (this.Depth * indentWidth) + 12;
 
             //if (GUI.Button(rect, column.ID))
             //{
@@ -360,19 +502,29 @@ namespace Detox.Editor.GUI
             }
 
             // TODO: Only use FriendlyName if the user-specified option is enabled
-            var graphName = string.IsNullOrEmpty(this.FriendlyName) ? this.Name : this.FriendlyName;
+            var graphName = PanelScript.ShowFriendlyNames ? this.FriendlyName : this.Name;
 
             if (e.modifiers == EventModifiers.Alt)
             {
-               if (GUI.Button(rect, Ellipsis.Compact(graphName, Style.Label, rect, Ellipsis.Format.Middle), Style.Label))
+               if (GUI.Button(rect, Ellipsis.Compact(graphName, labelStyle, rect, Ellipsis.Format.Middle), labelStyle))
                {
-                  this.CommandScriptLocate(this.Path);
+                  this.CommandGraphLocate();
                }
             }
             else
             {
-               GUI.Label(rect, Ellipsis.Compact(graphName, Style.Label, rect, Ellipsis.Format.Middle), Style.Label);
+               GUI.Label(rect, Ellipsis.Compact(graphName, labelStyle, rect, Ellipsis.Format.Middle), labelStyle);
             }
+         }
+
+         if (PanelScript.ShowLabelIcons)
+         {
+            var icon = this.HasChildren ? Content.IconFolder : Content.IconScript;
+
+            rect.width = 16;
+            rect.height = 16;
+
+            GUI.Label(rect, icon, GUIStyle.none);
          }
       }
 
@@ -384,6 +536,7 @@ namespace Detox.Editor.GUI
          }
 
          var e = Event.current;
+         var labelStyle = this.Selected ? Style.TextLabelSelected : Style.TextLabel;
 
          if (e.type == EventType.MouseDown)
          {
@@ -392,14 +545,14 @@ namespace Detox.Editor.GUI
 
          if (e.modifiers == EventModifiers.Alt)
          {
-            if (GUI.Button(rect, Ellipsis.Compact(this.SceneName, Style.Label, rect, Ellipsis.Format.Middle), Style.Label))
+            if (GUI.Button(rect, Ellipsis.Compact(this.SceneName, labelStyle, rect, Ellipsis.Format.Middle), labelStyle))
             {
-               CommandSceneLocate(this.SceneName);
+               this.CommandSceneLocate();
             }
          }
          else
          {
-            GUI.Label(rect, Ellipsis.Compact(this.SceneName, Style.Label, rect, Ellipsis.Format.Middle), Style.Label);
+            GUI.Label(rect, Ellipsis.Compact(this.SceneName, labelStyle, rect, Ellipsis.Format.Middle), labelStyle);
          }
       }
 
@@ -417,22 +570,22 @@ namespace Detox.Editor.GUI
             this.ClickCount = Event.current.clickCount;
          }
 
-         var stateButtonContent = this.SourceState == State.Missing
+         var stateButtonContent = this.SourceState == GraphInfo.State.Missing
                                      ? PanelScript.SourceStateContent.Missing
-                                     : (this.SourceState == State.Stale
+                                     : (this.SourceState == GraphInfo.State.Stale
                                            ? PanelScript.SourceStateContent.Stale
-                                           : (this.SourceState == State.Debug
+                                           : (this.SourceState == GraphInfo.State.Debug
                                                  ? PanelScript.SourceStateContent.Debug
                                                  : PanelScript.SourceStateContent.Release));
 
          rect.width = stateButtonContent.image.width + 2;
-         rect.height = stateButtonContent.image.height + 2;
+         rect.height = stateButtonContent.image.height + 1;
 
          if (e.modifiers == EventModifiers.Alt)
          {
             if (GUI.Button(rect, stateButtonContent, Style.StatusIcon))
             {
-               this.CommandSourceLocate(this.Name);
+               this.CommandSourceLocate();
             }
          }
          else
@@ -441,7 +594,7 @@ namespace Detox.Editor.GUI
          }
       }
 
-      // === Structs ====================================================================
+      // === Structures =================================================================
 
       // === Classes ====================================================================
 
@@ -449,39 +602,18 @@ namespace Detox.Editor.GUI
       {
          static Content()
          {
-            NoScene = new GUIContent("This script is not attached to any scene.  It may be used with Prefabs or as a Nested Script.");
-
-            WrongScene = new GUIContent("This uScript file was previously attached to a different Unity Scene.  "
-               + "It may not be compatible with the current Unity Scene, and may not run correctly, if edited while this scene is open.");
-
+            // Attempt to get the built-in folder icon
+#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
+            IconFolder = EditorGUIUtility.FindTexture("_Folder");
+#else
+            IconFolder = EditorGUIUtility.FindTexture("Folder Icon");
+#endif
             IconScript = uScriptGUI.GetTexture("iconScriptFile01");
-            IconScriptNested = uScriptGUI.GetTexture("iconScriptFile02");
-
-            IconSourceDebug = uScriptGUI.GetTexture("iconScriptStatusDebug");
-            IconSourceMissing = uScriptGUI.GetTexture("iconScriptStatusMissing");
-            IconSourceRelease = uScriptGUI.GetTexture("iconScriptStatusRelease");
-            IconSourceUnknown = uScriptGUI.GetTexture("iconScriptStatusUnknown");
-
-            IconUnityScene = uScriptGUI.GetSkinnedTexture("UnityScene");
          }
 
+         public static Texture2D IconFolder { get; private set; }
+
          public static Texture2D IconScript { get; private set; }
-
-         public static Texture2D IconScriptNested { get; private set; }
-
-         public static Texture2D IconSourceDebug { get; private set; }
-
-         public static Texture2D IconSourceMissing { get; private set; }
-
-         public static Texture2D IconSourceRelease { get; private set; }
-
-         public static Texture2D IconSourceUnknown { get; private set; }
-
-         public static Texture2D IconUnityScene { get; private set; }
-
-         public static GUIContent NoScene { get; private set; }
-
-         public static GUIContent WrongScene { get; private set; }
       }
 
       private static class Style
@@ -491,31 +623,53 @@ namespace Detox.Editor.GUI
             StatusIcon = new GUIStyle
             {
                border = new RectOffset(6, 6, 4, 4),
-               padding = new RectOffset(1, 1, 1, 1),
+               padding = new RectOffset(1, 1, 0, 1),
                active = { background = GUI.skin.button.active.background }
             };
 
             Foldout = new GUIStyle("IN Foldout");
 
-            // TODO: Look into "PR Row" availability. Reported as unknown on Win with pro skin
-            Row = new GUIStyle("PR Row") { contentOffset = new Vector2(0, -1) };
+            // The "CN EntryBackEven" and "CN EntryBackOdd" styles have alternate backgrounds, but no lost-focus state
+            // Some older version of Unity < 4.2 used a different style name for the Project window rows
+            GUIStyle labelStyle = GUI.skin.FindStyle("PR Label");
+            if (labelStyle == null)
+            {
+               labelStyle = "PR Row";
+            }
 
-            Label = new GUIStyle(EditorStyles.label)
+            RowEven = new GUIStyle(labelStyle) { contentOffset = new Vector2(0, -1) };
+            RowOdd = new GUIStyle(labelStyle) { contentOffset = new Vector2(0, -1) };
+
+            TextLabel = new GUIStyle(EditorStyles.label)
             {
                border = new RectOffset(6, 6, 4, 4),
+               overflow = new RectOffset(0, 0, 0, 1),
                active = { background = GUI.skin.button.active.background }
             };
+
+            TextLabelSelected = new GUIStyle(TextLabel) { normal = { textColor = Color.white } };
+
+            IconLabel = new GUIStyle(TextLabel) { padding = new RectOffset(18, 4, 1, 0), };
+
+            IconLabelSelected = new GUIStyle(IconLabel) { normal = { textColor = Color.white } };
          }
 
-         public static GUIStyle Label { get; private set; }
+         public static GUIStyle IconLabel { get; private set; }
+
+         public static GUIStyle IconLabelSelected { get; private set; }
+
+         public static GUIStyle TextLabel { get; private set; }
+
+         public static GUIStyle TextLabelSelected { get; private set; }
 
          public static GUIStyle StatusIcon { get; private set; }
 
          public static GUIStyle Foldout { get; private set; }
 
-         public static GUIStyle Row { get; private set; }
-      }
+         public static GUIStyle RowEven { get; private set; }
 
+         public static GUIStyle RowOdd { get; private set; }
+      }
 
       // ================================================================================
       // ================================================================================
@@ -534,6 +688,5 @@ namespace Detox.Editor.GUI
          //   //    RING (isHover, isActive)
          //   rowStyle.Draw(this.rowRect, GUIContent.none, false, false, true, this.listView.HasFocus);
          //}
-
    }
 }

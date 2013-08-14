@@ -1,105 +1,100 @@
-﻿// uScript utility class
-// (C) 2011 Detox Studios LLC
-// Desc: Class used to perform tasks that need to be run whether or not a uScript window is open.
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Detox Studios, LLC" file="uScriptBackgroundProcess.cs">
+//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Utility class used to perform tasks that need to be run whether or not a uScript window is open.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+using System.IO;
+
+using Detox.Editor;
 using Detox.ScriptEditor;
+
+using UnityEditor;
 
 #if UNITY_EDITOR
 
 [InitializeOnLoad]
 public class uScriptBackgroundProcess
 {
-   public class uScriptInfo
-   {
-      public string m_SceneName = "";
-      public string m_FullPath = "";
-      
-      public uScriptInfo(string fullPath)
-      {
-         m_FullPath = fullPath;
-         m_SceneName = "";
-      }
+   private const int FilesPerTick = 5;
 
-      public uScriptInfo(string fullPath, string sceneName)
-      {
-         m_FullPath = fullPath;
-         m_SceneName = sceneName;
-      }
-   };
-   
-   private const float USCRIPT_PROCESS_TIME = 30.0f;
-   private const int   FILES_PER_TICK = 5;
-   
-   public static Dictionary<string, uScriptInfo> s_uScriptInfo = new Dictionary<string, uScriptInfo>();
-   private static int s_CurrentKeyIndex = -1;
-   
+   private static int currentKeyIndex = -1;
+
    static uScriptBackgroundProcess()
    {
+      GraphInfoList = new Dictionary<string, GraphInfo>();
+
       EditorApplication.update += Update;
    }
-   
-   static void Update ()
+
+   public static Dictionary<string, GraphInfo> GraphInfoList { get; private set; }
+
+   public static void ForceFileRefresh()
+   {
+      GraphInfoList.Clear();
+
+      foreach (var path in uScript.GetGraphPaths())
+      {
+         var filename = Path.GetFileName(path);
+         if (filename != null)
+         {
+            GraphInfoList.Add(filename, new GraphInfo(path));
+         }
+      }
+
+      currentKeyIndex = 0;
+   }
+
+   private static void Update()
    {
       // cache the master object and component
-      if (uScript.MasterObject == null || uScript.MasterComponent == null) return;
+      if (uScript.MasterObject == null || uScript.MasterComponent == null)
+      {
+         return;
+      }
 
       // process any waiting uScripts that need attaching
       if (!EditorApplication.isCompiling)
       {
          AttachUScripts();
       }
-      
-      // any uScrupts left to process? Process them FILES_PER_TICK at a time each tick
-      if (s_uScriptInfo.Count > 0 && s_CurrentKeyIndex < s_uScriptInfo.Count)
+
+      // any uScripts left to process? Process them FILES_PER_TICK at a time each tick
+      if (GraphInfoList.Count > 0 && currentKeyIndex < GraphInfoList.Count)
       {
          int i;
-         List<string> keylist = new List<string>();
-         keylist.AddRange(s_uScriptInfo.Keys);
-         string[] keys = keylist.ToArray();
-         for (i = 0; i < FILES_PER_TICK && s_CurrentKeyIndex < s_uScriptInfo.Count; i++, s_CurrentKeyIndex++)
-         {
+         var keys = new List<string>(GraphInfoList.Keys).ToArray();
 
-            uScriptInfo info = s_uScriptInfo[keys[s_CurrentKeyIndex]];
-             Profile p = new Profile("Opening " + info.m_FullPath);
-            Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor( "", null, null );
-            scriptEditor.Open(info.m_FullPath);
-            s_uScriptInfo[keys[s_CurrentKeyIndex]] = new uScriptInfo(keys[s_CurrentKeyIndex], scriptEditor.SceneName);
-         
-             p.End();
+         for (i = 0; i < FilesPerTick && currentKeyIndex < GraphInfoList.Count; i++, currentKeyIndex++)
+         {
+            var info = GraphInfoList[keys[currentKeyIndex]];
+
+            var p = new Profile("Opening " + info.GraphPath);
+
+            var scriptEditor = new ScriptEditor(string.Empty, null, null);
+            scriptEditor.Open(info.GraphPath);
+
+            GraphInfoList[keys[currentKeyIndex]] = new GraphInfo(keys[currentKeyIndex], scriptEditor);
+
+            p.End();
          }
       }
    }
-   
-   public static void ForceFileRefresh()
-   {
-      // get list of uScripts every USCRIPT_PROCESS_TIME seconds
-      s_uScriptInfo.Clear();
 
-      foreach (string fileName in System.IO.Directory.GetFiles(uScript.Preferences.UserScripts))
-      {
-         if (fileName.EndsWith(".uscript"))
-         {
-            s_uScriptInfo.Add(System.IO.Path.GetFileName(fileName), new uScriptInfo(fileName));
-         }
-      }
-      
-      s_CurrentKeyIndex = 0;
-   }
-   
    private static void AttachUScripts()
    {
       if (uScript.MasterComponent.uScriptsToAttach.Length > 0)
       {
-         foreach(string path in uScript.MasterComponent.uScriptsToAttach)
+         foreach (var path in uScript.MasterComponent.uScriptsToAttach)
          {
             // add the new uScript to the master object
-            System.IO.FileInfo fileInfo = new System.IO.FileInfo(path);
-            String typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")) + uScriptConfig.Files.GeneratedComponentExtension;
-            //Debug.Log("TYPENAME: " + typeName);
+            var fileInfo = new FileInfo(path);
+            var typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".", System.StringComparison.Ordinal)) + uScriptConfig.Files.GeneratedComponentExtension;
+            //Debug.Log("Type name: " + typeName);
 
             uScript.MasterObject.AddComponent(typeName);
          }

@@ -392,7 +392,6 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-
    private Dictionary<string, bool> _staleScriptCache = new Dictionary<string, bool>();
 
    public static List<string> GetGraphPaths()
@@ -5368,25 +5367,21 @@ public sealed partial class uScript : EditorWindow
       //
       // If the parameter is on a Property node
       //    -- can we even identify properties by looking at the parameter or passed type??
-      //
    }
 
-   public static int GetAssetInstanceID(string path, Type type)
+   /// <summary>
+   /// Gets the InstanceID of the project asset located at the specified path.
+   /// </summary>
+   /// <param name="assetPathRelativeToProject">The asset path relative to the project folder, such as "Assets/MyTextures/hello.jpg".</param>
+   /// <param name="type">The asset type.</param>
+   /// <returns>The InstanceID assigned by Unity.</returns>
+   public static int GetAssetInstanceID(string assetPathRelativeToProject, Type type)
    {
-      UnityEngine.Object obj = Resources.LoadAssetAtPath(path, type);
-      if (obj == null)
-      {
-         //         Debug.Log("File not found:\t" + path + "\n");
-         return -1;
-      }
-
-      return obj.GetInstanceID();
+      var obj = AssetDatabase.LoadAssetAtPath(assetPathRelativeToProject, type);
+      return obj == null ? -1 : obj.GetInstanceID();
    }
 
-
-   //
    // This method can be expensive, so call it sparingly
-   //
    public static string GetClassPath(string newName)
    {
       if (string.IsNullOrEmpty(newName) == false)

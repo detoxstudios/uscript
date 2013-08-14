@@ -47,6 +47,10 @@ namespace Detox.Editor.GUI
          }
       }
 
+      public static bool ShowFriendlyNames { get; set; }
+
+      public static bool ShowLabelIcons { get; set; }
+
       // === Methods ====================================================================
 
       /// <summary>
@@ -94,16 +98,16 @@ namespace Detox.Editor.GUI
          this.panelScriptCurrent = new PanelScriptCurrent();
          this.panelScriptList = new PanelScriptList();
 
-         this.panelScriptList.RebuildListContents();
+         this.panelScriptList.GetListContents();
       }
 
       public void OnProjectChange()
       {
-         this.panelScriptList.RebuildListContents();
+         this.panelScriptList.GetListContents();
          this.panelScriptCurrent.RefreshSourceState();
       }
 
-      // === Structs ====================================================================
+      // === Structures =================================================================
 
       // === Classes ====================================================================
       public static class SourceStateContent

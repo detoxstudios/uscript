@@ -9,26 +9,17 @@
 
 namespace Detox.Editor.GUI
 {
-   using System;
    using System.Collections.Generic;
-   using System.IO;
    using System.Linq;
 
    using UnityEditor;
+
    using UnityEngine;
 
    public sealed partial class PanelScript
    {
       private class PanelScriptList
       {
-         // FriendlyName   - User-specified friendly name
-         // GraphName      - <name>
-         // GraphPath      - <path>/<name>.<extention>
-         // SceneName      - <name>
-         // ScenePath      - <path>/<name>.<extention>
-         // SourceState
-         // SourcePath
-
          // TODO: The default ListViewItem renderer should first draw the row, followed by each
          //       column using specified Rects. Each column will look for a property with a name
          //       that matches the column ID.  If one is found, the property value is printed as
@@ -57,6 +48,9 @@ namespace Detox.Editor.GUI
          // === Fields =====================================================================
 
          private readonly ListView listView;
+
+         private readonly List<ListViewItemScript> allItems = new List<ListViewItemScript>();
+
          private string filterText = string.Empty;
 
          // === Constructors ===============================================================
@@ -65,7 +59,6 @@ namespace Detox.Editor.GUI
          {
             uScriptInstance = uScript.Instance;
 
-            //this.listView = new ListView(ListViewEditor.Instance, typeof(ListViewItem_Script));
             this.listView = new ListView(uScript.Instance, typeof(ListViewItemScript))
             {
                ForceHorizontalColumnFit = true,
@@ -74,7 +67,10 @@ namespace Detox.Editor.GUI
                MultiSelectEnabled = false
             };
 
-            //this.CreateColumns();
+            ShowFriendlyNames = false;
+            ShowLabelIcons = true;
+
+            this.CreateColumns();
          }
 
          // === Properties =================================================================
@@ -100,7 +96,7 @@ namespace Detox.Editor.GUI
                //   bool newFocus = ((GUIUtility.keyboardControl == 0) && rectPanel.Contains(e.mousePosition));
                //   if (newFocus == false && newFocus != _listView.hasFocus)
                //   {
-               //      // check hotcontrol too
+               //      // check the hot control too
                //      Debug.Log("REPAINT\n");
                //      ListViewEditor.Instance.Repaint();
                //   }
@@ -120,11 +116,11 @@ namespace Detox.Editor.GUI
                }
                else
                {
-                  //this.listView.Draw(rectPanel);
-                  this.DrawOld(rectPanel);
+                  this.listView.Draw(rectPanel);
+//                  this.DrawOld(rectPanel);
                }
 
-               //// Update the listview focus
+               //// Update the list view focus
                //if (e.type == EventType.MouseDown || e.type == EventType.Used)
                //{
                //   bool newFocus = ((GUIUtility.keyboardControl == 0) && rectPanel.Contains(e.mousePosition));
@@ -139,7 +135,10 @@ namespace Detox.Editor.GUI
             EditorGUILayout.EndVertical();
          }
 
-         public void RebuildListContents()
+         /// <summary>
+         /// Generate the initial list contents. Should be called during uScript Editor initialization and OnProjectChanged.
+         /// </summary>
+         public void GetListContents()
          {
             if (this.listView == null)
             {
@@ -147,19 +146,173 @@ namespace Detox.Editor.GUI
                return;
             }
 
-            // Read graph files from subfolders
-            var fileNames = uScript.GetGraphPaths();
+            // Get the graph paths, making the path relative to the project folder
+            var initialPaths = uScript.GetGraphPaths().Select(path => path.Replace(uScript.Preferences.UserScripts + "/", string.Empty)).ToList();
 
-            // Build the flat list of scripts
-            foreach (var filename in fileNames)
+            // Create a ListViewItem for each path
+            foreach (var path in initialPaths)
             {
-               this.listView.AddItem(filename.Replace(uScript.Preferences.UserScripts + "/", string.Empty));
+               // TODO: Consider passing the actual GraphInfo instead, since ListViewItemScript pulls info from it anyway
+               this.allItems.Add(new ListViewItemScript(this.listView, path));
+            }
+ 
+            this.FilterListContents();
+            this.SortListContents();
+            this.BuildListHierarchy();
+         }
+
+         private void ApplyFilterAndSort()
+         {
+            
+         }
+
+         /// <summary>
+         /// Filter the list contents. Should be called whenever the filter text search field changes.
+         /// </summary>
+         public void FilterListContents()
+         {
+            // Filter the list, removing every item that does not contain the user-specified filter text
+            var match = this.filterText.ToLower();
+
+            //this.filteredItems.Clear();
+
+            //foreach (
+            //   var item in
+            //      this.allItems.Where(
+            //         item =>
+            //            string.IsNullOrEmpty(this.filterText)
+            //            || item.Path.Substring(0, item.Path.Length - 8).ToLower().Contains(match)))
+            //{
+            //   this.filteredItems.Add(item);
+            //}
+
+
+            foreach (var item in this.allItems)
+            {
+               item.IsVisible = string.IsNullOrEmpty(match)
+                                || item.Path.Substring(0, item.Path.Length - 8).ToLower().Contains(match);
             }
 
-            // TODO: pull the scene and source data here for each script
+            //DebugVisibleList(this.allItems, "VISIBLE ITEMS");
+            //DebugHiddenList(this.allItems, "HIDDEN ITEMS");
+         }
 
-            // Mark the hierarchy dirty so that the hierarchy can be rebuilt and filtering and sorting can be applied
+
+         /// <summary>
+         /// Sort the list contents. Should be called whenever sorting has changed, such as when column header buttons are clicked.
+         /// </summary>
+         public void SortListContents()
+         {
+            // Sort the list, using the user-specified ordering
+            // TODO: replace all of this with the actual sort logic
+         }
+
+         /// <summary>
+         /// Build the initial list hierarchy, inserting folder items before file items where necessary.
+         /// </summary>
+         public void BuildListHierarchy()
+         {
+            // Build the 
+
+            // 5. BUILD HIERARCHY
+            // foreach filtered list item
+            //    ...
+            //    ... Insert folder items before filter list items
+            // return hierarchy list
+            // Update item visibility
+
+            //foreach (var item in this.allItems)
+            //{
+            //   item.IsVisible = string.IsNullOrEmpty(this.filterText) || item.Path.Contains(this.filterText);
+            //}
+
+
+            //foreach (var item in this.filteredPaths)
+            //{
+            //   Debug.Log(string.Format("ADDING: \"{0}\"\n", item));
+            //   this.listView.AddItem(string.Format("{0}.uscript", item));
+            //}
+
+            this.UpdateListHierarchy();
+         }
+
+         /// <summary>
+         /// Update the list hierarchy, taking into account the directory foldout states. Should be called whenever a foldout state changes.
+         /// </summary>
+         public void UpdateListHierarchy()
+         {
+            // 6. BUILD FINAL LIST
+            // create final list
+            // skipPath = ""
+            // foreach item
+            //    if item is folder and collapsed
+            //       skipPath = item path
+            //       continue
+            //    if item path begins with skipPath
+            //       continue
+            //    add the item to final list
+            // return final list
+            // send final list to the ListView control
+
+            //var list = new List<ListViewItemScript>(this.allItems);
+
+            //foreach (var item in this.allItems)
+
+
+
+            this.listView.ClearItems();
+
+            foreach (var item in this.allItems.Where(item => item.IsVisible))
+            {
+               //Debug.Log(string.Format("ADDING: \"{0}\"\n", item.Name));
+               this.listView.AddItem(item);
+            }
+            
             this.listView.RebuildListHierarchy();
+         }
+
+         private static void DebugList(IEnumerable<string> list, string label = "")
+         {
+            var hasLabel = label != string.Empty;
+            Debug.Log(
+               string.Format(
+                  "{0}{1}\n{2}",
+                  hasLabel ? label + ":\n" : string.Empty,
+                  list.Aggregate(string.Empty, (current, path) => current + ((hasLabel ? "\t" : string.Empty) + path + "\n")),
+                  new string('-', 40)));
+         }
+
+         private static void DebugList(IEnumerable<ListViewItemScript> list, string label = "")
+         {
+            var hasLabel = label != string.Empty;
+            Debug.Log(
+               string.Format(
+                  "{0}{1}\n{2}",
+                  hasLabel ? label + ":\n" : string.Empty,
+                  list.Aggregate(string.Empty, (current, item) => current + ((hasLabel ? "\t" : string.Empty) + item.Path + "\n")),
+                  new string('-', 40)));
+         }
+
+         private static void DebugHiddenList(IEnumerable<ListViewItemScript> list, string label = "")
+         {
+            var hasLabel = label != string.Empty;
+            Debug.Log(
+               string.Format(
+                  "{0}{1}\n{2}",
+                  hasLabel ? label + ":\n" : string.Empty,
+                  list.Where(item => !item.IsVisible).Aggregate(string.Empty, (current, item) => current + ((hasLabel ? "\t" : string.Empty) + item.Path + "\n")),
+                  new string('-', 40)));
+         }
+
+         private static void DebugVisibleList(IEnumerable<ListViewItemScript> list, string label = "")
+         {
+            var hasLabel = label != string.Empty;
+            Debug.Log(
+               string.Format(
+                  "{0}{1}\n{2}",
+                  hasLabel ? label + ":\n" : string.Empty,
+                  list.Where(item => item.IsVisible).Aggregate(string.Empty, (current, item) => current + ((hasLabel ? "\t" : string.Empty) + item.Path + "\n")),
+                  new string('-', 40)));
          }
 
          private void CreateColumns()
@@ -169,9 +322,8 @@ namespace Detox.Editor.GUI
                Content = new GUIContent("Graph"),
                LayoutMethod = ListViewColumn.LayoutMethodOption.Custom,
                MinWidth = 100,
-               MaxWidth = 250,
-               Width = 150
-               //IsSelectable = false
+               MaxWidth = 300,
+               Width = 200
                //IsSelectable = true
             };
             this.listView.AddColumn(column);
@@ -180,44 +332,13 @@ namespace Detox.Editor.GUI
             {
                Content = new GUIContent("Scene"),
                LayoutMethod = ListViewColumn.LayoutMethodOption.Fluid,
-               MinWidth = 50,
-               MaxWidth = 250,
-               Width = 150
-               //IsSelectable = false
-               //IsSelectable = true,
+               MinWidth = 18,
+               MaxWidth = 200,
+               Width = 18
+               //IsSelectable = true
                //IsSortDirectionFixed = true
             };
             this.listView.AddColumn(column);
-
-            //column = new ListViewColumn("temp1")
-            //{
-            //   Content = new GUIContent("temp1"),
-            //   LayoutMethod = ListViewColumn.LayoutMethodOption.Fluid,
-            //   MinWidth = 20,
-            //   MaxWidth = 30,
-            //   Width = 20
-            //};
-            //this.listView.AddColumn(column);
-
-            //column = new ListViewColumn("temp2")
-            //{
-            //   Content = new GUIContent("temp2"),
-            //   LayoutMethod = ListViewColumn.LayoutMethodOption.Fluid,
-            //   MinWidth = 20,
-            //   MaxWidth = 22,
-            //   Width = 20
-            //};
-            //this.listView.AddColumn(column);
-
-            //column = new ListViewColumn("temp3")
-            //{
-            //   Content = new GUIContent("temp3"),
-            //   LayoutMethod = ListViewColumn.LayoutMethodOption.Fluid,
-            //   MinWidth = 20,
-            //   MaxWidth = 23,
-            //   Width = 20
-            //};
-            //this.listView.AddColumn(column);
 
             column = new ListViewColumn("state")
             {
@@ -226,7 +347,7 @@ namespace Detox.Editor.GUI
                MinWidth = 20,
                MaxWidth = 20,
                Width = 20
-               //IsSelectable = false
+               //IsSelectable = true
             };
             this.listView.AddColumn(column);
          }
@@ -245,6 +366,9 @@ namespace Detox.Editor.GUI
             {
                this.filterText = newFilterText.TrimStart();
 
+               this.FilterListContents();
+               this.BuildListHierarchy();
+
                // Drop focus if the user inserted a newline (hit enter)
                if (newFilterText.Contains("\n"))
                {
@@ -255,10 +379,41 @@ namespace Detox.Editor.GUI
             EditorGUILayout.EndHorizontal();
          }
 
-         // === Structs ====================================================================
+         private List<string> FilterPaths(List<string> paths, string filter)
+         {
+            if (string.IsNullOrEmpty(filter))
+            {
+               return paths;
+            }
+
+            var result = paths.Where(path => path.ToLower().Contains(filter.ToLower())).ToList();
+
+            paths.Clear();
+            paths.AddRange(result);
+
+            //for (int index = paths.Count - 1; index >= 0; index--)
+            //{
+            //   if (paths[index].ToLower().Contains(filter.ToLower()) == false)
+            //   {
+            //      paths.RemoveAt(index);
+            //   }
+            //}
+
+            return result;
+         }
+
+         private List<string> SortPaths(List<string> paths)
+         {
+            return paths;
+         }
+
+
+
+         // === Structures =================================================================
 
          // === Classes ====================================================================
 
+/*
          // TODO: REMOVE THE FOLLOWING:
 
          // ================================================================================
@@ -267,49 +422,6 @@ namespace Detox.Editor.GUI
          // ================================================================================
          // ================================================================================
 
-         private static class Style
-         {
-            static Style()
-            {
-               ScriptListNormal = new GUIStyle(EditorStyles.label)
-               {
-                  margin = new RectOffset(4, 4, 1, 1),
-                  padding = new RectOffset(2, 2, 0, 0)
-               };
-
-               ScriptListBold = new GUIStyle(ScriptListNormal) { fontStyle = FontStyle.Bold };
-
-               MiniButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft) { margin = new RectOffset(4, 0, 1, 1) };
-
-               MiniButtonRight = new GUIStyle(EditorStyles.miniButtonRight) { margin = new RectOffset(0, 4, 1, 1) };
-
-               // Get the width of the buttons, since the content
-               // under Windows has a different size then under Mac
-               WidthButtonSource = (int)MiniButtonLeft.CalcSize(uScriptGUIContent.buttonNodeSource).x;
-               WidthButtonLoad = (int)MiniButtonRight.CalcSize(uScriptGUIContent.buttonScriptLoad).x;
-            }
-
-            public static GUIStyle ScriptListNormal { get; private set; }
-            
-            public static GUIStyle ScriptListBold { get; private set; }
-
-            public static GUIStyle MiniButtonLeft { get; private set; }
-
-            public static GUIStyle MiniButtonRight { get; private set; }
-
-            public static int WidthButtonSource { get; private set; }
-
-            public static int WidthButtonLoad { get; private set; }
-         }
-
-         private const double DoubleClickTime = 0.5; // default in Windows OS is 500ms
-         private const int RowHeight = 17;
-         private const int ButtonHeight = 15;
-         private const int ButtonPadding = 4;
-
-         //private static uScriptGUIPanelScript instance = new uScriptGUIPanelScript();
-         private static Rect scrollviewRect;
-         private static float previousRowWidth;
 
          private double clickTime;
          private string clickedControl = string.Empty;
@@ -348,16 +460,9 @@ namespace Detox.Editor.GUI
             // make dirty and save (script turns red.  it shouldn't).
             // Consider losing the red altogether
 
-            Instance._scrollviewOffset = EditorGUILayout.BeginScrollView(
-               Instance._scrollviewOffset,
-               false,
-               false,
-               uScriptGUIStyle.HorizontalScrollbar,
-               uScriptGUIStyle.VerticalScrollbar,
-               "scrollview");
             {
                var keylist = new List<string>();
-               keylist.AddRange(uScriptBackgroundProcess.s_uScriptInfo.Keys);
+               keylist.AddRange(uScriptBackgroundProcess.GraphInfoList.Keys);
                var keys = keylist.ToArray();
 
                string scriptName;
@@ -438,9 +543,9 @@ namespace Detox.Editor.GUI
 
                            // uScript Label
                            string scriptSceneName = "None";
-                           if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName))
+                           if (!string.IsNullOrEmpty(uScriptBackgroundProcess.GraphInfoList[scriptFileName].SceneName))
                            {
-                              scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName;
+                              scriptSceneName = uScriptBackgroundProcess.GraphInfoList[scriptFileName].SceneName;
                            }
 
                            if (Event.current.type == EventType.Layout)
@@ -551,6 +656,7 @@ namespace Detox.Editor.GUI
                scrollviewRect = GUILayoutUtility.GetLastRect();
             }
          }
+*/
       }
    }
 }

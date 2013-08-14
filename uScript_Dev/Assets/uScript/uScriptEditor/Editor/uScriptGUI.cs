@@ -490,14 +490,16 @@ public static class uScriptGUI
       return assetPath;
    }
 
-   public static bool IsGeneratedScriptMissing(string scriptName)
+   public static bool IsGeneratedScriptMissing(string graphName)
    {
-      return uScript.GetAssetInstanceID(scriptName, typeof(TextAsset)) == -1;
+      var assetPathRelativeToProject = uScript.Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6) + "/" + graphName + ".cs";
+      var result = uScript.GetAssetInstanceID(assetPathRelativeToProject, typeof(TextAsset));
+      return result == -1;
    }
 
-   public static bool PingObject(string path, Type type)
+   public static bool PingObject(string assetPathRelativeToProject, Type type)
    {
-      var instanceID = uScript.GetAssetInstanceID(path, type);
+      var instanceID = uScript.GetAssetInstanceID(assetPathRelativeToProject, type);
       if (instanceID == -1)
       {
          return false;

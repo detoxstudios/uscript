@@ -16,7 +16,7 @@ namespace Detox.Editor.GUI
    public class ListViewColumn
    {
       // Constant Fields
-      private const int AbsoluteMinWidth = 20;
+      private const int AbsoluteMinWidth = 18;
       private const int AbsoluteMaxWidth = 2000;
 
       // Fields

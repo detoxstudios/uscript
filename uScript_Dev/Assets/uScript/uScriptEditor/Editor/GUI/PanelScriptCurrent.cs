@@ -73,20 +73,15 @@ namespace Detox.Editor.GUI
 
          public void RefreshSourceState()
          {
-            this.sourceMissing = uScriptGUI.IsGeneratedScriptMissing(this.graphFileName);
+            this.sourceMissing = uScriptGUI.IsGeneratedScriptMissing(this.graphFile);
          }
 
-         private void CommandSceneLocate()
-         {
-            uScriptGUI.PingProjectScene(this.graphSceneName);
-         }
-
-         private void CommandScriptLocate()
+         private void CommandGraphLocate()
          {
             uScriptGUI.PingProjectGraph(scriptEditorCtrl.ScriptName);
          }
 
-         private void CommandScriptReload()
+         private void CommandGraphReload()
          {
             var path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, this.graphFile);
             if (path != string.Empty)
@@ -95,7 +90,7 @@ namespace Detox.Editor.GUI
             }
          }
 
-         private void CommandScriptSave()
+         private void CommandGraphSave()
          {
             uScriptInstance.RequestSave(
                uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
@@ -103,7 +98,7 @@ namespace Detox.Editor.GUI
                false);
          }
 
-         private void CommandScriptSaveAs()
+         private void CommandGraphSaveAs()
          {
             uScriptInstance.RequestSave(
                uScript.Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
@@ -111,19 +106,24 @@ namespace Detox.Editor.GUI
                true);
          }
 
-         private void CommandScriptSaveDebug()
+         private void CommandGraphSaveDebug()
          {
             uScriptInstance.RequestSave(false, true, false);
          }
 
-         private void CommandScriptSaveQuick()
+         private void CommandGraphSaveQuick()
          {
             uScriptInstance.RequestSave(true, false, false);
          }
 
-         private void CommandScriptSaveRelease()
+         private void CommandGraphSaveRelease()
          {
             uScriptInstance.RequestSave(false, false, false);
+         }
+
+         private void CommandSceneLocate()
+         {
+            uScriptGUI.PingProjectScene(this.graphSceneName);
          }
 
          private void CommandSourceLocate()
@@ -141,17 +141,17 @@ namespace Detox.Editor.GUI
             //                         ? "Debug Save"
             //                         : "Release Save");
 
-            menu.AddItem(new GUIContent("Save"), false, this.CommandScriptSave);
-            menu.AddItem(new GUIContent("Save/Quick"), false, this.CommandScriptSaveQuick);
-            menu.AddItem(new GUIContent("Save/Debug"), false, this.CommandScriptSaveDebug);
-            menu.AddItem(new GUIContent("Save/Release"), false, this.CommandScriptSaveRelease);
-            menu.AddItem(new GUIContent("Save As..."), false, this.CommandScriptSaveAs);
+            menu.AddItem(new GUIContent("Save"), false, this.CommandGraphSave);
+            menu.AddItem(new GUIContent("Save/Quick"), false, this.CommandGraphSaveQuick);
+            menu.AddItem(new GUIContent("Save/Debug"), false, this.CommandGraphSaveDebug);
+            menu.AddItem(new GUIContent("Save/Release"), false, this.CommandGraphSaveRelease);
+            menu.AddItem(new GUIContent("Save As..."), false, this.CommandGraphSaveAs);
             menu.AddSeparator(string.Empty);
 
             // RELOAD
             if (scriptEditorCtrl.IsDirty)
             {
-               menu.AddItem(new GUIContent("Reload"), false, this.CommandScriptReload);
+               menu.AddItem(new GUIContent("Reload"), false, this.CommandGraphReload);
             }
             else
             {
@@ -205,7 +205,7 @@ namespace Detox.Editor.GUI
          {
             GUILayout.Label(GUIContent.none, GUILayout.Height(Content.IconScriptLogo.height));
 
-            // No GUILayout beyong this point, and ignore all non-left mouse clicks
+            // No GUILayout beyond this point, and ignore all non-left mouse clicks
             if (Event.current.type == EventType.Layout || (Event.current.isMouse && Event.current.button != 0))
             {
                return;
@@ -233,7 +233,7 @@ namespace Detox.Editor.GUI
             if (GUI.Button(
                nameRect, Ellipsis.Compact(label, Style.ButtonScriptName, nameRect, Ellipsis.Format.Middle), Style.ButtonScriptName))
             {
-               this.CommandScriptLocate();
+               this.CommandGraphLocate();
             }
          }
 
@@ -257,7 +257,7 @@ namespace Detox.Editor.GUI
          {
             GUILayout.Label(GUIContent.none, GUILayout.Height(Content.IconScriptLogo.height));
 
-            // No GUILayout beyong this point, and ignore all non-left mouse clicks
+            // No GUILayout beyond this point, and ignore all non-left mouse clicks
             if (Event.current.type == EventType.Layout || (Event.current.isMouse && Event.current.button != 0))
             {
                return;
@@ -371,16 +371,16 @@ namespace Detox.Editor.GUI
 
             //if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(this.graphFile))
             //{
-            //   if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[this.graphFile].m_SceneName) == false)
+            //   if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[this.graphFile].SceneName) == false)
             //   {
-            //      this.graphSceneName = uScriptBackgroundProcess.s_uScriptInfo[this.graphFile].m_SceneName;
+            //      this.graphSceneName = uScriptBackgroundProcess.s_uScriptInfo[this.graphFile].SceneName;
             //   }
             //}
 
             this.currentSceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
          }
 
-         // === Structs ====================================================================
+         // === Structures =================================================================
 
          // === Classes ====================================================================
 

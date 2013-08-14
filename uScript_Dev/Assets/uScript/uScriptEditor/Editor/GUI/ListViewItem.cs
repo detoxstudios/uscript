@@ -28,8 +28,8 @@ namespace Detox.Editor.GUI
       {
          this.ListView = listView;
          this.Path = path;
-         this.Name = path;
-         this.InstanceID = this.Name.GetHashCode();
+         this.Name = System.IO.Path.GetFileNameWithoutExtension(path);
+         this.InstanceID = path.GetHashCode();
       }
 
       // === Properties =================================================================
@@ -65,7 +65,9 @@ namespace Detox.Editor.GUI
          }
       }
 
-      public bool Hidden { get; set; }
+      public bool IsFolder { get; set; }
+
+      public bool IsVisible { get; set; }
 
       public string Name { get; set; }
 
@@ -81,14 +83,6 @@ namespace Detox.Editor.GUI
 
       public bool Selected { get; set; }
 
-      public bool Visible
-      {
-         get
-         {
-            return !this.Hidden;
-         }
-      }
-
       // === Indexers ===================================================================
 
       // === Methods ====================================================================
@@ -101,10 +95,6 @@ namespace Detox.Editor.GUI
 
          // TODO: This method should be abstract and required to be implemented by subclasses.
 
-
-
-
-         var rect = new Rect(itemRowRect);
          itemRowRect.height += this.Height;
 
          var e = Event.current;
@@ -189,7 +179,7 @@ namespace Detox.Editor.GUI
          }
          else
          {
-            rect = this.Position;
+            Rect rect = this.Position;
             rect.xMin = this.Depth * indentWidth;
 
             //Style.Label.Draw(rect, Ellipsis.Compact(this.Name, Style.Label, rect, Ellipsis.Format.Middle), false, false, false, false);

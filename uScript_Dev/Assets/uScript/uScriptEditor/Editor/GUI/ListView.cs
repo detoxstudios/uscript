@@ -19,6 +19,7 @@ namespace Detox.Editor.GUI
       // === Fields =====================================================================
 
       private readonly List<Rect> dragHandles = new List<Rect>();
+      private readonly List<ListViewItem> seedItems = new List<ListViewItem>();
       private readonly List<ListViewItem> flatItems = new List<ListViewItem>();
       private readonly List<ListViewItem> nestedItems = new List<ListViewItem>();
       private readonly List<ListViewItem> selectedItems = new List<ListViewItem>();
@@ -28,8 +29,10 @@ namespace Detox.Editor.GUI
       private Vector2 dragInitialSize;
       private ListViewColumn draggedColumn;
       private Rect itemRowRect;
-      private Vector2 listPosition = Vector2.zero;
       private Rect totalContentSize;
+
+      private Vector2 listOffset = Vector2.zero;
+
 
       // === Constructors ===============================================================
 
@@ -52,6 +55,17 @@ namespace Detox.Editor.GUI
       }
 
       // === Properties =================================================================
+      public Vector2 ListOffset
+      {
+         get
+         {
+            return this.listOffset;
+         }
+      }
+
+      public Rect ListPosition { get; private set; }
+
+      public Rect HeaderPosition { get; private set; }
 
       public bool AllowColumnReorder { get; set; }
 
@@ -87,6 +101,8 @@ namespace Detox.Editor.GUI
 
       public int ItemRow { get; set; }
 
+      public bool ItemRowEven { get; private set; }
+
       public List<ListViewItem> Items
       {
          get { return this.nestedItems; }
@@ -112,10 +128,13 @@ namespace Detox.Editor.GUI
 
       public ListViewItem[] SelectedItems
       {
-         get { return this.selectedItems.ToArray(); }
+         get
+         {
+            return this.selectedItems.ToArray();
+         }
       }
 
-//      public ListViewItem SelectedID
+      //      public ListViewItem SelectedID
 //      {
 //         get { return this.selectedItems.Count > 0 ? this.selectedItems[0] : null; }
 //      }
@@ -159,14 +178,28 @@ namespace Detox.Editor.GUI
 
       public void AddItem(string path)
       {
-         this.flatItems.Add((ListViewItem)Activator.CreateInstance(this.ListItemType, this, path));
+         this.AddItem((ListViewItem)Activator.CreateInstance(this.ListItemType, this, path));
+      }
+
+      public void AddItem(ListViewItem item)
+      {
+         this.seedItems.Add(item);
+      }
+
+      public void ClearItems()
+      {
+         this.seedItems.Clear();
       }
 
       public void RebuildListHierarchy()
       {
          var folderItemList = new Dictionary<string, ListViewItem>();
+         this.nestedItems.Clear();
 
-         foreach (ListViewItem item in this.flatItems)
+         //Debug.Log("FLAT ITEM COUNT: " + this.seedItems.Count + "\n");
+         this.flatItems.Clear();
+
+         foreach (var item in this.seedItems)
          {
             ListViewItem parent = null;
             var path = string.Empty;
@@ -184,17 +217,19 @@ namespace Detox.Editor.GUI
                }
                else
                {
-                  var newParent = (ListViewItem)Activator.CreateInstance(this.ListItemType, this, path + "/" + folder);
-                  this.AddHierarchyChild(parent, newParent);
+                  var child = (ListViewItem)Activator.CreateInstance(this.ListItemType, this, path + folder);
+                  this.AddHierarchyChild(parent, child);
 
-                  folderItemList.Add(path, newParent);
+                  folderItemList.Add(path, child);
 
-                  parent = newParent;
+                  parent = child;
                }
             }
 
             this.AddHierarchyChild(parent, item);
          }
+
+         //Debug.Log("FLAT LIST SIZE: " + this.flatItems.Count + "\n");
       }
 
       public void ClickNewSelection(ListViewItem item)
@@ -253,12 +288,36 @@ namespace Detox.Editor.GUI
             {
                this.DrawColumnHeaders();
             }
-            
+
+            var list = new List<ListViewItem>();
+            var skipPath = string.Empty;
+
+            foreach (var item in this.flatItems)
+            {
+               if (string.IsNullOrEmpty(skipPath) == false && item.Path.StartsWith(skipPath))
+               {
+                  continue;
+               }
+
+               if (item.Children != null && item.Expanded == false)
+               {
+                  skipPath = item.Path.Substring(0, item.Path.LastIndexOf("/", System.StringComparison.Ordinal));
+               }
+
+               list.Add(item);
+            }
+
+
+
             if (e.type == EventType.Layout)
             {
                // TODO: Determine the height and position of each item in the list
-               this.totalContentSize = new Rect();
-               this.CalculateItemLayout(this.nestedItems, ref this.totalContentSize);
+               //this.totalContentSize = new Rect();
+               //this.CalculateNestedListLayout(this.nestedItems, ref this.totalContentSize);
+
+               this.totalContentSize = this.CalculateFlatListLayout(list);
+
+               //Debug.Log("totalContentSize: " + this.totalContentSize + "\n");
 
                // TODO: With the above information, determine the first and last visible items
             }
@@ -266,298 +325,322 @@ namespace Detox.Editor.GUI
             {
                // TODO: Replace this properties with actual pixel sizes, to support variable-height rows.
                //       The current properties assume every row has a fixed height of 16 pixels.
-               this.FirstVisibleRow = (int)(this.listPosition.y / 16);
-               this.LastVisibleRow = (int)((rectListView.height + this.listPosition.y) / 16);
-               
+               this.FirstVisibleRow = (int)(this.listOffset.y / 16);
+               this.LastVisibleRow = (int)((rectListView.height + this.listOffset.y) / 16);
+
                this.Position = rectListView;
 
                //Debug.Log("LIST VIEW RECT: " + rectListView.ToString() + "\n" + "SCROLL OFFSET: " + _listPosition.ToString());
                //Debug.Log("FIRST:\t" + _firstVisibleRow.ToString() + "\nLAST:\t\t" + _lastVisibleRow.ToString());
             }
-            
-            this.listPosition = EditorGUILayout.BeginScrollView(this.listPosition, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
+
+            Rect listPosition = EditorGUILayout.BeginVertical();
             {
-               int totalVisibleRows = this.CountTotalVisibleRows(this.nestedItems);
-               if (this.TotalVisibleItems != totalVisibleRows)
+               this.listOffset = EditorGUILayout.BeginScrollView(
+                  this.listOffset,
+                  false,
+                  false,
+                  uScriptGUIStyle.HorizontalScrollbar,
+                  uScriptGUIStyle.VerticalScrollbar,
+                  "scrollview");
                {
-                  this.TotalVisibleItems = totalVisibleRows;
-                  this.EditorWindow.Repaint();
-               }
-
-               //Debug.Log("VISIBLE ROWS: " + totalVisibleRows.ToString() + "\n");
-               
-               var style = new GUIStyle();
-               style.normal.background = GUI.skin.box.normal.background;
-               style.border = GUI.skin.box.border;
-               
-               // Determine the width
-               var rectListContent = new Rect();
-
-               GUILayout.Box(string.Empty, GUIStyle.none, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true), GUILayout.MinHeight(this.totalContentSize.height), GUILayout.MinWidth(this.TotalColumnWidth));
-               if (e.type != EventType.Layout)
-               {
-                  rectListContent = GUILayoutUtility.GetLastRect();
-                  this.MinRowWidth = Math.Max(this.TotalColumnWidth, (int)rectListContent.width);
-                  //Debug.Log("ROW WIDTH: " + MinRowWidth.ToString() + "\n");
-                  
-                  //Debug.Log("OTHER CALC: " + rectListContent.ToString() + "\n\tCOL WIDTH: " + this.TotalColumnWidth + ", TYPE: " + e.type.ToString());
-
-                  rectListContent.y = this.Position.y;
-               }
-
-               if (this.Position != new Rect() && e.type != EventType.Layout)
-               {
-                  var rectScrollView = new Rect(this.Position);
-                  rectScrollView.yMin += 16;
-                  
-                  this.IsHorizontalScrollbarVisible = false;
-                  this.IsVerticalScrollbarVisible = false;
-                  
-                  if (rectScrollView.height < this.totalContentSize.height)
+                  var totalVisibleRows = this.CountTotalVisibleRows(this.nestedItems);
+                  if (this.TotalVisibleItems != totalVisibleRows)
                   {
-                     this.IsHorizontalScrollbarVisible = rectScrollView.width < this.MinRowWidth + 15;
-                     this.IsVerticalScrollbarVisible = true;
-                  }
-                  
-                  if (rectScrollView.width < this.MinRowWidth)
-                  {
-                     this.IsHorizontalScrollbarVisible = true;
-                     this.IsVerticalScrollbarVisible = rectScrollView.height < this.totalContentSize.height + 15;
+                     this.TotalVisibleItems = totalVisibleRows;
+                     this.EditorWindow.Repaint();
                   }
 
-                  //Debug.Log("SCROLLBARS:  " + (isHorizontalScrollbarVisible && isVerticalScrollbarVisible ? "BOTH"
-                  //   : (isHorizontalScrollbarVisible ? "HORIZONTAL"
-                  //      : (isVerticalScrollbarVisible ? "VERTICAL"
-                  //         : "NONE"))) + "\n");
-               }
-               
-               this.ItemRow = 0;
-               
-               if (this.nestedItems.Count > 0)
-               {
-                  this.itemRowRect = new Rect(0, 0, this.MinRowWidth, 0);
-                  
-                  for (int i = 0; i < this.nestedItems.Count; i++)
+                  //Debug.Log("VISIBLE ROWS: " + totalVisibleRows.ToString() + "\n");
+
+                  // Determine the width by drawing a non-visible box using the GUILayout system
+                  GUILayout.Box(
+                     string.Empty,
+                     GUIStyle.none,
+                     GUILayout.ExpandWidth(true),
+                     GUILayout.ExpandHeight(true),
+                     GUILayout.MinHeight(this.totalContentSize.height),
+                     GUILayout.MinWidth(this.TotalColumnWidth));
+
+                  if (e.type != EventType.Layout)
                   {
-                     //this.nestedItems[i].Draw(ref this.itemRowRect);
-                     //this.itemRowRect.y += this.itemRowRect.height;
+                     this.MinRowWidth = Math.Max(this.TotalColumnWidth, (int)GUILayoutUtility.GetLastRect().width);
+                  }
 
-                     // TOD: Pass a referent to _itemRowRect, so that the ListView can keep track of the layout
-                     // TODO: Create a Contains method that returns true if any part of a rect exists in another rect
+                  if (this.Position != new Rect() && e.type != EventType.Layout)
+                  {
+                     var rectScrollView = new Rect(this.Position);
+                     rectScrollView.yMin += 16;
 
-                     ListViewItem item = this.nestedItems[i];
+                     this.IsHorizontalScrollbarVisible = false;
+                     this.IsVerticalScrollbarVisible = false;
 
-                     bool shouldDrawRow = this.ItemRow >= this.FirstVisibleRow && this.ItemRow <= this.LastVisibleRow;
-
-                     if (shouldDrawRow)
+                     if (rectScrollView.height < this.totalContentSize.height)
                      {
-                        item.Position = new Rect(0, item.Row * item.Height, this.MinRowWidth, item.Height);
-
-                        //int top = 0;
-                        //int width = 0;
-
-                        item.Draw(ref this.itemRowRect);
-                        this.itemRowRect.y += item.Height;
-
-                        //Debug.Log("ROW: " + this.ItemRow.ToString() + ", RECT: " + this.itemRowRect.ToString() + "\n");
+                        this.IsHorizontalScrollbarVisible = rectScrollView.width < this.MinRowWidth + 15;
+                        this.IsVerticalScrollbarVisible = true;
                      }
 
-                     this.nestedItems[i].Row = this.ItemRow++;
+                     if (rectScrollView.width < this.MinRowWidth)
+                     {
+                        this.IsHorizontalScrollbarVisible = true;
+                        this.IsVerticalScrollbarVisible = rectScrollView.height < this.totalContentSize.height + 15;
+                     }
+
+                     //Debug.Log("SCROLLBARS:  " + (isHorizontalScrollbarVisible && isVerticalScrollbarVisible ? "BOTH"
+                     //   : (isHorizontalScrollbarVisible ? "HORIZONTAL"
+                     //      : (isVerticalScrollbarVisible ? "VERTICAL"
+                     //         : "NONE"))) + "\n");
+                  }
+
+                  this.ItemRow = 0;
+                  this.ItemRowEven = false;
+
+                  //if (this.nestedItems.Count > 0)
+                  if (list.Count > 0)
+                  {
+                     this.itemRowRect = new Rect(0, 0, this.MinRowWidth, 0);
+
+                     //for (var i = 0; i < this.nestedItems.Count; i++)
+                     for (var i = 0; i < list.Count; i++)
+                     {
+                        //this.nestedItems[i].Draw(ref this.itemRowRect);
+                        //this.itemRowRect.y += this.itemRowRect.height;
+
+                        // TOD: Pass a referent to _itemRowRect, so that the ListView can keep track of the layout
+                        // TODO: Create a Contains method that returns true if any part of a rect exists in another rect
+
+                        //ListViewItem item = this.nestedItems[i];
+                        ListViewItem item = list[i];
+
+                        bool shouldDrawRow = this.ItemRow >= this.FirstVisibleRow && this.ItemRow <= this.LastVisibleRow;
+
+                        if (shouldDrawRow)
+                        {
+                           // TODO: Figure out if we're using item.Position or this.itemRowRect ... leaning towards item.Position
+                           item.Position = new Rect(0, item.Row * item.Height, this.MinRowWidth, item.Height);
+                           this.itemRowRect.height = item.Height;
+
+                           //int top = 0;
+                           //int width = 0;
+
+                           //Debug.Log("DRAWING ITEM: \"" + item.Name + "\"\n");
+
+                           item.Draw(ref this.itemRowRect);
+                           this.itemRowRect.y += item.Height;
+
+                           //Debug.Log("ROW: " + this.ItemRow.ToString() + ", RECT: " + this.itemRowRect.ToString() + "\n");
+                        }
+
+                        //this.nestedItems[i].Row = this.ItemRow++;
+                        list[i].Row = this.ItemRow++;
+                        this.ItemRowEven = !this.ItemRowEven;
+                     }
+                  }
+                  else
+                  {
+                     // TODO: update the appearance of this message
+                     GUILayout.Label("No uScript graphs were found.");
                   }
                }
-               else
-               {
-                  // TODO: update the appearance of this message
-                  GUILayout.Label("No uScript graphs were found.");
-               }
+
+               EditorGUILayout.EndScrollView();
             }
-            
-            EditorGUILayout.EndScrollView();
+
+            if (e.type != EventType.Layout && e.type != EventType.Used && e.type != EventType.Ignore)
+            {
+               this.ListPosition = listPosition;
+            }
+
+            EditorGUILayout.EndVertical();
          }
          
          EditorGUILayout.EndVertical();
          
+         //Debug.Log("HEADER:\t" + this.HeaderPosition + "\t\t" + "LIST VIEW: " + this.Position
+         //   + "\n\tLIST: \t" + this.ListPosition + "\t\t\tEVENT: " + Event.current.type);
+
          // Update the listview focus
          if (e.type == EventType.MouseDown || e.type == EventType.Used)
          {
-            bool focus = (GUIUtility.keyboardControl == 0) && parentPanelRect.Contains(e.mousePosition);
+            var focus = (GUIUtility.keyboardControl == 0) && parentPanelRect.Contains(e.mousePosition);
             if (this.HasFocus != focus)
             {
                this.EditorWindow.Repaint();
             }
-            
+
             this.HasFocus = focus;
          }
          
          // Process keyboard input
          if (this.HasFocus)
          {
-            if (e.type == EventType.KeyDown)
-            {
-               // SelectAll (Cmd+A / Ctrl+A) is handled differently
-               if (e.modifiers == 0)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Escape:
-                        this.SelectNone();
-                        e.Use();
-                        break;
+            //if (e.type == EventType.KeyDown)
+            //{
+            //   // SelectAll (Cmd+A / Ctrl+A) is handled differently
+            //   if (e.modifiers == 0)
+            //   {
+            //      switch (e.keyCode)
+            //      {
+            //         case KeyCode.Escape:
+            //            this.SelectNone();
+            //            e.Use();
+            //            break;
                         
-                     case KeyCode.Tab:
-                        // Move focus to search control (if there is one)
-                        Debug.Log("KEY: " + e.keyCode.ToString() + "\n");
-                        break;
+            //         case KeyCode.Tab:
+            //            // Move focus to search control (if there is one)
+            //            Debug.Log("KEY: " + e.keyCode.ToString() + "\n");
+            //            break;
                         
-                     case KeyCode.Return:
-                     case KeyCode.KeypadEnter:
-                        // Action performed on KeyUp
-                        e.Use();
-                        break;
-                  }
-               }
-               else if (e.modifiers == EventModifiers.FunctionKey)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Home:
-                        this.SelectFirst();
-                        e.Use();
-                        break;
+            //         case KeyCode.Return:
+            //         case KeyCode.KeypadEnter:
+            //            // Action performed on KeyUp
+            //            e.Use();
+            //            break;
+            //      }
+            //   }
+            //   else if (e.modifiers == EventModifiers.FunctionKey)
+            //   {
+            //      switch (e.keyCode)
+            //      {
+            //         case KeyCode.Home:
+            //            this.SelectFirst();
+            //            e.Use();
+            //            break;
                         
-                     case KeyCode.End:
-                        this.SelectLast();
-                        e.Use();
-                        break;
+            //         case KeyCode.End:
+            //            this.SelectLast();
+            //            e.Use();
+            //            break;
                         
-                     case KeyCode.UpArrow:
-                        this.SelectPrevious();
-                        e.Use();
-                        break;
+            //         case KeyCode.UpArrow:
+            //            this.SelectPrevious();
+            //            e.Use();
+            //            break;
                         
-                     case KeyCode.DownArrow:
-                        this.SelectNext();
-                        e.Use();
-                        break;
+            //         case KeyCode.DownArrow:
+            //            this.SelectNext();
+            //            e.Use();
+            //            break;
                         
-                     case KeyCode.PageUp:
-                        this.SelectPageUp();
-                        e.Use();
-                        break;
+            //         case KeyCode.PageUp:
+            //            this.SelectPageUp();
+            //            e.Use();
+            //            break;
                         
-                     case KeyCode.PageDown:
-                        this.SelectPageDown();
-                        e.Use();
-                        break;
+            //         case KeyCode.PageDown:
+            //            this.SelectPageDown();
+            //            e.Use();
+            //            break;
                         
-                     case KeyCode.RightArrow:
-                     {
-                        bool changed = false;
-                        foreach (ListViewItem item in this.selectedItems)
-                        {
-                           if (item.HasVisibleChildren && (item.Expanded == false))
-                           {
-                              item.Expanded = true;
-                              changed = true;
-                           }
-                        }
+            //         case KeyCode.RightArrow:
+            //         {
+            //            bool changed = false;
+            //            foreach (ListViewItem item in this.selectedItems)
+            //            {
+            //               if (item.HasVisibleChildren && (item.Expanded == false))
+            //               {
+            //                  item.Expanded = true;
+            //                  changed = true;
+            //               }
+            //            }
                         
-                        if (changed == false)
-                        {
-                           this.SelectNext();
-                        }
+            //            if (changed == false)
+            //            {
+            //               this.SelectNext();
+            //            }
                         
-                        e.Use();
-                        break;
-                     }
+            //            e.Use();
+            //            break;
+            //         }
                         
-                     case KeyCode.LeftArrow:
-                     {
-                        bool changed = false;
-                        foreach (ListViewItem item in this.selectedItems)
-                        {
-                           if (item.HasVisibleChildren && item.Expanded)
-                           {
-                              item.Expanded = false;
-                              changed = true;
-                           }
-                        }
+            //         case KeyCode.LeftArrow:
+            //         {
+            //            bool changed = false;
+            //            foreach (ListViewItem item in this.selectedItems)
+            //            {
+            //               if (item.HasVisibleChildren && item.Expanded)
+            //               {
+            //                  item.Expanded = false;
+            //                  changed = true;
+            //               }
+            //            }
                         
-                        if ((changed == false) && (this.selectedItems.Count == 1))
-                        {
-                           this.SelectParent();
-                        }
+            //            if ((changed == false) && (this.selectedItems.Count == 1))
+            //            {
+            //               this.SelectParent();
+            //            }
                         
-                        e.Use();
-                        break;
-                     }
-                  }
-               }
-               else if (e.modifiers == EventModifiers.Shift)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Tab:
-                        // Move focus to search control (if there is one)
-                        Debug.Log("SHIFT KEY: " + e.keyCode.ToString() + "\n");
-                        break;
-                  }
-               }
-               else if (e.modifiers == EventModifiers.Alt)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Return:
-                     case KeyCode.KeypadEnter:
-                        // Action performed on KeyUp
-                        e.Use();
-                        break;
-                  }
-               }
-               else if ((e.modifiers & (EventModifiers.Control | EventModifiers.FunctionKey)) == 0)
-               {
-                  Debug.Log("KEY: " + e.keyCode.ToString() + ", MODIFIERS: " + e.modifiers.ToString() + "\n");
-               }
-            }
-            else if (e.type == EventType.KeyUp)
-            {
-               if (e.modifiers == 0)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Return:
-                     case KeyCode.KeypadEnter:
-                        // Duplicate the double-click behavior
-                        if (this.selectedItems.Count == 1)
-                        {
-                           if (this.selectedItems[0].HasVisibleChildren)
-                           {
-                              this.selectedItems[0].Expanded = !this.selectedItems[0].Expanded;
-                           }
-                           else
-                           {
-                              Debug.Log("ADDING PENDING EXECUTION\n");
-                              this.PendingExecution = this.selectedItems[0];
-                           }
-                        }
+            //            e.Use();
+            //            break;
+            //         }
+            //      }
+            //   }
+            //   else if (e.modifiers == EventModifiers.Shift)
+            //   {
+            //      switch (e.keyCode)
+            //      {
+            //         case KeyCode.Tab:
+            //            // Move focus to search control (if there is one)
+            //            Debug.Log("SHIFT KEY: " + e.keyCode.ToString() + "\n");
+            //            break;
+            //      }
+            //   }
+            //   else if (e.modifiers == EventModifiers.Alt)
+            //   {
+            //      switch (e.keyCode)
+            //      {
+            //         case KeyCode.Return:
+            //         case KeyCode.KeypadEnter:
+            //            // Action performed on KeyUp
+            //            e.Use();
+            //            break;
+            //      }
+            //   }
+            //   else if ((e.modifiers & (EventModifiers.Control | EventModifiers.FunctionKey)) == 0)
+            //   {
+            //      Debug.Log("KEY: " + e.keyCode.ToString() + ", MODIFIERS: " + e.modifiers.ToString() + "\n");
+            //   }
+            //}
+            //else if (e.type == EventType.KeyUp)
+            //{
+            //   if (e.modifiers == 0)
+            //   {
+            //      switch (e.keyCode)
+            //      {
+            //         case KeyCode.Return:
+            //         case KeyCode.KeypadEnter:
+            //            // Duplicate the double-click behavior
+            //            if (this.selectedItems.Count == 1)
+            //            {
+            //               if (this.selectedItems[0].HasVisibleChildren)
+            //               {
+            //                  this.selectedItems[0].Expanded = !this.selectedItems[0].Expanded;
+            //               }
+            //               else
+            //               {
+            //                  Debug.Log("ADDING PENDING EXECUTION\n");
+            //                  this.PendingExecution = this.selectedItems[0];
+            //               }
+            //            }
                         
-                        e.Use();
-                        break;
-                  }
-               }
-               else if (e.modifiers == EventModifiers.Alt)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Return:
-                     case KeyCode.KeypadEnter:
-                        // Duplicate the middle-click behavior
-                        Debug.Log("ALT KEY: " + e.keyCode.ToString() + "\n");
-                        e.Use();
-                        break;
-                  }
-               }
-            }
+            //            e.Use();
+            //            break;
+            //      }
+            //   }
+            //   else if (e.modifiers == EventModifiers.Alt)
+            //   {
+            //      switch (e.keyCode)
+            //      {
+            //         case KeyCode.Return:
+            //         case KeyCode.KeypadEnter:
+            //            // Duplicate the middle-click behavior
+            //            Debug.Log("ALT KEY: " + e.keyCode.ToString() + "\n");
+            //            e.Use();
+            //            break;
+            //      }
+            //   }
+            //}
          }
 
          // x
@@ -662,9 +745,9 @@ namespace Detox.Editor.GUI
          //   
          //                              // uScript Label
          //                              scriptSceneName = "None";
-         //                              if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName))
+         //                              if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].SceneName))
          //                              {
-         //                                 scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName;
+         //                                 scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].SceneName;
          //                              }
          //   
          //                              if (Event.current.type == EventType.Layout)
@@ -795,13 +878,13 @@ namespace Detox.Editor.GUI
          int yMin = item.Row * item.Height;
          int yMax = yMin + item.Height;
          
-         if (this.listPosition.y > yMin)
+         if (this.listOffset.y > yMin)
          {
-            this.listPosition.y = yMin;
+            this.listOffset.y = yMin;
          }
-         else if (this.listPosition.y < yMax - this.Position.height)
+         else if (this.listOffset.y < yMax - this.Position.height)
          {
-            this.listPosition.y = yMax - this.Position.height;
+            this.listOffset.y = yMax - this.Position.height;
          }
          
          this.EditorWindow.Repaint();
@@ -825,7 +908,12 @@ namespace Detox.Editor.GUI
                }
                else
                {
-                  Debug.Log("Execute: " + item.Name + "\n\t MODIFIERS: " + e.modifiers);
+                  //Debug.Log("Execute: " + item.Name + "\n\t MODIFIERS: " + e.modifiers);
+                  var path = uScript.Instance.FindFile(uScript.Preferences.UserScripts, item.Path);
+                  if (path != string.Empty)
+                  {
+                     uScript.Instance.OpenScript(path);
+                  }
                }
             }
          }
@@ -1165,7 +1253,7 @@ namespace Detox.Editor.GUI
          // Is there enough space for the full Custom column widths?
          if (availableWidth < widthFixedColumns + minWidthFluidColumns + widthCustomColumns)
          {
-            Debug.Log("FORCE SHRINK CUSTOM COLUMNS\n");
+            //Debug.Log("FORCE SHRINK CUSTOM COLUMNS\n");
             //    we need to use the minWidth for the fluid columns
             //    we need to force shrink resize columns as well
             //       get remaining of (availSpace - minWidthFluidColumns - widthFixedColumns - widthCustomColumns)
@@ -1251,16 +1339,100 @@ namespace Detox.Editor.GUI
          return count;
       }
 
-      private void CalculateItemLayout(IEnumerable<ListViewItem> items, ref Rect totalSize)
+      private Rect CalculateFlatListLayout()
+      {
+         var rect = new Rect();
+
+         //foreach (var item in this.flatItems)
+         //{
+
+         //   ListViewItem parent = null;
+         //   var path = string.Empty;
+         //   var folders = new List<string>(item.Path.Split('/'));
+
+         //   while (folders.Count > 1)
+         //   {
+         //      string folder = folders[0];
+         //      path += folder + "/";
+         //      folders.RemoveAt(0);
+
+         //      if (folderItemList.ContainsKey(path))
+         //      {
+         //         parent = folderItemList[path];
+         //      }
+         //      else
+         //      {
+         //         var child = (ListViewItem)Activator.CreateInstance(this.ListItemType, this, path + folder);
+         //         this.AddHierarchyChild(parent, child);
+
+         //         folderItemList.Add(path, child);
+
+         //         parent = child;
+         //      }
+         //   }
+
+         //   this.AddHierarchyChild(parent, item);
+         //}
+
+
+         var skipPath = string.Empty;
+
+         foreach (var item in this.flatItems)
+         {
+            if (string.IsNullOrEmpty(skipPath) == false && item.Path.StartsWith(skipPath))
+            {
+               continue;
+            }
+
+            if (item.Children != null && item.Expanded == false)
+            {
+               skipPath = item.Path.Substring(0, item.Path.LastIndexOf("/", System.StringComparison.Ordinal));
+               Debug.Log("NEW SKIP PATH: " + skipPath);
+            }
+
+            item.Position = new Rect(0, rect.height, rect.width, item.Height);
+            rect.height += item.Height;
+
+            Debug.Log("UPDATED RECT: " + rect + "\n");
+
+         }
+
+         Debug.Log("FINAL RECT: " + rect + "\n");
+
+         return rect;
+      }
+
+      private Rect CalculateFlatListLayout(IEnumerable<ListViewItem> list)
+      {
+         var rect = new Rect();
+
+         foreach (var item in list)
+         {
+            item.Position = new Rect(0, rect.height, rect.width, item.Height);
+            rect.height += item.Height;
+
+            //Debug.Log("UPDATED RECT: " + rect + "\n");
+         }
+
+         //Debug.Log("FINAL RECT: " + rect + "\n");
+
+         return rect;
+      }
+
+      private void CalculateNestedListLayout(IEnumerable<ListViewItem> items, ref Rect totalSize)
       {
          foreach (var item in items)
          {
             item.Position = new Rect(0, totalSize.height, totalSize.width, item.Height);
             totalSize.height += item.Height;
 
+            //Debug.Log("ITEM COUNT: " + items.Count + "\n");
+
+            //Debug.Log("ITEM: " + item.Name + ", POSITION: " + item.Position + "\n\ttotalSize: " + totalSize);
+
             if (item.Children != null && item.Expanded)
             {
-               this.CalculateItemLayout(item.Children, ref totalSize);
+               this.CalculateNestedListLayout(item.Children, ref totalSize);
             }
          }
       }
@@ -1274,10 +1446,10 @@ namespace Detox.Editor.GUI
 
          Event e = Event.current;
 
-         Rect rectColumnHeaders = EditorGUILayout.BeginHorizontal(GUILayout.ExpandHeight(false));
+         var headerPosition = EditorGUILayout.BeginHorizontal(GUILayout.ExpandHeight(false));
          {
-            var headerPosition = new Vector2(this.listPosition.x, 0);
-            EditorGUILayout.BeginScrollView(headerPosition, false, false, GUIStyle.none, GUIStyle.none, "scrollview", GUILayout.ExpandHeight(false));
+            var scrollPosition = new Vector2(this.listOffset.x, 0);
+            EditorGUILayout.BeginScrollView(scrollPosition, false, false, GUIStyle.none, GUIStyle.none, "scrollview", GUILayout.ExpandHeight(false));
             {
                this.TotalColumnWidth = 0;
                foreach (var column in this.Columns)
@@ -1290,7 +1462,9 @@ namespace Detox.Editor.GUI
 
                if (e.type != EventType.Layout && e.type != EventType.Used && e.type != EventType.Ignore)
                {
-                  var rectColumnHeader = new Rect(rectColumnHeaders.x, 0, rectColumnHeaders.width, rectColumnHeaders.height);
+                  this.HeaderPosition = headerPosition;
+
+                  var rectColumnHeader = new Rect(0, 0, headerPosition.width, headerPosition.height);
 
                   this.dragHandles.Clear();
 
@@ -1373,7 +1547,7 @@ namespace Detox.Editor.GUI
                         else if (e.type == EventType.MouseUp && this.draggedColumn != null)
                         {
                            // End drag
-                           Debug.Log("END DRAG".NewLine());
+                           //Debug.Log("END DRAG".NewLine());
                            this.draggedColumn = null;
                            this.EditorWindow.Repaint();
 ////                           e.Use();
@@ -1395,7 +1569,7 @@ namespace Detox.Editor.GUI
                   }
 
                   // Draw the headers now
-                  rectColumnHeader = new Rect(rectColumnHeaders.x, 0, rectColumnHeaders.width, rectColumnHeaders.height);
+                  rectColumnHeader = new Rect(0, 0, headerPosition.width, headerPosition.height);
 
                   foreach (ListViewColumn column in this.Columns)
                   {
@@ -1445,17 +1619,17 @@ namespace Detox.Editor.GUI
                   }
 
                   // TODO: Remove this section - Temporary handle drawing
-                  foreach (var rect in this.dragHandles)
-                  {
-                     // Set the area for the resize grab handle
-                     var r = new Rect(rect);
-////                     r.yMin += 10;
-////                     GUI.Box(r, GUIContent.none);
-////
-////                     Debug.DrawLine(new Vector2(rect.xMin, rect.yMin), new Vector2(rect.xMax, rect.yMax), Color.black);
-////                     GUI.Box(r, GUIContent.none, uScriptGUIStyle.debugBox);
-                     uScriptGUI.DebugBox(r, Color.red);
-                  }
+//                  foreach (var rect in this.dragHandles)
+//                  {
+//                     // Set the area for the resize grab handle
+//                     var r = new Rect(rect);
+//////                     r.yMin += 10;
+//////                     GUI.Box(r, GUIContent.none);
+//////
+//////                     Debug.DrawLine(new Vector2(rect.xMin, rect.yMin), new Vector2(rect.xMax, rect.yMax), Color.black);
+//////                     GUI.Box(r, GUIContent.none, uScriptGUIStyle.debugBox);
+//                     uScriptGUI.DebugBox(r, Color.red);
+//                  }
 
 ////                  // TEMP DEBUG DRAW
 ////                  rectColumnHeader = new Rect(rectColumnHeaders.x, 10, rectColumnHeaders.width, rectColumnHeaders.height-10);
@@ -1835,19 +2009,6 @@ namespace Detox.Editor.GUI
 
       private void AddHierarchyChild(ListViewItem parent, ListViewItem child)
       {
-         var index = child.Path.LastIndexOf("/", StringComparison.Ordinal) + 1;
-
-         if (index > 0 && child.Path.Length > index)
-         {
-            child.Name = child.Path.Substring(index);
-         }
-         
-         index = child.Name.LastIndexOf(".uscript", StringComparison.Ordinal);
-         if (index >= 0)
-         {
-            child.Name = child.Name.Substring(0, index);
-         }
-         
          if (parent != null)
          {
             if (parent.Children == null)
@@ -1863,8 +2024,33 @@ namespace Detox.Editor.GUI
          {
             this.nestedItems.Add(child);
          }
+
+         this.flatItems.Add(child);
+         //Debug.Log("ADDING FLAT ITEM: " + child.Path + "\n");
       }
-      
+
+      private void AddVisibleChild(ListViewItem parent, ListViewItem child)
+      {
+         if (parent != null)
+         {
+            if (parent.Children == null)
+            {
+               parent.Children = new List<ListViewItem>();
+            }
+
+            child.Parent = parent;
+            child.Depth = parent.Depth + 1;
+            parent.Children.Add(child);
+         }
+         else
+         {
+            this.nestedItems.Add(child);
+         }
+
+         this.flatItems.Add(child);
+         Debug.Log("ADDING FLAT ITEM: " + child.Path + "\n");
+      }
+
       // === Classes ====================================================================
 
       public static class Style

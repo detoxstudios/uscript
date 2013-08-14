@@ -177,11 +177,11 @@ public sealed class uScriptGUIPanelScript : uScriptGUIPanel
 
             // uScript Label
             string scriptSceneName = string.Empty;
-            if (uScriptBackgroundProcess.s_uScriptInfo.ContainsKey(this.currentScriptFileName))
+            if (uScriptBackgroundProcess.GraphInfoList.ContainsKey(this.currentScriptFileName))
             {
-               if (string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[this.currentScriptFileName].m_SceneName) == false)
+               if (string.IsNullOrEmpty(uScriptBackgroundProcess.GraphInfoList[this.currentScriptFileName].SceneName) == false)
                {
-                  scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[this.currentScriptFileName].m_SceneName;
+                  scriptSceneName = uScriptBackgroundProcess.GraphInfoList[this.currentScriptFileName].SceneName;
                }
             }
 
@@ -296,7 +296,7 @@ public sealed class uScriptGUIPanelScript : uScriptGUIPanel
             this._scrollviewOffset = EditorGUILayout.BeginScrollView(this._scrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
             {
                var keylist = new List<string>();
-               keylist.AddRange(uScriptBackgroundProcess.s_uScriptInfo.Keys);
+               keylist.AddRange(uScriptBackgroundProcess.GraphInfoList.Keys);
                var keys = keylist.ToArray();
 
                string scriptName;
@@ -369,9 +369,9 @@ public sealed class uScriptGUIPanelScript : uScriptGUIPanel
 
                            // uScript Label
                            scriptSceneName = "None";
-                           if (!string.IsNullOrEmpty(uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName))
+                           if (!string.IsNullOrEmpty(uScriptBackgroundProcess.GraphInfoList[scriptFileName].SceneName))
                            {
-                              scriptSceneName = uScriptBackgroundProcess.s_uScriptInfo[scriptFileName].m_SceneName;
+                              scriptSceneName = uScriptBackgroundProcess.GraphInfoList[scriptFileName].SceneName;
                            }
 
                            if (Event.current.type == EventType.Layout)
