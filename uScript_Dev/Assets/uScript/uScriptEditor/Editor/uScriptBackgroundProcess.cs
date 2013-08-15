@@ -17,6 +17,8 @@ using UnityEditor;
 
 #if UNITY_EDITOR
 
+// TODO: Rename the class to GraphBackgroundProcess or just BackgroundProcess
+
 [InitializeOnLoad]
 public class uScriptBackgroundProcess
 {
@@ -36,6 +38,8 @@ public class uScriptBackgroundProcess
    public static void ForceFileRefresh()
    {
       GraphInfoList.Clear();
+
+      // TODO: Keep the previous info for each graph until the graph is refreshed to avoid temporary loss of information.
 
       foreach (var path in uScript.GetGraphPaths())
       {

@@ -21,10 +21,6 @@ namespace Detox.Editor.GUI
 
       // === Fields =====================================================================
 
-      private string sceneName;
-
-      private string scenePath;
-
       private string sourcePath;
 
       // === Constructors ===============================================================
@@ -32,9 +28,7 @@ namespace Detox.Editor.GUI
       public ListViewItemScript(ListView listView, string path)
          : base(listView, path)
       {
-//         this.SourceState = 0;
-//         this.SceneName = null;
-//         this.FriendlyName = null;
+         // TODO: Consider using a GraphInfo here instead of a path
       }
 
       // === Finalizers =================================================================
@@ -80,22 +74,9 @@ namespace Detox.Editor.GUI
          }
       }
 
-      public string SourcePath
-      {
-         get
-         {
-            if (this.sourcePath == null)
-            {
-               this.sourcePath = string.Empty;
-               Debug.Log(this.Name + ": " + this.sourcePath + "\n");
-            }
-
-            return this.sourcePath;
-         }
-      }
-
-      // GraphName      - <name>
-      // GraphPath      - <path>/<name>.<extention>
+      // GraphID     - <path>/<name>
+      // GraphName   - <name>
+      // GraphPath   - <path>/<name>.<extention>
 
       // === Indexers ===================================================================
 
@@ -109,6 +90,8 @@ namespace Detox.Editor.GUI
          // Draw row background (alternate and selected)
          if (isRepaint)
          {
+            // TODO: See if we can get alternate row colors while retaining the focus state colors
+
             //if (this.Selected)
             //{
             //   Style.RowEven.Draw(this.Position, GUIContent.none, false, false, true, false);
@@ -125,8 +108,6 @@ namespace Detox.Editor.GUI
 
          //var rect = new Rect(itemRowRect);
          //itemRowRect.height = this.Height;
-
-         //Debug.Log("ITEM:\t" + this.Path + "\n\t\t\t" + this.FriendlyName + ", " + this.SceneName + ", " + this.SourceState + ", " + itemRowRect + "\n");
 
          // All row drawing should take place there, including the foldouts, selected highlights, and column cells.
          // Mouse input related to row selection and GUI buttons should be handled there as well.
@@ -149,113 +130,6 @@ namespace Detox.Editor.GUI
                this.ContextMenuCreate(new Rect(e.mousePosition.x, e.mousePosition.y, 0, 0));
             }
          }
-
-
-
-
-
-
-
-         //         this.height = (int)this.style.label.fixedHeight;
-
-         //Debug.Log("Default ListViewItem renderer: " + itemRowRect.ToString() + "\n"
-         //            + "ROW: " + this._listView.ItemRow.ToString() + ", RECT: " + itemRowRect.ToString() + "\n");
-
-         //if (this.HasVisibleChildren)
-         //{
-         //   //Debug.Log("PARENT: " + this.Name + "\n");
-
-         //   //// foldout toggle
-         //   //rect.x = 2 + (this.Depth * indentWidth);
-         //   //rect.y--;
-         //   //rect.width = indentWidth;
-
-         //   //this.Expanded = GUI.Toggle(rect, this.Expanded, GUIContent.none, Style.Foldout);
-
-         //   //rect.x = this.Depth * indentWidth;
-         //   //rect.y++;
-         //   //rect.width = this.Position.width;
-
-         //   //if (isRepaint)
-         //   //{
-         //   //   Style.Row.Draw(rect, this.Name, false, false, false, false);
-         //   //}
-
-         //   var rectToggle = this.Position;
-         //   rectToggle.xMin = 2 + (this.Depth * indentWidth);
-         //   rectToggle.width = 20;
-
-         //   rectToggle.x += 20;
-
-         //   this.Expanded = GUI.Toggle(rectToggle, this.Expanded, GUIContent.none, Style.Foldout);
-
-         //   var rectRow = this.Position;
-
-         //   if (e.type == EventType.MouseDown)
-         //   {
-         //      this.ClickCount = Event.current.clickCount;
-         //   }
-
-         //   if (GUI.Button(rectRow, Ellipsis.Compact(this.Name, Style.Row, rectRow, Ellipsis.Format.Middle), GUI.skin.label))
-         //   {
-         //      this.ListView.HandleMouseInput(this);
-         //   }
-
-         //   //var rectToggle = this.Position;
-         //   //rectToggle.xMin = 2 + (this.Depth * indentWidth);
-         //   //rectToggle.width = 20;
-
-         //   //rect
-
-         //   //this.Expanded = GUI.Toggle(rectToggle, this.Expanded, GUIContent.none, Style.Foldout);
-
-         //   //var r2 = this.Position;
-         //   //r2.xMin = rect.xMax;
-
-         //   //if (e.type == EventType.MouseDown)
-         //   //{
-         //   //   this.ClickCount = Event.current.clickCount;
-         //   //}
-
-         //   //if (GUI.Button(r2, Ellipsis.Compact(this.Name, Style.Row, r2, Ellipsis.Format.Middle), GUI.skin.label))
-         //   //{
-         //   //   this.ListView.HandleMouseInput(this);
-         //   //}
-         //}
-         //else
-         //{
-         //   rect = this.Position;
-         //   rect.xMin = this.Depth * indentWidth;
-
-         //   //Style.Row.Draw(rect, Ellipsis.Compact(this.Name, Style.Row, rect, Ellipsis.Format.Middle), false, false, false, false);
-         //   //if (GUI.Button(rect, Ellipsis.Compact(this.Name, Style.Row, rect, Ellipsis.Format.Middle)))
-         //   //{
-         //   //   Debug.Log("PRESSED: " + this.Name + "\n");
-         //   //}
-
-         //   if (e.type == EventType.MouseDown)
-         //   {
-         //      this.ClickCount = Event.current.clickCount;
-         //   }
-
-         //   if (GUI.Button(rect, Ellipsis.Compact(this.Name, Style.Row, rect, Ellipsis.Format.Middle), GUI.skin.label))
-         //   {
-         //      this.ListView.HandleMouseInput(this);
-         //   }
-
-         //   //GUI.changed = false;
-         //   //GUI.Toggle(
-         //   //   rect,
-         //   //   this.Selected,
-         //   //   Ellipsis.Compact(this.Name, Style.Row, rect, Ellipsis.Format.Middle),
-         //   //   GUI.skin.label);
-         //   //if (GUI.changed)
-         //   //{
-         //   //   GUI.changed = false;
-
-         //   //   this.ListView.HandleMouseInput(this);
-         //   //}
-         //}
 
          ////uScriptGUI.DebugBox(this.Position, Color.blue, this.Name);
 
@@ -306,8 +180,6 @@ namespace Detox.Editor.GUI
          if (e.type == EventType.MouseDown && e.button == 0 && this.Position.Contains(e.mousePosition))
          {
             this.ListView.HandleMouseInput(this);
-            //Debug.Log("ROW CLICKED: " + this.Name + "\n");
-            //e.Use();
          }
 
          //    ContextClick
@@ -481,20 +353,6 @@ namespace Detox.Editor.GUI
          else
          {
             rect.xMin += 2 + (this.Depth * indentWidth) + 12;
-
-            //if (GUI.Button(rect, column.ID))
-            //{
-            //   Debug.Log("CELL Clicked: " + column.ID + "\n");
-            //}
-
-            //rect = this.Position;
-            //rect.xMin = this.Depth * indentWidth;
-
-            //Style.Row.Draw(rect, Ellipsis.Compact(this.Name, Style.Row, rect, Ellipsis.Format.Middle), false, false, false, false);
-            //if (GUI.Button(rect, Ellipsis.Compact(this.Name, Style.Row, rect, Ellipsis.Format.Middle)))
-            //{
-            //   Debug.Log("PRESSED: " + this.Name + "\n");
-            //}
 
             if (e.type == EventType.MouseDown)
             {

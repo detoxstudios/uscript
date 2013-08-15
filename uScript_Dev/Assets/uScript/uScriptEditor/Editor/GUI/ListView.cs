@@ -61,6 +61,16 @@ namespace Detox.Editor.GUI
          {
             return this.listOffset;
          }
+
+         private set
+         {
+            if (this.listOffset != value)
+            {
+               this.EditorWindow.Repaint();
+            }
+
+            this.listOffset = value;
+         }
       }
 
       public Rect ListPosition { get; private set; }
@@ -325,8 +335,8 @@ namespace Detox.Editor.GUI
             {
                // TODO: Replace this properties with actual pixel sizes, to support variable-height rows.
                //       The current properties assume every row has a fixed height of 16 pixels.
-               this.FirstVisibleRow = (int)(this.listOffset.y / 16);
-               this.LastVisibleRow = (int)((rectListView.height + this.listOffset.y) / 16);
+               this.FirstVisibleRow = (int)(this.ListOffset.y / 16);
+               this.LastVisibleRow = (int)((rectListView.height + this.ListOffset.y) / 16);
 
                this.Position = rectListView;
 
@@ -336,8 +346,8 @@ namespace Detox.Editor.GUI
 
             Rect listPosition = EditorGUILayout.BeginVertical();
             {
-               this.listOffset = EditorGUILayout.BeginScrollView(
-                  this.listOffset,
+               this.ListOffset = EditorGUILayout.BeginScrollView(
+                  this.ListOffset,
                   false,
                   false,
                   uScriptGUIStyle.HorizontalScrollbar,
@@ -875,19 +885,20 @@ namespace Detox.Editor.GUI
       {
          ////         int index = GetVisibleItemIndex(item);
          
-         int yMin = item.Row * item.Height;
-         int yMax = yMin + item.Height;
-         
-         if (this.listOffset.y > yMin)
+         var yMin = item.Row * item.Height;
+         var yMax = yMin + item.Height;
+         var offset = this.ListOffset;
+
+         if (offset.y > yMin)
          {
-            this.listOffset.y = yMin;
+            offset.y = yMin;
          }
-         else if (this.listOffset.y < yMax - this.Position.height)
+         else if (offset.y < yMax - this.Position.height)
          {
-            this.listOffset.y = yMax - this.Position.height;
+            offset.y = yMax - this.Position.height;
          }
-         
-         this.EditorWindow.Repaint();
+
+         this.ListOffset = offset;
       }
 
       public void HandleMouseInput(ListViewItem item)
@@ -1448,7 +1459,7 @@ namespace Detox.Editor.GUI
 
          var headerPosition = EditorGUILayout.BeginHorizontal(GUILayout.ExpandHeight(false));
          {
-            var scrollPosition = new Vector2(this.listOffset.x, 0);
+            var scrollPosition = new Vector2(this.ListOffset.x, 0);
             EditorGUILayout.BeginScrollView(scrollPosition, false, false, GUIStyle.none, GUIStyle.none, "scrollview", GUILayout.ExpandHeight(false));
             {
                this.TotalColumnWidth = 0;
