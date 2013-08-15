@@ -238,8 +238,9 @@ namespace Detox.Editor.GUI
             {
                this.filterText = newFilterText.TrimStart();
 
-               this.FilterListContents();
-               this.UpdateListHierarchy();
+               this.listView.FilterItems(this.filterText);
+               //this.FilterListContents();
+               //this.UpdateListHierarchy();
 
                // Drop focus if the user inserted a newline (hit enter)
                if (newFilterText.Contains("\n"))

@@ -40,8 +40,6 @@ namespace Detox.Editor.GUI
 
       public int Depth { get; set; }
 
-      public bool Expanded { get; set; }
-
       public bool HasChildren
       {
          get { return this.Children != null && this.Children.Count > 0; }
@@ -140,7 +138,11 @@ namespace Detox.Editor.GUI
 
             rectToggle.x += 20;
 
-            this.Expanded = GUI.Toggle(rectToggle, this.Expanded, GUIContent.none, Style.Foldout);
+            var originalState = this.ListView.IsFolderExpanded(this);
+            if (originalState != GUI.Toggle(rectToggle, originalState, GUIContent.none, Style.Foldout))
+            {
+               this.ListView.ToggleFolder(this);
+            }
 
             var rectRow = this.Position;
 

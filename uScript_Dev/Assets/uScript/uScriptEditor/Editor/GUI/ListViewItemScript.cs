@@ -196,12 +196,22 @@ namespace Detox.Editor.GUI
 
       private void CommandDirectoryCollapse()
       {
-         this.Expanded = false;
+         this.ListView.CollapseFolder(this);
+      }
+
+      private void CommandDirectoryCollapseAll()
+      {
+         this.ListView.CollapseAllFolders();
       }
 
       private void CommandDirectoryExpand()
       {
-         this.Expanded = true;
+         this.ListView.ExpandFolder(this);
+      }
+
+      private void CommandDirectoryExpandAll()
+      {
+         this.ListView.ExpandAllFolders();
       }
 
       private void CommandDirectoryLocate()
@@ -241,14 +251,16 @@ namespace Detox.Editor.GUI
 
          if (this.HasChildren)
          {
-            if (this.Expanded)
+            if (this.ListView.IsFolderExpanded(this))
             {
-               menu.AddItem(new GUIContent("Collapse Folder"), false, this.CommandDirectoryCollapse);
+               menu.AddItem(new GUIContent("Collapse Folder"), true, this.CommandDirectoryCollapse);
             }
             else
             {
-               menu.AddItem(new GUIContent("Expand Folder"), false, this.CommandDirectoryExpand);
+               menu.AddItem(new GUIContent("Expand Folder"), true, this.CommandDirectoryExpand);
             }
+
+            menu.AddSeparator(string.Empty);
 
             menu.AddItem(new GUIContent("Locate Folder"), false, this.CommandDirectoryLocate);
          }
@@ -261,7 +273,7 @@ namespace Detox.Editor.GUI
                // TODO: Consider adding Save commands for the current graph
                if (uScript.Instance.ScriptEditorCtrl.IsDirty)
                {
-                  menu.AddItem(new GUIContent("Reload Graph"), false, this.CommandGraphLoad);
+                  menu.AddItem(new GUIContent("Reload Graph"), true, this.CommandGraphLoad);
                }
                else
                {
@@ -270,13 +282,13 @@ namespace Detox.Editor.GUI
             }
             else
             {
-               menu.AddItem(new GUIContent("Load Graph"), false, this.CommandGraphLoad);
+               menu.AddItem(new GUIContent("Load Graph"), true, this.CommandGraphLoad);
             }
-            menu.AddItem(new GUIContent("Locate Graph"), false, this.CommandGraphLocate);
 
             menu.AddSeparator(string.Empty);
 
-            // SCENE
+            menu.AddItem(new GUIContent("Locate Graph"), false, this.CommandGraphLocate);
+
             if (string.IsNullOrEmpty(this.SceneName))
             {
                menu.AddDisabledItem(new GUIContent("Locate Scene"));
@@ -286,9 +298,6 @@ namespace Detox.Editor.GUI
                menu.AddItem(new GUIContent("Locate Scene"), false, this.CommandSceneLocate);
             }
 
-            menu.AddSeparator(string.Empty);
-
-            // SOURCE
             if (this.SourceState == GraphInfo.State.Missing)
             {
                menu.AddDisabledItem(new GUIContent("Locate Source"));
@@ -300,6 +309,11 @@ namespace Detox.Editor.GUI
                //menu.AddDisabledItem(new GUIContent("Remove Source"));
             }
          }
+
+         menu.AddSeparator(string.Empty);
+
+         menu.AddItem(new GUIContent("Expand All Folders"), false, this.CommandDirectoryExpandAll);
+         menu.AddItem(new GUIContent("Collapse All Folders"), false, this.CommandDirectoryCollapseAll);
 
          if (rect.width > 0)
          {
@@ -328,7 +342,11 @@ namespace Detox.Editor.GUI
             rectToggle.xMin += 2 + (this.Depth * indentWidth);
             rectToggle.width = 12;
 
-            this.Expanded = GUI.Toggle(rectToggle, this.Expanded, GUIContent.none, Style.Foldout);
+            var originalState = this.ListView.IsFolderExpanded(this);
+            if (originalState != GUI.Toggle(rectToggle, originalState, GUIContent.none, Style.Foldout))
+            {
+               this.ListView.ToggleFolder(this);
+            }
 
             // TODO: If there columns cannot be reordered, and this column is first, let's use the full width for the foldouts
             rect.xMin = rectToggle.xMax;

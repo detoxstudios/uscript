@@ -19,10 +19,13 @@ namespace Detox.Editor.GUI
       // === Fields =====================================================================
 
       private readonly List<Rect> dragHandles = new List<Rect>();
+
       private readonly List<ListViewItem> seedItems = new List<ListViewItem>();
       private readonly List<ListViewItem> flatItems = new List<ListViewItem>();
       private readonly List<ListViewItem> nestedItems = new List<ListViewItem>();
       private readonly List<ListViewItem> selectedItems = new List<ListViewItem>();
+
+      private readonly Dictionary<string, FolderInfo> folders = new Dictionary<string, FolderInfo>();
 
       private ListViewItem anchorItem;
       private Vector2 dragInitialMouse;
@@ -203,13 +206,10 @@ namespace Detox.Editor.GUI
 
       public void RebuildListHierarchy()
       {
-         var folderItemList = new Dictionary<string, ListViewItem>();
+         this.flatItems.Clear();
          this.nestedItems.Clear();
 
-         //Debug.Log("FLAT ITEM COUNT: " + this.seedItems.Count + "\n");
-         this.flatItems.Clear();
-
-         foreach (var item in this.seedItems)
+         foreach (var item in this.seedItems.Where(item => item.IsVisible))
          {
             ListViewItem parent = null;
             var path = string.Empty;
@@ -217,20 +217,28 @@ namespace Detox.Editor.GUI
 
             while (folders.Count > 1)
             {
-               string folder = folders[0];
+               var folder = folders[0];
                path += folder + "/";
                folders.RemoveAt(0);
 
-               if (folderItemList.ContainsKey(path))
+               // TODO: Ideally, the key would be just "path"
+
+               if (this.folders.ContainsKey(path + folder))
                {
-                  parent = folderItemList[path];
+                  parent = this.folders[path + folder].Item;
+
+                  if (this.flatItems.Contains(parent) == false)
+                  {
+                     this.flatItems.Add(parent);
+                  }
                }
                else
                {
                   var child = (ListViewItem)Activator.CreateInstance(this.ListItemType, this, path + folder);
+
                   this.AddHierarchyChild(parent, child);
 
-                  folderItemList.Add(path, child);
+                  this.folders.Add(path + folder, new FolderInfo(child));
 
                   parent = child;
                }
@@ -239,7 +247,7 @@ namespace Detox.Editor.GUI
             this.AddHierarchyChild(parent, item);
          }
 
-         //Debug.Log("FLAT LIST SIZE: " + this.flatItems.Count + "\n");
+         this.RestoreFolderStates();
       }
 
       public void ClickNewSelection(ListViewItem item)
@@ -309,7 +317,7 @@ namespace Detox.Editor.GUI
                   continue;
                }
 
-               if (item.Children != null && item.Expanded == false)
+               if (item.Children != null && this.IsFolderExpanded(item) == false)
                {
                   skipPath = item.Path.Substring(0, item.Path.LastIndexOf("/", System.StringComparison.Ordinal));
                }
@@ -881,6 +889,115 @@ namespace Detox.Editor.GUI
          //   //            _isMouseOverScrollview = _scrollviewRect.Contains(Event.current.mousePosition);
       }
 
+      public void CollapseAllFolders()
+      {
+         foreach (var item in this.folders)
+         {
+            item.Value.Expanded = false;
+         }
+
+         this.SaveFolderStates();
+      }
+
+      public void CollapseFolder(ListViewItem item)
+      {
+         if (this.folders.ContainsKey(item.Path) == false)
+         {
+            uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.Name, uScriptDebug.Type.Error);
+            return;
+         }
+
+         if (this.folders[item.Path].Expanded == false)
+         {
+            return;  // The folder is already collapsed, so abort
+         }
+
+         this.folders[item.Path].Expanded = false;
+         this.SaveFolderStates();
+      }
+
+      public void ExpandAllFolders()
+      {
+         foreach (var item in this.folders)
+         {
+            item.Value.Expanded = true;
+         }
+
+         this.SaveFolderStates();
+      }
+
+      public void ExpandFolder(ListViewItem item)
+      {
+         if (this.folders.ContainsKey(item.Path) == false)
+         {
+            uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.Path, uScriptDebug.Type.Error);
+            return;
+         }
+
+         if (this.folders[item.Path].Expanded)
+         {
+            return;  // The folder is already expanded, so abort
+         }
+
+         this.folders[item.Path].Expanded = true;
+         this.SaveFolderStates();
+      }
+
+      public void ToggleFolder(ListViewItem item)
+      {
+         if (this.folders.ContainsKey(item.Path) == false)
+         {
+            uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.Path, uScriptDebug.Type.Error);
+            return;
+         }
+
+         this.folders[item.Path].Expanded = !this.folders[item.Path].Expanded;
+         this.SaveFolderStates();
+      }
+
+      public bool IsFolderExpanded(ListViewItem item)
+      {
+         if (this.folders.ContainsKey(item.Path))
+         {
+            return this.folders[item.Path].Expanded;
+         }
+
+         uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.Path, uScriptDebug.Type.Error);
+         return false;
+      }
+
+      public void FilterItems(string match)
+      {
+         // Filter the list, hiding every item that does not contain the user-specified filter text
+         match = match.ToLower();
+
+         foreach (var item in this.seedItems)
+         {
+            item.IsVisible = string.IsNullOrEmpty(match)
+                             || item.Path.Substring(0, item.Path.Length - 8).ToLower().Contains(match);
+         }
+
+         // TODO: Should the filterText apply to SceneName as well?
+
+         //var visibleCount = 0;
+         //var hiddenCount = 0;
+         //foreach (var item in this.seedItems)
+         //{
+         //   if (item.IsVisible)
+         //   {
+         //      visibleCount++;
+         //   }
+         //   else
+         //   {
+         //      hiddenCount++;
+         //   }
+         //}
+
+         //Debug.Log("FILTERING with \"" + match + "\": " + visibleCount + " visible, " + hiddenCount + " hidden.\n");
+
+         this.RebuildListHierarchy();
+      }
+
       public void FrameItem(ListViewItem item)
       {
          ////         int index = GetVisibleItemIndex(item);
@@ -915,7 +1032,7 @@ namespace Detox.Editor.GUI
             {
                if (item.HasChildren)
                {
-                  item.Expanded = !item.Expanded;
+                  this.ToggleFolder(item);
                }
                else
                {
@@ -1090,6 +1207,26 @@ namespace Detox.Editor.GUI
       {
       }
 
+      private void SaveFolderStates()
+      {
+         var expandedFolders = (from item in this.folders where item.Value.Expanded select item.Key).ToList();
+         var serialized = string.Join("\n", expandedFolders.ToArray());
+
+         uScript.Preferences.GraphListFolderStates = serialized;
+         uScript.Preferences.Save();
+      }
+
+      private void RestoreFolderStates()
+      {
+         var serialized = uScript.Preferences.GraphListFolderStates;
+         var expandedFolders = serialized.Split('\n');
+
+         foreach (var folder in expandedFolders.Where(key => this.folders.ContainsKey(key)))
+         {
+            this.folders[folder].Expanded = true;
+         }
+      }
+
       public void DrawContextMenu(ListViewItem item)
       {
          // If the item is not in the current selection,
@@ -1114,7 +1251,7 @@ namespace Detox.Editor.GUI
          {
             if (currItem.HasVisibleChildren)
             {
-               if (currItem.Expanded)
+               if (this.IsFolderExpanded(currItem))
                {
                   collapseCount++;
                }
@@ -1340,8 +1477,8 @@ namespace Detox.Editor.GUI
          foreach (var listViewItem in items)
          {
             count++;
-            
-            if (listViewItem.Children != null && listViewItem.Expanded)
+
+            if (listViewItem.Children != null && this.IsFolderExpanded(listViewItem))
             {
                count += this.CountTotalVisibleRows(listViewItem.Children);
             }
@@ -1395,7 +1532,7 @@ namespace Detox.Editor.GUI
                continue;
             }
 
-            if (item.Children != null && item.Expanded == false)
+            if (item.Children != null && this.IsFolderExpanded(item) == false)
             {
                skipPath = item.Path.Substring(0, item.Path.LastIndexOf("/", System.StringComparison.Ordinal));
                Debug.Log("NEW SKIP PATH: " + skipPath);
@@ -1441,7 +1578,7 @@ namespace Detox.Editor.GUI
 
             //Debug.Log("ITEM: " + item.Name + ", POSITION: " + item.Position + "\n\ttotalSize: " + totalSize);
 
-            if (item.Children != null && item.Expanded)
+            if (item.Children != null && this.IsFolderExpanded(item))
             {
                this.CalculateNestedListLayout(item.Children, ref totalSize);
             }
@@ -1891,7 +2028,7 @@ namespace Detox.Editor.GUI
                return item;
             }
 
-            if (item.Children != null && item.Expanded)
+            if (item.Children != null && this.IsFolderExpanded(item))
             {
                var result = this.GetItem(index, item.Children);
                if (result != null)
@@ -1997,17 +2134,17 @@ namespace Detox.Editor.GUI
          switch (data.Command)
          {
             case ContextMenuCallbackData.CommandType.Collapse:
-               foreach (var item in this.selectedItems.Where(item => item.HasVisibleChildren && item.Expanded))
+               foreach (var item in this.selectedItems.Where(item => item.HasVisibleChildren && this.IsFolderExpanded(item)))
                {
-                  item.Expanded = false;
+                  this.CollapseFolder(item);
                }
 
                break;
 
             case ContextMenuCallbackData.CommandType.Expand:
-               foreach (var item in this.selectedItems.Where(item => item.HasVisibleChildren && (item.Expanded == false)))
+               foreach (var item in this.selectedItems.Where(item => item.HasVisibleChildren && (this.IsFolderExpanded(item) == false)))
                {
-                  item.Expanded = true;
+                  this.ExpandFolder(item);
                }
 
                break;
@@ -2037,29 +2174,6 @@ namespace Detox.Editor.GUI
          }
 
          this.flatItems.Add(child);
-         //Debug.Log("ADDING FLAT ITEM: " + child.Path + "\n");
-      }
-
-      private void AddVisibleChild(ListViewItem parent, ListViewItem child)
-      {
-         if (parent != null)
-         {
-            if (parent.Children == null)
-            {
-               parent.Children = new List<ListViewItem>();
-            }
-
-            child.Parent = parent;
-            child.Depth = parent.Depth + 1;
-            parent.Children.Add(child);
-         }
-         else
-         {
-            this.nestedItems.Add(child);
-         }
-
-         this.flatItems.Add(child);
-         Debug.Log("ADDING FLAT ITEM: " + child.Path + "\n");
       }
 
       // === Classes ====================================================================
@@ -2239,6 +2353,18 @@ namespace Detox.Editor.GUI
          public Texture2D IconSourceMissing { get; private set; }
 
          public Texture2D IconSourceRelease { get; private set; }
+      }
+
+      public class FolderInfo
+      {
+         public FolderInfo(ListViewItem item)
+         {
+            this.Item = item;
+         }
+
+         public bool Expanded { get; set; }
+
+         public ListViewItem Item { get; set; }
       }
 
       private class ContextMenuCallbackData
