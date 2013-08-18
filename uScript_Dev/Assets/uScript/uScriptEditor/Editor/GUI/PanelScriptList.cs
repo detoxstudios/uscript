@@ -154,7 +154,7 @@ namespace Detox.Editor.GUI
             foreach (var item in this.allItems)
             {
                item.IsVisible = string.IsNullOrEmpty(match)
-                                || item.Path.Substring(0, item.Path.Length - 8).ToLower().Contains(match);
+                                || item.ItemPath.Substring(0, item.ItemPath.Length - 8).ToLower().Contains(match);
             }
 
             // TODO: Should the filterText apply to SceneName as well?

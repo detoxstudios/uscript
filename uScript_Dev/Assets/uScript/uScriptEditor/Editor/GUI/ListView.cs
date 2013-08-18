@@ -213,7 +213,7 @@ namespace Detox.Editor.GUI
          {
             ListViewItem parent = null;
             var path = string.Empty;
-            var folders = new List<string>(item.Path.Split('/'));
+            var folders = new List<string>(item.ItemPath.Split('/'));
 
             while (folders.Count > 1)
             {
@@ -287,9 +287,9 @@ namespace Detox.Editor.GUI
             this.anchorItem = this.nestedItems.First();
          }
 
-         var anchorName = this.anchorItem == null ? "(null)" : this.anchorItem.Name;
+         var anchorName = this.anchorItem == null ? "(null)" : this.anchorItem.ItemName;
 
-         Debug.Log("SELECT RANGE: \t\"" + anchorName + "\"\n\t\t\t\t  TO: \t\"" + item.Name + "\"");
+         Debug.Log("SELECT RANGE: \t\"" + anchorName + "\"\n\t\t\t\t  TO: \t\"" + item.ItemName + "\"");
 
          // TODO: Add the specified range to the selection
       }
@@ -312,14 +312,14 @@ namespace Detox.Editor.GUI
 
             foreach (var item in this.flatItems)
             {
-               if (string.IsNullOrEmpty(skipPath) == false && item.Path.StartsWith(skipPath))
+               if (string.IsNullOrEmpty(skipPath) == false && item.ItemPath.StartsWith(skipPath))
                {
                   continue;
                }
 
                if (item.Children != null && this.IsFolderExpanded(item) == false)
                {
-                  skipPath = item.Path.Substring(0, item.Path.LastIndexOf("/", System.StringComparison.Ordinal));
+                  skipPath = item.ItemPath.Substring(0, item.ItemPath.LastIndexOf("/", System.StringComparison.Ordinal));
                }
 
                list.Add(item);
@@ -442,7 +442,7 @@ namespace Detox.Editor.GUI
                            //int top = 0;
                            //int width = 0;
 
-                           //Debug.Log("DRAWING ITEM: \"" + item.Name + "\"\n");
+                           //Debug.Log("DRAWING ITEM: \"" + item.ItemName + "\"\n");
 
                            item.Draw(ref this.itemRowRect);
                            this.itemRowRect.y += item.Height;
@@ -901,18 +901,18 @@ namespace Detox.Editor.GUI
 
       public void CollapseFolder(ListViewItem item)
       {
-         if (this.folders.ContainsKey(item.Path) == false)
+         if (this.folders.ContainsKey(item.ItemPath) == false)
          {
-            uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.Name, uScriptDebug.Type.Error);
+            uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemName, uScriptDebug.Type.Error);
             return;
          }
 
-         if (this.folders[item.Path].Expanded == false)
+         if (this.folders[item.ItemPath].Expanded == false)
          {
             return;  // The folder is already collapsed, so abort
          }
 
-         this.folders[item.Path].Expanded = false;
+         this.folders[item.ItemPath].Expanded = false;
          this.SaveFolderStates();
       }
 
@@ -928,41 +928,41 @@ namespace Detox.Editor.GUI
 
       public void ExpandFolder(ListViewItem item)
       {
-         if (this.folders.ContainsKey(item.Path) == false)
+         if (this.folders.ContainsKey(item.ItemPath) == false)
          {
-            uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.Path, uScriptDebug.Type.Error);
+            uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemPath, uScriptDebug.Type.Error);
             return;
          }
 
-         if (this.folders[item.Path].Expanded)
+         if (this.folders[item.ItemPath].Expanded)
          {
             return;  // The folder is already expanded, so abort
          }
 
-         this.folders[item.Path].Expanded = true;
+         this.folders[item.ItemPath].Expanded = true;
          this.SaveFolderStates();
       }
 
       public void ToggleFolder(ListViewItem item)
       {
-         if (this.folders.ContainsKey(item.Path) == false)
+         if (this.folders.ContainsKey(item.ItemPath) == false)
          {
-            uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.Path, uScriptDebug.Type.Error);
+            uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemPath, uScriptDebug.Type.Error);
             return;
          }
 
-         this.folders[item.Path].Expanded = !this.folders[item.Path].Expanded;
+         this.folders[item.ItemPath].Expanded = !this.folders[item.ItemPath].Expanded;
          this.SaveFolderStates();
       }
 
       public bool IsFolderExpanded(ListViewItem item)
       {
-         if (this.folders.ContainsKey(item.Path))
+         if (this.folders.ContainsKey(item.ItemPath))
          {
-            return this.folders[item.Path].Expanded;
+            return this.folders[item.ItemPath].Expanded;
          }
 
-         uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.Path, uScriptDebug.Type.Error);
+         uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemPath, uScriptDebug.Type.Error);
          return false;
       }
 
@@ -974,7 +974,7 @@ namespace Detox.Editor.GUI
          foreach (var item in this.seedItems)
          {
             item.IsVisible = string.IsNullOrEmpty(match)
-                             || item.Path.Substring(0, item.Path.Length - 8).ToLower().Contains(match);
+                             || item.ItemPath.Substring(0, item.ItemPath.Length - 8).ToLower().Contains(match);
          }
 
          // TODO: Should the filterText apply to SceneName as well?
@@ -1036,12 +1036,7 @@ namespace Detox.Editor.GUI
                }
                else
                {
-                  //Debug.Log("Execute: " + item.Name + "\n\t MODIFIERS: " + e.modifiers);
-                  var path = uScript.Instance.FindFile(uScript.Preferences.UserScripts, item.Path);
-                  if (path != string.Empty)
-                  {
-                     uScript.Instance.OpenScript(path);
-                  }
+                  uScript.Instance.OpenScript(uScriptBackgroundProcess.GraphInfoList[item.ItemName].GraphPath);
                }
             }
          }
@@ -1085,7 +1080,7 @@ namespace Detox.Editor.GUI
       
       public void SelectItem(ListViewItem item)
       {
-         //Debug.Log("SelectItem: " + item.Name + "\n");
+         //Debug.Log("SelectItem: " + item.ItemName + "\n");
          item.Selected = true;
          this.selectedItems.Add(item);
       }
@@ -1317,7 +1312,7 @@ namespace Detox.Editor.GUI
             if (files.Count == 1)
             {
                data = new ContextMenuCallbackData(ContextMenuCallbackData.CommandType.Load, files[0]);
-               genericMenu.AddItem(new GUIContent("Load \"" + files[0].Name + "\""), false, this.ContextMenuCallback, data);
+               genericMenu.AddItem(new GUIContent("Load \"" + files[0].ItemName + "\""), false, this.ContextMenuCallback, data);
                
                //data = new ContextMenuCallbackData(ContextMenuCallbackData.CommandType.PingSource, files[0]);
                //genericMenu.AddItem(new GUIContent("Ping Source \"" + files[0].text + "\""), false, this.ContextMenuCallback, data);
@@ -1329,7 +1324,7 @@ namespace Detox.Editor.GUI
                foreach (var listViewItem in files)
                {
                   data = new ContextMenuCallbackData(ContextMenuCallbackData.CommandType.Load, listViewItem);
-                  genericMenu.AddItem(new GUIContent(string.Format("Load/\"{0}\"", listViewItem.Name)), false, this.ContextMenuCallback, data);
+                  genericMenu.AddItem(new GUIContent(string.Format("Load/\"{0}\"", listViewItem.ItemName)), false, this.ContextMenuCallback, data);
                }
             }
          }
@@ -1527,14 +1522,14 @@ namespace Detox.Editor.GUI
 
          foreach (var item in this.flatItems)
          {
-            if (string.IsNullOrEmpty(skipPath) == false && item.Path.StartsWith(skipPath))
+            if (string.IsNullOrEmpty(skipPath) == false && item.ItemPath.StartsWith(skipPath))
             {
                continue;
             }
 
             if (item.Children != null && this.IsFolderExpanded(item) == false)
             {
-               skipPath = item.Path.Substring(0, item.Path.LastIndexOf("/", System.StringComparison.Ordinal));
+               skipPath = item.ItemPath.Substring(0, item.ItemPath.LastIndexOf("/", System.StringComparison.Ordinal));
                Debug.Log("NEW SKIP PATH: " + skipPath);
             }
 
@@ -1576,7 +1571,7 @@ namespace Detox.Editor.GUI
 
             //Debug.Log("ITEM COUNT: " + items.Count + "\n");
 
-            //Debug.Log("ITEM: " + item.Name + ", POSITION: " + item.Position + "\n\ttotalSize: " + totalSize);
+            //Debug.Log("ITEM: " + item.ItemName + ", POSITION: " + item.Position + "\n\ttotalSize: " + totalSize);
 
             if (item.Children != null && this.IsFolderExpanded(item))
             {
@@ -1746,12 +1741,12 @@ namespace Detox.Editor.GUI
                               if (isSelectedColumn && column.IsSortDirectionFixed == false)
                               {
                                  column.IsSortDescending = !column.IsSortDescending;
-                                 ////                              Debug.Log("SELECTED COLUMN HEADER CLICKED: " + column.Name + "\n\tRE-SORT");
+                                 ////                              Debug.Log("SELECTED COLUMN HEADER CLICKED: " + column.ItemName + "\n\tRE-SORT");
                               }
                               else
                               {
                                  this.SortColumn = column;
-                                 ////Debug.Log("NEW COLUMN HEADER CLICKED: " + column.Name + "\n\tRE-SORT");
+                                 ////Debug.Log("NEW COLUMN HEADER CLICKED: " + column.ItemName + "\n\tRE-SORT");
                               }
                            }
                         }
@@ -2150,7 +2145,7 @@ namespace Detox.Editor.GUI
                break;
 
             default:
-               Debug.Log("COMMAND: " + data.Command.ToString() + " on \"" + data.Items[0].Path + "\"\n");
+               Debug.Log("COMMAND: " + data.Command.ToString() + " on \"" + data.Items[0].ItemPath + "\"\n");
                break;
          }
       }

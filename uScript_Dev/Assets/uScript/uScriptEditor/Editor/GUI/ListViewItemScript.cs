@@ -25,8 +25,8 @@ namespace Detox.Editor.GUI
 
       // === Constructors ===============================================================
 
-      public ListViewItemScript(ListView listView, string path)
-         : base(listView, path)
+      public ListViewItemScript(ListView listView, string itemPath)
+         : base(listView, itemPath)
       {
          // TODO: Consider using a GraphInfo here instead of a path
       }
@@ -45,9 +45,23 @@ namespace Detox.Editor.GUI
       {
          get
          {
-            return string.IsNullOrEmpty(uScriptBackgroundProcess.GraphInfoList[this.Path].GraphName)
-               ? this.Name
-               : uScriptBackgroundProcess.GraphInfoList[this.Path].GraphName;
+            return uScriptBackgroundProcess.GraphInfoList[this.ItemName].GraphName ?? this.ItemName;
+         }
+      }
+
+      public string GraphName
+      {
+         get
+         {
+            return this.ItemName;
+         }
+      }
+
+      public string GraphPath
+      {
+         get
+         {
+            return uScript.Preferences.UserScripts + "/" + this.ItemPath;
          }
       }
 
@@ -55,10 +69,7 @@ namespace Detox.Editor.GUI
       {
          get
          {
-            return uScriptBackgroundProcess.GraphInfoList.ContainsKey(this.Path) == false
-                   || string.IsNullOrEmpty(uScriptBackgroundProcess.GraphInfoList[this.Path].SceneName)
-               ? string.Empty
-               : uScriptBackgroundProcess.GraphInfoList[this.Path].SceneName;
+            return uScriptBackgroundProcess.GraphInfoList[this.ItemName].SceneName ?? string.Empty;
          }
       }
 
@@ -68,9 +79,7 @@ namespace Detox.Editor.GUI
       {
          get
          {
-            return uScriptBackgroundProcess.GraphInfoList.ContainsKey(this.Path) == false
-               ? GraphInfo.State.Missing
-               : uScriptBackgroundProcess.GraphInfoList[this.Path].SourceState;
+            return uScriptBackgroundProcess.GraphInfoList[this.ItemName].SourceState;
          }
       }
 
@@ -126,12 +135,12 @@ namespace Detox.Editor.GUI
 
             if (rect.Contains(mousePosition))
             {
-               //Debug.Log("CLICK POINT:\t" + mousePosition + "\t\tITEM: " + this.Position.yMin + "-" + (this.Position.yMax - 1) + ", " + this.Name + "\n" + "ACTUAL:\t\t\t" + e.mousePosition + "\t\tSCROLLVIEW: " + this.ListView.ListOffset);
+               //Debug.Log("CLICK POINT:\t" + mousePosition + "\t\tITEM: " + this.Position.yMin + "-" + (this.Position.yMax - 1) + ", " + this.ItemName + "\n" + "ACTUAL:\t\t\t" + e.mousePosition + "\t\tSCROLLVIEW: " + this.ListView.ListOffset);
                this.ContextMenuCreate(new Rect(e.mousePosition.x, e.mousePosition.y, 0, 0));
             }
          }
 
-         ////uScriptGUI.DebugBox(this.Position, Color.blue, this.Name);
+         ////uScriptGUI.DebugBox(this.Position, Color.blue, this.ItemName);
 
          // Draw column cells in the order of the columns
          rect = this.Position;
@@ -142,7 +151,7 @@ namespace Detox.Editor.GUI
 
          //if (isMouseOverRow)
          //{
-         //   Debug.Log("OVER ROW: " + this.Name + ", ALT: " + isAltKeyDown + "\n");
+         //   Debug.Log("OVER ROW: " + this.ItemName + ", ALT: " + isAltKeyDown + "\n");
          //}
 
          foreach (var column in this.ListView.Columns)
@@ -216,22 +225,22 @@ namespace Detox.Editor.GUI
 
       private void CommandDirectoryLocate()
       {
+         var directoryPath = uScript.Preferences.UserScripts + "/";
+
          // Foldout paths duplicate the folder name at the end, so remove it (e.g., "foo/bar/bar" -> "foo/bar")
-         uScriptGUI.PingProjectGraph(this.Path.Substring(0, this.Path.LastIndexOf("/", System.StringComparison.Ordinal)));
+         directoryPath += this.ItemPath.Substring(0, this.ItemPath.LastIndexOf("/", System.StringComparison.Ordinal));
+
+         uScriptGUI.PingProjectGraph(directoryPath);
       }
 
       private void CommandGraphLoad()
       {
-         var path = uScript.Instance.FindFile(uScript.Preferences.UserScripts, this.Path);
-         if (path != string.Empty)
-         {
-            uScript.Instance.OpenScript(path);
-         }
+         uScript.Instance.OpenScript(this.GraphPath);
       }
 
       private void CommandGraphLocate()
       {
-         uScriptGUI.PingProjectGraph(this.Path);
+         uScriptGUI.PingProjectGraph(this.GraphPath);
       }
 
       private void CommandSceneLocate()
@@ -242,7 +251,7 @@ namespace Detox.Editor.GUI
       private void CommandSourceLocate()
       {
          // TODO: Update the source state
-         uScriptGUI.PingProjectScript(this.Name);
+         uScriptGUI.PingProjectScript(this.ItemName);
       }
 
       private void ContextMenuCreate(Rect rect)
@@ -267,7 +276,7 @@ namespace Detox.Editor.GUI
          else
          {
             // GRAPH
-            var currentGraph = System.IO.Path.GetFileNameWithoutExtension(uScript.Instance.ScriptEditorCtrl.ScriptName) == this.Name;
+            var currentGraph = System.IO.Path.GetFileNameWithoutExtension(uScript.Instance.ScriptEditorCtrl.ScriptName) == this.ItemName;
             if (currentGraph)
             {
                // TODO: Consider adding Save commands for the current graph
@@ -358,14 +367,14 @@ namespace Detox.Editor.GUI
 
             if (e.modifiers == EventModifiers.Alt)
             {
-               if (GUI.Button(rect, Ellipsis.Compact(this.Name, labelStyle, rect, Ellipsis.Format.Middle), labelStyle))
+               if (GUI.Button(rect, Ellipsis.Compact(this.ItemName, labelStyle, rect, Ellipsis.Format.Middle), labelStyle))
                {
                   this.CommandDirectoryLocate();
                }
             }
             else
             {
-               GUI.Label(rect, Ellipsis.Compact(this.Name, labelStyle, rect, Ellipsis.Format.Middle), labelStyle);
+               GUI.Label(rect, Ellipsis.Compact(this.ItemName, labelStyle, rect, Ellipsis.Format.Middle), labelStyle);
             }
          }
          else
@@ -378,7 +387,7 @@ namespace Detox.Editor.GUI
             }
 
             // TODO: Only use FriendlyName if the user-specified option is enabled
-            var graphName = PanelScript.ShowFriendlyNames ? this.FriendlyName : this.Name;
+            var graphName = PanelScript.ShowFriendlyNames ? this.FriendlyName : this.ItemName;
 
             if (e.modifiers == EventModifiers.Alt)
             {

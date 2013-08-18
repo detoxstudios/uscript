@@ -22,9 +22,15 @@ using UnityEditor;
 [InitializeOnLoad]
 public class uScriptBackgroundProcess
 {
+   // === Constants ==================================================================
+
    private const int FilesPerTick = 5;
 
+   // === Fields =====================================================================
+
    private static int currentKeyIndex = -1;
+
+   // === Constructors ===============================================================
 
    static uScriptBackgroundProcess()
    {
@@ -33,20 +39,53 @@ public class uScriptBackgroundProcess
       EditorApplication.update += Update;
    }
 
+   // === Finalizers =================================================================
+
+   // === Delegates ==================================================================
+
+   // === Events =====================================================================
+
+   // === Enums ======================================================================
+
+   // === Properties =================================================================
+
    public static Dictionary<string, GraphInfo> GraphInfoList { get; private set; }
+
+   // === Indexers ===================================================================
+
+   // === Methods ====================================================================
+
+   private static void AttachUScripts()
+   {
+      if (uScript.MasterComponent.uScriptsToAttach.Length <= 0)
+      {
+         return;
+      }
+
+      foreach (var path in uScript.MasterComponent.uScriptsToAttach)
+      {
+         // Add the new graph to the master object
+         var fileInfo = new FileInfo(path);
+         var typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".", System.StringComparison.Ordinal)) + uScriptConfig.Files.GeneratedComponentExtension;
+         //Debug.Log("Type name: " + typeName);
+
+         uScript.MasterObject.AddComponent(typeName);
+      }
+
+      ForceFileRefresh();
+      uScript.MasterComponent.ClearAttachList();
+   }
 
    public static void ForceFileRefresh()
    {
       GraphInfoList.Clear();
 
-      // TODO: Keep the previous info for each graph until the graph is refreshed to avoid temporary loss of information.
-
       foreach (var path in uScript.GetGraphPaths())
       {
-         var filename = Path.GetFileName(path);
-         if (filename != null)
+         var graphName = Path.GetFileNameWithoutExtension(path);
+         if (graphName != null)
          {
-            GraphInfoList.Add(filename, new GraphInfo(path));
+            GraphInfoList.Add(graphName, new GraphInfo(path));
          }
       }
 
@@ -55,56 +94,38 @@ public class uScriptBackgroundProcess
 
    private static void Update()
    {
-      // cache the master object and component
+      // Cache the master object and component
       if (uScript.MasterObject == null || uScript.MasterComponent == null)
       {
          return;
       }
 
-      // process any waiting uScripts that need attaching
+      // Process any waiting uScripts that need attaching
       if (!EditorApplication.isCompiling)
       {
          AttachUScripts();
       }
 
-      // any uScripts left to process? Process them FILES_PER_TICK at a time each tick
-      if (GraphInfoList.Count > 0 && currentKeyIndex < GraphInfoList.Count)
+      // Any graphs left to process? Process using multiple ticks, if necessary.
+      if (GraphInfoList.Count <= 0 || currentKeyIndex >= GraphInfoList.Count)
       {
-         int i;
-         var keys = new List<string>(GraphInfoList.Keys).ToArray();
-
-         for (i = 0; i < FilesPerTick && currentKeyIndex < GraphInfoList.Count; i++, currentKeyIndex++)
-         {
-            var info = GraphInfoList[keys[currentKeyIndex]];
-
-            var p = new Profile("Opening " + info.GraphPath);
-
-            var scriptEditor = new ScriptEditor(string.Empty, null, null);
-            scriptEditor.Open(info.GraphPath);
-
-            GraphInfoList[keys[currentKeyIndex]] = new GraphInfo(keys[currentKeyIndex], scriptEditor);
-
-            p.End();
-         }
+         return;
       }
-   }
 
-   private static void AttachUScripts()
-   {
-      if (uScript.MasterComponent.uScriptsToAttach.Length > 0)
+      int i;
+      var keys = new List<string>(GraphInfoList.Keys).ToArray();
+
+      for (i = 0; i < FilesPerTick && currentKeyIndex < GraphInfoList.Count; i++, currentKeyIndex++)
       {
-         foreach (var path in uScript.MasterComponent.uScriptsToAttach)
-         {
-            // add the new uScript to the master object
-            var fileInfo = new FileInfo(path);
-            var typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".", System.StringComparison.Ordinal)) + uScriptConfig.Files.GeneratedComponentExtension;
-            //Debug.Log("Type name: " + typeName);
+         var info = GraphInfoList[keys[currentKeyIndex]];
 
-            uScript.MasterObject.AddComponent(typeName);
-         }
+         var p = new Profile("Opening \"" + info.GraphPath + "\"");
 
-         ForceFileRefresh();
-         uScript.MasterComponent.ClearAttachList();
+         var scriptEditor = new ScriptEditor(string.Empty, null, null);
+         scriptEditor.Open(info.GraphPath);
+         info.Update(scriptEditor);
+
+         p.End();
       }
    }
 }

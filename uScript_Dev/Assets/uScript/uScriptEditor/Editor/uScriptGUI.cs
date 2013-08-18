@@ -579,9 +579,14 @@ public static class uScriptGUI
          return;
       }
 
-      // Applies the uScriptProjectFiles path.
-      // For example, "foobar.uscript" -> "Assets/uScriptProjectFiles/uScripts/foobar.uscript"
-      assetPath = uScript.Preferences.UserScripts.Substring(Application.dataPath.Length - 6) + "/" + assetPath;
+      // The assetPath should be relative to the project folder
+      // For example, "Assets/uScriptProjectFiles/uScripts/foobar.uscript"
+      var projectPath = Application.dataPath.Substring(0, Application.dataPath.Length - 6);
+
+      if (assetPath.StartsWith(projectPath) && assetPath.Length > projectPath.Length)
+      {
+         assetPath = assetPath.Substring(projectPath.Length);
+      }
 
       var obj = AssetDatabase.LoadMainAssetAtPath(assetPath);
       if (obj == null)

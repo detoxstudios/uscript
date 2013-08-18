@@ -24,12 +24,12 @@ namespace Detox.Editor.GUI
 
       // === Constructors ===============================================================
 
-      public ListViewItem(ListView listView, string path)
+      public ListViewItem(ListView listView, string itemPath)
       {
          this.ListView = listView;
-         this.Path = path;
-         this.Name = System.IO.Path.GetFileNameWithoutExtension(path);
-         this.InstanceID = path.GetHashCode();
+         this.ItemPath = itemPath;
+         this.ItemName = System.IO.Path.GetFileNameWithoutExtension(itemPath);
+         this.InstanceID = itemPath.GetHashCode();
       }
 
       // === Properties =================================================================
@@ -67,11 +67,11 @@ namespace Detox.Editor.GUI
 
       public bool IsVisible { get; set; }
 
-      public string Name { get; set; }
+      public string ItemName { get; set; }
 
       public ListViewItem Parent { get; set; }
 
-      public string Path { get; private set; }
+      public string ItemPath { get; private set; }
 
       // ListView row number (changes whenever the list size changes)
       // TODO: remove this when it is no longer needed
@@ -114,7 +114,7 @@ namespace Detox.Editor.GUI
 
          if (this.HasVisibleChildren)
          {
-            //Debug.Log("PARENT: " + this.Name + "\n");
+            //Debug.Log("PARENT: " + this.ItemName + "\n");
 
             //// foldout toggle
             //rect.x = 2 + (this.Depth * indentWidth);
@@ -129,7 +129,7 @@ namespace Detox.Editor.GUI
 
             //if (isRepaint)
             //{
-            //   Style.Label.Draw(rect, this.Name, false, false, false, false);
+            //   Style.Label.Draw(rect, this.ItemName, false, false, false, false);
             //}
 
             var rectToggle = this.Position;
@@ -151,7 +151,7 @@ namespace Detox.Editor.GUI
                this.ClickCount = Event.current.clickCount;
             }
 
-            if (GUI.Button(rectRow, Ellipsis.Compact(this.Name, Style.Label, rectRow, Ellipsis.Format.Middle), GUI.skin.label))
+            if (GUI.Button(rectRow, Ellipsis.Compact(this.ItemName, Style.Label, rectRow, Ellipsis.Format.Middle), GUI.skin.label))
             {
                this.ListView.HandleMouseInput(this);
             }
@@ -174,7 +174,7 @@ namespace Detox.Editor.GUI
             //   this.ClickCount = Event.current.clickCount;
             //}
 
-            //if (GUI.Button(r2, Ellipsis.Compact(this.Name, Style.Label, r2, Ellipsis.Format.Middle), GUI.skin.label))
+            //if (GUI.Button(r2, Ellipsis.Compact(this.ItemName, Style.Label, r2, Ellipsis.Format.Middle), GUI.skin.label))
             //{
             //   this.ListView.HandleMouseInput(this);
             //}
@@ -184,10 +184,10 @@ namespace Detox.Editor.GUI
             Rect rect = this.Position;
             rect.xMin = this.Depth * indentWidth;
 
-            //Style.Label.Draw(rect, Ellipsis.Compact(this.Name, Style.Label, rect, Ellipsis.Format.Middle), false, false, false, false);
-            //if (GUI.Button(rect, Ellipsis.Compact(this.Name, Style.Label, rect, Ellipsis.Format.Middle)))
+            //Style.Label.Draw(rect, Ellipsis.Compact(this.ItemName, Style.Label, rect, Ellipsis.Format.Middle), false, false, false, false);
+            //if (GUI.Button(rect, Ellipsis.Compact(this.ItemName, Style.Label, rect, Ellipsis.Format.Middle)))
             //{
-            //   Debug.Log("PRESSED: " + this.Name + "\n");
+            //   Debug.Log("PRESSED: " + this.ItemName + "\n");
             //}
 
             if (e.type == EventType.MouseDown)
@@ -195,7 +195,7 @@ namespace Detox.Editor.GUI
                this.ClickCount = Event.current.clickCount;
             }
 
-            if (GUI.Button(rect, Ellipsis.Compact(this.Name, Style.Label, rect, Ellipsis.Format.Middle), GUI.skin.label))
+            if (GUI.Button(rect, Ellipsis.Compact(this.ItemName, Style.Label, rect, Ellipsis.Format.Middle), GUI.skin.label))
             {
                this.ListView.HandleMouseInput(this);
             }
@@ -204,7 +204,7 @@ namespace Detox.Editor.GUI
             //GUI.Toggle(
             //   rect,
             //   this.Selected,
-            //   Ellipsis.Compact(this.Name, Style.Label, rect, Ellipsis.Format.Middle),
+            //   Ellipsis.Compact(this.ItemName, Style.Label, rect, Ellipsis.Format.Middle),
             //   GUI.skin.label);
             //if (GUI.changed)
             //{
@@ -214,7 +214,7 @@ namespace Detox.Editor.GUI
             //}
          }
 
-         //uScriptGUI.DebugBox(this.Position, Color.blue, this.Name);
+         //uScriptGUI.DebugBox(this.Position, Color.blue, this.ItemName);
       }
 
       protected virtual int CalculateHeight()
@@ -255,7 +255,7 @@ namespace Detox.Editor.GUI
 //         int indentWidth = this.style.foldout.padding.left;
 //         this.height = (int)this.style.label.fixedHeight;
 
-         uScriptGUI.DebugBox(this.Position, Color.green, this.Name);
+         uScriptGUI.DebugBox(this.Position, Color.green, this.ItemName);
 
 /*
          this.rowRect = new Rect(0, this.row * this.height, this._listView.MinRowWidth, this.height);

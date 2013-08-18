@@ -78,16 +78,12 @@ namespace Detox.Editor.GUI
 
          private void CommandGraphLocate()
          {
-            uScriptGUI.PingProjectGraph(scriptEditorCtrl.ScriptName);
+            uScriptGUI.PingProjectGraph(uScriptBackgroundProcess.GraphInfoList[this.graphFileName].GraphPath);
          }
 
          private void CommandGraphReload()
          {
-            var path = uScriptInstance.FindFile(uScript.Preferences.UserScripts, this.graphFile);
-            if (path != string.Empty)
-            {
-               uScriptInstance.OpenScript(path);
-            }
+            uScriptInstance.OpenScript(uScriptBackgroundProcess.GraphInfoList[this.graphFileName].GraphPath);
          }
 
          private void CommandGraphSave()
@@ -220,13 +216,13 @@ namespace Detox.Editor.GUI
 
             System.Diagnostics.Debug.Assert(scriptEditorCtrl != null, "scriptEditorCtrl is null");
 
-            var friendlyName = string.IsNullOrEmpty(scriptEditorCtrl.ScriptEditor.FriendlyName.Default)
-               ? this.graphFileName
-               : scriptEditorCtrl.ScriptEditor.FriendlyName.Default;
+            //var graphName = string.IsNullOrEmpty(scriptEditorCtrl.ScriptEditor.FriendlyName.Default)
+            //   ? this.graphFileName
+            //   : scriptEditorCtrl.ScriptEditor.FriendlyName.Default;
 
             var label = string.Format(
                "{0}{1}",
-               string.IsNullOrEmpty(this.graphFile) ? "(new)" : friendlyName,
+               string.IsNullOrEmpty(this.graphFile) ? "(new)" : this.graphFileName,
                scriptEditorCtrl.IsDirty ? " *" : string.Empty);
 
             // Script Name
