@@ -3953,28 +3953,49 @@ public sealed partial class uScript : EditorWindow
    {
       Detox.ScriptEditor.ScriptEditor script = m_ScriptEditorCtrl.ScriptEditor;
 
-      //no file of this name or force us to ask for the name
-      if ("" == m_FullPath || true == forceNameRequest)
+      // No file of this name or force us to ask for the name
+      if (m_FullPath == string.Empty || forceNameRequest)
       {
          bool isSafe = false;
          string path = "Untitled.uScript";
-         while (!isSafe && path != "")
+         while (!isSafe && path != string.Empty)
          {
-            path = EditorUtility.SaveFilePanel("Save uScript As", Preferences.UserScripts, script.Name, "uscript");
-            if (path != "")
+            // The initial path for the panel should match the location of the current graph, otherwise Preferences.UserScripts
+            var currentGraphName = Path.GetFileNameWithoutExtension(script.Name) ?? string.Empty;
+            var initialDirectory = uScriptBackgroundProcess.GraphInfoList.ContainsKey(currentGraphName)
+               ? Path.GetDirectoryName(uScriptBackgroundProcess.GraphInfoList[currentGraphName].GraphPath)
+               : Preferences.UserScripts;
+
+            path = EditorUtility.SaveFilePanel("Save uScript As", initialDirectory, script.Name, "uscript");
+            if (path != string.Empty)
             {
-               System.IO.FileInfo fileInfo = new System.IO.FileInfo(path);
+               FileInfo fileInfo = new System.IO.FileInfo(path);
                string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
                if (!isSafe)
                {
                   // filename is not safe - tell the user they need to change it
-                  if (!EditorUtility.DisplayDialog("Invalid File Name", "Filename must be all alpha-numeric characters and must not start with a number. A suggested name for the one you entered is: " + safePath, "Try Again", "Cancel")) return false;
+                  var errorMessage =
+                     string.Format(
+                        "Filename must be all alpha-numeric characters and must not start with a number. A suggested name for the one you entered is: {0}",
+                        safePath);
+
+                  if (!EditorUtility.DisplayDialog("Invalid File Name", errorMessage, "Try Again", "Cancel"))
+                  {
+                     return false;
+                  }
+               }
+               else
+               {
+                  // TODO: Verify that it is not already being used
                }
             }
          }
 
          //early exit, they must have changed their minds
-         if ("" == path) return false;
+         if (path == string.Empty)
+         {
+            return false;
+         }
 
          m_FullPath = path;
          uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(m_FullPath).Substring("Assets".Length));

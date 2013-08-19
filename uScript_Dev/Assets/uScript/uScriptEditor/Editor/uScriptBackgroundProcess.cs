@@ -22,15 +22,9 @@ using UnityEditor;
 [InitializeOnLoad]
 public class uScriptBackgroundProcess
 {
-   // === Constants ==================================================================
-
    private const int FilesPerTick = 5;
 
-   // === Fields =====================================================================
-
    private static int currentKeyIndex = -1;
-
-   // === Constructors ===============================================================
 
    static uScriptBackgroundProcess()
    {
@@ -39,21 +33,7 @@ public class uScriptBackgroundProcess
       EditorApplication.update += Update;
    }
 
-   // === Finalizers =================================================================
-
-   // === Delegates ==================================================================
-
-   // === Events =====================================================================
-
-   // === Enums ======================================================================
-
-   // === Properties =================================================================
-
    public static Dictionary<string, GraphInfo> GraphInfoList { get; private set; }
-
-   // === Indexers ===================================================================
-
-   // === Methods ====================================================================
 
    private static void AttachUScripts()
    {
