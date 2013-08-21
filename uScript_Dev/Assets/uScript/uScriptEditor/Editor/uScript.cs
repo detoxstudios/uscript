@@ -3957,52 +3957,108 @@ public sealed partial class uScript : EditorWindow
       if (m_FullPath == string.Empty || forceNameRequest)
       {
          bool isSafe = false;
-         string path = "Untitled.uScript";
-         while (!isSafe && path != string.Empty)
-         {
-            // The initial path for the panel should match the location of the current graph, otherwise Preferences.UserScripts
-            var currentGraphName = Path.GetFileNameWithoutExtension(script.Name) ?? string.Empty;
-            var initialDirectory = uScriptBackgroundProcess.GraphInfoList.ContainsKey(currentGraphName)
-               ? Path.GetDirectoryName(uScriptBackgroundProcess.GraphInfoList[currentGraphName].GraphPath)
-               : Preferences.UserScripts;
+         string chosenPath = "Untitled.uScript";
+         var extension = "uscript";
 
-            path = EditorUtility.SaveFilePanel("Save uScript As", initialDirectory, script.Name, "uscript");
-            if (path != string.Empty)
+         // The initial path for the panel should match the location of the current graph, otherwise Preferences.UserScripts
+         var currentGraphName = Path.GetFileNameWithoutExtension(script.Name) ?? string.Empty;
+         var currentGraphPath = uScriptBackgroundProcess.GraphInfoList.ContainsKey(currentGraphName)
+            ? uScriptBackgroundProcess.GraphInfoList[currentGraphName].GraphPath
+            : string.Empty;
+
+         var directory = string.IsNullOrEmpty(currentGraphPath) ? Preferences.UserScripts : Path.GetDirectoryName(currentGraphPath);
+         var defaultName = script.Name;
+
+         while (!isSafe && chosenPath != string.Empty)
+         {
+            chosenPath = EditorUtility.SaveFilePanel("Save the uScript Graph As ...", directory, defaultName, extension);
+
+            // Update the defaults to reflect the most recently selected path
+            defaultName = Path.GetFileNameWithoutExtension(chosenPath);
+            System.Diagnostics.Debug.Assert(defaultName != null, "defaultName is null");
+
+            if (chosenPath != string.Empty)
             {
-               FileInfo fileInfo = new System.IO.FileInfo(path);
-               string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
+               // Validate the chosen graph location
+               isSafe = chosenPath.StartsWith(uScript.Preferences.UserScripts + "/");
+               if (!isSafe)
+               {
+                  // The specified directory is outside the UserScripts directory
+                  var displayPath = uScript.Preferences.UserScripts.Substring(Application.dataPath.Length);
+                  if (Application.platform == RuntimePlatform.WindowsEditor)
+                  {
+                     displayPath = displayPath.Replace("/", "\\");
+                  }
+                  displayPath = string.Format("Assets{0}", displayPath);
+
+                  var errorMessage =
+                     string.Format(
+                        "The chosen file location is invalid. The graph file must be saved in the uScript graphs directory"
+                        + " or in one of its sub-directories.\n\nThe project graph location can be modified through uScript"
+                        + " Preferences. It is currently set to:\n\n\t\"{0}\"\n",
+                        displayPath);
+
+                  if (EditorUtility.DisplayDialog("Invalid Location", errorMessage, "Try Again", "Cancel") == false)
+                  {
+                     return false;
+                  }
+
+                  continue;
+               }
+
+               // Update the defaults to reflect the most recently selected path
+               directory = Path.GetDirectoryName(chosenPath);
+
+               // Sanitize the chosen filename
+               var safeName = UnityCSharpGenerator.MakeSyntaxSafe(defaultName, out isSafe);
                if (!isSafe)
                {
                   // filename is not safe - tell the user they need to change it
                   var errorMessage =
                      string.Format(
-                        "Filename must be all alpha-numeric characters and must not start with a number. A suggested name for the one you entered is: {0}",
-                        safePath);
+                        "Filename must be all alpha-numeric characters and must not start with a number."
+                        + " A suggested name for the one you entered is: \"{0}\"",
+                        safeName);
 
-                  if (!EditorUtility.DisplayDialog("Invalid File Name", errorMessage, "Try Again", "Cancel"))
+                  if (EditorUtility.DisplayDialog("Invalid File Name", errorMessage, "Try Again", "Cancel") == false)
+                  {
+                     return false;
+                  }
+
+                  // Update the defaultName to the sanitized version
+                  defaultName = string.Format("{0}.{1}", safeName, extension);
+
+                  continue;
+               }
+
+               // Verify that it is not already being used, unless it entirely replaces an existing graph
+               var graphName = Path.GetFileNameWithoutExtension(defaultName);
+               isSafe = uScriptBackgroundProcess.GraphInfoList.ContainsKey(graphName) == false
+                  || chosenPath == uScriptBackgroundProcess.GraphInfoList[graphName].GraphPath;
+               if (!isSafe)
+               {
+                  // The specified graph name is already in use
+                  const string ErrorMessage = "The chosen graph name is already in use. Please select a different filename.";
+                  if (EditorUtility.DisplayDialog("Graph Name Unavailable", ErrorMessage, "Try Again", "Cancel") == false)
                   {
                      return false;
                   }
                }
-               else
-               {
-                  // TODO: Verify that it is not already being used
-               }
             }
          }
 
-         //early exit, they must have changed their minds
-         if (path == string.Empty)
+         // Early exit, they must have changed their minds
+         if (chosenPath == string.Empty)
          {
             return false;
          }
 
-         m_FullPath = path;
-         uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(m_FullPath).Substring("Assets".Length));
+         this.m_FullPath = chosenPath;
+         uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(this.m_FullPath).Substring("Assets".Length));
          uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
       }
 
-      if ("" != m_FullPath)
+      if (this.m_FullPath != string.Empty)
       {
          bool firstSave = false;
          string componentPath = GetGeneratedScriptPath(m_FullPath);
