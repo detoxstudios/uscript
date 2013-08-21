@@ -3919,14 +3919,14 @@ public sealed partial class uScript : EditorWindow
       return logicPath;
    }
 
-   private bool SaveScript(Detox.ScriptEditor.ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo, bool stubCode)
+   private bool SaveScript(ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo, bool stubCode)
    {
       bool result;
 
-      if (true == generateCode)
+      if (generateCode)
       {
-         string wrapperPath = GetGeneratedScriptPath(binaryPath);
-         string logicPath = GetNestedScriptPath(binaryPath);
+         string wrapperPath = this.GetGeneratedScriptPath(binaryPath);
+         string logicPath = this.GetNestedScriptPath(binaryPath);
 
          result = script.Save(binaryPath, logicPath, wrapperPath, generateDebugInfo, stubCode);
 
@@ -3946,19 +3946,19 @@ public sealed partial class uScript : EditorWindow
 
    public bool SaveScript(bool forceNameRequest)
    {
-      return SaveScript(forceNameRequest, true);
+      return this.SaveScript(forceNameRequest, true);
    }
 
    public bool SaveScript(bool forceNameRequest, bool generateCode)
    {
-      Detox.ScriptEditor.ScriptEditor script = m_ScriptEditorCtrl.ScriptEditor;
+      ScriptEditor script = this.m_ScriptEditorCtrl.ScriptEditor;
 
       // No file of this name or force us to ask for the name
-      if (m_FullPath == string.Empty || forceNameRequest)
+      if (this.m_FullPath == string.Empty || forceNameRequest)
       {
+         const string Extension = "uscript";
          bool isSafe = false;
          string chosenPath = "Untitled.uScript";
-         var extension = "uscript";
 
          // The initial path for the panel should match the location of the current graph, otherwise Preferences.UserScripts
          var currentGraphName = Path.GetFileNameWithoutExtension(script.Name) ?? string.Empty;
@@ -3971,7 +3971,7 @@ public sealed partial class uScript : EditorWindow
 
          while (!isSafe && chosenPath != string.Empty)
          {
-            chosenPath = EditorUtility.SaveFilePanel("Save the uScript Graph As ...", directory, defaultName, extension);
+            chosenPath = EditorUtility.SaveFilePanel("Save the uScript Graph As ...", directory, defaultName, Extension);
 
             // Update the defaults to reflect the most recently selected path
             defaultName = Path.GetFileNameWithoutExtension(chosenPath);
@@ -3980,15 +3980,16 @@ public sealed partial class uScript : EditorWindow
             if (chosenPath != string.Empty)
             {
                // Validate the chosen graph location
-               isSafe = chosenPath.StartsWith(uScript.Preferences.UserScripts + "/");
+               isSafe = chosenPath.StartsWith(Preferences.UserScripts + "/");
                if (!isSafe)
                {
                   // The specified directory is outside the UserScripts directory
-                  var displayPath = uScript.Preferences.UserScripts.Substring(Application.dataPath.Length);
+                  var displayPath = Preferences.UserScripts.Substring(Application.dataPath.Length);
                   if (Application.platform == RuntimePlatform.WindowsEditor)
                   {
                      displayPath = displayPath.Replace("/", "\\");
                   }
+
                   displayPath = string.Format("Assets{0}", displayPath);
 
                   var errorMessage =
@@ -4026,7 +4027,7 @@ public sealed partial class uScript : EditorWindow
                   }
 
                   // Update the defaultName to the sanitized version
-                  defaultName = string.Format("{0}.{1}", safeName, extension);
+                  defaultName = string.Format("{0}.{1}", safeName, Extension);
 
                   continue;
                }
@@ -4054,90 +4055,89 @@ public sealed partial class uScript : EditorWindow
          }
 
          this.m_FullPath = chosenPath;
-         uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(this.m_FullPath).Substring("Assets".Length));
-         uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
+         SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(this.m_FullPath).Substring("Assets".Length));
+         SetSetting("uScript\\LastScene", EditorApplication.currentScene);
       }
 
-      if (this.m_FullPath != string.Empty)
+      if (this.m_FullPath == string.Empty)
       {
-         bool firstSave = false;
-         string componentPath = GetGeneratedScriptPath(m_FullPath);
+         return false;
+      }
 
-         //only attach if they're generating code and it's never been generated before
-         //they could have saved without generating code by using quick save
-         if (false == System.IO.File.Exists(componentPath) && true == generateCode)
+      bool firstSave = false;
+      string componentPath = this.GetGeneratedScriptPath(this.m_FullPath);
+
+      //only attach if they're generating code and it's never been generated before
+      //they could have saved without generating code by using quick save
+      if (false == File.Exists(componentPath) && generateCode)
+      {
+         firstSave = true;
+      }
+      else if (forceNameRequest && generateCode)
+      {
+         firstSave = true;
+      }
+
+      bool pleaseAttachMe = false;
+      bool currentlyAttached = false;
+
+      //ask before they've saved so we know
+      //whether or not we have to save the scene name with the script
+      if (firstSave)
+      {
+         // ask the user if they want to assign this script to the master game object
+         pleaseAttachMe = EditorUtility.DisplayDialog("Assign uScript To Master GameObject?", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No");
+      }
+      else
+      {
+         currentlyAttached = this.IsAttachedToMaster;
+      }
+
+      //if they do want to attach to the master then set
+      //the scene name before we save
+      if (pleaseAttachMe || currentlyAttached)
+      {
+         script.SceneName = Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
+      }
+      else
+      {
+         //could be a save as, so make sure to clear the connection
+         script.SceneName = string.Empty;
+      }
+
+      if (this.SaveScript(script, this.m_FullPath, generateCode, this.GenerateDebugInfo, false))
+      {
+         // When a file is saved (regardless of method), we should updated the
+         // Dictionary cache for that script.
+
+         //script was saved under a new name, refresh the control
+         if (script.Name != this.m_ScriptEditorCtrl.Name)
          {
-            firstSave = true;
+            this.m_ScriptEditorCtrl = new ScriptEditorCtrl(script);
          }
-         else if (true == forceNameRequest && true == generateCode)
+
+         string scriptName = Path.GetFileNameWithoutExtension(this.m_FullPath);
+         this.SetStaleState(scriptName, script.GeneratedCodeIsStale);
+         this.SetDebugState(scriptName, script.SavedForDebugging);
+
+         this.m_ScriptEditorCtrl.IsDirty = false;
+
+         this.CacheScript();
+
+         if (pleaseAttachMe)
          {
-            firstSave = true;
+            AssetDatabase.Refresh();
+            this.AttachToMasterGO(this.m_FullPath);
          }
-
-         bool pleaseAttachMe = false;
-         bool currentlyAttached = false;
-
-         //ask before they've saved so we know
-         //whether or not we have to save the scene name with the script
-         if (firstSave)
-         {
-            // ask the user if they want to assign this script to the master game object
-            pleaseAttachMe = EditorUtility.DisplayDialog("Assign uScript To Master GameObject?", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No");
-         }
-         else
-         {
-            currentlyAttached = IsAttachedToMaster;
-         }
-
-         //if they do want to attach to the master then set
-         //the scene name before we save
-         if (true == pleaseAttachMe || true == currentlyAttached)
-         {
-            script.SceneName = System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene);
-         }
-         else if (false == pleaseAttachMe && false == currentlyAttached)
-         {
-            //could be a save as, so make sure to clear the connection
-            script.SceneName = "";
-         }
-
-         if (true == SaveScript(script, m_FullPath, generateCode, GenerateDebugInfo, false))
-         {
-            // When a file is saved (regardless of method), we should updated the
-            // Dictionary cache for that script.
-            //
-
-            //script was saved under a new name, refresh the control
-            if (script.Name != m_ScriptEditorCtrl.Name)
-            {
-               m_ScriptEditorCtrl = new Detox.ScriptEditor.ScriptEditorCtrl(script);
-            }
-
-            string scriptName = System.IO.Path.GetFileNameWithoutExtension(m_FullPath);
-            SetStaleState(scriptName, script.GeneratedCodeIsStale);
-            SetDebugState(scriptName, script.SavedForDebugging);
-
-            m_ScriptEditorCtrl.IsDirty = false;
-
-            CacheScript();
-
-            if (true == pleaseAttachMe)
-            {
-               AssetDatabase.Refresh();
-               AttachToMasterGO(m_FullPath);
-            }
             
 #if ENABLE_ANALYTICS
          GetGraphAnalyticsData(script);
 #endif
             
-            return true;
-         }
-         else
-         {
-            uScriptDebug.Log("there was an error saving " + m_FullPath, uScriptDebug.Type.Error);
-         }
+         return true;
       }
+
+      uScriptDebug.Log("there was an error saving " + this.m_FullPath, uScriptDebug.Type.Error);
 
       return false;
    }
