@@ -17,11 +17,10 @@
 //#define CLOSED_BETA
 //#define ENABLE_ANALYTICS
 
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -36,56 +35,83 @@ using UnityEditor;
 
 using UnityEngine;
 
+[SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1502:ElementMustNotBeOnSingleLine", Justification = "Reviewed. Suppression is OK here.")]
+[SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1516:ElementsMustBeSeparatedByBlankLine", Justification = "Reviewed. Suppression is OK here.")]
 public sealed partial class uScript : EditorWindow
 {
-   //so we know if the current script we've cached
-   //is dirty or has been saved to a file
-   public bool CurrentScriptDirty = false;
-   public string CurrentScript = null;
-   public string CurrentScriptName = "";
-   public string[] m_Patches = new string[0];
-
-   private bool m_Launched;
-
-   //complex class which Unity will not serialize
-   //so if it goes null I know the app domain has been rebuilt
-   private ComplexData m_ComplexData = null;
-
    // ###############################################################
    // # Version Name and Version Data
    // #
-
-   // Set version - format is MAJOR.MINOR.FOURDIGITSVNCOMMITNUMBER
-   static public string BuildNumber { get { return "0.9.2359"; } }
-
-   static public string BuildName { get { return "Professional (Retail Beta 40)"; } }
-   static public string BuildNamePLE { get { return "Personal Learning Edition (Retail Beta 40)"; } }
-   static public string BuildNameBasic { get { return "Basic (Retail Beta 40)"; } }
-
-#if DETOX_STORE_PLE
-   static public string ProductName { get { return BuildNamePLE; } }
-   static public string ProductType { get { return "uScript_PLE"; } }
-#elif UNITY_STORE_PRO
-   static public string ProductName { get { return BuildName; } }
-   static public string ProductType { get { return "uScript_AssetStore"; } }
-#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
-   static public string ProductName { get { return BuildNameBasic; } }
-   static public string ProductType { get { return "uScript_Basic"; } }
-#else
-   static public string ProductName { get { return BuildName; } }
-   static public string ProductType { get { return "uScript_Retail"; } }
-#endif
-
-   static public string FullVersionName { get { return ProductName + " (v" + BuildNumber + ")"; } }
-   //public string LastUnityBuild { get { return "3.3"; } }
-   //public string CurrentUnityBuild { get { return "3.4"; } }
-   //public string BetaUnityBuild { get { return "3.5"; } }
-   //public DateTime ExpireDate { get { return new DateTime(2011, 11, 30); } }
+   // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
+   public const string BuildNumber = "0.9.2359";
+   public const string BuildName = "Professional (Retail Beta 40)";
+   public const string BuildNamePLE = "Personal Learning Edition (Retail Beta 40)";
+   public const string BuildNameBasic = "Basic (Retail Beta 40)";
    // #
    // ###############################################################
 
+   public static readonly Preferences Preferences = new Preferences();
 
-   public bool isLicenseAccepted = false;
+   private static readonly AppFrameworkData AppData = new AppFrameworkData();
+   private static readonly Hashtable NodeParameterFields = new Hashtable();
+   private static readonly Hashtable NodeParameterDescFields = new Hashtable();
+   private static readonly Hashtable RequiresLink = new Hashtable();
+
+   private static uScript instance;
+
+   // So we know if the current script we've cached is dirty or has been saved to a file
+   private bool currentScriptDirty;
+   private string currentScript;
+   private string currentScriptName = string.Empty;
+   private string[] patches = new string[0];
+
+   private bool launched;
+
+   // Complex class which Unity will not serialize, so if it goes null I know the app domain has been rebuilt
+   private ComplexData complexData;
+
+   private MouseRegion mouseRegion = MouseRegion.Outside;
+   private MouseRegion mouseRegionUpdate = MouseRegion.Outside;
+   private MouseRegion mouseDownRegion = MouseRegion.Outside;
+
+   private Dictionary<MouseRegion, Rect> mouseRegionRect = new Dictionary<MouseRegion, Rect>();
+
+   private bool firstRun = true;
+
+   private ScriptEditorCtrl m_ScriptEditorCtrl;
+
+   private bool mouseDown;
+   private bool mouseDownOverCanvas;
+
+   private bool wantsCopy;
+   private bool wantsCut;
+   private bool wantsPaste;
+
+   private bool rebuildWhenReady;
+
+   private float mapScale = 1.0f;
+   private Point zoomPoint = new Point(0, 0);
+
+   private string pendingNodeSignature = string.Empty;
+   private bool pendingNodeUsesMousePosition;
+   private KeyCode pressedKey = KeyCode.None;
+
+   private string fullPath = string.Empty;
+   private string currentCanvasPosition = string.Empty;
+   private bool forceCodeValidation;
+
+   private Node focusedNode;
+
+#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
+
+#else
+   private Hashtable m_EntityTypeHash = null;
+   private EntityDesc[] m_EntityTypes = null;
+   private string[] m_SzEntityTypes = null;
+#endif
+
+   private LogicNode[] m_LogicTypes = null;
+   private string[] m_SzLogicTypes = null;
 
    public enum MouseRegion
    {
@@ -100,62 +126,73 @@ public sealed partial class uScript : EditorWindow
       HandleProperties,
       HandleReference
    }
-   private MouseRegion _mouseRegion = MouseRegion.Outside;
-   private MouseRegion _mouseRegionUpdate = MouseRegion.Outside;
-   private MouseRegion m_MouseDownRegion = MouseRegion.Outside;
-   public MouseRegion MouseDownRegion
+
+   public static uScript Instance
    {
-      get { return m_MouseDownRegion; }
-      set { m_MouseDownRegion = value; }
+      get
+      {
+         if (instance == null)
+         {
+            Init();
+         }
+
+         return instance;
+      }
    }
 
-   public Dictionary<MouseRegion, Rect> _mouseRegionRect = new Dictionary<MouseRegion, Rect>();
-
-   static private uScript s_Instance = null;
-   static public uScript Instance { get { if (null == s_Instance) Init(); return s_Instance; } }
-   bool _firstRun = true;
-
-   private ScriptEditorCtrl m_ScriptEditorCtrl = null;
-   private bool m_MouseDown = false;
-   private bool m_MouseDownOverCanvas = false;
-   private bool m_WantsCopy = false;
-   private bool m_WantsCut = false;
-   private bool m_WantsPaste = false;
-
-   private bool m_RebuildWhenReady = false;
-
-   public float m_MapScale = 1.0f;
-   private Point m_ZoomPoint = new Point(0, 0);
-
-   private String _pendingNodeSignature = "";
-   private bool _pendingNodeUsesMousePosition = false;
-   private KeyCode m_PressedKey = KeyCode.None;
-
-   bool _requestedCloseMap = false;
-   Point _requestCanvasLocation = Point.Empty;
-
-   private string m_FullPath = "";
-   private string m_CurrentCanvasPosition = "";
-   private bool m_ForceCodeValidation = false;
-
-   private Detox.FlowChart.Node m_FocusedNode = null;
-
-#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
-
+   // ###############################################################
+   // # Version Name and Version Data
+   // #
+#if DETOX_STORE_PLE
+   public static string ProductName { get { return BuildNamePLE; } }
+   public static string ProductType { get { return "uScript_PLE"; } }
+#elif UNITY_STORE_PRO
+   public static string ProductName { get { return BuildName; } }
+   public static string ProductType { get { return "uScript_AssetStore"; } }
+#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
+   public static string ProductName { get { return BuildNameBasic; } }
+   public static string ProductType { get { return "uScript_Basic"; } }
 #else
-   private Hashtable m_EntityTypeHash = null;
-   private EntityDesc[] m_EntityTypes = null;
-   private string[] m_SzEntityTypes = null;
+   public static string ProductName { get { return BuildName; } }
+   public static string ProductType { get { return "uScript_Retail"; } }
 #endif
 
-   private LogicNode[] m_LogicTypes = null;
-   private string[] m_SzLogicTypes = null;
+   public static string FullVersionName { get { return ProductName + " (v" + BuildNumber + ")"; } }
+   //public string LastUnityBuild { get { return "3.3"; } }
+   //public string CurrentUnityBuild { get { return "3.4"; } }
+   //public string BetaUnityBuild { get { return "3.5"; } }
+   //public DateTime ExpireDate { get { return new DateTime(2011, 11, 30); } }
+   // #
+   // ###############################################################
 
-   private static Hashtable m_NodeParameterFields = new Hashtable();
-   private static Hashtable m_NodeParameterDescFields = new Hashtable();
-   private static Hashtable m_RequiresLink = new Hashtable();
-   private static AppFrameworkData m_AppData = new AppFrameworkData();
-   public static Preferences Preferences = new Preferences();
+   //public static Preferences Preferences
+   //{
+   //   get
+   //   {
+   //      return preferences;
+   //   }
+   //}
+
+   public bool IsLicenseAccepted { get; private set; }
+
+   public float MapScale
+   {
+      get
+      {
+         return this.mapScale;
+      }
+
+      set
+      {
+         this.mapScale = value;
+      }
+   }
+
+   public MouseRegion MouseDownRegion
+   {
+      get { return this.mouseDownRegion; }
+      set { this.mouseDownRegion = value; }
+   }
 
    private Node _nodeClicked = null;
    public Node NodeClicked { get { return _nodeClicked; } set { _nodeClicked = value; } }
@@ -176,9 +213,14 @@ public sealed partial class uScript : EditorWindow
    public bool GenerateDebugInfo = true;
 
    bool _isContextMenuOpen = false;
+
    public bool isContextMenuOpen
    {
-      get { return _isContextMenuOpen; }
+      get
+      {
+         return _isContextMenuOpen;
+      }
+
       set
       {
          if (_isContextMenuOpen != value)
@@ -190,7 +232,7 @@ public sealed partial class uScript : EditorWindow
                m_ContextY = 0;
                m_CurrentMenu = null;
                rectContextMenuWindow = new Rect(m_ContextX, m_ContextY, 10, 10);
-               //               Event.current.Use();
+               //Event.current.Use();
             }
          }
       }
@@ -219,16 +261,14 @@ public sealed partial class uScript : EditorWindow
    Rect rectFileMenuButton = new Rect();
    Rect rectFileMenuWindow = new Rect(20, 20, 10, 10);
 
-   /* Palette Variables */
+   // Palette Variables
    String _graphListFilterText = string.Empty;
 
-   //
    // Statusbar Variables
-   //
    string _statusbarMessage;
 
-   //IMPORTANT - THIS CANNOT BE CACHED
-   //BECAUSE WE END UP WITH STALE VERSIONS
+   // IMPORTANT - THIS CANNOT BE CACHED
+   // BECAUSE WE END UP WITH STALE VERSIONS
    public static GameObject MasterObject
    {
       get
@@ -261,8 +301,8 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   //IMPORTANT - THIS CANNOT BE CACHED
-   //BECAUSE WE END UP WITH STALE VERSIONS
+   // IMPORTANT - THIS CANNOT BE CACHED
+   // BECAUSE WE END UP WITH STALE VERSIONS
    public static uScript_MasterComponent MasterComponent
    {
       get
@@ -344,10 +384,7 @@ public sealed partial class uScript : EditorWindow
       get { return m_ScriptEditorCtrl; }
    }
 
-
-   //
    // Content Panel Variables
-   //
    MouseEventArgs m_MouseDownArgs = null;
    MouseEventArgs m_MouseUpArgs = null;
    MouseEventArgs m_MouseMoveArgs = new MouseEventArgs();
@@ -359,9 +396,9 @@ public sealed partial class uScript : EditorWindow
    {
       get
       {
-         if (MasterObject != null && !String.IsNullOrEmpty(m_FullPath))
+         if (MasterObject != null && !String.IsNullOrEmpty(this.fullPath))
          {
-            System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_FullPath);
+            FileInfo fileInfo = new FileInfo(this.fullPath);
             bool isSafe = false;
             string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
             return MasterObject.GetComponent(safePath + uScriptConfig.Files.GeneratedComponentExtension) != null;
@@ -374,9 +411,9 @@ public sealed partial class uScript : EditorWindow
    {
       get
       {
-         if (!String.IsNullOrEmpty(m_FullPath))
+         if (!String.IsNullOrEmpty(this.fullPath))
          {
-            System.IO.FileInfo fileInfo = new System.IO.FileInfo(m_FullPath);
+            FileInfo fileInfo = new FileInfo(this.fullPath);
             bool isSafe = false;
             string safePath = UnityCSharpGenerator.MakeSyntaxSafe(fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".")), out isSafe);
             string componentPath = safePath + uScriptConfig.Files.GeneratedComponentExtension;
@@ -409,9 +446,9 @@ public sealed partial class uScript : EditorWindow
       {
          string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
 
-         if ("" != path)
+         if (path != string.Empty)
          {
-            ScriptEditor s = new ScriptEditor("", null, null);
+            ScriptEditor s = new ScriptEditor(string.Empty, null, null);
             if (true == s.Open(path))
             {
                bool stale = s.GeneratedCodeIsStale;
@@ -443,13 +480,10 @@ public sealed partial class uScript : EditorWindow
    }
 
    // The stale script state cache should be updated whenever a script's stale state changes, and when uScript first launches.
-   //
    public void SetStaleState(string scriptName, bool isStale)
    {
       _staleScriptCache[scriptName] = isStale;
    }
-
-
 
    private Dictionary<string, bool> _debugScriptCache = new Dictionary<string, bool>();
 
@@ -485,45 +519,41 @@ public sealed partial class uScript : EditorWindow
    }
 
    // The debug script state cache should be updated whenever a script's debug state changes, and when uScript first launches.
-   //
    public void SetDebugState(string scriptName, bool hasDebugCode)
    {
       _debugScriptCache[scriptName] = hasDebugCode;
    }
 
-
-
-
-   //
    // Editor Window Initialization
-   //
    [UnityEditor.MenuItem("Tools/Detox Studios/uScript Editor %u")]
    static void Init()
    {
-      s_Instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
-      s_Instance.Launching();
+      instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
+      instance.Launching();
 
       UpdateNotification.StartupCheck();
-
    }
 
-   // call to force release the mouse and stop a drag operation
+   // Call to force release the mouse and stop a drag operation
    public void ForceReleaseMouse()
    {
-      m_MouseDown = false;
-      m_MouseDownOverCanvas = false;
+      this.mouseDown = false;
+      this.mouseDownOverCanvas = false;
    }
 
    private void Launching()
    {
-      if (null != m_ComplexData) return;
+      if (null != this.complexData)
+      {
+         return;
+      }
 
       //Debug.Log( "Launching" );
 
-      if (false == m_Launched)
+      if (false == this.launched)
       {
          LaunchingFromUnity();
-         m_Launched = true;
+         this.launched = true;
       }
       else
       {
@@ -537,24 +567,24 @@ public sealed partial class uScript : EditorWindow
 
       LoadSettings();
 
-      wantsMouseMove = true;
+      this.wantsMouseMove = true;
 
-      System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.RootFolder);
-      System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.uScriptNodes);
-      System.IO.Directory.CreateDirectory(uScriptConfig.ConstantPaths.uScriptEditor);
+      Directory.CreateDirectory(uScriptConfig.ConstantPaths.RootFolder);
+      Directory.CreateDirectory(uScriptConfig.ConstantPaths.uScriptNodes);
+      Directory.CreateDirectory(uScriptConfig.ConstantPaths.uScriptEditor);
 
-      System.IO.Directory.CreateDirectory(Preferences.ProjectFiles);
-      System.IO.Directory.CreateDirectory(Preferences.UserScripts);
-      System.IO.Directory.CreateDirectory(Preferences.UserNodes);
-      System.IO.Directory.CreateDirectory(Preferences.GeneratedScripts);
-      System.IO.Directory.CreateDirectory(Preferences.NestedScripts);
+      Directory.CreateDirectory(Preferences.ProjectFiles);
+      Directory.CreateDirectory(Preferences.UserScripts);
+      Directory.CreateDirectory(Preferences.UserNodes);
+      Directory.CreateDirectory(Preferences.GeneratedScripts);
+      Directory.CreateDirectory(Preferences.NestedScripts);
 
       // Move the uScriptUserTypes.cs.template file into the uScriptProjectFiles folder if one doesn't already exist.
       string userTypesFileTemplate = uScriptConfig.ConstantPaths.Templates + "/uScriptUserTypes.cs.template";
       string userTypesFile = uScriptConfig.ConstantPaths.SettingsPath + "/uScriptUserTypes.cs";
       if (File.Exists(userTypesFileTemplate) && !File.Exists(userTypesFile))
       {
-         System.IO.File.Copy(userTypesFileTemplate, userTypesFile, false);
+         File.Copy(userTypesFileTemplate, userTypesFile, false);
          AssetDatabase.Refresh();
       }
 
@@ -562,17 +592,17 @@ public sealed partial class uScript : EditorWindow
       string gizmos = UnityEngine.Application.dataPath + "/Gizmos";
       if (!Directory.Exists(gizmos))
       {
-         System.IO.Directory.CreateDirectory(gizmos);
+         Directory.CreateDirectory(gizmos);
       }
 
       //copy gizmos into root
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(uScriptConfig.ConstantPaths.Gizmos);
+      DirectoryInfo directory = new DirectoryInfo(uScriptConfig.ConstantPaths.Gizmos);
 
-      foreach (System.IO.FileInfo file in directory.GetFiles())
+      foreach (FileInfo file in directory.GetFiles())
       {
-         if (!System.IO.File.Exists(gizmos + "/" + file.Name))
+         if (!File.Exists(gizmos + "/" + file.Name))
          {
-            System.IO.File.Copy(file.FullName, gizmos + "/" + file.Name, false);
+            File.Copy(file.FullName, gizmos + "/" + file.Name, false);
          }
       }
 
@@ -590,34 +620,34 @@ public sealed partial class uScript : EditorWindow
          MasterComponent.AddType(b.Type);
       }
 
-      String lastOpened = (String)uScript.GetSetting("uScript\\LastOpened", "");
-      String lastScene = (String)uScript.GetSetting("uScript\\LastScene", "");
+      String lastOpened = (String)GetSetting("uScript\\LastOpened", "");
+      String lastScene = (String)GetSetting("uScript\\LastScene", "");
       //Debug.Log("last = " + lastOpened + ", lastScene = " + lastScene );
       if (!String.IsNullOrEmpty(lastOpened) && lastScene == UnityEditor.EditorApplication.currentScene)
       {
-         m_FullPath = UnityEngine.Application.dataPath + lastOpened;
+         this.fullPath = UnityEngine.Application.dataPath + lastOpened;
          //Debug.Log("fp loaded from settings" );
       }
 
-      //Debug.Log("fp = " + m_FullPath );
+      //Debug.Log("fp = " + fullPath );
 
       //clear any old script undo data laying around
       ClearChangeStack();
 
-      if ("" != m_FullPath)
+      if (this.fullPath != string.Empty)
       {
-         if (false == OpenScript(m_FullPath))
+         if (this.OpenScript(this.fullPath) == false)
          {
-            m_FullPath = "";
+            this.fullPath = string.Empty;
          }
       }
 
-      if ("" == m_FullPath)
+      if (this.fullPath == string.Empty)
       {
          OpenFromCache();
       }
 
-      m_ComplexData = new ComplexData();
+      this.complexData = new ComplexData();
 
       Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
@@ -630,7 +660,7 @@ public sealed partial class uScript : EditorWindow
 
       LoadSettings();
 
-      m_ComplexData = new ComplexData();
+      this.complexData = new ComplexData();
 
       OpenFromCache();
 
@@ -644,7 +674,7 @@ public sealed partial class uScript : EditorWindow
       UnityEditor.Undo.ClearUndo(UndoComponent);
 
       m_UndoPatches = new string[0];
-      m_Patches = new string[0];
+      this.patches = new string[0];
    }
 
    private void OpenFromCache()
@@ -677,15 +707,13 @@ public sealed partial class uScript : EditorWindow
        }
 #endif
 
-
-
       ScriptEditor scriptEditor = null;
 
-      if (!String.IsNullOrEmpty(CurrentScript))
+      if (!String.IsNullOrEmpty(this.currentScript))
       {
          //Debug.Log("Opening from valid script");
          scriptEditor = new ScriptEditor(string.Empty, PopulateEntityTypes(null), PopulateLogicTypes());
-         scriptEditor.OpenFromBase64(null, CurrentScriptName, CurrentScript);
+         scriptEditor.OpenFromBase64(null, this.currentScriptName, this.currentScript);
       }
 
       if (null == scriptEditor)
@@ -695,13 +723,13 @@ public sealed partial class uScript : EditorWindow
       }
 
       Point loc = Point.Empty;
-      if (false == String.IsNullOrEmpty(m_CurrentCanvasPosition))
+      if (String.IsNullOrEmpty(this.currentCanvasPosition) == false)
       {
-         loc = new Point(Int32.Parse(m_CurrentCanvasPosition.Substring(0, m_CurrentCanvasPosition.IndexOf(","))),
-                         Int32.Parse(m_CurrentCanvasPosition.Substring(m_CurrentCanvasPosition.IndexOf(",") + 1)));
+         loc = new Point(Int32.Parse(this.currentCanvasPosition.Substring(0, this.currentCanvasPosition.IndexOf(","))),
+                         Int32.Parse(this.currentCanvasPosition.Substring(this.currentCanvasPosition.IndexOf(",") + 1)));
       }
 
-      foreach (string patch in m_Patches)
+      foreach (string patch in this.patches)
       {
          if (false == String.IsNullOrEmpty(patch))
          {
@@ -715,7 +743,7 @@ public sealed partial class uScript : EditorWindow
       m_ScriptEditorCtrl.BuildContextMenu();
       uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
 
-      m_ScriptEditorCtrl.IsDirty = CurrentScriptDirty || m_Patches.Length > 0;
+      m_ScriptEditorCtrl.IsDirty = this.currentScriptDirty || this.patches.Length > 0;
 
       //clear out all patches and cache new copy of the script
       CacheScript();
@@ -775,34 +803,34 @@ public sealed partial class uScript : EditorWindow
 
    public void CacheScript()
    {
-      m_Patches = new string[0];
-      CurrentScript = m_ScriptEditorCtrl.ScriptEditor.ToBase64(null);
-      CurrentScriptDirty = m_ScriptEditorCtrl.IsDirty;
-      CurrentScriptName = m_ScriptEditorCtrl.Name;
+      this.patches = new string[0];
+      this.currentScript = m_ScriptEditorCtrl.ScriptEditor.ToBase64(null);
+      this.currentScriptDirty = m_ScriptEditorCtrl.IsDirty;
+      this.currentScriptName = m_ScriptEditorCtrl.Name;
    }
 
-   static public object GetSetting(string key)
+   public static object GetSetting(string key)
    {
-      return m_AppData.Get(key);
+      return AppData.Get(key);
    }
 
-   static public object GetSetting(string key, object defaultValue)
+   public static object GetSetting(string key, object defaultValue)
    {
-      object value = m_AppData.Get(key);
+      object value = AppData.Get(key);
       return null != value ? value : defaultValue;
    }
 
-   static public void SetSetting(string key, object value)
+   public static void SetSetting(string key, object value)
    {
-      m_AppData.Set(key, value);
-      m_AppData.Save(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
+      AppData.Set(key, value);
+      AppData.Save(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
    }
 
-   static public void LoadSettings()
+   public static void LoadSettings()
    {
-      if (System.IO.File.Exists(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile))
+      if (File.Exists(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile))
       {
-         m_AppData.Load(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
+         AppData.Load(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
       }
 
       Preferences.Load();
@@ -824,7 +852,6 @@ public sealed partial class uScript : EditorWindow
       uScriptDebug.Log(e.Message, uScriptType);
    }
 
-
    public void RegisterUndo(Detox.Patch.PatchData p)
    {
       if (null != UndoComponent)
@@ -833,8 +860,8 @@ public sealed partial class uScript : EditorWindow
 
          UndoComponent.UndoNumber = m_UndoNumber;
 
-         Array.Resize(ref m_Patches, m_Patches.Length + 1);
-         m_Patches[m_Patches.Length - 1] = base64;
+         Array.Resize(ref this.patches, this.patches.Length + 1);
+         this.patches[this.patches.Length - 1] = base64;
 
          if (m_UndoPatches.Length <= m_UndoNumber)
          {
@@ -858,7 +885,7 @@ public sealed partial class uScript : EditorWindow
    void Awake()
    {
       EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
-      m_ForceCodeValidation = true;
+      this.forceCodeValidation = true;
    }
 
    public static bool IsUnityPro
@@ -869,7 +896,7 @@ public sealed partial class uScript : EditorWindow
 #if (UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_4_0)
          return SystemInfo.supportsRenderTextures;
 #else
-           return Application.HasProLicense();
+         return Application.HasProLicense();
 #endif
       }
    }
@@ -879,15 +906,15 @@ public sealed partial class uScript : EditorWindow
 
    void Update()
    {
-      if (null == m_ComplexData)
+      //Debug.Log("Update()\n" + EditorWindow.focusedWindow + " has focus, the mouse is over " + EditorWindow.mouseOverWindow);
+
+      if (null == this.complexData)
       {
          RelaunchingFromRebuiltAppDomain();
          return;
       }
 
       if (null == m_ScriptEditorCtrl) return;
-
-
 
 #if !(UNITY_STORE_PRO || UNITY_STORE_BASIC)
       // Initialize the LicenseWindow here if needed. Doing it during OnGUI may
@@ -904,9 +931,8 @@ public sealed partial class uScript : EditorWindow
       }
 #else
       // Force the license acceptance
-      isLicenseAccepted = true;
+      this.IsLicenseAccepted = true;
 #endif
-
 
       if (EditorApplication.isPlaying)
       {
@@ -933,10 +959,8 @@ public sealed partial class uScript : EditorWindow
          UndoComponent.UndoNumber = m_UndoNumber;
       }
 
-
       // Update the reference panel with the node palette's hot selection.
       uScriptGUIPanelReference.Instance.hotSelection = uScriptGUIPanelPalette.Instance._hotSelection;
-
 
       // Because Unity has an awesome GUI system, the mouse dragging is detected
       // after EventType.Layout has occurred. If any GUILayout calls are made in
@@ -965,19 +989,17 @@ public sealed partial class uScript : EditorWindow
          AssetBrowserWindow.Init();
       }
 
-
       // Additional variable changes that should occur after OnGUI has completed
-      _mouseRegion = _mouseRegionUpdate;
+      this.mouseRegion = this.mouseRegionUpdate;
 
-
-      if (true == CodeValidator.RequireRebuild(m_ForceCodeValidation))
+      if (CodeValidator.RequireRebuild(this.forceCodeValidation))
       {
          RebuildAllScripts();
       }
 
       //rebuild was requested but we have to wait until the editor
       //is done compiling so it properly reflects everything
-      if (true == m_RebuildWhenReady && false == EditorApplication.isCompiling)
+      if (this.rebuildWhenReady && EditorApplication.isCompiling == false)
       {
          //now build any scripts which are used as nested nodes
          //when these are done we will then build any scripts which references these
@@ -989,7 +1011,7 @@ public sealed partial class uScript : EditorWindow
          AssetDatabase.StopAssetEditing();
          AssetDatabase.Refresh();
 
-         m_RebuildWhenReady = false;
+         this.rebuildWhenReady = false;
       }
 
       if (true == m_SelectAllNodes)
@@ -1004,7 +1026,6 @@ public sealed partial class uScript : EditorWindow
       {
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
-
 
       if (UndoComponent.UndoNumber != m_UndoNumber)
       {
@@ -1056,36 +1077,36 @@ public sealed partial class uScript : EditorWindow
          }
       }
 
-      if (true == m_WantsCopy)
+      if (this.wantsCopy)
       {
          m_ScriptEditorCtrl.CopyToClipboard();
-         m_WantsCopy = false;
+         this.wantsCopy = false;
       }
-      if (true == m_WantsCut)
+      if (this.wantsCut)
       {
          m_ScriptEditorCtrl.CopyToClipboard();
          m_ScriptEditorCtrl.DeleteSelectedNodes();
-         m_WantsCut = false;
+         this.wantsCut = false;
       }
-      if (true == m_WantsPaste)
+      if (this.wantsPaste)
       {
          m_ScriptEditorCtrl.PasteFromClipboard(Point.Empty);
-         m_WantsPaste = false;
+         this.wantsPaste = false;
       }
 
       // Process any pending node creation request
-      if (m_ScriptEditorCtrl != null && !String.IsNullOrEmpty(_pendingNodeSignature))
+      if (m_ScriptEditorCtrl != null && !String.IsNullOrEmpty(this.pendingNodeSignature))
       {
          m_ScriptEditorCtrl.DeselectAll();
 
-         Point canvasPosition = (_pendingNodeUsesMousePosition
+         Point canvasPosition = (this.pendingNodeUsesMousePosition
             ? Detox.Windows.Forms.Cursor.Position
             : new Point((int)(NodeWindowRect.width * 0.5f), (int)(NodeWindowRect.height * 0.5f))); // viewport center
 
-         EntityNode entityNode = uScriptGUIPanelPalette.Instance.GetToolboxNode(_pendingNodeSignature);
+         EntityNode entityNode = uScriptGUIPanelPalette.Instance.GetToolboxNode(this.pendingNodeSignature);
          if (entityNode == null)
          {
-            uScriptDebug.Log("Attempt to create node type failed. Signature not recognized: \"" + _pendingNodeSignature + "\"", uScriptDebug.Type.Error);
+            uScriptDebug.Log("Attempt to create node type failed. Signature not recognized: \"" + this.pendingNodeSignature + "\"", uScriptDebug.Type.Error);
          }
          else
          {
@@ -1111,15 +1132,7 @@ public sealed partial class uScript : EditorWindow
             m_ScriptEditorCtrl.AddVariableNode(entityNode);
          }
 
-         _pendingNodeSignature = "";
-      }
-
-      if (_requestedCloseMap)
-      {
-         _requestedCloseMap = false;
-
-         // Center the canvas on _requestCanvasLocation
-         m_ScriptEditorCtrl.CenterOnPoint(_requestCanvasLocation);
+         this.pendingNodeSignature = string.Empty;
       }
 
       //we can't ignore if the context menu is up
@@ -1265,15 +1278,30 @@ public sealed partial class uScript : EditorWindow
       Detox.Editor.GUI.PanelScript.Instance.OnProjectChange();
    }
 
-   void OnGUI()
+   internal void OnInspectorUpdate()
+   {
+      //Debug.Log("OnInspectorUpdate()\n" + EditorWindow.focusedWindow + " has focus, the mouse is over " + EditorWindow.mouseOverWindow);
+   }
+
+   internal void OnFocus()
+   {
+      this.Repaint();
+   }
+
+   internal void OnLostFocus()
+   {
+      this.Repaint();
+   }
+
+   internal void OnGUI()
    {
       // Store the current event locally since it is reference so frequently
       Event e = Event.current;
 
       // Make sure the initial window size it not too small
-      if (_firstRun)
+      if (this.firstRun)
       {
-         _firstRun = false;
+         this.firstRun = false;
 
          Rect minSize = new Rect(200, 200, 620, 550);
          if (position.width < minSize.width || position.height < minSize.height)
@@ -1308,15 +1336,15 @@ public sealed partial class uScript : EditorWindow
       // Must be done in OnGUI rather than on demand
       m_ScriptEditorCtrl.ParseClipboardData();
 
-      GUI.enabled = isLicenseAccepted && !isPreferenceWindowOpen;
+      GUI.enabled = this.IsLicenseAccepted && !isPreferenceWindowOpen;
 
       // Set the default mouse region
-      _mouseRegionUpdate = uScript.MouseRegion.Outside;
+      this.mouseRegionUpdate = MouseRegion.Outside;
 
       // As little logic as possible should be performed here.  It is better
       // to use Update() to perform tasks once per tick.
 
-      bool lastMouseDown = m_MouseDown;
+      bool lastMouseDown = this.mouseDown;
 
       isContextMenuOpen = 0 != m_ContextX || 0 != m_ContextY;
       if (false == isPreferenceWindowOpen)
@@ -1336,10 +1364,10 @@ public sealed partial class uScript : EditorWindow
       }
       else
       {
-         if (true == m_MouseDown)
+         if (this.mouseDown)
          {
             m_MouseDownArgs = null;
-            m_MouseDown = false;
+            this.mouseDown = false;
 
             m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
             m_MouseUpArgs.Button = MouseButtons.Left;
@@ -1347,7 +1375,6 @@ public sealed partial class uScript : EditorWindow
             m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
          }
       }
-
 
       //
       // All the GUI drawing code
@@ -1360,8 +1387,6 @@ public sealed partial class uScript : EditorWindow
       // do external windows/popups
       DrawPopups();
 
-
-
       if (Event.current.type == EventType.Repaint)
       {
          // Process the PNG export first
@@ -1373,10 +1398,7 @@ public sealed partial class uScript : EditorWindow
          uScriptGUI.MonitorGUIControlFocusChanges();
       }
 
-
-
-
-      if (m_MouseDown == false)
+      if (this.mouseDown == false)
       {
          // turn panel rendering back on
          m_CanvasDragging = false;
@@ -1384,7 +1406,7 @@ public sealed partial class uScript : EditorWindow
 
       // the following code must be here because it needs to happen 
       // after we've figured out what region the mouse is in
-      if (_mouseRegion == uScript.MouseRegion.Outside)
+      if (this.mouseRegion == MouseRegion.Outside)
       {
          // if the mouse is not over our window, don't look for mouse move events
          // fixes an exception when trying to close a dirty uscript
@@ -1397,17 +1419,17 @@ public sealed partial class uScript : EditorWindow
       }
 
       // mark mouse down region for dragging resize handles
-      if (lastMouseDown == false && m_MouseDown)
+      if (lastMouseDown == false && this.mouseDown)
       {
          // mouse was pressed down this event, set the current region
-         m_MouseDownRegion = _mouseRegion;
+         this.mouseDownRegion = this.mouseRegion;
       }
 
       // Do this after the event processing has taken place so that we 
       // know we don't have a duplicate mouse up event
-      if (true == m_MouseDown && _mouseRegion == MouseRegion.Outside && m_MouseUpArgs == null)
+      if (this.mouseDown && this.mouseRegion == MouseRegion.Outside && m_MouseUpArgs == null)
       {
-         m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
+         m_MouseUpArgs = new MouseEventArgs();
 
          int button = 0;
 
@@ -1420,22 +1442,19 @@ public sealed partial class uScript : EditorWindow
          if (!uScriptGUI.PanelsHidden) m_MouseUpArgs.X -= uScriptGUI.PanelLeftWidth;
          m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
-         m_MouseDownRegion = MouseRegion.Outside;
-         m_MouseDown = false;
+         this.mouseDownRegion = MouseRegion.Outside;
+         this.mouseDown = false;
       }
 
       if (e.type == EventType.DragPerform || e.type == EventType.DragUpdated)
       {
-         if (_mouseRegion == MouseRegion.Canvas)
+         if (this.mouseRegion == MouseRegion.Canvas)
          {
             CheckDragDropCanvas();
             e.Use();
          }
       }
    }
-
-
-
 
    void OnGUI_HandleInput_ContextMenu()
    {
@@ -1501,9 +1520,6 @@ public sealed partial class uScript : EditorWindow
          e.Use();
       }
    }
-
-
-
 
    void OnGUI_HandleInput_FileMenu()
    {
@@ -1598,9 +1614,6 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-
-
-
    void OnGUI_HandleInput_Canvas()
    {
       Event e = Event.current;
@@ -1645,10 +1658,10 @@ public sealed partial class uScript : EditorWindow
                   overall.End();
 
                   //// stupid hack to prevent the "canvasDragging" behavior
-                  //if (m_MouseDown)
+                  //if (mouseDown)
                   //{
-                  //   m_MouseDownRegion = MouseRegion.Reference;
-                  //   m_MouseDown = false;
+                  //   this.mouseDownRegion = MouseRegion.Reference;
+                  //   mouseDown = false;
                   //}
                }
 
@@ -1688,15 +1701,15 @@ public sealed partial class uScript : EditorWindow
          case EventType.ExecuteCommand:
             if (e.commandName == "Copy" && AllowKeyInput())
             {
-               m_WantsCopy = true;
+               this.wantsCopy = true;
             }
             else if (e.commandName == "Cut" && AllowKeyInput())
             {
-               m_WantsCut = true;
+               this.wantsCut = true;
             }
             else if (e.commandName == "Paste" && AllowKeyInput())
             {
-               m_WantsPaste = true;
+               this.wantsPaste = true;
             }
             else if (e.commandName == "SelectAll" && AllowKeyInput())
             {
@@ -1720,7 +1733,7 @@ public sealed partial class uScript : EditorWindow
          case EventType.KeyDown:
             if (e.keyCode != KeyCode.None)
             {
-               m_PressedKey = e.keyCode;
+               this.pressedKey = e.keyCode;
             }
 
             if (AllowKeyInput())
@@ -2015,10 +2028,10 @@ public sealed partial class uScript : EditorWindow
                         //
                         // Position graph at previous Event node
                         //
-                        m_FocusedNode = m_ScriptEditorCtrl.GetPrevNode(m_FocusedNode, typeof(EntityEventDisplayNode));
-                        if (m_FocusedNode != null)
+                        this.focusedNode = m_ScriptEditorCtrl.GetPrevNode(this.focusedNode, typeof(EntityEventDisplayNode));
+                        if (this.focusedNode != null)
                         {
-                           m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
+                           m_ScriptEditorCtrl.CenterOnNode(this.focusedNode);
                         }
                         break;
 
@@ -2026,10 +2039,10 @@ public sealed partial class uScript : EditorWindow
                         //
                         // Position graph at next Event node
                         //
-                        m_FocusedNode = m_ScriptEditorCtrl.GetNextNode(m_FocusedNode, typeof(EntityEventDisplayNode));
-                        if (m_FocusedNode != null)
+                        this.focusedNode = m_ScriptEditorCtrl.GetNextNode(this.focusedNode, typeof(EntityEventDisplayNode));
+                        if (this.focusedNode != null)
                         {
-                           m_ScriptEditorCtrl.CenterOnNode(m_FocusedNode);
+                           m_ScriptEditorCtrl.CenterOnNode(this.focusedNode);
                         }
                         break;
 
@@ -2062,27 +2075,27 @@ public sealed partial class uScript : EditorWindow
                         //
                         // Zoom graph default
                         //
-                        m_MapScale = 1.0f;
+                        this.mapScale = 1.0f;
                         break;
 
                      case KeyCode.Minus:
                         //
                         // Zoom graph out
                         //
-                        m_MapScale = Mathf.Max(m_MapScale - 0.1f, 0.1f);
+                        this.mapScale = Mathf.Max(this.mapScale - 0.1f, 0.1f);
                         break;
 
                      case KeyCode.Equals:
                         //
                         // Zoom graph in
                         //
-                        m_MapScale = Mathf.Min(m_MapScale + 0.1f, 1.0f);
+                        this.mapScale = Mathf.Min(this.mapScale + 0.1f, 1.0f);
                         break;
                   }
                }
             }
 
-            m_PressedKey = KeyCode.None;
+            this.pressedKey = KeyCode.None;
 
             // Keep key events from going to the rest of Unity
             e.Use();
@@ -2093,7 +2106,7 @@ public sealed partial class uScript : EditorWindow
             // Ignore Right-clicks
             if (e.button != 1)
             {
-               if (false == m_MouseDown)
+               if (this.mouseDown == false)
                {
                   if (_canvasRect.Contains(e.mousePosition))
                   {
@@ -2112,9 +2125,8 @@ public sealed partial class uScript : EditorWindow
                      if (!uScriptGUI.PanelsHidden) m_MouseDownArgs.X -= uScriptGUI.PanelLeftWidth;
                      m_MouseDownArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
 
-                     m_MouseDownOverCanvas = true;
+                     this.mouseDownOverCanvas = true;
                   }
-
 
                   // Handle Double-Clicks
                   //
@@ -2135,7 +2147,7 @@ public sealed partial class uScript : EditorWindow
                      NodeClicked = null;
                   }
 
-                  m_MouseDown = true;
+                  this.mouseDown = true;
 
                   // reset drag variables
                   lastMouseX = (int)e.mousePosition.x;
@@ -2158,15 +2170,15 @@ public sealed partial class uScript : EditorWindow
             {
                // ignore the right-click here, otherwise it thinks its dragging after closing the context menu
             }
-            else if (m_MouseDownRegion == uScript.MouseRegion.Canvas && _canvasRect.Contains(e.mousePosition))
+            else if (this.mouseDownRegion == MouseRegion.Canvas && _canvasRect.Contains(e.mousePosition))
             {
                // this is the switch to use to turn off panel rendering while panning/marquee selecting
                m_CanvasDragging = true;
             }
             break;
          case EventType.MouseUp:
-            //            Debug.Log("MouseUp ...\n\tm_MouseDown (" + m_MouseDown + "), m_MouseDownOverCanvas (" + m_MouseDownOverCanvas + ")");
-            if (m_MouseDown && m_MouseDownOverCanvas)
+            //            Debug.Log("MouseUp ...\n\tm_MouseDown (" + mouseDown + "), mouseDownOverCanvas (" + mouseDownOverCanvas + ")");
+            if (this.mouseDown && this.mouseDownOverCanvas)
             {
                m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
 
@@ -2183,101 +2195,101 @@ public sealed partial class uScript : EditorWindow
 
                if (modifierKeys == Keys.None)
                {
-                  if (m_PressedKey == KeyCode.S)
+                  if (this.pressedKey == KeyCode.S)
                   {
                      PlaceNodeOnCanvas("string", true);
                   }
-                  else if (m_PressedKey == KeyCode.V)
+                  else if (this.pressedKey == KeyCode.V)
                   {
                      PlaceNodeOnCanvas("UnityEngine.Vector3", true);
                   }
-                  else if (m_PressedKey == KeyCode.I)
+                  else if (this.pressedKey == KeyCode.I)
                   {
                      PlaceNodeOnCanvas("int", true);
                   }
-                  else if (m_PressedKey == KeyCode.F)
+                  else if (this.pressedKey == KeyCode.F)
                   {
                      PlaceNodeOnCanvas("float", true);
                   }
-                  else if (m_PressedKey == KeyCode.B)
+                  else if (this.pressedKey == KeyCode.B)
                   {
                      PlaceNodeOnCanvas("bool", true);
                   }
-                  else if (m_PressedKey == KeyCode.G)
+                  else if (this.pressedKey == KeyCode.G)
                   {
                      PlaceNodeOnCanvas("UnityEngine.GameObject", true);
                   }
-                  else if (m_PressedKey == KeyCode.O)
+                  else if (this.pressedKey == KeyCode.O)
                   {
                      PlaceNodeOnCanvas("UnityEngine.Object", true);
                   }
-                  else if (m_PressedKey == KeyCode.C)
+                  else if (this.pressedKey == KeyCode.C)
                   {
                      PlaceNodeOnCanvas("CommentNode", true);
                   }
-                  else if (m_PressedKey == KeyCode.E)
+                  else if (this.pressedKey == KeyCode.E)
                   {
                      PlaceNodeOnCanvas("ExternalConnection", true);
                   }
-                  else if (m_PressedKey == KeyCode.L)
+                  else if (this.pressedKey == KeyCode.L)
                   {
                      PlaceNodeOnCanvas("uScriptAct_Log", true);
                   }
-                  else if (m_PressedKey == KeyCode.Alpha1)
+                  else if (this.pressedKey == KeyCode.Alpha1)
                   {
                      PlaceNodeOnCanvas(Preferences.FavoriteNode1, true);
                   }
-                  else if (m_PressedKey == KeyCode.Alpha2)
+                  else if (this.pressedKey == KeyCode.Alpha2)
                   {
                      PlaceNodeOnCanvas(Preferences.FavoriteNode2, true);
                   }
-                  else if (m_PressedKey == KeyCode.Alpha3)
+                  else if (this.pressedKey == KeyCode.Alpha3)
                   {
                      PlaceNodeOnCanvas(Preferences.FavoriteNode3, true);
                   }
-                  else if (m_PressedKey == KeyCode.Alpha4)
+                  else if (this.pressedKey == KeyCode.Alpha4)
                   {
                      PlaceNodeOnCanvas(Preferences.FavoriteNode4, true);
                   }
-                  else if (m_PressedKey == KeyCode.Alpha5)
+                  else if (this.pressedKey == KeyCode.Alpha5)
                   {
                      PlaceNodeOnCanvas(Preferences.FavoriteNode5, true);
                   }
-                  else if (m_PressedKey == KeyCode.Alpha6)
+                  else if (this.pressedKey == KeyCode.Alpha6)
                   {
                      PlaceNodeOnCanvas(Preferences.FavoriteNode6, true);
                   }
-                  else if (m_PressedKey == KeyCode.Alpha7)
+                  else if (this.pressedKey == KeyCode.Alpha7)
                   {
                      PlaceNodeOnCanvas(Preferences.FavoriteNode7, true);
                   }
-                  else if (m_PressedKey == KeyCode.Alpha8)
+                  else if (this.pressedKey == KeyCode.Alpha8)
                   {
                      PlaceNodeOnCanvas(Preferences.FavoriteNode8, true);
                   }
-                  else if (m_PressedKey == KeyCode.Alpha9)
+                  else if (this.pressedKey == KeyCode.Alpha9)
                   {
                      PlaceNodeOnCanvas(Preferences.FavoriteNode9, true);
                   }
                }
             }
-            m_MouseDownRegion = MouseRegion.Outside;
-            m_MouseDownOverCanvas = false;
-            m_MouseDown = false;
+            this.mouseDownRegion = MouseRegion.Outside;
+            this.mouseDownOverCanvas = false;
+            this.mouseDown = false;
             break;
 
          case EventType.ScrollWheel:
             if (_canvasRect.Contains(e.mousePosition))
             {
-               m_ZoomPoint = Detox.Windows.Forms.Cursor.Position;
+               this.zoomPoint = Detox.Windows.Forms.Cursor.Position;
 
-               float newScale = Mathf.Clamp(m_MapScale - Mathf.Clamp(e.delta.y * 0.01f, -1, 1), 0.1f, 1.0f);
+               float newScale = Mathf.Clamp(this.mapScale - Mathf.Clamp(e.delta.y * 0.01f, -1, 1), 0.1f, 1.0f);
 
                //make sure we stop on 1.0 before going lower or higher
-               if (m_MapScale < 1 && newScale > 1) newScale = 1;
-               if (m_MapScale > 1 && newScale < 1) newScale = 1;
+               if (this.mapScale < 1 && newScale > 1) newScale = 1;
+               if (this.mapScale > 1 && newScale < 1) newScale = 1;
 
-               m_MapScale = newScale;
+               this.mapScale = newScale;
 
                //               Debug.Log("SCROLLWHEEL: " + e.delta + "\n");
             }
@@ -2302,8 +2314,8 @@ public sealed partial class uScript : EditorWindow
    /// <param name='useMousePosition'>When True, the mouse position will be used as the node's initial canvas location.</param>
    public void PlaceNodeOnCanvas(string nodeSignature, bool useMousePosition)
    {
-      _pendingNodeSignature = nodeSignature;
-      _pendingNodeUsesMousePosition = useMousePosition;
+      this.pendingNodeSignature = nodeSignature;
+      this.pendingNodeUsesMousePosition = useMousePosition;
    }
 
    public void DrawPopups()
@@ -2358,8 +2370,7 @@ public sealed partial class uScript : EditorWindow
       }
       EndWindows();
    }
-
-
+   
    void OnPlaymodeStateChanged()
    {
       //if we're not debugging values then we're just starting into playing in the editor
@@ -2390,13 +2401,12 @@ public sealed partial class uScript : EditorWindow
 
       ClearChangeStack();
 
-      CurrentScriptDirty = false;
-      CurrentScript = null;
-      CurrentScriptName = null;
-      m_ComplexData = null;
+      this.currentScriptDirty = false;
+      this.currentScript = null;
+      this.currentScriptName = null;
+      this.complexData = null;
    }
-
-
+   
    public void OpenNode(Node node)
    {
       if (node is DisplayNode)
@@ -2536,7 +2546,7 @@ public sealed partial class uScript : EditorWindow
       {
          // if we didn't get the height we requested, we must have hit a limit, stop dragging and reset the height
          uScriptGUI.PanelPropertiesHeight = (int)rect.height;
-         m_MouseDownRegion = MouseRegion.Canvas;
+         this.mouseDownRegion = MouseRegion.Canvas;
          ForceReleaseMouse();
       }
       {
@@ -2584,17 +2594,15 @@ public sealed partial class uScript : EditorWindow
       else
       {
          // Get mouse position and region
-         string extraDetails = ((int)e.mousePosition.x).ToString() + ", "
-                               + ((int)e.mousePosition.y).ToString()
-                               + " (" + _mouseRegion.ToString() + ")";
+         string extraDetails = string.Format("{0}, {1} ({2})", (int)e.mousePosition.x, (int)e.mousePosition.y, this.mouseRegion);
 
          // Get button state
          if (Control.MouseButtons.Buttons != 0)
          {
-            extraDetails = (Control.MouseButtons.Buttons == MouseButtons.Left ? "Left-Click"
-                            : Control.MouseButtons.Buttons == MouseButtons.Middle ? "Middle-Click"
-                            : "Right-Click")
-                           + " :: " + extraDetails;
+            var click = Control.MouseButtons.Buttons == MouseButtons.Left
+               ? "Left-Click"
+               : Control.MouseButtons.Buttons == MouseButtons.Middle ? "Middle-Click" : "Right-Click";
+            extraDetails = string.Format("{0} :: {1}", click, extraDetails);
          }
 
          // Get modifiers
@@ -2618,7 +2626,6 @@ public sealed partial class uScript : EditorWindow
          EditorGUILayout.EndHorizontal();
       }
    }
-
 
    void DrawGraphContentsPanel()
    {
@@ -2664,7 +2671,6 @@ public sealed partial class uScript : EditorWindow
             }
          }
          EditorGUILayout.EndHorizontal();
-
 
          // Draw the contents
          //
@@ -2867,7 +2873,6 @@ public sealed partial class uScript : EditorWindow
                                        nodeButtonContent.text = name + comment;
                                     }
 
-
                                     UnityEngine.Color tmpColor = GUI.color;
                                     UnityEngine.Color textColor = uScriptGUIStyle.NodeButtonLeft.normal.textColor;
 
@@ -2891,10 +2896,8 @@ public sealed partial class uScript : EditorWindow
                                        m_ScriptEditorCtrl.ToggleNode(dn.Guid);
                                     }
 
-
                                     GUI.color = tmpColor;
                                     uScriptGUIStyle.NodeButtonLeft.normal.textColor = textColor;
-
 
                                     if (IsNodeTypeDeprecated(dn.EntityNode) == false && m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(dn.EntityNode))
                                     {
@@ -2960,7 +2963,6 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-
    Dictionary<string, bool> _foldoutsGraphContent = new Dictionary<string, bool>();
 
    public Rect paletteRect = new Rect();
@@ -2979,15 +2981,11 @@ public sealed partial class uScript : EditorWindow
       SetMouseRegion(MouseRegion.Palette);//, 1, 1, -4, -4 );
    }
 
-
-
-
-
    public void SetMouseRegion(MouseRegion region)
    {
       if (Event.current.type == EventType.Repaint)
       {
-         _mouseRegionRect[region] = GUILayoutUtility.GetLastRect();
+         this.mouseRegionRect[region] = GUILayoutUtility.GetLastRect();
       }
 
       if (isContextMenuOpen || isFileMenuOpen)
@@ -2995,19 +2993,19 @@ public sealed partial class uScript : EditorWindow
          return;
       }
 
-      if (_mouseRegionRect.ContainsKey(region))
+      if (this.mouseRegionRect.ContainsKey(region))
       {
          if (GUI.enabled)
          {
             switch (region)
             {
                case MouseRegion.HandleCanvas:
-                  EditorGUIUtility.AddCursorRect(_mouseRegionRect[region], MouseCursor.ResizeVertical);
+                  EditorGUIUtility.AddCursorRect(this.mouseRegionRect[region], MouseCursor.ResizeVertical);
                   break;
                case MouseRegion.HandlePalette:
                case MouseRegion.HandleProperties:
                case MouseRegion.HandleReference:
-                  EditorGUIUtility.AddCursorRect(_mouseRegionRect[region], MouseCursor.ResizeHorizontal);
+                  EditorGUIUtility.AddCursorRect(this.mouseRegionRect[region], MouseCursor.ResizeHorizontal);
                   break;
             }
          }
@@ -3023,26 +3021,23 @@ public sealed partial class uScript : EditorWindow
 
    void CalculateMouseRegion()
    {
-      foreach (KeyValuePair<MouseRegion, Rect> kvp in _mouseRegionRect)
+      foreach (KeyValuePair<MouseRegion, Rect> kvp in this.mouseRegionRect)
       {
          if (kvp.Value.Contains(Event.current.mousePosition) && !HiddenRegion(kvp.Key))
          {
-            _mouseRegionUpdate = kvp.Key;
+            this.mouseRegionUpdate = kvp.Key;
             break;
-            //EditorGUIUtility.DrawColorSwatch(_mouseRegionRect[region], UnityEngine.Color.cyan);
+            //EditorGUIUtility.DrawColorSwatch(mouseRegionRect[region], UnityEngine.Color.cyan);
          }
       }
    }
 
-
-
-
    public void RefreshScript()
    {
-      string relativePath = "Assets\\" + m_FullPath.Substring(UnityEngine.Application.dataPath.Length + 1);
-      String fileName = System.IO.Path.GetFileNameWithoutExtension(relativePath);
+      string relativePath = "Assets\\" + this.fullPath.Substring(UnityEngine.Application.dataPath.Length + 1);
+      String fileName = Path.GetFileNameWithoutExtension(relativePath);
 
-      relativePath = System.IO.Path.GetDirectoryName(relativePath);
+      relativePath = Path.GetDirectoryName(relativePath);
       relativePath = relativePath.Replace('\\', '/');
 
       string logicPath = relativePath + "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
@@ -3055,7 +3050,6 @@ public sealed partial class uScript : EditorWindow
       AssetDatabase.ImportAsset(wrapperPath, ImportAssetOptions.ForceUpdate);
       AssetDatabase.Refresh();
    }
-
 
    bool _isFileMenuOpen = false;
    public bool isFileMenuOpen
@@ -3070,7 +3064,6 @@ public sealed partial class uScript : EditorWindow
          }
       }
    }
-
 
    void DrawMenuItemShortcut(string shortcut)
    {
@@ -3089,7 +3082,6 @@ public sealed partial class uScript : EditorWindow
 
       GUI.Label(r, shortcut, uScriptGUIStyle.MenuDropDownButtonShortcut);
    }
-
 
    void DrawFileMenuWindow(int windowID)
    {
@@ -3324,7 +3316,6 @@ public sealed partial class uScript : EditorWindow
       isFileMenuOpen = false;
    }
 
-
    void DrawGUIContent()
    {
       int toolbarSpaceWidth = 16;
@@ -3409,8 +3400,8 @@ public sealed partial class uScript : EditorWindow
                //
                // When zoom is implemented, make sure the results are accurately scaled
                //
-               //            int canvasWidth = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].width) : 0);
-               //            int canvasHeight = (_mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(_mouseRegionRect[MouseRegion.Canvas].height-18) : 0);
+               //            int canvasWidth = (mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(mouseRegionRect[MouseRegion.Canvas].width) : 0);
+               //            int canvasHeight = (mouseRegionRect.ContainsKey(MouseRegion.Canvas) ? (int)(mouseRegionRect[MouseRegion.Canvas].height-18) : 0);
                //
                //            GUILayout.Box(string.Empty, style, GUILayout.Width(canvasWidth), GUILayout.Height(canvasHeight));
 
@@ -3420,8 +3411,8 @@ public sealed partial class uScript : EditorWindow
 
                if (m_ScriptEditorCtrl != null)
                {
-                  m_ScriptEditorCtrl.FlowChart.Zoom = m_MapScale;
-                  m_ScriptEditorCtrl.FlowChart.ZoomPoint = m_ZoomPoint;
+                  m_ScriptEditorCtrl.FlowChart.Zoom = this.mapScale;
+                  m_ScriptEditorCtrl.FlowChart.ZoomPoint = this.zoomPoint;
 
                   m_ScriptEditorCtrl.GuiPaint(args);
                }
@@ -3442,7 +3433,6 @@ public sealed partial class uScript : EditorWindow
       SetMouseRegion(MouseRegion.Canvas);//, 3, 1, -2, -4 );
    }
 
-
    // TEMP Variables for testing the new property grid methods
 
    public static int _paletteMode = 0;
@@ -3450,16 +3440,10 @@ public sealed partial class uScript : EditorWindow
 
    // END TEMP Variables
 
-
-
-
-
    void m_ScriptEditorCtrl_ScriptModified(object sender, EventArgs e)
    {
       RequestRepaint();
    }
-
-
 
    void DrawContextMenuWindow(int windowID)
    {
@@ -3491,11 +3475,11 @@ public sealed partial class uScript : EditorWindow
 
    public string FindFile(string path, string fileName)
    {
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
+      DirectoryInfo directory = new DirectoryInfo(path);
 
-      System.IO.FileInfo[] files = directory.GetFiles();
+      FileInfo[] files = directory.GetFiles();
 
-      foreach (System.IO.FileInfo file in files)
+      foreach (FileInfo file in files)
       {
          if (file.Name == fileName)
          {
@@ -3503,7 +3487,7 @@ public sealed partial class uScript : EditorWindow
          }
       }
 
-      foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
+      foreach (DirectoryInfo subDirectory in directory.GetDirectories())
       {
          string result = FindFile(subDirectory.FullName, fileName);
          if (result != "") return result;
@@ -3516,11 +3500,11 @@ public sealed partial class uScript : EditorWindow
    {
       List<string> paths = new List<string>();
 
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(rootPath);
+      DirectoryInfo directory = new DirectoryInfo(rootPath);
 
-      System.IO.FileInfo[] files = directory.GetFiles();
+      FileInfo[] files = directory.GetFiles();
 
-      foreach (System.IO.FileInfo file in files)
+      foreach (FileInfo file in files)
       {
          if (file.Extension == extension)
          {
@@ -3528,7 +3512,7 @@ public sealed partial class uScript : EditorWindow
          }
       }
 
-      foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
+      foreach (DirectoryInfo subDirectory in directory.GetDirectories())
       {
          string[] results = FindAllFiles(subDirectory.FullName, extension);
          paths.AddRange(results);
@@ -3536,7 +3520,6 @@ public sealed partial class uScript : EditorWindow
 
       return paths.ToArray();
    }
-
 
    private void DrawSubItems(ToolStripMenuItem menuItem)
    {
@@ -3587,10 +3570,10 @@ public sealed partial class uScript : EditorWindow
 
       m_ScriptEditorCtrl.OnMouseUp(m_MouseUpArgs);
 
-      m_CurrentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
-      if (!String.IsNullOrEmpty(m_FullPath))
+      this.currentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
+      if (!String.IsNullOrEmpty(this.fullPath))
       {
-         SetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", m_CurrentCanvasPosition);
+         SetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(this.fullPath) + "\\CanvasPosition", this.currentCanvasPosition);
       }
 
       Control.MouseButtons.Buttons = 0;
@@ -3620,7 +3603,7 @@ public sealed partial class uScript : EditorWindow
       Detox.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
       Detox.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
 
-      if (_mouseRegion == MouseRegion.Canvas)
+      if (this.mouseRegion == MouseRegion.Canvas)
       {
          m_ScriptEditorCtrl.OnMouseMove(m_MouseMoveArgs);
       }
@@ -3630,31 +3613,30 @@ public sealed partial class uScript : EditorWindow
       m_MouseMoveArgs.Y += (int)_canvasRect.y;
 
       // check for divider draggging
-      if (GUI.enabled && !uScriptGUI.PanelsHidden && m_MouseDown)
+      if (GUI.enabled && !uScriptGUI.PanelsHidden && this.mouseDown)
       {
-         if (m_MouseDownRegion == MouseRegion.HandleCanvas && deltaY != 0)
+         if (this.mouseDownRegion == MouseRegion.HandleCanvas && deltaY != 0)
          {
             uScriptGUI.PanelPropertiesHeight -= deltaY;
             RequestRepaint();
          }
-         else if (m_MouseDownRegion == MouseRegion.HandlePalette && deltaX != 0)
+         else if (this.mouseDownRegion == MouseRegion.HandlePalette && deltaX != 0)
          {
             uScriptGUI.PanelLeftWidth += deltaX;
             RequestRepaint();
          }
-         else if (m_MouseDownRegion == MouseRegion.HandleProperties && deltaX != 0)
+         else if (this.mouseDownRegion == MouseRegion.HandleProperties && deltaX != 0)
          {
             uScriptGUI.PanelPropertiesWidth += deltaX;
             RequestRepaint();
          }
-         else if (m_MouseDownRegion == MouseRegion.HandleReference && deltaX != 0)
+         else if (this.mouseDownRegion == MouseRegion.HandleReference && deltaX != 0)
          {
             uScriptGUI.PanelScriptsWidth -= deltaX;
             RequestRepaint();
          }
       }
    }
-
 
    private static bool _wasRepaintRequested;
    public static void RequestRepaint()
@@ -3747,15 +3729,15 @@ public sealed partial class uScript : EditorWindow
       uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
 
       //reset zoom we're not in some weird zoom state
-      m_MapScale = 1.0f;
+      this.mapScale = 1.0f;
 
-      CurrentScriptName = null;
+      this.currentScriptName = null;
 
-      m_CurrentCanvasPosition = "";
+      this.currentCanvasPosition = string.Empty;
 
-      CurrentScriptDirty = false;
-      CurrentScript = scriptEditor.ToBase64(null);
-      CurrentScriptName = scriptEditor.Name;
+      this.currentScriptDirty = false;
+      this.currentScript = scriptEditor.ToBase64(null);
+      this.currentScriptName = scriptEditor.Name;
 
       //brand new scriptso clear out any previous caches and undo/redo
       //ClearEntityTypes();
@@ -3763,7 +3745,7 @@ public sealed partial class uScript : EditorWindow
       ClearChangeStack();
       OpenFromCache();
 
-      m_FullPath = "";
+      this.fullPath = string.Empty;
 
       //Debug.Log("clearing" );
       uScript.SetSetting("uScript\\LastOpened", "");
@@ -3788,7 +3770,7 @@ public sealed partial class uScript : EditorWindow
 
    public bool OpenScript(string fullPath)
    {
-      if (false == AllowNewFile(true) || !System.IO.File.Exists(fullPath)) return false;
+      if (false == AllowNewFile(true) || !File.Exists(fullPath)) return false;
 
       Profile p = new Profile("OpenScript " + fullPath);
 
@@ -3797,31 +3779,39 @@ public sealed partial class uScript : EditorWindow
 
       scriptEditor = new Detox.ScriptEditor.ScriptEditor("", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
 
-      if (true == scriptEditor.Open(fullPath))
+      if (scriptEditor.Open(fullPath))
       {
-         if ("" != scriptEditor.SceneName && scriptEditor.SceneName != System.IO.Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene))
+         if (scriptEditor.SceneName != string.Empty
+             && scriptEditor.SceneName != Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene))
          {
-            EditorUtility.DisplayDialog("uScript Scene Warning", "This uScript file was attached to the uScript Master GameObject in scene " + scriptEditor.SceneName + ".  " +
-                                        "It may not be compatible with this scene or run correctly if edited while this scene is open.", "OK");
+            var message =
+               string.Format(
+                  "This uScript file was attached to the uScript Master GameObject in scene {0}. It may not"
+                  + " be compatible with this scene or run correctly if edited while this scene is open.",
+                  scriptEditor.SceneName);
+            EditorUtility.DisplayDialog("uScript Scene Warning", message, "OK");
          }
 
          //reset zoom we're not in some weird zoom state
-         m_MapScale = 1.0f;
+         this.mapScale = 1.0f;
 
-         CurrentScriptName = null;
+         this.currentScriptName = null;
 
-         if (fullPath != m_FullPath) m_CurrentCanvasPosition = "";
+         if (fullPath != this.fullPath)
+         {
+            this.currentCanvasPosition = string.Empty;
+         }
 
-         m_FullPath = fullPath;
+         this.fullPath = fullPath;
 
-         uScript.SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(fullPath).Substring("Assets".Length));
-         uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
+         SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(fullPath).Substring("Assets".Length));
+         SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
 
-         m_CurrentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(m_FullPath) + "\\CanvasPosition", "");
+         this.currentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(this.fullPath) + "\\CanvasPosition", "");
 
-         CurrentScriptDirty = false;
-         CurrentScript = scriptEditor.ToBase64(null);
-         CurrentScriptName = scriptEditor.Name;
+         this.currentScriptDirty = false;
+         this.currentScript = scriptEditor.ToBase64(null);
+         this.currentScriptName = scriptEditor.Name;
 
          //brand new scriptso clear out any previous caches and undo/redo
          ClearChangeStack();
@@ -3856,16 +3846,16 @@ public sealed partial class uScript : EditorWindow
       AssetDatabase.StopAssetEditing();
       AssetDatabase.Refresh();
 
-      m_RebuildWhenReady = true;
+      this.rebuildWhenReady = true;
    }
 
    public void RebuildScripts(string path, bool stubCode)
    {
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
+      DirectoryInfo directory = new DirectoryInfo(path);
 
-      System.IO.FileInfo[] files = directory.GetFiles();
+      FileInfo[] files = directory.GetFiles();
 
-      foreach (System.IO.FileInfo file in files)
+      foreach (FileInfo file in files)
       {
          if (".uscript" != file.Extension) continue;
 
@@ -3887,7 +3877,7 @@ public sealed partial class uScript : EditorWindow
          }
       }
 
-      foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
+      foreach (DirectoryInfo subDirectory in directory.GetDirectories())
       {
          RebuildScripts(subDirectory.FullName, stubCode);
       }
@@ -3895,11 +3885,11 @@ public sealed partial class uScript : EditorWindow
 
    private string GetGeneratedScriptPath(string binaryPath)
    {
-      System.IO.Directory.CreateDirectory(Preferences.GeneratedScripts);
+      Directory.CreateDirectory(Preferences.GeneratedScripts);
 
       string wrapperPath = Preferences.GeneratedScripts;
 
-      String fileName = System.IO.Path.GetFileNameWithoutExtension(binaryPath);
+      String fileName = Path.GetFileNameWithoutExtension(binaryPath);
 
       wrapperPath += "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
 
@@ -3908,11 +3898,11 @@ public sealed partial class uScript : EditorWindow
 
    private string GetNestedScriptPath(string binaryPath)
    {
-      System.IO.Directory.CreateDirectory(Preferences.NestedScripts);
+      Directory.CreateDirectory(Preferences.NestedScripts);
 
       string logicPath = Preferences.NestedScripts;
 
-      String fileName = System.IO.Path.GetFileNameWithoutExtension(binaryPath);
+      String fileName = Path.GetFileNameWithoutExtension(binaryPath);
 
       logicPath += "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
 
@@ -3954,7 +3944,7 @@ public sealed partial class uScript : EditorWindow
       ScriptEditor script = this.m_ScriptEditorCtrl.ScriptEditor;
 
       // No file of this name or force us to ask for the name
-      if (this.m_FullPath == string.Empty || forceNameRequest)
+      if (this.fullPath == string.Empty || forceNameRequest)
       {
          const string Extension = "uscript";
          bool isSafe = false;
@@ -4054,18 +4044,18 @@ public sealed partial class uScript : EditorWindow
             return false;
          }
 
-         this.m_FullPath = chosenPath;
-         SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(this.m_FullPath).Substring("Assets".Length));
+         this.fullPath = chosenPath;
+         SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(this.fullPath).Substring("Assets".Length));
          SetSetting("uScript\\LastScene", EditorApplication.currentScene);
       }
 
-      if (this.m_FullPath == string.Empty)
+      if (this.fullPath == string.Empty)
       {
          return false;
       }
 
       bool firstSave = false;
-      string componentPath = this.GetGeneratedScriptPath(this.m_FullPath);
+      string componentPath = this.GetGeneratedScriptPath(this.fullPath);
 
       //only attach if they're generating code and it's never been generated before
       //they could have saved without generating code by using quick save
@@ -4105,7 +4095,7 @@ public sealed partial class uScript : EditorWindow
          script.SceneName = string.Empty;
       }
 
-      if (this.SaveScript(script, this.m_FullPath, generateCode, this.GenerateDebugInfo, false))
+      if (this.SaveScript(script, this.fullPath, generateCode, this.GenerateDebugInfo, false))
       {
          // When a file is saved (regardless of method), we should updated the
          // Dictionary cache for that script.
@@ -4116,7 +4106,7 @@ public sealed partial class uScript : EditorWindow
             this.m_ScriptEditorCtrl = new ScriptEditorCtrl(script);
          }
 
-         string scriptName = Path.GetFileNameWithoutExtension(this.m_FullPath);
+         string scriptName = Path.GetFileNameWithoutExtension(this.fullPath);
          this.SetStaleState(scriptName, script.GeneratedCodeIsStale);
          this.SetDebugState(scriptName, script.SavedForDebugging);
 
@@ -4127,7 +4117,7 @@ public sealed partial class uScript : EditorWindow
          if (pleaseAttachMe)
          {
             AssetDatabase.Refresh();
-            this.AttachToMasterGO(this.m_FullPath);
+            this.AttachToMasterGO(this.fullPath);
          }
             
 #if ENABLE_ANALYTICS
@@ -4137,7 +4127,7 @@ public sealed partial class uScript : EditorWindow
          return true;
       }
 
-      uScriptDebug.Log("there was an error saving " + this.m_FullPath, uScriptDebug.Type.Error);
+      uScriptDebug.Log("there was an error saving " + this.fullPath, uScriptDebug.Type.Error);
 
       return false;
    }
@@ -4194,15 +4184,15 @@ public sealed partial class uScript : EditorWindow
 
    void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType)
    {
-      System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(path);
+      DirectoryInfo directory = new DirectoryInfo(path);
 
-      System.IO.FileInfo[] files = directory.GetFiles();
+      FileInfo[] files = directory.GetFiles();
 
-      foreach (System.IO.FileInfo file in files)
+      foreach (FileInfo file in files)
       {
          if (file.Name.StartsWith(".") || file.Name.StartsWith("_") || !file.Name.EndsWith(".cs")) continue;
 
-         Type type = uScript.MasterComponent.GetAssemblyQualifiedType(System.IO.Path.GetFileNameWithoutExtension(file.Name));
+         Type type = uScript.MasterComponent.GetAssemblyQualifiedType(Path.GetFileNameWithoutExtension(file.Name));
 
          if (null != type)
          {
@@ -4214,7 +4204,7 @@ public sealed partial class uScript : EditorWindow
          }
       }
 
-      foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
+      foreach (DirectoryInfo subDirectory in directory.GetDirectories())
       {
          if (subDirectory.Name.StartsWith(".") || subDirectory.Name.StartsWith("_")) continue;
 
@@ -4548,7 +4538,7 @@ public sealed partial class uScript : EditorWindow
       return rawScripts.ToArray();
    }
 
-   static private Hashtable m_RawDescription = new Hashtable();
+   private static Hashtable m_RawDescription = new Hashtable();
 
    private LogicNode[] OverrideNestedScriptTypes(LogicNode[] logicNodes)
    {
@@ -4756,7 +4746,6 @@ public sealed partial class uScript : EditorWindow
             }
          }
 
-
          Plug[] outputPlug = new Plug[1];
 
          outputPlug[0].Name = e.Name;
@@ -4873,13 +4862,13 @@ public sealed partial class uScript : EditorWindow
        return new EntityDesc[0];
 
 #else
-      if (null != m_EntityTypes)
+      if (this.m_EntityTypes != null)
       {
          if (null != requiredTypes)
          {
             foreach (string t in requiredTypes)
             {
-               if (false == m_EntityTypeHash.Contains(t))
+               if (this.m_EntityTypeHash.Contains(t) == false)
                {
                   m_EntityTypes = null;
                   m_SzEntityTypes = null;
@@ -4888,10 +4877,8 @@ public sealed partial class uScript : EditorWindow
             }
          }
 
-         if (null != m_EntityTypes) return m_EntityTypes;
+         if (this.m_EntityTypes != null) return m_EntityTypes;
       }
-
-
 
       uScriptDebug.Log("Rebuilding Entity Types", uScriptDebug.Type.Debug);
 
@@ -4946,7 +4933,7 @@ public sealed partial class uScript : EditorWindow
          baseProperties[p.Name] = p.Name;
       }
 
-      if (null == m_SzEntityTypes)
+      if (this.m_SzEntityTypes == null)
       {
          uScriptDebug.Log("Reparsing Entity Types", uScriptDebug.Type.Debug);
 
@@ -4973,7 +4960,6 @@ public sealed partial class uScript : EditorWindow
          {
             uniqueObjects[t.ToString()] = t;
          }
-
 
          string[] userTypes = UserTypes;
 
@@ -5136,14 +5122,17 @@ public sealed partial class uScript : EditorWindow
    public string AutoAssignInstance(EntityNode entityNode)
    {
       string type = ScriptEditor.FindNodeType(entityNode);
-      if ("" == type) return "";
+      if (type == string.Empty)
+      {
+         return string.Empty;
+      }
 
-      if (true == uScript.FindNodeAutoAssignMasterInstance(type))
+      if (FindNodeAutoAssignMasterInstance(type))
       {
          return uScriptRuntimeConfig.MasterObjectName;
       }
 
-      return "";
+      return string.Empty;
    }
 
    private void CheckDragDropCanvas()
@@ -5217,9 +5206,9 @@ public sealed partial class uScript : EditorWindow
       string type = ScriptEditor.FindNodeType(node);
       string key = type + "_" + parameterName;
 
-      if (true == m_NodeParameterFields.Contains(key))
+      if (NodeParameterFields.Contains(key))
       {
-         return (AssetType)m_NodeParameterFields[key];
+         return (AssetType)NodeParameterFields[key];
       }
 
       return AssetType.Invalid;
@@ -5229,9 +5218,9 @@ public sealed partial class uScript : EditorWindow
    {
       string key = type + "_" + parameterName;
 
-      if (true == m_NodeParameterDescFields.Contains(key))
+      if (NodeParameterDescFields.Contains(key))
       {
-         return (string)m_NodeParameterDescFields[key];
+         return (string)NodeParameterDescFields[key];
       }
 
       return string.Empty;
@@ -5242,7 +5231,7 @@ public sealed partial class uScript : EditorWindow
       string type = ScriptEditor.FindNodeType(node);
       string key = type + "_" + parameterName;
 
-      return m_RequiresLink.Contains(key);
+      return RequiresLink.Contains(key);
    }
 
    public static void AddAssetPathField(string type, string parameterName, object[] attributes)
@@ -5254,7 +5243,7 @@ public sealed partial class uScript : EditorWindow
             AssetPathField field = (AssetPathField)a;
             string key = type + "_" + parameterName;
 
-            m_NodeParameterFields[key] = field.AssetType;
+            NodeParameterFields[key] = field.AssetType;
             break;
          }
       }
@@ -5269,12 +5258,11 @@ public sealed partial class uScript : EditorWindow
             FriendlyNameAttribute field = (FriendlyNameAttribute)a;
             string key = type + "_" + parameterName;
 
-            m_NodeParameterDescFields[key] = field.Desc;
+            NodeParameterDescFields[key] = field.Desc;
             break;
          }
       }
    }
-
 
    public static void AddRequiresLink(string type, string parameterName, object[] attributes)
    {
@@ -5283,7 +5271,7 @@ public sealed partial class uScript : EditorWindow
          if (a is RequiresLink)
          {
             string key = type + "_" + parameterName;
-            m_RequiresLink[key] = true;
+            RequiresLink[key] = true;
             break;
          }
       }
@@ -5377,9 +5365,9 @@ public sealed partial class uScript : EditorWindow
    {
       // Check non-logic, non-event types first
       //
-      // Structs can't have attributes and some parameters are manually added to some nodes. To
+      // Structures can't have attributes and some parameters are manually added to some nodes. To
       // support descriptions on these parameters, we have to specify this information explicitly.
-      //
+
       if (string.IsNullOrEmpty(type))
       {
          switch (p.FriendlyName)
@@ -5392,6 +5380,7 @@ public sealed partial class uScript : EditorWindow
             default: return p.FriendlyName;
          }
       }
+
       if (type == "CommentNode")
       {
          switch (p.FriendlyName)
@@ -5406,39 +5395,45 @@ public sealed partial class uScript : EditorWindow
             default: return p.FriendlyName;
          }
       }
-      else if (type == "LocalNode")
+      
+      switch (type)
       {
-         if (p.FriendlyName == "Name")
-            return "The variable name (optional). Variables that share the same name are automatically linked together and treated as the same variable in your graph. Once linked, changing the value of one will affect all others in the graph. Variables with the same name in different graphs are NOT connected in any way. Use the \"Expose to Unity\" option below in order to access this variable as a reflected property between graphs.";
-         else if (p.FriendlyName == "Value")
-            return "The value of the variable. Only values supported by this variable type are allowed.";
-         else if (p.FriendlyName == "Expose to Unity")
-            return "When checked, this will expose this variable to Unity so that it will show up in the Inspector panel for this graph's component as well as allow you to access this variable from other uScript graphs as a reflected property. You must name this variable before you can use this oiption (see the Name field above). This is the equivelent of making a variable \"public\" in a script.";
-      }
-      else if (type == "ExternalConnection")
-      {
-         if (p.FriendlyName == "Name")
-            return "The connection name. This name will be displayed in other graphs for this socket.";
-         else if (p.FriendlyName == "Order")
-            return "The order that the sockets will appear on the nested node in other graphs (from left to right for variable sockets and top to bottom for input/output sockets). Lower numbers have higher priority and will draw first.";
-         else if (p.FriendlyName == "Description")
-            return "The help text for each socket you wish to show up in the uScript Reference panel when users select this nested node in another graph.";
-      }
-      else if (type == "OwnerConnection")
-      {
-         if (p.FriendlyName == "Connection")
-            return "The GameObject this uScript graph is attached to. Also commonly known as \"this\" in scripting.";
-      }
-      else if (type == "_reflectedAction")
-      {
-      }
-      else if (type == "_reflectedProperty")
-      {
-         return "This is the reflected object property that will be referenced and/or modified.";
+         case "LocalNode":
+            switch (p.FriendlyName)
+            {
+               case "Name": return "The variable name (optional). Variables that share the same name are automatically linked together and treated as the same variable in your graph. Once linked, changing the value of one will affect all others in the graph. Variables with the same name in different graphs are NOT connected in any way. Use the \"Expose to Unity\" option below in order to access this variable as a reflected property between graphs.";
+               case "Value": return "The value of the variable. Only values supported by this variable type are allowed.";
+               case "Expose to Unity": return "When checked, this will expose this variable to Unity so that it will show up in the Inspector panel for this graph's component as well as allow you to access this variable from other uScript graphs as a reflected property. You must name this variable before you can use this oiption (see the Name field above). This is the equivelent of making a variable \"public\" in a script.";
+            }
+
+            break;
+         
+         case "ExternalConnection":
+            switch (p.FriendlyName)
+            {
+               case "Name": return "The connection name. This name will be displayed in other graphs for this socket.";
+               case "Order": return "The order that the sockets will appear on the nested node in other graphs (from left to right for variable sockets and top to bottom for input/output sockets). Lower numbers have higher priority and will draw first.";
+               case "Description": return "The help text for each socket you wish to show up in the uScript Reference panel when users select this nested node in another graph.";
+            }
+
+            break;
+         
+         case "OwnerConnection":
+            if (p.FriendlyName == "Connection")
+            {
+               return "The GameObject this uScript graph is attached to. Also commonly known as \"this\" in scripting.";
+            }
+
+            break;
+         
+         case "_reflectedAction":
+            break;
+
+         case "_reflectedProperty":
+            return "This is the reflected object property that will be referenced and/or modified.";
       }
 
-
-      return uScript.GetParameterDescField(type, p.Name);
+      return GetParameterDescField(type, p.Name);
 
       // Any remaining parameters are likely be be reflected.
       //

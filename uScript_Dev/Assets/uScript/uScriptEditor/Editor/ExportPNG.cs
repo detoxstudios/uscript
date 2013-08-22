@@ -10,6 +10,7 @@
 namespace Detox.Editor
 {
    using System;
+   using System.IO;
    using System.Reflection;
 
    using UnityEngine;
@@ -106,15 +107,17 @@ namespace Detox.Editor
          {
             // Store the original panel and canvas states
             originalCanvasLocation = uScriptInstance.ScriptEditorCtrl.FlowChart.Location;
-            originalMapScale = uScriptInstance.m_MapScale;
+            originalMapScale = uScriptInstance.MapScale;
             originalPanelState = uScriptGUI.PanelsHidden;
 
             //// Clear the debug GUI output
             //debugOutput = new List<string>();
             //debugOutput.Add("Export to PNG");
 
-            destinationFileName = System.IO.Path.GetFileNameWithoutExtension(uScriptInstance.CurrentScriptName) + "_"
-                                  + DateTime.Now.ToString("yyyyMMdd_HHmmssff");
+            destinationFileName = string.Format(
+               "{0}_{1}",
+               Path.GetFileNameWithoutExtension(uScriptInstance.ScriptEditorCtrl.ScriptEditor.Name),
+               DateTime.Now.ToString("yyyyMMdd_HHmmssff"));
 
             // Disable user input
             IsExporting = true;
@@ -137,7 +140,7 @@ namespace Detox.Editor
             }
 
             // Set the map scale to normal
-            uScriptInstance.m_MapScale = 1;
+            uScriptInstance.MapScale = 1;
 
             phase = ExportPhase.GenerateSeqmentList;
          }
@@ -152,7 +155,7 @@ namespace Detox.Editor
                uScriptInstance.ScriptEditorCtrl.RebuildScript(null, false);
             }
 
-            uScriptInstance.m_MapScale = originalMapScale;
+            uScriptInstance.MapScale = originalMapScale;
             uScriptInstance.ScriptEditorCtrl.FlowChart.Location = originalCanvasLocation;
 
             phase = ExportPhase.Finished;
