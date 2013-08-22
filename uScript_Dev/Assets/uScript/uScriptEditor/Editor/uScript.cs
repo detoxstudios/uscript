@@ -102,6 +102,8 @@ public sealed partial class uScript : EditorWindow
 
    private Node focusedNode;
 
+   private bool hasFocus;
+
 #if DETOX_STORE_BASIC || UNITY_STORE_BASIC
 
 #else
@@ -165,13 +167,13 @@ public sealed partial class uScript : EditorWindow
    // #
    // ###############################################################
 
-   //public static Preferences Preferences
-   //{
-   //   get
-   //   {
-   //      return preferences;
-   //   }
-   //}
+   public bool HasFocus
+   {
+      get
+      {
+         return this.hasFocus && EditorWindow.focusedWindow == this;
+      }
+   }
 
    public bool IsLicenseAccepted { get; private set; }
 
@@ -1281,15 +1283,23 @@ public sealed partial class uScript : EditorWindow
    internal void OnInspectorUpdate()
    {
       //Debug.Log("OnInspectorUpdate()\n" + EditorWindow.focusedWindow + " has focus, the mouse is over " + EditorWindow.mouseOverWindow);
+      //Debug.Log(
+      //   "OnInspectorUpdate()\n" + (HasFocus
+      //      ? "The uScript EditorWindow HAS focus."
+      //      : "The uScript EditorWindow DOES NOT HAVE focus."));
    }
 
    internal void OnFocus()
    {
+      //Debug.Log("OnFocus()\n");
+      this.hasFocus = true;
       this.Repaint();
    }
 
    internal void OnLostFocus()
    {
+      //Debug.Log("OnLostFocus()\n");
+      this.hasFocus = false;
       this.Repaint();
    }
 

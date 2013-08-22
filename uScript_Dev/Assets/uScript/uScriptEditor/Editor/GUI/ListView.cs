@@ -489,6 +489,8 @@ namespace Detox.Editor.GUI
 
             this.HasFocus = focus;
          }
+
+         this.HasFocus = this.HasFocus && uScript.Instance.HasFocus;
          
          // Process keyboard input
          if (this.HasFocus)
