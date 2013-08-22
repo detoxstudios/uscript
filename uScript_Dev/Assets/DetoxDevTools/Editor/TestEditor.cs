@@ -131,11 +131,10 @@ public class TestEditor : EditorWindow
 "AS Badge New",
 "AS Badge Delete",
 "AS Badge Move",
-
       };
 
 
-   private Vector2 nameScrollviewPosition;
+   //private Vector2 nameScrollviewPosition;
    private Vector2 listScrollviewPosition;
 
 
@@ -150,12 +149,12 @@ public class TestEditor : EditorWindow
 
    internal void OnGUI()
    {
-      Debug.Log("Known texture names: " + GetIconGUIContents().Keys.Count + "\n");
+      //Debug.Log("Known texture names: " + GetIconGUIContents().Keys.Count + "\n");
       foreach (string key in GetIconGUIContents().Keys)
       {
          if (knownNamedTextures.Contains(key) == false)
          {
-            Debug.Log("Found unknown texture name: " + key + "\n");
+            //Debug.Log("Found unknown texture name: " + key + "\n");
          }
       }
 
@@ -213,9 +212,64 @@ public class TestEditor : EditorWindow
       foreach (GUIStyle style in skin.customStyles)
       {
          EditorGUILayout.BeginHorizontal();
-         GUILayout.Toggle(false, GUIContent.none, style, GUILayout.Width(20), GUILayout.Height(20));
-         GUILayout.Toggle(true, GUIContent.none, style, GUILayout.Width(20), GUILayout.Height(20));
-         GUILayout.Label(style.name);
+         //GUILayout.Toggle(false, GUIContent.none, style, GUILayout.Width(20), GUILayout.Height(20));
+         //GUILayout.Toggle(true, GUIContent.none, style, GUILayout.Width(20), GUILayout.Height(20));
+
+         GUILayout.Label(style.name, GUILayout.Width(200));
+
+         if (Event.current.type == EventType.Repaint)
+         {
+            Rect r = GUILayoutUtility.GetLastRect();
+            r.x += r.width;
+            r.width = 20;
+            style.Draw(r, "0", false, false, false, false);
+
+            r.x += r.width;
+            style.Draw(r, "1", false, false, false, true);
+
+            r.x += r.width;
+            style.Draw(r, "2", false, false, true, false);
+
+            r.x += r.width;
+            style.Draw(r, "3", false, false, true, true);
+
+            r.x += r.width;
+            style.Draw(r, "4", false, true, false, false);
+
+            r.x += r.width;
+            style.Draw(r, "5", false, true, false, true);
+
+            r.x += r.width;
+            style.Draw(r, "6", false, true, true, false);
+
+            r.x += r.width;
+            style.Draw(r, "7", false, true, true, true);
+
+            r.x += r.width;
+            style.Draw(r, "8", true, false, false, false);
+
+            r.x += r.width;
+            style.Draw(r, "9", true, false, false, true);
+
+            r.x += r.width;
+            style.Draw(r, "A", true, false, true, false);
+
+            r.x += r.width;
+            style.Draw(r, "B", true, false, true, true);
+
+            r.x += r.width;
+            style.Draw(r, "C", true, true, false, false);
+
+            r.x += r.width;
+            style.Draw(r, "D", true, true, false, true);
+
+            r.x += r.width;
+            style.Draw(r, "E", true, true, true, false);
+
+            r.x += r.width;
+            style.Draw(r, "F", true, true, true, true);
+         }
+
          EditorGUILayout.EndHorizontal();
       }
 

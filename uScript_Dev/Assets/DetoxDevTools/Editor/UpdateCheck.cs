@@ -13,7 +13,6 @@ using UnityEngine;
 
 public class UpdateCheck : EditorWindow
 {
-   private Vector2 scrollviewPosition;
    private UpdateNotification.UpdateStatus updateStatus = UpdateNotification.UpdateStatus.None;
 
    // Add menu named "My Window" to the Window menu

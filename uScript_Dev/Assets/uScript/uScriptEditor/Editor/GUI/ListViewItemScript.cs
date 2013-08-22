@@ -21,7 +21,7 @@ namespace Detox.Editor.GUI
 
       // === Fields =====================================================================
 
-      private string sourcePath;
+      //private string sourcePath;
 
       // === Constructors ===============================================================
 
