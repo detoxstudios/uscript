@@ -29,9 +29,6 @@ public class uScriptAct_SetRandomInt : uScriptLogic
       out int TargetInt
       )
    {
-      // Make sure we don't have min > max (or other way around)
-      if (Min > Max) { Min = Max; }
-
       TargetInt = Random.Range(Min, Max + 1);
    }
 }

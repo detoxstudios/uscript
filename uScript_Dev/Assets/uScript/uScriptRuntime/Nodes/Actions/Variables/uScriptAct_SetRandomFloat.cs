@@ -29,9 +29,6 @@ public class uScriptAct_SetRandomFloat : uScriptLogic
       out float TargetFloat
       )
    {
-      // Make sure we don't have min > max (or other way around)
-      if (Min > Max) { Min = Max; }
-
       TargetFloat = Random.Range(Min, Max);
    }
 }

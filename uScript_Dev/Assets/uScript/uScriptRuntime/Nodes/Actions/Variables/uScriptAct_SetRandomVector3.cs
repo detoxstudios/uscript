@@ -44,15 +44,7 @@ public class uScriptAct_SetRandomVector3 : uScriptLogic
       [FriendlyName("Target Vector3", "The Vector3 variable that gets set.")]
       out Vector3 TargetVector3
       )
-   {
-      // Make sure we don't have min > max (or other way around)
-      if (MinX > MaxX) { MinX = MaxX; }
-      if (MaxX < MinX) { MaxX = MinX; }
-      if (MinY > MaxY) { MinY = MaxY; }
-      if (MaxY < MinY) { MaxY = MinY; }
-      if (MinZ > MaxZ) { MinZ = MaxZ; }
-      if (MaxZ < MinZ) { MaxZ = MinZ; }
-		
+   {	
       float finalX = Random.Range(MinX, MaxX);
       float finalY = Random.Range(MinY, MaxY);
       float finalZ = Random.Range(MinZ, MaxZ);

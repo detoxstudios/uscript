@@ -53,16 +53,6 @@ public class uScriptAct_SetRandomVector4 : uScriptLogic
       out Vector4 TargetVector4
       )
    {
-      // Make sure we don't have min > max (or other way around)
-      if (MinX > MaxX) { MinX = MaxX; }
-//      if (MaxX < MinX) { MaxX = MinX; }
-      if (MinY > MaxY) { MinY = MaxY; }
-//      if (MaxY < MinY) { MaxY = MinY; }
-      if (MinZ > MaxZ) { MinZ = MaxZ; }
-//      if (MaxZ < MinZ) { MaxZ = MinZ; }
-      if (MinW > MaxW) { MinW = MaxW; }
-//      if (MaxW < MinW) { MaxW = MinW; }
-
       float finalX = Random.Range(MinX, MaxX);
       float finalY = Random.Range(MinY, MaxY);
       float finalZ = Random.Range(MinZ, MaxZ);
