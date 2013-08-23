@@ -30,6 +30,7 @@ public class uScriptBackgroundProcess
    {
       GraphInfoList = new Dictionary<string, GraphInfo>();
 
+      EditorApplication.projectWindowChanged += ForceFileRefresh;
       EditorApplication.update += Update;
    }
 

@@ -32,8 +32,6 @@ namespace Detox.Editor.GUI
 
          private readonly ListView listView;
 
-         private readonly List<ListViewItemScript> allItems = new List<ListViewItemScript>();
-
          private string filterText = string.Empty;
 
          // === Constructors ===============================================================
@@ -54,6 +52,10 @@ namespace Detox.Editor.GUI
             ShowLabelIcons = true;
 
             this.CreateColumns();
+
+            this.UpdateListContents();
+
+            EditorApplication.projectWindowChanged += this.UpdateListContents;
          }
 
          // === Properties =================================================================
@@ -120,7 +122,7 @@ namespace Detox.Editor.GUI
          /// <summary>
          /// Generate the initial list contents. Should be called during uScript Editor initialization and OnProjectChanged.
          /// </summary>
-         public void GetListContents()
+         public void UpdateListContents()
          {
             if (this.listView == null)
             {
@@ -131,60 +133,17 @@ namespace Detox.Editor.GUI
             // Get the graph paths, making the path relative to the project folder
             var initialPaths = uScript.GetGraphPaths().Select(path => path.Replace(uScript.Preferences.UserScripts + "/", string.Empty)).ToList();
 
-            // Create a ListViewItem for each path
-            foreach (var path in initialPaths)
-            {
-               // TODO: Consider passing the actual GraphInfo instead, since ListViewItemScript pulls info from it anyway
-               this.allItems.Add(new ListViewItemScript(this.listView, path));
-            }
- 
-            this.FilterListContents();
-            this.SortListContents();
-            this.UpdateListHierarchy();
-         }
-
-         /// <summary>
-         /// Filter the list contents. Should be called whenever the filter text search field changes.
-         /// </summary>
-         public void FilterListContents()
-         {
-            // Filter the list, hiding every item that does not contain the user-specified filter text
-            var match = this.filterText.ToLower();
-
-            foreach (var item in this.allItems)
-            {
-               item.IsVisible = string.IsNullOrEmpty(match)
-                                || item.ItemPath.Substring(0, item.ItemPath.Length - 8).ToLower().Contains(match);
-            }
-
-            // TODO: Should the filterText apply to SceneName as well?
-         }
-
-         /// <summary>
-         /// Sort the list contents. Should be called whenever sorting has changed, such as when column header buttons are clicked.
-         /// </summary>
-         public void SortListContents()
-         {
-            // Sort the list, using the user-specified ordering
-            // TODO: replace all of this with the actual sort logic
-
-            // TODO: A custom Comparer should be created to handle sorting, and it should be used by the ListView directly, not called here.
-         }
-
-         /// <summary>
-         /// Update the list hierarchy, taking into account the directory foldout states. Should be called whenever a foldout state changes.
-         /// </summary>
-         public void UpdateListHierarchy()
-         {
             // Send final (filtered and sorted) list to the ListView control
             this.listView.ClearItems();
 
-            foreach (var item in this.allItems.Where(item => item.IsVisible))
+            foreach (var path in initialPaths)
             {
-               this.listView.AddItem(item);
+               this.listView.AddItem(path);
             }
-            
-            this.listView.RebuildListHierarchy();
+
+            this.listView.FilterItems(this.filterText);
+
+            uScript.Instance.Repaint();
          }
 
          private void CreateColumns()

@@ -97,13 +97,10 @@ namespace Detox.Editor.GUI
 
          this.panelScriptCurrent = new PanelScriptCurrent();
          this.panelScriptList = new PanelScriptList();
-
-         this.panelScriptList.GetListContents();
       }
 
       public void OnProjectChange()
       {
-         this.panelScriptList.GetListContents();
          this.panelScriptCurrent.RefreshSourceState();
       }
 
