@@ -21,21 +21,23 @@ namespace Detox.Editor.GUI
       private readonly List<Rect> dragHandles = new List<Rect>();
 
       private readonly List<ListViewItem> seedItems = new List<ListViewItem>();
-      private readonly List<ListViewItem> flatItems = new List<ListViewItem>();
-      private readonly List<ListViewItem> nestedItems = new List<ListViewItem>();
+      private readonly List<ListViewItem> filteredItems = new List<ListViewItem>();
+      private readonly List<ListViewItem> visibleItems = new List<ListViewItem>(); 
       private readonly List<ListViewItem> selectedItems = new List<ListViewItem>();
 
-      private readonly Dictionary<string, FolderInfo> folders = new Dictionary<string, FolderInfo>();
+      private readonly Dictionary<string, FolderInfo> folderItems = new Dictionary<string, FolderInfo>();
 
       private ListViewItem anchorItem;
       private Vector2 dragInitialMouse;
       private Vector2 dragInitialSize;
       private ListViewColumn draggedColumn;
       private Rect itemRowRect;
-      private Rect totalContentSize;
 
       private Vector2 listOffset = Vector2.zero;
 
+      private bool shouldRebuildVisibleList;
+
+      private Rect totalContentSize;
 
       // === Constructors ===============================================================
 
@@ -58,6 +60,41 @@ namespace Detox.Editor.GUI
       }
 
       // === Properties =================================================================
+
+      public bool AllowColumnReorder { get; set; }
+
+      public bool AlternateRowBackground { get; set; }
+
+      public Rect Bounds { get; private set; }
+
+      public bool CanSelect { get; set; }
+
+      public Rect ClientRect { get; private set; }
+
+      public List<ListViewColumn> Columns { get; private set; }
+
+      public EditorWindow EditorWindow { get; private set; }
+
+      public int FirstVisibleRow { get; private set; }
+
+      public bool ForceHorizontalColumnFit { get; set; }
+
+      public bool HasFocus { get; set; }
+
+      public Rect HeaderPosition { get; private set; }
+
+      public bool IsHorizontalScrollbarVisible { get; private set; }
+
+      public bool IsVerticalScrollbarVisible { get; private set; }
+
+      public int ItemRow { get; set; }
+
+      public bool ItemRowEven { get; private set; }
+
+      public int LastVisibleRow { get; private set; }
+
+      public Type ListItemType { get; private set; }
+
       public Vector2 ListOffset
       {
          get
@@ -77,53 +114,6 @@ namespace Detox.Editor.GUI
       }
 
       public Rect ListPosition { get; private set; }
-
-      public Rect HeaderPosition { get; private set; }
-
-      public bool AllowColumnReorder { get; set; }
-
-      public bool AlternateRowBackground { get; set; }
-
-      public Rect Bounds { get; private set; }
-
-      public bool CanSelect { get; set; }
-
-      public Rect ClientRect { get; private set; }
-
-      public List<ListViewColumn> Columns { get; private set; }
-
-      public bool ContainsFocus { get; private set; }
-
-      public EditorWindow EditorWindow { get; private set; }
-
-      public int FirstVisibleRow { get; private set; }
-
-      public bool Focused { get; private set; }
-
-      public bool ForceHorizontalColumnFit { get; set; }
-
-      public bool GridLines { get; set; }
-
-      public bool HasFocus { get; set; }
-
-      public bool HideSelection { get; set; }
-
-      public bool IsHorizontalScrollbarVisible { get; private set; }
-
-      public bool IsVerticalScrollbarVisible { get; private set; }
-
-      public int ItemRow { get; set; }
-
-      public bool ItemRowEven { get; private set; }
-
-      public List<ListViewItem> Items
-      {
-         get { return this.nestedItems; }
-      }
-
-      public int LastVisibleRow { get; private set; }
-
-      public Type ListItemType { get; private set; }
 
       public int MinRowWidth { get; private set; }
 
@@ -147,7 +137,7 @@ namespace Detox.Editor.GUI
          }
       }
 
-      //      public ListViewItem SelectedID
+//      public ListViewItem SelectedID
 //      {
 //         get { return this.selectedItems.Count > 0 ? this.selectedItems[0] : null; }
 //      }
@@ -202,56 +192,15 @@ namespace Detox.Editor.GUI
       public void ClearItems()
       {
          this.seedItems.Clear();
-      }
-
-      public void RebuildListHierarchy()
-      {
-         this.flatItems.Clear();
-         this.nestedItems.Clear();
-
-         foreach (var item in this.seedItems.Where(item => item.IsVisible))
-         {
-            ListViewItem parent = null;
-            var path = string.Empty;
-            var folders = new List<string>(item.ItemPath.Split('/'));
-
-            while (folders.Count > 1)
-            {
-               var folder = folders[0];
-               path += folder + "/";
-               folders.RemoveAt(0);
-
-               // TODO: Ideally, the key would be just "path"
-
-               if (this.folders.ContainsKey(path + folder))
-               {
-                  parent = this.folders[path + folder].Item;
-
-                  if (this.flatItems.Contains(parent) == false)
-                  {
-                     this.flatItems.Add(parent);
-                  }
-               }
-               else
-               {
-                  var child = (ListViewItem)Activator.CreateInstance(this.ListItemType, this, path + folder);
-
-                  this.AddHierarchyChild(parent, child);
-
-                  this.folders.Add(path + folder, new FolderInfo(child));
-
-                  parent = child;
-               }
-            }
-
-            this.AddHierarchyChild(parent, item);
-         }
-
-         this.RestoreFolderStates();
+         this.filteredItems.Clear();
+         this.visibleItems.Clear();
       }
 
       public void ClickNewSelection(ListViewItem item)
       {
+         //Debug.Log("ClickNewSelection(): " + item.ItemPath + "\n" + "\t"
+         //   + "filteredItems.Count: " + this.filteredItems.Count + ", visibleItems.Count: " + this.visibleItems.Count);
+
          this.SelectNone();
          this.SelectItem(item);
          this.FrameItem(item);
@@ -260,6 +209,8 @@ namespace Detox.Editor.GUI
 
       public void ClickToggleSelection(ListViewItem item)
       {
+         //Debug.Log("ClickToggleSelection(): " + item.ItemPath + "\n");
+
          if (this.selectedItems.Contains(item))
          {
             this.DeselectItem(item);
@@ -284,11 +235,11 @@ namespace Detox.Editor.GUI
          // If there is no anchor, the first item in the list is used
          if (this.anchorItem == null)
          {
-            this.anchorItem = this.nestedItems.First();
+            this.anchorItem = this.visibleItems.First();
          }
 
+         // TODO: Remove the following debug logic
          var anchorName = this.anchorItem == null ? "(null)" : this.anchorItem.ItemName;
-
          Debug.Log("SELECT RANGE: \t\"" + anchorName + "\"\n\t\t\t\t  TO: \t\"" + item.ItemName + "\"");
 
          // TODO: Add the specified range to the selection
@@ -307,35 +258,15 @@ namespace Detox.Editor.GUI
                this.DrawColumnHeaders();
             }
 
-            var list = new List<ListViewItem>();
-            var skipPath = string.Empty;
-
-            foreach (var item in this.flatItems)
+            // Get the visibleItems, if necessary
+            if (this.shouldRebuildVisibleList)
             {
-               if (string.IsNullOrEmpty(skipPath) == false && item.ItemPath.StartsWith(skipPath))
-               {
-                  continue;
-               }
-
-               if (item.Children != null && this.IsFolderExpanded(item) == false)
-               {
-                  skipPath = item.ItemPath.Substring(0, item.ItemPath.LastIndexOf("/", System.StringComparison.Ordinal));
-               }
-
-               list.Add(item);
+               this.BuildVisibleList();
             }
-
-
 
             if (e.type == EventType.Layout)
             {
                // TODO: Determine the height and position of each item in the list
-               //this.totalContentSize = new Rect();
-               //this.CalculateNestedListLayout(this.nestedItems, ref this.totalContentSize);
-
-               this.totalContentSize = this.CalculateFlatListLayout(list);
-
-               //Debug.Log("totalContentSize: " + this.totalContentSize + "\n");
 
                // TODO: With the above information, determine the first and last visible items
             }
@@ -362,7 +293,7 @@ namespace Detox.Editor.GUI
                   uScriptGUIStyle.VerticalScrollbar,
                   "scrollview");
                {
-                  var totalVisibleRows = this.CountTotalVisibleRows(this.nestedItems);
+                  var totalVisibleRows = this.visibleItems.Count;
                   if (this.TotalVisibleItems != totalVisibleRows)
                   {
                      this.TotalVisibleItems = totalVisibleRows;
@@ -414,22 +345,16 @@ namespace Detox.Editor.GUI
                   this.ItemRow = 0;
                   this.ItemRowEven = false;
 
-                  //if (this.nestedItems.Count > 0)
-                  if (list.Count > 0)
+                  if (this.visibleItems.Count > 0)
                   {
                      this.itemRowRect = new Rect(0, 0, this.MinRowWidth, 0);
 
-                     //for (var i = 0; i < this.nestedItems.Count; i++)
-                     for (var i = 0; i < list.Count; i++)
+                     for (var i = 0; i < this.visibleItems.Count; i++)
                      {
-                        //this.nestedItems[i].Draw(ref this.itemRowRect);
-                        //this.itemRowRect.y += this.itemRowRect.height;
-
-                        // TOD: Pass a referent to _itemRowRect, so that the ListView can keep track of the layout
+                        // TODO: Pass a reference to _itemRowRect, so that the ListView can keep track of the layout
                         // TODO: Create a Contains method that returns true if any part of a rect exists in another rect
 
-                        //ListViewItem item = this.nestedItems[i];
-                        ListViewItem item = list[i];
+                        ListViewItem item = this.visibleItems[i];
 
                         bool shouldDrawRow = this.ItemRow >= this.FirstVisibleRow && this.ItemRow <= this.LastVisibleRow;
 
@@ -450,8 +375,7 @@ namespace Detox.Editor.GUI
                            //Debug.Log("ROW: " + this.ItemRow.ToString() + ", RECT: " + this.itemRowRect.ToString() + "\n");
                         }
 
-                        //this.nestedItems[i].Row = this.ItemRow++;
-                        list[i].Row = this.ItemRow++;
+                        this.visibleItems[i].Row = this.ItemRow++;
                         this.ItemRowEven = !this.ItemRowEven;
                      }
                   }
@@ -893,75 +817,85 @@ namespace Detox.Editor.GUI
 
       public void CollapseAllFolders()
       {
-         foreach (var item in this.folders)
+         foreach (var item in this.folderItems)
          {
             item.Value.Expanded = false;
          }
 
          this.SaveFolderStates();
+
+         this.shouldRebuildVisibleList = true;
       }
 
       public void CollapseFolder(ListViewItem item)
       {
-         if (this.folders.ContainsKey(item.ItemPath) == false)
+         if (this.folderItems.ContainsKey(item.ItemPath) == false)
          {
             uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemName, uScriptDebug.Type.Error);
             return;
          }
 
-         if (this.folders[item.ItemPath].Expanded == false)
+         if (this.folderItems[item.ItemPath].Expanded == false)
          {
             return;  // The folder is already collapsed, so abort
          }
 
-         this.folders[item.ItemPath].Expanded = false;
+         this.folderItems[item.ItemPath].Expanded = false;
          this.SaveFolderStates();
+
+         this.shouldRebuildVisibleList = true;
       }
 
       public void ExpandAllFolders()
       {
-         foreach (var item in this.folders)
+         foreach (var item in this.folderItems)
          {
             item.Value.Expanded = true;
          }
 
          this.SaveFolderStates();
+
+         this.shouldRebuildVisibleList = true;
       }
 
       public void ExpandFolder(ListViewItem item)
       {
-         if (this.folders.ContainsKey(item.ItemPath) == false)
+         if (this.folderItems.ContainsKey(item.ItemPath) == false)
          {
             uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemPath, uScriptDebug.Type.Error);
             return;
          }
 
-         if (this.folders[item.ItemPath].Expanded)
+         if (this.folderItems[item.ItemPath].Expanded)
          {
             return;  // The folder is already expanded, so abort
          }
 
-         this.folders[item.ItemPath].Expanded = true;
+         this.folderItems[item.ItemPath].Expanded = true;
          this.SaveFolderStates();
+
+         this.shouldRebuildVisibleList = true;
       }
 
       public void ToggleFolder(ListViewItem item)
       {
-         if (this.folders.ContainsKey(item.ItemPath) == false)
+         if (this.folderItems.ContainsKey(item.ItemPath) == false)
          {
             uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemPath, uScriptDebug.Type.Error);
             return;
          }
 
-         this.folders[item.ItemPath].Expanded = !this.folders[item.ItemPath].Expanded;
+         this.folderItems[item.ItemPath].Expanded = !this.folderItems[item.ItemPath].Expanded;
          this.SaveFolderStates();
+
+         this.shouldRebuildVisibleList = true;
       }
 
       public bool IsFolderExpanded(ListViewItem item)
       {
-         if (this.folders.ContainsKey(item.ItemPath))
+         if (this.folderItems.ContainsKey(item.ItemPath))
          {
-            return this.folders[item.ItemPath].Expanded;
+            return this.folderItems[item.ItemPath].Expanded;
          }
 
          uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemPath, uScriptDebug.Type.Error);
@@ -970,51 +904,41 @@ namespace Detox.Editor.GUI
 
       public void FilterItems(string match)
       {
+         // TODO: Delegate the work, passing the seedItems
+         // TODO: Should the filterText apply to SceneName as well?
+
+         // TODO: IsFiltered should be used to mean that the item was included by the search filter.
+         // TODO: IsVisible should mean just that. The item is visible in the list (taking foldouts into account. Truly visible.
+
+         // TODO: FilterItem() > BuildFilteredList() > create filteredItems, clear visibleItems > create visibleItems > draw visibleItems
+         // TODO: All keyboard navigation commands should use the visibleItems list, since that accurately represents the current foldout states
+         // TODO: When moving selection up, down, or collapsing or expanding (left or right), ...
+         // TODO: If a selected item is under a collapsed folder, deselect it
+
          // Filter the list, hiding every item that does not contain the user-specified filter text
          match = match.ToLower();
 
          foreach (var item in this.seedItems)
          {
-            item.IsVisible = string.IsNullOrEmpty(match)
-                             || item.ItemPath.Substring(0, item.ItemPath.Length - 8).ToLower().Contains(match);
+            item.IsVisible = false;
+            item.IsFiltered = string.IsNullOrEmpty(match)
+                              || item.ItemPath.Substring(0, item.ItemPath.Length - 8).ToLower().Contains(match);
          }
 
-         // TODO: Should the filterText apply to SceneName as well?
-
-         //var visibleCount = 0;
-         //var hiddenCount = 0;
-         //foreach (var item in this.seedItems)
-         //{
-         //   if (item.IsVisible)
-         //   {
-         //      visibleCount++;
-         //   }
-         //   else
-         //   {
-         //      hiddenCount++;
-         //   }
-         //}
-
-         //Debug.Log("FILTERING with \"" + match + "\": " + visibleCount + " visible, " + hiddenCount + " hidden.\n");
-
-         this.RebuildListHierarchy();
+         this.BuildFilteredList();
       }
 
       public void FrameItem(ListViewItem item)
       {
-         ////         int index = GetVisibleItemIndex(item);
-         
-         var yMin = item.Row * item.Height;
-         var yMax = yMin + item.Height;
          var offset = this.ListOffset;
 
-         if (offset.y > yMin)
+         if (offset.y > item.Position.yMin)
          {
-            offset.y = yMin;
+            offset.y = item.Position.yMin;
          }
-         else if (offset.y < yMax - this.Position.height)
+         else if (offset.y + this.ListPosition.height < item.Position.yMax)
          {
-            offset.y = yMax - this.Position.height;
+            offset.y += item.Position.yMax - (offset.y + this.ListPosition.height);
          }
 
          this.ListOffset = offset;
@@ -1069,7 +993,7 @@ namespace Detox.Editor.GUI
 
       public ListViewItem SelectItem(int index)
       {
-         ListViewItem item = this.GetVisibleItem(index);
+         var item = this.GetVisibleItem(index);
          if (item == null)
          {
             uScriptDebug.Log("No item was found at the specified list index (" + index.ToString(CultureInfo.InvariantCulture) + ").", uScriptDebug.Type.Error);
@@ -1096,25 +1020,29 @@ namespace Detox.Editor.GUI
       public void SelectFirst()
       {
          this.SelectNone();
-         
-         if (this.nestedItems.Count > 0)
+
+         if (this.visibleItems.Count <= 0)
          {
-            ListViewItem item = this.nestedItems[0];
-            this.SelectItem(item);
-            this.FrameItem(item);
+            return;
          }
+
+         var item = this.visibleItems.First();
+         this.SelectItem(item);
+         this.FrameItem(item);
       }
       
       public void SelectLast()
       {
          this.SelectNone();
 
-         if (this.nestedItems.Count > 0)
+         if (this.visibleItems.Count <= 0)
          {
-            ListViewItem item = this.nestedItems[this.nestedItems.Count - 1];
-            this.SelectItem(item);
-            this.FrameItem(item);
+            return;
          }
+
+         var item = this.visibleItems.Last();
+         this.SelectItem(item);
+         this.FrameItem(item);
       }
       
       public void SelectParent()
@@ -1145,7 +1073,7 @@ namespace Detox.Editor.GUI
          var index = this.selectedItems[this.selectedItems.Count - 1].Row + 1;
          ////         Debug.Log("CURRENT INDEX: " + _selectedItems[_selectedItems.Count - 1].row.ToString()
          ////            + "\nNEW: " + index.ToString());
-         var lastIndex = this.CountTotalVisibleRows(this.nestedItems) - 1;
+         var lastIndex = this.visibleItems.Count - 1;
          if (index > lastIndex)
          {
             ////            Debug.Log("UPDATE: " + index.ToString() + " to " + lastIndex.ToString() + "\n");
@@ -1206,7 +1134,7 @@ namespace Detox.Editor.GUI
 
       private void SaveFolderStates()
       {
-         var expandedFolders = (from item in this.folders where item.Value.Expanded select item.Key).ToList();
+         var expandedFolders = (from item in this.folderItems where item.Value.Expanded select item.Key).ToList();
          var serialized = string.Join("\n", expandedFolders.ToArray());
 
          uScript.Preferences.GraphListFolderStates = serialized;
@@ -1218,9 +1146,9 @@ namespace Detox.Editor.GUI
          var serialized = uScript.Preferences.GraphListFolderStates;
          var expandedFolders = serialized.Split('\n');
 
-         foreach (var folder in expandedFolders.Where(key => this.folders.ContainsKey(key)))
+         foreach (var folder in expandedFolders.Where(key => this.folderItems.ContainsKey(key)))
          {
-            this.folders[folder].Expanded = true;
+            this.folderItems[folder].Expanded = true;
          }
       }
 
@@ -1332,6 +1260,23 @@ namespace Detox.Editor.GUI
          }
          
          genericMenu.ShowAsContext();
+      }
+
+      private void AddHierarchyChild(ListViewItem parent, ListViewItem child)
+      {
+         if (parent != null)
+         {
+            if (parent.Children == null)
+            {
+               parent.Children = new List<ListViewItem>();
+            }
+
+            child.Parent = parent;
+            child.Depth = parent.Depth + 1;
+            parent.Children.Add(child);
+         }
+
+         this.filteredItems.Add(child);
       }
 
       private void AutoSizeColumns(int availableWidth)
@@ -1467,62 +1412,62 @@ namespace Detox.Editor.GUI
          }
       }
 
-      private int CountTotalVisibleRows(IEnumerable<ListViewItem> items)
+      private void BuildFilteredList()
       {
-         var count = 0;
-        
-         foreach (var listViewItem in items)
-         {
-            count++;
+         this.filteredItems.Clear();
 
-            if (listViewItem.Children != null && this.IsFolderExpanded(listViewItem))
+         this.shouldRebuildVisibleList = true;
+
+         foreach (var item in this.seedItems.Where(item => item.IsFiltered))
+         {
+            ListViewItem parent = null;
+            var path = string.Empty;
+            var folders = new List<string>(item.ItemPath.Split('/'));
+
+            while (folders.Count > 1)
             {
-               count += this.CountTotalVisibleRows(listViewItem.Children);
+               var folder = folders[0];
+               path += folder + "/";
+               folders.RemoveAt(0);
+
+               // TODO: Ideally, the key would be just "path"
+
+               if (this.folderItems.ContainsKey(path + folder))
+               {
+                  parent = this.folderItems[path + folder].Item;
+
+                  if (this.filteredItems.Contains(parent) == false)
+                  {
+                     this.filteredItems.Add(parent);
+                  }
+               }
+               else
+               {
+                  var child = (ListViewItem)Activator.CreateInstance(this.ListItemType, this, path + folder);
+
+                  this.AddHierarchyChild(parent, child);
+
+                  this.folderItems.Add(path + folder, new FolderInfo(child));
+
+                  parent = child;
+               }
             }
+
+            this.AddHierarchyChild(parent, item);
          }
-        
-         return count;
+
+         this.RestoreFolderStates();
       }
 
-      private Rect CalculateFlatListLayout()
+      private void BuildVisibleList()
       {
-         var rect = new Rect();
-
-         //foreach (var item in this.flatItems)
-         //{
-
-         //   ListViewItem parent = null;
-         //   var path = string.Empty;
-         //   var folders = new List<string>(item.Path.Split('/'));
-
-         //   while (folders.Count > 1)
-         //   {
-         //      string folder = folders[0];
-         //      path += folder + "/";
-         //      folders.RemoveAt(0);
-
-         //      if (folderItemList.ContainsKey(path))
-         //      {
-         //         parent = folderItemList[path];
-         //      }
-         //      else
-         //      {
-         //         var child = (ListViewItem)Activator.CreateInstance(this.ListItemType, this, path + folder);
-         //         this.AddHierarchyChild(parent, child);
-
-         //         folderItemList.Add(path, child);
-
-         //         parent = child;
-         //      }
-         //   }
-
-         //   this.AddHierarchyChild(parent, item);
-         //}
-
+         this.visibleItems.Clear();
+         this.shouldRebuildVisibleList = false;
+         this.totalContentSize = new Rect();
 
          var skipPath = string.Empty;
 
-         foreach (var item in this.flatItems)
+         foreach (var item in this.filteredItems)
          {
             if (string.IsNullOrEmpty(skipPath) == false && item.ItemPath.StartsWith(skipPath))
             {
@@ -1531,56 +1476,34 @@ namespace Detox.Editor.GUI
 
             if (item.Children != null && this.IsFolderExpanded(item) == false)
             {
-               skipPath = item.ItemPath.Substring(0, item.ItemPath.LastIndexOf("/", System.StringComparison.Ordinal));
-               Debug.Log("NEW SKIP PATH: " + skipPath);
+               skipPath = item.ItemPath.Substring(0, item.ItemPath.LastIndexOf("/", StringComparison.Ordinal));
             }
 
-            item.Position = new Rect(0, rect.height, rect.width, item.Height);
-            rect.height += item.Height;
+            item.IsVisible = true;
 
-            Debug.Log("UPDATED RECT: " + rect + "\n");
+            item.Position = new Rect(0, this.totalContentSize.height, this.totalContentSize.width, item.Height);
+            this.totalContentSize.height += item.Height;
 
-         }
-
-         Debug.Log("FINAL RECT: " + rect + "\n");
-
-         return rect;
-      }
-
-      private Rect CalculateFlatListLayout(IEnumerable<ListViewItem> list)
-      {
-         var rect = new Rect();
-
-         foreach (var item in list)
-         {
-            item.Position = new Rect(0, rect.height, rect.width, item.Height);
-            rect.height += item.Height;
-
-            //Debug.Log("UPDATED RECT: " + rect + "\n");
-         }
-
-         //Debug.Log("FINAL RECT: " + rect + "\n");
-
-         return rect;
-      }
-
-      private void CalculateNestedListLayout(IEnumerable<ListViewItem> items, ref Rect totalSize)
-      {
-         foreach (var item in items)
-         {
-            item.Position = new Rect(0, totalSize.height, totalSize.width, item.Height);
-            totalSize.height += item.Height;
-
-            //Debug.Log("ITEM COUNT: " + items.Count + "\n");
-
-            //Debug.Log("ITEM: " + item.ItemName + ", POSITION: " + item.Position + "\n\ttotalSize: " + totalSize);
-
-            if (item.Children != null && this.IsFolderExpanded(item))
-            {
-               this.CalculateNestedListLayout(item.Children, ref totalSize);
-            }
+            this.visibleItems.Add(item);
          }
       }
+
+      //private int CountTotalVisibleRows(IEnumerable<ListViewItem> items)
+      //{
+      //   var count = 0;
+        
+      //   foreach (var listViewItem in items)
+      //   {
+      //      count++;
+
+      //      if (listViewItem.Children != null && this.IsFolderExpanded(listViewItem))
+      //      {
+      //         count += this.CountTotalVisibleRows(listViewItem.Children);
+      //      }
+      //   }
+        
+      //   return count;
+      //}
 
       private void DrawColumnHeaders()
       {
@@ -1758,8 +1681,6 @@ namespace Detox.Editor.GUI
                         GUI.Label(rectColumnHeader, column.Content, Style.ColumnHeader);
                      }
 
-                     //Debug.Log("COLUMN: " + rectColumnHeader + " - " + column.ID + ", " + Event.current.type + "\n");
-
                      rectColumnHeader.x = rectColumnHeader.xMax;
                   }
 
@@ -1775,24 +1696,6 @@ namespace Detox.Editor.GUI
 //////                     GUI.Box(r, GUIContent.none, uScriptGUIStyle.debugBox);
 //                     uScriptGUI.DebugBox(r, Color.red);
 //                  }
-
-////                  // TEMP DEBUG DRAW
-////                  rectColumnHeader = new Rect(rectColumnHeaders.x, 10, rectColumnHeaders.width, rectColumnHeaders.height-10);
-////
-////                  // Handle column resizing
-////                  foreach (ListViewColumn column in Columns)
-////                  {
-////                     // Allocate space for the current column and prepare for the next
-////                     rectColumnHeader.width = column.Width;
-////                     rectColumnHeader.x = rectColumnHeader.xMax;
-////
-////                     // Set the area for the resize grab handle
-////                     Rect rectHandle = new Rect(rectColumnHeader);
-////                     rectHandle.x -= (_draggedColumn == null ? 2 : 4);
-////                     rectHandle.width = (_draggedColumn == null ? 5 : 9);
-////
-////                     GUI.Box(rectHandle, GUIContent.none);
-////                  }
                }
             }
 
@@ -2001,123 +1904,14 @@ namespace Detox.Editor.GUI
 
       private ListViewItem GetVisibleItem(int index)
       {
-         if (index < 0 || index > this.CountTotalVisibleRows(this.nestedItems))
+         if (index >= 0 && index < this.visibleItems.Count)
          {
-            uScriptDebug.Log("The specified item index is out of range.", uScriptDebug.Type.Error);
-            return null;
+            return this.visibleItems[index];
          }
 
-         ListViewItem item = this.GetItem(index, this.nestedItems);
-         if (item == null)
-         {
-            uScriptDebug.Log("Could not find a ListViewItem using the specified index (" + index.ToString(CultureInfo.InvariantCulture) + ")", uScriptDebug.Type.Error);
-         }
-
-         return item;
-      }
-
-      private ListViewItem GetItem(int index, IEnumerable<ListViewItem> items)
-      {
-         foreach (var item in items)
-         {
-            if (item.Row == index)
-            {
-               return item;
-            }
-
-            if (item.Children != null && this.IsFolderExpanded(item))
-            {
-               var result = this.GetItem(index, item.Children);
-               if (result != null)
-               {
-                  return result;
-               }
-            }
-         }
-
+         uScriptDebug.Log("The specified item index is out of range.", uScriptDebug.Type.Error);
          return null;
       }
-
-//   private ListViewItem GetItem(int index, List<ListViewItem> items, int startIndex)
-//   {
-//      for (int i = 0; i < items.Count; i++)
-//      {
-//         if (startIndex == index)
-//         {
-//            return items[i];
-//         }
-//
-//         startIndex++;
-//
-//         if (items[i].children != null && items[i].expanded)
-//         {
-//            ListViewItem result = GetItem(index, items[i].children, startIndex);
-//            if (result == null)
-//            {
-//               startIndex += items[i].children.Count;
-//            }
-//            else
-//            {
-//               return result;
-//            }
-//         }
-//      }
-//
-//      return null;
-//   }
-//
-//   /// <summary>Gets the index of the specified ListViewItem within the list of visible items.</summary>
-//   /// <returns>The item index or a negative value when an error occurs.</returns>
-//   /// <param name='item'>The ListViewItem to look for.</param>
-//   public int GetVisibleItemIndex(ListViewItem item)
-//   {
-//      int index = GetItemIndex(item, _items);
-//      if (index == -1)
-//      {
-//         uScriptDebug.Log("Could not find the specified ListViewItem.", uScriptDebug.Type.Warning);
-//      }
-//      return index;
-//   }
-//
-//   /// <summary>Gets the index of the specified ListViewItem within a list of items.</summary>
-//   /// <returns>The item index or a negative value when an error occurs.</returns>
-//   /// <param name='item'>The ListViewItem to look for.</param>
-//   /// <param name='items'>The list to search. This parameter is used for recursive searches.</param>
-//   private int GetItemIndex(ListViewItem item, List<ListViewItem> items)
-//   {
-//      if (item == null)
-//      {
-//         uScriptDebug.Log("The specified item is invalid. Cannot search for a null ListViewItem.", uScriptDebug.Type.Error);
-//         return -2;
-//      }
-//
-//      int index = 0;
-//
-//      for (int i = 0; i < items.Count; i++)
-//      {
-//         if (items[i] == item)
-//         {
-//            return index;
-//         }
-//
-//         index++;
-//
-//         if (items[i].children != null && items[i].expanded)
-//         {
-//            int result = GetItemIndex(item, items[i].children);
-//            if (result == -1)
-//            {
-//               index += items[i].children.Count;
-//            }
-//            else
-//            {
-//               return (index + result);
-//            }
-//         }
-//      }
-//
-//      return -1;
-//   }
 
       private void ContextMenuCallback(object obj)
       {
@@ -2152,32 +1946,11 @@ namespace Detox.Editor.GUI
          }
       }
 
-      private void AddHierarchyChild(ListViewItem parent, ListViewItem child)
-      {
-         if (parent != null)
-         {
-            if (parent.Children == null)
-            {
-               parent.Children = new List<ListViewItem>();
-            }
-            
-            child.Parent = parent;
-            child.Depth = parent.Depth + 1;
-            parent.Children.Add(child);
-         }
-         else
-         {
-            this.nestedItems.Add(child);
-         }
-
-         this.flatItems.Add(child);
-      }
-
       // === Classes ====================================================================
 
-      public static class Style
+      private static class Style
       {
-         public const int ColumnHeaderHeight = 16;
+         private const int ColumnHeaderHeight = 16;
 
          static Style()
          {
@@ -2267,103 +2040,6 @@ namespace Detox.Editor.GUI
          public static GUIStyle ColumnHeaderDescending { get; private set; }
       }
 
-      public class Content
-      {
-         /// <summary>
-         /// Initializes a new instance of the <see cref="Content"/> class.
-         /// </summary>
-         public Content()
-         {
-            // Attempt to get the built-in folder icon
-#if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
-            this.IconFolder = EditorGUIUtility.FindTexture("_Folder");
-            this.IconFolderEmpty = this.IconFolder;
-#else
-            //System.Reflection.Assembly asm = typeof(UnityEditorInternal.AssetStore).Assembly;
-            //if (asm != null)
-            //{
-            //   System.Type type = asm.GetType("UnityEditorInternal.EditorResourcesUtility");
-            //   if (type != null)
-            //   {
-            //      System.Reflection.BindingFlags flags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static;
-            //      System.Reflection.PropertyInfo property = type.GetProperty("folderIconName", flags);
-            //      if (property != null)
-            //      {
-            //         iconFolder = EditorGUIUtility.FindTexture((string)property.GetValue(null, null));
-            //      }
-
-            //      property = type.GetProperty("emptyFolderIconName", flags);
-            //      if (property != null)
-            //      {
-            //         iconFolderEmpty = EditorGUIUtility.FindTexture((string)property.GetValue(null, null));
-            //      }
-            //   }
-            //}
-            this.IconFolder = EditorGUIUtility.FindTexture("Folder Icon");
-            this.IconFolderEmpty = EditorGUIUtility.FindTexture("FolderEmpty Icon");
-#endif
-
-            // TODO: These probably should be moved to uScriptGUIPanelScriptNew where the custom item renderer is located
-            //uScriptGUIPanelScriptNew panel = uScriptGUIPanelScriptNew.Instance;
-            //if (panel == null)
-            //{
-            //   Debug.Log("PANEL INSTANCE IS NULL\n");
-            //}
-
-            //if (panel.Textures == null)
-            //{
-            //   Debug.Log("PANEL TEXTURES ARE NULL\n");
-            //}
-
-            //Dictionary<string, Texture2D> textures = panel.Textures;
-            Dictionary<string, Texture2D> textures = null;
-            if (textures != null)
-            {
-               this.IconScript = textures["iconScript"];
-               this.IconScriptNested = textures["iconScriptNested"];
-   
-               this.IconSourceDebug = textures["iconSourceDebug"];
-               this.IconSourceMissing = textures["iconSourceMissing"];
-               this.IconSourceRelease = textures["iconSourceRelease"];
-            }
-
-            //string skinPath = uScriptGUI.ImagePath;
-
-            //iconScript = AssetDatabase.LoadAssetAtPath(skinPath + "iconScriptFile01.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-            //iconScriptNested = AssetDatabase.LoadAssetAtPath(skinPath + "iconScriptFile02.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-
-            //iconSourceDebug = null;
-            //iconSourceMissing = null;
-            //iconSourceRelease = null;
-         }
-
-         public Texture2D IconFolder { get; private set; }
-         
-         public Texture2D IconFolderEmpty { get; private set; }
-         
-         public Texture2D IconScript { get; private set; }
-         
-         public Texture2D IconScriptNested { get; private set; }
-         
-         public Texture2D IconSourceDebug { get; private set; }
-         
-         public Texture2D IconSourceMissing { get; private set; }
-
-         public Texture2D IconSourceRelease { get; private set; }
-      }
-
-      public class FolderInfo
-      {
-         public FolderInfo(ListViewItem item)
-         {
-            this.Item = item;
-         }
-
-         public bool Expanded { get; set; }
-
-         public ListViewItem Item { get; set; }
-      }
-
       private class ContextMenuCallbackData
       {
          public ContextMenuCallbackData(CommandType command, params ListViewItem[] items)
@@ -2398,65 +2074,19 @@ namespace Detox.Editor.GUI
          
          public ListViewItem[] Items { get; private set; }
       }
-   }
 
-//      _nodeCount = 0;
-//      _propertyCount = 0;
-//
-//      columnOffset = offset;
-//      svRect = rect;
-//
-//      if (null == _styleEnabled)
-//      {
-//         _styleEnabled = new GUIStyle(GUI.skin.toggle);
-//         _styleEnabled.margin = new RectOffset(4, 0, 2, 4);
-//         _styleEnabled.padding = new RectOffset(20, 0, 0, 0);
-//         _styleEnabled.padding.left = 20;
-//
-//         _styleLabel = new GUIStyle(EditorStyles.label);
-//         _styleLabel.margin.left = 0;
-//
-//         _styleType = new GUIStyle(EditorStyles.label);
-//         _styleType.margin.left = 6;
-//      }
-//
-//      GUILayout.Label(string.Empty, new GUIStyle(), GUILayout.Height(uScriptGUIStyle.columnHeaderHeight));
-//
-//      float x = 0;
-//      float y = columnOffset.y;
-//
-//      // The columns have a margin of 4. Margins of adjacent cells overlap, so the spacing
-//      // betweem columns is the width of the largest margin, not the sum.
-//      //
-//      //    4.[A].4
-//      //          4.[B].4
-//      //                4.[C].4
-//      //
-//      //    4.[A].4.[B].4.[C].4
-//      //
-//      // The result should be that when laying out each column, the left-most and right-most
-//      // columns should allow for an extra 2px, while the inner columns assume that 2px will
-//      // be used on each side.
-//      //
-//      // Finally, the left margin of the left column, and the right margin of the right column
-//      // is excluded when positioning the GUI elements, since the offset is automatically applied.
-//
-//      //
-//      // Update control focus changes
-//      //
-//
-//      //if (Event.current.keyCode == KeyCode.Escape)
-//      //{
-//      //   Debug.Log("ESC was pressed\n");
-//      //   Event.current.Use();
-//      //}
-//
-//      if (GUI.GetNameOfFocusedControl() != _focusedControl)
-//      {
-//         uScriptDebug.Log("Control focus changed from '" + _focusedControl + "' to '" + GUI.GetNameOfFocusedControl() + "'\n", uScriptDebug.Type.Debug);
-//         _previousControl = _focusedControl;
-//         _focusedControl = GUI.GetNameOfFocusedControl();
-//      }
+      private class FolderInfo
+      {
+         public FolderInfo(ListViewItem item)
+         {
+            this.Item = item;
+         }
+
+         public bool Expanded { get; set; }
+
+         public ListViewItem Item { get; private set; }
+      }
+   }
 
 // It should include features, such as:
 //
@@ -2475,34 +2105,6 @@ namespace Detox.Editor.GUI
 // Perform all input processing during Update()
 //
 // Advanced features might include:
-//
-// + Resizable columns
 // + List sorting by column
 // + Adjustable column order
-// + Optional context menu support
-//
-//   private void DrawListView()
-//   {
-//      Rect listviewRect = new Rect(0, 0, 400, 200);
-//      Rect listviewContentRect = new Rect(0, 0, 240, 120);
-//      _scrollviewOffset = GUI.BeginScrollView(listviewRect, _scrollviewOffset, listviewContentRect);
-//      GUI.Box(new Rect(0, 0, 100, 100), "Scrollview");
-//      GUI.EndScrollView();
-//
-//      if (_listView == null)
-//      {
-//         _listView = new guiListView();
-//      }
-//   }
-//
-//   private guiListView _listView;
-//
-//   // ListViewState
-//   //    Columns (list ColumnState)
-//
-//   //    EVENTS:
-//   //       MouseIn
-//   //       MouseOut
-//   //
-//   //    HeaderHeight
 }

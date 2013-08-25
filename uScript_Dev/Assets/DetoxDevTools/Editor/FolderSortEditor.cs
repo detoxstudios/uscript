@@ -165,7 +165,7 @@ namespace Assets.Editor
          }
 
          // Mark the hierarchy dirty so that the hierarchy can be rebuilt and filtering and sorting can be applied
-         //this.listView.RebuildListHierarchy();
+         //this.listView.RebuildFilteredList();
       }
 
 

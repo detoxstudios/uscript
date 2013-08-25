@@ -63,11 +63,13 @@ namespace Detox.Editor.GUI
          }
       }
 
+      public bool IsFiltered { get; set; }
+
       public bool IsFolder { get; set; }
 
       public bool IsVisible { get; set; }
 
-      public string ItemName { get; set; }
+      public string ItemName { get; private set; }
 
       public ListViewItem Parent { get; set; }
 
@@ -155,8 +157,6 @@ namespace Detox.Editor.GUI
             {
                this.ListView.HandleMouseInput(this);
             }
-
-
 
             //var rectToggle = this.Position;
             //rectToggle.xMin = 2 + (this.Depth * indentWidth);
