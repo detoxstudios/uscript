@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Globalization;
 
 [NodePath("Actions/Math/Conversions")]
 
@@ -42,7 +43,11 @@ public class uScriptAct_ConvertVariable : uScriptLogic
       out bool BooleanValue,
       
       [FriendlyName("Vector3 Value", "The Target variable represented as a Vector3 value.")]
-      out Vector3 Vector3Value
+      out Vector3 Vector3Value,
+      
+      [FriendlyName("Float Group Separator", "The character to use between each set of 3 digits (i.e. comma - 1,000,000). Can be blank (i.e. 1000000).")]
+      [DefaultValue(","), SocketState(false, false)]
+      string FloatGroupSeparator
       )
    {
       int tempIntValue = 0;
@@ -337,7 +342,10 @@ public class uScriptAct_ConvertVariable : uScriptLogic
             tempInt64Value = System.Convert.ToInt64(tmpTarget);
             tempFloatValue = tmpTarget;
             tempBooleanValue = true;
-            tempStringValue = tmpTarget.ToString();
+            NumberFormatInfo current = (NumberFormatInfo)CultureInfo.CurrentCulture.NumberFormat.Clone ();
+            current.NumberDecimalDigits = 0;
+            current.NumberGroupSeparator = FloatGroupSeparator;
+            tempStringValue = tmpTarget.ToString("N", current);
          }
       }
 		
