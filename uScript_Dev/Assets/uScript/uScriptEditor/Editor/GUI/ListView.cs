@@ -27,6 +27,8 @@ namespace Detox.Editor.GUI
 
       private readonly Dictionary<string, FolderInfo> folderItems = new Dictionary<string, FolderInfo>();
 
+      private readonly int controlID;
+
       private ListViewItem anchorItem;
       private Vector2 dragInitialMouse;
       private Vector2 dragInitialSize;
@@ -48,6 +50,7 @@ namespace Detox.Editor.GUI
       public ListView(EditorWindow window, Type typeListViewItem)
       {
          this.EditorWindow = window;
+         this.controlID = GUIUtility.GetControlID(FocusType.Keyboard);
          
          if (typeof(ListViewItem).IsAssignableFrom(typeListViewItem))
          {
@@ -214,7 +217,7 @@ namespace Detox.Editor.GUI
          if (this.selectedItems.Contains(item))
          {
             this.DeselectItem(item);
-            this.EditorWindow.Repaint();
+            this.EditorWindow.Repaint(); // Required to avoid delayed refresh
          }
          else
          {
@@ -399,37 +402,23 @@ namespace Detox.Editor.GUI
          
          EditorGUILayout.EndVertical();
          
-         //Debug.Log("HEADER:\t" + this.HeaderPosition + "\t\t" + "LIST VIEW: " + this.Position
-         //   + "\n\tLIST: \t" + this.ListPosition + "\t\t\tEVENT: " + Event.current.type);
+         // Check to see if the control focus is gained or lost
+         this.UpdateFocus(parentPanelRect);
 
-         // Update the listview focus
-         if (e.type == EventType.MouseDown || e.type == EventType.Used)
-         {
-            var focus = (GUIUtility.keyboardControl == 0) && parentPanelRect.Contains(e.mousePosition);
-            if (this.HasFocus != focus)
-            {
-               this.EditorWindow.Repaint();
-            }
-
-            this.HasFocus = focus;
-         }
-
-         this.HasFocus = this.HasFocus && uScript.Instance.HasFocus;
-         
          // Process keyboard input
          if (this.HasFocus)
          {
-            //if (e.type == EventType.KeyDown)
-            //{
-            //   // SelectAll (Cmd+A / Ctrl+A) is handled differently
-            //   if (e.modifiers == 0)
-            //   {
-            //      switch (e.keyCode)
-            //      {
-            //         case KeyCode.Escape:
-            //            this.SelectNone();
-            //            e.Use();
-            //            break;
+            if (e.type == EventType.KeyDown)
+            {
+               // SelectAll (Cmd+A / Ctrl+A) is handled differently
+               if (e.modifiers == 0)
+               {
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.Escape:
+                        this.SelectNone();
+                        e.Use();
+                        break;
                         
             //         case KeyCode.Tab:
             //            // Move focus to search control (if there is one)
@@ -441,63 +430,112 @@ namespace Detox.Editor.GUI
             //            // Action performed on KeyUp
             //            e.Use();
             //            break;
-            //      }
-            //   }
-            //   else if (e.modifiers == EventModifiers.FunctionKey)
-            //   {
-            //      switch (e.keyCode)
-            //      {
-            //         case KeyCode.Home:
-            //            this.SelectFirst();
-            //            e.Use();
-            //            break;
+                  }
+               }
+               else if (e.modifiers == EventModifiers.FunctionKey)
+               {
+                  switch (e.keyCode)
+                  {
+                     case KeyCode.Home:
+                        this.SelectFirst();
+                        e.Use();
+                        break;
+
+                     case KeyCode.End:
+                        this.SelectLast();
+                        e.Use();
+                        break;
+
+                     case KeyCode.UpArrow:
+                        this.SelectPrevious();
+                        e.Use();
+                        break;
+
+                     case KeyCode.DownArrow:
+                        this.SelectNext();
+                        e.Use();
+                        break;
+
+                     case KeyCode.PageUp:
+                        this.SelectPageUp();
+                        e.Use();
+                        break;
+
+                     case KeyCode.PageDown:
+                        this.SelectPageDown();
+                        e.Use();
+                        break;
+
+                     case KeyCode.RightArrow:
+                        if (this.selectedItems.Count > 0)
+                        {
+                           if (this.selectedItems.Count > 1)
+                           {
+                              // When multiple items are selected, expand all selected folders
+                              foreach (var item in this.selectedItems)
+                              {
+                                 if (this.IsFolder(item))
+                                 {
+                                    this.ExpandFolder(item);
+                                 }
+                              }
+                           }
+                           else
+                           {
+                              // A single item is selected. If it's a folder, then expand if collapsed, or select the next item
+                              var item = this.selectedItems.First();
+                              if (this.IsFolder(item))
+                              {
+                                 if (this.IsFolderExpanded(item))
+                                 {
+                                    this.SelectNext();
+                                 }
+                                 else
+                                 {
+                                    this.ExpandFolder(item);
+                                 }
+                              }
+                           }
+                        }
+
+                        e.Use();
+                        break;
                         
-            //         case KeyCode.End:
-            //            this.SelectLast();
-            //            e.Use();
-            //            break;
-                        
-            //         case KeyCode.UpArrow:
-            //            this.SelectPrevious();
-            //            e.Use();
-            //            break;
-                        
-            //         case KeyCode.DownArrow:
-            //            this.SelectNext();
-            //            e.Use();
-            //            break;
-                        
-            //         case KeyCode.PageUp:
-            //            this.SelectPageUp();
-            //            e.Use();
-            //            break;
-                        
-            //         case KeyCode.PageDown:
-            //            this.SelectPageDown();
-            //            e.Use();
-            //            break;
-                        
-            //         case KeyCode.RightArrow:
-            //         {
-            //            bool changed = false;
-            //            foreach (ListViewItem item in this.selectedItems)
-            //            {
-            //               if (item.HasVisibleChildren && (item.Expanded == false))
-            //               {
-            //                  item.Expanded = true;
-            //                  changed = true;
-            //               }
-            //            }
-                        
-            //            if (changed == false)
-            //            {
-            //               this.SelectNext();
-            //            }
-                        
-            //            e.Use();
-            //            break;
-            //         }
-                        
+                     case KeyCode.LeftArrow:
+                        if (this.selectedItems.Count > 0)
+                        {
+                           if (this.selectedItems.Count > 1)
+                           {
+                              //TODO: create an ExpandSelectedFolders() and CollapseSelectedFolders()
+                              // When multiple items are selected, collapse all selected folders
+                              foreach (var item in this.selectedItems)
+                              {
+                                 if (this.IsFolder(item))
+                                 {
+                                    this.CollapseFolder(item);
+                                 }
+                              }
+                              // TODO: The CollapseSelectedFolders() method should collapse folders and then look through verify that all selected items are still visible, removing those that are not hidden. This pruning logic should be triggered after all Collapse actions and after filter updates as well.
+                           }
+                           else
+                           {
+                              // A single item is selected. If it's a folder and expanded then collapse else select the parent item, if there is one
+                              var item = this.selectedItems.First();
+                              if (this.IsFolder(item) && this.IsFolderExpanded(item))
+                              {
+                                 this.CollapseFolder(item);
+                              }
+                              else
+                              {
+                                 this.SelectParent(item);
+                              }
+                           }
+                        }
+
+                        e.Use();
+                        break;
+
+
             //         case KeyCode.LeftArrow:
             //         {
             //            bool changed = false;
@@ -518,10 +556,14 @@ namespace Detox.Editor.GUI
             //            e.Use();
             //            break;
             //         }
-            //      }
-            //   }
-            //   else if (e.modifiers == EventModifiers.Shift)
-            //   {
+
+                     default:
+                        Debug.Log(e.type + ": " + e.keyCode + ", MODIFIERS: " + e.modifiers + "\n");
+                        break;
+                  }
+               }
+               else if (e.modifiers == EventModifiers.Shift)
+               {
             //      switch (e.keyCode)
             //      {
             //         case KeyCode.Tab:
@@ -529,9 +571,9 @@ namespace Detox.Editor.GUI
             //            Debug.Log("SHIFT KEY: " + e.keyCode.ToString() + "\n");
             //            break;
             //      }
-            //   }
-            //   else if (e.modifiers == EventModifiers.Alt)
-            //   {
+               }
+               else if (e.modifiers == EventModifiers.Alt)
+               {
             //      switch (e.keyCode)
             //      {
             //         case KeyCode.Return:
@@ -540,16 +582,16 @@ namespace Detox.Editor.GUI
             //            e.Use();
             //            break;
             //      }
-            //   }
-            //   else if ((e.modifiers & (EventModifiers.Control | EventModifiers.FunctionKey)) == 0)
-            //   {
-            //      Debug.Log("KEY: " + e.keyCode.ToString() + ", MODIFIERS: " + e.modifiers.ToString() + "\n");
-            //   }
-            //}
-            //else if (e.type == EventType.KeyUp)
-            //{
-            //   if (e.modifiers == 0)
-            //   {
+               }
+               else if ((e.modifiers & (EventModifiers.Control | EventModifiers.FunctionKey)) == 0)
+               {
+                  Debug.Log("KEY: " + e.keyCode + ", MODIFIERS: " + e.modifiers + "\n");
+               }
+            }
+            else if (e.type == EventType.KeyUp)
+            {
+               if (e.modifiers == 0)
+               {
             //      switch (e.keyCode)
             //      {
             //         case KeyCode.Return:
@@ -571,9 +613,9 @@ namespace Detox.Editor.GUI
             //            e.Use();
             //            break;
             //      }
-            //   }
-            //   else if (e.modifiers == EventModifiers.Alt)
-            //   {
+               }
+               else if (e.modifiers == EventModifiers.Alt)
+               {
             //      switch (e.keyCode)
             //      {
             //         case KeyCode.Return:
@@ -583,8 +625,8 @@ namespace Detox.Editor.GUI
             //            e.Use();
             //            break;
             //      }
-            //   }
-            //}
+               }
+            }
          }
 
          // x
@@ -829,7 +871,7 @@ namespace Detox.Editor.GUI
 
       public void CollapseFolder(ListViewItem item)
       {
-         if (this.folderItems.ContainsKey(item.ItemPath) == false)
+         if (this.IsFolder(item) == false)
          {
             uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemName, uScriptDebug.Type.Error);
             return;
@@ -860,7 +902,7 @@ namespace Detox.Editor.GUI
 
       public void ExpandFolder(ListViewItem item)
       {
-         if (this.folderItems.ContainsKey(item.ItemPath) == false)
+         if (this.IsFolder(item) == false)
          {
             uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemPath, uScriptDebug.Type.Error);
             return;
@@ -879,7 +921,7 @@ namespace Detox.Editor.GUI
 
       public void ToggleFolder(ListViewItem item)
       {
-         if (this.folderItems.ContainsKey(item.ItemPath) == false)
+         if (this.IsFolder(item) == false)
          {
             uScriptDebug.Log("The specified ListViewItem does not appear to be a folder: " + item.ItemPath, uScriptDebug.Type.Error);
             return;
@@ -891,9 +933,14 @@ namespace Detox.Editor.GUI
          this.shouldRebuildVisibleList = true;
       }
 
+      public bool IsFolder(ListViewItem item)
+      {
+         return this.folderItems.ContainsKey(item.ItemPath);
+      }
+
       public bool IsFolderExpanded(ListViewItem item)
       {
-         if (this.folderItems.ContainsKey(item.ItemPath))
+         if (this.IsFolder(item))
          {
             return this.folderItems[item.ItemPath].Expanded;
          }
@@ -1019,12 +1066,12 @@ namespace Detox.Editor.GUI
       
       public void SelectFirst()
       {
-         this.SelectNone();
-
-         if (this.visibleItems.Count <= 0)
+         if (this.visibleItems.Count == 0)
          {
             return;
          }
+
+         this.SelectNone();
 
          var item = this.visibleItems.First();
          this.SelectItem(item);
@@ -1033,77 +1080,70 @@ namespace Detox.Editor.GUI
       
       public void SelectLast()
       {
-         this.SelectNone();
-
-         if (this.visibleItems.Count <= 0)
+         if (this.visibleItems.Count == 0)
          {
             return;
          }
+
+         this.SelectNone();
 
          var item = this.visibleItems.Last();
          this.SelectItem(item);
          this.FrameItem(item);
       }
       
-      public void SelectParent()
+      public void SelectParent(ListViewItem item)
       {
-         if (this.selectedItems.Count != 1)
-         {
-            return;
-         }
+         //if (this.selectedItems.Count != 1)
+         //{
+         //   return;
+         //}
 
-         var item = this.selectedItems[0];
+         //var item = this.selectedItems[0];
 
-         if (item.Parent != null)
-         {
-            this.DeselectItem(item);
-            this.SelectItem(item.Parent);
-            this.FrameItem(item.Parent);
-         }
+         //if (item.Parent != null)
+         //{
+         //   this.DeselectItem(item);
+         //   this.SelectItem(item.Parent);
+         //   this.FrameItem(item.Parent);
+         //}
       }
       
       public void SelectNext()
       {
-         if (this.selectedItems.Count <= 0)
+         if (this.selectedItems.Count == 0)
          {
+            this.SelectFirst();
             return;
          }
 
-         ////         int index = GetVisibleItemIndex(_selectedItems[_selectedItems.Count - 1]) + 1;
-         var index = this.selectedItems[this.selectedItems.Count - 1].Row + 1;
-         ////         Debug.Log("CURRENT INDEX: " + _selectedItems[_selectedItems.Count - 1].row.ToString()
-         ////            + "\nNEW: " + index.ToString());
+         var index = this.selectedItems.Last().Row + 1;
          var lastIndex = this.visibleItems.Count - 1;
          if (index > lastIndex)
          {
-            ////            Debug.Log("UPDATE: " + index.ToString() + " to " + lastIndex.ToString() + "\n");
             index = lastIndex;
          }
             
          this.SelectNone();
-
-         var item = this.SelectItem(index);
-         ////         if (item == null)
-         ////         {
-         ////            Debug.Log("NULL\n");
-         ////         }
-         this.FrameItem(item);
+         this.FrameItem(this.SelectItem(index));
       }
       
       public void SelectPrevious()
       {
-         if (this.selectedItems.Count > 0)
+         if (this.selectedItems.Count == 0)
          {
-            ////         int index = GetVisibleItemIndex(_selectedItems[_selectedItems.Count - 1]) - 1;
-            int index = this.selectedItems[this.selectedItems.Count - 1].Row - 1;
-            if (index < 0)
-            {
-               index = 0;
-            }
-            
-            this.SelectNone();
-            this.FrameItem(this.SelectItem(index));
+            this.SelectFirst();
+            return;
          }
+
+         var index = this.selectedItems.Last().Row - 1;
+         if (index < 0)
+         {
+            index = 0;
+         }
+            
+         this.SelectNone();
+         this.FrameItem(this.SelectItem(index));
       }
 
       public void SelectAll()
@@ -1113,7 +1153,7 @@ namespace Detox.Editor.GUI
       
       public void SelectNone()
       {
-         for (int i = this.selectedItems.Count - 1; i >= 0; i--)
+         for (var i = this.selectedItems.Count - 1; i >= 0; i--)
          {
             this.DeselectItem(this.selectedItems[i]);
          }
@@ -1126,10 +1166,58 @@ namespace Detox.Editor.GUI
       
       public void SelectPageDown()
       {
+         if (this.selectedItems.Count == 0)
+         {
+            this.SelectFirst();
+            return;
+         }
+
+         // Current item index
+         var item = this.selectedItems.Last();
+
+         // Locate the next item located approximately a full ListView height below the current item
+         var nextItem = this.visibleItems.Last();
+         for (var index = item.Row + 1; index < this.visibleItems.Count; index++)
+         {
+            // Has the search gone too far?
+            if (this.visibleItems[index].Position.yMin > item.Position.yMin + this.ListPosition.height)
+            {
+               nextItem = this.visibleItems[index - 1];
+               break;
+            }
+         }
+
+         this.SelectNone();
+         this.SelectItem(nextItem);
+         this.FrameItem(nextItem);
       }
       
       public void SelectPageUp()
       {
+         if (this.selectedItems.Count == 0)
+         {
+            this.SelectFirst();
+            return;
+         }
+
+         // Current item index
+         var item = this.selectedItems.Last();
+
+         // Locate the next item located approximately a full ListView height below the current item
+         var nextItem = this.visibleItems.First();
+         for (var index = item.Row - 1; index >= 0; index--)
+         {
+            // Has the search gone too far?
+            if (this.visibleItems[index].Position.yMin < item.Position.yMax - this.ListPosition.height)
+            {
+               nextItem = this.visibleItems[index];
+               break;
+            }
+         }
+
+         this.SelectNone();
+         this.SelectItem(nextItem);
+         this.FrameItem(nextItem);
       }
 
       private void SaveFolderStates()
@@ -1944,6 +2032,60 @@ namespace Detox.Editor.GUI
                Debug.Log("COMMAND: " + data.Command.ToString() + " on \"" + data.Items[0].ItemPath + "\"\n");
                break;
          }
+      }
+
+      private void UpdateFocus(Rect parentPanelRect)
+      {
+         var e = Event.current;
+
+         if (this.HasFocus)
+         {
+            // Verify that the control still has focus
+            if (uScript.Instance.HasFocus == false)
+            {
+               this.HasFocus = false;
+            }
+            else if (GUIUtility.keyboardControl != this.controlID)
+            {
+               this.HasFocus = false;
+            }
+            else if (e.type == EventType.MouseDown && parentPanelRect.Contains(e.mousePosition) == false)
+            {
+               this.HasFocus = false;
+               GUIUtility.keyboardControl = 0;
+            }
+
+            if (this.HasFocus == false)
+            {
+               // Focus was lost
+               uScript.Instance.Repaint();
+               //Debug.Log("LOST FOCUS: keyboardControl: " + GUIUtility.keyboardControl + "\n");
+            }
+         }
+         else
+         {
+            // Check to see if the control should get focus
+            if (e.type == EventType.MouseDown && parentPanelRect.Contains(e.mousePosition))
+            {
+               this.HasFocus = true;
+            }
+            else if (GUIUtility.keyboardControl == this.controlID && uScript.Instance.HasFocus)
+            {
+               this.HasFocus = true;
+            }
+
+            if (this.HasFocus)
+            {
+               // Focus was received
+               GUIUtility.keyboardControl = this.controlID;
+               uScript.Instance.Repaint();
+               //Debug.Log("RECEIVED FOCUS: keyboardControl: " + GUIUtility.keyboardControl + "\n");
+            }
+         }
+
+         // Finally, apply the editor focus status
+         // TODO: We shouldn't reference uScript here, if possible. This control should be self-contained for re-useability
+         this.HasFocus = this.HasFocus && uScript.Instance.HasFocus;
       }
 
       // === Classes ====================================================================
