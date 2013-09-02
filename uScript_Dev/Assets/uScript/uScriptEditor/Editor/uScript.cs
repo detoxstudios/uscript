@@ -923,10 +923,10 @@ public sealed partial class uScript : EditorWindow
       // cause issues, such as null exception errors and reports that OnGUI calls
       // are being made outside of OnGUI.
       //
-      if (isLicenseAccepted == false)
+      if (IsLicenseAccepted == false)
       {
-         isLicenseAccepted = LicenseWindow.HasUserAcceptedLicense();
-         if (isLicenseAccepted == false && LicenseWindow.isOpen == false)
+          IsLicenseAccepted = LicenseWindow.HasUserAcceptedLicense();
+          if (IsLicenseAccepted == false && LicenseWindow.isOpen == false)
          {
             LicenseWindow.Init();
          }
