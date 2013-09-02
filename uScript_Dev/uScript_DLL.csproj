@@ -59,12 +59,19 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\EntityEventDisplayNode.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\EntityMethodDisplayNode.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\EntityPropertyDisplayNode.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\ExportPNG.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\FlowChart.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GraphInfo.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItemScript.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScript.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptCurrent.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptList.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\LicenseWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\LocalNodeDisplayNode.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\LogicNodeDisplayNode.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\MetadataDatas.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ModelData.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\NodeUtility.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ObjectSerializer.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Partials.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\PatchData.cs" />
@@ -86,14 +93,12 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptBackgroundProcess.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptConfig.cs" />
-    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptExportPNG.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUI.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIContent.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanel.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelPalette.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelProperty.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelReference.cs" />
-    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIPanelScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIStyle.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptUtility.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\WelcomeWindow.cs" />
@@ -102,13 +107,15 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewColumn.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItem.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItemData.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="uScriptRuntime_DLL.csproj">
       <Project>{BD28F23C-2EC1-4B74-AB69-1510EBD650EE}</Project>
       <Name>uScriptRuntime_DLL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
