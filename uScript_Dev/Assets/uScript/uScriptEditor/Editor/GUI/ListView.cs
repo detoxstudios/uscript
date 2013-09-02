@@ -535,28 +535,6 @@ namespace Detox.Editor.GUI
                         e.Use();
                         break;
 
-
-            //         case KeyCode.LeftArrow:
-            //         {
-            //            bool changed = false;
-            //            foreach (ListViewItem item in this.selectedItems)
-            //            {
-            //               if (item.HasVisibleChildren && item.Expanded)
-            //               {
-            //                  item.Expanded = false;
-            //                  changed = true;
-            //               }
-            //            }
-                        
-            //            if ((changed == false) && (this.selectedItems.Count == 1))
-            //            {
-            //               this.SelectParent();
-            //            }
-                        
-            //            e.Use();
-            //            break;
-            //         }
-
                      default:
                         Debug.Log(e.type + ": " + e.keyCode + ", MODIFIERS: " + e.modifiers + "\n");
                         break;
@@ -1094,19 +1072,14 @@ namespace Detox.Editor.GUI
       
       public void SelectParent(ListViewItem item)
       {
-         //if (this.selectedItems.Count != 1)
-         //{
-         //   return;
-         //}
+         if (item.Parent == null)
+         {
+            return;
+         }
 
-         //var item = this.selectedItems[0];
-
-         //if (item.Parent != null)
-         //{
-         //   this.DeselectItem(item);
-         //   this.SelectItem(item.Parent);
-         //   this.FrameItem(item.Parent);
-         //}
+         this.SelectNone();
+         this.SelectItem(item.Parent);
+         this.FrameItem(item.Parent);
       }
       
       public void SelectNext()
