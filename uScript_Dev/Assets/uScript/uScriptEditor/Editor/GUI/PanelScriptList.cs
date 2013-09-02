@@ -187,7 +187,7 @@ namespace Detox.Editor.GUI
          {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
 
-            GUILayout.Label("uScript Directory", uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
+            GUILayout.Label("Project Graphs", uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
 
             GUILayout.FlexibleSpace();
 

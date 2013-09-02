@@ -136,7 +136,7 @@ public class PreferenceWindow : EditorWindow
          //
          // Project Settings
          //
-         GUILayout.Label("Project File Location", EditorStyles.boldLabel);
+         GUILayout.Label("Project Graphs Location", EditorStyles.boldLabel);
 
          string path = uScriptConfig.ConstantPaths.RelativePath(_preferences.UserScripts);
          if (path.Length > 64) path = path.Substring(0, 64) + "...";
@@ -152,7 +152,7 @@ public class PreferenceWindow : EditorWindow
          //
          // Code Generation Settings
          //
-         GUILayout.Label("Code Generation", EditorStyles.boldLabel);
+         GUILayout.Label("Code Generation Settings", EditorStyles.boldLabel);
 
          _preferences.MaximumNodeRecursionCount = Mathf.Min(_maxRecursion, Mathf.Max(_minRecursion, EditorGUILayout.IntField("Maximum Node Recursion", _preferences.MaximumNodeRecursionCount)));
          _preferences.SaveMethod = (Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", _preferences.SaveMethod);
