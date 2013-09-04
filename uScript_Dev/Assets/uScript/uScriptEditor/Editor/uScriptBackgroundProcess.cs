@@ -59,6 +59,11 @@ public class uScriptBackgroundProcess
 
    public static void ForceFileRefresh()
    {
+      if (uScript.IsOpen == false)
+      {
+         return;
+      }
+
       GraphInfoList.Clear();
 
       foreach (var path in uScript.GetGraphPaths())

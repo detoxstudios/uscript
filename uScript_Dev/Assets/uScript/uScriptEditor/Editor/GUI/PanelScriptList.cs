@@ -124,6 +124,11 @@ namespace Detox.Editor.GUI
          /// </summary>
          public void UpdateListContents()
          {
+            if (uScript.IsOpen == false)
+            {
+               return;
+            }
+
             if (this.listView == null)
             {
                uScriptDebug.Log("The ListView must be initialized before items can be added.", uScriptDebug.Type.Error);

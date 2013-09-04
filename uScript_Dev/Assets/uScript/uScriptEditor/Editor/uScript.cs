@@ -142,6 +142,14 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
+   public static bool IsOpen
+   {
+      get
+      {
+         return instance != null;
+      }
+   }
+
    // ###############################################################
    // # Version Name and Version Data
    // #
@@ -3829,7 +3837,7 @@ public sealed partial class uScript : EditorWindow
          //ClearLogicTypes();
          OpenFromCache();
 
-         uScriptBackgroundProcess.ForceFileRefresh();
+         //uScriptBackgroundProcess.ForceFileRefresh();
 
          p.End();
       }
@@ -3930,11 +3938,11 @@ public sealed partial class uScript : EditorWindow
 
          result = script.Save(binaryPath, logicPath, wrapperPath, generateDebugInfo, stubCode);
 
-         if (true == result)
-         {
-            // refresh uScript panel file list
-            uScriptBackgroundProcess.ForceFileRefresh();
-         }
+         //if (result)
+         //{
+         //   // refresh uScript panel file list
+         //   uScriptBackgroundProcess.ForceFileRefresh();
+         //}
       }
       else
       {
