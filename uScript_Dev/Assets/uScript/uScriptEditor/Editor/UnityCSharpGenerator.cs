@@ -1581,6 +1581,10 @@ namespace Detox.ScriptEditor
          {
             return "new UnityEngine.AnimatorStateInfo( )";
          }
+         else if ("UnityEngine.NavMeshHit" == type)
+         {
+            return "new UnityEngine.NavMeshHit( )";
+         }
          else if ("UnityEngine.Bounds" == type)
          {
             return "new UnityEngine.Bounds( )";
@@ -2369,21 +2373,20 @@ namespace Detox.ScriptEditor
       {
          Profile p = new Profile("DefineOnDestroy");
 
+         foreach (LogicNode logicNode in m_Script.Logics)
+         {
+            if (true == NeedsMethod(logicNode, "OnDestroy"))
+            {
+               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnDestroy( );");
+            }
+         }
+
          //for each logic node event, register event listeners with it
          foreach (LogicNode logicNode in m_Script.Logics)
          {
             foreach (Plug eventName in logicNode.Events)
             {
                AddLogicEventListener(logicNode, eventName.Name, false);
-            }
-         }
-
-         //for each logic node, create an script specific instance
-         foreach (LogicNode logicNode in m_Script.Logics)
-         {
-            if (true == NeedsMethod(logicNode, "OnDestroy"))
-            {
-               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnDestroy( );");
             }
          }
 
