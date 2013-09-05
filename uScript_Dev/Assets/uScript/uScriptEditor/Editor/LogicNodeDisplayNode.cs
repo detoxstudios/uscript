@@ -21,6 +21,15 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
+          // Logic nodes with no inputs and only event outputs
+          // should resemble event nodes
+         if (logicNode.Inputs.Length == 0 && 
+             logicNode.Outputs.Length == 0 &&
+             logicNode.Events.Length > 0)
+         {
+             NodeStyle = "node_event";
+         }
+
          Location = new Detox.Drawing.Point( logicNode.Position.X, logicNode.Position.Y );
          Name = logicNode.FriendlyName;
          
