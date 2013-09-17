@@ -43,8 +43,12 @@ public class uScriptAct_GetGameObjectMaterial : uScriptLogic
 		 if (MaterialIndex <= Target.renderer.materials.Length - 1)
 		 {
 		    targetMaterial = Target.renderer.materials[MaterialIndex];
-            materialColor = Target.renderer.materials[MaterialIndex].color;
 		    materialName = Target.renderer.materials[MaterialIndex].name;
+
+            if (Target.renderer.material.HasProperty("_Color"))
+                materialColor = Target.renderer.materials[MaterialIndex].color;
+            else
+                materialColor = UnityEngine.Color.white;
 		 }
 		 else
 		 {
