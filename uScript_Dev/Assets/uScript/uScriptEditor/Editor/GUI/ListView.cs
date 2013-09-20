@@ -286,6 +286,9 @@ namespace Detox.Editor.GUI
                //Debug.Log("FIRST:\t" + _firstVisibleRow.ToString() + "\nLAST:\t\t" + _lastVisibleRow.ToString());
             }
 
+            // Check to see if the control focus is gained or lost
+            this.UpdateFocus(parentPanelRect);
+
             Rect listPosition = EditorGUILayout.BeginVertical();
             {
                this.ListOffset = EditorGUILayout.BeginScrollView(
@@ -381,6 +384,12 @@ namespace Detox.Editor.GUI
                         this.visibleItems[i].Row = this.ItemRow++;
                         this.ItemRowEven = !this.ItemRowEven;
                      }
+
+                     if (e.type == EventType.MouseDown && e.button == 0)
+                     {
+                        this.SelectNone();
+                        e.Use();
+                     }
                   }
                   else
                   {
@@ -402,9 +411,6 @@ namespace Detox.Editor.GUI
          
          EditorGUILayout.EndVertical();
          
-         // Check to see if the control focus is gained or lost
-         this.UpdateFocus(parentPanelRect);
-
          // Process keyboard input
          if (this.HasFocus)
          {
@@ -1014,6 +1020,8 @@ namespace Detox.Editor.GUI
                this.ClickNewSelection(item);
             }
          }
+
+         e.Use();
       }
 
       public ListViewItem SelectItem(int index)
@@ -2022,7 +2030,7 @@ namespace Detox.Editor.GUI
             {
                this.HasFocus = false;
             }
-            else if (e.type == EventType.MouseDown && parentPanelRect.Contains(e.mousePosition) == false)
+            else if ((e.type == EventType.MouseDown || e.type == EventType.Used) && parentPanelRect.Contains(e.mousePosition) == false)
             {
                this.HasFocus = false;
                GUIUtility.keyboardControl = 0;
