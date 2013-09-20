@@ -80,6 +80,11 @@ public class uScriptBackgroundProcess
 
    private static void Update()
    {
+      if (uScript.IsOpen == false)
+      {
+         return;
+      }
+
       // Cache the master object and component
       if (uScript.MasterObject == null || uScript.MasterComponent == null)
       {

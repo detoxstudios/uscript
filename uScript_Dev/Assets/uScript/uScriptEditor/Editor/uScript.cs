@@ -558,7 +558,7 @@ public sealed partial class uScript : EditorWindow
          return;
       }
 
-      //Debug.Log( "Launching" );
+      //Debug.Log("Launching\n");
 
       if (false == this.launched)
       {
@@ -3061,8 +3061,8 @@ public sealed partial class uScript : EditorWindow
       string logicPath = relativePath + "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
       string wrapperPath = relativePath + "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
 
-      uScriptDebug.Log("refreshing " + logicPath);
-      uScriptDebug.Log("refreshing " + wrapperPath);
+      uScriptDebug.Log("Refreshing " + logicPath);
+      uScriptDebug.Log("Refreshing " + wrapperPath);
 
       AssetDatabase.ImportAsset(logicPath, ImportAssetOptions.ForceUpdate);
       AssetDatabase.ImportAsset(wrapperPath, ImportAssetOptions.ForceUpdate);
