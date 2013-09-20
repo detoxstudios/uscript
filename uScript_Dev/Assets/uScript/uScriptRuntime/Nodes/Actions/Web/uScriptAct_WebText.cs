@@ -1,8 +1,13 @@
-// uScript Action Node
-// (C) 2011 Detox Studios LLC
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Detox Studios, LLC" file="uScriptAct_WebText.cs">
+//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   uScript Action Node
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 using UnityEngine;
-using System.Collections;
 
 [NodePath("Actions/Web/Download")]
 
@@ -14,90 +19,77 @@ using System.Collections;
 [FriendlyName("Web Text", "Download text data from the specified URL.")]
 public class uScriptAct_WebText : uScriptLogic
 {
-   private bool _Out;
-   private bool _OutFinished;
-   private bool _OutError;
-
-   private WWW _www = null;
-
+   private bool finished;
+   private WWW www;
 
    // ================================================================================
    //    Output Sockets
    // ================================================================================
-   //
    [FriendlyName("Out")]
-   public bool Out { get { return _Out; } }
+   public bool Out { get; private set; }
 
-   [FriendlyName("Finished")]
-   public bool OutFinished { get { return _OutFinished; } }
+   [FriendlyName("Success")]
+   public bool OutFinished { get; private set; }
 
    [FriendlyName("Error")]
-   public bool OutError { get { return _OutError; } }
-
+   public bool OutError { get; private set; }
 
    // ================================================================================
    //    Input Sockets and Node Parameters
    // ================================================================================
-   //
-   // Parameter Attributes are applied below in Reset()
    public void In(
-      [FriendlyName("URL", "The url to download")]
+      [FriendlyName("URL", "The URL to download")]
       string URL,
-
-      [FriendlyName("Form Data", "A WWWForm instance containing the form data to post.")]
-      [SocketState(false, false)]
+      [FriendlyName("Form Data", "A WWWForm instance containing the form data to post."), SocketState(false, false)]
       WWWForm Form,
-
       [FriendlyName("Result", "The downloaded data.")]
       out string Result,
-
-      [FriendlyName("Error", "Returns an error message if there was an error during the download.")]
-      [SocketState(false, false)]
+      [FriendlyName("Error", "Returns an error message if there was an error during the download."), SocketState(false, false)]
       out string Error)
    {
-      _Out = true;
-      _OutFinished = false;
-      _OutError = false;
+      this.Out = true;
+      this.OutFinished = false;
+      this.OutError = false;
 
-      this._www = Form == null ? new WWW(URL) : new WWW(URL, Form);
+      this.finished = false;
+      this.www = Form == null ? new WWW(URL) : new WWW(URL, Form);
 
       Result = string.Empty;
       Error = string.Empty;
    }
-
 
    // ================================================================================
    //    Miscellaneous Node Functionality
    // ================================================================================
-   //
    [Driven]
-   public bool Driven(out string Result, out string Error)
+   public bool Driven(out string result, out string error)
    {
-      _Out = false;
+      this.Out = false;
 
-      Result = string.Empty;
-      Error = string.Empty;
+      result = string.Empty;
+      error = string.Empty;
 
-      if (_OutFinished == false)
+      if (this.finished)
       {
-         if (_www.isDone)
-         {
-            _OutFinished = true;
-
-            if (_www.error != null)
-            {
-               Error = _www.error;
-               _OutError = true;
-            }
-            else
-            {
-               Result = _www.text;
-            }
-         }
-         return true;
+         return false;
       }
 
-      return false;
-   }
+      if (this.www.isDone)
+      {
+         this.finished = true;
 
+         if (this.www.error != null)
+         {
+            error = this.www.error;
+            this.OutError = true;
+         }
+         else
+         {
+            result = this.www.text;
+            this.OutFinished = true;
+         }
+      }
+
+      return true;
+   }
 }

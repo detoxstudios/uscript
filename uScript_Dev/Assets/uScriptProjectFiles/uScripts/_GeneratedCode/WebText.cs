@@ -1,11 +1,11 @@
-//uScript Generated Code - Build 0.9.2359
+//uScript Generated Code - Build 0.9.2428
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 [NodePath("Graphs")]
 [System.Serializable]
-[FriendlyName("", "")]
+[FriendlyName("Web Text", "")]
 public class WebText : uScriptLogic
 {
 
@@ -196,6 +196,7 @@ public class WebText : uScriptLogic
    System.String logic_uScriptAct_ConvertVariable_StringValue_31;
    System.Boolean logic_uScriptAct_ConvertVariable_BooleanValue_31;
    UnityEngine.Vector3 logic_uScriptAct_ConvertVariable_Vector3Value_31;
+   System.String logic_uScriptAct_ConvertVariable_FloatGroupSeparator_31 = ",";
    bool logic_uScriptAct_ConvertVariable_Out_31 = true;
    //pointer to script instanced logic node
    uScriptAct_GUISelectionGrid logic_uScriptAct_GUISelectionGrid_uScriptAct_GUISelectionGrid_34 = new uScriptAct_GUISelectionGrid( );
@@ -1109,8 +1110,10 @@ public class WebText : uScriptLogic
          }
          {
          }
+         {
+         }
       }
-      logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_31.In(logic_uScriptAct_ConvertVariable_Target_31, out logic_uScriptAct_ConvertVariable_IntValue_31, out logic_uScriptAct_ConvertVariable_Int64Value_31, out logic_uScriptAct_ConvertVariable_FloatValue_31, out logic_uScriptAct_ConvertVariable_StringValue_31, out logic_uScriptAct_ConvertVariable_BooleanValue_31, out logic_uScriptAct_ConvertVariable_Vector3Value_31);
+      logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_31.In(logic_uScriptAct_ConvertVariable_Target_31, out logic_uScriptAct_ConvertVariable_IntValue_31, out logic_uScriptAct_ConvertVariable_Int64Value_31, out logic_uScriptAct_ConvertVariable_FloatValue_31, out logic_uScriptAct_ConvertVariable_StringValue_31, out logic_uScriptAct_ConvertVariable_BooleanValue_31, out logic_uScriptAct_ConvertVariable_Vector3Value_31, logic_uScriptAct_ConvertVariable_FloatGroupSeparator_31);
       local_32_System_String = logic_uScriptAct_ConvertVariable_StringValue_31;
       
       //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
