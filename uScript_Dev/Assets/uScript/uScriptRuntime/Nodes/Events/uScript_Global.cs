@@ -37,11 +37,11 @@ public class uScript_Global : uScriptEvent
       if ( uScriptStart != null ) uScriptStart(this, new System.EventArgs());
    }
 
-    //can't perform in Start because we aren't guaranteed
+   //can't perform in Start because we aren't guaranteed
    //all the listeners are registered
    void LateUpdate()
    {
-      if ( true == m_LateUpdateSent ) return;
+      if ( true == m_LateUpdateSent || false == m_UpdateSent ) return;
       
       m_LateUpdateSent = true;
       if ( uScriptLateStart != null ) uScriptLateStart(this, new System.EventArgs());
