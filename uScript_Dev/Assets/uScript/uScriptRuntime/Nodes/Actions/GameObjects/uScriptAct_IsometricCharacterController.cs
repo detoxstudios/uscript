@@ -211,7 +211,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       // apply translation/rotation
       if (Direction.Left == m_Rotate)
       {
-#if UNITY_4_2
+#if UNITY_4_2_2 || UNITY_4_3			
          m_Target.transform.Rotate(Vector3.up, -rotateSpeed * Time.deltaTime, Space.Self);
 #else
          m_Target.transform.RotateAroundLocal(Vector3.up, -rotateSpeed * Time.deltaTime);
@@ -219,7 +219,7 @@ public class uScriptAct_IsometricCharacterController : uScriptLogic
       }
       else if (Direction.Right == m_Rotate)
       {
-#if UNITY_4_2
+#if UNITY_4_2_2 || UNITY_4_3			
          m_Target.transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime, Space.Self);
 #else
          m_Target.transform.RotateAroundLocal(Vector3.up, rotateSpeed * Time.deltaTime);
