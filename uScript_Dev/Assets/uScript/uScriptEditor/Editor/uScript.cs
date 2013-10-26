@@ -27,6 +27,7 @@ using System.Reflection;
 
 using Detox.Data.Tools;
 using Detox.Drawing;
+using Detox.Editor.GUI;
 using Detox.FlowChart;
 using Detox.ScriptEditor;
 using Detox.Windows.Forms;
@@ -34,6 +35,8 @@ using Detox.Windows.Forms;
 using UnityEditor;
 
 using UnityEngine;
+
+using Control = Detox.Windows.Forms.Control;
 
 [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1502:ElementMustNotBeOnSingleLine", Justification = "Reviewed. Suppression is OK here.")]
 [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1516:ElementsMustBeSeparatedByBlankLine", Justification = "Reviewed. Suppression is OK here.")]
@@ -267,9 +270,6 @@ public sealed partial class uScript : EditorWindow
    public Vector2 _guiContentScrollPos;
 
    Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
-
-   Rect rectFileMenuButton = new Rect();
-   Rect rectFileMenuWindow = new Rect(20, 20, 10, 10);
 
    // Palette Variables
    String _graphListFilterText = string.Empty;
@@ -1371,10 +1371,6 @@ public sealed partial class uScript : EditorWindow
          {
             OnGUI_HandleInput_ContextMenu();
          }
-         else if (isFileMenuOpen)
-         {
-            OnGUI_HandleInput_FileMenu();
-         }
          else
          {
             OnGUI_HandleInput_Canvas();
@@ -1536,99 +1532,6 @@ public sealed partial class uScript : EditorWindow
       if (isContextMenuOpen == false)
       {
          e.Use();
-      }
-   }
-
-   void OnGUI_HandleInput_FileMenu()
-   {
-      Event e = Event.current;
-
-      int modifierKeys = 0;
-
-      if (Event.current.alt) modifierKeys |= Keys.Alt;
-      if (Event.current.shift) modifierKeys |= Keys.Shift;
-      if (Event.current.control || Event.current.command) modifierKeys |= Keys.Control;
-
-      switch (e.type)
-      {
-         case EventType.ContextClick:
-            isFileMenuOpen = false;
-            break;
-
-         case EventType.KeyDown:
-            e.Use();
-            break;
-
-         case EventType.KeyUp:
-            if (modifierKeys == Keys.None || modifierKeys == Keys.Alt)
-            {
-               switch (e.keyCode)
-               {
-                  case KeyCode.Escape:
-                     isFileMenuOpen = false;
-                     break;
-                  case KeyCode.N:
-                     FileMenuItem_New();
-                     break;
-                  case KeyCode.O:
-                     FileMenuItem_Open();
-                     break;
-                  case KeyCode.S:
-                     FileMenuItem_Save();
-                     break;
-                  case KeyCode.A:
-                     FileMenuItem_SaveAs();
-                     break;
-                  case KeyCode.Q:
-                     FileMenuItem_QuickSave();
-                     break;
-                  case KeyCode.D:
-                     FileMenuItem_DebugSave();
-                     break;
-                  case KeyCode.R:
-                     FileMenuItem_ReleaseSave();
-                     break;
-                  case KeyCode.E:
-                     FileMenuItem_ExportPNG();
-                     break;
-               }
-            }
-            e.Use();
-            break;
-
-         case EventType.MouseDown:
-            if (rectFileMenuWindow.Contains(e.mousePosition) == false)
-            {
-               isFileMenuOpen = false;
-            }
-            else if (e.button != 0)
-            {
-               isFileMenuOpen = false;
-            }
-            break;
-
-         case EventType.MouseUp:
-            if (e.button != 0)
-            {
-               isFileMenuOpen = false;
-            }
-            break;
-
-         case EventType.ScrollWheel:
-            e.Use();
-            break;
-
-         //         // paint/layout events
-         //         case EventType.Layout:
-         //            break;
-         //         case EventType.Repaint:
-         //            break;
-         //
-         //         // ignore these events
-         //         case EventType.Ignore:
-         //         case EventType.Used:
-         //         default:
-         //            break;
       }
    }
 
@@ -1873,18 +1776,12 @@ public sealed partial class uScript : EditorWindow
                   switch (e.keyCode)
                   {
                      case KeyCode.F:
-                        //
-                        // Open File Menu
-                        //
-                        isFileMenuOpen = true;
+                        // TODO: OPEN the file menu here
+                        //this.ContextMenuFile(toolbarRect);
                         break;
 
                      case KeyCode.G:
-                        //
-                        // Toggle grid visibility
-                        //
-                        Preferences.ShowGrid = !Preferences.ShowGrid;
-                        Preferences.Save();
+                        this.CommandViewMenuGrid();
                         break;
 
                      case KeyCode.H:
@@ -1934,12 +1831,12 @@ public sealed partial class uScript : EditorWindow
                         break;
 
                      case KeyCode.F:
-                        isFileMenuOpen = true;
+                        // TODO: Open the file menu here
+                        //this.ContextMenuFile(toolbarRect);
                         break;
 
                      case KeyCode.G:
-                        Preferences.GridSnap = !Preferences.GridSnap;
-                        Preferences.Save();
+                        this.CommandViewMenuSnap();
                         break;
 
                      case KeyCode.N:
@@ -1973,6 +1870,18 @@ public sealed partial class uScript : EditorWindow
 
                      case KeyCode.Comma:
                         m_ScriptEditorCtrl.CollapseSelectedNodes();
+                        break;
+
+                     case KeyCode.BackQuote: // ~
+                        this.CommandCanvasShowPanels();
+                        break;
+
+                     case KeyCode.Minus:  // _
+                        this.CommandCanvasZoomOut();
+                        break;
+
+                     case KeyCode.Equals: // +
+                        this.CommandCanvasZoomIn();
                         break;
                   }
                }
@@ -2033,81 +1942,35 @@ public sealed partial class uScript : EditorWindow
                         break;
 
                      case KeyCode.Home:
-                        //
-                        // Position graph at (0, 0)
-                        //
-                        if (m_ScriptEditorCtrl != null)
-                        {
-                           m_ScriptEditorCtrl.RebuildScript(null, true);
-                        }
+                        this.CommandCanvasLocateOrigin();
                         break;
 
                      case KeyCode.LeftBracket:
-                        //
-                        // Position graph at previous Event node
-                        //
-                        this.focusedNode = m_ScriptEditorCtrl.GetPrevNode(this.focusedNode, typeof(EntityEventDisplayNode));
-                        if (this.focusedNode != null)
-                        {
-                           m_ScriptEditorCtrl.CenterOnNode(this.focusedNode);
-                        }
+                        this.CommandCanvasLocatePreviousEvent();
                         break;
 
                      case KeyCode.RightBracket:
-                        //
-                        // Position graph at next Event node
-                        //
-                        this.focusedNode = m_ScriptEditorCtrl.GetNextNode(this.focusedNode, typeof(EntityEventDisplayNode));
-                        if (this.focusedNode != null)
-                        {
-                           m_ScriptEditorCtrl.CenterOnNode(this.focusedNode);
-                        }
+                        this.CommandCanvasLocateNextEvent();
                         break;
 
                      case KeyCode.BackQuote:
                      case KeyCode.Backslash:
-                        //
-                        // Toggle panel visibility
-                        //
-                        //    The BackQuote key doesn't work well on the German keyboard,
-                        //    so support Backslash as well.
-                        //
-                        uScriptGUI.PanelsHidden = !uScriptGUI.PanelsHidden;
-
-                        // FIXME: When toggled while the mouse is down, the canvas often shifts around.
-                        if (uScriptGUI.PanelsHidden)
-                        {
-                           // m_ScriptEditorCtrl.FlowChart.Location.X += (int)_canvasRect.x;
-                           m_ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
-                           m_ScriptEditorCtrl.RebuildScript(null, false);
-                        }
-                        else
-                        {
-                           // m_ScriptEditorCtrl.FlowChart.Location.X -= (int)_canvasRect.x;
-                           m_ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
-                           m_ScriptEditorCtrl.RebuildScript(null, false);
-                        }
+                        this.CommandCanvasShowPanels();
                         break;
 
                      case KeyCode.Alpha0:
-                        //
-                        // Zoom graph default
-                        //
-                        this.mapScale = 1.0f;
+                        this.CommandCanvasZoomReset();
                         break;
 
                      case KeyCode.Minus:
-                        //
-                        // Zoom graph out
-                        //
-                        this.mapScale = Mathf.Max(this.mapScale - 0.1f, 0.1f);
+                     case KeyCode.KeypadMinus:
+                        this.CommandCanvasZoomOut();
                         break;
 
                      case KeyCode.Equals:
-                        //
-                        // Zoom graph in
-                        //
-                        this.mapScale = Mathf.Min(this.mapScale + 0.1f, 1.0f);
+                     case KeyCode.Plus:
+                     case KeyCode.KeypadPlus:
+                        this.CommandCanvasZoomIn();
                         break;
                   }
                }
@@ -2381,12 +2244,9 @@ public sealed partial class uScript : EditorWindow
                rectContextMenuWindow = tmpRect;
             }
          }
-         else if (isFileMenuOpen)
-         {
-            rectFileMenuWindow = GUILayout.Window("FileMenu".GetHashCode(), rectFileMenuWindow, DrawFileMenuWindow, string.Empty, uScriptGUIStyle.MenuDropDownWindow);
-         }
       }
-      EndWindows();
+
+      this.EndWindows();
    }
    
    void OnPlaymodeStateChanged()
@@ -3006,7 +2866,7 @@ public sealed partial class uScript : EditorWindow
          this.mouseRegionRect[region] = GUILayoutUtility.GetLastRect();
       }
 
-      if (isContextMenuOpen || isFileMenuOpen)
+      if (isContextMenuOpen)
       {
          return;
       }
@@ -3069,20 +2929,6 @@ public sealed partial class uScript : EditorWindow
       AssetDatabase.Refresh();
    }
 
-   bool _isFileMenuOpen = false;
-   public bool isFileMenuOpen
-   {
-      get { return _isFileMenuOpen; }
-      set
-      {
-         if (_isFileMenuOpen != value)
-         {
-            _isFileMenuOpen = value;
-            Event.current.Use();
-         }
-      }
-   }
-
    void DrawMenuItemShortcut(string shortcut)
    {
       if (string.IsNullOrEmpty(shortcut))
@@ -3101,84 +2947,118 @@ public sealed partial class uScript : EditorWindow
       GUI.Label(r, shortcut, uScriptGUIStyle.MenuDropDownButtonShortcut);
    }
 
-   void DrawFileMenuWindow(int windowID)
+   private void CommandHelpMenuAbout()
    {
-      string modifier = (Application.platform == RuntimePlatform.WindowsEditor ? "Alt+" : uScriptGUI.KeyOption);
-
-      Vector2 v1 = uScriptGUIStyle.MenuDropDownButton.CalcSize(uScriptGUIContent.buttonScriptExportPNG);
-      Vector2 v2 = uScriptGUIStyle.MenuDropDownButtonShortcut.CalcSize(new GUIContent(modifier + "W"));
-
-      GUILayout.BeginVertical(GUILayout.Width(v1.x + 32 + v2.x));
-      {
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptNew, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_New();
-         }
-         DrawMenuItemShortcut(modifier + "N");
-
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptOpen, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_Open();
-         }
-         DrawMenuItemShortcut(modifier + "O");
-
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptSave, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_Save();
-         }
-         DrawMenuItemShortcut(modifier + "S");
-
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveAs, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_SaveAs();
-         }
-         DrawMenuItemShortcut(modifier + "A");
-
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveQuick, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_QuickSave();
-         }
-         DrawMenuItemShortcut(modifier + "Q");
-
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveDebug, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_DebugSave();
-         }
-         DrawMenuItemShortcut(modifier + "D");
-
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptSaveRelease, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_ReleaseSave();
-         }
-         DrawMenuItemShortcut(modifier + "R");
-
-         uScriptGUI.HR();
-
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptExportPNG, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_ExportPNG();
-         }
-         DrawMenuItemShortcut(modifier + "E");
-
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptUpgradeNodes, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_UpgradeDeprecatedNodes();
-         }
-
-         uScriptGUI.HR();
-
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptsRebuildAll, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_RebuildAll();
-         }
-
-         if (GUILayout.Button(uScriptGUIContent.buttonScriptsRemoveGenerated, uScriptGUIStyle.MenuDropDownButton))
-         {
-            FileMenuItem_Clean();
-         }
-      }
-      GUILayout.EndVertical();
+      Debug.Log("ABOUT uSCRIPT \n");
    }
+
+   private void CommandHelpMenuWelcome()
+   {
+      WelcomeWindow.Init();
+   }
+
+   private void CommandHelpMenuDocs()
+   {
+      Help.BrowseURL("http://uscript.net/docs/");
+   }
+
+   private void CommandHelpMenuForum()
+   {
+      Help.BrowseURL("http://uscript.net/forum/");
+   }
+
+   private void CommandHelpMenuShortcuts()
+   {
+      ReferenceWindow.Init();
+   }
+
+   private void CommandHelpMenuUpdates()
+   {
+      UpdateNotification.ManualCheck();
+   }
+
+   private void CommandCanvasShowPanels()
+   {
+      // Toggle panel visibility
+      //
+      //    The BackQuote key doesn't work well on the German keyboard,
+      //    so support Backslash as well.
+
+      uScriptGUI.PanelsHidden = !uScriptGUI.PanelsHidden;
+
+      // FIXME: When toggled while the mouse is down, the canvas often shifts around.
+      if (uScriptGUI.PanelsHidden)
+      {
+         // m_ScriptEditorCtrl.FlowChart.Location.X += (int)_canvasRect.x;
+         m_ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
+         m_ScriptEditorCtrl.RebuildScript(null, false);
+      }
+      else
+      {
+         // m_ScriptEditorCtrl.FlowChart.Location.X -= (int)_canvasRect.x;
+         m_ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
+         m_ScriptEditorCtrl.RebuildScript(null, false);
+      }
+   }
+
+   private void CommandViewMenuGrid()
+   {
+      Preferences.ShowGrid = !Preferences.ShowGrid;
+      Preferences.Save();
+   }
+
+   private void CommandViewMenuSnap()
+   {
+      Preferences.GridSnap = !Preferences.GridSnap;
+      Preferences.Save();
+   }
+
+   private void CommandCanvasZoomIn()
+   {
+      this.mapScale = Mathf.Min(this.mapScale + 0.1f, 1.0f);
+   }
+
+   private void CommandCanvasZoomOut()
+   {
+      this.mapScale = Mathf.Max(this.mapScale - 0.1f, 0.1f);
+   }
+
+   private void CommandCanvasLocateOrigin()
+   {
+      if (m_ScriptEditorCtrl != null)
+      {
+         m_ScriptEditorCtrl.RebuildScript(null, true);
+      }
+   }
+
+   private void CommandCanvasLocatePreviousEvent()
+   {
+      this.focusedNode = m_ScriptEditorCtrl.GetPrevNode(this.focusedNode, typeof(EntityEventDisplayNode));
+      if (this.focusedNode != null)
+      {
+         m_ScriptEditorCtrl.CenterOnNode(this.focusedNode);
+      }
+   }
+
+   private void CommandCanvasLocateNextEvent()
+   {
+      this.focusedNode = m_ScriptEditorCtrl.GetNextNode(this.focusedNode, typeof(EntityEventDisplayNode));
+      if (this.focusedNode != null)
+      {
+         m_ScriptEditorCtrl.CenterOnNode(this.focusedNode);
+      }
+   }
+
+   private void CommandCanvasZoomReset()
+   {
+      this.mapScale = 1.0f;
+   }
+
+   private void CommandViewMenuPreferences()
+   {
+      PreferenceWindow.Init();
+   }
+
 
    void FileMenuItem_New()
    {
@@ -3186,7 +3066,6 @@ public sealed partial class uScript : EditorWindow
       {
          NewScript();
       }
-      isFileMenuOpen = false;
    }
 
    void FileMenuItem_Open()
@@ -3196,7 +3075,6 @@ public sealed partial class uScript : EditorWindow
       {
          OpenScript(path);
       }
-      isFileMenuOpen = false;
    }
 
    private bool SaveDenied()
@@ -3234,7 +3112,6 @@ public sealed partial class uScript : EditorWindow
             if (saved) RefreshScript();
          }
       }
-      isFileMenuOpen = false;
    }
 
    void FileMenuItem_Save()
@@ -3267,7 +3144,6 @@ public sealed partial class uScript : EditorWindow
    void FileMenuItem_ExportPNG()
    {
       Detox.Editor.ExportPNG.Start();
-      isFileMenuOpen = false;
    }
 
    void FileMenuItem_UpgradeDeprecatedNodes()
@@ -3315,14 +3191,11 @@ public sealed partial class uScript : EditorWindow
       {
          Debug.Log(result + "\n");
       }
-
-      isFileMenuOpen = false;
    }
 
    void FileMenuItem_RebuildAll()
    {
       RebuildAllScripts();
-      isFileMenuOpen = false;
    }
 
    void FileMenuItem_Clean()
@@ -3331,7 +3204,6 @@ public sealed partial class uScript : EditorWindow
       StubGeneratedCode(Preferences.UserScripts);
       AssetDatabase.StopAssetEditing();
       AssetDatabase.Refresh();
-      isFileMenuOpen = false;
    }
 
    void DrawGUIContent()
@@ -3349,44 +3221,33 @@ public sealed partial class uScript : EditorWindow
                m_NodeToolbarRect = toolbarRect;
             }
 
-            isFileMenuOpen = GUILayout.Toggle(isFileMenuOpen, uScriptGUIContent.buttonFileMenu, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
-            if (Event.current.type == EventType.Repaint)
+            if (GUILayout.Button(uScriptGUIContent.FileMenu, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               rectFileMenuButton = GUILayoutUtility.GetLastRect();
-               rectFileMenuWindow.x = rectFileMenuButton.x;
-               rectFileMenuWindow.y = rectFileMenuButton.y + rectFileMenuButton.height;
+               this.ContextMenuFile(toolbarRect);
             }
 
-            if (GUILayout.Button(uScriptGUIContent.buttonPreferences, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(uScriptGUIContent.ViewMenu, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               PreferenceWindow.Init();
+               this.ContextMenuView(toolbarRect);
+            }
+
+            if (GUILayout.Button(uScriptGUIContent.HelpMenu, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+            {
+               this.ContextMenuHelp(toolbarRect);
             }
 
             GUILayout.FlexibleSpace();
-            GUILayout.Space(16);
 
-            int saveMethod = (int)Preferences.SaveMethod;
-            saveMethod = GUILayout.Toolbar(saveMethod, uScriptGUIContent.saveMethodList, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false));
-            if (saveMethod != (int)Preferences.SaveMethod)
+            GUILayout.Label("Default Save Mode:", uScriptGUIStyle.ToolbarLabel);
+            var oldMethod = (int)Preferences.SaveMethod;
+            var newMethod = EditorGUILayout.Popup(oldMethod, uScriptGUIContent.SaveMethodOptions, EditorStyles.toolbarDropDown, GUILayout.Width(100));
+            if (newMethod != oldMethod)
             {
-               Preferences.SaveMethod = (Preferences.SaveMethodType)saveMethod;
+               Preferences.SaveMethod = (Preferences.SaveMethodType)newMethod;
                Preferences.Save();
-               GenerateDebugInfo = Preferences.SaveMethod != Preferences.SaveMethodType.Release;
+               this.GenerateDebugInfo = Preferences.SaveMethod != Preferences.SaveMethodType.Release;
             }
 
-            // The toolbarButton style doesn't have a right edge, so looks wrong when used
-            // with the Toolbar control, so Draw a Box instead of the standard Space.
-            GUILayout.Box(GUIContent.none, EditorStyles.toolbarButton, GUILayout.Width(toolbarSpaceWidth));
-            //            GUILayout.Space(toolbarSpaceWidth);
-
-            bool newSnapValue = GUILayout.Toggle(Preferences.GridSnap, uScriptGUIContent.buttonGridSnap, EditorStyles.toolbarButton);
-            if (newSnapValue != Preferences.GridSnap)
-            {
-               Preferences.GridSnap = newSnapValue;
-               Preferences.Save();
-            }
-
-            GUILayout.Space(16);
             GUILayout.FlexibleSpace();
 
             GUILayout.Label(FullVersionName, uScriptGUIStyle.ToolbarLabel);
@@ -3458,6 +3319,103 @@ public sealed partial class uScript : EditorWindow
 
    // END TEMP Variables
 
+   private void ContextMenuFile(Rect rect)
+   {
+      var menu = new GenericMenu();
+
+      menu.AddItem(uScriptGUIContent.FileMenuItemNew, false, this.FileMenuItem_New);
+      menu.AddItem(uScriptGUIContent.FileMenuItemOpen, false, this.FileMenuItem_Open);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSave, false, this.FileMenuItem_Save);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSaveAs, false, this.FileMenuItem_SaveAs);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSaveQuick, false, this.FileMenuItem_QuickSave);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSaveDebug, false, this.FileMenuItem_DebugSave);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSaveRelease, false, this.FileMenuItem_ReleaseSave);
+      menu.AddSeparator(string.Empty);
+      menu.AddItem(uScriptGUIContent.FileMenuItemExportImage, false, this.FileMenuItem_ExportPNG);
+      menu.AddItem(uScriptGUIContent.FileMenuItemUpgradeNodes, false, this.FileMenuItem_UpgradeDeprecatedNodes);
+      menu.AddSeparator(string.Empty);
+      menu.AddItem(uScriptGUIContent.FileMenuItemRebuildGraphs, false, this.FileMenuItem_RebuildAll);
+      menu.AddItem(uScriptGUIContent.FileMenuItemRemoveSource, false, this.FileMenuItem_Clean);
+
+      // @TODO: Consider changing the delegate function from "FileMenuItem_*" to "Command*"
+      // @TODO: Consider adding Reload and Location commands
+
+      menu.DropDown(rect);
+
+      Event.current.Use();
+   }
+
+   private void ContextMenuView(Rect rect)
+   {
+      var menu = new GenericMenu();
+
+      menu.AddItem(uScriptGUIContent.ViewMenuItemPanels, !uScriptGUI.PanelsHidden, this.CommandCanvasShowPanels);
+      menu.AddSeparator(string.Empty);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemGrid, Preferences.ShowGrid, this.CommandViewMenuGrid);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemSnap, Preferences.GridSnap, this.CommandViewMenuSnap);
+      menu.AddDisabledItem(uScriptGUIContent.ViewMenuItemSnapSelected);
+      menu.AddSeparator(string.Empty);
+
+      menu.AddItem(uScriptGUIContent.ViewMenuItemFindCanvasOrigin, false, this.CommandCanvasLocateOrigin);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemFindNextEvent, false, this.CommandCanvasLocateNextEvent);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemFindPreviousEvent, false, this.CommandCanvasLocatePreviousEvent);
+
+      menu.AddSeparator(string.Empty);
+
+      if (this.mapScale < 1.0f)
+      {
+         menu.AddItem(uScriptGUIContent.ViewMenuItemZoomIn, false, this.CommandCanvasZoomIn);
+      }
+      else
+      {
+         menu.AddDisabledItem(uScriptGUIContent.ViewMenuItemZoomIn);
+      }
+
+      if (this.mapScale > 0.1f)
+      {
+         menu.AddItem(uScriptGUIContent.ViewMenuItemZoomOut, false, this.CommandCanvasZoomOut);
+      }
+      else
+      {
+         menu.AddDisabledItem(uScriptGUIContent.ViewMenuItemZoomOut);
+      }
+
+      if (this.mapScale < 1.0f)
+      {
+         menu.AddItem(uScriptGUIContent.ViewMenuItemZoomReset, false, this.CommandCanvasZoomReset);
+      }
+      else
+      {
+         menu.AddDisabledItem(uScriptGUIContent.ViewMenuItemZoomReset);
+      }
+
+      menu.AddSeparator(string.Empty);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemPreferences, false, this.CommandViewMenuPreferences);
+      //menu.AddDisabledItem(uScriptGUIContent.ViewMenuItemPreferences);
+
+      menu.DropDown(rect);
+
+      Event.current.Use();
+   }
+
+   private void ContextMenuHelp(Rect rect)
+   {
+      var menu = new GenericMenu();
+
+      menu.AddItem(uScriptGUIContent.HelpMenuItemShortcuts, false, this.CommandHelpMenuShortcuts);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemWelcome, false, this.CommandHelpMenuWelcome);
+      menu.AddSeparator(string.Empty);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemOnlineDocs, false, this.CommandHelpMenuDocs);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemOnlineForum, false, this.CommandHelpMenuForum);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemUpdates, false, this.CommandHelpMenuUpdates);
+      //menu.AddSeparator(string.Empty);
+      //menu.AddItem(uScriptGUIContent.HelpMenuItemAbout, false, this.CommandHelpMenuAbout);
+
+      menu.DropDown(rect);
+
+      Event.current.Use();
+   }
+
    void m_ScriptEditorCtrl_ScriptModified(object sender, EventArgs e)
    {
       RequestRepaint();
@@ -3507,11 +3465,14 @@ public sealed partial class uScript : EditorWindow
 
       foreach (DirectoryInfo subDirectory in directory.GetDirectories())
       {
-         string result = FindFile(subDirectory.FullName, fileName);
-         if (result != "") return result;
+         var result = FindFile(subDirectory.FullName, fileName);
+         if (result != string.Empty)
+         {
+            return result;
+         }
       }
 
-      return "";
+      return string.Empty;
    }
 
    private string[] FindAllFiles(string rootPath, string extension)

@@ -50,12 +50,8 @@ public class PreferenceWindow : EditorWindow
       uScript.Instance.isPreferenceWindowOpen = true;
 
       // Setup the custom GUIStyles used to layout the window
-      _styleWindow = new GUIStyle();
-      _styleWindow.margin = _padding;
-      _styleWindow.fixedWidth = _labelWidth + _valueWidth;
-
-      _styleCloseButton = new GUIStyle(GUI.skin.button);
-      _styleCloseButton.fixedWidth = (_labelWidth + _valueWidth - 4 - _styleCloseButton.margin.left * 4) * 0.5f;
+      _styleWindow = null;
+      _styleCloseButton = null;
    }
 
 
@@ -106,23 +102,15 @@ public class PreferenceWindow : EditorWindow
          base.maxSize = base.minSize;
       }
 
-//      if (_position != new Rect() && base.position.width != s_WantSize.x || base.position.height != s_WantSize.y)
-//      if (_position != new Rect())
-//      {
-//         Rect position = base.position;
-//         position.width = _position.x;
-//         position.height = _position.y;
-//         base.position = position;
-//         base.minSize = new Vector2(_position.width + _padding.left + _padding.right, _position.height + _padding.top + _padding.bottom);
-//         base.maxSize = base.minSize;
-//      }
+      if (this._styleWindow == null)
+      {
+         // Setup the custom GUIStyles used to layout the window
+         this._styleWindow = new GUIStyle { margin = this._padding, fixedWidth = _labelWidth + _valueWidth };
 
+         this._styleCloseButton = new GUIStyle(GUI.skin.button);
+         this._styleCloseButton.fixedWidth = (_labelWidth + _valueWidth - 4 - (this._styleCloseButton.margin.left * 4)) * 0.5f;
 
-
-
-
-
-
+      }
 
       // Get the Preferences
       _preferences = uScript.Preferences;

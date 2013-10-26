@@ -7,6 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Detox.Editor.GUI;
+
+using UnityEditor;
+
 using UnityEngine;
 
 public static class uScriptGUIContent
@@ -50,15 +54,48 @@ public static class uScriptGUIContent
       buttonScriptSourceDebug = new GUIContent("Source", "Ping the source file associated with this uScript.  This script contains Debug information.");
       buttonScriptUpgradeNodes = new GUIContent("Upgrade Deprecated Nodes", "Upgrade all deprecated nodes in this graph. If this graph is assigned to a specific Unity scene, please be sure that scene is open before doing this or you could loose work!");
 
-      buttonFileMenu = new GUIContent("File Menu", "Opens the file menu.");
-      buttonGridSnap = new GUIContent("Grid Snap", "Toggles grid snapping.");
-      buttonPreferences = new GUIContent("Preferences...", "Opens the preferences.");
+      buttonScriptNew = new GUIContent("New _&N", "Create a new uScript.  The active uScript will be closed automatically.");
 
-      saveMethodList = new[]
+      FileMenu = new GUIContent("File");
+      FileMenuItemNew = new GUIContent("New &N");
+      FileMenuItemOpen = new GUIContent("Open... &O");
+      FileMenuItemSave = new GUIContent("Save &S");
+      FileMenuItemSaveAs = new GUIContent("Save As... &A");
+      FileMenuItemSaveQuick = new GUIContent("Save Quick &Q");
+      FileMenuItemSaveDebug = new GUIContent("Save Debug &D");
+      FileMenuItemSaveRelease = new GUIContent("Save Release &R");
+      FileMenuItemExportImage = new GUIContent("Export to Image (PNG)   &E");
+      FileMenuItemUpgradeNodes = new GUIContent("Upgrade Deprecated Nodes");
+      FileMenuItemRebuildGraphs = new GUIContent("Rebuild All Graphs");
+      FileMenuItemRemoveSource = new GUIContent("Remove Generated Code");
+
+      ViewMenu = new GUIContent("View");
+      ViewMenuItemPanels = new GUIContent("Show Panels _`");
+      ViewMenuItemFindNextEvent = new GUIContent("Locate/Next Event Node _]");
+      ViewMenuItemFindPreviousEvent = new GUIContent("Locate/Previous Event Node _[");
+      ViewMenuItemFindCanvasOrigin = new GUIContent("Locate/Canvas Origin _Home");
+      ViewMenuItemGrid = new GUIContent("Show Grid %G");
+      ViewMenuItemSnap = new GUIContent("Snap to Grid &G");
+      ViewMenuItemSnapSelected = new GUIContent("Snap Selected Nodes &End");
+      ViewMenuItemZoomIn = new GUIContent("Zoom/Zoom In _+");
+      ViewMenuItemZoomOut = new GUIContent("Zoom/Zoom Out _-");
+      ViewMenuItemZoomReset = new GUIContent("Zoom/Reset Zoom _0");
+      
+      ViewMenuItemPreferences = new GUIContent("Preferences...");
+
+      HelpMenu = new GUIContent("Help");
+      HelpMenuItemOnlineDocs = new GUIContent("Online Documentation _F1");
+      HelpMenuItemOnlineForum = new GUIContent("Online Forums");
+      HelpMenuItemShortcuts = new GUIContent("Quick Command Reference");
+      HelpMenuItemUpdates = new GUIContent("Check for Updates");
+      HelpMenuItemAbout = new GUIContent("About uScript");
+      HelpMenuItemWelcome = new GUIContent("Welcome Window");
+
+      SaveMethodOptions = new[]
       {
-         new GUIContent("Quick Save", "When saved, no code will be generated."),
-         new GUIContent("Debug Save", "When saved, the generated code will contain debug information."),
-         new GUIContent("Release Save", "When saved, the generated code will be free of debug information.")
+         new GUIContent("Quick", PanelScript.SourceStateContent.Stale.image, "When saved, no code will be generated."),
+         new GUIContent("Debug", PanelScript.SourceStateContent.Debug.image, "When saved, the generated code will contain debug information."),
+         new GUIContent("Release", PanelScript.SourceStateContent.Release.image, "When saved, the generated code will be free of debug information.")
       };
 
       buttonScriptsRebuildAll = new GUIContent("Rebuild All uScripts", "Rebuild all uScripts in the Unity project. For best results, have an empty/blank Unity scene loaded when performing this action. Note: this could take a while if you have many large graphs!");
@@ -139,10 +176,6 @@ public static class uScriptGUIContent
 
    public static GUIContent buttonArraySearch { get; private set; }
 
-   public static GUIContent buttonFileMenu { get; private set; }
-
-   public static GUIContent buttonGridSnap { get; private set; }
-
    public static GUIContent buttonListCollapse { get; private set; }
 
    public static GUIContent buttonListExpand { get; private set; }
@@ -160,8 +193,6 @@ public static class uScriptGUIContent
    public static GUIContent buttonNodeToggle { get; private set; }
 
    public static GUIContent buttonNodeUpgrade { get; private set; }
-
-   public static GUIContent buttonPreferences { get; private set; }
 
    public static GUIContent buttonSaveModeDebug { get; private set; }
 
@@ -227,13 +258,75 @@ public static class uScriptGUIContent
 
    public static GUIContent iconError32 { get; private set; }
 
+   public static GUIContent FileMenu { get; private set; }
+
+   public static GUIContent FileMenuItemNew { get; private set; }
+
+   public static GUIContent FileMenuItemOpen { get; private set; }
+   
+   public static GUIContent FileMenuItemSave { get; private set; }
+   
+   public static GUIContent FileMenuItemSaveAs { get; private set; }
+   
+   public static GUIContent FileMenuItemSaveQuick { get; private set; }
+   
+   public static GUIContent FileMenuItemSaveDebug { get; private set; }
+   
+   public static GUIContent FileMenuItemSaveRelease { get; private set; }
+   
+   public static GUIContent FileMenuItemExportImage { get; private set; }
+   
+   public static GUIContent FileMenuItemUpgradeNodes { get; private set; }
+   
+   public static GUIContent FileMenuItemRebuildGraphs { get; private set; }
+
+   public static GUIContent FileMenuItemRemoveSource { get; private set; }
+
+   public static GUIContent ViewMenu { get; private set; }
+
+   public static GUIContent ViewMenuItemPanels { get; private set; }
+
+   public static GUIContent ViewMenuItemFindNextEvent { get; private set; }
+
+   public static GUIContent ViewMenuItemFindPreviousEvent { get; private set; }
+
+   public static GUIContent ViewMenuItemFindCanvasOrigin { get; private set; }
+
+   public static GUIContent ViewMenuItemGrid { get; private set; }
+
+   public static GUIContent ViewMenuItemSnap { get; private set; }
+
+   public static GUIContent ViewMenuItemSnapSelected { get; private set; }
+
+   public static GUIContent ViewMenuItemZoomIn { get; private set; }
+
+   public static GUIContent ViewMenuItemZoomOut { get; private set; }
+
+   public static GUIContent ViewMenuItemZoomReset { get; private set; }
+
+   public static GUIContent ViewMenuItemPreferences { get; private set; }
+
+   public static GUIContent HelpMenu { get; private set; }
+
+   public static GUIContent HelpMenuItemOnlineDocs { get; private set; }
+
+   public static GUIContent HelpMenuItemOnlineForum { get; private set; }
+
+   public static GUIContent HelpMenuItemShortcuts { get; private set; }
+
+   public static GUIContent HelpMenuItemUpdates { get; private set; }
+
+   public static GUIContent HelpMenuItemAbout { get; private set; }
+
+   public static GUIContent HelpMenuItemWelcome { get; private set; }
+
    public static GUIContent messageCompiling { get; private set; }
 
    public static GUIContent messagePlaying { get; private set; }
 
    public static GUIContent toolboxBreadcrumbs { get; private set; }
 
-   public static GUIContent[] saveMethodList { get; private set; }
+   public static GUIContent[] SaveMethodOptions { get; private set; }
 
    public static void Init()
    {

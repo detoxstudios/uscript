@@ -21,7 +21,6 @@ public static class uScriptGUIStyle
       var texturePropertyRowEven = uScriptGUI.GetSkinnedTexture("LineItem");
       var textureUnderline = uScriptGUI.GetSkinnedTexture("Underline");
       var textureWindowMenuContext = uScriptGUI.GetSkinnedTexture("MenuContext");
-      var textureWindowMenuDropDown = uScriptGUI.GetSkinnedTexture("MenuDropDown");
 
       PaletteToolbarFoldoutButton = new GUIStyle(EditorStyles.toolbarButton)
       {
@@ -206,26 +205,6 @@ public static class uScriptGUIStyle
       };
 
       ContextMenu = new GUIStyle(EditorStyles.toolbarButton);
-
-      MenuDropDownWindow = new GUIStyle(GUI.skin.window)
-      {
-         normal = { background = textureWindowMenuDropDown },
-         onNormal = { background = textureWindowMenuDropDown },
-         border = new RectOffset(10, 10, 4, 10),
-         padding = new RectOffset(0, 0, 0, 4),
-         overflow = new RectOffset(6, 6, 0, 6),
-         contentOffset = Vector2.zero
-      };
-
-      MenuDropDownButton = new GUIStyle(EditorStyles.largeLabel)
-      {
-         name = "menuDropDownButton",
-         active = { background = EditorStyles.toolbarButton.onActive.background },
-         hover = { background = EditorStyles.toolbarButton.onNormal.background },
-         border = EditorStyles.toolbarButton.border,
-         margin = new RectOffset(),
-         padding = new RectOffset(8, 8, 4, 4)
-      };
 
       MenuDropDownButtonShortcut = new GUIStyle(EditorStyles.largeLabel)
       {
@@ -525,10 +504,6 @@ public static class uScriptGUIStyle
    public static GUIStyle NodeButtonRight { get; private set; }
 
    public static GUIStyle ContextMenu { get; private set; }
-
-   public static GUIStyle MenuDropDownWindow { get; private set; }
-
-   public static GUIStyle MenuDropDownButton { get; private set; }
 
    public static GUIStyle MenuDropDownButtonShortcut { get; private set; }
 
