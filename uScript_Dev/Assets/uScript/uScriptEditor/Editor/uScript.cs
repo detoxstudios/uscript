@@ -334,32 +334,35 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private static float m_UnityVersion = 0.0f;
+   private static float unityVersion;
 
    public static float UnityVersion
    {
       get
       {
-         if (0.0f == m_UnityVersion)
+         if (0.0f == unityVersion)
          {
-            Type t = uScript.MasterComponent.GetType("uScriptUnityVersion");
+            Type t = MasterComponent.GetType("uScriptUnityVersion");
             if (null != t)
             {
-               uScriptIUnityVersion v = Activator.CreateInstance(t) as uScriptIUnityVersion;
-               if (null != v) m_UnityVersion = v.Version;
+               var v = Activator.CreateInstance(t) as uScriptIUnityVersion;
+               if (null != v)
+               {
+                  unityVersion = v.Version;
+               }
             }
 
-            if (0.0f != m_UnityVersion)
+            if (0.0f != unityVersion)
             {
-               uScriptDebug.Log("Unity Version: " + m_UnityVersion, uScriptDebug.Type.Debug);
+               uScriptDebug.Log("Unity Version: " + unityVersion, uScriptDebug.Type.Debug);
             }
             else
             {
-               uScriptDebug.Log("Unable to get Unity Version", uScriptDebug.Type.Debug);
+               uScriptDebug.Log("This uScript build does not support the version of Unity (" + UnityEngine.Application.unityVersion + ") you are running, and it may not function as intended.", uScriptDebug.Type.Warning);
             }
          }
 
-         return m_UnityVersion;
+         return unityVersion;
       }
    }
 
@@ -1572,8 +1575,8 @@ public sealed partial class uScript : EditorWindow
                   Profile overall = new Profile("BuildContextMenu");
 
                   this.m_ScriptEditorCtrl.BuildContextMenu();
-                  this.BuildCanvasContextMenu(null, null);
 
+                  this.BuildCanvasContextMenu(null, null);
                   this._canvasContextMenu.ShowAsContext();
 
                   overall.End();
@@ -3208,12 +3211,9 @@ public sealed partial class uScript : EditorWindow
 
    void DrawGUIContent()
    {
-      int toolbarSpaceWidth = 16;
-
       Rect rect = EditorGUILayout.BeginVertical();
       {
          // Toolbar
-         //
          Rect toolbarRect = EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
             if (toolbarRect.width != 0 && toolbarRect.height != 0)
@@ -3254,10 +3254,9 @@ public sealed partial class uScript : EditorWindow
          }
          EditorGUILayout.EndHorizontal();
 
+         // Canvas
          GUILayout.BeginVertical(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
          {
-            // Canvas
-            //
             if (rect.width != 0 && rect.height != 0)
             {
                m_NodeWindowRect = rect;
