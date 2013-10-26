@@ -98,7 +98,7 @@ public class uScriptAct_PlayAnimationCrossFading : uScriptLogic
             }
          }
 
-         if (false == m_GameObject.animation.IsPlaying(m_Animation))
+         if (m_GameObject != null && false == m_GameObject.animation.IsPlaying(m_Animation))
          {
             m_GameObject = null;
 
