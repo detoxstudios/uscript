@@ -53,6 +53,8 @@ public sealed partial class uScript : EditorWindow
    // #
    // ###############################################################
 
+   public const string Copyright = "\u00A9 2010-2013 Detox Studios, LLC.";
+
    public static readonly Preferences Preferences = new Preferences();
 
    private static readonly AppFrameworkData AppData = new AppFrameworkData();
@@ -2952,7 +2954,7 @@ public sealed partial class uScript : EditorWindow
 
    private void CommandHelpMenuAbout()
    {
-      Debug.Log("ABOUT uSCRIPT \n");
+      AboutWindow.Init();
    }
 
    private void CommandHelpMenuWelcome()
@@ -3407,8 +3409,8 @@ public sealed partial class uScript : EditorWindow
       menu.AddItem(uScriptGUIContent.HelpMenuItemOnlineDocs, false, this.CommandHelpMenuDocs);
       menu.AddItem(uScriptGUIContent.HelpMenuItemOnlineForum, false, this.CommandHelpMenuForum);
       menu.AddItem(uScriptGUIContent.HelpMenuItemUpdates, false, this.CommandHelpMenuUpdates);
-      //menu.AddSeparator(string.Empty);
-      //menu.AddItem(uScriptGUIContent.HelpMenuItemAbout, false, this.CommandHelpMenuAbout);
+      menu.AddSeparator(string.Empty);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemAbout, false, this.CommandHelpMenuAbout);
 
       menu.DropDown(rect);
 
