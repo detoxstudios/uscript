@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Signals")]
+[NodePath("Events/Signals")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Receives a signal from a Send Signal node and continues execution.")]

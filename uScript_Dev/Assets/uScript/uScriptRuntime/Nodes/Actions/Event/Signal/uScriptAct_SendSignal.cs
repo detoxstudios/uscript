@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[NodePath("Signals")]
+[NodePath("Actions/Signals")]
 
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sends a signal to a Receive Signal node.")]
