@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -94,6 +94,7 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_11 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_11 = true;
    bool logic_uScriptAct_Delay_AfterDelay_11 = true;
+   bool logic_uScriptAct_Delay_Stopped_11 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_11 = false;
    //pointer to script instanced logic node
    uScriptAct_SetBool logic_uScriptAct_SetBool_uScriptAct_SetBool_13 = new uScriptAct_SetBool( );
@@ -173,6 +174,7 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_39 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_39 = true;
    bool logic_uScriptAct_Delay_AfterDelay_39 = true;
+   bool logic_uScriptAct_Delay_Stopped_39 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_39 = false;
    //pointer to script instanced logic node
    uScriptAct_PlayAnimation logic_uScriptAct_PlayAnimation_uScriptAct_PlayAnimation_44 = new uScriptAct_PlayAnimation( );
@@ -854,6 +856,34 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
       }
    }
    
+   void Relay_Stop_11()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("d0e66241-b788-4e7e-ade6-7396c8f104c3", "Delay", Relay_Stop_11)) return; 
+         {
+            {
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_11.Stop(logic_uScriptAct_Delay_Duration_11, logic_uScriptAct_Delay_SingleFrame_11);
+         logic_uScriptAct_Delay_DrivenDelay_11 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_11.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_38();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_DoorLockablePrefabGraph.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
    void Relay_DrivenDelay_11( )
    {
       if ( relayCallCount++ < MaxRelayCallCount )
@@ -1317,6 +1347,34 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
             }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_39.In(logic_uScriptAct_Delay_Duration_39, logic_uScriptAct_Delay_SingleFrame_39);
+         logic_uScriptAct_Delay_DrivenDelay_39 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_39.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_9();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_DoorLockablePrefabGraph.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_Stop_39()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("9a88b379-7143-42c4-9996-fe51d191e3af", "Delay", Relay_Stop_39)) return; 
+         {
+            {
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_39.Stop(logic_uScriptAct_Delay_Duration_39, logic_uScriptAct_Delay_SingleFrame_39);
          logic_uScriptAct_Delay_DrivenDelay_39 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested

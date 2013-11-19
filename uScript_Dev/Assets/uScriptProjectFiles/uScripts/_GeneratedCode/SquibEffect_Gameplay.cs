@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -198,6 +198,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    UnityEngine.Quaternion logic_uScriptAct_VectorsFromQuaternion_quaternion_52 = new Quaternion( );
    UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_forward_52;
    UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_up_52;
+   UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_right_52;
    bool logic_uScriptAct_VectorsFromQuaternion_Out_52 = true;
    //pointer to script instanced logic node
    uScriptAct_GetPositionAndRotation logic_uScriptAct_GetPositionAndRotation_uScriptAct_GetPositionAndRotation_56 = new uScriptAct_GetPositionAndRotation( );
@@ -1456,8 +1457,10 @@ public class SquibEffect_Gameplay : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_52.In(logic_uScriptAct_VectorsFromQuaternion_quaternion_52, out logic_uScriptAct_VectorsFromQuaternion_forward_52, out logic_uScriptAct_VectorsFromQuaternion_up_52);
+         logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_52.In(logic_uScriptAct_VectorsFromQuaternion_quaternion_52, out logic_uScriptAct_VectorsFromQuaternion_forward_52, out logic_uScriptAct_VectorsFromQuaternion_up_52, out logic_uScriptAct_VectorsFromQuaternion_right_52);
          local_4_UnityEngine_Vector3 = logic_uScriptAct_VectorsFromQuaternion_forward_52;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -1094,12 +1094,14 @@ public class All_Action_Nodes : uScriptLogic
    System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_207 = (bool) false;
    System.Single logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_207 = (float) 0;
    System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_207 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_AsLocal_207 = (bool) false;
    bool logic_uScriptAct_SetGameObjectEulerAngles_Out_207 = true;
    //pointer to script instanced logic node
    uScriptAct_SetGameObjectPosition logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_208 = new uScriptAct_SetGameObjectPosition( );
    UnityEngine.GameObject[] logic_uScriptAct_SetGameObjectPosition_Target_208 = new UnityEngine.GameObject[] {};
    UnityEngine.Vector3 logic_uScriptAct_SetGameObjectPosition_Position_208 = new Vector3( (float)0, (float)0, (float)0 );
    System.Boolean logic_uScriptAct_SetGameObjectPosition_AsOffset_208 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectPosition_AsLocal_208 = (bool) false;
    bool logic_uScriptAct_SetGameObjectPosition_Out_208 = true;
    //pointer to script instanced logic node
    uScriptAct_SetRandomPosition logic_uScriptAct_SetRandomPosition_uScriptAct_SetRandomPosition_209 = new uScriptAct_SetRandomPosition( );
@@ -1878,6 +1880,7 @@ public class All_Action_Nodes : uScriptLogic
    System.String logic_uScriptAct_ConvertVariable_StringValue_713;
    System.Boolean logic_uScriptAct_ConvertVariable_BooleanValue_713;
    UnityEngine.Vector3 logic_uScriptAct_ConvertVariable_Vector3Value_713;
+   System.String logic_uScriptAct_ConvertVariable_FloatGroupSeparator_713 = ",";
    bool logic_uScriptAct_ConvertVariable_Out_713 = true;
    //pointer to script instanced logic node
    uScriptAct_ConvertVector4ToRect logic_uScriptAct_ConvertVector4ToRect_uScriptAct_ConvertVector4ToRect_714 = new uScriptAct_ConvertVector4ToRect( );
@@ -1895,6 +1898,7 @@ public class All_Action_Nodes : uScriptLogic
    UnityEngine.Quaternion logic_uScriptAct_VectorsFromQuaternion_quaternion_716 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
    UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_forward_716;
    UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_up_716;
+   UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_right_716;
    bool logic_uScriptAct_VectorsFromQuaternion_Out_716 = true;
    //pointer to script instanced logic node
    uScriptAct_AddFloat logic_uScriptAct_AddFloat_uScriptAct_AddFloat_722 = new uScriptAct_AddFloat( );
@@ -2816,6 +2820,7 @@ public class All_Action_Nodes : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_1053 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_1053 = true;
    bool logic_uScriptAct_Delay_AfterDelay_1053 = true;
+   bool logic_uScriptAct_Delay_Stopped_1053 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_1053 = false;
    //pointer to script instanced logic node
    uScriptAct_GetDeltaTime logic_uScriptAct_GetDeltaTime_uScriptAct_GetDeltaTime_1054 = new uScriptAct_GetDeltaTime( );
@@ -3472,6 +3477,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListAudioClip logic_uScriptAct_IsInListAudioClip_uScriptAct_IsInListAudioClip_1276 = new uScriptAct_IsInListAudioClip( );
    UnityEngine.AudioClip[] logic_uScriptAct_IsInListAudioClip_Target_1276 = new UnityEngine.AudioClip[ 0 ];
    UnityEngine.AudioClip[] logic_uScriptAct_IsInListAudioClip_List_1276 = new UnityEngine.AudioClip[ 0 ];
+   System.Int32 logic_uScriptAct_IsInListAudioClip_Index_1276;
    bool logic_uScriptAct_IsInListAudioClip_InList_1276 = true;
    bool logic_uScriptAct_IsInListAudioClip_NotInList_1276 = true;
    //pointer to script instanced logic node
@@ -3534,6 +3540,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListCamera logic_uScriptAct_IsInListCamera_uScriptAct_IsInListCamera_1304 = new uScriptAct_IsInListCamera( );
    UnityEngine.Camera[] logic_uScriptAct_IsInListCamera_Target_1304 = new UnityEngine.Camera[] {};
    UnityEngine.Camera[] logic_uScriptAct_IsInListCamera_List_1304 = new UnityEngine.Camera[] {};
+   System.Int32 logic_uScriptAct_IsInListCamera_Index_1304;
    bool logic_uScriptAct_IsInListCamera_InList_1304 = true;
    bool logic_uScriptAct_IsInListCamera_NotInList_1304 = true;
    //pointer to script instanced logic node
@@ -3596,6 +3603,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListColor logic_uScriptAct_IsInListColor_uScriptAct_IsInListColor_1331 = new uScriptAct_IsInListColor( );
    UnityEngine.Color[] logic_uScriptAct_IsInListColor_Target_1331 = new UnityEngine.Color[] {};
    UnityEngine.Color[] logic_uScriptAct_IsInListColor_List_1331 = new UnityEngine.Color[] {};
+   System.Int32 logic_uScriptAct_IsInListColor_Index_1331;
    bool logic_uScriptAct_IsInListColor_InList_1331 = true;
    bool logic_uScriptAct_IsInListColor_NotInList_1331 = true;
    //pointer to script instanced logic node
@@ -3651,6 +3659,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListFloat logic_uScriptAct_IsInListFloat_uScriptAct_IsInListFloat_1359 = new uScriptAct_IsInListFloat( );
    System.Int32[] logic_uScriptAct_IsInListFloat_Target_1359 = new System.Int32[] {};
    System.Single[] logic_uScriptAct_IsInListFloat_List_1359 = new System.Single[] {};
+   System.Int32 logic_uScriptAct_IsInListFloat_Index_1359;
    bool logic_uScriptAct_IsInListFloat_InList_1359 = true;
    bool logic_uScriptAct_IsInListFloat_NotInList_1359 = true;
    //pointer to script instanced logic node
@@ -3713,6 +3722,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListGameObject logic_uScriptAct_IsInListGameObject_uScriptAct_IsInListGameObject_1385 = new uScriptAct_IsInListGameObject( );
    UnityEngine.GameObject[] logic_uScriptAct_IsInListGameObject_Target_1385 = new UnityEngine.GameObject[] {};
    UnityEngine.GameObject[] logic_uScriptAct_IsInListGameObject_GameObjectList_1385 = new UnityEngine.GameObject[] {};
+   System.Int32 logic_uScriptAct_IsInListGameObject_Index_1385;
    bool logic_uScriptAct_IsInListGameObject_InList_1385 = true;
    bool logic_uScriptAct_IsInListGameObject_NotInList_1385 = true;
    //pointer to script instanced logic node
@@ -3768,6 +3778,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListInt logic_uScriptAct_IsInListInt_uScriptAct_IsInListInt_1412 = new uScriptAct_IsInListInt( );
    System.Int32[] logic_uScriptAct_IsInListInt_Target_1412 = new System.Int32[] {};
    System.Int32[] logic_uScriptAct_IsInListInt_List_1412 = new System.Int32[] {};
+   System.Int32 logic_uScriptAct_IsInListInt_Index_1412;
    bool logic_uScriptAct_IsInListInt_InList_1412 = true;
    bool logic_uScriptAct_IsInListInt_NotInList_1412 = true;
    //pointer to script instanced logic node
@@ -3830,6 +3841,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListMaterial logic_uScriptAct_IsInListMaterial_uScriptAct_IsInListMaterial_1441 = new uScriptAct_IsInListMaterial( );
    UnityEngine.Material[] logic_uScriptAct_IsInListMaterial_Target_1441 = new UnityEngine.Material[ 0 ];
    UnityEngine.Material[] logic_uScriptAct_IsInListMaterial_List_1441 = new UnityEngine.Material[ 0 ];
+   System.Int32 logic_uScriptAct_IsInListMaterial_Index_1441;
    bool logic_uScriptAct_IsInListMaterial_InList_1441 = true;
    bool logic_uScriptAct_IsInListMaterial_NotInList_1441 = true;
    //pointer to script instanced logic node
@@ -3892,6 +3904,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListRect logic_uScriptAct_IsInListRect_uScriptAct_IsInListRect_1466 = new uScriptAct_IsInListRect( );
    UnityEngine.Rect[] logic_uScriptAct_IsInListRect_Target_1466 = new Rect[] {};
    UnityEngine.Rect[] logic_uScriptAct_IsInListRect_List_1466 = new Rect[] {};
+   System.Int32 logic_uScriptAct_IsInListRect_Index_1466;
    bool logic_uScriptAct_IsInListRect_InList_1466 = true;
    bool logic_uScriptAct_IsInListRect_NotInList_1466 = true;
    //pointer to script instanced logic node
@@ -3954,6 +3967,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListString logic_uScriptAct_IsInListString_uScriptAct_IsInListString_1495 = new uScriptAct_IsInListString( );
    System.String[] logic_uScriptAct_IsInListString_Target_1495 = new System.String[] {};
    System.String[] logic_uScriptAct_IsInListString_List_1495 = new System.String[] {};
+   System.Int32 logic_uScriptAct_IsInListString_Index_1495;
    bool logic_uScriptAct_IsInListString_InList_1495 = true;
    bool logic_uScriptAct_IsInListString_NotInList_1495 = true;
    //pointer to script instanced logic node
@@ -4016,6 +4030,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListTexture2D logic_uScriptAct_IsInListTexture2D_uScriptAct_IsInListTexture2D_1524 = new uScriptAct_IsInListTexture2D( );
    UnityEngine.Texture2D[] logic_uScriptAct_IsInListTexture2D_Target_1524 = new UnityEngine.Texture2D[ 0 ];
    UnityEngine.Texture2D[] logic_uScriptAct_IsInListTexture2D_List_1524 = new UnityEngine.Texture2D[ 0 ];
+   System.Int32 logic_uScriptAct_IsInListTexture2D_Index_1524;
    bool logic_uScriptAct_IsInListTexture2D_InList_1524 = true;
    bool logic_uScriptAct_IsInListTexture2D_NotInList_1524 = true;
    //pointer to script instanced logic node
@@ -4078,6 +4093,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListTransform logic_uScriptAct_IsInListTransform_uScriptAct_IsInListTransform_1549 = new uScriptAct_IsInListTransform( );
    UnityEngine.Transform[] logic_uScriptAct_IsInListTransform_Target_1549 = new UnityEngine.Transform[] {};
    UnityEngine.Transform[] logic_uScriptAct_IsInListTransform_TransformList_1549 = new UnityEngine.Transform[] {};
+   System.Int32 logic_uScriptAct_IsInListTransform_Index_1549;
    bool logic_uScriptAct_IsInListTransform_InList_1549 = true;
    bool logic_uScriptAct_IsInListTransform_NotInList_1549 = true;
    //pointer to script instanced logic node
@@ -4140,6 +4156,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListVector2 logic_uScriptAct_IsInListVector2_uScriptAct_IsInListVector2_1579 = new uScriptAct_IsInListVector2( );
    UnityEngine.Vector2[] logic_uScriptAct_IsInListVector2_Target_1579 = new Vector2[] {};
    UnityEngine.Vector2[] logic_uScriptAct_IsInListVector2_List_1579 = new Vector2[] {};
+   System.Int32 logic_uScriptAct_IsInListVector2_Index_1579;
    bool logic_uScriptAct_IsInListVector2_InList_1579 = true;
    bool logic_uScriptAct_IsInListVector2_NotInList_1579 = true;
    //pointer to script instanced logic node
@@ -4202,6 +4219,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListVector3 logic_uScriptAct_IsInListVector3_uScriptAct_IsInListVector3_1604 = new uScriptAct_IsInListVector3( );
    UnityEngine.Vector3[] logic_uScriptAct_IsInListVector3_Target_1604 = new Vector3[] {};
    UnityEngine.Vector3[] logic_uScriptAct_IsInListVector3_List_1604 = new Vector3[] {};
+   System.Int32 logic_uScriptAct_IsInListVector3_Index_1604;
    bool logic_uScriptAct_IsInListVector3_InList_1604 = true;
    bool logic_uScriptAct_IsInListVector3_NotInList_1604 = true;
    //pointer to script instanced logic node
@@ -4264,6 +4282,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_IsInListVector4 logic_uScriptAct_IsInListVector4_uScriptAct_IsInListVector4_1632 = new uScriptAct_IsInListVector4( );
    UnityEngine.Vector4[] logic_uScriptAct_IsInListVector4_Target_1632 = new Vector4[] {};
    UnityEngine.Vector4[] logic_uScriptAct_IsInListVector4_List_1632 = new Vector4[] {};
+   System.Int32 logic_uScriptAct_IsInListVector4_Index_1632;
    bool logic_uScriptAct_IsInListVector4_InList_1632 = true;
    bool logic_uScriptAct_IsInListVector4_NotInList_1632 = true;
    //pointer to script instanced logic node
@@ -13631,8 +13650,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_207.In(logic_uScriptAct_SetGameObjectEulerAngles_Target_207, logic_uScriptAct_SetGameObjectEulerAngles_X_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_PreserveX_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_Y_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_207);
+         logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_207.In(logic_uScriptAct_SetGameObjectEulerAngles_Target_207, logic_uScriptAct_SetGameObjectEulerAngles_X_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_PreserveX_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_Y_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_207, logic_uScriptAct_SetGameObjectEulerAngles_AsLocal_207);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_207.Out;
@@ -13660,8 +13681,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_208.In(logic_uScriptAct_SetGameObjectPosition_Target_208, logic_uScriptAct_SetGameObjectPosition_Position_208, logic_uScriptAct_SetGameObjectPosition_AsOffset_208);
+         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_208.In(logic_uScriptAct_SetGameObjectPosition_Target_208, logic_uScriptAct_SetGameObjectPosition_Position_208, logic_uScriptAct_SetGameObjectPosition_AsOffset_208, logic_uScriptAct_SetGameObjectPosition_AsLocal_208);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_208.Out;
@@ -17619,8 +17642,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_713.In(logic_uScriptAct_ConvertVariable_Target_713, out logic_uScriptAct_ConvertVariable_IntValue_713, out logic_uScriptAct_ConvertVariable_Int64Value_713, out logic_uScriptAct_ConvertVariable_FloatValue_713, out logic_uScriptAct_ConvertVariable_StringValue_713, out logic_uScriptAct_ConvertVariable_BooleanValue_713, out logic_uScriptAct_ConvertVariable_Vector3Value_713);
+         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_713.In(logic_uScriptAct_ConvertVariable_Target_713, out logic_uScriptAct_ConvertVariable_IntValue_713, out logic_uScriptAct_ConvertVariable_Int64Value_713, out logic_uScriptAct_ConvertVariable_FloatValue_713, out logic_uScriptAct_ConvertVariable_StringValue_713, out logic_uScriptAct_ConvertVariable_BooleanValue_713, out logic_uScriptAct_ConvertVariable_Vector3Value_713, logic_uScriptAct_ConvertVariable_FloatGroupSeparator_713);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_713.Out;
@@ -17709,8 +17734,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_716.In(logic_uScriptAct_VectorsFromQuaternion_quaternion_716, out logic_uScriptAct_VectorsFromQuaternion_forward_716, out logic_uScriptAct_VectorsFromQuaternion_up_716);
+         logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_716.In(logic_uScriptAct_VectorsFromQuaternion_quaternion_716, out logic_uScriptAct_VectorsFromQuaternion_forward_716, out logic_uScriptAct_VectorsFromQuaternion_up_716, out logic_uScriptAct_VectorsFromQuaternion_right_716);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_716.Out;
@@ -23916,6 +23943,39 @@ public class All_Action_Nodes : uScriptLogic
       }
    }
    
+   void Relay_Stop_1053()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("dddf224c-c81c-463c-ae3d-6049aca9fd65", "Delay", Relay_Stop_1053)) return; 
+         {
+            {
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_1053.Stop(logic_uScriptAct_Delay_Duration_1053, logic_uScriptAct_Delay_SingleFrame_1053);
+         logic_uScriptAct_Delay_DrivenDelay_1053 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_1053.Immediate;
+         bool test_1 = logic_uScriptAct_Delay_uScriptAct_Delay_1053.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_1072();
+         }
+         if ( test_1 == true )
+         {
+            Relay_In_1072();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript All_Action_Nodes.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
    void Relay_DrivenDelay_1053( )
    {
       if ( relayCallCount++ < MaxRelayCallCount )
@@ -27608,8 +27668,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListAudioClip_uScriptAct_IsInListAudioClip_1276.TestIfInList(logic_uScriptAct_IsInListAudioClip_Target_1276, ref logic_uScriptAct_IsInListAudioClip_List_1276);
+         logic_uScriptAct_IsInListAudioClip_uScriptAct_IsInListAudioClip_1276.TestIfInList(logic_uScriptAct_IsInListAudioClip_Target_1276, ref logic_uScriptAct_IsInListAudioClip_List_1276, out logic_uScriptAct_IsInListAudioClip_Index_1276);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListAudioClip_uScriptAct_IsInListAudioClip_1276.InList;
@@ -28149,8 +28211,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListCamera_uScriptAct_IsInListCamera_1304.TestIfInList(logic_uScriptAct_IsInListCamera_Target_1304, ref logic_uScriptAct_IsInListCamera_List_1304);
+         logic_uScriptAct_IsInListCamera_uScriptAct_IsInListCamera_1304.TestIfInList(logic_uScriptAct_IsInListCamera_Target_1304, ref logic_uScriptAct_IsInListCamera_List_1304, out logic_uScriptAct_IsInListCamera_Index_1304);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListCamera_uScriptAct_IsInListCamera_1304.InList;
@@ -28699,8 +28763,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListColor_uScriptAct_IsInListColor_1331.TestIfInList(logic_uScriptAct_IsInListColor_Target_1331, ref logic_uScriptAct_IsInListColor_List_1331);
+         logic_uScriptAct_IsInListColor_uScriptAct_IsInListColor_1331.TestIfInList(logic_uScriptAct_IsInListColor_Target_1331, ref logic_uScriptAct_IsInListColor_List_1331, out logic_uScriptAct_IsInListColor_Index_1331);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListColor_uScriptAct_IsInListColor_1331.InList;
@@ -29191,8 +29257,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListFloat_uScriptAct_IsInListFloat_1359.TestIfInList(logic_uScriptAct_IsInListFloat_Target_1359, ref logic_uScriptAct_IsInListFloat_List_1359);
+         logic_uScriptAct_IsInListFloat_uScriptAct_IsInListFloat_1359.TestIfInList(logic_uScriptAct_IsInListFloat_Target_1359, ref logic_uScriptAct_IsInListFloat_List_1359, out logic_uScriptAct_IsInListFloat_Index_1359);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListFloat_uScriptAct_IsInListFloat_1359.InList;
@@ -29736,8 +29804,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListGameObject_uScriptAct_IsInListGameObject_1385.TestIfInList(logic_uScriptAct_IsInListGameObject_Target_1385, ref logic_uScriptAct_IsInListGameObject_GameObjectList_1385);
+         logic_uScriptAct_IsInListGameObject_uScriptAct_IsInListGameObject_1385.TestIfInList(logic_uScriptAct_IsInListGameObject_Target_1385, ref logic_uScriptAct_IsInListGameObject_GameObjectList_1385, out logic_uScriptAct_IsInListGameObject_Index_1385);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListGameObject_uScriptAct_IsInListGameObject_1385.InList;
@@ -30254,8 +30324,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListInt_uScriptAct_IsInListInt_1412.TestIfInList(logic_uScriptAct_IsInListInt_Target_1412, ref logic_uScriptAct_IsInListInt_List_1412);
+         logic_uScriptAct_IsInListInt_uScriptAct_IsInListInt_1412.TestIfInList(logic_uScriptAct_IsInListInt_Target_1412, ref logic_uScriptAct_IsInListInt_List_1412, out logic_uScriptAct_IsInListInt_Index_1412);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListInt_uScriptAct_IsInListInt_1412.InList;
@@ -30801,8 +30873,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListMaterial_uScriptAct_IsInListMaterial_1441.TestIfInList(logic_uScriptAct_IsInListMaterial_Target_1441, ref logic_uScriptAct_IsInListMaterial_List_1441);
+         logic_uScriptAct_IsInListMaterial_uScriptAct_IsInListMaterial_1441.TestIfInList(logic_uScriptAct_IsInListMaterial_Target_1441, ref logic_uScriptAct_IsInListMaterial_List_1441, out logic_uScriptAct_IsInListMaterial_Index_1441);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListMaterial_uScriptAct_IsInListMaterial_1441.InList;
@@ -31344,8 +31418,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListRect_uScriptAct_IsInListRect_1466.TestIfInList(logic_uScriptAct_IsInListRect_Target_1466, ref logic_uScriptAct_IsInListRect_List_1466);
+         logic_uScriptAct_IsInListRect_uScriptAct_IsInListRect_1466.TestIfInList(logic_uScriptAct_IsInListRect_Target_1466, ref logic_uScriptAct_IsInListRect_List_1466, out logic_uScriptAct_IsInListRect_Index_1466);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListRect_uScriptAct_IsInListRect_1466.InList;
@@ -31894,8 +31970,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListString_uScriptAct_IsInListString_1495.TestIfInList(logic_uScriptAct_IsInListString_Target_1495, ref logic_uScriptAct_IsInListString_List_1495);
+         logic_uScriptAct_IsInListString_uScriptAct_IsInListString_1495.TestIfInList(logic_uScriptAct_IsInListString_Target_1495, ref logic_uScriptAct_IsInListString_List_1495, out logic_uScriptAct_IsInListString_Index_1495);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListString_uScriptAct_IsInListString_1495.InList;
@@ -32447,8 +32525,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListTexture2D_uScriptAct_IsInListTexture2D_1524.TestIfInList(logic_uScriptAct_IsInListTexture2D_Target_1524, ref logic_uScriptAct_IsInListTexture2D_List_1524);
+         logic_uScriptAct_IsInListTexture2D_uScriptAct_IsInListTexture2D_1524.TestIfInList(logic_uScriptAct_IsInListTexture2D_Target_1524, ref logic_uScriptAct_IsInListTexture2D_List_1524, out logic_uScriptAct_IsInListTexture2D_Index_1524);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListTexture2D_uScriptAct_IsInListTexture2D_1524.InList;
@@ -32995,8 +33075,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListTransform_uScriptAct_IsInListTransform_1549.TestIfInList(logic_uScriptAct_IsInListTransform_Target_1549, ref logic_uScriptAct_IsInListTransform_TransformList_1549);
+         logic_uScriptAct_IsInListTransform_uScriptAct_IsInListTransform_1549.TestIfInList(logic_uScriptAct_IsInListTransform_Target_1549, ref logic_uScriptAct_IsInListTransform_TransformList_1549, out logic_uScriptAct_IsInListTransform_Index_1549);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListTransform_uScriptAct_IsInListTransform_1549.InList;
@@ -33540,8 +33622,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListVector2_uScriptAct_IsInListVector2_1579.TestIfInList(logic_uScriptAct_IsInListVector2_Target_1579, ref logic_uScriptAct_IsInListVector2_List_1579);
+         logic_uScriptAct_IsInListVector2_uScriptAct_IsInListVector2_1579.TestIfInList(logic_uScriptAct_IsInListVector2_Target_1579, ref logic_uScriptAct_IsInListVector2_List_1579, out logic_uScriptAct_IsInListVector2_Index_1579);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListVector2_uScriptAct_IsInListVector2_1579.InList;
@@ -34089,8 +34173,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListVector3_uScriptAct_IsInListVector3_1604.TestIfInList(logic_uScriptAct_IsInListVector3_Target_1604, ref logic_uScriptAct_IsInListVector3_List_1604);
+         logic_uScriptAct_IsInListVector3_uScriptAct_IsInListVector3_1604.TestIfInList(logic_uScriptAct_IsInListVector3_Target_1604, ref logic_uScriptAct_IsInListVector3_List_1604, out logic_uScriptAct_IsInListVector3_Index_1604);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListVector3_uScriptAct_IsInListVector3_1604.InList;
@@ -34639,8 +34725,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListVector4_uScriptAct_IsInListVector4_1632.TestIfInList(logic_uScriptAct_IsInListVector4_Target_1632, ref logic_uScriptAct_IsInListVector4_List_1632);
+         logic_uScriptAct_IsInListVector4_uScriptAct_IsInListVector4_1632.TestIfInList(logic_uScriptAct_IsInListVector4_Target_1632, ref logic_uScriptAct_IsInListVector4_List_1632, out logic_uScriptAct_IsInListVector4_Index_1632);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_IsInListVector4_uScriptAct_IsInListVector4_1632.InList;

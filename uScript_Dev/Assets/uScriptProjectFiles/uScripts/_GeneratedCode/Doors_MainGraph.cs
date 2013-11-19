@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -80,6 +80,7 @@ public class Doors_MainGraph : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_2 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_2 = true;
    bool logic_uScriptAct_Delay_AfterDelay_2 = true;
+   bool logic_uScriptAct_Delay_Stopped_2 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_2 = false;
    //pointer to script instanced logic node
    uScriptAct_AddVector3 logic_uScriptAct_AddVector3_uScriptAct_AddVector3_5 = new uScriptAct_AddVector3( );
@@ -250,6 +251,7 @@ public class Doors_MainGraph : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_72 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_72 = true;
    bool logic_uScriptAct_Delay_AfterDelay_72 = true;
+   bool logic_uScriptAct_Delay_Stopped_72 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_72 = false;
    //pointer to script instanced logic node
    uScriptAct_MoveToLocation logic_uScriptAct_MoveToLocation_uScriptAct_MoveToLocation_73 = new uScriptAct_MoveToLocation( );
@@ -1629,6 +1631,36 @@ public class Doors_MainGraph : uScriptLogic
             }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_2.In(logic_uScriptAct_Delay_Duration_2, logic_uScriptAct_Delay_SingleFrame_2);
+         logic_uScriptAct_Delay_DrivenDelay_2 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_2.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_15();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_MainGraph.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_Stop_2()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("237f0adb-7207-48cd-b7e4-9f32025ce6d5", "Delay", Relay_Stop_2)) return; 
+         {
+            {
+               logic_uScriptAct_Delay_Duration_2 = local_50_System_Single;
+               
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_2.Stop(logic_uScriptAct_Delay_Duration_2, logic_uScriptAct_Delay_SingleFrame_2);
          logic_uScriptAct_Delay_DrivenDelay_2 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -3074,6 +3106,36 @@ public class Doors_MainGraph : uScriptLogic
             }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_72.In(logic_uScriptAct_Delay_Duration_72, logic_uScriptAct_Delay_SingleFrame_72);
+         logic_uScriptAct_Delay_DrivenDelay_72 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_72.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_41();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript Doors_MainGraph.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_Stop_72()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("c5f04559-5697-4bdb-b519-fb2556359cdb", "Delay", Relay_Stop_72)) return; 
+         {
+            {
+               logic_uScriptAct_Delay_Duration_72 = local_14_System_Single;
+               
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_72.Stop(logic_uScriptAct_Delay_Duration_72, logic_uScriptAct_Delay_SingleFrame_72);
          logic_uScriptAct_Delay_DrivenDelay_72 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested

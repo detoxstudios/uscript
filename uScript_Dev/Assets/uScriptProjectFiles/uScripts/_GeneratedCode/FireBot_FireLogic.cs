@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -56,6 +56,7 @@ public class FireBot_FireLogic : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_1 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_1 = true;
    bool logic_uScriptAct_Delay_AfterDelay_1 = true;
+   bool logic_uScriptAct_Delay_Stopped_1 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_1 = false;
    //pointer to script instanced logic node
    uScriptAct_SpawnPrefab logic_uScriptAct_SpawnPrefab_uScriptAct_SpawnPrefab_6 = new uScriptAct_SpawnPrefab( );
@@ -464,6 +465,36 @@ public class FireBot_FireLogic : uScriptLogic
             }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_1.In(logic_uScriptAct_Delay_Duration_1, logic_uScriptAct_Delay_SingleFrame_1);
+         logic_uScriptAct_Delay_DrivenDelay_1 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_1.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_27();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_FireLogic.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_Stop_1()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("4d08f396-5b96-46d8-866e-cd817bf051a1", "Delay", Relay_Stop_1)) return; 
+         {
+            {
+               logic_uScriptAct_Delay_Duration_1 = local_Time_Till_Spawn_System_Single;
+               
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_1.Stop(logic_uScriptAct_Delay_Duration_1, logic_uScriptAct_Delay_SingleFrame_1);
          logic_uScriptAct_Delay_DrivenDelay_1 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested

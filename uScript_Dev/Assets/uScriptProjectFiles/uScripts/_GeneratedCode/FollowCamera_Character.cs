@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -479,8 +479,8 @@ public class FollowCamera_Character : uScriptLogic
    
    public void OnDestroy()
    {
-      logic_FollowCamera_FollowCamera_0.Out -= FollowCamera_Out_0;
       logic_FollowCamera_FollowCamera_0.OnDestroy( );
+      logic_FollowCamera_FollowCamera_0.Out -= FollowCamera_Out_0;
    }
    
    public void OnGUI()

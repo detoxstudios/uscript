@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -73,6 +73,7 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
    UnityEngine.GameObject[] logic_uScriptAct_SetGameObjectPosition_Target_9 = new UnityEngine.GameObject[] {};
    UnityEngine.Vector3 logic_uScriptAct_SetGameObjectPosition_Position_9 = new Vector3( );
    System.Boolean logic_uScriptAct_SetGameObjectPosition_AsOffset_9 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectPosition_AsLocal_9 = (bool) false;
    bool logic_uScriptAct_SetGameObjectPosition_Out_9 = true;
    //pointer to script instanced logic node
    uScriptAct_GetPositionAndRotation logic_uScriptAct_GetPositionAndRotation_uScriptAct_GetPositionAndRotation_11 = new uScriptAct_GetPositionAndRotation( );
@@ -513,8 +514,10 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_9.In(logic_uScriptAct_SetGameObjectPosition_Target_9, logic_uScriptAct_SetGameObjectPosition_Position_9, logic_uScriptAct_SetGameObjectPosition_AsOffset_9);
+         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_9.In(logic_uScriptAct_SetGameObjectPosition_Target_9, logic_uScriptAct_SetGameObjectPosition_Position_9, logic_uScriptAct_SetGameObjectPosition_AsOffset_9, logic_uScriptAct_SetGameObjectPosition_AsLocal_9);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          

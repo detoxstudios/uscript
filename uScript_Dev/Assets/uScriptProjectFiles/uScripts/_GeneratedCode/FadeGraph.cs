@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -45,6 +45,7 @@ public class FadeGraph : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_1 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_1 = true;
    bool logic_uScriptAct_Delay_AfterDelay_1 = true;
+   bool logic_uScriptAct_Delay_Stopped_1 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_1 = false;
    //pointer to script instanced logic node
    uScriptAct_GetGameObjectMaterial logic_uScriptAct_GetGameObjectMaterial_uScriptAct_GetGameObjectMaterial_2 = new uScriptAct_GetGameObjectMaterial( );
@@ -151,6 +152,7 @@ public class FadeGraph : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_28 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_28 = true;
    bool logic_uScriptAct_Delay_AfterDelay_28 = true;
+   bool logic_uScriptAct_Delay_Stopped_28 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_28 = false;
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_29 = new uScriptAct_Delay( );
@@ -158,6 +160,7 @@ public class FadeGraph : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_29 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_29 = true;
    bool logic_uScriptAct_Delay_AfterDelay_29 = true;
+   bool logic_uScriptAct_Delay_Stopped_29 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_29 = false;
    //pointer to script instanced logic node
    uScriptAct_CameraFade logic_uScriptAct_CameraFade_uScriptAct_CameraFade_30 = new uScriptAct_CameraFade( );
@@ -465,6 +468,34 @@ public class FadeGraph : uScriptLogic
             }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_1.In(logic_uScriptAct_Delay_Duration_1, logic_uScriptAct_Delay_SingleFrame_1);
+         logic_uScriptAct_Delay_DrivenDelay_1 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_1.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_2();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_Stop_1()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("eb7ef601-e1b7-40d7-a4d0-ae30ced8afde", "Delay", Relay_Stop_1)) return; 
+         {
+            {
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_1.Stop(logic_uScriptAct_Delay_Duration_1, logic_uScriptAct_Delay_SingleFrame_1);
          logic_uScriptAct_Delay_DrivenDelay_1 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -1171,6 +1202,34 @@ public class FadeGraph : uScriptLogic
       }
    }
    
+   void Relay_Stop_28()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("d30eb30b-81a6-47ee-b3e0-5b7ab3e934b9", "Delay", Relay_Stop_28)) return; 
+         {
+            {
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_28.Stop(logic_uScriptAct_Delay_Duration_28, logic_uScriptAct_Delay_SingleFrame_28);
+         logic_uScriptAct_Delay_DrivenDelay_28 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_28.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_14();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
    void Relay_DrivenDelay_28( )
    {
       if ( relayCallCount++ < MaxRelayCallCount )
@@ -1207,6 +1266,34 @@ public class FadeGraph : uScriptLogic
             }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_29.In(logic_uScriptAct_Delay_Duration_29, logic_uScriptAct_Delay_SingleFrame_29);
+         logic_uScriptAct_Delay_DrivenDelay_29 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_29.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_30();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FadeGraph.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_Stop_29()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("bcae7323-6b05-489a-8718-7f77c9147ff2", "Delay", Relay_Stop_29)) return; 
+         {
+            {
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_29.Stop(logic_uScriptAct_Delay_Duration_29, logic_uScriptAct_Delay_SingleFrame_29);
          logic_uScriptAct_Delay_DrivenDelay_29 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested

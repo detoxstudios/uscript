@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -1249,6 +1249,7 @@ public class CodeGenTest : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_265 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_265 = true;
    bool logic_uScriptAct_Delay_AfterDelay_265 = true;
+   bool logic_uScriptAct_Delay_Stopped_265 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_265 = false;
    //pointer to script instanced logic node
    uScriptAct_GetDeltaTime logic_uScriptAct_GetDeltaTime_uScriptAct_GetDeltaTime_266 = new uScriptAct_GetDeltaTime( );
@@ -1899,12 +1900,14 @@ public class CodeGenTest : uScriptLogic
    System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_382 = (bool) false;
    System.Single logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_382 = (float) 0;
    System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_382 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_AsLocal_382 = (bool) false;
    bool logic_uScriptAct_SetGameObjectEulerAngles_Out_382 = true;
    //pointer to script instanced logic node
    uScriptAct_SetGameObjectPosition logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_383 = new uScriptAct_SetGameObjectPosition( );
    UnityEngine.GameObject[] logic_uScriptAct_SetGameObjectPosition_Target_383 = new UnityEngine.GameObject[] {};
    UnityEngine.Vector3 logic_uScriptAct_SetGameObjectPosition_Position_383 = new Vector3( (float)0, (float)0, (float)0 );
    System.Boolean logic_uScriptAct_SetGameObjectPosition_AsOffset_383 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectPosition_AsLocal_383 = (bool) false;
    bool logic_uScriptAct_SetGameObjectPosition_Out_383 = true;
    //pointer to script instanced logic node
    uScriptAct_SetRandomPosition logic_uScriptAct_SetRandomPosition_uScriptAct_SetRandomPosition_384 = new uScriptAct_SetRandomPosition( );
@@ -2209,6 +2212,7 @@ public class CodeGenTest : uScriptLogic
    System.String logic_uScriptAct_ConvertVariable_StringValue_419;
    System.Boolean logic_uScriptAct_ConvertVariable_BooleanValue_419;
    UnityEngine.Vector3 logic_uScriptAct_ConvertVariable_Vector3Value_419;
+   System.String logic_uScriptAct_ConvertVariable_FloatGroupSeparator_419 = ",";
    bool logic_uScriptAct_ConvertVariable_Out_419 = true;
    //pointer to script instanced logic node
    uScriptAct_ConvertVector4ToRect logic_uScriptAct_ConvertVector4ToRect_uScriptAct_ConvertVector4ToRect_420 = new uScriptAct_ConvertVector4ToRect( );
@@ -2425,6 +2429,7 @@ public class CodeGenTest : uScriptLogic
    UnityEngine.Quaternion logic_uScriptAct_VectorsFromQuaternion_quaternion_454 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
    UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_forward_454;
    UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_up_454;
+   UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_right_454;
    bool logic_uScriptAct_VectorsFromQuaternion_Out_454 = true;
    //pointer to script instanced logic node
    uScriptAct_Trigonometry logic_uScriptAct_Trigonometry_uScriptAct_Trigonometry_455 = new uScriptAct_Trigonometry( );
@@ -2475,6 +2480,7 @@ public class CodeGenTest : uScriptLogic
    uScriptAct_IsInListAudioClip logic_uScriptAct_IsInListAudioClip_uScriptAct_IsInListAudioClip_471 = new uScriptAct_IsInListAudioClip( );
    UnityEngine.AudioClip[] logic_uScriptAct_IsInListAudioClip_Target_471 = new UnityEngine.AudioClip[ 0 ];
    UnityEngine.AudioClip[] logic_uScriptAct_IsInListAudioClip_List_471 = new UnityEngine.AudioClip[ 0 ];
+   System.Int32 logic_uScriptAct_IsInListAudioClip_Index_471;
    bool logic_uScriptAct_IsInListAudioClip_InList_471 = true;
    bool logic_uScriptAct_IsInListAudioClip_NotInList_471 = true;
    //pointer to script instanced logic node
@@ -5233,6 +5239,7 @@ public class CodeGenTest : uScriptLogic
    
    public void OnDestroy()
    {
+      logic_CodeGenTest_Nested_CodeGenTest_Nested_458.OnDestroy( );
       logic_uScriptCon_Gate_uScriptCon_Gate_95.Out -= uScriptCon_Gate_Out_95;
       logic_uScriptCon_TimedGate_uScriptCon_TimedGate_96.Out -= uScriptCon_TimedGate_Out_96;
       logic_uScriptCon_ManualSwitch_uScriptCon_ManualSwitch_98.Output1 -= uScriptCon_ManualSwitch_Output1_98;
@@ -5260,7 +5267,6 @@ public class CodeGenTest : uScriptLogic
       logic_uScriptAct_SpawnPrefab_uScriptAct_SpawnPrefab_389.FinishedSpawning -= uScriptAct_SpawnPrefab_FinishedSpawning_389;
       logic_uScriptAct_SpawnPrefabAtLocation_uScriptAct_SpawnPrefabAtLocation_390.FinishedSpawning -= uScriptAct_SpawnPrefabAtLocation_FinishedSpawning_390;
       logic_CodeGenTest_Nested_CodeGenTest_Nested_458.Node_Is_Done -= CodeGenTest_Nested_Node_Is_Done_458;
-      logic_CodeGenTest_Nested_CodeGenTest_Nested_458.OnDestroy( );
    }
    
    public void OnGUI()
@@ -14548,6 +14554,39 @@ public class CodeGenTest : uScriptLogic
       }
    }
    
+   void Relay_Stop_265()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("5f81a775-60b8-44de-b4f3-0a1f0f1ff84d", "Delay", Relay_Stop_265)) return; 
+         {
+            {
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_265.Stop(logic_uScriptAct_Delay_Duration_265, logic_uScriptAct_Delay_SingleFrame_265);
+         logic_uScriptAct_Delay_DrivenDelay_265 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_265.Immediate;
+         bool test_1 = logic_uScriptAct_Delay_uScriptAct_Delay_265.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_267();
+         }
+         if ( test_1 == true )
+         {
+            Relay_In_266();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript CodeGenTest.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
    void Relay_DrivenDelay_265( )
    {
       if ( relayCallCount++ < MaxRelayCallCount )
@@ -18593,8 +18632,10 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_382.In(logic_uScriptAct_SetGameObjectEulerAngles_Target_382, logic_uScriptAct_SetGameObjectEulerAngles_X_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_PreserveX_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_Y_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_382);
+         logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_382.In(logic_uScriptAct_SetGameObjectEulerAngles_Target_382, logic_uScriptAct_SetGameObjectEulerAngles_X_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_PreserveX_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_Y_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_382, logic_uScriptAct_SetGameObjectEulerAngles_AsLocal_382);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_382.Out;
@@ -18622,8 +18663,10 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_383.In(logic_uScriptAct_SetGameObjectPosition_Target_383, logic_uScriptAct_SetGameObjectPosition_Position_383, logic_uScriptAct_SetGameObjectPosition_AsOffset_383);
+         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_383.In(logic_uScriptAct_SetGameObjectPosition_Target_383, logic_uScriptAct_SetGameObjectPosition_Position_383, logic_uScriptAct_SetGameObjectPosition_AsOffset_383, logic_uScriptAct_SetGameObjectPosition_AsLocal_383);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_383.Out;
@@ -21242,8 +21285,10 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_419.In(logic_uScriptAct_ConvertVariable_Target_419, out logic_uScriptAct_ConvertVariable_IntValue_419, out logic_uScriptAct_ConvertVariable_Int64Value_419, out logic_uScriptAct_ConvertVariable_FloatValue_419, out logic_uScriptAct_ConvertVariable_StringValue_419, out logic_uScriptAct_ConvertVariable_BooleanValue_419, out logic_uScriptAct_ConvertVariable_Vector3Value_419);
+         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_419.In(logic_uScriptAct_ConvertVariable_Target_419, out logic_uScriptAct_ConvertVariable_IntValue_419, out logic_uScriptAct_ConvertVariable_Int64Value_419, out logic_uScriptAct_ConvertVariable_FloatValue_419, out logic_uScriptAct_ConvertVariable_StringValue_419, out logic_uScriptAct_ConvertVariable_BooleanValue_419, out logic_uScriptAct_ConvertVariable_Vector3Value_419, logic_uScriptAct_ConvertVariable_FloatGroupSeparator_419);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_419.Out;
@@ -22618,8 +22663,10 @@ public class CodeGenTest : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_454.In(logic_uScriptAct_VectorsFromQuaternion_quaternion_454, out logic_uScriptAct_VectorsFromQuaternion_forward_454, out logic_uScriptAct_VectorsFromQuaternion_up_454);
+         logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_454.In(logic_uScriptAct_VectorsFromQuaternion_quaternion_454, out logic_uScriptAct_VectorsFromQuaternion_forward_454, out logic_uScriptAct_VectorsFromQuaternion_up_454, out logic_uScriptAct_VectorsFromQuaternion_right_454);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_454.Out;
@@ -23171,8 +23218,10 @@ public class CodeGenTest : uScriptLogic
                properties.AddRange(local_467_UnityEngine_AudioClipArray);
                logic_uScriptAct_IsInListAudioClip_List_471 = properties.ToArray();
             }
+            {
+            }
          }
-         logic_uScriptAct_IsInListAudioClip_uScriptAct_IsInListAudioClip_471.TestIfInList(logic_uScriptAct_IsInListAudioClip_Target_471, ref logic_uScriptAct_IsInListAudioClip_List_471);
+         logic_uScriptAct_IsInListAudioClip_uScriptAct_IsInListAudioClip_471.TestIfInList(logic_uScriptAct_IsInListAudioClip_Target_471, ref logic_uScriptAct_IsInListAudioClip_List_471, out logic_uScriptAct_IsInListAudioClip_Index_471);
          local_467_UnityEngine_AudioClipArray = logic_uScriptAct_IsInListAudioClip_List_471;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested

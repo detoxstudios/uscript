@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -415,10 +415,10 @@ public class AlarmGameplay_MainGame : uScriptLogic
    
    public void OnDestroy()
    {
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_37.OnDestroy( );
       logic_uScriptAct_PlaySound_uScriptAct_PlaySound_0.Finished -= uScriptAct_PlaySound_Finished_0;
       logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_37.Out___Alarm_Start -= AlarmGameplay_AlarmSetup_Out___Alarm_Start_37;
       logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_37.Out___Alarm_Stop -= AlarmGameplay_AlarmSetup_Out___Alarm_Stop_37;
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_37.OnDestroy( );
    }
    
    public void OnGUI()

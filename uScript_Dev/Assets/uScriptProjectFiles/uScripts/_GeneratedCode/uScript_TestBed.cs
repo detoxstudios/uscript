@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -63,6 +63,7 @@ public class uScript_TestBed : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_7 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_7 = true;
    bool logic_uScriptAct_Delay_AfterDelay_7 = true;
+   bool logic_uScriptAct_Delay_Stopped_7 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_7 = false;
    //pointer to script instanced logic node
    uScriptAct_OnInputEventFilter logic_uScriptAct_OnInputEventFilter_uScriptAct_OnInputEventFilter_8 = new uScriptAct_OnInputEventFilter( );
@@ -590,6 +591,35 @@ public class uScript_TestBed : uScriptLogic
             }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_7.In(logic_uScriptAct_Delay_Duration_7, logic_uScriptAct_Delay_SingleFrame_7);
+         logic_uScriptAct_Delay_DrivenDelay_7 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_7.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_10();
+            Relay_Begin_4();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_TestBed.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_Stop_7()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("659ae927-4929-4f20-8025-80248a31f8ec", "Delay", Relay_Stop_7)) return; 
+         {
+            {
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_7.Stop(logic_uScriptAct_Delay_Duration_7, logic_uScriptAct_Delay_SingleFrame_7);
          logic_uScriptAct_Delay_DrivenDelay_7 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -67,6 +67,7 @@ public class FollowCamera : uScriptLogic
    UnityEngine.Quaternion logic_uScriptAct_VectorsFromQuaternion_quaternion_1 = new Quaternion( );
    UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_forward_1;
    UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_up_1;
+   UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_right_1;
    bool logic_uScriptAct_VectorsFromQuaternion_Out_1 = true;
    //pointer to script instanced logic node
    uScriptAct_ScaleVector3 logic_uScriptAct_ScaleVector3_uScriptAct_ScaleVector3_2 = new uScriptAct_ScaleVector3( );
@@ -127,6 +128,7 @@ public class FollowCamera : uScriptLogic
    UnityEngine.Quaternion logic_uScriptAct_VectorsFromQuaternion_quaternion_21 = new Quaternion( );
    UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_forward_21;
    UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_up_21;
+   UnityEngine.Vector3 logic_uScriptAct_VectorsFromQuaternion_right_21;
    bool logic_uScriptAct_VectorsFromQuaternion_Out_21 = true;
    //pointer to script instanced logic node
    uScriptAct_SetComponentsVector3 logic_uScriptAct_SetComponentsVector3_uScriptAct_SetComponentsVector3_22 = new uScriptAct_SetComponentsVector3( );
@@ -147,6 +149,7 @@ public class FollowCamera : uScriptLogic
    UnityEngine.GameObject[] logic_uScriptAct_SetGameObjectPosition_Target_26 = new UnityEngine.GameObject[] {};
    UnityEngine.Vector3 logic_uScriptAct_SetGameObjectPosition_Position_26 = new Vector3( );
    System.Boolean logic_uScriptAct_SetGameObjectPosition_AsOffset_26 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectPosition_AsLocal_26 = (bool) false;
    bool logic_uScriptAct_SetGameObjectPosition_Out_26 = true;
    //pointer to script instanced logic node
    uScriptAct_LookAt logic_uScriptAct_LookAt_uScriptAct_LookAt_27 = new uScriptAct_LookAt( );
@@ -351,8 +354,10 @@ public class FollowCamera : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_1.In(logic_uScriptAct_VectorsFromQuaternion_quaternion_1, out logic_uScriptAct_VectorsFromQuaternion_forward_1, out logic_uScriptAct_VectorsFromQuaternion_up_1);
+         logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_1.In(logic_uScriptAct_VectorsFromQuaternion_quaternion_1, out logic_uScriptAct_VectorsFromQuaternion_forward_1, out logic_uScriptAct_VectorsFromQuaternion_up_1, out logic_uScriptAct_VectorsFromQuaternion_right_1);
          local_10_UnityEngine_Vector3 = logic_uScriptAct_VectorsFromQuaternion_forward_1;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -672,8 +677,10 @@ public class FollowCamera : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_21.In(logic_uScriptAct_VectorsFromQuaternion_quaternion_21, out logic_uScriptAct_VectorsFromQuaternion_forward_21, out logic_uScriptAct_VectorsFromQuaternion_up_21);
+         logic_uScriptAct_VectorsFromQuaternion_uScriptAct_VectorsFromQuaternion_21.In(logic_uScriptAct_VectorsFromQuaternion_quaternion_21, out logic_uScriptAct_VectorsFromQuaternion_forward_21, out logic_uScriptAct_VectorsFromQuaternion_up_21, out logic_uScriptAct_VectorsFromQuaternion_right_21);
          local_18_UnityEngine_Vector3 = logic_uScriptAct_VectorsFromQuaternion_forward_21;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -813,8 +820,10 @@ public class FollowCamera : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_26.In(logic_uScriptAct_SetGameObjectPosition_Target_26, logic_uScriptAct_SetGameObjectPosition_Position_26, logic_uScriptAct_SetGameObjectPosition_AsOffset_26);
+         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_26.In(logic_uScriptAct_SetGameObjectPosition_Target_26, logic_uScriptAct_SetGameObjectPosition_Position_26, logic_uScriptAct_SetGameObjectPosition_AsOffset_26, logic_uScriptAct_SetGameObjectPosition_AsLocal_26);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_26.Out;

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -104,6 +104,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_13 = (bool) false;
    System.Single logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_13 = (float) 0;
    System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_13 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_AsLocal_13 = (bool) false;
    bool logic_uScriptAct_SetGameObjectEulerAngles_Out_13 = true;
    //pointer to script instanced logic node
    uScriptAct_LookAt logic_uScriptAct_LookAt_uScriptAct_LookAt_14 = new uScriptAct_LookAt( );
@@ -216,6 +217,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    UnityEngine.GameObject[] logic_uScriptAct_SetGameObjectPosition_Target_49 = new UnityEngine.GameObject[] {};
    UnityEngine.Vector3 logic_uScriptAct_SetGameObjectPosition_Position_49 = new Vector3( (float)-14, (float)19, (float)1 );
    System.Boolean logic_uScriptAct_SetGameObjectPosition_AsOffset_49 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectPosition_AsLocal_49 = (bool) false;
    bool logic_uScriptAct_SetGameObjectPosition_Out_49 = true;
    //pointer to script instanced logic node
    uScriptAct_GetPositionAndRotation logic_uScriptAct_GetPositionAndRotation_uScriptAct_GetPositionAndRotation_50 = new uScriptAct_GetPositionAndRotation( );
@@ -1554,8 +1556,10 @@ public class BallRoller_BallRollLogic : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_13.In(logic_uScriptAct_SetGameObjectEulerAngles_Target_13, logic_uScriptAct_SetGameObjectEulerAngles_X_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_PreserveX_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_Y_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_13);
+         logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_13.In(logic_uScriptAct_SetGameObjectEulerAngles_Target_13, logic_uScriptAct_SetGameObjectEulerAngles_X_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_PreserveX_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_Y_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_13, logic_uScriptAct_SetGameObjectEulerAngles_AsLocal_13);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_13.Out;
@@ -2446,8 +2450,10 @@ public class BallRoller_BallRollLogic : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_49.In(logic_uScriptAct_SetGameObjectPosition_Target_49, logic_uScriptAct_SetGameObjectPosition_Position_49, logic_uScriptAct_SetGameObjectPosition_AsOffset_49);
+         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_49.In(logic_uScriptAct_SetGameObjectPosition_Target_49, logic_uScriptAct_SetGameObjectPosition_Position_49, logic_uScriptAct_SetGameObjectPosition_AsOffset_49, logic_uScriptAct_SetGameObjectPosition_AsLocal_49);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -266,6 +266,7 @@ public class TestScript001 : uScriptLogic
    System.String logic_uScriptAct_ConvertVariable_StringValue_42;
    System.Boolean logic_uScriptAct_ConvertVariable_BooleanValue_42;
    UnityEngine.Vector3 logic_uScriptAct_ConvertVariable_Vector3Value_42;
+   System.String logic_uScriptAct_ConvertVariable_FloatGroupSeparator_42 = ",";
    bool logic_uScriptAct_ConvertVariable_Out_42 = true;
    //pointer to script instanced logic node
    uScriptAct_GetAxis logic_uScriptAct_GetAxis_uScriptAct_GetAxis_46 = new uScriptAct_GetAxis( );
@@ -309,6 +310,7 @@ public class TestScript001 : uScriptLogic
    System.String logic_uScriptAct_ConvertVariable_StringValue_54;
    System.Boolean logic_uScriptAct_ConvertVariable_BooleanValue_54;
    UnityEngine.Vector3 logic_uScriptAct_ConvertVariable_Vector3Value_54;
+   System.String logic_uScriptAct_ConvertVariable_FloatGroupSeparator_54 = ",";
    bool logic_uScriptAct_ConvertVariable_Out_54 = true;
    //pointer to script instanced logic node
    uScriptAct_GUILayoutLabel logic_uScriptAct_GUILayoutLabel_uScriptAct_GUILayoutLabel_56 = new uScriptAct_GUILayoutLabel( );
@@ -354,6 +356,7 @@ public class TestScript001 : uScriptLogic
    System.String logic_uScriptAct_ConvertVariable_StringValue_65;
    System.Boolean logic_uScriptAct_ConvertVariable_BooleanValue_65;
    UnityEngine.Vector3 logic_uScriptAct_ConvertVariable_Vector3Value_65;
+   System.String logic_uScriptAct_ConvertVariable_FloatGroupSeparator_65 = ",";
    bool logic_uScriptAct_ConvertVariable_Out_65 = true;
    //pointer to script instanced logic node
    uScriptAct_GUILayoutToggle logic_uScriptAct_GUILayoutToggle_uScriptAct_GUILayoutToggle_66 = new uScriptAct_GUILayoutToggle( );
@@ -1326,6 +1329,7 @@ public class TestScript001 : uScriptLogic
    System.String logic_uScriptAct_ConvertVariable_StringValue_308;
    System.Boolean logic_uScriptAct_ConvertVariable_BooleanValue_308;
    UnityEngine.Vector3 logic_uScriptAct_ConvertVariable_Vector3Value_308;
+   System.String logic_uScriptAct_ConvertVariable_FloatGroupSeparator_308 = ",";
    bool logic_uScriptAct_ConvertVariable_Out_308 = true;
    //pointer to script instanced logic node
    uScriptAct_GUILayoutLabel logic_uScriptAct_GUILayoutLabel_uScriptAct_GUILayoutLabel_310 = new uScriptAct_GUILayoutLabel( );
@@ -2892,8 +2896,10 @@ public class TestScript001 : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_42.In(logic_uScriptAct_ConvertVariable_Target_42, out logic_uScriptAct_ConvertVariable_IntValue_42, out logic_uScriptAct_ConvertVariable_Int64Value_42, out logic_uScriptAct_ConvertVariable_FloatValue_42, out logic_uScriptAct_ConvertVariable_StringValue_42, out logic_uScriptAct_ConvertVariable_BooleanValue_42, out logic_uScriptAct_ConvertVariable_Vector3Value_42);
+         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_42.In(logic_uScriptAct_ConvertVariable_Target_42, out logic_uScriptAct_ConvertVariable_IntValue_42, out logic_uScriptAct_ConvertVariable_Int64Value_42, out logic_uScriptAct_ConvertVariable_FloatValue_42, out logic_uScriptAct_ConvertVariable_StringValue_42, out logic_uScriptAct_ConvertVariable_BooleanValue_42, out logic_uScriptAct_ConvertVariable_Vector3Value_42, logic_uScriptAct_ConvertVariable_FloatGroupSeparator_42);
          local_43_System_String = logic_uScriptAct_ConvertVariable_StringValue_42;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -3102,8 +3108,10 @@ public class TestScript001 : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_54.In(logic_uScriptAct_ConvertVariable_Target_54, out logic_uScriptAct_ConvertVariable_IntValue_54, out logic_uScriptAct_ConvertVariable_Int64Value_54, out logic_uScriptAct_ConvertVariable_FloatValue_54, out logic_uScriptAct_ConvertVariable_StringValue_54, out logic_uScriptAct_ConvertVariable_BooleanValue_54, out logic_uScriptAct_ConvertVariable_Vector3Value_54);
+         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_54.In(logic_uScriptAct_ConvertVariable_Target_54, out logic_uScriptAct_ConvertVariable_IntValue_54, out logic_uScriptAct_ConvertVariable_Int64Value_54, out logic_uScriptAct_ConvertVariable_FloatValue_54, out logic_uScriptAct_ConvertVariable_StringValue_54, out logic_uScriptAct_ConvertVariable_BooleanValue_54, out logic_uScriptAct_ConvertVariable_Vector3Value_54, logic_uScriptAct_ConvertVariable_FloatGroupSeparator_54);
          local_horizontalValue_System_String = logic_uScriptAct_ConvertVariable_StringValue_54;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -3441,8 +3449,10 @@ public class TestScript001 : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_65.In(logic_uScriptAct_ConvertVariable_Target_65, out logic_uScriptAct_ConvertVariable_IntValue_65, out logic_uScriptAct_ConvertVariable_Int64Value_65, out logic_uScriptAct_ConvertVariable_FloatValue_65, out logic_uScriptAct_ConvertVariable_StringValue_65, out logic_uScriptAct_ConvertVariable_BooleanValue_65, out logic_uScriptAct_ConvertVariable_Vector3Value_65);
+         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_65.In(logic_uScriptAct_ConvertVariable_Target_65, out logic_uScriptAct_ConvertVariable_IntValue_65, out logic_uScriptAct_ConvertVariable_Int64Value_65, out logic_uScriptAct_ConvertVariable_FloatValue_65, out logic_uScriptAct_ConvertVariable_StringValue_65, out logic_uScriptAct_ConvertVariable_BooleanValue_65, out logic_uScriptAct_ConvertVariable_Vector3Value_65, logic_uScriptAct_ConvertVariable_FloatGroupSeparator_65);
          local_27_System_String = logic_uScriptAct_ConvertVariable_StringValue_65;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -8253,8 +8263,10 @@ public class TestScript001 : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_308.In(logic_uScriptAct_ConvertVariable_Target_308, out logic_uScriptAct_ConvertVariable_IntValue_308, out logic_uScriptAct_ConvertVariable_Int64Value_308, out logic_uScriptAct_ConvertVariable_FloatValue_308, out logic_uScriptAct_ConvertVariable_StringValue_308, out logic_uScriptAct_ConvertVariable_BooleanValue_308, out logic_uScriptAct_ConvertVariable_Vector3Value_308);
+         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_308.In(logic_uScriptAct_ConvertVariable_Target_308, out logic_uScriptAct_ConvertVariable_IntValue_308, out logic_uScriptAct_ConvertVariable_Int64Value_308, out logic_uScriptAct_ConvertVariable_FloatValue_308, out logic_uScriptAct_ConvertVariable_StringValue_308, out logic_uScriptAct_ConvertVariable_BooleanValue_308, out logic_uScriptAct_ConvertVariable_Vector3Value_308, logic_uScriptAct_ConvertVariable_FloatGroupSeparator_308);
          local_intValue_System_Int32 = logic_uScriptAct_ConvertVariable_IntValue_308;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested

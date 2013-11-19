@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -134,6 +134,7 @@ public class uScript_StressTest : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_63 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_63 = true;
    bool logic_uScriptAct_Delay_AfterDelay_63 = true;
+   bool logic_uScriptAct_Delay_Stopped_63 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_63 = false;
    //pointer to script instanced logic node
    uScriptAct_Delay logic_uScriptAct_Delay_uScriptAct_Delay_64 = new uScriptAct_Delay( );
@@ -141,6 +142,7 @@ public class uScript_StressTest : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_64 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_64 = true;
    bool logic_uScriptAct_Delay_AfterDelay_64 = true;
+   bool logic_uScriptAct_Delay_Stopped_64 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_64 = false;
    //pointer to script instanced logic node
    uScriptAct_DestroyComponent logic_uScriptAct_DestroyComponent_uScriptAct_DestroyComponent_65 = new uScriptAct_DestroyComponent( );
@@ -1289,6 +1291,41 @@ public class uScript_StressTest : uScriptLogic
       }
    }
    
+   void Relay_Stop_63()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("e9561390-31c1-4ebb-b6d6-efac67318268", "Delay", Relay_Stop_63)) return; 
+         {
+            {
+               logic_uScriptAct_Delay_Duration_63 = local_25_System_Single;
+               
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_63.Stop(logic_uScriptAct_Delay_Duration_63, logic_uScriptAct_Delay_SingleFrame_63);
+         logic_uScriptAct_Delay_DrivenDelay_63 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_63.Immediate;
+         bool test_1 = logic_uScriptAct_Delay_uScriptAct_Delay_63.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_19();
+         }
+         if ( test_1 == true )
+         {
+            Relay_In_28();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
    void Relay_DrivenDelay_63( )
    {
       if ( relayCallCount++ < MaxRelayCallCount )
@@ -1331,6 +1368,34 @@ public class uScript_StressTest : uScriptLogic
             }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_64.In(logic_uScriptAct_Delay_Duration_64, logic_uScriptAct_Delay_SingleFrame_64);
+         logic_uScriptAct_Delay_DrivenDelay_64 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_64.Immediate;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_110();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript uScript_StressTest.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_Stop_64()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("02ff9116-0c4f-4aaf-ba41-f312cb1252ef", "Delay", Relay_Stop_64)) return; 
+         {
+            {
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_64.Stop(logic_uScriptAct_Delay_Duration_64, logic_uScriptAct_Delay_SingleFrame_64);
          logic_uScriptAct_Delay_DrivenDelay_64 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested

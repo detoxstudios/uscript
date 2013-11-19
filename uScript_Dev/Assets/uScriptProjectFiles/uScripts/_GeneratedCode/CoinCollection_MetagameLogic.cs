@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -61,6 +61,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_4 = (bool) false;
    System.Single logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_4 = (float) 0;
    System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_4 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectEulerAngles_AsLocal_4 = (bool) false;
    bool logic_uScriptAct_SetGameObjectEulerAngles_Out_4 = true;
    //pointer to script instanced logic node
    uScriptAct_LookAt logic_uScriptAct_LookAt_uScriptAct_LookAt_5 = new uScriptAct_LookAt( );
@@ -114,6 +115,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    UnityEngine.GameObject[] logic_uScriptAct_SetGameObjectPosition_Target_20 = new UnityEngine.GameObject[] {};
    UnityEngine.Vector3 logic_uScriptAct_SetGameObjectPosition_Position_20 = new Vector3( (float)-14, (float)19, (float)1 );
    System.Boolean logic_uScriptAct_SetGameObjectPosition_AsOffset_20 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectPosition_AsLocal_20 = (bool) false;
    bool logic_uScriptAct_SetGameObjectPosition_Out_20 = true;
    //pointer to script instanced logic node
    uScriptAct_GetPositionAndRotation logic_uScriptAct_GetPositionAndRotation_uScriptAct_GetPositionAndRotation_21 = new uScriptAct_GetPositionAndRotation( );
@@ -888,8 +890,10 @@ public class CoinCollection_MetagameLogic : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_4.In(logic_uScriptAct_SetGameObjectEulerAngles_Target_4, logic_uScriptAct_SetGameObjectEulerAngles_X_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_PreserveX_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_Y_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_4);
+         logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_4.In(logic_uScriptAct_SetGameObjectEulerAngles_Target_4, logic_uScriptAct_SetGameObjectEulerAngles_X_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_PreserveX_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_Y_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_PreserveY_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_Z_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_PreserveZ_Axis_4, logic_uScriptAct_SetGameObjectEulerAngles_AsLocal_4);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          bool test_0 = logic_uScriptAct_SetGameObjectEulerAngles_uScriptAct_SetGameObjectEulerAngles_4.Out;
@@ -1231,8 +1235,10 @@ public class CoinCollection_MetagameLogic : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_20.In(logic_uScriptAct_SetGameObjectPosition_Target_20, logic_uScriptAct_SetGameObjectPosition_Position_20, logic_uScriptAct_SetGameObjectPosition_AsOffset_20);
+         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_20.In(logic_uScriptAct_SetGameObjectPosition_Target_20, logic_uScriptAct_SetGameObjectPosition_Position_20, logic_uScriptAct_SetGameObjectPosition_AsOffset_20, logic_uScriptAct_SetGameObjectPosition_AsLocal_20);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -266,6 +266,7 @@ public class FireBot_Gameplay : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_55 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_55 = true;
    bool logic_uScriptAct_Delay_AfterDelay_55 = true;
+   bool logic_uScriptAct_Delay_Stopped_55 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_55 = false;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventBool logic_uScriptAct_SendCustomEventBool_uScriptAct_SendCustomEventBool_56 = new uScriptAct_SendCustomEventBool( );
@@ -310,6 +311,7 @@ public class FireBot_Gameplay : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_64 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_64 = true;
    bool logic_uScriptAct_Delay_AfterDelay_64 = true;
+   bool logic_uScriptAct_Delay_Stopped_64 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_64 = false;
    //pointer to script instanced logic node
    uScriptAct_AddFloat logic_uScriptAct_AddFloat_uScriptAct_AddFloat_65 = new uScriptAct_AddFloat( );
@@ -335,6 +337,7 @@ public class FireBot_Gameplay : uScriptLogic
    UnityEngine.GameObject[] logic_uScriptAct_SetGameObjectPosition_Target_75 = new UnityEngine.GameObject[] {};
    UnityEngine.Vector3 logic_uScriptAct_SetGameObjectPosition_Position_75 = new Vector3( );
    System.Boolean logic_uScriptAct_SetGameObjectPosition_AsOffset_75 = (bool) false;
+   System.Boolean logic_uScriptAct_SetGameObjectPosition_AsLocal_75 = (bool) false;
    bool logic_uScriptAct_SetGameObjectPosition_Out_75 = true;
    //pointer to script instanced logic node
    uScriptAct_AddForce logic_uScriptAct_AddForce_uScriptAct_AddForce_77 = new uScriptAct_AddForce( );
@@ -458,6 +461,7 @@ public class FireBot_Gameplay : uScriptLogic
    System.String logic_uScriptAct_ConvertVariable_StringValue_119;
    System.Boolean logic_uScriptAct_ConvertVariable_BooleanValue_119;
    UnityEngine.Vector3 logic_uScriptAct_ConvertVariable_Vector3Value_119;
+   System.String logic_uScriptAct_ConvertVariable_FloatGroupSeparator_119 = ",";
    bool logic_uScriptAct_ConvertVariable_Out_119 = true;
    //pointer to script instanced logic node
    uScriptAct_SetBool logic_uScriptAct_SetBool_uScriptAct_SetBool_122 = new uScriptAct_SetBool( );
@@ -2703,6 +2707,36 @@ public class FireBot_Gameplay : uScriptLogic
       }
    }
    
+   void Relay_Stop_55()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("b96ee52e-5d88-4341-8b5e-672efa92928f", "Delay", Relay_Stop_55)) return; 
+         {
+            {
+               logic_uScriptAct_Delay_Duration_55 = local_35_System_Single;
+               
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_55.Stop(logic_uScriptAct_Delay_Duration_55, logic_uScriptAct_Delay_SingleFrame_55);
+         logic_uScriptAct_Delay_DrivenDelay_55 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_55.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_138();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
    void Relay_DrivenDelay_55( )
    {
       if ( relayCallCount++ < MaxRelayCallCount )
@@ -2917,6 +2951,36 @@ public class FireBot_Gameplay : uScriptLogic
             }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_64.In(logic_uScriptAct_Delay_Duration_64, logic_uScriptAct_Delay_SingleFrame_64);
+         logic_uScriptAct_Delay_DrivenDelay_64 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_64.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_In_50();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript FireBot_Gameplay.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_Stop_64()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("a569f5a7-6143-488b-86eb-cafe8c5cd918", "Delay", Relay_Stop_64)) return; 
+         {
+            {
+               logic_uScriptAct_Delay_Duration_64 = local_3_System_Single;
+               
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_64.Stop(logic_uScriptAct_Delay_Duration_64, logic_uScriptAct_Delay_SingleFrame_64);
          logic_uScriptAct_Delay_DrivenDelay_64 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -3167,8 +3231,10 @@ public class FireBot_Gameplay : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_75.In(logic_uScriptAct_SetGameObjectPosition_Target_75, logic_uScriptAct_SetGameObjectPosition_Position_75, logic_uScriptAct_SetGameObjectPosition_AsOffset_75);
+         logic_uScriptAct_SetGameObjectPosition_uScriptAct_SetGameObjectPosition_75.In(logic_uScriptAct_SetGameObjectPosition_Target_75, logic_uScriptAct_SetGameObjectPosition_Position_75, logic_uScriptAct_SetGameObjectPosition_AsOffset_75, logic_uScriptAct_SetGameObjectPosition_AsLocal_75);
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -3830,8 +3896,10 @@ public class FireBot_Gameplay : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_119.In(logic_uScriptAct_ConvertVariable_Target_119, out logic_uScriptAct_ConvertVariable_IntValue_119, out logic_uScriptAct_ConvertVariable_Int64Value_119, out logic_uScriptAct_ConvertVariable_FloatValue_119, out logic_uScriptAct_ConvertVariable_StringValue_119, out logic_uScriptAct_ConvertVariable_BooleanValue_119, out logic_uScriptAct_ConvertVariable_Vector3Value_119);
+         logic_uScriptAct_ConvertVariable_uScriptAct_ConvertVariable_119.In(logic_uScriptAct_ConvertVariable_Target_119, out logic_uScriptAct_ConvertVariable_IntValue_119, out logic_uScriptAct_ConvertVariable_Int64Value_119, out logic_uScriptAct_ConvertVariable_FloatValue_119, out logic_uScriptAct_ConvertVariable_StringValue_119, out logic_uScriptAct_ConvertVariable_BooleanValue_119, out logic_uScriptAct_ConvertVariable_Vector3Value_119, logic_uScriptAct_ConvertVariable_FloatGroupSeparator_119);
          local_149_System_String = logic_uScriptAct_ConvertVariable_StringValue_119;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2275
+//uScript Generated Code - Build 0.9.2439
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -104,6 +104,7 @@ public class GameWheel_Metagame : uScriptLogic
    System.Boolean logic_uScriptAct_Delay_SingleFrame_14 = (bool) false;
    bool logic_uScriptAct_Delay_Immediate_14 = true;
    bool logic_uScriptAct_Delay_AfterDelay_14 = true;
+   bool logic_uScriptAct_Delay_Stopped_14 = true;
    bool logic_uScriptAct_Delay_DrivenDelay_14 = false;
    //pointer to script instanced logic node
    uScriptAct_SetBool logic_uScriptAct_SetBool_uScriptAct_SetBool_15 = new uScriptAct_SetBool( );
@@ -1107,6 +1108,36 @@ public class GameWheel_Metagame : uScriptLogic
             }
          }
          logic_uScriptAct_Delay_uScriptAct_Delay_14.In(logic_uScriptAct_Delay_Duration_14, logic_uScriptAct_Delay_SingleFrame_14);
+         logic_uScriptAct_Delay_DrivenDelay_14 = true;
+         
+         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         bool test_0 = logic_uScriptAct_Delay_uScriptAct_Delay_14.AfterDelay;
+         
+         if ( test_0 == true )
+         {
+            Relay_True_15();
+         }
+      }
+      else
+      {
+         uScriptDebug.Log( "Possible infinite loop detected in uScript GameWheel_Metagame.uscript at Delay.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
+      }
+   }
+   
+   void Relay_Stop_14()
+   {
+      if ( relayCallCount++ < MaxRelayCallCount )
+      {
+         if (true == CheckDebugBreak("b4b42d68-5713-4d5a-9edb-a62c43cd9573", "Delay", Relay_Stop_14)) return; 
+         {
+            {
+               logic_uScriptAct_Delay_Duration_14 = local_64_System_Single;
+               
+            }
+            {
+            }
+         }
+         logic_uScriptAct_Delay_uScriptAct_Delay_14.Stop(logic_uScriptAct_Delay_Duration_14, logic_uScriptAct_Delay_SingleFrame_14);
          logic_uScriptAct_Delay_DrivenDelay_14 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
