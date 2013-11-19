@@ -109,6 +109,10 @@ public sealed partial class uScript : EditorWindow
 
    private bool hasFocus;
 
+   private Rect helpButtonRect;
+   private Rect fileButtonRect;
+   private Rect viewButtonRect;
+
 #if DETOX_STORE_BASIC || UNITY_STORE_BASIC
 
 #else
@@ -3219,6 +3223,8 @@ public sealed partial class uScript : EditorWindow
 
    void DrawGUIContent()
    {
+      var isPainting = Event.current.type == EventType.Repaint;
+
       Rect rect = EditorGUILayout.BeginVertical();
       {
          // Toolbar
@@ -3231,17 +3237,32 @@ public sealed partial class uScript : EditorWindow
 
             if (GUILayout.Button(uScriptGUIContent.FileMenu, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               this.ContextMenuFile(toolbarRect);
+               this.ContextMenuFile(this.fileButtonRect);
+            }
+
+            if (isPainting)
+            {
+               this.fileButtonRect = GUILayoutUtility.GetLastRect();
             }
 
             if (GUILayout.Button(uScriptGUIContent.ViewMenu, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               this.ContextMenuView(toolbarRect);
+               this.ContextMenuView(this.viewButtonRect);
+            }
+
+            if (isPainting)
+            {
+               this.viewButtonRect = GUILayoutUtility.GetLastRect();
             }
 
             if (GUILayout.Button(uScriptGUIContent.HelpMenu, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
-               this.ContextMenuHelp(toolbarRect);
+               this.ContextMenuHelp(this.helpButtonRect);
+            }
+
+            if (isPainting)
+            {
+               this.helpButtonRect = GUILayoutUtility.GetLastRect();
             }
 
             GUILayout.FlexibleSpace();
@@ -3305,11 +3326,11 @@ public sealed partial class uScript : EditorWindow
             }
             EditorGUILayout.EndScrollView();
 
-            GUI.SetNextControlName("");
+            GUI.SetNextControlName(string.Empty);
          }
          GUILayout.EndVertical();
 
-         if (Event.current.type == EventType.Repaint)
+         if (isPainting)
          {
             _canvasRect = GUILayoutUtility.GetLastRect();
          }
