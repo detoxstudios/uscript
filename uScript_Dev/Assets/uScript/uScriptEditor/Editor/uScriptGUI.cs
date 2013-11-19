@@ -2193,7 +2193,11 @@ public static class uScriptGUI
       }
 
       // Display the column label
+#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
       EditorGUIUtility.LookLikeControls(columnLabel.Width);
+#else
+      EditorGUIUtility.labelWidth = columnLabel.Width;
+#endif
    }
 
    private static void EndRow(string type)

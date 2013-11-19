@@ -26,7 +26,11 @@ public class UpdateCheck : EditorWindow
 
    internal void OnGUI()
    {
+#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
       EditorGUIUtility.LookLikeControls(110);
+#else
+      EditorGUIUtility.labelWidth = 110;
+#endif
 
       GUILayout.Label("Unity", EditorStyles.boldLabel);
       EditorGUI.indentLevel++;
