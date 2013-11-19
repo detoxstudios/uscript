@@ -62,6 +62,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ExportPNG.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\FlowChart.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GraphInfo.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\AboutWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItemScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptCurrent.cs" />

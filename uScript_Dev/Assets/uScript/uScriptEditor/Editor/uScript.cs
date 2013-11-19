@@ -46,10 +46,10 @@ public sealed partial class uScript : EditorWindow
    // # Version Name and Version Data
    // #
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public const string BuildNumber = "0.9.2439";
-   public const string BuildName = "Professional (Retail Beta 43)";
-   public const string BuildNamePLE = "Personal Learning Edition (Retail Beta 43)";
-   public const string BuildNameBasic = "Basic (Retail Beta 43)";
+   public const string BuildNumber = "0.9.2456";
+   public const string BuildName = "Professional (Retail Beta 44)";
+   public const string BuildNamePLE = "Personal Learning Edition (Retail Beta 44)";
+   public const string BuildNameBasic = "Basic (Retail Beta 44)";
    // #
    // ###############################################################
 
@@ -615,10 +615,16 @@ public sealed partial class uScript : EditorWindow
 
       foreach (FileInfo file in directory.GetFiles())
       {
-         if (!File.Exists(gizmos + "/" + file.Name))
-         {
-            File.Copy(file.FullName, gizmos + "/" + file.Name, false);
-         }
+          if (!file.Name.Contains(".meta"))
+          {
+              // Remove the leading underscore from the backup file's name.
+              string finalName = file.Name.Substring(1);
+
+              if (!File.Exists(gizmos + "/" + finalName))
+              {
+                  File.Copy(file.FullName, gizmos + "/" + finalName, false);
+              }
+          }
       }
 
       //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
