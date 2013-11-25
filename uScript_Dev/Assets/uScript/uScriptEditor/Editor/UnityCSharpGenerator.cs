@@ -1548,6 +1548,10 @@ namespace Detox.ScriptEditor
          {
             return "new UnityEngine.ContactPoint( )";
          }
+         else if ("UnityEngine.WheelHit" == type)
+         {
+            return "new UnityEngine.WheelHit( )";
+         }
          else if ("UnityEngine.Touch" == type)
          {
             return "new UnityEngine.Touch( )";
@@ -1838,6 +1842,10 @@ namespace Detox.ScriptEditor
          else if ("UnityEngine.ContactPoint[]" == type)
          {
             declaration = "new UnityEngine.ContactPoint[ " + elements.Length + " ]";
+         }
+         else if ("UnityEngine.WheelHit[]" == type)
+         {
+            declaration = "new UnityEngine.WheelHit[ " + elements.Length + " ]";
          }
          else if ("UnityEngine.Texture2D[]" == type)
          {
