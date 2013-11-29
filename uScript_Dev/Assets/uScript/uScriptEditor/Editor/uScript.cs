@@ -2073,7 +2073,8 @@ public sealed partial class uScript : EditorWindow
             }
             break;
          case EventType.MouseUp:
-            //            Debug.Log("MouseUp ...\n\tm_MouseDown (" + mouseDown + "), mouseDownOverCanvas (" + mouseDownOverCanvas + ")");
+			// THIS IS WHERE MIN SIZE BUG CAUSES WRONG VALUES (enable the debug output):
+            Debug.Log("[uScript.cs] EventType.MouseUp:\n  mouseDown = " + this.mouseDown.ToString() + ",  mouseDownOverCanvas = " + mouseDownOverCanvas.ToString());
             if (this.mouseDown && this.mouseDownOverCanvas)
             {
                m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
