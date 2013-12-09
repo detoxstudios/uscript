@@ -90,8 +90,8 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
          if (m_ScriptEditorCtrl.SelectedNodes.Length != 1)
          {
             currentNodeClassName = string.Empty;
-            helpButtonTooltip = "Open the online uScript reference in the default web browser.";
-            helpButtonURL = "http://www.uscript.net/docs/";
+            helpButtonTooltip = "Open the online uScript User Guide in the default web browser.";
+            helpButtonURL = "http://docs.uscript.net/";
          }
          else
          {

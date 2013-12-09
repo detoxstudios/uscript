@@ -183,15 +183,15 @@ public class WelcomeWindow : EditorWindow
 
          QuickStart = new Item(
             "iconWelcomeQuickstart",
-            "Quick Start",
-            "Do you want to jump right in?  Check out our Getting Started guide to get you up and running.",
-            "http://www.uscript.net/docs/index.php?title=Getting_Started");
+            "Key Concepts",
+            "Do you want to jump right in?  Check out the Key Concepts section of our User Guide to help get you started.",
+            "http://docs.uscript.net/Default.htm#3-Working_With_uScript/3.2-Key_Concepts.htm");
 
          Documentation = new Item(
             "iconWelcomeDocumentation",
             "Documentation",
-            "For more extensive information on uScript, including the Node Reference Guide, check out our online documentation.",
-            "http://uscript.net/docs/");
+            "For more extensive information on uScript check out our full User Guide online documentation.",
+            "http://docs.uscript.net/");
 
          Tutorials = new Item(
             "iconWelcomeVideoTutorials",

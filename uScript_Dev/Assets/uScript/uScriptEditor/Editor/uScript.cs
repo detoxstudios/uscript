@@ -1930,7 +1930,7 @@ public sealed partial class uScript : EditorWindow
                         //
                         // Open uScript online documentation
                         //
-                        Help.BrowseURL("http://www.uscript.net/docs/index.php?title=Main_Page");
+                        Help.BrowseURL("http://docs.uscript.net/");
                         break;
 
                      case KeyCode.Backspace:
@@ -2073,8 +2073,10 @@ public sealed partial class uScript : EditorWindow
             }
             break;
          case EventType.MouseUp:
+#if DEVELOPMENT_BUILD
 			// THIS IS WHERE MIN SIZE BUG CAUSES WRONG VALUES (enable the debug output):
             Debug.Log("[uScript.cs] EventType.MouseUp:\n  mouseDown = " + this.mouseDown.ToString() + ",  mouseDownOverCanvas = " + mouseDownOverCanvas.ToString());
+#endif
             if (this.mouseDown && this.mouseDownOverCanvas)
             {
                m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
@@ -2975,7 +2977,7 @@ public sealed partial class uScript : EditorWindow
 
    private void CommandHelpMenuDocs()
    {
-      Help.BrowseURL("http://uscript.net/docs/");
+      Help.BrowseURL("http://docs.uscript.net/");
    }
 
    private void CommandHelpMenuForum()
