@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Detox Studios, LLC" file="uScript.cs">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2014 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   The primary uScript editor logic.
@@ -46,14 +46,14 @@ public sealed partial class uScript : EditorWindow
    // # Version Name and Version Data
    // #
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public const string BuildNumber = "0.9.2461";
-   public const string BuildName = "Professional (Retail Beta 44)";
-   public const string BuildNamePLE = "Personal Learning Edition (Retail Beta 44)";
-   public const string BuildNameBasic = "Basic (Retail Beta 44)";
+   public const string BuildNumber = "1.0.2475";
+   public const string BuildName = "Professional Edition (RC1)";
+   public const string BuildNamePLE = "Personal Learning Edition (RC1)";
+   public const string BuildNameBasic = "Basic Edition (RC1)";
    // #
    // ###############################################################
 
-   public const string Copyright = "\u00A9 2010-2013 Detox Studios, LLC.";
+   public const string Copyright = "\u00A9 2010-2014 Detox Studios, LLC.";
 
    public static readonly Preferences Preferences = new Preferences();
 
@@ -2073,10 +2073,6 @@ public sealed partial class uScript : EditorWindow
             }
             break;
          case EventType.MouseUp:
-#if DEVELOPMENT_BUILD
-			// THIS IS WHERE MIN SIZE BUG CAUSES WRONG VALUES (enable the debug output):
-            Debug.Log("[uScript.cs] EventType.MouseUp:\n  mouseDown = " + this.mouseDown.ToString() + ",  mouseDownOverCanvas = " + mouseDownOverCanvas.ToString());
-#endif
             if (this.mouseDown && this.mouseDownOverCanvas)
             {
                m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();

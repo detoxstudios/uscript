@@ -4,15 +4,14 @@ Thank you for using uScript! Please use these links for helpful information:
 A great resource of documentation, tutorials, and example projects you can use
 to learn all about uScript!
 
-http://www.uscript.net/docs
+http://docs.uscript.net/
 
-Quick Start Guide: http://uscript.net/docs/index.php?title=Getting_Started
+For extending/customizing uScript, see our SDK Documentation:
+
+http://docs.uscript.net/Development/
 
 
-
-** uScript Community Website **
-Join the uScript Community by signing up on our forums, contribute to the
-community wiki or just get the latest uScript news.
+** uScript Community Website and Forum **
 
 http://uscript.net
 
