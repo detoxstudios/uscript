@@ -338,7 +338,7 @@ namespace Detox.Editor.GUI
             }
 
             // Miscellaneous file commands
-            var iconScriptCommands = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector).FindStyle("PaneOptions").normal.background;
+            var iconScriptCommands = GUI.skin.FindStyle("PaneOptions").normal.background;
             if (GUILayout.Button(iconScriptCommands, Style.ButtonToolbarDropDown))
             {
                this.ContextMenuCreate(rect);

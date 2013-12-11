@@ -206,8 +206,11 @@ public class TestEditor : EditorWindow
 
       GUILayout.Space(20);
 
-      GUISkin skin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector);
-      GUILayout.Label(string.Format("GetBuiltinSkin(EditorSkin.Inspector) : {0} styles", skin.customStyles.Length), EditorStyles.boldLabel);
+      //GUISkin skin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Game);
+      //GUISkin skin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Inspector); // "LightSkin"
+      //GUISkin skin = EditorGUIUtility.GetBuiltinSkin(EditorSkin.Scene);     // "DarkSkin"
+      var skin = GUI.skin;
+      GUILayout.Label(string.Format("\"" + skin.name + "\" : {0} styles", skin.customStyles.Length), EditorStyles.boldLabel);
 
       foreach (GUIStyle style in skin.customStyles)
       {
