@@ -18,7 +18,7 @@ public sealed partial class uScript
 {
    public static string FindNodeAuthorName(string type)
    {
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
 
       if (uScriptType != null)
       {
@@ -35,7 +35,7 @@ public sealed partial class uScript
 
    public static string FindNodeAuthorURL(string type)
    {
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
 
       if (uScriptType != null)
       {
@@ -52,7 +52,7 @@ public sealed partial class uScript
 
    public static bool FindNodeAutoAssignMasterInstance(string type)
    {
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
 
       if (uScriptType != null)
       {
@@ -66,7 +66,7 @@ public sealed partial class uScript
 
    public static string FindNodeCopyright(string type)
    {
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
 
       if (uScriptType != null)
       {
@@ -159,7 +159,7 @@ public sealed partial class uScript
          }
       }
 
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
 
       if (uScriptType != null)
       {
@@ -228,7 +228,7 @@ public sealed partial class uScript
          return "http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Owner_Variable";
       }
 
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
 
       if (uScriptType != null)
       {
@@ -245,7 +245,7 @@ public sealed partial class uScript
 
    //public static string FindNodeLicense(string type)
    //{
-   //   Type uScriptType = uScript.MasterComponent.GetType(type);
+   //   Type uScriptType = uScript.uScript.Instance.GetType(type);
    //   if (uScriptType != null)
    //   {
    //      object[] attributes = uScriptType.GetCustomAttributes(false);
@@ -286,7 +286,7 @@ public sealed partial class uScript
          return uScriptConfig.Variable.FriendlyName(((LocalNode)node).Value.Type).Replace("UnityEngine.", string.Empty);
       }
 
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
 
       if (uScriptType != null)
       {
@@ -313,7 +313,7 @@ public sealed partial class uScript
 
    public static string FindNodePath(string defaultCategory, string type)
    {
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
 
       if (uScriptType != null)
       {
@@ -330,7 +330,7 @@ public sealed partial class uScript
 
    public static string FindNodePropertiesPath(string defaultCategory, string type)
    {
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
 
       if (uScriptType != null)
       {
@@ -347,7 +347,7 @@ public sealed partial class uScript
 
    public static string FindNodeToolTip(string type)
    {
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
 
       if (uScriptType != null)
       {
@@ -428,7 +428,7 @@ public sealed partial class uScript
          return null;
       }
 
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
       if (uScriptType == null)
       {
          return null;
@@ -447,7 +447,7 @@ public sealed partial class uScript
          return false;
       }
 
-      var uScriptType = MasterComponent.GetType(type);
+      var uScriptType = uScript.Instance.GetType(type);
       if (uScriptType == null)
       {
          return false;

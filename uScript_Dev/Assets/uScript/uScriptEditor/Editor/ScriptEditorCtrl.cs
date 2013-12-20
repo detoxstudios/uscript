@@ -198,7 +198,7 @@ namespace Detox.ScriptEditor
             
             if ( p != Parameter.Empty )
             {
-               Type type = uScript.MasterComponent.GetType( p.Type.Replace("[]", "") );
+               Type type = uScript.Instance.GetType( p.Type.Replace("[]", "") );
 
                if ( typeof(UnityEngine.GameObject).IsAssignableFrom(type) )
                {
@@ -235,7 +235,7 @@ namespace Detox.ScriptEditor
                p = parameter;
 
                 Profile profType = new Profile ("Gettype");
-                Type type = uScript.MasterComponent.GetType( p.Type.Replace("[]", "") );
+                Type type = uScript.Instance.GetType( p.Type.Replace("[]", "") );
                 profType.End();
 
                 Profile profAssign = new Profile ("Assign");
@@ -480,7 +480,7 @@ namespace Detox.ScriptEditor
                  point.Y <= node.ZoomSize.Height )
             {      
                string type = ScriptEditor.FindNodeType(entityNode);
-               Type t = uScript.MasterComponent.GetAssemblyQualifiedType(type);
+               Type t = uScript.Instance.GetAssemblyQualifiedType(type);
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
@@ -525,7 +525,7 @@ namespace Detox.ScriptEditor
                   if ( null != destTypeString )
                   {
                      destTypeString = destTypeString.Replace( "[]", "" );
-                     Type destType = uScript.MasterComponent.GetType(destTypeString);
+                     Type destType = uScript.Instance.GetType(destTypeString);
 
                      //see if the game object being dragged
                      //has a component type we can use
@@ -569,7 +569,7 @@ namespace Detox.ScriptEditor
                  point.Y <= node.ZoomSize.Height )
             {
                string type = ScriptEditor.FindNodeType(entityNode);
-               Type t = uScript.MasterComponent.GetAssemblyQualifiedType(type);
+               Type t = uScript.Instance.GetAssemblyQualifiedType(type);
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
@@ -647,7 +647,7 @@ namespace Detox.ScriptEditor
                   {
                      bool isArray = destTypeString.Contains( "[]" );
                      destTypeString = destTypeString.Replace( "[]", "" );
-                     Type destType = uScript.MasterComponent.GetType(destTypeString);
+                     Type destType = uScript.Instance.GetType(destTypeString);
 
                      string name = null;
 
@@ -3094,7 +3094,7 @@ namespace Detox.ScriptEditor
             if ( null != typeHash && false == typeHash.Contains(type) ) continue;
 
             //don't show uscript logic nodes as variables
-            Type t = uScript.MasterComponent.GetType( type );
+            Type t = uScript.Instance.GetType( type );
             if ( null != t && typeof(uScriptLogic).IsAssignableFrom(t) || typeof(uScriptEvent).IsAssignableFrom(t) ) continue;
 
             string friendlyName = uScriptConfig.Variable.FriendlyName(type);

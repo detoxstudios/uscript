@@ -308,6 +308,11 @@ public sealed partial class uScript : EditorWindow
             uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
             uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
          }
+         if (null == uScriptMaster.GetComponent<uScript_MasterComponent>())
+         {
+            uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
+            uScriptMaster.AddComponent(typeof(uScript_MasterComponent));
+         }
          if (null == uScriptMaster.GetComponent<uScript_UndoComponent>())
          {
             uScriptDebug.Log("Adding Undo Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
@@ -348,7 +353,7 @@ public sealed partial class uScript : EditorWindow
       {
          if (0.0f == unityVersion)
          {
-            Type t = MasterComponent.GetType("uScriptUnityVersion");
+            Type t = uScript.Instance.GetType("uScriptUnityVersion");
             if (null != t)
             {
                var v = Activator.CreateInstance(t) as uScriptIUnityVersion;
@@ -372,11 +377,43 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
+   private Hashtable m_Types = new Hashtable();
+ 
+   public Type GetType(string typeName)
+   {
+      Type type = m_Types[ typeName ] as Type;
+
+      if ( null == type ) type = GetAssemblyQualifiedType( typeName );
+
+      return type;
+   }
+
+   public Type GetAssemblyQualifiedType(String typeName)
+   {
+      if ( null == typeName ) return null;
+
+      // try the basic version first
+      if ( Type.GetType(typeName) != null ) return Type.GetType(typeName);
+      
+      // not found, look through all the assemblies
+      foreach ( Assembly assembly in AppDomain.CurrentDomain.GetAssemblies() )
+      {
+         if ( Type.GetType(typeName + ", " + assembly.ToString()) != null ) return Type.GetType(typeName + ", " + assembly.ToString());
+      }
+      
+      return null;
+   }
+   
+   public void AddType(Type type)
+   {
+      m_Types[ type.ToString( ) ] = type;
+   }
+
    public static string[] UserTypes
    {
       get
       {
-         Type t = uScript.MasterComponent.GetType("uScriptUserTypes");
+         Type t = uScript.Instance.GetType("uScriptUserTypes");
          if (null != t)
          {
             FieldInfo p = t.GetField("Types");
@@ -637,12 +674,12 @@ public sealed partial class uScript : EditorWindow
 
       foreach (UnityEngine.Object o in allObjects)
       {
-         MasterComponent.AddType(o.GetType());
+         uScript.Instance.AddType(o.GetType());
       }
 
       foreach (uScriptConfigBlock b in uScriptConfig.Variables)
       {
-         MasterComponent.AddType(b.Type);
+         uScript.Instance.AddType(b.Type);
       }
 
       String lastOpened = (String)GetSetting("uScript\\LastOpened", "");
@@ -4198,7 +4235,7 @@ public sealed partial class uScript : EditorWindow
       {
          if (file.Name.StartsWith(".") || file.Name.StartsWith("_") || !file.Name.EndsWith(".cs")) continue;
 
-         Type type = uScript.MasterComponent.GetAssemblyQualifiedType(Path.GetFileNameWithoutExtension(file.Name));
+         Type type = uScript.Instance.GetAssemblyQualifiedType(Path.GetFileNameWithoutExtension(file.Name));
 
          if (null != type)
          {
@@ -4253,7 +4290,7 @@ public sealed partial class uScript : EditorWindow
 
       foreach (string s in m_SzLogicTypes)
       {
-         Type t = MasterComponent.GetType(s);
+         Type t = uScript.Instance.GetType(s);
          if (null != t) types.Add(t);
       }
 
@@ -4303,7 +4340,7 @@ public sealed partial class uScript : EditorWindow
 
       foreach (Type type in types)
       {
-         MasterComponent.AddType(type);
+         uScript.Instance.AddType(type);
 
          LogicNode logicNode = new LogicNode(type.ToString(), FindFriendlyName(type.ToString(), type.GetCustomAttributes(false)));
 
@@ -4385,7 +4422,7 @@ public sealed partial class uScript : EditorWindow
                                  output.Output = true;
                                  output.DefaultAsObject = FindDefaultValue("", eventProperty.GetCustomAttributes(false));
 
-                                 MasterComponent.AddType(eventProperty.PropertyType);
+                                 uScript.Instance.AddType(eventProperty.PropertyType);
 
                                  logicEventParameters.Add(output);
 
@@ -4466,7 +4503,7 @@ public sealed partial class uScript : EditorWindow
                AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
                AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
 
-               MasterComponent.AddType(p.ParameterType);
+               uScript.Instance.AddType(p.ParameterType);
 
                variables.Add(variable);
             }
@@ -4482,7 +4519,7 @@ public sealed partial class uScript : EditorWindow
                parameter.State = FindSocketState(m.GetCustomAttributes(false));
                parameter.FriendlyName = "Return Value";
 
-               MasterComponent.AddType(m.ReturnType);
+               uScript.Instance.AddType(m.ReturnType);
 
                variables.Add(parameter);
             }
@@ -4598,7 +4635,7 @@ public sealed partial class uScript : EditorWindow
       EntityDesc entityDesc = new EntityDesc();
 
       entityDesc.Type = type.ToString();
-      MasterComponent.AddType(type);
+      uScript.Instance.AddType(type);
 
       MethodInfo[] methodInfos = type.GetMethods();
       EventInfo[] eventInfos = type.GetEvents();
@@ -4677,7 +4714,7 @@ public sealed partial class uScript : EditorWindow
             AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
             AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
             AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
-            MasterComponent.AddType(p.ParameterType);
+            uScript.Instance.AddType(p.ParameterType);
 
             parameters.Add(parameter);
          }
@@ -4693,7 +4730,7 @@ public sealed partial class uScript : EditorWindow
             parameter.Default = "";
             parameter.FriendlyName = "Return Value";
 
-            MasterComponent.AddType(m.ReturnType);
+            uScript.Instance.AddType(m.ReturnType);
 
             parameters.Add(parameter);
          }
@@ -4745,7 +4782,7 @@ public sealed partial class uScript : EditorWindow
                   AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
                   AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
                   AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
-                  MasterComponent.AddType(p.PropertyType);
+                  uScript.Instance.AddType(p.PropertyType);
 
                   eventInputsOutpus.Add(input);
                }
@@ -4792,7 +4829,7 @@ public sealed partial class uScript : EditorWindow
                            output.Output = true;
                            output.DefaultAsObject = FindDefaultValue("", eventProperty.GetCustomAttributes(false));
 
-                           MasterComponent.AddType(eventProperty.PropertyType);
+                           uScript.Instance.AddType(eventProperty.PropertyType);
 
                            eventInputsOutpus.Add(output);
 
@@ -4836,7 +4873,7 @@ public sealed partial class uScript : EditorWindow
 
          entityProperties.Add(property);
 
-         MasterComponent.AddType(p.PropertyType);
+         uScript.Instance.AddType(p.PropertyType);
       }
 
       foreach (FieldInfo f in fieldInfos)
@@ -4847,7 +4884,7 @@ public sealed partial class uScript : EditorWindow
          property.IsStatic = f.IsStatic;
          entityProperties.Add(property);
 
-         MasterComponent.AddType(f.FieldType);
+         uScript.Instance.AddType(f.FieldType);
       }
 
       entityDesc.Properties = entityProperties.ToArray();
@@ -4974,7 +5011,7 @@ public sealed partial class uScript : EditorWindow
             string szType = s.Trim();
             if ("" == szType) continue;
 
-            Type t = MasterComponent.GetType(szType);
+            Type t = uScript.Instance.GetType(szType);
 
             if (null != t)
             {
@@ -5018,7 +5055,7 @@ public sealed partial class uScript : EditorWindow
             string szType = s.Trim();
             if ("" == szType) continue;
 
-            Type t = MasterComponent.GetType(szType);
+            Type t = uScript.Instance.GetType(szType);
             if (null != t) uniqueObjects[t.ToString()] = t;
          }
 
@@ -5028,7 +5065,7 @@ public sealed partial class uScript : EditorWindow
             {
                if (true == uniqueObjects.ContainsKey(t)) continue;
 
-               Type type = uScript.MasterComponent.GetType(t);
+               Type type = uScript.Instance.GetType(t);
 
                if (null != type)
                {
@@ -5062,7 +5099,7 @@ public sealed partial class uScript : EditorWindow
 
       foreach (string s in m_SzEntityTypes)
       {
-         Type t = MasterComponent.GetType(s);
+         Type t = uScript.Instance.GetType(s);
          if (null != t) types.Add(t);
       }
 
@@ -5321,7 +5358,7 @@ public sealed partial class uScript : EditorWindow
    public static string FindFriendlyName(EntityNode node)
    {
       string type = ScriptEditor.FindNodeType(node);
-      Type uscriptType = uScript.MasterComponent.GetType(type);
+      Type uscriptType = uScript.Instance.GetType(type);
 
       if (null != uscriptType)
       {
@@ -5348,7 +5385,7 @@ public sealed partial class uScript : EditorWindow
 
    public static bool NodeNeedsGuiLayout(string type)
    {
-      Type uscriptType = uScript.MasterComponent.GetType(type);
+      Type uscriptType = uScript.Instance.GetType(type);
 
       if (uscriptType != null)
       {

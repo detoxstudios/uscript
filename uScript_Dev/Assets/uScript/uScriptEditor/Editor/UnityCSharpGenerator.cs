@@ -797,7 +797,7 @@ namespace Detox.ScriptEditor
             return false;
          }
 
-         Type t = uScript.MasterComponent.GetType(s);
+         Type t = uScript.Instance.GetType(s);
 
          //nested script which isn't reflected yet
          //(maybe the code hasn't been generated)
@@ -1597,9 +1597,9 @@ namespace Detox.ScriptEditor
          {
             return FormatArrayValue(stringValue, type);
          }
-         else if (null != uScript.MasterComponent.GetAssemblyQualifiedType(type))
+         else if (null != uScript.Instance.GetAssemblyQualifiedType(type))
          {
-            System.Type netType = uScript.MasterComponent.GetAssemblyQualifiedType(type);
+            System.Type netType = uScript.Instance.GetAssemblyQualifiedType(type);
 
             if (typeof(System.Enum).IsAssignableFrom(netType))
             {
@@ -1887,9 +1887,9 @@ namespace Detox.ScriptEditor
                }
                else
                {
-                  if (null != uScript.MasterComponent.GetAssemblyQualifiedType(type.Replace("[]", "")))
+                  if (null != uScript.Instance.GetAssemblyQualifiedType(type.Replace("[]", "")))
                   {
-                     System.Type netType = uScript.MasterComponent.GetAssemblyQualifiedType(type.Replace("[]", ""));
+                     System.Type netType = uScript.Instance.GetAssemblyQualifiedType(type.Replace("[]", ""));
 
                      if (typeof(System.Enum).IsAssignableFrom(netType))
                      {
@@ -2690,7 +2690,7 @@ namespace Detox.ScriptEditor
          Type componentArrayType = typeof(UnityEngine.Component[]);
          Type gameObjectArrayType = typeof(UnityEngine.GameObject[]);
 
-         Type nodeType = uScript.MasterComponent.GetType(parameter.Type);
+         Type nodeType = uScript.Instance.GetType(parameter.Type);
          if (null == nodeType) return;
 
          if (true == gameObjectArrayType.IsAssignableFrom(nodeType))
@@ -2927,7 +2927,7 @@ namespace Detox.ScriptEditor
          Type componentArrayType = typeof(UnityEngine.Component[]);
          Type gameObjectArrayType = typeof(UnityEngine.GameObject[]);
 
-         Type nodeType = uScript.MasterComponent.GetType(parameter.Type);
+         Type nodeType = uScript.Instance.GetType(parameter.Type);
          if (null == nodeType) return;
 
          if (true == gameObjectArrayType.IsAssignableFrom(nodeType))
@@ -3143,7 +3143,7 @@ namespace Detox.ScriptEditor
 
       private void AddMissingComponent(string componentVariable, string gameObjectVariable, string componentType)
       {
-         Type type = uScript.MasterComponent.GetType(componentType);
+         Type type = uScript.Instance.GetType(componentType);
          if (null != type && typeof(uScriptEvent).IsAssignableFrom(type))
          {
             AddCSharpLine("if ( null == " + componentVariable + " )");
