@@ -36,9 +36,7 @@ public class uScript_OnScreenKeyboard : uScriptEvent
    void Update()
    {
 
-#if UNITY_3_5
-
-   #if UNITY_IPHONE || UNITY_ANROID
+   #if UNITY_IPHONE || UNITY_ANDROID
       if (!m_LastKeyboardOut)
       {
          if (TouchScreenKeyboard.visible)
@@ -51,33 +49,10 @@ public class uScript_OnScreenKeyboard : uScriptEvent
    #else
       if (showLog)
       {
-         uScriptDebug.Log("The 'On-Screen Keyboard Events' node will only work with mobile devices!", uScriptDebug.Type.Warning);
+         uScriptDebug.Log("The 'On-Screen Keyboard Events' node will only work with iOS or Android devices!", uScriptDebug.Type.Warning);
          showLog = false;
       }
    #endif
-
-#else
-
-#if UNITY_IPHONE || UNITY_ANDROID
-      if (!m_LastKeyboardOut)
-      {
-         if (iPhoneKeyboard.visible)
-         {
-            if ( null != OnKeyboardSlidOut ) OnKeyboardSlidOut( this, new System.EventArgs() );     
-         }
-      }
-      
-      m_LastKeyboardOut = iPhoneKeyboard.visible;
-#else
-      if (showLog)
-      {
-         uScriptDebug.Log("The 'On-Screen Keyboard Events' node will only work with iOS and Android devices!", uScriptDebug.Type.Warning);
-         showLog = false;
-      }
-   #endif
-
-#endif
-
 
    }
 }
