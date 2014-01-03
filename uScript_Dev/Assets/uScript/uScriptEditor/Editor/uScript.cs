@@ -933,7 +933,12 @@ public sealed partial class uScript : EditorWindow
          m_UndoPatches[m_UndoNumber] = base64;
 
          //Debug.Log("undo " + m_UndoNumber );
+#if  UNITY_3_5
+         UnityEditor.Undo.RegisterUndo(UndoComponent, p.Name + " (uScript)");
+#else
          UnityEditor.Undo.RecordObject(UndoComponent, p.Name + " (uScript)");
+#endif
+
 
          //now increment and if the old one is restored
          //the numbers won't match
