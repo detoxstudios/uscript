@@ -317,6 +317,7 @@ public sealed partial class uScript : EditorWindow
          {
             uScriptDebug.Log("Adding Undo Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
             uScriptMaster.AddComponent(typeof(uScript_UndoComponent));
+            uScript.Instance.ClearChangeStack();
          }
          return uScriptMaster.GetComponent<uScript_UndoComponent>();
       }
