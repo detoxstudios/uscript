@@ -933,7 +933,7 @@ public sealed partial class uScript : EditorWindow
          m_UndoPatches[m_UndoNumber] = base64;
 
          //Debug.Log("undo " + m_UndoNumber );
-         UnityEditor.Undo.RegisterUndo(UndoComponent, p.Name + " (uScript)");
+         UnityEditor.Undo.RecordObject(UndoComponent, p.Name + " (uScript)");
 
          //now increment and if the old one is restored
          //the numbers won't match
@@ -4368,7 +4368,7 @@ public sealed partial class uScript : EditorWindow
             {
                accessorMethods[e.GetAddMethod().Name] = true;
             }
-
+             
             if (e.GetRaiseMethod() != null)
             {
                accessorMethods[e.GetRaiseMethod().Name] = true;
@@ -4389,7 +4389,7 @@ public sealed partial class uScript : EditorWindow
             p.Name = e.Name;
             p.FriendlyName = FindFriendlyName(p.Name, e.GetCustomAttributes(false));
 
-            if ("" == logicNode.EventArgs)
+            if ("System.EventArgs" == logicNode.EventArgs)
             {
                ParameterInfo[] eventParameters = e.GetAddMethod().GetParameters();
 

@@ -3784,6 +3784,18 @@ namespace Detox.ScriptEditor
             }
          }
 
+         if ( sourceParam == Parameter.Empty && source is LogicNode )
+         {
+            foreach ( Parameter p in ((LogicNode)source).EventParameters )
+            {
+               if ( link.Source.Anchor == p.Name )
+               {
+                  sourceParam = p;
+                  break;
+               }
+            }
+         }
+
          if ( link.Destination.Anchor == "Instance" )
          {
             if ( dest is EntityMethod )
@@ -3994,8 +4006,10 @@ namespace Detox.ScriptEditor
          //source must be output and dest must be input
          if ( true != sourceParam.Output || true != destParam.Input ) 
          {
-            //UnityEngine.Debug.Log( "source = " + sourceParam.Name );
-            //UnityEngine.Debug.Log( "dest   = " + destParam.Input );
+            UnityEngine.Debug.Log( "source = " + sourceParam.Name );
+            UnityEngine.Debug.Log( "source = " + sourceParam.Name );
+            
+             //UnityEngine.Debug.Log( "dest   = " + destParam.Input );
 
             reason = "The source link must allow an output and the destination must allow an input";
             return false;
