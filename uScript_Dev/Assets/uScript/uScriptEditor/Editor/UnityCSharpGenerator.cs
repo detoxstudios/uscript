@@ -3672,7 +3672,7 @@ namespace Detox.ScriptEditor
          int i = 0;
 
          List<Parameter> parameters = new List<Parameter>(logicNode.EventParameters);
-         parameters.AddRange(logicNode.Parameters);
+         //parameters.AddRange(logicNode.Parameters);
 
          //Fill in the global event parameters variable names
          //and then the loop which follows will link them up to the local variables
