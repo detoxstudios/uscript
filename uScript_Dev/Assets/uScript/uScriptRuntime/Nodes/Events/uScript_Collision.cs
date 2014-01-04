@@ -24,15 +24,15 @@ public class uScript_Collision : uScriptEvent
       [SocketState(false, false)]
       public Vector3 RelativeVelocity { get { return m_Collision.relativeVelocity; } }
 
-      [FriendlyName("Rigid Body", "The rigidbody component of the Instigator GameObject. This is null if the Instigator is a collider with no rigidbody attached.")]
+      [FriendlyName("Rigid Body", "The rigidbody component of the 'Triggered By' GameObject that caused this event to fire. This is null if the 'Triggered By' GameObject is a collider with no rigidbody attached.")]
       [SocketState(false, false)]
       public Rigidbody RigidBody { get { return m_Collision.rigidbody; } }
 
-      [FriendlyName("Collider", "The collider component of the Instigator GameObject.")]
+      [FriendlyName("Collider", "The collider component of the 'Triggered By' GameObject that caused this event to fire.")]
       [SocketState(false, false)]
       public Collider Collider { get { return m_Collision.collider; } }
 
-      [FriendlyName("Transform", "The transform component of the Instigator GameObject.")]
+      [FriendlyName("Transform", "The transform component of the 'Triggered By' GameObject.")]
       [SocketState(false, false)]
       public Transform Transform { get { return m_Collision.transform; } }
 
@@ -40,7 +40,7 @@ public class uScript_Collision : uScriptEvent
       [SocketState(false, false)]
       public ContactPoint[] Contacts { get { return m_Collision.contacts; } }
 
-      [FriendlyName("Instigator", "The GameObject that collided with this GameObject (the Instance).")]
+      [FriendlyName("Triggered By", "The GameObject that collided with this GameObject (the Instance) and caused the event to fire.")]
       public GameObject GameObject { get { return m_Collision.gameObject; } }
 
       public CollisionEventArgs(Collision collision)

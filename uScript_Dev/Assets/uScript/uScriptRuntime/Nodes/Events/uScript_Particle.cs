@@ -20,7 +20,7 @@ public class uScript_Particle : uScriptEvent
    {
       private GameObject m_GameObject;
 
-      [FriendlyName("Instigator", "The GameObject that was collided with.")]
+      [FriendlyName("Triggered By", "The GameObject that was collided with and caused this event to fire.")]
       public GameObject GameObject { get { return m_GameObject; } }
 
       public ParticleCollisionEventArgs(GameObject hit)

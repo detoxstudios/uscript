@@ -20,7 +20,7 @@ public class uScript_ProxyController : uScriptEvent
    {
       private ControllerColliderHit m_Hit;
 
-      [FriendlyName("Instigator", "The GameObject that was hit by Character Controller.")]
+      [FriendlyName("Triggered By", "The GameObject that was hit by Character Controller and caused this event to fire.")]
       public GameObject GameObject { get { return m_Hit.gameObject; } }
 
       [FriendlyName("Character Controller", "The controller that hit Collider.")]
