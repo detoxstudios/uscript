@@ -2135,79 +2135,79 @@ public sealed partial class uScript : EditorWindow
                {
                   if (this.pressedKey == KeyCode.S)
                   {
-                     PlaceNodeOnCanvas("string", true);
+                     this.PlaceNodeOnCanvas("string", true);
                   }
                   else if (this.pressedKey == KeyCode.V)
                   {
-                     PlaceNodeOnCanvas("UnityEngine.Vector3", true);
+                     this.PlaceNodeOnCanvas("UnityEngine.Vector3", true);
                   }
                   else if (this.pressedKey == KeyCode.I)
                   {
-                     PlaceNodeOnCanvas("int", true);
+                     this.PlaceNodeOnCanvas("int", true);
                   }
                   else if (this.pressedKey == KeyCode.F)
                   {
-                     PlaceNodeOnCanvas("float", true);
+                     this.PlaceNodeOnCanvas("float", true);
                   }
                   else if (this.pressedKey == KeyCode.B)
                   {
-                     PlaceNodeOnCanvas("bool", true);
+                     this.PlaceNodeOnCanvas("bool", true);
                   }
                   else if (this.pressedKey == KeyCode.G)
                   {
-                     PlaceNodeOnCanvas("UnityEngine.GameObject", true);
+                     this.PlaceNodeOnCanvas("UnityEngine.GameObject", true);
                   }
                   else if (this.pressedKey == KeyCode.O)
                   {
-                     PlaceNodeOnCanvas("UnityEngine.Object", true);
+                     this.PlaceNodeOnCanvas("OwnerConnection", true);
                   }
                   else if (this.pressedKey == KeyCode.C)
                   {
-                     PlaceNodeOnCanvas("CommentNode", true);
+                     this.PlaceNodeOnCanvas("CommentNode", true);
                   }
                   else if (this.pressedKey == KeyCode.E)
                   {
-                     PlaceNodeOnCanvas("ExternalConnection", true);
+                     this.PlaceNodeOnCanvas("ExternalConnection", true);
                   }
                   else if (this.pressedKey == KeyCode.L)
                   {
-                     PlaceNodeOnCanvas("uScriptAct_Log", true);
+                     this.PlaceNodeOnCanvas("uScriptAct_Log", true);
                   }
                   else if (this.pressedKey == KeyCode.Alpha1)
                   {
-                     PlaceNodeOnCanvas(Preferences.FavoriteNode1, true);
+                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode1, true);
                   }
                   else if (this.pressedKey == KeyCode.Alpha2)
                   {
-                     PlaceNodeOnCanvas(Preferences.FavoriteNode2, true);
+                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode2, true);
                   }
                   else if (this.pressedKey == KeyCode.Alpha3)
                   {
-                     PlaceNodeOnCanvas(Preferences.FavoriteNode3, true);
+                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode3, true);
                   }
                   else if (this.pressedKey == KeyCode.Alpha4)
                   {
-                     PlaceNodeOnCanvas(Preferences.FavoriteNode4, true);
+                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode4, true);
                   }
                   else if (this.pressedKey == KeyCode.Alpha5)
                   {
-                     PlaceNodeOnCanvas(Preferences.FavoriteNode5, true);
+                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode5, true);
                   }
                   else if (this.pressedKey == KeyCode.Alpha6)
                   {
-                     PlaceNodeOnCanvas(Preferences.FavoriteNode6, true);
+                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode6, true);
                   }
                   else if (this.pressedKey == KeyCode.Alpha7)
                   {
-                     PlaceNodeOnCanvas(Preferences.FavoriteNode7, true);
+                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode7, true);
                   }
                   else if (this.pressedKey == KeyCode.Alpha8)
                   {
-                     PlaceNodeOnCanvas(Preferences.FavoriteNode8, true);
+                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode8, true);
                   }
                   else if (this.pressedKey == KeyCode.Alpha9)
                   {
-                     PlaceNodeOnCanvas(Preferences.FavoriteNode9, true);
+                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode9, true);
                   }
                }
             }

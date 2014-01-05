@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Detox.Drawing;
@@ -31,9 +31,9 @@ namespace Detox.ScriptEditor
          PrepareNode( );
       }
 
-      public override bool Selected 
+      public override bool Selected
       {
-         set 
+         set
          {
             if (base.Selected != value)
             {
@@ -47,7 +47,7 @@ namespace Detox.ScriptEditor
       private void PrepareNode( )
       {
          string value = "";
-			
+
          Name = LocalNode.Name.Default;
 
          // Use the variable type name if the variable is empty/null
@@ -76,7 +76,7 @@ namespace Detox.ScriptEditor
          }
 
          NodeStyle = "variable_" + uScriptConfig.Variable.FriendlyStyleName(LocalNode.Value.Type);
-			
+
          List<Socket> sockets = new List<Socket>( );
          Socket socket;
 
@@ -103,8 +103,8 @@ namespace Detox.ScriptEditor
 
       protected override Size CalculateSize(Socket []sockets)
       {
-         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && 
-              uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded ) 
+         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) &&
+              uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded )
          {
             return new Size(57, 57);
          }
@@ -137,7 +137,7 @@ namespace Detox.ScriptEditor
 
          IsCircleWhenZoomed = true;
          NodeStyle = "externalconnection";
-                  
+
          Location = new Detox.Drawing.Point( externalConnection.Position.X, externalConnection.Position.Y );
 
          Name = "";
@@ -145,9 +145,9 @@ namespace Detox.ScriptEditor
          PrepareNode( );
       }
 
-      public override bool Selected 
+      public override bool Selected
       {
-         set 
+         set
          {
             if (base.Selected != value)
             {
@@ -171,7 +171,7 @@ namespace Detox.ScriptEditor
                name = name.Substring(0, 3) + "...";
             }
          }
-         
+
          List<Socket> sockets = new List<Socket>( );
          Socket socket;
 
@@ -198,7 +198,7 @@ namespace Detox.ScriptEditor
 
       protected override Size CalculateSize(Socket []sockets)
       {
-         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && 
+         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) &&
                uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded ) return new Size(61, 59);
 
          if ( true == this.m_Ctrl.FlowChart.Zoom < 1.0f )
@@ -213,7 +213,7 @@ namespace Detox.ScriptEditor
 
          return size;
       }
-      
+
       protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)
       {
          foreach ( Socket socket in sockets )
@@ -227,7 +227,7 @@ namespace Detox.ScriptEditor
 
                point.Width  = Size.Width;
                point.Height = Size.Height;
-                  
+
                point.Input  = socket.Input;
                point.Output = socket.Output;
                point.CanSource = false;
@@ -269,7 +269,7 @@ namespace Detox.ScriptEditor
 
          IsCircleWhenZoomed = true;
          NodeStyle = "variable_owner";
-                  
+
          Location = new Detox.Drawing.Point( ownerConnection.Position.X, ownerConnection.Position.Y );
 
          Name = "";
@@ -318,10 +318,10 @@ namespace Detox.ScriptEditor
                point.Name   = socket.InternalName;
                point.X      = Size.Width / 2;
                point.Y      = Size.Height / 2;
-               
+
                point.Width  = Size.Width;
                point.Height = Size.Height;
-                  
+
                point.Input  = socket.Input;
                point.Output = socket.Output;
                point.CanSource = false;
@@ -349,4 +349,4 @@ namespace Detox.ScriptEditor
       }
    }
 }
-   
+

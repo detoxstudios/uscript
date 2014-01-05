@@ -1,36 +1,28 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ReferenceWindow.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the ReferenceWindow type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 using UnityEditor;
 using UnityEngine;
 
 public class ReferenceWindow : EditorWindow
 {
-   static ReferenceWindow window = null;
-   bool isFirstRun = false;
-
    // Layout parameters
-   const int WINDOW_WIDTH = 730;
-   const int WINDOW_HEIGHT = 640;
-   Vector2 scrollviewPosition;
-   bool isWindows = false;
-   bool isProSkin = false;
-   int minWidthKey = 0;
+   private const int WindowHeight = 640;
+   private const int WindowWidth = 730;
 
-   // Custom Content
-   GUIContent contentPanelIcon;
-   GUIContent contentPanelTitle;
-   GUIContent contentPanelDescription;
+   private static ReferenceWindow window;
 
-   // Custom styles
-   GUIStyle styleWindow;
-   GUIStyle stylePanelIcon;
-   GUIStyle stylePanelTitle;
-   GUIStyle stylePanelDescription;
-   GUIStyle styleCommandSection;
-   GUIStyle styleCommandSectionDescription;
-   GUIStyle styleCommandKey;
-   GUIStyle styleCommandMouse;
-   GUIStyle styleCommandContext;
-   GUIStyle styleCommandOr;
-   GUIStyle styleCommandPlus;
+   private bool isFirstRun;
+   private bool isProSkin;
+   private bool isWindows;
+   private int minWidthKey;
+   private Vector2 scrollviewPosition;
 
    // Create the window
    public static void Init()
@@ -42,67 +34,62 @@ public class ReferenceWindow : EditorWindow
 
    public void OnGUI()
    {
-      if (isFirstRun)
+      if (this.isFirstRun)
       {
-         isFirstRun = false;
+         this.isFirstRun = false;
 
-         isWindows = Application.platform == RuntimePlatform.WindowsEditor;
+         this.isWindows = Application.platform == RuntimePlatform.WindowsEditor;
 
          // Set the min and max window dimensions to prevent resizing
-         base.minSize = new Vector2(WINDOW_WIDTH, WINDOW_HEIGHT);
-         base.maxSize = base.minSize;
+         this.minSize = new Vector2(WindowWidth, WindowHeight);
+         this.maxSize = this.minSize;
 
          // Force the window to a position relative to the uScript window
 //         base.position = new Rect(uScript.Instance.position.x + 50, uScript.Instance.position.y + 50, WINDOW_WIDTH, WINDOW_HEIGHT);
 
          // Make sure the skin is set at least once
-         isProSkin = !uScriptGUI.IsProSkin;
+         this.isProSkin = !uScriptGUI.IsProSkin;
 
-         if (isWindows)
+         if (this.isWindows)
          {
             window.Focus();
          }
       }
 
-      if (isProSkin != uScriptGUI.IsProSkin)
+      if (this.isProSkin != uScriptGUI.IsProSkin)
       {
-         isProSkin = uScriptGUI.IsProSkin;
+         this.isProSkin = uScriptGUI.IsProSkin;
 
-         UpdateCustomStyles();
+         this.UpdateCustomStyles();
       }
 
       // Apply an content offset, because for some reason,
       // there is a 10-pixel gap between the window bar and the first row.
       GUILayout.Space(-10);
 
-      EditorGUILayout.BeginVertical(styleWindow);
+      EditorGUILayout.BeginVertical(Style.Window);
       {
-         DrawPanelHeader();
+         this.DrawPanelHeader();
 
          GUILayout.Space(16);
 
          EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
          {
-            scrollviewPosition = EditorGUILayout.BeginScrollView(scrollviewPosition, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
+            this.scrollviewPosition = EditorGUILayout.BeginScrollView(this.scrollviewPosition, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
             {
-               DrawCommands_Editor();
-               DrawCommands_FileAccess();
-               DrawCommands_Canvas();
-               DrawCommands_Node();
-               DrawCommands_NodePlacement();
+               this.DrawCommandsEditor();
+               this.DrawCommandsFileAccess();
+               this.DrawCommandsCanvas();
+               this.DrawCommandsNode();
+               this.DrawCommandsNodePlacement();
             }
+
             EditorGUILayout.EndScrollView();
          }
-         EditorGUILayout.EndVertical();
 
-//         GUILayout.Space(8);
-//         EditorGUILayout.BeginHorizontal();
-//         {
-//            GUILayout.FlexibleSpace();
-//            GUILayout.Label(position.ToString());
-//         }
-//         EditorGUILayout.EndHorizontal();
+         EditorGUILayout.EndVertical();
       }
+
       EditorGUILayout.EndVertical();
    }
 
@@ -110,267 +97,261 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginHorizontal();
       {
-         GUILayout.Label(contentPanelIcon, stylePanelIcon);
+         GUILayout.Label(Content.PanelIcon, Style.PanelIcon);
 
          EditorGUILayout.BeginVertical();
          {
-            GUILayout.Label(contentPanelTitle, stylePanelTitle);
-            GUILayout.Label(contentPanelDescription, stylePanelDescription);
-
-//            EditorGUILayout.Space();
-//
-//            EditorGUILayout.BeginHorizontal();
-//            {
-//               GUILayout.FlexibleSpace();
-//               if (GUILayout.Button("Click here for more inforation and an assortment of helpful links"))
-//               {
-//                  WelcomeWindow.Init();
-//               }
-//               GUILayout.FlexibleSpace();
-//            }
-//            EditorGUILayout.EndHorizontal();
+            GUILayout.Label(Content.PanelTitle, Style.PanelTitle);
+            GUILayout.Label(Content.PanelDescription, Style.PanelDescription);
          }
+
          EditorGUILayout.EndVertical();
       }
+
       EditorGUILayout.EndHorizontal();
    }
 
-   private void DrawCommands_Editor()
+   private void DrawCommandsEditor()
    {
-      EditorGUILayout.BeginVertical(styleCommandSection);
+      EditorGUILayout.BeginVertical(Style.CommandSection);
       {
          GUILayout.Label("Editor Commands", uScriptGUIStyle.ReferenceName);
 
-         DrawCommand("Online uScript documentation", ".Press_F1");
+         this.DrawCommand("Online uScript documentation", ".Press_F1");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Toggle panel visibility", ".Press_`", ".Press_\\");
+         this.DrawCommand("Toggle panel visibility", ".Press_`", ".Press_\\");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Cut", ".Press_Ctrl+X");
-         DrawCommand("Copy", ".Press_Ctrl+C");
-         DrawCommand("Paste", ".Press_Ctrl+V");
-         DrawCommand("Undo", ".Press_Ctrl+Z");
-         DrawCommand("Redo", ".Press_Ctrl+Y");
+         this.DrawCommand("Cut", ".Press_Ctrl+X");
+         this.DrawCommand("Copy", ".Press_Ctrl+C");
+         this.DrawCommand("Paste", ".Press_Ctrl+V");
+         this.DrawCommand("Undo", ".Press_Ctrl+Z");
+         this.DrawCommand("Redo", ".Press_Ctrl+Y");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Close uScript Editor window", ".Press_Ctrl+W");
-         DrawCommand("Context Menu", ".Click_RMB");
+         this.DrawCommand("Close uScript Editor window", ".Press_Ctrl+W");
+         this.DrawCommand("Context Menu", ".Click_RMB");
       }
+
       EditorGUILayout.EndVertical();
    }
 
-   private void DrawCommands_Canvas()
+   private void DrawCommandsCanvas()
    {
-      EditorGUILayout.BeginVertical(styleCommandSection);
+      EditorGUILayout.BeginVertical(Style.CommandSection);
       {
          GUILayout.Label("Canvas Commands", uScriptGUIStyle.ReferenceName);
 
-         DrawCommand("Pan Canvas", ".Hold_Alt+LMB_.then drag");
-         DrawCommand(string.Empty, "or_.Hold_MMB_.then drag");
+         this.DrawCommand("Pan Canvas", ".Hold_Alt+LMB_.then drag");
+         this.DrawCommand(string.Empty, "or_.Hold_MMB_.then drag");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Center graph at origin (0, 0)", ".Press_Home", ".Press_Ctrl+H");
-         DrawCommand("Center graph on next Event node", ".Press_]");
-         DrawCommand("Center graph on previous Event node", ".Press_[");
+         this.DrawCommand("Center graph at origin (0, 0)", ".Press_Home", ".Press_Ctrl+H");
+         this.DrawCommand("Center graph on next Event node", ".Press_]");
+         this.DrawCommand("Center graph on previous Event node", ".Press_[");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Toggle grid visibility", ".Press_Ctrl+G");
-         DrawCommand("Toggle grid snapping", ".Press_Alt+G");
-         DrawCommand("Snap selected nodes to grid", ".Press_Alt+End");
+         this.DrawCommand("Toggle grid visibility", ".Press_Ctrl+G");
+         this.DrawCommand("Toggle grid snapping", ".Press_Alt+G");
+         this.DrawCommand("Snap selected nodes to grid", ".Press_Alt+End");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Reset Zoom to 100%", ".Press_0");
-         DrawCommand("Zoom Out by 10%", ".Press_-", ".Scroll_MouseWheel_.down");
-         DrawCommand("Zoom In by 10%", ".Press_=", ".Scroll_MouseWheel_.up");
+         this.DrawCommand("Reset Zoom to 100%", ".Press_0");
+         this.DrawCommand("Zoom Out by 10%", ".Press_-", ".Scroll_MouseWheel_.down");
+         this.DrawCommand("Zoom In by 10%", ".Press_=", ".Scroll_MouseWheel_.up");
       }
+
       EditorGUILayout.EndVertical();
    }
 
-   private void DrawCommands_Node()
+   private void DrawCommandsNode()
    {
-      EditorGUILayout.BeginVertical(styleCommandSection);
+      EditorGUILayout.BeginVertical(Style.CommandSection);
       {
          GUILayout.Label("Node Commands", uScriptGUIStyle.ReferenceName);
 
-         DrawCommand("New node selection", ".Click_LMB_.on node");
-         DrawCommand(string.Empty, "or_.Hold_LMB_.on canvas and drag over node(s)");
+         this.DrawCommand("New node selection", ".Click_LMB_.on node");
+         this.DrawCommand(string.Empty, "or_.Hold_LMB_.on canvas and drag over node(s)");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Add to selection", ".Hold_Shift+LMB_.on canvas and drag over node(s)");
-         DrawCommand("Remove from selection", ".Hold_Ctrl+LMB_.on canvas and drag over node(s)");
-         DrawCommand("Toggle node selection", ".Press_Shift+LMB_.on node");
+         this.DrawCommand("Add to selection", ".Hold_Shift+LMB_.on canvas and drag over node(s)");
+         this.DrawCommand("Remove from selection", ".Hold_Ctrl+LMB_.on canvas and drag over node(s)");
+         this.DrawCommand("Toggle node selection", ".Press_Shift+LMB_.on node");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Move selection", ".Hold_LMB_.on selected node and drag");
+         this.DrawCommand("Move selection", ".Hold_LMB_.on selected node and drag");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Delete node selection", ".Press_Delete", ".Press_Backspace");
-         DrawCommand("Drop node selection", ".Press_Escape", ".Click_LMB_.on canvas");
+         this.DrawCommand("Delete node selection", ".Press_Delete", ".Press_Backspace");
+         this.DrawCommand("Drop node selection", ".Press_Escape", ".Click_LMB_.on canvas");
 
          EditorGUILayout.Space();
 
-         DrawCommand("Collapse selected nodes", ".Press_<", ".Press_Shift+,");
-         DrawCommand("Expand selected nodes", ".Press_>", ".Press_Shift+.");
-         DrawCommand("Collapse all nodes", ".Press_Alt+<", ".Press_Shift+Alt+,");
-         DrawCommand("Expand all nodes", ".Press_Alt+>", ".Press_Shift+Alt+.");
+         this.DrawCommand("Collapse selected nodes", ".Press_<", ".Press_Shift+,");
+         this.DrawCommand("Expand selected nodes", ".Press_>", ".Press_Shift+.");
+         this.DrawCommand("Collapse all nodes", ".Press_Alt+<", ".Press_Shift+Alt+,");
+         this.DrawCommand("Expand all nodes", ".Press_Alt+>", ".Press_Shift+Alt+.");
       }
+
       EditorGUILayout.EndVertical();
    }
 
-   private void DrawCommands_FileAccess()
+   private void DrawCommandsFileAccess()
    {
-      EditorGUILayout.BeginVertical(styleCommandSection);
+      EditorGUILayout.BeginVertical(Style.CommandSection);
       {
          GUILayout.Label("File Menu Commands", uScriptGUIStyle.ReferenceName);
 
-         DrawCommand("Open File Menu", ".Press_Alt+F", ".Press_Ctrl+F");
+         this.DrawCommand("Open File Menu", ".Press_Alt+F", ".Press_Ctrl+F");
 
          EditorGUILayout.Space();
 
-         DrawCommand("New uScript graph", ".Press_Alt+N");
-         DrawCommand("Open uScript graph ...", ".Press_Alt+O");
-         DrawCommand("Save", ".Press_Alt+S");
-         DrawCommand("Save As ...", ".Press_Alt+A");
-         DrawCommand("Save Quick", ".Press_Alt+Q");
-         DrawCommand("Save Debug", ".Press_Alt+D");
-         DrawCommand("Save Release", ".Press_Alt+R");
-         DrawCommand("Export graph to Image (PNG)", ".Press_Alt+E");
+         this.DrawCommand("New uScript graph", ".Press_Alt+N");
+         this.DrawCommand("Open uScript graph ...", ".Press_Alt+O");
+         this.DrawCommand("Save", ".Press_Alt+S");
+         this.DrawCommand("Save As ...", ".Press_Alt+A");
+         this.DrawCommand("Save Quick", ".Press_Alt+Q");
+         this.DrawCommand("Save Debug", ".Press_Alt+D");
+         this.DrawCommand("Save Release", ".Press_Alt+R");
+         this.DrawCommand("Export graph to Image (PNG)", ".Press_Alt+E");
       }
+
       EditorGUILayout.EndVertical();
    }
 
-   private void DrawCommands_NodePlacement()
+   private void DrawCommandsNodePlacement()
    {
-      EditorGUILayout.BeginVertical(styleCommandSection);
+      EditorGUILayout.BeginVertical(Style.CommandSection);
       {
          GUILayout.Label("Quick Node Placement Commands", uScriptGUIStyle.ReferenceName);
 
-         GUILayout.Label("Some nodes can be quickly placed on the graph by holding the associated key and clicking the"
-            + " left mouse button where you wish the node to appear.", styleCommandSectionDescription);
+         GUILayout.Label(
+            "Some nodes can be quickly placed on the graph by holding the associated key and clicking the"
+            + " left mouse button where you wish the node to appear.",
+            Style.CommandSectionDescription);
 
-         DrawCommand("Bool variable", ".Hold_B+.click_LMB");
-         DrawCommand("Float variable", ".Hold_F+.click_LMB");
-         DrawCommand("GameObject variable", ".Hold_G+.click_LMB");
-         DrawCommand("Int variable", ".Hold_I+.click_LMB");
-         DrawCommand("Object variable", ".Hold_O+.click_LMB");
-         DrawCommand("String variable", ".Hold_S+.click_LMB");
-         DrawCommand("Vector3 variable", ".Hold_V+.click_LMB");
-
-         EditorGUILayout.Space();
-
-         DrawCommand("Comment", ".Hold_C+.click_LMB");
-         DrawCommand("External Connection", ".Hold_E+.click_LMB");
-         DrawCommand("Log action", ".Hold_L+.click_LMB");
+         this.DrawCommand("Bool variable", ".Hold_B+.click_LMB");
+         this.DrawCommand("Float variable", ".Hold_F+.click_LMB");
+         this.DrawCommand("GameObject variable", ".Hold_G+.click_LMB");
+         this.DrawCommand("Int variable", ".Hold_I+.click_LMB");
+         this.DrawCommand("Owner GameObject variable", ".Hold_O+.click_LMB");
+         this.DrawCommand("String variable", ".Hold_S+.click_LMB");
+         this.DrawCommand("Vector3 variable", ".Hold_V+.click_LMB");
 
          EditorGUILayout.Space();
 
-         for (int i = 1; i < 10; i++)
+         this.DrawCommand("Comment", ".Hold_C+.click_LMB");
+         this.DrawCommand("External Connection", ".Hold_E+.click_LMB");
+         this.DrawCommand("Log action", ".Hold_L+.click_LMB");
+
+         EditorGUILayout.Space();
+
+         for (var i = 1; i < 10; i++)
          {
-            DrawCommand("Favorite " + i.ToString(), ".Hold_" + i.ToString() + "+.click_LMB");
+            this.DrawCommand("Favorite " + i, ".Hold_" + i + "+.click_LMB");
          }
       }
+
       EditorGUILayout.EndVertical();
    }
 
    /// <summary>Display the formatted input action and command summary.</summary>
    /// <param name='action'>The action description.</param>
-   /// <param name='cmds'>Parameter list of commands. Each string represents compound input that may contain keyboard and mouse actions, as well as context. Contextual information should be preceeded by an underscore.</param>
-   private void DrawCommand(string action, params string[] cmds)
+   /// <param name='commands'>Parameter list of commands. Each string represents compound input that may contain keyboard and mouse actions, as well as context. Contextual information should be preceded by an underscore.</param>
+   private void DrawCommand(string action, params string[] commands)
    {
-      GUIStyle labelStyle = styleCommandKey;
-
       EditorGUILayout.BeginHorizontal();
       {
          GUILayout.Label(action, GUILayout.Width(220));
 
-         for (int c = 0; c < cmds.Length; c++)
+         for (var c = 0; c < commands.Length; c++)
          {
             // Separate multiple commands
             if (c != 0)
             {
-               GUILayout.Label("or", styleCommandOr);
+               GUILayout.Label("or", Style.CommandOr);
             }
 
             // Separate compound commands
-            string[] keys = cmds[c].Split('+');
+            var keys = commands[c].Split('+');
 
-            for (int k = 0; k < keys.Length; k++)
+            for (var k = 0; k < keys.Length; k++)
             {
                if (k != 0)
                {
-                  GUILayout.Label("+", styleCommandPlus);
+                  GUILayout.Label("+", Style.CommandPlus);
                }
 
-               string[] parts = keys[k].Split('_');
+               var parts = keys[k].Split('_');
 
-               for (int p = 0; p < parts.Length; p++)
+               foreach (var t in parts)
                {
-                  string part = parts[p];
+                  var part = t;
 
                   // Expand text
-                  if (part == "LMB")
+                  switch (part)
                   {
-                     part = "Left Mouse Button";
-                  }
-                  else if (part == "MMB")
-                  {
-                     part = "Middle Mouse Button";
-                  }
-                  else if (part == "RMB")
-                  {
-                     part = "Right Mouse Button";
-                  }
-                  else if (part == "MouseWheel")
-                  {
-                     part = "Mouse Wheel";
+                     case "LMB":
+                        part = "Left Mouse Button";
+                        break;
+                     case "MMB":
+                        part = "Middle Mouse Button";
+                        break;
+                     case "RMB":
+                        part = "Right Mouse Button";
+                        break;
+                     case "MouseWheel":
+                        part = "Mouse Wheel";
+                        break;
                   }
 
                   // Determine style
-                  if (part[0] == '.' && part.Length > 1)
+                  var labelStyle = Style.CommandKey;
+                  if (part.Length > 1)
                   {
-                     labelStyle = styleCommandContext;
-                     part = part.Substring(1);
-                  }
-                  else if (part == "or")
-                  {
-                     labelStyle = styleCommandOr;
-                  }
-                  else if (part.ToLower().Contains("mouse"))
-                  {
-                     labelStyle = styleCommandMouse;
-                  }
-                  else
-                  {
-                     labelStyle = styleCommandKey;
+                     if (part[0] == '.')
+                     {
+                        labelStyle = Style.CommandContext;
+                        part = part.Substring(1);
+                     }
+                     else if (part == "or")
+                     {
+                        labelStyle = Style.CommandOr;
+                     }
+                     else if (part.ToLower().Contains("mouse"))
+                     {
+                        labelStyle = Style.CommandMouse;
+                     }
                   }
 
                   // Format command keys for Mac
-                  part = ApplyMacFormatting(part);
+                  part = this.ApplyMacFormatting(part);
 
                   // Determine label width
-                  int labelWidth = (int)Mathf.Max(minWidthKey, labelStyle.CalcSize(new GUIContent(part)).x);
+                  var labelWidth = (int)Mathf.Max(this.minWidthKey, labelStyle.CalcSize(new GUIContent(part)).x);
 
                   GUILayout.Label(part, labelStyle, GUILayout.Width(labelWidth));
                }
             }
          }
       }
+
       EditorGUILayout.EndHorizontal();
    }
 
    private string ApplyMacFormatting(string key)
    {
-      if (isWindows == false)
+      if (this.isWindows == false)
       {
          // Update key modifier when on Mac
          if (key == "Ctrl")
@@ -405,73 +386,124 @@ public class ReferenceWindow : EditorWindow
                return uScriptGUI.KeyReturn + " Return";
          }
       }
+
       return key;
    }
 
    private void UpdateCustomStyles()
    {
-      // Setup the custom styles for this window
-      styleWindow = new GUIStyle();
-      styleWindow.fixedHeight = base.minSize.y;
-      styleWindow.fixedWidth = base.minSize.x;
-      styleWindow.padding = new RectOffset(32, 32, 16, 32);
+      Style.Window.fixedHeight = this.minSize.y;
+      Style.Window.fixedWidth = this.minSize.x;
 
-      stylePanelIcon = new GUIStyle();
-      stylePanelIcon.padding = new RectOffset(0, 32, 0, 0);
-      stylePanelIcon.stretchWidth = false;
-
-      stylePanelTitle = new GUIStyle();
-      stylePanelTitle.fontSize = 32;
-      stylePanelTitle.fontStyle = FontStyle.Bold;
-      stylePanelTitle.normal.textColor = EditorStyles.boldLabel.normal.textColor;
-
-      stylePanelDescription = GUI.skin.GetStyle("WordWrappedLabel");
-
-      styleCommandSection = new GUIStyle();
-      styleCommandSection.margin = new RectOffset(8, 8, 0, 16);
-      styleCommandSection.stretchWidth = true;
-
-      styleCommandSectionDescription = new GUIStyle(EditorStyles.label);
-      styleCommandSectionDescription.margin = new RectOffset(4, 4, 4, 16);
-      styleCommandSectionDescription.padding = new RectOffset(3, 3, 1, 0);
-      styleCommandSectionDescription.wordWrap = true;
-
-      styleCommandKey = new GUIStyle(EditorStyles.miniButton);
-      styleCommandKey.margin = new RectOffset(0, 0, 2, 2);
-      styleCommandKey.stretchWidth = false;
-
-      styleCommandMouse = new GUIStyle(EditorStyles.boldLabel);
-      styleCommandMouse.margin = new RectOffset(0, 0, 2, 2);
-      styleCommandMouse.stretchWidth = false;
-
-      styleCommandContext = new GUIStyle(EditorStyles.label);
-      styleCommandContext.margin = new RectOffset(2, 2, 2, 2);
-      styleCommandContext.stretchWidth = false;
-
-      styleCommandOr = new GUIStyle(EditorStyles.label);
-      styleCommandOr.fontStyle = FontStyle.Italic;
-      styleCommandOr.margin = new RectOffset(8, 8, 2, 2);
-      styleCommandOr.stretchWidth = false;
-
-      styleCommandPlus = new GUIStyle(EditorStyles.label);
-      styleCommandPlus.margin = new RectOffset(0, 0, 2, 2);
-      styleCommandPlus.stretchWidth = false;
-
-      contentPanelIcon = new GUIContent(uScriptGUI.GetTexture("iconWelcomeLogo"));
-      contentPanelTitle = new GUIContent("Quick Command Reference");
-      contentPanelDescription = new GUIContent("This is summary of the various commands available to you while using the uScript Editor.");
-
-      minWidthKey = (int)Mathf.Max(styleCommandKey.CalcSize(new GUIContent("W")).x, styleCommandKey.CalcSize(new GUIContent("=")).x);
+      this.minWidthKey = (int)Mathf.Max(Style.CommandKey.CalcSize(new GUIContent("W")).x, Style.CommandKey.CalcSize(new GUIContent("=")).x);
 
       // Apply skin and platform variations
-      if (isProSkin)
+      if (this.isProSkin)
       {
-         styleCommandKey.padding = (isWindows ? new RectOffset(4, 7, 2, 2) : new RectOffset(5, 7, 1, 3));
+         Style.CommandKey.padding = this.isWindows ? new RectOffset(4, 7, 2, 2) : new RectOffset(5, 7, 1, 3);
       }
       else
       {
-         styleCommandKey.padding = (isWindows ? new RectOffset(4, 7, 2, 2) : new RectOffset(5, 7, 2, 2));
+         Style.CommandKey.padding = this.isWindows ? new RectOffset(4, 7, 2, 2) : new RectOffset(5, 7, 2, 2);
       }
    }
 
+   // === Classes ====================================================================
+
+   private static class Content
+   {
+      static Content()
+      {
+         PanelIcon = new GUIContent(uScriptGUI.GetTexture("iconWelcomeLogo"));
+         PanelTitle = new GUIContent("Quick Command Reference");
+         PanelDescription = new GUIContent("This is summary of the various commands available to you while using the uScript Editor.");
+      }
+
+      public static GUIContent PanelIcon { get; private set; }
+
+      public static GUIContent PanelTitle { get; private set; }
+
+      public static GUIContent PanelDescription { get; private set; }
+   }
+
+   private static class Style
+   {
+      static Style()
+      {
+         CommandContext = new GUIStyle(EditorStyles.label)
+         {
+            margin = new RectOffset(2, 2, 2, 2),
+            stretchWidth = false
+         };
+
+         CommandKey = new GUIStyle(EditorStyles.miniButton)
+         {
+            margin = new RectOffset(0, 0, 2, 2),
+            stretchWidth = false
+         };
+
+         CommandMouse = new GUIStyle(EditorStyles.boldLabel)
+         {
+            margin = new RectOffset(0, 0, 2, 2),
+            stretchWidth = false
+         };
+
+         CommandOr = new GUIStyle(EditorStyles.label)
+         {
+            fontStyle = FontStyle.Italic,
+            margin = new RectOffset(8, 8, 2, 2),
+            stretchWidth = false
+         };
+
+         CommandPlus = new GUIStyle(EditorStyles.label)
+         {
+            margin = new RectOffset(0, 0, 2, 2),
+            stretchWidth = false
+         };
+
+         CommandSection = new GUIStyle { margin = new RectOffset(8, 8, 0, 16), stretchWidth = true };
+
+         CommandSectionDescription = new GUIStyle(EditorStyles.label)
+         {
+            margin = new RectOffset(4, 4, 4, 16),
+            padding = new RectOffset(3, 3, 1, 0),
+            wordWrap = true
+         };
+
+         PanelDescription = GUI.skin.GetStyle("WordWrappedLabel");
+
+         PanelIcon = new GUIStyle { padding = new RectOffset(0, 32, 0, 0), stretchWidth = false };
+
+         PanelTitle = new GUIStyle
+         {
+            fontSize = 32,
+            fontStyle = FontStyle.Bold,
+            normal = { textColor = EditorStyles.boldLabel.normal.textColor }
+         };
+
+         Window = new GUIStyle { padding = new RectOffset(32, 32, 16, 32) };
+      }
+
+      public static GUIStyle Window { get; private set; }
+
+      public static GUIStyle PanelIcon { get; private set; }
+
+      public static GUIStyle PanelTitle { get; private set; }
+
+      public static GUIStyle PanelDescription { get; private set; }
+
+      public static GUIStyle CommandSection { get; private set; }
+
+      public static GUIStyle CommandSectionDescription { get; private set; }
+
+      public static GUIStyle CommandKey { get; private set; }
+
+      public static GUIStyle CommandMouse { get; private set; }
+
+      public static GUIStyle CommandContext { get; private set; }
+
+      public static GUIStyle CommandOr { get; private set; }
+
+      public static GUIStyle CommandPlus { get; private set; }
+   }
 }
