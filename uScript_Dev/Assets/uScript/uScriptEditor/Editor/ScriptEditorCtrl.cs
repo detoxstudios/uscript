@@ -107,7 +107,7 @@ namespace Detox.ScriptEditor
       { 
          get { return m_ScriptEditor; } 
       }
-		
+      
       public Detox.FlowChart.FlowChartCtrl FlowChart { get { return m_FlowChart; } }
       
       public DisplayNode [] SelectedNodes
@@ -850,17 +850,17 @@ namespace Detox.ScriptEditor
             List<Guid> guidsToSelect = new List<Guid>( );
 
             Hashtable remappedGuid = new Hashtable( );
-				
-			   // calculate a base point for this script chunk
-			   float left = float.MaxValue, top = float.MaxValue, right = float.MinValue, bottom = float.MinValue;
-			   foreach ( EntityNode entityNode in scriptEditor.EntityNodes )
-			   {
+            
+            // calculate a base point for this script chunk
+            float left = float.MaxValue, top = float.MaxValue, right = float.MinValue, bottom = float.MinValue;
+            foreach ( EntityNode entityNode in scriptEditor.EntityNodes )
+            {
                if ( typeof(LinkNode).IsAssignableFrom(entityNode.GetType()) ) continue;
-			      if (entityNode.Position.X < left)   left = entityNode.Position.X;
-			      if (entityNode.Position.Y < top)    top  = entityNode.Position.Y;
+               if (entityNode.Position.X < left)   left = entityNode.Position.X;
+               if (entityNode.Position.Y < top)    top  = entityNode.Position.Y;
                if (entityNode.Position.X > right)  right = entityNode.Position.X;
                if (entityNode.Position.Y > bottom) bottom  = entityNode.Position.Y;
-			   }
+            }
             Rectangle baseRect = new Rectangle( (int)left, (int)top, (int)(right - left), (int)(bottom - top) );
 
             Patch.Batch batchPatch = new Patch.Batch( "Paste" );
@@ -877,8 +877,8 @@ namespace Detox.ScriptEditor
                //from a previous paste or existing node
                EntityNode clone = entityNode;
                clone.Guid = (Guid) remappedGuid[ entityNode.Guid ];
-   			   if (cursorPoint == Point.Empty)
-   			   {
+               if (cursorPoint == Point.Empty)
+               {
                   if (m_CopiedFromThisLocation)
                   {
                      // this paste was copied and then pasted without moving the graph or 
@@ -895,12 +895,12 @@ namespace Detox.ScriptEditor
                      Point diff = new Point( clone.Position.X - baseRect.X, clone.Position.Y - baseRect.Y );
                      clone.Position = new Point( centerView.X - (int)(baseRect.Width / 2.0f) + diff.X, centerView.Y - (int)(baseRect.Height / 2.0f) + diff.Y);
                   }
-   			   }
-   			   else
-   			   {
+               }
+               else
+               {
                   Point diff = new Point( clone.Position.X - baseRect.X, clone.Position.Y - baseRect.Y );
                   clone.Position = new Point( cursorPoint.X + diff.X, cursorPoint.Y + diff.Y );
-   			   }
+               }
 
                Patch.EntityNode patchNode = new Detox.Patch.EntityNode( "", null, clone.Copy(true) );
                batchPatch.Add( patchNode );
@@ -1429,7 +1429,7 @@ namespace Detox.ScriptEditor
                offset.X += 10;
                offset.Y += 10;
             }
-				
+            
             m_ContextObject = null;
          }
          else
@@ -3272,7 +3272,7 @@ namespace Detox.ScriptEditor
             Invalid = -1,
             Bottom, Left, Right, Center
          }
-			
+         
          public bool   Input;
          public bool   Output;
          public string InternalName;
@@ -3489,7 +3489,7 @@ namespace Detox.ScriptEditor
                textPoint.Y = (yStart - uScriptConfig.Style.PointSize - textLength.Height + uScriptConfig.Style.BottomSocketLabelGap);
                textPoint.StyleName = "socket_text";
                textPoints.Add( textPoint );
-					
+               
                string text;
 
                // Draw the socket value label under the socket
