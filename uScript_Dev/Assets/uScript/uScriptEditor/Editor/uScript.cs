@@ -933,7 +933,6 @@ public sealed partial class uScript : EditorWindow
 
          m_UndoPatches[m_UndoNumber] = base64;
 
-         //Debug.Log("undo " + m_UndoNumber );
 #if  UNITY_3_5
          UnityEditor.Undo.RegisterUndo(UndoComponent, p.Name + " (uScript)");
 #else
@@ -4374,7 +4373,7 @@ public sealed partial class uScript : EditorWindow
             {
                accessorMethods[e.GetAddMethod().Name] = true;
             }
-             
+
             if (e.GetRaiseMethod() != null)
             {
                accessorMethods[e.GetRaiseMethod().Name] = true;
@@ -4395,7 +4394,8 @@ public sealed partial class uScript : EditorWindow
             p.Name = e.Name;
             p.FriendlyName = FindFriendlyName(p.Name, e.GetCustomAttributes(false));
 
-            if ("System.EventArgs" == logicNode.EventArgs)
+            // All event types must share the same args, so only gather them once
+            if (logicEventParameters.Count == 0)
             {
                ParameterInfo[] eventParameters = e.GetAddMethod().GetParameters();
 

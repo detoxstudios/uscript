@@ -2180,11 +2180,6 @@ namespace Detox.ScriptEditor
                }
             }
 
-            foreach (Parameter parameter in logic.EventParameters)
-            {
-                AddCSharpLine(FormatType(parameter.Type) + " " + CSharpName(logic, parameter.Name) + ";");
-            }
-
             foreach (Plug output in logic.Outputs)
             {
                AddCSharpLine("bool " + CSharpName(logic, output.Name) + " = true;");
@@ -3671,12 +3666,8 @@ namespace Detox.ScriptEditor
 
          int i = 0;
 
-         List<Parameter> parameters = new List<Parameter>(logicNode.EventParameters);
-         //parameters.AddRange(logicNode.Parameters);
-
-         //Fill in the global event parameters variable names
-         //and then the loop which follows will link them up to the local variables
-         //(along with the existing non event parameters)
+         //all we want to do for an entityevent is output the variables
+         //then call the relays
          AddCSharpLine("//fill globals");
          foreach (Parameter parameter in logicNode.EventParameters)
          {
@@ -3687,11 +3678,13 @@ namespace Detox.ScriptEditor
             ++i;
          }
 
+
+
          List<Parameter> outputList = new List<Parameter>();
 
          //figure out where our outgoing links go
          //and set those variables directly
-         foreach (Parameter parameter in parameters)
+         foreach (Parameter parameter in logicNode.Parameters)
          {
             //only allow output parameters, those come through in the event args
             if (parameter.Output == false) continue;
