@@ -46,10 +46,10 @@ public sealed partial class uScript : EditorWindow
    // # Version Name and Version Data
    // #
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public const string BuildNumber = "1.0.2500";
-   public const string BuildName = "Professional Edition (RC2)";
-   public const string BuildNamePLE = "Personal Learning Edition (RC2)";
-   public const string BuildNameBasic = "Basic Edition (RC2)";
+   public const string BuildNumber = "1.0.2505";
+   public const string BuildName = "Professional Edition (RC3)";
+   public const string BuildNamePLE = "Personal Learning Edition (RC3)";
+   public const string BuildNameBasic = "Basic Edition (RC3)";
    // #
    // ###############################################################
 
