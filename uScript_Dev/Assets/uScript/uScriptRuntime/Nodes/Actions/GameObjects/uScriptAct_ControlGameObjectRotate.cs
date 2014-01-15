@@ -46,7 +46,7 @@ public class uScriptAct_ControlGameObjectRotate : uScriptLogic
 				}
 				else
 				{
-					Target.transform.Rotate(Vector3.left * Speed);
+					Target.transform.Rotate(Vector3.left * Speed, Space.World);
 				}
                break;
 
@@ -57,7 +57,7 @@ public class uScriptAct_ControlGameObjectRotate : uScriptLogic
 				}
 				else
 				{
-					Target.transform.Rotate(Vector3.right * Speed);
+					Target.transform.Rotate(Vector3.right * Speed, Space.World);
 				}
                break;
 
@@ -68,7 +68,7 @@ public class uScriptAct_ControlGameObjectRotate : uScriptLogic
 				}
 				else
 				{
-					Target.transform.Rotate(Vector3.down * Speed);
+					Target.transform.Rotate(Vector3.down * Speed, Space.World);
 				}
                break;
 
@@ -79,7 +79,7 @@ public class uScriptAct_ControlGameObjectRotate : uScriptLogic
 				}
 				else
 				{
-					Target.transform.Rotate(Vector3.up * Speed);
+					Target.transform.Rotate(Vector3.up * Speed, Space.World);
 				}
                break;
 
@@ -90,7 +90,7 @@ public class uScriptAct_ControlGameObjectRotate : uScriptLogic
 				}
 				else
 				{
-					Target.transform.Rotate(Vector3.forward * Speed);
+					Target.transform.Rotate(Vector3.forward * Speed, Space.World);
 				}
                break;
 
@@ -101,7 +101,7 @@ public class uScriptAct_ControlGameObjectRotate : uScriptLogic
 				}
 				else
 				{
-					Target.transform.Rotate(Vector3.back * Speed);
+					Target.transform.Rotate(Vector3.back * Speed, Space.World);
 				}
                break;
 
