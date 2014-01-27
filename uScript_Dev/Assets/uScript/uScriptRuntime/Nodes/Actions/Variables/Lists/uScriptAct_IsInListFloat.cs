@@ -25,8 +25,8 @@ public class uScriptAct_IsInListFloat : uScriptLogic
     
    [FriendlyName("Test If In List")]
    public void TestIfInList(
-      [FriendlyName("Target", "The target int(s) to check for membership in the Float List.")]
-      int[] Target,
+      [FriendlyName("Target", "The target floats(s) to check for membership in the Float List.")]
+      float[] Target,
 
       [FriendlyName("Float List", "The Float List to check.")]
       ref float[] List,
