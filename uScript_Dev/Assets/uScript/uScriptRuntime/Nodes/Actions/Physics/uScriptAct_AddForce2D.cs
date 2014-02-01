@@ -14,11 +14,11 @@ using System.Collections;
 
 
 [FriendlyName("Add Force (2D)", "Applies a 2D Add Force to the specified GameObject. Target must have a RigidBody2D Component in order to recieve a force.")]
-public class uScriptAct_AddForce2D : uScriptLogic 
+public class uScriptAct_AddForce2D : uScriptLogic
 {
-    public bool Out { get { return true; } }
+   public bool Out { get { return true; } }
 
-    public void In (
+   public void In(
 
         [FriendlyName("Target", "GameObject to apply the force to.")]
         GameObject Target,
@@ -28,18 +28,18 @@ public class uScriptAct_AddForce2D : uScriptLogic
 
         [FriendlyName("Scale", "A scale to multiply to the force (force x scale).")]
         float scale
-        )
-    {
-        if ( null != Target)
-        {
-            if (scale != 0)
-            {
-                force = force * scale; 
-            }
+   )
+   {
+      if (null != Target)
+      {
+         if (scale != 0)
+         {
+            force = force * scale;
+         }
 
-            Target.rigidbody2D.AddForce(force);
-        }
-    }
+         Target.rigidbody2D.AddForce(force);
+      }
+   }
 }
 
 #endif
