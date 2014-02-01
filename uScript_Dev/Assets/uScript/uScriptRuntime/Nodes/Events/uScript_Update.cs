@@ -21,10 +21,10 @@ public class uScript_Update : uScriptEvent
    [FriendlyName("On Update")]
    public event uScriptEventHandler OnUpdate;
    
-   [FriendlyName("On LateUpdate")]
+   [FriendlyName("On Late Update")]
    public event uScriptEventHandler OnLateUpdate;
 
-   [FriendlyName("On FixedUpdate")]
+   [FriendlyName("On Fixed Update")]
    public event uScriptEventHandler OnFixedUpdate;
 
    void Update()

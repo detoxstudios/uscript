@@ -30,8 +30,11 @@ public class uScript_Triggers : uScriptEvent
       }
    }
 
+   [FriendlyName("On Trigger Enter")]
    public event uScriptEventHandler OnEnterTrigger;
+   [FriendlyName("On Trigger Exit")]
    public event uScriptEventHandler OnExitTrigger;
+   [FriendlyName("While Inside Trigger")]
    public event uScriptEventHandler WhileInsideTrigger;
  
    private bool m_AlwaysTrigger = false;

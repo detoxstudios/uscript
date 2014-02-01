@@ -5,14 +5,14 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Events/Physics Events")]
+[NodePath("Events/Physics Events (2D)")]
 
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when Instance receives a 2D collision.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("On Collision 2D", "Fires an event signal when Instance GameObject receives a 2D collision. The GameObjects involved must have a 2D rigidbody component on them to fire this event.")]
+[FriendlyName("On Collision (2D)", "Fires an event signal when Instance GameObject receives a 2D collision. The GameObjects involved must have a 2D rigidbody component on them to fire this event.")]
 public class uScript_Collision_2D : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, CollisionEventArgs args);

@@ -1,18 +1,18 @@
 // uScript Action Node
 // (C) 2013 Detox Studios LLC
-#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
 
+#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Physics2D")]
+[NodePath("Actions/Physics (2D)")]
 
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
-[NodeToolTip("Cast a ray from the specified screen location (in pxiels) out into the scene.")]
+[NodeToolTip("Cast a 2D ray from the specified screen location (in pixels) out into the scene.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("2D Raycast From Screen Point", "Cast a 2D ray from the specified screen location (in pxiels) out into the scene, determines if anything was hit along the way, and fires the associated output link. Used with Unity's 2D Physics system.")]
+[FriendlyName("Raycast From Screen Point (2D)", "Cast a 2D ray from the specified screen location (in pixels) out into the scene, determines if anything was hit along the way, and fires the associated output link. Used with Unity's 2D Physics system.")]
 public class uScriptAct_RaycastFromScreenPoint_2D : uScriptLogic
 {
    private bool m_NotObstructed = false;
@@ -83,4 +83,5 @@ public class uScriptAct_RaycastFromScreenPoint_2D : uScriptLogic
       m_NotObstructed = !m_Obstructed;
    }
 }
+
 #endif

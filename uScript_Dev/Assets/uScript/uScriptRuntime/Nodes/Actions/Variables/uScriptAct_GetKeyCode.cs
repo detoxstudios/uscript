@@ -1,0 +1,46 @@
+// uScript Action Node
+// (C) 2014 Detox Studios LLC
+
+using UnityEngine;
+using System.Collections;
+
+[NodePath("Actions/Variables/KeyCode")]
+
+[NodeCopyright("Copyright 2014 by Detox Studios LLC")]
+[NodeToolTip( "Gets the first key pressed from the current frame.")]
+[NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
+[NodeHelp("http://www.uscript.net/")]
+
+[FriendlyName("Get Pressed KeyCode", "Returns the KeyCode of the first key pressed in the current frame (KeyCode.None if there wasn't one pressed).  Warning - this is very slow and should not run on every tick!")]
+public class uScriptAct_GetKeyCode : uScriptLogic
+
+
+{
+	private int k;
+	private KeyCode firstKey;
+   public bool Out { get { return true; } }
+
+   public void In(
+
+      [FriendlyName("KeyCode", "The first key pressed (KeyCode.None if no key pressed).")]
+		out KeyCode result,
+
+      [FriendlyName("Key Name", "The name of the key pressed as a string.")]
+      [SocketState(false, false)]
+		out string resultString
+      )
+   {
+		firstKey = KeyCode.None;
+		k = System.Enum.GetNames(typeof(KeyCode)).Length;
+		for(int i = 0; i < k; i++)
+		{
+			if(Input.GetKey((KeyCode)i))
+			{
+				firstKey = (KeyCode)i;
+				break;
+			}
+		}
+		result = firstKey;
+      resultString = firstKey.ToString();
+   }
+}
