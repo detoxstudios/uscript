@@ -46,10 +46,10 @@ public sealed partial class uScript : EditorWindow
    // # Version Name and Version Data
    // #
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public const string BuildNumber = "1.0.2505";
-   public const string BuildName = "Professional Edition (RC3)";
-   public const string BuildNamePLE = "Personal Learning Edition (RC3)";
-   public const string BuildNameBasic = "Basic Edition (RC3)";
+   public const string BuildNumber = "1.0.2522";
+   public const string BuildName = "Professional Edition (RC4)";
+   public const string BuildNamePLE = "Personal Learning Edition (RC4)";
+   public const string BuildNameBasic = "Basic Edition (RC4)";
    // #
    // ###############################################################
 
@@ -4124,7 +4124,7 @@ public sealed partial class uScript : EditorWindow
       if (firstSave)
       {
          // ask the user if they want to assign this script to the master game object
-         pleaseAttachMe = EditorUtility.DisplayDialog("Assign uScript To Master GameObject?", "This uScript has not been assigned to the master game object yet. Would you like to assign it now?", "Yes", "No");
+         pleaseAttachMe = EditorUtility.DisplayDialog("Assign Graph To Master GameObject?", "This uScript graph has not been assigned to the master GameObject yet.\n\n Select YES to assign it now, or NO to manually assign the graph to a GameObject or Prefab later. ", "Yes", "No");
       }
       else
       {
