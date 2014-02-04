@@ -1,11 +1,9 @@
-Line 1
-Line 2
-Line 3
-Line 4
-Line 5
-Line 6
-Line 7
-Line 8
-Line 9
-Line 10
-Line 11
+
+	Okay! The SVN post-commit hook should be up and running again!
+
+	Let me know if you encounter any formatting issues with the Diff output.
+
+	Added lines should be GREEN and removed lines RED. Every other row should
+	have a shaded background color. Everything should line up, and horizontal
+	a horizontal scrollbar will appear if the code box is too narrow.
+
