@@ -22,7 +22,7 @@ public class uScriptAct_GetKeyCode : uScriptLogic
 
    public void In(
 
-      [FriendlyName("KeyCode", "The first key pressed (KeyCode.None if no key pressed).")]
+      [FriendlyName("KeyCode", "The first key pressed (KeyCode.None if none was pressed).")]
 		out KeyCode result,
 
       [FriendlyName("Key Name", "The name of the key pressed as a string.")]
@@ -30,17 +30,18 @@ public class uScriptAct_GetKeyCode : uScriptLogic
 		out string resultString
       )
    {
-		firstKey = KeyCode.None;
-		k = System.Enum.GetNames(typeof(KeyCode)).Length;
-		for(int i = 0; i < k; i++)
-		{
-			if(Input.GetKey((KeyCode)i))
+		
+		firstKey=KeyCode.None;
+
+		foreach (KeyCode type in System.Enum.GetValues(typeof(KeyCode))){
+			if(Input.GetKey(type))
 			{
-				firstKey = (KeyCode)i;
+				firstKey = type;
 				break;
 			}
 		}
-		result = firstKey;
+
+	  result = firstKey;
       resultString = firstKey.ToString();
    }
 }
