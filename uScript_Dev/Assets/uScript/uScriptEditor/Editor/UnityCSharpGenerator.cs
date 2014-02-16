@@ -1524,6 +1524,15 @@ namespace Detox.ScriptEditor
             }
             catch (Exception) { return "UnityEngine.Color.black"; }
          }
+         else if ("UnityEngine.Color32" == type)
+         {
+             try
+             {
+                 string[] subString = stringValue.Split(',');
+                 return "new UnityEngine.Color32( (byte)" + subString[0] + ", (byte)" + subString[1] + ", (byte)" + subString[2] + ", (byte)" + subString[3] + " )";
+             }
+             catch (Exception) { return "UnityEngine.Color.black"; }
+         }
          else if (type.Contains("Dictionary"))
          {
             return "new " + FormatType(type) + "( )";
@@ -1749,6 +1758,24 @@ namespace Detox.ScriptEditor
                declaration += "}";
             }
             catch (Exception) { declaration = "new UnityEngine.Color[0]"; }
+         }
+         else if ("UnityEngine.Color32[]" == type)
+         {
+             try
+             {
+                 elements = Parameter.FlattenStringArrays(elements, ',');
+                 
+                 declaration = "new UnityEngine.Color32[] {";
+                 
+                 for (int i = 0; i < elements.Length; i += 4)
+                 {
+                     declaration += "new UnityEngine.Color32((byte)" + elements[i] + ", (byte)" + elements[i + 1] + ", (byte)" + elements[i + 2] + ", (byte)" + elements[i + 3] + "),";
+                 }
+                 
+                 if (elements.Length > 0) declaration = declaration.Substring(0, declaration.Length - 1);
+                 declaration += "}";
+             }
+             catch (Exception) { declaration = "new UnityEngine.Color32[0]"; }
          }
          else if ("UnityEngine.GameObject[]" == type)
          {
