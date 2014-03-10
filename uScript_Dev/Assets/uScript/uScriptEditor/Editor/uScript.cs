@@ -379,35 +379,35 @@ public sealed partial class uScript : EditorWindow
    }
 
    private Hashtable m_Types = new Hashtable();
- 
+
    public Type GetType(string typeName)
    {
-      Type type = m_Types[ typeName ] as Type;
+      Type type = m_Types[typeName] as Type;
 
-      if ( null == type ) type = GetAssemblyQualifiedType( typeName );
+      if (null == type) type = GetAssemblyQualifiedType(typeName);
 
       return type;
    }
 
    public Type GetAssemblyQualifiedType(String typeName)
    {
-      if ( null == typeName ) return null;
+      if (null == typeName) return null;
 
       // try the basic version first
-      if ( Type.GetType(typeName) != null ) return Type.GetType(typeName);
-      
+      if (Type.GetType(typeName) != null) return Type.GetType(typeName);
+
       // not found, look through all the assemblies
-      foreach ( Assembly assembly in AppDomain.CurrentDomain.GetAssemblies() )
+      foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
       {
-         if ( Type.GetType(typeName + ", " + assembly.ToString()) != null ) return Type.GetType(typeName + ", " + assembly.ToString());
+         if (Type.GetType(typeName + ", " + assembly.ToString()) != null) return Type.GetType(typeName + ", " + assembly.ToString());
       }
-      
+
       return null;
    }
-   
+
    public void AddType(Type type)
    {
-      m_Types[ type.ToString( ) ] = type;
+      m_Types[type.ToString()] = type;
    }
 
    public static string[] UserTypes
@@ -657,16 +657,16 @@ public sealed partial class uScript : EditorWindow
 
       foreach (FileInfo file in directory.GetFiles())
       {
-          if (!file.Name.Contains(".meta"))
-          {
-              // Remove the leading underscore from the backup file's name.
-              string finalName = file.Name.Substring(1);
+         if (!file.Name.Contains(".meta"))
+         {
+            // Remove the leading underscore from the backup file's name.
+            string finalName = file.Name.Substring(1);
 
-              if (!File.Exists(gizmos + "/" + finalName))
-              {
-                  File.Copy(file.FullName, gizmos + "/" + finalName, false);
-              }
-          }
+            if (!File.Exists(gizmos + "/" + finalName))
+            {
+               File.Copy(file.FullName, gizmos + "/" + finalName, false);
+            }
+         }
       }
 
       //save all the types from unity so we can use them for quick lookup, we can't use Type.GetType because
@@ -2304,7 +2304,7 @@ public sealed partial class uScript : EditorWindow
 
       this.EndWindows();
    }
-   
+
    void OnPlaymodeStateChanged()
    {
       //if we're not debugging values then we're just starting into playing in the editor
@@ -2340,7 +2340,7 @@ public sealed partial class uScript : EditorWindow
       this.currentScriptName = null;
       this.complexData = null;
    }
-   
+
    public void OpenNode(Node node)
    {
       if (node is DisplayNode)
@@ -2494,7 +2494,7 @@ public sealed partial class uScript : EditorWindow
          DrawGUIVerticalDivider();
          SetMouseRegion(MouseRegion.HandleReference);//, -3, 3, 6, -3 );
 
-//         uScriptGUIPanelScript.Instance.Draw();
+         //         uScriptGUIPanelScript.Instance.Draw();
          Detox.Editor.GUI.PanelScript.Instance.Draw();
       }
       EditorGUILayout.EndHorizontal();
@@ -4163,11 +4163,11 @@ public sealed partial class uScript : EditorWindow
             AssetDatabase.Refresh();
             this.AttachToMasterGO(this.fullPath);
          }
-            
+
 #if ENABLE_ANALYTICS
          GetGraphAnalyticsData(script);
 #endif
-            
+
          return true;
       }
 
@@ -4175,18 +4175,18 @@ public sealed partial class uScript : EditorWindow
 
       return false;
    }
-   
+
    /// <summary>
    /// Gets the graph's node analytics data. This code is part of a side project by Scott to potentially store locally node data for an entire Unity project for things like node deletion on project building to remove unused nodes and such.
    /// </summary>
    /// <param name='script'>
    /// The graph you want to grab all the node data for.
    /// </param>
-    void GetGraphAnalyticsData(Detox.ScriptEditor.ScriptEditor script)
+   void GetGraphAnalyticsData(Detox.ScriptEditor.ScriptEditor script)
    {
       // Create list of unique nodes used and their quantity used on the graph:
       Dictionary<string, KeyValuePair<string, int>> nodesUsed = new Dictionary<string, KeyValuePair<string, int>>();
-      
+
       // Get all the Action nodes:
       foreach (Detox.ScriptEditor.LogicNode node in script.Logics)
       {
@@ -4201,10 +4201,10 @@ public sealed partial class uScript : EditorWindow
             nodesUsed.Add(node.FriendlyName, tmpPair);
          }
       }
-      
+
       // Get all the Event nodes:
       foreach (Detox.ScriptEditor.EntityEvent node in script.Events)
-      {	
+      {
          if (nodesUsed.ContainsKey(node.FriendlyType))
          {
             KeyValuePair<string, int> tmpPair = new KeyValuePair<string, int>("Event", nodesUsed[node.FriendlyType].Value + 1);
@@ -4216,7 +4216,7 @@ public sealed partial class uScript : EditorWindow
             nodesUsed.Add(node.FriendlyType, tmpPair);
          }
       }
-      
+
    }
 
    void AttachToMasterGO(String path)
@@ -5440,7 +5440,7 @@ public sealed partial class uScript : EditorWindow
             default: return p.FriendlyName;
          }
       }
-      
+
       switch (type)
       {
          case "LocalNode":
@@ -5452,7 +5452,7 @@ public sealed partial class uScript : EditorWindow
             }
 
             break;
-         
+
          case "ExternalConnection":
             switch (p.FriendlyName)
             {
@@ -5462,7 +5462,7 @@ public sealed partial class uScript : EditorWindow
             }
 
             break;
-         
+
          case "OwnerConnection":
             if (p.FriendlyName == "Connection")
             {
@@ -5470,7 +5470,7 @@ public sealed partial class uScript : EditorWindow
             }
 
             break;
-         
+
          case "_reflectedAction":
             break;
 
