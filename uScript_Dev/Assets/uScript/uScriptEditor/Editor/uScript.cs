@@ -229,7 +229,7 @@ public sealed partial class uScript : EditorWindow
    private bool m_CanvasDragging = false;
    public bool wasCanvasDragged = false;
 
-   public bool GenerateDebugInfo = true;
+   public bool GenerateDebugInfo { get { return Preferences.SaveMethod != Preferences.SaveMethodType.Release; } }
 
    bool _isContextMenuOpen = false;
 
@@ -3151,19 +3151,16 @@ public sealed partial class uScript : EditorWindow
          if (quick)
          {
             //         Debug.Log("QUICK SAVE\n");
-            SaveScript(rename, false);
+            SaveScript(rename, false, debug);
          }
          else
          {
             //         Debug.Log(debug ? "DEBUG SAVE\n" : "RELEASE SAVE\n");
             bool saved = false;
-            GenerateDebugInfo = debug;
 
             AssetDatabase.StartAssetEditing();
-            saved = SaveScript(rename);
+            saved = SaveScript(rename, true, debug);
             AssetDatabase.StopAssetEditing();
-
-            GenerateDebugInfo = Preferences.SaveMethod != Preferences.SaveMethodType.Release;
 
             if (saved) RefreshScript();
          }
@@ -3315,7 +3312,6 @@ public sealed partial class uScript : EditorWindow
             {
                Preferences.SaveMethod = (Preferences.SaveMethodType)newMethod;
                Preferences.Save();
-               this.GenerateDebugInfo = Preferences.SaveMethod != Preferences.SaveMethodType.Release;
             }
 
             GUILayout.FlexibleSpace();
@@ -3984,10 +3980,10 @@ public sealed partial class uScript : EditorWindow
 
    public bool SaveScript(bool forceNameRequest)
    {
-      return this.SaveScript(forceNameRequest, true);
+      return this.SaveScript(forceNameRequest, true, GenerateDebugInfo);
    }
 
-   public bool SaveScript(bool forceNameRequest, bool generateCode)
+   public bool SaveScript(bool forceNameRequest, bool generateCode, bool generateDebugInfo)
    {
       ScriptEditor script = this.m_ScriptEditorCtrl.ScriptEditor;
 
@@ -4143,7 +4139,7 @@ public sealed partial class uScript : EditorWindow
          script.SceneName = string.Empty;
       }
 
-      if (this.SaveScript(script, this.fullPath, generateCode, this.GenerateDebugInfo, false))
+      if (this.SaveScript(script, this.fullPath, generateCode, generateDebugInfo, false))
       {
          // When a file is saved (regardless of method), we should updated the
          // Dictionary cache for that script.
