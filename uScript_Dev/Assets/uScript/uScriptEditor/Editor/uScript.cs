@@ -27,6 +27,7 @@ using System.Reflection;
 
 using Detox.Data.Tools;
 using Detox.Drawing;
+using Detox.Editor;
 using Detox.Editor.GUI;
 using Detox.FlowChart;
 using Detox.ScriptEditor;
