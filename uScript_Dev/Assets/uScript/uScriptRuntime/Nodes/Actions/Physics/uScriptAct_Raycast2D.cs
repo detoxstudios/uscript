@@ -28,8 +28,12 @@ public class uScriptAct_Raycast2D : uScriptLogic
       [FriendlyName("Start", "The start point of the ray cast. Must be a GameObject, Transform, or Vector2, or Vector3.")]
       object Start,
 
-      [FriendlyName("End", "The end point of the ray cast. Must be a GameObject, Transform, or Vector2, or Vector3.")]
-      object End,
+      [FriendlyName("Direction", "The direction of the ray cast. Must be a Vector2.")]
+      Vector2 Direction,
+
+	  [FriendlyName("Distance", "How far out the ray cast will travel from its Start position. If the default value of zero is used, the ray will cast an infinite distance. Must be a float.")]
+	  [DefaultValue(0f)]
+	  float Distance,
       
       [FriendlyName("Layer Mask", "A Layer mask that is used to selectively ignore colliders when casting a ray.")]
       [SocketState(false, false)]
@@ -76,34 +80,12 @@ public class uScriptAct_Raycast2D : uScriptLogic
          validInputs = false;
       }
 
-      if (typeof(GameObject) == End.GetType() || typeof(Vector3) == End.GetType())
-      {
-         if (typeof(GameObject) == End.GetType())
-         {
-            GameObject tmpGameObjectEnd = (GameObject)End;
-            m_EndVector = tmpGameObjectEnd.transform.position;
-         }
-         if (typeof(Vector2) == End.GetType())
-         {
-            Vector2 tmpGameObjectEnd = (Vector2)End;
-            m_EndVector = tmpGameObjectEnd;
-         }
-         if (typeof(Vector3) == End.GetType())
-         {
-            Vector2 tmpGameObjectEnd = (Vector3)End;
-            m_EndVector = tmpGameObjectEnd;
-         }
-         if (typeof(Transform) == End.GetType())
-         {
-            Transform tmpGameObjectEnd = (Transform)End;
-            m_EndVector = tmpGameObjectEnd.position;
-         }
-      }
-      else
-      {
-         uScriptDebug.Log("The Raycast node can only take a GameObject, Transform, Vector2, or Vector3 for the 'End' input nub!", uScriptDebug.Type.Error);
-         validInputs = false;
-      }
+	  // Figure out if distance should be used.
+		bool useDistance = false;
+		if (Distance > 0)
+		{
+			useDistance = true;
+		}
 
       if (validInputs)
       {
@@ -115,17 +97,37 @@ public class uScriptAct_Raycast2D : uScriptLogic
 
          if (!include)
          {
-            if (Physics2D.Raycast(m_StartVector, m_EndVector))
-            {
-               hitTrue = true;
-            }
+			if(!useDistance)
+			{
+	            if (Physics2D.Raycast(m_StartVector, m_EndVector))
+	            {
+	               hitTrue = true;
+	            }
+			}
+			else
+			{
+				if (Physics2D.Raycast(m_StartVector, m_EndVector, Distance))
+				{
+					hitTrue = true;
+				}
+			}
          }
          else
          {
-            if (Physics2D.Raycast(m_StartVector, m_EndVector, layerMask))
-            {
-               hitTrue = true;
-            }
+			if(!useDistance)
+			{
+	            if (Physics2D.Raycast(m_StartVector, m_EndVector, layerMask))
+	            {
+	               hitTrue = true;
+	            }
+			}
+			else
+			{
+				if (Physics2D.Raycast(m_StartVector, m_EndVector, Distance, layerMask))
+				{
+					hitTrue = true;
+				}
+			}
          }
       }
 
