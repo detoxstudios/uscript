@@ -5,14 +5,14 @@
 using UnityEngine;
 using System.Collections;
 
-[NodePath("Actions/Physics")]
+[NodePath("Actions/Physics (2D)")]
 
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Gets the velocity of a GameObject's Rigidbody as a Vector3.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Get Rigidbody Velocity", "Gets the velocity of a GameObject's Rigidbody as a Vector3. If Target does not have a rigidbody component, will return Vector3.zero.")]
+[FriendlyName("Get Rigidbody Velocity (2D)", "Gets the velocity of a GameObject's Rigidbody2D component as a Vector2. If Target does not have a Rigidbody2D component, will return Vector2.zero.")]
 public class uScriptAct_GetRigidbodyVelocity2D : uScriptLogic
 {
    public bool Out { get { return true; } }
@@ -25,7 +25,8 @@ public class uScriptAct_GetRigidbodyVelocity2D : uScriptLogic
       out Vector2 Velocity,
 
       [FriendlyName("AngularVelocity", "The velocity of the rigidbody component attached to Target.")]
-      out float AngularVelocity,
+      [SocketStateAttribute(false, false)]
+	  out float AngularVelocity,
  
       [FriendlyName("Magnitude", "The magnitude of the rigidbody component attached to Target.")]
        out float Magnitude
@@ -39,7 +40,7 @@ public class uScriptAct_GetRigidbodyVelocity2D : uScriptLogic
       }
       else
       {
-         Velocity = Vector3.zero;
+         Velocity = Vector2.zero;
          AngularVelocity = 0;
          Magnitude = 0;
       }
