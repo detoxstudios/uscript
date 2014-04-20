@@ -21,8 +21,6 @@ using UnityEditor;
 
 using UnityEngine;
 
-using Object = System.Object;
-
 public static class uScriptGUI
 {
    // === Constants ==================================================================
@@ -37,7 +35,7 @@ public static class uScriptGUI
    public const string KeyReturn = "\u23CE";
 
    // How much deep to scan. (of course you can also pass it to the method)
-   private const int MaximumFolderRecursioDepth = 12;
+   private const int MaximumFolderRecursionDepth = 12;
 
    // === Fields =====================================================================
 
@@ -48,7 +46,6 @@ public static class uScriptGUI
 
    private static readonly Dictionary<int, string> ControlIDList = new Dictionary<int, string>();
    private static readonly Dictionary<string, bool> FoldoutExpanded = new Dictionary<string, bool>();
-   ////private static Dictionary<string, object> _modifiedValue = new Dictionary<string, object>();
 
    private static Column columnEnabled;
    private static Column columnLabel;
@@ -59,9 +56,9 @@ public static class uScriptGUI
    private static GUIStyle styleType;
 
    private static string nodeKey = string.Empty;
-   private static int nodeCount;
+
    private static int propertyCount;
-   private static bool isPropertyRowEven = false;
+   private static bool isPropertyRowEven;
    private static int focusedControlID = -1;
 
    private static GUIStyle horizontalScrollbarLeftButton;
@@ -76,6 +73,8 @@ public static class uScriptGUI
    private static string[] guiLayoutOptionDisplayNames;
 
    private static List<string> resourcePaths;
+
+   private static Dictionary<string, string> scenePaths;
 
    // === Properties =================================================================
 
@@ -349,7 +348,7 @@ public static class uScriptGUI
 
    public static void GetResourceFolderPaths(string sourceDir, int recursionDepth)
    {
-      if (recursionDepth > MaximumFolderRecursioDepth)
+      if (recursionDepth > MaximumFolderRecursionDepth)
       {
          return;
       }
@@ -537,9 +536,6 @@ public static class uScriptGUI
       return true;
    }
 
-   private static Dictionary<string, string> scenePaths;
-
-
    public static void GetScenePaths()
    {
       // TODO: Replace this logic, because it's slow. If we stored the full scene path with the script, this wouldn't be needed.
@@ -547,7 +543,7 @@ public static class uScriptGUI
       scenePaths = new Dictionary<string, string>();
 
       // get every single one of the files in the Assets folder.
-      var files = uScriptGUI.GetFilesFromDirectory(new System.IO.DirectoryInfo(Application.dataPath), "*.unity");
+      var files = GetFilesFromDirectory(new DirectoryInfo(Application.dataPath), "*.unity");
 
       foreach (var fi in files)
       {
@@ -557,9 +553,9 @@ public static class uScriptGUI
             continue;
          }
 
-         var obj = AssetDatabase.LoadMainAssetAtPath(uScriptGUI.GetRelativeAssetPath(fi.FullName));
+         var obj = AssetDatabase.LoadMainAssetAtPath(GetRelativeAssetPath(fi.FullName));
          var path = AssetDatabase.GetAssetPath(obj);
-         var name = System.IO.Path.GetFileNameWithoutExtension(path);
+         var name = Path.GetFileNameWithoutExtension(path);
 
          System.Diagnostics.Debug.Assert(name != null, "name != null");
 
@@ -635,14 +631,6 @@ public static class uScriptGUI
       return PingGeneratedScript(scriptName);
    }
 
-
-
-
-
-
-
-
-
    public static string FixSlashes(string s)
    {
       // This may not longer be needed. When did Unity switch to using only fowardslashes?
@@ -655,8 +643,8 @@ public static class uScriptGUI
    /// <summary>
    /// Given a path to a file system object, remove everything in the path above the project Assets folder. The resulting path should work better with the Unity API.
    /// </summary>
-   /// <param name="pathName"></param>
-   /// <returns></returns>
+   /// <param name="pathName">The path to process.</param>
+   /// <returns>The relative path.</returns>
    public static string GetRelativeAssetPath(string pathName)
    {
       //dataPath uses forward slashes on all platforms now
@@ -666,9 +654,9 @@ public static class uScriptGUI
    /// <summary>
    /// Given a directory and a search filter, return a list of file references. This function may not work well with file system "hard links"
    /// </summary>
-   /// <param name="directoryInfo"></param>
-   /// <param name="searchFor"></param>
-   /// <returns></returns>
+   /// <param name="directoryInfo">The directory to examine.</param>
+   /// <param name="searchFor">The search filter.</param>
+   /// <returns>List of file information.</returns>
    public static List<FileInfo> GetFilesFromDirectory(DirectoryInfo directoryInfo, string searchFor)
    {
       var files = directoryInfo.GetFiles(searchFor).ToList();
@@ -682,15 +670,6 @@ public static class uScriptGUI
 
       return files;
    }
-
-
-
-
-
-
-
-
-
 
    public static string GetControlName()
    {
@@ -740,24 +719,16 @@ public static class uScriptGUI
       columnValue = new Column(col2, 220);
       columnType = new Column(col3, 0);
 
-      nodeCount = 0;
       propertyCount = 0;
 
       columnOffset = offset;
       svRect = rect;
 
-      if (null == styleEnabled)
+      if (styleEnabled == null)
       {
-         styleEnabled = new GUIStyle(GUI.skin.toggle);
-         styleEnabled.margin = new RectOffset(4, 0, 2, 4);
-         styleEnabled.padding = new RectOffset(20, 0, 0, 0);
-         styleEnabled.padding.left = 20;
-
-         styleLabel = new GUIStyle(EditorStyles.label);
-         styleLabel.margin.left = 0;
-
-         styleType = new GUIStyle(EditorStyles.label);
-         styleType.margin.left = 6;
+         styleEnabled = new GUIStyle(GUI.skin.toggle) { margin = new RectOffset(4, 0, 2, 4), padding = new RectOffset(20, 0, 0, 0) };
+         styleLabel = new GUIStyle(EditorStyles.label) { margin = { left = 0 } };
+         styleType = new GUIStyle(EditorStyles.label) { margin = { left = 6 } };
       }
 
       GUILayout.Label(string.Empty, new GUIStyle(), GUILayout.Height(uScriptGUIStyle.ColumnHeaderHeight));
@@ -769,7 +740,7 @@ public static class uScriptGUI
       var y = columnOffset.y;
 
       // The columns have a margin of 4. Margins of adjacent cells overlap, so the spacing
-      // betweem columns is the width of the largest margin, not the sum.
+      // between columns is the width of the largest margin, not the sum.
       //
       //    4.[A].4
       //          4.[B].4
@@ -823,7 +794,7 @@ public static class uScriptGUI
       GUILayout.Space(10);
    }
 
-   public static void HR()
+   public static void HorizontalRule()
    {
       GUILayout.BeginHorizontal(uScriptGUIStyle.PanelHR, GUILayout.ExpandWidth(true));
 
@@ -835,7 +806,6 @@ public static class uScriptGUI
       ScriptEditorCtrl scriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
       EntityNode entityNode = null;
 
-      nodeCount++;
       nodeKey = node != null ? node.Guid.ToString() : "UNKNOWN";
       if (false == FoldoutExpanded.ContainsKey(nodeKey))
       {
@@ -1028,26 +998,26 @@ public static class uScriptGUI
                {
                   if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.PropertyButtonMiddleDeprecated))
                   {
-                     var Click = new EventHandler(scriptEditorCtrl.m_MenuUpgradeNode_Click);
+                     var click = new EventHandler(scriptEditorCtrl.m_MenuUpgradeNode_Click);
 
                      // clear all selected nodes first
                      scriptEditorCtrl.DeselectAll();
                      // toggle the clicked node
                      scriptEditorCtrl.ToggleNode(node.Guid);
-                     Click(null, new EventArgs());
+                     click(null, new EventArgs());
                   }
                }
                else
                {
                   if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.PropertyButtonMiddleDeprecated))
                   {
-                     var Click = new EventHandler(scriptEditorCtrl.m_MenuDeleteMissingNode_Click);
+                     var click = new EventHandler(scriptEditorCtrl.m_MenuDeleteMissingNode_Click);
 
                      // clear all selected nodes first
                      scriptEditorCtrl.DeselectAll();
                      // toggle the clicked node
                      scriptEditorCtrl.ToggleNode(node.Guid);
-                     Click(null, new EventArgs());
+                     click(null, new EventArgs());
                   }
                }
             }
@@ -1190,13 +1160,13 @@ public static class uScriptGUI
 
          var parameters = new[]
          {
-            fieldInfo.GetValue(null),                  // RecycledTextEditor editor
+            fieldInfo.GetValue(null),           // RecycledTextEditor editor
             id,                                 // int id
             EditorGUI.IndentedRect(position),   // Rect position
             value,                              // string text
             style,                              // GUIStyle style
             null,                               // string allowedLetters
-            false,                               // out bool changed
+            false,                              // out bool changed
             false,                              // bool reset
             false,                              // bool multiline
             false                               // bool passwordField
@@ -1677,10 +1647,6 @@ public static class uScriptGUI
             {
                textValue = unityObject.name;
             }
-
-
-
-
          }
 
          EndRow(type.ToString());
@@ -1754,9 +1720,9 @@ public static class uScriptGUI
                entry = array[i];
             }
 
-            if (entry == null)
+            if (ReferenceEquals(entry, null))
             {
-               if (typeof(T) == typeof(Enum))
+               if (typeof(T) == typeof(Enum) && type != null)
                {
                   entry = (T)Enum.Parse(type, Enum.GetNames(type)[0]);
                }
@@ -2560,7 +2526,7 @@ public static class uScriptGUI
    // ================================================================================
 
    // There are four panel containers, each of which must be able to hold all panels.
-   // The size value returned applies to the axis appropraite for the container.
+   // The size value returned applies to the axis appropriate for the container.
    // All panels within a container share the size of that axis.
    // The default container size is 250px, regardless of the axis it affects.
    // There should probably be a minimum size for each container, perhaps 50 or 100px.

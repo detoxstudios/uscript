@@ -3445,7 +3445,7 @@ public sealed partial class uScript : EditorWindow
          {
             if (item.Text == "<hr>")
             {
-               uScriptGUI.HR();
+               uScriptGUI.HorizontalRule();
             }
             else
             {
