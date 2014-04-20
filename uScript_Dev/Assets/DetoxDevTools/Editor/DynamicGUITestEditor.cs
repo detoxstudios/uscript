@@ -1,98 +1,107 @@
-using UnityEditor;
-using UnityEngine;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DynamicGUITestEditor.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2014 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the DynamicGUITestEditor type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-public class DynamicGUITestEditor : EditorWindow
+namespace Detox.DetoxDevTools.Editor
 {
-   static private DynamicGUITestEditor _instance = null;
+   using System.Globalization;
 
-   static public DynamicGUITestEditor Instance
+   using UnityEditor;
+
+   using UnityEngine;
+
+   public class DynamicGUITestEditor : EditorWindow
    {
-      get
+      private static DynamicGUITestEditor panel;
+
+      private readonly string[] gridOptions = { "A", "B", "C", "D" };
+      private int gridIndex;
+
+      private int intField = 42;
+      private float floatField = Mathf.PI;
+      private string textField = "TEXT";
+      private Color colorField = Color.blue;
+
+      [MenuItem("Tools/Detox Studios/Internal/Dynamic GUI Test Editor &%g")]
+      private static void Init()
       {
-         if (null == _instance)
-         {
-            Init();
-         }
-         return _instance;
+         panel = (DynamicGUITestEditor)GetWindow(typeof(DynamicGUITestEditor), true, "Dynamic GUI Test Editor");
+         var panelSize = new Vector2(256, 224);
+         panel.minSize = panelSize;
+         panel.maxSize = panelSize;
       }
-   }
-   
-   [MenuItem("Tools/Detox Studios/Internal/Dynamic GUI Test Editor &%g")]
-   private static void Init()
-   {
-      _instance = (DynamicGUITestEditor)EditorWindow.GetWindow(typeof(DynamicGUITestEditor), true, "Dynamic GUI Test Editor");
-      Vector2 panelSize = new Vector2(256, 224);
-      _instance.minSize = panelSize;
-      _instance.maxSize = panelSize;
-   }
 
-   public int _gridIndex = 0;
-   public string[] _gridOptions = new string[] {"A", "B", "C", "D"};
-   private int _intField = 42;
-   private float _floatField = Mathf.PI;
-   private string _textField = "TEXT";
-   private Color _colorField = Color.blue;
-   
-   void OnGUI()
-   {
-      EditorGUILayout.BeginVertical();
+      private void OnGUI()
       {
-         _gridIndex = GUILayout.SelectionGrid(_gridIndex, _gridOptions, 4);
-      
-         EditorGUILayout.Separator();
-
-         EditorGUILayout.LabelField("Name of focused control:", "\"" + GUI.GetNameOfFocusedControl() + "\"");
-         EditorGUILayout.LabelField("keyboardControl:", GUIUtility.keyboardControl.ToString());
-         EditorGUILayout.LabelField("hotControl:", GUIUtility.hotControl.ToString());
-      
-         EditorGUILayout.Separator();
-         
-         EditorGUILayout.BeginVertical(GUI.skin.box);
+         EditorGUILayout.BeginVertical();
          {
-            switch (_gridIndex)
+            this.gridIndex = GUILayout.SelectionGrid(this.gridIndex, this.gridOptions, 4);
+      
+            EditorGUILayout.Separator();
+
+            EditorGUILayout.LabelField("Name of focused control:", "\"" + GUI.GetNameOfFocusedControl() + "\"");
+            EditorGUILayout.LabelField("keyboardControl:", GUIUtility.keyboardControl.ToString(CultureInfo.InvariantCulture));
+            EditorGUILayout.LabelField("hotControl:", GUIUtility.hotControl.ToString(CultureInfo.InvariantCulture));
+      
+            EditorGUILayout.Separator();
+         
+            EditorGUILayout.BeginVertical(GUI.skin.box);
             {
-               case 0:
-                  _intField = EditorGUILayout.IntField(ControlName("IntField"), _intField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_00"), _textField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_01"), _textField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_02"), _textField);
-                  break;
-               case 1:
-                  _floatField = EditorGUILayout.FloatField(ControlName("FloatField"), _floatField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_03"), _textField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_04"), _textField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_05"), _textField);
-                  break;
-               case 2:
-                  _colorField = EditorGUILayout.ColorField(ControlName("ColorField"), _colorField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_06"), _textField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_07"), _textField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_08"), _textField);
-                  break;
-               case 3:
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_09"), _textField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_0A"), _textField);
-                  _textField = EditorGUILayout.TextField(ControlName("TextField_0B"), _textField);
-                  GUILayout.Space(19);
-                  break;
+               switch (this.gridIndex)
+               {
+                  case 0:
+                     this.intField = EditorGUILayout.IntField(this.ControlName("IntField"), this.intField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_00"), this.textField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_01"), this.textField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_02"), this.textField);
+                     break;
+
+                  case 1:
+                     this.floatField = EditorGUILayout.FloatField(this.ControlName("FloatField"), this.floatField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_03"), this.textField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_04"), this.textField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_05"), this.textField);
+                     break;
+
+                  case 2:
+                     this.colorField = EditorGUILayout.ColorField(this.ControlName("ColorField"), this.colorField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_06"), this.textField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_07"), this.textField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_08"), this.textField);
+                     break;
+
+                  case 3:
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_09"), this.textField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_0A"), this.textField);
+                     this.textField = EditorGUILayout.TextField(this.ControlName("TextField_0B"), this.textField);
+                     GUILayout.Space(19);
+                     break;
+               }
+            }
+
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.Separator();
+         
+            if (GUILayout.Button("keyboardControl = 0"))
+            {
+               GUIUtility.keyboardControl = 0;
             }
          }
-         EditorGUILayout.EndVertical();
 
-         EditorGUILayout.Separator();
-         
-         if (GUILayout.Button("keyboardControl = 0"))
-         {
-            GUIUtility.keyboardControl = 0;
-         }
+         EditorGUILayout.EndVertical();
       }
-      EditorGUILayout.EndVertical();
-   }
                
-   private string ControlName(string name)
-   {
-      string result = _gridOptions[_gridIndex] + "_" + name;
-      GUI.SetNextControlName(result);
-      return result;
+      private string ControlName(string controlName)
+      {
+         var result = string.Format("{0}_{1}", this.gridOptions[this.gridIndex], controlName);
+         GUI.SetNextControlName(result);
+         return result;
+      }
    }
 }
