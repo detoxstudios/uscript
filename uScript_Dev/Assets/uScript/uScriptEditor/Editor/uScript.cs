@@ -1399,15 +1399,7 @@ public sealed partial class uScript : EditorWindow
          return;
       }
 
-      // Drop keyboard focus from the active control if anything else is clicked
-      //      if (e.type == EventType.MouseUp)
-      //      {
-      //         if (GUIUtility.hotControl != GUIUtility.keyboardControl)
-      //         {
-      //            GUIUtility.keyboardControl = 0;
-      //            this.Repaint();
-      //         }
-      //      }
+      DropKeyboardFocusWhenNewControlClicked();
 
       // Must be done in OnGUI rather than on demand
       m_ScriptEditorCtrl.ParseClipboardData();
@@ -1525,6 +1517,14 @@ public sealed partial class uScript : EditorWindow
             CheckDragDropCanvas();
             e.Use();
          }
+      }
+   }
+
+   private static void DropKeyboardFocusWhenNewControlClicked()
+   {
+      if (GUIUtility.hotControl != 0 && GUIUtility.hotControl != GUIUtility.keyboardControl)
+      {
+         GUIUtility.keyboardControl = 0;
       }
    }
 
