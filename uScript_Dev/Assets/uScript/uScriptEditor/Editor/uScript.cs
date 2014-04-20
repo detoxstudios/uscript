@@ -2770,6 +2770,8 @@ public sealed partial class uScript : EditorWindow
                                     var selected = GUILayout.Toggle(dn.Selected, nodeButtonContent, uScriptGUIStyle.NodeButtonLeft);
                                     if (selected != dn.Selected)
                                     {
+                                       GUIUtility.keyboardControl = 0;
+
                                        // is the shift key modifier being used?
                                        if (Event.current.modifiers != EventModifiers.Shift)
                                        {
@@ -2789,6 +2791,8 @@ public sealed partial class uScript : EditorWindow
                                        {
                                           if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.NodeButtonMiddle, GUILayout.Width(20)))
                                           {
+                                             GUIUtility.keyboardControl = 0;
+
                                              var click = new EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
                                              if (click != null)
                                              {
@@ -2804,6 +2808,8 @@ public sealed partial class uScript : EditorWindow
                                        {
                                           if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.NodeButtonMiddle, GUILayout.Width(20)))
                                           {
+                                             GUIUtility.keyboardControl = 0;
+
                                              var click = new EventHandler(m_ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
                                              if (click != null)
                                              {

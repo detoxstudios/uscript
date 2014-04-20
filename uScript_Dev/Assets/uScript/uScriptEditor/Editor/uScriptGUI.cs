@@ -711,6 +711,7 @@ public static class uScriptGUI
    {
       if (GUIUtility.keyboardControl != focusedControlID)
       {
+         // @NOTE: ControlIDList is only populated in uScriptGUI.VariableNameField(), which is currently disabled.
          if (ControlIDList.ContainsKey(focusedControlID))
          {
             var oldControlName = ControlIDList[focusedControlID];
