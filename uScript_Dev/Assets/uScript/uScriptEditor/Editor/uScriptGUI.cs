@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="uScriptGUI.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2014 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   This file contains a collection of custom uScript GUI controls for use with uScriptEditor.
@@ -402,10 +402,10 @@ public static class uScriptGUI
       }
 
       // Recurse into subdirectories of this directory.
-      var subdirEntries = Directory.GetDirectories(sourceDir);
-      foreach (var subdir in subdirEntries.Where(subdir => (File.GetAttributes(subdir) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint))
+      var directories = Directory.GetDirectories(sourceDir);
+      foreach (var directory in directories.Where(path => (File.GetAttributes(path) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint))
       {
-         GetResourceFolderPaths(subdir, recursionDepth + 1);
+         GetResourceFolderPaths(directory, recursionDepth + 1);
       }
    }
 
@@ -1623,9 +1623,9 @@ public static class uScriptGUI
 
             EndRow(textValue.GetType().ToString());
 
-            var tmpBool = false;
+            var tempBoolean = false;
 
-            BeginStaticRow(string.Empty, ref tmpBool, true, isReadOnly);
+            BeginStaticRow(string.Empty, ref tempBoolean, true, isReadOnly);
 
             //send the new value to the enum popup and whatever it
             //returns (in case the user modified it here) is what our final value is
@@ -2203,27 +2203,6 @@ public static class uScriptGUI
       }
 
       return true;
-   }
-
-   private static void OpenAssetBrowserWindow(AssetType type, string currentSelection)
-   {
-      if (AssetBrowserWindow.isOpen)
-      {
-         Debug.LogWarning("The AssetBrowserWindow is already open!\n");
-         return;
-      }
-
-      AssetBrowserWindow.assetType = type;
-   }
-
-   private static int GetControlID()
-   {
-      return GetControlID(string.Empty);
-   }
-
-   private static int GetControlID(string suffix)
-   {
-      return GetControlName(suffix).GetHashCode();
    }
 
    private static string GetControlName(string suffix)
