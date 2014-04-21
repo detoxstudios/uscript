@@ -1652,9 +1652,9 @@ public static class uScriptGUI
 
             EndRow(textValue.GetType().ToString());
 
-            var tmpBool = false;
+            var socketExposed = false;
 
-            BeginStaticRow(string.Empty, ref tmpBool, true, isReadOnly);
+            BeginStaticRow(string.Empty, ref socketExposed, true, isReadOnly);
 
             // now try and update the object browser with an instance of the specified object
             var objects = UnityEngine.Object.FindObjectsOfType(type);
@@ -1664,7 +1664,7 @@ public static class uScriptGUI
             // we must refer to (and select) their parent game object
             if (typeof(Component).IsAssignableFrom(type))
             {
-               type = typeof(GameObject);
+               //type = typeof(GameObject);
                if (null != unityObject)
                {
                   unityObject = ((Component)unityObject).gameObject;

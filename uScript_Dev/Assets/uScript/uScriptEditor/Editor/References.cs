@@ -148,7 +148,6 @@ namespace Detox.Windows.Forms
          return null;
       }
 
-
       public void OnPaint( )
       {
          bool signalUpdate = false;
@@ -354,9 +353,9 @@ namespace Detox.Windows.Forms
                            values = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly, typeof(GameObject));
                            val = Parameter.ArrayToString(values);
                         }
-                        else if ( null != GetObjectFieldType(p.Type) )
+                        else if (null != this.GetObjectFieldType(p.Type))
                         {
-                           val = uScriptGUI.ObjectField(p.FriendlyName, null, GetObjectFieldType(p.Type), p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ObjectField(p.FriendlyName, null, this.GetObjectFieldType(p.Type), p.Default, ref isSocketExposed, isLocked, isReadOnly);
                         }
                         else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "TextArea" )
                         {
