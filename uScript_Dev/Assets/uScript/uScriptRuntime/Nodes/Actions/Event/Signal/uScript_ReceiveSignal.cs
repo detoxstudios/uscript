@@ -37,7 +37,7 @@ public class uScript_ReceiveSignal : uScriptEvent
 
    public void OnIncomingSignal(GameObject o, string name)
    {
-      if (o.gameObject == gameObject) 
+      if (o.gameObject == gameObject && OnReceiveSignal != null) 
          OnReceiveSignal(this, new ReceiveSignalEventArgs(name));
    }
 }
