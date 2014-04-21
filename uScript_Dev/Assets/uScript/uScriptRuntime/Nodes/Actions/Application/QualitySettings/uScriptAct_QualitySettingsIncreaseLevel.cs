@@ -1,6 +1,6 @@
 // uScript Action Node
 // (C) 2012 Detox Studios LLC
-#if (!UNITY_3_0 && !UNITY_3_1 && !UNITY_3_2 && !UNITY_3_3)
+
 using UnityEngine;
 using System.Collections;
 
@@ -26,4 +26,3 @@ public class uScriptAct_QualitySettingsIncreaseLevel : uScriptLogic
       QualitySettings.IncreaseLevel(applyExpensiveChanges);
    }
 }
-#endif

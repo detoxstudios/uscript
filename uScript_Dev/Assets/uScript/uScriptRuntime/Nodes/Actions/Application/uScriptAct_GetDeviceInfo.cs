@@ -1,6 +1,5 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
-#if UNITY_3_4 || UNITY_3_5
 using UnityEngine;
 using System.Collections;
 
@@ -42,4 +41,3 @@ public class uScriptAct_GetDeviceInfo : uScriptLogic
 #endif
    }
 }
-#endif
