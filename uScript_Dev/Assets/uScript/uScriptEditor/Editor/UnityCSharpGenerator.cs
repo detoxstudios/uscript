@@ -1537,46 +1537,6 @@ namespace Detox.ScriptEditor
          {
             return "new " + FormatType(type) + "( )";
          }
-         else if ("UnityEngine.Ray" == type)
-         {
-            return "new UnityEngine.Ray( )";
-         }
-         else if ("UnityEngine.Resolution" == type)
-         {
-            return "new UnityEngine.Resolution( )";
-         }
-         else if ("UnityEngine.JointDrive" == type)
-         {
-            return "new UnityEngine.JointDrive( )";
-         }
-         else if ("UnityEngine.RaycastHit" == type)
-         {
-            return "new UnityEngine.RaycastHit( )";
-         }
-         else if ("UnityEngine.ContactPoint" == type)
-         {
-            return "new UnityEngine.ContactPoint( )";
-         }
-         else if ("UnityEngine.WheelHit" == type)
-         {
-            return "new UnityEngine.WheelHit( )";
-         }
-         else if ("UnityEngine.Touch" == type)
-         {
-            return "new UnityEngine.Touch( )";
-         }
-         else if ("UnityEngine.Plane" == type)
-         {
-            return "new UnityEngine.Plane( )";
-         }
-         else if ("UnityEngine.TouchPhase" == type)
-         {
-            return "new UnityEngine.TouchPhase( )";
-         }
-         else if ("UnityEngine.NetworkPlayer" == type)
-         {
-            return "new UnityEngine.NetworkPlayer( )";
-         }
          else if ("UnityEngine.LayerMask" == type)
          {
             if ("" == stringValue)
@@ -1585,22 +1545,6 @@ namespace Detox.ScriptEditor
             }
 
             return stringValue;
-         }
-         else if ("UnityEngine.NetworkMessageInfo" == type)
-         {
-            return "new UnityEngine.NetworkMessageInfo( )";
-         }
-         else if ("UnityEngine.AnimatorStateInfo" == type)
-         {
-            return "new UnityEngine.AnimatorStateInfo( )";
-         }
-         else if ("UnityEngine.NavMeshHit" == type)
-         {
-            return "new UnityEngine.NavMeshHit( )";
-         }
-         else if ("UnityEngine.Bounds" == type)
-         {
-            return "new UnityEngine.Bounds( )";
          }
          else if (type.Contains("[]"))
          {
@@ -1624,7 +1568,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         return "null";
+         return "default(" + type + ")";
       }
 
       private string FormatArrayValue(string stringValue, string type)
@@ -2243,7 +2187,7 @@ namespace Detox.ScriptEditor
 
             if (entityProperty.Instance.Default != "")
             {
-               AddCSharpLine(FormatType(entityProperty.Instance.Type) + " " + CSharpName(entityProperty, entityProperty.Instance.Name) + " = " + FormatValue(entityProperty.Instance.Default, entityProperty.ComponentType) + ";");
+               AddCSharpLine(FormatType(entityProperty.Instance.Type) + " " + CSharpName(entityProperty, entityProperty.Instance.Name) + " = " + FormatValue(entityProperty.Instance.Default, entityProperty.Instance.Type) + ";");
             }
          }
 
