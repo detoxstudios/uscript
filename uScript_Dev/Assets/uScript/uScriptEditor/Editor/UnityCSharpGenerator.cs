@@ -3896,77 +3896,83 @@ namespace Detox.ScriptEditor
 
          if (false == receiver.IsStatic)
          {
-            AddCSharpLine(receiver.ComponentType + " component;");
+            AddCSharpLine("{");
+            ++m_TabStack;
 
-            LinkNode[] instanceLinks = FindLinksByDestination(receiver.Guid, receiver.Instance.Name);
+                AddCSharpLine(receiver.ComponentType + " component;");
 
-            foreach (LinkNode link in instanceLinks)
-            {
-               EntityNode node = m_Script.GetNode(link.Source.Guid);
+                LinkNode[] instanceLinks = FindLinksByDestination(receiver.Guid, receiver.Instance.Name);
 
-               if (returnParam != Parameter.Empty)
-               {
-                  AddCSharpLine("component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();");
-                  AddCSharpLine("if ( null != component )");
-                  AddCSharpLine("{");
-                  ++m_TabStack;
+                foreach (LinkNode link in instanceLinks)
+                {
+                   EntityNode node = m_Script.GetNode(link.Source.Guid);
 
-                  AddCSharpLine(CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");");
+                   if (returnParam != Parameter.Empty)
+                   {
+                      AddCSharpLine("component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();");
+                      AddCSharpLine("if ( null != component )");
+                      AddCSharpLine("{");
+                      ++m_TabStack;
 
-                  --m_TabStack;
-                  AddCSharpLine("}");
+                      AddCSharpLine(CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");");
 
-                  //only one instance link supported because of the return parameter - this should be enforced
-                  //in the editor - this is just for a sanity check
-                  break;
-               }
-               else
-               {
-                  AddCSharpLine("component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();");
-                  AddCSharpLine("if ( null != component )");
-                  AddCSharpLine("{");
-                  ++m_TabStack;
+                      --m_TabStack;
+                      AddCSharpLine("}");
 
-                  AddCSharpLine("component." + receiver.Input.Name + "(" + args + ");");
+                      //only one instance link supported because of the return parameter - this should be enforced
+                      //in the editor - this is just for a sanity check
+                      break;
+                   }
+                   else
+                   {
+                      AddCSharpLine("component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();");
+                      AddCSharpLine("if ( null != component )");
+                      AddCSharpLine("{");
+                      ++m_TabStack;
 
-                  --m_TabStack;
-                  AddCSharpLine("}");
-               }
-            }
+                      AddCSharpLine("component." + receiver.Input.Name + "(" + args + ");");
 
-            //only one instance because of the return parameter
-            if (receiver.Instance.Default != "")
-            {
-               if (returnParam != Parameter.Empty)
-               {
-                  //only one instance supported because of the return parameter - this should be enforced
-                  //in the editor - this is just for a sanity check
-                  if (instanceLinks.Length == 0)
-                  {
-                     AddCSharpLine("component = " + CSharpName(receiver, receiver.Instance.Name) + ".GetComponent<" + receiver.ComponentType + ">();");
-                     AddCSharpLine("if ( null != component )");
-                     AddCSharpLine("{");
-                     ++m_TabStack;
+                      --m_TabStack;
+                      AddCSharpLine("}");
+                   }
+                }
 
-                     AddCSharpLine(CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");");
+                //only one instance because of the return parameter
+                if (receiver.Instance.Default != "")
+                {
+                   if (returnParam != Parameter.Empty)
+                   {
+                      //only one instance supported because of the return parameter - this should be enforced
+                      //in the editor - this is just for a sanity check
+                      if (instanceLinks.Length == 0)
+                      {
+                         AddCSharpLine("component = " + CSharpName(receiver, receiver.Instance.Name) + ".GetComponent<" + receiver.ComponentType + ">();");
+                         AddCSharpLine("if ( null != component )");
+                         AddCSharpLine("{");
+                         ++m_TabStack;
 
-                     --m_TabStack;
-                     AddCSharpLine("}");
-                  }
-               }
-               else
-               {
-                  AddCSharpLine("component = " + CSharpName(receiver, receiver.Instance.Name) + ".GetComponent<" + receiver.ComponentType + ">();");
-                  AddCSharpLine("if ( null != component )");
-                  AddCSharpLine("{");
-                  ++m_TabStack;
+                         AddCSharpLine(CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");");
 
-                  AddCSharpLine("component." + receiver.Input.Name + "(" + args + ");");
+                         --m_TabStack;
+                         AddCSharpLine("}");
+                      }
+                   }
+                   else
+                   {
+                      AddCSharpLine("component = " + CSharpName(receiver, receiver.Instance.Name) + ".GetComponent<" + receiver.ComponentType + ">();");
+                      AddCSharpLine("if ( null != component )");
+                      AddCSharpLine("{");
+                      ++m_TabStack;
 
-                  --m_TabStack;
-                  AddCSharpLine("}");
-               }
-            }
+                      AddCSharpLine("component." + receiver.Input.Name + "(" + args + ");");
+
+                      --m_TabStack;
+                      AddCSharpLine("}");
+                   }
+                }
+
+             --m_TabStack;
+             AddCSharpLine("}");
          }
          else //static static receiver
          {
