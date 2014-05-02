@@ -42,10 +42,9 @@ public class UpdateCheck : EditorWindow
 
       GUILayout.Label("uScript", EditorStyles.boldLabel);
       EditorGUI.indentLevel++;
-      EditorGUILayout.LabelField("Product Build", uScript.FullVersionName);
-      EditorGUILayout.LabelField("Product Name", uScript.ProductName);
-      EditorGUILayout.LabelField("Product Type", uScript.ProductType);
-      EditorGUILayout.LabelField("You are Using", uScript.BuildNumber);
+      EditorGUILayout.LabelField("Product Name", uScriptBuild.Name);
+      EditorGUILayout.LabelField("Product Type", UpdateNotification.ProductType);
+      EditorGUILayout.LabelField("You are Using", uScriptBuild.Number);
       EditorGUILayout.LabelField("Latest Version", UpdateNotification.LatestVersion);
       EditorGUI.indentLevel--;
 

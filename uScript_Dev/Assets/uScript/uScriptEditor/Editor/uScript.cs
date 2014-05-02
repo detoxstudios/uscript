@@ -43,19 +43,6 @@ using Control = Detox.Windows.Forms.Control;
 [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1516:ElementsMustBeSeparatedByBlankLine", Justification = "Reviewed. Suppression is OK here.")]
 public sealed partial class uScript : EditorWindow
 {
-   // ###############################################################
-   // # Version Name and Version Data
-   // #
-   // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public const string BuildNumber = "1.0.2576";
-   public const string BuildName = "Professional Edition (RC6)";
-   public const string BuildNamePLE = "Personal Learning Edition (RC6)";
-   public const string BuildNameBasic = "Basic Edition (RC6)";
-   // #
-   // ###############################################################
-
-   public const string Copyright = "\u00A9 2010-2014 Detox Studios, LLC.";
-
    public static readonly Preferences Preferences = new Preferences();
 
    private static readonly AppFrameworkData AppData = new AppFrameworkData();
@@ -159,31 +146,6 @@ public sealed partial class uScript : EditorWindow
          return instance != null;
       }
    }
-
-   // ###############################################################
-   // # Version Name and Version Data
-   // #
-#if DETOX_STORE_PLE
-   public static string ProductName { get { return BuildNamePLE; } }
-   public static string ProductType { get { return "uScript_PLE"; } }
-#elif UNITY_STORE_PRO
-   public static string ProductName { get { return BuildName; } }
-   public static string ProductType { get { return "uScript_AssetStore"; } }
-#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
-   public static string ProductName { get { return BuildNameBasic; } }
-   public static string ProductType { get { return "uScript_Basic"; } }
-#else
-   public static string ProductName { get { return BuildName; } }
-   public static string ProductType { get { return "uScript_Retail"; } }
-#endif
-
-   public static string FullVersionName { get { return ProductName + " (v" + BuildNumber + ")"; } }
-   //public string LastUnityBuild { get { return "3.3"; } }
-   //public string CurrentUnityBuild { get { return "3.4"; } }
-   //public string BetaUnityBuild { get { return "3.5"; } }
-   //public DateTime ExpireDate { get { return new DateTime(2011, 11, 30); } }
-   // #
-   // ###############################################################
 
    public bool HasFocus
    {
@@ -3272,7 +3234,8 @@ public sealed partial class uScript : EditorWindow
 
             GUILayout.FlexibleSpace();
 
-            GUILayout.Label(FullVersionName, uScriptGUIStyle.ToolbarLabel);
+            var buildInfo = string.Format("{0} (v{1})", uScriptBuild.Name, uScriptBuild.Number);
+            GUILayout.Label(buildInfo, uScriptGUIStyle.ToolbarLabel);
          }
          EditorGUILayout.EndHorizontal();
 

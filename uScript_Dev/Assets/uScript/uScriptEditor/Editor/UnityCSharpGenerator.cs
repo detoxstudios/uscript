@@ -1093,7 +1093,7 @@ namespace Detox.ScriptEditor
       {
          Profile p = new Profile("DeclareNamespaces");
 
-         AddCSharpLine("//uScript Generated Code - Build " + uScript.BuildNumber);
+         AddCSharpLine("//uScript Generated Code - Build " + uScriptBuild.Number);
          if (true == m_GenerateDebugInfo)
          {
             AddCSharpLine("//Generated with Debug Info");

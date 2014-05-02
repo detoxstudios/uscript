@@ -29,6 +29,16 @@ public class UpdateNotification
       UpdateServerError
    }
 
+#if DETOX_STORE_PLE
+   public static string ProductType { get { return "uScript_PLE"; } }
+#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
+   public static string ProductType { get { return "uScript_Basic"; } }
+#elif UNITY_STORE_PRO
+   public static string ProductType { get { return "uScript_AssetStore"; } }
+#else
+   public static string ProductType { get { return "uScript_Retail"; } }
+#endif
+
    public static string LatestVersion { get; private set; }
 
    public static string WebResponse { get; private set; }
@@ -43,9 +53,9 @@ public class UpdateNotification
 
       // Inform them of the results
       string msg;
-      var isAssetStoreProduct = uScript.ProductType == "uScript_AssetStore";
+      var isAssetStoreProduct = ProductType == "uScript_AssetStore";
 
-      var yourVersion = string.Format("\tYour version: \t{0}\n", uScript.BuildNumber);
+      var yourVersion = string.Format("\tYour version: \t{0}\n", uScriptBuild.Number);
       var latestVersion = string.Format("\tLatest version: \t{0}\n", LatestVersion);
 
       switch (updateResult)
@@ -146,7 +156,7 @@ public class UpdateNotification
 //               Debug.Log("\tNew version detected!\n");
 
                string msg;
-               var isAssetStoreProduct = uScript.ProductType == "uScript_AssetStore";
+               var isAssetStoreProduct = ProductType == "uScript_AssetStore";
 
                if (isAssetStoreProduct)
                {
@@ -160,7 +170,7 @@ public class UpdateNotification
                }
 
                msg += "\n"
-                    + "\tYour version: \t" + uScript.BuildNumber + "\n"
+                    + "\tYour version: \t" + uScriptBuild.Number + "\n"
                     + "\tLatest version: \t\t" + LatestVersion
                     + "\n";
 
@@ -229,7 +239,7 @@ public class UpdateNotification
                var errorMessage = string.Empty;
 
                // Get the current build number
-               var valueSegments = uScript.BuildNumber.Split('.');
+               var valueSegments = uScriptBuild.Number.Split('.');
                var tmpValue = valueSegments[valueSegments.GetUpperBound(0)];
                if (int.TryParse(tmpValue, out currentBuild) == false)
                {
@@ -300,8 +310,8 @@ public class UpdateNotification
             WebRequest.Create(
                string.Format(
                   "http://detoxstudios.com/download/versionCheck.php?productName={0}&productBuild={1}&platformName={2}&platformBuild={3}&platformPro={4}",
-                  WWW.EscapeURL(uScript.ProductType),
-                  WWW.EscapeURL(uScript.BuildNumber),
+                  WWW.EscapeURL(ProductType),
+                  WWW.EscapeURL(uScriptBuild.Number),
                   WWW.EscapeURL(Application.platform.ToString()),
                   WWW.EscapeURL(Application.unityVersion),
                   WWW.EscapeURL(uScript.IsUnityPro.ToString()))) as HttpWebRequest;

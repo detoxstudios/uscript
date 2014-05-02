@@ -72,9 +72,9 @@ namespace Detox.Editor.GUI
 
             EditorGUILayout.BeginVertical();
             {
-               GUILayout.Label("uScript " + uScript.ProductName, Style.ProductName);
-               GUILayout.Label("Version " + uScript.BuildNumber, Style.ProductVersion);
-               GUILayout.Label("\n" + uScript.Copyright + "\nAll rights reserved.\n", Style.ProductCopyright);
+               GUILayout.Label("uScript " + uScriptBuild.Name, Style.ProductName);
+               GUILayout.Label("Build " + uScriptBuild.Number, Style.ProductVersion);
+               GUILayout.Label("\n" + uScriptBuild.Copyright + "\nAll rights reserved.\n", Style.ProductCopyright);
 
                if (GUILayout.Button("www.detoxstudios.com", Style.WebsiteLink))
                {

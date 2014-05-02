@@ -1,10 +1,43 @@
-// uScript utility file
-// (C) 2011 Detox Studios LLC
-// Desc: Contains classes referenced by uScript generated code which needs to be included in a dll to be linked with users' games.
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Detox Studios, LLC" file="uScript_Runtime.cs">
+//   Copyright 2010-2014 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Contains classes referenced by uScript generated code which needs to be included in a dll to be linked with users' games.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 using System;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
+
 using UnityEngine;
+
+public static class uScriptBuild
+{
+   public static string Copyright { get { return "\u00A9 2010-2014 Detox Studios, LLC."; } }
+
+#if DETOX_STORE_PLE
+   public static string Name { get { return "Personal Learning Edition (RC6)"; } }
+#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
+   public static string Name { get { return "Basic Edition (RC6)"; } }
+#else
+   public static string Name { get { return "Professional Edition (RC6)"; } }
+#endif
+
+   // ###############################################################
+   // # Version Name and Version Data
+   // #
+   // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
+   public static string Number { get { return "1.0.2576"; } }
+   // #
+   // ###############################################################
+
+   //public string LastUnityBuild { get { return "3.3"; } }
+   //public string CurrentUnityBuild { get { return "3.4"; } }
+   //public string BetaUnityBuild { get { return "3.5"; } }
+   //public DateTime ExpireDate { get { return new DateTime(2011, 11, 30); } }
+}
 
 // The list of asset types supported by the AssetBrowserWindow class
 public enum AssetType
@@ -26,17 +59,17 @@ public enum AssetType
    TextAsset,
    Texture2D
 
-//    Procedural Material Assets
+   //    Procedural Material Assets
 }
 
 public interface uScriptIUnityVersion
 {
-	float Version { get; }
+   float Version { get; }
 }
 
 public class uScriptRuntimeConfig
 {
-	public static string MasterObjectName = "_uScript";
+   public static string MasterObjectName = "_uScript";
 }
 
 [AttributeUsage(AttributeTargets.ReturnValue | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
@@ -44,15 +77,18 @@ public class DefaultValue : Attribute
 {
    public object Default;
 
-   public DefaultValue(object o) { Default = o; }
+   public DefaultValue(object o)
+   {
+      Default = o;
+   }
 
    public DefaultValue(Type t, float[] f)
    {
       // Custom handlers for specific Unity data types
-      if (t == typeof(Rect) && f.Length == 4)         Default = new Rect(f[0], f[1], f[2], f[3]);
+      if (t == typeof(Rect) && f.Length == 4) Default = new Rect(f[0], f[1], f[2], f[3]);
 
-      else if (t == typeof(Color) && f.Length == 3)   Default = new Color(f[0], f[1], f[2]);
-      else if (t == typeof(Color) && f.Length == 4)   Default = new Color(f[0], f[1], f[2], f[3]);
+      else if (t == typeof(Color) && f.Length == 3) Default = new Color(f[0], f[1], f[2]);
+      else if (t == typeof(Color) && f.Length == 4) Default = new Color(f[0], f[1], f[2], f[3]);
 
       else if (t == typeof(Vector2) && f.Length == 2) Default = new Vector2(f[0], f[1]);
 
@@ -64,7 +100,9 @@ public class DefaultValue : Attribute
       else if (t == typeof(Vector4) && f.Length == 4) Default = new Vector4(f[0], f[1], f[2], f[3]);
 
       else
-         Debug.LogError("Unhandled DefaultValue type and float[] length pair:\n\t" + t.ToString() + " cannot have " + f.Length.ToString() + " parameters or the type isn't yet supported.\n");
+      {
+         Debug.LogError(string.Format("Unhandled DefaultValue type and float[] length pair:\n\t{0} cannot have {1} parameters or the type isn't yet supported.\n", t, f.Length));
+      }
    }
 }
 
@@ -72,12 +110,13 @@ public class DefaultValue : Attribute
 public class SocketStateAttribute : Attribute
 {
    public bool Visible = false;
-   public bool Locked  = false;
-   
+
+   public bool Locked = false;
+
    public SocketStateAttribute(bool visible, bool locked)
    {
       Visible = visible;
-      Locked  = locked;
+      Locked = locked;
    }
 }
 
@@ -86,7 +125,7 @@ public class AssetPathField : Attribute
 {
    public AssetType AssetType = AssetType.Invalid;
 
-   public AssetPathField(AssetType assetType) 
+   public AssetPathField(AssetType assetType)
    {
       AssetType = assetType;
    }
@@ -95,7 +134,7 @@ public class AssetPathField : Attribute
 [AttributeUsage(AttributeTargets.Parameter)]
 public class RequiresLink : Attribute
 {
-   public RequiresLink() 
+   public RequiresLink()
    {
    }
 }
@@ -112,7 +151,7 @@ public class FriendlyNameAttribute : Attribute
 [AttributeUsage(AttributeTargets.Method)]
 public class Driven : Attribute
 {
-   public Driven() {}
+   public Driven() { }
 }
 
 [AttributeUsage(AttributeTargets.Class)]
@@ -125,8 +164,8 @@ public class NodeDeprecated : Attribute
       UpgradeType = upgradeToType;
    }
 
-   public NodeDeprecated( )
-   {}
+   public NodeDeprecated()
+   { }
 }
 
 [AttributeUsage(AttributeTargets.Class)]
@@ -139,19 +178,19 @@ public class NodeNeedsGuiLayout : Attribute
       Value = value;
    }
 
-   public NodeNeedsGuiLayout( )
-   {}
+   public NodeNeedsGuiLayout()
+   { }
 }
 
 //deprectated, does nothing
 [AttributeUsage(AttributeTargets.Class)]
 public class NodeComponentType : Attribute
 {
-   public NodeComponentType(Type type) 
-   {}
-   
-   public NodeComponentType(Type type1, Type type2) 
-   {}
+   public NodeComponentType(Type type)
+   { }
+
+   public NodeComponentType(Type type1, Type type2)
+   { }
 }
 
 [AttributeUsage(AttributeTargets.Class)]
@@ -221,10 +260,10 @@ public class uScriptEvent : MonoBehaviour
 
 public class uScriptLogic : System.Object
 {
-   public virtual void SetParent( GameObject parent ) {}
-   
+   public virtual void SetParent(GameObject parent) { }
+
    //editor
-   public virtual Hashtable EditorDragDrop( object o ) { return null; }
+   public virtual Hashtable EditorDragDrop(object o) { return null; }
 }
 
 public class uScriptDebug : MonoBehaviour
@@ -294,28 +333,28 @@ public class uScriptCustomEvent
       Children,
       All
    }
-   
+
    public class CustomEventData
    {
-      public CustomEventData() {}
+      public CustomEventData() { }
       public CustomEventData(string eventName, object eventData, GameObject sender) { EventName = eventName; EventData = eventData; Sender = sender; }
-      
+
       public string EventName = "";
       public object EventData = null;
       public GameObject Sender = null;
    }
-   
+
    public static void BroadcastCustomEvent(string eventName, object eventData, GameObject eventSender)
    {
       GameObject[] gos = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
       CustomEventData cEventData = new CustomEventData(eventName, eventData, eventSender);
-      foreach (GameObject go in gos) 
+      foreach (GameObject go in gos)
       {
-         if (go && go.transform.parent == null) 
+         if (go && go.transform.parent == null)
          {
             go.gameObject.BroadcastMessage("CustomEvent", cEventData, SendMessageOptions.DontRequireReceiver);
          }
-      }   
+      }
    }
 
    public static void SendCustomEventUp(string eventName, object eventData, GameObject eventSender)
