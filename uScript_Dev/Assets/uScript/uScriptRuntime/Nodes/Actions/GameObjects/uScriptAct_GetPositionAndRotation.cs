@@ -47,21 +47,35 @@ public class uScriptAct_GetPositionAndRotation : uScriptLogic
       out Vector3 Right
       )
    {
-      if (GetLocal)
+      if (null != Target)
       {
-         Position = Target.transform.localPosition;
-         Rotation = Target.transform.localRotation;
-         EulerAngles = Target.transform.localEulerAngles;
+         if (GetLocal)
+         {
+            Position = Target.transform.localPosition;
+            Rotation = Target.transform.localRotation;
+            EulerAngles = Target.transform.localEulerAngles;
+         }
+         else
+         {
+            Position = Target.transform.position;
+            Rotation = Target.transform.rotation;
+            EulerAngles = Target.transform.eulerAngles;
+         }
+   		
+   		Forward = Target.transform.forward;
+   		Up = Target.transform.up;
+   		Right = Target.transform.right;
       }
       else
       {
-         Position = Target.transform.position;
-         Rotation = Target.transform.rotation;
-         EulerAngles = Target.transform.eulerAngles;
+         uScriptDebug.Log("[Get Position and Rotation] The target GameObject was null! Returning 0,0,0 for all values!", uScriptDebug.Type.Warning);
+         Position = Vector3.zero;
+         Rotation = new Quaternion();
+         EulerAngles = Vector3.zero;
+         Forward = Vector3.zero;
+         Up = Vector3.zero;
+         Right = Vector3.zero;
       }
-		
-		Forward = Target.transform.forward;
-		Up = Target.transform.up;
-		Right = Target.transform.right;
+
    }
 }
