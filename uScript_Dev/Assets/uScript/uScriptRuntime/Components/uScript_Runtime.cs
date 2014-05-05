@@ -7,6 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+#define UNITY_STORE_PRO //Don't forget LicenseWindow.cs
+//#define UNITY_STORE_BASIC //Don't forget LicenseWindow.cs
+//#define DETOX_STORE_PRO //Don't forget LicenseWindow.cs
+//#define DETOX_STORE_BASIC //Don't forget LicenseWindow.cs
+//#define DETOX_STORE_PLE // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
+//#define CLOSED_BETA
+
 using System;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
@@ -29,7 +36,7 @@ public static class uScriptBuild
    // # Version Name and Version Data
    // #
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public static string Number { get { return "1.0.2579"; } }
+   public static string Number { get { return "1.0.2580"; } }
    // #
    // ###############################################################
 
