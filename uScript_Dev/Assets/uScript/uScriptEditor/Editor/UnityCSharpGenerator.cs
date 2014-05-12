@@ -1568,7 +1568,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         return "default(" + type + ")";
+         return "default(" + FormatType(type) + ")";
       }
 
       private string FormatArrayValue(string stringValue, string type)
