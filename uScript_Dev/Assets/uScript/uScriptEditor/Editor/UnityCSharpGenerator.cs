@@ -86,7 +86,7 @@ namespace Detox.ScriptEditor
          }
       }
 
-      private string m_CSharpString;
+      private StringBuilder m_CSharpString;
       private bool m_GenerateDebugInfo;
       private int m_TabStack;
       private Hashtable m_GuidToId = new Hashtable();
@@ -138,7 +138,7 @@ namespace Detox.ScriptEditor
          Profile parseExternals = new Profile("ParseExternals");
 
          m_GenerateDebugInfo = false;
-         m_CSharpString = "";
+         m_CSharpString = new StringBuilder();
          m_TabStack = 0;
 
          m_Script = null;
@@ -583,7 +583,7 @@ namespace Detox.ScriptEditor
          Profile p = new Profile("GenerateGameObjectScript");
 
          m_GenerateDebugInfo = false;
-         m_CSharpString = "";
+         m_CSharpString = new StringBuilder();
          m_TabStack = 0;
 
          m_Script = null;
@@ -783,7 +783,7 @@ namespace Detox.ScriptEditor
 
          p.End( );
 
-         return m_CSharpString;
+         return m_CSharpString.ToString();
       }
 
       private bool NeedsMethod(EntityNode node, string methodName)
@@ -865,7 +865,7 @@ namespace Detox.ScriptEditor
       {
          Profile p = new Profile("GenerateLogicScript");
 
-         m_CSharpString = "";
+         m_CSharpString = new StringBuilder();
          m_TabStack = 0;
 
          m_Script = null;
@@ -1086,7 +1086,7 @@ namespace Detox.ScriptEditor
          }
 
          p.End();
-         return m_CSharpString;
+         return m_CSharpString.ToString();
       }
 
       private void DeclareNamespaces()
@@ -2847,7 +2847,7 @@ namespace Detox.ScriptEditor
                   AddCSharpLine("//if it's called twice there would be a double event registration (which is an error)");
                   AddCSharpLine("if ( false == m_RegisteredForEvents )");
                   AddCSharpLine("{");
-                     m_CSharpString += newCode;
+                     m_CSharpString.Append(newCode);
                   AddCSharpLine("}");
                }
             }
@@ -2978,8 +2978,8 @@ namespace Detox.ScriptEditor
 
       private string SetCode(string s)
       {
-         string c = m_CSharpString;
-         m_CSharpString = s;
+         string c = m_CSharpString.ToString();
+         m_CSharpString = new StringBuilder(s);
 
          return c;
       }
@@ -3055,7 +3055,7 @@ namespace Detox.ScriptEditor
 
             AddCSharpLine("{");
 
-            m_CSharpString += newCode;
+            m_CSharpString.Append(newCode);
 
             AddCSharpLine("}");
 
@@ -4507,10 +4507,10 @@ namespace Detox.ScriptEditor
       {
          for (int i = 0; i < m_TabStack; i++)
          {
-            m_CSharpString += "   ";
+            m_CSharpString.Append("   ");
          }
 
-         m_CSharpString += CSharpScript + "\r\n";
+         m_CSharpString.Append(CSharpScript + "\r\n");
       }
 
       private string PreviousName(EntityNode entityNode)
@@ -5196,7 +5196,7 @@ namespace Detox.ScriptEditor
             if (true == needsProperties)
                AddCSharpLine("List<" + FormatType(parameter.Type.Replace("[]", "")) + "> properties = new List<" + FormatType(parameter.Type.Replace("[]", "")) + ">();");
 
-            m_CSharpString += newCode;
+            m_CSharpString.Append(newCode);
 
             if (true == needsProperties)
                AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
@@ -5235,7 +5235,7 @@ namespace Detox.ScriptEditor
          {
             AddCSharpLine("{");
 
-            m_CSharpString += newCode;
+            m_CSharpString.Append(newCode);
 
             AddCSharpLine("}");
          }
