@@ -41,10 +41,18 @@ public class uScriptAct_Linecast2D : uScriptLogic
 
       [FriendlyName("Show Line", "If true, the line will be displayed in the Scene view.")]
       [SocketState(false, false)]
-      bool showRay
+      bool showRay,
+
+      [FriendlyName("Hit GameObject", "The first GameObject that was hit by the raycast (if any).")]
+      out GameObject HitObject,
+
+      [FriendlyName("Hit Location", "The position of the hit (if any).")]
+      out Vector3 HitLocation,
+
+      [FriendlyName("Hit Normal", "The surface normal of the hit (if any).")]
+      out Vector3 HitNormal
       )
    {
-      bool hitTrue = false;
       bool validInputs = true;
        
       if (typeof(GameObject) == Start.GetType() || typeof(Vector3) == Start.GetType())
@@ -105,6 +113,8 @@ public class uScriptAct_Linecast2D : uScriptLogic
          validInputs = false;
       }
 
+      RaycastHit2D hit = default(RaycastHit2D);
+
       if (validInputs)
       {
          if (true == showRay)
@@ -114,20 +124,28 @@ public class uScriptAct_Linecast2D : uScriptLogic
 
          if (!include)
          {
-            if (Physics2D.Linecast(m_StartVector, m_EndVector))
-            {
-               hitTrue = true;
-            }
+            hit = Physics2D.Linecast(m_StartVector, m_EndVector);
          }
          else
          {
-            if (Physics2D.Linecast(m_StartVector, m_EndVector, layerMask))
-            {
-               hitTrue = true;
-            }
+            hit = Physics2D.Linecast(m_StartVector, m_EndVector, layerMask);
          }
       }
-      m_Obstructed = hitTrue;
+      
+      if (hit.collider != null)
+      {
+         HitLocation = hit.point;
+         HitObject   = hit.collider.gameObject;
+         HitNormal   = hit.normal;
+      }
+      else
+      {
+         HitObject   = null;
+         HitLocation = Vector3.zero;
+         HitNormal   = Vector3.zero;
+      }
+
+      m_Obstructed = hit.collider != null;
       m_NotObstructed = !m_Obstructed;
    }
 }

@@ -31,10 +31,10 @@ public class uScriptAct_Raycast2D : uScriptLogic
       [FriendlyName("Direction", "The direction of the ray cast. Must be a Vector2.")]
       Vector2 Direction,
 
-	  [FriendlyName("Distance", "How far out the ray cast will travel from its Start position. If the default value of zero is used, the ray will cast an infinite distance. Must be a float.")]
+     [FriendlyName("Distance", "How far out the ray cast will travel from its Start position. If the default value of zero is used, the ray will cast an infinite distance. Must be a float.")]
 	  [DefaultValue(0f)]
 	  float Distance,
-      
+
       [FriendlyName("Layer Mask", "A Layer mask that is used to selectively ignore colliders when casting a ray.")]
       [SocketState(false, false)]
       LayerMask layerMask,
@@ -45,10 +45,18 @@ public class uScriptAct_Raycast2D : uScriptLogic
 
       [FriendlyName("Show Ray", "If true, the ray will be displayed as a line in the Scene view.")]
       [SocketState(false, false)]
-      bool showRay
+      bool showRay,
+
+      [FriendlyName("Hit GameObject", "The first GameObject that was hit by the raycast (if any).")]
+      out GameObject HitObject,
+
+      [FriendlyName("Hit Location", "The position of the hit (if any).")]
+      out Vector3 HitLocation,
+
+      [FriendlyName("Hit Normal", "The surface normal of the hit (if any).")]
+      out Vector3 HitNormal
       )
    {
-      bool hitTrue = false;
       bool validInputs = true;
  
       if (typeof(GameObject) == Start.GetType() || typeof(Vector3) == Start.GetType())
@@ -87,6 +95,8 @@ public class uScriptAct_Raycast2D : uScriptLogic
 			useDistance = true;
 		}
 
+      RaycastHit2D hit = default(RaycastHit2D);
+      
       if (validInputs)
       {
 
@@ -97,41 +107,42 @@ public class uScriptAct_Raycast2D : uScriptLogic
 
          if (!include)
          {
-			if(!useDistance)
-			{
-	            if (Physics2D.Raycast(m_StartVector, m_EndVector))
-	            {
-	               hitTrue = true;
-	            }
-			}
-			else
-			{
-				if (Physics2D.Raycast(m_StartVector, m_EndVector, Distance))
-				{
-					hitTrue = true;
-				}
-			}
+			   if(!useDistance)
+			   {
+               hit = Physics2D.Raycast(m_StartVector, m_EndVector);
+			   }
+			   else
+			   {
+				   hit = Physics2D.Raycast(m_StartVector, m_EndVector, Distance);
+			   }
          }
          else
          {
-			if(!useDistance)
-			{
-	            if (Physics2D.Raycast(m_StartVector, m_EndVector, layerMask))
-	            {
-	               hitTrue = true;
-	            }
-			}
-			else
-			{
-				if (Physics2D.Raycast(m_StartVector, m_EndVector, Distance, layerMask))
-				{
-					hitTrue = true;
-				}
-			}
+			   if(!useDistance)
+			   {
+	            hit = Physics2D.Raycast(m_StartVector, m_EndVector, layerMask);
+			   }
+			   else
+			   {
+				   hit = Physics2D.Raycast(m_StartVector, m_EndVector, Distance, layerMask);
+			   }
          }
       }
 
-      m_Obstructed = hitTrue;
+      if (hit.collider != null)
+      {
+         HitLocation = hit.point;
+         HitObject   = hit.collider.gameObject;
+         HitNormal   = hit.normal;
+      }
+      else
+      {
+         HitObject   = null;
+         HitLocation = Vector3.zero;
+         HitNormal   = Vector3.zero;
+      }
+
+      m_Obstructed = hit.collider != null;
       m_NotObstructed = !m_Obstructed;
    }
 }
