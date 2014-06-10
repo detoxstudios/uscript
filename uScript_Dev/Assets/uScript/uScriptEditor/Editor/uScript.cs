@@ -1361,7 +1361,7 @@ public sealed partial class uScript : EditorWindow
          return;
       }
 
-      DropKeyboardFocusWhenNewControlClicked();
+      this.DropKeyboardFocusWhenNewControlClicked();
 
       // Must be done in OnGUI rather than on demand
       m_ScriptEditorCtrl.ParseClipboardData();
@@ -1482,8 +1482,13 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private static void DropKeyboardFocusWhenNewControlClicked()
+   private void DropKeyboardFocusWhenNewControlClicked()
    {
+      if (this.hasFocus == false)
+      {
+         return;
+      }
+
       if (GUIUtility.hotControl != 0 && GUIUtility.hotControl != GUIUtility.keyboardControl)
       {
          GUIUtility.keyboardControl = 0;
