@@ -61,7 +61,12 @@ public class uScriptAct_CameraFade : uScriptLogic
 		               
 		  [FriendlyName("Color", "The material color you wish to use when Color Override is set to true.")]
 		  [SocketState(false, false)]
-		  Color FadeColor
+		  Color FadeColor,
+
+         [FriendlyName("Scale", "Set this to greater than the default of '1' if you can see the edges of the plane in the camera's view during the fade.")]
+         [SocketState(false, false)]
+         [DefaultValue(1.0f)]
+         float Scale
       	  )
    {
 		
@@ -102,6 +107,12 @@ public class uScriptAct_CameraFade : uScriptLogic
 			m_CameraPlane.transform.parent        = m_TargetCamera.transform;
 			m_CameraPlane.transform.localRotation = Quaternion.Euler(new Vector3(-90,0,0));
 			m_CameraPlane.transform.localPosition = new Vector3(0,0,0.5F);
+
+         if (Scale > 1.0f)
+         {
+            Vector3 scaleVector = new Vector3(Scale, Scale, Scale);
+            m_CameraPlane.transform.localScale = scaleVector; 
+         }
 			
 			// Start Fade
 			
