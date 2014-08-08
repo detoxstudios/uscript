@@ -1250,6 +1250,7 @@ namespace Detox.ScriptEditor
                   if ( false == (name == "Split String") &&
                        false == (name.Contains("List")) &&
                        false == (name == "On Collision") &&
+                       false == (name == "Get GameObjects By Name") &&
                        false == (name == "Get GameObjects By Tag") &&
                        false == (name == "Get Children By Tag") &&
                        false == (name == "Get Animations") &&
