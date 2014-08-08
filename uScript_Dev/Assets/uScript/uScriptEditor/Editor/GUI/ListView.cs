@@ -105,7 +105,7 @@ namespace Detox.Editor.GUI
             return this.listOffset;
          }
 
-         private set
+         set
          {
             if (this.listOffset != value)
             {

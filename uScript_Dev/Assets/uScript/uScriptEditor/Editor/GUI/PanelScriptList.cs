@@ -51,6 +51,8 @@ namespace Detox.Editor.GUI
             ShowFriendlyNames = false;
             ShowLabelIcons = true;
 
+            this.RestoreState();
+
             this.CreateColumns();
 
             this.UpdateListContents();
@@ -117,6 +119,13 @@ namespace Detox.Editor.GUI
             }
 
             EditorGUILayout.EndVertical();
+         }
+
+         public void SaveState()
+         {
+            uScript.Preferences.ProjectGraphListFilter = this.filterText;
+            uScript.Preferences.ProjectGraphListOffset = (int)this.listView.ListOffset.y;
+            uScript.Preferences.Save();
          }
 
          /// <summary>
@@ -237,6 +246,12 @@ namespace Detox.Editor.GUI
             //}
 
             return result;
+         }
+
+         private void RestoreState()
+         {
+            this.filterText = uScript.Preferences.ProjectGraphListFilter;
+            this.listView.ListOffset = new Vector2(0, uScript.Preferences.ProjectGraphListOffset);
          }
 
          private List<string> SortPaths(List<string> paths)

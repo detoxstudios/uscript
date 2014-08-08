@@ -104,6 +104,12 @@ namespace Detox.Editor.GUI
          this.panelScriptCurrent.RefreshSourceState();
       }
 
+      public void SaveState()
+      {
+         // TODO: Move this internally, by checking (EditorApplication.isCompiling) in Draw().
+         this.panelScriptList.SaveState();
+      }
+
       // === Structures =================================================================
 
       // === Classes ====================================================================

@@ -519,7 +519,7 @@ public sealed partial class uScript : EditorWindow
 
          if (string.Empty != path)
          {
-            ScriptEditor s = new ScriptEditor("", null, null);
+            ScriptEditor s = new ScriptEditor(string.Empty, null, null);
             if (true == s.Open(path))
             {
                bool debugCode = s.SavedForDebugging;
@@ -646,8 +646,8 @@ public sealed partial class uScript : EditorWindow
          uScript.Instance.AddType(b.Type);
       }
 
-      String lastOpened = (String)GetSetting("uScript\\LastOpened", "");
-      String lastScene = (String)GetSetting("uScript\\LastScene", "");
+      String lastOpened = (String)GetSetting("uScript\\LastOpened", string.Empty);
+      String lastScene = (String)GetSetting("uScript\\LastScene", string.Empty);
       //Debug.Log("last = " + lastOpened + ", lastScene = " + lastScene );
       if (!String.IsNullOrEmpty(lastOpened) && lastScene == UnityEditor.EditorApplication.currentScene)
       {
@@ -931,7 +931,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private string m_CurrentBreakpoint = "";
+   private string m_CurrentBreakpoint = string.Empty;
    private bool m_IsDebuggingValues = false;
 
    void Update()
@@ -2373,6 +2373,7 @@ public sealed partial class uScript : EditorWindow
       }
       else if (EditorApplication.isCompiling)
       {
+         PanelScript.Instance.SaveState();
          this.ShowNotification(uScriptGUIContent.messageCompiling);
       }
       else
@@ -2470,12 +2471,12 @@ public sealed partial class uScript : EditorWindow
 
    void DrawGUIHorizontalDivider()
    {
-      GUILayout.Box("", uScriptGUIStyle.HorizontalDivider, GUILayout.Height(uScriptGUI.PanelDividerThickness), GUILayout.ExpandWidth(true));
+      GUILayout.Box(string.Empty, uScriptGUIStyle.HorizontalDivider, GUILayout.Height(uScriptGUI.PanelDividerThickness), GUILayout.ExpandWidth(true));
    }
 
    void DrawGUIVerticalDivider()
    {
-      GUILayout.Box("", uScriptGUIStyle.VerticalDivider, GUILayout.Width(uScriptGUI.PanelDividerThickness), GUILayout.ExpandHeight(true));
+      GUILayout.Box(string.Empty, uScriptGUIStyle.VerticalDivider, GUILayout.Width(uScriptGUI.PanelDividerThickness), GUILayout.ExpandHeight(true));
    }
 
    //   int counter = 0;
@@ -2556,7 +2557,7 @@ public sealed partial class uScript : EditorWindow
 
                GUI.SetNextControlName("FilterSearch");
                var filterText = uScriptGUI.ToolbarSearchField(_graphListFilterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
-               GUI.SetNextControlName("");
+               GUI.SetNextControlName(string.Empty);
                if (filterText != _graphListFilterText)
                {
                   // Drop focus if the user inserted a newline (hit enter)
@@ -3174,7 +3175,7 @@ public sealed partial class uScript : EditorWindow
       RebuildAllScripts();
    }
 
-   void FileMenuItem_Clean()
+   private void FileMenuItem_Clean()
    {
       AssetDatabase.StartAssetEditing();
       StubGeneratedCode(Preferences.UserScripts);
@@ -3423,7 +3424,7 @@ public sealed partial class uScript : EditorWindow
             }
             else
             {
-               if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.MenuContextButton))
+               if (GUILayout.Button(item.Text.Replace("&", string.Empty), uScriptGUIStyle.MenuContextButton))
                {
                   m_CurrentMenu = item;
                   break;
@@ -3495,7 +3496,7 @@ public sealed partial class uScript : EditorWindow
 
       foreach (ToolStripItem item in menuItem.DropDownItems.Items)
       {
-         if (GUILayout.Button(item.Text.Replace("&", ""), uScriptGUIStyle.MenuContextButton))
+         if (GUILayout.Button(item.Text.Replace("&", string.Empty), uScriptGUIStyle.MenuContextButton))
          {
             m_CurrentMenu = item;
             rectContextMenuWindow.width = 10;
@@ -3629,9 +3630,9 @@ public sealed partial class uScript : EditorWindow
       {
          int result;
 
-         string titleName = "";
-         string graphName = "";
-         string msgContent = "";
+         string titleName = string.Empty;
+         string graphName = string.Empty;
+         string msgContent = string.Empty;
          if (m_ScriptEditorCtrl.ScriptEditor.Name.IsNotNullOrEmpty())
          {
             titleName = "Save File?";
@@ -3716,7 +3717,7 @@ public sealed partial class uScript : EditorWindow
       this.fullPath = string.Empty;
 
       //Debug.Log("clearing" );
-      uScript.SetSetting("uScript\\LastOpened", "");
+      uScript.SetSetting("uScript\\LastOpened", string.Empty);
       uScript.SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
    }
 
@@ -3742,10 +3743,10 @@ public sealed partial class uScript : EditorWindow
 
       Profile p = new Profile("OpenScript " + fullPath);
 
-      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor("", null, null);
+      Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor(string.Empty, null, null);
       scriptEditor.Open(fullPath);
 
-      scriptEditor = new Detox.ScriptEditor.ScriptEditor("", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
+      scriptEditor = new Detox.ScriptEditor.ScriptEditor(string.Empty, PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
 
       if (scriptEditor.Open(fullPath))
       {
@@ -3775,7 +3776,7 @@ public sealed partial class uScript : EditorWindow
          SetSetting("uScript\\LastOpened", uScriptConfig.ConstantPaths.RelativePath(fullPath).Substring("Assets".Length));
          SetSetting("uScript\\LastScene", UnityEditor.EditorApplication.currentScene);
 
-         this.currentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(this.fullPath) + "\\CanvasPosition", "");
+         this.currentCanvasPosition = (String)GetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(this.fullPath) + "\\CanvasPosition", string.Empty);
 
          this.currentScriptDirty = false;
          this.currentScript = scriptEditor.ToBase64(null);
@@ -3807,47 +3808,47 @@ public sealed partial class uScript : EditorWindow
 
    public void RebuildAllScripts()
    {
-      //first remove everything so we get rid of any compiler errors
-      //which allows the reflection to properly refresh
-      AssetDatabase.StartAssetEditing();
-      StubGeneratedCode(Preferences.UserScripts);
-      AssetDatabase.StopAssetEditing();
-      AssetDatabase.Refresh();
+      // First remove everything so we get rid of any compiler errors,
+      // which allows the reflection to properly refresh
+      this.FileMenuItem_Clean();
 
       this.rebuildWhenReady = true;
    }
 
-   public void RebuildScripts(string path, bool stubCode)
+   public void RebuildScript(string scriptFullName, bool stubCode)
    {
-      DirectoryInfo directory = new DirectoryInfo(path);
+      var scriptEditor = new ScriptEditor(string.Empty, null, null);
+      scriptEditor.Open(scriptFullName);
 
-      FileInfo[] files = directory.GetFiles();
+      scriptEditor = new ScriptEditor(string.Empty, this.PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
 
-      foreach (FileInfo file in files)
+      if (scriptEditor.Open(scriptFullName))
       {
-         if (".uscript" != file.Extension) continue;
-
-         Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor("", null, null);
-         scriptEditor.Open(file.FullName);
-
-         scriptEditor = new Detox.ScriptEditor.ScriptEditor("", PopulateEntityTypes(scriptEditor.Types), PopulateLogicTypes());
-
-         if (true == scriptEditor.Open(file.FullName))
+         if (this.SaveScript(scriptEditor, scriptFullName, true, this.GenerateDebugInfo, stubCode))
          {
-            if (true == SaveScript(scriptEditor, file.FullName, true, GenerateDebugInfo, stubCode))
-            {
-               uScriptDebug.Log("Rebuilt " + file.FullName);
-            }
-            else
-            {
-               uScriptDebug.Log("Could not save " + file.FullName, uScriptDebug.Type.Error);
-            }
+            uScriptDebug.Log("Rebuilt " + scriptFullName);
+         }
+         else
+         {
+            uScriptDebug.Log("Could not save " + scriptFullName, uScriptDebug.Type.Error);
          }
       }
+   }
 
-      foreach (DirectoryInfo subDirectory in directory.GetDirectories())
+   private void RebuildScripts(string path, bool stubCode)
+   {
+      var directory = new DirectoryInfo(path);
+
+      var files = directory.GetFiles();
+
+      foreach (var file in files.Where(file => ".uscript" == file.Extension))
       {
-         RebuildScripts(subDirectory.FullName, stubCode);
+         this.RebuildScript(file.FullName, stubCode);
+      }
+
+      foreach (var subDirectory in directory.GetDirectories())
+      {
+         this.RebuildScripts(subDirectory.FullName, stubCode);
       }
    }
 
@@ -4343,10 +4344,10 @@ public sealed partial class uScript : EditorWindow
                                  output.State = FindSocketState(eventProperty.GetCustomAttributes(false)); ;
                                  output.Name = eventProperty.Name;
                                  output.FriendlyName = FindFriendlyName(eventProperty.Name, eventProperty.GetCustomAttributes(false));
-                                 output.Type = eventProperty.PropertyType.ToString().Replace("&", "");
+                                 output.Type = eventProperty.PropertyType.ToString().Replace("&", string.Empty);
                                  output.Input = false;
                                  output.Output = true;
-                                 output.DefaultAsObject = FindDefaultValue("", eventProperty.GetCustomAttributes(false));
+                                 output.DefaultAsObject = FindDefaultValue(string.Empty, eventProperty.GetCustomAttributes(false));
 
                                  uScript.Instance.AddType(eventProperty.PropertyType);
 
@@ -4421,9 +4422,9 @@ public sealed partial class uScript : EditorWindow
 
                variable.State = FindSocketState(p.GetCustomAttributes(false));
                variable.Name = p.Name;
-               variable.Type = p.ParameterType.ToString().Replace("&", "");
+               variable.Type = p.ParameterType.ToString().Replace("&", string.Empty);
                variable.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
-               variable.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
+               variable.DefaultAsObject = FindDefaultValue(string.Empty, p.GetCustomAttributes(false));
 
                AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
                AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
@@ -4438,10 +4439,10 @@ public sealed partial class uScript : EditorWindow
             {
                Parameter parameter = new Parameter();
                parameter.Name = "Return";
-               parameter.Type = m.ReturnType.ToString().Replace("&", "");
+               parameter.Type = m.ReturnType.ToString().Replace("&", string.Empty);
                parameter.Input = false;
                parameter.Output = true;
-               parameter.Default = "";
+               parameter.Default = string.Empty;
                parameter.State = FindSocketState(m.GetCustomAttributes(false));
                parameter.FriendlyName = "Return Value";
 
@@ -4530,7 +4531,7 @@ public sealed partial class uScript : EditorWindow
             )
          {
             string friendlyName = rawScript.FriendlyName;
-            if ("" == friendlyName) friendlyName = rawScript.Type;
+            if (string.Empty == friendlyName) friendlyName = rawScript.Type;
 
             LogicNode logicNode = new LogicNode(rawScript.Type, friendlyName);
 
@@ -4616,7 +4617,7 @@ public sealed partial class uScript : EditorWindow
             Parameter parameter = new Parameter();
             parameter.State = FindSocketState(p.GetCustomAttributes(false));
             parameter.Name = p.Name;
-            parameter.Type = p.ParameterType.ToString().Replace("&", "");
+            parameter.Type = p.ParameterType.ToString().Replace("&", string.Empty);
             parameter.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
 
             if (true == p.IsOut)
@@ -4635,7 +4636,7 @@ public sealed partial class uScript : EditorWindow
                parameter.Output = false;
             }
 
-            parameter.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
+            parameter.DefaultAsObject = FindDefaultValue(string.Empty, p.GetCustomAttributes(false));
 
             AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
             AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
@@ -4650,10 +4651,10 @@ public sealed partial class uScript : EditorWindow
             Parameter parameter = new Parameter();
             parameter.State = FindSocketState(m.GetCustomAttributes(false));
             parameter.Name = "Return";
-            parameter.Type = m.ReturnType.ToString().Replace("&", "");
+            parameter.Type = m.ReturnType.ToString().Replace("&", string.Empty);
             parameter.Input = false;
             parameter.Output = true;
-            parameter.Default = "";
+            parameter.Default = string.Empty;
             parameter.FriendlyName = "Return Value";
 
             uScript.Instance.AddType(m.ReturnType);
@@ -4699,10 +4700,10 @@ public sealed partial class uScript : EditorWindow
                   //them and push in the value
                   input.State = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
                   input.Name = p.Name;
-                  input.Type = p.PropertyType.ToString().Replace("&", "");
+                  input.Type = p.PropertyType.ToString().Replace("&", string.Empty);
                   input.Input = true;
                   input.Output = false;
-                  input.DefaultAsObject = FindDefaultValue("", p.GetCustomAttributes(false));
+                  input.DefaultAsObject = FindDefaultValue(string.Empty, p.GetCustomAttributes(false));
                   input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
 
                   AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
@@ -4750,10 +4751,10 @@ public sealed partial class uScript : EditorWindow
                            output.State = FindSocketState(eventProperty.GetCustomAttributes(false)); ;
                            output.Name = eventProperty.Name;
                            output.FriendlyName = FindFriendlyName(eventProperty.Name, eventProperty.GetCustomAttributes(false));
-                           output.Type = eventProperty.PropertyType.ToString().Replace("&", "");
+                           output.Type = eventProperty.PropertyType.ToString().Replace("&", string.Empty);
                            output.Input = false;
                            output.Output = true;
-                           output.DefaultAsObject = FindDefaultValue("", eventProperty.GetCustomAttributes(false));
+                           output.DefaultAsObject = FindDefaultValue(string.Empty, eventProperty.GetCustomAttributes(false));
 
                            uScript.Instance.AddType(eventProperty.PropertyType);
 
@@ -4935,7 +4936,7 @@ public sealed partial class uScript : EditorWindow
          foreach (string s in userTypes)
          {
             string szType = s.Trim();
-            if ("" == szType) continue;
+            if (string.Empty == szType) continue;
 
             Type t = uScript.Instance.GetType(szType);
 
@@ -4979,7 +4980,7 @@ public sealed partial class uScript : EditorWindow
          foreach (string s in unityTypeArray)
          {
             string szType = s.Trim();
-            if ("" == szType) continue;
+            if (string.Empty == szType) continue;
 
             Type t = uScript.Instance.GetType(szType);
             if (null != t) uniqueObjects[t.ToString()] = t;
@@ -5291,7 +5292,7 @@ public sealed partial class uScript : EditorWindow
          return FindFriendlyName(type, uscriptType.GetCustomAttributes(false));
       }
 
-      return "";
+      return string.Empty;
    }
 
    public static string FindFriendlyName(string defaultName, object[] attributes)

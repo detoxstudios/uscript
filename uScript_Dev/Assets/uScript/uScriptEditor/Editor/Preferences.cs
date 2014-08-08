@@ -7,7 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1107:CodeMustNotContainMultipleStatementsOnOneLine", Justification = "Reviewed. Suppression is OK here.")]
@@ -187,6 +189,18 @@ public class Preferences
       set { this.LoadIfRequired(); this.preferences["ExpandFavoritePanel"] = value; }
    }
 
+   public string ProjectGraphListFilter
+   {
+      get { this.LoadIfRequired(); return this.preferences["ProjectGraphListFilter"] as string; }
+      set { this.LoadIfRequired(); this.preferences["ProjectGraphListFilter"] = value; }
+   }
+
+   public int ProjectGraphListOffset
+   {
+      get { this.LoadIfRequired(); return (int)this.preferences["ProjectGraphListOffset"]; }
+      set { this.LoadIfRequired(); this.preferences["ProjectGraphListOffset"] = value; }
+   }
+
    public string FavoriteNode1
    {
       get { this.LoadIfRequired(); return this.preferences["FavoriteNode1"] as string; }
@@ -240,7 +254,7 @@ public class Preferences
       get { this.LoadIfRequired(); return this.preferences["FavoriteNode9"] as string; }
       set { this.LoadIfRequired(); this.preferences["FavoriteNode9"] = value; }
    }
-   
+
    public string[] FavoriteNodes
    {
       get
@@ -331,47 +345,50 @@ public class Preferences
    [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1503:CurlyBracketsMustNotBeOmitted", Justification = "Reviewed. Suppression is OK here.")]
    private void LoadDefaultsIfRequired()
    {
-      if (null == this.preferences["AutoExpandToolbox"])         this.preferences["AutoExpandToolbox"]         = true;
-      if (null == this.preferences["DrawPanelsOnUpdate"])        this.preferences["DrawPanelsOnUpdate"]        = false;
-      if (null == this.preferences["ShowGrid"])                  this.preferences["ShowGrid"]                  = uScriptConfig.Style.ShowGrid;
-      if (null == this.preferences["GridSize"])                  this.preferences["GridSize"]                  = uScriptConfig.Style.GridSize;
-      if (null == this.preferences["GridSubdivisions"])          this.preferences["GridSubdivisions"]          = uScriptConfig.Style.GridSubdivisions;
-      if (null == this.preferences["GridColorMajor"])            this.preferences["GridColorMajor"]            = uScriptConfig.Style.GridColorMajor;
-      if (null == this.preferences["GridColorMinor"])            this.preferences["GridColorMinor"]            = uScriptConfig.Style.GridColorMinor;
-      if (null == this.preferences["DoubleClickBehavior"])       this.preferences["DoubleClickBehavior"]       = DoubleClickBehaviorType.PingSource;
-      if (null == this.preferences["VariableExpansion"])         this.preferences["VariableExpansion"]         = VariableExpansionType.Dynamic;
-      if (null == this.preferences["GridSnap"])                  this.preferences["GridSnap"]                  = false;
-      if (null == this.preferences["ShowAtStartup"])             this.preferences["ShowAtStartup"]             = true;
-      if (null == this.preferences["CheckForUpdate"])            this.preferences["CheckForUpdate"]            = true;
-      if (null == this.preferences["LastUpdateCheck"])           this.preferences["LastUpdateCheck"]           = 0;
-      if (null == this.preferences["IgnoreUpdateBuild"])         this.preferences["IgnoreUpdateBuild"]         = string.Empty;
+      if (null == this.preferences["AutoExpandToolbox"]) this.preferences["AutoExpandToolbox"] = true;
+      if (null == this.preferences["DrawPanelsOnUpdate"]) this.preferences["DrawPanelsOnUpdate"] = false;
+      if (null == this.preferences["ShowGrid"]) this.preferences["ShowGrid"] = uScriptConfig.Style.ShowGrid;
+      if (null == this.preferences["GridSize"]) this.preferences["GridSize"] = uScriptConfig.Style.GridSize;
+      if (null == this.preferences["GridSubdivisions"]) this.preferences["GridSubdivisions"] = uScriptConfig.Style.GridSubdivisions;
+      if (null == this.preferences["GridColorMajor"]) this.preferences["GridColorMajor"] = uScriptConfig.Style.GridColorMajor;
+      if (null == this.preferences["GridColorMinor"]) this.preferences["GridColorMinor"] = uScriptConfig.Style.GridColorMinor;
+      if (null == this.preferences["DoubleClickBehavior"]) this.preferences["DoubleClickBehavior"] = DoubleClickBehaviorType.PingSource;
+      if (null == this.preferences["VariableExpansion"]) this.preferences["VariableExpansion"] = VariableExpansionType.Dynamic;
+      if (null == this.preferences["GridSnap"]) this.preferences["GridSnap"] = false;
+      if (null == this.preferences["ShowAtStartup"]) this.preferences["ShowAtStartup"] = true;
+      if (null == this.preferences["CheckForUpdate"]) this.preferences["CheckForUpdate"] = true;
+      if (null == this.preferences["LastUpdateCheck"]) this.preferences["LastUpdateCheck"] = 0;
+      if (null == this.preferences["IgnoreUpdateBuild"]) this.preferences["IgnoreUpdateBuild"] = string.Empty;
 
-      if (null == this.preferences["RelativeProjectFiles"])      this.preferences["RelativeProjectFiles"]      = uScriptConfig.ConstantPaths.RelativePathInAssets(UnityEngine.Application.dataPath + "/uScriptProjectFiles");
-      if (null == this.preferences["RelativeUserScripts"])       this.preferences["RelativeUserScripts"]       = uScriptConfig.ConstantPaths.RelativePathInAssets(this.ProjectFiles + "/uScripts");
-      if (null == this.preferences["RelativeUserNodes"])         this.preferences["RelativeUserNodes"]         = uScriptConfig.ConstantPaths.RelativePathInAssets(this.ProjectFiles + "/Nodes");
-      if (null == this.preferences["RelativeNestedScripts"])     this.preferences["RelativeNestedScripts"]     = uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode");
-      if (null == this.preferences["RelativeGeneratedScripts"])  this.preferences["RelativeGeneratedScripts"]  = uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode");
+      if (null == this.preferences["RelativeProjectFiles"]) this.preferences["RelativeProjectFiles"] = uScriptConfig.ConstantPaths.RelativePathInAssets(UnityEngine.Application.dataPath + "/uScriptProjectFiles");
+      if (null == this.preferences["RelativeUserScripts"]) this.preferences["RelativeUserScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(this.ProjectFiles + "/uScripts");
+      if (null == this.preferences["RelativeUserNodes"]) this.preferences["RelativeUserNodes"] = uScriptConfig.ConstantPaths.RelativePathInAssets(this.ProjectFiles + "/Nodes");
+      if (null == this.preferences["RelativeNestedScripts"]) this.preferences["RelativeNestedScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode");
+      if (null == this.preferences["RelativeGeneratedScripts"]) this.preferences["RelativeGeneratedScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode");
       if (null == this.preferences["MaximumNodeRecursionCount"]) this.preferences["MaximumNodeRecursionCount"] = 1000;
-      if (null == this.preferences["SaveMethod"])                this.preferences["SaveMethod"]                = 1;   // 0:Quick, 1:Debug, 2:Release
-      if (null == this.preferences["ProfileMin"])                this.preferences["ProfileMin"]                = 1f;
-      if (null == this.preferences["Profiling"])                 this.preferences["Profiling"]                 = false;
-      if (null == this.preferences["PropertyPanelNodeLimit"])    this.preferences["PropertyPanelNodeLimit"]    = 1;
+      if (null == this.preferences["SaveMethod"]) this.preferences["SaveMethod"] = 1;   // 0:Quick, 1:Debug, 2:Release
+      if (null == this.preferences["ProfileMin"]) this.preferences["ProfileMin"] = 1f;
+      if (null == this.preferences["Profiling"]) this.preferences["Profiling"] = false;
+      if (null == this.preferences["PropertyPanelNodeLimit"]) this.preferences["PropertyPanelNodeLimit"] = 1;
 
-      if (null == this.preferences["ExpandFavoritePanel"])       this.preferences["ExpandFavoritePanel"]       = true;
+      if (null == this.preferences["ExpandFavoritePanel"]) this.preferences["ExpandFavoritePanel"] = true;
 
-      if (null == this.preferences["FavoriteNode1"])             this.preferences["FavoriteNode1"]             = string.Empty;
-      if (null == this.preferences["FavoriteNode2"])             this.preferences["FavoriteNode2"]             = string.Empty;
-      if (null == this.preferences["FavoriteNode3"])             this.preferences["FavoriteNode3"]             = string.Empty;
-      if (null == this.preferences["FavoriteNode4"])             this.preferences["FavoriteNode4"]             = string.Empty;
-      if (null == this.preferences["FavoriteNode5"])             this.preferences["FavoriteNode5"]             = string.Empty;
-      if (null == this.preferences["FavoriteNode6"])             this.preferences["FavoriteNode6"]             = string.Empty;
-      if (null == this.preferences["FavoriteNode7"])             this.preferences["FavoriteNode7"]             = string.Empty;
-      if (null == this.preferences["FavoriteNode8"])             this.preferences["FavoriteNode8"]             = string.Empty;
-      if (null == this.preferences["FavoriteNode9"])             this.preferences["FavoriteNode9"]             = string.Empty;
+      if (null == this.preferences["ProjectGraphListFilter"]) this.preferences["ProjectGraphListFilter"] = string.Empty;
+      if (null == this.preferences["ProjectGraphListOffset"]) this.preferences["ProjectGraphListOffset"] = 0;
 
-      if (null == this.preferences["GraphListFolderStates"])     this.preferences["GraphListFolderStates"]     = string.Empty;
+      if (null == this.preferences["FavoriteNode1"]) this.preferences["FavoriteNode1"] = string.Empty;
+      if (null == this.preferences["FavoriteNode2"]) this.preferences["FavoriteNode2"] = string.Empty;
+      if (null == this.preferences["FavoriteNode3"]) this.preferences["FavoriteNode3"] = string.Empty;
+      if (null == this.preferences["FavoriteNode4"]) this.preferences["FavoriteNode4"] = string.Empty;
+      if (null == this.preferences["FavoriteNode5"]) this.preferences["FavoriteNode5"] = string.Empty;
+      if (null == this.preferences["FavoriteNode6"]) this.preferences["FavoriteNode6"] = string.Empty;
+      if (null == this.preferences["FavoriteNode7"]) this.preferences["FavoriteNode7"] = string.Empty;
+      if (null == this.preferences["FavoriteNode8"]) this.preferences["FavoriteNode8"] = string.Empty;
+      if (null == this.preferences["FavoriteNode9"]) this.preferences["FavoriteNode9"] = string.Empty;
+
+      if (null == this.preferences["GraphListFolderStates"]) this.preferences["GraphListFolderStates"] = string.Empty;
    }
-   
+
    private void LoadIfRequired()
    {
       if (null == this.preferences)

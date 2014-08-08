@@ -310,12 +310,18 @@ namespace Detox.Editor.GUI
             if (this.SourceState == GraphInfo.State.Missing)
             {
                menu.AddDisabledItem(new GUIContent("Locate Source"));
-               //menu.AddDisabledItem(new GUIContent("Remove Source"));
+
+               menu.AddSeparator(string.Empty);
+
+               menu.AddDisabledItem(new GUIContent("Remove Source"));
             }
             else
             {
                menu.AddItem(new GUIContent("Locate Source"), false, this.CommandSourceLocate);
-               //menu.AddDisabledItem(new GUIContent("Remove Source"));
+
+               menu.AddSeparator(string.Empty);
+
+               menu.AddItem(new GUIContent("Remove Source"), false, this.CommandSourceRemove);
             }
          }
 
@@ -477,6 +483,15 @@ namespace Detox.Editor.GUI
          {
             GUI.Label(rect, stateButtonContent, Style.StatusIcon);
          }
+      }
+
+      private void CommandSourceRemove()
+      {
+         // TODO: Update the source state
+         AssetDatabase.StartAssetEditing();
+         uScript.Instance.RebuildScript(this.GraphPath.Replace("/", "\\"), true);
+         AssetDatabase.StopAssetEditing();
+         AssetDatabase.Refresh();
       }
 
       // === Structures =================================================================
