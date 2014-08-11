@@ -4006,9 +4006,7 @@ namespace Detox.ScriptEditor
          //source must be output and dest must be input
          if ( true != sourceParam.Output || true != destParam.Input ) 
          {
-            UnityEngine.Debug.Log( "source = " + sourceParam.Name );
-            UnityEngine.Debug.Log( "source = " + sourceParam.Name );
-            
+//            UnityEngine.Debug.Log( "source = " + sourceParam.Name );
              //UnityEngine.Debug.Log( "dest   = " + destParam.Input );
 
             reason = "The source link must allow an output and the destination must allow an input";
