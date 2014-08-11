@@ -45,6 +45,8 @@ public sealed partial class uScript : EditorWindow
 {
    public static readonly Preferences Preferences = new Preferences();
 
+   public static EditorApplication.CallbackFunction GraphSaved;
+
    private static readonly AppFrameworkData AppData = new AppFrameworkData();
    private static readonly Hashtable NodeParameterFields = new Hashtable();
    private static readonly Hashtable NodeParameterDescFields = new Hashtable();
@@ -4082,6 +4084,9 @@ public sealed partial class uScript : EditorWindow
          this.m_ScriptEditorCtrl.IsDirty = false;
 
          this.CacheScript();
+
+         uScriptBackgroundProcess.ForceFileRefresh();
+         if ( uScript.GraphSaved != null ) uScript.GraphSaved();
 
          if (pleaseAttachMe)
          {
