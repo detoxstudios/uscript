@@ -550,7 +550,7 @@ public sealed partial class uScript : EditorWindow
    [UnityEditor.MenuItem("Tools/Detox Studios/uScript Editor %u")]
    static void Init()
    {
-      instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript Editor");
+      instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript");
       instance.Launching();
 
       UpdateNotification.StartupCheck();
