@@ -1,44 +1,48 @@
-using UnityEngine;
-using System.Collections;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ImportGUITextures.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2014 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the ImportGUITextures type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 using UnityEditor;
 
+using UnityEngine;
 
-class ImportGUITextures : AssetPostprocessor
+internal class ImportGUITextures : AssetPostprocessor
 {
-   void OnPreprocessTexture()
+   private void OnPreprocessTexture()
    {
-
-      if (assetPath.Contains("_GUI"))
+      if (!this.assetPath.Contains("_GUI")
+         && !this.assetPath.Contains("Editor Default Resources/Icons"))
       {
-         TextureImporter textureImporter = (TextureImporter)assetImporter;
-         TextureImporterSettings textureSettings = new TextureImporterSettings();
+         return;
+      }
 
-         textureImporter.textureType = TextureImporterType.Advanced;
+      var textureImporter = (TextureImporter)this.assetImporter;
+      var textureSettings = new TextureImporterSettings();
+
+      textureImporter.textureType = TextureImporterType.Advanced;
 #if UNITY_3_5
          textureImporter.SetPlatformTextureSettings("Standalone", 512, TextureImporterFormat.AutomaticTruecolor, 100);
 #else
-         textureImporter.SetPlatformTextureSettings("Standalone", 512, TextureImporterFormat.AutomaticTruecolor);
+      textureImporter.SetPlatformTextureSettings("Standalone", 512, TextureImporterFormat.AutomaticTruecolor);
 #endif
-         textureImporter.npotScale = TextureImporterNPOTScale.None;
-         textureImporter.ReadTextureSettings(textureSettings);
-         textureSettings.mipmapEnabled = false;
+      textureImporter.npotScale = TextureImporterNPOTScale.None;
+      textureImporter.ReadTextureSettings(textureSettings);
+      textureSettings.mipmapEnabled = false;
 #if UNITY_3_5
          textureSettings.linearTexture = true;
 #endif
 
-         textureSettings.aniso = 0;
-         textureSettings.filterMode = FilterMode.Point;
-         textureSettings.wrapMode = TextureWrapMode.Clamp;
-         textureSettings.maxTextureSize = 512;
-         textureSettings.textureFormat = TextureImporterFormat.AutomaticTruecolor;
+      textureSettings.aniso = 0;
+      textureSettings.filterMode = FilterMode.Point;
+      textureSettings.wrapMode = TextureWrapMode.Clamp;
+      textureSettings.maxTextureSize = 512;
+      textureSettings.textureFormat = TextureImporterFormat.AutomaticTruecolor;
 
-
-
-
-         textureImporter.SetTextureSettings(textureSettings);
-
-      }
-
+      textureImporter.SetTextureSettings(textureSettings);
    }
-
 }
