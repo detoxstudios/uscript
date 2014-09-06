@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2439
+//uScript Generated Code - Build 1.0.2609
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -25,14 +25,14 @@ public class FadeGraph : uScriptLogic
    //external parameters
    
    //local nodes
-   public UnityEngine.Material FadeMaterial = null;
+   public UnityEngine.Material FadeMaterial = default(UnityEngine.Material);
    System.Single local_11_System_Single = (float) 0;
    UnityEngine.Color local_12_UnityEngine_Color = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
    System.String local_19_System_String = "Health:";
    System.String local_25_System_String = "";
    System.Single local_8_System_Single = (float) 0;
    UnityEngine.Color local_FadeColor_UnityEngine_Color = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
-   UnityEngine.GameObject local_FadeGO_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_FadeGO_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_FadeGO_UnityEngine_GameObject_previous = null;
    System.Single local_PlayerHealth_System_Single = (float) 100;
    
@@ -49,7 +49,7 @@ public class FadeGraph : uScriptLogic
    bool logic_uScriptAct_Delay_DrivenDelay_1 = false;
    //pointer to script instanced logic node
    uScriptAct_GetGameObjectMaterial logic_uScriptAct_GetGameObjectMaterial_uScriptAct_GetGameObjectMaterial_2 = new uScriptAct_GetGameObjectMaterial( );
-   UnityEngine.GameObject logic_uScriptAct_GetGameObjectMaterial_Target_2 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetGameObjectMaterial_Target_2 = default(UnityEngine.GameObject);
    System.Int32 logic_uScriptAct_GetGameObjectMaterial_MaterialIndex_2 = (int) 0;
    UnityEngine.Material logic_uScriptAct_GetGameObjectMaterial_targetMaterial_2;
    UnityEngine.Color logic_uScriptAct_GetGameObjectMaterial_materialColor_2;
@@ -92,13 +92,14 @@ public class FadeGraph : uScriptLogic
    bool logic_uScriptAct_InterpolateFloatLinear_Driven_9 = false;
    //pointer to script instanced logic node
    uScriptAct_CameraFade logic_uScriptAct_CameraFade_uScriptAct_CameraFade_14 = new uScriptAct_CameraFade( );
-   UnityEngine.Camera logic_uScriptAct_CameraFade_TargetCamera_14 = null;
+   UnityEngine.Camera logic_uScriptAct_CameraFade_TargetCamera_14 = default(UnityEngine.Camera);
    uScriptAct_CameraFade.FadeDirection logic_uScriptAct_CameraFade_Direction_14 = uScriptAct_CameraFade.FadeDirection.To;
-   UnityEngine.Material logic_uScriptAct_CameraFade_FadeMaterial_14 = null;
+   UnityEngine.Material logic_uScriptAct_CameraFade_FadeMaterial_14 = default(UnityEngine.Material);
    System.Single logic_uScriptAct_CameraFade_FadeTime_14 = (float) 2;
    System.Single logic_uScriptAct_CameraFade_HoldTime_14 = (float) 0;
    System.Boolean logic_uScriptAct_CameraFade_ColorOverride_14 = (bool) true;
    UnityEngine.Color logic_uScriptAct_CameraFade_FadeColor_14 = new UnityEngine.Color( (float)1, (float)0, (float)0, (float)1 );
+   System.Single logic_uScriptAct_CameraFade_Scale_14 = (float) 1;
    bool logic_uScriptAct_CameraFade_Immediate_14 = true;
    bool logic_uScriptAct_CameraFade_FadeFinished_14 = true;
    bool logic_uScriptAct_CameraFade_DrivenFade_14 = false;
@@ -164,20 +165,21 @@ public class FadeGraph : uScriptLogic
    bool logic_uScriptAct_Delay_DrivenDelay_29 = false;
    //pointer to script instanced logic node
    uScriptAct_CameraFade logic_uScriptAct_CameraFade_uScriptAct_CameraFade_30 = new uScriptAct_CameraFade( );
-   UnityEngine.Camera logic_uScriptAct_CameraFade_TargetCamera_30 = null;
+   UnityEngine.Camera logic_uScriptAct_CameraFade_TargetCamera_30 = default(UnityEngine.Camera);
    uScriptAct_CameraFade.FadeDirection logic_uScriptAct_CameraFade_Direction_30 = uScriptAct_CameraFade.FadeDirection.From;
-   UnityEngine.Material logic_uScriptAct_CameraFade_FadeMaterial_30 = null;
+   UnityEngine.Material logic_uScriptAct_CameraFade_FadeMaterial_30 = default(UnityEngine.Material);
    System.Single logic_uScriptAct_CameraFade_FadeTime_30 = (float) 2;
    System.Single logic_uScriptAct_CameraFade_HoldTime_30 = (float) 0;
    System.Boolean logic_uScriptAct_CameraFade_ColorOverride_30 = (bool) true;
    UnityEngine.Color logic_uScriptAct_CameraFade_FadeColor_30 = new UnityEngine.Color( (float)1, (float)0, (float)0, (float)1 );
+   System.Single logic_uScriptAct_CameraFade_Scale_30 = (float) 1;
    bool logic_uScriptAct_CameraFade_Immediate_30 = true;
    bool logic_uScriptAct_CameraFade_FadeFinished_30 = true;
    bool logic_uScriptAct_CameraFade_DrivenFade_30 = false;
    
    //event nodes
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_0 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_16 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_0 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_16 = default(UnityEngine.GameObject);
    
    //property nodes
    
@@ -877,8 +879,10 @@ public class FadeGraph : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_CameraFade_uScriptAct_CameraFade_14.In(logic_uScriptAct_CameraFade_TargetCamera_14, logic_uScriptAct_CameraFade_Direction_14, logic_uScriptAct_CameraFade_FadeMaterial_14, logic_uScriptAct_CameraFade_FadeTime_14, logic_uScriptAct_CameraFade_HoldTime_14, logic_uScriptAct_CameraFade_ColorOverride_14, logic_uScriptAct_CameraFade_FadeColor_14);
+         logic_uScriptAct_CameraFade_uScriptAct_CameraFade_14.In(logic_uScriptAct_CameraFade_TargetCamera_14, logic_uScriptAct_CameraFade_Direction_14, logic_uScriptAct_CameraFade_FadeMaterial_14, logic_uScriptAct_CameraFade_FadeTime_14, logic_uScriptAct_CameraFade_HoldTime_14, logic_uScriptAct_CameraFade_ColorOverride_14, logic_uScriptAct_CameraFade_FadeColor_14, logic_uScriptAct_CameraFade_Scale_14);
          logic_uScriptAct_CameraFade_DrivenFade_14 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -913,6 +917,8 @@ public class FadeGraph : uScriptLogic
             {
                logic_uScriptAct_CameraFade_FadeMaterial_14 = FadeMaterial;
                
+            }
+            {
             }
             {
             }
@@ -1356,8 +1362,10 @@ public class FadeGraph : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_CameraFade_uScriptAct_CameraFade_30.In(logic_uScriptAct_CameraFade_TargetCamera_30, logic_uScriptAct_CameraFade_Direction_30, logic_uScriptAct_CameraFade_FadeMaterial_30, logic_uScriptAct_CameraFade_FadeTime_30, logic_uScriptAct_CameraFade_HoldTime_30, logic_uScriptAct_CameraFade_ColorOverride_30, logic_uScriptAct_CameraFade_FadeColor_30);
+         logic_uScriptAct_CameraFade_uScriptAct_CameraFade_30.In(logic_uScriptAct_CameraFade_TargetCamera_30, logic_uScriptAct_CameraFade_Direction_30, logic_uScriptAct_CameraFade_FadeMaterial_30, logic_uScriptAct_CameraFade_FadeTime_30, logic_uScriptAct_CameraFade_HoldTime_30, logic_uScriptAct_CameraFade_ColorOverride_30, logic_uScriptAct_CameraFade_FadeColor_30, logic_uScriptAct_CameraFade_Scale_30);
          logic_uScriptAct_CameraFade_DrivenFade_30 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -1386,6 +1394,8 @@ public class FadeGraph : uScriptLogic
             {
                logic_uScriptAct_CameraFade_FadeMaterial_30 = FadeMaterial;
                
+            }
+            {
             }
             {
             }

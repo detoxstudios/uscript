@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 0.9.2439
+//uScript Generated Code - Build 1.0.2609
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -91,14 +91,14 @@ public class uScript_TestBed : uScriptLogic
    bool logic_uScriptAct_Log_Out_13 = true;
    
    //event nodes
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_3 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_11 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_3 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_11 = default(UnityEngine.GameObject);
    
    //property nodes
    System.Single property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_0 = (float) 0;
-   UnityEngine.GameObject property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 = null;
+   UnityEngine.GameObject property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_0 = default(UnityEngine.GameObject);
    System.Single property_fieldOfView_Detox_ScriptEditor_Parameter_fieldOfView_5 = (float) 0;
-   UnityEngine.GameObject property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 = null;
+   UnityEngine.GameObject property_fieldOfView_Detox_ScriptEditor_Parameter_Instance_5 = default(UnityEngine.GameObject);
    
    //method nodes
    #pragma warning restore 414

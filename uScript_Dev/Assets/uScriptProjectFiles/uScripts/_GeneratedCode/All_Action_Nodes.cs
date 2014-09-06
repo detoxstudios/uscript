@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2557
+//uScript Generated Code - Build 1.0.2609
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -28,18 +28,18 @@ public class All_Action_Nodes : uScriptLogic
    public System.String ExposedTestVariable = "The All_Action_Nodes uScript graph has executed ( ";
    System.Boolean local_11_System_Boolean = (bool) false;
    System.Boolean local_12_System_Boolean = (bool) false;
-   UnityEngine.GameObject local_15_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_15_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_15_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_16_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_16_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_16_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_24_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_24_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_24_UnityEngine_GameObject_previous = null;
    System.String local_25_System_String = "Player";
-   UnityEngine.GameObject local_27_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_27_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_27_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_28_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_28_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_28_UnityEngine_GameObject_previous = null;
-   UnityEngine.GameObject local_30_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_30_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_30_UnityEngine_GameObject_previous = null;
    System.String local_35_System_String = "racecar";
    System.String local_36_System_String = "car";
@@ -48,14 +48,14 @@ public class All_Action_Nodes : uScriptLogic
    System.String local_56_System_String = "Got through Condition/Counter,Gates, and Switches Nodes!";
    System.Single local_57_System_Single = (float) 0;
    System.Int32 local_58_System_Int32 = (int) 0;
-   UnityEngine.GameObject local_61_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_61_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_61_UnityEngine_GameObject_previous = null;
    System.String local_63_System_String = "";
    System.String local_65_System_String = "(";
    System.String local_66_System_String = ")";
    System.String local_67_System_String = "";
    System.String local_69_System_String = "Got through Simple Reflection Test ";
-   UnityEngine.GameObject local_7_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_7_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_7_UnityEngine_GameObject_previous = null;
    UnityEngine.AudioClip[] local_702_UnityEngine_AudioClipArray = new UnityEngine.AudioClip[ 0 ];
    UnityEngine.Camera[] local_703_UnityEngine_CameraArray = new UnityEngine.Camera[] {};
@@ -65,7 +65,7 @@ public class All_Action_Nodes : uScriptLogic
    UnityEngine.GUILayoutOption[] local_707_UnityEngine_GUILayoutOptionArray = new UnityEngine.GUILayoutOption[] {  };
    System.Int32[] local_708_System_Int32Array = new System.Int32[] {};
    UnityEngine.Material[] local_709_UnityEngine_MaterialArray = new UnityEngine.Material[ 0 ];
-   UnityEngine.Camera local_71_UnityEngine_Camera = null;
+   UnityEngine.Camera local_71_UnityEngine_Camera = default(UnityEngine.Camera);
    UnityEngine.Rect[] local_710_UnityEngine_RectArray = new Rect[] {};
    System.String[] local_711_System_StringArray = new System.String[] {};
    UnityEngine.Texture2D[] local_712_UnityEngine_Texture2DArray = new UnityEngine.Texture2D[ 0 ];
@@ -73,27 +73,27 @@ public class All_Action_Nodes : uScriptLogic
    UnityEngine.Vector2[] local_714_UnityEngine_Vector2Array = new Vector2[] {};
    UnityEngine.Vector3[] local_715_UnityEngine_Vector3Array = new Vector3[] {};
    UnityEngine.Vector4[] local_716_UnityEngine_Vector4Array = new Vector4[] {};
-   UnityEngine.AudioClip local_717_UnityEngine_AudioClip = null;
+   UnityEngine.AudioClip local_717_UnityEngine_AudioClip = default(UnityEngine.AudioClip);
    System.Boolean local_718_System_Boolean = (bool) false;
-   UnityEngine.Camera local_719_UnityEngine_Camera = null;
+   UnityEngine.Camera local_719_UnityEngine_Camera = default(UnityEngine.Camera);
    UnityEngine.Color local_720_UnityEngine_Color = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
    System.Single local_721_System_Single = (float) 0;
-   UnityEngine.GameObject local_722_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_722_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_722_UnityEngine_GameObject_previous = null;
    System.Int32 local_723_System_Int32 = (int) 0;
    uScript_Lerper.LoopType local_724_uScript_Lerper_LoopType = uScript_Lerper.LoopType.None;
-   UnityEngine.Material local_725_UnityEngine_Material = null;
+   UnityEngine.Material local_725_UnityEngine_Material = default(UnityEngine.Material);
    UnityEngine.Quaternion local_727_UnityEngine_Quaternion = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Ray local_728_UnityEngine_Ray = new UnityEngine.Ray( );
+   UnityEngine.Ray local_728_UnityEngine_Ray = default(UnityEngine.Ray);
    UnityEngine.Rect local_729_UnityEngine_Rect = new Rect( (float)0, (float)0, (float)0, (float)0 );
    System.String local_730_System_String = "";
-   UnityEngine.Texture2D local_731_UnityEngine_Texture2D = null;
-   UnityEngine.Transform local_732_UnityEngine_Transform = null;
+   UnityEngine.Texture2D local_731_UnityEngine_Texture2D = default(UnityEngine.Texture2D);
+   UnityEngine.Transform local_732_UnityEngine_Transform = default(UnityEngine.Transform);
    UnityEngine.Vector2 local_733_UnityEngine_Vector2 = new Vector2( (float)0, (float)0 );
    UnityEngine.Vector3 local_734_UnityEngine_Vector3 = new Vector3( (float)0, (float)0, (float)0 );
    UnityEngine.Vector4 local_735_UnityEngine_Vector4 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
    System.String local_74_System_String = " )!";
-   UnityEngine.GameObject local_8_UnityEngine_GameObject = null;
+   UnityEngine.GameObject local_8_UnityEngine_GameObject = default(UnityEngine.GameObject);
    UnityEngine.GameObject local_8_UnityEngine_GameObject_previous = null;
    System.String local_Some_Named_Variable__System_String = "";
    
@@ -124,8 +124,8 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptCon_BetweenInts_False_5 = true;
    //pointer to script instanced logic node
    uScriptCon_CheckDistance logic_uScriptCon_CheckDistance_uScriptCon_CheckDistance_6 = new uScriptCon_CheckDistance( );
-   UnityEngine.GameObject logic_uScriptCon_CheckDistance_A_6 = null;
-   UnityEngine.GameObject logic_uScriptCon_CheckDistance_B_6 = null;
+   UnityEngine.GameObject logic_uScriptCon_CheckDistance_A_6 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptCon_CheckDistance_B_6 = default(UnityEngine.GameObject);
    System.Single logic_uScriptCon_CheckDistance_Distance_6 = (float) 1;
    bool logic_uScriptCon_CheckDistance_Closer_6 = true;
    bool logic_uScriptCon_CheckDistance_Further_6 = true;
@@ -153,8 +153,8 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptCon_CompareFloat_LessThan_13 = true;
    //pointer to script instanced logic node
    uScriptCon_CompareGameObjects logic_uScriptCon_CompareGameObjects_uScriptCon_CompareGameObjects_14 = new uScriptCon_CompareGameObjects( );
-   UnityEngine.GameObject logic_uScriptCon_CompareGameObjects_A_14 = null;
-   UnityEngine.GameObject logic_uScriptCon_CompareGameObjects_B_14 = null;
+   UnityEngine.GameObject logic_uScriptCon_CompareGameObjects_A_14 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptCon_CompareGameObjects_B_14 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptCon_CompareGameObjects_CompareByTag_14 = (bool) false;
    System.Boolean logic_uScriptCon_CompareGameObjects_CompareByName_14 = (bool) false;
    System.Boolean logic_uScriptCon_CompareGameObjects_ReportNull_14 = (bool) true;
@@ -202,15 +202,15 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptCon_CompareVector4_Different_22 = true;
    //pointer to script instanced logic node
    uScriptCon_GameObjectHasTag logic_uScriptCon_GameObjectHasTag_uScriptCon_GameObjectHasTag_23 = new uScriptCon_GameObjectHasTag( );
-   UnityEngine.GameObject logic_uScriptCon_GameObjectHasTag_GameObject_23 = null;
+   UnityEngine.GameObject logic_uScriptCon_GameObjectHasTag_GameObject_23 = default(UnityEngine.GameObject);
    System.String[] logic_uScriptCon_GameObjectHasTag_Tag_23 = new System.String[] {};
    bool logic_uScriptCon_GameObjectHasTag_HasAllTags_23 = true;
    bool logic_uScriptCon_GameObjectHasTag_HasTag_23 = true;
    bool logic_uScriptCon_GameObjectHasTag_MissingTags_23 = true;
    //pointer to script instanced logic node
    uScriptCon_IsChild logic_uScriptCon_IsChild_uScriptCon_IsChild_26 = new uScriptCon_IsChild( );
-   UnityEngine.GameObject logic_uScriptCon_IsChild_Child_26 = null;
-   UnityEngine.GameObject logic_uScriptCon_IsChild_Parent_26 = null;
+   UnityEngine.GameObject logic_uScriptCon_IsChild_Child_26 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptCon_IsChild_Parent_26 = default(UnityEngine.GameObject);
    bool logic_uScriptCon_IsChild_IsChild_26 = true;
    bool logic_uScriptCon_IsChild_IsNotChild_26 = true;
    //pointer to script instanced logic node
@@ -360,7 +360,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_Log_Out_68 = true;
    //pointer to script instanced logic node
    uScriptAct_GetAnimationState logic_uScriptAct_GetAnimationState_uScriptAct_GetAnimationState_75 = new uScriptAct_GetAnimationState( );
-   UnityEngine.GameObject logic_uScriptAct_GetAnimationState_target_75 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetAnimationState_target_75 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_GetAnimationState_animationName_75 = "";
    System.Single logic_uScriptAct_GetAnimationState_weight_75;
    System.Single logic_uScriptAct_GetAnimationState_normalizedPosition_75;
@@ -371,7 +371,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetAnimationState_Out_75 = true;
    //pointer to script instanced logic node
    uScriptAct_GetAnimations logic_uScriptAct_GetAnimations_uScriptAct_GetAnimations_76 = new uScriptAct_GetAnimations( );
-   UnityEngine.GameObject logic_uScriptAct_GetAnimations_Target_76 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetAnimations_Target_76 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_GetAnimations_Filter_76 = "";
    System.String[] logic_uScriptAct_GetAnimations_Animations_76;
    bool logic_uScriptAct_GetAnimations_Out_76 = true;
@@ -385,7 +385,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_PlayAnimation_Out_77 = true;
    //pointer to script instanced logic node
    uScriptAct_PlayAnimationAdditive logic_uScriptAct_PlayAnimationAdditive_uScriptAct_PlayAnimationAdditive_78 = new uScriptAct_PlayAnimationAdditive( );
-   UnityEngine.GameObject logic_uScriptAct_PlayAnimationAdditive_Target_78 = null;
+   UnityEngine.GameObject logic_uScriptAct_PlayAnimationAdditive_Target_78 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_PlayAnimationAdditive_Animation_78 = "";
    UnityEngine.GameObject[] logic_uScriptAct_PlayAnimationAdditive_MixingTransform_78 = new UnityEngine.GameObject[] {};
    System.Single logic_uScriptAct_PlayAnimationAdditive_SpeedFactor_78 = (float) 1;
@@ -412,27 +412,27 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_RewindAnimation_Out_80 = true;
    //pointer to script instanced logic node
    uScriptAct_SetAnimationWeight logic_uScriptAct_SetAnimationWeight_uScriptAct_SetAnimationWeight_81 = new uScriptAct_SetAnimationWeight( );
-   UnityEngine.GameObject logic_uScriptAct_SetAnimationWeight_target_81 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetAnimationWeight_target_81 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_SetAnimationWeight_animationName_81 = "";
    System.Single logic_uScriptAct_SetAnimationWeight_weight_81 = (float) 1;
    //pointer to script instanced logic node
    uScriptAct_SetAnimationLayer logic_uScriptAct_SetAnimationLayer_uScriptAct_SetAnimationLayer_82 = new uScriptAct_SetAnimationLayer( );
-   UnityEngine.GameObject logic_uScriptAct_SetAnimationLayer_target_82 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetAnimationLayer_target_82 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_SetAnimationLayer_animationName_82 = "";
    System.Int32 logic_uScriptAct_SetAnimationLayer_layer_82 = (int) 0;
    //pointer to script instanced logic node
    uScriptAct_SetAnimationSpeed logic_uScriptAct_SetAnimationSpeed_uScriptAct_SetAnimationSpeed_83 = new uScriptAct_SetAnimationSpeed( );
-   UnityEngine.GameObject logic_uScriptAct_SetAnimationSpeed_target_83 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetAnimationSpeed_target_83 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_SetAnimationSpeed_animationName_83 = "";
    System.Single logic_uScriptAct_SetAnimationSpeed_speed_83 = (float) 1;
    //pointer to script instanced logic node
    uScriptAct_SetAnimationWrapMode logic_uScriptAct_SetAnimationWrapMode_uScriptAct_SetAnimationWrapMode_84 = new uScriptAct_SetAnimationWrapMode( );
-   UnityEngine.GameObject logic_uScriptAct_SetAnimationWrapMode_target_84 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetAnimationWrapMode_target_84 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_SetAnimationWrapMode_animationName_84 = "";
    UnityEngine.WrapMode logic_uScriptAct_SetAnimationWrapMode_wrapMode_84 = UnityEngine.WrapMode.Once;
    //pointer to script instanced logic node
    uScriptAct_SetAnimationPosition logic_uScriptAct_SetAnimationPosition_uScriptAct_SetAnimationPosition_85 = new uScriptAct_SetAnimationPosition( );
-   UnityEngine.GameObject logic_uScriptAct_SetAnimationPosition_target_85 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetAnimationPosition_target_85 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_SetAnimationPosition_animationName_85 = "";
    System.Single logic_uScriptAct_SetAnimationPosition_normalizedPosition_85 = (float) 0;
    //pointer to script instanced logic node
@@ -801,7 +801,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_Log_Out_160 = true;
    //pointer to script instanced logic node
    uScriptAct_GetAudioClipInfo logic_uScriptAct_GetAudioClipInfo_uScriptAct_GetAudioClipInfo_162 = new uScriptAct_GetAudioClipInfo( );
-   UnityEngine.AudioClip logic_uScriptAct_GetAudioClipInfo_target_162 = null;
+   UnityEngine.AudioClip logic_uScriptAct_GetAudioClipInfo_target_162 = default(UnityEngine.AudioClip);
    System.Single logic_uScriptAct_GetAudioClipInfo_clipLength_162;
    System.Single logic_uScriptAct_GetAudioClipInfo_clipSamples_162;
    System.Int32 logic_uScriptAct_GetAudioClipInfo_clipChannels_162;
@@ -811,16 +811,16 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_PlayAudioSource logic_uScriptAct_PlayAudioSource_uScriptAct_PlayAudioSource_163 = new uScriptAct_PlayAudioSource( );
    UnityEngine.GameObject[] logic_uScriptAct_PlayAudioSource_target_163 = new UnityEngine.GameObject[] {};
-   UnityEngine.AudioClip logic_uScriptAct_PlayAudioSource_audioClip_163 = null;
+   UnityEngine.AudioClip logic_uScriptAct_PlayAudioSource_audioClip_163 = default(UnityEngine.AudioClip);
    bool logic_uScriptAct_PlayAudioSource_Out_163 = true;
    //pointer to script instanced logic node
    uScriptAct_PlayAudioSourceOneShot logic_uScriptAct_PlayAudioSourceOneShot_uScriptAct_PlayAudioSourceOneShot_164 = new uScriptAct_PlayAudioSourceOneShot( );
    UnityEngine.GameObject[] logic_uScriptAct_PlayAudioSourceOneShot_target_164 = new UnityEngine.GameObject[] {};
-   UnityEngine.AudioClip logic_uScriptAct_PlayAudioSourceOneShot_audioClip_164 = null;
+   UnityEngine.AudioClip logic_uScriptAct_PlayAudioSourceOneShot_audioClip_164 = default(UnityEngine.AudioClip);
    bool logic_uScriptAct_PlayAudioSourceOneShot_Out_164 = true;
    //pointer to script instanced logic node
    uScriptAct_PlaySound logic_uScriptAct_PlaySound_uScriptAct_PlaySound_165 = new uScriptAct_PlaySound( );
-   UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_165 = null;
+   UnityEngine.AudioClip logic_uScriptAct_PlaySound_audioClip_165 = default(UnityEngine.AudioClip);
    UnityEngine.GameObject[] logic_uScriptAct_PlaySound_target_165 = new UnityEngine.GameObject[] {};
    System.Single logic_uScriptAct_PlaySound_volume_165 = (float) 1;
    System.Boolean logic_uScriptAct_PlaySound_loop_165 = (bool) false;
@@ -836,7 +836,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_PlaySoundRandom_Out_166 = true;
    //pointer to script instanced logic node
    uScriptAct_SetActiveAudioListener logic_uScriptAct_SetActiveAudioListener_uScriptAct_SetActiveAudioListener_167 = new uScriptAct_SetActiveAudioListener( );
-   UnityEngine.GameObject logic_uScriptAct_SetActiveAudioListener_Target_167 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetActiveAudioListener_Target_167 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SetActiveAudioListener_Out_167 = true;
    //pointer to script instanced logic node
    uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_168 = new uScriptAct_Log( );
@@ -846,19 +846,20 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_Log_Out_168 = true;
    //pointer to script instanced logic node
    uScriptAct_CameraFade logic_uScriptAct_CameraFade_uScriptAct_CameraFade_170 = new uScriptAct_CameraFade( );
-   UnityEngine.Camera logic_uScriptAct_CameraFade_TargetCamera_170 = null;
+   UnityEngine.Camera logic_uScriptAct_CameraFade_TargetCamera_170 = default(UnityEngine.Camera);
    uScriptAct_CameraFade.FadeDirection logic_uScriptAct_CameraFade_Direction_170 = uScriptAct_CameraFade.FadeDirection.To;
-   UnityEngine.Material logic_uScriptAct_CameraFade_FadeMaterial_170 = null;
+   UnityEngine.Material logic_uScriptAct_CameraFade_FadeMaterial_170 = default(UnityEngine.Material);
    System.Single logic_uScriptAct_CameraFade_FadeTime_170 = (float) 1;
    System.Single logic_uScriptAct_CameraFade_HoldTime_170 = (float) 0;
    System.Boolean logic_uScriptAct_CameraFade_ColorOverride_170 = (bool) false;
    UnityEngine.Color logic_uScriptAct_CameraFade_FadeColor_170 = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
+   System.Single logic_uScriptAct_CameraFade_Scale_170 = (float) 1;
    bool logic_uScriptAct_CameraFade_Immediate_170 = true;
    bool logic_uScriptAct_CameraFade_FadeFinished_170 = true;
    bool logic_uScriptAct_CameraFade_DrivenFade_170 = false;
    //pointer to script instanced logic node
    uScriptAct_GetCameraRelativeRotation logic_uScriptAct_GetCameraRelativeRotation_uScriptAct_GetCameraRelativeRotation_171 = new uScriptAct_GetCameraRelativeRotation( );
-   UnityEngine.Camera logic_uScriptAct_GetCameraRelativeRotation_camera_171 = null;
+   UnityEngine.Camera logic_uScriptAct_GetCameraRelativeRotation_camera_171 = default(UnityEngine.Camera);
    System.Single logic_uScriptAct_GetCameraRelativeRotation_stickX_171 = (float) 0;
    System.Single logic_uScriptAct_GetCameraRelativeRotation_stickY_171 = (float) 0;
    System.Boolean logic_uScriptAct_GetCameraRelativeRotation_constrainToXZ_171 = (bool) false;
@@ -866,18 +867,18 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetCameraRelativeRotation_Out_171 = true;
    //pointer to script instanced logic node
    uScriptAct_SetCameraDepth logic_uScriptAct_SetCameraDepth_uScriptAct_SetCameraDepth_172 = new uScriptAct_SetCameraDepth( );
-   UnityEngine.GameObject logic_uScriptAct_SetCameraDepth_Target_172 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetCameraDepth_Target_172 = default(UnityEngine.GameObject);
    System.Single logic_uScriptAct_SetCameraDepth_Depth_172 = (float) 0;
    bool logic_uScriptAct_SetCameraDepth_Out_172 = true;
    //pointer to script instanced logic node
    uScriptAct_SwitchCameras logic_uScriptAct_SwitchCameras_uScriptAct_SwitchCameras_173 = new uScriptAct_SwitchCameras( );
-   UnityEngine.GameObject logic_uScriptAct_SwitchCameras_FromCamera_173 = null;
-   UnityEngine.GameObject logic_uScriptAct_SwitchCameras_Target_173 = null;
+   UnityEngine.GameObject logic_uScriptAct_SwitchCameras_FromCamera_173 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptAct_SwitchCameras_Target_173 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_SwitchCameras_EnableAudioListener_173 = (bool) true;
    bool logic_uScriptAct_SwitchCameras_Out_173 = true;
    //pointer to script instanced logic node
    uScriptAct_UpdateCameraOrbit logic_uScriptAct_UpdateCameraOrbit_uScriptAct_UpdateCameraOrbit_174 = new uScriptAct_UpdateCameraOrbit( );
-   UnityEngine.Camera logic_uScriptAct_UpdateCameraOrbit_Camera_174 = null;
+   UnityEngine.Camera logic_uScriptAct_UpdateCameraOrbit_Camera_174 = default(UnityEngine.Camera);
    UnityEngine.Vector3 logic_uScriptAct_UpdateCameraOrbit_Target_174 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_UpdateCameraOrbit_Distance_174 = (float) 5;
    UnityEngine.Vector2 logic_uScriptAct_UpdateCameraOrbit_Movement_174 = new Vector2( (float)0, (float)0 );
@@ -907,77 +908,77 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_SendCustomEvent logic_uScriptAct_SendCustomEvent_uScriptAct_SendCustomEvent_180 = new uScriptAct_SendCustomEvent( );
    System.String logic_uScriptAct_SendCustomEvent_EventName_180 = "";
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEvent_sendGroup_180 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEvent_EventSender_180 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEvent_EventSender_180 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEvent_Out_180 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventBool logic_uScriptAct_SendCustomEventBool_uScriptAct_SendCustomEventBool_181 = new uScriptAct_SendCustomEventBool( );
    System.String logic_uScriptAct_SendCustomEventBool_EventName_181 = "";
    System.Boolean logic_uScriptAct_SendCustomEventBool_EventValue_181 = (bool) false;
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventBool_sendGroup_181 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventBool_EventSender_181 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventBool_EventSender_181 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventBool_Out_181 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventColor logic_uScriptAct_SendCustomEventColor_uScriptAct_SendCustomEventColor_182 = new uScriptAct_SendCustomEventColor( );
    System.String logic_uScriptAct_SendCustomEventColor_EventName_182 = "";
    UnityEngine.Color logic_uScriptAct_SendCustomEventColor_EventValue_182 = new UnityEngine.Color( (float)0, (float)0, (float)0, (float)1 );
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventColor_sendGroup_182 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventColor_EventSender_182 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventColor_EventSender_182 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventColor_Out_182 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventFloat logic_uScriptAct_SendCustomEventFloat_uScriptAct_SendCustomEventFloat_183 = new uScriptAct_SendCustomEventFloat( );
    System.String logic_uScriptAct_SendCustomEventFloat_EventName_183 = "";
    System.Single logic_uScriptAct_SendCustomEventFloat_EventValue_183 = (float) 0;
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventFloat_sendGroup_183 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventFloat_EventSender_183 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventFloat_EventSender_183 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventFloat_Out_183 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventGameObject logic_uScriptAct_SendCustomEventGameObject_uScriptAct_SendCustomEventGameObject_184 = new uScriptAct_SendCustomEventGameObject( );
    System.String logic_uScriptAct_SendCustomEventGameObject_EventName_184 = "";
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventGameObject_EventValue_184 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventGameObject_EventValue_184 = default(UnityEngine.GameObject);
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventGameObject_sendGroup_184 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventGameObject_EventSender_184 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventGameObject_EventSender_184 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventGameObject_Out_184 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventInt logic_uScriptAct_SendCustomEventInt_uScriptAct_SendCustomEventInt_185 = new uScriptAct_SendCustomEventInt( );
    System.String logic_uScriptAct_SendCustomEventInt_EventName_185 = "";
    System.Int32 logic_uScriptAct_SendCustomEventInt_EventValue_185 = (int) 0;
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventInt_sendGroup_185 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventInt_EventSender_185 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventInt_EventSender_185 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventInt_Out_185 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventObject logic_uScriptAct_SendCustomEventObject_uScriptAct_SendCustomEventObject_186 = new uScriptAct_SendCustomEventObject( );
    System.String logic_uScriptAct_SendCustomEventObject_EventName_186 = "";
-   UnityEngine.Object logic_uScriptAct_SendCustomEventObject_EventValue_186 = null;
+   UnityEngine.Object logic_uScriptAct_SendCustomEventObject_EventValue_186 = default(UnityEngine.Object);
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventObject_sendGroup_186 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventObject_EventSender_186 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventObject_EventSender_186 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventObject_Out_186 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventVector2 logic_uScriptAct_SendCustomEventVector2_uScriptAct_SendCustomEventVector2_187 = new uScriptAct_SendCustomEventVector2( );
    System.String logic_uScriptAct_SendCustomEventVector2_EventName_187 = "";
    UnityEngine.Vector2 logic_uScriptAct_SendCustomEventVector2_EventValue_187 = new Vector2( (float)0, (float)0 );
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventVector2_sendGroup_187 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector2_EventSender_187 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector2_EventSender_187 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventVector2_Out_187 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventString logic_uScriptAct_SendCustomEventString_uScriptAct_SendCustomEventString_188 = new uScriptAct_SendCustomEventString( );
    System.String logic_uScriptAct_SendCustomEventString_EventName_188 = "";
    System.String logic_uScriptAct_SendCustomEventString_EventValue_188 = "";
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventString_sendGroup_188 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventString_EventSender_188 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventString_EventSender_188 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventString_Out_188 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventVector3 logic_uScriptAct_SendCustomEventVector3_uScriptAct_SendCustomEventVector3_189 = new uScriptAct_SendCustomEventVector3( );
    System.String logic_uScriptAct_SendCustomEventVector3_EventName_189 = "";
    UnityEngine.Vector3 logic_uScriptAct_SendCustomEventVector3_EventValue_189 = new Vector3( (float)0, (float)0, (float)0 );
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventVector3_sendGroup_189 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector3_EventSender_189 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector3_EventSender_189 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventVector3_Out_189 = true;
    //pointer to script instanced logic node
    uScriptAct_SendCustomEventVector4 logic_uScriptAct_SendCustomEventVector4_uScriptAct_SendCustomEventVector4_190 = new uScriptAct_SendCustomEventVector4( );
    System.String logic_uScriptAct_SendCustomEventVector4_EventName_190 = "";
    UnityEngine.Vector4 logic_uScriptAct_SendCustomEventVector4_EventValue_190 = new Vector4( (float)0, (float)0, (float)0, (float)0 );
    uScriptCustomEvent.SendGroup logic_uScriptAct_SendCustomEventVector4_sendGroup_190 = uScriptCustomEvent.SendGroup.Parents;
-   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector4_EventSender_190 = null;
+   UnityEngine.GameObject logic_uScriptAct_SendCustomEventVector4_EventSender_190 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SendCustomEventVector4_Out_190 = true;
    //pointer to script instanced logic node
    uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_191 = new uScriptAct_Log( );
@@ -1016,14 +1017,14 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_Log_Out_196 = true;
    //pointer to script instanced logic node
    uScriptAct_ControlGameObjectMove logic_uScriptAct_ControlGameObjectMove_uScriptAct_ControlGameObjectMove_198 = new uScriptAct_ControlGameObjectMove( );
-   UnityEngine.GameObject logic_uScriptAct_ControlGameObjectMove_Target_198 = null;
+   UnityEngine.GameObject logic_uScriptAct_ControlGameObjectMove_Target_198 = default(UnityEngine.GameObject);
    uScriptAct_ControlGameObjectMove.Direction logic_uScriptAct_ControlGameObjectMove_moveDirection_198 = uScriptAct_ControlGameObjectMove.Direction.Forward;
    System.Single logic_uScriptAct_ControlGameObjectMove_Speed_198 = (float) 0.01;
    System.Boolean logic_uScriptAct_ControlGameObjectMove_useLocal_198 = (bool) false;
    bool logic_uScriptAct_ControlGameObjectMove_Out_198 = true;
    //pointer to script instanced logic node
    uScriptAct_ControlGameObjectRotate logic_uScriptAct_ControlGameObjectRotate_uScriptAct_ControlGameObjectRotate_199 = new uScriptAct_ControlGameObjectRotate( );
-   UnityEngine.GameObject logic_uScriptAct_ControlGameObjectRotate_Target_199 = null;
+   UnityEngine.GameObject logic_uScriptAct_ControlGameObjectRotate_Target_199 = default(UnityEngine.GameObject);
    uScriptAct_ControlGameObjectRotate.Direction logic_uScriptAct_ControlGameObjectRotate_rotateDirection_199 = uScriptAct_ControlGameObjectRotate.Direction.Forward;
    System.Single logic_uScriptAct_ControlGameObjectRotate_Speed_199 = (float) 0.1;
    System.Boolean logic_uScriptAct_ControlGameObjectRotate_useLocal_199 = (bool) false;
@@ -1055,14 +1056,14 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_MoveToLocationRelative logic_uScriptAct_MoveToLocationRelative_uScriptAct_MoveToLocationRelative_203 = new uScriptAct_MoveToLocationRelative( );
    UnityEngine.GameObject[] logic_uScriptAct_MoveToLocationRelative_targetArray_203 = new UnityEngine.GameObject[] {};
    UnityEngine.Vector3 logic_uScriptAct_MoveToLocationRelative_location_203 = new Vector3( (float)0, (float)0, (float)0 );
-   UnityEngine.GameObject logic_uScriptAct_MoveToLocationRelative_source_203 = null;
+   UnityEngine.GameObject logic_uScriptAct_MoveToLocationRelative_source_203 = default(UnityEngine.GameObject);
    System.Single logic_uScriptAct_MoveToLocationRelative_totalTime_203 = (float) 0;
    bool logic_uScriptAct_MoveToLocationRelative_Out_203 = true;
    bool logic_uScriptAct_MoveToLocationRelative_Cancelled_203 = true;
    //pointer to script instanced logic node
    uScriptAct_OrbitGameObject logic_uScriptAct_OrbitGameObject_uScriptAct_OrbitGameObject_204 = new uScriptAct_OrbitGameObject( );
    UnityEngine.GameObject[] logic_uScriptAct_OrbitGameObject_Target_204 = new UnityEngine.GameObject[] {};
-   UnityEngine.GameObject logic_uScriptAct_OrbitGameObject_Orbiter_204 = null;
+   UnityEngine.GameObject logic_uScriptAct_OrbitGameObject_Orbiter_204 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_OrbitGameObject_Axis_204 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_OrbitGameObject_OrbitSpeed_204 = (float) 0;
    System.Boolean logic_uScriptAct_OrbitGameObject_OrbitState_204;
@@ -1165,7 +1166,7 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_Teleport logic_uScriptAct_Teleport_uScriptAct_Teleport_214 = new uScriptAct_Teleport( );
    UnityEngine.GameObject[] logic_uScriptAct_Teleport_Target_214 = new UnityEngine.GameObject[] {};
-   UnityEngine.GameObject logic_uScriptAct_Teleport_Destination_214 = null;
+   UnityEngine.GameObject logic_uScriptAct_Teleport_Destination_214 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_Teleport_UpdateRotation_214 = (bool) false;
    bool logic_uScriptAct_Teleport_Out_214 = true;
    //pointer to script instanced logic node
@@ -1183,7 +1184,7 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_AssignMaterial logic_uScriptAct_AssignMaterial_uScriptAct_AssignMaterial_217 = new uScriptAct_AssignMaterial( );
    UnityEngine.GameObject[] logic_uScriptAct_AssignMaterial_Target_217 = new UnityEngine.GameObject[] {};
-   UnityEngine.Material logic_uScriptAct_AssignMaterial_materialName_217 = null;
+   UnityEngine.Material logic_uScriptAct_AssignMaterial_materialName_217 = default(UnityEngine.Material);
    System.Int32 logic_uScriptAct_AssignMaterial_MatChannel_217 = (int) 0;
    bool logic_uScriptAct_AssignMaterial_Out_217 = true;
    //pointer to script instanced logic node
@@ -1194,8 +1195,8 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_AssignMaterialColor_Out_218 = true;
    //pointer to script instanced logic node
    uScriptAct_AssignShader logic_uScriptAct_AssignShader_uScriptAct_AssignShader_219 = new uScriptAct_AssignShader( );
-   UnityEngine.Material logic_uScriptAct_AssignShader_material_219 = null;
-   UnityEngine.Shader logic_uScriptAct_AssignShader_shader_219 = null;
+   UnityEngine.Material logic_uScriptAct_AssignShader_material_219 = default(UnityEngine.Material);
+   UnityEngine.Shader logic_uScriptAct_AssignShader_shader_219 = default(UnityEngine.Shader);
    bool logic_uScriptAct_AssignShader_Out_219 = true;
    //pointer to script instanced logic node
    uScriptAct_AttachScript logic_uScriptAct_AttachScript_uScriptAct_AttachScript_220 = new uScriptAct_AttachScript( );
@@ -1204,8 +1205,8 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_AttachScript_Out_220 = true;
    //pointer to script instanced logic node
    uScriptAct_AttachToGameObject logic_uScriptAct_AttachToGameObject_uScriptAct_AttachToGameObject_221 = new uScriptAct_AttachToGameObject( );
-   UnityEngine.GameObject logic_uScriptAct_AttachToGameObject_Target_221 = null;
-   UnityEngine.GameObject logic_uScriptAct_AttachToGameObject_Attachment_221 = null;
+   UnityEngine.GameObject logic_uScriptAct_AttachToGameObject_Target_221 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptAct_AttachToGameObject_Attachment_221 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_AttachToGameObject_UseRelativeOffset_221 = (bool) false;
    UnityEngine.Vector3 logic_uScriptAct_AttachToGameObject_RelativeOffset_221 = new Vector3( (float)0, (float)0, (float)0 );
    System.Boolean logic_uScriptAct_AttachToGameObject_UseRelativeRotation_221 = (bool) false;
@@ -1243,7 +1244,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_DetachChildren_Out_226 = true;
    //pointer to script instanced logic node
    uScriptAct_GetAllChildren logic_uScriptAct_GetAllChildren_uScriptAct_GetAllChildren_227 = new uScriptAct_GetAllChildren( );
-   UnityEngine.GameObject logic_uScriptAct_GetAllChildren_Target_227 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetAllChildren_Target_227 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_GetAllChildren_recursive_227 = (bool) false;
    UnityEngine.GameObject logic_uScriptAct_GetAllChildren_FirstChild_227;
    UnityEngine.GameObject[] logic_uScriptAct_GetAllChildren_Children_227;
@@ -1253,7 +1254,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetAllChildren_ChildrenNotFound_227 = true;
    //pointer to script instanced logic node
    uScriptAct_GetChildrenByTag logic_uScriptAct_GetChildrenByTag_uScriptAct_GetChildrenByTag_228 = new uScriptAct_GetChildrenByTag( );
-   UnityEngine.GameObject logic_uScriptAct_GetChildrenByTag_Target_228 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetChildrenByTag_Target_228 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_GetChildrenByTag_Tag_228 = "";
    uScriptAct_GetChildrenByTag.SearchType logic_uScriptAct_GetChildrenByTag_SearchMethod_228 = uScriptAct_GetChildrenByTag.SearchType.Matches;
    System.Boolean logic_uScriptAct_GetChildrenByTag_recursive_228 = (bool) false;
@@ -1265,8 +1266,8 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetChildrenByTag_ChildrenNotFound_228 = true;
    //pointer to script instanced logic node
    uScriptAct_GetDistance logic_uScriptAct_GetDistance_uScriptAct_GetDistance_229 = new uScriptAct_GetDistance( );
-   UnityEngine.GameObject logic_uScriptAct_GetDistance_A_229 = null;
-   UnityEngine.GameObject logic_uScriptAct_GetDistance_B_229 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetDistance_A_229 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptAct_GetDistance_B_229 = default(UnityEngine.GameObject);
    System.Single logic_uScriptAct_GetDistance_Distance_229;
    bool logic_uScriptAct_GetDistance_Out_229 = true;
    //pointer to script instanced logic node
@@ -1278,7 +1279,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetGameObjectByName_GameObjectNotFound_230 = true;
    //pointer to script instanced logic node
    uScriptAct_GetGameObjectName logic_uScriptAct_GetGameObjectName_uScriptAct_GetGameObjectName_231 = new uScriptAct_GetGameObjectName( );
-   UnityEngine.GameObject logic_uScriptAct_GetGameObjectName_gameObject_231 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetGameObjectName_gameObject_231 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_GetGameObjectName_name_231;
    bool logic_uScriptAct_GetGameObjectName_Out_231 = true;
    //pointer to script instanced logic node
@@ -1299,7 +1300,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetGameObjectsByTag_GameObjectsNotFound_233 = true;
    //pointer to script instanced logic node
    uScriptAct_GetGameObjectMaterial logic_uScriptAct_GetGameObjectMaterial_uScriptAct_GetGameObjectMaterial_234 = new uScriptAct_GetGameObjectMaterial( );
-   UnityEngine.GameObject logic_uScriptAct_GetGameObjectMaterial_Target_234 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetGameObjectMaterial_Target_234 = default(UnityEngine.GameObject);
    System.Int32 logic_uScriptAct_GetGameObjectMaterial_MaterialIndex_234 = (int) 0;
    UnityEngine.Material logic_uScriptAct_GetGameObjectMaterial_targetMaterial_234;
    UnityEngine.Color logic_uScriptAct_GetGameObjectMaterial_materialColor_234;
@@ -1307,12 +1308,12 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetGameObjectMaterial_Out_234 = true;
    //pointer to script instanced logic node
    uScriptAct_GetParent logic_uScriptAct_GetParent_uScriptAct_GetParent_235 = new uScriptAct_GetParent( );
-   UnityEngine.GameObject logic_uScriptAct_GetParent_Target_235 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetParent_Target_235 = default(UnityEngine.GameObject);
    UnityEngine.GameObject logic_uScriptAct_GetParent_Parent_235;
    bool logic_uScriptAct_GetParent_Out_235 = true;
    //pointer to script instanced logic node
    uScriptAct_GetPositionAndRotation logic_uScriptAct_GetPositionAndRotation_uScriptAct_GetPositionAndRotation_236 = new uScriptAct_GetPositionAndRotation( );
-   UnityEngine.GameObject logic_uScriptAct_GetPositionAndRotation_Target_236 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetPositionAndRotation_Target_236 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_GetPositionAndRotation_GetLocal_236 = (bool) false;
    UnityEngine.Vector3 logic_uScriptAct_GetPositionAndRotation_Position_236;
    UnityEngine.Quaternion logic_uScriptAct_GetPositionAndRotation_Rotation_236;
@@ -1323,7 +1324,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetPositionAndRotation_Out_236 = true;
    //pointer to script instanced logic node
    uScriptAct_GetGameObjectScale logic_uScriptAct_GetGameObjectScale_uScriptAct_GetGameObjectScale_237 = new uScriptAct_GetGameObjectScale( );
-   UnityEngine.GameObject logic_uScriptAct_GetGameObjectScale_Target_237 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetGameObjectScale_Target_237 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_GetGameObjectScale_Scale_237;
    System.Single logic_uScriptAct_GetGameObjectScale_X_237;
    System.Single logic_uScriptAct_GetGameObjectScale_Y_237;
@@ -1331,25 +1332,25 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetGameObjectScale_Out_237 = true;
    //pointer to script instanced logic node
    uScriptAct_GetTransform logic_uScriptAct_GetTransform_uScriptAct_GetTransform_238 = new uScriptAct_GetTransform( );
-   UnityEngine.GameObject logic_uScriptAct_GetTransform_Target_238 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetTransform_Target_238 = default(UnityEngine.GameObject);
    UnityEngine.Transform logic_uScriptAct_GetTransform_targetTransform_238;
    bool logic_uScriptAct_GetTransform_Out_238 = true;
    //pointer to script instanced logic node
    uScriptAct_IsComponentActive logic_uScriptAct_IsComponentActive_uScriptAct_IsComponentActive_239 = new uScriptAct_IsComponentActive( );
-   UnityEngine.GameObject logic_uScriptAct_IsComponentActive_Target_239 = null;
+   UnityEngine.GameObject logic_uScriptAct_IsComponentActive_Target_239 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_IsComponentActive_component_239 = "";
    bool logic_uScriptAct_IsComponentActive_Out_239 = true;
    bool logic_uScriptAct_IsComponentActive_Active_239 = true;
    bool logic_uScriptAct_IsComponentActive_Inactive_239 = true;
    //pointer to script instanced logic node
    uScriptAct_IsActive logic_uScriptAct_IsActive_uScriptAct_IsActive_240 = new uScriptAct_IsActive( );
-   UnityEngine.GameObject logic_uScriptAct_IsActive_Target_240 = null;
+   UnityEngine.GameObject logic_uScriptAct_IsActive_Target_240 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_IsActive_Out_240 = true;
    bool logic_uScriptAct_IsActive_Active_240 = true;
    bool logic_uScriptAct_IsActive_Inactive_240 = true;
    //pointer to script instanced logic node
    uScriptAct_IsometricCharacterController logic_uScriptAct_IsometricCharacterController_uScriptAct_IsometricCharacterController_241 = new uScriptAct_IsometricCharacterController( );
-   UnityEngine.GameObject logic_uScriptAct_IsometricCharacterController_target_241 = null;
+   UnityEngine.GameObject logic_uScriptAct_IsometricCharacterController_target_241 = default(UnityEngine.GameObject);
    System.Single logic_uScriptAct_IsometricCharacterController_translation_241 = (float) 0;
    System.Single logic_uScriptAct_IsometricCharacterController_rotation_241 = (float) 1.5;
    System.Boolean logic_uScriptAct_IsometricCharacterController_filterTranslation_241 = (bool) false;
@@ -1366,11 +1367,11 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_ReplaceMaterial logic_uScriptAct_ReplaceMaterial_uScriptAct_ReplaceMaterial_243 = new uScriptAct_ReplaceMaterial( );
    UnityEngine.GameObject[] logic_uScriptAct_ReplaceMaterial_Target_243 = new UnityEngine.GameObject[] {};
    System.Int32 logic_uScriptAct_ReplaceMaterial_materialIndex_243 = (int) 0;
-   UnityEngine.Material logic_uScriptAct_ReplaceMaterial_newMaterial_243 = null;
+   UnityEngine.Material logic_uScriptAct_ReplaceMaterial_newMaterial_243 = default(UnityEngine.Material);
    bool logic_uScriptAct_ReplaceMaterial_Out_243 = true;
    //pointer to script instanced logic node
    uScriptAct_SetGameObjectName logic_uScriptAct_SetGameObjectName_uScriptAct_SetGameObjectName_244 = new uScriptAct_SetGameObjectName( );
-   UnityEngine.GameObject logic_uScriptAct_SetGameObjectName_Target_244 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetGameObjectName_Target_244 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_SetGameObjectName_Name_244 = "";
    bool logic_uScriptAct_SetGameObjectName_Out_244 = true;
    //pointer to script instanced logic node
@@ -1382,7 +1383,7 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_SetParent logic_uScriptAct_SetParent_uScriptAct_SetParent_246 = new uScriptAct_SetParent( );
    UnityEngine.GameObject[] logic_uScriptAct_SetParent_Target_246 = new UnityEngine.GameObject[] {};
-   UnityEngine.GameObject logic_uScriptAct_SetParent_Parent_246 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetParent_Parent_246 = default(UnityEngine.GameObject);
    bool logic_uScriptAct_SetParent_Out_246 = true;
    //pointer to script instanced logic node
    uScriptAct_SetTag logic_uScriptAct_SetTag_uScriptAct_SetTag_247 = new uScriptAct_SetTag( );
@@ -1391,7 +1392,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_SetTag_Out_247 = true;
    //pointer to script instanced logic node
    uScriptAct_SetMainTextureScale logic_uScriptAct_SetMainTextureScale_uScriptAct_SetMainTextureScale_248 = new uScriptAct_SetMainTextureScale( );
-   UnityEngine.Material logic_uScriptAct_SetMainTextureScale_material_248 = null;
+   UnityEngine.Material logic_uScriptAct_SetMainTextureScale_material_248 = default(UnityEngine.Material);
    UnityEngine.Vector2 logic_uScriptAct_SetMainTextureScale_textureScale_248 = new Vector2( (float)0, (float)0 );
    bool logic_uScriptAct_SetMainTextureScale_Out_248 = true;
    //pointer to script instanced logic node
@@ -1401,7 +1402,7 @@ public class All_Action_Nodes : uScriptLogic
    UnityEngine.Vector3 logic_uScriptAct_SpawnChildPrefabAtLocation_SpawnPosition_249 = new Vector3( (float)0, (float)0, (float)0 );
    UnityEngine.Quaternion logic_uScriptAct_SpawnChildPrefabAtLocation_SpawnRotation_249 = new Quaternion( (float)0, (float)0, (float)0, (float)0 );
    System.String logic_uScriptAct_SpawnChildPrefabAtLocation_SpawnedName_249 = "";
-   UnityEngine.GameObject logic_uScriptAct_SpawnChildPrefabAtLocation_Parent_249 = null;
+   UnityEngine.GameObject logic_uScriptAct_SpawnChildPrefabAtLocation_Parent_249 = default(UnityEngine.GameObject);
    UnityEngine.GameObject logic_uScriptAct_SpawnChildPrefabAtLocation_SpawnedGameObject_249;
    System.Int32 logic_uScriptAct_SpawnChildPrefabAtLocation_SpawnedInstancedID_249;
    bool logic_uScriptAct_SpawnChildPrefabAtLocation_Immediate_249 = true;
@@ -1409,7 +1410,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_SpawnPrefab logic_uScriptAct_SpawnPrefab_uScriptAct_SpawnPrefab_250 = new uScriptAct_SpawnPrefab( );
    System.String logic_uScriptAct_SpawnPrefab_PrefabName_250 = "";
    System.String logic_uScriptAct_SpawnPrefab_ResourcePath_250 = "";
-   UnityEngine.GameObject logic_uScriptAct_SpawnPrefab_SpawnPoint_250 = null;
+   UnityEngine.GameObject logic_uScriptAct_SpawnPrefab_SpawnPoint_250 = default(UnityEngine.GameObject);
    System.String logic_uScriptAct_SpawnPrefab_SpawnedName_250 = "";
    UnityEngine.Vector3 logic_uScriptAct_SpawnPrefab_LocationOffset_250 = new Vector3( (float)0, (float)0, (float)0 );
    UnityEngine.GameObject logic_uScriptAct_SpawnPrefab_SpawnedGameObject_250;
@@ -1495,7 +1496,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GUISetDepth_Out_267 = true;
    //pointer to script instanced logic node
    uScriptAct_GUISetSkin logic_uScriptAct_GUISetSkin_uScriptAct_GUISetSkin_268 = new uScriptAct_GUISetSkin( );
-   UnityEngine.GUISkin logic_uScriptAct_GUISetSkin_skin_268 = null;
+   UnityEngine.GUISkin logic_uScriptAct_GUISetSkin_skin_268 = default(UnityEngine.GUISkin);
    bool logic_uScriptAct_GUISetSkin_Out_268 = true;
    //pointer to script instanced logic node
    uScriptAct_Log logic_uScriptAct_Log_uScriptAct_Log_269 = new uScriptAct_Log( );
@@ -1507,7 +1508,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_GUIBeginGroup logic_uScriptAct_GUIBeginGroup_uScriptAct_GUIBeginGroup_270 = new uScriptAct_GUIBeginGroup( );
    UnityEngine.Rect logic_uScriptAct_GUIBeginGroup_Position_270 = new Rect( (float)0, (float)0, (float)0, (float)0 );
    System.String logic_uScriptAct_GUIBeginGroup_Text_270 = "";
-   UnityEngine.Texture2D logic_uScriptAct_GUIBeginGroup_Texture_270 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIBeginGroup_Texture_270 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIBeginGroup_ToolTip_270 = "";
    System.String logic_uScriptAct_GUIBeginGroup_guiStyle_270 = "";
    bool logic_uScriptAct_GUIBeginGroup_Out_270 = true;
@@ -1526,7 +1527,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_GUIBox logic_uScriptAct_GUIBox_uScriptAct_GUIBox_272 = new uScriptAct_GUIBox( );
    System.String logic_uScriptAct_GUIBox_Text_272 = "";
    UnityEngine.Rect logic_uScriptAct_GUIBox_Position_272 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture2D logic_uScriptAct_GUIBox_Texture_272 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIBox_Texture_272 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIBox_ToolTip_272 = "";
    System.String logic_uScriptAct_GUIBox_guiStyle_272 = "";
    bool logic_uScriptAct_GUIBox_Out_272 = true;
@@ -1535,7 +1536,7 @@ public class All_Action_Nodes : uScriptLogic
    System.String logic_uScriptAct_GUIButton_Text_273 = "";
    System.Int32 logic_uScriptAct_GUIButton_identifier_273 = (int) 0;
    UnityEngine.Rect logic_uScriptAct_GUIButton_Position_273 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture2D logic_uScriptAct_GUIButton_Texture_273 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIButton_Texture_273 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIButton_ToolTip_273 = "";
    System.String logic_uScriptAct_GUIButton_guiStyle_273 = "";
    bool logic_uScriptAct_GUIButton_Out_273 = true;
@@ -1558,7 +1559,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_GUILabel logic_uScriptAct_GUILabel_uScriptAct_GUILabel_277 = new uScriptAct_GUILabel( );
    System.String logic_uScriptAct_GUILabel_Text_277 = "";
    UnityEngine.Rect logic_uScriptAct_GUILabel_Position_277 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_277 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILabel_Texture_277 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILabel_ToolTip_277 = "";
    System.String logic_uScriptAct_GUILabel_guiStyle_277 = "";
    bool logic_uScriptAct_GUILabel_Out_277 = true;
@@ -1601,7 +1602,7 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_GUITexture logic_uScriptAct_GUITexture_uScriptAct_GUITexture_282 = new uScriptAct_GUITexture( );
    UnityEngine.Rect logic_uScriptAct_GUITexture_Position_282 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture2D logic_uScriptAct_GUITexture_Texture_282 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUITexture_Texture_282 = default(UnityEngine.Texture2D);
    UnityEngine.ScaleMode logic_uScriptAct_GUITexture_scaleMode_282 = UnityEngine.ScaleMode.StretchToFill;
    System.Boolean logic_uScriptAct_GUITexture_alphaBlend_282 = (bool) true;
    System.Single logic_uScriptAct_GUITexture_aspect_282 = (float) 1;
@@ -1611,7 +1612,7 @@ public class All_Action_Nodes : uScriptLogic
    System.Boolean logic_uScriptAct_GUIToggle_Value_283 = (bool) false;
    System.String logic_uScriptAct_GUIToggle_Text_283 = "";
    UnityEngine.Rect logic_uScriptAct_GUIToggle_Position_283 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture2D logic_uScriptAct_GUIToggle_Texture_283 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIToggle_Texture_283 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIToggle_ToolTip_283 = "";
    System.String logic_uScriptAct_GUIToggle_guiStyle_283 = "";
    bool logic_uScriptAct_GUIToggle_Out_283 = true;
@@ -1629,7 +1630,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_GUIWindow logic_uScriptAct_GUIWindow_uScriptAct_GUIWindow_285 = new uScriptAct_GUIWindow( );
    System.String logic_uScriptAct_GUIWindow_Name_285 = "";
    UnityEngine.Rect logic_uScriptAct_GUIWindow_Position_285 = new Rect( (float)0, (float)0, (float)0, (float)0 );
-   UnityEngine.Texture2D logic_uScriptAct_GUIWindow_Texture_285 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GUIWindow_Texture_285 = default(UnityEngine.Texture2D);
    System.String logic_uScriptAct_GUIWindow_ControlName_285 = "";
    System.String logic_uScriptAct_GUIWindow_ToolTip_285 = "";
    System.String logic_uScriptAct_GUIWindow_guiStyle_285 = "";
@@ -1638,14 +1639,14 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_GUILayoutBeginArea logic_uScriptAct_GUILayoutBeginArea_uScriptAct_GUILayoutBeginArea_286 = new uScriptAct_GUILayoutBeginArea( );
    UnityEngine.Rect logic_uScriptAct_GUILayoutBeginArea_Position_286 = new Rect( (float)0, (float)0, (float)0, (float)0 );
    System.String logic_uScriptAct_GUILayoutBeginArea_Text_286 = "";
-   UnityEngine.Texture logic_uScriptAct_GUILayoutBeginArea_Texture_286 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILayoutBeginArea_Texture_286 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILayoutBeginArea_Tooltip_286 = "";
    System.String logic_uScriptAct_GUILayoutBeginArea_Style_286 = "";
    bool logic_uScriptAct_GUILayoutBeginArea_Out_286 = true;
    //pointer to script instanced logic node
    uScriptAct_GUILayoutBeginHorizontal logic_uScriptAct_GUILayoutBeginHorizontal_uScriptAct_GUILayoutBeginHorizontal_287 = new uScriptAct_GUILayoutBeginHorizontal( );
    System.String logic_uScriptAct_GUILayoutBeginHorizontal_Text_287 = "";
-   UnityEngine.Texture logic_uScriptAct_GUILayoutBeginHorizontal_Texture_287 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILayoutBeginHorizontal_Texture_287 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILayoutBeginHorizontal_Tooltip_287 = "";
    System.String logic_uScriptAct_GUILayoutBeginHorizontal_Style_287 = "";
    UnityEngine.GUILayoutOption[] logic_uScriptAct_GUILayoutBeginHorizontal_Options_287 = new UnityEngine.GUILayoutOption[] {  };
@@ -1663,7 +1664,7 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_GUILayoutBeginVertical logic_uScriptAct_GUILayoutBeginVertical_uScriptAct_GUILayoutBeginVertical_289 = new uScriptAct_GUILayoutBeginVertical( );
    System.String logic_uScriptAct_GUILayoutBeginVertical_Text_289 = "";
-   UnityEngine.Texture logic_uScriptAct_GUILayoutBeginVertical_Texture_289 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILayoutBeginVertical_Texture_289 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILayoutBeginVertical_Tooltip_289 = "";
    System.String logic_uScriptAct_GUILayoutBeginVertical_Style_289 = "";
    UnityEngine.GUILayoutOption[] logic_uScriptAct_GUILayoutBeginVertical_Options_289 = new UnityEngine.GUILayoutOption[] {  };
@@ -1671,7 +1672,7 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_GUILayoutBox logic_uScriptAct_GUILayoutBox_uScriptAct_GUILayoutBox_290 = new uScriptAct_GUILayoutBox( );
    System.String logic_uScriptAct_GUILayoutBox_Text_290 = "";
-   UnityEngine.Texture logic_uScriptAct_GUILayoutBox_Texture_290 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILayoutBox_Texture_290 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILayoutBox_Tooltip_290 = "";
    System.String logic_uScriptAct_GUILayoutBox_Style_290 = "";
    UnityEngine.GUILayoutOption[] logic_uScriptAct_GUILayoutBox_Options_290 = new UnityEngine.GUILayoutOption[] {  };
@@ -1679,7 +1680,7 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_GUILayoutButton logic_uScriptAct_GUILayoutButton_uScriptAct_GUILayoutButton_291 = new uScriptAct_GUILayoutButton( );
    System.String logic_uScriptAct_GUILayoutButton_Text_291 = "";
-   UnityEngine.Texture logic_uScriptAct_GUILayoutButton_Texture_291 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILayoutButton_Texture_291 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILayoutButton_Tooltip_291 = "";
    System.String logic_uScriptAct_GUILayoutButton_Style_291 = "";
    UnityEngine.GUILayoutOption[] logic_uScriptAct_GUILayoutButton_Options_291 = new UnityEngine.GUILayoutOption[] {  };
@@ -1718,7 +1719,7 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_GUILayoutLabel logic_uScriptAct_GUILayoutLabel_uScriptAct_GUILayoutLabel_298 = new uScriptAct_GUILayoutLabel( );
    System.String logic_uScriptAct_GUILayoutLabel_Text_298 = "";
-   UnityEngine.Texture logic_uScriptAct_GUILayoutLabel_Texture_298 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILayoutLabel_Texture_298 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILayoutLabel_Tooltip_298 = "";
    System.String logic_uScriptAct_GUILayoutLabel_Style_298 = "";
    UnityEngine.GUILayoutOption[] logic_uScriptAct_GUILayoutLabel_Options_298 = new UnityEngine.GUILayoutOption[] {  };
@@ -1765,7 +1766,7 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_GUILayoutToggle logic_uScriptAct_GUILayoutToggle_uScriptAct_GUILayoutToggle_303 = new uScriptAct_GUILayoutToggle( );
    System.Boolean logic_uScriptAct_GUILayoutToggle_Value_303 = (bool) false;
    System.String logic_uScriptAct_GUILayoutToggle_Text_303 = "";
-   UnityEngine.Texture logic_uScriptAct_GUILayoutToggle_Texture_303 = null;
+   UnityEngine.Texture logic_uScriptAct_GUILayoutToggle_Texture_303 = default(UnityEngine.Texture);
    System.String logic_uScriptAct_GUILayoutToggle_Tooltip_303 = "";
    System.String logic_uScriptAct_GUILayoutToggle_Style_303 = "";
    UnityEngine.GUILayoutOption[] logic_uScriptAct_GUILayoutToggle_Options_303 = new UnityEngine.GUILayoutOption[] {  };
@@ -1840,8 +1841,8 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetAngleVector3_Out_315 = true;
    //pointer to script instanced logic node
    uScriptAct_GetFacingAngle logic_uScriptAct_GetFacingAngle_uScriptAct_GetFacingAngle_316 = new uScriptAct_GetFacingAngle( );
-   UnityEngine.GameObject logic_uScriptAct_GetFacingAngle_A_316 = null;
-   UnityEngine.GameObject logic_uScriptAct_GetFacingAngle_B_316 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetFacingAngle_A_316 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptAct_GetFacingAngle_B_316 = default(UnityEngine.GameObject);
    System.Single logic_uScriptAct_GetFacingAngle_Angle_316;
    bool logic_uScriptAct_GetFacingAngle_Out_316 = true;
    //pointer to script instanced logic node
@@ -2486,7 +2487,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_Log_Out_401 = true;
    //pointer to script instanced logic node
    uScriptAct_AddForce logic_uScriptAct_AddForce_uScriptAct_AddForce_403 = new uScriptAct_AddForce( );
-   UnityEngine.GameObject logic_uScriptAct_AddForce_Target_403 = null;
+   UnityEngine.GameObject logic_uScriptAct_AddForce_Target_403 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_AddForce_Force_403 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_AddForce_Scale_403 = (float) 0;
    System.Boolean logic_uScriptAct_AddForce_UseForceMode_403 = (bool) false;
@@ -2494,7 +2495,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_AddForce_Out_403 = true;
    //pointer to script instanced logic node
    uScriptAct_AddRelativeForce logic_uScriptAct_AddRelativeForce_uScriptAct_AddRelativeForce_404 = new uScriptAct_AddRelativeForce( );
-   UnityEngine.GameObject logic_uScriptAct_AddRelativeForce_Target_404 = null;
+   UnityEngine.GameObject logic_uScriptAct_AddRelativeForce_Target_404 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_AddRelativeForce_Force_404 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_AddRelativeForce_Scale_404 = (float) 0;
    System.Boolean logic_uScriptAct_AddRelativeForce_UseForceMode_404 = (bool) false;
@@ -2502,7 +2503,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_AddRelativeForce_Out_404 = true;
    //pointer to script instanced logic node
    uScriptAct_AddRelativeTorque logic_uScriptAct_AddRelativeTorque_uScriptAct_AddRelativeTorque_405 = new uScriptAct_AddRelativeTorque( );
-   UnityEngine.GameObject logic_uScriptAct_AddRelativeTorque_Target_405 = null;
+   UnityEngine.GameObject logic_uScriptAct_AddRelativeTorque_Target_405 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_AddRelativeTorque_Force_405 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_AddRelativeTorque_Scale_405 = (float) 0;
    System.Boolean logic_uScriptAct_AddRelativeTorque_UseForceMode_405 = (bool) false;
@@ -2510,7 +2511,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_AddRelativeTorque_Out_405 = true;
    //pointer to script instanced logic node
    uScriptAct_AddTorque logic_uScriptAct_AddTorque_uScriptAct_AddTorque_406 = new uScriptAct_AddTorque( );
-   UnityEngine.GameObject logic_uScriptAct_AddTorque_Target_406 = null;
+   UnityEngine.GameObject logic_uScriptAct_AddTorque_Target_406 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_AddTorque_Force_406 = new Vector3( (float)0, (float)0, (float)0 );
    System.Single logic_uScriptAct_AddTorque_Scale_406 = (float) 0;
    System.Boolean logic_uScriptAct_AddTorque_UseForceMode_406 = (bool) false;
@@ -2528,19 +2529,19 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetGravity_Out_408 = true;
    //pointer to script instanced logic node
    uScriptAct_GetRigidBody logic_uScriptAct_GetRigidBody_uScriptAct_GetRigidBody_409 = new uScriptAct_GetRigidBody( );
-   UnityEngine.GameObject logic_uScriptAct_GetRigidBody_Target_409 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetRigidBody_Target_409 = default(UnityEngine.GameObject);
    UnityEngine.Rigidbody logic_uScriptAct_GetRigidBody_rigidBody_409;
    bool logic_uScriptAct_GetRigidBody_Out_409 = true;
    //pointer to script instanced logic node
    uScriptAct_GetRigidbodyVelocity logic_uScriptAct_GetRigidbodyVelocity_uScriptAct_GetRigidbodyVelocity_410 = new uScriptAct_GetRigidbodyVelocity( );
-   UnityEngine.GameObject logic_uScriptAct_GetRigidbodyVelocity_Target_410 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetRigidbodyVelocity_Target_410 = default(UnityEngine.GameObject);
    UnityEngine.Vector3 logic_uScriptAct_GetRigidbodyVelocity_Velocity_410;
    System.Single logic_uScriptAct_GetRigidbodyVelocity_Magnitude_410;
    bool logic_uScriptAct_GetRigidbodyVelocity_Out_410 = true;
    //pointer to script instanced logic node
    uScriptAct_IgnoreCollision logic_uScriptAct_IgnoreCollision_uScriptAct_IgnoreCollision_411 = new uScriptAct_IgnoreCollision( );
-   UnityEngine.GameObject logic_uScriptAct_IgnoreCollision_A_411 = null;
-   UnityEngine.GameObject logic_uScriptAct_IgnoreCollision_B_411 = null;
+   UnityEngine.GameObject logic_uScriptAct_IgnoreCollision_A_411 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptAct_IgnoreCollision_B_411 = default(UnityEngine.GameObject);
    System.Boolean logic_uScriptAct_IgnoreCollision_Ignore_411 = (bool) true;
    bool logic_uScriptAct_IgnoreCollision_Out_411 = true;
    //pointer to script instanced logic node
@@ -2564,7 +2565,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_Raycast_Obstructed_413 = true;
    //pointer to script instanced logic node
    uScriptAct_RaycastFromCamera logic_uScriptAct_RaycastFromCamera_uScriptAct_RaycastFromCamera_414 = new uScriptAct_RaycastFromCamera( );
-   UnityEngine.Camera logic_uScriptAct_RaycastFromCamera_Camera_414 = null;
+   UnityEngine.Camera logic_uScriptAct_RaycastFromCamera_Camera_414 = default(UnityEngine.Camera);
    System.Int32 logic_uScriptAct_RaycastFromCamera_Offset_X_414 = (int) 0;
    System.Int32 logic_uScriptAct_RaycastFromCamera_Offset_Y_414 = (int) 0;
    System.Single logic_uScriptAct_RaycastFromCamera_Distance_414 = (float) 100;
@@ -2579,7 +2580,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_RaycastFromCamera_Obstructed_414 = true;
    //pointer to script instanced logic node
    uScriptAct_RaycastFromCursor logic_uScriptAct_RaycastFromCursor_uScriptAct_RaycastFromCursor_415 = new uScriptAct_RaycastFromCursor( );
-   UnityEngine.Camera logic_uScriptAct_RaycastFromCursor_Camera_415 = null;
+   UnityEngine.Camera logic_uScriptAct_RaycastFromCursor_Camera_415 = default(UnityEngine.Camera);
    System.Single logic_uScriptAct_RaycastFromCursor_Distance_415 = (float) 100;
    UnityEngine.LayerMask logic_uScriptAct_RaycastFromCursor_layerMask_415 = 1;
    System.Boolean logic_uScriptAct_RaycastFromCursor_include_415 = (bool) true;
@@ -2592,7 +2593,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_RaycastFromCursor_Obstructed_415 = true;
    //pointer to script instanced logic node
    uScriptAct_RaycastFromScreenPoint logic_uScriptAct_RaycastFromScreenPoint_uScriptAct_RaycastFromScreenPoint_416 = new uScriptAct_RaycastFromScreenPoint( );
-   UnityEngine.Camera logic_uScriptAct_RaycastFromScreenPoint_Camera_416 = null;
+   UnityEngine.Camera logic_uScriptAct_RaycastFromScreenPoint_Camera_416 = default(UnityEngine.Camera);
    UnityEngine.Vector2 logic_uScriptAct_RaycastFromScreenPoint_ScreenPosition_416 = new Vector2( (float)0, (float)0 );
    System.Single logic_uScriptAct_RaycastFromScreenPoint_Distance_416 = (float) 100;
    UnityEngine.LayerMask logic_uScriptAct_RaycastFromScreenPoint_layerMask_416 = 1;
@@ -2719,11 +2720,11 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_RenderSettingsSetHaloStrength_Out_441 = true;
    //pointer to script instanced logic node
    uScriptAct_RenderSettingsSetSkyboxMaterial logic_uScriptAct_RenderSettingsSetSkyboxMaterial_uScriptAct_RenderSettingsSetSkyboxMaterial_442 = new uScriptAct_RenderSettingsSetSkyboxMaterial( );
-   UnityEngine.Material logic_uScriptAct_RenderSettingsSetSkyboxMaterial_newSkybox_442 = null;
+   UnityEngine.Material logic_uScriptAct_RenderSettingsSetSkyboxMaterial_newSkybox_442 = default(UnityEngine.Material);
    bool logic_uScriptAct_RenderSettingsSetSkyboxMaterial_Out_442 = true;
    //pointer to script instanced logic node
    uScriptAct_MaterialSetFloat logic_uScriptAct_MaterialSetFloat_uScriptAct_MaterialSetFloat_443 = new uScriptAct_MaterialSetFloat( );
-   UnityEngine.Material logic_uScriptAct_MaterialSetFloat_material_443 = null;
+   UnityEngine.Material logic_uScriptAct_MaterialSetFloat_material_443 = default(UnityEngine.Material);
    System.String logic_uScriptAct_MaterialSetFloat_name_443 = "";
    System.Single logic_uScriptAct_MaterialSetFloat_value_443 = (float) 0;
    bool logic_uScriptAct_MaterialSetFloat_Out_443 = true;
@@ -2801,7 +2802,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_Log_Out_457 = true;
    //pointer to script instanced logic node
    uScriptAct_GetTextureInfo logic_uScriptAct_GetTextureInfo_uScriptAct_GetTextureInfo_459 = new uScriptAct_GetTextureInfo( );
-   UnityEngine.Texture2D logic_uScriptAct_GetTextureInfo_target_459 = null;
+   UnityEngine.Texture2D logic_uScriptAct_GetTextureInfo_target_459 = default(UnityEngine.Texture2D);
    System.Int32 logic_uScriptAct_GetTextureInfo_width_459;
    System.Int32 logic_uScriptAct_GetTextureInfo_height_459;
    UnityEngine.Vector2 logic_uScriptAct_GetTextureInfo_size_459;
@@ -2934,7 +2935,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_Log_Out_482 = true;
    //pointer to script instanced logic node
    uScriptAct_SetAnimation logic_uScriptAct_SetAnimation_uScriptAct_SetAnimation_484 = new uScriptAct_SetAnimation( );
-   UnityEngine.Animation logic_uScriptAct_SetAnimation_Value_484 = null;
+   UnityEngine.Animation logic_uScriptAct_SetAnimation_Value_484 = default(UnityEngine.Animation);
    UnityEngine.Animation logic_uScriptAct_SetAnimation_TargetAnim_484;
    bool logic_uScriptAct_SetAnimation_Out_484 = true;
    //pointer to script instanced logic node
@@ -2944,7 +2945,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_SetRandomAnimation_Out_485 = true;
    //pointer to script instanced logic node
    uScriptAct_SetAudioClip logic_uScriptAct_SetAudioClip_uScriptAct_SetAudioClip_486 = new uScriptAct_SetAudioClip( );
-   UnityEngine.AudioClip logic_uScriptAct_SetAudioClip_Value_486 = null;
+   UnityEngine.AudioClip logic_uScriptAct_SetAudioClip_Value_486 = default(UnityEngine.AudioClip);
    UnityEngine.AudioClip logic_uScriptAct_SetAudioClip_TargetGameObject_486;
    bool logic_uScriptAct_SetAudioClip_Out_486 = true;
    //pointer to script instanced logic node
@@ -2964,7 +2965,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_SetRandomBool_Out_489 = true;
    //pointer to script instanced logic node
    uScriptAct_GetCameraFromGameObject logic_uScriptAct_GetCameraFromGameObject_uScriptAct_GetCameraFromGameObject_490 = new uScriptAct_GetCameraFromGameObject( );
-   UnityEngine.GameObject logic_uScriptAct_GetCameraFromGameObject_Target_490 = null;
+   UnityEngine.GameObject logic_uScriptAct_GetCameraFromGameObject_Target_490 = default(UnityEngine.GameObject);
    UnityEngine.Camera logic_uScriptAct_GetCameraFromGameObject_TargetCamera_490;
    bool logic_uScriptAct_GetCameraFromGameObject_Out_490 = true;
    //pointer to script instanced logic node
@@ -3015,7 +3016,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_SetConstraint_Out_496 = true;
    //pointer to script instanced logic node
    uScriptAct_GetComponentsContactPoint logic_uScriptAct_GetComponentsContactPoint_uScriptAct_GetComponentsContactPoint_497 = new uScriptAct_GetComponentsContactPoint( );
-   UnityEngine.ContactPoint logic_uScriptAct_GetComponentsContactPoint_ContactPoint_497 = new UnityEngine.ContactPoint( );
+   UnityEngine.ContactPoint logic_uScriptAct_GetComponentsContactPoint_ContactPoint_497 = default(UnityEngine.ContactPoint);
    UnityEngine.Vector3 logic_uScriptAct_GetComponentsContactPoint_point_497;
    UnityEngine.Vector3 logic_uScriptAct_GetComponentsContactPoint_normal_497;
    UnityEngine.Collider logic_uScriptAct_GetComponentsContactPoint_ThisCollider_497;
@@ -3052,7 +3053,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_SetRandomFloat_Out_502 = true;
    //pointer to script instanced logic node
    uScriptAct_SetGameObject logic_uScriptAct_SetGameObject_uScriptAct_SetGameObject_503 = new uScriptAct_SetGameObject( );
-   UnityEngine.GameObject logic_uScriptAct_SetGameObject_Value_503 = null;
+   UnityEngine.GameObject logic_uScriptAct_SetGameObject_Value_503 = default(UnityEngine.GameObject);
    UnityEngine.GameObject logic_uScriptAct_SetGameObject_TargetGameObject_503;
    bool logic_uScriptAct_SetGameObject_Out_503 = true;
    //pointer to script instanced logic node
@@ -3097,7 +3098,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_StringToKeyCode_Out_510 = true;
    //pointer to script instanced logic node
    uScriptAct_SetMaterial logic_uScriptAct_SetMaterial_uScriptAct_SetMaterial_511 = new uScriptAct_SetMaterial( );
-   UnityEngine.Material logic_uScriptAct_SetMaterial_Value_511 = null;
+   UnityEngine.Material logic_uScriptAct_SetMaterial_Value_511 = default(UnityEngine.Material);
    UnityEngine.Material logic_uScriptAct_SetMaterial_TargetMat_511;
    bool logic_uScriptAct_SetMaterial_Out_511 = true;
    //pointer to script instanced logic node
@@ -3272,7 +3273,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_SetRandomTextAsset_Out_535 = true;
    //pointer to script instanced logic node
    uScriptAct_TextAssetToString logic_uScriptAct_TextAssetToString_uScriptAct_TextAssetToString_536 = new uScriptAct_TextAssetToString( );
-   UnityEngine.TextAsset logic_uScriptAct_TextAssetToString_Value_536 = null;
+   UnityEngine.TextAsset logic_uScriptAct_TextAssetToString_Value_536 = default(UnityEngine.TextAsset);
    System.String logic_uScriptAct_TextAssetToString_Target_536;
    System.String logic_uScriptAct_TextAssetToString_FileName_536;
    bool logic_uScriptAct_TextAssetToString_Out_536 = true;
@@ -3288,17 +3289,17 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_SetRandomTexture2D_Out_538 = true;
    //pointer to script instanced logic node
    uScriptAct_SetTexture2D logic_uScriptAct_SetTexture2D_uScriptAct_SetTexture2D_539 = new uScriptAct_SetTexture2D( );
-   UnityEngine.Texture2D logic_uScriptAct_SetTexture2D_Value_539 = null;
+   UnityEngine.Texture2D logic_uScriptAct_SetTexture2D_Value_539 = default(UnityEngine.Texture2D);
    UnityEngine.Texture2D logic_uScriptAct_SetTexture2D_Target_539;
    bool logic_uScriptAct_SetTexture2D_Out_539 = true;
    //pointer to script instanced logic node
    uScriptAct_GetGameObjectFromTransform logic_uScriptAct_GetGameObjectFromTransform_uScriptAct_GetGameObjectFromTransform_540 = new uScriptAct_GetGameObjectFromTransform( );
-   UnityEngine.Transform logic_uScriptAct_GetGameObjectFromTransform_InputTransform_540 = null;
+   UnityEngine.Transform logic_uScriptAct_GetGameObjectFromTransform_InputTransform_540 = default(UnityEngine.Transform);
    UnityEngine.GameObject logic_uScriptAct_GetGameObjectFromTransform_transGameObject_540;
    bool logic_uScriptAct_GetGameObjectFromTransform_Out_540 = true;
    //pointer to script instanced logic node
    uScriptAct_GetPositionFromTransform logic_uScriptAct_GetPositionFromTransform_uScriptAct_GetPositionFromTransform_541 = new uScriptAct_GetPositionFromTransform( );
-   UnityEngine.Transform logic_uScriptAct_GetPositionFromTransform_target_541 = null;
+   UnityEngine.Transform logic_uScriptAct_GetPositionFromTransform_target_541 = default(UnityEngine.Transform);
    System.Boolean logic_uScriptAct_GetPositionFromTransform_getLocal_541 = (bool) false;
    UnityEngine.Vector3 logic_uScriptAct_GetPositionFromTransform_position_541;
    UnityEngine.Vector3 logic_uScriptAct_GetPositionFromTransform_forward_541;
@@ -3308,20 +3309,20 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetPositionFromTransform_Out_541 = true;
    //pointer to script instanced logic node
    uScriptAct_GetRootTransform logic_uScriptAct_GetRootTransform_uScriptAct_GetRootTransform_542 = new uScriptAct_GetRootTransform( );
-   UnityEngine.Transform logic_uScriptAct_GetRootTransform_target_542 = null;
+   UnityEngine.Transform logic_uScriptAct_GetRootTransform_target_542 = default(UnityEngine.Transform);
    UnityEngine.Transform logic_uScriptAct_GetRootTransform_rootTransform_542;
    UnityEngine.GameObject logic_uScriptAct_GetRootTransform_rootGameObject_542;
    bool logic_uScriptAct_GetRootTransform_Out_542 = true;
    //pointer to script instanced logic node
    uScriptAct_GetRotationFromTransform logic_uScriptAct_GetRotationFromTransform_uScriptAct_GetRotationFromTransform_543 = new uScriptAct_GetRotationFromTransform( );
-   UnityEngine.Transform logic_uScriptAct_GetRotationFromTransform_target_543 = null;
+   UnityEngine.Transform logic_uScriptAct_GetRotationFromTransform_target_543 = default(UnityEngine.Transform);
    System.Boolean logic_uScriptAct_GetRotationFromTransform_getLocal_543 = (bool) false;
    UnityEngine.Quaternion logic_uScriptAct_GetRotationFromTransform_rotation_543;
    UnityEngine.Vector3 logic_uScriptAct_GetRotationFromTransform_eulerAngle_543;
    bool logic_uScriptAct_GetRotationFromTransform_Out_543 = true;
    //pointer to script instanced logic node
    uScriptAct_GetScaleFromTransform logic_uScriptAct_GetScaleFromTransform_uScriptAct_GetScaleFromTransform_544 = new uScriptAct_GetScaleFromTransform( );
-   UnityEngine.Transform logic_uScriptAct_GetScaleFromTransform_target_544 = null;
+   UnityEngine.Transform logic_uScriptAct_GetScaleFromTransform_target_544 = default(UnityEngine.Transform);
    System.Boolean logic_uScriptAct_GetScaleFromTransform_getLossy_544 = (bool) false;
    UnityEngine.Vector3 logic_uScriptAct_GetScaleFromTransform_scale_544;
    System.Single logic_uScriptAct_GetScaleFromTransform_xScale_544;
@@ -3330,7 +3331,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_GetScaleFromTransform_Out_544 = true;
    //pointer to script instanced logic node
    uScriptAct_SetTransform logic_uScriptAct_SetTransform_uScriptAct_SetTransform_545 = new uScriptAct_SetTransform( );
-   UnityEngine.Transform logic_uScriptAct_SetTransform_Value_545 = null;
+   UnityEngine.Transform logic_uScriptAct_SetTransform_Value_545 = default(UnityEngine.Transform);
    UnityEngine.Transform logic_uScriptAct_SetTransform_TargetTransform_545;
    bool logic_uScriptAct_SetTransform_Out_545 = true;
    //pointer to script instanced logic node
@@ -3506,14 +3507,14 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_ReplaceValueAtIndexInListAudioClip logic_uScriptAct_ReplaceValueAtIndexInListAudioClip_uScriptAct_ReplaceValueAtIndexInListAudioClip_570 = new uScriptAct_ReplaceValueAtIndexInListAudioClip( );
    UnityEngine.AudioClip[] logic_uScriptAct_ReplaceValueAtIndexInListAudioClip_TargetList_570 = new UnityEngine.AudioClip[ 0 ];
    System.Int32 logic_uScriptAct_ReplaceValueAtIndexInListAudioClip_Index_570 = (int) 0;
-   UnityEngine.AudioClip logic_uScriptAct_ReplaceValueAtIndexInListAudioClip_NewValue_570 = null;
+   UnityEngine.AudioClip logic_uScriptAct_ReplaceValueAtIndexInListAudioClip_NewValue_570 = default(UnityEngine.AudioClip);
    UnityEngine.AudioClip[] logic_uScriptAct_ReplaceValueAtIndexInListAudioClip_ModifiedList_570;
    bool logic_uScriptAct_ReplaceValueAtIndexInListAudioClip_Out_570 = true;
    //pointer to script instanced logic node
    uScriptAct_ReplaceValueInListAudioClip logic_uScriptAct_ReplaceValueInListAudioClip_uScriptAct_ReplaceValueInListAudioClip_571 = new uScriptAct_ReplaceValueInListAudioClip( );
    UnityEngine.AudioClip[] logic_uScriptAct_ReplaceValueInListAudioClip_TargetList_571 = new UnityEngine.AudioClip[ 0 ];
-   UnityEngine.AudioClip logic_uScriptAct_ReplaceValueInListAudioClip_OldValue_571 = null;
-   UnityEngine.AudioClip logic_uScriptAct_ReplaceValueInListAudioClip_NewValue_571 = null;
+   UnityEngine.AudioClip logic_uScriptAct_ReplaceValueInListAudioClip_OldValue_571 = default(UnityEngine.AudioClip);
+   UnityEngine.AudioClip logic_uScriptAct_ReplaceValueInListAudioClip_NewValue_571 = default(UnityEngine.AudioClip);
    UnityEngine.AudioClip[] logic_uScriptAct_ReplaceValueInListAudioClip_ModifiedList_571;
    System.Int32 logic_uScriptAct_ReplaceValueInListAudioClip_ValuesFound_571;
    bool logic_uScriptAct_ReplaceValueInListAudioClip_Out_571 = true;
@@ -3569,14 +3570,14 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_ReplaceValueAtIndexInListCamera logic_uScriptAct_ReplaceValueAtIndexInListCamera_uScriptAct_ReplaceValueAtIndexInListCamera_579 = new uScriptAct_ReplaceValueAtIndexInListCamera( );
    UnityEngine.Camera[] logic_uScriptAct_ReplaceValueAtIndexInListCamera_TargetList_579 = new UnityEngine.Camera[] {};
    System.Int32 logic_uScriptAct_ReplaceValueAtIndexInListCamera_Index_579 = (int) 0;
-   UnityEngine.Camera logic_uScriptAct_ReplaceValueAtIndexInListCamera_NewValue_579 = null;
+   UnityEngine.Camera logic_uScriptAct_ReplaceValueAtIndexInListCamera_NewValue_579 = default(UnityEngine.Camera);
    UnityEngine.Camera[] logic_uScriptAct_ReplaceValueAtIndexInListCamera_ModifiedList_579;
    bool logic_uScriptAct_ReplaceValueAtIndexInListCamera_Out_579 = true;
    //pointer to script instanced logic node
    uScriptAct_ReplaceValueInListCamera logic_uScriptAct_ReplaceValueInListCamera_uScriptAct_ReplaceValueInListCamera_580 = new uScriptAct_ReplaceValueInListCamera( );
    UnityEngine.Camera[] logic_uScriptAct_ReplaceValueInListCamera_TargetList_580 = new UnityEngine.Camera[] {};
-   UnityEngine.Camera logic_uScriptAct_ReplaceValueInListCamera_OldValue_580 = null;
-   UnityEngine.Camera logic_uScriptAct_ReplaceValueInListCamera_NewValue_580 = null;
+   UnityEngine.Camera logic_uScriptAct_ReplaceValueInListCamera_OldValue_580 = default(UnityEngine.Camera);
+   UnityEngine.Camera logic_uScriptAct_ReplaceValueInListCamera_NewValue_580 = default(UnityEngine.Camera);
    UnityEngine.Camera[] logic_uScriptAct_ReplaceValueInListCamera_ModifiedList_580;
    System.Int32 logic_uScriptAct_ReplaceValueInListCamera_ValuesFound_580;
    bool logic_uScriptAct_ReplaceValueInListCamera_Out_580 = true;
@@ -3750,8 +3751,8 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_ReplaceValueInListGameObject logic_uScriptAct_ReplaceValueInListGameObject_uScriptAct_ReplaceValueInListGameObject_605 = new uScriptAct_ReplaceValueInListGameObject( );
    UnityEngine.GameObject[] logic_uScriptAct_ReplaceValueInListGameObject_TargetList_605 = new UnityEngine.GameObject[] {};
-   UnityEngine.GameObject logic_uScriptAct_ReplaceValueInListGameObject_OldValue_605 = null;
-   UnityEngine.GameObject logic_uScriptAct_ReplaceValueInListGameObject_NewValue_605 = null;
+   UnityEngine.GameObject logic_uScriptAct_ReplaceValueInListGameObject_OldValue_605 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject logic_uScriptAct_ReplaceValueInListGameObject_NewValue_605 = default(UnityEngine.GameObject);
    UnityEngine.GameObject[] logic_uScriptAct_ReplaceValueInListGameObject_ModifiedList_605;
    System.Int32 logic_uScriptAct_ReplaceValueInListGameObject_ValuesFound_605;
    bool logic_uScriptAct_ReplaceValueInListGameObject_Out_605 = true;
@@ -3870,14 +3871,14 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_ReplaceValueAtIndexInListMaterial logic_uScriptAct_ReplaceValueAtIndexInListMaterial_uScriptAct_ReplaceValueAtIndexInListMaterial_622 = new uScriptAct_ReplaceValueAtIndexInListMaterial( );
    UnityEngine.Material[] logic_uScriptAct_ReplaceValueAtIndexInListMaterial_TargetList_622 = new UnityEngine.Material[ 0 ];
    System.Int32 logic_uScriptAct_ReplaceValueAtIndexInListMaterial_Index_622 = (int) 0;
-   UnityEngine.Material logic_uScriptAct_ReplaceValueAtIndexInListMaterial_NewValue_622 = null;
+   UnityEngine.Material logic_uScriptAct_ReplaceValueAtIndexInListMaterial_NewValue_622 = default(UnityEngine.Material);
    UnityEngine.Material[] logic_uScriptAct_ReplaceValueAtIndexInListMaterial_ModifiedList_622;
    bool logic_uScriptAct_ReplaceValueAtIndexInListMaterial_Out_622 = true;
    //pointer to script instanced logic node
    uScriptAct_ReplaceValueInListMaterial logic_uScriptAct_ReplaceValueInListMaterial_uScriptAct_ReplaceValueInListMaterial_623 = new uScriptAct_ReplaceValueInListMaterial( );
    UnityEngine.Material[] logic_uScriptAct_ReplaceValueInListMaterial_TargetList_623 = new UnityEngine.Material[ 0 ];
-   UnityEngine.Material logic_uScriptAct_ReplaceValueInListMaterial_OldValue_623 = null;
-   UnityEngine.Material logic_uScriptAct_ReplaceValueInListMaterial_NewValue_623 = null;
+   UnityEngine.Material logic_uScriptAct_ReplaceValueInListMaterial_OldValue_623 = default(UnityEngine.Material);
+   UnityEngine.Material logic_uScriptAct_ReplaceValueInListMaterial_NewValue_623 = default(UnityEngine.Material);
    UnityEngine.Material[] logic_uScriptAct_ReplaceValueInListMaterial_ModifiedList_623;
    System.Int32 logic_uScriptAct_ReplaceValueInListMaterial_ValuesFound_623;
    bool logic_uScriptAct_ReplaceValueInListMaterial_Out_623 = true;
@@ -4059,14 +4060,14 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_ReplaceValueAtIndexInListTexture2D logic_uScriptAct_ReplaceValueAtIndexInListTexture2D_uScriptAct_ReplaceValueAtIndexInListTexture2D_649 = new uScriptAct_ReplaceValueAtIndexInListTexture2D( );
    UnityEngine.Texture2D[] logic_uScriptAct_ReplaceValueAtIndexInListTexture2D_TargetList_649 = new UnityEngine.Texture2D[ 0 ];
    System.Int32 logic_uScriptAct_ReplaceValueAtIndexInListTexture2D_Index_649 = (int) 0;
-   UnityEngine.Texture2D logic_uScriptAct_ReplaceValueAtIndexInListTexture2D_NewValue_649 = null;
+   UnityEngine.Texture2D logic_uScriptAct_ReplaceValueAtIndexInListTexture2D_NewValue_649 = default(UnityEngine.Texture2D);
    UnityEngine.Texture2D[] logic_uScriptAct_ReplaceValueAtIndexInListTexture2D_ModifiedList_649;
    bool logic_uScriptAct_ReplaceValueAtIndexInListTexture2D_Out_649 = true;
    //pointer to script instanced logic node
    uScriptAct_ReplaceValueInListTexture2D logic_uScriptAct_ReplaceValueInListTexture2D_uScriptAct_ReplaceValueInListTexture2D_650 = new uScriptAct_ReplaceValueInListTexture2D( );
    UnityEngine.Texture2D[] logic_uScriptAct_ReplaceValueInListTexture2D_TargetList_650 = new UnityEngine.Texture2D[ 0 ];
-   UnityEngine.Texture2D logic_uScriptAct_ReplaceValueInListTexture2D_OldValue_650 = null;
-   UnityEngine.Texture2D logic_uScriptAct_ReplaceValueInListTexture2D_NewValue_650 = null;
+   UnityEngine.Texture2D logic_uScriptAct_ReplaceValueInListTexture2D_OldValue_650 = default(UnityEngine.Texture2D);
+   UnityEngine.Texture2D logic_uScriptAct_ReplaceValueInListTexture2D_NewValue_650 = default(UnityEngine.Texture2D);
    UnityEngine.Texture2D[] logic_uScriptAct_ReplaceValueInListTexture2D_ModifiedList_650;
    System.Int32 logic_uScriptAct_ReplaceValueInListTexture2D_ValuesFound_650;
    bool logic_uScriptAct_ReplaceValueInListTexture2D_Out_650 = true;
@@ -4122,14 +4123,14 @@ public class All_Action_Nodes : uScriptLogic
    uScriptAct_ReplaceValueAtIndexInListTransform logic_uScriptAct_ReplaceValueAtIndexInListTransform_uScriptAct_ReplaceValueAtIndexInListTransform_658 = new uScriptAct_ReplaceValueAtIndexInListTransform( );
    UnityEngine.Transform[] logic_uScriptAct_ReplaceValueAtIndexInListTransform_TargetList_658 = new UnityEngine.Transform[] {};
    System.Int32 logic_uScriptAct_ReplaceValueAtIndexInListTransform_Index_658 = (int) 0;
-   UnityEngine.Transform logic_uScriptAct_ReplaceValueAtIndexInListTransform_NewValue_658 = null;
+   UnityEngine.Transform logic_uScriptAct_ReplaceValueAtIndexInListTransform_NewValue_658 = default(UnityEngine.Transform);
    UnityEngine.Transform[] logic_uScriptAct_ReplaceValueAtIndexInListTransform_ModifiedList_658;
    bool logic_uScriptAct_ReplaceValueAtIndexInListTransform_Out_658 = true;
    //pointer to script instanced logic node
    uScriptAct_ReplaceValueInListTransform logic_uScriptAct_ReplaceValueInListTransform_uScriptAct_ReplaceValueInListTransform_659 = new uScriptAct_ReplaceValueInListTransform( );
    UnityEngine.Transform[] logic_uScriptAct_ReplaceValueInListTransform_TargetList_659 = new UnityEngine.Transform[] {};
-   UnityEngine.Transform logic_uScriptAct_ReplaceValueInListTransform_OldValue_659 = null;
-   UnityEngine.Transform logic_uScriptAct_ReplaceValueInListTransform_NewValue_659 = null;
+   UnityEngine.Transform logic_uScriptAct_ReplaceValueInListTransform_OldValue_659 = default(UnityEngine.Transform);
+   UnityEngine.Transform logic_uScriptAct_ReplaceValueInListTransform_NewValue_659 = default(UnityEngine.Transform);
    UnityEngine.Transform[] logic_uScriptAct_ReplaceValueInListTransform_ModifiedList_659;
    System.Int32 logic_uScriptAct_ReplaceValueInListTransform_ValuesFound_659;
    bool logic_uScriptAct_ReplaceValueInListTransform_Out_659 = true;
@@ -4355,7 +4356,7 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_WebText logic_uScriptAct_WebText_uScriptAct_WebText_692 = new uScriptAct_WebText( );
    System.String logic_uScriptAct_WebText_URL_692 = "";
-   UnityEngine.WWWForm logic_uScriptAct_WebText_Form_692 = null;
+   UnityEngine.WWWForm logic_uScriptAct_WebText_Form_692 = default(UnityEngine.WWWForm);
    System.String logic_uScriptAct_WebText_Result_692;
    System.String logic_uScriptAct_WebText_Error_692;
    bool logic_uScriptAct_WebText_Out_692 = true;
@@ -4365,7 +4366,7 @@ public class All_Action_Nodes : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_WebTexture logic_uScriptAct_WebTexture_uScriptAct_WebTexture_693 = new uScriptAct_WebTexture( );
    System.String logic_uScriptAct_WebTexture_URL_693 = "";
-   UnityEngine.WWWForm logic_uScriptAct_WebTexture_Form_693 = null;
+   UnityEngine.WWWForm logic_uScriptAct_WebTexture_Form_693 = default(UnityEngine.WWWForm);
    UnityEngine.Texture2D logic_uScriptAct_WebTexture_Result_693;
    System.String logic_uScriptAct_WebTexture_Error_693;
    bool logic_uScriptAct_WebTexture_Out_693 = true;
@@ -4374,7 +4375,7 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_WebTexture_Driven_693 = false;
    //pointer to script instanced logic node
    uScriptAct_FormUpdateField logic_uScriptAct_FormUpdateField_uScriptAct_FormUpdateField_694 = new uScriptAct_FormUpdateField( );
-   UnityEngine.WWWForm logic_uScriptAct_FormUpdateField_Form_694 = null;
+   UnityEngine.WWWForm logic_uScriptAct_FormUpdateField_Form_694 = default(UnityEngine.WWWForm);
    System.String logic_uScriptAct_FormUpdateField_Field_694 = "";
    System.Object logic_uScriptAct_FormUpdateField_Value_694 = "";
    bool logic_uScriptAct_FormUpdateField_Out_694 = true;
@@ -4418,43 +4419,43 @@ public class All_Action_Nodes : uScriptLogic
    bool logic_uScriptAct_Concatenate_Out_701 = true;
    
    //event nodes
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_1 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_3 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_39 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_59 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_72 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_87 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_145 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_161 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_169 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_176 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_179 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_197 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_1 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_3 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_39 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_59 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_72 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_87 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_145 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_161 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_169 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_176 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_179 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_197 = default(UnityEngine.GameObject);
    System.Boolean event_UnityEngine_GameObject_GUIChanged_253 = (bool) false;
    System.String event_UnityEngine_GameObject_FocusedControl_253 = "";
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_253 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_308 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_313 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_395 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_399 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_402 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_422 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_445 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_452 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_458 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_462 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_472 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_477 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_483 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_691 = null;
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_699 = null;
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_253 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_308 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_313 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_395 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_399 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_402 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_422 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_445 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_452 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_458 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_462 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_472 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_477 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_483 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_691 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_699 = default(UnityEngine.GameObject);
    
    //property nodes
    System.String property_name_Detox_ScriptEditor_Parameter_name_70 = "";
    
    //method nodes
    System.String method_Detox_ScriptEditor_Plug_UnityEngine_GameObject_name_60 = "_uScript";
-   UnityEngine.GameObject method_Detox_ScriptEditor_Plug_UnityEngine_GameObject_Return_60 = null;
+   UnityEngine.GameObject method_Detox_ScriptEditor_Plug_UnityEngine_GameObject_Return_60 = default(UnityEngine.GameObject);
    #pragma warning restore 414
    
    //functions to refresh properties from entities
@@ -12203,8 +12204,10 @@ public class All_Action_Nodes : uScriptLogic
             }
             {
             }
+            {
+            }
          }
-         logic_uScriptAct_CameraFade_uScriptAct_CameraFade_170.In(logic_uScriptAct_CameraFade_TargetCamera_170, logic_uScriptAct_CameraFade_Direction_170, logic_uScriptAct_CameraFade_FadeMaterial_170, logic_uScriptAct_CameraFade_FadeTime_170, logic_uScriptAct_CameraFade_HoldTime_170, logic_uScriptAct_CameraFade_ColorOverride_170, logic_uScriptAct_CameraFade_FadeColor_170);
+         logic_uScriptAct_CameraFade_uScriptAct_CameraFade_170.In(logic_uScriptAct_CameraFade_TargetCamera_170, logic_uScriptAct_CameraFade_Direction_170, logic_uScriptAct_CameraFade_FadeMaterial_170, logic_uScriptAct_CameraFade_FadeTime_170, logic_uScriptAct_CameraFade_HoldTime_170, logic_uScriptAct_CameraFade_ColorOverride_170, logic_uScriptAct_CameraFade_FadeColor_170, logic_uScriptAct_CameraFade_Scale_170);
          logic_uScriptAct_CameraFade_DrivenFade_170 = true;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
@@ -12231,6 +12234,8 @@ public class All_Action_Nodes : uScriptLogic
       if ( relayCallCount++ < MaxRelayCallCount )
       {
          {
+            {
+            }
             {
             }
             {
