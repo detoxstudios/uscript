@@ -913,6 +913,12 @@ namespace Detox.ScriptEditor
          }
          set
          {
+            if (null == value)
+            {
+               Default = "";
+               return;
+            }
+
             if ( Type.Contains("[]") )
             {
                Default = ArrayToString( Type, value );
