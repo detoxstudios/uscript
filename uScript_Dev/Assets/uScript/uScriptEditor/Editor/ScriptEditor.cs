@@ -3480,7 +3480,21 @@ namespace Detox.ScriptEditor
                   string existingType = existingParam.Type != null ? existingParam.Type.Replace("[]", "") : "";
                   string newType      = myParam.Type != null ? myParam.Type.Replace("[]", "") : "";
 
-                  if ( existingType != newType )
+                  bool typeIsSuperclass = false;
+
+                  if ( null != existingType && null != newType )
+                  {
+                     Type et = uScript.Instance.GetAssemblyQualifiedType(existingType);
+                     Type nt = uScript.Instance.GetAssemblyQualifiedType(newType);
+
+                     if ( et != null && nt != null )
+                     {
+                        if (et.IsAssignableFrom(nt) || nt.IsAssignableFrom(et) )
+                           typeIsSuperclass = true;
+                     }
+                  }
+
+                  if ( existingType != newType && false == typeIsSuperclass )
                   {
                      if ( true == nameAlreadyUsed )
                      {
@@ -4089,6 +4103,7 @@ namespace Detox.ScriptEditor
 
             if ( false == allow )
             {
+               Debug.Log( Name + " " + reason );
                Status.Info( Name + " " + reason );
             }
          }
