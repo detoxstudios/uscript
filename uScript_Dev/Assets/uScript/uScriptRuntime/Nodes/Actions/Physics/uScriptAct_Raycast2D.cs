@@ -59,28 +59,25 @@ public class uScriptAct_Raycast2D : uScriptLogic
    {
       bool validInputs = true;
  
-      if (typeof(GameObject) == Start.GetType() || typeof(Vector3) == Start.GetType())
+      if (typeof(GameObject) == Start.GetType())
       {
-         if (typeof(GameObject) == Start.GetType())
-         {
-            GameObject tmpGameObjectStart = (GameObject)Start;
-            m_StartVector = tmpGameObjectStart.transform.position;
-         }
-         if (typeof(Vector2) == Start.GetType())
-         {
-            Vector2 tmpVector3Start = (Vector2)Start;
-            m_StartVector = tmpVector3Start;
-         }
-         if (typeof(Vector3) == Start.GetType())
-         {
-            Vector2 tmpVector3Start = (Vector3)Start;
-            m_StartVector = tmpVector3Start;
-         }
-         if (typeof(Transform) == Start.GetType())
-         {
-            Transform tmpVector3Start = (Transform)Start;
-            m_StartVector = tmpVector3Start.position;
-         }
+         GameObject tmpGameObjectStart = (GameObject)Start;
+         m_StartVector = tmpGameObjectStart.transform.position;
+      }
+      else if (typeof(Vector2) == Start.GetType())
+      {
+         Vector2 tmpVector3Start = (Vector2)Start;
+         m_StartVector = tmpVector3Start;
+      }
+      else if (typeof(Vector3) == Start.GetType())
+      {
+         Vector2 tmpVector3Start = (Vector3)Start;
+         m_StartVector = tmpVector3Start;
+      }
+      else if (typeof(Transform) == Start.GetType())
+      {
+         Transform tmpVector3Start = (Transform)Start;
+         m_StartVector = tmpVector3Start.position;
       }
       else
       {
