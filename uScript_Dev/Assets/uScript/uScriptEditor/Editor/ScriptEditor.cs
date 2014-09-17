@@ -4103,7 +4103,7 @@ namespace Detox.ScriptEditor
 
             if ( false == allow )
             {
-               Debug.Log( Name + " " + reason );
+               //Debug.Log( Name + " " + reason );
                Status.Info( Name + " " + reason );
             }
          }
