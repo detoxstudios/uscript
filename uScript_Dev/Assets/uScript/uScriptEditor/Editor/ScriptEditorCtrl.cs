@@ -1211,10 +1211,15 @@ namespace Detox.ScriptEditor
                EntityEvent entityEvent = (EntityEvent) node;
                linkTo = entityEvent.Instance;
             }
-            if ( node is EntityMethod )
+            else if ( node is EntityMethod )
             {
                EntityMethod m = (EntityMethod) node;
                linkTo = m.Instance;
+            }
+            else if ( node is EntityProperty )
+            {
+               EntityProperty p = (EntityProperty) node;
+               linkTo = p.Instance;
             }
          }
          else
