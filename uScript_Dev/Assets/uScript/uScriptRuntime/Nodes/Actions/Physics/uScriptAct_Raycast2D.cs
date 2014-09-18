@@ -16,7 +16,6 @@ using System.Collections;
 public class uScriptAct_Raycast2D : uScriptLogic
 {
    private Vector2 m_StartVector = Vector3.zero;
-   private Vector2 m_EndVector = Vector3.zero;
 
    private bool m_NotObstructed = false;
    private bool m_Obstructed = false;
@@ -99,29 +98,29 @@ public class uScriptAct_Raycast2D : uScriptLogic
 
          if (true == showRay)
          {
-            Debug.DrawLine(m_StartVector, m_EndVector);
+            Debug.DrawLine(m_StartVector, m_StartVector + (Direction * Distance));
          }
 
          if (!include)
          {
 			   if(!useDistance)
 			   {
-               hit = Physics2D.Raycast(m_StartVector, m_EndVector);
+               hit = Physics2D.Raycast(m_StartVector, Direction);
 			   }
 			   else
 			   {
-				   hit = Physics2D.Raycast(m_StartVector, m_EndVector, Distance);
+				   hit = Physics2D.Raycast(m_StartVector, Direction, Distance);
 			   }
          }
          else
          {
 			   if(!useDistance)
 			   {
-	            hit = Physics2D.Raycast(m_StartVector, m_EndVector, layerMask);
+	            hit = Physics2D.Raycast(m_StartVector, Direction, layerMask);
 			   }
 			   else
 			   {
-				   hit = Physics2D.Raycast(m_StartVector, m_EndVector, Distance, layerMask);
+				   hit = Physics2D.Raycast(m_StartVector, Direction, Distance, layerMask);
 			   }
          }
       }
