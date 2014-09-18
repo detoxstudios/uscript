@@ -85,8 +85,6 @@ public class uScript_Lerper
          {
             m_Running = true;
             m_LoopRestartCountdown = 0;
-
-            ++m_LoopIteration;
          }
       }
 
@@ -124,16 +122,18 @@ public class uScript_Lerper
             //pingpong - reverse direction and restart
             if ( LoopType.PingPong == m_LoopType ) 
             {
+               m_LoopIteration++;
                m_IsReversed = ! m_IsReversed;
                if ( 0 == m_LoopRestartCountdown ) m_Running = true;
             }
             //repeate = reset time and restart
             else if ( LoopType.Repeat == m_LoopType )
             {
+               m_LoopIteration++;
                m_CurrentTime = (m_IsReversed == false) ? 0 : m_TotalTime;
                if ( 0 == m_LoopRestartCountdown ) m_Running = true;
             }
-         }         
+         }
          
          //still running or we were restarted
          if ( true == m_Running )
