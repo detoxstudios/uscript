@@ -61,7 +61,7 @@ public class uScriptAct_PlayAudioSource : uScriptLogic
       [FriendlyName("Target", "The GameObject to emit the sound from.")]
       GameObject[] target,
 
-      [FriendlyName("Audio Clip", "(optional) You can specify an AudioClip to play instead of the deault AudioClip assigned to the target's AudioSource component.")]
+      [FriendlyName("Audio Clip", "(optional) You can specify an AudioClip to play instead of the default AudioClip assigned to the target's AudioSource component.")]
       [RequiresLink]
       AudioClip audioClip
       )

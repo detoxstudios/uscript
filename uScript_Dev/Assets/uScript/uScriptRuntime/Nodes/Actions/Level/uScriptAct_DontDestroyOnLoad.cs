@@ -19,6 +19,7 @@ public class uScriptAct_DontDestroyOnLoad : uScriptLogic
 
    public void In (
       [FriendlyName("Target", "The GameObject(s) or other object types you wish to set DontDestroyOnLoad on.")]
+      [RequiresLink]
       UnityEngine.Object[] Target
       )
    {
