@@ -116,7 +116,7 @@ public class uScriptAct_Raycast2D : uScriptLogic
          {
 			   if(!useDistance)
 			   {
-	            hit = Physics2D.Raycast(m_StartVector, Direction, layerMask);
+	            hit = Physics2D.Raycast(m_StartVector, Direction, float.MaxValue, layerMask);
 			   }
 			   else
 			   {
