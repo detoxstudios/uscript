@@ -28,7 +28,7 @@ public class uScriptAct_GetVector2Distance : uScriptLogic
       out float Distance
       )
    {
-      if (A != Vector2.zero && B != Vector2.zero)
+      if (A != Vector2.zero || B != Vector2.zero)
       {
          Distance = Vector2.Distance(A, B);
       }
