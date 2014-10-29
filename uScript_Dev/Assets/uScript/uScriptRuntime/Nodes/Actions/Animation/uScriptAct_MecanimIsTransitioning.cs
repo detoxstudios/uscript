@@ -20,6 +20,8 @@ public class uScriptAct_MecanimIsTransitioning : uScriptLogic
    private int m_LayerIndex = -1;
    private bool m_CheckForTransitions = false;
    private bool m_SentFirst = false;
+   private bool m_CheckOld = false;
+   private bool m_CheckNew = false;
 
    public delegate void uScriptEventHandler(object sender, System.EventArgs args);
 
@@ -48,8 +50,10 @@ public class uScriptAct_MecanimIsTransitioning : uScriptLogic
       int layer)
    {
       m_Animator = Target.GetComponent<Animator>();
-      m_OldState = Animator.StringToHash(oldState);
-      m_NewState = Animator.StringToHash(newState);
+      m_CheckOld = !string.IsNullOrEmpty(oldState);
+      m_CheckNew = !string.IsNullOrEmpty(newState);
+      if ( m_CheckOld ) m_OldState = Animator.StringToHash(oldState);
+      if ( m_CheckNew ) m_NewState = Animator.StringToHash(newState);
       m_LayerIndex = layer;
       m_CheckForTransitions = true;
    }
@@ -77,7 +81,7 @@ public class uScriptAct_MecanimIsTransitioning : uScriptLogic
       {
          if ( m_Animator.IsInTransition(m_LayerIndex) )
          {
-            if ( m_Animator.GetCurrentAnimatorStateInfo(m_LayerIndex).nameHash == m_OldState && m_Animator.GetNextAnimatorStateInfo(m_LayerIndex).nameHash == m_NewState )
+            if ( (!m_CheckOld || m_Animator.GetCurrentAnimatorStateInfo(m_LayerIndex).nameHash == m_OldState) && (!m_CheckNew || m_Animator.GetNextAnimatorStateInfo(m_LayerIndex).nameHash == m_NewState) )
             {
                if ( !m_SentFirst )
                {
