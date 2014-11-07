@@ -29,14 +29,14 @@ public static class uScriptBuild
 #elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
    public static string Name { get { return "Basic Edition (RC9)"; } }
 #else
-   public static string Name { get { return "Professional Edition (RC10)"; } }
+   public static string Name { get { return "Professional Edition (RC11)"; } }
 #endif
 
    // ###############################################################
    // # Version Name and Version Data
    // #
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public static string Number { get { return "1.0.2609"; } }
+   public static string Number { get { return "1.0.2627"; } }
    // #
    // ###############################################################
 
