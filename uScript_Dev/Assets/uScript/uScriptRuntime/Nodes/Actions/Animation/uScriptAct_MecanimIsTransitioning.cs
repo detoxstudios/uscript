@@ -1,6 +1,7 @@
 // uScript Action Node
 // (C) 2014 Detox Studios LLC
 
+#if !UNITY_3_5
 using UnityEngine;
 using System.Collections;
 
@@ -107,3 +108,4 @@ public class uScriptAct_MecanimIsTransitioning : uScriptLogic
    }
 
 }
+#endif
