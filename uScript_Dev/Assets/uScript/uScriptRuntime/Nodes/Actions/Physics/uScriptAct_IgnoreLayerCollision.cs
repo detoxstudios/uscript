@@ -19,18 +19,36 @@ public class uScriptAct_IgnoreLayerCollision : uScriptLogic
    public void In(
       [FriendlyName("Layer A", "The first layer.")]
       LayerMask LayerA,
-      
+
       [FriendlyName("Layer B", "The second layer.")]
       LayerMask LayerB,
-      
+
       [FriendlyName("Ignore", "True = Ignore collisions between the layers, False = Enable collisions between the layers.")]
       [DefaultValue(true), SocketState(false, false)]
       bool Ignore
       )
    {
-      if (LayerA != LayerB)
+
+      int a = 0, b = 0;
+
+      for (int i = 0; i < 32; i++)
       {
-         Physics.IgnoreLayerCollision(1 << LayerA, 1 << LayerB, Ignore);
+         if (0 != (LayerA.value & (1 << i)))
+         {
+            a = i;
+            break;
+         }
       }
+
+      for (int i = 0; i < 32; i++)
+      {
+         if (0 != (LayerB.value & (1 << i)))
+         {
+            b = i;
+            break;
+         }
+      }
+
+      Physics.IgnoreLayerCollision(a, b, Ignore);
    }
 }
