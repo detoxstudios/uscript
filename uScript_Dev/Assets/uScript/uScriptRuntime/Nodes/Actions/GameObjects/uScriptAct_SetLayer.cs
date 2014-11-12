@@ -16,7 +16,7 @@ using System.Collections.Generic;
 public class uScriptAct_SetLayer : uScriptLogic
 {
    private bool m_ApplyToChildren;
-	public bool Out { get { return true; } }
+   public bool Out { get { return true; } }
 
    public void In(
       [FriendlyName("Target", "The GameObject(s) you wish to set the layer for.")]
@@ -30,38 +30,37 @@ public class uScriptAct_SetLayer : uScriptLogic
       bool ApplyToChildren
       )
    {
-		m_ApplyToChildren = ApplyToChildren;
-		
+      m_ApplyToChildren = ApplyToChildren;
+
       int index = 0;
-      
-      if (Layer.value > 0)
+
+      for (index = 0; index < 32; index++)
       {
-         for (index = 0; index < 32; index++ )
-         {
-            if (((Layer.value >> index) & 0x1) != 0) break;
-         }
+         if (((Layer.value >> index) & 0x1) != 0) break;
       }
 
+      Debug.Log("setting " + index);
+
       foreach (GameObject obj in Target)
-	  {
-			Transform objTrans = obj.transform;
-	     SetGameObjectLayer(objTrans, index);
-	  }
-		
+      {
+         Transform objTrans = obj.transform;
+         SetGameObjectLayer(objTrans, index);
+      }
+
    }
-	
-	
+
+
    private void SetGameObjectLayer(Transform obj, int newLayer)
    {
       obj.gameObject.layer = newLayer;
-		
-		if(m_ApplyToChildren)
-		{
-			foreach(Transform child in obj)
-			{
-				SetGameObjectLayer(child, newLayer);
-			}
-		}
+
+      if (m_ApplyToChildren)
+      {
+         foreach (Transform child in obj)
+         {
+            SetGameObjectLayer(child, newLayer);
+         }
+      }
    }
-	
+
 }
