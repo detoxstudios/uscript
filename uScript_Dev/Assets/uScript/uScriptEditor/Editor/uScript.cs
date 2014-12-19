@@ -134,7 +134,7 @@ public sealed partial class uScript : EditorWindow
       {
          if (instance == null)
          {
-            Init();
+            Open();
          }
 
          return instance;
@@ -548,9 +548,7 @@ public sealed partial class uScript : EditorWindow
       _debugScriptCache[scriptName] = hasDebugCode;
    }
 
-   // Editor Window Initialization
-   [UnityEditor.MenuItem("Tools/Detox Studios/uScript Editor %u")]
-   public static void Init()
+   public static void Open()
    {
       instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript");
       instance.Launching();

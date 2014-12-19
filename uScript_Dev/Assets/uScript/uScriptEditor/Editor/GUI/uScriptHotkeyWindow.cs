@@ -95,8 +95,6 @@ namespace Detox.Editor.GUI
          }
       }
 
-      // Create the window
-      [MenuItem("Tools/Detox Studios/Internal/Hotkeys")]
       public static void Open()
       {
          instance = GetWindow<uScriptHotkeyWindow>(false, "Hotkeys", false);
