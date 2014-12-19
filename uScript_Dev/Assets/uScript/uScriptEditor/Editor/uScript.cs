@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Detox Studios, LLC" file="uScript.cs">
-//   Copyright 2010-2014 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   The primary uScript editor logic.
@@ -548,7 +548,7 @@ public sealed partial class uScript : EditorWindow
 
    // Editor Window Initialization
    [UnityEditor.MenuItem("Tools/Detox Studios/uScript Editor %u")]
-   static void Init()
+   public static void Init()
    {
       instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript");
       instance.Launching();
@@ -2931,7 +2931,7 @@ public sealed partial class uScript : EditorWindow
 
    private void CommandHelpMenuAbout()
    {
-      AboutWindow.Init();
+      AboutWindow.Open();
    }
 
    private void CommandHelpMenuWelcome()

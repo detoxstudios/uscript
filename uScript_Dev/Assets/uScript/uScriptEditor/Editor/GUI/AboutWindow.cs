@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="AboutWindow.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the AboutWindow type.
@@ -19,19 +19,18 @@ namespace Detox.Editor.GUI
    public class AboutWindow : EditorWindow
    {
       private const int WindowWidth = 320;
+
       private const int WindowHeight = 260;
 
       private static AboutWindow window;
 
       private bool isFirstRun;
-      private bool isWindows;
 
-      // Create the window
-      public static void Init()
+      public static void Open()
       {
-         // Get existing open window or if none, make a new one:
-         window = EditorWindow.GetWindow<AboutWindow>(true, "uScript Quick Command Reference", true) as AboutWindow;
-         window.isFirstRun = true;   // unnecessary, but we'll get a warning that 'window' is unused, otherwise
+         window = GetWindow<AboutWindow>(true, "About uScript", true);
+         window.isFirstRun = true;
+         window.wantsMouseMove = true;
       }
 
       public void OnGUI()
@@ -40,52 +39,33 @@ namespace Detox.Editor.GUI
          {
             this.isFirstRun = false;
 
-            this.isWindows = Application.platform == RuntimePlatform.WindowsEditor;
-
             // Set the min and max window dimensions to prevent resizing
             this.minSize = new Vector2(WindowWidth, WindowHeight);
             this.maxSize = this.minSize;
 
-            // Force the window to a position relative to the uScript window
-            //         base.position = new Rect(uScript.Instance.position.x + 50, uScript.Instance.position.y + 50, WINDOW_WIDTH, WINDOW_HEIGHT);
-
-            if (this.isWindows)
+            if (Application.platform == RuntimePlatform.WindowsEditor)
             {
                window.Focus();
             }
          }
 
-         if (Event.current.type != EventType.Repaint)
+         if (Event.current.type == EventType.MouseMove)
          {
             this.Repaint();
          }
 
-         // Apply an content offset, because for some reason,
-         // there is a 10-pixel gap between the window bar and the first row.
-         GUILayout.Space(-10);
+         GUILayout.Label(Content.Header, Style.Header);
 
-         EditorGUILayout.BeginVertical();
+         GUILayout.Space(16);
+
+         GUILayout.Label("uScript " + uScriptBuild.Name, Style.ProductName);
+         GUILayout.Label("Build " + uScriptBuild.Number, Style.ProductVersion);
+         GUILayout.Label("\n" + uScriptBuild.Copyright + "\nAll rights reserved.\n", Style.ProductCopyright);
+
+         if (GUILayout.Button("www.detoxstudios.com", Style.WebsiteLink))
          {
-            GUILayout.Label(Content.Header, Style.Header);
-
-            GUILayout.Space(16);
-
-            EditorGUILayout.BeginVertical();
-            {
-               GUILayout.Label("uScript " + uScriptBuild.Name, Style.ProductName);
-               GUILayout.Label("Build " + uScriptBuild.Number, Style.ProductVersion);
-               GUILayout.Label("\n" + uScriptBuild.Copyright + "\nAll rights reserved.\n", Style.ProductCopyright);
-
-               if (GUILayout.Button("www.detoxstudios.com", Style.WebsiteLink))
-               {
-                  Application.OpenURL("http://detoxstudios.com/");
-               }
-            }
-
-            EditorGUILayout.EndVertical();
+            Application.OpenURL("http://detoxstudios.com/");
          }
-
-         EditorGUILayout.EndVertical();
       }
 
       private static class Content
@@ -111,7 +91,7 @@ namespace Detox.Editor.GUI
             WebsiteLink = new GUIStyle(GUI.skin.button) { alignment = TextAnchor.UpperCenter };
             WebsiteLink.hover.background = WebsiteLink.normal.background;
             WebsiteLink.hover.textColor = WebsiteLink.normal.textColor;
-            WebsiteLink.normal.background = uScriptGUI.GetTexture("Transparent");
+            WebsiteLink.normal.background = null;
             WebsiteLink.margin = new RectOffset(80, 80, 3, 3);
          }
 
