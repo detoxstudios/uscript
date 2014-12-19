@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Detox.Editor;
 using Detox.Editor.GUI;
 using UnityEditor;
 using UnityEngine;
@@ -28,7 +29,7 @@ public class ListViewEditor : EditorWindow
       }
    }
 
-   [MenuItem("Tools/Detox Studios/Internal/ListView Editor &%l")]
+   [MenuItem("uScript/Internal/ListView Editor &%l", false, 501)]
    internal static void Init()
    {
       // Get existing open window or if none, make a new one:

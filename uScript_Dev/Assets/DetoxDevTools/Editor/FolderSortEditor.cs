@@ -12,6 +12,8 @@ namespace Detox.DetoxDevTools.Editor
    using System.Collections.Generic;
    using System.Linq;
 
+   using Detox.Editor;
+
    using UnityEditor;
 
    using UnityEngine;
@@ -134,7 +136,7 @@ namespace Detox.DetoxDevTools.Editor
          EditorGUILayout.EndVertical();
       }
 
-      [MenuItem("Tools/Detox Studios/Internal/Folder Sort Editor")]
+      [MenuItem("uScript/Internal/Folder Sort Editor", false, 501)]
       private static void Init()
       {
          // Get existing open window or if none, make a new one:

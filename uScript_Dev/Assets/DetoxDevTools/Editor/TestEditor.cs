@@ -13,6 +13,8 @@ namespace Detox.DetoxDevTools.Editor
    using System.Collections.Generic;
    using System.Reflection;
 
+   using Detox.Editor;
+
    using UnityEditor;
 
    using UnityEngine;
@@ -139,8 +141,7 @@ namespace Detox.DetoxDevTools.Editor
       //private Vector2 nameScrollviewPosition;
       private Vector2 listScrollviewPosition;
 
-      // Add menu named "My Window" to the Window menu
-      [MenuItem("Tools/Detox Studios/Internal/General Purpose Test Editor")]
+      [MenuItem("uScript/Internal/General Purpose Test Editor", false, 501)]
       internal static void Init()
       {
          // Get existing open window or if none, make a new one:

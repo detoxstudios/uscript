@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Detox.Editor;
+
 using UnityEditor;
 
 using UnityEngine;
@@ -15,8 +17,7 @@ public class UpdateCheck : EditorWindow
 {
    private UpdateNotification.UpdateStatus updateStatus = UpdateNotification.UpdateStatus.None;
 
-   // Add menu named "My Window" to the Window menu
-   [MenuItem("Tools/Detox Studios/Internal/Check for Updates")]
+   [MenuItem("uScript/Internal/Check for Updates", false, 501)]
    internal static void Init()
    {
       // Get existing open window or if none, make a new one:

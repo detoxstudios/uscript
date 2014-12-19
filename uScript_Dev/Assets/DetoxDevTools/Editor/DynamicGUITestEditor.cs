@@ -11,6 +11,8 @@ namespace Detox.DetoxDevTools.Editor
 {
    using System.Globalization;
 
+   using Detox.Editor;
+
    using UnityEditor;
 
    using UnityEngine;
@@ -27,7 +29,7 @@ namespace Detox.DetoxDevTools.Editor
       private string textField = "TEXT";
       private Color colorField = Color.blue;
 
-      [MenuItem("Tools/Detox Studios/Internal/Dynamic GUI Test Editor &%g")]
+      [MenuItem("uScript/Internal/Dynamic GUI Text Editor &%g", false, 501)]
       private static void Init()
       {
          panel = (DynamicGUITestEditor)GetWindow(typeof(DynamicGUITestEditor), true, "Dynamic GUI Test Editor");

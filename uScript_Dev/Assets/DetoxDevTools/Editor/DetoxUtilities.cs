@@ -1,3 +1,5 @@
+using Detox.Editor;
+
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
@@ -5,8 +7,7 @@ using System.Collections;
 
 public class DetoxUtilities : EditorWindow
 {
-
-   [MenuItem("Tools/Detox Studios/Internal/Setup TestBed Scene")]
+   [MenuItem("uScript/Internal/Setup TestBed Scene", false, 501)]
    public static void SetupScene()
    {
       Debug.Log("STARTING TESTBED REBUILD...\n");
@@ -106,14 +107,13 @@ public class DetoxUtilities : EditorWindow
       Debug.Log("FINISHED TESTBED REBUILD!\n");
 
    }
-   
+
    /*
-   [MenuItem("Tools/Detox Studios/Internal/Fix GUI Texture Settings")]
+   [MenuItem("uScript/Internal/Fix GUI Texture Settings")]
    public static void FixGUITextures()
    {
       Debug.Log("Fix GUI Texture Settings: Not Yet Working!");
       //UnityEditor.AssetDatabase.ImportAsset( "Assets/uScript/uScriptEditor/Editor/_GUI/uScriptDefault/uscript_background.png", ImportAssetOptions.ImportRecursive);
    }
    */
-
 }
