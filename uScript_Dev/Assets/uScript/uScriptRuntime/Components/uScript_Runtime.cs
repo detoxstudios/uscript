@@ -22,7 +22,7 @@ using UnityEngine;
 
 public static class uScriptBuild
 {
-   public static string Copyright { get { return "\u00A9 2010-2014 Detox Studios, LLC."; } }
+   public static string Copyright { get { return "\u00A9 2010-2015 Detox Studios, LLC."; } }
 
 #if DETOX_STORE_PLE
    public static string Name { get { return "Personal Learning Edition (RC9)"; } }
