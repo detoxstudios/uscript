@@ -172,6 +172,8 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
+   public static uScriptHotkeyWindow HotkeyWindow { get; set; }
+
    public MouseRegion MouseDownRegion
    {
       get { return this.mouseDownRegion; }
@@ -1336,14 +1338,34 @@ public sealed partial class uScript : EditorWindow
    internal void OnGUI()
    {
       // Store the current event locally since it is reference so frequently
-      Event e = Event.current;
+      var e = Event.current;
+
+      if (HotkeyWindow != null)
+      {
+         switch (e.type)
+         {
+            case EventType.KeyDown:
+            case EventType.KeyUp:
+            case EventType.MouseDown:
+            case EventType.MouseUp:
+            case EventType.MouseDrag:
+            case EventType.ScrollWheel:
+               // Forcing the mousePosition to appear over the toolbar of the target windows
+               // to prevent mouse clicks and drags from affecting the window. Y should be
+               // somewhere in the range of 22 and 40, probably.
+               var modifiedEvent = e;
+               modifiedEvent.mousePosition = new Vector2(0, 30);
+               HotkeyWindow.SendEvent(modifiedEvent);
+               break;
+         }
+      }
 
       // Make sure the initial window size it not too small
       if (this.firstRun)
       {
          this.firstRun = false;
 
-         Rect minSize = new Rect(200, 200, 620, 550);
+         var minSize = new Rect(200, 200, 620, 550);
          if (position.width < minSize.width || position.height < minSize.height)
          {
             position = minSize;
@@ -1376,7 +1398,7 @@ public sealed partial class uScript : EditorWindow
       // As little logic as possible should be performed here.  It is better
       // to use Update() to perform tasks once per tick.
 
-      bool lastMouseDown = this.mouseDown;
+      var lastMouseDown = this.mouseDown;
 
       isContextMenuOpen = 0 != m_ContextX || 0 != m_ContextY;
       if (false == isPreferenceWindowOpen)
@@ -4086,7 +4108,7 @@ public sealed partial class uScript : EditorWindow
          this.CacheScript();
 
          uScriptBackgroundProcess.ForceFileRefresh();
-         if ( uScript.GraphSaved != null ) uScript.GraphSaved();
+         if (uScript.GraphSaved != null) uScript.GraphSaved();
 
          if (pleaseAttachMe)
          {

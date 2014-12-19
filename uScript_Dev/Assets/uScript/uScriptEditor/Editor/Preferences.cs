@@ -1,15 +1,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Preferences.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the Preferences type used to store user settings and preferences in the uScript editor.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Collections;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1107:CodeMustNotContainMultipleStatementsOnOneLine", Justification = "Reviewed. Suppression is OK here.")]
@@ -157,6 +155,18 @@ public class Preferences
    {
       get { this.LoadIfRequired(); return (bool)this.preferences["ShowAtStartup"]; }
       set { this.LoadIfRequired(); this.preferences["ShowAtStartup"] = value; }
+   }
+
+   public bool ShowAllHotkeys
+   {
+      get { this.LoadIfRequired(); return (bool)this.preferences["ShowAllHotkeys"]; }
+      set { this.LoadIfRequired(); this.preferences["ShowAllHotkeys"] = value; }
+   }
+
+   public bool LeftMouseButtonPrimary
+   {
+      get { this.LoadIfRequired(); return (bool)this.preferences["LeftMouseButtonPrimary"]; }
+      set { this.LoadIfRequired(); this.preferences["LeftMouseButtonPrimary"] = value; }
    }
 
    public bool CheckForUpdate
@@ -356,6 +366,8 @@ public class Preferences
       if (null == this.preferences["VariableExpansion"]) this.preferences["VariableExpansion"] = VariableExpansionType.Dynamic;
       if (null == this.preferences["GridSnap"]) this.preferences["GridSnap"] = false;
       if (null == this.preferences["ShowAtStartup"]) this.preferences["ShowAtStartup"] = true;
+      if (null == this.preferences["ShowAllHotkeys"]) this.preferences["ShowAllHotkeys"] = false;
+      if (null == this.preferences["LeftMouseButtonPrimary"]) this.preferences["LeftMouseButtonPrimary"] = true;
       if (null == this.preferences["CheckForUpdate"]) this.preferences["CheckForUpdate"] = true;
       if (null == this.preferences["LastUpdateCheck"]) this.preferences["LastUpdateCheck"] = 0;
       if (null == this.preferences["IgnoreUpdateBuild"]) this.preferences["IgnoreUpdateBuild"] = string.Empty;
