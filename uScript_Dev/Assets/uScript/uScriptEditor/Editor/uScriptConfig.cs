@@ -135,7 +135,7 @@ public partial class uScriptConfig
 public abstract class uScriptStyle
 {
    public abstract GUIStyle Get(string name);
-	
+    
    public abstract int SocketValueTextHorizontalOffset { get; }	
    public abstract int SocketValueTextVerticalOffset { get; }		
    public abstract int BottomSocketLabelGapSize { get; }
@@ -183,12 +183,12 @@ public class uScriptDefaultStyle : uScriptStyle
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
-	  element.alignment = TextAnchor.UpperCenter;
-	  element.fontStyle = FontStyle.Bold;
-	  element.fontSize = 12;
+      element.alignment = TextAnchor.UpperCenter;
+      element.fontStyle = FontStyle.Bold;
+      element.fontSize = 12;
       elementSettings["node"] = element;
-		
-	  element = new GUIStyle();
+        
+      element = new GUIStyle();
       element.normal.textColor = Color.black;
       element.border.left = 9;
       element.border.right = 15;
@@ -200,9 +200,9 @@ public class uScriptDefaultStyle : uScriptStyle
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
-	  element.alignment = TextAnchor.UpperCenter;
-	  element.fontStyle = FontStyle.Bold;
-	  element.fontSize = 12;
+      element.alignment = TextAnchor.UpperCenter;
+      element.fontStyle = FontStyle.Bold;
+      element.fontSize = 12;
       elementSettings["node_selected"] = element;
 
       element = new GUIStyle();
@@ -217,9 +217,9 @@ public class uScriptDefaultStyle : uScriptStyle
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
-	  element.alignment = TextAnchor.UpperCenter;
+      element.alignment = TextAnchor.UpperCenter;
       element.fontStyle = FontStyle.Normal;
-	  element.fontSize = 0;
+      element.fontSize = 0;
       elementSettings["static"] = element;
 
       element = new GUIStyle();
@@ -234,9 +234,9 @@ public class uScriptDefaultStyle : uScriptStyle
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
-	   element.alignment = TextAnchor.UpperLeft;
+       element.alignment = TextAnchor.UpperLeft;
       element.fontStyle = FontStyle.Bold;
-	   element.fontSize = 0;
+       element.fontSize = 0;
       elementSettings["comment"] = element;
 
       element = new GUIStyle();
@@ -255,8 +255,8 @@ public class uScriptDefaultStyle : uScriptStyle
       element.fontStyle = FontStyle.Bold;
       element.fontSize = 0;
       elementSettings["selectionbox"] = element;
-		
-	  element = new GUIStyle();
+        
+      element = new GUIStyle();
       element.normal.textColor = Color.black;
       element.border.left = 6;
       element.border.right = 6;
@@ -270,7 +270,7 @@ public class uScriptDefaultStyle : uScriptStyle
       element.fixedWidth = 0f;
       element.alignment = TextAnchor.UpperLeft;
       element.fontStyle = FontStyle.Bold;
-	   element.fontSize = 0;
+       element.fontSize = 0;
       elementSettings["comment_selected"] = element;
 
       element = new GUIStyle();
@@ -285,9 +285,9 @@ public class uScriptDefaultStyle : uScriptStyle
       element.padding.bottom = 0;
       element.fixedHeight = 0f;
       element.fixedWidth = 0f;
-	   element.alignment = TextAnchor.UpperCenter;
-	   element.fontStyle = FontStyle.Normal;
-	   element.fontSize = 0;
+       element.alignment = TextAnchor.UpperCenter;
+       element.fontStyle = FontStyle.Normal;
+       element.fontSize = 0;
       elementSettings["property"] = element;
 
       element = new GUIStyle();
@@ -302,9 +302,9 @@ public class uScriptDefaultStyle : uScriptStyle
       element.padding.bottom = -12;
       element.fixedHeight = 0;
       element.fixedWidth = 0f;
-	   element.alignment = TextAnchor.LowerCenter;
+       element.alignment = TextAnchor.LowerCenter;
       element.fontStyle = FontStyle.Normal;
-	   element.fontSize = 0;
+       element.fontSize = 0;
       elementSettings["variable"] = element;
 
       element = new GUIStyle();
@@ -517,8 +517,8 @@ public class uScriptDefaultStyle : uScriptStyle
       element.fontStyle = FontStyle.Normal;
       element.fontSize = 0;
       m_Styles["title_comment"] = element;
-		
-	  element = new GUIStyle();
+        
+      element = new GUIStyle();
       element.normal.textColor = new UnityEngine.Color(0.15f, 0.15f, 0.15f, 1f);
       element.border.left = 6;
       element.border.right = 6;
@@ -564,21 +564,21 @@ public class uScriptDefaultStyle : uScriptStyle
 
       if (false == name.Contains("socket") &&
           true == name.Contains("node") &&
-		  false == name.Contains("selected"))
+          false == name.Contains("selected"))
       {
-   	   //Debug.Log( "returning node_default" );
+       //Debug.Log( "returning node_default" );
          return m_Styles[ "node_default" ];
       }
-		else if (true == name.Contains("node_selected"))
+        else if (true == name.Contains("node_selected"))
       {
-   	   //Debug.Log( "returning node_selected" );
+       //Debug.Log( "returning node_selected" );
          return m_Styles[ "node_selected" ];
       }
       else if (true == name.Contains("socket"))
       {
          if ( true == name.Contains("_io") )
          {
-   	      //Debug.Log( "node_default_socket_io" );
+          //Debug.Log( "node_default_socket_io" );
             return m_Styles[ "node_default_socket_io" ];
          }
          else
@@ -588,7 +588,7 @@ public class uScriptDefaultStyle : uScriptStyle
 
             if ( true == name.Contains("_out_") )
             {
-   	         //Debug.Log( "node_default_socket_io" );
+             //Debug.Log( "node_default_socket_io" );
                return m_Styles[ "node_" + type + "_socket_out_variable_default" ];
             }
             else
@@ -599,18 +599,18 @@ public class uScriptDefaultStyle : uScriptStyle
       }
       else if (true == name.Contains("icon"))
       {
-   	   //Debug.Log( "icon_lock_open" );
+       //Debug.Log( "icon_lock_open" );
          return m_Styles[ "icon_lock_open" ];
       }
       else if (true == name.Contains("comment") &&
-			   false == name.Contains("selected"))
+               false == name.Contains("selected"))
       {
-   	   //Debug.Log( "comment" );
+       //Debug.Log( "comment" );
          return m_Styles[ "comment" ];
       }
-	  else if (true == name.Contains("comment_selected"))
+      else if (true == name.Contains("comment_selected"))
       {
-   	   //Debug.Log( "comment_selected" );
+       //Debug.Log( "comment_selected" );
          return m_Styles[ "comment_selected" ];
       }
       else if (true == name.Contains("externalconnection") &&
@@ -626,40 +626,40 @@ public class uScriptDefaultStyle : uScriptStyle
       }
       else if (true == name.Contains("property"))
       {
-   	   //Debug.Log( "property_default" );
+       //Debug.Log( "property_default" );
          return m_Styles[ "property_default" ];
       }
-	  else
-	  {
-   	   //Debug.Log( "variable_default" );
+      else
+      {
+       //Debug.Log( "variable_default" );
          return m_Styles[ "variable_default" ];
-	  }
+      }
    }
-	
+    
    //how many pixels to adjust the variable socket value text left (+) or right (-) (horizontal)
    public override int SocketValueTextHorizontalOffset { get { return 2; } }
-	
+    
    //how many pixels between the variable socket and the value text (vertical)
    public override int SocketValueTextVerticalOffset { get { return 15; } }
-	
+    
    //how many pixels between variable socket labels (horizontal)
    public override int BottomSocketLabelGapSize { get { return 4; } }
-	
+    
    //how many pixels to adjust between variable socket labels and side borders (vertical)
    public override int BottomSocketBorderAdjustmentPad { get { return 6; } }
-	
+    
    //how many pixels between variable socket labels and In/Out sockets (vertical)
    public override int SideSocketToBottomSocketPad { get { return 16; } }
-	
+    
    //how many pixels between a variable socket and its label (vertical)
    public override int BottomSocketLabelGap { get { return 2; } }
-	
+    
    //how many pixels to pad objects from the top of the node (vertical)
    public override int TopPad   { get { return 2; } }
 
    //how many pixels to pad objects from the left of the node (horizontal)
    public override int LeftPad  { get { return 2; } }
-	
+    
    //how many pixels to pad objects from the right of the node (horizontal)
    public override int RightPad { get { return 7; } }
 
@@ -684,10 +684,10 @@ public class uScriptDefaultStyle : uScriptStyle
    //when rendering output only nodes, any additional offset
    //because they can be different style/shape than input/output (vertical)
    public override int OutputOnlyPointOffset { get { return 5; } }
-	
+    
    // sets and additional vertical offset for IO socket labels (vertical)
    public override int IOSocketLabelVerticalOffset { get { return 2; } }
-	
+    
    // sets and additional horizontal offset for IO socket labels (horizontal)
    public override int IOSocketLabelHorizontalOffset { get { return -2; } }
 
