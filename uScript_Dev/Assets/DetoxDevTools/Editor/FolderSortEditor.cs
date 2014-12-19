@@ -1,17 +1,15 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Detox Studios, LLC" file="FolderSortEditor.cs">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Editor window for testing the performance of GenericMenu initialization.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Assets.Editor
+namespace Detox.DetoxDevTools.Editor
 {
-   using System;
    using System.Collections.Generic;
-   using System.IO;
    using System.Linq;
 
    using UnityEditor;
@@ -121,8 +119,10 @@ namespace Assets.Editor
             {
                content = EditorGUILayout.TextArea(content, GUI.skin.label, GUILayout.ExpandHeight(true));
             }
+
             EditorGUILayout.EndScrollView();
          }
+
          EditorGUILayout.EndVertical();
 
          var count = string.IsNullOrEmpty(content)
@@ -145,10 +145,8 @@ namespace Assets.Editor
          }
       }
 
-
       private void GetFolderList()
       {
-
          //if (this.listView == null)
          //{
          //   uScriptDebug.Log("The ListView must be initialized before items can be added.", uScriptDebug.Type.Error);
@@ -167,9 +165,6 @@ namespace Assets.Editor
          // Mark the hierarchy dirty so that the hierarchy can be rebuilt and filtering and sorting can be applied
          //this.listView.RebuildFilteredList();
       }
-
-
-
 
       private void DrawToolbar()
       {
@@ -262,7 +257,6 @@ namespace Assets.Editor
          // build hierarchy
 
          // sort hierarchy
-
 
          // Perform the sort using specified options ...
          this.Sort();
