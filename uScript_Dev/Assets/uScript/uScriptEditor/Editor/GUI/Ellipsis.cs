@@ -1,11 +1,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Detox Studios, LLC" file="Ellipsis.cs">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the Ellipsis type.
 // </summary>
-// 
 // --------------------------------------------------------------------------------------------------------------------
 
 /*
