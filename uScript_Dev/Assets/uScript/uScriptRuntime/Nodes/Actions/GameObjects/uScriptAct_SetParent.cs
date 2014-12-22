@@ -18,7 +18,7 @@ public class uScriptAct_SetParent : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In (
-      [FriendlyName("Target", "The GameObject you wish to be the child.")]
+      [FriendlyName("Target", "The GameObject you wish to be the child."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Parent", "The GameObject you wish to set as the Target's parent.")]

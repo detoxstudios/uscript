@@ -17,7 +17,7 @@ public class uScriptAct_SetTag : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) you wish to assign the existing tag to.")]GameObject[] Target, 
+      [FriendlyName("Target", "The GameObject(s) you wish to assign the existing tag to."), AutoLinkType(typeof(GameObject))]GameObject[] Target, 
       [FriendlyName("Tag", "The tag(s) you wish to assign to the Target GameObject(s)")] string Tags)
    {
       foreach (GameObject obj in Target)

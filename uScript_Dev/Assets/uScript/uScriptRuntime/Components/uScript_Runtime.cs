@@ -161,6 +161,20 @@ public class Driven : Attribute
    public Driven() { }
 }
 
+[AttributeUsage(AttributeTargets.Parameter)]
+public class AutoLinkType : Attribute
+{
+   public Type LinkType = null;
+
+   public AutoLinkType(Type linkType)
+   {
+      LinkType = linkType;
+   }
+
+   public AutoLinkType()
+   { }
+}
+
 [AttributeUsage(AttributeTargets.Class)]
 public class NodeDeprecated : Attribute
 {

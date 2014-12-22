@@ -16,7 +16,7 @@ public class uScriptAct_MaxInt : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Values", "The variables to compare.")]
+      [FriendlyName("Values", "The variables to compare."), AutoLinkType(typeof(int))]
       int[] Values,
 
       [FriendlyName("Result", "Largest value passed in. If no variables are passed in, -2147483648 will be returned.")]

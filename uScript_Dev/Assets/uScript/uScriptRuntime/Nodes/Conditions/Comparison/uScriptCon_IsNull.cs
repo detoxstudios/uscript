@@ -23,7 +23,7 @@ public class uScriptCon_IsNull : uScriptLogic
    public bool IsNotNull { get { return !m_IsNull; } }
     
    public void In(
-      [FriendlyName("Target", "The GameObject you wish to see is null or not. Will also except multiple GameObject variables or a GameObject List variable.")]
+      [FriendlyName("Target", "The GameObject you wish to see is null or not. Will also except multiple GameObject variables or a GameObject List variable."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target
       )
    {

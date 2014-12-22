@@ -25,7 +25,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    public event uScriptEventHandler Finished;
 
    public void In(
-      [FriendlyName("Target", "The target GameObject(s) to play the animation on.")]
+      [FriendlyName("Target", "The target GameObject(s) to play the animation on."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Animation", "The name of the animation to play. Animation must exist in the GameObject's AnimationClip.")]

@@ -18,7 +18,7 @@ public class uScriptAct_DetachChildren : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In (
-      [FriendlyName("Target", "The target GameObject.")]
+      [FriendlyName("Target", "The target GameObject."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target
       )
    {

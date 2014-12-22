@@ -19,7 +19,7 @@ public class uScriptAct_SetLayer : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) you wish to set the layer for.")]
+      [FriendlyName("Target", "The GameObject(s) you wish to set the layer for."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Layer", "The Layer you wish to set the Target(s) to.")]

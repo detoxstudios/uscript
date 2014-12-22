@@ -19,7 +19,7 @@ public class uScriptAct_RewindAnimation : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The target GameObject(s) you wish to rewind animations on.")]
+      [FriendlyName("Target", "The target GameObject(s) you wish to rewind animations on."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Animation Name", "(optional) Provide an animation name to just rewind a specific animation.")]

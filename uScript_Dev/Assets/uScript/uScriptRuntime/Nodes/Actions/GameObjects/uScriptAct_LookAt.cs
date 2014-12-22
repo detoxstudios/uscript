@@ -34,7 +34,7 @@ public class uScriptAct_LookAt : uScriptLogic
    //private bool         m_RotateAroundVector;
 
    public void In(
-      [FriendlyName("Target", "The Target GameObject(s) whose look direction will be adjusted.")]
+      [FriendlyName("Target", "The Target GameObject(s) whose look direction will be adjusted."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Focus", "The item to focus on - can be a Vector3 position or a GameObject.")]

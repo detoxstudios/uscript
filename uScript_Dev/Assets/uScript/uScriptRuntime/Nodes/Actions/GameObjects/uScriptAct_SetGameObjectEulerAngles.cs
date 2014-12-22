@@ -18,7 +18,7 @@ public class uScriptAct_SetGameObjectEulerAngles : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The Target GameObject(s) to set Euler Angles for.")]
+      [FriendlyName("Target", "The Target GameObject(s) to set Euler Angles for."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("X Axis", "The X Axis Euler angle to set.")]

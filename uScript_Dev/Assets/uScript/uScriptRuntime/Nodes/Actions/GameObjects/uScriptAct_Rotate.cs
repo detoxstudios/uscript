@@ -26,7 +26,7 @@ public class uScriptAct_Rotate : uScriptLogic
    public bool Out { get { return true; } }
    
    public void In(
-      [FriendlyName("Target", "The Target GameObject(s) to rotate.")]
+      [FriendlyName("Target", "The Target GameObject(s) to rotate."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Degrees", "The number of degrees to rotate.")]

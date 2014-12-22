@@ -20,10 +20,10 @@ public class uScriptAct_MultiplyVector2 : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("A", "The first variable or variable list.")]
+      [FriendlyName("A", "The first variable or variable list."), AutoLinkType(typeof(Vector2))]
       Vector2[] A,
       
-      [FriendlyName("B", "The second variable or variable list.")]
+      [FriendlyName("B", "The second variable or variable list."), AutoLinkType(typeof(Vector2))]
       Vector2[] B,
 
       [FriendlyName("Result", "The Vector2 result of the operation.")]

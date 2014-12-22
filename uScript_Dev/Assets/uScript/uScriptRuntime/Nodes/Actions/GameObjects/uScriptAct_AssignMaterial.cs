@@ -17,7 +17,7 @@ public class uScriptAct_AssignMaterial : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) to assign the material to.")]
+      [FriendlyName("Target", "The GameObject(s) to assign the material to."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Material", "The material to assign.")]

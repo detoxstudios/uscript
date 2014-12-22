@@ -18,7 +18,7 @@ public class uScriptAct_AttachScript : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) to attach the script to.")]
+      [FriendlyName("Target", "The GameObject(s) to attach the script to."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Component Name", "The names of the components or script filenames to attach to the specified GameObject(s).")]

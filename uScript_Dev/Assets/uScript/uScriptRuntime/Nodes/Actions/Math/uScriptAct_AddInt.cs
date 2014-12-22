@@ -20,10 +20,10 @@ public class uScriptAct_AddInt : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("A", "The first variable or variable list.")]
+      [FriendlyName("A", "The first variable or variable list."), AutoLinkType(typeof(int))]
       int[] A,
 
-      [FriendlyName("B", "The second variable or variable list.")]
+      [FriendlyName("B", "The second variable or variable list."), AutoLinkType(typeof(int))]
       int[] B,
 
       [FriendlyName("Result", "The integer result of the operation.")]

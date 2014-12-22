@@ -16,7 +16,7 @@ public class uScriptAct_MinInt : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Values", "The variables to compare.")]
+      [FriendlyName("Values", "The variables to compare."), AutoLinkType(typeof(int))]
       int[] Values,
 
       [FriendlyName("Result", "Smallest value passed in. If no variables are passed in, 2147483647 will be returned.")]

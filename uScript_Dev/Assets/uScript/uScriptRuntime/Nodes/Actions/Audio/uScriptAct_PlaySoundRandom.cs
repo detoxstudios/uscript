@@ -76,7 +76,7 @@ public class uScriptAct_PlaySoundRandom : uScriptLogic
       [RequiresLink]
       AudioClip[] audioClips,
 
-      [FriendlyName("Targets", "The list of GameObjects to choose from.")]
+      [FriendlyName("Targets", "The list of GameObjects to choose from."), AutoLinkType(typeof(GameObject))]
       GameObject[] targets,
 
       [FriendlyName("Volume", "The volume level (0.0-1.0) to play the audio clip at.")]

@@ -17,7 +17,7 @@ public class uScriptAct_SetGameObjectRotationQ : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) to rotate")]
+      [FriendlyName("Target", "The GameObject(s) to rotate"), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Rotation", "Quaternion rotation to set")]

@@ -92,7 +92,7 @@ public class uScriptAct_PlayMovieOnGameObject : uScriptLogic
    }
 
    public void Stop(
-      [FriendlyName("Target", "The GameObject(s) with the material containing the movie texture.")]
+      [FriendlyName("Target", "The GameObject(s) with the material containing the movie texture."), AutoLinkType(typeof(GameObject))]
       GameObject[] Targets,
 
       [FriendlyName("Loop", "Whether or not to loop the movie.")]

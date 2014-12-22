@@ -29,7 +29,7 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
 
 
    public void In(
-      [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
+      [FriendlyName("Target", "The Target GameObject(s) to be moved."), AutoLinkType(typeof(GameObject))]
       GameObject[] targetArray,
       
       [FriendlyName("End Location", "The ending location to move the Targets to.")]
@@ -63,7 +63,7 @@ public class uScriptAct_MoveToLocationFixed : uScriptLogic
 	
 	
    public void Cancel(
-      [FriendlyName("Target", "The Target GameObject(s) to be moved.")]
+      [FriendlyName("Target", "The Target GameObject(s) to be moved."), AutoLinkType(typeof(GameObject))]
       GameObject[] targetArray,
       
       [FriendlyName("End Location", "The ending location to move the Targets to.")]

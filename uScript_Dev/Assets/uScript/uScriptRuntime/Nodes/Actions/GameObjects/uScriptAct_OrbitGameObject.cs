@@ -73,7 +73,7 @@ public class uScriptAct_OrbitGameObject : uScriptLogic
 
    [FriendlyName("Update Orbit Data")]
    public void UpdateSpeed(
-      [FriendlyName("Target", "The GameObject(s) you wish to orbit.")]
+      [FriendlyName("Target", "The GameObject(s) you wish to orbit."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Orbiter", "The GameObject you wish to have the Target orbit around.")]

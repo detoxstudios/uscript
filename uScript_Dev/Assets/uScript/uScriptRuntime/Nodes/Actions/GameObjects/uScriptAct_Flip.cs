@@ -16,7 +16,7 @@ public class uScriptAct_Flip : uScriptLogic
    public bool Out { get { return true; } }
    
    public void In(
-      [FriendlyName("Target", "The Target GameObject(s) to rotate.")]
+      [FriendlyName("Target", "The Target GameObject(s) to rotate."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Axis", "The axis to rotate around (X, Y, or Z).")]

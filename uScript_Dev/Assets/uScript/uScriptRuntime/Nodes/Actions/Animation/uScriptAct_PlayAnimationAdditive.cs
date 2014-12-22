@@ -35,7 +35,7 @@ public class uScriptAct_PlayAnimationAdditive : uScriptLogic
    public void In(
       [FriendlyName("Target", "The target GameObject to play the animation on.")] GameObject Target,
       [FriendlyName("Animation", "The name of the animation to play. Animation must exist in the GameObject's AnimationClip.")] string Animation,
-      [FriendlyName("Mixing Transform", "The target GameObject in the character's hierarchy where the blending should occur.")] GameObject[] MixingTransform,
+      [FriendlyName("Mixing Transform", "The target GameObject in the character's hierarchy where the blending should occur."), AutoLinkType(typeof(GameObject))] GameObject[] MixingTransform,
       [FriendlyName("Speed Factor", "The speed at which to play the animation."), DefaultValue(1f), SocketState(false, false)] float SpeedFactor, 
       [FriendlyName("Blend Weight", "The strength of the blending between animations."), DefaultValue(1f), SocketState(false, false)] float BlendWeight,
 	   [FriendlyName("Fade Length", "How long (in seconds) the blend should take to reach the Blend Weight"), DefaultValue(1f), SocketState(false, false)] float FadeLength,
@@ -88,7 +88,7 @@ public class uScriptAct_PlayAnimationAdditive : uScriptLogic
    public void Stop(
       [FriendlyName("Target", "The target GameObject to play the animation on.")] GameObject Target,
       [FriendlyName("Animation", "The name of the animation to play. Animation must exist in the GameObject's AnimationClip.")] string Animation,
-      [FriendlyName("Mixing Transform", "The target GameObject in the character's hierarchy where the blending should occur.")] GameObject[] MixingTransform,
+      [FriendlyName("Mixing Transform", "The target GameObject in the character's hierarchy where the blending should occur."), AutoLinkType(typeof(GameObject))] GameObject[] MixingTransform,
       [FriendlyName("Speed Factor", "The speed at which to play the animation."), DefaultValue(1f), SocketState(false, false)] float SpeedFactor,
       [FriendlyName("Blend Weight", "The strength of the blending between animations."), DefaultValue(1f), SocketState(false, false)] float BlendWeight,
       [FriendlyName("Fade Length", "How long (in seconds) the blend should take to reach the Blend Weight"), DefaultValue(1f), SocketState(false, false)] float FadeLength,

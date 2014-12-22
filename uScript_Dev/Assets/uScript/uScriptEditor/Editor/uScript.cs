@@ -4370,6 +4370,7 @@ public sealed partial class uScript : EditorWindow
                                  output.Name = eventProperty.Name;
                                  output.FriendlyName = FindFriendlyName(eventProperty.Name, eventProperty.GetCustomAttributes(false));
                                  output.Type = eventProperty.PropertyType.ToString().Replace("&", string.Empty);
+                                 output.AutoLinkType = FindAutoLinkType(output.Type, eventProperty.GetCustomAttributes(false));
                                  output.Input = false;
                                  output.Output = true;
                                  output.DefaultAsObject = FindDefaultValue(string.Empty, eventProperty.GetCustomAttributes(false));
@@ -4448,6 +4449,7 @@ public sealed partial class uScript : EditorWindow
                variable.State = FindSocketState(p.GetCustomAttributes(false));
                variable.Name = p.Name;
                variable.Type = p.ParameterType.ToString().Replace("&", string.Empty);
+               variable.AutoLinkType = FindAutoLinkType(variable.Type, p.GetCustomAttributes(false));
                variable.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
                variable.DefaultAsObject = FindDefaultValue(string.Empty, p.GetCustomAttributes(false));
 
@@ -4469,6 +4471,7 @@ public sealed partial class uScript : EditorWindow
                parameter.Output = true;
                parameter.Default = string.Empty;
                parameter.State = FindSocketState(m.GetCustomAttributes(false));
+               parameter.AutoLinkType = FindAutoLinkType(parameter.Type, m.GetCustomAttributes(false));
                parameter.FriendlyName = "Return Value";
 
                uScript.Instance.AddType(m.ReturnType);
@@ -4643,6 +4646,7 @@ public sealed partial class uScript : EditorWindow
             parameter.State = FindSocketState(p.GetCustomAttributes(false));
             parameter.Name = p.Name;
             parameter.Type = p.ParameterType.ToString().Replace("&", string.Empty);
+            parameter.AutoLinkType = FindAutoLinkType(parameter.Type, p.GetCustomAttributes(false));
             parameter.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
 
             if (true == p.IsOut)
@@ -4677,6 +4681,7 @@ public sealed partial class uScript : EditorWindow
             parameter.State = FindSocketState(m.GetCustomAttributes(false));
             parameter.Name = "Return";
             parameter.Type = m.ReturnType.ToString().Replace("&", string.Empty);
+            parameter.AutoLinkType = FindAutoLinkType(parameter.Type, m.GetCustomAttributes(false));
             parameter.Input = false;
             parameter.Output = true;
             parameter.Default = string.Empty;
@@ -4777,6 +4782,7 @@ public sealed partial class uScript : EditorWindow
                            output.Name = eventProperty.Name;
                            output.FriendlyName = FindFriendlyName(eventProperty.Name, eventProperty.GetCustomAttributes(false));
                            output.Type = eventProperty.PropertyType.ToString().Replace("&", string.Empty);
+                           output.AutoLinkType = FindAutoLinkType(output.Type, eventProperty.GetCustomAttributes(false));
                            output.Input = false;
                            output.Output = true;
                            output.DefaultAsObject = FindDefaultValue(string.Empty, eventProperty.GetCustomAttributes(false));
@@ -5293,6 +5299,23 @@ public sealed partial class uScript : EditorWindow
       }
 
       return Parameter.VisibleState.Visible; ;
+   }
+
+   public static string FindAutoLinkType(string type, object[] attributes)
+   {
+      if (null != attributes)
+      {
+         foreach (object a in attributes)
+         {
+            if (a is AutoLinkType)
+            {
+               AutoLinkType c = (AutoLinkType) a;
+               return c.LinkType.ToString().Replace("&", string.Empty);
+            }
+         }
+      }
+
+      return type;
    }
 
    public static bool FindDrivenAttribute(object[] attributes)

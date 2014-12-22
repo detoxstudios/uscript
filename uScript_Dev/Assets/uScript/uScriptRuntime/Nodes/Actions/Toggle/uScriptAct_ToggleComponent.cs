@@ -146,7 +146,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
 
    [FriendlyName("Toggle")]
    public void Toggle(
-      [FriendlyName("Target", "The Target GameObject(s) to toggle component state on.")]
+      [FriendlyName("Target", "The Target GameObject(s) to toggle component state on."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Component Name", "The name of the component to toggle.")]

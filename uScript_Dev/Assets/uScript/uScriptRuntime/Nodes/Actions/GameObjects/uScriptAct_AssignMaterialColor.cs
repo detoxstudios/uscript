@@ -19,7 +19,7 @@ public class uScriptAct_AssignMaterialColor : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) to assign the material color to.")]
+      [FriendlyName("Target", "The GameObject(s) to assign the material color to."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Color", "The material color to assign to the Target object(s).")]

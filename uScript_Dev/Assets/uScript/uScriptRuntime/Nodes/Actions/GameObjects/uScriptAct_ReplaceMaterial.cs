@@ -18,7 +18,7 @@ public class uScriptAct_ReplaceMaterial : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) to replace the material on.")]
+      [FriendlyName("Target", "The GameObject(s) to replace the material on."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Material Index", "The index of the material you wish to replace on the Target.")]

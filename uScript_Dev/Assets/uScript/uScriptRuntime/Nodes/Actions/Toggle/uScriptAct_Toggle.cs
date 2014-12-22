@@ -92,7 +92,7 @@ public class uScriptAct_Toggle : uScriptLogic
 
    [FriendlyName("Toggle")]
    public void Toggle(
-      [FriendlyName("Target", "The Target GameObject(s) to toggle state on.")]
+      [FriendlyName("Target", "The Target GameObject(s) to toggle state on."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Ignore Children", "If True, the state change will not affect the Target's children. However, the children will still not render if their parent has been disabled.")]

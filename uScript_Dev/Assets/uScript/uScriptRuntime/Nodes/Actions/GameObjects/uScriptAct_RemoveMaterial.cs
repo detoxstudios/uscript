@@ -18,7 +18,7 @@ public class uScriptAct_RemoveMaterial : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) to remove the material from.")]
+      [FriendlyName("Target", "The GameObject(s) to remove the material from."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Material Index", "The index of the material you wish to remove on the Target.")]

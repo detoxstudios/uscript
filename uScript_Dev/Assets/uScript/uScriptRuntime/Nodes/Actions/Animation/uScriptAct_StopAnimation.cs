@@ -19,7 +19,7 @@ public class uScriptAct_StopAnimation : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The target GameObject(s) you wish to stop animations on.")]
+      [FriendlyName("Target", "The target GameObject(s) you wish to stop animations on."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Animation Name", "(optional) Provide an animation name to just stop a specific animation.")]

@@ -55,7 +55,7 @@ public class uScriptAct_PlaySound : uScriptLogic
       [RequiresLink]
       AudioClip audioClip,
 
-      [FriendlyName("Target", "The GameObject to emit the sound from.")]
+      [FriendlyName("Target", "The GameObject to emit the sound from."), AutoLinkType(typeof(GameObject))]
       GameObject[] target,
 
       [FriendlyName("Volume", "The volume level (0.0-1.0) to play the audio clip at.")]

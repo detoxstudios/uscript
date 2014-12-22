@@ -17,7 +17,7 @@ public class uScriptAct_SetRandomPosition : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) that the random position is applied to.")]
+      [FriendlyName("Target", "The GameObject(s) that the random position is applied to."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Origin", "The starting location for the random position offset.")]

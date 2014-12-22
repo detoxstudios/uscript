@@ -17,7 +17,8 @@ public class uScriptAct_SetRandomContactPoint : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("ContactPoint", "The ContactPoint to randomly choose from. Connect a ContactPoint List or individual ContactPoint variables to this socket.")]
+      [FriendlyName("ContactPoint", "The ContactPoint to randomly choose from. Connect a ContactPoint List or individual ContactPoint variables to this socket."),
+      AutoLinkType(typeof(ContactPoint))]
       ContactPoint[] ObjectSet,
 
       [FriendlyName("Target ContactPoint", "The ContactPoint value that gets set.")]

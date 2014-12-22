@@ -18,7 +18,7 @@ public class uScriptAct_SetRigidbodyAngularVelocity2D : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "GameObject(s) to set the velocity of.")]
+      [FriendlyName("Target", "GameObject(s) to set the velocity of."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Velocity", "The velocity to give to the rigidbody2D component attached to the Target GameObject(s).")]

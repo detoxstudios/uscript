@@ -17,7 +17,7 @@ public class uScriptAct_Teleport : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The Target GameObject(s) to teleport.")]
+      [FriendlyName("Target", "The Target GameObject(s) to teleport."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Destination", "The destination GameObject to teleport to.")]

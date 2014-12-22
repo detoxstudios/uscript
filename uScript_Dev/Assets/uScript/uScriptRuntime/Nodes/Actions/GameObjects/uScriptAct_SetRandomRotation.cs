@@ -17,7 +17,7 @@ public class uScriptAct_SetRandomRotation : uScriptLogic
    public bool Out { get { return true; } }
 	
    public void In(
-      [FriendlyName("Target", "The GameObject(s) that the random rotation is applied to.")]
+      [FriendlyName("Target", "The GameObject(s) that the random rotation is applied to."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Min Angle X", "Minimum allowable angle. (0-360 degrees)")]

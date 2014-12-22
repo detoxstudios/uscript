@@ -57,7 +57,7 @@ public class uScriptAct_Particles : uScriptLogic
  
    [FriendlyName("Stop Emitting")]
    public void StopEmitting(
-      [FriendlyName("Target", "The Target GameObject(s) to start/stop particles on. Note: The Target GameObject must be setup in Unity to use particles (have the appropriate particle component assigned and set up).")]
+      [FriendlyName("Target", "The Target GameObject(s) to start/stop particles on. Note: The Target GameObject must be setup in Unity to use particles (have the appropriate particle component assigned and set up)."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Clear Particles", "Whether or not to immediately clear all the particles already emitted by Target emitters - will be cleared before starting or after stopping.")]

@@ -25,7 +25,7 @@ public class uScriptAct_Destroy : uScriptLogic
    public bool ObjectsDestroyed { get { return m_ObjectsDestroyed; } }
 
    public void In(
-      [FriendlyName("Target", "The target GameObject(s) to destroy.")]
+      [FriendlyName("Target", "The target GameObject(s) to destroy."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Delay", "The time to wait before destroying the target object(s).")]

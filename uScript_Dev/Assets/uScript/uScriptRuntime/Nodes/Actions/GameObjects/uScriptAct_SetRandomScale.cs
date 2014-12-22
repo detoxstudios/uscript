@@ -17,7 +17,7 @@ public class uScriptAct_SetRandomScale : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) that the random scale is applied to.")]
+      [FriendlyName("Target", "The GameObject(s) that the random scale is applied to."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Min X", "Minimum allowable float value.")]

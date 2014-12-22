@@ -18,7 +18,7 @@ public class uScriptAct_DestroyComponent : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The target GameObject(s) that will be affected.")]
+      [FriendlyName("Target", "The target GameObject(s) that will be affected."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
       
       [FriendlyName("Component Name", "The name of the component(s) to destroy from all target GameObject(s).")]

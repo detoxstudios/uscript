@@ -78,6 +78,7 @@ namespace Detox.ScriptEditor
       public string       FriendlyName;
       public string       Default;
       public string       Type;
+      public string       AutoLinkType;
       public string       ReferenceGuid;
       public bool         Input;
       public bool         Output;
@@ -1173,6 +1174,10 @@ namespace Detox.ScriptEditor
          State   = parameterData.State != 0 ? (Parameter.VisibleState) parameterData.State : Parameter.VisibleState.Visible;
          ReferenceGuid = parameterData.ReferenceGuid;
          FriendlyName  = parameterData.FriendlyName;
+         
+         // This will get overridden by the newly reflected node 
+         // so it doesn't need to be saved/loaded
+         AutoLinkType = parameterData.Type;
       }
    }
 
@@ -1561,6 +1566,7 @@ namespace Detox.ScriptEditor
          Name.Input   = true;
          Name.Output  = false;
          Name.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         Name.AutoLinkType = Name.Type;
 
          Order = new Parameter( );
          Order.Name    = "Order";
@@ -1570,6 +1576,7 @@ namespace Detox.ScriptEditor
          Order.Input   = true;
          Order.Output  = false;
          Order.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         Order.AutoLinkType = Order.Type;
 
          Description = new Parameter( );
          Description.Name    = "Description";
@@ -1579,6 +1586,7 @@ namespace Detox.ScriptEditor
          Description.Input   = true;
          Description.Output  = false;
          Description.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         Description.AutoLinkType = Description.Type;
 
          m_ShowComment = new Parameter( );
          m_ShowComment.Name         = "Output Comment";
@@ -1588,6 +1596,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
          m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         m_ShowComment.AutoLinkType = m_ShowComment.Type;
 
          m_Comment = new Parameter( );
          m_Comment.Name          = "Comment";
@@ -1597,6 +1606,7 @@ namespace Detox.ScriptEditor
          m_Comment.Input   = true;
          m_Comment.Output  = false;
          m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         m_Comment.AutoLinkType = m_Comment.Type;
       }
    }
 
@@ -1839,6 +1849,7 @@ namespace Detox.ScriptEditor
          m_Instance.State  = Parameter.VisibleState.Visible;
          m_Instance.Name         = "Instance";
          m_Instance.FriendlyName = "Instance";
+         m_Instance.AutoLinkType = m_Instance.Type;
 
          m_ShowComment = new Parameter( );
          m_ShowComment.ReferenceGuid = "";
@@ -1849,6 +1860,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_ShowComment.Input   = true;
          m_ShowComment.Output  = false;
+         m_ShowComment.AutoLinkType = m_ShowComment.Type;
 
          m_Comment = new Parameter( );
          m_Comment.ReferenceGuid = "";
@@ -1859,6 +1871,7 @@ namespace Detox.ScriptEditor
          m_Comment.Input   = true;
          m_Comment.Output  = false;
          m_Comment.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         m_Comment.AutoLinkType = m_Comment.Type;
 
          m_Guid = Guid.NewGuid( );
 
@@ -2008,6 +2021,7 @@ namespace Detox.ScriptEditor
          m_TitleText.Type = typeof(String).ToString( );
          m_TitleText.Input = true;
          m_TitleText.Output = false;
+         m_TitleText.AutoLinkType = m_TitleText.Type;
 
          m_TitleTextColor = new Parameter( );
          m_TitleTextColor.State = Parameter.VisibleState.Visible;
@@ -2017,6 +2031,7 @@ namespace Detox.ScriptEditor
          m_TitleTextColor.Type = typeof(UnityEngine.Color).ToString( );
          m_TitleTextColor.Input = true;
          m_TitleTextColor.Output = false;
+         m_TitleTextColor.AutoLinkType = m_TitleTextColor.Type;
 
          m_BodyText = new Parameter( );
          m_BodyText.State = Parameter.VisibleState.Visible;
@@ -2026,6 +2041,7 @@ namespace Detox.ScriptEditor
          m_BodyText.Type = "TextArea";
          m_BodyText.Input = true;
          m_BodyText.Output = false;
+         m_BodyText.AutoLinkType = m_BodyText.Type;
 
          m_BodyTextColor = new Parameter( );
          m_BodyTextColor.State = Parameter.VisibleState.Visible;
@@ -2035,6 +2051,7 @@ namespace Detox.ScriptEditor
          m_BodyTextColor.Type = typeof(UnityEngine.Color).ToString( );
          m_BodyTextColor.Input = true;
          m_BodyTextColor.Output = false;
+         m_BodyTextColor.AutoLinkType = m_BodyTextColor.Type;
 
          m_NodeColor = new Parameter( );
          m_NodeColor.State = Parameter.VisibleState.Visible;
@@ -2044,6 +2061,7 @@ namespace Detox.ScriptEditor
          m_NodeColor.Type = typeof(UnityEngine.Color).ToString( );
          m_NodeColor.Input = true;
          m_NodeColor.Output = false;
+         m_NodeColor.AutoLinkType = m_NodeColor.Type;
 
          m_Width.Name  = "Width";
          m_Width.State = Parameter.VisibleState.Visible;
@@ -2053,6 +2071,7 @@ namespace Detox.ScriptEditor
          m_Width.Input = true;
          m_Width.Output= false;
          m_Width.Default = "0";
+         m_Width.AutoLinkType = m_Width.Type;
 
          m_Height.Name  = "Height";
          m_Height.ReferenceGuid = "";
@@ -2062,6 +2081,7 @@ namespace Detox.ScriptEditor
          m_Height.Input = true;
          m_Height.Output= false;
          m_Height.Default = "0";
+         m_Height.AutoLinkType = m_Height.Type;
       }
    }
 
@@ -2220,6 +2240,7 @@ namespace Detox.ScriptEditor
          m_Instance.Input           = true;
          m_Instance.Output          = false;
          m_Instance.Default         = "";
+         m_Instance.AutoLinkType    = m_Instance.Type;
 
          m_Guid = Guid.NewGuid( );
          
@@ -2234,6 +2255,7 @@ namespace Detox.ScriptEditor
          m_ShowComment.Type         = typeof(bool).ToString( );
          m_ShowComment.Input        = true;
          m_ShowComment.Output       = false;
+         m_ShowComment.AutoLinkType = m_ShowComment.Type;
 
          m_Comment                  = new Parameter( );
          m_Comment.State            = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
@@ -2243,6 +2265,7 @@ namespace Detox.ScriptEditor
          m_Comment.Type             = typeof(String).ToString( );
          m_Comment.Input            = true;
          m_Comment.Output           = false;
+         m_Comment.AutoLinkType     = m_Comment.Type;
 
          EventArgs = "System.EventArgs";
          m_IsStatic= false;
@@ -2586,6 +2609,7 @@ namespace Detox.ScriptEditor
          m_Instance.Input  = true;
          m_Instance.Output = false;
          m_Instance.Default= "";
+         m_Instance.AutoLinkType = m_Instance.Type;
 
          m_Parameter = new Parameter( );
          m_Parameter.Name    = name;
@@ -2595,6 +2619,7 @@ namespace Detox.ScriptEditor
          m_Parameter.Output  = output;
          m_Parameter.Default = "";
          m_Parameter.Type    = valueType;
+         m_Parameter.AutoLinkType = m_Parameter.Type;
 
          m_Position = Point.Empty; 
          m_Guid     = Guid.NewGuid( ); 
@@ -2719,6 +2744,7 @@ namespace Detox.ScriptEditor
          m_Value.Output  = true;
          m_Value.Name    = "Value";
          m_Value.Type    = type;
+         m_Value.AutoLinkType = m_Value.Type;
 
          m_Name.Default = name;
          m_Name.ReferenceGuid = "";
@@ -2728,6 +2754,7 @@ namespace Detox.ScriptEditor
          m_Name.Name    = "Name";
          m_Name.FriendlyName = "Name";
          m_Name.Type    = typeof(String).ToString( );
+         m_Name.AutoLinkType = m_Name.Type;
 
          m_Externaled.Default = "false";
          m_Externaled.ReferenceGuid = "";
@@ -2737,6 +2764,7 @@ namespace Detox.ScriptEditor
          m_Externaled.Name    = "Expose to Unity";
          m_Externaled.FriendlyName = "Expose to Unity";
          m_Externaled.Type    = typeof(bool).ToString( );
+         m_Externaled.AutoLinkType = m_Externaled.Type;
 
          m_Position = Point.Empty; 
          m_Guid = Guid.NewGuid( ); 

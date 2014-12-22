@@ -19,7 +19,7 @@ public class uScriptAct_PlayAudioSourceOneShot : uScriptLogic
 
    // Parameter Attributes are applied below in Stop()
    public void Play(
-      [FriendlyName("Target", "The GameObject with the AudioSource component to play.")]
+      [FriendlyName("Target", "The GameObject with the AudioSource component to play."), AutoLinkType(typeof(GameObject))]
       GameObject[] target,
 
       [FriendlyName("Audio Clip", "(optional) You can specify an AudioClip to play instead of the deault AudioClip assigned to the target's component.")]

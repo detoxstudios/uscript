@@ -17,10 +17,10 @@ public class uScriptAct_SubtractVector4 : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("A", "The Vector4 to subtract from. If more than one Vector4 variable is connected to A, they will be subtracted from (0, 0, 0, 0) before B is subtracted from them.")]
+      [FriendlyName("A", "The Vector4 to subtract from. If more than one Vector4 variable is connected to A, they will be subtracted from (0, 0, 0, 0) before B is subtracted from them."), AutoLinkType(typeof(Vector4))]
       Vector4[] A,
 
-      [FriendlyName("B", "The Vector4 to subtract from A. If more than one Vector4 variable is connected to B, they will be subtracted from (0, 0, 0, 0) before being subtracted from A.")]
+      [FriendlyName("B", "The Vector4 to subtract from A. If more than one Vector4 variable is connected to B, they will be subtracted from (0, 0, 0, 0) before being subtracted from A."), AutoLinkType(typeof(Vector4))]
       Vector4[] B,
 
       [FriendlyName("Result", "The Vector4 result of the subtraction operation.")]

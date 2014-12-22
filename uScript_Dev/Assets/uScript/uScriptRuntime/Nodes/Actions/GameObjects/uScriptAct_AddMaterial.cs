@@ -18,7 +18,7 @@ public class uScriptAct_AddMaterial : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Target", "The GameObject(s) to assign add the new material to.")]
+      [FriendlyName("Target", "The GameObject(s) to assign add the new material to."), AutoLinkType(typeof(GameObject))]
       GameObject[] Target,
 
       [FriendlyName("Material", "The material(s) to add to the Target. If material channel index order is important and you are adding more than one material at once, use a Material List or add one material at a time.")]

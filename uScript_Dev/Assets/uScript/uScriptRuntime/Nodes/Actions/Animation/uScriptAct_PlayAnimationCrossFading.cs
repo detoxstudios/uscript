@@ -30,7 +30,7 @@ public class uScriptAct_PlayAnimationCrossFading : uScriptLogic
    public event uScriptEventHandler PlayNext;
 
    public void In(
-      [FriendlyName("Target", "The target GameObject to play the animation on.")] GameObject[] Target,
+      [FriendlyName("Target", "The target GameObject to play the animation on."), AutoLinkType(typeof(GameObject))] GameObject[] Target,
       [FriendlyName("Animation", "The name of the animation to play. Animation must exist in the GameObject's AnimationClip.")] string Animation,
       [FriendlyName("Speed Factor", "The speed at which to play the animation."), DefaultValue(1f), SocketState(false, false)] float SpeedFactor,
 	   [FriendlyName("Fade Length", "How long (in seconds) the blend should take to reach the Blend Weight"), DefaultValue(1f), SocketState(false, false)] float FadeLength,
