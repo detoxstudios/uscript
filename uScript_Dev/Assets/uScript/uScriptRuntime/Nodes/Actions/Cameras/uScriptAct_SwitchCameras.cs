@@ -35,8 +35,13 @@ public class uScriptAct_SwitchCameras : uScriptLogic
             Component FromCam = FromCamera.GetComponent("Camera");
             Component ToCam = Target.GetComponent("Camera");
 
+#if (UNITY_3 || UNITY_4)
             FromCam.camera.enabled = false;
             ToCam.camera.enabled = true;
+#else
+            FromCam.GetComponent<Camera>().enabled = false;
+            ToCam.GetComponent<Camera>().enabled = true;
+#endif
          }
          catch (System.Exception e)
          {

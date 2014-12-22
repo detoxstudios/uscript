@@ -34,8 +34,13 @@ public class uScriptAct_GetRigidbodyVelocity2D : uScriptLogic
    {
       if (Target != null && Target.GetComponent<Rigidbody2D>( ))
       {
+#if (UNITY_3 || UNITY_4)
          Velocity = Target.rigidbody2D.velocity;
          AngularVelocity = Target.rigidbody2D.angularVelocity;
+#else
+         Velocity = Target.GetComponent<Rigidbody2D>().velocity;
+         AngularVelocity = Target.GetComponent<Rigidbody2D>().angularVelocity;
+#endif
          Magnitude = Velocity.magnitude;
       }
       else

@@ -36,6 +36,7 @@ public class uScriptAct_ReplaceMaterial : uScriptLogic
             {
                try
                {
+#if (UNITY_3 || UNITY_4)
                   Material[] tmpMaterials = tmpTarget.renderer.materials;
 
                   // Check to make sure the specified index is in range
@@ -44,6 +45,16 @@ public class uScriptAct_ReplaceMaterial : uScriptLogic
                      tmpMaterials[materialIndex] = newMaterial;
                      tmpTarget.renderer.materials = tmpMaterials;
                   }
+#else
+                  Material[] tmpMaterials = tmpTarget.GetComponent<Renderer>().materials;
+
+                  // Check to make sure the specified index is in range
+                  if (materialIndex < tmpMaterials.Length && materialIndex > -1)
+                  {
+                     tmpMaterials[materialIndex] = newMaterial;
+                     tmpTarget.GetComponent<Renderer>().materials = tmpMaterials;
+                  }
+#endif
                   else
                   {
                      uScriptDebug.Log("(Node = Replace Material) The index supplied is outside the material index range on the specified Target GameObject (" + tmpTarget.name + ").");

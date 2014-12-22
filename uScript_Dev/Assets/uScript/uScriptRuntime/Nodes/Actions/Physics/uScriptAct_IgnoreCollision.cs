@@ -28,9 +28,16 @@ public class uScriptAct_IgnoreCollision : uScriptLogic
       bool Ignore
       )
    {
+#if (UNITY_3 || UNITY_4)
       if (A.collider != null && B.collider != null)
       {
          Physics.IgnoreCollision(A.collider, B.collider, Ignore);
       }
+#else
+      if (A.GetComponent<Collider>() != null && B.GetComponent<Collider>() != null)
+      {
+         Physics.IgnoreCollision(A.GetComponent<Collider>(), B.GetComponent<Collider>(), Ignore);
+      }
+#endif
    }
 }

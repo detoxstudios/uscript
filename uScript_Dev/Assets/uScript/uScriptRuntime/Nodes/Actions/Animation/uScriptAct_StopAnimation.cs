@@ -31,6 +31,7 @@ public class uScriptAct_StopAnimation : uScriptLogic
       {
          if (currentTarget != null)
          {
+#if (UNITY_3 || UNITY_4)
 				if ("" != AnimationName)
 				{
 					currentTarget.animation.Stop(AnimationName);
@@ -39,7 +40,16 @@ public class uScriptAct_StopAnimation : uScriptLogic
 				{
 					currentTarget.animation.Stop();
 				}
-			
+#else
+            if ("" != AnimationName)
+				{
+               currentTarget.GetComponent<Animation>().Stop(AnimationName);
+				}
+				else
+				{
+               currentTarget.GetComponent<Animation>().Stop();
+				}
+#endif
 				
          }
       }

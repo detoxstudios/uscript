@@ -31,6 +31,7 @@ public class uScriptAct_RewindAnimation : uScriptLogic
       {
          if (currentTarget != null)
          {
+#if (UNITY_3 || UNITY_4)
 				if ("" != AnimationName)
 				{
 					currentTarget.animation.Rewind(AnimationName);
@@ -39,6 +40,16 @@ public class uScriptAct_RewindAnimation : uScriptLogic
 				{
 					currentTarget.animation.Rewind();
 				}
+#else
+            if ("" != AnimationName)
+				{
+               currentTarget.GetComponent<Animation>().Rewind(AnimationName);
+				}
+				else
+				{
+               currentTarget.GetComponent<Animation>().Rewind();
+				}
+#endif
 
          }
       }

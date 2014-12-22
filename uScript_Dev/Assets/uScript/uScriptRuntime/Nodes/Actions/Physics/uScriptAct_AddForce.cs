@@ -36,6 +36,7 @@ public class uScriptAct_AddForce : uScriptLogic
       ForceMode ForceModeType
       )
    {
+#if (UNITY_3 || UNITY_4)
 		if  ( null != Target.rigidbody )
 		{
          if (Scale != 0) { Force = Force * Scale; }
@@ -49,6 +50,21 @@ public class uScriptAct_AddForce : uScriptLogic
 				Target.rigidbody.AddForce(Force);
 			}
 		}
+#else
+      if (null != Target.GetComponent<Rigidbody>())
+      {
+         if (Scale != 0) { Force = Force * Scale; }
+
+         if (UseForceMode)
+         {
+            Target.GetComponent<Rigidbody>().AddForce(Force, ForceModeType);
+         }
+         else
+         {
+            Target.GetComponent<Rigidbody>().AddForce(Force);
+         }
+      }
+#endif
 		else
 		{
 			uScriptDebug.Log("(Node - Add Force) The specified Target GameObject does not have a Rigid Body Component, so no force could be added.", uScriptDebug.Type.Warning);

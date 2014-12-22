@@ -36,6 +36,7 @@ public class uScriptAct_AddTorque : uScriptLogic
       ForceMode ForceModeType
       )
    {
+#if (UNITY_3 || UNITY_4)
 		if  ( null != Target.rigidbody )
 		{
          if (Scale != 0) { Force = Force * Scale; }
@@ -49,6 +50,21 @@ public class uScriptAct_AddTorque : uScriptLogic
 				Target.rigidbody.AddTorque(Force);
 			}
 		}
+#else
+      if (null != Target.GetComponent<Rigidbody>())
+		{
+         if (Scale != 0) { Force = Force * Scale; }
+
+			if ( UseForceMode )
+			{
+            Target.GetComponent<Rigidbody>().AddTorque(Force, ForceModeType);
+			}
+			else
+			{
+            Target.GetComponent<Rigidbody>().AddTorque(Force);
+			}
+		}
+#endif
 		else
 		{
 			uScriptDebug.Log("(Node - Add Torque) The specified Target GameObject does not have a Rigid Body Component, so no force could be added.", uScriptDebug.Type.Warning);

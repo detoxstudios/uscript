@@ -49,6 +49,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
       {
          if (currentTarget != null)
          {
+#if (UNITY_3 || UNITY_4)
             if(currentTarget.animation.GetClip(Animation))
             {
                //only save one so we can ask about the animation state
@@ -80,6 +81,39 @@ public class uScriptAct_PlayAnimation : uScriptLogic
                currentTarget.animation[Animation].wrapMode = AnimWrapMode;
                currentTarget.animation.Play(Animation);
             }
+#else
+            if (currentTarget.GetComponent<Animation>().GetClip(Animation))
+            {
+               //only save one so we can ask about the animation state
+               //i don't need to save all of them in the array
+               m_GameObject = currentTarget;
+               m_Animation  = Animation;
+
+               if (SpeedFactor == 0F)
+               {
+                  currentTarget.GetComponent<Animation>()[Animation].speed = 1.0F;
+               }
+               else
+               {
+                  currentTarget.GetComponent<Animation>()[Animation].speed = SpeedFactor;
+               }
+
+               if (StopOtherAnimations)
+               {
+                  currentTarget.GetComponent<Animation>().Play(PlayMode.StopAll);
+               }
+
+               if (SpeedFactor < 0)
+               {
+                  // Needed to play in reverse with a negative speed
+                  currentTarget.GetComponent<Animation>()[Animation].time = currentTarget.GetComponent<Animation>()[Animation].length;
+               }
+
+
+               currentTarget.GetComponent<Animation>()[Animation].wrapMode = AnimWrapMode;
+               currentTarget.GetComponent<Animation>().Play(Animation);
+            }
+#endif
          }
          else
          {
@@ -92,7 +126,11 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    {
       if ( null != m_GameObject )
       {
+#if (UNITY_3 || UNITY_4)
          if ( false == m_GameObject.animation.IsPlaying(m_Animation) )
+#else
+         if (false == m_GameObject.GetComponent<Animation>().IsPlaying(m_Animation))
+#endif
          {
             m_GameObject = null;
 

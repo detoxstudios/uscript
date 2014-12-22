@@ -27,12 +27,23 @@ public class uScriptAct_GetAnimationState : uScriptLogic {
       [FriendlyName("Wrap Mode", "The current wrap mode of the animation.")][SocketState(false, false)]out WrapMode wrapMode
 	   )
 	{
+
+#if (UNITY_3 || UNITY_4)
 		weight = target.animation[animationName].weight;
 		normalizedPosition = target.animation[animationName].normalizedTime;
 		speed = target.animation[animationName].speed;
 		layer = target.animation[animationName].layer;
 		wrapMode = target.animation[animationName].wrapMode;
       animLength = target.animation[animationName].length;
+#else
+      weight = target.GetComponent<Animation>()[animationName].weight;
+      normalizedPosition = target.GetComponent<Animation>()[animationName].normalizedTime;
+      speed = target.GetComponent<Animation>()[animationName].speed;
+      layer = target.GetComponent<Animation>()[animationName].layer;
+      wrapMode = target.GetComponent<Animation>()[animationName].wrapMode;
+      animLength = target.GetComponent<Animation>()[animationName].length;
+#endif
+
 	}
 	
 }

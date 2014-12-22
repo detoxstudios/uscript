@@ -23,6 +23,7 @@ public class uScriptAct_SetAnimationPosition : uScriptLogic {
       [FriendlyName("Normalized Position", "The normalized position (percentage) of the animation's start/play position you wish to set (0.0 - 1.0).")][DefaultValue(0)]float normalizedPosition
       )
 	{
+#if (UNITY_3 || UNITY_4)
 		if (normalizedPosition >= 0 && normalizedPosition <= 1)
 			target.animation[animationName].normalizedTime = normalizedPosition;
 		else if (normalizedPosition < 0)
@@ -30,6 +31,15 @@ public class uScriptAct_SetAnimationPosition : uScriptLogic {
 		else if (normalizedPosition > 1)
 			target.animation[animationName].normalizedTime = 1;
 		if (Out != null) Out(this, new System.EventArgs());
+#else
+      if (normalizedPosition >= 0 && normalizedPosition <= 1)
+         target.GetComponent<Animation>()[animationName].normalizedTime = normalizedPosition;
+		else if (normalizedPosition < 0)
+         target.GetComponent<Animation>()[animationName].normalizedTime = 0;
+		else if (normalizedPosition > 1)
+         target.GetComponent<Animation>()[animationName].normalizedTime = 1;
+		if (Out != null) Out(this, new System.EventArgs());
+#endif
 	}
 	
 }

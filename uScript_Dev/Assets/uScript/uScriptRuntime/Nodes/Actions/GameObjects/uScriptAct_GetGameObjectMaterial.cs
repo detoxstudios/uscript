@@ -40,6 +40,7 @@ public class uScriptAct_GetGameObjectMaterial : uScriptLogic
 
       if ( Target != null )
       {
+#if (UNITY_3 || UNITY_4)
 		 if (MaterialIndex <= Target.renderer.materials.Length - 1)
 		 {
 		    targetMaterial = Target.renderer.materials[MaterialIndex];
@@ -49,6 +50,17 @@ public class uScriptAct_GetGameObjectMaterial : uScriptLogic
                 materialColor = Target.renderer.materials[MaterialIndex].color;
             else
                 materialColor = UnityEngine.Color.white;
+#else
+         if (MaterialIndex <= Target.GetComponent<Renderer>().materials.Length - 1)
+		 {
+          targetMaterial = Target.GetComponent<Renderer>().materials[MaterialIndex];
+          materialName = Target.GetComponent<Renderer>().materials[MaterialIndex].name;
+
+          if (Target.GetComponent<Renderer>().material.HasProperty("_Color"))
+             materialColor = Target.GetComponent<Renderer>().materials[MaterialIndex].color;
+            else
+                materialColor = UnityEngine.Color.white;
+#endif
 		 }
 		 else
 		 {

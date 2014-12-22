@@ -32,12 +32,21 @@ public class uScriptAct_AddForceAtPosition2D : uScriptLogic
       float Scale
       )
    {
+#if (UNITY_3 || UNITY_4)
 		if  ( null != Target.rigidbody2D )
 		{
          if (Scale != 0) { Force = Force * Scale; }
 
          Target.rigidbody2D.AddForceAtPosition(Force, ForcePosition);
 		}
+#else
+      if (null != Target.GetComponent<Rigidbody2D>())
+      {
+         if (Scale != 0) { Force = Force * Scale; }
+
+         Target.GetComponent<Rigidbody2D>().AddForceAtPosition(Force, ForcePosition);
+      }
+#endif
 		else
 		{
          uScriptDebug.Log("(Node - Add Force At Position (2D)) The specified Target GameObject does not have a rigidbody2D component, so no force could be added.", uScriptDebug.Type.Warning);

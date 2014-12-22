@@ -25,7 +25,11 @@ public class uScriptAct_GetRigidBody2D : uScriptLogic
       out Rigidbody2D rigidBody
       )
    {
+#if (UNITY_3 || UNITY_4)
       rigidBody = Target.rigidbody2D;
+#else
+      rigidBody = Target.GetComponent<Rigidbody2D>();
+#endif
    }
 }
 

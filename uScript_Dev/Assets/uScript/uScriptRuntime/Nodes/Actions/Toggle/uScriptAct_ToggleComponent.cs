@@ -49,18 +49,32 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                if (currentComponentName.ToLower() == "collider" )
                {
 #if !UNITY_3_2 && !UNITY_3_3
+#if (UNITY_3 || UNITY_4)
                   if ( currentTarget.collider != null )
                   {
                      currentTarget.collider.enabled = true;
                   }
+#else
+                  if (currentTarget.GetComponent<Collider>() != null)
+                  {
+                     currentTarget.GetComponent<Collider>().enabled = true;
+                  }
+#endif
 #endif
                }
                else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
+#if (UNITY_3 || UNITY_4)
                   if ( currentTarget.renderer != null )
                   {
                      currentTarget.renderer.enabled = true;
                   }
+#else
+                  if (currentTarget.GetComponent<Renderer>() != null)
+                  {
+                     currentTarget.GetComponent<Renderer>().enabled = true;
+                  }
+#endif
                }
                else
                {
@@ -103,18 +117,32 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                if (currentComponentName.ToLower() == "collider" )
                {
 #if !UNITY_3_2 && !UNITY_3_3
+#if (UNITY_3 || UNITY_4)
                   if ( currentTarget.collider != null )
                   {
                      currentTarget.collider.enabled = false;
                   }
+#else
+                  if (currentTarget.GetComponent<Collider>() != null)
+                  {
+                     currentTarget.GetComponent<Collider>().enabled = false;
+                  }
+#endif
 #endif
                }
                else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
+#if (UNITY_3 || UNITY_4)
                   if ( currentTarget.renderer != null )
                   {
                      currentTarget.renderer.enabled = false;
                   }
+#else
+                  if (currentTarget.GetComponent<Renderer>() != null)
+                  {
+                     currentTarget.GetComponent<Renderer>().enabled = false;
+                  }
+#endif
                }
                else
                {
@@ -165,6 +193,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                if (currentComponentName.ToLower() == "collider" )
                {
 #if !UNITY_3_2 && !UNITY_3_3
+#if (UNITY_3 || UNITY_4)
                   if ( currentTarget.collider != null )
                   {
                      if (currentTarget.collider.enabled)
@@ -178,10 +207,26 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                         turnedOn = true;
                      }
                   }
+#else
+                  if (currentTarget.GetComponent<Collider>() != null)
+                  {
+                     if (currentTarget.GetComponent<Collider>().enabled)
+                     {
+                        currentTarget.GetComponent<Collider>().enabled = false;
+                        turnedOff = true;
+                     }
+                     else
+                     {
+                        currentTarget.GetComponent<Collider>().enabled = true;
+                        turnedOn = true;
+                     }
+                  }
+#endif
 #endif
                }
                else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
+#if (UNITY_3 || UNITY_4)
                   if ( currentTarget.renderer != null )
                   {
                      if (currentTarget.renderer.enabled)
@@ -195,6 +240,21 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                         turnedOn = true;
                      }
                   }
+#else
+                  if (currentTarget.GetComponent<Renderer>() != null)
+                  {
+                     if (currentTarget.GetComponent<Renderer>().enabled)
+                     {
+                        currentTarget.GetComponent<Renderer>().enabled = false;
+                        turnedOff = true;
+                     }
+                     else
+                     {
+                        currentTarget.GetComponent<Renderer>().enabled = true;
+                        turnedOn = true;
+                     }
+                  }
+#endif
                }
                else
                {

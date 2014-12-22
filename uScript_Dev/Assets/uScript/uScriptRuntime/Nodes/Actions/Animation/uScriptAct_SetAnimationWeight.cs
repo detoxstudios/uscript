@@ -23,6 +23,7 @@ public class uScriptAct_SetAnimationWeight : uScriptLogic {
       [FriendlyName("Blend Weight", "The blend weight you wish to set (0.0 - 1.0).")][DefaultValue(1)]float weight
       )
 	{
+#if (UNITY_3 || UNITY_4)
 		if (weight >= 0 && weight <= 1)
 			target.animation[animationName].weight = weight;
 		else if (weight < 0)
@@ -30,6 +31,15 @@ public class uScriptAct_SetAnimationWeight : uScriptLogic {
 		else if (weight > 1)
 			target.animation[animationName].weight = 1;
 		if (Out != null) Out(this, new System.EventArgs());
+#else
+      if (weight >= 0 && weight <= 1)
+         target.GetComponent<Animation>()[animationName].weight = weight;
+		else if (weight < 0)
+         target.GetComponent<Animation>()[animationName].weight = 0;
+		else if (weight > 1)
+         target.GetComponent<Animation>()[animationName].weight = 1;
+		if (Out != null) Out(this, new System.EventArgs());
+#endif
 	}
 	
 }

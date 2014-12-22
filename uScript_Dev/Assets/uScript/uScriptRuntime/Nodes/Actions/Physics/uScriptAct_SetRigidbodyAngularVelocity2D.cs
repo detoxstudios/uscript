@@ -27,10 +27,17 @@ public class uScriptAct_SetRigidbodyAngularVelocity2D : uScriptLogic
    {
       foreach (GameObject currentTarget in Target)
       {
+#if (UNITY_3 || UNITY_4)
          if (currentTarget != null && currentTarget.rigidbody2D != null)
          {
             currentTarget.rigidbody2D.angularVelocity = Velocity;
          }
+#else
+         if (currentTarget != null && currentTarget.GetComponent<Rigidbody2D>() != null)
+         {
+            currentTarget.GetComponent<Rigidbody2D>().angularVelocity = Velocity;
+         }
+#endif
       }
    }
 }

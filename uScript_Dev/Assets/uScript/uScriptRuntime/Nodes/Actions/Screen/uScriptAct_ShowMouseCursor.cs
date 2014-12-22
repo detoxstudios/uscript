@@ -22,6 +22,10 @@ public class uScriptAct_ShowMouseCursor : uScriptLogic
       bool show
       )
    {
+#if (UNITY_3 || UNITY_4)
       Screen.showCursor = show;
+#else
+      Cursor.visible = show;
+#endif
    }
 }

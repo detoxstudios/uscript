@@ -37,12 +37,21 @@ public class uScriptAct_AddTorque2D : uScriptLogic
       ForceMode ForceModeType
       )
    {
+#if (UNITY_3 || UNITY_4)
 		if  ( null != Target.rigidbody2D )
 		{
          if (Scale != 0) { Force = Force * Scale; }
 
          Target.rigidbody2D.AddTorque(Force);
 		}
+#else
+      if (null != Target.GetComponent<Rigidbody2D>())
+      {
+         if (Scale != 0) { Force = Force * Scale; }
+
+         Target.GetComponent<Rigidbody2D>().AddTorque(Force);
+      }
+#endif
 		else
 		{
          uScriptDebug.Log("(Node - Add Torque (2D)) The specified Target GameObject does not have a rigidbody2D component, so no force could be added.", uScriptDebug.Type.Warning);

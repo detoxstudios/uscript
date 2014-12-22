@@ -45,6 +45,7 @@ public class uScriptAct_PlayAnimationCrossFading : uScriptLogic
 
       foreach ( GameObject currentTarget in Target )
       {
+#if (UNITY_3 || UNITY_4)
          if (currentTarget != null)
          {
             //only save one so we can ask about the animation state
@@ -76,6 +77,39 @@ public class uScriptAct_PlayAnimationCrossFading : uScriptLogic
             currentTarget.animation[Animation].wrapMode = AnimWrapMode;
             currentTarget.animation.CrossFade(Animation, FadeLength);
          }
+#else
+         if (currentTarget != null)
+         {
+            //only save one so we can ask about the animation state
+            //i don't need to save all of them in the array
+            m_GameObject = currentTarget;
+            m_Animation  = Animation;
+
+            if (SpeedFactor == 0F)
+            {
+               currentTarget.GetComponent<Animation>()[Animation].speed = 1.0F;
+            }
+            else
+            {
+               currentTarget.GetComponent<Animation>()[Animation].speed = SpeedFactor;
+            }
+
+            if (StopOtherAnimations)
+            {
+               currentTarget.GetComponent<Animation>().Play(PlayMode.StopAll);
+            }
+
+            if (SpeedFactor < 0)
+            {
+               // Needed to play in reverse with a negative speed
+               currentTarget.GetComponent<Animation>()[Animation].time = currentTarget.GetComponent<Animation>()[Animation].length;
+            }
+
+
+            currentTarget.GetComponent<Animation>()[Animation].wrapMode = AnimWrapMode;
+            currentTarget.GetComponent<Animation>().CrossFade(Animation, FadeLength);
+         }
+#endif
       }
    }
 
@@ -86,7 +120,11 @@ public class uScriptAct_PlayAnimationCrossFading : uScriptLogic
          if (m_playNextTime > 0.0f)
          {
             // Check if play time is longer then the total play length minus pre fire time or if the animation isn't playing.
+#if (UNITY_3 || UNITY_4)
             if (m_GameObject.animation[m_Animation].time >= m_GameObject.animation[m_Animation].length - m_playNextTime)
+#else
+            if (m_GameObject.GetComponent<Animation>()[m_Animation].time >= m_GameObject.GetComponent<Animation>()[m_Animation].length - m_playNextTime)
+#endif
             {
                m_GameObject = null;
 
@@ -98,7 +136,11 @@ public class uScriptAct_PlayAnimationCrossFading : uScriptLogic
             }
          }
 
+#if (UNITY_3 || UNITY_4)
          if (m_GameObject != null && false == m_GameObject.animation.IsPlaying(m_Animation))
+#else
+         if (m_GameObject != null && false == m_GameObject.GetComponent<Animation>().IsPlaying(m_Animation))
+#endif
          {
             m_GameObject = null;
 

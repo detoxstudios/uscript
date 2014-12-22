@@ -23,6 +23,17 @@ public class uScriptAct_LockMouseCursor : uScriptLogic
       bool Lock
       )
    {
+#if (UNITY_3 || UNITY_4)
       Screen.lockCursor = Lock;
+#else
+      if (Lock == true)
+      {
+         Cursor.lockState = CursorLockMode.Locked;
+      }
+      else
+      {
+         Cursor.lockState = CursorLockMode.None;
+      }
+#endif
    }
 }

@@ -29,8 +29,12 @@ public class uScriptAct_SetCameraDepth : uScriptLogic
       {
 			try
 			{
-				Component TargetCam = Target.GetComponent( "Camera" );				
+				Component TargetCam = Target.GetComponent( "Camera" );
+#if (UNITY_3 || UNITY_4)
 				TargetCam.camera.depth = Depth;
+#else
+            TargetCam.GetComponent<Camera>().depth = Depth;
+#endif
 			}
 			catch (System.Exception e)
          {

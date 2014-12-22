@@ -24,6 +24,10 @@ public class uScriptAct_GetRigidBody : uScriptLogic
       out Rigidbody rigidBody
       )
    {
+#if (UNITY_3 || UNITY_4)
       rigidBody = Target.rigidbody;
+#else
+      rigidBody = Target.GetComponent<Rigidbody>();
+#endif
    }
 }

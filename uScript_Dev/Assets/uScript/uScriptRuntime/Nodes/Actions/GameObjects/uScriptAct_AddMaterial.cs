@@ -41,6 +41,7 @@ public class uScriptAct_AddMaterial : uScriptLogic
 					{
 						if(null != tmpMaterialName)
 						{
+#if (UNITY_3 || UNITY_4)
 							List<Material> MatList = new List<Material>();
 				            Material[] tmpMaterials = tmpTarget.renderer.materials;
 							MatList.AddRange(tmpMaterials);
@@ -49,6 +50,16 @@ public class uScriptAct_AddMaterial : uScriptLogic
 				
 				            tmpTarget.renderer.materials = MatList.ToArray();
 							tempIndex = tmpTarget.renderer.materials.Length - 1;
+#else
+                     List<Material> MatList = new List<Material>();
+                     Material[] tmpMaterials = tmpTarget.GetComponent<Renderer>().materials;
+                     MatList.AddRange(tmpMaterials);
+                     Material newMaterial = new Material(tmpMaterialName);
+                     MatList.Add(newMaterial);
+
+                     tmpTarget.GetComponent<Renderer>().materials = MatList.ToArray();
+                     tempIndex = tmpTarget.GetComponent<Renderer>().materials.Length - 1;
+#endif
 						}
 					}
 		         }

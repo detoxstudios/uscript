@@ -23,7 +23,11 @@ public class uScriptAct_SetAnimationSpeed : uScriptLogic {
       [FriendlyName("Speed Factor", "The speed of the animation.")][DefaultValue(1.0f)]float speed
       )
 	{
+#if (UNITY_3 || UNITY_4)
 		target.animation[animationName].speed = speed;
+#else
+      target.GetComponent<Animation>()[animationName].speed = speed;
+#endif
 		if (Out != null) Out(this, new System.EventArgs());
 	}
 }
