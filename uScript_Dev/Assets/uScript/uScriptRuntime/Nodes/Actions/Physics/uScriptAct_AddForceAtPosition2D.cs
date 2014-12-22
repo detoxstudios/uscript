@@ -32,7 +32,7 @@ public class uScriptAct_AddForceAtPosition2D : uScriptLogic
       float Scale
       )
    {
-#if (UNITY_3_5 || UNITY_4)
+#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
 		if  ( null != Target.rigidbody2D )
 		{
          if (Scale != 0) { Force = Force * Scale; }

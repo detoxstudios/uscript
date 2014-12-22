@@ -35,7 +35,7 @@ public class uScriptAct_AssignMaterialColor : uScriptLogic
       {
          foreach (GameObject tmpGameObject in Target)
          {
-#if (UNITY_3_5 || UNITY_4)
+#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
             tmpGameObject.renderer.materials[MatChannel].color = MatColor;
 #else
             tmpGameObject.GetComponent<Renderer>().materials[MatChannel].color = MatColor;

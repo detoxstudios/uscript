@@ -96,7 +96,7 @@ public class uScriptAct_CameraFade : uScriptLogic
 			// Create a primitive in front of the camera.
 			m_CameraPlane                         = GameObject.CreatePrimitive(PrimitiveType.Plane);
          m_CameraPlane.name = "uScriptRuntimeGenerated_CameraFadePlane";
-#if (UNITY_3_5 || UNITY_4)
+#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
          m_CameraPlane.collider.enabled = false;
 			m_CameraPlane.renderer.material       = m_FadeMaterial;
 #else
@@ -158,7 +158,7 @@ public class uScriptAct_CameraFade : uScriptLogic
 		 if (m_TimeToTrigger < 0f) m_TimeToTrigger = 0f;  
          float t = 1.0f - (m_TimeToTrigger / m_TotalTime);
 
-#if (UNITY_3_5 || UNITY_4)
+#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
 		 if (m_FadeTo)
 		 {
 			m_CameraPlane.renderer.material.color = new Color(m_FadeMaterial.color.r, m_FadeMaterial.color.g, m_FadeMaterial.color.b, Mathf.Lerp(0F, 1F, t));

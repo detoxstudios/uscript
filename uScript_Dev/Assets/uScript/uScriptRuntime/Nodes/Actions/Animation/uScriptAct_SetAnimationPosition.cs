@@ -23,7 +23,7 @@ public class uScriptAct_SetAnimationPosition : uScriptLogic {
       [FriendlyName("Normalized Position", "The normalized position (percentage) of the animation's start/play position you wish to set (0.0 - 1.0).")][DefaultValue(0)]float normalizedPosition
       )
 	{
-#if (UNITY_3_5 || UNITY_4)
+#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
 		if (normalizedPosition >= 0 && normalizedPosition <= 1)
 			target.animation[animationName].normalizedTime = normalizedPosition;
 		else if (normalizedPosition < 0)
