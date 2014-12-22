@@ -23,7 +23,7 @@ public class uScriptAct_SetAnimationWeight : uScriptLogic {
       [FriendlyName("Blend Weight", "The blend weight you wish to set (0.0 - 1.0).")][DefaultValue(1)]float weight
       )
 	{
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
 		if (weight >= 0 && weight <= 1)
 			target.animation[animationName].weight = weight;
 		else if (weight < 0)

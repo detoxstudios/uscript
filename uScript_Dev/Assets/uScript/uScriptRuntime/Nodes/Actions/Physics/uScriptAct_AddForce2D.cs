@@ -1,4 +1,4 @@
-﻿// uScript uScript_Collision2D.cs
+// uScript uScript_Collision2D.cs
 // (C) 2014 Detox Studios LLC
 
 #if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
@@ -36,7 +36,7 @@ public class uScriptAct_AddForce2D : uScriptLogic
          {
             force = force * scale;
          }
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
          if  ( null != Target.rigidbody2D )
 	   	{
             Target.rigidbody2D.AddForce(force);

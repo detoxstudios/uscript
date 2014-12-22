@@ -82,7 +82,7 @@ public class uScriptAct_MecanimIsTransitioning : uScriptLogic
       {
          if ( m_Animator.IsInTransition(m_LayerIndex) )
          {
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
             if ( (!m_CheckOld || m_Animator.GetCurrentAnimatorStateInfo(m_LayerIndex).nameHash == m_OldState) && (!m_CheckNew || m_Animator.GetNextAnimatorStateInfo(m_LayerIndex).nameHash == m_NewState) )
 #else
             if ((!m_CheckOld || m_Animator.GetCurrentAnimatorStateInfo(m_LayerIndex).fullPathHash == m_OldState) && (!m_CheckNew || m_Animator.GetNextAnimatorStateInfo(m_LayerIndex).fullPathHash == m_NewState))

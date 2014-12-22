@@ -36,7 +36,7 @@ public class uScriptAct_AddRelativeTorque : uScriptLogic
       ForceMode ForceModeType
       )
    {
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
 		if  ( null != Target.rigidbody )
 		{
          if (Scale != 0) { Force = Force * Scale; }

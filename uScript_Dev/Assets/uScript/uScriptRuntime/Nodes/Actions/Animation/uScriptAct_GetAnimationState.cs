@@ -28,7 +28,7 @@ public class uScriptAct_GetAnimationState : uScriptLogic {
 	   )
 	{
 
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
 		weight = target.animation[animationName].weight;
 		normalizedPosition = target.animation[animationName].normalizedTime;
 		speed = target.animation[animationName].speed;

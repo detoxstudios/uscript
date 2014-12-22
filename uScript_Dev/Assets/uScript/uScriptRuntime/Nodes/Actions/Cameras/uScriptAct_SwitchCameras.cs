@@ -35,7 +35,7 @@ public class uScriptAct_SwitchCameras : uScriptLogic
             Component FromCam = FromCamera.GetComponent("Camera");
             Component ToCam = Target.GetComponent("Camera");
 
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
             FromCam.camera.enabled = false;
             ToCam.camera.enabled = true;
 #else

@@ -40,7 +40,7 @@ public class uScriptAct_GetGameObjectMaterial : uScriptLogic
 
       if ( Target != null )
       {
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
 		 if (MaterialIndex <= Target.renderer.materials.Length - 1)
 		 {
 		    targetMaterial = Target.renderer.materials[MaterialIndex];

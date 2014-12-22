@@ -32,7 +32,7 @@ public class uScriptAct_RemoveMaterial : uScriptLogic
          {
             try
             {
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
                List<Material> MatList = new List<Material>();
                Material[] tmpMaterials = tmpTarget.renderer.materials;
 

@@ -41,7 +41,7 @@ public class uScriptAct_AddMaterial : uScriptLogic
 					{
 						if(null != tmpMaterialName)
 						{
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
 							List<Material> MatList = new List<Material>();
 				            Material[] tmpMaterials = tmpTarget.renderer.materials;
 							MatList.AddRange(tmpMaterials);

@@ -45,7 +45,7 @@ public class uScriptAct_GetAudioClipInfo : uScriptLogic {
         clipSamples = target.samples;
         clipChannels = target.channels;
         clipFrequency = target.frequency;
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
         clipIsReady = target.isReadyToPlay;
 #else
         if (target.loadState == AudioDataLoadState.Loaded)

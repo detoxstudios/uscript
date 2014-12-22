@@ -36,7 +36,7 @@ public class uScriptAct_ReplaceMaterial : uScriptLogic
             {
                try
                {
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
                   Material[] tmpMaterials = tmpTarget.renderer.materials;
 
                   // Check to make sure the specified index is in range

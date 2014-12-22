@@ -37,7 +37,7 @@ public class uScriptAct_AddTorque2D : uScriptLogic
       ForceMode ForceModeType
       )
    {
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
 		if  ( null != Target.rigidbody2D )
 		{
          if (Scale != 0) { Force = Force * Scale; }

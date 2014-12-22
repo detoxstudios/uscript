@@ -31,7 +31,7 @@ public class uScriptAct_StopAnimation : uScriptLogic
       {
          if (currentTarget != null)
          {
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
 				if ("" != AnimationName)
 				{
 					currentTarget.animation.Stop(AnimationName);

@@ -55,7 +55,7 @@ public class uScriptAct_PlayAnimationAdditive : uScriptLogic
             m_GameObject = Target;
             m_Animation  = Animation;
 
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
             if (SpeedFactor == 0F)
             {
                 Target.animation[m_Animation].speed = 1.0F;
@@ -136,7 +136,7 @@ public class uScriptAct_PlayAnimationAdditive : uScriptLogic
           foreach (GameObject t in MixingTransform)
            {
                //TODO: Make the blend complete before removing mixing transform.
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
               Target.animation[m_Animation].RemoveMixingTransform(t.transform);
               Target.animation[m_Animation].layer = setLayer;
               Target.animation.Blend(m_Animation, 0.0f, FadeLength);
@@ -159,7 +159,7 @@ public class uScriptAct_PlayAnimationAdditive : uScriptLogic
          if (m_playNextTime > 0.0f)
          {
             // Check if play time is longer then the total play length minus pre fire time or if the animation isn't playing.
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
             if (m_GameObject.animation[m_Animation].time >= m_GameObject.animation[m_Animation].length - m_playNextTime)
 #else
             if (m_GameObject.GetComponent<Animation>()[m_Animation].time >= m_GameObject.GetComponent<Animation>()[m_Animation].length - m_playNextTime)
@@ -175,7 +175,7 @@ public class uScriptAct_PlayAnimationAdditive : uScriptLogic
             }
          }
 
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
          if (false == m_GameObject.animation.IsPlaying(m_Animation))
 #else
          if (false == m_GameObject.GetComponent<Animation>().IsPlaying(m_Animation))

@@ -34,7 +34,7 @@ public class uScriptAct_AssignMaterial : uScriptLogic
          try
          {
             // Get the materials on the Target
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
             Material[] tmpMaterials = tmpTarget.renderer.materials;
             tmpMaterials[MatChannel] = materialName;
             tmpTarget.renderer.materials = tmpMaterials;

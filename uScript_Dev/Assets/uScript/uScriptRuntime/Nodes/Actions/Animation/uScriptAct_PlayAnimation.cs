@@ -49,7 +49,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
       {
          if (currentTarget != null)
          {
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
             if(currentTarget.animation.GetClip(Animation))
             {
                //only save one so we can ask about the animation state
@@ -126,7 +126,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    {
       if ( null != m_GameObject )
       {
-#if (UNITY_3 || UNITY_4)
+#if (UNITY_3_5 || UNITY_4)
          if ( false == m_GameObject.animation.IsPlaying(m_Animation) )
 #else
          if (false == m_GameObject.GetComponent<Animation>().IsPlaying(m_Animation))
