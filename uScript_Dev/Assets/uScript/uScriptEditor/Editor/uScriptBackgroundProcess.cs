@@ -50,7 +50,8 @@ public class uScriptBackgroundProcess
          var typeName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(".", System.StringComparison.Ordinal)) + uScriptConfig.Files.GeneratedComponentExtension;
          //Debug.Log("Type name: " + typeName);
 
-         uScript.MasterObject.AddComponent(typeName);
+         System.Type type = System.Type.GetType(typeName);
+         uScript.MasterObject.AddComponent(type);
       }
 
       ForceFileRefresh();

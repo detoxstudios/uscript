@@ -45,11 +45,12 @@ public class uScriptAct_AttachScript : uScriptLogic
 
             try
             {
+               System.Type type = System.Type.GetType(tempScript);
                foreach ( GameObject currentGameObject in Target )
                {
                   if (currentGameObject != null)
                   {
-                     currentGameObject.AddComponent(tempScript);
+                     currentGameObject.AddComponent(type);
                   }
                   
                }
