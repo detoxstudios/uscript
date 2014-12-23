@@ -49,7 +49,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
       {
          if (currentTarget != null)
          {
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
             if(currentTarget.animation.GetClip(Animation))
             {
                //only save one so we can ask about the animation state
@@ -126,7 +126,7 @@ public class uScriptAct_PlayAnimation : uScriptLogic
    {
       if ( null != m_GameObject )
       {
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
          if ( false == m_GameObject.animation.IsPlaying(m_Animation) )
 #else
          if (false == m_GameObject.GetComponent<Animation>().IsPlaying(m_Animation))

@@ -45,7 +45,7 @@ public class uScriptAct_PlayAnimationCrossFading : uScriptLogic
 
       foreach ( GameObject currentTarget in Target )
       {
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
          if (currentTarget != null)
          {
             //only save one so we can ask about the animation state
@@ -120,7 +120,7 @@ public class uScriptAct_PlayAnimationCrossFading : uScriptLogic
          if (m_playNextTime > 0.0f)
          {
             // Check if play time is longer then the total play length minus pre fire time or if the animation isn't playing.
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
             if (m_GameObject.animation[m_Animation].time >= m_GameObject.animation[m_Animation].length - m_playNextTime)
 #else
             if (m_GameObject.GetComponent<Animation>()[m_Animation].time >= m_GameObject.GetComponent<Animation>()[m_Animation].length - m_playNextTime)
@@ -136,7 +136,7 @@ public class uScriptAct_PlayAnimationCrossFading : uScriptLogic
             }
          }
 
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
          if (m_GameObject != null && false == m_GameObject.animation.IsPlaying(m_Animation))
 #else
          if (m_GameObject != null && false == m_GameObject.GetComponent<Animation>().IsPlaying(m_Animation))

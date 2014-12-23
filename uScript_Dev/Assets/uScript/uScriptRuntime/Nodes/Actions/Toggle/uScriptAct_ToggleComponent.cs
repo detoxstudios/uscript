@@ -49,7 +49,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                if (currentComponentName.ToLower() == "collider" )
                {
 #if !UNITY_3_2 && !UNITY_3_3
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
                   if ( currentTarget.collider != null )
                   {
                      currentTarget.collider.enabled = true;
@@ -64,7 +64,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                }
                else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
                   if ( currentTarget.renderer != null )
                   {
                      currentTarget.renderer.enabled = true;
@@ -117,7 +117,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                if (currentComponentName.ToLower() == "collider" )
                {
 #if !UNITY_3_2 && !UNITY_3_3
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
                   if ( currentTarget.collider != null )
                   {
                      currentTarget.collider.enabled = false;
@@ -132,7 +132,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                }
                else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
                   if ( currentTarget.renderer != null )
                   {
                      currentTarget.renderer.enabled = false;
@@ -193,7 +193,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                if (currentComponentName.ToLower() == "collider" )
                {
 #if !UNITY_3_2 && !UNITY_3_3
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
                   if ( currentTarget.collider != null )
                   {
                      if (currentTarget.collider.enabled)
@@ -226,7 +226,7 @@ public class uScriptAct_ToggleComponent : uScriptLogic
                }
                else if (currentComponentName.ToLower() == "meshrenderer" || currentComponentName.ToLower() == "renderer")
                {
-#if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
                   if ( currentTarget.renderer != null )
                   {
                      if (currentTarget.renderer.enabled)
