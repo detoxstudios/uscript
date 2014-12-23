@@ -37,10 +37,10 @@ public class uScriptAct_AddForce2D : uScriptLogic
             force = force * scale;
          }
 #if (UNITY_3_0 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
-         if  ( null != Target.rigidbody2D )
-	   	{
+         if (null != Target.rigidbody2D)
+         {
             Target.rigidbody2D.AddForce(force);
-   		{
+         }
 #else
          if (null != Target.GetComponent<Rigidbody2D>())
          {
