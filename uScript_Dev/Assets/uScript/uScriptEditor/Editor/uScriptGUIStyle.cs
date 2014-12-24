@@ -417,7 +417,7 @@ public static class uScriptGUIStyle
          padding = ((GUIStyle)"ButtonRight").padding
       };
 
-      PropertyTextArea = new GUIStyle(EditorStyles.textArea) { margin = new RectOffset(4, 4, 2, 2) };
+      PropertyTextArea = new GUIStyle(EditorStyles.textField) { margin = new RectOffset(4, 4, 2, 2), wordWrap = true };
 
       PropertyTextField = new GUIStyle(EditorStyles.textField) { margin = new RectOffset(4, 4, 2, 2) };
 
