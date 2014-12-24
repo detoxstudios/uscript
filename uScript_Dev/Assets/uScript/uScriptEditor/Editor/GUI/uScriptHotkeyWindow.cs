@@ -7,8 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if !UNITY_3_5
 namespace Detox.Editor.GUI
 {
+#endif
    using System;
    using System.Collections.Generic;
    using System.Linq;
@@ -17,8 +19,6 @@ namespace Detox.Editor.GUI
    using UnityEditor;
 
    using UnityEngine;
-
-   using uScript = global::uScript;
 
    public class uScriptHotkeyWindow : EditorWindow
    {
@@ -743,13 +743,38 @@ namespace Detox.Editor.GUI
          }
 
          // Handle "shift" input manually, because Unity does not correctly
-         // send MouseDown and MouseUp messages for the Shift keys.
+         // send KeyDown and KeyUp messages for the Shift keys.
          var exists = this.keyDown.ContainsKey(KeyCode.LeftShift);
          if ((exists == false && e.shift) || (exists && this.keyDown[KeyCode.LeftShift] != e.shift))
          {
             this.keyDown[KeyCode.LeftShift] = e.shift;
             this.Repaint();
          }
+
+#if UNITY_3_5
+         // Handle other modifier input manually, because Unity 3.x does not correctly
+         // send KeyDown and KeyUp messages for them.
+         exists = this.keyDown.ContainsKey(KeyCode.LeftAlt);
+         if ((exists == false && e.alt) || (exists && this.keyDown[KeyCode.LeftAlt] != e.alt))
+         {
+            this.keyDown[KeyCode.LeftAlt] = e.alt;
+            this.Repaint();
+         }
+			
+         exists = this.keyDown.ContainsKey(KeyCode.LeftControl);
+         if ((exists == false && e.control) || (exists && this.keyDown[KeyCode.LeftControl] != e.control))
+         {
+            this.keyDown[KeyCode.LeftControl] = e.control;
+            this.Repaint();
+         }
+			
+         exists = this.keyDown.ContainsKey(KeyCode.LeftWindows);
+         if ((exists == false && e.command) || (exists && this.keyDown[KeyCode.LeftWindows] != e.command))
+         {
+            this.keyDown[KeyCode.LeftWindows] = e.command;
+            this.Repaint();
+         }
+#endif
       }
 
       ////public void Reset()
@@ -952,4 +977,6 @@ namespace Detox.Editor.GUI
          public static GUIStyle CommandText { get; private set; }
       }
    }
+#if !UNITY_3_5
 }
+#endif

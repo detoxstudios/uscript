@@ -1338,6 +1338,7 @@ public sealed partial class uScript : EditorWindow
       // Store the current event locally since it is reference so frequently
       var e = Event.current;
 
+#if !UNITY_3_5
       if (HotkeyWindow != null)
       {
          switch (e.type)
@@ -1357,7 +1358,8 @@ public sealed partial class uScript : EditorWindow
                break;
          }
       }
-
+#endif
+		
       // Make sure the initial window size it not too small
       if (this.firstRun)
       {

@@ -7,8 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if !UNITY_3_5
 namespace Detox.Editor.GUI
 {
+#endif
    using UnityEditor;
 
    using UnityEngine;
@@ -106,4 +108,6 @@ namespace Detox.Editor.GUI
          public static GUIStyle WebsiteLink { get; private set; }
       }
    }
+#if !UNITY_3_5
 }
+#endif
