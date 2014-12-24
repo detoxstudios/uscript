@@ -56,6 +56,12 @@ namespace Detox.Editor.GUI
             this.Repaint();
          }
 
+#if UNITY_3_5
+         // There is a 10 pixel high gap between the top of the window and the first GUI element on early versions of Unity.
+         // This is certainly needed for <= 3.5.7, but not >= 4.6.0. Early 4.x versions have not been tested.
+         GUILayout.Space(-10);
+#endif
+
          GUILayout.Label(Content.Header, Style.Header);
 
          GUILayout.Space(16);
@@ -84,17 +90,37 @@ namespace Detox.Editor.GUI
       {
          static Style()
          {
-            Header = new GUIStyle { padding = new RectOffset(0, 32, 0, 0), stretchWidth = false };
+            Header = new GUIStyle { padding = new RectOffset(0, 0, 0, 0), stretchWidth = false };
 
-            ProductCopyright = new GUIStyle(EditorStyles.label) { alignment = TextAnchor.UpperCenter };
-            ProductName = new GUIStyle(EditorStyles.boldLabel) { alignment = TextAnchor.UpperCenter };
-            ProductVersion = new GUIStyle(EditorStyles.label) { alignment = TextAnchor.UpperCenter };
+            ProductCopyright = new GUIStyle(EditorStyles.label)
+                                  {
+                                     alignment = TextAnchor.UpperCenter,
+                                     padding = new RectOffset(2, 2, 2, 2)
+                                  };
 
-            WebsiteLink = new GUIStyle(GUI.skin.button) { alignment = TextAnchor.UpperCenter };
-            WebsiteLink.hover.background = WebsiteLink.normal.background;
-            WebsiteLink.hover.textColor = WebsiteLink.normal.textColor;
-            WebsiteLink.normal.background = null;
-            WebsiteLink.margin = new RectOffset(80, 80, 3, 3);
+            ProductName = new GUIStyle(EditorStyles.boldLabel)
+                             {
+                                alignment = TextAnchor.UpperCenter,
+                                padding = new RectOffset(2, 2, 0, 0)
+                             };
+
+            ProductVersion = new GUIStyle(EditorStyles.label)
+                                {
+                                   alignment = TextAnchor.UpperCenter,
+                                   padding = new RectOffset(2, 2, 0, 0)
+                                };
+
+            WebsiteLink = new GUIStyle(GUI.skin.button)
+                             {
+                                alignment = TextAnchor.UpperCenter,
+                                margin = new RectOffset(80, 80, 3, 3),
+                                normal = { background = null },
+                                hover =
+                                   {
+                                      background = GUI.skin.button.normal.background,
+                                      textColor = GUI.skin.button.normal.textColor
+                                   }
+                             };
          }
 
          public static GUIStyle Header { get; private set; }
