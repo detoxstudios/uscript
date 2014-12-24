@@ -294,8 +294,11 @@ namespace Detox.Editor.GUI
             case KeyCode.LeftAlt:
             case KeyCode.RightAlt:
                return "Alt";
+#if UNITY_3_5
+#else
             case KeyCode.LeftCommand:
             case KeyCode.RightCommand:
+#endif
             case KeyCode.LeftWindows:
             case KeyCode.RightWindows:
                return IsWindows ? "Win" : "Cmd";
@@ -649,8 +652,28 @@ namespace Detox.Editor.GUI
             this.DrawCommandBasic("LINE 3", new[] { KeyCode.Tab, KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y, KeyCode.U, KeyCode.I, KeyCode.O, KeyCode.P, KeyCode.LeftBracket, KeyCode.RightBracket, KeyCode.Backslash });
             this.DrawCommandBasic("LINE 4", new[] { KeyCode.CapsLock, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.Semicolon, KeyCode.Quote, KeyCode.Return });
             this.DrawCommandBasic("LINE 5", new[] { KeyCode.LeftShift, KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V, KeyCode.B, KeyCode.N, KeyCode.M, KeyCode.Comma, KeyCode.Period, KeyCode.Slash, KeyCode.RightShift });
-            this.DrawCommandBasic("Windows", new[] { KeyCode.LeftControl, KeyCode.LeftCommand, KeyCode.LeftAlt, KeyCode.Space, KeyCode.RightAlt, KeyCode.RightCommand, KeyCode.Menu, KeyCode.RightControl });
-            this.DrawCommandBasic("Mac", new[] { KeyCode.LeftControl, KeyCode.LeftAlt, KeyCode.LeftCommand, KeyCode.Space, KeyCode.RightCommand, KeyCode.RightAlt, KeyCode.RightControl });
+            this.DrawCommandBasic("Windows", new[] { KeyCode.LeftControl, 
+					#if UNITY_3_5
+					#else
+					KeyCode.LeftCommand,
+					#endif
+					KeyCode.LeftAlt, KeyCode.Space, KeyCode.RightAlt,
+					#if UNITY_3_5
+					#else
+					KeyCode.RightCommand,
+					#endif
+					KeyCode.Menu, KeyCode.RightControl });
+            this.DrawCommandBasic("Mac", new[] { KeyCode.LeftControl, KeyCode.LeftAlt, 
+					#if UNITY_3_5
+					#else
+					KeyCode.LeftCommand,
+					#endif
+					KeyCode.Space,
+					#if UNITY_3_5
+					#else
+					KeyCode.RightCommand,
+					#endif
+					KeyCode.RightAlt, KeyCode.RightControl });
 
             EditorGUILayout.Space();
 
