@@ -293,9 +293,8 @@ namespace Detox.Editor.GUI
                return "Ctrl";
             case KeyCode.LeftAlt:
             case KeyCode.RightAlt:
-               return "Alt";
-#if UNITY_3_5
-#else
+               return IsWindows ? "Alt" : "Opt";
+#if !UNITY_3_5
             case KeyCode.LeftCommand:
             case KeyCode.RightCommand:
 #endif
@@ -415,7 +414,7 @@ namespace Detox.Editor.GUI
                            keyCode = KeyCode.LeftAlt;
                            break;
                         case "CTRL":
-                           keyCode = KeyCode.LeftControl;
+                           keyCode = IsWindows ? KeyCode.LeftControl : KeyCode.LeftWindows;
                            break;
                         case "SHIFT":
                            keyCode = KeyCode.LeftShift;
@@ -652,28 +651,39 @@ namespace Detox.Editor.GUI
             this.DrawCommandBasic("LINE 3", new[] { KeyCode.Tab, KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y, KeyCode.U, KeyCode.I, KeyCode.O, KeyCode.P, KeyCode.LeftBracket, KeyCode.RightBracket, KeyCode.Backslash });
             this.DrawCommandBasic("LINE 4", new[] { KeyCode.CapsLock, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.F, KeyCode.G, KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.Semicolon, KeyCode.Quote, KeyCode.Return });
             this.DrawCommandBasic("LINE 5", new[] { KeyCode.LeftShift, KeyCode.Z, KeyCode.X, KeyCode.C, KeyCode.V, KeyCode.B, KeyCode.N, KeyCode.M, KeyCode.Comma, KeyCode.Period, KeyCode.Slash, KeyCode.RightShift });
-            this.DrawCommandBasic("Windows", new[] { KeyCode.LeftControl, 
-					#if UNITY_3_5
-					#else
-					KeyCode.LeftCommand,
-					#endif
-					KeyCode.LeftAlt, KeyCode.Space, KeyCode.RightAlt,
-					#if UNITY_3_5
-					#else
-					KeyCode.RightCommand,
-					#endif
-					KeyCode.Menu, KeyCode.RightControl });
-            this.DrawCommandBasic("Mac", new[] { KeyCode.LeftControl, KeyCode.LeftAlt, 
-					#if UNITY_3_5
-					#else
-					KeyCode.LeftCommand,
-					#endif
-					KeyCode.Space,
-					#if UNITY_3_5
-					#else
-					KeyCode.RightCommand,
-					#endif
-					KeyCode.RightAlt, KeyCode.RightControl });
+
+            if (IsWindows)
+            {
+               this.DrawCommandBasic("LINE 6", new[] { KeyCode.LeftControl, 
+#if !UNITY_3_5
+               KeyCode.LeftCommand,
+#else
+               KeyCode.LeftWindows,
+#endif
+               KeyCode.LeftAlt, KeyCode.Space, KeyCode.RightAlt,
+#if !UNITY_3_5
+               KeyCode.RightCommand,
+#else
+               KeyCode.RightWindows,
+#endif
+               KeyCode.Menu, KeyCode.RightControl });
+            }
+            else
+            {
+               this.DrawCommandBasic("LINE 6", new[] { KeyCode.LeftControl, KeyCode.LeftAlt, 
+#if !UNITY_3_5
+               KeyCode.LeftCommand,
+#else
+               KeyCode.LeftWindows,
+#endif
+               KeyCode.Space,
+#if !UNITY_3_5
+               KeyCode.RightCommand,
+#else
+               KeyCode.RightWindows,
+#endif
+               KeyCode.RightAlt, KeyCode.RightControl });
+            }
 
             EditorGUILayout.Space();
 
@@ -776,76 +786,6 @@ namespace Detox.Editor.GUI
          }
 #endif
       }
-
-      ////public void Reset()
-      ////{
-      ////   this.Tag("0:\t Reset");
-      ////}
-
-      ////public void Awake()
-      ////{
-      ////   this.Tag("1:\t Awake");
-      ////}
-
-      ////public void Start()
-      ////{
-      ////   this.Tag("3:\t Start");
-      ////}
-
-      //public void OnFocus()
-      //{
-      //   Debug.Log("4:\t OnFocus\n");
-      //}
-
-      ////public void FixedUpdate()
-      ////{
-      ////   this.Tag("5:\t FixedUpdate");
-      ////}
-
-      ////public void Update()
-      ////{
-      ////   this.Tag("7:\t Update");
-      ////}
-
-      ////public void LateUpdate()
-      ////{
-      ////   this.Tag("10:\t LateUpdate");
-      ////}
-
-      ////public void OnWillRenderObject()
-      ////{
-      ////   this.Tag("11:\t OnWillRenderObject");
-      ////}
-
-      //public void OnLostFocus()
-      //{
-      //   Debug.Log("30:\t OnLostFocus\n");
-      //}
-
-      ////public void OnDestroy()
-      ////{
-      ////   this.Tag("32:\t OnDestroy");
-      ////}
-
-      ////public void OnHierarchyChange()
-      ////{
-      ////   this.Tag("xxx:\t OnHierarchyChange (" + Event.current.type + ")");
-      ////}
-
-      ////public void OnProjectChange()
-      ////{
-      ////   this.Tag("xxx:\t OnProjectChange (" + Event.current.type + ")");
-      ////}
-
-      ////public void OnSelectionChange()
-      ////{
-      ////   this.Tag("xxx:\t OnSelectionChange");
-      ////}
-
-      ////public void OnInspectorGUI()
-      ////{
-      ////   this.Tag("xxx:\t OnInspectorGUI (" + Event.current.type + ")");
-      ////}
 
       private void UpdateCustomStyles()
       {
