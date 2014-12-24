@@ -712,7 +712,7 @@ namespace Detox.Editor.GUI
                this.Repaint();
                e.Use();
             }
-            else if ((eventType == EventType.KeyUp) && (this.keyDown.ContainsKey(keyCode) && this.keyDown[keyCode]))
+            else if ((eventType == EventType.KeyUp) && this.keyDown.ContainsKey(keyCode) && this.keyDown[keyCode])
             {
                this.keyDown[keyCode] = false;
                this.Repaint();
@@ -770,14 +770,14 @@ namespace Detox.Editor.GUI
             this.keyDown[KeyCode.LeftAlt] = e.alt;
             this.Repaint();
          }
-			
+
          exists = this.keyDown.ContainsKey(KeyCode.LeftControl);
          if ((exists == false && e.control) || (exists && this.keyDown[KeyCode.LeftControl] != e.control))
          {
             this.keyDown[KeyCode.LeftControl] = e.control;
             this.Repaint();
          }
-			
+
          exists = this.keyDown.ContainsKey(KeyCode.LeftWindows);
          if ((exists == false && e.command) || (exists && this.keyDown[KeyCode.LeftWindows] != e.command))
          {
