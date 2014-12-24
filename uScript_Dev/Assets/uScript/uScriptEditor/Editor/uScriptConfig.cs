@@ -62,8 +62,8 @@ public partial class uScriptConfig
 
          if (type != null)
          {
-            string formatted = type.Replace( "+", "." );
-     
+            string formatted = type.Replace("+", ".");
+
             //Template type
             if (formatted.Contains("`2["))
             {
@@ -761,6 +761,7 @@ public partial class uScriptConfig
       public static string GuiPath           { get {return uScriptEditor   + "/Editor/_GUI"; } }
       public static string SkinPath          { get {return GuiPath         + "/uScriptDefault"; } }
       public static string Gizmos            { get {return uScriptEditor   + "/Editor/_Gizmos"; } }
+      public static string Skins             { get { return uScriptEditor + "/Editor/Skins"; } }
       public static string Screenshots       { get {return UnityEngine.Application.dataPath + "/../Screenshots"; } }
       public static string Templates         { get {return uScriptEditor   + "/Editor/_Templates"; } }
 
