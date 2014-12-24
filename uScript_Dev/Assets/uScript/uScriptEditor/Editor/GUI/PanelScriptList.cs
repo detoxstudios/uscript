@@ -58,7 +58,7 @@ namespace Detox.Editor.GUI
             this.UpdateListContents();
 
             EditorApplication.projectWindowChanged += this.UpdateListContents;
-			uScript.GraphSaved += this.UpdateListContents;
+            uScript.GraphSaved += this.UpdateListContents;
          }
 
          // === Properties =================================================================
