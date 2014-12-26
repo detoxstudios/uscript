@@ -1,14 +1,16 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="WelcomeWindow.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the WelcomeWindow type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-   using UnityEditor;
-   using UnityEngine;
+using Detox.Editor;
+
+using UnityEditor;
+using UnityEngine;
 
 public class WelcomeWindow : EditorWindow
 {

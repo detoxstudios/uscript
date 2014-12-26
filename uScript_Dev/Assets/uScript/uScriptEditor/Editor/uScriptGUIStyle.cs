@@ -1,13 +1,16 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="uScriptGUIStyle.cs" company="">
-//   
+// <copyright file="uScriptGUIStyle.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
-//   This file contains a collection of custom uScript GUI styles for use with uScriptEditor
+//   Defines the uScriptGUIStyle type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+
+using Detox.Editor;
+
 using UnityEditor;
 using UnityEngine;
 

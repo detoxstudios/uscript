@@ -1,20 +1,29 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Reflection;
-
-using Detox.Drawing;
-using Detox.Utility;
-using Detox.Data;
-using Detox.Data.ScriptEditor;
-
-using UnityEngine;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ScriptEditor.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the Plug type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Detox.ScriptEditor
 {
+   using System;
+   using System.Collections;
+   using System.Collections.Generic;
+   using System.IO;
+   using System.Linq;
+   using System.Reflection;
+
+   using Detox.Data;
+   using Detox.Data.ScriptEditor;
+   using Detox.Drawing;
+   using Detox.Editor;
+   using Detox.Utility;
+
+   using UnityEngine;
+
    public struct Plug
    {
       public string Name;
@@ -3071,14 +3080,14 @@ namespace Detox.ScriptEditor
 
       public EntityDesc [] EntityDescs
       {
-         set { m_EntityDescs = value; }
          get { return m_EntityDescs; }
+         set { this.m_EntityDescs = value; }
       }
 
       public LogicNode [] LogicNodes
       {
-         set { m_LogicNodes = value; }
          get { return m_LogicNodes; }
+         set { this.m_LogicNodes = value; }
       }
 
       public string [] Types
@@ -3101,6 +3110,7 @@ namespace Detox.ScriptEditor
                      typeHash[ node.Instance.Type ] = node.Instance.Type;
                      typeHash[ node.ComponentType ] = node.ComponentType;
                   }
+
                   foreach ( EntityMethod node in desc.Methods )
                   {
                      foreach ( Parameter p in node.Parameters )
@@ -3111,6 +3121,7 @@ namespace Detox.ScriptEditor
                      typeHash[ node.Instance.Type ] = node.Instance.Type;
                      typeHash[ node.ComponentType ] = node.ComponentType;
                   }
+
                   foreach ( EntityProperty node in desc.Properties )
                   {
                      foreach ( Parameter p in node.Parameters )
@@ -3145,6 +3156,7 @@ namespace Detox.ScriptEditor
                   typeHash[ node.Instance.Type ] = node.Instance.Type;
                   typeHash[ node.ComponentType ] = node.ComponentType;
                }
+
                foreach ( EntityMethod node in Methods )
                {
                   foreach ( Parameter p in node.Parameters )
@@ -3155,6 +3167,7 @@ namespace Detox.ScriptEditor
                   typeHash[ node.Instance.Type ] = node.Instance.Type;
                   typeHash[ node.ComponentType ] = node.ComponentType;
                }
+
                foreach ( EntityProperty node in Properties )
                {
                   foreach ( Parameter p in node.Parameters )
@@ -3582,6 +3595,7 @@ namespace Detox.ScriptEditor
                         {
                            reason = "An External Node (" + externalSource.Name.Default + ") can't link to an input and an output";
                         }
+
                         return false;
                      }
                      else if ( existingParam.Type != myParam.Type )
@@ -3596,12 +3610,14 @@ namespace Detox.ScriptEditor
                            reason = "An External Node (" + externalSource.Name.Default + ") can't link to two different types  (" + 
                                     "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                         }
+
                         return false;
                      }
                   }
                }
             }
          }
+
          if ( dest is ExternalConnection )
          {
             ExternalConnection externalDest = (ExternalConnection) dest;
@@ -3652,6 +3668,7 @@ namespace Detox.ScriptEditor
                      {
                         reason = "An External Node (" + externalDest.Name.Default + ") can't link to an Input and a output parameter or an Output";
                      }
+
                      return false;
                   }
 
@@ -3667,6 +3684,7 @@ namespace Detox.ScriptEditor
                      {
                         reason = "An External Node (" + externalDest.Name.Default + ") can't link to an Output and an input parameter or an Input";
                      }
+
                      return false;
                   }
 
@@ -3684,6 +3702,7 @@ namespace Detox.ScriptEditor
                         reason = "An External Node (" + externalDest.Name.Default + ") can't link to two different types  (" + 
                                     "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                      }
+
                      return false;
                   }
                }
@@ -3774,6 +3793,7 @@ namespace Detox.ScriptEditor
                               return false;
                            }
                         }
+
                         //ok we know they're both parameters, and we know we are both outputs
                         else if ( existingParam.Type != myParam.Type )
                         {
@@ -3787,6 +3807,7 @@ namespace Detox.ScriptEditor
                               reason = "An External Node (" + externalDest.Name.Default + ") can't link to two different types  (" + 
                                     "Existing type " + uScriptConfig.Variable.FriendlyName(existingParam.Type) + ", New type " + uScriptConfig.Variable.FriendlyName(myParam.Type) + ")";
                            }
+
                            return false;
                         }
                      }
@@ -3981,6 +4002,7 @@ namespace Detox.ScriptEditor
                      break;
                   }
                }
+
                foreach ( Plug eventPlug in logic.Events )
                {
                   if ( link.Source.Anchor == eventPlug.Name )
@@ -4069,6 +4091,7 @@ namespace Detox.ScriptEditor
             destParam.Type   = destParam.Type.Replace("[]", "");
             sourceParam.Type = sourceParam.Type.Replace("[]", "");
          }
+
          //else if source isn't an array but dest is, remove the array qualifier
          //because source doesn't have to be an array to be a compatible type
          //as long as dest isn't a local node.  If dest is a local node it has to match

@@ -11,6 +11,8 @@
 namespace Detox.Editor.GUI
 {
 #endif
+   using Detox.Editor;
+
    using UnityEditor;
 
    using UnityEngine;

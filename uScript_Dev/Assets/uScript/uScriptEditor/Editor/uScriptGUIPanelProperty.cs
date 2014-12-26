@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="uScriptGUIPanelProperty.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2014 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the uScriptGUIPanelProperty type.
@@ -8,6 +8,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+
+using Detox.Editor;
 
 using UnityEditor;
 

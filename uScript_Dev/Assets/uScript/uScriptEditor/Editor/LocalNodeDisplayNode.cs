@@ -1,16 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Detox.Drawing;
-using Detox.Data;
-using System.Linq;
-using System.Text;
-using Detox.Windows.Forms;
-
-using Detox.FlowChart;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="LocalNodeDisplayNode.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the LocalNodeDisplayNode type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Detox.ScriptEditor
 {
+   using System.Collections.Generic;
+
+   using Detox.Drawing;
+   using Detox.Editor;
+   using Detox.FlowChart;
+
    public partial class LocalNodeDisplayNode : DisplayNode
    {
       public  LocalNode LocalNode

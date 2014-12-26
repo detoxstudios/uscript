@@ -16,6 +16,8 @@ namespace Detox.Editor.GUI
    using System.Linq;
    using System.Text.RegularExpressions;
 
+   using Detox.Editor;
+
    using UnityEditor;
 
    using UnityEngine;

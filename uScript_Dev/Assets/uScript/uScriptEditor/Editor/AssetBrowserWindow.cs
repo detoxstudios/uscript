@@ -1,8 +1,20 @@
-using UnityEditor;
-using UnityEngine;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AssetBrowserWindow.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the AssetBrowserWindow type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
+
+using Detox.Editor;
+
+using UnityEditor;
+
+using UnityEngine;
 
 public class AssetBrowserWindow : EditorWindow
 {

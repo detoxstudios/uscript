@@ -1,19 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Detox.Drawing;
-using Detox.Data;
-using System.Linq;
-using System.Text;
-using Detox.Windows.Forms;
-using System.Collections;
-using System.Reflection.Emit;
-
-using Detox.FlowChart;
-using Detox.Application;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ScriptEditorCtrl.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the ScriptEditorCtrl type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Detox.ScriptEditor
 {
+   using System;
+   using System.Collections;
+   using System.Collections.Generic;
+   using System.ComponentModel;
+
+   using Detox.Application;
+   using Detox.Drawing;
+   using Detox.Editor;
+   using Detox.FlowChart;
+   using Detox.Windows.Forms;
+
    public partial class ScriptEditorCtrl : ToolWindow
    {
       public struct AutoLinkDesc
@@ -3847,4 +3853,3 @@ namespace Detox.ScriptEditor
       }
    }
 }
-

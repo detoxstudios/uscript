@@ -1,15 +1,14 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="uScriptGUIContent.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   This file contains a collection of custom uScript GUI content for use with uScriptEditor.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Detox.Editor;
 using Detox.Editor.GUI;
-
-using UnityEditor;
 
 using UnityEngine;
 

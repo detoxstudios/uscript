@@ -1,14 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Collections;
-
-using Detox.DirectX;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AnimData.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the AnimExportSettings type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Detox.Data.Anim
 {
+   using System.Collections;
+   using System.Collections.Generic;
+
+   using Detox.DirectX;
+
    public struct AnimExportSettings
    {
       public string filename;
@@ -132,4 +137,3 @@ namespace Detox.Data.Anim
       }
    }
 }
-

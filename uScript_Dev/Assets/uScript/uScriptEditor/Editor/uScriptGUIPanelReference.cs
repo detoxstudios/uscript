@@ -1,13 +1,22 @@
-using UnityEngine;
-using UnityEditor;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using System.IO;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="uScriptGUIPanelReference.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the uScriptGUIPanelReference type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-using Detox.ScriptEditor;
+using System;
+using System.Collections.Generic;
+
+using Detox.Editor;
 using Detox.FlowChart;
+using Detox.ScriptEditor;
+
+using UnityEditor;
+
+using UnityEngine;
 
 public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 {

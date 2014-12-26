@@ -1,17 +1,24 @@
-using UnityEngine;
-using UnityEditor;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="uScriptGUIPanelPalette.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the uScriptGUIPanelPalette type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 
 using Detox.Drawing;
-using Detox.FlowChart;
+using Detox.Editor;
 using Detox.ScriptEditor;
 using Detox.Windows.Forms;
 
-//using Detox.Data.Tools;
-using System.Linq;
+using UnityEditor;
+
+using UnityEngine;
 
 public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 {

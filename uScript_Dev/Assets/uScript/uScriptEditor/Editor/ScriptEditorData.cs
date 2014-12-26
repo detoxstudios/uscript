@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using Detox.Drawing;
-using Detox.Utility;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ScriptEditorData.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the ScriptEditorData type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Detox.Data.ScriptEditor
 {
+   using System;
+   using System.Collections.Generic;
+   using System.IO;
+
+   using Detox.Drawing;
+
    public class ScriptEditorData : ISerializable
    {
       private EntityNodeData []m_NodeDatas = null;

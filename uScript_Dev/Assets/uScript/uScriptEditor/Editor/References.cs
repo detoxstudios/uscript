@@ -1,3 +1,12 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="References.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   References.cs
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace Detox.Windows
 {
 }
@@ -107,6 +116,8 @@ namespace Detox.Windows.Forms
    using System.Reflection;
    using System;
    using System.Collections.Generic;
+
+   using Detox.Editor;
    using Detox.Windows.Forms;
    using Detox.Drawing;
    using UnityEngine;

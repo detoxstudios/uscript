@@ -1,11 +1,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ReferenceWindow.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the ReferenceWindow type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using Detox.Editor;
 
 using UnityEditor;
 using UnityEngine;
