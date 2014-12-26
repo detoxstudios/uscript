@@ -87,6 +87,11 @@ namespace Detox.Editor.GUI
       /// <returns>This function returns text trimmed to the specified width.</returns>
       public static string Compact(string text, GUIStyle style, Rect maxSize, Format options)
       {
+         return Compact(text, style, maxSize.width, options);
+      }
+
+      public static string Compact(string text, GUIStyle style, float maxSize, Format options)
+      {
          if (string.IsNullOrEmpty(text))
          {
             return text;
@@ -106,7 +111,7 @@ namespace Detox.Editor.GUI
          Vector2 s = style.CalcSize(new GUIContent(text));
 
          // control is large enough to display the whole text
-         if (s.x <= maxSize.width)
+         if (s.x <= maxSize)
          {
             return text;
          }
@@ -188,7 +193,7 @@ namespace Detox.Editor.GUI
 
             // candidate string fits into control boundaries, try a longer string
             // stop when seg <= 1
-            if (s.x <= maxSize.width)
+            if (s.x <= maxSize)
             {
                len += seg;
                fit = tst;
@@ -216,7 +221,7 @@ namespace Detox.Editor.GUI
             s = style.CalcSize(new GUIContent(fit));
 
             // if still not fit then return "...\filename.ext"
-            if (s.x > maxSize.width)
+            if (s.x > maxSize)
             {
                fit = Path.Combine(EllipsisChars, post);
             }
