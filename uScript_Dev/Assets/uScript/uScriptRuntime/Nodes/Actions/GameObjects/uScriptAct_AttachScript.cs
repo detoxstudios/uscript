@@ -45,7 +45,7 @@ public class uScriptAct_AttachScript : uScriptLogic
 
             try
             {
-               System.Type type = System.Type.GetType(tempScript);
+               System.Type type = uScriptUtils.GetAssemblyQualifiedType(tempScript);
                foreach ( GameObject currentGameObject in Target )
                {
                   if (currentGameObject != null)

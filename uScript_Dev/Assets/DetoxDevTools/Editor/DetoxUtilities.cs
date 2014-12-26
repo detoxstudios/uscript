@@ -26,8 +26,8 @@ public class DetoxUtilities : EditorWindow
       GameObject new_uScript = new GameObject("_uScript");
       new_uScript.transform.position = new Vector3(0f, 0f, 0f);
       new_uScript.AddComponent(typeof(uScript_MasterComponent));
-      
-      System.Type type = uScript.Instance.GetAssemblyQualifiedType( "uScript_TestBed_Component" );
+
+      System.Type type = uScriptUtils.GetAssemblyQualifiedType( "uScript_TestBed_Component" );
       if ( null != type )
       {
          new_uScript.AddComponent(type);

@@ -361,25 +361,9 @@ public sealed partial class uScript : EditorWindow
    {
       Type type = m_Types[typeName] as Type;
 
-      if (null == type) type = GetAssemblyQualifiedType(typeName);
+      if (null == type) type = uScriptUtils.GetAssemblyQualifiedType(typeName);
 
       return type;
-   }
-
-   public Type GetAssemblyQualifiedType(String typeName)
-   {
-      if (null == typeName) return null;
-
-      // try the basic version first
-      if (Type.GetType(typeName) != null) return Type.GetType(typeName);
-
-      // not found, look through all the assemblies
-      foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
-      {
-         if (Type.GetType(typeName + ", " + assembly.ToString()) != null) return Type.GetType(typeName + ", " + assembly.ToString());
-      }
-
-      return null;
    }
 
    public void AddType(Type type)
@@ -4196,7 +4180,7 @@ public sealed partial class uScript : EditorWindow
       {
          if (file.Name.StartsWith(".") || file.Name.StartsWith("_") || !file.Name.EndsWith(".cs")) continue;
 
-         Type type = uScript.Instance.GetAssemblyQualifiedType(Path.GetFileNameWithoutExtension(file.Name));
+         Type type = uScriptUtils.GetAssemblyQualifiedType(Path.GetFileNameWithoutExtension(file.Name));
 
          if (null != type)
          {

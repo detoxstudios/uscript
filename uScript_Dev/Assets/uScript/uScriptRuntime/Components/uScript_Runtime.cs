@@ -17,6 +17,7 @@
 using System;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 using UnityEngine;
 
@@ -277,6 +278,25 @@ public class uScriptCode : MonoBehaviour
 
 public class uScriptEvent : MonoBehaviour
 {
+}
+
+public class uScriptUtils
+{
+   public static Type GetAssemblyQualifiedType(String typeName)
+   {
+      if (null == typeName) return null;
+      
+      // try the basic version first
+      if (Type.GetType(typeName) != null) return Type.GetType(typeName);
+      
+      // not found, look through all the assemblies
+      foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+      {
+         if (Type.GetType(typeName + ", " + assembly.ToString()) != null) return Type.GetType(typeName + ", " + assembly.ToString());
+      }
+      
+      return null;
+   }
 }
 
 public class uScriptLogic : System.Object

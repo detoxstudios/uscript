@@ -393,7 +393,7 @@ namespace Detox.ScriptEditor
    
          if (eType == null)
          {
-            eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
+            eType = uScriptUtils.GetAssemblyQualifiedType(this.Type);
 
             if (eType != null)
             {
@@ -666,7 +666,7 @@ namespace Detox.ScriptEditor
 
          if (eType == null)
          {
-            eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
+            eType = uScriptUtils.GetAssemblyQualifiedType(this.Type);
             if (eType != null)
             {
                uScript.Instance.AddType(eType);
@@ -886,7 +886,7 @@ namespace Detox.ScriptEditor
    
             if (eType == null)
             {
-               eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
+               eType = uScriptUtils.GetAssemblyQualifiedType(this.Type);
                if (eType != null)
                {
                   uScript.Instance.AddType(eType);
@@ -1097,7 +1097,7 @@ namespace Detox.ScriptEditor
             System.Type eType = uScript.Instance.GetType(this.Type);
             if (eType == null)
             {
-               eType = uScript.Instance.GetAssemblyQualifiedType(this.Type);
+               eType = uScriptUtils.GetAssemblyQualifiedType(this.Type);
                if (eType != null)
                {
                   uScript.Instance.AddType(eType);
@@ -3525,8 +3525,8 @@ namespace Detox.ScriptEditor
 
                   if ( null != existingType && null != newType )
                   {
-                     Type et = uScript.Instance.GetAssemblyQualifiedType(existingType);
-                     Type nt = uScript.Instance.GetAssemblyQualifiedType(newType);
+                     Type et = uScriptUtils.GetAssemblyQualifiedType(existingType);
+                     Type nt = uScriptUtils.GetAssemblyQualifiedType(newType);
 
                      if ( et != null && nt != null )
                      {
@@ -4418,7 +4418,7 @@ namespace Detox.ScriptEditor
          if ( m_DeprecatedNodes.Contains(oldNode.Guid) )
          {         
             Type newType = uScript.GetNodeUpgradeType(oldNode);
-            if ( null == newType ) newType = uScript.Instance.GetAssemblyQualifiedType(ScriptEditor.FindNodeType(oldNode));
+            if ( null == newType ) newType = uScriptUtils.GetAssemblyQualifiedType(ScriptEditor.FindNodeType(oldNode));
 
             if ( null != newType )
             {               
@@ -4461,7 +4461,7 @@ namespace Detox.ScriptEditor
          if ( m_DeprecatedNodes.Contains(oldNode.Guid) )
          {         
             Type newType = uScript.GetNodeUpgradeType(oldNode);
-            if ( null == newType ) newType = uScript.Instance.GetAssemblyQualifiedType(ScriptEditor.FindNodeType(oldNode));
+            if ( null == newType ) newType = uScriptUtils.GetAssemblyQualifiedType(ScriptEditor.FindNodeType(oldNode));
 
             if ( null != newType )
             {

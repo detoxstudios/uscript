@@ -486,7 +486,7 @@ namespace Detox.ScriptEditor
                  point.Y <= node.ZoomSize.Height )
             {      
                string type = ScriptEditor.FindNodeType(entityNode);
-               Type t = uScript.Instance.GetAssemblyQualifiedType(type);
+               Type t = uScriptUtils.GetAssemblyQualifiedType(type);
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
@@ -575,7 +575,7 @@ namespace Detox.ScriptEditor
                  point.Y <= node.ZoomSize.Height )
             {
                string type = ScriptEditor.FindNodeType(entityNode);
-               Type t = uScript.Instance.GetAssemblyQualifiedType(type);
+               Type t = uScriptUtils.GetAssemblyQualifiedType(type);
 
                if ( typeof(uScriptLogic).IsAssignableFrom(t) )
                {  
