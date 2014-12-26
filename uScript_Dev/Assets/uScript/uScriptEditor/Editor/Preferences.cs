@@ -23,11 +23,11 @@ public class Preferences
       LoadGraphOpenSource
    }
 
-   public enum VariableExpansionType
+   public enum MenuLocationType
    {
-      AlwaysExpanded,
-      AlwaysCollapsed,
-      Dynamic
+      Default,
+      Tools,
+      Window
    }
 
    public enum SaveMethodType
@@ -35,6 +35,13 @@ public class Preferences
       Quick,
       Debug,
       Release
+   }
+
+   public enum VariableExpansionType
+   {
+      AlwaysExpanded,
+      AlwaysCollapsed,
+      Dynamic
    }
 
    public string ProjectFiles
@@ -89,6 +96,12 @@ public class Preferences
    {
       get { this.LoadIfRequired(); return (SaveMethodType)this.preferences["SaveMethod"]; }
       set { this.LoadIfRequired(); this.preferences["SaveMethod"] = value; }
+   }
+
+   public MenuLocationType MenuLocation
+   {
+      get { this.LoadIfRequired(); return (MenuLocationType)this.preferences["MenuLocation"]; }
+      set { this.LoadIfRequired(); this.preferences["MenuLocation"] = value; }
    }
 
    public bool ShowGrid
@@ -379,6 +392,7 @@ public class Preferences
       if (null == this.preferences["RelativeGeneratedScripts"]) this.preferences["RelativeGeneratedScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode");
       if (null == this.preferences["MaximumNodeRecursionCount"]) this.preferences["MaximumNodeRecursionCount"] = 1000;
       if (null == this.preferences["SaveMethod"]) this.preferences["SaveMethod"] = 1;   // 0:Quick, 1:Debug, 2:Release
+      if (null == this.preferences["MenuLocation"]) this.preferences["MenuLocation"] = 0;   // 0:Default, 1:Tools, 2:Window
       if (null == this.preferences["ProfileMin"]) this.preferences["ProfileMin"] = 1f;
       if (null == this.preferences["Profiling"]) this.preferences["Profiling"] = false;
       if (null == this.preferences["PropertyPanelNodeLimit"]) this.preferences["PropertyPanelNodeLimit"] = 1;

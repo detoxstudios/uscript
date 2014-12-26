@@ -19,33 +19,27 @@ namespace Detox.Editor.GUI
    {
       private const string ScriptName = "uScriptMenuLocation.cs";
 
-      private static readonly string ScriptPath = uScript.Preferences.ProjectFiles + "/Editor/";
+      private static readonly string ScriptPath;
 
       static MenuLocation()
       {
+         uScript.LoadSettings();
+         ScriptPath = uScript.Preferences.ProjectFiles + "/Editor/";
+
          if (File.Exists(ScriptPath + ScriptName) == false)
          {
-            Change(Location.Default);
+            Change(uScript.Preferences.MenuLocation);
          }
       }
 
-      public enum Location
-      {
-         Default,
-
-         Tools,
-
-         Window
-      }
-
-      public static void Change(Location menuLocation)
+      public static void Change(Preferences.MenuLocationType menuLocation)
       {
          switch (menuLocation)
          {
-            case Location.Tools:
+            case Preferences.MenuLocationType.Tools:
                Change("Tools");
                break;
-            case Location.Window:
+            case Preferences.MenuLocationType.Window:
                Change("Window");
                break;
             default:
@@ -91,9 +85,7 @@ namespace Detox.Editor
 
    public static class uScriptMenuLocation
    {
-      public const string CurrentLocation = """ + menuPath + @"uScript"";
-
-      [UnityEditor.MenuItem(""" + menuPath + @"uScript/uScript Editor %u"", false, 1)]
+      [MenuItem(""" + menuPath + @"uScript/uScript Editor %u"", false, 1)]
       internal static void OpenEditor()
       {
          uScript.Open();
@@ -113,22 +105,10 @@ namespace Detox.Editor
       // 56 Reference
       // 57 Toolbox
 
-      [MenuItem(""" + menuPath + @"uScript/Menu Location/Default"", false, 201)]
-      internal static void LocationRoot()
+      [MenuItem(""" + menuPath + @"uScript/Preferences"", false, 901)]
+      internal static void OpenPreferencesWindow()
       {
-         MenuLocation.Change(MenuLocation.Location.Default);
-      }
-
-      [MenuItem(""" + menuPath + @"uScript/Menu Location/Tools"", false, 202)]
-      internal static void LocationTools()
-      {
-         MenuLocation.Change(MenuLocation.Location.Tools);
-      }
-
-      [MenuItem(""" + menuPath + @"uScript/Menu Location/Window"", false, 203)]
-      internal static void LocationWindow()
-      {
-         MenuLocation.Change(MenuLocation.Location.Window);
+         PreferenceWindow.Open();
       }
 
       [MenuItem(""" + menuPath + @"uScript/About uScript"", false, 1001)]

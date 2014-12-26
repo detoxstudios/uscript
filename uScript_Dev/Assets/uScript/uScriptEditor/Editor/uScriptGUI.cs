@@ -111,7 +111,7 @@ public static class uScriptGUI
       set
       {
          var instance = uScript.Instance;
-         GUI.enabled = value && (instance.IsLicenseAccepted && !instance.isPreferenceWindowOpen && !instance.isContextMenuOpen);
+         GUI.enabled = value && (instance.IsLicenseAccepted && !uScript.IsPreferenceWindowOpen && !instance.isContextMenuOpen);
       }
    }
 

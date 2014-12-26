@@ -141,6 +141,18 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
+   public static uScriptHotkeyWindow HotkeyWindow { get; set; }
+
+   public static PreferenceWindow PreferenceWindow { get; set; }
+
+   public static bool IsPreferenceWindowOpen
+   {
+      get
+      {
+         return PreferenceWindow != null;
+      }
+   }
+   
    public static bool IsOpen
    {
       get
@@ -171,8 +183,6 @@ public sealed partial class uScript : EditorWindow
          this.mapScale = value;
       }
    }
-
-   public static uScriptHotkeyWindow HotkeyWindow { get; set; }
 
    public MouseRegion MouseDownRegion
    {
@@ -414,7 +424,6 @@ public sealed partial class uScript : EditorWindow
    MouseEventArgs m_MouseMoveArgs = new MouseEventArgs();
 
    public bool m_SelectAllNodes = false;
-   public bool isPreferenceWindowOpen = false;
 
    public bool IsAttachedToMaster
    {
@@ -1359,7 +1368,7 @@ public sealed partial class uScript : EditorWindow
          }
       }
 #endif
-		
+
       // Make sure the initial window size it not too small
       if (this.firstRun)
       {
@@ -1390,7 +1399,7 @@ public sealed partial class uScript : EditorWindow
       // Must be done in OnGUI rather than on demand
       m_ScriptEditorCtrl.ParseClipboardData();
 
-      GUI.enabled = this.IsLicenseAccepted && !isPreferenceWindowOpen;
+      GUI.enabled = this.IsLicenseAccepted && !IsPreferenceWindowOpen;
 
       // Set the default mouse region
       this.mouseRegionUpdate = MouseRegion.Outside;
@@ -1401,7 +1410,7 @@ public sealed partial class uScript : EditorWindow
       var lastMouseDown = this.mouseDown;
 
       isContextMenuOpen = 0 != m_ContextX || 0 != m_ContextY;
-      if (false == isPreferenceWindowOpen)
+      if (false == IsPreferenceWindowOpen)
       {
          if (isContextMenuOpen)
          {
@@ -3060,9 +3069,8 @@ public sealed partial class uScript : EditorWindow
 
    private void CommandViewMenuPreferences()
    {
-      PreferenceWindow.Init();
+      PreferenceWindow.Open();
    }
-
 
    void FileMenuItem_New()
    {
