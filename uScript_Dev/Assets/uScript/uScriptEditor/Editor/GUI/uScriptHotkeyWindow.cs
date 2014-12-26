@@ -101,19 +101,19 @@ namespace Detox.Editor.GUI
          instance.isFirstRun = true;
       }
 
-      public void OnEnable()
+      internal void OnEnable()
       {
          uScript.HotkeyWindow = this;
 
          ShouldShowAllHotkeys = uScript.Preferences.ShowAllHotkeys;
       }
 
-      public void OnDisable()
+      internal void OnDisable()
       {
          uScript.HotkeyWindow = null;
       }
 
-      public void OnGUI()
+      internal void OnGUI()
       {
          this.ProcessInputChanges();
 
