@@ -43,13 +43,13 @@ namespace Detox.Editor
 
       // === Fields =====================================================================
 
-      public static Vector2 columnOffset;
-      public static Rect svRect;
-      public static string _focusedControl = string.Empty;
-      public static string _previousControl = string.Empty;
-
       private static readonly Dictionary<int, string> ControlIDList = new Dictionary<int, string>();
       private static readonly Dictionary<string, bool> FoldoutExpanded = new Dictionary<string, bool>();
+
+      private static Vector2 columnOffset;
+      private static Rect scrollviewRect;
+      private static string focusedControl = string.Empty;
+      private static string previousControl = string.Empty;
 
       private static Column columnEnabled;
       private static Column columnLabel;
@@ -429,6 +429,7 @@ namespace Detox.Editor
             // Create the path list and populate it with Resource folders
             resourcePaths = new List<string>();
             GetResourceFolderPaths(Application.dataPath, 0);
+
             //         choices = _resourcePaths.ToArray();
          }
 
@@ -758,7 +759,7 @@ namespace Detox.Editor
          propertyCount = 0;
 
          columnOffset = offset;
-         svRect = rect;
+         scrollviewRect = rect;
 
          if (styleEnabled == null)
          {
@@ -805,7 +806,10 @@ namespace Detox.Editor
 
          // Last column - Property type
          // This right-most column should appear to have an expanded width
-         UnityEngine.GUI.Label(new Rect(x, y, svRect.width, uScriptGUIStyle.ColumnHeaderHeight), columnType.Label, uScriptGUIStyle.ColumnHeader);
+
+         var position = new Rect(x, y, scrollviewRect.width, uScriptGUIStyle.ColumnHeaderHeight);
+         UnityEngine.GUI.Label(position, columnType.Label, uScriptGUIStyle.ColumnHeader);
+
          //      GUI.Label(new Rect(x, y, _columnType.Width + 4 + 2, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, style);
          //      GUI.Label(new Rect(x, y, svRect.width - _columnLabel.Width - columnValue.Width - 22 + columnOffset.x, uScriptGUIStyle.columnHeaderHeight), _columnType.Label, style);
 
@@ -817,11 +821,11 @@ namespace Detox.Editor
          //   Event.current.Use();
          //}
 
-         if (UnityEngine.GUI.GetNameOfFocusedControl() != _focusedControl)
+         if (UnityEngine.GUI.GetNameOfFocusedControl() != focusedControl)
          {
-            uScriptDebug.Log("Control focus changed from '" + _focusedControl + "' to '" + UnityEngine.GUI.GetNameOfFocusedControl() + "'\n", uScriptDebug.Type.Debug);
-            _previousControl = _focusedControl;
-            _focusedControl = UnityEngine.GUI.GetNameOfFocusedControl();
+            uScriptDebug.Log("Control focus changed from '" + focusedControl + "' to '" + UnityEngine.GUI.GetNameOfFocusedControl() + "'\n", uScriptDebug.Type.Debug);
+            previousControl = focusedControl;
+            focusedControl = UnityEngine.GUI.GetNameOfFocusedControl();
          }
       }
 
@@ -1038,6 +1042,7 @@ namespace Detox.Editor
 
                         // clear all selected nodes first
                         scriptEditorCtrl.DeselectAll();
+
                         // toggle the clicked node
                         scriptEditorCtrl.ToggleNode(node.Guid);
                         click(null, new EventArgs());
@@ -1051,6 +1056,7 @@ namespace Detox.Editor
 
                         // clear all selected nodes first
                         scriptEditorCtrl.DeselectAll();
+
                         // toggle the clicked node
                         scriptEditorCtrl.ToggleNode(node.Guid);
                         click(null, new EventArgs());
@@ -1236,11 +1242,26 @@ namespace Detox.Editor
 
       public static string TextArea(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
       {
+         const int LineHeight = 13;
+         const int Padding = 3;
+         const int MinLines = Padding + (LineHeight * 2);
+         const int MaxLines = Padding + (LineHeight * 10);
+
          BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
 
          if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
          {
-            value = EditorGUILayout.TextArea(value, GUILayout.Width(columnValue.Width));
+            var content = new GUIContent(value);
+            var calcHeight = Mathf.Clamp(
+               uScriptGUIStyle.PropertyTextArea.CalcHeight(content, columnValue.Width),
+               MinLines,
+               MaxLines);
+
+            value = EditorGUILayout.TextArea(
+               value,
+               uScriptGUIStyle.PropertyTextArea,
+               GUILayout.Width(columnValue.Width),
+               GUILayout.Height(calcHeight));
          }
 
          EndRow(value.GetType().ToString());
@@ -1534,6 +1555,7 @@ namespace Detox.Editor
          if (!isPowerOfTwo)
          {
             return 0;
+
             //throw new ArgumentException("Not a power of two", "number");
          }
 
@@ -1719,6 +1741,7 @@ namespace Detox.Editor
             if (UnityEngine.GUI.Button(btnRect, uScriptGUIContent.buttonArrayAdd, uScriptGUIStyle.PropertyArrayTextButton))
             {
                GUIUtility.keyboardControl = 0;
+
                // Special conversion case for strings and GUILayoutOption objects
                var element = typeof(T) == typeof(string)
                                 ? (T)(object)string.Empty
@@ -1845,6 +1868,7 @@ namespace Detox.Editor
 
             array = ArrayInsert(array, index, element);
          }
+
          //      }
 
          object t = value;
@@ -1864,8 +1888,10 @@ namespace Detox.Editor
             {
                EditorGUILayout.BeginHorizontal(GUILayout.Width(columnValue.Width));
                {
-                  t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.PropertyTextField, GUILayout.ExpandWidth(true));
-
+                  t = EditorGUILayout.TextField(
+                     (string)t,
+                     uScriptGUIStyle.PropertyTextField,
+                     GUILayout.ExpandWidth(true));
                   Rect r = GUILayoutUtility.GetLastRect();
 
                   if (r.Contains(Event.current.mousePosition) && UnityEngine.GUI.enabled)
@@ -1905,10 +1931,11 @@ namespace Detox.Editor
                      }
                      else
                      {
-                        Debug.LogWarning(string.Format(
-                           "No GameObject matching \"{0}\" was found in the Scene.\n\tAn associated Game Object may not yet exist,"
-                           + " or might not be active.  Game Object names may contain leading and trailing whitespace.\n",
-                           t));
+                        Debug.LogWarning(
+                           string.Format(
+                              "No GameObject matching \"{0}\" was found in the Scene.\n\tAn associated Game Object may not yet exist,"
+                              + " or might not be active.  Game Object names may contain leading and trailing whitespace.\n",
+                              t));
                      }
                   }
 
@@ -1919,7 +1946,23 @@ namespace Detox.Editor
             }
             else
             {
-               t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width));
+               //t = EditorGUILayout.TextField((string)t, uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width));
+               const int LineHeight = 13;
+               const int Padding = 3;
+               const int MinLines = Padding + (LineHeight * 1);
+               const int MaxLines = Padding + (LineHeight * 5);
+
+               var content = new GUIContent((string)t);
+               var calcHeight = Mathf.Clamp(
+                  uScriptGUIStyle.PropertyTextArea.CalcHeight(content, columnValue.Width - 30),
+                  MinLines,
+                  MaxLines);
+
+               t = EditorGUILayout.TextArea(
+                  (string)t,
+                  uScriptGUIStyle.PropertyTextArea,
+                  GUILayout.Width(columnValue.Width),
+                  GUILayout.Height(calcHeight));
             }
          }
          else if (value is bool)
@@ -2043,6 +2086,7 @@ namespace Detox.Editor
          else
          {
             Debug.LogWarning("Unhandled array type: " + value.GetType() + "\n");
+
             //throw System.ArgumentException("Unhandled type: " + value.GetType().ToString());
          }
 

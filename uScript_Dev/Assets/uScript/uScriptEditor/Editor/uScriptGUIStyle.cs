@@ -3,7 +3,7 @@
 //   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the uScriptGUIStyle type.
+//   This file contains a collection of custom uScript GUI styles for use with uScriptEditor.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -420,7 +420,7 @@ public static class uScriptGUIStyle
          padding = ((GUIStyle)"ButtonRight").padding
       };
 
-      PropertyTextArea = new GUIStyle(EditorStyles.textField) { margin = new RectOffset(4, 4, 2, 2), wordWrap = true };
+      PropertyTextArea = new GUIStyle(EditorStyles.textField) { margin = new RectOffset(4, 4, 2, 2), wordWrap = true, stretchHeight = true };
 
       PropertyTextField = new GUIStyle(EditorStyles.textField) { margin = new RectOffset(4, 4, 2, 2) };
 
@@ -441,7 +441,7 @@ public static class uScriptGUIStyle
          alignment = TextAnchor.UpperCenter
       };
 
-      PropertyRowOdd = new GUIStyle(GUIStyle.none) { fixedHeight = 20 };
+      PropertyRowOdd = new GUIStyle(GUIStyle.none) { /* fixedHeight = 20 */ };
 
       PropertyRowEven = new GUIStyle(PropertyRowOdd) { normal = { background = texturePropertyRowEven } };
 
