@@ -163,6 +163,18 @@ public static class uScriptGUIContent
       toolboxBreadcrumbs.image = uScriptGUI.GetSkinnedTexture("iconSearch");
    }
 
+   private static readonly GUIContent TempText = new GUIContent();
+
+   private static readonly GUIContent TempImage = new GUIContent();
+
+   private static readonly GUIContent TempTextImage = new GUIContent();
+
+   private static readonly GUIContent TempTextTooltip = new GUIContent();
+
+   private static readonly GUIContent TempImageTooltip = new GUIContent();
+
+   private static readonly GUIContent TempTextImageTooltip = new GUIContent();
+
    public static GUIContent buttonArrayAdd { get; private set; }
 
    public static GUIContent buttonArrayClear { get; private set; }
@@ -262,21 +274,21 @@ public static class uScriptGUIContent
    public static GUIContent FileMenuItemNew { get; private set; }
 
    public static GUIContent FileMenuItemOpen { get; private set; }
-   
+
    public static GUIContent FileMenuItemSave { get; private set; }
-   
+
    public static GUIContent FileMenuItemSaveAs { get; private set; }
-   
+
    public static GUIContent FileMenuItemSaveQuick { get; private set; }
-   
+
    public static GUIContent FileMenuItemSaveDebug { get; private set; }
-   
+
    public static GUIContent FileMenuItemSaveRelease { get; private set; }
-   
+
    public static GUIContent FileMenuItemExportImage { get; private set; }
-   
+
    public static GUIContent FileMenuItemUpgradeNodes { get; private set; }
-   
+
    public static GUIContent FileMenuItemRebuildGraphs { get; private set; }
 
    public static GUIContent FileMenuItemRemoveSource { get; private set; }
@@ -327,13 +339,65 @@ public static class uScriptGUIContent
 
    public static GUIContent[] SaveMethodOptions { get; private set; }
 
-   public static void Init()
+   internal static void ClearStaticCache()
    {
+      TempText.text = null;
+
+      TempImage.image = null;
+
+      TempTextImage.text = null;
+      TempTextImage.image = null;
+
+      TempTextTooltip.text = null;
+      TempTextTooltip.tooltip = null;
+
+      TempImageTooltip.image = null;
+      TempImageTooltip.tooltip = null;
+
+      TempTextImageTooltip.text = null;
+      TempTextImageTooltip.image = null;
+      TempTextImageTooltip.tooltip = null;
    }
 
-   public static void ChangeTooltip(string tooltip)
+   internal static GUIContent Temp(string text)
    {
-      buttonWebDocumentation.tooltip = tooltip;
+      TempText.text = text;
+      return TempText;
+   }
+
+   internal static GUIContent Temp(Texture image)
+   {
+      TempImage.image = image;
+      return TempImage;
+   }
+
+   internal static GUIContent Temp(string text, Texture image)
+   {
+      TempTextImage.text = text;
+      TempTextImage.image = image;
+      return TempTextImage;
+   }
+
+   internal static GUIContent Temp(string text, string tooltip)
+   {
+      TempTextTooltip.text = text;
+      TempTextTooltip.tooltip = tooltip;
+      return TempTextTooltip;
+   }
+
+   internal static GUIContent Temp(Texture image, string tooltip)
+   {
+      TempImageTooltip.image = image;
+      TempImageTooltip.tooltip = tooltip;
+      return TempImageTooltip;
+   }
+
+   internal static GUIContent Temp(string text, Texture image, string tooltip)
+   {
+      TempTextImageTooltip.text = text;
+      TempTextImageTooltip.image = image;
+      TempTextImageTooltip.tooltip = tooltip;
+      return TempTextImageTooltip;
    }
 
 //   public static GUIContent IconContent(string name)

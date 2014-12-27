@@ -148,7 +148,7 @@ public sealed class uScriptGUIPanelReference: uScriptGUIPanel
 
             uScriptGUI.Enabled = (string.IsNullOrEmpty(helpButtonURL) == false);
 
-            uScriptGUIContent.ChangeTooltip(helpButtonTooltip);
+            uScriptGUIContent.buttonWebDocumentation.tooltip = helpButtonTooltip;
             if (GUILayout.Button(uScriptGUIContent.buttonWebDocumentation, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
             {
                Help.BrowseURL(helpButtonURL);
