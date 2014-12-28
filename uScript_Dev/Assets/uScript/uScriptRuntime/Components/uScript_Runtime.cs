@@ -319,11 +319,11 @@ public class uScriptDebug : MonoBehaviour
       Debug
    }
 
-   [ContractAnnotation("=> halt")]
+   [ContractAnnotation("condition: false => halt")]
    [System.Diagnostics.Conditional("UNITY_EDITOR")]
-   public static void Assert(bool comparison)
+   public static void Assert(bool condition)
    {
-      if (comparison == false)
+      if (condition == false)
       {
          Debug.LogError("Assertion failed\n");
          Debug.Break();
