@@ -28,8 +28,6 @@ namespace Detox.Editor.GUI
 
    using UnityEngine;
 
-   using Debug = System.Diagnostics.Debug;
-
    public class Ellipsis
    {
       /// <summary>
@@ -108,7 +106,7 @@ namespace Detox.Editor.GUI
             throw new ArgumentNullException("style");
          }
 
-         Vector2 s = style.CalcSize(new GUIContent(text));
+         var s = style.CalcSize(new GUIContent(text));
 
          // control is large enough to display the whole text
          if (s.x <= maxSize)
@@ -116,30 +114,29 @@ namespace Detox.Editor.GUI
             return text;
          }
 
-         string pre = string.Empty;
-         string mid = text;
-         string post = string.Empty;
+         var pre = string.Empty;
+         var mid = text;
+         var post = string.Empty;
 
-         bool isPath = (Format.Path & options) != 0;
+         var isPath = (Format.Path & options) != 0;
 
          // split path string into <drive><directory><filename>
          if (isPath)
          {
             pre = Path.GetPathRoot(text);
             
-            string directoryName = Path.GetDirectoryName(text);
+            var directoryName = Path.GetDirectoryName(text);
             if (directoryName != null)
             {
                mid = directoryName.Substring(pre.Length);
             }
 
             post = Path.GetFileName(text);
-            Debug.Assert(post != null, "post is null");
          }
 
-         int len = 0;
-         int seg = mid.Length;
-         string fit = string.Empty;
+         var len = 0;
+         var seg = mid.Length;
+         var fit = string.Empty;
 
          // find the longest string that fits into
          // the control boundaries using bisection method
@@ -147,8 +144,8 @@ namespace Detox.Editor.GUI
          {
             seg -= seg / 2;
 
-            int left = len + seg;
-            int right = mid.Length;
+            var left = len + seg;
+            var right = mid.Length;
 
             if (left > right)
             {
@@ -181,7 +178,7 @@ namespace Detox.Editor.GUI
             }
 
             // build and measure a candidate string with ellipsis
-            string tst = mid.Substring(0, left) + EllipsisChars + mid.Substring(right);
+            var tst = mid.Substring(0, left) + EllipsisChars + mid.Substring(right);
 
             // restore path with <drive> and <filename>
             if (isPath)
