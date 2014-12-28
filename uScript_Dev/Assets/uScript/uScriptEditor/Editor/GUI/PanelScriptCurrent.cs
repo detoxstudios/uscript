@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="PanelScriptCurrent.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the PanelScript type.
@@ -214,7 +214,7 @@ namespace Detox.Editor.GUI
 
             nameRect.xMin += Content.IconScriptLogo.width + 4;
 
-            System.Diagnostics.Debug.Assert(scriptEditorCtrl != null, "scriptEditorCtrl is null");
+            uScriptDebug.Assert(scriptEditorCtrl != null, "scriptEditorCtrl is null");
 
             //var graphName = string.IsNullOrEmpty(scriptEditorCtrl.ScriptEditor.FriendlyName.Default)
             //   ? this.graphFileName

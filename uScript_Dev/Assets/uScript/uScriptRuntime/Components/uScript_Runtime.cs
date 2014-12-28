@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Detox Studios, LLC" file="uScript_Runtime.cs">
-//   Copyright 2010-2014 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Contains classes referenced by uScript generated code which needs to be included in a dll to be linked with users' games.
@@ -16,8 +16,9 @@
 
 using System;
 using System.Collections;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+
+using JetBrains.Annotations;
 
 using UnityEngine;
 
@@ -285,16 +286,16 @@ public class uScriptUtils
    public static Type GetAssemblyQualifiedType(String typeName)
    {
       if (null == typeName) return null;
-      
+
       // try the basic version first
       if (Type.GetType(typeName) != null) return Type.GetType(typeName);
-      
+
       // not found, look through all the assemblies
       foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
       {
          if (Type.GetType(typeName + ", " + assembly.ToString()) != null) return Type.GetType(typeName + ", " + assembly.ToString());
       }
-      
+
       return null;
    }
 }
@@ -318,6 +319,28 @@ public class uScriptDebug : MonoBehaviour
       Debug
    }
 
+   [ContractAnnotation("=> halt")]
+   [System.Diagnostics.Conditional("UNITY_EDITOR")]
+   public static void Assert(bool comparison)
+   {
+      if (comparison == false)
+      {
+         Debug.LogError("Assertion failed\n");
+         Debug.Break();
+      }
+   }
+
+   [ContractAnnotation("condition: false => halt")]
+   [System.Diagnostics.Conditional("UNITY_EDITOR")]
+   public static void Assert(bool condition, string message)
+   {
+      if (condition == false)
+      {
+         Debug.LogError(message + "\n");
+         Debug.Break();
+      }
+   }
+
    public static void Log(string msgString)
    {
       Log(msgString, Type.Message);
@@ -330,38 +353,29 @@ public class uScriptDebug : MonoBehaviour
    /// <param name="msgType">Message type to output (0 = message, 1 = warning, 2 = error).</param>
    public static void Log(string msgString, Type msgType)
    {
-      string appName = "uScript: ";
-      string msgOutput = appName + msgString + "\n";
+      const string AppName = "uScript: ";
+      var msgOutput = string.Format("{0}{1}\n", AppName, msgString);
 
       switch (msgType)
       {
-         case Type.Message:
-            {
-               Debug.Log(msgOutput);
-               break;
-            }
          case Type.Warning:
-            {
-               Debug.LogWarning(msgOutput);
-               break;
-            }
+            Debug.LogWarning(msgOutput);
+            break;
+
          case Type.Error:
-            {
-               Debug.LogError(msgOutput);
-               break;
-            }
+            Debug.LogError(msgOutput);
+            break;
+
          case Type.Debug:
-            {
-#if ( ENABLE_DEBUG_LOG )
-               Debug.Log(msgOutput);
+#if ENABLE_DEBUG_LOG
+            Debug.Log(msgOutput);
 #endif
-               break;
-            }
+            break;
+
+         case Type.Message:
          default:
-            {
-               Debug.Log(msgOutput);
-               break;
-            }
+            Debug.Log(msgOutput);
+            break;
       }
    }
 }

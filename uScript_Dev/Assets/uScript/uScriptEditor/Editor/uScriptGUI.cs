@@ -593,7 +593,7 @@ namespace Detox.Editor
             var path = AssetDatabase.GetAssetPath(obj);
             var name = Path.GetFileNameWithoutExtension(path);
 
-            System.Diagnostics.Debug.Assert(name != null, "name != null");
+            uScriptDebug.Assert(name != null, "name != null");
 
             if (scenePaths.ContainsKey(name))
             {
@@ -641,7 +641,7 @@ namespace Detox.Editor
             GetScenePaths();
          }
 
-         System.Diagnostics.Debug.Assert(scenePaths != null, "scenePaths should not be null here!");
+         uScriptDebug.Assert(scenePaths != null, "scenePaths should not be null here!");
 
          if (string.IsNullOrEmpty(scenePath))
          {
@@ -1160,14 +1160,14 @@ namespace Detox.Editor
       public static T GetFieldValue<T>(Type type, string fieldName, BindingFlags bindingFlags)
       {
          var fieldInfo = type.GetField(fieldName, bindingFlags);
-         System.Diagnostics.Debug.Assert(fieldInfo != null, "Unable to access a field named \"" + fieldName + "\"");
+         uScriptDebug.Assert(fieldInfo != null, "Unable to access a field named \"" + fieldName + "\"");
          return (T)fieldInfo.GetValue(null);
       }
 
       public static T GetPropertyValue<T>(Type type, string propertyName, BindingFlags bindingFlags)
       {
          var propertyInfo = type.GetProperty(propertyName, bindingFlags);
-         System.Diagnostics.Debug.Assert(propertyInfo != null, "Unable to access a property named \"" + propertyName + "\"");
+         uScriptDebug.Assert(propertyInfo != null, "Unable to access a property named \"" + propertyName + "\"");
          return (T)propertyInfo.GetValue(null, null);
       }
 
@@ -1198,7 +1198,7 @@ namespace Detox.Editor
             var id = GUIUtility.GetControlID(controlName.GetHashCode(), FocusType.Keyboard, position);
 
             var fieldInfo = typeof(EditorGUI).GetField("s_RecycledEditor", Flags);
-            System.Diagnostics.Debug.Assert(fieldInfo != null, "Unable to access the RecycledEditor field.");
+            uScriptDebug.Assert(fieldInfo != null, "Unable to access the RecycledEditor field.");
 
             var parameters = new[]
                                 {

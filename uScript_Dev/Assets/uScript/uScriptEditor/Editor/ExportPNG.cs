@@ -206,7 +206,7 @@ namespace Detox.Editor
             }
 
             // Adjust positions and sizes
-            System.Diagnostics.Debug.Assert(viewportBorderSize != null, "viewportBorderSize is null");
+            uScriptDebug.Assert(viewportBorderSize != null, "viewportBorderSize is null");
             viewportY = Screen.height - viewportHeight - viewportY - viewportBorderSize.top;
 
             // Tweaks to handle various dock scenarios - this is stupid

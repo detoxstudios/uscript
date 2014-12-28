@@ -3950,7 +3950,7 @@ public sealed partial class uScript : EditorWindow
 
             // Update the defaults to reflect the most recently selected path
             defaultName = Path.GetFileNameWithoutExtension(chosenPath);
-            System.Diagnostics.Debug.Assert(defaultName != null, "defaultName is null");
+            uScriptDebug.Assert(defaultName != null, "defaultName is null");
 
             if (chosenPath != string.Empty)
             {
