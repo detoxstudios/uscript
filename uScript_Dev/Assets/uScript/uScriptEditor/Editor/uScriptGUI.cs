@@ -923,10 +923,10 @@ namespace Detox.Editor
 
                   // The "ToggleMixed" style does not exist in Unity 3.x
                   GUIStyle toggleStyle = UnityEngine.GUI.skin.toggle;
-                  UnityEngine.GUI.changed = false;
-                  
+
+                  EditorGUI.BeginChangeCheck();
                   toggleState = UnityEngine.GUI.Toggle(toggleRect, toggleState, GUIContent.none, toggleStyle);
-                  if (UnityEngine.GUI.changed)
+                  if (EditorGUI.EndChangeCheck())
                   {
                      // When showing a mixed value on Unity 3.x, the toggle returns True when pressed.
                      // It returns False on Unity 4.x.
@@ -995,10 +995,10 @@ namespace Detox.Editor
                      }
 
                      var toggleStyle = EditorGUI.showMixedValue ? "ToggleMixed" : UnityEngine.GUI.skin.toggle;
-                     UnityEngine.GUI.changed = false;
 
+                     EditorGUI.BeginChangeCheck();
                      toggleState = UnityEngine.GUI.Toggle(toggleRect, toggleState, GUIContent.none, toggleStyle);
-                     if (UnityEngine.GUI.changed)
+                     if (EditorGUI.EndChangeCheck())
                      {
                         if (toggleState)
                         {
@@ -1256,6 +1256,10 @@ namespace Detox.Editor
                uScriptGUIStyle.PropertyTextArea.CalcHeight(content, columnValue.Width),
                MinLines,
                MaxLines);
+
+            var e = Event.current;
+
+            //Debug.Log("TAB: " + )
 
             value = EditorGUILayout.TextArea(
                value,

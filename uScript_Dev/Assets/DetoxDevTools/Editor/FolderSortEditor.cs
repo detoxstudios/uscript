@@ -227,7 +227,7 @@ namespace Detox.DetoxDevTools.Editor
             }
          }
 
-         GUI.changed = false;
+         EditorGUI.BeginChangeCheck();
 
          GUI.enabled = this.filterText != string.Empty;
 
@@ -242,7 +242,7 @@ namespace Detox.DetoxDevTools.Editor
          this.sortFoldersFirst = GUILayout.Toggle(this.sortFoldersFirst, "Folders First", Style.Toggle);
          this.sortNatural = GUILayout.Toggle(this.sortNatural, "Natural", Style.Toggle);
 
-         if (GUI.changed)
+         if (EditorGUI.EndChangeCheck())
          {
             GUIUtility.keyboardControl = 0;
             this.RefreshSort();

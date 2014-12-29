@@ -53,10 +53,11 @@ public class WelcomeWindow : EditorWindow
          {
             GUILayout.FlexibleSpace();
 
-            GUI.changed = false;
+            EditorGUI.BeginChangeCheck();
             uScript.Preferences.ShowAtStartup = GUILayout.Toggle(
-               uScript.Preferences.ShowAtStartup, Content.ShowAtStartupText);
-            if (GUI.changed)
+               uScript.Preferences.ShowAtStartup,
+               Content.ShowAtStartupText);
+            if (EditorGUI.EndChangeCheck())
             {
                uScript.Preferences.Save();
             }
