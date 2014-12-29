@@ -1257,10 +1257,6 @@ namespace Detox.Editor
                MinLines,
                MaxLines);
 
-            var e = Event.current;
-
-            //Debug.Log("TAB: " + )
-
             value = EditorGUILayout.TextArea(
                value,
                uScriptGUIStyle.PropertyTextArea,
