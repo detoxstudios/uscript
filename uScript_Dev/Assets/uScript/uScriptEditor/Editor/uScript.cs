@@ -985,7 +985,7 @@ public sealed partial class uScript : EditorWindow
       }
 
       // Update the reference panel with the node palette's hot selection.
-      uScriptGUIPanelReference.Instance.hotSelection = uScriptGUIPanelPalette.Instance._hotSelection;
+      uScriptGUIPanelReference.Instance.HotSelection = uScriptGUIPanelPalette.Instance._hotSelection;
 
       // Because Unity has an awesome GUI system, the mouse dragging is detected
       // after EventType.Layout has occurred. If any GUILayout calls are made in

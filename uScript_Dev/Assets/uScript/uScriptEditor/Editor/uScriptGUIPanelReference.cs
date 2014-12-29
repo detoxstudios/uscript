@@ -7,474 +7,475 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-using Detox.Editor;
-using Detox.FlowChart;
-using Detox.ScriptEditor;
-
-using UnityEditor;
-
-using UnityEngine;
-
-public sealed class uScriptGUIPanelReference: uScriptGUIPanel
+namespace Detox.Editor
 {
-   //
-   // Singleton pattern
-   //
-   static readonly uScriptGUIPanelReference _instance = new uScriptGUIPanelReference();
+   using System;
+   using System.Globalization;
+   using System.Linq;
 
-   public static uScriptGUIPanelReference Instance { get { return _instance; } }
+   using Detox.FlowChart;
+   using Detox.ScriptEditor;
 
-   private uScriptGUIPanelReference()
+   using UnityEditor;
+
+   using UnityEngine;
+
+   using ScriptEditor = Detox.ScriptEditor.ScriptEditor;
+
+   public sealed class uScriptGUIPanelReference : uScriptGUIPanel
    {
-      Init();
-   }
+      private static uScriptGUIPanelReference instance;
 
+      private string currentNodeClassName = string.Empty;
+      private EntityNode hotSelection;
 
-   //
-   // Members specific to this panel class
-   //
-   private string currentNodeClassName = string.Empty;
-   private EntityNode _hotSelection = null;
+      private Node focusedNode;
 
-   public EntityNode hotSelection { set { _hotSelection = value; } }
-
-   private Node _focusedNode = null;
-
-   // Node variables
-   private string _nodeSignature = string.Empty;
-   private uScriptGUIPanelPalette.PaletteMenuItem _toolboxMenuItem = null;
-   private string _toolboxPath = string.Empty;
-
-   //
-   // Methods common to the panel classes
-   //
-   public void Init()
-   {
-      _name = "Reference";
-//      _size = 250;
-//      _region = uScriptGUI.Region.Reference;
-   }
-
-//   public void Update()
-//   {
-//      //
-//      // Called whenever member data should be updated
-//      //
-//   }
-
-   public override void Draw()
-   {
-      //
-      // Called during OnGUI()
-      //
-
-      // Local references to uScript
-      uScript uScriptInstance = uScript.Instance;
-      ScriptEditorCtrl m_ScriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
-
-      // Setup the strings for the button
-      string helpButtonTooltip = string.Empty;
-      string helpButtonURL = string.Empty;
-
-      EntityNode node = null;
-
-
-      // Hot node selection has priority.  If the mouse isn't hovering over a node in the Node Palette,
-      // use the current node selection to determine the contents of the panel.
-
-      // Setup the toolbar buttons
-      if (_hotSelection != null)
+      private string nodeSignature = string.Empty;
+      private uScriptGUIPanelPalette.PaletteMenuItem toolboxMenuItem;
+      private string toolboxPath = string.Empty;
+     
+      private uScriptGUIPanelReference()
       {
-         node = _hotSelection;
-
-         currentNodeClassName = string.Empty;
-         helpButtonURL = string.Empty;
-         helpButtonTooltip = string.Empty;
+         this.Init();
       }
-      else
+
+      public static uScriptGUIPanelReference Instance
       {
-         if (m_ScriptEditorCtrl.SelectedNodes.Length != 1)
+         get
          {
-            currentNodeClassName = string.Empty;
-            helpButtonTooltip = "Open the online uScript User Guide in the default web browser.";
-            helpButtonURL = "http://docs.uscript.net/";
+            return instance ?? (instance = new uScriptGUIPanelReference());
+         }
+      }
+
+      public EntityNode HotSelection { set { this.hotSelection = value; } }
+
+      public void Init()
+      {
+         this._name = "Reference";
+
+         //_size = 250;
+         //_region = uScriptGUI.Region.Reference;
+      }
+
+      public override void Draw()
+      {
+         // Local references to uScript
+         var uScriptInstance = uScript.Instance;
+         var scriptEditorCtrl = uScriptInstance.ScriptEditorCtrl;
+
+         // Setup the strings for the button
+         var helpButtonTooltip = string.Empty;
+         var helpButtonURL = string.Empty;
+
+         EntityNode node = null;
+
+         // Hot node selection has priority.  If the mouse isn't hovering over a node in the Node Palette,
+         // use the current node selection to determine the contents of the panel.
+
+         // Setup the toolbar buttons
+         if (this.hotSelection != null)
+         {
+            node = this.hotSelection;
+
+            this.currentNodeClassName = string.Empty;
+            helpButtonURL = string.Empty;
+            helpButtonTooltip = string.Empty;
          }
          else
          {
-            node = m_ScriptEditorCtrl.SelectedNodes[0].EntityNode;
-
-            if (node != null)
+            if (scriptEditorCtrl.SelectedNodes.Length != 1)
             {
-               string newNodeClassName = ScriptEditor.FindNodeType(node);
-               if (newNodeClassName != currentNodeClassName)
+               this.currentNodeClassName = string.Empty;
+               helpButtonTooltip = "Open the online uScript User Guide in the default web browser.";
+               helpButtonURL = "http://docs.uscript.net/";
+            }
+            else
+            {
+               node = scriptEditorCtrl.SelectedNodes[0].EntityNode;
+
+               if (node != null)
                {
-                  currentNodeClassName = newNodeClassName;
-//                  currentNodeClassPath = GetClassPath(newNodeClassName);
+                  var newNodeClassName = ScriptEditor.FindNodeType(node);
+                  this.currentNodeClassName = newNodeClassName;
+
+                  //currentNodeClassPath = GetClassPath(newNodeClassName);
+
+                  helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
+                  helpButtonURL = uScript.FindNodeHelp(uScript.GetNodeType(node), node);
+               }
+            }
+
+            helpButtonTooltip += string.Format(" ({0})", helpButtonURL);
+         }
+
+         //EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, _options);
+         EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
+         {
+            //EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
+            EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+            {
+               GUILayout.Label(this._name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
+
+               //var style = new GUIStyle(UnityEngine.GUI.skin.label)
+               //               {
+               //                  richText = true,
+               //                  normal = { textColor = Color.white }
+               //               };
+
+               //GUILayout.Label(
+               //   ("HELLO: " + "bold".Bold().Color(Color.cyan) + ", " + "italic".Italic() + ", "
+               //    + "bold and italic".BoldItalic()
+               //    + ", <color=black>black</color>, <color=white>white</color>, <color=green>red</color>, "
+               //    + "red".Red() + ", " + "green".Green() + ", <color=blue>blue</color>, " + "blue".Blue()
+               //    + ", <color=#F70>uScript</color> XXX").Black(),
+               //   style);
+
+               uScriptGUI.Enabled = string.IsNullOrEmpty(this.currentNodeClassName) == false;
+
+               if (GUILayout.Button(uScriptGUIContent.buttonNodeSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+               {
+                  uScriptGUI.PingObject(uScript.GetClassPath(this.currentNodeClassName), typeof(TextAsset));
                }
 
-               helpButtonTooltip = "Open the online reference for the selected node in the default web browser.";
-               helpButtonURL = uScript.FindNodeHelp(uScript.GetNodeType(node), node);
-            }
-         }
+               uScriptGUI.Enabled = string.IsNullOrEmpty(helpButtonURL) == false;
 
-         helpButtonTooltip += " (" + helpButtonURL + ")";
-      }
-
-//      EditorGUILayout.BeginVertical(uScriptGUIStyle.panelBox, _options);
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox);
-      {
-         // Toolbar
-         //
-//         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
-         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
-         {
-            GUILayout.Label(_name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
-
-//            GUIStyle style = new GUIStyle(GUI.skin.label);
-//            style.richText = true;
-//            style.normal.textColor = UnityEngine.Color.white;
-//
-//            GUILayout.Label(("HELLO: " + "bold".Bold().Color(UnityEngine.Color.cyan) + ", " + "italic".Italic() + ", " + "bold and italic".BoldItalic() + ", <color=black>black</color>, <color=white>white</color>, <color=green>red</color>, " + "red".Red() + ", " + "green".Green() + ", <color=blue>blue</color>, " + "blue".Blue() + ", <color=#F70>uScript</color> XXX").Black(), style);
-
-            uScriptGUI.Enabled = (string.IsNullOrEmpty(currentNodeClassName) == false);
-
-            if (GUILayout.Button(uScriptGUIContent.buttonNodeSource, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
-            {
-               uScriptGUI.PingObject(uScript.GetClassPath(currentNodeClassName), typeof(TextAsset));
-            }
-
-            uScriptGUI.Enabled = (string.IsNullOrEmpty(helpButtonURL) == false);
-
-            uScriptGUIContent.buttonWebDocumentation.tooltip = helpButtonTooltip;
-            if (GUILayout.Button(uScriptGUIContent.buttonWebDocumentation, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
-            {
-               Help.BrowseURL(helpButtonURL);
-            }
-
-            uScriptGUI.Enabled = (_hotSelection == null);
-
-            if (GUILayout.Button(uScriptGUIContent.buttonWebForum, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
-            {
-               Help.BrowseURL("http://uscript.net/forum");
-            }
-
-            if (GUILayout.Button(uScriptGUIContent.commandReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
-            {
-               ReferenceWindow.Init();
-            }
-
-            uScriptGUI.Enabled = true;
-         }
-         EditorGUILayout.EndHorizontal();
-
-
-         if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
-         {
-            DrawHiddenNotification();
-         }
-         else
-         {
-            // Selection description
-            //
-            _scrollviewOffset = EditorGUILayout.BeginScrollView(_scrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
-            {
-               if ((m_ScriptEditorCtrl.SelectedNodes.Length == 1) && (m_ScriptEditorCtrl.SelectedNodes[0] != null))
+               uScriptGUIContent.buttonWebDocumentation.tooltip = helpButtonTooltip;
+               if (GUILayout.Button(uScriptGUIContent.buttonWebDocumentation, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
                {
-                  if (uScript.IsNodeTypeDeprecated(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode) || m_ScriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(m_ScriptEditorCtrl.SelectedNodes[0].EntityNode))
+                  Help.BrowseURL(helpButtonURL);
+               }
+
+               uScriptGUI.Enabled = this.hotSelection == null;
+
+               if (GUILayout.Button(uScriptGUIContent.buttonWebForum, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+               {
+                  Help.BrowseURL("http://uscript.net/forum");
+               }
+
+               if (GUILayout.Button(uScriptGUIContent.commandReference, EditorStyles.toolbarButton, GUILayout.ExpandWidth(false)))
+               {
+                  ReferenceWindow.Init();
+               }
+
+               uScriptGUI.Enabled = true;
+            }
+
+            EditorGUILayout.EndHorizontal();
+
+            if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
+            {
+               this.DrawHiddenNotification();
+            }
+            else
+            {
+               // Selection description
+               this._scrollviewOffset = EditorGUILayout.BeginScrollView(this._scrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview");
+               {
+                  if ((scriptEditorCtrl.SelectedNodes.Length == 1) && (scriptEditorCtrl.SelectedNodes[0] != null))
                   {
-                     GUILayout.Box("SELECTED NODE IS DEPRECATED: UPDATE OR REPLACE", uScriptGUIStyle.PanelMessageError);
+                     if (uScript.IsNodeTypeDeprecated(scriptEditorCtrl.SelectedNodes[0].EntityNode) || scriptEditorCtrl.ScriptEditor.IsNodeInstanceDeprecated(scriptEditorCtrl.SelectedNodes[0].EntityNode))
+                     {
+                        GUILayout.Box("SELECTED NODE IS DEPRECATED: UPDATE OR REPLACE", uScriptGUIStyle.PanelMessageError);
+                     }
+                  }
+
+                  if (node == null)
+                  {
+                     this.DrawGraphReferenceContent();
+                  }
+                  else
+                  {
+                     this.DrawNodeReferenceContent(node);
                   }
                }
 
-               if (node == null)
-               {
-                  DrawGraphReferenceContent();
-               }
-               else
-               {
-                  DrawNodeReferenceContent(node);
-               }
+               EditorGUILayout.EndScrollView();
             }
-            EditorGUILayout.EndScrollView();
          }
+
+         EditorGUILayout.EndVertical();
+
+         //uScriptGUI.DefineRegion(uScriptGUI.Region.Reference);
+         uScriptInstance.SetMouseRegion(uScript.MouseRegion.Reference);
       }
-      EditorGUILayout.EndVertical();
 
-//      uScriptGUI.DefineRegion(uScriptGUI.Region.Reference);
-      uScriptInstance.SetMouseRegion(uScript.MouseRegion.Reference);
-   }
-
-   private void DrawFormattedParameter(Parameter p)
-   {
-      DrawFormattedParameter(p, string.Empty);
-   }
-
-   private void DrawFormattedParameter(Parameter p, string nodeType)
-   {
-      DrawFormattedParameter(p.FriendlyName,
-         uScriptConfig.Variable.FriendlyName(p.Type).Replace("UnityEngine.", string.Empty) + (p.Input && p.Output ? " (In/Out)" : p.Output ? " (out)" : string.Empty),
-         uScript.FindParameterDescription(nodeType, p));
-   }
-
-   private void DrawFormattedParameter(string name, string type, string description)
-   {
-      GUILayout.BeginHorizontal();
+      private void DrawFormattedParameter(Parameter p)
       {
-         // Icon
-         GUILayout.Space(24);
-
-         //
-         GUILayout.BeginVertical();
-         {
-            // Parameter name and type
-            GUILayout.Label(name + ":", uScriptGUIStyle.ReferenceName);
-            GUI.Label(GUILayoutUtility.GetLastRect(), type, uScriptGUIStyle.ReferenceInfo);
-
-            // Parameter description
-            GUILayout.Label(description, uScriptGUIStyle.ReferenceDesc);
-         }
-         GUILayout.EndVertical();
+         this.DrawFormattedParameter(p, string.Empty);
       }
-      GUILayout.EndHorizontal();
-   }
 
-   private void DrawGraphDetails()
-   {
-      ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
-
-      EditorGUILayout.BeginVertical(uScriptGUIStyle.ReferenceDetailBox);
+      private void DrawFormattedParameter(Parameter p, string nodeType)
       {
-         int count;
-         float titleWidth = uScriptGUIStyle.ReferenceDetailTitle.CalcSize(new GUIContent("Graph contains:")).x;
-         float countWidth;
-         float labelWidth;
+         var type = string.Format(
+            "{0}{1}",
+            uScriptConfig.Variable.FriendlyName(p.Type).Replace("UnityEngine.", string.Empty),
+            p.Input && p.Output ? " (in/out)" : p.Output ? " (out)" : string.Empty);
+         this.DrawFormattedParameter(p.FriendlyName, type, uScript.FindParameterDescription(nodeType, p));
+      }
 
-         EditorGUILayout.BeginHorizontal();
+      private void DrawFormattedParameter(string name, string type, string description)
+      {
+         GUILayout.BeginHorizontal();
          {
-            GUILayout.Label("Graph contains:", uScriptGUIStyle.ReferenceDetailTitle, GUILayout.Width(titleWidth));
+            // Icon
+            GUILayout.Space(24);
 
-            EditorGUILayout.BeginVertical();
+            GUILayout.BeginVertical();
             {
-               int countMax = Math.Max(m_ScriptEditorCtrl.FlowChart.Nodes.Length, m_ScriptEditorCtrl.FlowChart.Links.Length);
-               countWidth = uScriptGUIStyle.ReferenceDetailValue.CalcSize(new GUIContent(countMax.ToString())).x;
-               labelWidth = uScriptGUIStyle.ReferenceDetailLabel.CalcSize(new GUIContent("nodes")).x + 12;
+               // Parameter name and type
+               GUILayout.Label(string.Format("{0}:", name), uScriptGUIStyle.ReferenceName);
+               UnityEngine.GUI.Label(GUILayoutUtility.GetLastRect(), type, uScriptGUIStyle.ReferenceInfo);
 
-               EditorGUILayout.BeginHorizontal();
-               {
-                  count = m_ScriptEditorCtrl.FlowChart.Nodes.Length;
-
-                  GUILayout.Label(count.ToString(), uScriptGUIStyle.ReferenceDetailValue, GUILayout.Width(countWidth));
-
-                  GUILayout.Label((count == 1 ? "node" : "nodes"), uScriptGUIStyle.ReferenceDetailLabel, GUILayout.Width(labelWidth));
-
-                  if (m_ScriptEditorCtrl.FlowChart.SelectedNodes.Length > 0)
-                  {
-                     string label = "(" + m_ScriptEditorCtrl.FlowChart.SelectedNodes.Length.ToString() + " selected)";
-                     GUILayout.Label(label, uScriptGUIStyle.ReferenceDetailLabel);
-                  }
-               }
-               EditorGUILayout.EndHorizontal();
-
-               EditorGUILayout.BeginHorizontal();
-               {
-                  string value = m_ScriptEditorCtrl.FlowChart.Links.Length.ToString();
-                  GUILayout.Label(value, uScriptGUIStyle.ReferenceDetailValue);
-
-                  GUILayout.Label((count == 1 ? "link" : "links"), uScriptGUIStyle.ReferenceDetailLabel, GUILayout.Width(labelWidth));
-
-                  if (m_ScriptEditorCtrl.FlowChart.SelectedLinks.Length > 0)
-                  {
-                     value = "(" + m_ScriptEditorCtrl.FlowChart.SelectedLinks.Length.ToString() + " selected)";
-                     GUILayout.Label(value, uScriptGUIStyle.ReferenceDetailLabel);
-                  }
-               }
-               EditorGUILayout.EndHorizontal();
+               // Parameter description
+               GUILayout.Label(description, uScriptGUIStyle.ReferenceDesc);
             }
-            EditorGUILayout.EndVertical();
-         }
-         EditorGUILayout.EndHorizontal();
 
-         count = m_ScriptEditorCtrl.ScriptEditor.DeprecatedNodes.Length;
-         if (count > 0)
+            GUILayout.EndVertical();
+         }
+
+         GUILayout.EndHorizontal();
+      }
+
+      private void DrawGraphDetails()
+      {
+         var scriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
+         var flowChart = scriptEditorCtrl.FlowChart;
+
+         EditorGUILayout.BeginVertical(uScriptGUIStyle.ReferenceDetailBox);
          {
+            int count;
+            float titleWidth = uScriptGUIStyle.ReferenceDetailTitle.CalcSize(new GUIContent("Graph contains:")).x;
+            float countWidth;
+            GUIContent tempContent;
+
             EditorGUILayout.BeginHorizontal();
             {
-               EditorGUILayout.BeginHorizontal(GUILayout.Width(titleWidth));
+               GUILayout.Label("Graph contains:", uScriptGUIStyle.ReferenceDetailTitle, GUILayout.Width(titleWidth));
+
+               EditorGUILayout.BeginVertical();
                {
-                  GUILayout.FlexibleSpace();
+                  var countMax = Math.Max(flowChart.Nodes.Length, flowChart.Links.Length);
+                  tempContent = uScriptGUIContent.Temp(countMax.ToString(CultureInfo.InvariantCulture));
+                  countWidth = uScriptGUIStyle.ReferenceDetailValue.CalcSize(tempContent).x;
 
-                  if (GUILayout.Button(uScriptGUIContent.buttonNodeFindDeprecated, uScriptGUIStyle.ReferenceButtonIcon))
+                  tempContent = uScriptGUIContent.Temp("nodes");
+                  var labelWidth = uScriptGUIStyle.ReferenceDetailLabel.CalcSize(tempContent).x + 12;
+
+                  EditorGUILayout.BeginHorizontal();
                   {
-                     _focusedNode = m_ScriptEditorCtrl.GetNextDeprecatedNode(_focusedNode);
-                     if (_focusedNode != null)
+                     count = flowChart.Nodes.Length;
+
+                     tempContent = uScriptGUIContent.Temp(count.ToString(CultureInfo.InvariantCulture));
+                     GUILayout.Label(tempContent, uScriptGUIStyle.ReferenceDetailValue, GUILayout.Width(countWidth));
+
+                     tempContent = uScriptGUIContent.Temp(count == 1 ? "node" : "nodes");
+                     GUILayout.Label(tempContent, uScriptGUIStyle.ReferenceDetailLabel, GUILayout.Width(labelWidth));
+
+                     if (flowChart.SelectedNodes.Length > 0)
                      {
-                        m_ScriptEditorCtrl.CenterOnNode(_focusedNode);
+                        tempContent =
+                           uScriptGUIContent.Temp(string.Format("({0} selected)", flowChart.SelectedNodes.Length));
+                        GUILayout.Label(tempContent, uScriptGUIStyle.ReferenceDetailLabel);
                      }
                   }
 
-                  if (GUILayout.Button(uScriptGUIContent.buttonNodeFixAllDeprecated, uScriptGUIStyle.ReferenceButtonText))
+                  EditorGUILayout.EndHorizontal();
+
+                  EditorGUILayout.BeginHorizontal();
                   {
-                     List<DisplayNode> nodes = new List<DisplayNode>();
-                     foreach (Node node in m_ScriptEditorCtrl.FlowChart.Nodes)
+                     tempContent = uScriptGUIContent.Temp(flowChart.Links.Length.ToString(CultureInfo.InvariantCulture));
+                     GUILayout.Label(tempContent, uScriptGUIStyle.ReferenceDetailValue);
+
+                     tempContent = uScriptGUIContent.Temp(count == 1 ? "link" : "links");
+                     GUILayout.Label(tempContent, uScriptGUIStyle.ReferenceDetailLabel, GUILayout.Width(labelWidth));
+
+                     if (flowChart.SelectedLinks.Length > 0)
                      {
-                        nodes.Add((DisplayNode)node);
+                        tempContent =
+                           uScriptGUIContent.Temp(string.Format("({0} selected)", flowChart.SelectedLinks.Length));
+                        GUILayout.Label(tempContent, uScriptGUIStyle.ReferenceDetailLabel);
                      }
-                     m_ScriptEditorCtrl.UpgradeDeprecatedNodes(nodes.ToArray());
                   }
+
+                  EditorGUILayout.EndHorizontal();
                }
-               EditorGUILayout.EndHorizontal();
 
-               GUILayout.Label(count.ToString(), uScriptGUIStyle.ReferenceDetailAlertValue, GUILayout.Width(countWidth));
-               GUILayout.Label("deprecated " + (count == 1 ? "node" : "nodes") + " must be updated or replaced.", uScriptGUIStyle.ReferenceDetailAlertLabel);
+               EditorGUILayout.EndVertical();
             }
+
             EditorGUILayout.EndHorizontal();
-         }
-      }
-      EditorGUILayout.EndVertical();
-   }
 
-   void DrawGraphReferenceContent()
-   {
-      ScriptEditorCtrl m_ScriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
-
-      // Graph name
-      string graphName = m_ScriptEditorCtrl.ScriptName;
-
-      int index = graphName.ToLower().LastIndexOf(".uscript");
-      if (index >= 0)
-      {
-         graphName = graphName.Remove(index);
-      }
-
-      if (string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptEditor.FriendlyName.Default) == false)
-      {
-         graphName = m_ScriptEditorCtrl.ScriptEditor.FriendlyName.Default + "  (" + graphName + ")";
-      }
-
-      GUILayout.Label(graphName, uScriptGUIStyle.ReferenceName);
-
-      // General reference description
-      GUILayout.Label("Select a node on the canvas to view the help text for that node.", uScriptGUIStyle.ReferenceDesc);
-
-      DrawGraphDetails();
-
-      if (m_ScriptEditorCtrl.SelectedNodes.Length > 1)
-      {
-         GUILayout.Label("Help cannot be provided when multiple nodes are selected.", uScriptGUIStyle.PanelMessage);
-         return;
-      }
-
-      // Display an "Friendly Name" and "Description" parameters
-      DrawFormattedParameter(m_ScriptEditorCtrl.ScriptEditor.FriendlyName);
-      DrawFormattedParameter(m_ScriptEditorCtrl.ScriptEditor.Description);
-   }
-
-   void DrawNodeReferenceContent(EntityNode node)
-   {
-      string nodeSignature = uScript.GetNodeSignature(node);
-
-      if (_nodeSignature != nodeSignature)
-      {
-         _nodeSignature = nodeSignature;
-
-         _toolboxMenuItem = uScriptGUIPanelPalette.Instance.GetToolboxMenuItem(nodeSignature);
-
-         _toolboxPath = (_toolboxMenuItem != null ? _toolboxMenuItem.Path : string.Empty);
-         int lastSeparatorIndex = _toolboxPath.LastIndexOf('/');
-         if (lastSeparatorIndex < 0)
-         {
-            _toolboxPath = string.Empty;
-         }
-         else
-         {
-            _toolboxPath = _toolboxPath.Substring(0, lastSeparatorIndex).Replace("/", " > ");
-         }
-      }
-
-      Rect rectNameRow = EditorGUILayout.BeginHorizontal();
-      {
-         // Node name
-         string nodeName;
-         if (_toolboxMenuItem == null)
-         {
-            nodeName = uScript.FindNodeName(uScript.GetNodeType(node), node);
-         }
-         else
-         {
-            nodeName = _toolboxMenuItem.Name;
-         }
-         GUILayout.Label(nodeName, uScriptGUIStyle.ReferenceName);
-
-         // Node breadcrumbs
-         if (Event.current.type != EventType.Layout && string.IsNullOrEmpty(_toolboxPath) == false)
-         {
-            Vector2 sizeNameLabel = uScriptGUIStyle.ReferenceName.CalcSize(new GUIContent(nodeName));
-
-            GUIContent toolboxPath = uScriptGUIContent.toolboxBreadcrumbs;
-            toolboxPath.text = _toolboxPath;
-
-            while (toolboxPath.text != string.Empty
-               && rectNameRow.width < sizeNameLabel.x + 32 + uScriptGUIStyle.ReferenceInfo.CalcSize(toolboxPath).x)
+            count = scriptEditorCtrl.ScriptEditor.DeprecatedNodes.Length;
+            if (count > 0)
             {
-               int lastSeparatorIndex = toolboxPath.text.LastIndexOf(" > ");
-               if (lastSeparatorIndex < 0)
+               EditorGUILayout.BeginHorizontal();
                {
-                  toolboxPath.text = string.Empty;
+                  EditorGUILayout.BeginHorizontal(GUILayout.Width(titleWidth));
+                  {
+                     GUILayout.FlexibleSpace();
+
+                     if (GUILayout.Button(uScriptGUIContent.buttonNodeFindDeprecated, uScriptGUIStyle.ReferenceButtonIcon))
+                     {
+                        this.focusedNode = scriptEditorCtrl.GetNextDeprecatedNode(this.focusedNode);
+                        if (this.focusedNode != null)
+                        {
+                           scriptEditorCtrl.CenterOnNode(this.focusedNode);
+                        }
+                     }
+
+                     if (GUILayout.Button(uScriptGUIContent.buttonNodeFixAllDeprecated, uScriptGUIStyle.ReferenceButtonText))
+                     {
+                        scriptEditorCtrl.UpgradeDeprecatedNodes(flowChart.Nodes.Cast<DisplayNode>().ToArray());
+                     }
+                  }
+
+                  EditorGUILayout.EndHorizontal();
+
+                  tempContent = uScriptGUIContent.Temp(count.ToString(CultureInfo.InvariantCulture));
+                  GUILayout.Label(tempContent, uScriptGUIStyle.ReferenceDetailAlertValue, GUILayout.Width(countWidth));
+
+                  tempContent =
+                     uScriptGUIContent.Temp(
+                        string.Format("deprecated {0} must be updated or replaced.", count == 1 ? "node" : "nodes"));
+                  GUILayout.Label(tempContent, uScriptGUIStyle.ReferenceDetailAlertLabel);
                }
-               else
+
+               EditorGUILayout.EndHorizontal();
+            }
+         }
+
+         EditorGUILayout.EndVertical();
+      }
+
+      private void DrawGraphReferenceContent()
+      {
+         var scriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
+
+         // Graph name
+         var graphName = scriptEditorCtrl.ScriptName;
+
+         var index = graphName.ToLower().LastIndexOf(".uscript", StringComparison.Ordinal);
+         if (index >= 0)
+         {
+            graphName = graphName.Remove(index);
+         }
+
+         if (string.IsNullOrEmpty(scriptEditorCtrl.ScriptEditor.FriendlyName.Default) == false)
+         {
+            graphName = string.Format("{0} ({1})", scriptEditorCtrl.ScriptEditor.FriendlyName.Default, graphName);
+         }
+
+         GUILayout.Label(uScriptGUIContent.Temp(graphName), uScriptGUIStyle.ReferenceName);
+
+         // General reference description
+         var tempContent = uScriptGUIContent.Temp("Select a node on the canvas to view the help text for that node.");
+         GUILayout.Label(tempContent, uScriptGUIStyle.ReferenceDesc);
+
+         this.DrawGraphDetails();
+
+         if (scriptEditorCtrl.SelectedNodes.Length > 1)
+         {
+            tempContent = uScriptGUIContent.Temp("Help cannot be provided when multiple nodes are selected.");
+            GUILayout.Label(tempContent, uScriptGUIStyle.PanelMessage);
+            return;
+         }
+
+         // Display an "Friendly Name" and "Description" parameters
+         this.DrawFormattedParameter(scriptEditorCtrl.ScriptEditor.FriendlyName);
+         this.DrawFormattedParameter(scriptEditorCtrl.ScriptEditor.Description);
+      }
+
+      private void DrawNodeReferenceContent(EntityNode node)
+      {
+         var signature = uScript.GetNodeSignature(node);
+
+         if (this.nodeSignature != signature)
+         {
+            this.nodeSignature = signature;
+
+            this.toolboxMenuItem = uScriptGUIPanelPalette.Instance.GetToolboxMenuItem(signature);
+
+            this.toolboxPath = this.toolboxMenuItem != null ? this.toolboxMenuItem.Path : string.Empty;
+            var lastSeparatorIndex = this.toolboxPath.LastIndexOf('/');
+            this.toolboxPath = lastSeparatorIndex < 0
+                                  ? string.Empty
+                                  : this.toolboxPath.Substring(0, lastSeparatorIndex).Replace("/", " > ");
+         }
+
+         var rectNameRow = EditorGUILayout.BeginHorizontal();
+         {
+            // Node name
+            var nodeName = this.toolboxMenuItem == null
+                              ? uScript.FindNodeName(uScript.GetNodeType(node), node)
+                              : this.toolboxMenuItem.Name;
+            var nodeNameContent = uScriptGUIContent.Temp(nodeName);
+            GUILayout.Label(nodeNameContent, uScriptGUIStyle.ReferenceName);
+
+            // Node breadcrumbs
+            if (Event.current.type != EventType.Layout && string.IsNullOrEmpty(this.toolboxPath) == false)
+            {
+               var sizeNameLabel = uScriptGUIStyle.ReferenceName.CalcSize(nodeNameContent);
+
+               // TODO: Move content from uScriptGUIContent to this class
+               var breadcrumbs = uScriptGUIContent.toolboxBreadcrumbs;
+               breadcrumbs.text = this.toolboxPath;
+
+               while (breadcrumbs.text != string.Empty
+                      && rectNameRow.width < sizeNameLabel.x + 32 + uScriptGUIStyle.ReferenceInfo.CalcSize(breadcrumbs).x)
                {
-                  toolboxPath.text = toolboxPath.text.Substring(0, lastSeparatorIndex + 2);
+                  var lastSeparatorIndex = breadcrumbs.text.LastIndexOf(" > ", StringComparison.Ordinal);
+                  breadcrumbs.text = lastSeparatorIndex < 0
+                                        ? string.Empty
+                                        : breadcrumbs.text.Substring(0, lastSeparatorIndex + 2);
                }
+
+               if (breadcrumbs.text != this.toolboxPath)
+               {
+                  breadcrumbs.text += breadcrumbs.text == string.Empty ? "..." : " ...";
+               }
+
+               rectNameRow.xMin = rectNameRow.xMax - uScriptGUIStyle.ReferenceInfo.CalcSize(breadcrumbs).x;
+
+               if (UnityEngine.GUI.Button(rectNameRow, breadcrumbs, uScriptGUIStyle.ReferenceInfo))
+               {
+                  UnityEngine.GUI.FocusControl("PaletteFilterSearch");
+                  uScriptGUIPanelPalette.Instance.FilterToolboxMenuItems(nodeNameContent.text, true);
+               }
+
+               EditorGUIUtility.AddCursorRect(rectNameRow, MouseCursor.Link);
             }
+         }
 
-            if (toolboxPath.text != _toolboxPath)
-            {
-               toolboxPath.text += (toolboxPath.text == string.Empty ? "..." : " ...");
-            }
+         EditorGUILayout.EndHorizontal();
 
-            rectNameRow.xMin = rectNameRow.xMax - uScriptGUIStyle.ReferenceInfo.CalcSize(toolboxPath).x;
+         // Node description
+         var nodeType = uScript.GetNodeType(node);
+         GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.ReferenceDesc);
 
-            if (GUI.Button(rectNameRow, toolboxPath, uScriptGUIStyle.ReferenceInfo))
-            {
-               GUI.FocusControl("PaletteFilterSearch");
-               uScriptGUIPanelPalette.Instance.FilterToolboxMenuItems(nodeName, true);
-            }
+         // Display the dynamic parameters
+         foreach (var p in node.Parameters)
+         {
+            this.DrawFormattedParameter(p, nodeType);
+         }
 
-            EditorGUIUtility.AddCursorRect(rectNameRow, MouseCursor.Link);
+         // Display a "ShowComment" parameter if necessary
+         if (node.ShowComment.Input)
+         {
+            this.DrawFormattedParameter(node.ShowComment);
+         }
+
+         // Display a "Comment" parameter if necessary
+         if (node.Comment.Input)
+         {
+            this.DrawFormattedParameter(node.Comment);
+         }
+
+         // Display an "Instance" parameter if necessary
+         if (node.Instance.Input)
+         {
+            this.DrawFormattedParameter(node.Instance);
          }
       }
-      EditorGUILayout.EndHorizontal();
-
-      // Node description
-      string nodeType = uScript.GetNodeType(node);
-      GUILayout.Label(uScript.FindNodeDescription(nodeType, node), uScriptGUIStyle.ReferenceDesc);
-
-      // Display the dynamic parameters
-      foreach (Parameter p in node.Parameters)
-      {
-         DrawFormattedParameter(p, nodeType);
-      }
-
-      // Display an "ShowComment" parameter if necessary
-      if (node.ShowComment.Input)
-      {
-         DrawFormattedParameter(node.ShowComment);
-      }
-
-      // Display an "Comment" parameter if necessary
-      if (node.Comment.Input)
-      {
-         DrawFormattedParameter(node.Comment);
-      }
-
-      // Display an "Instance" parameter if necessary
-      if (node.Instance.Input)
-      {
-         DrawFormattedParameter(node.Instance);
-      }
    }
-
 }
