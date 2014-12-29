@@ -23,8 +23,6 @@ namespace Detox.Editor
 
    using UnityEngine;
 
-   using Application = UnityEngine.Application;
-
    public static class uScriptGUI
    {
       // === Constants ==================================================================
@@ -46,10 +44,14 @@ namespace Detox.Editor
       private static readonly Dictionary<int, string> ControlIDList = new Dictionary<int, string>();
       private static readonly Dictionary<string, bool> FoldoutExpanded = new Dictionary<string, bool>();
 
+      private static TextEditor activeTextEditor;
+      private static MethodInfo activeTextEditorMethodEndEditing;
+
       private static Vector2 columnOffset;
       private static Rect scrollviewRect;
       private static string focusedControl = string.Empty;
-      private static string previousControl = string.Empty;
+
+      //private static string previousControl = string.Empty;
 
       private static Column columnEnabled;
       private static Column columnLabel;
@@ -824,7 +826,8 @@ namespace Detox.Editor
          if (UnityEngine.GUI.GetNameOfFocusedControl() != focusedControl)
          {
             uScriptDebug.Log("Control focus changed from '" + focusedControl + "' to '" + UnityEngine.GUI.GetNameOfFocusedControl() + "'\n", uScriptDebug.Type.Debug);
-            previousControl = focusedControl;
+
+            //previousControl = focusedControl;
             focusedControl = UnityEngine.GUI.GetNameOfFocusedControl();
          }
       }
@@ -2145,6 +2148,41 @@ namespace Detox.Editor
 
          Debug.LogError("Unhandled option type: " + optionName + "\n");
          return null;
+      }
+
+      internal static void OverrideTextEditorTabBehavior()
+      {
+         // This method contains reflections into Unity's assembly. It has been tested on Unity 3.5.7 and 4.6.1.
+
+#if !UNITY_3_5
+         var e = Event.current;
+
+         // Both Tab and Shift Tab will be included. Tab with other modifier keys don't work consistently, and should be avoided.
+         if (e.type == EventType.KeyDown && (e.character == '\t' || e.keyCode == KeyCode.Tab))
+         {
+            if (activeTextEditor == null)
+            {
+               var fi = typeof(EditorGUI).GetField("activeEditor", BindingFlags.Static | BindingFlags.NonPublic);
+               uScriptDebug.Assert(fi != null, "Could not access the field: EditorGUI.activeEditor");
+
+               activeTextEditor = (TextEditor)fi.GetValue(null);
+            }
+
+            if (activeTextEditor != null)
+            {
+               if (activeTextEditorMethodEndEditing == null)
+               {
+                  activeTextEditorMethodEndEditing = activeTextEditor.GetType().GetMethod("EndEditing");
+                  uScriptDebug.Assert(activeTextEditorMethodEndEditing != null, "Could not access the method: EditorGUI.activeEditor.EndEditing()");
+               }
+
+               if (activeTextEditorMethodEndEditing != null && activeTextEditor.controlID != 0)
+               {
+                  activeTextEditorMethodEndEditing.Invoke(activeTextEditor, null);
+               }
+            }
+         }
+#endif
       }
 
       private static T[] ArrayAppend<T>(T[] array, T val)

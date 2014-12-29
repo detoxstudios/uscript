@@ -1328,30 +1328,12 @@ public sealed partial class uScript : EditorWindow
 
    internal void OnGUI()
    {
+      SendEventToHotkeyWindow();
+
+      uScriptGUI.OverrideTextEditorTabBehavior();
+
       // Store the current event locally since it is reference so frequently
       var e = Event.current;
-
-#if !UNITY_3_5
-      if (HotkeyWindow != null)
-      {
-         switch (e.type)
-         {
-            case EventType.KeyDown:
-            case EventType.KeyUp:
-            case EventType.MouseDown:
-            case EventType.MouseUp:
-            case EventType.MouseDrag:
-            case EventType.ScrollWheel:
-               // Forcing the mousePosition to appear over the toolbar of the target windows
-               // to prevent mouse clicks and drags from affecting the window. Y should be
-               // somewhere in the range of 22 and 40, probably.
-               var modifiedEvent = e;
-               modifiedEvent.mousePosition = new Vector2(0, 30);
-               HotkeyWindow.SendEvent(modifiedEvent);
-               break;
-         }
-      }
-#endif
 
       // Make sure the initial window size it not too small
       if (this.firstRun)
@@ -1497,6 +1479,33 @@ public sealed partial class uScript : EditorWindow
             e.Use();
          }
       }
+   }
+
+   private static void SendEventToHotkeyWindow()
+   {
+#if !UNITY_3_5
+      var e = Event.current;
+
+      if (HotkeyWindow != null)
+      {
+         switch (e.type)
+         {
+            case EventType.KeyDown:
+            case EventType.KeyUp:
+            case EventType.MouseDown:
+            case EventType.MouseUp:
+            case EventType.MouseDrag:
+            case EventType.ScrollWheel:
+               // Forcing the mousePosition to appear over the toolbar of the target windows
+               // to prevent mouse clicks and drags from affecting the window. Y should be
+               // somewhere in the range of 22 and 40, probably.
+               var modifiedEvent = e;
+               modifiedEvent.mousePosition = new Vector2(0, 30);
+               HotkeyWindow.SendEvent(modifiedEvent);
+               break;
+         }
+      }
+#endif
    }
 
    private void DropKeyboardFocusWhenNewControlClicked()
