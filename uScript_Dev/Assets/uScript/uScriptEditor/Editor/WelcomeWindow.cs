@@ -23,7 +23,7 @@ public class WelcomeWindow : EditorWindow
    public static void Init()
    {
       // Get existing open window or if none, make a new one:
-      window = EditorWindow.GetWindow<WelcomeWindow>(true, "Welcome To uScript", true);
+      window = GetWindow<WelcomeWindow>(true, "Welcome To uScript", true);
       window.firstRun = true; // unnecessary, but we'll get a warning that 'window' is unused, otherwise
    }
 
