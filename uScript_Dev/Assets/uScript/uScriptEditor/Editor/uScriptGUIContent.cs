@@ -28,9 +28,6 @@ public static class uScriptGUIContent
 
       buttonNodeDeleteMissing = new GUIContent(string.Empty, "Delete this missing node.");
       buttonNodeFind = new GUIContent(string.Empty, "Center the canvas on this node.");
-      buttonNodeFindDeprecated = new GUIContent(string.Empty, "Center the canvas on the next deprecated node.");
-      buttonNodeFixAllDeprecated = new GUIContent("Fix All", "Upgrade all deprecated nodes in this graph. If this graph is assigned to a specific Unity scene, please be sure that scene is open before doing this or you could loose work!");
-      buttonNodeSource = new GUIContent("Source", "Ping the source file associated with this node.");
       buttonNodeToggle = new GUIContent(string.Empty, "Toggle socket visibility on this node (Show All or Hide Unused).");
       buttonNodeUpgrade = new GUIContent(string.Empty, "Upgrade this deprecated node.");
 
@@ -100,18 +97,11 @@ public static class uScriptGUIContent
       buttonScriptsRebuildAll = new GUIContent("Rebuild All uScripts", "Rebuild all uScripts in the Unity project. For best results, have an empty/blank Unity scene loaded when performing this action. Note: this could take a while if you have many large graphs!");
       buttonScriptsRemoveGenerated = new GUIContent("Remove Generated Code", "Removes all the generated script files created by uScript. For best results, have an empty/blank Unity scene loaded when performing this action. Note: Your uScript graphs will not work until they have been rebuilt/re-saved!");
 
-      buttonWebDocumentation = new GUIContent("Online Reference", "Open the online uScript reference in the default web browser.");
-      buttonWebForum = new GUIContent("Forum", "Open the online forum in the default web browser.");
-
-      commandReference = new GUIContent(string.Empty, "Open the Quick Command Reference window.");
-
       favoritePanelCollapse = new GUIContent(string.Empty, "Collapse this list.");
       favoritePanelExpand = new GUIContent(string.Empty, "Expand this list.");
 
       messageCompiling = new GUIContent("The Unity Editor is compiling one or more scripts. Please wait.");
       messagePlaying = new GUIContent("The Unity Editor is in play mode!");
-
-      toolboxBreadcrumbs = new GUIContent(string.Empty, "Search for this node in the Toolbox.");
 
       //#if (UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4)
       //      iconHelp = new GUIContent(EditorGUIUtility.LoadRequired("Builtin Skins/Icons/_Help.png") as Texture2D);
@@ -141,12 +131,9 @@ public static class uScriptGUIContent
       buttonListCollapse.image = uScriptGUI.GetSkinnedTexture("iconExpand");
       buttonListExpand.image = uScriptGUI.GetSkinnedTexture("iconCollapse");
       buttonNodeFind.image = uScriptGUI.GetSkinnedTexture("iconMiniSearch");
-      buttonNodeFindDeprecated.image = buttonNodeFind.image;
       buttonNodeToggle.image = uScriptGUI.GetSkinnedTexture("iconMiniToggle");
       buttonNodeUpgrade.image = uScriptGUI.GetSkinnedTexture("iconMiniUpgrade");
       buttonNodeDeleteMissing.image = uScriptGUI.GetSkinnedTexture("iconMiniDelete");
-
-      commandReference.image = uScriptGUI.GetSkinnedTexture("iconKeyboard");
 
       favoritePanelCollapse.image = buttonListCollapse.image;
       favoritePanelExpand.image = buttonListExpand.image;
@@ -159,8 +146,6 @@ public static class uScriptGUIContent
       iconWarn32 = new GUIContent(uScriptGUI.GetTexture("iconWarn32"));
       iconError16 = new GUIContent(uScriptGUI.GetTexture("iconError16"));
       iconError32 = new GUIContent(uScriptGUI.GetTexture("iconError32"));
-
-      toolboxBreadcrumbs.image = uScriptGUI.GetSkinnedTexture("iconSearch");
    }
 
    private static readonly GUIContent TempText = new GUIContent();
@@ -194,12 +179,6 @@ public static class uScriptGUIContent
    public static GUIContent buttonNodeDeleteMissing { get; private set; }
 
    public static GUIContent buttonNodeFind { get; private set; }
-
-   public static GUIContent buttonNodeFindDeprecated { get; private set; }
-
-   public static GUIContent buttonNodeFixAllDeprecated { get; private set; }
-
-   public static GUIContent buttonNodeSource { get; private set; }
 
    public static GUIContent buttonNodeToggle { get; private set; }
 
@@ -242,12 +221,6 @@ public static class uScriptGUIContent
    public static GUIContent buttonScriptsRebuildAll { get; private set; }
 
    public static GUIContent buttonScriptsRemoveGenerated { get; private set; }
-
-   public static GUIContent buttonWebDocumentation { get; private set; }
-
-   public static GUIContent buttonWebForum { get; private set; }
-
-   public static GUIContent commandReference { get; private set; }
 
    public static GUIContent favoritePanelCollapse { get; private set; }
 
@@ -334,8 +307,6 @@ public static class uScriptGUIContent
    public static GUIContent messageCompiling { get; private set; }
 
    public static GUIContent messagePlaying { get; private set; }
-
-   public static GUIContent toolboxBreadcrumbs { get; private set; }
 
    public static GUIContent[] SaveMethodOptions { get; private set; }
 

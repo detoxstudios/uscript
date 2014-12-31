@@ -255,110 +255,11 @@ public static class uScriptGUIStyle
          padding = new RectOffset(16, 16, 16, 16)
       };
 
-      PanelMessageError = new GUIStyle(GUI.skin.box)
-      {
-         normal = { textColor = EditorStyles.boldLabel.normal.textColor },
-         font = EditorStyles.boldLabel.font,
-         wordWrap = true,
-         stretchWidth = true
-      };
-
       Underline = new GUIStyle(EditorStyles.boldLabel)
       {
          normal = { background = textureUnderline },
          border = new RectOffset(0, 0, 0, 2),
          padding = new RectOffset(0, 0, 2, 2)
-      };
-
-      ReferenceButtonIcon = new GUIStyle(EditorStyles.miniButton)
-      {
-         name = "uScript_referenceButtonIcon",
-         alignment = TextAnchor.MiddleCenter,
-         imagePosition = ImagePosition.ImageOnly,
-         padding = new RectOffset(),
-         margin = new RectOffset(4, 4, 0, 0),
-         fixedHeight = 20,
-         fixedWidth = 20
-      };
-
-      ReferenceButtonText = new GUIStyle(EditorStyles.miniButton)
-      {
-         name = "uScript_referenceButtonText",
-         alignment = TextAnchor.MiddleCenter,
-         padding = new RectOffset(3, 6, 2, 4),
-         margin = new RectOffset(4, 4, 0, 0),
-         fontSize = 11,
-         fixedHeight = 20
-      };
-
-      ReferenceDetailBox = new GUIStyle(GUI.skin.box)
-      {
-         name = "uScript_referenceDetailBox",
-         margin = new RectOffset(24, 24, 16, 16),
-         padding = new RectOffset(4, 4, 4, 4)
-      };
-
-      ReferenceDetailTitle = new GUIStyle(EditorStyles.boldLabel)
-      {
-         name = "uScript_referenceDetailTitle",
-         margin = new RectOffset(),
-         padding = new RectOffset(2, 2, 2, 3),
-         stretchWidth = false
-      };
-
-      ReferenceDetailLabel = new GUIStyle(EditorStyles.boldLabel)
-      {
-         name = "uScript_referenceDetailLabel",
-         margin = new RectOffset(),
-         padding = new RectOffset(2, 2, 2, 3),
-         stretchWidth = false
-      };
-
-      ReferenceDetailValue = new GUIStyle(ReferenceDetailLabel)
-      {
-         name = "uScript_referenceDetailValue",
-         alignment = TextAnchor.MiddleRight,
-         margin = new RectOffset(12, 0, 0, 0)
-      };
-
-      ReferenceDetailAlertLabel = new GUIStyle(EditorStyles.boldLabel)
-      {
-         name = "uScript_referenceDetailAlertLabel",
-         margin = new RectOffset(),
-         padding = new RectOffset(2, 2, 2, 3),
-         normal = { textColor = Color.red },
-         wordWrap = true
-      };
-
-      ReferenceDetailAlertValue = new GUIStyle(ReferenceDetailAlertLabel)
-      {
-         name = "uScript_referenceDetailAlertValue",
-         alignment = TextAnchor.MiddleRight,
-         margin = new RectOffset(12, 0, 0, 0)
-      };
-
-      ReferenceName = new GUIStyle(EditorStyles.boldLabel)
-      {
-         name = "referenceName",
-         normal = { background = textureUnderline },
-         border = new RectOffset(0, 0, 0, 2),
-         padding = new RectOffset(0, 0, 2, 2)
-      };
-
-      ReferenceInfo = new GUIStyle(EditorStyles.miniLabel)
-      {
-         name = "uScript_referenceInfo",
-         alignment = TextAnchor.LowerRight,
-         padding = new RectOffset(0, 0, 3, 2)
-      };
-
-      ReferenceDesc = new GUIStyle(EditorStyles.label)
-      {
-         name = "referenceDesc",
-         padding = new RectOffset(0, 0, 0, 3),
-         stretchHeight = false,
-         stretchWidth = true,
-         wordWrap = true
       };
 
       PropertyButtonLeft = new GUIStyle("ButtonLeft")
@@ -522,8 +423,6 @@ public static class uScriptGUIStyle
 
    public static GUIStyle PanelMessageBold { get; private set; }
 
-   public static GUIStyle PanelMessageError { get; private set; }
-
    public static GUIStyle PropertyButtonLeft { get; private set; }
 
    public static GUIStyle PropertyButtonMiddleDeprecated { get; private set; }
@@ -551,28 +450,6 @@ public static class uScriptGUIStyle
    public static GUIStyle PropertyTextArea { get; private set; }
 
    public static GUIStyle PropertyTextField { get; private set; }
-
-   public static GUIStyle ReferenceInfo { get; private set; }
-
-   public static GUIStyle ReferenceName { get; private set; }
-
-   public static GUIStyle ReferenceDesc { get; private set; }
-
-   public static GUIStyle ReferenceButtonIcon { get; private set; }
-
-   public static GUIStyle ReferenceButtonText { get; private set; }
-
-   public static GUIStyle ReferenceDetailBox { get; private set; }
-
-   public static GUIStyle ReferenceDetailTitle { get; private set; }
-
-   public static GUIStyle ReferenceDetailLabel { get; private set; }
-
-   public static GUIStyle ReferenceDetailValue { get; private set; }
-
-   public static GUIStyle ReferenceDetailAlertLabel { get; private set; }
-
-   public static GUIStyle ReferenceDetailAlertValue { get; private set; }
 
    public static GUIStyle ScriptRowOdd { get; private set; }
 

@@ -30,8 +30,8 @@ public class ReferenceWindow : EditorWindow
    public static void Init()
    {
       // Get existing open window or if none, make a new one:
-      window = EditorWindow.GetWindow<ReferenceWindow>(true, "uScript Quick Command Reference", true) as ReferenceWindow;
-      window.isFirstRun = true;   // unnecessary, but we'll get a warning that 'window' is unused, otherwise
+      window = GetWindow<ReferenceWindow>(true, "uScript Quick Command Reference", true);
+      window.isFirstRun = true;
    }
 
    public void OnGUI()
@@ -117,7 +117,7 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginVertical(Style.CommandSection);
       {
-         GUILayout.Label("Editor Commands", uScriptGUIStyle.ReferenceName);
+         GUILayout.Label("Editor Commands", Style.SectionHeader);
 
          this.DrawCommand("Online uScript documentation", ".Press_F1");
 
@@ -146,7 +146,7 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginVertical(Style.CommandSection);
       {
-         GUILayout.Label("Canvas Commands", uScriptGUIStyle.ReferenceName);
+         GUILayout.Label("Canvas Commands", Style.SectionHeader);
 
          this.DrawCommand("Pan Canvas", ".Hold_Alt+LMB_.then drag");
          this.DrawCommand(string.Empty, "or_.Hold_MMB_.then drag");
@@ -177,7 +177,7 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginVertical(Style.CommandSection);
       {
-         GUILayout.Label("Node Commands", uScriptGUIStyle.ReferenceName);
+         GUILayout.Label("Node Commands", Style.SectionHeader);
 
          this.DrawCommand("New node selection", ".Click_LMB_.on node");
          this.DrawCommand(string.Empty, "or_.Hold_LMB_.on canvas and drag over node(s)");
@@ -212,7 +212,7 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginVertical(Style.CommandSection);
       {
-         GUILayout.Label("File Menu Commands", uScriptGUIStyle.ReferenceName);
+         GUILayout.Label("File Menu Commands", Style.SectionHeader);
 
          this.DrawCommand("Open File Menu", ".Press_Alt+F", ".Press_Ctrl+F");
 
@@ -235,7 +235,7 @@ public class ReferenceWindow : EditorWindow
    {
       EditorGUILayout.BeginVertical(Style.CommandSection);
       {
-         GUILayout.Label("Quick Node Placement Commands", uScriptGUIStyle.ReferenceName);
+         GUILayout.Label("Quick Node Placement Commands", Style.SectionHeader);
 
          GUILayout.Label(
             "Some nodes can be quickly placed on the graph by holding the associated key and clicking the"
@@ -483,10 +483,29 @@ public class ReferenceWindow : EditorWindow
             normal = { textColor = EditorStyles.boldLabel.normal.textColor }
          };
 
+         SectionHeader = new GUIStyle(EditorStyles.boldLabel)
+         {
+            normal = { background = uScriptGUI.GetSkinnedTexture("Underline") },
+            border = new RectOffset(0, 0, 0, 2),
+            padding = new RectOffset(0, 0, 2, 2)
+         };
+
          Window = new GUIStyle { padding = new RectOffset(32, 32, 16, 32) };
       }
 
-      public static GUIStyle Window { get; private set; }
+      public static GUIStyle CommandContext { get; private set; }
+
+      public static GUIStyle CommandKey { get; private set; }
+
+      public static GUIStyle CommandMouse { get; private set; }
+
+      public static GUIStyle CommandOr { get; private set; }
+
+      public static GUIStyle CommandPlus { get; private set; }
+
+      public static GUIStyle CommandSection { get; private set; }
+
+      public static GUIStyle CommandSectionDescription { get; private set; }
 
       public static GUIStyle PanelIcon { get; private set; }
 
@@ -494,18 +513,8 @@ public class ReferenceWindow : EditorWindow
 
       public static GUIStyle PanelDescription { get; private set; }
 
-      public static GUIStyle CommandSection { get; private set; }
+      public static GUIStyle SectionHeader { get; private set; }
 
-      public static GUIStyle CommandSectionDescription { get; private set; }
-
-      public static GUIStyle CommandKey { get; private set; }
-
-      public static GUIStyle CommandMouse { get; private set; }
-
-      public static GUIStyle CommandContext { get; private set; }
-
-      public static GUIStyle CommandOr { get; private set; }
-
-      public static GUIStyle CommandPlus { get; private set; }
+      public static GUIStyle Window { get; private set; }
    }
 }

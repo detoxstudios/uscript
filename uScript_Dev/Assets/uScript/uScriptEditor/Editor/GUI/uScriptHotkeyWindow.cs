@@ -492,7 +492,7 @@ namespace Detox.Editor.GUI
       {
          EditorGUILayout.BeginVertical(Style.CommandSection);
          {
-            GUILayout.Label("Canvas Commands", uScriptGUIStyle.ReferenceName);
+            GUILayout.Label("Canvas Commands", Style.SectionHeader);
 
             this.DrawCommand("Pan Canvas", "[Alt]+[LMB] then [drag]");
             this.DrawCommand(string.Empty, "[MMB] then [drag]");
@@ -523,7 +523,7 @@ namespace Detox.Editor.GUI
       {
          EditorGUILayout.BeginVertical(Style.CommandSection);
          {
-            GUILayout.Label("Editor Commands", uScriptGUIStyle.ReferenceName);
+            GUILayout.Label("Editor Commands", Style.SectionHeader);
 
             this.DrawCommand("Online uScript documentation", "[F1]");
 
@@ -552,7 +552,7 @@ namespace Detox.Editor.GUI
       {
          EditorGUILayout.BeginVertical(Style.CommandSection);
          {
-            GUILayout.Label("File Menu Commands", uScriptGUIStyle.ReferenceName);
+            GUILayout.Label("File Menu Commands", Style.SectionHeader);
 
             this.DrawCommand("Open File Menu", "[Alt]+[F]", "[Ctrl]+[F]");
 
@@ -575,7 +575,7 @@ namespace Detox.Editor.GUI
       {
          EditorGUILayout.BeginVertical(Style.CommandSection);
          {
-            GUILayout.Label("Node Commands", uScriptGUIStyle.ReferenceName);
+            GUILayout.Label("Node Commands", Style.SectionHeader);
 
             this.DrawCommand("New node selection", "[LMB] on node");
             this.DrawCommand(string.Empty, "[LMB] on canvas and [drag] over node(s)");
@@ -610,7 +610,7 @@ namespace Detox.Editor.GUI
       {
          EditorGUILayout.BeginVertical(Style.CommandSection);
          {
-            GUILayout.Label("Quick Node Placement Commands", uScriptGUIStyle.ReferenceName);
+            GUILayout.Label("Quick Node Placement Commands", Style.SectionHeader);
 
             GUILayout.Label(
                "Some nodes can be quickly placed on the graph by holding the associated key and clicking the"
@@ -646,7 +646,7 @@ namespace Detox.Editor.GUI
       {
          EditorGUILayout.BeginVertical(Style.CommandSection);
          {
-            GUILayout.Label("Virtual Keyboard and Mouse Buttons", uScriptGUIStyle.ReferenceName);
+            GUILayout.Label("Virtual Keyboard and Mouse Buttons", Style.SectionHeader);
 
             this.DrawCommandBasic("LINE 1", new[] { KeyCode.Escape, KeyCode.F1, KeyCode.F2, KeyCode.F3, KeyCode.F4, KeyCode.F5, KeyCode.F6, KeyCode.F7, KeyCode.F8, KeyCode.F9, KeyCode.F10, KeyCode.F11, KeyCode.F12 });
             this.DrawCommandBasic("LINE 2", new[] { KeyCode.BackQuote, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9, KeyCode.Alpha0, KeyCode.Minus, KeyCode.Equals, KeyCode.Backspace });
@@ -812,50 +812,50 @@ namespace Detox.Editor.GUI
          static Style()
          {
             ButtonToolbarDropDown = new GUIStyle(EditorStyles.toolbarButton)
-                                       {
-                                          contentOffset = new Vector2(0, 2),
-                                          stretchWidth = false
-                                       };
+            {
+               contentOffset = new Vector2(0, 2),
+               stretchWidth = false
+            };
 
             CommandKey = new GUIStyle(EditorStyles.miniButton)
-                            {
-                               margin = new RectOffset(0, 0, 2, 2),
-                               stretchWidth = false
-                            };
+            {
+               margin = new RectOffset(0, 0, 2, 2),
+               stretchWidth = false
+            };
 
             CommandKeyDown = new GUIStyle(EditorStyles.miniButton)
-                                {
-                                   //normal = EditorStyles.miniButton.active,
-                                   normal = EditorStyles.miniButton.onNormal,
-                                   margin = new RectOffset(0, 0, 2, 2),
-                                   stretchWidth = false
-                                };
+            {
+               //normal = EditorStyles.miniButton.active,
+               normal = EditorStyles.miniButton.onNormal,
+               margin = new RectOffset(0, 0, 2, 2),
+               stretchWidth = false
+            };
 
             CommandMouse = new GUIStyle(EditorStyles.label)
-                              {
-                                 margin = new RectOffset(0, 0, 2, 2),
-                                 stretchWidth = false
-                              };
+            {
+               margin = new RectOffset(0, 0, 2, 2),
+               stretchWidth = false
+            };
 
             CommandMouseDown = new GUIStyle(EditorStyles.boldLabel)
-                                  {
-                                     //fontStyle = FontStyle.Bold,
-                                     margin = new RectOffset(0, 0, 2, 2),
-                                     stretchWidth = false
-                                  };
+            {
+               //fontStyle = FontStyle.Bold,
+               margin = new RectOffset(0, 0, 2, 2),
+               stretchWidth = false
+            };
 
             CommandOr = new GUIStyle(EditorStyles.label)
-                           {
-                              fontStyle = FontStyle.Italic,
-                              margin = new RectOffset(8, 8, 2, 2),
-                              stretchWidth = false
-                           };
+            {
+               fontStyle = FontStyle.Italic,
+               margin = new RectOffset(8, 8, 2, 2),
+               stretchWidth = false
+            };
 
             CommandPlus = new GUIStyle(EditorStyles.label)
-                             {
-                                margin = new RectOffset(0, 0, 2, 2),
-                                stretchWidth = false
-                             };
+            {
+               margin = new RectOffset(0, 0, 2, 2),
+               stretchWidth = false
+            };
 
             CommandText = new GUIStyle(EditorStyles.label)
             {
@@ -866,16 +866,21 @@ namespace Detox.Editor.GUI
             CommandSection = new GUIStyle { margin = new RectOffset(8, 8, 0, 16), stretchWidth = true };
 
             CommandSectionDescription = new GUIStyle(EditorStyles.label)
-                                           {
-                                              margin = new RectOffset(4, 4, 4, 16),
-                                              padding = new RectOffset(3, 3, 1, 0),
-                                              wordWrap = true
-                                           };
+            {
+               margin = new RectOffset(4, 4, 4, 16),
+               padding = new RectOffset(3, 3, 1, 0),
+               wordWrap = true
+            };
+
+            SectionHeader = new GUIStyle(EditorStyles.boldLabel)
+            {
+               normal = { background = uScriptGUI.GetSkinnedTexture("Underline") },
+               border = new RectOffset(0, 0, 0, 2),
+               padding = new RectOffset(0, 0, 2, 2)
+            };
 
             Window = new GUIStyle { padding = new RectOffset(32, 32, 16, 32) };
          }
-
-         public static GUIStyle Window { get; private set; }
 
          public static GUIStyle ButtonToolbarDropDown { get; private set; }
 
@@ -883,40 +888,23 @@ namespace Detox.Editor.GUI
 
          public static GUIStyle CommandSectionDescription { get; private set; }
 
-         /// <summary>
-         /// Gets the style for keyboard shortcuts.
-         /// </summary>
          public static GUIStyle CommandKey { get; private set; }
 
-         /// <summary>
-         /// Gets the style for active keyboard shortcuts.
-         /// </summary>
          public static GUIStyle CommandKeyDown { get; private set; }
 
-         /// <summary>
-         /// Gets the style for mouse shortcuts.
-         /// </summary>
          public static GUIStyle CommandMouse { get; private set; }
 
-         /// <summary>
-         /// Gets the style for active mouse shortcuts.
-         /// </summary>
          public static GUIStyle CommandMouseDown { get; private set; }
 
-         /// <summary>
-         /// Gets the style for the "or" that separates shortcut combos.
-         /// </summary>
          public static GUIStyle CommandOr { get; private set; }
 
-         /// <summary>
-         /// Gets the style for the "+" that combines shortcut keys/input.
-         /// </summary>
          public static GUIStyle CommandPlus { get; private set; }
 
-         /// <summary>
-         /// Gets the style for normal shortcut text.
-         /// </summary>
          public static GUIStyle CommandText { get; private set; }
+
+         public static GUIStyle SectionHeader { get; private set; }
+
+         public static GUIStyle Window { get; private set; }
       }
    }
 #if !UNITY_3_5
