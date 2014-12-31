@@ -54,6 +54,8 @@ public sealed partial class uScript : EditorWindow
 
    private static uScript instance;
 
+   private static bool shouldTestCompatibility;
+
    // So we know if the current script we've cached is dirty or has been saved to a file
    private bool currentScriptDirty;
    private string currentScript;
@@ -329,9 +331,9 @@ public sealed partial class uScript : EditorWindow
    {
       get
       {
-         if (0.0f == unityVersion)
+         if (unityVersion < 1)
          {
-            Type t = Instance.GetType("uScriptUnityVersion");
+            var t = Instance.GetType("uScriptUnityVersion");
             if (null != t)
             {
                var v = Activator.CreateInstance(t) as uScriptIUnityVersion;
@@ -341,13 +343,9 @@ public sealed partial class uScript : EditorWindow
                }
             }
 
-            if (0.0f != unityVersion)
+            if (unityVersion > 1)
             {
                uScriptDebug.Log("Unity Version: " + unityVersion, uScriptDebug.Type.Debug);
-            }
-            else
-            {
-               uScriptDebug.Log("This uScript build does not support the version of Unity (" + Application.unityVersion + ") you are running, and it may not function as intended.", uScriptDebug.Type.Warning);
             }
          }
 
@@ -554,6 +552,29 @@ public sealed partial class uScript : EditorWindow
    {
       this.mouseDown = false;
       this.mouseDownOverCanvas = false;
+   }
+
+   private static void RequestVersionCompatiblyTest()
+   {
+      shouldTestCompatibility = true;
+   }
+
+   private static void TestVersionCompatibility()
+   {
+      if (shouldTestCompatibility == false || UnityVersion > 1)
+      {
+         return;
+      }
+
+      shouldTestCompatibility = false;
+
+      var msg =
+         string.Format(
+            "This uScript build does not support the version of Unity ({0}) you are running, and it may not function as intended.",
+            Application.unityVersion);
+
+      uScriptDebug.Log(msg, uScriptDebug.Type.Warning);
+      EditorUtility.DisplayDialog("Incompatibility Warning", msg, "Okay");
    }
 
    private void Launching()
@@ -925,10 +946,13 @@ public sealed partial class uScript : EditorWindow
    }
 
    private string m_CurrentBreakpoint = string.Empty;
-   private bool m_IsDebuggingValues = false;
+   private bool m_IsDebuggingValues;
 
-   void Update()
+   internal void Update()
    {
+      TestVersionCompatibility();
+
+
       //Debug.Log("Update()\n" + EditorWindow.focusedWindow + " has focus, the mouse is over " + EditorWindow.mouseOverWindow);
 
       if (null == this.complexData)
@@ -1347,10 +1371,13 @@ public sealed partial class uScript : EditorWindow
          uScriptGUI.PanelPropertiesWidth = (int)(uScript.Instance.position.width / 3);
          uScriptGUI.PanelScriptsWidth = (int)(uScript.Instance.position.width / 3);
 
+
          if (Preferences.ShowAtStartup)
          {
             WelcomeWindow.Init();
          }
+
+         RequestVersionCompatiblyTest();
       }
 
       if (m_ScriptEditorCtrl == null)
