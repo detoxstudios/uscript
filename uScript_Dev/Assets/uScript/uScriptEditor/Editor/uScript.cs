@@ -331,7 +331,7 @@ public sealed partial class uScript : EditorWindow
       {
          if (0.0f == unityVersion)
          {
-            Type t = uScript.Instance.GetType("uScriptUnityVersion");
+            Type t = Instance.GetType("uScriptUnityVersion");
             if (null != t)
             {
                var v = Activator.CreateInstance(t) as uScriptIUnityVersion;
@@ -347,7 +347,7 @@ public sealed partial class uScript : EditorWindow
             }
             else
             {
-               uScriptDebug.Log("This uScript build does not support the version of Unity (" + UnityEngine.Application.unityVersion + ") you are running, and it may not function as intended.", uScriptDebug.Type.Warning);
+               uScriptDebug.Log("This uScript build does not support the version of Unity (" + Application.unityVersion + ") you are running, and it may not function as intended.", uScriptDebug.Type.Warning);
             }
          }
 
@@ -563,8 +563,6 @@ public sealed partial class uScript : EditorWindow
          return;
       }
 
-      //Debug.Log("Launching\n");
-
       if (false == this.launched)
       {
          LaunchingFromUnity();
@@ -578,7 +576,7 @@ public sealed partial class uScript : EditorWindow
 
    private void LaunchingFromUnity()
    {
-      uScriptDebug.Log("Launching From Unity.", uScriptDebug.Type.Debug);
+      uScriptDebug.Log("Launching From Unity", uScriptDebug.Type.Debug);
 
       LoadSettings();
 
@@ -1608,34 +1606,21 @@ public sealed partial class uScript : EditorWindow
             // mouse is over the canvas when the event occurs
             if (this._canvasRect.Contains(e.mousePosition))
             {
-               // Use the new context menu in Unity 3.4 and higher
-               if (UnityVersion < 3.4f)
-               {
-                  this.m_ScriptEditorCtrl.BuildContextMenu();
+               var profile = new Profile("BuildContextMenu");
 
-                  uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
+               this.m_ScriptEditorCtrl.BuildContextMenu();
 
-                  this.m_ContextX = (int)e.mousePosition.x;
-                  this.m_ContextY = (int)(e.mousePosition.y - this._canvasRect.yMin);
-               }
-               else
-               {
-                  Profile overall = new Profile("BuildContextMenu");
+               this.BuildCanvasContextMenu(null, null);
+               this._canvasContextMenu.ShowAsContext();
 
-                  this.m_ScriptEditorCtrl.BuildContextMenu();
+               profile.End();
 
-                  this.BuildCanvasContextMenu(null, null);
-                  this._canvasContextMenu.ShowAsContext();
-
-                  overall.End();
-
-                  //// stupid hack to prevent the "canvasDragging" behavior
-                  //if (mouseDown)
-                  //{
-                  //   this.mouseDownRegion = MouseRegion.Reference;
-                  //   mouseDown = false;
-                  //}
-               }
+               //// stupid hack to prevent the "canvasDragging" behavior
+               //if (mouseDown)
+               //{
+               //   this.mouseDownRegion = MouseRegion.Reference;
+               //   mouseDown = false;
+               //}
 
                e.Use();
             }
