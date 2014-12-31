@@ -14,11 +14,15 @@
 //#define DETOX_STORE_PLE // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
 //#define CLOSED_BETA
 
+//#define ENABLE_DEBUG_LOG
+
 using System;
 using System.Collections;
 using System.Reflection;
 
 using JetBrains.Annotations;
+
+using UnityEditor;
 
 using UnityEngine;
 
@@ -340,6 +344,7 @@ public class uScriptDebug : MonoBehaviour
       if (condition == false)
       {
          Log(message, type);
+         EditorUtility.DisplayDialog("uScript Assertion Failed!", message, "Okay");
          Debug.Break();
       }
    }
