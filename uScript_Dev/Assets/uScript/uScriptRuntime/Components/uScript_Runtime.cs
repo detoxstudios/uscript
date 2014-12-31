@@ -323,20 +323,23 @@ public class uScriptDebug : MonoBehaviour
    [System.Diagnostics.Conditional("UNITY_EDITOR")]
    public static void Assert(bool condition)
    {
-      if (condition == false)
-      {
-         Debug.LogError("Assertion failed\n");
-         Debug.Break();
-      }
+      Assert(condition, "Assertion failed", Type.Error);
    }
 
    [ContractAnnotation("condition: false => halt")]
    [System.Diagnostics.Conditional("UNITY_EDITOR")]
    public static void Assert(bool condition, string message)
    {
+      Assert(condition, message, Type.Error);
+   }
+
+   [ContractAnnotation("condition: false => halt")]
+   [System.Diagnostics.Conditional("UNITY_EDITOR")]
+   public static void Assert(bool condition, string message, Type type)
+   {
       if (condition == false)
       {
-         Debug.LogError(message + "\n");
+         Log(message, type);
          Debug.Break();
       }
    }
