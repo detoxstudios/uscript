@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="uScriptUnityVersion.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the uScriptUnityVersion type.
@@ -25,6 +25,8 @@ public class uScriptUnityVersion : uScriptIUnityVersion
    public float Version { get { return 4.5f; } }
 #elif UNITY_4_6
    public float Version { get { return 4.6f; } }
+#elif UNITY_5_0
+   public float Version { get { return 5.0f; } }
 #else
    public float Version { get { return 0.0f; } }
 #endif
