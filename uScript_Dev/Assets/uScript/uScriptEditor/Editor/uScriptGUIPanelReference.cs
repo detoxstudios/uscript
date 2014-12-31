@@ -174,36 +174,36 @@ namespace Detox.Editor
 
          EditorGUILayout.BeginHorizontal();
          {
-            EditorGUILayout.BeginHorizontal(GUILayout.Width(Style.DetailTitle.fixedWidth));
-            {
-               GUILayout.FlexibleSpace();
-
-               if (GUILayout.Button(Content.ButtonFindDeprecated, Style.ButtonFindDeprecated))
-               {
-                  this.deprecatedNode = scriptEditorCtrl.GetNextDeprecatedNode(this.deprecatedNode);
-                  if (this.deprecatedNode != null)
-                  {
-                     scriptEditorCtrl.CenterOnNode(this.deprecatedNode);
-                  }
-               }
-
-               if (GUILayout.Button(Content.ButtonFixAllDeprecated, Style.ButtonFixAllDeprecated))
-               {
-                  scriptEditorCtrl.UpgradeDeprecatedNodes(flowChart.Nodes.Cast<DisplayNode>().ToArray());
-               }
-            }
-
-            EditorGUILayout.EndHorizontal();
-
             var tempContent = uScriptGUIContent.Temp(count.ToString(CultureInfo.InvariantCulture));
-            GUILayout.Label(tempContent, Style.ReferenceDetailAlertValue, GUILayout.Width(Style.DetailValue.fixedWidth));
+            GUILayout.Label(tempContent, Style.DetailAlertValue, GUILayout.Width(Style.DetailValue.fixedWidth));
 
             var message = string.Format("deprecated {0} must be updated or replaced.", count == 1 ? "node" : "nodes");
             tempContent = uScriptGUIContent.Temp(message);
-            GUILayout.Label(tempContent, Style.ReferenceDetailAlertLabel);
+            GUILayout.Label(tempContent, Style.DetailAlertLabel);
          }
-
          EditorGUILayout.EndHorizontal();
+
+         EditorGUILayout.BeginHorizontal();
+         {
+            GUILayout.Space(24 + Style.DetailAlertValue.fixedWidth);
+
+            if (GUILayout.Button(Content.ButtonFindDeprecated, Style.ButtonFindDeprecated))
+            {
+               this.deprecatedNode = scriptEditorCtrl.GetNextDeprecatedNode(this.deprecatedNode);
+               if (this.deprecatedNode != null)
+               {
+                  scriptEditorCtrl.CenterOnNode(this.deprecatedNode);
+               }
+            }
+
+            if (GUILayout.Button(Content.ButtonFixAllDeprecated, Style.ButtonFixAllDeprecated))
+            {
+               scriptEditorCtrl.UpgradeDeprecatedNodes(flowChart.Nodes.Cast<DisplayNode>().ToArray());
+            }
+         }
+         EditorGUILayout.EndHorizontal();
+
+         GUILayout.Space(4);
       }
 
       private void DrawGraphDetails()
@@ -212,25 +212,14 @@ namespace Detox.Editor
 
          EditorGUILayout.BeginVertical(Style.DetailBox);
          {
-            EditorGUILayout.BeginHorizontal();
-            {
-               GUILayout.Label(Content.DetailTitle, Style.DetailTitle);
+            GUILayout.Label(Content.DetailTitle, Style.DetailTitle);
 
-               EditorGUILayout.BeginVertical();
-               {
-                  var flowChart = uScript.Instance.ScriptEditorCtrl.FlowChart;
-                  this.DrawGraphDetailItem("node", flowChart.Nodes.Length, flowChart.SelectedNodes.Length);
-                  this.DrawGraphDetailItem("link", flowChart.Links.Length, flowChart.SelectedLinks.Length);
-               }
-
-               EditorGUILayout.EndVertical();
-            }
-
-            EditorGUILayout.EndHorizontal();
+            var flowChart = uScript.Instance.ScriptEditorCtrl.FlowChart;
+            this.DrawGraphDetailItem("node", flowChart.Nodes.Length, flowChart.SelectedNodes.Length);
+            this.DrawGraphDetailItem("link", flowChart.Links.Length, flowChart.SelectedLinks.Length);
 
             this.DrawGraphDetailItemDeprecated();
          }
-
          EditorGUILayout.EndVertical();
       }
 
@@ -329,7 +318,6 @@ namespace Detox.Editor
                EditorGUIUtility.AddCursorRect(rectNameRow, MouseCursor.Link);
             }
          }
-
          EditorGUILayout.EndHorizontal();
 
          // Node description
@@ -472,7 +460,6 @@ namespace Detox.Editor
          if (Style.DetailValue.fixedWidth < 1)
          {
             // Execute once, before the width of the value has been calculated
-            Style.DetailTitle.fixedWidth = Style.DetailTitle.CalcSize(Content.DetailTitle).x;
             Style.DetailLabel.fixedWidth = Style.DetailLabel.CalcSize(uScriptGUIContent.Temp("nodes")).x;
          }
 
@@ -485,9 +472,10 @@ namespace Detox.Editor
             this.detailsMaxValue = maxValue;
 
             // Reset the fixedWidth so CalcSize will determine the new size
-            Style.DetailValue.fixedWidth = 0;
-            Style.DetailValue.fixedWidth =
-               Style.DetailValue.CalcSize(uScriptGUIContent.Temp(maxValue.ToString(CultureInfo.InvariantCulture))).x;
+            Style.DetailAlertValue.fixedWidth = 0;
+            Style.DetailAlertValue.fixedWidth =
+               Style.DetailAlertValue.CalcSize(uScriptGUIContent.Temp(maxValue.ToString(CultureInfo.InvariantCulture))).x;
+            Style.DetailValue.fixedWidth = Style.DetailAlertValue.fixedWidth;
          }
       }
 
@@ -553,23 +541,24 @@ namespace Detox.Editor
       {
          static Style()
          {
-            ButtonFindDeprecated = new GUIStyle(EditorStyles.miniButton)
+            ButtonFindDeprecated = new GUIStyle(UnityEngine.GUI.skin.button)
             {
                alignment = TextAnchor.MiddleCenter,
                imagePosition = ImagePosition.ImageOnly,
                padding = new RectOffset(),
-               margin = new RectOffset(4, 4, 0, 0),
+               margin = new RectOffset(4, 4, 4, 4),
                fixedHeight = 20,
-               fixedWidth = 20
+               fixedWidth = 24
             };
 
-            ButtonFixAllDeprecated = new GUIStyle(EditorStyles.miniButton)
+            ButtonFixAllDeprecated = new GUIStyle(UnityEngine.GUI.skin.button)
             {
                alignment = TextAnchor.MiddleCenter,
-               padding = new RectOffset(3, 6, 2, 4),
-               margin = new RectOffset(4, 4, 0, 0),
+               padding = new RectOffset(8, 8, 2, 4),
+               margin = new RectOffset(4, 4, 4, 4),
                fontSize = 11,
-               fixedHeight = 20
+               fixedHeight = 20,
+               stretchWidth = false
             };
 
             DeprecatedNodeMessage = new GUIStyle(UnityEngine.GUI.skin.box)
@@ -582,9 +571,10 @@ namespace Detox.Editor
 
             DetailTitle = new GUIStyle(EditorStyles.boldLabel)
             {
-               margin = new RectOffset(),
-               padding = new RectOffset(2, 12, 1, 2),
-               stretchWidth = false
+               normal = { background = uScriptGUI.GetSkinnedTexture("Underline") },
+               border = new RectOffset(0, 0, 0, 2),
+               padding = new RectOffset(0, 0, 0, 2),
+               margin = new RectOffset(0, 0, 0, 4)
             };
 
             DetailLabel = new GUIStyle(EditorStyles.label)
@@ -598,6 +588,7 @@ namespace Detox.Editor
 
             DetailValue = new GUIStyle(DetailLabel)
             {
+               margin = new RectOffset(24, 0, 0, 0),
                alignment = TextAnchor.UpperRight,
             };
 
@@ -607,18 +598,18 @@ namespace Detox.Editor
                padding = new RectOffset(4, 4, 4, 4)
             };
 
-            ReferenceDetailAlertLabel = new GUIStyle(EditorStyles.boldLabel)
+            DetailAlertLabel = new GUIStyle(EditorStyles.boldLabel)
             {
                margin = new RectOffset(),
-               padding = new RectOffset(2, 2, 2, 3),
+               padding = new RectOffset(2, 2, 8, 2),
                normal = { textColor = Color.red },
                wordWrap = true
             };
 
-            ReferenceDetailAlertValue = new GUIStyle(ReferenceDetailAlertLabel)
+            DetailAlertValue = new GUIStyle(DetailAlertLabel)
             {
-               alignment = TextAnchor.MiddleRight,
-               margin = new RectOffset(12, 0, 0, 0)
+               alignment = TextAnchor.UpperRight,
+               margin = new RectOffset(24, 0, 0, 0)
             };
 
             ReferenceName = new GUIStyle(EditorStyles.boldLabel)
@@ -643,7 +634,7 @@ namespace Detox.Editor
             };
 
             uScriptDebug.Assert(
-               DetailTitle.fixedWidth < 1 && DetailLabel.fixedWidth < 1 && DetailValue.fixedWidth < 1,
+               DetailLabel.fixedWidth < 1 && DetailValue.fixedWidth < 1 && DetailAlertValue.fixedWidth < 1,
                "Certain styles have dynamic fixedWidths, and should not be set during initialization.",
                uScriptDebug.Type.Warning);
          }
@@ -653,6 +644,10 @@ namespace Detox.Editor
          public static GUIStyle ButtonFixAllDeprecated { get; private set; }
 
          public static GUIStyle DeprecatedNodeMessage { get; private set; }
+
+         public static GUIStyle DetailAlertLabel { get; private set; }
+
+         public static GUIStyle DetailAlertValue { get; private set; }
 
          public static GUIStyle DetailBox { get; private set; }
 
@@ -669,10 +664,6 @@ namespace Detox.Editor
          public static GUIStyle ReferenceName { get; private set; }
 
          public static GUIStyle ReferenceDesc { get; private set; }
-
-         public static GUIStyle ReferenceDetailAlertLabel { get; private set; }
-
-         public static GUIStyle ReferenceDetailAlertValue { get; private set; }
       }
    }
 }
