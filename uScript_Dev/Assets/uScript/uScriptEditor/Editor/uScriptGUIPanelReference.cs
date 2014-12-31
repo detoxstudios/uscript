@@ -175,7 +175,7 @@ namespace Detox.Editor
          EditorGUILayout.BeginHorizontal();
          {
             var tempContent = uScriptGUIContent.Temp(count.ToString(CultureInfo.InvariantCulture));
-            GUILayout.Label(tempContent, Style.DetailAlertValue, GUILayout.Width(Style.DetailValue.fixedWidth));
+            GUILayout.Label(tempContent, Style.DetailAlertValue);
 
             var message = string.Format("deprecated {0} must be updated or replaced.", count == 1 ? "node" : "nodes");
             tempContent = uScriptGUIContent.Temp(message);
@@ -609,7 +609,9 @@ namespace Detox.Editor
             DetailAlertValue = new GUIStyle(DetailAlertLabel)
             {
                alignment = TextAnchor.UpperRight,
-               margin = new RectOffset(24, 0, 0, 0)
+               margin = new RectOffset(24, 0, 0, 0),
+               stretchWidth = false,
+               wordWrap = false
             };
 
             ReferenceName = new GUIStyle(EditorStyles.boldLabel)
