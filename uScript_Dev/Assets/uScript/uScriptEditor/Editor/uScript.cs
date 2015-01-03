@@ -543,8 +543,6 @@ public sealed partial class uScript : EditorWindow
    {
       instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript");
       instance.Launching();
-
-      UpdateNotification.StartupCheck();
    }
 
    // Call to force release the mouse and stop a drag operation
@@ -1378,6 +1376,8 @@ public sealed partial class uScript : EditorWindow
          }
 
          RequestVersionCompatiblyTest();
+
+         UpdateNotification.StartupCheck();
       }
 
       if (m_ScriptEditorCtrl == null)
