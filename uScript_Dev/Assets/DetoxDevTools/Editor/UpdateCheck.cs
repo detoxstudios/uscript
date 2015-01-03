@@ -22,7 +22,7 @@ public class UpdateCheck : EditorWindow
    {
       // Get existing open window or if none, make a new one:
       //UpdateCheck window = (UpdateCheck)EditorWindow.GetWindow (typeof (UpdateCheck));
-      EditorWindow.GetWindow<UpdateCheck>();
+      GetWindow<UpdateCheck>();
    }
 
    internal void OnGUI()
@@ -44,7 +44,7 @@ public class UpdateCheck : EditorWindow
       GUILayout.Label("uScript", EditorStyles.boldLabel);
       EditorGUI.indentLevel++;
       EditorGUILayout.LabelField("Product Name", uScriptBuild.Name);
-      EditorGUILayout.LabelField("Product Type", UpdateNotification.ProductType);
+      EditorGUILayout.LabelField("Product Type", UpdateNotification.GetProductType());
       EditorGUILayout.LabelField("You are Using", uScriptBuild.Number);
       EditorGUILayout.LabelField("Latest Version", UpdateNotification.LatestVersion);
       EditorGUI.indentLevel--;
@@ -53,7 +53,12 @@ public class UpdateCheck : EditorWindow
 
       if (GUILayout.Button("Check for Updates"))
       {
-         this.updateStatus = UpdateNotification.ManualCheck();
+         UpdateNotification.ManualCheck();
+      }
+
+      if (GUILayout.Button("Startup Check"))
+      {
+         UpdateNotification.StartupCheck();
       }
 
       EditorGUILayout.Space();
@@ -89,7 +94,7 @@ public class UpdateCheck : EditorWindow
       GUILayout.Label("Server Response", EditorStyles.boldLabel);
       EditorGUI.indentLevel++;
       EditorGUILayout.LabelField("Determination", message);
-      EditorGUILayout.TextField("Raw Response", UpdateNotification.WebResponse ?? string.Empty);
+      //EditorGUILayout.TextField("Raw Response", UpdateNotification.WebResponse ?? string.Empty);
       EditorGUI.indentLevel--;
    }
 }
