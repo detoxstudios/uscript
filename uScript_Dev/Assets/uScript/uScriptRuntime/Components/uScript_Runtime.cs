@@ -50,6 +50,26 @@ public static class uScriptBuild
    //public string CurrentUnityBuild { get { return "3.4"; } }
    //public string BetaUnityBuild { get { return "3.5"; } }
    //public DateTime ExpireDate { get { return new DateTime(2011, 11, 30); } }
+
+   public enum EditionType { PLE, Basic, Pro }
+   public enum SourceType { Detox, Unity }
+
+#if UNITY_STORE_PRO
+   public const EditionType Edition = EditionType.Pro;
+   public const SourceType Source = SourceType.Unity;
+#elif UNITY_STORE_BASIC
+   public const EditionType Edition = EditionType.Basic;
+   public const SourceType Source = SourceType.Unity;
+#elif DETOX_STORE_PRO
+   public const EditionType Edition = EditionType.Pro;
+   public const SourceType Source = SourceType.Detox;
+#elif DETOX_STORE_BASIC
+   public const EditionType Edition = EditionType.Basic;
+   public const SourceType Source = SourceType.Detox;
+#else
+   public const EditionType Edition = EditionType.PLE;
+   public const SourceType Source = SourceType.Detox;
+#endif
 }
 
 // The list of asset types supported by the AssetBrowserWindow class
