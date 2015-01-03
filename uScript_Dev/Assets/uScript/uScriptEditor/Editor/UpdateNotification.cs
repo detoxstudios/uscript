@@ -63,7 +63,6 @@ public class UpdateNotification : EditorWindow
    {
       window = GetWindow<UpdateNotification>(true, string.Empty, true);
       window.isFirstRun = true;
-      window.wantsMouseMove = true;
       window.shouldUpdateLayout = true;
 
       updateStatus = UpdateStatus.CheckNeeded;
@@ -152,6 +151,14 @@ public class UpdateNotification : EditorWindow
          if (Application.platform == RuntimePlatform.WindowsEditor)
          {
             window.Focus();
+         }
+
+         // It seems like OnGUI() is first on Mac, but Update() is called first on Windows.
+         // Initialize some GUI members here just in case.
+         if (updateStatus == UpdateStatus.CheckNeeded)
+         {
+            this.Title = Content.TitleCheckInProgress;
+            this.Body = Content.BodyCheckInProgress;
          }
       }
 
