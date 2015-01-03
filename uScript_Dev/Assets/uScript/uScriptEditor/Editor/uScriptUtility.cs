@@ -171,22 +171,22 @@ public static class StringExtensions
    #region HTML Tags
    public static string Bold(this string value)
    {
-      return "<b>" + value + "</b>";
+      return string.Format("<b>{0}</b>", value);
    }
 
    public static string BoldItalic(this string value)
    {
-      return "<b><i>" + value + "</i></b>";
+      return string.Format("<b><i>{0}</i></b>", value);
    }
 
    public static string Italic(this string value)
    {
-      return "<i>" + value + "</i>";
+      return string.Format("<i>{0}</i>", value);
    }
 
    public static string Color(this string value, UnityEngine.Color color)
    {
-      return "<color=#" + color.ToHex() + ">" + value + "</color>";
+      return string.Format("<color=#{0}>{1}</color>", color.ToHex(), value);
    }
 
    public static string White(this string value)
