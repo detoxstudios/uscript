@@ -22,8 +22,6 @@ using System.Reflection;
 
 using JetBrains.Annotations;
 
-using UnityEditor;
-
 using UnityEngine;
 
 public static class uScriptBuild
@@ -364,7 +362,7 @@ public class uScriptDebug : MonoBehaviour
       if (condition == false)
       {
          Log(message, type);
-         EditorUtility.DisplayDialog("uScript Assertion Failed!", message, "Okay");
+         //UnityEditor.EditorUtility.DisplayDialog("uScript Assertion Failed!", message, "Okay");
          Debug.Break();
       }
    }
