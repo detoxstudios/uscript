@@ -64,9 +64,11 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GraphInfo.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\AboutWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItemScript.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\MenuLocation.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptCurrent.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptList.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\uScriptHotkeyWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\LicenseWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\LocalNodeDisplayNode.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\LogicNodeDisplayNode.cs" />

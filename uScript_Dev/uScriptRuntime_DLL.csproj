@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Annotations.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_BroadcastCustomEvent.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Lerper.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_MasterComponent.cs" />
