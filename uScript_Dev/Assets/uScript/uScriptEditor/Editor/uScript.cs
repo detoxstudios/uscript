@@ -601,9 +601,8 @@ public sealed partial class uScript : EditorWindow
 
       this.wantsMouseMove = true;
 
-      Directory.CreateDirectory(uScriptConfig.ConstantPaths.RootFolder);
-      Directory.CreateDirectory(uScriptConfig.ConstantPaths.uScriptNodes);
-      Directory.CreateDirectory(uScriptConfig.ConstantPaths.uScriptEditor);
+      Directory.CreateDirectory(uScriptConfig.ConstantPaths.Editor);
+      Directory.CreateDirectory(uScriptConfig.ConstantPaths.RuntimeNodes);
 
       Directory.CreateDirectory(Preferences.ProjectFiles);
       Directory.CreateDirectory(Preferences.UserScripts);
@@ -613,7 +612,7 @@ public sealed partial class uScript : EditorWindow
 
       // Move the uScriptUserTypes.cs.template file into the uScriptProjectFiles folder if one doesn't already exist.
       string userTypesFileTemplate = uScriptConfig.ConstantPaths.Templates + "/uScriptUserTypes.cs.template";
-      string userTypesFile = uScriptConfig.ConstantPaths.SettingsPath + "/uScriptUserTypes.cs";
+      string userTypesFile = uScriptConfig.ConstantPaths.Settings + "/uScriptUserTypes.cs";
       if (File.Exists(userTypesFileTemplate) && !File.Exists(userTypesFile))
       {
          File.Copy(userTypesFileTemplate, userTypesFile, false);
@@ -861,14 +860,14 @@ public sealed partial class uScript : EditorWindow
    public static void SetSetting(string key, object value)
    {
       AppData.Set(key, value);
-      AppData.Save(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
+      AppData.Save(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile);
    }
 
    public static void LoadSettings()
    {
-      if (File.Exists(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile))
+      if (File.Exists(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile))
       {
-         AppData.Load(uScriptConfig.ConstantPaths.SettingsPath + "/" + uScriptConfig.Files.SettingsFile);
+         AppData.Load(uScriptConfig.ConstantPaths.Settings + "/" + uScriptConfig.Files.SettingsFile);
       }
 
       Preferences.Load();
@@ -1437,14 +1436,14 @@ public sealed partial class uScript : EditorWindow
       // do external windows/popups
       DrawPopups();
 
+      // User input should be disabled during the export process
+      if (ExportPNG.IsExporting)
+      {
+         ExportPNG.ContinueExport();
+      }
+
       if (Event.current.type == EventType.Repaint)
       {
-         // Process the PNG export first
-         //
-         // The user should not be able to input during this process
-         //
-         Detox.Editor.ExportPNG.ProcessImageExport();
-
          uScriptGUI.MonitorGUIControlFocusChanges();
       }
 
@@ -3157,7 +3156,7 @@ public sealed partial class uScript : EditorWindow
 
    void FileMenuItem_ExportPNG()
    {
-      Detox.Editor.ExportPNG.Start();
+      Detox.Editor.ExportPNG.BeginExport();
    }
 
    void FileMenuItem_UpgradeDeprecatedNodes()
@@ -4237,7 +4236,7 @@ public sealed partial class uScript : EditorWindow
 
          Dictionary<Type, Type> uniqueNodes = new Dictionary<Type, Type>();
 
-         GatherDerivedTypes(uniqueNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptLogic));
+         GatherDerivedTypes(uniqueNodes, uScriptConfig.ConstantPaths.RuntimeNodes, typeof(uScriptLogic));
 
          GatherDerivedTypes(uniqueNodes, Preferences.UserNodes, typeof(uScriptLogic));
          GatherDerivedTypes(uniqueNodes, Preferences.NestedScripts, typeof(uScriptLogic));
@@ -4957,7 +4956,7 @@ public sealed partial class uScript : EditorWindow
          Dictionary<string, Type> uniqueObjects = new Dictionary<string, Type>();
 
          Dictionary<Type, Type> eventNodes = new Dictionary<Type, Type>();
-         GatherDerivedTypes(eventNodes, uScriptConfig.ConstantPaths.uScriptNodes, typeof(uScriptEvent));
+         GatherDerivedTypes(eventNodes, uScriptConfig.ConstantPaths.RuntimeNodes, typeof(uScriptEvent));
          GatherDerivedTypes(eventNodes, Preferences.UserNodes, typeof(uScriptEvent));
 
          foreach (UnityEngine.Object o in allObjects)

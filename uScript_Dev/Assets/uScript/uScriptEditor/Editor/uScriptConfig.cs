@@ -1,6 +1,11 @@
-// uScript uScriptConfig.cs
-// (C) 2010 Detox Studios LLC
-// Desc: uScript's configuration file. Edit settings here to configure the uScript visual scripting tool.
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="uScriptConfig.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   uScript's configuration file. Edit settings here to configure the uScript visual scripting tool.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 #define ENABLE_DEBUG_LOG
 
@@ -10,14 +15,12 @@
 // 4. Forum Build Only: Comment out UNITY_STORE_BUILD in uScript.cs and LicenseWindow.cs
 // 5. PLE Build Only: Uncomment FREE_PLE_BUILD in uScript_MasterComponent.cs
 
-
 using System;
 using System.Collections.Generic;
 
 using UnityEngine;
 
 // uScript uScript_EventHandler.cs
-// (C) 2010 Detox Studios LLC
 
 public struct uScriptConfigBlock
 {
@@ -132,6 +135,7 @@ public partial class uScriptConfig
       }
    }
 }
+
 public abstract class uScriptStyle
 {
    public abstract GUIStyle Get(string name);
@@ -342,7 +346,7 @@ public class uScriptDefaultStyle : uScriptStyle
       elementSettings["externalconnection_selected"] = element;
 
 
-      string assetPath = uScriptConfig.ConstantPaths.SkinPath + "/elements";
+      string assetPath = uScriptConfig.ConstantPaths.Skin + "/elements";
       assetPath = uScriptConfig.ConstantPaths.RelativePath(assetPath);
 
       System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo( assetPath );
@@ -751,45 +755,56 @@ public partial class uScriptConfig
 
    //do not override in the preferences path, 
    //these are accessed outside the scope of uScript.cs and our preferences file
-   public struct ConstantPaths
+   public static class ConstantPaths
    {
-      public static string SettingsPath      { get {return UnityEngine.Application.dataPath + "/uScriptProjectFiles"; } } 
-      public static string RootFolder        { get {return UnityEngine.Application.dataPath + "/uScript"; } }
-      public static string RuntimeFolder     { get {return RootFolder      + "/uScriptRuntime";} }
-      public static string uScriptEditor     { get {return RootFolder      + "/uScriptEditor";} }
-      public static string uScriptNodes      { get {return RuntimeFolder   + "/Nodes";} }
-      public static string GuiPath           { get {return uScriptEditor   + "/Editor/_GUI"; } }
-      public static string SkinPath          { get {return GuiPath         + "/uScriptDefault"; } }
-      public static string Gizmos            { get {return uScriptEditor   + "/Editor/_Gizmos"; } }
-      public static string Skins             { get { return uScriptEditor + "/Editor/Skins"; } }
-      public static string Screenshots       { get {return UnityEngine.Application.dataPath + "/../Screenshots"; } }
-      public static string Templates         { get {return uScriptEditor   + "/Editor/_Templates"; } }
+      static ConstantPaths()
+      {
+         var assets = Application.dataPath;
+
+         Editor = string.Format("{0}/uScript/uScriptEditor", assets);
+         RuntimeNodes = string.Format("{0}/uScript/uScriptRuntime/Nodes", assets);
+
+         Gizmos = string.Format("{0}/Editor/_Gizmos", Editor);
+         Skin = string.Format("{0}/Editor/_GUI/uScriptDefault", Editor);
+         Skins = string.Format("{0}/Editor/Skins", Editor);
+         Templates = string.Format("{0}/Editor/_Templates", Editor);
+
+         var path = assets.Substring(0, assets.LastIndexOf("/Assets", StringComparison.Ordinal));
+         Screenshots = string.Format("{0}/Screenshots", path);
+
+         Settings = string.Format("{0}/uScriptProjectFiles", assets);
+      }
+
+      public static string Editor { get; private set; }
+
+      public static string Gizmos { get; private set; }
+
+      public static string RuntimeNodes { get; private set; }
+
+      public static string Skin { get; private set; }
+
+      public static string Skins { get; private set; }
+
+      public static string Screenshots { get; private set; }
+
+      public static string Settings { get; private set; }
+
+      public static string Templates { get; private set; }
 
       public static string RelativePath(string absolutePath)
       {
-         absolutePath = absolutePath.Replace( '\\', '/' );
-
-         if ( absolutePath.StartsWith(UnityEngine.Application.dataPath) )
-         {
-            return absolutePath.Substring( UnityEngine.Application.dataPath.Length - "Assets".Length );
-         }
-         else
-         {
-            return absolutePath;
-         }
+         absolutePath = absolutePath.Replace('\\', '/');
+         return absolutePath.StartsWith(Application.dataPath)
+                   ? absolutePath.Substring(Application.dataPath.Length - "Assets".Length)
+                   : absolutePath;
       }
+
       public static string RelativePathInAssets(string absolutePath)
       {
-         absolutePath = absolutePath.Replace( '\\', '/' );
-
-         if ( absolutePath.StartsWith(UnityEngine.Application.dataPath) )
-         {
-            return absolutePath.Substring( UnityEngine.Application.dataPath.Length );
-         }
-         else
-         {
-            return absolutePath;
-         }
+         absolutePath = absolutePath.Replace('\\', '/');
+         return absolutePath.StartsWith(Application.dataPath)
+                   ? absolutePath.Substring(Application.dataPath.Length)
+                   : absolutePath;
       }
    }
 
@@ -803,14 +818,14 @@ public partial class uScriptConfig
    }
    
    public static uScriptStyle Style = new uScriptDefaultStyle( );
-   public static UnityEngine.Texture2D canvasBackgroundTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_background.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-   public static UnityEngine.Texture2D nodeDefaultTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_node_default_color.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-   public static UnityEngine.Texture2D nodeEventTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_node_event_color.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-   public static UnityEngine.Texture2D nodeVariableTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_node_variable_color.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-   public static UnityEngine.Texture2D minimapScreenBorder = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/uscript_minimap_screen_border.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-   public static UnityEngine.Texture2D lineTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/icons/uscript_line.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-   public static UnityEngine.Texture2D PointerLineEnd = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/icons/uscript_pointer_line_end.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
-   public static UnityEngine.Texture2D ResizeTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.SkinPath) + "/icons/uscript_icon_resize_comment.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D canvasBackgroundTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.Skin) + "/uscript_background.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D nodeDefaultTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.Skin) + "/uscript_node_default_color.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D nodeEventTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.Skin) + "/uscript_node_event_color.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D nodeVariableTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.Skin) + "/uscript_node_variable_color.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D minimapScreenBorder = UnityEditor.AssetDatabase.LoadAssetAtPath(ConstantPaths.RelativePath(ConstantPaths.Skin) + "/uscript_minimap_screen_border.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D lineTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.Skin) + "/icons/uscript_line.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D PointerLineEnd = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.Skin) + "/icons/uscript_pointer_line_end.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
+   public static UnityEngine.Texture2D ResizeTexture = UnityEditor.AssetDatabase.LoadAssetAtPath( ConstantPaths.RelativePath(ConstantPaths.Skin) + "/icons/uscript_icon_resize_comment.png", typeof(UnityEngine.Texture2D)) as UnityEngine.Texture2D;
    public static int   MinResizeX = 60;
    public static int   MinResizeY = 16;
    public static float bezierPenWidth = 1.25f;
