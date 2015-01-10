@@ -84,6 +84,8 @@ namespace Detox.Editor
 
       private static bool panelsInitialized;
 
+      private static MethodInfo methodCheckOnGUI;
+
       // === Properties =================================================================
 
       public static int PanelDividerThickness { get; private set; }
@@ -277,6 +279,21 @@ namespace Detox.Editor
          PanelPropertiesHeight = 250;
          PanelPropertiesWidth = 500;
          PanelScriptsWidth = 300;
+      }
+
+      internal static void CheckOnGUI()
+      {
+         if (methodCheckOnGUI == null)
+         {
+            methodCheckOnGUI = typeof(GUIUtility).GetMethod("CheckOnGUI", BindingFlags.Static | BindingFlags.NonPublic);
+            if (methodCheckOnGUI == null)
+            {
+               uScriptDebug.Log("Could not access GUIUtility.CheckOnGUI() via reflection.", uScriptDebug.Type.Error);
+               return;
+            }
+         }
+
+         methodCheckOnGUI.Invoke(null, null);
       }
 
       // TODO: Remove when no longer needed
