@@ -8,6 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
+
+using UnityEngine;
 
 public static class uScriptUtility
 {
@@ -58,7 +61,7 @@ public static class uScriptUtility
 }
 
 
-public static class uScriptExtensions
+internal static class uScriptExtensions
 {
    public static void Information(this UnityEngine.GUIStyle style, int columns)
    {
@@ -90,6 +93,12 @@ public static class uScriptExtensions
    public static T OneOf<T>(this System.Random r, params T[] array)
    {
       return array[r.Next(array.Length)];
+   }
+
+   public static void SaveAs(this Texture2D texture, string path)
+   {
+      var bytes = texture.EncodeToPNG();
+      File.WriteAllBytes(path, bytes);
    }
 }
 
@@ -169,6 +178,28 @@ public static class StringExtensions
    #endregion
 
    #region HTML Tags
+#if UNITY_3_5
+   public static string Bold(this string value)
+   {
+      return value;
+   }
+
+   public static string BoldItalic(this string value)
+   {
+      return value;
+   }
+
+   public static string Italic(this string value)
+   {
+      return value;
+   }
+
+   public static string Color(this string value, UnityEngine.Color color)
+   {
+      return value;
+   }
+
+#else
    public static string Bold(this string value)
    {
       return string.Format("<b>{0}</b>", value);
@@ -188,6 +219,7 @@ public static class StringExtensions
    {
       return string.Format("<color=#{0}>{1}</color>", color.ToHex(), value);
    }
+#endif
 
    public static string White(this string value)
    {
