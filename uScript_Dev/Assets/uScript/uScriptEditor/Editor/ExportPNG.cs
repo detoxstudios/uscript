@@ -10,7 +10,9 @@
 namespace Detox.Editor
 {
    using System;
+   using System.Collections.Generic;
    using System.IO;
+   using System.Linq;
    using System.Reflection;
 
    using Detox.Drawing;
@@ -27,13 +29,13 @@ namespace Detox.Editor
 
       private static ExportPhase phase;
 
-      private static Drawing.Point originalCanvasLocation;
+      private static Point originalCanvasLocation;
 
       private static float originalMapScale;
 
       private static bool originalPanelState;
 
-      private static Rect graphBounds;
+      private static Rect targetBounds;
 
       //static List<string> debugOutput;
       //static GUIStyle debugBoxStyle;
@@ -56,14 +58,18 @@ namespace Detox.Editor
 
       private static int segmentY;
 
-      private static int segmentWidth; // in pixels
+      private static int segmentWidth;
 
-      private static int segmentHeight; // in pixels
+      private static int segmentHeight;
 
-      // texture
+      private static List<Guid> selectedLinks;
+
+      private static List<Guid> selectedNodes;
+
+      private static FlowChart.Node[] targetNodes;
+
       private static Texture2D texture;
 
-      // Create a texture the size of the screen, RGB24 format
       private static int viewportX;
 
       private static int viewportY;
@@ -133,14 +139,16 @@ namespace Detox.Editor
          {
             case ExportPhase.Idle:
                return;
+
             case ExportPhase.Initiate:
                originalCanvasLocation = uScriptInstance.ScriptEditorCtrl.FlowChart.Location;
                originalMapScale = uScriptInstance.MapScale;
                originalPanelState = uScriptGUI.PanelsHidden;
-               Debug.Log("Exporting the graph to PNG ... This could take a while.\n");
+               //Debug.Log("Exporting the graph to PNG ... This could take a while.\n");
 
                phase = ExportPhase.OverrideEditorState;
                break;
+
             case ExportPhase.OverrideEditorState:
                if (originalPanelState == false)
                {
@@ -152,7 +160,11 @@ namespace Detox.Editor
                uScriptInstance.MapScale = 1;
                phase = ExportPhase.GenerateSeqmentList;
                break;
+
             case ExportPhase.RestoreEditorState:
+               RestoreSelectedLinks();
+               RestoreSelectedNodes();
+
                if (originalPanelState == false)
                {
                   uScriptGUI.PanelsHidden = false;
@@ -163,27 +175,12 @@ namespace Detox.Editor
                uScriptInstance.MapScale = originalMapScale;
                uScriptInstance.ScriptEditorCtrl.FlowChart.Location = originalCanvasLocation;
                phase = ExportPhase.Finished;
-               return;
+               break;
+
             case ExportPhase.GenerateSeqmentList:
                {
-                  // Deselect all nodes, and determine the number of segments to capture
-
-                  // Get the graph bounds and de-select all nodes and links
-                  graphBounds = new Rect(float.MaxValue, float.MaxValue, float.MinValue, float.MinValue);
-
-                  foreach (var link in uScriptInstance.ScriptEditorCtrl.FlowChart.Links)
-                  {
-                     link.Selected = false;
-                  }
-
-                  foreach (var node in uScriptInstance.ScriptEditorCtrl.FlowChart.Nodes)
-                  {
-                     node.Selected = false;
-                     graphBounds.xMin = Math.Min(graphBounds.xMin, node.Location.X - BoundsPadding);
-                     graphBounds.yMin = Math.Min(graphBounds.yMin, node.Location.Y - BoundsPadding);
-                     graphBounds.xMax = Math.Max(graphBounds.xMax, node.Location.X + BoundsPadding + node.Size.Width);
-                     graphBounds.yMax = Math.Max(graphBounds.yMax, node.Location.Y + BoundsPadding + node.Size.Height);
-                  }
+                  StoreSelectedLinks();
+                  StoreSelectedNodes();
 
                   // Get the viewport dimensions
                   viewportX = (int)uScriptInstance._canvasRect.x;
@@ -198,7 +195,7 @@ namespace Detox.Editor
                   var fi = uScript.Instance.GetType().GetField("m_Parent", Flags);
                   if (fi != null)
                   {
-                     object parent = fi.GetValue(uScript.Instance);
+                     var parent = fi.GetValue(uScript.Instance);
                      if (parent != null)
                      {
                         var pi = parent.GetType().GetProperty("borderSize", Flags);
@@ -234,16 +231,16 @@ namespace Detox.Editor
                   // Determine the segment details
                   segmentColumn = segmentRow = 0;
 
-                  segmentColumnOverflow = (int)graphBounds.width % viewportWidth;
-                  segmentRowOverflow = (int)graphBounds.height % viewportHeight;
+                  segmentColumnOverflow = (int)targetBounds.width % viewportWidth;
+                  segmentRowOverflow = (int)targetBounds.height % viewportHeight;
 
-                  segmentColumns = ((int)graphBounds.width / viewportWidth) + (segmentColumnOverflow > 0 ? 1 : 0);
-                  segmentRows = ((int)graphBounds.height / viewportHeight) + (segmentRowOverflow > 0 ? 1 : 0);
+                  segmentColumns = ((int)targetBounds.width / viewportWidth) + (segmentColumnOverflow > 0 ? 1 : 0);
+                  segmentRows = ((int)targetBounds.height / viewportHeight) + (segmentRowOverflow > 0 ? 1 : 0);
 
-                  textureDimensions = new Point((int)graphBounds.width, (int)graphBounds.height);
+                  textureDimensions = new Point((int)targetBounds.width, (int)targetBounds.height);
 
                   // Create the texture
-                  texture = new Texture2D((int)graphBounds.width, (int)graphBounds.height, TextureFormat.RGB24, false);
+                  texture = new Texture2D((int)targetBounds.width, (int)targetBounds.height, TextureFormat.RGB24, false);
 
                   //// Display debug information for the graph
                   //debugOutput.Add("\tCanvas Size:\t\t\t" + viewportWidth.ToString() + ", " + viewportHeight);
@@ -255,24 +252,26 @@ namespace Detox.Editor
                   //debugOutput.Add("\tTotal Size:\t\t\t" + graphBounds.width + ", " + graphBounds.height);
                   //debugOutput.Add("\tOverflow Size:\t\t" + segmentColumnOverflow + ", " + segmentRowOverflow);
 
-                  var msg = segmentColumns * segmentRows > 1
-                               ? string.Format(
-                                  "\tStitching together {0} canvas snapshots ...",
-                                  segmentColumns * segmentRows)
-                               : string.Empty;
-                  if (string.IsNullOrEmpty(msg) == false)
-                  {
-                     Debug.Log(
-                        string.Format(
-                           "\tThe resulting image will be {0}x{1} pixels in size.\n{2}",
-                           textureDimensions.X,
-                           textureDimensions.Y,
-                           msg));
-                  }
+
+                  //var msg = segmentColumns * segmentRows > 1
+                  //             ? string.Format(
+                  //                "\tStitching together {0} canvas snapshots ...",
+                  //                segmentColumns * segmentRows)
+                  //             : string.Empty;
+                  //if (string.IsNullOrEmpty(msg) == false)
+                  //{
+                  //   Debug.Log(
+                  //      string.Format(
+                  //         "\tThe resulting image will be {0}x{1} pixels in size.\n{2}",
+                  //         textureDimensions.X,
+                  //         textureDimensions.Y,
+                  //         msg));
+                  //}
 
                   phase = ExportPhase.NextSegment;
                }
                break;
+
             case ExportPhase.NextSegment:
                segmentWidth = viewportWidth;
                segmentHeight = viewportHeight;
@@ -306,14 +305,15 @@ namespace Detox.Editor
                   segmentY = segmentRow * viewportHeight;
 
                   // Update the canvas position to point to the segment
-                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location.X = -(int)graphBounds.x - segmentX;
-                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location.Y = -(int)graphBounds.y - segmentY;
+                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location.X = -(int)targetBounds.x - segmentX;
+                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location.Y = -(int)targetBounds.y - segmentY;
 
-                  segmentY = (int)graphBounds.height - segmentHeight - segmentY;
+                  segmentY = (int)targetBounds.height - segmentHeight - segmentY;
 
                   phase = ExportPhase.CaptureSegmentImage;
                }
                break;
+
             case ExportPhase.CaptureSegmentImage:
                texture.ReadPixels(
                   new Rect(
@@ -327,6 +327,7 @@ namespace Detox.Editor
                segmentColumn++;
                phase = ExportPhase.NextSegment;
                break;
+
             case ExportPhase.ExportCompleteImage:
                {
                   // Apply the texture changes
@@ -355,6 +356,7 @@ namespace Detox.Editor
                   phase = ExportPhase.RestoreEditorState;
                }
                break;
+
             case ExportPhase.Finished:
                uScriptInstance.RemoveNotification();
                IsExporting = false;
@@ -367,20 +369,45 @@ namespace Detox.Editor
 
       private static bool CanExport()
       {
-         uScriptInstance = uScript.Instance;
+         return IsCanvasReady() && IsTargetFound() && IsTargetBoundsValid();
+      }
 
+      private static bool IsCanvasReady()
+      {
+         uScriptInstance = uScript.Instance;
          if (uScriptInstance == null || uScriptInstance.ScriptEditorCtrl == null)
          {
             uScriptDebug.Log("Unable to access the uScript editor control!", uScriptDebug.Type.Error);
             return false;
          }
+         return true;
+      }
 
-         if (uScriptInstance.ScriptEditorCtrl.FlowChart.Nodes.Length == 0)
+      private static bool IsTargetBoundsValid()
+      {
+         targetBounds = GetGraphBounds();
+         if (targetBounds.width > 8192 || targetBounds.height > 8192)
+         {
+            uScriptDebug.Log(
+               string.Format(
+                  "The graph is too large to export. No dimension should be more than 8192 pixels, but the graph is at least {0}x{1}",
+                  targetBounds.width,
+                  targetBounds.height),
+               uScriptDebug.Type.Warning);
+            return false;
+         }
+         return true;
+      }
+
+      private static bool IsTargetFound()
+      {
+         var flowChart = uScript.Instance.ScriptEditorCtrl.FlowChart;
+         targetNodes = flowChart.SelectedNodes.Length > 0 ? flowChart.SelectedNodes : flowChart.Nodes;
+         if (targetNodes.Length == 0)
          {
             uScriptDebug.Log("The graph contains nothing to export.", uScriptDebug.Type.Warning);
             return false;
          }
-
          return true;
       }
 
@@ -395,6 +422,65 @@ namespace Detox.Editor
             path,
             string.IsNullOrEmpty(name) ? "Untitled" : name,
             DateTime.Now.ToString("yyyyMMdd_HHmmssff"));
+      }
+
+      private static Rect GetGraphBounds()
+      {
+         var rect = new Rect(float.MaxValue, float.MaxValue, float.MinValue, float.MinValue);
+         foreach (var node in targetNodes)
+         {
+            rect.xMin = Math.Min(rect.xMin, node.Location.X - BoundsPadding);
+            rect.yMin = Math.Min(rect.yMin, node.Location.Y - BoundsPadding);
+            rect.xMax = Math.Max(rect.xMax, node.Location.X + BoundsPadding + node.Size.Width);
+            rect.yMax = Math.Max(rect.yMax, node.Location.Y + BoundsPadding + node.Size.Height);
+         }
+         return rect;
+      }
+
+      private static void RestoreSelectedLinks()
+      {
+         while (selectedLinks.Count > 0)
+         {
+            var guid = selectedLinks.ElementAt(0);
+            selectedLinks.RemoveAt(0);
+
+            var link = uScriptInstance.ScriptEditorCtrl.FlowChart.Links.FirstOrDefault(i => i.Guid == guid);
+            uScriptDebug.Assert(link != null);
+            link.Selected = true;
+         }
+      }
+
+      private static void RestoreSelectedNodes()
+      {
+         while (selectedNodes.Count > 0)
+         {
+            var guid = selectedNodes.ElementAt(0);
+            selectedNodes.RemoveAt(0);
+
+            var node = uScriptInstance.ScriptEditorCtrl.FlowChart.Nodes.FirstOrDefault(i => i.Guid == guid);
+            uScriptDebug.Assert(node != null);
+            node.Selected = true;
+         }
+      }
+
+      private static void StoreSelectedLinks()
+      {
+         selectedLinks = new List<Guid>();
+         foreach (var link in uScriptInstance.ScriptEditorCtrl.FlowChart.SelectedLinks)
+         {
+            selectedLinks.Add(link.Guid);
+            link.Selected = false;
+         }
+      }
+
+      private static void StoreSelectedNodes()
+      {
+         selectedNodes = new List<Guid>();
+         foreach (var node in uScriptInstance.ScriptEditorCtrl.FlowChart.SelectedNodes)
+         {
+            selectedNodes.Add(node.Guid);
+            node.Selected = false;
+         }
       }
 
       ///// <summary>
