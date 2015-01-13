@@ -392,7 +392,7 @@ public class Preferences
       if (null == this.preferences["RelativeGeneratedScripts"]) this.preferences["RelativeGeneratedScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode");
       if (null == this.preferences["MaximumNodeRecursionCount"]) this.preferences["MaximumNodeRecursionCount"] = 1000;
       if (null == this.preferences["SaveMethod"]) this.preferences["SaveMethod"] = 1;   // 0:Quick, 1:Debug, 2:Release
-      if (null == this.preferences["MenuLocation"]) this.preferences["MenuLocation"] = 0;   // 0:Default, 1:Tools, 2:Window
+      if (null == this.preferences["MenuLocation"]) this.preferences["MenuLocation"] = 1;   // 0:Default, 1:Tools, 2:Window
       if (null == this.preferences["ProfileMin"]) this.preferences["ProfileMin"] = 1f;
       if (null == this.preferences["Profiling"]) this.preferences["Profiling"] = false;
       if (null == this.preferences["PropertyPanelNodeLimit"]) this.preferences["PropertyPanelNodeLimit"] = 1;
