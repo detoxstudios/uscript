@@ -10,6 +10,8 @@
 using System;
 using System.IO;
 
+using UnityEditor;
+
 using UnityEngine;
 
 public static class uScriptUtility
@@ -60,7 +62,6 @@ public static class uScriptUtility
    }
 }
 
-
 internal static class uScriptExtensions
 {
    public static void Information(this UnityEngine.GUIStyle style, int columns)
@@ -104,10 +105,20 @@ internal static class uScriptExtensions
 
 
 /// <summary>
-/// String Extentensions
+/// String Extensions
 /// </summary>
-public static class StringExtensions
+internal static class StringExtensions
 {
+   /// <summary>
+   /// Returns a modified path that is relative to the Unity project folder, as long as the specified path points to a Unity asset. In either case, all backslash characters are replaced with forward slashes.
+   /// </summary>
+   /// <param name="path">The path to reformat</param>
+   /// <returns>The relative path beginning with "Assets"</returns>
+   public static string RelativeAssetPath(this string path)
+   {
+      return path.Replace('\\', '/').Replace(Application.dataPath, "Assets");
+   }
+
    #region FormatWith
 
    /// <summary>
