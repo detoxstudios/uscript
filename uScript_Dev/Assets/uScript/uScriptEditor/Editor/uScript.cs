@@ -2929,21 +2929,19 @@ public sealed partial class uScript : EditorWindow
 
    public void RefreshScript()
    {
-      string relativePath = "Assets\\" + this.fullPath.Substring(UnityEngine.Application.dataPath.Length + 1);
-      String fileName = Path.GetFileNameWithoutExtension(relativePath);
+      var fileName = Path.GetFileNameWithoutExtension(this.fullPath);
+      var relativePath = Path.GetDirectoryName(this.fullPath.RelativeAssetPath());
 
-      relativePath = Path.GetDirectoryName(relativePath);
-      relativePath = relativePath.Replace('\\', '/');
+      var logicPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedCodeExtension);
+      var wrapperPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedComponentExtension);
 
-      string logicPath = relativePath + "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
-      string wrapperPath = relativePath + "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
+#if !UNITY_3_5
+      uScriptDebug.Log(string.Format("Refreshing:\t{0}\n\t\t{1}", logicPath, wrapperPath));
+#else
+      uScriptDebug.Log(string.Format("Refreshing:\t{0}\n\t\t\t\t\t\t\t\t{1}", logicPath, wrapperPath));
+#endif
 
-      uScriptDebug.Log("Refreshing " + logicPath);
-      uScriptDebug.Log("Refreshing " + wrapperPath);
-
-      AssetDatabase.ImportAsset(logicPath, ImportAssetOptions.ForceUpdate);
-      AssetDatabase.ImportAsset(wrapperPath, ImportAssetOptions.ForceUpdate);
-      AssetDatabase.Refresh();
+      AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
    }
 
    void DrawMenuItemShortcut(string shortcut)
