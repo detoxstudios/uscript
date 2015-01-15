@@ -2929,16 +2929,16 @@ public sealed partial class uScript : EditorWindow
 
    public void RefreshScript()
    {
+      const string Label = "Refreshing:\t";
+      var indent = GUIStyle.none.GetTabIndent(string.Format("uScript: {0}", Label));
+
       var fileName = Path.GetFileNameWithoutExtension(this.fullPath);
       var relativePath = Path.GetDirectoryName(this.fullPath.RelativeAssetPath());
 
       var logicPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedCodeExtension);
       var wrapperPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedComponentExtension);
 
-      var label = "Refreshing:\t";
-      var indent = GUIStyle.none.GetTabIndent(string.Format("uScript: {0}", label));
-
-      uScriptDebug.Log(string.Format("{0}{1}\n{2}{3}", label, logicPath, indent, wrapperPath));
+      uScriptDebug.Log(string.Format("{0}{1}\n{2}{3}", Label, logicPath, indent, wrapperPath));
 
       AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
    }
