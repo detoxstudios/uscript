@@ -648,7 +648,7 @@ public static class uScriptGUIStyle
       var columnLabelWidths = new int[columns];
       var columnValueWidths = new int[columns];
 
-      var tabWidth = new GUIStyle().CalcSize(new GUIContent("\t")).x;
+      var tabWidth = GUIStyle.none.TabWidth();
 
       var index = 0;
       foreach (var item in items)

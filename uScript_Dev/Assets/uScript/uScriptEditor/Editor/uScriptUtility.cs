@@ -69,6 +69,42 @@ internal static class uScriptExtensions
       uScriptGUIStyle.Information(style, columns);
    }
 
+   /// <summary>
+   /// Examines the content and returns a string of Tab characters useful for indentation. This takes into account the various tab widths and fonts used across Unity versions and platforms.
+   /// </summary>
+   /// <param name="content">The content used for alignment. The last character should be a Tab (\t), but it doesn't need to be.</param>
+   /// <param name="style">The GUIStyle used to calculate alignment.</param>
+   /// <returns>A string consisting of one or more Tab characters.</returns>
+   public static string GetTabIndent(this GUIStyle style, string content)
+   {
+      var indentLevel = style.GetTabIndentLevel(content);
+      return new string('\t', indentLevel);
+   }
+
+   /// <summary>
+   /// Examines the content and returns the number of Tab characters needed to align indentation. This takes into account the various tab widths and fonts used across Unity versions and platforms.
+   /// </summary>
+   /// <param name="content">The content used for alignment. The last character should be a Tab (\t), but it doesn't need to be.</param>
+   /// <param name="style">The GUIStyle used to calculate alignment.</param>
+   /// <returns>The number of Tab characters needed for alignment.</returns>
+   public static int GetTabIndentLevel(this GUIStyle style, string content)
+   {
+      var tabSize = style.TabWidth();
+      var contentSize = (int)style.CalcSize(uScriptGUIContent.Temp(content)).x;
+
+      return contentSize / tabSize;
+   }
+
+   /// <summary>
+   /// Returns the width of the Tab character for the GUIStyle.
+   /// </summary>
+   /// <param name="style">The GUIStyle used to calculate the Tab width.</param>
+   /// <returns>The width of the Tab character.</returns>
+   public static int TabWidth(this GUIStyle style)
+   {
+      return (int)style.CalcSize(uScriptGUIContent.Temp("\t")).x;
+   }
+
    public enum TextOverflowMethod
    {
       Clip,
