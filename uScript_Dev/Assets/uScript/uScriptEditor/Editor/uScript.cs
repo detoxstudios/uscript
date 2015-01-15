@@ -2935,11 +2935,10 @@ public sealed partial class uScript : EditorWindow
       var logicPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedCodeExtension);
       var wrapperPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedComponentExtension);
 
-#if !UNITY_3_5
-      uScriptDebug.Log(string.Format("Refreshing:\t{0}\n\t\t{1}", logicPath, wrapperPath));
-#else
-      uScriptDebug.Log(string.Format("Refreshing:\t{0}\n\t\t\t\t\t\t\t\t{1}", logicPath, wrapperPath));
-#endif
+      var label = "Refreshing:\t";
+      var indent = GUIStyle.none.GetTabIndent(string.Format("uScript: {0}", label));
+
+      uScriptDebug.Log(string.Format("{0}{1}\n{2}{3}", label, logicPath, indent, wrapperPath));
 
       AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
    }
