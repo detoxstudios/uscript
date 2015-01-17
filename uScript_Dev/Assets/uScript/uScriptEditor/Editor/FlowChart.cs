@@ -1222,8 +1222,8 @@ namespace Detox.FlowChart
             }
          }
 
-         Pen pen = new Pen( Detox.Drawing.Color.Black, uScriptConfig.bezierPenWidth );
-         Pen selectedPen = new Pen( Detox.Drawing.Color.LightYellow, uScriptConfig.bezierPenWidthSelected );
+         Pen pen = new Pen( Detox.Drawing.Color.Black, uScriptConfig.BezierPenWidth );
+         Pen selectedPen = new Pen( Detox.Drawing.Color.LightYellow, uScriptConfig.BezierPenWidthSelected );
 
          if (null != m_StartLinkNode)
          {
@@ -1261,7 +1261,7 @@ namespace Detox.FlowChart
             Handles.color = new UnityEngine.Color( selectedPen.Color.FR, selectedPen.Color.FG, selectedPen.Color.FB );
             Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0),
                                 new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0),
-                                 Handles.color, uScriptConfig.lineTexture, selectedPen.Width );
+                                 Handles.color, uScriptConfig.LineTexture, selectedPen.Width );
             // The end of the new socket link
             UnityEngine.GUI.Box( new UnityEngine.Rect(end.X - uScriptConfig.PointerLineEnd.width / 2, end.Y - uScriptConfig.PointerLineEnd.height / 2,
                                  uScriptConfig.PointerLineEnd.width, uScriptConfig.PointerLineEnd.height),
@@ -1346,7 +1346,7 @@ namespace Detox.FlowChart
                Handles.color = new UnityEngine.Color( selectedPen.Color.FR, selectedPen.Color.FG, selectedPen.Color.FB );
                Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0),
                                    new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0),
-                                    Handles.color, uScriptConfig.lineTexture, selectedPen.Width );
+                                    Handles.color, uScriptConfig.LineTexture, selectedPen.Width );
             }
             else
             {
@@ -1392,7 +1392,7 @@ namespace Detox.FlowChart
 
                Handles.DrawBezier( new UnityEngine.Vector3(start.X, start.Y, 0), new UnityEngine.Vector3(end.X, end.Y, 0),
                                    new UnityEngine.Vector3(control1.X, control1.Y, 0), new UnityEngine.Vector3(control2.X, control2.Y, 0),
-                                   Handles.color, uScriptConfig.lineTexture, lineWidth );
+                                   Handles.color, uScriptConfig.LineTexture, lineWidth );
             }
          }
 

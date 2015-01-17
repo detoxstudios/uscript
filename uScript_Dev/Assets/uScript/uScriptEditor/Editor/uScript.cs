@@ -3287,7 +3287,7 @@ public sealed partial class uScript : EditorWindow
             }
 
             GUIStyle style = new GUIStyle();
-            style.normal.background = uScriptConfig.canvasBackgroundTexture;
+            style.normal.background = uScriptConfig.CanvasBackgroundTexture;
 
             GUI.SetNextControlName("MainView");
 

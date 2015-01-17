@@ -3358,8 +3358,8 @@ namespace Detox.ScriptEditor
                points.Add( point );
 
                textPoint.Name = FormatName(socket);
-               textPoint.X = xStart + uScriptConfig.Style.PointSize + uScriptConfig.Style.IOSocketLabelHorizontalOffset;
-               textPoint.Y = (y - (textLength.Height / 2 + uScriptConfig.Style.IOSocketLabelVerticalOffset));
+               textPoint.X = xStart + uScriptConfig.Style.PointSize + uScriptConfig.Style.IoSocketLabelHorizontalOffset;
+               textPoint.Y = (y - (textLength.Height / 2 + uScriptConfig.Style.IoSocketLabelVerticalOffset));
                textPoint.StyleName = "socket_text";
                textPoints.Add( textPoint );
             
@@ -3399,8 +3399,8 @@ namespace Detox.ScriptEditor
                points.Add( point );
 
                textPoint.Name = FormatName(socket);
-               textPoint.X =  (xStart - (uScriptConfig.Style.PointSize + textLength.Width)) - uScriptConfig.Style.IOSocketLabelHorizontalOffset;
-               textPoint.Y =  (y - (textLength.Height / 2)) - uScriptConfig.Style.IOSocketLabelVerticalOffset;
+               textPoint.X =  (xStart - (uScriptConfig.Style.PointSize + textLength.Width)) - uScriptConfig.Style.IoSocketLabelHorizontalOffset;
+               textPoint.Y =  (y - (textLength.Height / 2)) - uScriptConfig.Style.IoSocketLabelVerticalOffset;
                textPoint.StyleName = "socket_text";
                textPoints.Add( textPoint );
             
