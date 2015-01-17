@@ -29,7 +29,7 @@ public struct uScriptConfigBlock
    }
 }
 
-public class uScriptConfig
+public static class uScriptConfig
 {
    public const float BezierPenWidth = 1.25f;
    public const float BezierPenWidthSelected = 1.5f;
@@ -371,7 +371,73 @@ public class uScriptDefaultStyle : uScriptStyle
 {
    private readonly Dictionary<string, GUIStyle> styles = new Dictionary<string, GUIStyle>();
 
-   public uScriptDefaultStyle()
+   //how many pixels to adjust the variable socket value text left (+) or right (-) (horizontal)
+   public override int SocketValueTextHorizontalOffset { get { return 2; } }
+    
+   //how many pixels between the variable socket and the value text (vertical)
+   public override int SocketValueTextVerticalOffset { get { return 15; } }
+    
+   //how many pixels between variable socket labels (horizontal)
+   public override int BottomSocketLabelGapSize { get { return 4; } }
+    
+   //how many pixels to adjust between variable socket labels and side borders (vertical)
+   public override int BottomSocketBorderAdjustmentPad { get { return 6; } }
+    
+   //how many pixels between variable socket labels and In/Out sockets (vertical)
+   public override int SideSocketToBottomSocketPad { get { return 16; } }
+    
+   //how many pixels between a variable socket and its label (vertical)
+   public override int BottomSocketLabelGap { get { return 2; } }
+    
+   //how many pixels to pad objects from the top of the node (vertical)
+   public override int TopPad { get { return 2; } }
+
+   //how many pixels to pad objects from the left of the node (horizontal)
+   public override int LeftPad { get { return 2; } }
+    
+   //how many pixels to pad objects from the right of the node (horizontal)
+   public override int RightPad { get { return 7; } }
+
+   //how many pixels to pad objects from the bottom of the node  (vertical)
+   public override int BottomPad { get { return 7; } }
+
+   //how big (in pixels) the link points should be (used for spacing and hit detection)
+   public override int PointSize { get { return 13; } }
+
+   //top and bottom padding for titles (vertical)
+   public override int TitleTopBottomPad { get { return 18; } }
+
+   //left and right padding for title labels (horizontal)
+   public override int TitleLeftRightPad { get { return 18; } }
+
+   //right shadow width (horizontal)
+   public override int RightShadow { get { return 6; } }
+
+   //bottom shadow height (vertical)
+   public override int BottomShadow { get { return 6; } }
+
+   //when rendering output only nodes, any additional offset
+   //because they can be different style/shape than input/output (vertical)
+   public override int OutputOnlyPointOffset { get { return 5; } }
+    
+   // sets and additional vertical offset for IO socket labels (vertical)
+   public override int IoSocketLabelVerticalOffset { get { return 2; } }
+    
+   // sets and additional horizontal offset for IO socket labels (horizontal)
+   public override int IoSocketLabelHorizontalOffset { get { return -2; } }
+
+   public override bool ShowGrid { get { return true; } }
+
+   //background grid size
+   public override int GridSize { get { return 20; } }
+
+   public override int GridSubdivisions { get { return 4; } }
+
+   public override Color GridColorMajor { get { return new Color(87 / 255f, 96 / 255f, 110 / 255f); } }
+
+   public override Color GridColorMinor { get { return new Color(95 / 255f, 103 / 255f, 118 / 255f); } }
+
+   public void CreateDefaultStyles()
    {
       var defaultStyles = new Dictionary<string, GUIStyle>();
       var nodeTextGrey = new Color(188 / 255.0f, 188 / 255.0f, 188 / 255.0f);
@@ -509,10 +575,9 @@ public class uScriptDefaultStyle : uScriptStyle
       foreach (var file in files)
       {
          var name = System.IO.Path.GetFileName(file.Name);
-         
+
          var styleBackground = UnityEditor.AssetDatabase.LoadAssetAtPath(relativePath + "/" + name, typeof(Texture2D)) as Texture2D;
-         
-         // TODO: This is where the nullException occurs during import
+         uScriptDebug.Assert(styleBackground != null, string.Format("The style background texture could not be loaded: {0}", name));
          styleBackground.wrapMode = TextureWrapMode.Clamp;
 
          name = System.IO.Path.GetFileNameWithoutExtension(name);
@@ -674,74 +739,13 @@ public class uScriptDefaultStyle : uScriptStyle
       };
    }
 
-   //how many pixels to adjust the variable socket value text left (+) or right (-) (horizontal)
-   public override int SocketValueTextHorizontalOffset { get { return 2; } }
-    
-   //how many pixels between the variable socket and the value text (vertical)
-   public override int SocketValueTextVerticalOffset { get { return 15; } }
-    
-   //how many pixels between variable socket labels (horizontal)
-   public override int BottomSocketLabelGapSize { get { return 4; } }
-    
-   //how many pixels to adjust between variable socket labels and side borders (vertical)
-   public override int BottomSocketBorderAdjustmentPad { get { return 6; } }
-    
-   //how many pixels between variable socket labels and In/Out sockets (vertical)
-   public override int SideSocketToBottomSocketPad { get { return 16; } }
-    
-   //how many pixels between a variable socket and its label (vertical)
-   public override int BottomSocketLabelGap { get { return 2; } }
-    
-   //how many pixels to pad objects from the top of the node (vertical)
-   public override int TopPad { get { return 2; } }
-
-   //how many pixels to pad objects from the left of the node (horizontal)
-   public override int LeftPad { get { return 2; } }
-    
-   //how many pixels to pad objects from the right of the node (horizontal)
-   public override int RightPad { get { return 7; } }
-
-   //how many pixels to pad objects from the bottom of the node  (vertical)
-   public override int BottomPad { get { return 7; } }
-
-   //how big (in pixels) the link points should be (used for spacing and hit detection)
-   public override int PointSize { get { return 13; } }
-
-   //top and bottom padding for titles (vertical)
-   public override int TitleTopBottomPad { get { return 18; } }
-
-   //left and right padding for title labels (horizontal)
-   public override int TitleLeftRightPad { get { return 18; } }
-
-   //right shadow width (horizontal)
-   public override int RightShadow { get { return 6; } }
-
-   //bottom shadow height (vertical)
-   public override int BottomShadow { get { return 6; } }
-
-   //when rendering output only nodes, any additional offset
-   //because they can be different style/shape than input/output (vertical)
-   public override int OutputOnlyPointOffset { get { return 5; } }
-    
-   // sets and additional vertical offset for IO socket labels (vertical)
-   public override int IoSocketLabelVerticalOffset { get { return 2; } }
-    
-   // sets and additional horizontal offset for IO socket labels (horizontal)
-   public override int IoSocketLabelHorizontalOffset { get { return -2; } }
-
-   public override bool ShowGrid { get { return true; } }
-
-   //background grid size
-   public override int GridSize { get { return 20; } }
-
-   public override int GridSubdivisions { get { return 4; } }
-
-   public override Color GridColorMajor { get { return new Color(87 / 255f, 96 / 255f, 110 / 255f); } }
-
-   public override Color GridColorMinor { get { return new Color(95 / 255f, 103 / 255f, 118 / 255f); } }
-
    public override GUIStyle Get(string name)
    {
+      if (this.styles == null || this.styles.Count == 0)
+      {
+         CreateDefaultStyles();
+      }
+
       name = name ?? string.Empty;
 
       if (this.styles.ContainsKey(name))

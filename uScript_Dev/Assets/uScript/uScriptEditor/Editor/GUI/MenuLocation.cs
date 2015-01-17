@@ -62,7 +62,7 @@ namespace Detox.Editor.GUI
          // WriteAllText creates a file, writes the specified string to the file, and then closes the file.
          Directory.CreateDirectory(ScriptPath);
          File.WriteAllText(ScriptPath + ScriptName, content);
-         AssetDatabase.Refresh();
+         AssetDatabase.ImportAsset(ScriptPath + ScriptName, ImportAssetOptions.ForceUpdate);
       }
 
       private static string FormatScript(string menuPath)
