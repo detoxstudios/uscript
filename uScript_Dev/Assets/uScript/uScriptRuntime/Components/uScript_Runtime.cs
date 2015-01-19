@@ -14,7 +14,7 @@
 //#define DETOX_STORE_PLE // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
 //#define CLOSED_BETA
 
-#define ENABLE_DEBUG_LOG
+//#define ENABLE_DEBUG_LOG
 
 using System;
 using System.Collections;
