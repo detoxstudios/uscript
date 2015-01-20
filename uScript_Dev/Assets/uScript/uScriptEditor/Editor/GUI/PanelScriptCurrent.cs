@@ -83,7 +83,7 @@ namespace Detox.Editor.GUI
 
          private void CommandGraphReload()
          {
-            uScriptInstance.OpenScript(uScriptBackgroundProcess.GraphInfoList[this.graphFileName].GraphPath);
+            uScriptInstance.OpenGraph(uScriptBackgroundProcess.GraphInfoList[this.graphFileName].GraphPath);
          }
 
          private void CommandGraphSave()

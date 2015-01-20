@@ -673,7 +673,7 @@ public sealed partial class uScript : EditorWindow
 
       if (this.fullPath != string.Empty)
       {
-         if (this.OpenScript(this.fullPath) == false)
+         if (this.OpenGraph(this.fullPath) == false)
          {
             this.fullPath = string.Empty;
          }
@@ -2330,13 +2330,14 @@ public sealed partial class uScript : EditorWindow
 
    void OnDestroy()
    {
-      AllowNewFile(false);
+      this.WasCurrentGraphSaved(false);
 
       if (m_ScriptEditorCtrl != null)
       {
          m_ScriptEditorCtrl.ScriptModified -= new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
          m_ScriptEditorCtrl = null;
       }
+
       Detox.Utility.Status.StatusUpdate -= new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
       //trapperm: do not clear change stack because this is called on minimize/maximize
@@ -2382,7 +2383,7 @@ public sealed partial class uScript : EditorWindow
             }
             else
             {
-               OpenScript(scriptPath);
+               this.OpenGraph(scriptPath);
             }
          }
          else
@@ -2395,7 +2396,7 @@ public sealed partial class uScript : EditorWindow
             }
             else
             {
-               OpenScript(scriptPath);
+               this.OpenGraph(scriptPath);
             }
          }
       }
@@ -2930,18 +2931,28 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   public void RefreshScript()
+   public void RefreshAssetDatabase()
    {
-      const string Label = "Refreshing:\t";
+      const string Label = "Saved:\t";
       var indent = GUIStyle.none.GetTabIndent(string.Format("uScript: {0}", Label));
 
       var fileName = Path.GetFileNameWithoutExtension(this.fullPath);
-      var relativePath = Path.GetDirectoryName(this.fullPath.RelativeAssetPath());
+      var relativePath = Preferences.GeneratedScripts.RelativeAssetPath();
 
       var logicPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedCodeExtension);
       var wrapperPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedComponentExtension);
 
-      uScriptDebug.Log(string.Format("{0}{1}\n{2}{3}", Label, logicPath, indent, wrapperPath));
+      uScriptDebug.Log(
+         string.Format(
+            "{0}{1}\n{2}... and generated source files based on the graph.\n\n{3}\n- {4}\n\n{5}\n- {6}\n- {7}",
+            Label,
+            fileName.Bold(),
+            indent,
+            "Graph:".Bold(),
+            this.fullPath.RelativeAssetPath(),
+            "Generated source files:".Bold(),
+            logicPath,
+            wrapperPath));
 
       AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
    }
@@ -3078,9 +3089,9 @@ public sealed partial class uScript : EditorWindow
 
    void FileMenuItem_New()
    {
-      if (AllowNewFile(true))
+      if (this.WasCurrentGraphSaved(true))
       {
-         NewScript();
+         this.CreateNewGraph();
       }
    }
 
@@ -3089,11 +3100,11 @@ public sealed partial class uScript : EditorWindow
       string path = EditorUtility.OpenFilePanel("Open uScript", Preferences.UserScripts, "uscript");
       if (path.Length > 0)
       {
-         OpenScript(path);
+         this.OpenGraph(path);
       }
    }
 
-   private bool SaveDenied()
+   private static bool SaveDenied()
    {
       if (EditorApplication.isPlayingOrWillChangePlaymode)
       {
@@ -3104,39 +3115,49 @@ public sealed partial class uScript : EditorWindow
       return false;
    }
 
-   public void RequestSave(bool quick, bool debug, bool rename)
+   public bool RequestSave(bool quick, bool debug, bool rename)
    {
-      if (false == SaveDenied())
+      if (SaveDenied())
       {
-         if (quick)
-         {
-            //         Debug.Log("QUICK SAVE\n");
-            SaveScript(rename, false, debug);
-         }
-         else
-         {
-            //         Debug.Log(debug ? "DEBUG SAVE\n" : "RELEASE SAVE\n");
-            bool saved = false;
+         return false;
+      }
 
-            AssetDatabase.StartAssetEditing();
-            saved = SaveScript(rename, true, debug);
-            AssetDatabase.StopAssetEditing();
+      var saved = false;
 
-            if (saved) RefreshScript();
+      if (quick)
+      {
+         this.SaveGraph(rename, false, debug);
+         // TODO: Invalidate source files if saved
+      }
+      else
+      {
+         AssetDatabase.StartAssetEditing();
+         saved = this.SaveGraph(rename, true, debug);
+         AssetDatabase.StopAssetEditing();
+
+         if (saved)
+         {
+            this.RefreshAssetDatabase();
          }
       }
+
+      return saved;
    }
 
-   void FileMenuItem_Save()
+   private void FileMenuItem_Save()
    {
-      RequestSave(Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
-                  Preferences.SaveMethod == Preferences.SaveMethodType.Debug, false);
+      RequestSave(
+         Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+         Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
+         false);
    }
 
-   void FileMenuItem_SaveAs()
+   private void FileMenuItem_SaveAs()
    {
-      RequestSave(Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
-                  Preferences.SaveMethod == Preferences.SaveMethodType.Debug, true);
+      RequestSave(
+         Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+         Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
+         true);
    }
 
    void FileMenuItem_QuickSave()
@@ -3649,81 +3670,71 @@ public sealed partial class uScript : EditorWindow
       _wasRepaintRequested = true;
    }
 
-   //   public void Redraw()
-   //   {
-   //      if (true == m_Repainting) return;
-   //
-   //      m_Repainting = true;
-   //
-   //      Repaint();
-   //
-   //      m_Repainting = false;
-   //   }
-
-   private bool AllowNewFile(bool allowCancel)
+   private bool WasCurrentGraphSaved(bool allowCancel)
    {
-      if (m_ScriptEditorCtrl != null && true == m_ScriptEditorCtrl.IsDirty)
+      if (m_ScriptEditorCtrl != null && this.m_ScriptEditorCtrl.IsDirty)
       {
+         const string Title = "Save uScript Graph?";
+         const string Message = "The current graph has been modified, would you like to save the graph and generate source files?";
+
+         var message = string.IsNullOrEmpty(m_ScriptEditorCtrl.ScriptEditor.Name)
+                          ? Message
+                          : string.Format(
+                             "{0}\n\n\t{1}\n",
+                             Message,
+                             Path.GetFileNameWithoutExtension(this.m_ScriptEditorCtrl.ScriptEditor.Name));
+
          int result;
 
-         string titleName = string.Empty;
-         string graphName = string.Empty;
-         string msgContent = string.Empty;
-         if (m_ScriptEditorCtrl.ScriptEditor.Name.IsNotNullOrEmpty())
+         if (allowCancel)
          {
-            titleName = "Save File?";
-            graphName = m_ScriptEditorCtrl.ScriptEditor.Name;
-            msgContent = " has been modified, would you like to save?";
+            result = EditorUtility.DisplayDialogComplex(Title, message, "Yes", "No", "Cancel");
          }
          else
          {
-            titleName = "Save New File?";
-            graphName = "A new graph";
-            msgContent = " has been modified, would you like to save?";
+            result = EditorUtility.DisplayDialog(Title, message, "Yes", "No") ? 0 : 1;
          }
 
-         if (true == allowCancel)
+         // YES - user wishes to save the graph
+         if (result == 0)
          {
-            result = EditorUtility.DisplayDialogComplex(titleName, graphName + msgContent, "Yes", "No", "Cancel");
+            return RequestSave(
+               Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
+               Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
+               false);
+
+            //if (SaveDenied())
+            //{
+            //   return false;
+            //}
+
+            //AssetDatabase.StartAssetEditing();
+
+            //var saved = this.SaveScript(false);
+
+            //AssetDatabase.StopAssetEditing();
+
+            //return saved;
          }
-         else
+
+         // NO - user does not want to save before continue operation
+         if (result == 1)
          {
-            bool yes = EditorUtility.DisplayDialog(titleName, graphName + msgContent, "Yes", "No");
-
-            if (true == yes) result = 0;
-            else result = 1;
+            return true;
          }
 
-         if (0 == result)
+         // CANCEL - user wants to abort the save and the previous operation
+         if (result == 2)
          {
-            if (true == SaveDenied())
-            {
-               return false;
-            }
-
-            bool scriptSaved;
-
-            AssetDatabase.StartAssetEditing();
-
-            scriptSaved = SaveScript(false);
-
-            AssetDatabase.StopAssetEditing();
-
-            return scriptSaved;
+            return false;
          }
-
-         //user did not want to clean file
-         else if (1 == result) return true;
-
-         //file was not cleaned
-         else if (2 == result) return false;
       }
 
-      //file was not dirty
+      // the graph was not dirty and doesn't need to be saved
       return true;
    }
 
-   public void NewScript()
+   public void CreateNewGraph()
    {
       Detox.ScriptEditor.ScriptEditor scriptEditor = new Detox.ScriptEditor.ScriptEditor(string.Empty, PopulateEntityTypes(null), PopulateLogicTypes());
 
@@ -3773,9 +3784,18 @@ public sealed partial class uScript : EditorWindow
       m_SzLogicTypes = null;
    }
 
-   public bool OpenScript(string fullPath)
+   public bool OpenGraph(string fullPath)
    {
-      if (false == AllowNewFile(true) || !File.Exists(fullPath)) return false;
+      if (File.Exists(fullPath) == false)
+      {
+         uScriptDebug.Log("The specified file does not exist: " + fullPath, uScriptDebug.Type.Error);
+         return false;
+      }
+
+      if (this.WasCurrentGraphSaved(true) == false)
+      {
+         return false;
+      }
 
       Profile p = new Profile("OpenScript " + fullPath);
 
@@ -3860,13 +3880,13 @@ public sealed partial class uScript : EditorWindow
 
       if (scriptEditor.Open(scriptFullName))
       {
-         if (this.SaveScript(scriptEditor, scriptFullName, true, this.GenerateDebugInfo, stubCode))
+         if (this.SaveGraph(scriptEditor, scriptFullName, true, this.GenerateDebugInfo, stubCode))
          {
-            uScriptDebug.Log("Rebuilt " + scriptFullName);
+            uScriptDebug.Log(string.Format("Rebuilt:\t{0}", scriptFullName.RelativeAssetPath()));
          }
          else
          {
-            uScriptDebug.Log("Could not save " + scriptFullName, uScriptDebug.Type.Error);
+            uScriptDebug.Log(string.Format("Could not save {0}", scriptFullName.RelativeAssetPath()), uScriptDebug.Type.Error);
          }
       }
    }
@@ -3914,7 +3934,7 @@ public sealed partial class uScript : EditorWindow
       return logicPath;
    }
 
-   private bool SaveScript(ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo, bool stubCode)
+   private bool SaveGraph(ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo, bool stubCode)
    {
       bool result;
 
@@ -3939,12 +3959,7 @@ public sealed partial class uScript : EditorWindow
       return result;
    }
 
-   public bool SaveScript(bool forceNameRequest)
-   {
-      return this.SaveScript(forceNameRequest, true, GenerateDebugInfo);
-   }
-
-   public bool SaveScript(bool forceNameRequest, bool generateCode, bool generateDebugInfo)
+   private bool SaveGraph(bool forceNameRequest, bool generateCode, bool generateDebugInfo)
    {
       ScriptEditor script = this.m_ScriptEditorCtrl.ScriptEditor;
 
@@ -4100,7 +4115,7 @@ public sealed partial class uScript : EditorWindow
          script.SceneName = string.Empty;
       }
 
-      if (this.SaveScript(script, this.fullPath, generateCode, generateDebugInfo, false))
+      if (this.SaveGraph(script, this.fullPath, generateCode, generateDebugInfo, false))
       {
          // When a file is saved (regardless of method), we should updated the
          // Dictionary cache for that script.

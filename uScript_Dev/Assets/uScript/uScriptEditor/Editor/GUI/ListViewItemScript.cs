@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ListViewItemScript.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the ListViewItem_Script type.
@@ -17,29 +17,11 @@ namespace Detox.Editor.GUI
 
    public class ListViewItemScript : ListViewItem
    {
-      // === Constants ==================================================================
-
-      // === Fields =====================================================================
-
-      //private string sourcePath;
-
-      // === Constructors ===============================================================
-
       public ListViewItemScript(ListView listView, string itemPath)
          : base(listView, itemPath)
       {
          // TODO: Consider using a GraphInfo here instead of a path
       }
-
-      // === Finalizers =================================================================
-
-      // === Delegates ==================================================================
-
-      // === Events =====================================================================
-
-      // === Enums ======================================================================
-
-      // === Properties =================================================================
 
       public string FriendlyName
       {
@@ -86,10 +68,6 @@ namespace Detox.Editor.GUI
       // GraphID     - <path>/<name>
       // GraphName   - <name>
       // GraphPath   - <path>/<name>.<extention>
-
-      // === Indexers ===================================================================
-
-      // === Methods ====================================================================
 
       public override void Draw(ref Rect itemRowRect)
       {
@@ -199,6 +177,7 @@ namespace Detox.Editor.GUI
       {
          //this.ListView.ItemRowEven = !this.ListView.ItemRowEven;
          var style = listView.ItemRowEven ? Style.RowEven : Style.RowOdd;
+
          // position, isHover, isActive, on, hasKeyboardFocus
          style.Draw(position, false, false, selected, listView.HasFocus);
       }
@@ -228,14 +207,14 @@ namespace Detox.Editor.GUI
          var directoryPath = uScript.Preferences.UserScripts + "/";
 
          // Foldout paths duplicate the folder name at the end, so remove it (e.g., "foo/bar/bar" -> "foo/bar")
-         directoryPath += this.ItemPath.Substring(0, this.ItemPath.LastIndexOf("/", System.StringComparison.Ordinal));
+         directoryPath += this.ItemPath.Substring(0, this.ItemPath.LastIndexOf("/", StringComparison.Ordinal));
 
          uScriptGUI.PingProjectGraph(directoryPath);
       }
 
       private void CommandGraphLoad()
       {
-         uScript.Instance.OpenScript(this.GraphPath);
+         uScript.Instance.OpenGraph(this.GraphPath);
       }
 
       private void CommandGraphLocate()
@@ -262,16 +241,16 @@ namespace Detox.Editor.GUI
          {
             if (this.ListView.IsFolderExpanded(this))
             {
-               menu.AddItem(new GUIContent("Collapse Folder"), true, this.CommandDirectoryCollapse);
+               menu.AddItem(Content.CollapseFolder, true, this.CommandDirectoryCollapse);
             }
             else
             {
-               menu.AddItem(new GUIContent("Expand Folder"), true, this.CommandDirectoryExpand);
+               menu.AddItem(Content.ExpandFolder, true, this.CommandDirectoryExpand);
             }
 
             menu.AddSeparator(string.Empty);
 
-            menu.AddItem(new GUIContent("Locate Folder"), false, this.CommandDirectoryLocate);
+            menu.AddItem(Content.LocateFolder, false, this.CommandDirectoryLocate);
          }
          else
          {
@@ -282,53 +261,53 @@ namespace Detox.Editor.GUI
                // TODO: Consider adding Save commands for the current graph
                if (uScript.Instance.ScriptEditorCtrl.IsDirty)
                {
-                  menu.AddItem(new GUIContent("Reload Graph"), true, this.CommandGraphLoad);
+                  menu.AddItem(Content.ReloadGraph, true, this.CommandGraphLoad);
                }
                else
                {
-                  menu.AddDisabledItem(new GUIContent("Reload Graph"));
+                  menu.AddDisabledItem(Content.ReloadGraph);
                }
             }
             else
             {
-               menu.AddItem(new GUIContent("Load Graph"), true, this.CommandGraphLoad);
+               menu.AddItem(Content.LoadGraph, true, this.CommandGraphLoad);
             }
 
             menu.AddSeparator(string.Empty);
 
-            menu.AddItem(new GUIContent("Locate Graph"), false, this.CommandGraphLocate);
+            menu.AddItem(Content.LocateGraph, false, this.CommandGraphLocate);
 
             if (string.IsNullOrEmpty(this.SceneName))
             {
-               menu.AddDisabledItem(new GUIContent("Locate Scene"));
+               menu.AddDisabledItem(Content.LocateScene);
             }
             else
             {
-               menu.AddItem(new GUIContent("Locate Scene"), false, this.CommandSceneLocate);
+               menu.AddItem(Content.LocateScene, false, this.CommandSceneLocate);
             }
 
             if (this.SourceState == GraphInfo.State.Missing)
             {
-               menu.AddDisabledItem(new GUIContent("Locate Source"));
+               menu.AddDisabledItem(Content.LocateSource);
 
                menu.AddSeparator(string.Empty);
 
-               menu.AddDisabledItem(new GUIContent("Remove Source"));
+               menu.AddDisabledItem(Content.RemoveSource);
             }
             else
             {
-               menu.AddItem(new GUIContent("Locate Source"), false, this.CommandSourceLocate);
+               menu.AddItem(Content.LocateSource, false, this.CommandSourceLocate);
 
                menu.AddSeparator(string.Empty);
 
-               menu.AddItem(new GUIContent("Remove Source"), false, this.CommandSourceRemove);
+               menu.AddItem(Content.RemoveSource, false, this.CommandSourceRemove);
             }
          }
 
          menu.AddSeparator(string.Empty);
 
-         menu.AddItem(new GUIContent("Expand All Folders"), false, this.CommandDirectoryExpandAll);
-         menu.AddItem(new GUIContent("Collapse All Folders"), false, this.CommandDirectoryCollapseAll);
+         menu.AddItem(Content.ExpandAllFolders, false, this.CommandDirectoryExpandAll);
+         menu.AddItem(Content.CollapseAllFolders, false, this.CommandDirectoryCollapseAll);
 
          if (rect.width > 0)
          {
@@ -502,6 +481,18 @@ namespace Detox.Editor.GUI
       {
          static Content()
          {
+            CollapseAllFolders = new GUIContent("Collapse All Folders");
+            CollapseFolder = new GUIContent("Collapse Folder");
+            ExpandAllFolders = new GUIContent("Expand All Folders");
+            ExpandFolder = new GUIContent("Expand Folder");
+            LoadGraph = new GUIContent("Load Graph");
+            LocateFolder = new GUIContent("Locate Folder");
+            LocateGraph = new GUIContent("Locate Graph");
+            LocateScene = new GUIContent("Locate Scene");
+            LocateSource = new GUIContent("Locate Source");
+            ReloadGraph = new GUIContent("Reload Graph");
+            RemoveSource = new GUIContent("Remove Source");
+
             // Attempt to get the built-in folder icon
 #if UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_3_6
             IconFolder = EditorGUIUtility.FindTexture("_Folder");
@@ -510,6 +501,28 @@ namespace Detox.Editor.GUI
 #endif
             IconScript = uScriptGUI.GetTexture("iconScriptFile01");
          }
+
+         public static GUIContent CollapseFolder { get; private set; }
+
+         public static GUIContent CollapseAllFolders { get; private set; }
+
+         public static GUIContent ExpandFolder { get; private set; }
+
+         public static GUIContent ExpandAllFolders { get; private set; }
+
+         public static GUIContent LoadGraph { get; private set; }
+
+         public static GUIContent LocateFolder { get; private set; }
+
+         public static GUIContent LocateGraph { get; private set; }
+
+         public static GUIContent LocateScene { get; private set; }
+
+         public static GUIContent LocateSource { get; private set; }
+
+         public static GUIContent ReloadGraph { get; private set; }
+
+         public static GUIContent RemoveSource { get; private set; }
 
          public static Texture2D IconFolder { get; private set; }
 

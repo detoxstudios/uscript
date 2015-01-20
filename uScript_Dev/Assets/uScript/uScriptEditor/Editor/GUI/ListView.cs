@@ -993,7 +993,7 @@ namespace Detox.Editor.GUI
                }
                else
                {
-                  uScript.Instance.OpenScript(uScriptBackgroundProcess.GraphInfoList[item.ItemName].GraphPath);
+                  uScript.Instance.OpenGraph(uScriptBackgroundProcess.GraphInfoList[item.ItemName].GraphPath);
                }
             }
          }
