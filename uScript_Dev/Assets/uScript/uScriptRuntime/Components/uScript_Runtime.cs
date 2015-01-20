@@ -380,7 +380,7 @@ public class uScriptDebug : MonoBehaviour
    public static void Log(string msgString, Type msgType)
    {
       const string AppName = "uScript: ";
-      var msgOutput = string.Format("{0}{1}\n", AppName, msgString);
+      var msgOutput = string.Format("{0}{1}\n\n________________________________________", AppName, msgString);
 
       switch (msgType)
       {
