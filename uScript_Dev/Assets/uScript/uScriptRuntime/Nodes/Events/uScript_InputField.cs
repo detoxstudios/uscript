@@ -4,6 +4,9 @@
 using UnityEngine;
 using System.Collections;
 
+//Unity 4.6 and above only
+#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2 && !UNITY_4_3 && !UNITY_4_4 && !UNITY_4_5
+
 [NodePath("Events/UI Events")]
 
 [NodeCopyright("Copyright 2015 by Detox Studios LLC")]
@@ -57,3 +60,5 @@ public class uScript_InputField : uScriptEvent
       if ( OnInputFieldEditingEnded != null ) OnInputFieldEditingEnded( this, new InputFieldEventArgs(value) ); 
    }
 }
+
+#endif
