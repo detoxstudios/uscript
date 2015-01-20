@@ -1058,6 +1058,7 @@ public sealed partial class uScript : EditorWindow
          this.rebuildWhenReady = false;
       }
 
+
       if (true == m_SelectAllNodes)
       {
          m_ScriptEditorCtrl.SelectAllNodes();
@@ -1105,7 +1106,7 @@ public sealed partial class uScript : EditorWindow
          CacheScript();
 
          m_UndoNumber = UndoComponent.UndoNumber;
-
+         
          //Debug.Log("applied undo " + m_UndoNumber );
       }
 
@@ -2338,7 +2339,9 @@ public sealed partial class uScript : EditorWindow
       }
       Detox.Utility.Status.StatusUpdate -= new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
-      ClearChangeStack();
+      //trapperm: do not clear change stack because this is called on minimize/maximize
+      //and we want to keep the undo stack
+      //ClearChangeStack();
 
       this.currentScriptDirty = false;
       this.currentScript = null;
