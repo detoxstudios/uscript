@@ -32,7 +32,7 @@ public class uScript_MasterComponent : MonoBehaviour
       {
          if (null == m_LatestMaster)
          {
-            var gameObjects = FindObjectsOfType<GameObject>();
+            var gameObjects = (GameObject[])FindObjectsOfType(typeof(GameObject));
             foreach (var gameObject in gameObjects)
             {
                if (gameObject.name != uScriptRuntimeConfig.MasterObjectName)
