@@ -370,7 +370,12 @@ public sealed partial class uScript : EditorWindow
 
    private static GameObject GetMasterGameObject()
    {
-      var uScriptMaster = MasterObject ?? CreateMasterGameObject();
+      var uScriptMaster = MasterObject;
+      if (uScriptMaster == null)
+      {
+         uScriptMaster = CreateMasterGameObject();
+      }
+
       EnsureMasterComponentExists(uScriptMaster);
       EnsureUndoComponentExists(uScriptMaster);
       return uScriptMaster;
