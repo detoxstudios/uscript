@@ -10,6 +10,8 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 
+using Object = UnityEngine.Object;
+
 [ExecuteInEditMode]
 public class uScript_MasterComponent : MonoBehaviour
 {
@@ -24,29 +26,32 @@ public class uScript_MasterComponent : MonoBehaviour
    
    //keep track of the latest master so uScripts loading
    //will know which master loaded with them for their scene information
-   public static GameObject LatestMaster 
+   public static GameObject LatestMaster
    {
-      get 
-      { 
-         if (null == m_LatestMaster) 
+      get
+      {
+         if (null == m_LatestMaster)
          {
-            GameObject[] gos = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
-            foreach (GameObject g in gos)
+            var gameObjects = FindObjectsOfType<GameObject>();
+            foreach (var gameObject in gameObjects)
             {
-               if (g.name != uScriptRuntimeConfig.MasterObjectName)
+               if (gameObject.name != uScriptRuntimeConfig.MasterObjectName)
+               {
                   continue;
+               }
 
-               uScript_MasterComponent c = g.GetComponent<uScript_MasterComponent>();
-               
                //if the name matches, it has a master component, and our master is null
                //or this one is set to override then use it
-               if (null != c && (m_LatestMaster == null || c.UseAsMaster == true))
+               var component = gameObject.GetComponent<uScript_MasterComponent>();
+               if (component != null && (component.UseAsMaster || m_LatestMaster == null))
                {
-                  m_LatestMaster = g;
-   
+                  m_LatestMaster = gameObject;
+
                   //if we found one marked to be the master, we can stop searching
-                  if (c.UseAsMaster == true)
+                  if (component.UseAsMaster)
+                  {
                      break;
+                  }
                }
             }
          }
@@ -57,15 +62,18 @@ public class uScript_MasterComponent : MonoBehaviour
 
    public static uScript_MasterComponent LatestMasterComponent
    {
-       get
-       {
-            if (null == m_LatestMasterComponent) 
+      get
+      {
+         if (null == m_LatestMasterComponent)
+         {
+            if (null != LatestMaster)
             {
-                if (null != LatestMaster) m_LatestMasterComponent = LatestMaster.GetComponent<uScript_MasterComponent>();
+               m_LatestMasterComponent = LatestMaster.GetComponent<uScript_MasterComponent>();
             }
+         }
 
-           return m_LatestMasterComponent;
-       }
+         return m_LatestMasterComponent;
+      }
    }
 
 
