@@ -279,25 +279,7 @@ public sealed partial class uScript : EditorWindow
    {
       get
       {
-         GameObject uScriptMaster = MasterObject;//GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-         if (null == uScriptMaster)
-         {
-            uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Debug);
-
-            uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
-            uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
-         }
-         if (null == uScriptMaster.GetComponent<uScript_MasterComponent>())
-         {
-            uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_MasterComponent));
-         }
-         if (null == uScriptMaster.GetComponent<uScript_UndoComponent>())
-         {
-            uScriptDebug.Log("Adding Undo Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_UndoComponent));
-            uScript.Instance.ClearChangeStack();
-         }
+         var uScriptMaster = GetMasterGameObject();
          return uScriptMaster.GetComponent<uScript_UndoComponent>();
       }
    }
@@ -308,19 +290,7 @@ public sealed partial class uScript : EditorWindow
    {
       get
       {
-         GameObject uScriptMaster = MasterObject;//GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
-         if (null == uScriptMaster)
-         {
-            uScriptDebug.Log("Adding default uScript master gameobject: " + uScriptRuntimeConfig.MasterObjectName, uScriptDebug.Type.Debug);
-
-            uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
-            uScriptMaster.transform.position = new Vector3(0f, 0f, 0f);
-         }
-         if (null == uScriptMaster.GetComponent<uScript_MasterComponent>())
-         {
-            uScriptDebug.Log("Adding Master Object to master gameobject (" + uScriptRuntimeConfig.MasterObjectName + ")", uScriptDebug.Type.Debug);
-            uScriptMaster.AddComponent(typeof(uScript_MasterComponent));
-         }
+         var uScriptMaster = GetMasterGameObject();
          return uScriptMaster.GetComponent<uScript_MasterComponent>();
       }
    }
@@ -357,10 +327,7 @@ public sealed partial class uScript : EditorWindow
 
    public Type GetType(string typeName)
    {
-      Type type = m_Types[typeName] as Type;
-
-      if (null == type) type = uScriptUtils.GetAssemblyQualifiedType(typeName);
-
+      var type = this.m_Types[typeName] as Type ?? uScriptUtils.GetAssemblyQualifiedType(typeName);
       return type;
    }
 
@@ -388,6 +355,52 @@ public sealed partial class uScript : EditorWindow
 
          return new string[0];
       }
+   }
+
+   private static GameObject CreateMasterGameObject()
+   {
+      uScriptDebug.Log(
+         string.Format("Adding default uScript master GameObject: {0}", uScriptRuntimeConfig.MasterObjectName),
+         uScriptDebug.Type.Debug);
+
+      var uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
+      uScriptMaster.transform.position = Vector3.zero;
+      return uScriptMaster;
+   }
+
+   private static GameObject GetMasterGameObject()
+   {
+      var uScriptMaster = MasterObject ?? CreateMasterGameObject();
+      EnsureMasterComponentExists(uScriptMaster);
+      EnsureUndoComponentExists(uScriptMaster);
+      return uScriptMaster;
+   }
+
+   private static void EnsureMasterComponentExists(GameObject uScriptMaster)
+   {
+      if (uScriptMaster.GetComponent<uScript_MasterComponent>() != null)
+      {
+         return;
+      }
+
+      uScriptDebug.Log(
+         string.Format("Master Component added to master GameObject ({0})", uScriptRuntimeConfig.MasterObjectName),
+         uScriptDebug.Type.Debug);
+      uScriptMaster.AddComponent<uScript_MasterComponent>();
+   }
+
+   private static void EnsureUndoComponentExists(GameObject uScriptMaster)
+   {
+      if (uScriptMaster.GetComponent<uScript_UndoComponent>() != null)
+      {
+         return;
+      }
+
+      uScriptDebug.Log(
+         string.Format("Undo Component added to the master GameObject ({0})", uScriptRuntimeConfig.MasterObjectName),
+         uScriptDebug.Type.Debug);
+      uScriptMaster.AddComponent<uScript_UndoComponent>();
+      Instance.ClearChangeStack();
    }
 
    public bool AllowKeyInput()
