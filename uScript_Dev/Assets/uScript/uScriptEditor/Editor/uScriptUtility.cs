@@ -155,6 +155,18 @@ internal static class StringExtensions
       return path.Replace('\\', '/').Replace(Application.dataPath, "Assets");
    }
 
+   /// <summary>
+   /// Returns a modified path that is relative to the Unity project's parent folder, and with all backslash characters replaced by forward slashes.
+   /// </summary>
+   /// <param name="path">The path to reformat</param>
+   /// <returns>The relative path beginning with the Unity project folder</returns>
+   public static string RelativeProjectPath(this string path)
+   {
+      var projectPath = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf("/Assets", StringComparison.Ordinal));
+      projectPath = projectPath.Substring(0, projectPath.LastIndexOf("/", StringComparison.Ordinal) + 1);
+      return path.Replace('\\', '/').Replace(projectPath, string.Empty);
+   }
+
    #region FormatWith
 
    /// <summary>
