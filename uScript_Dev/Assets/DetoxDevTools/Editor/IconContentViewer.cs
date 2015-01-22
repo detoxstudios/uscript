@@ -59,6 +59,7 @@ public sealed class IconContentViewer : EditorWindow
    private float drawScale;
 
    private Texture2D blackTexture;
+   private Texture2D whiteTexture;
    private string grabName;
    private Rect grabRect;
    private bool shouldGrab;
@@ -93,7 +94,7 @@ public sealed class IconContentViewer : EditorWindow
 
          foreach (var key in iconContent)
          {
-            var icon = EditorGUIUtility.IconContent(key).image as Texture2D;
+            var icon = GetTexture(key);
             if (icon == null)
             {
                continue;
@@ -116,11 +117,16 @@ public sealed class IconContentViewer : EditorWindow
       blackTexture = new Texture2D(1, 1);
       blackTexture.SetPixel(0, 0, Color.black);
       blackTexture.Apply();
+
+      whiteTexture = new Texture2D(1, 1);
+      whiteTexture.SetPixel(0, 0, Color.white);
+      whiteTexture.Apply();
    }
 
    internal void OnDisable()
    {
       DestroyImmediate(blackTexture);
+      DestroyImmediate(whiteTexture);
    }
 
    internal void OnGUI()
@@ -133,9 +139,9 @@ public sealed class IconContentViewer : EditorWindow
       GUI.BeginGroup(new Rect(sidePanelWidth, 0, position.width - sidePanelWidth, position.height));
       this.scrollPos = GUILayout.BeginScrollView(this.scrollPos, true, true, GUILayout.MaxWidth(position.width - sidePanelWidth));
 
-      for (int i = 0; i < iconGroups.Count; ++i)
+      for (var i = 0; i < iconGroups.Count; ++i)
       {
-         IconGroup group = iconGroups[i];
+         var group = iconGroups[i];
          EditorGUILayout.LabelField(group.Name);
          DrawIconSelectionGrid(group.IconData, group.MaxWidth);
 
@@ -144,6 +150,33 @@ public sealed class IconContentViewer : EditorWindow
 
       GUILayout.EndScrollView();
       GUI.EndGroup();
+   }
+
+   private static Texture2D GetTexture(string name)
+   {
+#if UNITY_3_5
+      var mi = typeof(EditorGUIUtility).GetMethod(
+         "IconContent",
+         BindingFlags.NonPublic | BindingFlags.Static,
+         null,
+         new[] { typeof(string) },
+         null);
+      if (mi != null)
+      {
+         return ((GUIContent)mi.Invoke(null, new object[] { name })).image as Texture2D;
+      }
+
+      uScriptDebug.Log("Could not reflect EditorGUIUtility.IconContent()");
+      return null;
+#else
+      // NOTE: Unity 5 borks, because is somehow includes a string with 3 tabs in its internal content list.
+      if (name == "\t\t\t")
+      {
+         return null;
+      }
+
+      return EditorGUIUtility.IconContent(name).image as Texture2D;
+#endif
    }
 
    private static string GeneratePath(string name)
@@ -1599,7 +1632,11 @@ public sealed class IconContentViewer : EditorWindow
 
       var rightAligned = new GUIStyle(EditorStyles.label) { alignment = TextAnchor.UpperRight };
 
+#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
+      EditorGUIUtility.LookLikeControls(50);
+#else
       EditorGUIUtility.labelWidth = 50;
+#endif
       EditorGUILayout.LabelField("Width:", string.Format("{0}px", iconTexture.width), rightAligned, GUILayout.Width(100));
       EditorGUILayout.LabelField("Height:", string.Format("{0}px", iconTexture.height), rightAligned, GUILayout.Width(100));
 
@@ -1638,7 +1675,7 @@ public sealed class IconContentViewer : EditorWindow
          rect = new Rect((int)((panelWidth - texture.width) * 0.5f), rect.yMax + pad2, texture.width, texture.height);
          backgroundRect = new Rect(rect.x - pad1, rect.y - pad1, rect.width + pad2, rect.height + pad2);
 
-         GUI.DrawTexture(backgroundRect, Texture2D.whiteTexture, ScaleMode.StretchToFill);
+         GUI.DrawTexture(backgroundRect, this.whiteTexture, ScaleMode.StretchToFill);
          GUI.DrawTexture(rect, texture, ScaleMode.StretchToFill);
          if (pad1 > 0)
          {
