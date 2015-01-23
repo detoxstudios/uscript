@@ -893,12 +893,13 @@ public sealed partial class uScript : EditorWindow
 
    static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)
    {
-      uScriptDebug.Type uScriptType = uScriptDebug.Type.Message;
+      var uScriptType = uScriptDebug.Type.Message;
 
       if (e.LogType == Detox.Utility.LogType.Error)
       {
          uScriptType = uScriptDebug.Type.Error;
       }
+
       if (e.LogType == Detox.Utility.LogType.Warning)
       {
          uScriptType = uScriptDebug.Type.Warning;

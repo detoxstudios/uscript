@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Threading;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Status.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the LogType type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Detox.Utility
 {
+   using System;
+   using System.IO;
+   using System.Threading;
+
    public enum LogType
    {
       Info,
@@ -14,73 +20,77 @@ namespace Detox.Utility
       Error
    }
 
-   public class StatusUpdateEventArgs : EventArgs
-   {
-      private LogType m_LogType;
-      private string  m_Message;
-
-      public LogType LogType  { get { return m_LogType; } }
-      public string  Message  { get { return m_Message; } }
-
-      public StatusUpdateEventArgs (LogType logType, string message)
-      {
-         m_Message = message;
-         m_LogType = logType;
-      }
-   }
-
    public class Status
    {
+      private static string m_Path;
+
+      private static StreamWriter m_Writer;
+
+      private static Mutex m_Mutex;
+
       public delegate void StatusUpdateEventHandler(StatusUpdateEventArgs e);
-      static public event StatusUpdateEventHandler StatusUpdate;
 
-      static private void OnStatusUpdate(LogType type, string message)
-      {
-         if (null != StatusUpdate) StatusUpdate( new StatusUpdateEventArgs(type, message) );
-      }
+      public static event StatusUpdateEventHandler StatusUpdate;
 
-      static private string       m_Path   = null;
-      static private StreamWriter m_Writer = null;
-      static private Mutex        m_Mutex = null;
-
-      static public void Create(string path)
+      public static void Create(string path)
       {
          m_Path = path;
 
-         m_Writer = new StreamWriter( m_Path, true );
-         m_Writer.WriteLine( "-----------------------------------------" );
+         m_Writer = new StreamWriter(m_Path, true);
+         m_Writer.WriteLine("-----------------------------------------");
 
-         m_Mutex = new Mutex( );
+         m_Mutex = new Mutex();
       }
 
-      static public void Info(string message)
+      public static void Info(string message)
       {
          Log(LogType.Info, message);
       }
 
-      static public void Warning(string message)
+      public static void Warning(string message)
       {
          Log(LogType.Warning, message);
       }
 
-      static public void Error(string message)
+      public static void Error(string message)
       {
          Log(LogType.Error, message);
       }
 
-      static public void Log(LogType type, string message)
+      public static void Log(LogType type, string message)
       {
-         if ( null != m_Writer )
+         if (null != m_Writer)
          {
-            m_Mutex.WaitOne( );
-            
-            m_Writer.WriteLine(type.ToString() + ":" + message);
-            m_Writer.Flush( );
+            m_Mutex.WaitOne();
 
-            m_Mutex.ReleaseMutex( );
+            m_Writer.WriteLine("{0}:{1}", type, message);
+            m_Writer.Flush();
+
+            m_Mutex.ReleaseMutex();
          }
-         
+
          OnStatusUpdate(type, message);
       }
+
+      private static void OnStatusUpdate(LogType type, string message)
+      {
+         if (null != StatusUpdate)
+         {
+            StatusUpdate(new StatusUpdateEventArgs(type, message));
+         }
+      }
+   }
+
+   public class StatusUpdateEventArgs : EventArgs
+   {
+      public StatusUpdateEventArgs(LogType logType, string message)
+      {
+         this.Message = message;
+         this.LogType = logType;
+      }
+
+      public LogType LogType { get; private set; }
+
+      public string Message { get; private set; }
    }
 }

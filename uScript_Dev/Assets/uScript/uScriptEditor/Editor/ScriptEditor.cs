@@ -4744,26 +4744,30 @@ namespace Detox.ScriptEditor
 
          try
          {
-            streamReader = File.OpenText( fullPath );
-            string contents = streamReader.ReadToEnd( );
-            
-            streamReader.Close( );
+            streamReader = File.OpenText(fullPath);
+            var contents = streamReader.ReadToEnd();
 
-            string start = "/*[[BEGIN BASE64\r\n";
-            string end   = "\r\nEND BASE64]]*/";
-            contents = contents.Substring( contents.IndexOf(start) );
-            contents = contents.Substring( start.Length );
-            contents = contents.Substring( 0, contents.Length - end.Length );
+            streamReader.Close();
 
-            bool result = OpenFromBase64( fullPath, Path.GetFileName(fullPath), contents );
+            const string Start = "/*[[BEGIN BASE64\r\n";
+            const string End = "\r\nEND BASE64]]*/";
 
-             return result;
+            contents = contents.Substring(contents.IndexOf(Start, StringComparison.Ordinal));
+            contents = contents.Substring(Start.Length);
+            contents = contents.Substring(0, contents.Length - End.Length);
+
+            var result = this.OpenFromBase64(fullPath, Path.GetFileName(fullPath), contents);
+
+            return result;
          }
          catch (Exception e)
          {
-            if ( null != streamReader ) streamReader.Close( );
+            if (null != streamReader)
+            {
+               streamReader.Close();
+            }
 
-            Status.Error( "Failed to load " + fullPath + ". Exception: " + e.Message );
+            Status.Error(string.Format("Failed to load {0}. Exception: {1}", fullPath, e.Message));
             return false;
          }
       }
