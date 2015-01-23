@@ -64,6 +64,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GraphInfo.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\AboutWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\HierarchyWindowIcon.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ProjectWindowIcon.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItemScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\MenuLocation.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScript.cs" />

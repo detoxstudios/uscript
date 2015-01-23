@@ -3,7 +3,7 @@
 //   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
-//   Defines the StatusIcons type.
+//   Defines the HierarchyWindowIcon type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 

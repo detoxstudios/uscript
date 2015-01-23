@@ -38,7 +38,7 @@ internal class ImportGUITextures : AssetPostprocessor
 #endif
 
       textureSettings.aniso = 0;
-      textureSettings.filterMode = FilterMode.Point;
+      textureSettings.filterMode = this.assetPath.Contains("Bilinear") ? FilterMode.Bilinear : FilterMode.Point;
       textureSettings.wrapMode = TextureWrapMode.Clamp;
       textureSettings.maxTextureSize = 512;
       textureSettings.textureFormat = TextureImporterFormat.AutomaticTruecolor;
