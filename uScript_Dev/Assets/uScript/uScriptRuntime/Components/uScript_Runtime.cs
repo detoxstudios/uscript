@@ -40,7 +40,7 @@ public static class uScriptBuild
    // # Version Name and Version Data
    // #
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public static string Number { get { return "1.0.2738"; } }
+   public static string Number { get { return "1.0.2740"; } }
    // #
    // ###############################################################
 
