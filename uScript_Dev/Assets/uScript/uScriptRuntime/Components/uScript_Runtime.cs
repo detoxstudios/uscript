@@ -29,18 +29,18 @@ public static class uScriptBuild
    public static string Copyright { get { return "\u00A9 2010-2015 Detox Studios, LLC."; } }
 
 #if DETOX_STORE_PLE
-   public static string Name { get { return "Personal Learning Edition (RC13)"; } }
+   public static string Name { get { return "Personal Learning Edition (RC14)"; } }
 #elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
-   public static string Name { get { return "Basic Edition (RC13)"; } }
+   public static string Name { get { return "Basic Edition (RC14)"; } }
 #else
-   public static string Name { get { return "Professional Edition (RC13)"; } }
+   public static string Name { get { return "Professional Edition (RC14)"; } }
 #endif
 
    // ###############################################################
    // # Version Name and Version Data
    // #
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public static string Number { get { return "1.0.2715"; } }
+   public static string Number { get { return "1.0.2738"; } }
    // #
    // ###############################################################
 
