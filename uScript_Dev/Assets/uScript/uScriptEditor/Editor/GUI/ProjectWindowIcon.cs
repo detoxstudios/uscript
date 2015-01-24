@@ -18,15 +18,29 @@ namespace Detox.Editor.GUI
    [InitializeOnLoad]
    internal static class ProjectWindowIcon
    {
-      private static readonly Texture2D GraphIcon16;
-      private static readonly Texture2D GraphIcon64;
+      private static Texture2D graphIcon16;
+      private static Texture2D graphIcon64;
 
       static ProjectWindowIcon()
       {
-         GraphIcon16 = uScriptGUI.GetTexture("iconScriptFile01");
-         GraphIcon64 = uScriptGUI.GetTexture("Bilinear/iconScriptFile01_64");
-         //GraphIcon64 = uScriptGUI.GetTexture("Bilinear/iconScriptFile03_64");
          EditorApplication.projectWindowItemOnGUI += ProjectWindowItemOnGUI;
+      }
+
+      private static Texture2D GraphIcon16
+      {
+         get
+         {
+            return graphIcon16 ?? (graphIcon16 = uScriptGUI.GetTexture("iconScriptFile01"));
+         }
+      }
+
+      private static Texture2D GraphIcon64
+      {
+         get
+         {
+            // Alternate texture: "Bilinear/iconScriptFile03_64"
+            return graphIcon64 ?? (graphIcon64 = uScriptGUI.GetTexture("Bilinear/iconScriptFile01_64"));
+         }
       }
 
       private static void ProjectWindowItemOnGUI(string guid, Rect selectionRect)
@@ -36,7 +50,7 @@ namespace Detox.Editor.GUI
             return;
          }
 
-         if (HasValidComponent(guid))
+         if (ShouldDrawIcon(guid))
          {
             DrawIcon(selectionRect);
          }
@@ -44,17 +58,14 @@ namespace Detox.Editor.GUI
 
       private static void DrawIcon(Rect rect)
       {
-         Texture2D icon;
-         if (rect.height > 16)
+         var isGridIcon = rect.height > 16;
+         var icon = isGridIcon ? GraphIcon64 : GraphIcon16;
+         if (icon == null)
          {
-            icon = GraphIcon64;
-            rect = GetGridIconPosition(rect, icon);
+            return;
          }
-         else
-         {
-            icon = GraphIcon16;
-            rect = GetListIconPosition(rect, icon);
-         }
+
+         rect = isGridIcon ? GetGridIconPosition(rect, icon) : GetListIconPosition(rect, icon);
 
          GUI.Box(rect, uScriptGUIContent.Temp(icon, "uScript Graph"), GUIStyle.none);
       }
@@ -91,7 +102,7 @@ namespace Detox.Editor.GUI
          return rect;
       }
 
-      private static bool HasValidComponent(string guid)
+      private static bool ShouldDrawIcon(string guid)
       {
          var path = AssetDatabase.GUIDToAssetPath(guid);
          var extension = Path.GetExtension(path) ?? string.Empty;
