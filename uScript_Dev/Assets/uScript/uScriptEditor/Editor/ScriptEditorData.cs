@@ -931,7 +931,7 @@ namespace Detox.Data.ScriptEditor
          Parameters = data.Parameters;
       }
 
-      public new int Version { get { return 3; } }
+      public new int Version { get { return 4; } }
 
       public new void Load(ObjectSerializer serializer)
       {
@@ -963,8 +963,8 @@ namespace Detox.Data.ScriptEditor
                externaled.Default      = "false";
                externaled.Input        = true;
                externaled.Output       = false;
-               externaled.Name         = "Expose to Unity";
-               externaled.FriendlyName = "Expose to Unity";
+               externaled.Name         = "Make Public";
+               externaled.FriendlyName = "Make Public";
                externaled.State        = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
                externaled.Type         = typeof(bool).ToString( );
 
@@ -975,12 +975,28 @@ namespace Detox.Data.ScriptEditor
             {
                for (int i = 0; i < Parameters.Length; i++)
                {
-                  if (Parameters[i].FriendlyName == "Expose to Inspector")
+                  if (Parameters[i].FriendlyName == "Expose to Inspector" || Parameters[i].FriendlyName == "Expose to Unity")
                   {
-                     Parameters[i].Name = "Expose to Unity";
-                     Parameters[i].FriendlyName = "Expose to Unity";
+                     Parameters[i].Name = "Make Public";
+                     Parameters[i].FriendlyName = "Make Public";
                   }
                }
+            }
+
+            if ( serializer.CurrentVersion < 4 )
+            {
+               Parameter hiddenInspector = new Parameter( );
+               
+               hiddenInspector.Default      = "false";
+               hiddenInspector.Input        = true;
+               hiddenInspector.Output       = false;
+               hiddenInspector.Name         = "Hide In Inspector";
+               hiddenInspector.FriendlyName = "Hide In Inspector";
+               hiddenInspector.State        = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
+               hiddenInspector.Type         = typeof(bool).ToString( );
+               
+               Array.Resize<Parameter>( ref Parameters, Parameters.Length + 1 );            
+               Parameters[ Parameters.Length - 1 ] = hiddenInspector; 
             }
          }
       }

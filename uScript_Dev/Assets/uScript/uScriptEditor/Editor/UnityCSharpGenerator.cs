@@ -605,18 +605,18 @@ namespace Detox.ScriptEditor
             ++m_TabStack;
 
             AddCSharpLine("#pragma warning disable 414");
-            AddCSharpLine("public " + logicClassName + " ExposedVariables = new " + logicClassName + "( ); ");
+            AddCSharpLine("public " + logicClassName + " PublicVariables = new " + logicClassName + "( ); ");
             AddCSharpLine("#pragma warning restore 414");
 
             AddCSharpLine("");
 
-            //any named variables using the "Exposed to Unity" property should be also marked as public properties
+            //any named variables using the "Make Public" property should be also marked as public properties
             //so they can be get/set by other uscripts
             foreach (LocalNode node in m_Script.UniqueLocals)
             {
                if ("true" == node.Externaled.Default)
                {
-                  AddCSharpLine("public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return ExposedVariables." + CSharpName(node) + "; } set { ExposedVariables." + CSharpName(node) + " = value; } } ");
+                  AddCSharpLine("public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return PublicVariables." + CSharpName(node) + "; } set { PublicVariables." + CSharpName(node) + " = value; } } ");
                }
             }
 
@@ -631,10 +631,10 @@ namespace Detox.ScriptEditor
                AddCSharpLine("#if !(UNITY_FLASH)");
                AddCSharpLine("useGUILayout = " + (NeedsGuiLayout() ? "true;" : "false;"));
                AddCSharpLine("#endif");
-               AddCSharpLine("ExposedVariables.Awake( );");
+               AddCSharpLine("PublicVariables.Awake( );");
 
-               //AddCSharpLine( "ExposedVariables = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
-               AddCSharpLine("ExposedVariables.SetParent( this.gameObject );");
+               //AddCSharpLine( "PublicVariables = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
+               AddCSharpLine("PublicVariables.SetParent( this.gameObject );");
 
                string version = uScript_MasterComponent.Version;
 
@@ -642,7 +642,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine("{");
                ++m_TabStack;
                AddCSharpLine("uScriptDebug.Log( \"The generated code is not compatible with your current uScript Runtime \" + uScript_MasterComponent.Version, uScriptDebug.Type.Error );");
-               AddCSharpLine("ExposedVariables = null;");
+               AddCSharpLine("PublicVariables = null;");
                AddCSharpLine("UnityEngine.Debug.Break();");
                --m_TabStack;
                AddCSharpLine("}");
@@ -657,7 +657,7 @@ namespace Detox.ScriptEditor
 
             if (false == stubCode)
             {
-               AddCSharpLine("ExposedVariables.Start( );");
+               AddCSharpLine("PublicVariables.Start( );");
             }
 
             --m_TabStack;
@@ -669,7 +669,7 @@ namespace Detox.ScriptEditor
 
             if (false == stubCode)
             {
-               AddCSharpLine("ExposedVariables.OnEnable( );");
+               AddCSharpLine("PublicVariables.OnEnable( );");
             }
 
             --m_TabStack;
@@ -681,7 +681,7 @@ namespace Detox.ScriptEditor
 
             if (false == stubCode)
             {
-               AddCSharpLine("ExposedVariables.OnDisable( );");
+               AddCSharpLine("PublicVariables.OnDisable( );");
             }
 
             --m_TabStack;
@@ -696,7 +696,7 @@ namespace Detox.ScriptEditor
 
             if (false == stubCode)
             {
-               AddCSharpLine("ExposedVariables.Update( );");
+               AddCSharpLine("PublicVariables.Update( );");
             }
 
             --m_TabStack;
@@ -708,7 +708,7 @@ namespace Detox.ScriptEditor
 
             if (false == stubCode)
             {
-               AddCSharpLine("ExposedVariables.OnDestroy( );");
+               AddCSharpLine("PublicVariables.OnDestroy( );");
             }
 
             --m_TabStack;
@@ -722,7 +722,7 @@ namespace Detox.ScriptEditor
 
                if (false == stubCode)
                {
-                  AddCSharpLine("ExposedVariables.LateUpdate( );");
+                  AddCSharpLine("PublicVariables.LateUpdate( );");
                }
 
                --m_TabStack;
@@ -737,7 +737,7 @@ namespace Detox.ScriptEditor
 
                if (false == stubCode)
                {
-                  AddCSharpLine("ExposedVariables.FixedUpdate( );");
+                  AddCSharpLine("PublicVariables.FixedUpdate( );");
                }
 
                --m_TabStack;
@@ -752,7 +752,7 @@ namespace Detox.ScriptEditor
 
                if (false == stubCode)
                {
-                  AddCSharpLine("ExposedVariables.OnGUI( );");
+                  AddCSharpLine("PublicVariables.OnGUI( );");
                }
 
                --m_TabStack;
@@ -2112,6 +2112,11 @@ namespace Detox.ScriptEditor
 
          foreach (LocalNode local in locals)
          {
+            if ( "true" == local.HideInInspector.Default )
+            {
+               AddCSharpLine("[HideInInspector]");
+            }
+
             string prefix = "true" == local.Externaled.Default ? "public " : "";
 
             AddCSharpLine(prefix + FormatType(local.Value.Type) + " " + CSharpName(local) + " = " + FormatValue(local.Value.Default, local.Value.Type) + ";");

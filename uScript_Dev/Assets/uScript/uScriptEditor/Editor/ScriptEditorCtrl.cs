@@ -2293,11 +2293,31 @@ namespace Detox.ScriptEditor
 
                      //status updates aren't working and we have to get the build done
                      //so i'm forcing a log warning
-                     uScriptDebug.Log( "For a node to be exposed to Unity it must have a name.", uScriptDebug.Type.Warning );
+                     uScriptDebug.Log( "For a variable to be made public, it must have a name.", uScriptDebug.Type.Warning );
                   }
                   else if (localNode.Name.Default != "")
                   {
                      globalModified = true;
+
+                     if ( localNode.HideInInspector.Default == "true" &&
+                         localNode.Externaled.Default == "false"
+                         )
+                     {
+                        Parameter clonedHidden = localNode.HideInInspector;
+                        clonedHidden.Default = "false";
+                        
+                        localNode.HideInInspector = clonedHidden;
+                        entityNode = localNode;
+                        
+                        //the old node might equal the new node
+                        //but we still changed
+                        //from the value in the property grid
+                        changed = true;
+                        
+                        //status updates aren't working and we have to get the build done
+                        //so i'm forcing a log warning
+                        uScriptDebug.Log( "For a variable to be hidden in the inspector, it must have a name and be made public.", uScriptDebug.Type.Warning );
+                     }
                   }
                }
                else if (entityNode is ExternalConnection)

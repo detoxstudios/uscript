@@ -2695,13 +2695,14 @@ namespace Detox.ScriptEditor
 
       public Parameter Instance { get { return Parameter.Empty; } set {} }
 
-      public Parameter[] Parameters { get { return new Parameter[] {m_Name, m_Value, m_Externaled}; } set { m_Name = value[0]; m_Value = value[1];  m_Externaled = value[2];} }
+      public Parameter[] Parameters { get { return new Parameter[] {m_Name, m_Value, m_Externaled, m_HideInInspector}; } set { m_Name = value[0]; m_Value = value[1]; m_Externaled = value[2]; m_HideInInspector = value[3];} }
 
       public bool IsStatic { get { return false; } }
 
       private Parameter m_Name;
       private Parameter m_Value;
       private Parameter m_Externaled;
+      private Parameter m_HideInInspector;
 
       public Parameter Name
       {
@@ -2721,6 +2722,12 @@ namespace Detox.ScriptEditor
          set { m_Value = value; }
       }
 
+      public Parameter HideInInspector
+      {
+         get { return m_HideInInspector; }
+         set { m_HideInInspector = value; }
+      }
+      
       private Guid m_Guid;
       public Guid Guid
       {
@@ -2770,11 +2777,21 @@ namespace Detox.ScriptEditor
          m_Externaled.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
          m_Externaled.Input   = true;
          m_Externaled.Output  = false;
-         m_Externaled.Name    = "Expose to Unity";
-         m_Externaled.FriendlyName = "Expose to Unity";
+         m_Externaled.Name    = "Make Public";
+         m_Externaled.FriendlyName = "Make Public";
          m_Externaled.Type    = typeof(bool).ToString( );
          m_Externaled.AutoLinkType = m_Externaled.Type;
 
+         m_HideInInspector.Default = "false";
+         m_HideInInspector.ReferenceGuid = "";
+         m_HideInInspector.State   = Parameter.VisibleState.Hidden | Parameter.VisibleState.Locked;
+         m_HideInInspector.Input   = true;
+         m_HideInInspector.Output  = false;
+         m_HideInInspector.Name    = "Hide In Inspector";
+         m_HideInInspector.FriendlyName = "Hide In Inspector";
+         m_HideInInspector.Type    = typeof(bool).ToString( );
+         m_HideInInspector.AutoLinkType = m_HideInInspector.Type;
+         
          m_Position = Point.Empty; 
          m_Guid = Guid.NewGuid( ); 
       }

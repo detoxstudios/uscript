@@ -5467,9 +5467,10 @@ public sealed partial class uScript : EditorWindow
          case "LocalNode":
             switch (p.FriendlyName)
             {
-               case "Name": return "The variable name (optional). Variables that share the same name are automatically linked together and treated as the same variable in your graph. Once linked, changing the value of one will affect all others in the graph. Variables with the same name in different graphs are NOT connected in any way. Use the \"Expose to Unity\" option below in order to access this variable as a reflected property between graphs.";
+               case "Name": return "The variable name (optional). Variables that share the same name are automatically linked together and treated as the same variable in your graph. Once linked, changing the value of one will affect all others in the graph. Variables with the same name in different graphs are NOT connected in any way. Use the \"Make Public\" option below in order to access this variable as a reflected property between graphs.";
                case "Value": return "The value of the variable. Only values supported by this variable type are allowed.";
-               case "Expose to Unity": return "When checked, this will expose this variable to Unity so that it will show up in the Inspector panel for this graph's component as well as allow you to access this variable from other uScript graphs as a reflected property. You must name this variable before you can use this oiption (see the Name field above). This is the equivelent of making a variable \"public\" in a script.";
+               case "Make Public": return "When checked, this will allow you to access this variable from other uScript graphs as a reflected property. You must name this variable before you can use this option (see the Name field above). This is the equivelent of making a variable \"public\" in a script.";
+               case "Hide In Inspector": return "When checked, this will hide this variable from Unity so that it will not show up in the Inspector panel for this graph's component. You must name this variable and make it public using the \"Make Public\" checkbox above before you can use this option (see the Name field above). This is the equivelent of using the [HideInInspector] attribute above a variable in a script.";
             }
 
             break;
