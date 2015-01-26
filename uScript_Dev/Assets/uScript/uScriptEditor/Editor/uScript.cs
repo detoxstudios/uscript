@@ -2100,14 +2100,14 @@ public sealed partial class uScript : EditorWindow
                   // Does this work on all platforms?  Wasn't e.clickCount unstable on one platform?
                   // - It appears to work fine on OS X.
                   //
-                  if (e.clickCount == 2 && NodeClicked != null)
+                  if (e.clickCount == 2 && this.NodeClicked != null)
                   {
-                     OpenNode(NodeClicked);
+                     this.NodeDoubleClicked(this.NodeClicked);
                   }
                   else
                   {
                      // Clear the clicked node in all other cases
-                     NodeClicked = null;
+                     this.NodeClicked = null;
                   }
 
                   this.mouseDown = true;
@@ -2369,54 +2369,55 @@ public sealed partial class uScript : EditorWindow
       this.complexData = null;
    }
 
-   public void OpenNode(Node node)
+   public void NodeDoubleClicked(Node node)
    {
-      if (node is DisplayNode)
+      var displayNode = node as DisplayNode;
+      if (displayNode == null)
       {
-         //
-         // Ping the source, Open the source in the default editor, or Load the Nested Graph
-         //
+         return;
+      }
 
-         string currentNodeClassName = ScriptEditor.FindNodeType(((DisplayNode)node).EntityNode);
-         string currentNodeClassPath = GetClassPath(currentNodeClassName);
-         string scriptPath = FindFile(Preferences.UserScripts, currentNodeClassName + ".uscript");
-         int assetInstanceID = 0;
+      // Ping the source, Open the source in the default editor, or Load the Nested Graph
 
-         if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.PingSource)
+      var currentNodeClassName = ScriptEditor.FindNodeType(displayNode.EntityNode);
+      var currentNodeClassPath = GetClassPath(currentNodeClassName);
+      var scriptPath = this.FindFile(Preferences.UserScripts, currentNodeClassName + ".uscript");
+      int assetInstanceID;
+
+      if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.PingSource)
+      {
+         // PING node source, PING script source
+         uScriptGUI.PingObject(currentNodeClassPath, typeof(TextAsset));
+      }
+      else if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.OpenSource)
+      {
+         // OPEN node source, OPEN script source
+         assetInstanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
+         AssetDatabase.OpenAsset(assetInstanceID);
+      }
+      else if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.LoadGraphPingSource)
+      {
+         // PING node source, LOAD script
+         if (scriptPath == string.Empty)
          {
-            // PING node source, PING script source
-            uScriptGUI.PingObject(currentNodeClassPath, typeof(TextAsset));
-         }
-         else if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.OpenSource)
-         {
-            // OPEN node source, OPEN script source
-            assetInstanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
-            AssetDatabase.OpenAsset(assetInstanceID);
-         }
-         else if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.LoadGraphPingSource)
-         {
-            // PING node source, LOAD script
-            if (scriptPath == string.Empty)
-            {
-               uScriptGUI.PingObject(uScript.GetClassPath(currentNodeClassName), typeof(TextAsset));
-            }
-            else
-            {
-               this.OpenGraph(scriptPath);
-            }
+            uScriptGUI.PingObject(GetClassPath(currentNodeClassName), typeof(TextAsset));
          }
          else
          {
-            // OPEN node source, LOAD script
-            if (scriptPath == string.Empty)
-            {
-               assetInstanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
-               AssetDatabase.OpenAsset(assetInstanceID);
-            }
-            else
-            {
-               this.OpenGraph(scriptPath);
-            }
+            this.OpenGraph(scriptPath);
+         }
+      }
+      else
+      {
+         // OPEN node source, LOAD script
+         if (scriptPath == string.Empty)
+         {
+            assetInstanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
+            AssetDatabase.OpenAsset(assetInstanceID);
+         }
+         else
+         {
+            this.OpenGraph(scriptPath);
          }
       }
    }
