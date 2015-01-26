@@ -13,12 +13,19 @@ namespace Detox.ScriptEditor
    using System.Collections;
    using System.Collections.Generic;
    using System.ComponentModel;
+   using System.Linq;
 
    using Detox.Application;
    using Detox.Drawing;
    using Detox.Editor;
    using Detox.FlowChart;
    using Detox.Windows.Forms;
+
+   using UnityEngine;
+
+   using Cursor = Detox.Windows.Forms.Cursor;
+   using Graphics = Detox.Drawing.Graphics;
+   using Object = System.Object;
 
    public partial class ScriptEditorCtrl : ToolWindow
    {
@@ -1768,19 +1775,23 @@ namespace Detox.ScriptEditor
 
       public void SelectAllNodes()
       {
-         List<Guid> guids = new List<Guid>( );
-
-         foreach ( EntityNode node in m_ScriptEditor.EntityNodes )
-         {
-            guids.Add( node.Guid );
-         }
-
-         m_FlowChart.SelectNodes( guids.ToArray( ) );
+         m_FlowChart.SelectNodes(this.m_ScriptEditor.EntityNodes.Select(node => node.Guid).ToArray());
       }
-      
+
+      public void SelectAllNodesWithinArea(Rectangle rectangle)
+      {
+         var scriptEditorCtrl = uScript.Instance.ScriptEditorCtrl;
+
+         m_FlowChart.SelectNodes(
+            (from node in this.m_ScriptEditor.EntityNodes
+             let n = scriptEditorCtrl.GetNode(node.Guid)
+             where rectangle.Contains(n.Bounds)
+             select node.Guid).ToArray());
+      }
+
       public void SelectAllLinks()
       {
-         foreach ( Link link in m_FlowChart.Links )
+         foreach (var link in m_FlowChart.Links)
          {
             link.Selected = true;
          }
