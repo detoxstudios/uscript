@@ -1035,14 +1035,28 @@ namespace Detox.Drawing
          Height = height;
       }
 
+      public bool Contains(Rectangle rectangle)
+      {
+         return this.Left <= rectangle.Left && this.Right >= rectangle.Right && this.Top <= rectangle.Top
+                && this.Bottom >= rectangle.Bottom;
+      }
+
       public bool IntersectsWith(Rectangle rectangle)
       {
-         if ( Right  < rectangle.Left ) return false;
-         if ( Left   > rectangle.Right ) return false;
-         if ( Bottom < rectangle.Top ) return false;
-         if ( Top    > rectangle.Bottom ) return false;
+         return this.Right >= rectangle.Left && this.Left <= rectangle.Right && this.Bottom >= rectangle.Top
+                && this.Top <= rectangle.Bottom;
+      }
 
-         return true;
+      public override string ToString()
+      {
+         return string.Format(
+            "(Left: {0}, Right: {1}, Top: {2}, Bottom: {3}, Width: {4}, Height: {5})",
+            this.Left,
+            this.Right,
+            this.Top,
+            this.Bottom,
+            this.Width,
+            this.Height);
       }
    }
 
