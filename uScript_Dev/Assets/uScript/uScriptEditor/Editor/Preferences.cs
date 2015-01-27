@@ -27,7 +27,8 @@ public class Preferences
    {
       Default,
       Tools,
-      Window
+      Window,
+      Custom
    }
 
    public enum SaveMethodType
@@ -368,51 +369,51 @@ public class Preferences
    [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1503:CurlyBracketsMustNotBeOmitted", Justification = "Reviewed. Suppression is OK here.")]
    private void LoadDefaultsIfRequired()
    {
-      if (null == this.preferences["AutoExpandToolbox"]) this.preferences["AutoExpandToolbox"] = true;
-      if (null == this.preferences["DrawPanelsOnUpdate"]) this.preferences["DrawPanelsOnUpdate"] = false;
-      if (null == this.preferences["ShowGrid"]) this.preferences["ShowGrid"] = uScriptConfig.Style.ShowGrid;
-      if (null == this.preferences["GridSize"]) this.preferences["GridSize"] = uScriptConfig.Style.GridSize;
-      if (null == this.preferences["GridSubdivisions"]) this.preferences["GridSubdivisions"] = uScriptConfig.Style.GridSubdivisions;
-      if (null == this.preferences["GridColorMajor"]) this.preferences["GridColorMajor"] = uScriptConfig.Style.GridColorMajor;
-      if (null == this.preferences["GridColorMinor"]) this.preferences["GridColorMinor"] = uScriptConfig.Style.GridColorMinor;
-      if (null == this.preferences["DoubleClickBehavior"]) this.preferences["DoubleClickBehavior"] = DoubleClickBehaviorType.PingSource;
-      if (null == this.preferences["VariableExpansion"]) this.preferences["VariableExpansion"] = VariableExpansionType.Dynamic;
-      if (null == this.preferences["GridSnap"]) this.preferences["GridSnap"] = false;
-      if (null == this.preferences["ShowAtStartup"]) this.preferences["ShowAtStartup"] = true;
-      if (null == this.preferences["ShowAllHotkeys"]) this.preferences["ShowAllHotkeys"] = false;
-      if (null == this.preferences["LeftMouseButtonPrimary"]) this.preferences["LeftMouseButtonPrimary"] = true;
-      if (null == this.preferences["CheckForUpdate"]) this.preferences["CheckForUpdate"] = true;
-      if (null == this.preferences["LastUpdateCheck"]) this.preferences["LastUpdateCheck"] = 0;
-      if (null == this.preferences["IgnoreUpdateBuild"]) this.preferences["IgnoreUpdateBuild"] = string.Empty;
+      this.SetDefault("AutoExpandToolbox", true);
+      this.SetDefault("DrawPanelsOnUpdate", false);
+      this.SetDefault("ShowGrid", uScriptConfig.Style.ShowGrid);
+      this.SetDefault("GridSize", uScriptConfig.Style.GridSize);
+      this.SetDefault("GridSubdivisions", uScriptConfig.Style.GridSubdivisions);
+      this.SetDefault("GridColorMajor", uScriptConfig.Style.GridColorMajor);
+      this.SetDefault("GridColorMinor", uScriptConfig.Style.GridColorMinor);
+      this.SetDefault("DoubleClickBehavior", DoubleClickBehaviorType.PingSource);
+      this.SetDefault("VariableExpansion", VariableExpansionType.Dynamic);
+      this.SetDefault("GridSnap", false);
+      this.SetDefault("ShowAtStartup", true);
+      this.SetDefault("ShowAllHotkeys", false);
+      this.SetDefault("LeftMouseButtonPrimary", true);
+      this.SetDefault("CheckForUpdate", true);
+      this.SetDefault("LastUpdateCheck", 0);
+      this.SetDefault("IgnoreUpdateBuild", string.Empty);
 
-      if (null == this.preferences["RelativeProjectFiles"]) this.preferences["RelativeProjectFiles"] = uScriptConfig.ConstantPaths.RelativePathInAssets(UnityEngine.Application.dataPath + "/uScriptProjectFiles");
-      if (null == this.preferences["RelativeUserScripts"]) this.preferences["RelativeUserScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(this.ProjectFiles + "/uScripts");
-      if (null == this.preferences["RelativeUserNodes"]) this.preferences["RelativeUserNodes"] = uScriptConfig.ConstantPaths.RelativePathInAssets(this.ProjectFiles + "/Nodes");
-      if (null == this.preferences["RelativeNestedScripts"]) this.preferences["RelativeNestedScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode");
-      if (null == this.preferences["RelativeGeneratedScripts"]) this.preferences["RelativeGeneratedScripts"] = uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode");
-      if (null == this.preferences["MaximumNodeRecursionCount"]) this.preferences["MaximumNodeRecursionCount"] = 1000;
-      if (null == this.preferences["SaveMethod"]) this.preferences["SaveMethod"] = 1;   // 0:Quick, 1:Debug, 2:Release
-      if (null == this.preferences["MenuLocation"]) this.preferences["MenuLocation"] = 1;   // 0:Default, 1:Tools, 2:Window
-      if (null == this.preferences["ProfileMin"]) this.preferences["ProfileMin"] = 1f;
-      if (null == this.preferences["Profiling"]) this.preferences["Profiling"] = false;
-      if (null == this.preferences["PropertyPanelNodeLimit"]) this.preferences["PropertyPanelNodeLimit"] = 1;
+      this.SetDefault("RelativeProjectFiles", uScriptConfig.ConstantPaths.RelativePathInAssets(UnityEngine.Application.dataPath + "/uScriptProjectFiles"));
+      this.SetDefault("RelativeUserScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(this.ProjectFiles + "/uScripts"));
+      this.SetDefault("RelativeUserNodes", uScriptConfig.ConstantPaths.RelativePathInAssets(this.ProjectFiles + "/Nodes"));
+      this.SetDefault("RelativeNestedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode"));
+      this.SetDefault("RelativeGeneratedScripts", uScriptConfig.ConstantPaths.RelativePathInAssets(this.UserScripts + "/_GeneratedCode"));
+      this.SetDefault("MaximumNodeRecursionCount", 1000);
+      this.SetDefault("SaveMethod", 1); // 0:Quick, 1:Debug, 2:Release
+      this.SetDefault("MenuLocation", 1); // 0:Default, 1:Tools, 2:Window  // TODO: Default to 0 in a new project
+      this.SetDefault("ProfileMin", 1f);
+      this.SetDefault("Profiling", false);
+      this.SetDefault("PropertyPanelNodeLimit", 1);
 
-      if (null == this.preferences["ExpandFavoritePanel"]) this.preferences["ExpandFavoritePanel"] = true;
+      this.SetDefault("ExpandFavoritePanel", true);
 
-      if (null == this.preferences["ProjectGraphListFilter"]) this.preferences["ProjectGraphListFilter"] = string.Empty;
-      if (null == this.preferences["ProjectGraphListOffset"]) this.preferences["ProjectGraphListOffset"] = 0;
+      this.SetDefault("ProjectGraphListFilter", string.Empty);
+      this.SetDefault("ProjectGraphListOffset", 0);
 
-      if (null == this.preferences["FavoriteNode1"]) this.preferences["FavoriteNode1"] = string.Empty;
-      if (null == this.preferences["FavoriteNode2"]) this.preferences["FavoriteNode2"] = string.Empty;
-      if (null == this.preferences["FavoriteNode3"]) this.preferences["FavoriteNode3"] = string.Empty;
-      if (null == this.preferences["FavoriteNode4"]) this.preferences["FavoriteNode4"] = string.Empty;
-      if (null == this.preferences["FavoriteNode5"]) this.preferences["FavoriteNode5"] = string.Empty;
-      if (null == this.preferences["FavoriteNode6"]) this.preferences["FavoriteNode6"] = string.Empty;
-      if (null == this.preferences["FavoriteNode7"]) this.preferences["FavoriteNode7"] = string.Empty;
-      if (null == this.preferences["FavoriteNode8"]) this.preferences["FavoriteNode8"] = string.Empty;
-      if (null == this.preferences["FavoriteNode9"]) this.preferences["FavoriteNode9"] = string.Empty;
+      this.SetDefault("FavoriteNode1", string.Empty);
+      this.SetDefault("FavoriteNode2", string.Empty);
+      this.SetDefault("FavoriteNode3", string.Empty);
+      this.SetDefault("FavoriteNode4", string.Empty);
+      this.SetDefault("FavoriteNode5", string.Empty);
+      this.SetDefault("FavoriteNode6", string.Empty);
+      this.SetDefault("FavoriteNode7", string.Empty);
+      this.SetDefault("FavoriteNode8", string.Empty);
+      this.SetDefault("FavoriteNode9", string.Empty);
 
-      if (null == this.preferences["GraphListFolderStates"]) this.preferences["GraphListFolderStates"] = string.Empty;
+      this.SetDefault("GraphListFolderStates", string.Empty);
    }
 
    private void LoadIfRequired()
@@ -420,6 +421,14 @@ public class Preferences
       if (null == this.preferences)
       {
          this.Load();
+      }
+   }
+
+   private void SetDefault(string key, object value)
+   {
+      if (this.preferences.ContainsKey(key) == false)
+      {
+         this.preferences.Add(key, value);
       }
    }
 }
