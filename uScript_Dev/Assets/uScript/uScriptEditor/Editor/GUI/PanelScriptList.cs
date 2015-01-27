@@ -168,7 +168,7 @@ namespace Detox.Editor.GUI
                Content = new GUIContent("Graph"),
                LayoutMethod = ListViewColumn.LayoutMethodOption.Custom,
                MinWidth = 100,
-               MaxWidth = 300,
+               MaxWidth = 600,
                Width = 200
                //IsSelectable = true
             };
