@@ -154,7 +154,7 @@ public sealed class IconContentViewer : EditorWindow
 
    private static Texture2D GetTexture(string name)
    {
-#if UNITY_3_5
+#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3
       var mi = typeof(EditorGUIUtility).GetMethod(
          "IconContent",
          BindingFlags.NonPublic | BindingFlags.Static,
