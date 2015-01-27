@@ -10,7 +10,7 @@
 namespace Detox.Editor.GUI
 {
    using System.IO;
-   using System.Linq;
+   using System.Reflection;
 
    using UnityEditor;
 
@@ -26,7 +26,7 @@ namespace Detox.Editor.GUI
          uScript.LoadSettings();
          ScriptPath = uScript.Preferences.ProjectFiles + "/Editor/";
 
-         if (File.Exists(ScriptPath + ScriptName) == false)
+         if (FileDoesNotExist() || VersionIsObsolete())
          {
             Change(uScript.Preferences.MenuLocation);
          }
@@ -37,10 +37,13 @@ namespace Detox.Editor.GUI
          switch (menuLocation)
          {
             case Preferences.MenuLocationType.Tools:
-               Change("Tools");
+               Change("Tools/");
                break;
             case Preferences.MenuLocationType.Window:
-               Change("Window");
+               Change("Window/");
+               break;
+            case Preferences.MenuLocationType.Custom:
+               Change(ReflectOldMenuRoot());
                break;
             default:
                Change(string.Empty);
@@ -48,25 +51,27 @@ namespace Detox.Editor.GUI
          }
       }
 
-      private static void Change(string menuPath)
+      private static void Change(string menuRoot)
       {
-         menuPath = menuPath ?? string.Empty;
-
-         if (menuPath != string.Empty && menuPath.Last() != '/' && menuPath.Last() != '\\')
-         {
-            menuPath += "/";
-         }
-
-         var content = FormatScript(menuPath);
+         var content = FormatScript(menuRoot, uScriptBuild.Number);
 
          // WriteAllText creates a file, writes the specified string to the file, and then closes the file.
          Directory.CreateDirectory(ScriptPath);
          File.WriteAllText(ScriptPath + ScriptName, content);
          AssetDatabase.ImportAsset(ScriptPath + ScriptName, ImportAssetOptions.ForceUpdate);
+         AssetDatabase.Refresh();
       }
 
-      private static string FormatScript(string menuPath)
+      private static string FormatScript(string menuRoot, string menuBuild)
       {
+         // 51 Canvas
+         // 52 Contents
+         // 53 Graphs
+
+         // 55 Properties
+         // 56 Reference
+         // 57 Toolbox
+
          return
             @"// --------------------------------------------------------------------------------------------------------------------
 // <copyright file=""uScriptMenuLocation.cs"" company=""Detox Studios, LLC"">
@@ -79,46 +84,94 @@ namespace Detox.Editor.GUI
 
 namespace Detox.Editor
 {
-   using Detox.Editor.GUI;
-
    using UnityEditor;
 
    public static class uScriptMenuLocation
    {
-      [MenuItem(""" + menuPath + @"uScript/uScript Editor %u"", false, 1)]
+      // WARNING:
+      // --------------------
+      // The contents of this file are dynamically generated. Any modifications made
+      // to this file may be overwritten and lost the next time it is generated.
+      
+      // To customize the location of the uScript menu:
+      //    1. Open the uScript Preferences window, set 'Menu Location' to ""Custom"", and save your changes.
+      //    2. Modify the 'MenuRoot' string below (e.g., ""Plugins/"", ""Tools/"", ""Window/"", etc.)
+      //.
+      internal const string MenuRoot = """ + menuRoot + @""";
+
+      // Specifies the build of uScript this file was meant to work with
+      internal const string Build = """ + menuBuild + @""";
+
+      [MenuItem(MenuRoot + ""uScript/uScript Editor %u"", false, 1)]
       internal static void OpenEditor()
       {
-         uScript.Open();
+         EditorCommands.OpenEditorWindow();
       }
 
-      // 51 Canvas
-      // 52 Contents
-      // 53 Graphs
-
-      [MenuItem(""" + menuPath + @"uScript/Hotkeys"", false, 54)]
+      [MenuItem(MenuRoot + ""uScript/Hotkeys"", false, 54)]
       internal static void OpenHotkeysWindow()
       {
-         uScriptHotkeyWindow.Open();
+         EditorCommands.OpenHotkeyWindow();
       }
 
-      // 55 Properties
-      // 56 Reference
-      // 57 Toolbox
-
-      [MenuItem(""" + menuPath + @"uScript/Preferences"", false, 901)]
-      internal static void OpenPreferencesWindow()
+      [MenuItem(MenuRoot + ""uScript/Preferences"", false, 901)]
+      internal static void OpenPreferenceWindow()
       {
-         PreferenceWindow.Open();
+         EditorCommands.OpenPreferenceWindow();
       }
 
-      [MenuItem(""" + menuPath + @"uScript/About uScript"", false, 1001)]
+      [MenuItem(MenuRoot + ""uScript/About uScript"", false, 1001)]
       internal static void OpenAboutWindow()
       {
-         AboutWindow.Open();
+         EditorCommands.OpenAboutWindow();
       }
    }
 }
 ";
+      }
+
+      private static bool FileDoesNotExist()
+      {
+         return File.Exists(ScriptPath + ScriptName) == false;
+      }
+
+      private static string ReflectOldBuildNumber()
+      {
+         var type = System.Type.GetType("Detox.Editor.uScriptMenuLocation");
+         if (type != null)
+         {
+            var field = type.GetField("Build", BindingFlags.NonPublic | BindingFlags.Static);
+            if (field != null)
+            {
+               return field.GetValue(null) as string;
+            }
+         }
+         return string.Empty;
+      }
+
+      private static string ReflectOldMenuRoot()
+      {
+         var type = System.Type.GetType("Detox.Editor.uScriptMenuLocation");
+         if (type != null)
+         {
+            var field = type.GetField("MenuRoot", BindingFlags.NonPublic | BindingFlags.Static);
+            if (field != null)
+            {
+               return field.GetValue(null) as string;
+            }
+         }
+         return string.Empty;
+      }
+
+      private static bool VersionIsObsolete()
+      {
+         BuildInfo newBuild;
+         BuildInfo oldBuild;
+
+         BuildInfo.TryParse(uScriptBuild.Number, out newBuild);
+         BuildInfo.TryParse(ReflectOldBuildNumber(), out oldBuild);
+
+         return newBuild > oldBuild;
       }
    }
 }

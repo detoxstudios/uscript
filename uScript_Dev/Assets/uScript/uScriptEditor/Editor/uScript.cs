@@ -143,9 +143,15 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   public static uScriptHotkeyWindow HotkeyWindow { get; set; }
+#if !UNITY_3_5
+   public static Detox.Editor.GUI.Windows.HotkeyWindow HotkeyWindow { get; set; }
+
+   public static Detox.Editor.GUI.Windows.PreferenceWindow PreferenceWindow { get; set; }
+#else
+   public static HotkeyWindow HotkeyWindow { get; set; }
 
    public static PreferenceWindow PreferenceWindow { get; set; }
+#endif
 
    public static bool IsPreferenceWindowOpen
    {
@@ -1391,7 +1397,7 @@ public sealed partial class uScript : EditorWindow
 
          if (Preferences.ShowAtStartup)
          {
-            WelcomeWindow.Init();
+            EditorCommands.OpenWelcomeWindow();
          }
 
          RequestVersionCompatiblyTest();
@@ -2995,14 +3001,14 @@ public sealed partial class uScript : EditorWindow
       GUI.Label(r, shortcut, uScriptGUIStyle.MenuDropDownButtonShortcut);
    }
 
-   private void CommandHelpMenuAbout()
+   private static void CommandHelpMenuAbout()
    {
-      AboutWindow.Open();
+      EditorCommands.OpenAboutWindow();
    }
 
-   private void CommandHelpMenuWelcome()
+   private static void CommandHelpMenuWelcome()
    {
-      WelcomeWindow.Init();
+      EditorCommands.OpenWelcomeWindow();
    }
 
    private void CommandHelpMenuDocs()
@@ -3102,9 +3108,9 @@ public sealed partial class uScript : EditorWindow
       this.mapScale = 1.0f;
    }
 
-   private void CommandViewMenuPreferences()
+   private static void CommandViewMenuPreferences()
    {
-      PreferenceWindow.Open();
+      EditorCommands.OpenPreferenceWindow();
    }
 
    void FileMenuItem_New()
@@ -3457,7 +3463,7 @@ public sealed partial class uScript : EditorWindow
       }
 
       menu.AddSeparator(string.Empty);
-      menu.AddItem(uScriptGUIContent.ViewMenuItemPreferences, false, this.CommandViewMenuPreferences);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemPreferences, false, CommandViewMenuPreferences);
       //menu.AddDisabledItem(uScriptGUIContent.ViewMenuItemPreferences);
 
       menu.DropDown(rect);
@@ -3470,13 +3476,13 @@ public sealed partial class uScript : EditorWindow
       var menu = new GenericMenu();
 
       menu.AddItem(uScriptGUIContent.HelpMenuItemShortcuts, false, this.CommandHelpMenuShortcuts);
-      menu.AddItem(uScriptGUIContent.HelpMenuItemWelcome, false, this.CommandHelpMenuWelcome);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemWelcome, false, CommandHelpMenuWelcome);
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.HelpMenuItemOnlineDocs, false, this.CommandHelpMenuDocs);
       menu.AddItem(uScriptGUIContent.HelpMenuItemOnlineForum, false, this.CommandHelpMenuForum);
       menu.AddItem(uScriptGUIContent.HelpMenuItemUpdates, false, this.CommandHelpMenuUpdates);
       menu.AddSeparator(string.Empty);
-      menu.AddItem(uScriptGUIContent.HelpMenuItemAbout, false, this.CommandHelpMenuAbout);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemAbout, false, CommandHelpMenuAbout);
 
       menu.DropDown(rect);
 

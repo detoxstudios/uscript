@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 #if !UNITY_3_5
-namespace Detox.Editor
+namespace Detox.Editor.GUI.Windows
 {
 #endif
    using Detox.Editor.GUI;

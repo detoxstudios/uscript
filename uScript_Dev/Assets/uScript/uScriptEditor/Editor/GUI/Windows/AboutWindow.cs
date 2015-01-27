@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 #if !UNITY_3_5
-namespace Detox.Editor.GUI
+namespace Detox.Editor.GUI.Windows
 {
 #endif
    using Detox.Editor;
@@ -16,9 +16,6 @@ namespace Detox.Editor.GUI
    using UnityEditor;
 
    using UnityEngine;
-
-   using Application = UnityEngine.Application;
-   using GUI = UnityEngine.GUI;
 
    public class AboutWindow : EditorWindow
    {
@@ -139,3 +136,11 @@ namespace Detox.Editor.GUI
 #if !UNITY_3_5
 }
 #endif
+
+namespace Detox.Editor.GUI.Windows
+{
+   public static class Unity357Support
+   {
+      
+   }
+}

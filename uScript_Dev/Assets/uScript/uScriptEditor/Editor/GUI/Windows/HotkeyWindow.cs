@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="uScriptHotkeyWindow.cs" company="Detox Studios, LLC">
+// <copyright file="HotkeyWindow.cs" company="Detox Studios, LLC">
 //   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 #if !UNITY_3_5
-namespace Detox.Editor.GUI
+namespace Detox.Editor.GUI.Windows
 {
 #endif
    using System;
@@ -22,13 +22,13 @@ namespace Detox.Editor.GUI
 
    using UnityEngine;
 
-   public class uScriptHotkeyWindow : EditorWindow
+   public class HotkeyWindow : EditorWindow
    {
       // Layout parameters
       private const int WindowHeight = 200;
       private const int WindowWidth = 250;
 
-      private static uScriptHotkeyWindow instance;
+      private static HotkeyWindow instance;
 
       private readonly Dictionary<KeyCode, bool> keyDown = new Dictionary<KeyCode, bool>();
 
@@ -38,7 +38,7 @@ namespace Detox.Editor.GUI
 
       private Rect panelOptionsRect;
 
-      public static uScriptHotkeyWindow Instance
+      public static HotkeyWindow Instance
       {
          get
          {
@@ -99,7 +99,7 @@ namespace Detox.Editor.GUI
 
       public static void Open()
       {
-         instance = GetWindow<uScriptHotkeyWindow>(false, "Hotkeys", false);
+         instance = GetWindow<HotkeyWindow>(false, "Hotkeys", false);
          instance.isFirstRun = true;
       }
 
