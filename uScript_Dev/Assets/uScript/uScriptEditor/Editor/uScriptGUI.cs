@@ -1089,7 +1089,7 @@ namespace Detox.Editor
                var favoriteNodes = uScript.Preferences.FavoriteNodes;
                var favoriteIndex = Array.IndexOf(favoriteNodes, favoriteNodeType) + 1;
 
-               var newIndex = EditorGUILayout.Popup(favoriteIndex, uScriptGUIPanelPalette.Instance.favoritePopupOptions, uScriptGUIStyle.PropertyButtonMiddleFavorite, GUILayout.Width(30));
+               var newIndex = EditorGUILayout.Popup(favoriteIndex, uScriptGUIPanelPalette.Instance.FavoritePopupOptions, uScriptGUIStyle.PropertyButtonMiddleFavorite, GUILayout.Width(30));
                if (newIndex != favoriteIndex)
                {
                   if (favoriteIndex == 0)
