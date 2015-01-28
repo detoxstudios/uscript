@@ -206,6 +206,9 @@ namespace Detox.Editor.GUI.Windows
          var boolValue = EditorGUILayout.Toggle("Show Welcome Window on Start", this.preferences.ShowAtStartup);
          this.preferences.ShowAtStartup = boolValue;
 
+         boolValue = EditorGUILayout.Toggle("Show uScript Icon in Hierarchy", this.preferences.ShowHierarchyIcon);
+         this.preferences.ShowHierarchyIcon = boolValue;
+         
          EditorGUILayout.BeginHorizontal();
          {
             boolValue = EditorGUILayout.Toggle("Check for Updates on Start", this.preferences.CheckForUpdate);

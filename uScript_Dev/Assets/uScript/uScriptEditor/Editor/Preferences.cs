@@ -297,6 +297,12 @@ public class Preferences
       set { this.LoadIfRequired(); this.preferences["GraphListFolderStates"] = value; }
    }
 
+	public bool ShowHierarchyIcon
+	{
+		get { this.LoadIfRequired(); return (bool)this.preferences["ShowHierarchyIcon"]; }
+		set { this.LoadIfRequired(); this.preferences["ShowHierarchyIcon"] = value; }
+	}
+
    public string GetFavoriteNode(int number)
    {
       if (number < 1 || number > 9)
@@ -414,6 +420,8 @@ public class Preferences
       this.SetDefault("FavoriteNode9", string.Empty);
 
       this.SetDefault("GraphListFolderStates", string.Empty);
+
+      this.SetDefault("ShowHierarchyIcon", true);
    }
 
    private void LoadIfRequired()
