@@ -53,10 +53,10 @@ public static class uScriptGUIContent
       buttonScriptNew = new GUIContent("New _&N", "Create a new uScript.  The active uScript will be closed automatically.");
 
       FileMenu = new GUIContent("File");
-      FileMenuItemNew = new GUIContent("New &N");
-      FileMenuItemOpen = new GUIContent("Open... &O");
-      FileMenuItemSave = new GUIContent("Save &S");
-      FileMenuItemSaveAs = new GUIContent("Save As... &A");
+      FileMenuItemNew = new GUIContent("New Graph &N");
+      FileMenuItemOpen = new GUIContent("Open Graph... &O");
+      FileMenuItemSave = new GUIContent("Save Graph &S");
+      FileMenuItemSaveAs = new GUIContent("Save Graph As... &A");
       FileMenuItemSaveQuick = new GUIContent("Save Quick &Q");
       FileMenuItemSaveDebug = new GUIContent("Save Debug &D");
       FileMenuItemSaveRelease = new GUIContent("Save Release &R");
