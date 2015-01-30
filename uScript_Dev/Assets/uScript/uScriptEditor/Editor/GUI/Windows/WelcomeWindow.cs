@@ -11,76 +11,35 @@
 namespace Detox.Editor.GUI.Windows
 {
 #endif
+   using System.Collections.Generic;
+
    using Detox.Editor;
 
    using UnityEditor;
 
    using UnityEngine;
 
-   using Application = UnityEngine.Application;
-   using GUI = UnityEngine.GUI;
-
    public class WelcomeWindow : EditorWindow
    {
-      private const int WindowWidth = 560;
+      private bool isFirstRun = true;
 
-      private static WelcomeWindow window;
-
-      private bool firstRun = true;
-
-      public static void Init()
+      public static void Open()
       {
-         // Get existing open window or if none, make a new one:
-         window = GetWindow<WelcomeWindow>(true, "Welcome To uScript", true);
-         window.firstRun = true; // unnecessary, but we'll get a warning that 'window' is unused, otherwise
+         GetWindow<WelcomeWindow>(true, "Welcome To uScript", true);
       }
 
       public void OnGUI()
       {
-         GUILayout.BeginVertical(Style.Clear, GUILayout.Width(WindowWidth));
-         {
-            GUILayout.BeginVertical();
-            {
-               ShowHeader(Content.Header);
+         this.LayoutGUI();
 
-               GUILayout.Space(16);
+         DrawHeader();
+         DrawItems();
+         DrawToggle();
+      }
 
-               ShowItem(Content.QuickStart);
-               ShowItem(Content.Documentation);
-               ShowItem(Content.Tutorials);
-               ShowItem(Content.Examples);
-               ShowItem(Content.Community);
-               ShowItem(Content.Feedback);
-            }
-
-            GUILayout.EndVertical();
-
-            GUILayout.Space(8);
-
-            GUILayout.BeginHorizontal(GUILayout.Height(20));
-            {
-               GUILayout.FlexibleSpace();
-
-               EditorGUI.BeginChangeCheck();
-               uScript.Preferences.ShowAtStartup = GUILayout.Toggle(
-                  uScript.Preferences.ShowAtStartup,
-                  Content.ShowAtStartupText);
-               if (EditorGUI.EndChangeCheck())
-               {
-                  uScript.Preferences.Save();
-               }
-
-               GUILayout.Space(16);
-            }
-
-            GUILayout.EndHorizontal();
-
-            GUILayout.Space(16);
-         }
-
-         GUILayout.EndVertical();
-
-         this.ResizeWindow();
+      private static bool ShouldUpdateRects()
+      {
+         return Content.HeaderIcon.Rect.x < 1;
       }
 
       private static void ShowHelpPageOrBrowseURL(string url)
@@ -95,90 +54,116 @@ namespace Detox.Editor.GUI.Windows
          }
       }
 
-      private static void ShowHeader(Content.Item item)
+      private static void DrawHeader()
       {
-         GUILayout.BeginHorizontal(Style.HeaderRow);
-
-         GUILayout.Label(item.Icon, Style.HeaderIcon);
-
-         GUILayout.Space(16);
-
-         GUILayout.BeginVertical(GUILayout.ExpandWidth(true));
-
-         GUILayout.Label(item.Label, Style.HeaderLabel);
-         GUILayout.Label(item.Text, "WordWrappedLabel");
-
-         GUILayout.EndVertical();
-
-         GUILayout.EndHorizontal();
+         GUI.Label(Content.HeaderIcon.Rect, Content.HeaderIcon.GUIContent, Style.Image);
+         GUI.Label(Content.HeaderTitle.Rect, Content.HeaderTitle.GUIContent, Style.Image);
+         GUI.Label(Content.HeaderText.Rect, Content.HeaderText.GUIContent, Style.WrappedText);
       }
 
-      private static void ShowItem(Content.Item item)
+      private static void DrawItems()
       {
-         GUILayout.BeginHorizontal(Style.ItemRow);
-
-         if (GUILayout.Button(item.Icon, Style.ItemIcon))
+         foreach (var item in Content.Items)
          {
-            ShowHelpPageOrBrowseURL(item.URL);
+            if (GUI.Button(item.Icon.Rect, item.Icon.GUIContent, Style.Image))
+            {
+               ShowHelpPageOrBrowseURL(item.URL);
+            }
+
+            if (GUI.Button(item.Label.Rect, item.Label.GUIContent, Style.Label))
+            {
+               ShowHelpPageOrBrowseURL(item.URL);
+            }
+
+            GUI.Label(item.Text.Rect, item.Text.GUIContent, Style.WrappedText);
+
+            if (Event.current.type == EventType.Repaint)
+            {
+               EditorGUIUtility.AddCursorRect(item.Icon.Rect, MouseCursor.Link);
+               EditorGUIUtility.AddCursorRect(item.Label.Rect, MouseCursor.Link);
+            }
          }
-
-         if (Event.current.type == EventType.Repaint)
-         {
-            EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-         }
-
-         GUILayout.Space(8);
-
-         GUILayout.BeginVertical(GUILayout.ExpandWidth(true));
-
-         if (GUILayout.Button(item.Label, Style.ItemLabel))
-         {
-            ShowHelpPageOrBrowseURL(item.URL);
-         }
-
-         if (Event.current.type == EventType.Repaint)
-         {
-            EditorGUIUtility.AddCursorRect(GUILayoutUtility.GetLastRect(), MouseCursor.Link);
-         }
-
-         GUILayout.Label(item.Text, "WordWrappedLabel");
-
-         GUILayout.EndVertical();
-
-         GUILayout.EndHorizontal();
       }
 
-      private void ResizeWindow()
+      private static void DrawToggle()
       {
-         if (Event.current.type != EventType.Repaint)
+         var toggle = uScript.Preferences.ShowAtStartup;
+         EditorGUI.BeginChangeCheck();
+         toggle = GUI.Toggle(Content.Toggle.Rect, toggle, Content.Toggle.GUIContent);
+         if (EditorGUI.EndChangeCheck())
          {
-            return;
+            uScript.Preferences.ShowAtStartup = toggle;
+            uScript.Preferences.Save();
+         }
+      }
+
+      private static Vector2 UpdateRects()
+      {
+         const int VPad = 16;
+         const int HPad = 24;
+         const int Spacer = 20;
+
+         const int WindowWidth = 512;
+         const int TextWidth = WindowWidth - HPad - HPad - HPad - HPad - Spacer;
+
+         // The icon is 64x64 with a left and top margin
+         Content.HeaderIcon.Rect = new Rect(HPad, VPad, 64, 64);
+
+         // The title is at the top-right of the icon, with a space separating them.
+         Content.HeaderTitle.Rect = new Rect(
+            Content.HeaderIcon.Rect.xMax + Spacer,
+            VPad,
+            Content.HeaderTitle.GUIContent.image.width,
+            Content.HeaderTitle.GUIContent.image.height);
+
+         // The header text is directly below the header title and has the same width.
+         Content.HeaderText.Rect = new Rect(
+            Content.HeaderTitle.Rect.x,
+            Content.HeaderTitle.Rect.yMax,
+            Content.HeaderTitle.Rect.width,
+            Style.WrappedText.CalcHeight(Content.HeaderText.GUIContent, Content.HeaderTitle.Rect.width));
+
+         Vector2 size;
+         var y = Content.HeaderText.Rect.yMax + (VPad * 1.5f);
+
+         // Layout for each of the items
+         foreach (var item in Content.Items)
+         {
+            size = Style.Image.CalcSize(item.Icon.GUIContent);
+            item.Icon.Rect = new Rect(HPad * 2, y, size.x, size.y);
+
+            size = Style.Label.CalcSize(item.Label.GUIContent);
+            item.Label.Rect = new Rect(item.Icon.Rect.xMax + Spacer, y, TextWidth - item.Icon.Rect.width, size.y);
+
+            var height = Style.WrappedText.CalcHeight(item.Text.GUIContent, item.Label.Rect.width);
+            item.Text.Rect = new Rect(item.Label.Rect.x, item.Label.Rect.yMax, item.Label.Rect.width, height);
+
+            var rowHeight = Mathf.Max(item.Icon.Rect.height, item.Label.Rect.height + item.Text.Rect.height);
+            y += rowHeight + VPad;
          }
 
-         var lastRect = GUILayoutUtility.GetLastRect();
+         // The preference toggle
+         size = GUI.skin.toggle.CalcSize(Content.Toggle.GUIContent);
+         Content.Toggle.Rect = new Rect(WindowWidth - 8 - size.x, y, size.x, size.y);
 
-         if (this.firstRun)
+         return new Vector2(WindowWidth, Content.Toggle.Rect.yMax + 8);
+      }
+
+      private void LayoutGUI()
+      {
+         if (ShouldUpdateRects())
          {
-            this.firstRun = false;
+            this.minSize = this.maxSize = UpdateRects();
+         }
 
-            // Force the window to a position relative to the uScript window
-            lastRect.x = uScript.Instance.position.x + 50;
-            lastRect.y = uScript.Instance.position.y + 50;
-
-            window.position = new Rect();
+         if (this.isFirstRun)
+         {
+            this.isFirstRun = false;
 
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
-               window.Focus();
+               this.Focus();
             }
-         }
-
-         // Force the window dimesions to accommodate its content
-         if ((int)window.position.width != (int)lastRect.width || (int)window.position.height != (int)lastRect.height)
-         {
-            window.position = lastRect;
-            window.minSize = new Vector2(lastRect.width, lastRect.height);
-            window.maxSize = window.minSize;
          }
       }
 
@@ -186,85 +171,95 @@ namespace Detox.Editor.GUI.Windows
       {
          static Content()
          {
-            Header = new Item(
-               "iconWelcomeLogo",
-               "Welcome To uScript",
-               "We've worked hard to get this into your hands, and we cannot wait to see the wonderful things you create with it!",
-               string.Empty);
+            HeaderIcon = new PositionedContent(uScriptGUI.GetTexture("iconWelcomeLogo"));
 
-            QuickStart = new Item(
-               "iconWelcomeQuickstart",
-               "Key Concepts",
-               "Do you want to jump right in?  Check out the Key Concepts section of our User Guide to help get you started.",
-               "http://docs.uscript.net/Default.htm#3-Working_With_uScript/3.2-Key_Concepts.htm");
+            HeaderTitle = new PositionedContent(uScriptGUI.GetSkinnedTexture("WelcomeHeader"));
 
-            Documentation = new Item(
-               "iconWelcomeDocumentation",
-               "Documentation",
-               "For more extensive information on uScript check out our full User Guide online documentation.",
-               "http://docs.uscript.net/");
+            HeaderText =
+               new PositionedContent(
+                  "We've worked hard to get this into your hands, and we cannot wait to see the wonderful things you create with it!");
 
-            Tutorials = new Item(
-               "iconWelcomeVideoTutorials",
-               "Video Tutorials",
-               "We have a selection of video tutorials that cover many uScript topics from basic to advanced.",
-               "http://www.uscript.net/docs/index.php?title=Tutorials");
+            Items = new List<Item>
+                       {
+                          new Item(
+                             "iconWelcomeQuickstart",
+                             "Key Concepts",
+                             "Do you want to jump right in?  Check out the Key Concepts section of our User Guide to help get you started.",
+                             "http://docs.uscript.net/Default.htm#3-Working_With_uScript/3.2-Key_Concepts.htm"),
+                          new Item(
+                             "iconWelcomeDocumentation",
+                             "Documentation",
+                             "For more extensive information on uScript check out our full User Guide online documentation.",
+                             "http://docs.uscript.net/"),
+                          new Item(
+                             "iconWelcomeVideoTutorials",
+                             "Video Tutorials",
+                             "We have a selection of video tutorials that cover many uScript topics from basic to advanced.",
+                             "http://www.uscript.net/docs/index.php?title=Tutorials"),
+                          new Item(
+                             "iconWelcomeExamples",
+                             "Example Projects",
+                             "Deconstruct our example projects to see exactly how they function.  Each project is well documented.",
+                             "http://www.uscript.net/docs/index.php?title=Example_Projects"),
+                          new Item(
+                             "iconWelcomeCommunity",
+                             "Community",
+                             "The uScript community is growing daily. Visit the forum and join the conversation.",
+                             "http://www.uscript.net/forum/"),
+                          new Item(
+                             "iconWelcomeFeedback",
+                             "Feedback",
+                             "Your feedback is important to us!  We setup a UserVoice account where you can vote on existing suggestions or add your own.",
+                             "http://uscript.uservoice.com/forums/125157-uscript-feedback"),
+                       };
 
-            Examples = new Item(
-               "iconWelcomeExamples",
-               "Example Projects",
-               "Deconstruct our example projects to see exactly how they function.  Each project is well documented.",
-               "http://www.uscript.net/docs/index.php?title=Example_Projects");
-
-            Community = new Item(
-               "iconWelcomeCommunity",
-               "Community",
-               "The uScript community is growing daily. Visit the forum and join the conversation.",
-               "http://www.uscript.net/forum/");
-
-            Feedback = new Item(
-               "iconWelcomeFeedback",
-               "Feedback",
-               "Your feedback is important to us!  We setup a UserVoice account where you can vote on existing suggestions or add your own.",
-               "http://uscript.uservoice.com/forums/125157-uscript-feedback");
-
-            ShowAtStartupText = new GUIContent("Show at Startup");
+            Toggle = new PositionedContent("Show at Startup");
          }
 
-         public static Item Header { get; private set; }
+         public static PositionedContent HeaderIcon { get; private set; }
 
-         public static Item QuickStart { get; private set; }
+         public static PositionedContent HeaderTitle { get; private set; }
 
-         public static Item Documentation { get; private set; }
+         public static PositionedContent HeaderText { get; private set; }
 
-         public static Item Tutorials { get; private set; }
+         public static PositionedContent Toggle { get; private set; }
 
-         public static Item Examples { get; private set; }
-
-         public static Item Community { get; private set; }
-
-         public static Item Feedback { get; private set; }
-
-         public static GUIContent ShowAtStartupText { get; private set; }
+         public static List<Item> Items { get; private set; }
 
          public class Item
          {
             public Item(string icon, string label, string text, string url)
             {
-               // TODO: Replace the LoadAssetAtPath call with the call from uScriptGUI
-               this.Icon = new GUIContent(uScriptGUI.GetTexture(icon));
-               this.Label = new GUIContent(label);
-               this.Text = new GUIContent(text);
+               this.Icon = new PositionedContent(uScriptGUI.GetTexture(icon));
+               this.Label = new PositionedContent(label);
+               this.Text = new PositionedContent(text);
                this.URL = url;
             }
 
-            public GUIContent Icon { get; private set; }
+            public PositionedContent Icon { get; private set; }
 
-            public GUIContent Label { get; private set; }
+            public PositionedContent Label { get; private set; }
 
-            public GUIContent Text { get; private set; }
+            public PositionedContent Text { get; private set; }
 
             public string URL { get; private set; }
+         }
+
+         public class PositionedContent
+         {
+            public PositionedContent(string text)
+            {
+               this.GUIContent = new GUIContent(text);
+            }
+
+            public PositionedContent(Texture image)
+            {
+               this.GUIContent = new GUIContent(image);
+            }
+
+            public GUIContent GUIContent { get; private set; }
+
+            public Rect Rect { get; set; }
          }
       }
 
@@ -272,49 +267,18 @@ namespace Detox.Editor.GUI.Windows
       {
          static Style()
          {
-            Clear = new GUIStyle();
-            Clear.border = GUI.skin.box.border;
-            Clear.margin = new RectOffset();
-            Clear.padding = new RectOffset();
+            Image = new GUIStyle();
 
-            HeaderRow = new GUIStyle(Clear);
-            HeaderRow.margin = new RectOffset(40, 40, 0, 16);
+            Label = new GUIStyle(EditorStyles.boldLabel);
 
-            HeaderIcon = new GUIStyle();
-            HeaderIcon.margin = new RectOffset(0, 0, 4, 4);
-
-            HeaderLabel = new GUIStyle(Clear);
-            HeaderLabel.normal.textColor = EditorStyles.boldLabel.normal.textColor;
-            HeaderLabel.fontStyle = FontStyle.Bold;
-            HeaderLabel.fontSize = 32;
-
-            ItemRow = new GUIStyle(Clear);
-            ItemRow.margin = new RectOffset(64, 64, 16, 16);
-
-            ItemIcon = new GUIStyle();
-            ItemIcon.margin = new RectOffset(2, 2, 2, 2);
-
-            ItemLabel = new GUIStyle(Clear);
-            ItemLabel.normal.textColor = EditorStyles.boldLabel.active.textColor;
-            ItemLabel.fontSize = EditorStyles.boldLabel.fontSize;
-            ItemLabel.fontStyle = FontStyle.Bold;
-            ItemLabel.margin = new RectOffset(4, 4, 0, 4);
-            ItemLabel.stretchWidth = false;
+            WrappedText = new GUIStyle(EditorStyles.wordWrappedLabel);
          }
 
-         public static GUIStyle Clear { get; private set; }
+         public static GUIStyle Image { get; private set; }
 
-         public static GUIStyle HeaderRow { get; private set; }
+         public static GUIStyle Label { get; private set; }
 
-         public static GUIStyle HeaderIcon { get; private set; }
-
-         public static GUIStyle HeaderLabel { get; private set; }
-
-         public static GUIStyle ItemRow { get; private set; }
-
-         public static GUIStyle ItemIcon { get; private set; }
-
-         public static GUIStyle ItemLabel { get; private set; }
+         public static GUIStyle WrappedText { get; private set; }
       }
    }
 #if !UNITY_3_5

@@ -35,7 +35,7 @@ namespace Detox.Editor
 
       public static void OpenWelcomeWindow()
       {
-         WelcomeWindow.Init();
+         WelcomeWindow.Open();
       }
    }
 }

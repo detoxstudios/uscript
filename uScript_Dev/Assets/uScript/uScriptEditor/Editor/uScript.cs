@@ -56,6 +56,8 @@ public sealed partial class uScript : EditorWindow
 
    private static bool shouldTestCompatibility;
 
+   private static bool shouldPerformUpdateCheck;
+
    // So we know if the current script we've cached is dirty or has been saved to a file
    private bool currentScriptDirty;
    private string currentScript;
@@ -581,7 +583,12 @@ public sealed partial class uScript : EditorWindow
       shouldTestCompatibility = true;
    }
 
-   private static void TestVersionCompatibility()
+   private static void RequestUpdateCheck()
+   {
+      shouldPerformUpdateCheck = true;
+   }
+
+   private static void VerifyBuildCompatibility()
    {
       if (shouldTestCompatibility == false || UnityVersion > 1)
       {
@@ -597,6 +604,18 @@ public sealed partial class uScript : EditorWindow
 
       uScriptDebug.Log(msg, uScriptDebug.Type.Warning);
       EditorUtility.DisplayDialog("Incompatibility Warning", msg, "Okay");
+   }
+
+   private static void PerformUpdateCheck()
+   {
+      if (shouldPerformUpdateCheck == false)
+      {
+         return;
+      }
+
+      shouldPerformUpdateCheck = false;
+
+      UpdateNotification.StartupCheck();
    }
 
    private void Launching()
@@ -972,8 +991,9 @@ public sealed partial class uScript : EditorWindow
 
    internal void Update()
    {
-      TestVersionCompatibility();
+      VerifyBuildCompatibility();
 
+      PerformUpdateCheck();
 
       //Debug.Log("Update()\n" + EditorWindow.focusedWindow + " has focus, the mouse is over " + EditorWindow.mouseOverWindow);
 
@@ -1082,7 +1102,6 @@ public sealed partial class uScript : EditorWindow
 
          this.rebuildWhenReady = false;
       }
-
 
       if (true == m_SelectAllNodes)
       {
@@ -1401,8 +1420,7 @@ public sealed partial class uScript : EditorWindow
          }
 
          RequestVersionCompatiblyTest();
-
-         UpdateNotification.StartupCheck();
+         RequestUpdateCheck();
       }
 
       if (m_ScriptEditorCtrl == null)
@@ -3398,8 +3416,10 @@ public sealed partial class uScript : EditorWindow
 
       menu.AddItem(uScriptGUIContent.FileMenuItemNew, false, this.FileMenuItem_New);
       menu.AddItem(uScriptGUIContent.FileMenuItemOpen, false, this.FileMenuItem_Open);
+      menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemSave, false, this.FileMenuItem_Save);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveAs, false, this.FileMenuItem_SaveAs);
+      menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveQuick, false, this.FileMenuItem_QuickSave);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveDebug, false, this.FileMenuItem_DebugSave);
       menu.AddItem(uScriptGUIContent.FileMenuItemSaveRelease, false, this.FileMenuItem_ReleaseSave);
