@@ -26,7 +26,7 @@ using UnityEngine;
 
 public sealed class IconContentViewer : EditorWindow
 {
-   private const float SidePanelMinWidth = 150;
+   private const float SidePanelMinWidth = 400;
 
    private const float SidePanelMaxWidth = 250;
 
@@ -69,7 +69,8 @@ public sealed class IconContentViewer : EditorWindow
    internal static void Init()
    {
       var window = GetWindow<IconContentViewer>(true, "Content Icons");
-      window.position = new Rect(150, 150, 700, 400);
+      window.position = new Rect(150, 150, 960, 600);
+      window.minSize = new Vector2(800, 500);
    }
 
    internal void OnEnable()
@@ -139,11 +140,10 @@ public sealed class IconContentViewer : EditorWindow
       GUI.BeginGroup(new Rect(sidePanelWidth, 0, position.width - sidePanelWidth, position.height));
       this.scrollPos = GUILayout.BeginScrollView(this.scrollPos, true, true, GUILayout.MaxWidth(position.width - sidePanelWidth));
 
-      for (var i = 0; i < iconGroups.Count; ++i)
+      foreach (var @group in this.iconGroups)
       {
-         var group = iconGroups[i];
-         EditorGUILayout.LabelField(group.Name);
-         DrawIconSelectionGrid(group.IconData, group.MaxWidth);
+         EditorGUILayout.LabelField(string.Format("{0} ({1} items)", @group.Name, @group.IconData.Length));
+         this.DrawIconSelectionGrid(@group.IconData, @group.MaxWidth);
 
          GUILayout.Space(15);
       }
