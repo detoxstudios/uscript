@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
 
-[FriendlyName("Break", "Pauses the game and spits out the game time and an optional text string to Unity's console. Restart the game by pressing the Play button in the Unity editor.")]
+[FriendlyName("Break", "Pauses the game and spits out the game time and an optional text string to Unity's console. Resume the game by pressing the Pause button in the Unity editor.")]
 public class uScriptAct_Break : uScriptLogic
 {
    private bool m_DelayedOut = false;
