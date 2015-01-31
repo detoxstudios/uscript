@@ -53,6 +53,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\AnimData.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\AssetBrowserWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\BinaryXml.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\BuildInfo.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\CodeValidator.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\CommentNode.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\EditableObject.cs" />
