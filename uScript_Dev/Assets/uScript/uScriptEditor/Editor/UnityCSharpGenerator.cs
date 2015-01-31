@@ -428,7 +428,7 @@ namespace Detox.ScriptEditor
                      break;
                   }
                }
-               else if (node is OwnerConnection || node is ExternalConnection)
+               else if (node is OwnerConnection || node is ExternalConnection || node is EntityProperty)
                {
                   includeNode = true;
                }
@@ -1156,7 +1156,7 @@ namespace Detox.ScriptEditor
                         AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
                      else
                         AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ";");
-
+                      
                      AddCSharpLine("if ( null != component )");
                      AddCSharpLine("{");
                      ++m_TabStack;
@@ -2034,27 +2034,6 @@ namespace Detox.ScriptEditor
             AddCSharpLine("int relayCallCount = 0;");
          }
 
-         //AddCSharpLine( "//external output properties" );
-         //Plug []properties = FindExternalOutputProperties( );
-         //string []outputs  = FindExternalOutputs( );
-
-         //for ( int i = 0; i < properties.Length; i++ )
-         //{
-         //   AddCSharpLine( "bool " + outputs[i] + " = false;" );
-
-         //   //Immediately set to false after it's retrieved.  This forces the internal nodes to set it to true on a next signal
-         //   //if they want to continue feeding output.  Specifically this fixes a bug with [Driven] where an externalized socket
-         //   //might be hooked up to a true output and, later before it in the chain, someone outputs false.  It still
-         //   //would be stuck outputting true to the parent graph everytime [Driven] is iterated
-         //   //It's ok if the parent hooks up to this multiple times because it creates a temp variable with the
-         //   //returned result and uses that, it doesn't requery us for each connection
-         //   AddCSharpLine( "[FriendlyName(\"" + EscapeString(properties[i].FriendlyName) + "\")]" );
-         //   AddCSharpLine( "public bool " + properties[i].Name + " { get { bool b = " + outputs[i] + "; " + outputs[i] + " = false; return b;} }" );
-
-         //   m_ExternalOutputs.Add( properties[i] );
-         //}
-
-
          AddCSharpLine("");
          AddCSharpLine("//externally exposed events");
          Plug[] events = FindExternalEvents();
@@ -2193,6 +2172,12 @@ namespace Detox.ScriptEditor
             if (entityProperty.Instance.Default != "")
             {
                AddCSharpLine(FormatType(entityProperty.Instance.Type) + " " + CSharpName(entityProperty, entityProperty.Instance.Name) + " = " + FormatValue(entityProperty.Instance.Default, entityProperty.Instance.Type) + ";");
+               AddCSharpLine(FormatType(entityProperty.Instance.Type) + " " + PreviousName(entityProperty, entityProperty.Instance.Name) + " = null;");
+
+               if (entityProperty.Parameter.Type == "UnityEngine.GameObject")
+               {
+                  AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + PreviousName(entityProperty, entityProperty.Parameter.Name) + " = null;");
+               }
             }
          }
 
@@ -2440,8 +2425,6 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine(CSharpSyncEventListenersDeclaration() + ";");
-
          foreach (EntityProperty entityProperty in m_Script.Properties)
          {
             if (false == entityProperty.IsStatic)
@@ -2452,6 +2435,8 @@ namespace Detox.ScriptEditor
                }
             }
          }
+
+         AddCSharpLine(CSharpSyncEventListenersDeclaration() + ";");
 
          foreach (LogicNode logicNode in m_Script.Logics)
          {
@@ -2505,8 +2490,6 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine(CSharpSyncEventListenersDeclaration() + ";");
-
          foreach (EntityProperty entityProperty in m_Script.Properties)
          {
             if (false == entityProperty.IsStatic)
@@ -2516,7 +2499,9 @@ namespace Detox.ScriptEditor
                   FillComponent(false, entityProperty, entityProperty.Instance);
                }
             }
-         }
+         } 
+
+         AddCSharpLine(CSharpSyncEventListenersDeclaration() + ";");
 
          foreach (LogicNode logicNode in m_Script.Logics)
          {
@@ -2551,6 +2536,18 @@ namespace Detox.ScriptEditor
          AddCSharpLine("void " + CSharpSyncEventListenersDeclaration());
          AddCSharpLine("{");
          ++m_TabStack;
+
+         foreach (EntityProperty entityProperty in m_Script.Properties)
+         {
+            if (false == entityProperty.IsStatic)
+            {
+               if (entityProperty.Instance.Default != "")
+               {
+                  SyncSlaveConnections(entityProperty, new Parameter[]{entityProperty.Instance});
+                  FillComponent(false, entityProperty, entityProperty.Parameter);
+               }
+            }
+         }
 
          foreach (EntityEvent entityEvent in m_Script.Events)
          {
@@ -2604,7 +2601,7 @@ namespace Detox.ScriptEditor
             {
                if (entityProperty.Instance.Default != "")
                {
-                  UnregisterEventListeners(entityProperty, entityProperty.Instance);
+                  UnregisterEventListeners(entityProperty, entityProperty.Parameter);
                }
             }
          }
@@ -2823,9 +2820,9 @@ namespace Detox.ScriptEditor
                   AddCSharpLine(CSharpName(node, parameter.Name) + " = GameObject.Find( \"" + EscapeString(parameter.Default) + "\" ) as " + FormatType(parameter.Type) + ";");
                }
 
-               //only set up listeners if it's NOT a variable connecxtion
+               //only set up listeners if it's NOT a variable connection
                //otherwise they'll be set in the conditional below this
-               if (false == node is LocalNode)
+               if (false == node is LocalNode && false == node is EntityProperty)
                {
                   SetupEventListeners(CSharpName(node, parameter.Name), node, true);
                }
@@ -2836,7 +2833,7 @@ namespace Detox.ScriptEditor
 
             //if we're not supposed to fill nulls we need to make sure
             //the event listeners get re-registered
-            if (false == fillNulls && false == node is LocalNode)
+            if (false == fillNulls && false == node is LocalNode && false == node is EntityProperty)
             {
                string currentCode = SetCode("");
 
@@ -2857,26 +2854,33 @@ namespace Detox.ScriptEditor
                }
             }
 
-            //if it's a variable node linked to us
+            //if it's a variable node or an entity property node linked to us 
             //then we need to go a few steps further to see if its contents
             //have been modified at runtime.  if they have then
             //we need to register new event listeners
-            if (true == node is LocalNode)
+            if (true == node is LocalNode || true == node is EntityProperty)
             {
+               if (true == node is EntityProperty && node.Instance != parameter)
+                  AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration((EntityProperty)node) + "();");
+
                AddCSharpLine("//if our game object reference was changed then we need to reset event listeners");
                AddCSharpLine("if ( " + PreviousName(node, parameter.Name) + " != " + CSharpName(node, parameter.Name) + " || false == m_RegisteredForEvents )");
                AddCSharpLine("{");
                ++m_TabStack;
 
                AddCSharpLine("//tear down old listeners");
-               SetupEventListeners(PreviousName(node, parameter.Name), node, false);
+               if ((node is LocalNode) ||
+                   (node is EntityProperty && node.Instance != parameter))
+                  SetupEventListeners(PreviousName(node, parameter.Name), node, false);
                AddCSharpLine("");
 
                AddCSharpLine(PreviousName(node, parameter.Name) + " = " + CSharpName(node, parameter.Name) + ";");
                AddCSharpLine("");
 
                AddCSharpLine("//setup new listeners");
-               SetupEventListeners(CSharpName(node, parameter.Name), node, true);
+               if ((node is LocalNode) ||
+                   (node is EntityProperty && node.Instance != parameter))
+                  SetupEventListeners(CSharpName(node, parameter.Name), node, true);
 
                --m_TabStack;
                AddCSharpLine("}");
@@ -2999,6 +3003,31 @@ namespace Detox.ScriptEditor
          if (node is EntityEvent)
          {
             SetupEvent(eventVariable, ((EntityEvent)node), setup);
+         }
+         else if (node is EntityProperty)
+         {
+            //if we are a property node, see if there are any event listeners
+            //hooked up to us - if so then we need to get the matching component
+            //and register the listeners
+            EntityProperty ep = (EntityProperty)node;
+
+            foreach (LinkNode link in m_Script.Links)
+            {
+               if (link.Source.Guid == ep.Guid &&
+                  link.Source.Anchor == ep.Parameter.Name)
+               {
+                  EntityNode destNode = m_Script.GetNode(link.Destination.Guid);
+
+                  if (destNode is EntityEvent)
+                  {
+                     EntityEvent eventNode = (EntityEvent)destNode;
+                     if (link.Destination.Anchor == eventNode.Instance.Name)
+                     {
+                        SetupEvent(eventVariable, eventNode, setup);
+                     }
+                  }
+               }
+            }
          }
          else if (node is LocalNode)
          {
