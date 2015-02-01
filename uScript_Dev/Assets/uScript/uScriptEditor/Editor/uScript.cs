@@ -1680,7 +1680,11 @@ public sealed partial class uScript : EditorWindow
 
                this.m_ScriptEditorCtrl.BuildContextMenu();
 
-               this.BuildCanvasContextMenu(null, null);
+               if (this._canvasContextMenu == null)
+               {
+                  // cache the context menu...
+                  this.BuildCanvasContextMenu(null, null);
+               }
                this._canvasContextMenu.ShowAsContext();
 
                profile.End();
