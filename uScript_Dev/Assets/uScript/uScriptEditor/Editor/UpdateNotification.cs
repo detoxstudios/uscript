@@ -267,7 +267,7 @@ public class UpdateNotification : EditorWindow
       if (string.IsNullOrEmpty(webRequest.error) == false)
       {
          window.Title = Content.TitleError;
-         window.Body = new GUIContent(webRequest.error);
+         window.Body = new GUIContent(string.Format("{0}\n\nIs this device connected to the internet?", webRequest.error));
          updateStatus = UpdateStatus.UpdateServerError;
       }
       else if (BuildInfo.TryParse(webRequest.text, out serverBuild) == false)
@@ -336,8 +336,12 @@ public class UpdateNotification : EditorWindow
 
       if (string.IsNullOrEmpty(webRequest.error) == false)
       {
-         var msg = string.Format("{0}: \"{1}\"", Content.TitleError.text, webRequest.error);
-         uScriptDebug.Log(msg, uScriptDebug.Type.Error);
+         // DO NOTHING - Better to silently fail than to report a web request error during the startup check.
+         // An error will be generated when WWW fails to connect to the internet, and we don't want to annoy
+         // users with daily warning messages, if they frequently run offline.
+
+         // var msg = string.Format("{0}: \"{1}\"", Content.TitleError.text, webRequest.error);
+         // uScriptDebug.Log(msg, uScriptDebug.Type.Warning);
       }
       else if (BuildInfo.TryParse(webRequest.text, out serverBuild) == false)
       {
