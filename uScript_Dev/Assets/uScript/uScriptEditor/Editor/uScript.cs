@@ -716,7 +716,7 @@ public sealed partial class uScript : EditorWindow
 
       if (this.fullPath != string.Empty)
       {
-         if (this.OpenGraph(this.fullPath) == false)
+         if (this.OpenGraph(this.fullPath, true) == false)
          {
             this.fullPath = string.Empty;
          }
@@ -3834,11 +3834,19 @@ public sealed partial class uScript : EditorWindow
       m_SzLogicTypes = null;
    }
 
-   public bool OpenGraph(string fullPath)
+   public bool OpenGraph(string fullPath, bool launching = false)
    {
       if (File.Exists(fullPath) == false)
       {
-         uScriptDebug.Log("The specified file does not exist: " + fullPath, uScriptDebug.Type.Error);
+         // don't spit out an error if we're just launching uscript
+         if (launching)
+         {
+            uScriptDebug.Log(fullPath + " was open last time uScript was open, but is not found now - did it get moved or deleted?", uScriptDebug.Type.Message);
+         }
+         else
+         {
+            uScriptDebug.Log("The specified file does not exist: " + fullPath, uScriptDebug.Type.Error);
+         }
          return false;
       }
 
