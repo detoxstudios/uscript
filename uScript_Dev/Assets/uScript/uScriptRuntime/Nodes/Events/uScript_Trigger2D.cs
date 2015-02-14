@@ -13,9 +13,8 @@ using System.Collections;
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Trigger_Events")]
 
 [NodePropertiesPath("Properties/Triggers")]
-[FriendlyName("Trigger Events (2D) [Deprecated Use Trigger Event (2D)]", "Fires an event signal when a GameObject enters, exits, or stays in a 2D trigger. The Instance GameObject must have a 2D collider component on it set to be a trigger. Also, only other Gameobjects with a 2D rigidbody and 2D collider components will work with the trigger (the 'Triggerd By' GameObject).")]
-[NodeDeprecated]
-public class uScript_Triggers2D : uScriptEvent
+[FriendlyName("Trigger Event (2D)", "Fires an event signal when a GameObject enters, exits, or stays in a 2D trigger. The Instance GameObject must have a 2D collider component on it set to be a trigger. Also, only other Gameobjects with a 2D rigidbody and 2D collider components will work with the trigger (the 'Triggerd By' GameObject).")]
+public class uScript_Trigger2D : uScriptEvent
 {
    public delegate void uScriptEventHandler(object sender, TriggerEventArgs args);
 
@@ -38,44 +37,20 @@ public class uScript_Triggers2D : uScriptEvent
    [FriendlyName("While Inside Trigger")]
    public event uScriptEventHandler WhileInsideTrigger;
  
-   private bool m_AlwaysTrigger = false;
-   
-   private int m_TimesToTrigger;
-   [FriendlyName("Times to Trigger", "How many times this trigger should fire before it deactivates.")]
-   public int TimesToTrigger 
-   { 
-      set 
-      { 
-         m_TimesToTrigger = value;
-         if ( 0 == m_TimesToTrigger ) m_AlwaysTrigger = true;
-      } 
-   }
-
    void OnTriggerEnter2D(Collider2D other)
    {
-      Debug.Log("ENTER FIRED!");
-      if ( 0 == m_TimesToTrigger && false == m_AlwaysTrigger ) return;
-      --m_TimesToTrigger;
-
       if ( OnEnterTrigger != null ) OnEnterTrigger( this, new TriggerEventArgs(other.gameObject) ); 
    }
 
    void OnTriggerExit2D(Collider2D other)
    {
-      if ( 0 == m_TimesToTrigger && false == m_AlwaysTrigger ) return;
-      --m_TimesToTrigger;
-
       if ( OnExitTrigger != null ) OnExitTrigger( this, new TriggerEventArgs(other.gameObject) ); 
    }
 
    void OnTriggerStay2D(Collider2D other)
    {
-      if ( 0 == m_TimesToTrigger && false == m_AlwaysTrigger ) return;
-      --m_TimesToTrigger;
-
       if ( WhileInsideTrigger != null ) WhileInsideTrigger( this, new TriggerEventArgs(other.gameObject) ); 
-   }
-	
+   }	
 }
 
 #endif
