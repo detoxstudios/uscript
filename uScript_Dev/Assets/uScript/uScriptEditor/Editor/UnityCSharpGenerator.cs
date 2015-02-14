@@ -112,7 +112,7 @@ namespace Detox.ScriptEditor
 
          if (false == quick) RemoveOverriddenParameters( );
 
-         ConslidateExternals( );
+         ConsolidateExternals( );
 
          preprocess.End();
       }
@@ -162,13 +162,6 @@ namespace Detox.ScriptEditor
                DefineExternalInput(external);
             }
 
-            //Plug []properties = FindExternalOutputProperties( );
-
-            //for ( int i = 0; i < properties.Length; i++ )
-            //{
-            //   m_ExternalOutputs.Add( properties[i] );
-            //}
-
             Plug[] events = FindExternalEvents();
 
             if (events.Length > 0)
@@ -179,7 +172,6 @@ namespace Detox.ScriptEditor
                }
             }
 
-            //DefineExternalDrivens( );
             DeclareEventArgs();
 
             m_RequiredMethods.Add("Start");
@@ -283,9 +275,9 @@ namespace Detox.ScriptEditor
          profile.End( );
       }
 
-      private void ConslidateExternals()
+      private void ConsolidateExternals()
       {
-         Profile p = new Profile("ConslidateExternals");
+         Profile p = new Profile("ConsolidateExternals");
 
          ExternalConnection[] externals = m_Script.Externals;
          Hashtable unique = new Hashtable();
@@ -5352,7 +5344,7 @@ namespace Detox.ScriptEditor
 
       private string CheckDebugBreakDeclaration(EntityNode node, string method)
       {
-         return "CheckDebugBreak(\"" + node.Guid.ToString() + "\", \"" + uScript.FindFriendlyName(node) + "\", " + method + ")";
+         return "CheckDebugBreak(\"" + node.Guid.ToString() + "\", \"" + MakeSyntaxSafe(uScript.FindFriendlyName(node)) + "\", " + method + ")";
       }
 
       private void DefineCheckDebugBreak()
