@@ -71,7 +71,6 @@ public class FireBot_Gameplay : uScriptLogic
    System.Single local_94_System_Single = (float) 0.2;
    System.Int32 local_95_System_Int32 = (int) 0;
    System.String local_98_System_String = "";
-   System.Single local_Bot_Speed_Per_Second_System_Single = (float) 10;
    System.Single local_Bot_Speed_System_Single = (float) 10;
    System.Single local_Camera_Distance_System_Single = (float) 30;
    System.Boolean local_ForwardMotion_System_Boolean = (bool) false;
@@ -583,8 +582,8 @@ public class FireBot_Gameplay : uScriptLogic
    System.String event_UnityEngine_GameObject_EventName_149 = "";
    System.Int32 event_UnityEngine_GameObject_EventData_149 = (int) 0;
    UnityEngine.GameObject event_UnityEngine_GameObject_Instance_149 = default(UnityEngine.GameObject);
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_341 = default(UnityEngine.GameObject);
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_341 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_155 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_155 = default(UnityEngine.GameObject);
    
    //property nodes
    UnityEngine.Vector3 property_forward_Detox_ScriptEditor_Parameter_forward_77 = new Vector3( );
@@ -916,22 +915,22 @@ public class FireBot_Gameplay : uScriptLogic
             }
          }
       }
-      if ( null == event_UnityEngine_GameObject_Instance_341 || false == m_RegisteredForEvents )
+      if ( null == event_UnityEngine_GameObject_Instance_155 || false == m_RegisteredForEvents )
       {
-         event_UnityEngine_GameObject_Instance_341 = GameObject.Find( "KillTrigger" ) as UnityEngine.GameObject;
-         if ( null != event_UnityEngine_GameObject_Instance_341 )
+         event_UnityEngine_GameObject_Instance_155 = GameObject.Find( "KillTrigger" ) as UnityEngine.GameObject;
+         if ( null != event_UnityEngine_GameObject_Instance_155 )
          {
             {
-               uScript_Trigger component = event_UnityEngine_GameObject_Instance_341.GetComponent<uScript_Trigger>();
+               uScript_Trigger component = event_UnityEngine_GameObject_Instance_155.GetComponent<uScript_Trigger>();
                if ( null == component )
                {
-                  component = event_UnityEngine_GameObject_Instance_341.AddComponent<uScript_Trigger>();
+                  component = event_UnityEngine_GameObject_Instance_155.AddComponent<uScript_Trigger>();
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_341;
-                  component.OnExitTrigger += Instance_OnExitTrigger_341;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_341;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_155;
+                  component.OnExitTrigger += Instance_OnExitTrigger_155;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_155;
                }
             }
          }
@@ -1023,15 +1022,15 @@ public class FireBot_Gameplay : uScriptLogic
             }
          }
       }
-      if ( null != event_UnityEngine_GameObject_Instance_341 )
+      if ( null != event_UnityEngine_GameObject_Instance_155 )
       {
          {
-            uScript_Trigger component = event_UnityEngine_GameObject_Instance_341.GetComponent<uScript_Trigger>();
+            uScript_Trigger component = event_UnityEngine_GameObject_Instance_155.GetComponent<uScript_Trigger>();
             if ( null != component )
             {
-               component.OnEnterTrigger -= Instance_OnEnterTrigger_341;
-               component.OnExitTrigger -= Instance_OnExitTrigger_341;
-               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_341;
+               component.OnEnterTrigger -= Instance_OnEnterTrigger_155;
+               component.OnExitTrigger -= Instance_OnExitTrigger_155;
+               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_155;
             }
          }
       }
@@ -1334,7 +1333,7 @@ public class FireBot_Gameplay : uScriptLogic
       Relay_OnCustomEventInt_149( );
    }
    
-   void Instance_OnEnterTrigger_341(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_OnEnterTrigger_155(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -1342,12 +1341,12 @@ public class FireBot_Gameplay : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_341 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_155 = e.GameObject;
       //relay event to nodes
-      Relay_OnEnterTrigger_341( );
+      Relay_OnEnterTrigger_155( );
    }
    
-   void Instance_OnExitTrigger_341(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_OnExitTrigger_155(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -1355,12 +1354,12 @@ public class FireBot_Gameplay : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_341 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_155 = e.GameObject;
       //relay event to nodes
-      Relay_OnExitTrigger_341( );
+      Relay_OnExitTrigger_155( );
    }
    
-   void Instance_WhileInsideTrigger_341(object o, uScript_Trigger.TriggerEventArgs e)
+   void Instance_WhileInsideTrigger_155(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
       //if it ever goes above MaxRelayCallCount before being reset
@@ -1368,9 +1367,9 @@ public class FireBot_Gameplay : uScriptLogic
       if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
       
       //fill globals
-      event_UnityEngine_GameObject_GameObject_341 = e.GameObject;
+      event_UnityEngine_GameObject_GameObject_155 = e.GameObject;
       //relay event to nodes
-      Relay_WhileInsideTrigger_341( );
+      Relay_WhileInsideTrigger_155( );
    }
    
    void uScriptCon_TimedGate_Out_49(object o, System.EventArgs e)
@@ -2039,7 +2038,7 @@ public class FireBot_Gameplay : uScriptLogic
             }
          }
          logic_uScriptAct_SetFloat_uScriptAct_SetFloat_24.In(logic_uScriptAct_SetFloat_Value_24, out logic_uScriptAct_SetFloat_Target_24);
-         local_Bot_Speed_Per_Second_System_Single = logic_uScriptAct_SetFloat_Target_24;
+         BotSpeedPerSecond = logic_uScriptAct_SetFloat_Target_24;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -3997,7 +3996,7 @@ public class FireBot_Gameplay : uScriptLogic
             }
          }
          logic_uScriptAct_SetFloat_uScriptAct_SetFloat_127.In(logic_uScriptAct_SetFloat_Value_127, out logic_uScriptAct_SetFloat_Target_127);
-         local_Bot_Speed_Per_Second_System_Single = logic_uScriptAct_SetFloat_Target_127;
+         BotSpeedPerSecond = logic_uScriptAct_SetFloat_Target_127;
          
          //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
          
@@ -4477,10 +4476,10 @@ public class FireBot_Gameplay : uScriptLogic
       }
    }
    
-   void Relay_OnEnterTrigger_341()
+   void Relay_OnEnterTrigger_155()
    {
-      if (true == CheckDebugBreak("64a9305f-8396-4f19-bc60-bce48c5f8208", "Trigger_Event", Relay_OnEnterTrigger_341)) return; 
-      local_66_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_341;
+      if (true == CheckDebugBreak("64a9305f-8396-4f19-bc60-bce48c5f8208", "Trigger_Event", Relay_OnEnterTrigger_155)) return; 
+      local_66_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_155;
       {
          //if our game object reference was changed then we need to reset event listeners
          if ( local_66_UnityEngine_GameObject_previous != local_66_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -4495,10 +4494,10 @@ public class FireBot_Gameplay : uScriptLogic
       Relay_In_31();
    }
    
-   void Relay_OnExitTrigger_341()
+   void Relay_OnExitTrigger_155()
    {
-      if (true == CheckDebugBreak("64a9305f-8396-4f19-bc60-bce48c5f8208", "Trigger_Event", Relay_OnExitTrigger_341)) return; 
-      local_66_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_341;
+      if (true == CheckDebugBreak("64a9305f-8396-4f19-bc60-bce48c5f8208", "Trigger_Event", Relay_OnExitTrigger_155)) return; 
+      local_66_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_155;
       {
          //if our game object reference was changed then we need to reset event listeners
          if ( local_66_UnityEngine_GameObject_previous != local_66_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -4512,10 +4511,10 @@ public class FireBot_Gameplay : uScriptLogic
       }
    }
    
-   void Relay_WhileInsideTrigger_341()
+   void Relay_WhileInsideTrigger_155()
    {
-      if (true == CheckDebugBreak("64a9305f-8396-4f19-bc60-bce48c5f8208", "Trigger_Event", Relay_WhileInsideTrigger_341)) return; 
-      local_66_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_341;
+      if (true == CheckDebugBreak("64a9305f-8396-4f19-bc60-bce48c5f8208", "Trigger_Event", Relay_WhileInsideTrigger_155)) return; 
+      local_66_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_155;
       {
          //if our game object reference was changed then we need to reset event listeners
          if ( local_66_UnityEngine_GameObject_previous != local_66_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -4577,8 +4576,6 @@ public class FireBot_Gameplay : uScriptLogic
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "7bb2d924-a997-40e2-a09f-2dc0104ff74b", local_75_System_Single);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "FireBot_Gameplay.uscript:80", local_80_System_Single);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "00492ee7-41fd-4184-97c5-b983c0acb209", local_80_System_Single);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "FireBot_Gameplay.uscript:Bot Speed Per Second", local_Bot_Speed_Per_Second_System_Single);
-      uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "a3e6859b-1e85-4255-a6fa-43d73bf89ab5", local_Bot_Speed_Per_Second_System_Single);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "FireBot_Gameplay.uscript:Camera Distance", local_Camera_Distance_System_Single);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "37afeb78-5da4-4925-b36c-0d501b923116", local_Camera_Distance_System_Single);
       uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( "FireBot_Gameplay.uscript:92", local_92_System_String);

@@ -57,13 +57,7 @@ public class MouseLook : MonoBehaviour {
 	void Start ()
 	{
 		// Make the rigid body not change rotation
-#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
 		if (rigidbody)
 			rigidbody.freezeRotation = true;
-#else
-		if (transform.GetComponent<Rigidbody>())
-			transform.GetComponent<Rigidbody>().freezeRotation = true;
-
-#endif
 	}
 }
