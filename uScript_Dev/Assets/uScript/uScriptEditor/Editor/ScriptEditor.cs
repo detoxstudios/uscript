@@ -2320,6 +2320,7 @@ namespace Detox.ScriptEditor
          node.RequiredMethods= RequiredMethods;
          node.ShowComment    = ShowComment;
          node.EventParameters= EventParameters;
+         node.IsNestedNode = IsNestedNode;
 
          return node;
       }
@@ -2383,6 +2384,8 @@ namespace Detox.ScriptEditor
          if ( ShowComment != node.ShowComment ) return false;
          if ( Comment != node.Comment ) return false;
 
+         if ( IsNestedNode != node.IsNestedNode ) return false;
+
          return true;
       }
 
@@ -2394,6 +2397,7 @@ namespace Detox.ScriptEditor
       public Plug      []Events;
       public string    []Drivens;
       public Parameter []EventParameters;
+      public bool        IsNestedNode;
 
       //used only if this logic node is wrapping
       //a nested script and that nested script
@@ -2452,6 +2456,7 @@ namespace Detox.ScriptEditor
          Inputs          = new Plug[ 0 ];
          Outputs         = new Plug[ 0 ];
          Events          = new Plug[ 0 ];
+         IsNestedNode    = false;
          m_Parameters    = new Parameter[ 0 ];
 
          EventArgs       = "System.EventArgs";
@@ -2491,7 +2496,7 @@ namespace Detox.ScriptEditor
       { 
          Type = data.Type; 
          FriendlyName = data.FriendlyName;
-
+         IsNestedNode = false;
          RequiredMethods = data.RequiredMethods;
 
          m_Guid = data.Guid;

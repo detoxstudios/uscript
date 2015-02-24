@@ -4657,6 +4657,7 @@ public sealed partial class uScript : EditorWindow
             logicNode.Drivens = rawScript.Drivens;
             logicNode.RequiredMethods = rawScript.RequiredMethods;
             logicNode.EventArgs = rawScript.EventArgs;
+            logicNode.IsNestedNode = true;
             logicNode.EventParameters = rawScript.ExternalEventParameters;
 
             m_RawDescription[rawScript.Type] = rawScript.Description;

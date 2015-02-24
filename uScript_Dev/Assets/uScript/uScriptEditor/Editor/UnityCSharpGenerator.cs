@@ -3614,34 +3614,37 @@ namespace Detox.ScriptEditor
             AddCSharpLine(CSharpRelay(node, connection.Anchor) + "( );");
          }
 
-         //transfer our member variables to the output args
-         foreach (ExternalConnection external in m_Script.Externals)
-         {
-            LinkNode[] outputs = FindLinksByDestination(external.Guid, external.Connection);
+         //We no longer transfer our member variable to the output args
+         //because an external always sends the output through event arguments
 
-            foreach (LinkNode link in outputs)
-            {
-               EntityNode parameterNode = m_Script.GetNode(link.Source.Guid);
+         ////transfer our member variables to the output args
+         //foreach (ExternalConnection external in m_Script.Externals)
+         //{
+         //   LinkNode[] outputs = FindLinksByDestination(external.Guid, external.Connection);
 
-               foreach (Parameter p in parameterNode.Parameters)
-               {
-                  if (p.Name == link.Source.Anchor)
-                  {
-                     //external connections don't have a parameter
-                     //because they take on whatever parameter they link to
-                     Parameter parameter = new Parameter();
-                     parameter.Name = external.Connection;
-                     parameter.Type = p.Type;
-                     SyncSlaveConnections(external, new Parameter[] { parameter });
+         //   foreach (LinkNode link in outputs)
+         //   {
+         //      EntityNode parameterNode = m_Script.GetNode(link.Source.Guid);
 
-                     AddCSharpLine(CSharpExternalParameterDeclaration(external.Name.Default).Name + " = " + CSharpName(external, p.Name) + ";");
-                  }
-               }
+         //      foreach (Parameter p in parameterNode.Parameters)
+         //      {
+         //         if (p.Name == link.Source.Anchor)
+         //         {
+         //            //external connections don't have a parameter
+         //            //because they take on whatever parameter they link to
+         //            Parameter parameter = new Parameter();
+         //            parameter.Name = external.Connection;
+         //            parameter.Type = p.Type;
+         //            SyncSlaveConnections(external, new Parameter[] { parameter });
 
-               //only one link allowed for each external parameter out
-               break;
-            }
-         }
+         //            AddCSharpLine(CSharpExternalParameterDeclaration(external.Name.Default).Name + " = " + CSharpName(external, p.Name) + ";");
+         //         }
+         //      }
+
+         //      //only one link allowed for each external parameter out
+         //      break;
+         //   }
+         //}
 
          --m_TabStack;
 
@@ -4133,40 +4136,57 @@ namespace Detox.ScriptEditor
             AddCSharpLine(CSharpName(receiver, driven) + " = true;");
          }
 
-         //use previously saved temp variables to push the values
-         //to all the links we connect out to
-         foreach (Parameter parameter in receiver.Parameters)
+         // Only copy variables back over if it's not a nested node
+         // if it is a nested node then all the values were sent back via an event
+         // before the method we called ever exited
+         // and this code would simply be overwriting those values
+         if (receiver.IsNestedNode == false)
          {
-            if (false == parameter.Output) continue;
-
-            LinkNode[] argLinks = FindLinksBySource(receiver.Guid, parameter.Name);
-
-            foreach (LinkNode link in argLinks)
+            //use previously saved temp variables to push the values
+            //to all the links we connect out to
+            foreach (Parameter parameter in receiver.Parameters)
             {
-               EntityNode argNode = m_Script.GetNode(link.Destination.Guid);
-               AddCSharpLine(CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";");
+               if (false == parameter.Output) continue;
 
-               foreach (Parameter p in argNode.Parameters)
+               LinkNode[] argLinks = FindLinksBySource(receiver.Guid, parameter.Name);
+
+               foreach (LinkNode link in argLinks)
                {
-                  if (p.Name == link.Destination.Anchor)
+                  EntityNode argNode = m_Script.GetNode(link.Destination.Guid);
+                  AddCSharpLine(CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";");
+
+                  foreach (Parameter p in argNode.Parameters)
                   {
-                     SyncReferencedGameObject(argNode, parameter);
-                     break;
+                     if (p.Name == link.Destination.Anchor)
+                     {
+                        SyncReferencedGameObject(argNode, parameter);
+                        break;
+                     }
+                  }
+
+                  if (argNode.Instance.Name == link.Destination.Anchor)
+                  {
+                     SyncReferencedGameObject(argNode, argNode.Instance);
                   }
                }
-
-               if (argNode.Instance.Name == link.Destination.Anchor)
-               {
-                  SyncReferencedGameObject(argNode, argNode.Instance);
-               }
             }
+
+            //force any potential entites affected to update
+            RefreshSetProperties(receiver, receiver.Parameters);
+         }
+         else
+         {
+
+            AddCSharpLine("");
+            AddCSharpLine("//Don't copy 'out' values back to the global variables because this was an auto generated nested node");
+            AddCSharpLine("//and those values get set through an event which is called before the above method exited");
          }
 
-         //force any potential entites affected to update
-         RefreshSetProperties(receiver, receiver.Parameters);
-
-         AddCSharpLine("");
-         AddCSharpLine("//save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested");
+         if (receiver.Outputs.Length > 0)
+         {
+            AddCSharpLine("");
+            AddCSharpLine("//save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested");
+         }
 
          int i = 0;
 
