@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Signal_Filter")]
 
-[FriendlyName("Signal_Filter", "Filters a signal so it only passes after the specified parameters are met.")]
+[FriendlyName("Signal Filter", "Filters a signal so it only passes after the specified parameters are met.")]
 public class uScriptAct_OnSignalFilter : uScriptLogic 
 {
    private bool m_Started;
@@ -35,7 +35,7 @@ public class uScriptAct_OnSignalFilter : uScriptLogic
       // then on the first signal it'll decrement to 1
       // on the next signal it'll dec to 0 and be allowed... thus one signal before it was allowed to pass
       m_SignalsToOpen = signalsToOpen + 1;
-      m_SignalsAllowed = signalsAllowed >= 0 ? signalsAllowed + 1 : signalsAllowed;
+      m_SignalsAllowed = signalsAllowed;
    }
 
    public void In(

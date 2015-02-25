@@ -3781,11 +3781,11 @@ namespace Detox.ScriptEditor
                                  reason = "An External Node with the same name (" + externalDest.Name.Default + ") already exists and is not connected to an Event output";
                               }
                            }
-                           else
-                           {
-                              reason = "An External Node (" + externalDest.Name.Default + ") can't link to an event output and an immediate output";
-                              return false;
-                           }
+                           //else
+                           //{
+                           //   reason = "An External Node (" + externalDest.Name.Default + ") can't link to an event output and an immediate output";
+                           //   return false;
+                           //}
                         }
                         else if ( Parameter.Empty != myParam )
                         {
