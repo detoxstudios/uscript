@@ -1680,7 +1680,12 @@ public sealed partial class uScript : EditorWindow
 
                this.m_ScriptEditorCtrl.BuildContextMenu();
 
-               if (this._canvasContextMenu == null)
+               //we can't rely on the cache'd context menu because
+               //the breakpoints might have changed and the context menu
+               //must update accordingly
+               //we might need to only rebuild the parts of it which changed
+               //as we do with m_ScriptEditorCtrl.BuildContextMenu()
+               //if (this._canvasContextMenu == null)
                {
                   // cache the context menu...
                   this.BuildCanvasContextMenu(null, null);

@@ -5377,7 +5377,7 @@ namespace Detox.ScriptEditor
             AddCSharpLine("if (true == m_Breakpoint) return true;");
             AddCSharpLine("");
 
-            AddCSharpLine("if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))");
+            AddCSharpLine("if (true == uScript_MasterComponent.FindBreakpoint(guid))");
             AddCSharpLine("{");
             ++m_TabStack;
             AddCSharpLine("if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)");

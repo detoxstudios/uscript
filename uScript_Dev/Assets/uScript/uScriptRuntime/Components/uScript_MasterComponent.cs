@@ -23,7 +23,8 @@ public class uScript_MasterComponent : MonoBehaviour
 
    private static GameObject m_LatestMaster;
    private static uScript_MasterComponent m_LatestMasterComponent;
-   
+   private static List<uScript_MasterComponent> m_AllMasterComponents = new List<uScript_MasterComponent>();
+
    //keep track of the latest master so uScripts loading
    //will know which master loaded with them for their scene information
    public static GameObject LatestMaster
@@ -109,6 +110,16 @@ public class uScript_MasterComponent : MonoBehaviour
 #endif
    }
 
+   public void Start()
+   {
+      uScript_MasterComponent.m_AllMasterComponents.Add(this);
+   }
+   
+   public void OnDestroy()
+   {
+      uScript_MasterComponent.m_AllMasterComponents.Remove(this);
+   }
+
    public Hashtable m_Values = new Hashtable( );
 
    public void UpdateNodeValue(string guid, object value)
@@ -128,6 +139,19 @@ public class uScript_MasterComponent : MonoBehaviour
    [HideInInspector]
    public string CurrentBreakpoint = "";
    
+   static public bool FindBreakpoint(string guid)
+   {
+#if UNITY_EDITOR
+      foreach (uScript_MasterComponent c in uScript_MasterComponent.m_AllMasterComponents)
+      {
+         if (true == c.HasBreakpoint(guid))
+            return true;
+      }
+      
+#endif
+      return false;
+   }
+
    public bool HasBreakpoint(string guid)
    {
 #if UNITY_EDITOR
