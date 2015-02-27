@@ -4182,6 +4182,9 @@ public sealed partial class uScript : EditorWindow
          if (script.Name != this.m_ScriptEditorCtrl.Name)
          {
             this.m_ScriptEditorCtrl = new ScriptEditorCtrl(script);
+
+            m_ScriptEditorCtrl.BuildContextMenu();
+            uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
          }
 
          string scriptName = Path.GetFileNameWithoutExtension(this.fullPath);
