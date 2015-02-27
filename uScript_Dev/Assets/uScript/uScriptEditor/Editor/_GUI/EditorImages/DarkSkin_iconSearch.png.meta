@@ -1,12 +1,11 @@
 fileFormatVersion: 2
 guid: 349e6c2f6ecba3b4d83c89981568b059
 TextureImporter:
-  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    linearTexture: 0
+    linearTexture: 1
     correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
@@ -20,7 +19,6 @@ TextureImporter:
   isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 0
-  seamlessCubemap: 0
   textureFormat: -3
   maxTextureSize: 512
   textureSettings:
@@ -31,21 +29,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
-  spriteExtrude: 1
-  spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: .5, y: .5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
-  alphaIsTransparency: 0
   textureType: 5
   buildTargetSettings:
   - buildTarget: Standalone
     maxTextureSize: 512
     textureFormat: -3
-    compressionQuality: 50
-  spriteSheet:
-    sprites: []
-  spritePackingTag: 
-  userData: 
+    compressionQuality: 100
