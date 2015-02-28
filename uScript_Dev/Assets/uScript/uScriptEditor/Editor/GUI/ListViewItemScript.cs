@@ -214,7 +214,7 @@ namespace Detox.Editor.GUI
 
       private void CommandGraphLoad()
       {
-         uScript.Instance.OpenGraph(this.GraphPath);
+         uScript.Instance.OpenGraph(this.GraphPath, false);
       }
 
       private void CommandGraphLocate()

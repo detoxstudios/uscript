@@ -2437,7 +2437,7 @@ public sealed partial class uScript : EditorWindow
          }
          else
          {
-            this.OpenGraph(scriptPath);
+            this.OpenGraph(scriptPath, false);
          }
       }
       else
@@ -2450,7 +2450,7 @@ public sealed partial class uScript : EditorWindow
          }
          else
          {
-            this.OpenGraph(scriptPath);
+            this.OpenGraph(scriptPath, false);
          }
       }
    }
@@ -3153,7 +3153,7 @@ public sealed partial class uScript : EditorWindow
       string path = EditorUtility.OpenFilePanel("Open uScript", Preferences.UserScripts, "uscript");
       if (path.Length > 0)
       {
-         this.OpenGraph(path);
+         this.OpenGraph(path, false);
       }
    }
 
@@ -3839,7 +3839,7 @@ public sealed partial class uScript : EditorWindow
       m_SzLogicTypes = null;
    }
 
-   public bool OpenGraph(string fullPath, bool launching = false)
+   public bool OpenGraph(string fullPath, bool launching)
    {
       if (File.Exists(fullPath) == false)
       {
