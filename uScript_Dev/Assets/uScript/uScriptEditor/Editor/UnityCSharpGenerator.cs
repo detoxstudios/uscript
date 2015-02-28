@@ -39,7 +39,7 @@ namespace Detox.ScriptEditor
                tab += "   ";
             }
 
-            uScriptDebug.Log(tab + m_Name + " " + seconds + "\n", uScriptDebug.Type.Debug);
+            uScriptDebug.Log(tab + m_Name + " " + seconds + "\n", uScriptDebug.Type.Message);
          }
       }
    }
