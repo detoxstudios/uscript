@@ -171,7 +171,12 @@ namespace Detox.Editor
          BuildInfo.TryParse(uScriptBuild.Number, out newBuild);
          BuildInfo.TryParse(ReflectOldBuildNumber(), out oldBuild);
 
+#if UNITY_3_5 // Override hack because 'oldBuild' comes back as 0.0.0 in Unity 3 when compiled to a DLL.
+          return false;
+#else
          return newBuild > oldBuild;
+#endif
+
       }
    }
 }
