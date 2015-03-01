@@ -35,7 +35,7 @@ public static class uScriptBuild
 
 
 #if DETOX_STORE_PLE
-   public static string Name { get { return "Personal Learning Edition + productNameAppendText"; } }
+   public static string Name { get { return "Personal Learning Edition" + productNameAppendText; } }
 #elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
    public static string Name { get { return "Basic Edition" + productNameAppendText; } }
 #else
