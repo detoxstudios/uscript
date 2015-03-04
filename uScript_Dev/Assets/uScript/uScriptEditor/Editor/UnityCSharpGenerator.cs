@@ -597,7 +597,7 @@ namespace Detox.ScriptEditor
             ++m_TabStack;
 
             AddCSharpLine("#pragma warning disable 414");
-            AddCSharpLine("public " + logicClassName + " PublicVariables = new " + logicClassName + "( ); ");
+            AddCSharpLine("public " + logicClassName + " ExposedVariables = new " + logicClassName + "( ); ");
             AddCSharpLine("#pragma warning restore 414");
 
             AddCSharpLine("");
@@ -608,7 +608,7 @@ namespace Detox.ScriptEditor
             {
                if ("true" == node.Externaled.Default)
                {
-                  AddCSharpLine("public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return PublicVariables." + CSharpName(node) + "; } set { PublicVariables." + CSharpName(node) + " = value; } } ");
+                  AddCSharpLine("public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return ExposedVariables." + CSharpName(node) + "; } set { ExposedVariables." + CSharpName(node) + " = value; } } ");
                }
             }
 
@@ -623,10 +623,10 @@ namespace Detox.ScriptEditor
                AddCSharpLine("#if !(UNITY_FLASH)");
                AddCSharpLine("useGUILayout = " + (NeedsGuiLayout() ? "true;" : "false;"));
                AddCSharpLine("#endif");
-               AddCSharpLine("PublicVariables.Awake( );");
+               AddCSharpLine("ExposedVariables.Awake( );");
 
-               //AddCSharpLine( "PublicVariables = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
-               AddCSharpLine("PublicVariables.SetParent( this.gameObject );");
+               //AddCSharpLine( "ExposedVariables = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
+               AddCSharpLine("ExposedVariables.SetParent( this.gameObject );");
 
                string version = uScript_MasterComponent.Version;
 
@@ -634,7 +634,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine("{");
                ++m_TabStack;
                AddCSharpLine("uScriptDebug.Log( \"The generated code is not compatible with your current uScript Runtime \" + uScript_MasterComponent.Version, uScriptDebug.Type.Error );");
-               AddCSharpLine("PublicVariables = null;");
+               AddCSharpLine("ExposedVariables = null;");
                AddCSharpLine("UnityEngine.Debug.Break();");
                --m_TabStack;
                AddCSharpLine("}");
@@ -649,7 +649,7 @@ namespace Detox.ScriptEditor
 
             if (false == stubCode)
             {
-               AddCSharpLine("PublicVariables.Start( );");
+               AddCSharpLine("ExposedVariables.Start( );");
             }
 
             --m_TabStack;
@@ -661,7 +661,7 @@ namespace Detox.ScriptEditor
 
             if (false == stubCode)
             {
-               AddCSharpLine("PublicVariables.OnEnable( );");
+               AddCSharpLine("ExposedVariables.OnEnable( );");
             }
 
             --m_TabStack;
@@ -673,7 +673,7 @@ namespace Detox.ScriptEditor
 
             if (false == stubCode)
             {
-               AddCSharpLine("PublicVariables.OnDisable( );");
+               AddCSharpLine("ExposedVariables.OnDisable( );");
             }
 
             --m_TabStack;
@@ -688,7 +688,7 @@ namespace Detox.ScriptEditor
 
             if (false == stubCode)
             {
-               AddCSharpLine("PublicVariables.Update( );");
+               AddCSharpLine("ExposedVariables.Update( );");
             }
 
             --m_TabStack;
@@ -700,7 +700,7 @@ namespace Detox.ScriptEditor
 
             if (false == stubCode)
             {
-               AddCSharpLine("PublicVariables.OnDestroy( );");
+               AddCSharpLine("ExposedVariables.OnDestroy( );");
             }
 
             --m_TabStack;
@@ -714,7 +714,7 @@ namespace Detox.ScriptEditor
 
                if (false == stubCode)
                {
-                  AddCSharpLine("PublicVariables.LateUpdate( );");
+                  AddCSharpLine("ExposedVariables.LateUpdate( );");
                }
 
                --m_TabStack;
@@ -729,7 +729,7 @@ namespace Detox.ScriptEditor
 
                if (false == stubCode)
                {
-                  AddCSharpLine("PublicVariables.FixedUpdate( );");
+                  AddCSharpLine("ExposedVariables.FixedUpdate( );");
                }
 
                --m_TabStack;
@@ -744,7 +744,7 @@ namespace Detox.ScriptEditor
 
                if (false == stubCode)
                {
-                  AddCSharpLine("PublicVariables.OnGUI( );");
+                  AddCSharpLine("ExposedVariables.OnGUI( );");
                }
 
                --m_TabStack;
