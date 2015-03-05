@@ -57,8 +57,10 @@ namespace Detox.Editor.GUI
 
          // WriteAllText creates a file, writes the specified string to the file, and then closes the file.
          Directory.CreateDirectory(ScriptPath);
-         File.WriteAllText(ScriptPath + ScriptName, content);
-         AssetDatabase.ImportAsset(ScriptPath + ScriptName, ImportAssetOptions.ForceUpdate);
+
+         var path = string.Format("{0}{1}", ScriptPath, ScriptName);
+         File.WriteAllText(path, content);
+         AssetDatabase.ImportAsset(path.RelativeAssetPath(), ImportAssetOptions.ForceUpdate);
          AssetDatabase.Refresh();
       }
 
@@ -172,7 +174,7 @@ namespace Detox.Editor
          BuildInfo.TryParse(ReflectOldBuildNumber(), out oldBuild);
 
 #if UNITY_3_5 // Override hack because 'oldBuild' comes back as 0.0.0 in Unity 3 when compiled to a DLL.
-          return false;
+         return false;
 #else
          return newBuild > oldBuild;
 #endif
