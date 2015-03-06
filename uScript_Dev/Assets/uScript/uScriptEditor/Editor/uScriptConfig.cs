@@ -31,8 +31,13 @@ public struct uScriptConfigBlock
 
 public static class uScriptConfig
 {
+#if UNITY_5
+   public const float BezierPenWidth = 2.75f;
+   public const float BezierPenWidthSelected = 3.0f;
+#else
    public const float BezierPenWidth = 1.25f;
    public const float BezierPenWidthSelected = 1.5f;
+#endif
    public const int MinResizeX = 60;
    public const int MinResizeY = 16;
 
@@ -116,7 +121,11 @@ public static class uScriptConfig
                          new Color(255.0f / 255.0f, 255.0f / 255.0f, 196.0f / 255.0f)
                       };
 
+#if UNITY_5
+      LineWidths = new[] { 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.5f, 2.75f };
+#else
       LineWidths = new[] { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.25f };
+#endif
    }
 
    public static Texture2D CanvasBackgroundTexture { get; private set; }
