@@ -27,13 +27,8 @@ public class uScriptAct_GetParent : uScriptLogic
    {
       
       if ( null != Target.transform.parent )
-      {
          Parent = Target.transform.parent.gameObject;
-      }
       else
-      {
-         uScriptDebug.Log ("(Node - Get Parent): The specified Target GameObject does not have a parent (was null).", uScriptDebug.Type.Warning);
          Parent = null;
-      }
    }
 }
