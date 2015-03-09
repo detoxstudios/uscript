@@ -2161,15 +2161,14 @@ namespace Detox.ScriptEditor
          {
             AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpName(entityProperty, entityProperty.Parameter.Name) + " = " + FormatValue(entityProperty.Parameter.Default, entityProperty.Parameter.Type) + ";");
 
+            // If it's a gameobject, it might be swapped out and we'd need to re-register event listeners
+            if (entityProperty.Parameter.Type == "UnityEngine.GameObject")
+               AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + PreviousName(entityProperty, entityProperty.Parameter.Name) + " = null;");
+
             if (entityProperty.Instance.Default != "")
             {
                AddCSharpLine(FormatType(entityProperty.Instance.Type) + " " + CSharpName(entityProperty, entityProperty.Instance.Name) + " = " + FormatValue(entityProperty.Instance.Default, entityProperty.Instance.Type) + ";");
                AddCSharpLine(FormatType(entityProperty.Instance.Type) + " " + PreviousName(entityProperty, entityProperty.Instance.Name) + " = null;");
-
-               if (entityProperty.Parameter.Type == "UnityEngine.GameObject")
-               {
-                  AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + PreviousName(entityProperty, entityProperty.Parameter.Name) + " = null;");
-               }
             }
          }
 
