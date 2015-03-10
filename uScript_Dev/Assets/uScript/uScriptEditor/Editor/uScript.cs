@@ -1262,6 +1262,8 @@ public sealed partial class uScript : EditorWindow
 
    private void BuildCanvasContextMenu(ToolStripItem toolStripItem, string path)
    {
+      Profile profile = new Profile("BuildCanvasContextMenu");
+      
       GUIContent content;
 
       if (toolStripItem == null || string.IsNullOrEmpty(path))
@@ -1332,6 +1334,8 @@ public sealed partial class uScript : EditorWindow
       {
          uScriptDebug.Log(string.Format("The toolStripItem ({0}) is a {1} and is unhandled!\n", toolStripItem.Text, toolStripItem.GetType()), uScriptDebug.Type.Warning);
       }
+
+      profile.End();
    }
 
    private static void ContextMenuCallback(object obj)

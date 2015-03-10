@@ -2569,7 +2569,7 @@ namespace Detox.ScriptEditor
 
       private void m_ContextMenuStrip_Opening(object sender, CancelEventArgs args)
       {
-         Profile overall = new Profile ("m_ContextMenuStrip_Opening");
+         Profile overall = new Profile("m_ContextMenuStrip_Opening");
 
          m_ContextObject = null;
          m_ContextCursor = Detox.Windows.Forms.Cursor.Position;
