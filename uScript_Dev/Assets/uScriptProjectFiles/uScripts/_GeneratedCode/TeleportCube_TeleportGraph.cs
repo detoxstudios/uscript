@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -593,18 +593,18 @@ public class TeleportCube_TeleportGraph : uScriptLogic
    
    void Relay_OnEnterTrigger_21()
    {
-      if (true == CheckDebugBreak("cf4609e9-3462-4b77-b7af-8ef6e1752a9c", "Trigger_Event", Relay_OnEnterTrigger_21)) return; 
+      if (true == CheckDebugBreak("e3edc2ec-9f1a-4b2c-8957-d55171e106ea", "Trigger_Event", Relay_OnEnterTrigger_21)) return; 
       Relay_In_0();
    }
    
    void Relay_OnExitTrigger_21()
    {
-      if (true == CheckDebugBreak("cf4609e9-3462-4b77-b7af-8ef6e1752a9c", "Trigger_Event", Relay_OnExitTrigger_21)) return; 
+      if (true == CheckDebugBreak("e3edc2ec-9f1a-4b2c-8957-d55171e106ea", "Trigger_Event", Relay_OnExitTrigger_21)) return; 
    }
    
    void Relay_WhileInsideTrigger_21()
    {
-      if (true == CheckDebugBreak("cf4609e9-3462-4b77-b7af-8ef6e1752a9c", "Trigger_Event", Relay_WhileInsideTrigger_21)) return; 
+      if (true == CheckDebugBreak("e3edc2ec-9f1a-4b2c-8957-d55171e106ea", "Trigger_Event", Relay_WhileInsideTrigger_21)) return; 
    }
    
    private void UpdateEditorValues( )
@@ -624,7 +624,7 @@ public class TeleportCube_TeleportGraph : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

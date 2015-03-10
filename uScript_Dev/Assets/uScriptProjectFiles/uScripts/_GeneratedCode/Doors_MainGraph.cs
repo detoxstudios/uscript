@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -651,9 +651,9 @@ public class Doors_MainGraph : uScriptLogic
                uScript_Trigger component = local_6_UnityEngine_GameObject_previous.GetComponent<uScript_Trigger>();
                if ( null != component )
                {
-                  component.OnEnterTrigger -= Instance_OnEnterTrigger_164;
-                  component.OnExitTrigger -= Instance_OnExitTrigger_164;
-                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_164;
+                  component.OnEnterTrigger -= Instance_OnEnterTrigger_158;
+                  component.OnExitTrigger -= Instance_OnExitTrigger_158;
+                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_158;
                }
             }
          }
@@ -671,9 +671,9 @@ public class Doors_MainGraph : uScriptLogic
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_164;
-                  component.OnExitTrigger += Instance_OnExitTrigger_164;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_164;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_158;
+                  component.OnExitTrigger += Instance_OnExitTrigger_158;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_158;
                }
             }
          }
@@ -692,9 +692,9 @@ public class Doors_MainGraph : uScriptLogic
                uScript_Trigger component = local_16_UnityEngine_GameObject_previous.GetComponent<uScript_Trigger>();
                if ( null != component )
                {
-                  component.OnEnterTrigger -= Instance_OnEnterTrigger_158;
-                  component.OnExitTrigger -= Instance_OnExitTrigger_158;
-                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_158;
+                  component.OnEnterTrigger -= Instance_OnEnterTrigger_164;
+                  component.OnExitTrigger -= Instance_OnExitTrigger_164;
+                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_164;
                }
             }
          }
@@ -712,9 +712,9 @@ public class Doors_MainGraph : uScriptLogic
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_158;
-                  component.OnExitTrigger += Instance_OnExitTrigger_158;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_158;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_164;
+                  component.OnExitTrigger += Instance_OnExitTrigger_164;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_164;
                }
             }
          }
@@ -949,9 +949,9 @@ public class Doors_MainGraph : uScriptLogic
                uScript_Trigger component = local_6_UnityEngine_GameObject_previous.GetComponent<uScript_Trigger>();
                if ( null != component )
                {
-                  component.OnEnterTrigger -= Instance_OnEnterTrigger_164;
-                  component.OnExitTrigger -= Instance_OnExitTrigger_164;
-                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_164;
+                  component.OnEnterTrigger -= Instance_OnEnterTrigger_158;
+                  component.OnExitTrigger -= Instance_OnExitTrigger_158;
+                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_158;
                }
             }
          }
@@ -969,9 +969,9 @@ public class Doors_MainGraph : uScriptLogic
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_164;
-                  component.OnExitTrigger += Instance_OnExitTrigger_164;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_164;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_158;
+                  component.OnExitTrigger += Instance_OnExitTrigger_158;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_158;
                }
             }
          }
@@ -986,9 +986,9 @@ public class Doors_MainGraph : uScriptLogic
                uScript_Trigger component = local_16_UnityEngine_GameObject_previous.GetComponent<uScript_Trigger>();
                if ( null != component )
                {
-                  component.OnEnterTrigger -= Instance_OnEnterTrigger_158;
-                  component.OnExitTrigger -= Instance_OnExitTrigger_158;
-                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_158;
+                  component.OnEnterTrigger -= Instance_OnEnterTrigger_164;
+                  component.OnExitTrigger -= Instance_OnExitTrigger_164;
+                  component.WhileInsideTrigger -= Instance_WhileInsideTrigger_164;
                }
             }
          }
@@ -1006,9 +1006,9 @@ public class Doors_MainGraph : uScriptLogic
                }
                if ( null != component )
                {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_158;
-                  component.OnExitTrigger += Instance_OnExitTrigger_158;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_158;
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_164;
+                  component.OnExitTrigger += Instance_OnExitTrigger_164;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_164;
                }
             }
          }
@@ -1310,9 +1310,9 @@ public class Doors_MainGraph : uScriptLogic
             uScript_Trigger component = local_6_UnityEngine_GameObject.GetComponent<uScript_Trigger>();
             if ( null != component )
             {
-               component.OnEnterTrigger -= Instance_OnEnterTrigger_164;
-               component.OnExitTrigger -= Instance_OnExitTrigger_164;
-               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_164;
+               component.OnEnterTrigger -= Instance_OnEnterTrigger_158;
+               component.OnExitTrigger -= Instance_OnExitTrigger_158;
+               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_158;
             }
          }
       }
@@ -1322,9 +1322,9 @@ public class Doors_MainGraph : uScriptLogic
             uScript_Trigger component = local_16_UnityEngine_GameObject.GetComponent<uScript_Trigger>();
             if ( null != component )
             {
-               component.OnEnterTrigger -= Instance_OnEnterTrigger_158;
-               component.OnExitTrigger -= Instance_OnExitTrigger_158;
-               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_158;
+               component.OnEnterTrigger -= Instance_OnEnterTrigger_164;
+               component.OnExitTrigger -= Instance_OnExitTrigger_164;
+               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_164;
             }
          }
       }
@@ -2366,9 +2366,9 @@ public class Doors_MainGraph : uScriptLogic
                            uScript_Trigger component = local_6_UnityEngine_GameObject_previous.GetComponent<uScript_Trigger>();
                            if ( null != component )
                            {
-                              component.OnEnterTrigger -= Instance_OnEnterTrigger_164;
-                              component.OnExitTrigger -= Instance_OnExitTrigger_164;
-                              component.WhileInsideTrigger -= Instance_WhileInsideTrigger_164;
+                              component.OnEnterTrigger -= Instance_OnEnterTrigger_158;
+                              component.OnExitTrigger -= Instance_OnExitTrigger_158;
+                              component.WhileInsideTrigger -= Instance_WhileInsideTrigger_158;
                            }
                         }
                      }
@@ -2386,9 +2386,9 @@ public class Doors_MainGraph : uScriptLogic
                            }
                            if ( null != component )
                            {
-                              component.OnEnterTrigger += Instance_OnEnterTrigger_164;
-                              component.OnExitTrigger += Instance_OnExitTrigger_164;
-                              component.WhileInsideTrigger += Instance_WhileInsideTrigger_164;
+                              component.OnEnterTrigger += Instance_OnEnterTrigger_158;
+                              component.OnExitTrigger += Instance_OnExitTrigger_158;
+                              component.WhileInsideTrigger += Instance_WhileInsideTrigger_158;
                            }
                         }
                      }
@@ -2430,9 +2430,9 @@ public class Doors_MainGraph : uScriptLogic
                            uScript_Trigger component = local_6_UnityEngine_GameObject_previous.GetComponent<uScript_Trigger>();
                            if ( null != component )
                            {
-                              component.OnEnterTrigger -= Instance_OnEnterTrigger_164;
-                              component.OnExitTrigger -= Instance_OnExitTrigger_164;
-                              component.WhileInsideTrigger -= Instance_WhileInsideTrigger_164;
+                              component.OnEnterTrigger -= Instance_OnEnterTrigger_158;
+                              component.OnExitTrigger -= Instance_OnExitTrigger_158;
+                              component.WhileInsideTrigger -= Instance_WhileInsideTrigger_158;
                            }
                         }
                      }
@@ -2450,9 +2450,9 @@ public class Doors_MainGraph : uScriptLogic
                            }
                            if ( null != component )
                            {
-                              component.OnEnterTrigger += Instance_OnEnterTrigger_164;
-                              component.OnExitTrigger += Instance_OnExitTrigger_164;
-                              component.WhileInsideTrigger += Instance_WhileInsideTrigger_164;
+                              component.OnEnterTrigger += Instance_OnEnterTrigger_158;
+                              component.OnExitTrigger += Instance_OnExitTrigger_158;
+                              component.WhileInsideTrigger += Instance_WhileInsideTrigger_158;
                            }
                         }
                      }
@@ -3503,66 +3503,66 @@ public class Doors_MainGraph : uScriptLogic
    
    void Relay_OnEnterTrigger_158()
    {
-      if (true == CheckDebugBreak("6d23719b-506c-4f8d-880d-13b792423a48", "Trigger_Event", Relay_OnEnterTrigger_158)) return; 
-      Relay_In_57();
+      if (true == CheckDebugBreak("d274d28e-e91b-47ed-a007-d05d864fdd57", "Trigger_Event", Relay_OnEnterTrigger_158)) return; 
+      Relay_True_30();
    }
    
    void Relay_OnExitTrigger_158()
    {
-      if (true == CheckDebugBreak("6d23719b-506c-4f8d-880d-13b792423a48", "Trigger_Event", Relay_OnExitTrigger_158)) return; 
+      if (true == CheckDebugBreak("d274d28e-e91b-47ed-a007-d05d864fdd57", "Trigger_Event", Relay_OnExitTrigger_158)) return; 
    }
    
    void Relay_WhileInsideTrigger_158()
    {
-      if (true == CheckDebugBreak("6d23719b-506c-4f8d-880d-13b792423a48", "Trigger_Event", Relay_WhileInsideTrigger_158)) return; 
+      if (true == CheckDebugBreak("d274d28e-e91b-47ed-a007-d05d864fdd57", "Trigger_Event", Relay_WhileInsideTrigger_158)) return; 
    }
    
    void Relay_OnEnterTrigger_161()
    {
-      if (true == CheckDebugBreak("ec6869ab-2b17-43d1-aa76-c85814cc377b", "Trigger_Event", Relay_OnEnterTrigger_161)) return; 
+      if (true == CheckDebugBreak("2736c5e4-e0cd-454b-bde6-8a02babc902c", "Trigger_Event", Relay_OnEnterTrigger_161)) return; 
       Relay_In_50();
    }
    
    void Relay_OnExitTrigger_161()
    {
-      if (true == CheckDebugBreak("ec6869ab-2b17-43d1-aa76-c85814cc377b", "Trigger_Event", Relay_OnExitTrigger_161)) return; 
+      if (true == CheckDebugBreak("2736c5e4-e0cd-454b-bde6-8a02babc902c", "Trigger_Event", Relay_OnExitTrigger_161)) return; 
    }
    
    void Relay_WhileInsideTrigger_161()
    {
-      if (true == CheckDebugBreak("ec6869ab-2b17-43d1-aa76-c85814cc377b", "Trigger_Event", Relay_WhileInsideTrigger_161)) return; 
+      if (true == CheckDebugBreak("2736c5e4-e0cd-454b-bde6-8a02babc902c", "Trigger_Event", Relay_WhileInsideTrigger_161)) return; 
    }
    
    void Relay_OnEnterTrigger_164()
    {
-      if (true == CheckDebugBreak("1c7d557f-663f-45d4-b6c7-c627278348e7", "Trigger_Event", Relay_OnEnterTrigger_164)) return; 
-      Relay_True_30();
+      if (true == CheckDebugBreak("27e3328c-ef35-4237-b99a-6e9980c32e2f", "Trigger_Event", Relay_OnEnterTrigger_164)) return; 
+      Relay_In_57();
    }
    
    void Relay_OnExitTrigger_164()
    {
-      if (true == CheckDebugBreak("1c7d557f-663f-45d4-b6c7-c627278348e7", "Trigger_Event", Relay_OnExitTrigger_164)) return; 
+      if (true == CheckDebugBreak("27e3328c-ef35-4237-b99a-6e9980c32e2f", "Trigger_Event", Relay_OnExitTrigger_164)) return; 
    }
    
    void Relay_WhileInsideTrigger_164()
    {
-      if (true == CheckDebugBreak("1c7d557f-663f-45d4-b6c7-c627278348e7", "Trigger_Event", Relay_WhileInsideTrigger_164)) return; 
+      if (true == CheckDebugBreak("27e3328c-ef35-4237-b99a-6e9980c32e2f", "Trigger_Event", Relay_WhileInsideTrigger_164)) return; 
    }
    
    void Relay_OnEnterTrigger_167()
    {
-      if (true == CheckDebugBreak("fc8a65f7-c017-4e6a-bd51-470574d3a8cf", "Trigger_Event", Relay_OnEnterTrigger_167)) return; 
+      if (true == CheckDebugBreak("ff7230e2-d1ba-4ba7-aad8-b410074ae6de", "Trigger_Event", Relay_OnEnterTrigger_167)) return; 
       Relay_In_61();
    }
    
    void Relay_OnExitTrigger_167()
    {
-      if (true == CheckDebugBreak("fc8a65f7-c017-4e6a-bd51-470574d3a8cf", "Trigger_Event", Relay_OnExitTrigger_167)) return; 
+      if (true == CheckDebugBreak("ff7230e2-d1ba-4ba7-aad8-b410074ae6de", "Trigger_Event", Relay_OnExitTrigger_167)) return; 
    }
    
    void Relay_WhileInsideTrigger_167()
    {
-      if (true == CheckDebugBreak("fc8a65f7-c017-4e6a-bd51-470574d3a8cf", "Trigger_Event", Relay_WhileInsideTrigger_167)) return; 
+      if (true == CheckDebugBreak("ff7230e2-d1ba-4ba7-aad8-b410074ae6de", "Trigger_Event", Relay_WhileInsideTrigger_167)) return; 
    }
    
    private void UpdateEditorValues( )
@@ -3639,7 +3639,7 @@ public class Doors_MainGraph : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

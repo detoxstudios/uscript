@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -792,7 +792,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    
    void Relay_OnGui_1()
    {
-      if (true == CheckDebugBreak("147aaa7d-d122-40e8-abe2-80f201356edf", "GUI Events", Relay_OnGui_1)) return; 
+      if (true == CheckDebugBreak("147aaa7d-d122-40e8-abe2-80f201356edf", "GUI_Events", Relay_OnGui_1)) return; 
       Relay_In_2();
    }
    
@@ -800,7 +800,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5264832f-c586-486a-96c3-3a4bbd9bfc20", "GUI Begin Group", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("5264832f-c586-486a-96c3-3a4bbd9bfc20", "GUI_Begin_Group", Relay_In_2)) return; 
          {
             {
                logic_uScriptAct_GUIBeginGroup_Position_2 = local_Filtered_Rect_UnityEngine_Rect;
@@ -833,20 +833,20 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    
    void Relay_uScriptStart_3()
    {
-      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript Events", Relay_uScriptStart_3)) return; 
+      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript_Events", Relay_uScriptStart_3)) return; 
       Relay_In_4();
    }
    
    void Relay_uScriptLateStart_3()
    {
-      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript Events", Relay_uScriptLateStart_3)) return; 
+      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript_Events", Relay_uScriptLateStart_3)) return; 
    }
    
    void Relay_In_4()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("34c65f62-1988-4081-b2b4-86bf2f901d6d", "Create Relative Rect (Screen)", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("34c65f62-1988-4081-b2b4-86bf2f901d6d", "Create_Relative_Rect__Screen_", Relay_In_4)) return; 
          {
             {
             }
@@ -882,7 +882,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e75e3898-72da-4170-8679-480a80a5c381", "GUI Box", Relay_In_6)) return; 
+         if (true == CheckDebugBreak("e75e3898-72da-4170-8679-480a80a5c381", "GUI_Box", Relay_In_6)) return; 
          {
             {
             }
@@ -915,7 +915,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI Button", Relay_OnButtonDown_7)) return; 
+         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI_Button", Relay_OnButtonDown_7)) return; 
       }
       else
       {
@@ -927,7 +927,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI Button", Relay_OnButtonHeld_7)) return; 
+         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI_Button", Relay_OnButtonHeld_7)) return; 
       }
       else
       {
@@ -939,7 +939,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI Button", Relay_OnButtonUp_7)) return; 
+         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI_Button", Relay_OnButtonUp_7)) return; 
       }
       else
       {
@@ -951,7 +951,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI Button", Relay_OnButtonClicked_7)) return; 
+         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI_Button", Relay_OnButtonClicked_7)) return; 
          Relay_In_46();
       }
       else
@@ -964,7 +964,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI Button", Relay_In_7)) return; 
+         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI_Button", Relay_In_7)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_7 = local_13_System_String;
@@ -1005,7 +1005,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI Button", Relay_OnButtonDown_9)) return; 
+         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI_Button", Relay_OnButtonDown_9)) return; 
       }
       else
       {
@@ -1017,7 +1017,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI Button", Relay_OnButtonHeld_9)) return; 
+         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI_Button", Relay_OnButtonHeld_9)) return; 
       }
       else
       {
@@ -1029,7 +1029,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI Button", Relay_OnButtonUp_9)) return; 
+         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI_Button", Relay_OnButtonUp_9)) return; 
       }
       else
       {
@@ -1041,7 +1041,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI Button", Relay_OnButtonClicked_9)) return; 
+         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI_Button", Relay_OnButtonClicked_9)) return; 
          Relay_In_47();
       }
       else
@@ -1054,7 +1054,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI Button", Relay_In_9)) return; 
+         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI_Button", Relay_In_9)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_9 = local_14_System_String;
@@ -1095,7 +1095,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonDown_10)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonDown_10)) return; 
       }
       else
       {
@@ -1107,7 +1107,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonHeld_10)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonHeld_10)) return; 
       }
       else
       {
@@ -1119,7 +1119,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonUp_10)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonUp_10)) return; 
       }
       else
       {
@@ -1131,7 +1131,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonClicked_10)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonClicked_10)) return; 
          Relay_SendCustomEvent_37();
       }
       else
@@ -1144,7 +1144,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_In_10)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_In_10)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_10 = local_15_System_String;
@@ -1183,7 +1183,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("52d5cf8c-1389-4ebf-b017-600a8334d984", "GUI End Group", Relay_In_12)) return; 
+         if (true == CheckDebugBreak("52d5cf8c-1389-4ebf-b017-600a8334d984", "GUI_End_Group", Relay_In_12)) return; 
          {
          }
          logic_uScriptAct_GUIEndGroup_uScriptAct_GUIEndGroup_12.In();
@@ -1199,25 +1199,25 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    
    void Relay_OnUpdate_17()
    {
-      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global Update", Relay_OnUpdate_17)) return; 
+      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global_Update", Relay_OnUpdate_17)) return; 
       Relay_Filter_18();
    }
    
    void Relay_OnLateUpdate_17()
    {
-      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global Update", Relay_OnLateUpdate_17)) return; 
+      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global_Update", Relay_OnLateUpdate_17)) return; 
    }
    
    void Relay_OnFixedUpdate_17()
    {
-      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global Update", Relay_OnFixedUpdate_17)) return; 
+      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global_Update", Relay_OnFixedUpdate_17)) return; 
    }
    
    void Relay_Reset_18()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter Rect", Relay_Reset_18)) return; 
+         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter_Rect", Relay_Reset_18)) return; 
          {
             {
                logic_uScriptAct_FilterRect_Target_18 = local_Target_Rect_UnityEngine_Rect;
@@ -1244,7 +1244,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter Rect", Relay_Filter_18)) return; 
+         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter_Rect", Relay_Filter_18)) return; 
          {
             {
                logic_uScriptAct_FilterRect_Target_18 = local_Target_Rect_UnityEngine_Rect;
@@ -1269,7 +1269,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    
    void Relay_OnCustomEventString_21()
    {
-      if (true == CheckDebugBreak("1d6d4a07-bce2-4eea-a953-a8478cc30661", "Custom Event (String)", Relay_OnCustomEventString_21)) return; 
+      if (true == CheckDebugBreak("1d6d4a07-bce2-4eea-a953-a8478cc30661", "Custom_Event__String_", Relay_OnCustomEventString_21)) return; 
       local_22_System_String = event_UnityEngine_GameObject_EventName_21;
       local_23_System_String = event_UnityEngine_GameObject_EventData_21;
       Relay_In_25();
@@ -1279,7 +1279,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("759827d3-d770-4b3d-bc8c-57687f83fafc", "Compare String", Relay_In_24)) return; 
+         if (true == CheckDebugBreak("759827d3-d770-4b3d-bc8c-57687f83fafc", "Compare_String", Relay_In_24)) return; 
          {
             {
                logic_uScriptCon_CompareString_A_24 = local_23_System_String;
@@ -1308,7 +1308,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aac8d650-712b-4248-b513-14bcd5c7ce29", "Compare String", Relay_In_25)) return; 
+         if (true == CheckDebugBreak("aac8d650-712b-4248-b513-14bcd5c7ce29", "Compare_String", Relay_In_25)) return; 
          {
             {
                logic_uScriptCon_CompareString_A_25 = local_22_System_String;
@@ -1337,7 +1337,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c8f331db-f880-48f3-92d0-08aced7c34c8", "Create Relative Rect (Screen)", Relay_In_26)) return; 
+         if (true == CheckDebugBreak("c8f331db-f880-48f3-92d0-08aced7c34c8", "Create_Relative_Rect__Screen_", Relay_In_26)) return; 
          {
             {
             }
@@ -1368,7 +1368,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ab90415b-4dc2-4605-8dc7-a127b9a43e71", "Get Components (Rect)", Relay_In_29)) return; 
+         if (true == CheckDebugBreak("ab90415b-4dc2-4605-8dc7-a127b9a43e71", "Get_Components__Rect_", Relay_In_29)) return; 
          {
             {
                logic_uScriptAct_GetComponentsRect_InputRect_29 = local_Target_Rect_UnityEngine_Rect;
@@ -1406,7 +1406,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d460684c-6acd-4352-aafd-b66804f7d228", "Set Components (Rect)", Relay_In_31)) return; 
+         if (true == CheckDebugBreak("d460684c-6acd-4352-aafd-b66804f7d228", "Set_Components__Rect_", Relay_In_31)) return; 
          {
             {
             }
@@ -1447,7 +1447,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b2adeacb-fa4c-40f3-a809-a77876ea0087", "Get Components (Rect)", Relay_In_34)) return; 
+         if (true == CheckDebugBreak("b2adeacb-fa4c-40f3-a809-a77876ea0087", "Get_Components__Rect_", Relay_In_34)) return; 
          {
             {
                logic_uScriptAct_GetComponentsRect_InputRect_34 = local_Target_Rect_UnityEngine_Rect;
@@ -1485,7 +1485,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4c0c2678-3ddb-435c-9fcf-f987c98bc601", "Send Custom Event (String)", Relay_SendCustomEvent_37)) return; 
+         if (true == CheckDebugBreak("4c0c2678-3ddb-435c-9fcf-f987c98bc601", "Send_Custom_Event__String_", Relay_SendCustomEvent_37)) return; 
          {
             {
             }
@@ -1518,7 +1518,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("93a7cb18-5a50-4ce9-b5a4-fce1e9c966f8", "Set Components (Rect)", Relay_In_38)) return; 
+         if (true == CheckDebugBreak("93a7cb18-5a50-4ce9-b5a4-fce1e9c966f8", "Set_Components__Rect_", Relay_In_38)) return; 
          {
             {
             }
@@ -1553,7 +1553,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c2b8aee4-12d3-42cf-a2f5-682cf38df548", "GUI Button", Relay_OnButtonDown_42)) return; 
+         if (true == CheckDebugBreak("c2b8aee4-12d3-42cf-a2f5-682cf38df548", "GUI_Button", Relay_OnButtonDown_42)) return; 
       }
       else
       {
@@ -1565,7 +1565,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c2b8aee4-12d3-42cf-a2f5-682cf38df548", "GUI Button", Relay_OnButtonHeld_42)) return; 
+         if (true == CheckDebugBreak("c2b8aee4-12d3-42cf-a2f5-682cf38df548", "GUI_Button", Relay_OnButtonHeld_42)) return; 
       }
       else
       {
@@ -1577,7 +1577,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c2b8aee4-12d3-42cf-a2f5-682cf38df548", "GUI Button", Relay_OnButtonUp_42)) return; 
+         if (true == CheckDebugBreak("c2b8aee4-12d3-42cf-a2f5-682cf38df548", "GUI_Button", Relay_OnButtonUp_42)) return; 
       }
       else
       {
@@ -1589,7 +1589,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c2b8aee4-12d3-42cf-a2f5-682cf38df548", "GUI Button", Relay_OnButtonClicked_42)) return; 
+         if (true == CheckDebugBreak("c2b8aee4-12d3-42cf-a2f5-682cf38df548", "GUI_Button", Relay_OnButtonClicked_42)) return; 
          Relay_In_50();
       }
       else
@@ -1602,7 +1602,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c2b8aee4-12d3-42cf-a2f5-682cf38df548", "GUI Button", Relay_In_42)) return; 
+         if (true == CheckDebugBreak("c2b8aee4-12d3-42cf-a2f5-682cf38df548", "GUI_Button", Relay_In_42)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_42 = local_40_System_String;
@@ -1643,7 +1643,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3f64a886-8d5b-4fae-8374-188ba408cfe1", "GUI Button", Relay_OnButtonDown_43)) return; 
+         if (true == CheckDebugBreak("3f64a886-8d5b-4fae-8374-188ba408cfe1", "GUI_Button", Relay_OnButtonDown_43)) return; 
       }
       else
       {
@@ -1655,7 +1655,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3f64a886-8d5b-4fae-8374-188ba408cfe1", "GUI Button", Relay_OnButtonHeld_43)) return; 
+         if (true == CheckDebugBreak("3f64a886-8d5b-4fae-8374-188ba408cfe1", "GUI_Button", Relay_OnButtonHeld_43)) return; 
       }
       else
       {
@@ -1667,7 +1667,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3f64a886-8d5b-4fae-8374-188ba408cfe1", "GUI Button", Relay_OnButtonUp_43)) return; 
+         if (true == CheckDebugBreak("3f64a886-8d5b-4fae-8374-188ba408cfe1", "GUI_Button", Relay_OnButtonUp_43)) return; 
       }
       else
       {
@@ -1679,7 +1679,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3f64a886-8d5b-4fae-8374-188ba408cfe1", "GUI Button", Relay_OnButtonClicked_43)) return; 
+         if (true == CheckDebugBreak("3f64a886-8d5b-4fae-8374-188ba408cfe1", "GUI_Button", Relay_OnButtonClicked_43)) return; 
          Relay_In_48();
       }
       else
@@ -1692,7 +1692,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3f64a886-8d5b-4fae-8374-188ba408cfe1", "GUI Button", Relay_In_43)) return; 
+         if (true == CheckDebugBreak("3f64a886-8d5b-4fae-8374-188ba408cfe1", "GUI_Button", Relay_In_43)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_43 = local_41_System_String;
@@ -1733,7 +1733,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("92f4ca19-fdd3-4bc4-910d-64a47cf93b7f", "Set String", Relay_In_46)) return; 
+         if (true == CheckDebugBreak("92f4ca19-fdd3-4bc4-910d-64a47cf93b7f", "Set_String", Relay_In_46)) return; 
          {
             {
                logic_uScriptAct_SetString_Value_46 = local_13_System_String;
@@ -1769,7 +1769,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b1a844f3-f541-4add-a9f0-d167a1eb18d9", "Set String", Relay_In_47)) return; 
+         if (true == CheckDebugBreak("b1a844f3-f541-4add-a9f0-d167a1eb18d9", "Set_String", Relay_In_47)) return; 
          {
             {
                logic_uScriptAct_SetString_Value_47 = local_14_System_String;
@@ -1805,7 +1805,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("105a6f51-0871-4212-a6d7-4509d26cc319", "Set String", Relay_In_48)) return; 
+         if (true == CheckDebugBreak("105a6f51-0871-4212-a6d7-4509d26cc319", "Set_String", Relay_In_48)) return; 
          {
             {
                logic_uScriptAct_SetString_Value_48 = local_41_System_String;
@@ -1841,7 +1841,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ecf9cd53-7dd7-4180-b06c-fed17905a765", "Set String", Relay_In_50)) return; 
+         if (true == CheckDebugBreak("ecf9cd53-7dd7-4180-b06c-fed17905a765", "Set_String", Relay_In_50)) return; 
          {
             {
                logic_uScriptAct_SetString_Value_50 = local_40_System_String;
@@ -1877,7 +1877,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8b01cde3-9ab2-4919-9376-921090e12e52", "GUI Label", Relay_In_51)) return; 
+         if (true == CheckDebugBreak("8b01cde3-9ab2-4919-9376-921090e12e52", "GUI_Label", Relay_In_51)) return; 
          {
             {
                logic_uScriptAct_GUILabel_Text_51 = local_Weapon_Name_System_String;
@@ -1914,7 +1914,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("584235cf-486b-4f51-aa54-8d9887e28335", "Load Texture2D", Relay_In_53)) return; 
+         if (true == CheckDebugBreak("584235cf-486b-4f51-aa54-8d9887e28335", "Load_Texture2D", Relay_In_53)) return; 
          {
             {
             }
@@ -1942,7 +1942,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0d1ef9b7-7dec-4287-8978-987503c1d0c3", "Load Texture2D", Relay_In_55)) return; 
+         if (true == CheckDebugBreak("0d1ef9b7-7dec-4287-8978-987503c1d0c3", "Load_Texture2D", Relay_In_55)) return; 
          {
             {
             }
@@ -1970,7 +1970,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d532c102-9be6-4b42-836f-4314d2d6d803", "Load Texture2D", Relay_In_58)) return; 
+         if (true == CheckDebugBreak("d532c102-9be6-4b42-836f-4314d2d6d803", "Load_Texture2D", Relay_In_58)) return; 
          {
             {
             }
@@ -1998,7 +1998,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a77d255d-fcd0-44fe-945f-953ab30c3bf2", "Load Texture2D", Relay_In_59)) return; 
+         if (true == CheckDebugBreak("a77d255d-fcd0-44fe-945f-953ab30c3bf2", "Load_Texture2D", Relay_In_59)) return; 
          {
             {
             }
@@ -2021,7 +2021,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8f745760-5de3-4737-aa59-0e1b105d9fab", "Set Texture2D", Relay_In_61)) return; 
+         if (true == CheckDebugBreak("8f745760-5de3-4737-aa59-0e1b105d9fab", "Set_Texture2D", Relay_In_61)) return; 
          {
             {
                logic_uScriptAct_SetTexture2D_Value_61 = local_Sword4_UnityEngine_Texture2D;
@@ -2046,7 +2046,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0797f498-c820-44d4-884b-8aadbb110b94", "Set Texture2D", Relay_In_63)) return; 
+         if (true == CheckDebugBreak("0797f498-c820-44d4-884b-8aadbb110b94", "Set_Texture2D", Relay_In_63)) return; 
          {
             {
                logic_uScriptAct_SetTexture2D_Value_63 = local_Sword3_UnityEngine_Texture2D;
@@ -2071,7 +2071,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("04eac4c9-2710-48d3-b95a-5cb7c03e1d9c", "Set Texture2D", Relay_In_64)) return; 
+         if (true == CheckDebugBreak("04eac4c9-2710-48d3-b95a-5cb7c03e1d9c", "Set_Texture2D", Relay_In_64)) return; 
          {
             {
                logic_uScriptAct_SetTexture2D_Value_64 = local_Sword2_UnityEngine_Texture2D;
@@ -2096,7 +2096,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9986cd46-6a67-4c15-bde6-b4bb159b5230", "Set Texture2D", Relay_In_65)) return; 
+         if (true == CheckDebugBreak("9986cd46-6a67-4c15-bde6-b4bb159b5230", "Set_Texture2D", Relay_In_65)) return; 
          {
             {
                logic_uScriptAct_SetTexture2D_Value_65 = local_Sword1_UnityEngine_Texture2D;
@@ -2176,7 +2176,7 @@ public class AdvancedUI_SelectWeapon : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

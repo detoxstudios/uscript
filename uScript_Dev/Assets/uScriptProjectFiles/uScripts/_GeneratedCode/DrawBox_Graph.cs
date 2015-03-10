@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -450,7 +450,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("019bca16-43e5-41df-8e8f-b2371848896a", "Set Bool", Relay_True_0)) return; 
+         if (true == CheckDebugBreak("019bca16-43e5-41df-8e8f-b2371848896a", "Set_Bool", Relay_True_0)) return; 
          {
             {
             }
@@ -471,7 +471,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("019bca16-43e5-41df-8e8f-b2371848896a", "Set Bool", Relay_False_0)) return; 
+         if (true == CheckDebugBreak("019bca16-43e5-41df-8e8f-b2371848896a", "Set_Bool", Relay_False_0)) return; 
          {
             {
             }
@@ -490,21 +490,21 @@ public class DrawBox_Graph : uScriptLogic
    
    void Relay_uScriptStart_2()
    {
-      if (true == CheckDebugBreak("90e44dca-6335-4d15-8a3e-2047110e18ec", "uScript Events", Relay_uScriptStart_2)) return; 
+      if (true == CheckDebugBreak("90e44dca-6335-4d15-8a3e-2047110e18ec", "uScript_Events", Relay_uScriptStart_2)) return; 
       Relay_In_3();
       Relay_ShowLabel_9();
    }
    
    void Relay_uScriptLateStart_2()
    {
-      if (true == CheckDebugBreak("90e44dca-6335-4d15-8a3e-2047110e18ec", "uScript Events", Relay_uScriptLateStart_2)) return; 
+      if (true == CheckDebugBreak("90e44dca-6335-4d15-8a3e-2047110e18ec", "uScript_Events", Relay_uScriptLateStart_2)) return; 
    }
    
    void Relay_In_3()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1e6c07c1-6b22-4a1a-9dd4-0c88dc522401", "Load Texture2D", Relay_In_3)) return; 
+         if (true == CheckDebugBreak("1e6c07c1-6b22-4a1a-9dd4-0c88dc522401", "Load_Texture2D", Relay_In_3)) return; 
          {
             {
             }
@@ -527,7 +527,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d3219c62-f838-4995-bd0e-5801905dab14", "Get Mouse Position", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("d3219c62-f838-4995-bd0e-5801905dab14", "Get_Mouse_Position", Relay_In_5)) return; 
          {
             {
             }
@@ -555,24 +555,24 @@ public class DrawBox_Graph : uScriptLogic
    
    void Relay_OnUpdate_6()
    {
-      if (true == CheckDebugBreak("018ba388-0302-4557-996c-c51274262db1", "Global Update", Relay_OnUpdate_6)) return; 
+      if (true == CheckDebugBreak("018ba388-0302-4557-996c-c51274262db1", "Global_Update", Relay_OnUpdate_6)) return; 
       Relay_In_21();
       Relay_In_23();
    }
    
    void Relay_OnLateUpdate_6()
    {
-      if (true == CheckDebugBreak("018ba388-0302-4557-996c-c51274262db1", "Global Update", Relay_OnLateUpdate_6)) return; 
+      if (true == CheckDebugBreak("018ba388-0302-4557-996c-c51274262db1", "Global_Update", Relay_OnLateUpdate_6)) return; 
    }
    
    void Relay_OnFixedUpdate_6()
    {
-      if (true == CheckDebugBreak("018ba388-0302-4557-996c-c51274262db1", "Global Update", Relay_OnFixedUpdate_6)) return; 
+      if (true == CheckDebugBreak("018ba388-0302-4557-996c-c51274262db1", "Global_Update", Relay_OnFixedUpdate_6)) return; 
    }
    
    void Relay_KeyEvent_8()
    {
-      if (true == CheckDebugBreak("c83ba475-16dd-4fde-a54d-a8d47eda80f6", "Input Events", Relay_KeyEvent_8)) return; 
+      if (true == CheckDebugBreak("c83ba475-16dd-4fde-a54d-a8d47eda80f6", "Input_Events", Relay_KeyEvent_8)) return; 
       Relay_In_36();
    }
    
@@ -580,7 +580,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f9c85cd5-914e-4e05-bcbf-713fdb1ed948", "Print Text", Relay_ShowLabel_9)) return; 
+         if (true == CheckDebugBreak("f9c85cd5-914e-4e05-bcbf-713fdb1ed948", "Print_Text", Relay_ShowLabel_9)) return; 
          {
             {
             }
@@ -612,7 +612,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f9c85cd5-914e-4e05-bcbf-713fdb1ed948", "Print Text", Relay_HideLabel_9)) return; 
+         if (true == CheckDebugBreak("f9c85cd5-914e-4e05-bcbf-713fdb1ed948", "Print_Text", Relay_HideLabel_9)) return; 
          {
             {
             }
@@ -644,7 +644,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a03c4459-5485-492a-a44a-12534486d7de", "Subtract Float", Relay_In_11)) return; 
+         if (true == CheckDebugBreak("a03c4459-5485-492a-a44a-12534486d7de", "Subtract_Float", Relay_In_11)) return; 
          {
             {
                logic_uScriptAct_SubtractFloat_A_11 = local_CurrentY_System_Single;
@@ -680,7 +680,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ba116538-9c52-4b1f-9150-24ee03ef56a8", "Get Mouse Position", Relay_In_12)) return; 
+         if (true == CheckDebugBreak("ba116538-9c52-4b1f-9150-24ee03ef56a8", "Get_Mouse_Position", Relay_In_12)) return; 
          {
             {
             }
@@ -710,7 +710,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3f20bda3-60f6-4e9b-b9bb-45a7039942c2", "Subtract Float", Relay_In_17)) return; 
+         if (true == CheckDebugBreak("3f20bda3-60f6-4e9b-b9bb-45a7039942c2", "Subtract_Float", Relay_In_17)) return; 
          {
             {
                logic_uScriptAct_SubtractFloat_A_17 = local_CurrentX_System_Single;
@@ -744,7 +744,7 @@ public class DrawBox_Graph : uScriptLogic
    
    void Relay_OnGui_19()
    {
-      if (true == CheckDebugBreak("3577864b-ccfb-45dd-8e69-b630fe939ee0", "GUI Events", Relay_OnGui_19)) return; 
+      if (true == CheckDebugBreak("3577864b-ccfb-45dd-8e69-b630fe939ee0", "GUI_Events", Relay_OnGui_19)) return; 
       Relay_In_20();
    }
    
@@ -752,7 +752,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c7d602b7-c07a-4e26-8dea-41de082f59ea", "Compare Bool", Relay_In_20)) return; 
+         if (true == CheckDebugBreak("c7d602b7-c07a-4e26-8dea-41de082f59ea", "Compare_Bool", Relay_In_20)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_20 = local_MouseDown_System_Boolean;
@@ -779,7 +779,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("48c25290-78fa-44d3-9a00-fdc27a0da8fe", "Compare Bool", Relay_In_21)) return; 
+         if (true == CheckDebugBreak("48c25290-78fa-44d3-9a00-fdc27a0da8fe", "Compare_Bool", Relay_In_21)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_21 = local_MouseDown_System_Boolean;
@@ -806,7 +806,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("f48d3a87-8cee-4240-b7be-7822c251b23d", "Get Mouse Position", Relay_In_23)) return; 
+         if (true == CheckDebugBreak("f48d3a87-8cee-4240-b7be-7822c251b23d", "Get_Mouse_Position", Relay_In_23)) return; 
          {
             {
             }
@@ -841,7 +841,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b8275064-60e2-49f0-8a3d-0b2bc8c60464", "GUI Texture", Relay_In_27)) return; 
+         if (true == CheckDebugBreak("b8275064-60e2-49f0-8a3d-0b2bc8c60464", "GUI_Texture", Relay_In_27)) return; 
          {
             {
                logic_uScriptAct_GUITexture_Position_27 = local_SelectionRect_UnityEngine_Rect;
@@ -873,7 +873,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6d3e5178-07ca-48e2-930f-418a91f6176e", "Set Components (Rect)", Relay_In_32)) return; 
+         if (true == CheckDebugBreak("6d3e5178-07ca-48e2-930f-418a91f6176e", "Set_Components__Rect_", Relay_In_32)) return; 
          {
             {
                logic_uScriptAct_SetComponentsRect_Left_32 = local_StartX_System_Single;
@@ -910,7 +910,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aeb0bb5e-9694-47d5-9a4a-67e891700786", "Input Events Filter", Relay_In_36)) return; 
+         if (true == CheckDebugBreak("aeb0bb5e-9694-47d5-9a4a-67e891700786", "Input_Events_Filter", Relay_In_36)) return; 
          {
             {
             }
@@ -962,7 +962,7 @@ public class DrawBox_Graph : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

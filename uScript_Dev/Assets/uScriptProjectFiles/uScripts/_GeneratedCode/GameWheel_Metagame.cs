@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -2064,7 +2064,7 @@ public class GameWheel_Metagame : uScriptLogic
    
    void Relay_OnEnterTrigger_131()
    {
-      if (true == CheckDebugBreak("bf40afee-6399-4df3-8f55-2cf06a48a9b5", "Trigger_Event", Relay_OnEnterTrigger_131)) return; 
+      if (true == CheckDebugBreak("6d46d0a9-a967-41bc-bb54-5642bd414dfe", "Trigger_Event", Relay_OnEnterTrigger_131)) return; 
       local_24_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_131;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -2082,7 +2082,7 @@ public class GameWheel_Metagame : uScriptLogic
    
    void Relay_OnExitTrigger_131()
    {
-      if (true == CheckDebugBreak("bf40afee-6399-4df3-8f55-2cf06a48a9b5", "Trigger_Event", Relay_OnExitTrigger_131)) return; 
+      if (true == CheckDebugBreak("6d46d0a9-a967-41bc-bb54-5642bd414dfe", "Trigger_Event", Relay_OnExitTrigger_131)) return; 
       local_24_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_131;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -2099,7 +2099,7 @@ public class GameWheel_Metagame : uScriptLogic
    
    void Relay_WhileInsideTrigger_131()
    {
-      if (true == CheckDebugBreak("bf40afee-6399-4df3-8f55-2cf06a48a9b5", "Trigger_Event", Relay_WhileInsideTrigger_131)) return; 
+      if (true == CheckDebugBreak("6d46d0a9-a967-41bc-bb54-5642bd414dfe", "Trigger_Event", Relay_WhileInsideTrigger_131)) return; 
       local_24_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_131;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -2161,7 +2161,7 @@ public class GameWheel_Metagame : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

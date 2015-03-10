@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -321,6 +321,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    //property nodes
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_34 = new Vector3( );
    UnityEngine.GameObject property_position_Detox_ScriptEditor_Parameter_Instance_34 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject property_position_Detox_ScriptEditor_Parameter_Instance_34_previous = null;
    
    //method nodes
    #pragma warning restore 414
@@ -351,11 +352,20 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void SyncUnityHooks( )
    {
-      SyncEventListeners( );
       if ( null == property_position_Detox_ScriptEditor_Parameter_Instance_34 || false == m_RegisteredForEvents )
       {
          property_position_Detox_ScriptEditor_Parameter_Instance_34 = GameObject.Find( "Main Camera" ) as UnityEngine.GameObject;
       }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_position_Detox_ScriptEditor_Parameter_Instance_34_previous != property_position_Detox_ScriptEditor_Parameter_Instance_34 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_position_Detox_ScriptEditor_Parameter_Instance_34_previous = property_position_Detox_ScriptEditor_Parameter_Instance_34;
+         
+         //setup new listeners
+      }
+      SyncEventListeners( );
       if ( null == local_9_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          local_9_UnityEngine_GameObject = GameObject.Find( "Main Camera" ) as UnityEngine.GameObject;
@@ -529,6 +539,15 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void RegisterForUnityHooks( )
    {
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_position_Detox_ScriptEditor_Parameter_Instance_34_previous != property_position_Detox_ScriptEditor_Parameter_Instance_34 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_position_Detox_ScriptEditor_Parameter_Instance_34_previous = property_position_Detox_ScriptEditor_Parameter_Instance_34;
+         
+         //setup new listeners
+      }
       SyncEventListeners( );
       //if our game object reference was changed then we need to reset event listeners
       if ( local_9_UnityEngine_GameObject_previous != local_9_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -671,6 +690,21 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void SyncEventListeners( )
    {
+      {
+         {
+            {
+               //if our game object reference was changed then we need to reset event listeners
+               if ( property_position_Detox_ScriptEditor_Parameter_Instance_34_previous != property_position_Detox_ScriptEditor_Parameter_Instance_34 || false == m_RegisteredForEvents )
+               {
+                  //tear down old listeners
+                  
+                  property_position_Detox_ScriptEditor_Parameter_Instance_34_previous = property_position_Detox_ScriptEditor_Parameter_Instance_34;
+                  
+                  //setup new listeners
+               }
+            }
+         }
+      }
       if ( null == event_UnityEngine_GameObject_Instance_0 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_0 = uScript_MasterComponent.LatestMaster;
@@ -1287,23 +1321,23 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void Relay_OnUpdate_0()
    {
-      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global Update", Relay_OnUpdate_0)) return; 
+      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global_Update", Relay_OnUpdate_0)) return; 
    }
    
    void Relay_OnLateUpdate_0()
    {
-      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global Update", Relay_OnLateUpdate_0)) return; 
+      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global_Update", Relay_OnLateUpdate_0)) return; 
    }
    
    void Relay_OnFixedUpdate_0()
    {
-      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global Update", Relay_OnFixedUpdate_0)) return; 
+      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global_Update", Relay_OnFixedUpdate_0)) return; 
       Relay_In_26();
    }
    
    void Relay_KeyEvent_1()
    {
-      if (true == CheckDebugBreak("49d038d9-23ca-46fd-a197-3c6e3a04e69a", "Input Events", Relay_KeyEvent_1)) return; 
+      if (true == CheckDebugBreak("49d038d9-23ca-46fd-a197-3c6e3a04e69a", "Input_Events", Relay_KeyEvent_1)) return; 
       Relay_In_12();
    }
    
@@ -1311,7 +1345,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2a9d0a59-2474-4371-9fed-a43812d3e5e8", "Add Force", Relay_In_3)) return; 
+         if (true == CheckDebugBreak("2a9d0a59-2474-4371-9fed-a43812d3e5e8", "Add_Force", Relay_In_3)) return; 
          {
             {
                {
@@ -1382,7 +1416,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a71ac3c4-a17c-47f3-ab39-87d02c43084b", "Add Force", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("a71ac3c4-a17c-47f3-ab39-87d02c43084b", "Add_Force", Relay_In_4)) return; 
          {
             {
                {
@@ -1453,7 +1487,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0c3f67ea-e9cf-471e-8e4e-884156667bb2", "Set Vector3", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("0c3f67ea-e9cf-471e-8e4e-884156667bb2", "Set_Vector3", Relay_In_5)) return; 
          {
             {
                logic_uScriptAct_SetVector3_Value_5 = local_25_UnityEngine_Vector3;
@@ -1482,7 +1516,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void Relay_KeyEvent_7()
    {
-      if (true == CheckDebugBreak("d6d74250-8094-462b-8b7a-fa6005d4dc0e", "Input Events", Relay_KeyEvent_7)) return; 
+      if (true == CheckDebugBreak("d6d74250-8094-462b-8b7a-fa6005d4dc0e", "Input_Events", Relay_KeyEvent_7)) return; 
       Relay_In_8();
    }
    
@@ -1490,7 +1524,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2af320e9-a78d-4fad-8f17-862b1d0cf678", "Input Events Filter", Relay_In_8)) return; 
+         if (true == CheckDebugBreak("2af320e9-a78d-4fad-8f17-862b1d0cf678", "Input_Events_Filter", Relay_In_8)) return; 
          {
             {
             }
@@ -1515,7 +1549,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c1e6d87e-45c3-469a-8243-c072f7ed97a7", "Input Events Filter", Relay_In_12)) return; 
+         if (true == CheckDebugBreak("c1e6d87e-45c3-469a-8243-c072f7ed97a7", "Input_Events_Filter", Relay_In_12)) return; 
          {
             {
             }
@@ -1540,7 +1574,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("025b3342-e5c9-4f11-adcf-afbc228558ae", "Set Euler Angles", Relay_In_13)) return; 
+         if (true == CheckDebugBreak("025b3342-e5c9-4f11-adcf-afbc228558ae", "Set_Euler_Angles", Relay_In_13)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -1593,7 +1627,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cf7c11d6-27b6-447b-a135-c1d531d7f4d4", "Look At", Relay_Finished_14)) return; 
+         if (true == CheckDebugBreak("cf7c11d6-27b6-447b-a135-c1d531d7f4d4", "Look_At", Relay_Finished_14)) return; 
       }
       else
       {
@@ -1605,7 +1639,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cf7c11d6-27b6-447b-a135-c1d531d7f4d4", "Look At", Relay_In_14)) return; 
+         if (true == CheckDebugBreak("cf7c11d6-27b6-447b-a135-c1d531d7f4d4", "Look_At", Relay_In_14)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -1658,7 +1692,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a7784265-1624-4584-bc4e-0f9d2573f7d3", "Add Vector3", Relay_In_15)) return; 
+         if (true == CheckDebugBreak("a7784265-1624-4584-bc4e-0f9d2573f7d3", "Add_Vector3", Relay_In_15)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -1694,7 +1728,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("90113637-b515-4642-93d4-0c48a9d55dfb", "Play Sound", Relay_Finished_17)) return; 
+         if (true == CheckDebugBreak("90113637-b515-4642-93d4-0c48a9d55dfb", "Play_Sound", Relay_Finished_17)) return; 
       }
       else
       {
@@ -1706,7 +1740,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("90113637-b515-4642-93d4-0c48a9d55dfb", "Play Sound", Relay_Play_17)) return; 
+         if (true == CheckDebugBreak("90113637-b515-4642-93d4-0c48a9d55dfb", "Play_Sound", Relay_Play_17)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_17 = local_Col_Sound_UnityEngine_AudioClip;
@@ -1748,7 +1782,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("90113637-b515-4642-93d4-0c48a9d55dfb", "Play Sound", Relay_UpdateVolume_17)) return; 
+         if (true == CheckDebugBreak("90113637-b515-4642-93d4-0c48a9d55dfb", "Play_Sound", Relay_UpdateVolume_17)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_17 = local_Col_Sound_UnityEngine_AudioClip;
@@ -1790,7 +1824,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("90113637-b515-4642-93d4-0c48a9d55dfb", "Play Sound", Relay_Stop_17)) return; 
+         if (true == CheckDebugBreak("90113637-b515-4642-93d4-0c48a9d55dfb", "Play_Sound", Relay_Stop_17)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_17 = local_Col_Sound_UnityEngine_AudioClip;
@@ -1832,7 +1866,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a9e6eda8-0032-46cc-9b72-efcb8ac848e2", "Add Force", Relay_In_18)) return; 
+         if (true == CheckDebugBreak("a9e6eda8-0032-46cc-9b72-efcb8ac848e2", "Add_Force", Relay_In_18)) return; 
          {
             {
                {
@@ -1903,7 +1937,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("310b76aa-7f2a-41ab-b27f-99ca03e51a22", "Add Force", Relay_In_19)) return; 
+         if (true == CheckDebugBreak("310b76aa-7f2a-41ab-b27f-99ca03e51a22", "Add_Force", Relay_In_19)) return; 
          {
             {
                {
@@ -2042,7 +2076,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1ffa62bc-db40-4dba-a030-a74d3fa2d11d", "Add Vector3", Relay_In_21)) return; 
+         if (true == CheckDebugBreak("1ffa62bc-db40-4dba-a030-a74d3fa2d11d", "Add_Vector3", Relay_In_21)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -2078,7 +2112,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aa457d97-73ea-4737-b7bd-f32cf8bec6dd", "Input Events Filter", Relay_In_22)) return; 
+         if (true == CheckDebugBreak("aa457d97-73ea-4737-b7bd-f32cf8bec6dd", "Input_Events_Filter", Relay_In_22)) return; 
          {
             {
             }
@@ -2103,7 +2137,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("03443454-af1c-4f5a-9c1a-fda9e5da17bc", "Add Vector3", Relay_In_23)) return; 
+         if (true == CheckDebugBreak("03443454-af1c-4f5a-9c1a-fda9e5da17bc", "Add_Vector3", Relay_In_23)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -2139,7 +2173,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b93b7ff-8019-44be-a5d8-11f6d83c43c2", "Compare Bool", Relay_In_26)) return; 
+         if (true == CheckDebugBreak("3b93b7ff-8019-44be-a5d8-11f6d83c43c2", "Compare_Bool", Relay_In_26)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_26 = local_Attach_Camera_System_Boolean;
@@ -2171,7 +2205,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aed4cbb7-1a43-441d-9b8a-2d2aa6a54887", "Add Vector3", Relay_In_27)) return; 
+         if (true == CheckDebugBreak("aed4cbb7-1a43-441d-9b8a-2d2aa6a54887", "Add_Vector3", Relay_In_27)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -2205,13 +2239,13 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void Relay_KeyEvent_33()
    {
-      if (true == CheckDebugBreak("8a1b7b1f-eb39-45cf-a3ec-6a79b7dc459c", "Input Events", Relay_KeyEvent_33)) return; 
+      if (true == CheckDebugBreak("8a1b7b1f-eb39-45cf-a3ec-6a79b7dc459c", "Input_Events", Relay_KeyEvent_33)) return; 
       Relay_In_38();
    }
    
    void Relay_KeyEvent_36()
    {
-      if (true == CheckDebugBreak("afe8ed96-1880-4955-962b-faea2a0516e9", "Input Events", Relay_KeyEvent_36)) return; 
+      if (true == CheckDebugBreak("afe8ed96-1880-4955-962b-faea2a0516e9", "Input_Events", Relay_KeyEvent_36)) return; 
       Relay_In_37();
    }
    
@@ -2219,7 +2253,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2d3d4205-9b58-4943-b9db-c384eaeb83a6", "Input Events Filter", Relay_In_37)) return; 
+         if (true == CheckDebugBreak("2d3d4205-9b58-4943-b9db-c384eaeb83a6", "Input_Events_Filter", Relay_In_37)) return; 
          {
             {
             }
@@ -2244,7 +2278,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a1e11af0-179b-41cf-a6fd-bcdfc810cb0f", "Input Events Filter", Relay_In_38)) return; 
+         if (true == CheckDebugBreak("a1e11af0-179b-41cf-a6fd-bcdfc810cb0f", "Input_Events_Filter", Relay_In_38)) return; 
          {
             {
             }
@@ -2269,7 +2303,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("004ac46c-75f5-411d-a4f1-01482da65786", "Set Bool", Relay_True_41)) return; 
+         if (true == CheckDebugBreak("004ac46c-75f5-411d-a4f1-01482da65786", "Set_Bool", Relay_True_41)) return; 
          {
             {
             }
@@ -2295,7 +2329,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("004ac46c-75f5-411d-a4f1-01482da65786", "Set Bool", Relay_False_41)) return; 
+         if (true == CheckDebugBreak("004ac46c-75f5-411d-a4f1-01482da65786", "Set_Bool", Relay_False_41)) return; 
          {
             {
             }
@@ -2321,7 +2355,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0e39d844-aafe-4bd6-ae3d-93278c0c62d6", "Add Vector3", Relay_In_42)) return; 
+         if (true == CheckDebugBreak("0e39d844-aafe-4bd6-ae3d-93278c0c62d6", "Add_Vector3", Relay_In_42)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -2355,13 +2389,13 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void Relay_KeyEvent_43()
    {
-      if (true == CheckDebugBreak("4d3617b3-e294-4771-98eb-69862b517fb3", "Input Events", Relay_KeyEvent_43)) return; 
+      if (true == CheckDebugBreak("4d3617b3-e294-4771-98eb-69862b517fb3", "Input_Events", Relay_KeyEvent_43)) return; 
       Relay_In_22();
    }
    
    void Relay_OnEnterCollision_44()
    {
-      if (true == CheckDebugBreak("c0febaf7-2218-48e3-b2c7-ef302a3a519e", "On Collision", Relay_OnEnterCollision_44)) return; 
+      if (true == CheckDebugBreak("c0febaf7-2218-48e3-b2c7-ef302a3a519e", "On_Collision", Relay_OnEnterCollision_44)) return; 
       local_51_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_44;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -2379,7 +2413,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void Relay_OnExitCollision_44()
    {
-      if (true == CheckDebugBreak("c0febaf7-2218-48e3-b2c7-ef302a3a519e", "On Collision", Relay_OnExitCollision_44)) return; 
+      if (true == CheckDebugBreak("c0febaf7-2218-48e3-b2c7-ef302a3a519e", "On_Collision", Relay_OnExitCollision_44)) return; 
       local_51_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_44;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -2396,7 +2430,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void Relay_WhileInsideCollision_44()
    {
-      if (true == CheckDebugBreak("c0febaf7-2218-48e3-b2c7-ef302a3a519e", "On Collision", Relay_WhileInsideCollision_44)) return; 
+      if (true == CheckDebugBreak("c0febaf7-2218-48e3-b2c7-ef302a3a519e", "On_Collision", Relay_WhileInsideCollision_44)) return; 
       local_51_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_44;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -2442,7 +2476,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d9cbe2c7-b65f-4d59-b76c-1c564e60549f", "Set Position", Relay_In_49)) return; 
+         if (true == CheckDebugBreak("d9cbe2c7-b65f-4d59-b76c-1c564e60549f", "Set_Position", Relay_In_49)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -2482,7 +2516,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ab00a0d0-69d5-4a13-843d-6d78db00c4a0", "Get Position and Rotation", Relay_In_50)) return; 
+         if (true == CheckDebugBreak("ab00a0d0-69d5-4a13-843d-6d78db00c4a0", "Get_Position_and_Rotation", Relay_In_50)) return; 
          {
             {
                {
@@ -2535,7 +2569,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4bc2361e-d207-4ac1-ac72-1ddabd5f17a4", "Add Force", Relay_In_52)) return; 
+         if (true == CheckDebugBreak("4bc2361e-d207-4ac1-ac72-1ddabd5f17a4", "Add_Force", Relay_In_52)) return; 
          {
             {
                {
@@ -2611,7 +2645,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c1818070-f299-4e3e-b806-3be9d216c3d5", "Input Events Filter", Relay_In_54)) return; 
+         if (true == CheckDebugBreak("c1818070-f299-4e3e-b806-3be9d216c3d5", "Input_Events_Filter", Relay_In_54)) return; 
          {
             {
             }
@@ -2634,13 +2668,13 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void Relay_KeyEvent_55()
    {
-      if (true == CheckDebugBreak("624e7061-6d31-4b96-987f-0aa1188598fc", "Input Events", Relay_KeyEvent_55)) return; 
+      if (true == CheckDebugBreak("624e7061-6d31-4b96-987f-0aa1188598fc", "Input_Events", Relay_KeyEvent_55)) return; 
       Relay_In_54();
    }
    
    void Relay_OnEnterCollision_56()
    {
-      if (true == CheckDebugBreak("8501013f-f2d3-44a0-883e-91fe44b92de9", "On Collision", Relay_OnEnterCollision_56)) return; 
+      if (true == CheckDebugBreak("8501013f-f2d3-44a0-883e-91fe44b92de9", "On_Collision", Relay_OnEnterCollision_56)) return; 
       local_59_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_56;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -2658,7 +2692,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void Relay_OnExitCollision_56()
    {
-      if (true == CheckDebugBreak("8501013f-f2d3-44a0-883e-91fe44b92de9", "On Collision", Relay_OnExitCollision_56)) return; 
+      if (true == CheckDebugBreak("8501013f-f2d3-44a0-883e-91fe44b92de9", "On_Collision", Relay_OnExitCollision_56)) return; 
       local_59_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_56;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -2675,7 +2709,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void Relay_WhileInsideCollision_56()
    {
-      if (true == CheckDebugBreak("8501013f-f2d3-44a0-883e-91fe44b92de9", "On Collision", Relay_WhileInsideCollision_56)) return; 
+      if (true == CheckDebugBreak("8501013f-f2d3-44a0-883e-91fe44b92de9", "On_Collision", Relay_WhileInsideCollision_56)) return; 
       local_59_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_56;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -2694,7 +2728,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9190ed7f-2348-4fc0-8ac6-983acd8798c8", "Compare GameObjects", Relay_In_60)) return; 
+         if (true == CheckDebugBreak("9190ed7f-2348-4fc0-8ac6-983acd8798c8", "Compare_GameObjects", Relay_In_60)) return; 
          {
             {
                {
@@ -2753,7 +2787,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2797d323-2f58-42a6-a67e-e09a8a84e4dd", "Compare Bool", Relay_In_62)) return; 
+         if (true == CheckDebugBreak("2797d323-2f58-42a6-a67e-e09a8a84e4dd", "Compare_Bool", Relay_In_62)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_62 = local_Can_Jump__System_Boolean;
@@ -2780,7 +2814,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6a2ce54e-52fc-418a-b78e-579c7ce17a7d", "Set Bool", Relay_True_63)) return; 
+         if (true == CheckDebugBreak("6a2ce54e-52fc-418a-b78e-579c7ce17a7d", "Set_Bool", Relay_True_63)) return; 
          {
             {
             }
@@ -2801,7 +2835,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6a2ce54e-52fc-418a-b78e-579c7ce17a7d", "Set Bool", Relay_False_63)) return; 
+         if (true == CheckDebugBreak("6a2ce54e-52fc-418a-b78e-579c7ce17a7d", "Set_Bool", Relay_False_63)) return; 
          {
             {
             }
@@ -2822,7 +2856,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("57467ece-e5af-41d5-94e7-9accc668f1c9", "Set Bool", Relay_True_65)) return; 
+         if (true == CheckDebugBreak("57467ece-e5af-41d5-94e7-9accc668f1c9", "Set_Bool", Relay_True_65)) return; 
          {
             {
             }
@@ -2843,7 +2877,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("57467ece-e5af-41d5-94e7-9accc668f1c9", "Set Bool", Relay_False_65)) return; 
+         if (true == CheckDebugBreak("57467ece-e5af-41d5-94e7-9accc668f1c9", "Set_Bool", Relay_False_65)) return; 
          {
             {
             }
@@ -2862,21 +2896,21 @@ public class BallRoller_BallRollLogic : uScriptLogic
    
    void Relay_uScriptStart_67()
    {
-      if (true == CheckDebugBreak("eacf9f4b-f4ac-4c1e-b44e-dd9b1e007459", "uScript Events", Relay_uScriptStart_67)) return; 
+      if (true == CheckDebugBreak("eacf9f4b-f4ac-4c1e-b44e-dd9b1e007459", "uScript_Events", Relay_uScriptStart_67)) return; 
       Relay_ShowLabel_68();
       Relay_In_70();
    }
    
    void Relay_uScriptLateStart_67()
    {
-      if (true == CheckDebugBreak("eacf9f4b-f4ac-4c1e-b44e-dd9b1e007459", "uScript Events", Relay_uScriptLateStart_67)) return; 
+      if (true == CheckDebugBreak("eacf9f4b-f4ac-4c1e-b44e-dd9b1e007459", "uScript_Events", Relay_uScriptLateStart_67)) return; 
    }
    
    void Relay_ShowLabel_68()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7e01458b-c989-4aa8-b9a1-d0bd16c5c326", "Print Text", Relay_ShowLabel_68)) return; 
+         if (true == CheckDebugBreak("7e01458b-c989-4aa8-b9a1-d0bd16c5c326", "Print_Text", Relay_ShowLabel_68)) return; 
          {
             {
             }
@@ -2913,7 +2947,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7e01458b-c989-4aa8-b9a1-d0bd16c5c326", "Print Text", Relay_HideLabel_68)) return; 
+         if (true == CheckDebugBreak("7e01458b-c989-4aa8-b9a1-d0bd16c5c326", "Print_Text", Relay_HideLabel_68)) return; 
          {
             {
             }
@@ -2950,7 +2984,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e5e173b7-bb6e-4111-bc81-3a1696a7fc3c", "Print Text", Relay_ShowLabel_69)) return; 
+         if (true == CheckDebugBreak("e5e173b7-bb6e-4111-bc81-3a1696a7fc3c", "Print_Text", Relay_ShowLabel_69)) return; 
          {
             {
             }
@@ -2982,7 +3016,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e5e173b7-bb6e-4111-bc81-3a1696a7fc3c", "Print Text", Relay_HideLabel_69)) return; 
+         if (true == CheckDebugBreak("e5e173b7-bb6e-4111-bc81-3a1696a7fc3c", "Print_Text", Relay_HideLabel_69)) return; 
          {
             {
             }
@@ -3014,7 +3048,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d74c6b73-086b-407c-89bb-9574f2c6d3c5", "Load AudioClip", Relay_In_70)) return; 
+         if (true == CheckDebugBreak("d74c6b73-086b-407c-89bb-9574f2c6d3c5", "Load_AudioClip", Relay_In_70)) return; 
          {
             {
             }
@@ -3089,7 +3123,7 @@ public class BallRoller_BallRollLogic : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

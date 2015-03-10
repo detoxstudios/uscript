@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -768,7 +768,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("fd77c1d3-fd73-47be-a4d5-5281a034ad87", "Raycast From Camera", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("fd77c1d3-fd73-47be-a4d5-5281a034ad87", "Raycast_From_Camera", Relay_In_5)) return; 
          {
             {
                logic_uScriptAct_RaycastFromCamera_Camera_5 = local_32_UnityEngine_Camera;
@@ -817,7 +817,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4a519ab5-0f88-48fd-99e9-7757bd132764", "Compare String", Relay_In_10)) return; 
+         if (true == CheckDebugBreak("4a519ab5-0f88-48fd-99e9-7757bd132764", "Compare_String", Relay_In_10)) return; 
          {
             {
                logic_uScriptCon_CompareString_A_10 = local_60_System_String;
@@ -848,7 +848,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("fbf5f0cb-069d-4b6a-a89d-b4f01c2a2a89", "Load Texture2D", Relay_In_11)) return; 
+         if (true == CheckDebugBreak("fbf5f0cb-069d-4b6a-a89d-b4f01c2a2a89", "Load_Texture2D", Relay_In_11)) return; 
          {
             {
             }
@@ -876,7 +876,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2a5d3293-369f-4dd7-a361-80f859f2cfd1", "Create Relative Rect (Screen)", Relay_In_17)) return; 
+         if (true == CheckDebugBreak("2a5d3293-369f-4dd7-a361-80f859f2cfd1", "Create_Relative_Rect__Screen_", Relay_In_17)) return; 
          {
             {
                logic_uScriptAct_CreateRelativeRectScreen_RectWidth_17 = local_76_System_Int32;
@@ -916,7 +916,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("dbfcadde-8ed5-479c-8299-664738209217", "Spawn Prefab At Location", Relay_FinishedSpawning_19)) return; 
+         if (true == CheckDebugBreak("dbfcadde-8ed5-479c-8299-664738209217", "Spawn_Prefab_At_Location", Relay_FinishedSpawning_19)) return; 
          Relay_In_68();
       }
       else
@@ -929,7 +929,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("dbfcadde-8ed5-479c-8299-664738209217", "Spawn Prefab At Location", Relay_In_19)) return; 
+         if (true == CheckDebugBreak("dbfcadde-8ed5-479c-8299-664738209217", "Spawn_Prefab_At_Location", Relay_In_19)) return; 
          {
             {
                logic_uScriptAct_SpawnPrefabAtLocation_PrefabName_19 = local_40_System_String;
@@ -977,7 +977,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    
    void Relay_KeyEvent_21()
    {
-      if (true == CheckDebugBreak("8db4b60c-9bf6-4a2a-8ccf-ad82dbc8ddee", "Input Events", Relay_KeyEvent_21)) return; 
+      if (true == CheckDebugBreak("8db4b60c-9bf6-4a2a-8ccf-ad82dbc8ddee", "Input_Events", Relay_KeyEvent_21)) return; 
       Relay_In_70();
       Relay_In_39();
    }
@@ -986,7 +986,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d2686224-5beb-444b-93dc-40f15a0a7ce7", "GUI Texture", Relay_In_23)) return; 
+         if (true == CheckDebugBreak("d2686224-5beb-444b-93dc-40f15a0a7ce7", "GUI_Texture", Relay_In_23)) return; 
          {
             {
                logic_uScriptAct_GUITexture_Position_23 = local_Crosshair_Rect_UnityEngine_Rect;
@@ -1056,7 +1056,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aaa2007a-0809-4572-a4d5-4fd15eb86a2d", "Send Custom Event (Int)", Relay_SendCustomEvent_31)) return; 
+         if (true == CheckDebugBreak("aaa2007a-0809-4572-a4d5-4fd15eb86a2d", "Send_Custom_Event__Int_", Relay_SendCustomEvent_31)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventInt_EventName_31 = local_EVENT_Grenade_UI_System_String;
@@ -1084,7 +1084,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("424d9d71-3a5b-47d1-8ea1-ef81e7b9d402", "Timed Gate", Relay_Out_37)) return; 
+         if (true == CheckDebugBreak("424d9d71-3a5b-47d1-8ea1-ef81e7b9d402", "Timed_Gate", Relay_Out_37)) return; 
          Relay_In_51();
       }
       else
@@ -1097,7 +1097,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("424d9d71-3a5b-47d1-8ea1-ef81e7b9d402", "Timed Gate", Relay_In_37)) return; 
+         if (true == CheckDebugBreak("424d9d71-3a5b-47d1-8ea1-ef81e7b9d402", "Timed_Gate", Relay_In_37)) return; 
          {
             {
                logic_uScriptCon_TimedGate_Duration_37 = local_3_System_Single;
@@ -1121,7 +1121,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c0c2cfc7-2d1c-4dc2-9e59-6911302e3d97", "Send Custom Event (Int)", Relay_SendCustomEvent_38)) return; 
+         if (true == CheckDebugBreak("c0c2cfc7-2d1c-4dc2-9e59-6911302e3d97", "Send_Custom_Event__Int_", Relay_SendCustomEvent_38)) return; 
          {
             {
                logic_uScriptAct_SendCustomEventInt_EventName_38 = local_EVENT_Grenade_UI_System_String;
@@ -1149,7 +1149,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1600261b-67d6-43b7-b8f9-9ccfab248312", "Input Events Filter", Relay_In_39)) return; 
+         if (true == CheckDebugBreak("1600261b-67d6-43b7-b8f9-9ccfab248312", "Input_Events_Filter", Relay_In_39)) return; 
          {
             {
                logic_uScriptAct_OnInputEventFilter_KeyCode_39 = local_79_UnityEngine_KeyCode;
@@ -1176,7 +1176,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ab877325-874e-4be3-a741-ca868c6f336f", "Spawn Prefab At Location", Relay_FinishedSpawning_42)) return; 
+         if (true == CheckDebugBreak("ab877325-874e-4be3-a741-ca868c6f336f", "Spawn_Prefab_At_Location", Relay_FinishedSpawning_42)) return; 
          Relay_In_52();
       }
       else
@@ -1189,7 +1189,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ab877325-874e-4be3-a741-ca868c6f336f", "Spawn Prefab At Location", Relay_In_42)) return; 
+         if (true == CheckDebugBreak("ab877325-874e-4be3-a741-ca868c6f336f", "Spawn_Prefab_At_Location", Relay_In_42)) return; 
          {
             {
                logic_uScriptAct_SpawnPrefabAtLocation_PrefabName_42 = local_0_System_String;
@@ -1239,7 +1239,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1c266721-6382-4f8a-9b1e-70e9538b8fbb", "Print Text", Relay_ShowLabel_43)) return; 
+         if (true == CheckDebugBreak("1c266721-6382-4f8a-9b1e-70e9538b8fbb", "Print_Text", Relay_ShowLabel_43)) return; 
          {
             {
                logic_uScriptAct_PrintText_Text_43 = local_35_System_String;
@@ -1273,7 +1273,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1c266721-6382-4f8a-9b1e-70e9538b8fbb", "Print Text", Relay_HideLabel_43)) return; 
+         if (true == CheckDebugBreak("1c266721-6382-4f8a-9b1e-70e9538b8fbb", "Print_Text", Relay_HideLabel_43)) return; 
          {
             {
                logic_uScriptAct_PrintText_Text_43 = local_35_System_String;
@@ -1305,21 +1305,21 @@ public class SquibEffect_Gameplay : uScriptLogic
    
    void Relay_uScriptStart_44()
    {
-      if (true == CheckDebugBreak("3de06897-62ee-4ce8-bde1-30f3ae0b181d", "uScript Events", Relay_uScriptStart_44)) return; 
+      if (true == CheckDebugBreak("3de06897-62ee-4ce8-bde1-30f3ae0b181d", "uScript_Events", Relay_uScriptStart_44)) return; 
       Relay_SendCustomEvent_38();
       Relay_In_17();
    }
    
    void Relay_uScriptLateStart_44()
    {
-      if (true == CheckDebugBreak("3de06897-62ee-4ce8-bde1-30f3ae0b181d", "uScript Events", Relay_uScriptLateStart_44)) return; 
+      if (true == CheckDebugBreak("3de06897-62ee-4ce8-bde1-30f3ae0b181d", "uScript_Events", Relay_uScriptLateStart_44)) return; 
    }
    
    void Relay_True_47()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("20aeb726-7583-4a30-87b1-91dce75a38c7", "Set Bool", Relay_True_47)) return; 
+         if (true == CheckDebugBreak("20aeb726-7583-4a30-87b1-91dce75a38c7", "Set_Bool", Relay_True_47)) return; 
          {
             {
             }
@@ -1340,7 +1340,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("20aeb726-7583-4a30-87b1-91dce75a38c7", "Set Bool", Relay_False_47)) return; 
+         if (true == CheckDebugBreak("20aeb726-7583-4a30-87b1-91dce75a38c7", "Set_Bool", Relay_False_47)) return; 
          {
             {
             }
@@ -1361,7 +1361,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5f9190b5-3f68-4567-a9aa-e9bb234d3adc", "Add Force", Relay_In_49)) return; 
+         if (true == CheckDebugBreak("5f9190b5-3f68-4567-a9aa-e9bb234d3adc", "Add_Force", Relay_In_49)) return; 
          {
             {
                {
@@ -1411,7 +1411,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5086132d-71ea-4a5b-9769-17262be471d9", "Subtract Int", Relay_In_51)) return; 
+         if (true == CheckDebugBreak("5086132d-71ea-4a5b-9769-17262be471d9", "Subtract_Int", Relay_In_51)) return; 
          {
             {
                logic_uScriptAct_SubtractInt_A_51 = local_Grenades_On_Hand_System_Int32;
@@ -1447,7 +1447,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ed65820e-a1ce-4078-af56-2d6a5a3c7c03", "Vectors From Quaternion", Relay_In_52)) return; 
+         if (true == CheckDebugBreak("ed65820e-a1ce-4078-af56-2d6a5a3c7c03", "Vectors_From_Quaternion", Relay_In_52)) return; 
          {
             {
                logic_uScriptAct_VectorsFromQuaternion_quaternion_52 = local_8_UnityEngine_Quaternion;
@@ -1479,7 +1479,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    
    void Relay_OnCustomEventInt_54()
    {
-      if (true == CheckDebugBreak("3192307f-d9f2-43ad-baa1-94c79931d838", "Custom Event (Int)", Relay_OnCustomEventInt_54)) return; 
+      if (true == CheckDebugBreak("3192307f-d9f2-43ad-baa1-94c79931d838", "Custom_Event__Int_", Relay_OnCustomEventInt_54)) return; 
       local_60_System_String = event_UnityEngine_GameObject_EventName_54;
       Relay_In_10();
    }
@@ -1488,7 +1488,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4b355309-b859-4eef-921f-c453cfa07b38", "Get Position and Rotation", Relay_In_56)) return; 
+         if (true == CheckDebugBreak("4b355309-b859-4eef-921f-c453cfa07b38", "Get_Position_and_Rotation", Relay_In_56)) return; 
          {
             {
                {
@@ -1542,7 +1542,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d778b925-f5b1-4898-bd70-6d4178f8d456", "Add Vector3", Relay_In_63)) return; 
+         if (true == CheckDebugBreak("d778b925-f5b1-4898-bd70-6d4178f8d456", "Add_Vector3", Relay_In_63)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -1576,7 +1576,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    
    void Relay_OnGui_65()
    {
-      if (true == CheckDebugBreak("b391115c-5f58-49d0-895e-5195e1a0f9ab", "GUI Events", Relay_OnGui_65)) return; 
+      if (true == CheckDebugBreak("b391115c-5f58-49d0-895e-5195e1a0f9ab", "GUI_Events", Relay_OnGui_65)) return; 
       Relay_In_75();
    }
    
@@ -1659,7 +1659,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c08443ea-180b-44c8-b1d7-209ca5c5046f", "Compare Int", Relay_In_69)) return; 
+         if (true == CheckDebugBreak("c08443ea-180b-44c8-b1d7-209ca5c5046f", "Compare_Int", Relay_In_69)) return; 
          {
             {
                logic_uScriptCon_CompareInt_A_69 = local_Grenades_On_Hand_System_Int32;
@@ -1690,7 +1690,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d2843711-bd8a-403e-b86c-dbad2dbee12b", "Input Events Filter", Relay_In_70)) return; 
+         if (true == CheckDebugBreak("d2843711-bd8a-403e-b86c-dbad2dbee12b", "Input_Events_Filter", Relay_In_70)) return; 
          {
             {
             }
@@ -1715,7 +1715,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("254b3a9c-cd60-4c95-b51b-cb71376ceb35", "Compare Bool", Relay_In_75)) return; 
+         if (true == CheckDebugBreak("254b3a9c-cd60-4c95-b51b-cb71376ceb35", "Compare_Bool", Relay_In_75)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_75 = local_Enable_Crosshair__System_Boolean;
@@ -1742,7 +1742,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("81fea639-74c6-4b5f-95aa-0fc72d467a99", "Quaternion From Vectors", Relay_In_78)) return; 
+         if (true == CheckDebugBreak("81fea639-74c6-4b5f-95aa-0fc72d467a99", "Quaternion_From_Vectors", Relay_In_78)) return; 
          {
             {
             }
@@ -1774,7 +1774,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d9b09e47-af14-45c1-a3ee-ecf64d927270", "Spawn Prefab At Location", Relay_FinishedSpawning_82)) return; 
+         if (true == CheckDebugBreak("d9b09e47-af14-45c1-a3ee-ecf64d927270", "Spawn_Prefab_At_Location", Relay_FinishedSpawning_82)) return; 
          Relay_In_84();
       }
       else
@@ -1787,7 +1787,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d9b09e47-af14-45c1-a3ee-ecf64d927270", "Spawn Prefab At Location", Relay_In_82)) return; 
+         if (true == CheckDebugBreak("d9b09e47-af14-45c1-a3ee-ecf64d927270", "Spawn_Prefab_At_Location", Relay_In_82)) return; 
          {
             {
                logic_uScriptAct_SpawnPrefabAtLocation_PrefabName_82 = local_83_System_String;
@@ -1921,7 +1921,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("237639bd-a378-4c40-8f07-db9dce0403ca", "Add Vector3", Relay_In_88)) return; 
+         if (true == CheckDebugBreak("237639bd-a378-4c40-8f07-db9dce0403ca", "Add_Vector3", Relay_In_88)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -1957,7 +1957,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3a360303-0b0d-43dd-9744-65d282978faf", "Divide Vector3 With Float", Relay_In_92)) return; 
+         if (true == CheckDebugBreak("3a360303-0b0d-43dd-9744-65d282978faf", "Divide_Vector3_With_Float", Relay_In_92)) return; 
          {
             {
                logic_uScriptAct_DivideVector3WithFloat_targetVector3_92 = local_RayHitNormal_UnityEngine_Vector3;
@@ -2060,7 +2060,7 @@ public class SquibEffect_Gameplay : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

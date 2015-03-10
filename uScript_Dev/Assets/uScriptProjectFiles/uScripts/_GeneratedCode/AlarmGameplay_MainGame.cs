@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -116,17 +116,17 @@ public class AlarmGameplay_MainGame : uScriptLogic
    System.String logic_uScriptAct_SetString_Target_25;
    bool logic_uScriptAct_SetString_Out_25 = true;
    //pointer to script instanced logic node
-   AlarmGameplay_AlarmSetup logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35 = new AlarmGameplay_AlarmSetup( );
-   UnityEngine.AudioClip logic_AlarmGameplay_AlarmSetup_Alarm_Sound_35 = default(UnityEngine.AudioClip);
-   System.Boolean logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__35 = (bool) false;
+   AlarmGameplay_AlarmSetup logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34 = new AlarmGameplay_AlarmSetup( );
+   UnityEngine.AudioClip logic_AlarmGameplay_AlarmSetup_Alarm_Sound_34 = default(UnityEngine.AudioClip);
+   System.Boolean logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__34 = (bool) false;
    
    //event nodes
    UnityEngine.GameObject event_UnityEngine_GameObject_Instance_8 = default(UnityEngine.GameObject);
    UnityEngine.GameObject event_UnityEngine_GameObject_Instance_12 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_62 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_62 = default(UnityEngine.GameObject);
    UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_63 = default(UnityEngine.GameObject);
    UnityEngine.GameObject event_UnityEngine_GameObject_Instance_63 = default(UnityEngine.GameObject);
-   UnityEngine.GameObject event_UnityEngine_GameObject_GameObject_66 = default(UnityEngine.GameObject);
-   UnityEngine.GameObject event_UnityEngine_GameObject_Instance_66 = default(UnityEngine.GameObject);
    
    //property nodes
    UnityEngine.Color property_color_Detox_ScriptEditor_Parameter_color_10 = UnityEngine.Color.black;
@@ -258,9 +258,29 @@ public class AlarmGameplay_MainGame : uScriptLogic
             }
          }
       }
+      if ( null == event_UnityEngine_GameObject_Instance_62 || false == m_RegisteredForEvents )
+      {
+         event_UnityEngine_GameObject_Instance_62 = GameObject.Find( "Trigger_Alarm" ) as UnityEngine.GameObject;
+         if ( null != event_UnityEngine_GameObject_Instance_62 )
+         {
+            {
+               uScript_Trigger component = event_UnityEngine_GameObject_Instance_62.GetComponent<uScript_Trigger>();
+               if ( null == component )
+               {
+                  component = event_UnityEngine_GameObject_Instance_62.AddComponent<uScript_Trigger>();
+               }
+               if ( null != component )
+               {
+                  component.OnEnterTrigger += Instance_OnEnterTrigger_62;
+                  component.OnExitTrigger += Instance_OnExitTrigger_62;
+                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_62;
+               }
+            }
+         }
+      }
       if ( null == event_UnityEngine_GameObject_Instance_63 || false == m_RegisteredForEvents )
       {
-         event_UnityEngine_GameObject_Instance_63 = GameObject.Find( "Trigger_Alarm" ) as UnityEngine.GameObject;
+         event_UnityEngine_GameObject_Instance_63 = GameObject.Find( "Trigger_Console" ) as UnityEngine.GameObject;
          if ( null != event_UnityEngine_GameObject_Instance_63 )
          {
             {
@@ -274,26 +294,6 @@ public class AlarmGameplay_MainGame : uScriptLogic
                   component.OnEnterTrigger += Instance_OnEnterTrigger_63;
                   component.OnExitTrigger += Instance_OnExitTrigger_63;
                   component.WhileInsideTrigger += Instance_WhileInsideTrigger_63;
-               }
-            }
-         }
-      }
-      if ( null == event_UnityEngine_GameObject_Instance_66 || false == m_RegisteredForEvents )
-      {
-         event_UnityEngine_GameObject_Instance_66 = GameObject.Find( "Trigger_Console" ) as UnityEngine.GameObject;
-         if ( null != event_UnityEngine_GameObject_Instance_66 )
-         {
-            {
-               uScript_Trigger component = event_UnityEngine_GameObject_Instance_66.GetComponent<uScript_Trigger>();
-               if ( null == component )
-               {
-                  component = event_UnityEngine_GameObject_Instance_66.AddComponent<uScript_Trigger>();
-               }
-               if ( null != component )
-               {
-                  component.OnEnterTrigger += Instance_OnEnterTrigger_66;
-                  component.OnExitTrigger += Instance_OnExitTrigger_66;
-                  component.WhileInsideTrigger += Instance_WhileInsideTrigger_66;
                }
             }
          }
@@ -323,6 +323,18 @@ public class AlarmGameplay_MainGame : uScriptLogic
             }
          }
       }
+      if ( null != event_UnityEngine_GameObject_Instance_62 )
+      {
+         {
+            uScript_Trigger component = event_UnityEngine_GameObject_Instance_62.GetComponent<uScript_Trigger>();
+            if ( null != component )
+            {
+               component.OnEnterTrigger -= Instance_OnEnterTrigger_62;
+               component.OnExitTrigger -= Instance_OnExitTrigger_62;
+               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_62;
+            }
+         }
+      }
       if ( null != event_UnityEngine_GameObject_Instance_63 )
       {
          {
@@ -332,18 +344,6 @@ public class AlarmGameplay_MainGame : uScriptLogic
                component.OnEnterTrigger -= Instance_OnEnterTrigger_63;
                component.OnExitTrigger -= Instance_OnExitTrigger_63;
                component.WhileInsideTrigger -= Instance_WhileInsideTrigger_63;
-            }
-         }
-      }
-      if ( null != event_UnityEngine_GameObject_Instance_66 )
-      {
-         {
-            uScript_Trigger component = event_UnityEngine_GameObject_Instance_66.GetComponent<uScript_Trigger>();
-            if ( null != component )
-            {
-               component.OnEnterTrigger -= Instance_OnEnterTrigger_66;
-               component.OnExitTrigger -= Instance_OnExitTrigger_66;
-               component.WhileInsideTrigger -= Instance_WhileInsideTrigger_66;
             }
          }
       }
@@ -366,15 +366,15 @@ public class AlarmGameplay_MainGame : uScriptLogic
       logic_uScriptAct_PrintText_uScriptAct_PrintText_22.SetParent(g);
       logic_uScriptCon_CompareBool_uScriptCon_CompareBool_23.SetParent(g);
       logic_uScriptAct_SetString_uScriptAct_SetString_25.SetParent(g);
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.SetParent(g);
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.SetParent(g);
    }
    public void Awake()
    {
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.Awake( );
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Awake( );
       
       logic_uScriptAct_PlaySound_uScriptAct_PlaySound_0.Finished += uScriptAct_PlaySound_Finished_0;
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.Out___Alarm_Start += AlarmGameplay_AlarmSetup_Out___Alarm_Start_35;
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.Out___Alarm_Stop += AlarmGameplay_AlarmSetup_Out___Alarm_Stop_35;
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Out___Alarm_Start += AlarmGameplay_AlarmSetup_Out___Alarm_Start_34;
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Out___Alarm_Stop += AlarmGameplay_AlarmSetup_Out___Alarm_Stop_34;
    }
    
    public void Start()
@@ -382,19 +382,19 @@ public class AlarmGameplay_MainGame : uScriptLogic
       SyncUnityHooks( );
       m_RegisteredForEvents = true;
       
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.Start( );
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Start( );
    }
    
    public void OnEnable()
    {
       RegisterForUnityHooks( );
       m_RegisteredForEvents = true;
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.OnEnable( );
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.OnEnable( );
    }
    
    public void OnDisable()
    {
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.OnDisable( );
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.OnDisable( );
       UnregisterEventListeners( );
       m_RegisteredForEvents = false;
    }
@@ -420,15 +420,15 @@ public class AlarmGameplay_MainGame : uScriptLogic
       SyncEventListeners( );
       
       logic_uScriptAct_PlaySound_uScriptAct_PlaySound_0.Update( );
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.Update( );
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Update( );
    }
    
    public void OnDestroy()
    {
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.OnDestroy( );
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.OnDestroy( );
       logic_uScriptAct_PlaySound_uScriptAct_PlaySound_0.Finished -= uScriptAct_PlaySound_Finished_0;
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.Out___Alarm_Start -= AlarmGameplay_AlarmSetup_Out___Alarm_Start_35;
-      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.Out___Alarm_Stop -= AlarmGameplay_AlarmSetup_Out___Alarm_Stop_35;
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Out___Alarm_Start -= AlarmGameplay_AlarmSetup_Out___Alarm_Start_34;
+      logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Out___Alarm_Stop -= AlarmGameplay_AlarmSetup_Out___Alarm_Stop_34;
    }
    
    public void OnGUI()
@@ -472,6 +472,45 @@ public class AlarmGameplay_MainGame : uScriptLogic
       Relay_uScriptLateStart_12( );
    }
    
+   void Instance_OnEnterTrigger_62(object o, uScript_Trigger.TriggerEventArgs e)
+   {
+      //reset event call
+      //if it ever goes above MaxRelayCallCount before being reset
+      //then we assume it is stuck in an infinite loop
+      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
+      
+      //fill globals
+      event_UnityEngine_GameObject_GameObject_62 = e.GameObject;
+      //relay event to nodes
+      Relay_OnEnterTrigger_62( );
+   }
+   
+   void Instance_OnExitTrigger_62(object o, uScript_Trigger.TriggerEventArgs e)
+   {
+      //reset event call
+      //if it ever goes above MaxRelayCallCount before being reset
+      //then we assume it is stuck in an infinite loop
+      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
+      
+      //fill globals
+      event_UnityEngine_GameObject_GameObject_62 = e.GameObject;
+      //relay event to nodes
+      Relay_OnExitTrigger_62( );
+   }
+   
+   void Instance_WhileInsideTrigger_62(object o, uScript_Trigger.TriggerEventArgs e)
+   {
+      //reset event call
+      //if it ever goes above MaxRelayCallCount before being reset
+      //then we assume it is stuck in an infinite loop
+      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
+      
+      //fill globals
+      event_UnityEngine_GameObject_GameObject_62 = e.GameObject;
+      //relay event to nodes
+      Relay_WhileInsideTrigger_62( );
+   }
+   
    void Instance_OnEnterTrigger_63(object o, uScript_Trigger.TriggerEventArgs e)
    {
       //reset event call
@@ -511,45 +550,6 @@ public class AlarmGameplay_MainGame : uScriptLogic
       Relay_WhileInsideTrigger_63( );
    }
    
-   void Instance_OnEnterTrigger_66(object o, uScript_Trigger.TriggerEventArgs e)
-   {
-      //reset event call
-      //if it ever goes above MaxRelayCallCount before being reset
-      //then we assume it is stuck in an infinite loop
-      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
-      
-      //fill globals
-      event_UnityEngine_GameObject_GameObject_66 = e.GameObject;
-      //relay event to nodes
-      Relay_OnEnterTrigger_66( );
-   }
-   
-   void Instance_OnExitTrigger_66(object o, uScript_Trigger.TriggerEventArgs e)
-   {
-      //reset event call
-      //if it ever goes above MaxRelayCallCount before being reset
-      //then we assume it is stuck in an infinite loop
-      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
-      
-      //fill globals
-      event_UnityEngine_GameObject_GameObject_66 = e.GameObject;
-      //relay event to nodes
-      Relay_OnExitTrigger_66( );
-   }
-   
-   void Instance_WhileInsideTrigger_66(object o, uScript_Trigger.TriggerEventArgs e)
-   {
-      //reset event call
-      //if it ever goes above MaxRelayCallCount before being reset
-      //then we assume it is stuck in an infinite loop
-      if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;
-      
-      //fill globals
-      event_UnityEngine_GameObject_GameObject_66 = e.GameObject;
-      //relay event to nodes
-      Relay_WhileInsideTrigger_66( );
-   }
-   
    void uScriptAct_PlaySound_Finished_0(object o, System.EventArgs e)
    {
       //fill globals
@@ -557,18 +557,18 @@ public class AlarmGameplay_MainGame : uScriptLogic
       Relay_Finished_0( );
    }
    
-   void AlarmGameplay_AlarmSetup_Out___Alarm_Start_35(object o, AlarmGameplay_AlarmSetup.LogicEventArgs e)
+   void AlarmGameplay_AlarmSetup_Out___Alarm_Start_34(object o, AlarmGameplay_AlarmSetup.LogicEventArgs e)
    {
       //fill globals
       //relay event to nodes
-      Relay_Out___Alarm_Start_35( );
+      Relay_Out___Alarm_Start_34( );
    }
    
-   void AlarmGameplay_AlarmSetup_Out___Alarm_Stop_35(object o, AlarmGameplay_AlarmSetup.LogicEventArgs e)
+   void AlarmGameplay_AlarmSetup_Out___Alarm_Stop_34(object o, AlarmGameplay_AlarmSetup.LogicEventArgs e)
    {
       //fill globals
       //relay event to nodes
-      Relay_Out___Alarm_Stop_35( );
+      Relay_Out___Alarm_Stop_34( );
    }
    
    void Relay_Finished_0()
@@ -1093,11 +1093,11 @@ public class AlarmGameplay_MainGame : uScriptLogic
       }
    }
    
-   void Relay_Out___Alarm_Start_35()
+   void Relay_Out___Alarm_Start_34()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8fdf5393-0564-4d28-9e78-aa3a4f827e37", "Alarm_Setup", Relay_Out___Alarm_Start_35)) return; 
+         if (true == CheckDebugBreak("8fdf5393-0564-4d28-9e78-aa3a4f827e37", "Alarm_Setup", Relay_Out___Alarm_Start_34)) return; 
       }
       else
       {
@@ -1105,11 +1105,11 @@ public class AlarmGameplay_MainGame : uScriptLogic
       }
    }
    
-   void Relay_Out___Alarm_Stop_35()
+   void Relay_Out___Alarm_Stop_34()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8fdf5393-0564-4d28-9e78-aa3a4f827e37", "Alarm_Setup", Relay_Out___Alarm_Stop_35)) return; 
+         if (true == CheckDebugBreak("8fdf5393-0564-4d28-9e78-aa3a4f827e37", "Alarm_Setup", Relay_Out___Alarm_Stop_34)) return; 
       }
       else
       {
@@ -1117,24 +1117,25 @@ public class AlarmGameplay_MainGame : uScriptLogic
       }
    }
    
-   void Relay_Alarm_Start_35()
+   void Relay_Alarm_Start_34()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8fdf5393-0564-4d28-9e78-aa3a4f827e37", "Alarm_Setup", Relay_Alarm_Start_35)) return; 
+         if (true == CheckDebugBreak("8fdf5393-0564-4d28-9e78-aa3a4f827e37", "Alarm_Setup", Relay_Alarm_Start_34)) return; 
          {
             {
-               logic_AlarmGameplay_AlarmSetup_Alarm_Sound_35 = local_Alarm_Audio_UnityEngine_AudioClip;
+               logic_AlarmGameplay_AlarmSetup_Alarm_Sound_34 = local_Alarm_Audio_UnityEngine_AudioClip;
                
             }
             {
-               logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__35 = local_Alarm_Hacked__System_Boolean;
+               logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__34 = local_Alarm_Hacked__System_Boolean;
                
             }
          }
-         logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.Alarm_Start(logic_AlarmGameplay_AlarmSetup_Alarm_Sound_35, logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__35);
+         logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Alarm_Start(logic_AlarmGameplay_AlarmSetup_Alarm_Sound_34, logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__34);
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         //Don't copy 'out' values back to the global variables because this was an auto generated nested node
+         //and those values get set through an event which is called before the above method exited
          
       }
       else
@@ -1143,63 +1144,64 @@ public class AlarmGameplay_MainGame : uScriptLogic
       }
    }
    
-   void Relay_Alarm_Stop_35()
+   void Relay_Alarm_Stop_34()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8fdf5393-0564-4d28-9e78-aa3a4f827e37", "Alarm_Setup", Relay_Alarm_Stop_35)) return; 
+         if (true == CheckDebugBreak("8fdf5393-0564-4d28-9e78-aa3a4f827e37", "Alarm_Setup", Relay_Alarm_Stop_34)) return; 
          {
             {
-               logic_AlarmGameplay_AlarmSetup_Alarm_Sound_35 = local_Alarm_Audio_UnityEngine_AudioClip;
+               logic_AlarmGameplay_AlarmSetup_Alarm_Sound_34 = local_Alarm_Audio_UnityEngine_AudioClip;
                
             }
             {
-               logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__35 = local_Alarm_Hacked__System_Boolean;
+               logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__34 = local_Alarm_Hacked__System_Boolean;
                
             }
          }
-         logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_35.Alarm_Stop(logic_AlarmGameplay_AlarmSetup_Alarm_Sound_35, logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__35);
+         logic_AlarmGameplay_AlarmSetup_AlarmGameplay_AlarmSetup_34.Alarm_Stop(logic_AlarmGameplay_AlarmSetup_Alarm_Sound_34, logic_AlarmGameplay_AlarmSetup_Alarm_Hacked__34);
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         //Don't copy 'out' values back to the global variables because this was an auto generated nested node
+         //and those values get set through an event which is called before the above method exited
          
       }
       else
       {
          uScriptDebug.Log( "Possible infinite loop detected in uScript AlarmGameplay_MainGame.uscript at Alarm Setup.  If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.", uScriptDebug.Type.Error);
       }
+   }
+   
+   void Relay_OnEnterTrigger_62()
+   {
+      if (true == CheckDebugBreak("25da3948-574b-4b7c-96d9-6c39c4967544", "Trigger_Event", Relay_OnEnterTrigger_62)) return; 
+      Relay_Alarm_Start_34();
+   }
+   
+   void Relay_OnExitTrigger_62()
+   {
+      if (true == CheckDebugBreak("25da3948-574b-4b7c-96d9-6c39c4967544", "Trigger_Event", Relay_OnExitTrigger_62)) return; 
+      Relay_Alarm_Stop_34();
+   }
+   
+   void Relay_WhileInsideTrigger_62()
+   {
+      if (true == CheckDebugBreak("25da3948-574b-4b7c-96d9-6c39c4967544", "Trigger_Event", Relay_WhileInsideTrigger_62)) return; 
    }
    
    void Relay_OnEnterTrigger_63()
    {
-      if (true == CheckDebugBreak("94046e32-68aa-4653-a859-e73fe977cb34", "Trigger_Event", Relay_OnEnterTrigger_63)) return; 
-      Relay_Alarm_Start_35();
+      if (true == CheckDebugBreak("2b1e95d4-d155-4bba-a366-16b622ee8d88", "Trigger_Event", Relay_OnEnterTrigger_63)) return; 
    }
    
    void Relay_OnExitTrigger_63()
    {
-      if (true == CheckDebugBreak("94046e32-68aa-4653-a859-e73fe977cb34", "Trigger_Event", Relay_OnExitTrigger_63)) return; 
-      Relay_Alarm_Stop_35();
+      if (true == CheckDebugBreak("2b1e95d4-d155-4bba-a366-16b622ee8d88", "Trigger_Event", Relay_OnExitTrigger_63)) return; 
+      Relay_HideLabel_22();
    }
    
    void Relay_WhileInsideTrigger_63()
    {
-      if (true == CheckDebugBreak("94046e32-68aa-4653-a859-e73fe977cb34", "Trigger_Event", Relay_WhileInsideTrigger_63)) return; 
-   }
-   
-   void Relay_OnEnterTrigger_66()
-   {
-      if (true == CheckDebugBreak("87dc2677-1e5b-43fb-937b-f7d5a8439b4d", "Trigger_Event", Relay_OnEnterTrigger_66)) return; 
-   }
-   
-   void Relay_OnExitTrigger_66()
-   {
-      if (true == CheckDebugBreak("87dc2677-1e5b-43fb-937b-f7d5a8439b4d", "Trigger_Event", Relay_OnExitTrigger_66)) return; 
-      Relay_HideLabel_22();
-   }
-   
-   void Relay_WhileInsideTrigger_66()
-   {
-      if (true == CheckDebugBreak("87dc2677-1e5b-43fb-937b-f7d5a8439b4d", "Trigger_Event", Relay_WhileInsideTrigger_66)) return; 
+      if (true == CheckDebugBreak("2b1e95d4-d155-4bba-a366-16b622ee8d88", "Trigger_Event", Relay_WhileInsideTrigger_63)) return; 
       Relay_ShowLabel_22();
    }
    
@@ -1225,7 +1227,7 @@ public class AlarmGameplay_MainGame : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

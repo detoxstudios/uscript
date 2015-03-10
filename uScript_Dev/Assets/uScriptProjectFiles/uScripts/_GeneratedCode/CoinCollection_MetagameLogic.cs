@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -216,12 +216,17 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    //property nodes
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_13 = new Vector3( );
    UnityEngine.GameObject property_position_Detox_ScriptEditor_Parameter_Instance_13 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject property_position_Detox_ScriptEditor_Parameter_Instance_13_previous = null;
    UnityEngine.AudioClip property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46 = default(UnityEngine.AudioClip);
    UnityEngine.GameObject property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46_previous = null;
    UnityEngine.AudioClip property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47 = default(UnityEngine.AudioClip);
    UnityEngine.GameObject property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47_previous = null;
    UnityEngine.GameObject property_Player_Detox_ScriptEditor_Parameter_Player_48 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject property_Player_Detox_ScriptEditor_Parameter_Player_48_previous = null;
    UnityEngine.GameObject property_Player_Detox_ScriptEditor_Parameter_Instance_48 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject property_Player_Detox_ScriptEditor_Parameter_Instance_48_previous = null;
    
    //method nodes
    #pragma warning restore 414
@@ -318,23 +323,59 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void SyncUnityHooks( )
    {
-      SyncEventListeners( );
       if ( null == property_position_Detox_ScriptEditor_Parameter_Instance_13 || false == m_RegisteredForEvents )
       {
          property_position_Detox_ScriptEditor_Parameter_Instance_13 = GameObject.Find( "Main Camera" ) as UnityEngine.GameObject;
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_position_Detox_ScriptEditor_Parameter_Instance_13_previous != property_position_Detox_ScriptEditor_Parameter_Instance_13 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_position_Detox_ScriptEditor_Parameter_Instance_13_previous = property_position_Detox_ScriptEditor_Parameter_Instance_13;
+         
+         //setup new listeners
       }
       if ( null == property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46 || false == m_RegisteredForEvents )
       {
          property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46 = uScript_MasterComponent.LatestMaster;
       }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46_previous != property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46_previous = property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46;
+         
+         //setup new listeners
+      }
       if ( null == property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47 || false == m_RegisteredForEvents )
       {
          property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47 = uScript_MasterComponent.LatestMaster;
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47_previous != property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47_previous = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47;
+         
+         //setup new listeners
       }
       if ( null == property_Player_Detox_ScriptEditor_Parameter_Instance_48 || false == m_RegisteredForEvents )
       {
          property_Player_Detox_ScriptEditor_Parameter_Instance_48 = uScript_MasterComponent.LatestMaster;
       }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_Player_Detox_ScriptEditor_Parameter_Instance_48_previous != property_Player_Detox_ScriptEditor_Parameter_Instance_48 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_Player_Detox_ScriptEditor_Parameter_Instance_48_previous = property_Player_Detox_ScriptEditor_Parameter_Instance_48;
+         
+         //setup new listeners
+      }
+      SyncEventListeners( );
       if ( null == local_3_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          local_3_UnityEngine_GameObject = GameObject.Find( "Main Camera" ) as UnityEngine.GameObject;
@@ -391,6 +432,42 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void RegisterForUnityHooks( )
    {
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_position_Detox_ScriptEditor_Parameter_Instance_13_previous != property_position_Detox_ScriptEditor_Parameter_Instance_13 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_position_Detox_ScriptEditor_Parameter_Instance_13_previous = property_position_Detox_ScriptEditor_Parameter_Instance_13;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46_previous != property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46_previous = property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47_previous != property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47_previous = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47;
+         
+         //setup new listeners
+      }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_Player_Detox_ScriptEditor_Parameter_Instance_48_previous != property_Player_Detox_ScriptEditor_Parameter_Instance_48 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_Player_Detox_ScriptEditor_Parameter_Instance_48_previous = property_Player_Detox_ScriptEditor_Parameter_Instance_48;
+         
+         //setup new listeners
+      }
       SyncEventListeners( );
       //if our game object reference was changed then we need to reset event listeners
       if ( local_3_UnityEngine_GameObject_previous != local_3_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -432,6 +509,76 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void SyncEventListeners( )
    {
+      {
+         {
+            {
+               //if our game object reference was changed then we need to reset event listeners
+               if ( property_position_Detox_ScriptEditor_Parameter_Instance_13_previous != property_position_Detox_ScriptEditor_Parameter_Instance_13 || false == m_RegisteredForEvents )
+               {
+                  //tear down old listeners
+                  
+                  property_position_Detox_ScriptEditor_Parameter_Instance_13_previous = property_position_Detox_ScriptEditor_Parameter_Instance_13;
+                  
+                  //setup new listeners
+               }
+            }
+         }
+      }
+      {
+         {
+            {
+               //if our game object reference was changed then we need to reset event listeners
+               if ( property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46_previous != property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46 || false == m_RegisteredForEvents )
+               {
+                  //tear down old listeners
+                  
+                  property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46_previous = property_CoinAudioGold_Detox_ScriptEditor_Parameter_Instance_46;
+                  
+                  //setup new listeners
+               }
+            }
+         }
+      }
+      {
+         {
+            {
+               //if our game object reference was changed then we need to reset event listeners
+               if ( property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47_previous != property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47 || false == m_RegisteredForEvents )
+               {
+                  //tear down old listeners
+                  
+                  property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47_previous = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_Instance_47;
+                  
+                  //setup new listeners
+               }
+            }
+         }
+      }
+      {
+         {
+            {
+               //if our game object reference was changed then we need to reset event listeners
+               if ( property_Player_Detox_ScriptEditor_Parameter_Instance_48_previous != property_Player_Detox_ScriptEditor_Parameter_Instance_48 || false == m_RegisteredForEvents )
+               {
+                  //tear down old listeners
+                  
+                  property_Player_Detox_ScriptEditor_Parameter_Instance_48_previous = property_Player_Detox_ScriptEditor_Parameter_Instance_48;
+                  
+                  //setup new listeners
+               }
+            }
+         }
+      }
+      property_Player_Detox_ScriptEditor_Parameter_Player_48 = property_Player_Detox_ScriptEditor_Parameter_Player_48_Get_Refresh();
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_Player_Detox_ScriptEditor_Parameter_Player_48_previous != property_Player_Detox_ScriptEditor_Parameter_Player_48 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_Player_Detox_ScriptEditor_Parameter_Player_48_previous = property_Player_Detox_ScriptEditor_Parameter_Player_48;
+         
+         //setup new listeners
+      }
       if ( null == event_UnityEngine_GameObject_Instance_0 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_0 = uScript_MasterComponent.LatestMaster;
@@ -825,17 +972,17 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void Relay_OnUpdate_0()
    {
-      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global Update", Relay_OnUpdate_0)) return; 
+      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global_Update", Relay_OnUpdate_0)) return; 
    }
    
    void Relay_OnLateUpdate_0()
    {
-      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global Update", Relay_OnLateUpdate_0)) return; 
+      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global_Update", Relay_OnLateUpdate_0)) return; 
    }
    
    void Relay_OnFixedUpdate_0()
    {
-      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global Update", Relay_OnFixedUpdate_0)) return; 
+      if (true == CheckDebugBreak("a262559c-931a-4569-abe8-1540b9082471", "Global_Update", Relay_OnFixedUpdate_0)) return; 
       Relay_In_10();
    }
    
@@ -843,7 +990,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0c3f67ea-e9cf-471e-8e4e-884156667bb2", "Set Vector3", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("0c3f67ea-e9cf-471e-8e4e-884156667bb2", "Set_Vector3", Relay_In_2)) return; 
          {
             {
                logic_uScriptAct_SetVector3_Value_2 = local_9_UnityEngine_Vector3;
@@ -874,7 +1021,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("025b3342-e5c9-4f11-adcf-afbc228558ae", "Set Euler Angles", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("025b3342-e5c9-4f11-adcf-afbc228558ae", "Set_Euler_Angles", Relay_In_4)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -927,7 +1074,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cf7c11d6-27b6-447b-a135-c1d531d7f4d4", "Look At", Relay_Finished_5)) return; 
+         if (true == CheckDebugBreak("cf7c11d6-27b6-447b-a135-c1d531d7f4d4", "Look_At", Relay_Finished_5)) return; 
       }
       else
       {
@@ -939,7 +1086,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("cf7c11d6-27b6-447b-a135-c1d531d7f4d4", "Look At", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("cf7c11d6-27b6-447b-a135-c1d531d7f4d4", "Look_At", Relay_In_5)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -958,6 +1105,18 @@ public class CoinCollection_MetagameLogic : uScriptLogic
                logic_uScriptAct_LookAt_Target_5 = properties.ToArray();
             }
             {
+               {
+                  property_Player_Detox_ScriptEditor_Parameter_Player_48 = property_Player_Detox_ScriptEditor_Parameter_Player_48_Get_Refresh();
+                  //if our game object reference was changed then we need to reset event listeners
+                  if ( property_Player_Detox_ScriptEditor_Parameter_Player_48_previous != property_Player_Detox_ScriptEditor_Parameter_Player_48 || false == m_RegisteredForEvents )
+                  {
+                     //tear down old listeners
+                     
+                     property_Player_Detox_ScriptEditor_Parameter_Player_48_previous = property_Player_Detox_ScriptEditor_Parameter_Player_48;
+                     
+                     //setup new listeners
+                  }
+               }
                logic_uScriptAct_LookAt_Focus_5 = property_Player_Detox_ScriptEditor_Parameter_Player_48_Get_Refresh( );
                
             }
@@ -1049,7 +1208,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("03443454-af1c-4f5a-9c1a-fda9e5da17bc", "Add Vector3", Relay_In_7)) return; 
+         if (true == CheckDebugBreak("03443454-af1c-4f5a-9c1a-fda9e5da17bc", "Add_Vector3", Relay_In_7)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -1085,7 +1244,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b93b7ff-8019-44be-a5d8-11f6d83c43c2", "Compare Bool", Relay_In_10)) return; 
+         if (true == CheckDebugBreak("3b93b7ff-8019-44be-a5d8-11f6d83c43c2", "Compare_Bool", Relay_In_10)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_10 = local_Attach_Camera_System_Boolean;
@@ -1115,7 +1274,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void Relay_KeyEvent_14()
    {
-      if (true == CheckDebugBreak("afe8ed96-1880-4955-962b-faea2a0516e9", "Input Events", Relay_KeyEvent_14)) return; 
+      if (true == CheckDebugBreak("afe8ed96-1880-4955-962b-faea2a0516e9", "Input_Events", Relay_KeyEvent_14)) return; 
       Relay_In_15();
    }
    
@@ -1123,7 +1282,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2d3d4205-9b58-4943-b9db-c384eaeb83a6", "Input Events Filter", Relay_In_15)) return; 
+         if (true == CheckDebugBreak("2d3d4205-9b58-4943-b9db-c384eaeb83a6", "Input_Events_Filter", Relay_In_15)) return; 
          {
             {
             }
@@ -1148,7 +1307,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("004ac46c-75f5-411d-a4f1-01482da65786", "Set Bool", Relay_True_16)) return; 
+         if (true == CheckDebugBreak("004ac46c-75f5-411d-a4f1-01482da65786", "Set_Bool", Relay_True_16)) return; 
          {
             {
             }
@@ -1174,7 +1333,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("004ac46c-75f5-411d-a4f1-01482da65786", "Set Bool", Relay_False_16)) return; 
+         if (true == CheckDebugBreak("004ac46c-75f5-411d-a4f1-01482da65786", "Set_Bool", Relay_False_16)) return; 
          {
             {
             }
@@ -1227,7 +1386,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d9cbe2c7-b65f-4d59-b76c-1c564e60549f", "Set Position", Relay_In_20)) return; 
+         if (true == CheckDebugBreak("d9cbe2c7-b65f-4d59-b76c-1c564e60549f", "Set_Position", Relay_In_20)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -1267,9 +1426,21 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ab00a0d0-69d5-4a13-843d-6d78db00c4a0", "Get Position and Rotation", Relay_In_21)) return; 
+         if (true == CheckDebugBreak("ab00a0d0-69d5-4a13-843d-6d78db00c4a0", "Get_Position_and_Rotation", Relay_In_21)) return; 
          {
             {
+               {
+                  property_Player_Detox_ScriptEditor_Parameter_Player_48 = property_Player_Detox_ScriptEditor_Parameter_Player_48_Get_Refresh();
+                  //if our game object reference was changed then we need to reset event listeners
+                  if ( property_Player_Detox_ScriptEditor_Parameter_Player_48_previous != property_Player_Detox_ScriptEditor_Parameter_Player_48 || false == m_RegisteredForEvents )
+                  {
+                     //tear down old listeners
+                     
+                     property_Player_Detox_ScriptEditor_Parameter_Player_48_previous = property_Player_Detox_ScriptEditor_Parameter_Player_48;
+                     
+                     //setup new listeners
+                  }
+               }
                logic_uScriptAct_GetPositionAndRotation_Target_21 = property_Player_Detox_ScriptEditor_Parameter_Player_48_Get_Refresh( );
                
             }
@@ -1307,20 +1478,20 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void Relay_uScriptStart_23()
    {
-      if (true == CheckDebugBreak("eacf9f4b-f4ac-4c1e-b44e-dd9b1e007459", "uScript Events", Relay_uScriptStart_23)) return; 
+      if (true == CheckDebugBreak("eacf9f4b-f4ac-4c1e-b44e-dd9b1e007459", "uScript_Events", Relay_uScriptStart_23)) return; 
       Relay_ShowLabel_24();
    }
    
    void Relay_uScriptLateStart_23()
    {
-      if (true == CheckDebugBreak("eacf9f4b-f4ac-4c1e-b44e-dd9b1e007459", "uScript Events", Relay_uScriptLateStart_23)) return; 
+      if (true == CheckDebugBreak("eacf9f4b-f4ac-4c1e-b44e-dd9b1e007459", "uScript_Events", Relay_uScriptLateStart_23)) return; 
    }
    
    void Relay_ShowLabel_24()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7e01458b-c989-4aa8-b9a1-d0bd16c5c326", "Print Text", Relay_ShowLabel_24)) return; 
+         if (true == CheckDebugBreak("7e01458b-c989-4aa8-b9a1-d0bd16c5c326", "Print_Text", Relay_ShowLabel_24)) return; 
          {
             {
             }
@@ -1357,7 +1528,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7e01458b-c989-4aa8-b9a1-d0bd16c5c326", "Print Text", Relay_HideLabel_24)) return; 
+         if (true == CheckDebugBreak("7e01458b-c989-4aa8-b9a1-d0bd16c5c326", "Print_Text", Relay_HideLabel_24)) return; 
          {
             {
             }
@@ -1394,7 +1565,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e5e173b7-bb6e-4111-bc81-3a1696a7fc3c", "Print Text", Relay_ShowLabel_25)) return; 
+         if (true == CheckDebugBreak("e5e173b7-bb6e-4111-bc81-3a1696a7fc3c", "Print_Text", Relay_ShowLabel_25)) return; 
          {
             {
             }
@@ -1426,7 +1597,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e5e173b7-bb6e-4111-bc81-3a1696a7fc3c", "Print Text", Relay_HideLabel_25)) return; 
+         if (true == CheckDebugBreak("e5e173b7-bb6e-4111-bc81-3a1696a7fc3c", "Print_Text", Relay_HideLabel_25)) return; 
          {
             {
             }
@@ -1456,25 +1627,25 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void Relay_OnUpdate_26()
    {
-      if (true == CheckDebugBreak("4f2e473b-d5d1-4738-8a5f-97a891bac302", "Global Update", Relay_OnUpdate_26)) return; 
+      if (true == CheckDebugBreak("4f2e473b-d5d1-4738-8a5f-97a891bac302", "Global_Update", Relay_OnUpdate_26)) return; 
    }
    
    void Relay_OnLateUpdate_26()
    {
-      if (true == CheckDebugBreak("4f2e473b-d5d1-4738-8a5f-97a891bac302", "Global Update", Relay_OnLateUpdate_26)) return; 
+      if (true == CheckDebugBreak("4f2e473b-d5d1-4738-8a5f-97a891bac302", "Global_Update", Relay_OnLateUpdate_26)) return; 
       Relay_In_29();
    }
    
    void Relay_OnFixedUpdate_26()
    {
-      if (true == CheckDebugBreak("4f2e473b-d5d1-4738-8a5f-97a891bac302", "Global Update", Relay_OnFixedUpdate_26)) return; 
+      if (true == CheckDebugBreak("4f2e473b-d5d1-4738-8a5f-97a891bac302", "Global_Update", Relay_OnFixedUpdate_26)) return; 
    }
    
    void Relay_In_27()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b40a5afc-c7eb-42e7-abf3-ffd805b04a1e", "Compare String", Relay_In_27)) return; 
+         if (true == CheckDebugBreak("b40a5afc-c7eb-42e7-abf3-ffd805b04a1e", "Compare_String", Relay_In_27)) return; 
          {
             {
                logic_uScriptCon_CompareString_A_27 = local_35_System_String;
@@ -1505,7 +1676,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6c87add6-9bfd-44e1-b4c9-1062aaa80e93", "Print Text", Relay_ShowLabel_28)) return; 
+         if (true == CheckDebugBreak("6c87add6-9bfd-44e1-b4c9-1062aaa80e93", "Print_Text", Relay_ShowLabel_28)) return; 
          {
             {
                logic_uScriptAct_PrintText_Text_28 = local_32_System_String;
@@ -1539,7 +1710,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6c87add6-9bfd-44e1-b4c9-1062aaa80e93", "Print Text", Relay_HideLabel_28)) return; 
+         if (true == CheckDebugBreak("6c87add6-9bfd-44e1-b4c9-1062aaa80e93", "Print_Text", Relay_HideLabel_28)) return; 
          {
             {
                logic_uScriptAct_PrintText_Text_28 = local_32_System_String;
@@ -1609,7 +1780,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    
    void Relay_OnCustomEventInt_34()
    {
-      if (true == CheckDebugBreak("0ffdc7ae-be7e-473f-9432-53a93062b0e3", "Custom Event (Int)", Relay_OnCustomEventInt_34)) return; 
+      if (true == CheckDebugBreak("0ffdc7ae-be7e-473f-9432-53a93062b0e3", "Custom_Event__Int_", Relay_OnCustomEventInt_34)) return; 
       local_35_System_String = event_UnityEngine_GameObject_EventName_34;
       local_CoinValue_System_Int32 = event_UnityEngine_GameObject_EventData_34;
       Relay_In_27();
@@ -1619,7 +1790,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5889dc85-d6d7-4003-9136-877c419bd7c2", "Add Int", Relay_In_37)) return; 
+         if (true == CheckDebugBreak("5889dc85-d6d7-4003-9136-877c419bd7c2", "Add_Int", Relay_In_37)) return; 
          {
             {
                List<System.Int32> properties = new List<System.Int32>();
@@ -1657,7 +1828,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e769f90b-db3a-4db3-8ccb-5f062a7ebf7f", "Compare Int", Relay_In_39)) return; 
+         if (true == CheckDebugBreak("e769f90b-db3a-4db3-8ccb-5f062a7ebf7f", "Compare_Int", Relay_In_39)) return; 
          {
             {
                logic_uScriptCon_CompareInt_A_39 = local_CoinValue_System_Int32;
@@ -1691,7 +1862,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e98b51aa-20d4-4a9d-999f-09fb2af4453a", "Play Sound", Relay_Finished_42)) return; 
+         if (true == CheckDebugBreak("e98b51aa-20d4-4a9d-999f-09fb2af4453a", "Play_Sound", Relay_Finished_42)) return; 
       }
       else
       {
@@ -1703,7 +1874,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e98b51aa-20d4-4a9d-999f-09fb2af4453a", "Play Sound", Relay_Play_42)) return; 
+         if (true == CheckDebugBreak("e98b51aa-20d4-4a9d-999f-09fb2af4453a", "Play_Sound", Relay_Play_42)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_42 = property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46_Get_Refresh( );
@@ -1745,7 +1916,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e98b51aa-20d4-4a9d-999f-09fb2af4453a", "Play Sound", Relay_UpdateVolume_42)) return; 
+         if (true == CheckDebugBreak("e98b51aa-20d4-4a9d-999f-09fb2af4453a", "Play_Sound", Relay_UpdateVolume_42)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_42 = property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46_Get_Refresh( );
@@ -1787,7 +1958,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e98b51aa-20d4-4a9d-999f-09fb2af4453a", "Play Sound", Relay_Stop_42)) return; 
+         if (true == CheckDebugBreak("e98b51aa-20d4-4a9d-999f-09fb2af4453a", "Play_Sound", Relay_Stop_42)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_42 = property_CoinAudioGold_Detox_ScriptEditor_Parameter_CoinAudioGold_46_Get_Refresh( );
@@ -1829,7 +2000,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("66fdce2e-6102-47d0-bce9-36747450e706", "Play Sound", Relay_Finished_43)) return; 
+         if (true == CheckDebugBreak("66fdce2e-6102-47d0-bce9-36747450e706", "Play_Sound", Relay_Finished_43)) return; 
       }
       else
       {
@@ -1841,7 +2012,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("66fdce2e-6102-47d0-bce9-36747450e706", "Play Sound", Relay_Play_43)) return; 
+         if (true == CheckDebugBreak("66fdce2e-6102-47d0-bce9-36747450e706", "Play_Sound", Relay_Play_43)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_43 = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47_Get_Refresh( );
@@ -1883,7 +2054,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("66fdce2e-6102-47d0-bce9-36747450e706", "Play Sound", Relay_UpdateVolume_43)) return; 
+         if (true == CheckDebugBreak("66fdce2e-6102-47d0-bce9-36747450e706", "Play_Sound", Relay_UpdateVolume_43)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_43 = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47_Get_Refresh( );
@@ -1925,7 +2096,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("66fdce2e-6102-47d0-bce9-36747450e706", "Play Sound", Relay_Stop_43)) return; 
+         if (true == CheckDebugBreak("66fdce2e-6102-47d0-bce9-36747450e706", "Play_Sound", Relay_Stop_43)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_43 = property_CoinAudioSilver_Detox_ScriptEditor_Parameter_CoinAudioSilver_47_Get_Refresh( );
@@ -2002,7 +2173,7 @@ public class CoinCollection_MetagameLogic : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -350,7 +350,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c5b5993f-61dc-4a4e-8685-964aff85ede4", "Compare Bool", Relay_In_0)) return; 
+         if (true == CheckDebugBreak("c5b5993f-61dc-4a4e-8685-964aff85ede4", "Compare_Bool", Relay_In_0)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_0 = external_3;
@@ -377,7 +377,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a5ca0fd2-64f4-42b7-b54d-061fd8491670", "Play Animation", Relay_Finished_1)) return; 
+         if (true == CheckDebugBreak("a5ca0fd2-64f4-42b7-b54d-061fd8491670", "Play_Animation", Relay_Finished_1)) return; 
       }
       else
       {
@@ -389,7 +389,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a5ca0fd2-64f4-42b7-b54d-061fd8491670", "Play Animation", Relay_In_1)) return; 
+         if (true == CheckDebugBreak("a5ca0fd2-64f4-42b7-b54d-061fd8491670", "Play_Animation", Relay_In_1)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -493,7 +493,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("517ad356-bae2-4c37-b274-58e57922d785", "Compare Bool", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("517ad356-bae2-4c37-b274-58e57922d785", "Compare_Bool", Relay_In_4)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_4 = external_3;
@@ -520,7 +520,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1384e518-81de-4435-aca2-127aad5be020", "Play Animation", Relay_Finished_5)) return; 
+         if (true == CheckDebugBreak("1384e518-81de-4435-aca2-127aad5be020", "Play_Animation", Relay_Finished_5)) return; 
       }
       else
       {
@@ -532,7 +532,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1384e518-81de-4435-aca2-127aad5be020", "Play Animation", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("1384e518-81de-4435-aca2-127aad5be020", "Play_Animation", Relay_In_5)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -574,7 +574,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle Component", Relay_OnOut_6)) return; 
+         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle_Component", Relay_OnOut_6)) return; 
          Relay_In_2();
          Relay_Play_19();
          Relay_In_22();
@@ -590,7 +590,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle Component", Relay_OffOut_6)) return; 
+         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle_Component", Relay_OffOut_6)) return; 
          Relay_In_5();
          Relay_Stop_19();
          Relay_Connection_24();
@@ -605,7 +605,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle Component", Relay_ToggleOut_6)) return; 
+         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle_Component", Relay_ToggleOut_6)) return; 
       }
       else
       {
@@ -617,7 +617,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle Component", Relay_TurnOn_6)) return; 
+         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle_Component", Relay_TurnOn_6)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -668,7 +668,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle Component", Relay_TurnOff_6)) return; 
+         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle_Component", Relay_TurnOff_6)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -719,7 +719,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle Component", Relay_Toggle_6)) return; 
+         if (true == CheckDebugBreak("3702455b-ec4e-484d-8ad5-44fc608eb815", "Toggle_Component", Relay_Toggle_6)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -794,7 +794,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("690b1f93-7ae9-433e-b5b1-437102dc2926", "Play Sound", Relay_Finished_19)) return; 
+         if (true == CheckDebugBreak("690b1f93-7ae9-433e-b5b1-437102dc2926", "Play_Sound", Relay_Finished_19)) return; 
       }
       else
       {
@@ -806,7 +806,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("690b1f93-7ae9-433e-b5b1-437102dc2926", "Play Sound", Relay_Play_19)) return; 
+         if (true == CheckDebugBreak("690b1f93-7ae9-433e-b5b1-437102dc2926", "Play_Sound", Relay_Play_19)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_19 = external_25;
@@ -834,7 +834,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("690b1f93-7ae9-433e-b5b1-437102dc2926", "Play Sound", Relay_UpdateVolume_19)) return; 
+         if (true == CheckDebugBreak("690b1f93-7ae9-433e-b5b1-437102dc2926", "Play_Sound", Relay_UpdateVolume_19)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_19 = external_25;
@@ -862,7 +862,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("690b1f93-7ae9-433e-b5b1-437102dc2926", "Play Sound", Relay_Stop_19)) return; 
+         if (true == CheckDebugBreak("690b1f93-7ae9-433e-b5b1-437102dc2926", "Play_Sound", Relay_Stop_19)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_19 = external_25;
@@ -1016,7 +1016,7 @@ public class AlarmGameplay_AlarmSetup : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

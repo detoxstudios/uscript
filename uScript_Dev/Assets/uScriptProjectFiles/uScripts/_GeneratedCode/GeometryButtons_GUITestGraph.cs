@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -857,7 +857,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle Component", Relay_OnOut_0)) return; 
+         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle_Component", Relay_OnOut_0)) return; 
       }
       else
       {
@@ -869,7 +869,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle Component", Relay_OffOut_0)) return; 
+         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle_Component", Relay_OffOut_0)) return; 
       }
       else
       {
@@ -881,7 +881,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle Component", Relay_ToggleOut_0)) return; 
+         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle_Component", Relay_ToggleOut_0)) return; 
       }
       else
       {
@@ -893,7 +893,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle Component", Relay_TurnOn_0)) return; 
+         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle_Component", Relay_TurnOn_0)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -932,7 +932,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle Component", Relay_TurnOff_0)) return; 
+         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle_Component", Relay_TurnOff_0)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -971,7 +971,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle Component", Relay_Toggle_0)) return; 
+         if (true == CheckDebugBreak("c36f3a75-465b-4e89-b78f-57cf004e8b38", "Toggle_Component", Relay_Toggle_0)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -1010,7 +1010,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("8afbaaca-cd6b-4fa6-abdd-d5407d4eb0e7", "Compare GameObjects", Relay_In_3)) return; 
+         if (true == CheckDebugBreak("8afbaaca-cd6b-4fa6-abdd-d5407d4eb0e7", "Compare_GameObjects", Relay_In_3)) return; 
          {
             {
                {
@@ -1067,51 +1067,51 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    
    void Relay_OnTouchBegan_6()
    {
-      if (true == CheckDebugBreak("9d4bf783-b062-4a6d-8626-02af71e1be1a", "Touch Events", Relay_OnTouchBegan_6)) return; 
+      if (true == CheckDebugBreak("9d4bf783-b062-4a6d-8626-02af71e1be1a", "Touch_Events", Relay_OnTouchBegan_6)) return; 
       local_15_UnityEngine_Vector2 = event_UnityEngine_GameObject_Position_6;
       Relay_In_12();
    }
    
    void Relay_OnTouchMoved_6()
    {
-      if (true == CheckDebugBreak("9d4bf783-b062-4a6d-8626-02af71e1be1a", "Touch Events", Relay_OnTouchMoved_6)) return; 
+      if (true == CheckDebugBreak("9d4bf783-b062-4a6d-8626-02af71e1be1a", "Touch_Events", Relay_OnTouchMoved_6)) return; 
       local_15_UnityEngine_Vector2 = event_UnityEngine_GameObject_Position_6;
    }
    
    void Relay_OnTouchStationary_6()
    {
-      if (true == CheckDebugBreak("9d4bf783-b062-4a6d-8626-02af71e1be1a", "Touch Events", Relay_OnTouchStationary_6)) return; 
+      if (true == CheckDebugBreak("9d4bf783-b062-4a6d-8626-02af71e1be1a", "Touch_Events", Relay_OnTouchStationary_6)) return; 
       local_15_UnityEngine_Vector2 = event_UnityEngine_GameObject_Position_6;
    }
    
    void Relay_OnTouchEnded_6()
    {
-      if (true == CheckDebugBreak("9d4bf783-b062-4a6d-8626-02af71e1be1a", "Touch Events", Relay_OnTouchEnded_6)) return; 
+      if (true == CheckDebugBreak("9d4bf783-b062-4a6d-8626-02af71e1be1a", "Touch_Events", Relay_OnTouchEnded_6)) return; 
       local_15_UnityEngine_Vector2 = event_UnityEngine_GameObject_Position_6;
    }
    
    void Relay_OnTouchCanceled_6()
    {
-      if (true == CheckDebugBreak("9d4bf783-b062-4a6d-8626-02af71e1be1a", "Touch Events", Relay_OnTouchCanceled_6)) return; 
+      if (true == CheckDebugBreak("9d4bf783-b062-4a6d-8626-02af71e1be1a", "Touch_Events", Relay_OnTouchCanceled_6)) return; 
       local_15_UnityEngine_Vector2 = event_UnityEngine_GameObject_Position_6;
    }
    
    void Relay_uScriptStart_7()
    {
-      if (true == CheckDebugBreak("2360ec9c-0bba-489d-ac62-d94fe3fa47ca", "uScript Events", Relay_uScriptStart_7)) return; 
+      if (true == CheckDebugBreak("2360ec9c-0bba-489d-ac62-d94fe3fa47ca", "uScript_Events", Relay_uScriptStart_7)) return; 
       Relay_ShowLabel_24();
    }
    
    void Relay_uScriptLateStart_7()
    {
-      if (true == CheckDebugBreak("2360ec9c-0bba-489d-ac62-d94fe3fa47ca", "uScript Events", Relay_uScriptLateStart_7)) return; 
+      if (true == CheckDebugBreak("2360ec9c-0bba-489d-ac62-d94fe3fa47ca", "uScript_Events", Relay_uScriptLateStart_7)) return; 
    }
    
    void Relay_In_8()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("bf77f9e7-de77-4624-bef5-888ce401d346", "Compare GameObjects", Relay_In_8)) return; 
+         if (true == CheckDebugBreak("bf77f9e7-de77-4624-bef5-888ce401d346", "Compare_GameObjects", Relay_In_8)) return; 
          {
             {
                {
@@ -1170,7 +1170,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c34be803-5ce5-4a0d-aa94-bc32dda6d6d8", "Input Events Filter", Relay_In_9)) return; 
+         if (true == CheckDebugBreak("c34be803-5ce5-4a0d-aa94-bc32dda6d6d8", "Input_Events_Filter", Relay_In_9)) return; 
          {
             {
             }
@@ -1195,7 +1195,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b638b2e1-a308-43ee-ac2b-07d0589dc6ec", "Input Events Filter", Relay_In_10)) return; 
+         if (true == CheckDebugBreak("b638b2e1-a308-43ee-ac2b-07d0589dc6ec", "Input_Events_Filter", Relay_In_10)) return; 
          {
             {
             }
@@ -1220,7 +1220,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle Component", Relay_OnOut_11)) return; 
+         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle_Component", Relay_OnOut_11)) return; 
       }
       else
       {
@@ -1232,7 +1232,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle Component", Relay_OffOut_11)) return; 
+         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle_Component", Relay_OffOut_11)) return; 
       }
       else
       {
@@ -1244,7 +1244,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle Component", Relay_ToggleOut_11)) return; 
+         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle_Component", Relay_ToggleOut_11)) return; 
       }
       else
       {
@@ -1256,7 +1256,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle Component", Relay_TurnOn_11)) return; 
+         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle_Component", Relay_TurnOn_11)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -1295,7 +1295,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle Component", Relay_TurnOff_11)) return; 
+         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle_Component", Relay_TurnOff_11)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -1334,7 +1334,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle Component", Relay_Toggle_11)) return; 
+         if (true == CheckDebugBreak("28297236-f9c6-43b2-8704-8e3068b5e644", "Toggle_Component", Relay_Toggle_11)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -1373,7 +1373,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2176e13f-d5b3-445c-9e10-9f00629b135d", "Raycast From Screen Point", Relay_In_12)) return; 
+         if (true == CheckDebugBreak("2176e13f-d5b3-445c-9e10-9f00629b135d", "Raycast_From_Screen_Point", Relay_In_12)) return; 
          {
             {
                logic_uScriptAct_RaycastFromScreenPoint_Camera_12 = local_16_UnityEngine_Camera;
@@ -1433,7 +1433,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("800fe30b-fb17-4a94-8a2d-5f88d0e7afdf", "Input Events Filter", Relay_In_13)) return; 
+         if (true == CheckDebugBreak("800fe30b-fb17-4a94-8a2d-5f88d0e7afdf", "Input_Events_Filter", Relay_In_13)) return; 
          {
             {
             }
@@ -1456,40 +1456,40 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    
    void Relay_OnEnter_14()
    {
-      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse Cursor Events", Relay_OnEnter_14)) return; 
+      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse_Cursor_Events", Relay_OnEnter_14)) return; 
    }
    
    void Relay_OnOver_14()
    {
-      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse Cursor Events", Relay_OnOver_14)) return; 
+      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse_Cursor_Events", Relay_OnOver_14)) return; 
    }
    
    void Relay_OnExit_14()
    {
-      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse Cursor Events", Relay_OnExit_14)) return; 
+      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse_Cursor_Events", Relay_OnExit_14)) return; 
    }
    
    void Relay_OnDown_14()
    {
-      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse Cursor Events", Relay_OnDown_14)) return; 
+      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse_Cursor_Events", Relay_OnDown_14)) return; 
    }
    
    void Relay_OnUp_14()
    {
-      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse Cursor Events", Relay_OnUp_14)) return; 
+      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse_Cursor_Events", Relay_OnUp_14)) return; 
       Relay_TurnOff_11();
    }
    
    void Relay_OnDrag_14()
    {
-      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse Cursor Events", Relay_OnDrag_14)) return; 
+      if (true == CheckDebugBreak("b5cbeb20-cd76-4625-8881-cb1379b44551", "Mouse_Cursor_Events", Relay_OnDrag_14)) return; 
    }
    
    void Relay_ShowLabel_17()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3c9cdd1a-f20c-4fe1-8a30-77f537588986", "Print Text", Relay_ShowLabel_17)) return; 
+         if (true == CheckDebugBreak("3c9cdd1a-f20c-4fe1-8a30-77f537588986", "Print_Text", Relay_ShowLabel_17)) return; 
          {
             {
             }
@@ -1521,7 +1521,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3c9cdd1a-f20c-4fe1-8a30-77f537588986", "Print Text", Relay_HideLabel_17)) return; 
+         if (true == CheckDebugBreak("3c9cdd1a-f20c-4fe1-8a30-77f537588986", "Print_Text", Relay_HideLabel_17)) return; 
          {
             {
             }
@@ -1553,7 +1553,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric Character Controller", Relay_MoveForward_18)) return; 
+         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric_Character_Controller", Relay_MoveForward_18)) return; 
          {
             {
                {
@@ -1598,7 +1598,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric Character Controller", Relay_MoveBackward_18)) return; 
+         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric_Character_Controller", Relay_MoveBackward_18)) return; 
          {
             {
                {
@@ -1643,7 +1643,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric Character Controller", Relay_StrafeRight_18)) return; 
+         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric_Character_Controller", Relay_StrafeRight_18)) return; 
          {
             {
                {
@@ -1688,7 +1688,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric Character Controller", Relay_StrafeLeft_18)) return; 
+         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric_Character_Controller", Relay_StrafeLeft_18)) return; 
          {
             {
                {
@@ -1733,7 +1733,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric Character Controller", Relay_RotateRight_18)) return; 
+         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric_Character_Controller", Relay_RotateRight_18)) return; 
          {
             {
                {
@@ -1778,7 +1778,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric Character Controller", Relay_RotateLeft_18)) return; 
+         if (true == CheckDebugBreak("5fe39876-0e2b-495c-a27e-e496d27fc8e9", "Isometric_Character_Controller", Relay_RotateLeft_18)) return; 
          {
             {
                {
@@ -1821,38 +1821,38 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    
    void Relay_OnEnter_20()
    {
-      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse Cursor Events", Relay_OnEnter_20)) return; 
+      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse_Cursor_Events", Relay_OnEnter_20)) return; 
    }
    
    void Relay_OnOver_20()
    {
-      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse Cursor Events", Relay_OnOver_20)) return; 
+      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse_Cursor_Events", Relay_OnOver_20)) return; 
    }
    
    void Relay_OnExit_20()
    {
-      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse Cursor Events", Relay_OnExit_20)) return; 
+      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse_Cursor_Events", Relay_OnExit_20)) return; 
    }
    
    void Relay_OnDown_20()
    {
-      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse Cursor Events", Relay_OnDown_20)) return; 
+      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse_Cursor_Events", Relay_OnDown_20)) return; 
    }
    
    void Relay_OnUp_20()
    {
-      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse Cursor Events", Relay_OnUp_20)) return; 
+      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse_Cursor_Events", Relay_OnUp_20)) return; 
       Relay_TurnOn_0();
    }
    
    void Relay_OnDrag_20()
    {
-      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse Cursor Events", Relay_OnDrag_20)) return; 
+      if (true == CheckDebugBreak("a29b1374-1b68-4bf4-97f7-1518fe50504e", "Mouse_Cursor_Events", Relay_OnDrag_20)) return; 
    }
    
    void Relay_KeyEvent_21()
    {
-      if (true == CheckDebugBreak("151bf802-2aa4-4f2e-96fd-b9cf76376f2c", "Input Events", Relay_KeyEvent_21)) return; 
+      if (true == CheckDebugBreak("151bf802-2aa4-4f2e-96fd-b9cf76376f2c", "Input_Events", Relay_KeyEvent_21)) return; 
       Relay_In_22();
       Relay_In_10();
       Relay_In_13();
@@ -1863,7 +1863,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("35e6f2a7-407c-430b-a6af-525edf79e278", "Input Events Filter", Relay_In_22)) return; 
+         if (true == CheckDebugBreak("35e6f2a7-407c-430b-a6af-525edf79e278", "Input_Events_Filter", Relay_In_22)) return; 
          {
             {
             }
@@ -1888,7 +1888,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c861776c-8e37-4d84-a7f2-d02c7a551f94", "Print Text", Relay_ShowLabel_24)) return; 
+         if (true == CheckDebugBreak("c861776c-8e37-4d84-a7f2-d02c7a551f94", "Print_Text", Relay_ShowLabel_24)) return; 
          {
             {
             }
@@ -1925,7 +1925,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c861776c-8e37-4d84-a7f2-d02c7a551f94", "Print Text", Relay_HideLabel_24)) return; 
+         if (true == CheckDebugBreak("c861776c-8e37-4d84-a7f2-d02c7a551f94", "Print_Text", Relay_HideLabel_24)) return; 
          {
             {
             }
@@ -1981,7 +1981,7 @@ public class GeometryButtons_GUITestGraph : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -349,25 +349,25 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
    
    void Relay_OnUpdate_0()
    {
-      if (true == CheckDebugBreak("5cf7a572-ff41-4492-a391-103626f63b61", "Global Update", Relay_OnUpdate_0)) return; 
+      if (true == CheckDebugBreak("5cf7a572-ff41-4492-a391-103626f63b61", "Global_Update", Relay_OnUpdate_0)) return; 
       Relay_In_1();
    }
    
    void Relay_OnLateUpdate_0()
    {
-      if (true == CheckDebugBreak("5cf7a572-ff41-4492-a391-103626f63b61", "Global Update", Relay_OnLateUpdate_0)) return; 
+      if (true == CheckDebugBreak("5cf7a572-ff41-4492-a391-103626f63b61", "Global_Update", Relay_OnLateUpdate_0)) return; 
    }
    
    void Relay_OnFixedUpdate_0()
    {
-      if (true == CheckDebugBreak("5cf7a572-ff41-4492-a391-103626f63b61", "Global Update", Relay_OnFixedUpdate_0)) return; 
+      if (true == CheckDebugBreak("5cf7a572-ff41-4492-a391-103626f63b61", "Global_Update", Relay_OnFixedUpdate_0)) return; 
    }
    
    void Relay_In_1()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("077ba1de-59df-4074-99a1-a4a1dd9335aa", "Get Distance", Relay_In_1)) return; 
+         if (true == CheckDebugBreak("077ba1de-59df-4074-99a1-a4a1dd9335aa", "Get_Distance", Relay_In_1)) return; 
          {
             {
                {
@@ -423,7 +423,7 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6cd5f51c-eac3-4d37-9e4d-472560a325ff", "Compare Float", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("6cd5f51c-eac3-4d37-9e4d-472560a325ff", "Compare_Float", Relay_In_4)) return; 
          {
             {
                logic_uScriptCon_CompareFloat_A_4 = local_Player_Distance_System_Single;
@@ -454,7 +454,7 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d9e3e114-0885-47f6-aba4-f7c13235ebee", "Clamp Float", Relay_In_6)) return; 
+         if (true == CheckDebugBreak("d9e3e114-0885-47f6-aba4-f7c13235ebee", "Clamp_Float", Relay_In_6)) return; 
          {
             {
                logic_uScriptAct_ClampFloat_Target_6 = local_Player_Distance_System_Single;
@@ -490,7 +490,7 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1263ddea-0adb-4e1a-b0b1-61a6e3e26ccc", "Set Position", Relay_In_9)) return; 
+         if (true == CheckDebugBreak("1263ddea-0adb-4e1a-b0b1-61a6e3e26ccc", "Set_Position", Relay_In_9)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -532,7 +532,7 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("31ec951d-5554-4249-9fa0-a5fe8cbd83b1", "Get Position and Rotation", Relay_In_11)) return; 
+         if (true == CheckDebugBreak("31ec951d-5554-4249-9fa0-a5fe8cbd83b1", "Get_Position_and_Rotation", Relay_In_11)) return; 
          {
             {
                {
@@ -585,7 +585,7 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("019ec6e0-b038-4551-b5da-39aca4920dd6", "Get Components (Vector3)", Relay_In_12)) return; 
+         if (true == CheckDebugBreak("019ec6e0-b038-4551-b5da-39aca4920dd6", "Get_Components__Vector3_", Relay_In_12)) return; 
          {
             {
                logic_uScriptAct_GetComponentsVector3_InputVector3_12 = local_15_UnityEngine_Vector3;
@@ -620,7 +620,7 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ba91f045-31f2-4dd0-a5ea-b5c27a9cf546", "Set Components (Vector3)", Relay_In_13)) return; 
+         if (true == CheckDebugBreak("ba91f045-31f2-4dd0-a5ea-b5c27a9cf546", "Set_Components__Vector3_", Relay_In_13)) return; 
          {
             {
                logic_uScriptAct_SetComponentsVector3_X_13 = local_16_System_Single;
@@ -683,7 +683,7 @@ public class ProximityDoor_DetectPositionGraph : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

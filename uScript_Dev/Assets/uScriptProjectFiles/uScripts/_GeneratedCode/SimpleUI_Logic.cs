@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -129,6 +129,7 @@ public class SimpleUI_Logic : uScriptLogic
    //property nodes
    UnityEngine.Vector3 property_position_Detox_ScriptEditor_Parameter_position_25 = new Vector3( );
    UnityEngine.GameObject property_position_Detox_ScriptEditor_Parameter_Instance_25 = default(UnityEngine.GameObject);
+   UnityEngine.GameObject property_position_Detox_ScriptEditor_Parameter_Instance_25_previous = null;
    
    //method nodes
    UnityEngine.Vector3 method_Detox_ScriptEditor_Plug_UnityEngine_GameObject_force_16 = new Vector3( (float)0, (float)300, (float)0 );
@@ -160,11 +161,20 @@ public class SimpleUI_Logic : uScriptLogic
    
    void SyncUnityHooks( )
    {
-      SyncEventListeners( );
       if ( null == property_position_Detox_ScriptEditor_Parameter_Instance_25 || false == m_RegisteredForEvents )
       {
          property_position_Detox_ScriptEditor_Parameter_Instance_25 = GameObject.Find( "Cube" ) as UnityEngine.GameObject;
       }
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_position_Detox_ScriptEditor_Parameter_Instance_25_previous != property_position_Detox_ScriptEditor_Parameter_Instance_25 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_position_Detox_ScriptEditor_Parameter_Instance_25_previous = property_position_Detox_ScriptEditor_Parameter_Instance_25;
+         
+         //setup new listeners
+      }
+      SyncEventListeners( );
       if ( null == local_15_UnityEngine_GameObject || false == m_RegisteredForEvents )
       {
          local_15_UnityEngine_GameObject = GameObject.Find( "Cube" ) as UnityEngine.GameObject;
@@ -182,6 +192,15 @@ public class SimpleUI_Logic : uScriptLogic
    
    void RegisterForUnityHooks( )
    {
+      //if our game object reference was changed then we need to reset event listeners
+      if ( property_position_Detox_ScriptEditor_Parameter_Instance_25_previous != property_position_Detox_ScriptEditor_Parameter_Instance_25 || false == m_RegisteredForEvents )
+      {
+         //tear down old listeners
+         
+         property_position_Detox_ScriptEditor_Parameter_Instance_25_previous = property_position_Detox_ScriptEditor_Parameter_Instance_25;
+         
+         //setup new listeners
+      }
       SyncEventListeners( );
       //if our game object reference was changed then we need to reset event listeners
       if ( local_15_UnityEngine_GameObject_previous != local_15_UnityEngine_GameObject || false == m_RegisteredForEvents )
@@ -196,6 +215,21 @@ public class SimpleUI_Logic : uScriptLogic
    
    void SyncEventListeners( )
    {
+      {
+         {
+            {
+               //if our game object reference was changed then we need to reset event listeners
+               if ( property_position_Detox_ScriptEditor_Parameter_Instance_25_previous != property_position_Detox_ScriptEditor_Parameter_Instance_25 || false == m_RegisteredForEvents )
+               {
+                  //tear down old listeners
+                  
+                  property_position_Detox_ScriptEditor_Parameter_Instance_25_previous = property_position_Detox_ScriptEditor_Parameter_Instance_25;
+                  
+                  //setup new listeners
+               }
+            }
+         }
+      }
       if ( null == event_UnityEngine_GameObject_Instance_0 || false == m_RegisteredForEvents )
       {
          event_UnityEngine_GameObject_Instance_0 = uScript_MasterComponent.LatestMaster;
@@ -465,7 +499,7 @@ public class SimpleUI_Logic : uScriptLogic
    
    void Relay_OnGui_0()
    {
-      if (true == CheckDebugBreak("b51b9490-29c2-4ce8-8b73-59f914eaec5e", "GUI Events", Relay_OnGui_0)) return; 
+      if (true == CheckDebugBreak("b51b9490-29c2-4ce8-8b73-59f914eaec5e", "GUI_Events", Relay_OnGui_0)) return; 
       Relay_In_1();
    }
    
@@ -473,7 +507,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a730152c-c939-4f79-a63c-0e7254d46f6c", "GUI Set Background Color", Relay_In_1)) return; 
+         if (true == CheckDebugBreak("a730152c-c939-4f79-a63c-0e7254d46f6c", "GUI_Set_Background_Color", Relay_In_1)) return; 
          {
             {
             }
@@ -498,7 +532,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4e442452-5c25-4eac-984e-9b3987f951d7", "GUI Button", Relay_OnButtonDown_2)) return; 
+         if (true == CheckDebugBreak("4e442452-5c25-4eac-984e-9b3987f951d7", "GUI_Button", Relay_OnButtonDown_2)) return; 
       }
       else
       {
@@ -510,7 +544,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4e442452-5c25-4eac-984e-9b3987f951d7", "GUI Button", Relay_OnButtonHeld_2)) return; 
+         if (true == CheckDebugBreak("4e442452-5c25-4eac-984e-9b3987f951d7", "GUI_Button", Relay_OnButtonHeld_2)) return; 
       }
       else
       {
@@ -522,7 +556,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4e442452-5c25-4eac-984e-9b3987f951d7", "GUI Button", Relay_OnButtonUp_2)) return; 
+         if (true == CheckDebugBreak("4e442452-5c25-4eac-984e-9b3987f951d7", "GUI_Button", Relay_OnButtonUp_2)) return; 
       }
       else
       {
@@ -534,7 +568,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4e442452-5c25-4eac-984e-9b3987f951d7", "GUI Button", Relay_OnButtonClicked_2)) return; 
+         if (true == CheckDebugBreak("4e442452-5c25-4eac-984e-9b3987f951d7", "GUI_Button", Relay_OnButtonClicked_2)) return; 
          Relay_AddRelativeForce_16();
       }
       else
@@ -547,7 +581,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4e442452-5c25-4eac-984e-9b3987f951d7", "GUI Button", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("4e442452-5c25-4eac-984e-9b3987f951d7", "GUI_Button", Relay_In_2)) return; 
          {
             {
             }
@@ -582,7 +616,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0d74540d-189b-47db-b10f-7aabb787ca26", "GUI Set Enabled State", Relay_In_3)) return; 
+         if (true == CheckDebugBreak("0d74540d-189b-47db-b10f-7aabb787ca26", "GUI_Set_Enabled_State", Relay_In_3)) return; 
          {
             {
                logic_uScriptAct_GUISetEnabledState_Enabled_3 = local_Jump_Enabled_System_Boolean;
@@ -609,7 +643,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("724c40a7-e27c-4d9b-b72d-91e674bfa54a", "GUI Set Enabled State", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("724c40a7-e27c-4d9b-b72d-91e674bfa54a", "GUI_Set_Enabled_State", Relay_In_5)) return; 
          {
             {
             }
@@ -634,7 +668,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("959a7a71-b2fc-46b8-a376-e971c58b399a", "GUI Set Background Color", Relay_In_6)) return; 
+         if (true == CheckDebugBreak("959a7a71-b2fc-46b8-a376-e971c58b399a", "GUI_Set_Background_Color", Relay_In_6)) return; 
          {
             {
             }
@@ -659,7 +693,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("554c0e61-5a15-4c92-8764-bd3ae6c0720b", "GUI Button", Relay_OnButtonDown_7)) return; 
+         if (true == CheckDebugBreak("554c0e61-5a15-4c92-8764-bd3ae6c0720b", "GUI_Button", Relay_OnButtonDown_7)) return; 
       }
       else
       {
@@ -671,7 +705,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("554c0e61-5a15-4c92-8764-bd3ae6c0720b", "GUI Button", Relay_OnButtonHeld_7)) return; 
+         if (true == CheckDebugBreak("554c0e61-5a15-4c92-8764-bd3ae6c0720b", "GUI_Button", Relay_OnButtonHeld_7)) return; 
       }
       else
       {
@@ -683,7 +717,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("554c0e61-5a15-4c92-8764-bd3ae6c0720b", "GUI Button", Relay_OnButtonUp_7)) return; 
+         if (true == CheckDebugBreak("554c0e61-5a15-4c92-8764-bd3ae6c0720b", "GUI_Button", Relay_OnButtonUp_7)) return; 
       }
       else
       {
@@ -695,7 +729,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("554c0e61-5a15-4c92-8764-bd3ae6c0720b", "GUI Button", Relay_OnButtonClicked_7)) return; 
+         if (true == CheckDebugBreak("554c0e61-5a15-4c92-8764-bd3ae6c0720b", "GUI_Button", Relay_OnButtonClicked_7)) return; 
          Relay_In_10();
       }
       else
@@ -708,7 +742,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("554c0e61-5a15-4c92-8764-bd3ae6c0720b", "GUI Button", Relay_In_7)) return; 
+         if (true == CheckDebugBreak("554c0e61-5a15-4c92-8764-bd3ae6c0720b", "GUI_Button", Relay_In_7)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_7 = local_Enabled_Text_System_String;
@@ -740,7 +774,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b7fc7931-e830-46d7-920f-8512afffe428", "Set Bool", Relay_True_9)) return; 
+         if (true == CheckDebugBreak("b7fc7931-e830-46d7-920f-8512afffe428", "Set_Bool", Relay_True_9)) return; 
          {
             {
             }
@@ -766,7 +800,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b7fc7931-e830-46d7-920f-8512afffe428", "Set Bool", Relay_False_9)) return; 
+         if (true == CheckDebugBreak("b7fc7931-e830-46d7-920f-8512afffe428", "Set_Bool", Relay_False_9)) return; 
          {
             {
             }
@@ -792,7 +826,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("79b90be1-20ff-4ea2-a1a5-a33de01446e1", "Compare Bool", Relay_In_10)) return; 
+         if (true == CheckDebugBreak("79b90be1-20ff-4ea2-a1a5-a33de01446e1", "Compare_Bool", Relay_In_10)) return; 
          {
             {
                logic_uScriptCon_CompareBool_Bool_10 = local_Jump_Enabled_System_Boolean;
@@ -824,7 +858,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0b889e77-7458-44ed-a9a5-74d7dbc5e1fc", "Set Bool", Relay_True_11)) return; 
+         if (true == CheckDebugBreak("0b889e77-7458-44ed-a9a5-74d7dbc5e1fc", "Set_Bool", Relay_True_11)) return; 
          {
             {
             }
@@ -850,7 +884,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0b889e77-7458-44ed-a9a5-74d7dbc5e1fc", "Set Bool", Relay_False_11)) return; 
+         if (true == CheckDebugBreak("0b889e77-7458-44ed-a9a5-74d7dbc5e1fc", "Set_Bool", Relay_False_11)) return; 
          {
             {
             }
@@ -876,7 +910,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4c70fc70-fb45-4cd7-a9dc-3ff4ee06ea8f", "Set String", Relay_In_13)) return; 
+         if (true == CheckDebugBreak("4c70fc70-fb45-4cd7-a9dc-3ff4ee06ea8f", "Set_String", Relay_In_13)) return; 
          {
             {
             }
@@ -905,7 +939,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5c1dc7ed-38e8-4bf1-957f-a1cc606571b8", "Set String", Relay_In_14)) return; 
+         if (true == CheckDebugBreak("5c1dc7ed-38e8-4bf1-957f-a1cc606571b8", "Set_String", Relay_In_14)) return; 
          {
             {
             }
@@ -934,7 +968,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d7b0c72e-8998-4eed-bf50-7562bd8ba925", "UnityEngine.Rigidbody", Relay_AddRelativeForce_16)) return; 
+         if (true == CheckDebugBreak("d7b0c72e-8998-4eed-bf50-7562bd8ba925", "UnityEngine_Rigidbody", Relay_AddRelativeForce_16)) return; 
          {
             {
             }
@@ -958,7 +992,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("fc9832ad-ed38-4fe6-ac66-90dc2a988fa1", "Print Text", Relay_ShowLabel_20)) return; 
+         if (true == CheckDebugBreak("fc9832ad-ed38-4fe6-ac66-90dc2a988fa1", "Print_Text", Relay_ShowLabel_20)) return; 
          {
             {
                logic_uScriptAct_PrintText_Text_20 = local_22_System_String;
@@ -992,7 +1026,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("fc9832ad-ed38-4fe6-ac66-90dc2a988fa1", "Print Text", Relay_HideLabel_20)) return; 
+         if (true == CheckDebugBreak("fc9832ad-ed38-4fe6-ac66-90dc2a988fa1", "Print_Text", Relay_HideLabel_20)) return; 
          {
             {
                logic_uScriptAct_PrintText_Text_20 = local_22_System_String;
@@ -1062,18 +1096,18 @@ public class SimpleUI_Logic : uScriptLogic
    
    void Relay_OnUpdate_23()
    {
-      if (true == CheckDebugBreak("6aab1e6a-1c27-434a-948a-aca785161dc6", "Global Update", Relay_OnUpdate_23)) return; 
+      if (true == CheckDebugBreak("6aab1e6a-1c27-434a-948a-aca785161dc6", "Global_Update", Relay_OnUpdate_23)) return; 
    }
    
    void Relay_OnLateUpdate_23()
    {
-      if (true == CheckDebugBreak("6aab1e6a-1c27-434a-948a-aca785161dc6", "Global Update", Relay_OnLateUpdate_23)) return; 
+      if (true == CheckDebugBreak("6aab1e6a-1c27-434a-948a-aca785161dc6", "Global_Update", Relay_OnLateUpdate_23)) return; 
       Relay_In_21();
    }
    
    void Relay_OnFixedUpdate_23()
    {
-      if (true == CheckDebugBreak("6aab1e6a-1c27-434a-948a-aca785161dc6", "Global Update", Relay_OnFixedUpdate_23)) return; 
+      if (true == CheckDebugBreak("6aab1e6a-1c27-434a-948a-aca785161dc6", "Global_Update", Relay_OnFixedUpdate_23)) return; 
    }
    
    private void UpdateEditorValues( )
@@ -1094,7 +1128,7 @@ public class SimpleUI_Logic : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

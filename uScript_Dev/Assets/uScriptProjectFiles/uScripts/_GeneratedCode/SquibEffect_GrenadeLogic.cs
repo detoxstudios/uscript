@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -256,13 +256,13 @@ public class SquibEffect_GrenadeLogic : uScriptLogic
    }
    void Relay_uScriptStart_1()
    {
-      if (true == CheckDebugBreak("7a66b730-9183-4691-870c-140925cb05b1", "uScript Events", Relay_uScriptStart_1)) return; 
+      if (true == CheckDebugBreak("7a66b730-9183-4691-870c-140925cb05b1", "uScript_Events", Relay_uScriptStart_1)) return; 
       Relay_In_0();
    }
    
    void Relay_uScriptLateStart_1()
    {
-      if (true == CheckDebugBreak("7a66b730-9183-4691-870c-140925cb05b1", "uScript Events", Relay_uScriptLateStart_1)) return; 
+      if (true == CheckDebugBreak("7a66b730-9183-4691-870c-140925cb05b1", "uScript_Events", Relay_uScriptLateStart_1)) return; 
    }
    
    private void UpdateEditorValues( )
@@ -274,7 +274,7 @@ public class SquibEffect_GrenadeLogic : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

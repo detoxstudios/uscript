@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -1433,18 +1433,18 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
    
    void Relay_OnEnterTrigger_91()
    {
-      if (true == CheckDebugBreak("1d3585e9-56b3-4cde-a62f-fcb11e904549", "Trigger_Event", Relay_OnEnterTrigger_91)) return; 
+      if (true == CheckDebugBreak("b2a9a545-06f0-4f73-b63d-1c11df7626f3", "Trigger_Event", Relay_OnEnterTrigger_91)) return; 
       Relay_SendCustomEvent_8();
    }
    
    void Relay_OnExitTrigger_91()
    {
-      if (true == CheckDebugBreak("1d3585e9-56b3-4cde-a62f-fcb11e904549", "Trigger_Event", Relay_OnExitTrigger_91)) return; 
+      if (true == CheckDebugBreak("b2a9a545-06f0-4f73-b63d-1c11df7626f3", "Trigger_Event", Relay_OnExitTrigger_91)) return; 
    }
    
    void Relay_WhileInsideTrigger_91()
    {
-      if (true == CheckDebugBreak("1d3585e9-56b3-4cde-a62f-fcb11e904549", "Trigger_Event", Relay_WhileInsideTrigger_91)) return; 
+      if (true == CheckDebugBreak("b2a9a545-06f0-4f73-b63d-1c11df7626f3", "Trigger_Event", Relay_WhileInsideTrigger_91)) return; 
    }
    
    private void UpdateEditorValues( )
@@ -1478,7 +1478,7 @@ public class Doors_DoorLockablePrefabGraph : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

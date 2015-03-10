@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 public class Doors_DoorLockablePrefabGraph_Component : uScriptCode
 {
    #pragma warning disable 414
-   public Doors_DoorLockablePrefabGraph PublicVariables = new Doors_DoorLockablePrefabGraph( ); 
+   public Doors_DoorLockablePrefabGraph ExposedVariables = new Doors_DoorLockablePrefabGraph( ); 
    #pragma warning restore 414
    
    
@@ -18,34 +18,34 @@ public class Doors_DoorLockablePrefabGraph_Component : uScriptCode
       #if !(UNITY_FLASH)
       useGUILayout = false;
       #endif
-      PublicVariables.Awake( );
-      PublicVariables.SetParent( this.gameObject );
+      ExposedVariables.Awake( );
+      ExposedVariables.SetParent( this.gameObject );
       if ( "1.CMR" != uScript_MasterComponent.Version )
       {
          uScriptDebug.Log( "The generated code is not compatible with your current uScript Runtime " + uScript_MasterComponent.Version, uScriptDebug.Type.Error );
-         PublicVariables = null;
+         ExposedVariables = null;
          UnityEngine.Debug.Break();
       }
    }
    void Start( )
    {
-      PublicVariables.Start( );
+      ExposedVariables.Start( );
    }
    void OnEnable( )
    {
-      PublicVariables.OnEnable( );
+      ExposedVariables.OnEnable( );
    }
    void OnDisable( )
    {
-      PublicVariables.OnDisable( );
+      ExposedVariables.OnDisable( );
    }
    void Update( )
    {
-      PublicVariables.Update( );
+      ExposedVariables.Update( );
    }
    void OnDestroy( )
    {
-      PublicVariables.OnDestroy( );
+      ExposedVariables.OnDestroy( );
    }
    #if UNITY_EDITOR
       void OnDrawGizmos( )

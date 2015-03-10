@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,11 +12,6 @@ public class SimpleLogic_Graph_Component : uScriptCode
    public SimpleLogic_Graph ExposedVariables = new SimpleLogic_Graph( ); 
    #pragma warning restore 414
    
-   public UnityEngine.GameObject MainCamera { get { return ExposedVariables.MainCamera; } set { ExposedVariables.MainCamera = value; } } 
-   public UnityEngine.GameObject Camera2 { get { return ExposedVariables.Camera2; } set { ExposedVariables.Camera2 = value; } } 
-   public UnityEngine.GameObject Box1 { get { return ExposedVariables.Box1; } set { ExposedVariables.Box1 = value; } } 
-   public UnityEngine.GameObject Box2 { get { return ExposedVariables.Box2; } set { ExposedVariables.Box2 = value; } } 
-   public UnityEngine.GameObject Light { get { return ExposedVariables.Light; } set { ExposedVariables.Light = value; } } 
    
    void Awake( )
    {
@@ -62,21 +57,16 @@ public class SimpleLogic_Graph_Component : uScriptCode
          {
             GameObject gameObject;
             gameObject = GameObject.Find( "Box1" ); 
-            if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_variables.png");
-         }
-         {
-            GameObject gameObject;
-            gameObject = GameObject.Find( "Main Camera" ); 
-            if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_variables.png");
-         }
-         {
-            GameObject gameObject;
-            gameObject = GameObject.Find( "Directional light" ); 
-            if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_variables.png");
+            if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_events.png");
          }
          {
             GameObject gameObject;
             gameObject = GameObject.Find( "Box2" ); 
+            if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_events.png");
+         }
+         {
+            GameObject gameObject;
+            gameObject = GameObject.Find( "Main Camera" ); 
             if ( null != gameObject ) Gizmos.DrawIcon(gameObject.transform.position, "uscript_gizmo_variables.png");
          }
          {

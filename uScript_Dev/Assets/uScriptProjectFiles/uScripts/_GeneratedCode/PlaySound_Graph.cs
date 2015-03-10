@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -472,7 +472,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2b996ed3-8295-4e12-83ad-a6bbc2f0853f", "Play Sound", Relay_Finished_1)) return; 
+         if (true == CheckDebugBreak("2b996ed3-8295-4e12-83ad-a6bbc2f0853f", "Play_Sound", Relay_Finished_1)) return; 
       }
       else
       {
@@ -484,7 +484,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2b996ed3-8295-4e12-83ad-a6bbc2f0853f", "Play Sound", Relay_Play_1)) return; 
+         if (true == CheckDebugBreak("2b996ed3-8295-4e12-83ad-a6bbc2f0853f", "Play_Sound", Relay_Play_1)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_1 = local_Alarm_AudioClip_UnityEngine_AudioClip;
@@ -526,7 +526,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2b996ed3-8295-4e12-83ad-a6bbc2f0853f", "Play Sound", Relay_UpdateVolume_1)) return; 
+         if (true == CheckDebugBreak("2b996ed3-8295-4e12-83ad-a6bbc2f0853f", "Play_Sound", Relay_UpdateVolume_1)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_1 = local_Alarm_AudioClip_UnityEngine_AudioClip;
@@ -568,7 +568,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2b996ed3-8295-4e12-83ad-a6bbc2f0853f", "Play Sound", Relay_Stop_1)) return; 
+         if (true == CheckDebugBreak("2b996ed3-8295-4e12-83ad-a6bbc2f0853f", "Play_Sound", Relay_Stop_1)) return; 
          {
             {
                logic_uScriptAct_PlaySound_audioClip_1 = local_Alarm_AudioClip_UnityEngine_AudioClip;
@@ -610,7 +610,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("373c63b4-b58a-41f0-aa1a-59a010257289", "Load AudioClip", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("373c63b4-b58a-41f0-aa1a-59a010257289", "Load_AudioClip", Relay_In_2)) return; 
          {
             {
             }
@@ -636,54 +636,54 @@ public class PlaySound_Graph : uScriptLogic
    
    void Relay_uScriptStart_3()
    {
-      if (true == CheckDebugBreak("17728fb2-ec20-48ec-b387-e5482e5912e9", "uScript Events", Relay_uScriptStart_3)) return; 
+      if (true == CheckDebugBreak("17728fb2-ec20-48ec-b387-e5482e5912e9", "uScript_Events", Relay_uScriptStart_3)) return; 
       Relay_In_2();
    }
    
    void Relay_uScriptLateStart_3()
    {
-      if (true == CheckDebugBreak("17728fb2-ec20-48ec-b387-e5482e5912e9", "uScript Events", Relay_uScriptLateStart_3)) return; 
+      if (true == CheckDebugBreak("17728fb2-ec20-48ec-b387-e5482e5912e9", "uScript_Events", Relay_uScriptLateStart_3)) return; 
    }
    
    void Relay_OnEnter_7()
    {
-      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse Cursor Events", Relay_OnEnter_7)) return; 
+      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse_Cursor_Events", Relay_OnEnter_7)) return; 
       Relay_Play_1();
       Relay_TurnOn_9();
    }
    
    void Relay_OnOver_7()
    {
-      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse Cursor Events", Relay_OnOver_7)) return; 
+      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse_Cursor_Events", Relay_OnOver_7)) return; 
    }
    
    void Relay_OnExit_7()
    {
-      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse Cursor Events", Relay_OnExit_7)) return; 
+      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse_Cursor_Events", Relay_OnExit_7)) return; 
       Relay_Stop_1();
       Relay_TurnOff_9();
    }
    
    void Relay_OnDown_7()
    {
-      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse Cursor Events", Relay_OnDown_7)) return; 
+      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse_Cursor_Events", Relay_OnDown_7)) return; 
    }
    
    void Relay_OnUp_7()
    {
-      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse Cursor Events", Relay_OnUp_7)) return; 
+      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse_Cursor_Events", Relay_OnUp_7)) return; 
    }
    
    void Relay_OnDrag_7()
    {
-      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse Cursor Events", Relay_OnDrag_7)) return; 
+      if (true == CheckDebugBreak("47310a36-0a8a-4fea-a467-9d4c3959b6ac", "Mouse_Cursor_Events", Relay_OnDrag_7)) return; 
    }
    
    void Relay_OnOut_9()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle Component", Relay_OnOut_9)) return; 
+         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle_Component", Relay_OnOut_9)) return; 
       }
       else
       {
@@ -695,7 +695,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle Component", Relay_OffOut_9)) return; 
+         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle_Component", Relay_OffOut_9)) return; 
       }
       else
       {
@@ -707,7 +707,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle Component", Relay_ToggleOut_9)) return; 
+         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle_Component", Relay_ToggleOut_9)) return; 
       }
       else
       {
@@ -719,7 +719,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle Component", Relay_TurnOn_9)) return; 
+         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle_Component", Relay_TurnOn_9)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -755,7 +755,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle Component", Relay_TurnOff_9)) return; 
+         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle_Component", Relay_TurnOff_9)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -791,7 +791,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle Component", Relay_Toggle_9)) return; 
+         if (true == CheckDebugBreak("1ec0bd06-2122-41c1-b942-0e766e144f6f", "Toggle_Component", Relay_Toggle_9)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -827,7 +827,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1e9884f2-fc2e-4931-a618-950bc8672b0d", "Print Text", Relay_ShowLabel_13)) return; 
+         if (true == CheckDebugBreak("1e9884f2-fc2e-4931-a618-950bc8672b0d", "Print_Text", Relay_ShowLabel_13)) return; 
          {
             {
             }
@@ -859,7 +859,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1e9884f2-fc2e-4931-a618-950bc8672b0d", "Print Text", Relay_HideLabel_13)) return; 
+         if (true == CheckDebugBreak("1e9884f2-fc2e-4931-a618-950bc8672b0d", "Print_Text", Relay_HideLabel_13)) return; 
          {
             {
             }
@@ -902,7 +902,7 @@ public class PlaySound_Graph : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

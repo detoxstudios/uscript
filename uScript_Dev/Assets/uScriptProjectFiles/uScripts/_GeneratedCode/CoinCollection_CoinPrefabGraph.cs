@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -812,7 +812,7 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    }
    void Relay_OnEnterTrigger_45()
    {
-      if (true == CheckDebugBreak("abae5ea9-b649-4fea-a98a-9c1bf98b62c0", "Trigger_Event", Relay_OnEnterTrigger_45)) return; 
+      if (true == CheckDebugBreak("ade60245-db72-4ee5-8f87-0e2655ac0956", "Trigger_Event", Relay_OnEnterTrigger_45)) return; 
       local_6_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_45;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -830,7 +830,7 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    
    void Relay_OnExitTrigger_45()
    {
-      if (true == CheckDebugBreak("abae5ea9-b649-4fea-a98a-9c1bf98b62c0", "Trigger_Event", Relay_OnExitTrigger_45)) return; 
+      if (true == CheckDebugBreak("ade60245-db72-4ee5-8f87-0e2655ac0956", "Trigger_Event", Relay_OnExitTrigger_45)) return; 
       local_6_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_45;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -847,7 +847,7 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    
    void Relay_WhileInsideTrigger_45()
    {
-      if (true == CheckDebugBreak("abae5ea9-b649-4fea-a98a-9c1bf98b62c0", "Trigger_Event", Relay_WhileInsideTrigger_45)) return; 
+      if (true == CheckDebugBreak("ade60245-db72-4ee5-8f87-0e2655ac0956", "Trigger_Event", Relay_WhileInsideTrigger_45)) return; 
       local_6_UnityEngine_GameObject = event_UnityEngine_GameObject_GameObject_45;
       {
          //if our game object reference was changed then we need to reset event listeners
@@ -883,7 +883,7 @@ public class CoinCollection_CoinPrefabGraph : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

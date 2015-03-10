@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -72,8 +72,8 @@ public class FollowCamera_Character : uScriptLogic
    //pointer to script instanced logic node
    uScriptAct_IsometricCharacterController logic_uScriptAct_IsometricCharacterController_uScriptAct_IsometricCharacterController_15 = new uScriptAct_IsometricCharacterController( );
    UnityEngine.GameObject logic_uScriptAct_IsometricCharacterController_target_15 = default(UnityEngine.GameObject);
-   System.Single logic_uScriptAct_IsometricCharacterController_translation_15 = (float) 1.5;
-   System.Single logic_uScriptAct_IsometricCharacterController_rotation_15 = (float) 100;
+   System.Single logic_uScriptAct_IsometricCharacterController_translation_15 = (float) 1;
+   System.Single logic_uScriptAct_IsometricCharacterController_rotation_15 = (float) 85;
    System.Boolean logic_uScriptAct_IsometricCharacterController_filterTranslation_15 = (bool) false;
    System.Single logic_uScriptAct_IsometricCharacterController_translationFilterConstant_15 = (float) 0.7;
    System.Boolean logic_uScriptAct_IsometricCharacterController_filterRotation_15 = (bool) false;
@@ -704,7 +704,8 @@ public class FollowCamera_Character : uScriptLogic
          }
          logic_FollowCamera_FollowCamera_0.Reset_Position(logic_FollowCamera_Follow_Object_0, logic_FollowCamera_Follow_Distance_0, logic_FollowCamera_Follow_Height_0, logic_FollowCamera_Look_At_Object_0, logic_FollowCamera_Filter_Value_0, logic_FollowCamera_Camera_0);
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         //Don't copy 'out' values back to the global variables because this was an auto generated nested node
+         //and those values get set through an event which is called before the above method exited
          
       }
       else
@@ -774,7 +775,8 @@ public class FollowCamera_Character : uScriptLogic
          }
          logic_FollowCamera_FollowCamera_0.Update_Position(logic_FollowCamera_Follow_Object_0, logic_FollowCamera_Follow_Distance_0, logic_FollowCamera_Follow_Height_0, logic_FollowCamera_Look_At_Object_0, logic_FollowCamera_Filter_Value_0, logic_FollowCamera_Camera_0);
          
-         //save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested
+         //Don't copy 'out' values back to the global variables because this was an auto generated nested node
+         //and those values get set through an event which is called before the above method exited
          
       }
       else
@@ -785,34 +787,34 @@ public class FollowCamera_Character : uScriptLogic
    
    void Relay_uScriptStart_1()
    {
-      if (true == CheckDebugBreak("26ae5e93-5f33-4a74-bd45-1ab60725f4e8", "uScript Events", Relay_uScriptStart_1)) return; 
+      if (true == CheckDebugBreak("26ae5e93-5f33-4a74-bd45-1ab60725f4e8", "uScript_Events", Relay_uScriptStart_1)) return; 
       Relay_Reset_Position_0();
    }
    
    void Relay_uScriptLateStart_1()
    {
-      if (true == CheckDebugBreak("26ae5e93-5f33-4a74-bd45-1ab60725f4e8", "uScript Events", Relay_uScriptLateStart_1)) return; 
+      if (true == CheckDebugBreak("26ae5e93-5f33-4a74-bd45-1ab60725f4e8", "uScript_Events", Relay_uScriptLateStart_1)) return; 
    }
    
    void Relay_OnUpdate_2()
    {
-      if (true == CheckDebugBreak("f6a9f64b-71d9-40a0-9b84-63266c650faf", "Global Update", Relay_OnUpdate_2)) return; 
+      if (true == CheckDebugBreak("f6a9f64b-71d9-40a0-9b84-63266c650faf", "Global_Update", Relay_OnUpdate_2)) return; 
       Relay_Update_Position_0();
    }
    
    void Relay_OnLateUpdate_2()
    {
-      if (true == CheckDebugBreak("f6a9f64b-71d9-40a0-9b84-63266c650faf", "Global Update", Relay_OnLateUpdate_2)) return; 
+      if (true == CheckDebugBreak("f6a9f64b-71d9-40a0-9b84-63266c650faf", "Global_Update", Relay_OnLateUpdate_2)) return; 
    }
    
    void Relay_OnFixedUpdate_2()
    {
-      if (true == CheckDebugBreak("f6a9f64b-71d9-40a0-9b84-63266c650faf", "Global Update", Relay_OnFixedUpdate_2)) return; 
+      if (true == CheckDebugBreak("f6a9f64b-71d9-40a0-9b84-63266c650faf", "Global_Update", Relay_OnFixedUpdate_2)) return; 
    }
    
    void Relay_KeyEvent_7()
    {
-      if (true == CheckDebugBreak("c468ee21-ba99-4e1d-87eb-88ecb33f633d", "Input Events", Relay_KeyEvent_7)) return; 
+      if (true == CheckDebugBreak("c468ee21-ba99-4e1d-87eb-88ecb33f633d", "Input_Events", Relay_KeyEvent_7)) return; 
       Relay_In_8();
    }
    
@@ -820,7 +822,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("11b7e2f1-cde0-485d-9df8-40436e427287", "Input Events Filter", Relay_In_8)) return; 
+         if (true == CheckDebugBreak("11b7e2f1-cde0-485d-9df8-40436e427287", "Input_Events_Filter", Relay_In_8)) return; 
          {
             {
             }
@@ -843,7 +845,7 @@ public class FollowCamera_Character : uScriptLogic
    
    void Relay_KeyEvent_9()
    {
-      if (true == CheckDebugBreak("47a35231-9605-4e6b-9193-a8eecee80a3e", "Input Events", Relay_KeyEvent_9)) return; 
+      if (true == CheckDebugBreak("47a35231-9605-4e6b-9193-a8eecee80a3e", "Input_Events", Relay_KeyEvent_9)) return; 
       Relay_In_10();
    }
    
@@ -851,7 +853,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d051b1e7-8e98-4b69-b935-4df4680ffec4", "Input Events Filter", Relay_In_10)) return; 
+         if (true == CheckDebugBreak("d051b1e7-8e98-4b69-b935-4df4680ffec4", "Input_Events_Filter", Relay_In_10)) return; 
          {
             {
             }
@@ -874,7 +876,7 @@ public class FollowCamera_Character : uScriptLogic
    
    void Relay_KeyEvent_11()
    {
-      if (true == CheckDebugBreak("d8fcad54-9952-4abf-bae6-344f592d6dcf", "Input Events", Relay_KeyEvent_11)) return; 
+      if (true == CheckDebugBreak("d8fcad54-9952-4abf-bae6-344f592d6dcf", "Input_Events", Relay_KeyEvent_11)) return; 
       Relay_In_12();
    }
    
@@ -882,7 +884,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9bef96f6-0953-436f-9c22-4b2cdde7966a", "Input Events Filter", Relay_In_12)) return; 
+         if (true == CheckDebugBreak("9bef96f6-0953-436f-9c22-4b2cdde7966a", "Input_Events_Filter", Relay_In_12)) return; 
          {
             {
             }
@@ -905,7 +907,7 @@ public class FollowCamera_Character : uScriptLogic
    
    void Relay_KeyEvent_13()
    {
-      if (true == CheckDebugBreak("2ef503df-849b-42c2-bc77-f4f4999b74f9", "Input Events", Relay_KeyEvent_13)) return; 
+      if (true == CheckDebugBreak("2ef503df-849b-42c2-bc77-f4f4999b74f9", "Input_Events", Relay_KeyEvent_13)) return; 
       Relay_In_14();
    }
    
@@ -913,7 +915,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("52b4a3a5-9026-4821-a7a5-4c8178301e98", "Input Events Filter", Relay_In_14)) return; 
+         if (true == CheckDebugBreak("52b4a3a5-9026-4821-a7a5-4c8178301e98", "Input_Events_Filter", Relay_In_14)) return; 
          {
             {
             }
@@ -938,7 +940,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric Character Controller", Relay_MoveForward_15)) return; 
+         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric_Character_Controller", Relay_MoveForward_15)) return; 
          {
             {
                {
@@ -983,7 +985,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric Character Controller", Relay_MoveBackward_15)) return; 
+         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric_Character_Controller", Relay_MoveBackward_15)) return; 
          {
             {
                {
@@ -1028,7 +1030,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric Character Controller", Relay_StrafeRight_15)) return; 
+         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric_Character_Controller", Relay_StrafeRight_15)) return; 
          {
             {
                {
@@ -1073,7 +1075,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric Character Controller", Relay_StrafeLeft_15)) return; 
+         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric_Character_Controller", Relay_StrafeLeft_15)) return; 
          {
             {
                {
@@ -1118,7 +1120,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric Character Controller", Relay_RotateRight_15)) return; 
+         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric_Character_Controller", Relay_RotateRight_15)) return; 
          {
             {
                {
@@ -1163,7 +1165,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric Character Controller", Relay_RotateLeft_15)) return; 
+         if (true == CheckDebugBreak("d7cc2d24-c616-4058-9fd2-c053322a8a01", "Isometric_Character_Controller", Relay_RotateLeft_15)) return; 
          {
             {
                {
@@ -1206,20 +1208,20 @@ public class FollowCamera_Character : uScriptLogic
    
    void Relay_uScriptStart_19()
    {
-      if (true == CheckDebugBreak("5dbf8ac4-4186-4d3e-9a64-ad74788ff0eb", "uScript Events", Relay_uScriptStart_19)) return; 
+      if (true == CheckDebugBreak("5dbf8ac4-4186-4d3e-9a64-ad74788ff0eb", "uScript_Events", Relay_uScriptStart_19)) return; 
       Relay_ShowLabel_20();
    }
    
    void Relay_uScriptLateStart_19()
    {
-      if (true == CheckDebugBreak("5dbf8ac4-4186-4d3e-9a64-ad74788ff0eb", "uScript Events", Relay_uScriptLateStart_19)) return; 
+      if (true == CheckDebugBreak("5dbf8ac4-4186-4d3e-9a64-ad74788ff0eb", "uScript_Events", Relay_uScriptLateStart_19)) return; 
    }
    
    void Relay_ShowLabel_20()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7ad19681-8968-40c1-936b-d2fc86832268", "Print Text", Relay_ShowLabel_20)) return; 
+         if (true == CheckDebugBreak("7ad19681-8968-40c1-936b-d2fc86832268", "Print_Text", Relay_ShowLabel_20)) return; 
          {
             {
             }
@@ -1251,7 +1253,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("7ad19681-8968-40c1-936b-d2fc86832268", "Print Text", Relay_HideLabel_20)) return; 
+         if (true == CheckDebugBreak("7ad19681-8968-40c1-936b-d2fc86832268", "Print_Text", Relay_HideLabel_20)) return; 
          {
             {
             }
@@ -1294,7 +1296,7 @@ public class FollowCamera_Character : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

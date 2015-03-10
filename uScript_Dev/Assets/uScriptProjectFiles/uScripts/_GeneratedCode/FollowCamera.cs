@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -301,7 +301,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("78534c31-e3c4-4341-a86d-c766ea69ca16", "Get Position and Rotation", Relay_In_0)) return; 
+         if (true == CheckDebugBreak("78534c31-e3c4-4341-a86d-c766ea69ca16", "Get_Position_and_Rotation", Relay_In_0)) return; 
          {
             {
                logic_uScriptAct_GetPositionAndRotation_Target_0 = external_35;
@@ -344,7 +344,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0d4fd339-b841-46fa-8ae1-bc349efb27ba", "Vectors From Quaternion", Relay_In_1)) return; 
+         if (true == CheckDebugBreak("0d4fd339-b841-46fa-8ae1-bc349efb27ba", "Vectors_From_Quaternion", Relay_In_1)) return; 
          {
             {
                logic_uScriptAct_VectorsFromQuaternion_quaternion_1 = local_12_UnityEngine_Quaternion;
@@ -378,7 +378,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("1bf6c46a-ace1-4ab6-bd15-14641139d28b", "Scale Vector3", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("1bf6c46a-ace1-4ab6-bd15-14641139d28b", "Scale_Vector3", Relay_In_2)) return; 
          {
             {
                logic_uScriptAct_ScaleVector3_v_2 = local_10_UnityEngine_Vector3;
@@ -412,7 +412,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("23fd76d7-99d6-4e9e-a628-78544c436abc", "Set Components (Vector3)", Relay_In_3)) return; 
+         if (true == CheckDebugBreak("23fd76d7-99d6-4e9e-a628-78544c436abc", "Set_Components__Vector3_", Relay_In_3)) return; 
          {
             {
             }
@@ -446,7 +446,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("71056900-ddea-4f42-960c-75687ef9bbae", "Add Vector3", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("71056900-ddea-4f42-960c-75687ef9bbae", "Add_Vector3", Relay_In_4)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -482,7 +482,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3e30a62d-ea61-4404-b987-21ac2329313d", "Add Vector3", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("3e30a62d-ea61-4404-b987-21ac2329313d", "Add_Vector3", Relay_In_5)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -518,7 +518,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("0b77edeb-e055-4932-a28f-bf72729f0a0b", "Scale Vector3", Relay_In_14)) return; 
+         if (true == CheckDebugBreak("0b77edeb-e055-4932-a28f-bf72729f0a0b", "Scale_Vector3", Relay_In_14)) return; 
          {
             {
                logic_uScriptAct_ScaleVector3_v_14 = local_18_UnityEngine_Vector3;
@@ -552,7 +552,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("83aa72fc-ce56-4700-8a72-a6b5391c35a8", "Add Vector3", Relay_In_16)) return; 
+         if (true == CheckDebugBreak("83aa72fc-ce56-4700-8a72-a6b5391c35a8", "Add_Vector3", Relay_In_16)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -588,7 +588,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("9121d6e0-1a0e-4927-92c1-6670a5153bb6", "Add Vector3", Relay_In_17)) return; 
+         if (true == CheckDebugBreak("9121d6e0-1a0e-4927-92c1-6670a5153bb6", "Add_Vector3", Relay_In_17)) return; 
          {
             {
                List<UnityEngine.Vector3> properties = new List<UnityEngine.Vector3>();
@@ -624,7 +624,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3549075d-acff-4b0d-962b-9fdf417c082c", "Get Position and Rotation", Relay_In_20)) return; 
+         if (true == CheckDebugBreak("3549075d-acff-4b0d-962b-9fdf417c082c", "Get_Position_and_Rotation", Relay_In_20)) return; 
          {
             {
                logic_uScriptAct_GetPositionAndRotation_Target_20 = external_35;
@@ -667,7 +667,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("6258056e-4ae8-43ac-a162-75b669923487", "Vectors From Quaternion", Relay_In_21)) return; 
+         if (true == CheckDebugBreak("6258056e-4ae8-43ac-a162-75b669923487", "Vectors_From_Quaternion", Relay_In_21)) return; 
          {
             {
                logic_uScriptAct_VectorsFromQuaternion_quaternion_21 = local_19_UnityEngine_Quaternion;
@@ -701,7 +701,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("2b4bbe79-fa6a-4d9d-9c2f-37e29dfc26bf", "Set Components (Vector3)", Relay_In_22)) return; 
+         if (true == CheckDebugBreak("2b4bbe79-fa6a-4d9d-9c2f-37e29dfc26bf", "Set_Components__Vector3_", Relay_In_22)) return; 
          {
             {
             }
@@ -735,7 +735,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("84bd8b46-e35f-4566-b614-dae40904b04c", "Filter Vector", Relay_Reset_25)) return; 
+         if (true == CheckDebugBreak("84bd8b46-e35f-4566-b614-dae40904b04c", "Filter_Vector", Relay_Reset_25)) return; 
          {
             {
                logic_uScriptAct_FilterVector_Target_25 = local_Raw_unfiltered_camera_position_UnityEngine_Vector3;
@@ -771,7 +771,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("84bd8b46-e35f-4566-b614-dae40904b04c", "Filter Vector", Relay_Filter_25)) return; 
+         if (true == CheckDebugBreak("84bd8b46-e35f-4566-b614-dae40904b04c", "Filter_Vector", Relay_Filter_25)) return; 
          {
             {
                logic_uScriptAct_FilterVector_Target_25 = local_Raw_unfiltered_camera_position_UnityEngine_Vector3;
@@ -807,7 +807,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c7675a15-a39f-42df-8c89-83a069b9fadd", "Set Position", Relay_In_26)) return; 
+         if (true == CheckDebugBreak("c7675a15-a39f-42df-8c89-83a069b9fadd", "Set_Position", Relay_In_26)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -843,7 +843,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("35bebe5b-6892-4821-a5b6-7a5741312623", "Look At", Relay_Finished_27)) return; 
+         if (true == CheckDebugBreak("35bebe5b-6892-4821-a5b6-7a5741312623", "Look_At", Relay_Finished_27)) return; 
       }
       else
       {
@@ -855,7 +855,7 @@ public class FollowCamera : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("35bebe5b-6892-4821-a5b6-7a5741312623", "Look At", Relay_In_27)) return; 
+         if (true == CheckDebugBreak("35bebe5b-6892-4821-a5b6-7a5741312623", "Look_At", Relay_In_27)) return; 
          {
             {
                List<UnityEngine.GameObject> properties = new List<UnityEngine.GameObject>();
@@ -1035,7 +1035,7 @@ public class FollowCamera : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -525,7 +525,7 @@ public class AdvancedUI_Options : uScriptLogic
    
    void Relay_OnGui_0()
    {
-      if (true == CheckDebugBreak("147aaa7d-d122-40e8-abe2-80f201356edf", "GUI Events", Relay_OnGui_0)) return; 
+      if (true == CheckDebugBreak("147aaa7d-d122-40e8-abe2-80f201356edf", "GUI_Events", Relay_OnGui_0)) return; 
       Relay_In_1();
    }
    
@@ -533,7 +533,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5264832f-c586-486a-96c3-3a4bbd9bfc20", "GUI Begin Group", Relay_In_1)) return; 
+         if (true == CheckDebugBreak("5264832f-c586-486a-96c3-3a4bbd9bfc20", "GUI_Begin_Group", Relay_In_1)) return; 
          {
             {
                logic_uScriptAct_GUIBeginGroup_Position_1 = local_Filtered_Rect_UnityEngine_Rect;
@@ -566,20 +566,20 @@ public class AdvancedUI_Options : uScriptLogic
    
    void Relay_uScriptStart_2()
    {
-      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript Events", Relay_uScriptStart_2)) return; 
+      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript_Events", Relay_uScriptStart_2)) return; 
       Relay_In_3();
    }
    
    void Relay_uScriptLateStart_2()
    {
-      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript Events", Relay_uScriptLateStart_2)) return; 
+      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript_Events", Relay_uScriptLateStart_2)) return; 
    }
    
    void Relay_In_3()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("34c65f62-1988-4081-b2b4-86bf2f901d6d", "Create Relative Rect (Screen)", Relay_In_3)) return; 
+         if (true == CheckDebugBreak("34c65f62-1988-4081-b2b4-86bf2f901d6d", "Create_Relative_Rect__Screen_", Relay_In_3)) return; 
          {
             {
             }
@@ -615,7 +615,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e75e3898-72da-4170-8679-480a80a5c381", "GUI Box", Relay_In_5)) return; 
+         if (true == CheckDebugBreak("e75e3898-72da-4170-8679-480a80a5c381", "GUI_Box", Relay_In_5)) return; 
          {
             {
             }
@@ -648,7 +648,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonDown_6)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonDown_6)) return; 
       }
       else
       {
@@ -660,7 +660,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonHeld_6)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonHeld_6)) return; 
       }
       else
       {
@@ -672,7 +672,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonUp_6)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonUp_6)) return; 
       }
       else
       {
@@ -684,7 +684,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonClicked_6)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonClicked_6)) return; 
          Relay_SendCustomEvent_31();
       }
       else
@@ -697,7 +697,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_In_6)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_In_6)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_6 = local_9_System_String;
@@ -736,7 +736,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("52d5cf8c-1389-4ebf-b017-600a8334d984", "GUI End Group", Relay_In_8)) return; 
+         if (true == CheckDebugBreak("52d5cf8c-1389-4ebf-b017-600a8334d984", "GUI_End_Group", Relay_In_8)) return; 
          {
          }
          logic_uScriptAct_GUIEndGroup_uScriptAct_GUIEndGroup_8.In();
@@ -752,25 +752,25 @@ public class AdvancedUI_Options : uScriptLogic
    
    void Relay_OnUpdate_11()
    {
-      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global Update", Relay_OnUpdate_11)) return; 
+      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global_Update", Relay_OnUpdate_11)) return; 
       Relay_Filter_12();
    }
    
    void Relay_OnLateUpdate_11()
    {
-      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global Update", Relay_OnLateUpdate_11)) return; 
+      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global_Update", Relay_OnLateUpdate_11)) return; 
    }
    
    void Relay_OnFixedUpdate_11()
    {
-      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global Update", Relay_OnFixedUpdate_11)) return; 
+      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global_Update", Relay_OnFixedUpdate_11)) return; 
    }
    
    void Relay_Reset_12()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter Rect", Relay_Reset_12)) return; 
+         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter_Rect", Relay_Reset_12)) return; 
          {
             {
                logic_uScriptAct_FilterRect_Target_12 = local_Target_Rect_UnityEngine_Rect;
@@ -797,7 +797,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter Rect", Relay_Filter_12)) return; 
+         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter_Rect", Relay_Filter_12)) return; 
          {
             {
                logic_uScriptAct_FilterRect_Target_12 = local_Target_Rect_UnityEngine_Rect;
@@ -822,7 +822,7 @@ public class AdvancedUI_Options : uScriptLogic
    
    void Relay_OnCustomEventString_15()
    {
-      if (true == CheckDebugBreak("1d6d4a07-bce2-4eea-a953-a8478cc30661", "Custom Event (String)", Relay_OnCustomEventString_15)) return; 
+      if (true == CheckDebugBreak("1d6d4a07-bce2-4eea-a953-a8478cc30661", "Custom_Event__String_", Relay_OnCustomEventString_15)) return; 
       local_16_System_String = event_UnityEngine_GameObject_EventName_15;
       local_17_System_String = event_UnityEngine_GameObject_EventData_15;
       Relay_In_19();
@@ -832,7 +832,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("759827d3-d770-4b3d-bc8c-57687f83fafc", "Compare String", Relay_In_18)) return; 
+         if (true == CheckDebugBreak("759827d3-d770-4b3d-bc8c-57687f83fafc", "Compare_String", Relay_In_18)) return; 
          {
             {
                logic_uScriptCon_CompareString_A_18 = local_17_System_String;
@@ -861,7 +861,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aac8d650-712b-4248-b513-14bcd5c7ce29", "Compare String", Relay_In_19)) return; 
+         if (true == CheckDebugBreak("aac8d650-712b-4248-b513-14bcd5c7ce29", "Compare_String", Relay_In_19)) return; 
          {
             {
                logic_uScriptCon_CompareString_A_19 = local_16_System_String;
@@ -890,7 +890,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c8f331db-f880-48f3-92d0-08aced7c34c8", "Create Relative Rect (Screen)", Relay_In_20)) return; 
+         if (true == CheckDebugBreak("c8f331db-f880-48f3-92d0-08aced7c34c8", "Create_Relative_Rect__Screen_", Relay_In_20)) return; 
          {
             {
             }
@@ -921,7 +921,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ab90415b-4dc2-4605-8dc7-a127b9a43e71", "Get Components (Rect)", Relay_In_23)) return; 
+         if (true == CheckDebugBreak("ab90415b-4dc2-4605-8dc7-a127b9a43e71", "Get_Components__Rect_", Relay_In_23)) return; 
          {
             {
                logic_uScriptAct_GetComponentsRect_InputRect_23 = local_Target_Rect_UnityEngine_Rect;
@@ -959,7 +959,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d460684c-6acd-4352-aafd-b66804f7d228", "Set Components (Rect)", Relay_In_25)) return; 
+         if (true == CheckDebugBreak("d460684c-6acd-4352-aafd-b66804f7d228", "Set_Components__Rect_", Relay_In_25)) return; 
          {
             {
             }
@@ -999,7 +999,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b2adeacb-fa4c-40f3-a809-a77876ea0087", "Get Components (Rect)", Relay_In_28)) return; 
+         if (true == CheckDebugBreak("b2adeacb-fa4c-40f3-a809-a77876ea0087", "Get_Components__Rect_", Relay_In_28)) return; 
          {
             {
                logic_uScriptAct_GetComponentsRect_InputRect_28 = local_Target_Rect_UnityEngine_Rect;
@@ -1037,7 +1037,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4c0c2678-3ddb-435c-9fcf-f987c98bc601", "Send Custom Event (String)", Relay_SendCustomEvent_31)) return; 
+         if (true == CheckDebugBreak("4c0c2678-3ddb-435c-9fcf-f987c98bc601", "Send_Custom_Event__String_", Relay_SendCustomEvent_31)) return; 
          {
             {
             }
@@ -1070,7 +1070,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("93a7cb18-5a50-4ce9-b5a4-fce1e9c966f8", "Set Components (Rect)", Relay_In_32)) return; 
+         if (true == CheckDebugBreak("93a7cb18-5a50-4ce9-b5a4-fce1e9c966f8", "Set_Components__Rect_", Relay_In_32)) return; 
          {
             {
             }
@@ -1105,7 +1105,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("18deede5-4ef7-4912-a0d2-33b938d64ecc", "GUI Toggle", Relay_In_34)) return; 
+         if (true == CheckDebugBreak("18deede5-4ef7-4912-a0d2-33b938d64ecc", "GUI_Toggle", Relay_In_34)) return; 
          {
             {
                logic_uScriptAct_GUIToggle_Value_34 = local_SFX_On_System_Boolean;
@@ -1143,7 +1143,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3965fb59-4fb5-4bb2-a7f2-9b1bf47e12e6", "GUI Toggle", Relay_In_36)) return; 
+         if (true == CheckDebugBreak("3965fb59-4fb5-4bb2-a7f2-9b1bf47e12e6", "GUI_Toggle", Relay_In_36)) return; 
          {
             {
                logic_uScriptAct_GUIToggle_Value_36 = local_Music_On_System_Boolean;
@@ -1212,7 +1212,7 @@ public class AdvancedUI_Options : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {

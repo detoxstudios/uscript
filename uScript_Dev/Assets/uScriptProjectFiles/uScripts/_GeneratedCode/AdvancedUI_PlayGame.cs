@@ -1,4 +1,4 @@
-//uScript Generated Code - Build 1.0.2740
+//uScript Generated Code - Build 1.0.2830
 //Generated with Debug Info
 using UnityEngine;
 using System.Collections;
@@ -641,7 +641,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    
    void Relay_OnGui_1()
    {
-      if (true == CheckDebugBreak("147aaa7d-d122-40e8-abe2-80f201356edf", "GUI Events", Relay_OnGui_1)) return; 
+      if (true == CheckDebugBreak("147aaa7d-d122-40e8-abe2-80f201356edf", "GUI_Events", Relay_OnGui_1)) return; 
       Relay_In_2();
    }
    
@@ -649,7 +649,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5264832f-c586-486a-96c3-3a4bbd9bfc20", "GUI Begin Group", Relay_In_2)) return; 
+         if (true == CheckDebugBreak("5264832f-c586-486a-96c3-3a4bbd9bfc20", "GUI_Begin_Group", Relay_In_2)) return; 
          {
             {
                logic_uScriptAct_GUIBeginGroup_Position_2 = local_Filtered_Rect_UnityEngine_Rect;
@@ -682,20 +682,20 @@ public class AdvancedUI_PlayGame : uScriptLogic
    
    void Relay_uScriptStart_3()
    {
-      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript Events", Relay_uScriptStart_3)) return; 
+      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript_Events", Relay_uScriptStart_3)) return; 
       Relay_In_4();
    }
    
    void Relay_uScriptLateStart_3()
    {
-      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript Events", Relay_uScriptLateStart_3)) return; 
+      if (true == CheckDebugBreak("142bb7d2-9a66-46e4-b88b-305ea355566c", "uScript_Events", Relay_uScriptLateStart_3)) return; 
    }
    
    void Relay_In_4()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("34c65f62-1988-4081-b2b4-86bf2f901d6d", "Create Relative Rect (Screen)", Relay_In_4)) return; 
+         if (true == CheckDebugBreak("34c65f62-1988-4081-b2b4-86bf2f901d6d", "Create_Relative_Rect__Screen_", Relay_In_4)) return; 
          {
             {
             }
@@ -731,7 +731,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e75e3898-72da-4170-8679-480a80a5c381", "GUI Box", Relay_In_6)) return; 
+         if (true == CheckDebugBreak("e75e3898-72da-4170-8679-480a80a5c381", "GUI_Box", Relay_In_6)) return; 
          {
             {
             }
@@ -764,7 +764,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI Button", Relay_OnButtonDown_7)) return; 
+         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI_Button", Relay_OnButtonDown_7)) return; 
       }
       else
       {
@@ -776,7 +776,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI Button", Relay_OnButtonHeld_7)) return; 
+         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI_Button", Relay_OnButtonHeld_7)) return; 
       }
       else
       {
@@ -788,7 +788,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI Button", Relay_OnButtonUp_7)) return; 
+         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI_Button", Relay_OnButtonUp_7)) return; 
       }
       else
       {
@@ -800,7 +800,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI Button", Relay_OnButtonClicked_7)) return; 
+         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI_Button", Relay_OnButtonClicked_7)) return; 
          Relay_SendCustomEvent_13();
       }
       else
@@ -813,7 +813,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI Button", Relay_In_7)) return; 
+         if (true == CheckDebugBreak("5fef6547-87c4-47b4-8280-a6793aa7e709", "GUI_Button", Relay_In_7)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_7 = local_14_System_String;
@@ -852,7 +852,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI Button", Relay_OnButtonDown_9)) return; 
+         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI_Button", Relay_OnButtonDown_9)) return; 
       }
       else
       {
@@ -864,7 +864,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI Button", Relay_OnButtonHeld_9)) return; 
+         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI_Button", Relay_OnButtonHeld_9)) return; 
       }
       else
       {
@@ -876,7 +876,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI Button", Relay_OnButtonUp_9)) return; 
+         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI_Button", Relay_OnButtonUp_9)) return; 
       }
       else
       {
@@ -888,7 +888,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI Button", Relay_OnButtonClicked_9)) return; 
+         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI_Button", Relay_OnButtonClicked_9)) return; 
          Relay_SendCustomEvent_47();
       }
       else
@@ -901,7 +901,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI Button", Relay_In_9)) return; 
+         if (true == CheckDebugBreak("42f651df-8829-43e7-8d11-333e64c7f17e", "GUI_Button", Relay_In_9)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_9 = local_15_System_String;
@@ -940,7 +940,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonDown_10)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonDown_10)) return; 
       }
       else
       {
@@ -952,7 +952,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonHeld_10)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonHeld_10)) return; 
       }
       else
       {
@@ -964,7 +964,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonUp_10)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonUp_10)) return; 
       }
       else
       {
@@ -976,7 +976,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_OnButtonClicked_10)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_OnButtonClicked_10)) return; 
          Relay_SendCustomEvent_44();
       }
       else
@@ -989,7 +989,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI Button", Relay_In_10)) return; 
+         if (true == CheckDebugBreak("3b561381-83f6-4e7e-af43-79a13065e583", "GUI_Button", Relay_In_10)) return; 
          {
             {
                logic_uScriptAct_GUIButton_Text_10 = local_16_System_String;
@@ -1028,7 +1028,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("52d5cf8c-1389-4ebf-b017-600a8334d984", "GUI End Group", Relay_In_12)) return; 
+         if (true == CheckDebugBreak("52d5cf8c-1389-4ebf-b017-600a8334d984", "GUI_End_Group", Relay_In_12)) return; 
          {
          }
          logic_uScriptAct_GUIEndGroup_uScriptAct_GUIEndGroup_12.In();
@@ -1046,7 +1046,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("15a32514-b759-415f-a661-c3f6f7f99225", "Send Custom Event (String)", Relay_SendCustomEvent_13)) return; 
+         if (true == CheckDebugBreak("15a32514-b759-415f-a661-c3f6f7f99225", "Send_Custom_Event__String_", Relay_SendCustomEvent_13)) return; 
          {
             {
             }
@@ -1077,25 +1077,25 @@ public class AdvancedUI_PlayGame : uScriptLogic
    
    void Relay_OnUpdate_18()
    {
-      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global Update", Relay_OnUpdate_18)) return; 
+      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global_Update", Relay_OnUpdate_18)) return; 
       Relay_Filter_19();
    }
    
    void Relay_OnLateUpdate_18()
    {
-      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global Update", Relay_OnLateUpdate_18)) return; 
+      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global_Update", Relay_OnLateUpdate_18)) return; 
    }
    
    void Relay_OnFixedUpdate_18()
    {
-      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global Update", Relay_OnFixedUpdate_18)) return; 
+      if (true == CheckDebugBreak("6f411169-b787-4ba5-8dff-9c129355d01b", "Global_Update", Relay_OnFixedUpdate_18)) return; 
    }
    
    void Relay_Reset_19()
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter Rect", Relay_Reset_19)) return; 
+         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter_Rect", Relay_Reset_19)) return; 
          {
             {
                logic_uScriptAct_FilterRect_Target_19 = local_Target_Rect_UnityEngine_Rect;
@@ -1122,7 +1122,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter Rect", Relay_Filter_19)) return; 
+         if (true == CheckDebugBreak("07cb7dc7-127e-429c-8b73-a68849028c77", "Filter_Rect", Relay_Filter_19)) return; 
          {
             {
                logic_uScriptAct_FilterRect_Target_19 = local_Target_Rect_UnityEngine_Rect;
@@ -1147,7 +1147,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    
    void Relay_OnCustomEventString_22()
    {
-      if (true == CheckDebugBreak("1d6d4a07-bce2-4eea-a953-a8478cc30661", "Custom Event (String)", Relay_OnCustomEventString_22)) return; 
+      if (true == CheckDebugBreak("1d6d4a07-bce2-4eea-a953-a8478cc30661", "Custom_Event__String_", Relay_OnCustomEventString_22)) return; 
       local_23_System_String = event_UnityEngine_GameObject_EventName_22;
       local_24_System_String = event_UnityEngine_GameObject_EventData_22;
       Relay_In_26();
@@ -1157,7 +1157,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("759827d3-d770-4b3d-bc8c-57687f83fafc", "Compare String", Relay_In_25)) return; 
+         if (true == CheckDebugBreak("759827d3-d770-4b3d-bc8c-57687f83fafc", "Compare_String", Relay_In_25)) return; 
          {
             {
                logic_uScriptCon_CompareString_A_25 = local_24_System_String;
@@ -1191,7 +1191,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("aac8d650-712b-4248-b513-14bcd5c7ce29", "Compare String", Relay_In_26)) return; 
+         if (true == CheckDebugBreak("aac8d650-712b-4248-b513-14bcd5c7ce29", "Compare_String", Relay_In_26)) return; 
          {
             {
                logic_uScriptCon_CompareString_A_26 = local_23_System_String;
@@ -1220,7 +1220,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("c8f331db-f880-48f3-92d0-08aced7c34c8", "Create Relative Rect (Screen)", Relay_In_27)) return; 
+         if (true == CheckDebugBreak("c8f331db-f880-48f3-92d0-08aced7c34c8", "Create_Relative_Rect__Screen_", Relay_In_27)) return; 
          {
             {
             }
@@ -1251,7 +1251,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("5fb6cde5-73e0-43eb-8316-554b7ce4ae39", "Set Components (Rect)", Relay_In_30)) return; 
+         if (true == CheckDebugBreak("5fb6cde5-73e0-43eb-8316-554b7ce4ae39", "Set_Components__Rect_", Relay_In_30)) return; 
          {
             {
             }
@@ -1286,7 +1286,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("a5aa1bd2-e5ef-4bf7-9d6c-2fb54cb12851", "Get Components (Rect)", Relay_In_31)) return; 
+         if (true == CheckDebugBreak("a5aa1bd2-e5ef-4bf7-9d6c-2fb54cb12851", "Get_Components__Rect_", Relay_In_31)) return; 
          {
             {
                logic_uScriptAct_GetComponentsRect_InputRect_31 = local_Target_Rect_UnityEngine_Rect;
@@ -1324,7 +1324,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("ab90415b-4dc2-4605-8dc7-a127b9a43e71", "Get Components (Rect)", Relay_In_36)) return; 
+         if (true == CheckDebugBreak("ab90415b-4dc2-4605-8dc7-a127b9a43e71", "Get_Components__Rect_", Relay_In_36)) return; 
          {
             {
                logic_uScriptAct_GetComponentsRect_InputRect_36 = local_Target_Rect_UnityEngine_Rect;
@@ -1362,7 +1362,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("d460684c-6acd-4352-aafd-b66804f7d228", "Set Components (Rect)", Relay_In_38)) return; 
+         if (true == CheckDebugBreak("d460684c-6acd-4352-aafd-b66804f7d228", "Set_Components__Rect_", Relay_In_38)) return; 
          {
             {
             }
@@ -1402,7 +1402,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("b2adeacb-fa4c-40f3-a809-a77876ea0087", "Get Components (Rect)", Relay_In_41)) return; 
+         if (true == CheckDebugBreak("b2adeacb-fa4c-40f3-a809-a77876ea0087", "Get_Components__Rect_", Relay_In_41)) return; 
          {
             {
                logic_uScriptAct_GetComponentsRect_InputRect_41 = local_Target_Rect_UnityEngine_Rect;
@@ -1440,7 +1440,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("4c0c2678-3ddb-435c-9fcf-f987c98bc601", "Send Custom Event (String)", Relay_SendCustomEvent_44)) return; 
+         if (true == CheckDebugBreak("4c0c2678-3ddb-435c-9fcf-f987c98bc601", "Send_Custom_Event__String_", Relay_SendCustomEvent_44)) return; 
          {
             {
             }
@@ -1473,7 +1473,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("93a7cb18-5a50-4ce9-b5a4-fce1e9c966f8", "Set Components (Rect)", Relay_In_45)) return; 
+         if (true == CheckDebugBreak("93a7cb18-5a50-4ce9-b5a4-fce1e9c966f8", "Set_Components__Rect_", Relay_In_45)) return; 
          {
             {
             }
@@ -1508,7 +1508,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("e276c2c8-0b2a-41fc-9f85-62f920285347", "Send Custom Event (String)", Relay_SendCustomEvent_47)) return; 
+         if (true == CheckDebugBreak("e276c2c8-0b2a-41fc-9f85-62f920285347", "Send_Custom_Event__String_", Relay_SendCustomEvent_47)) return; 
          {
             {
             }
@@ -1541,7 +1541,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if ( relayCallCount++ < MaxRelayCallCount )
       {
-         if (true == CheckDebugBreak("03e41d45-8a36-487a-bbab-92f2c842e4b2", "Compare String", Relay_In_48)) return; 
+         if (true == CheckDebugBreak("03e41d45-8a36-487a-bbab-92f2c842e4b2", "Compare_String", Relay_In_48)) return; 
          {
             {
                logic_uScriptCon_CompareString_A_48 = local_24_System_String;
@@ -1611,7 +1611,7 @@ public class AdvancedUI_PlayGame : uScriptLogic
    {
       if (true == m_Breakpoint) return true;
       
-      if (true == uScript_MasterComponent.LatestMasterComponent.HasBreakpoint(guid))
+      if (true == uScript_MasterComponent.FindBreakpoint(guid))
       {
          if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)
          {
