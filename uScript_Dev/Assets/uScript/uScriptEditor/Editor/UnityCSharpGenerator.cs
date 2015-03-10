@@ -159,7 +159,7 @@ namespace Detox.ScriptEditor
 
             foreach (ExternalConnection external in m_Script.Externals)
             {
-               DefineExternalInput(external);
+               DefineExternalInput(external, false);
             }
 
             Plug[] events = FindExternalEvents();
@@ -1061,11 +1061,8 @@ namespace Detox.ScriptEditor
                AddCSharpLine("");
             }
 
-            if (false == stubCode)
-            {
-               DefineEvents();
-            }
-
+            DefineEvents(stubCode);
+            
             if (false == stubCode)
             {
                DefineUpdateEditorValues();
@@ -3151,44 +3148,56 @@ namespace Detox.ScriptEditor
          }
       }
 
-      private void DefineEvents()
+      private void DefineEvents(bool stubCode)
       {
          Profile p = new Profile("DefineEvents");
 
-         //for every registered event listener
-         //define the function the event will call
-         foreach (EntityEvent entityEvent in m_Script.Events)
+         if (false == stubCode)
          {
-            foreach (Plug output in entityEvent.Outputs)
+            //for every registered event listener
+            //define the function the event will call
+            foreach (EntityEvent entityEvent in m_Script.Events)
             {
-               DefineEntityEvent(entityEvent, output.Name);
+               foreach (Plug output in entityEvent.Outputs)
+               {
+                  DefineEntityEvent(entityEvent, output.Name);
+               }
+            }
+
+            //for every registered logic node event listener
+            //define the function the event will call
+            foreach (LogicNode logicNode in m_Script.Logics)
+            {
+               foreach (Plug eventName in logicNode.Events)
+               {
+                  DefineLogicEvent(logicNode, eventName.Name);
+               }
+            }
+
+            //for every external node
+            //define the function the event will call
+            foreach (ExternalConnection external in m_Script.Externals)
+            {
+               DefineExternalInput(external, stubCode);
+            }
+
+            //then for every node linked to the event listener or logic listener
+            //define a relay function the event will call
+            foreach (EntityNode entityNode in m_Script.EntityNodes)
+            {
+               if (false == entityNode is LinkNode)
+               {
+                  DefineRelay(entityNode);
+               }
             }
          }
-
-         //for every registered logic node event listener
-         //define the function the event will call
-         foreach (LogicNode logicNode in m_Script.Logics)
+         else
          {
-            foreach (Plug eventName in logicNode.Events)
+            //Even if the code is stubbed we need to declare the inputs
+            //so other graphs which hook up to these will not error
+            foreach (ExternalConnection external in m_Script.Externals)
             {
-               DefineLogicEvent(logicNode, eventName.Name);
-            }
-         }
-
-         //for every external node
-         //define the function the event will call
-         foreach (ExternalConnection external in m_Script.Externals)
-         {
-            DefineExternalInput(external);
-         }
-
-         //then for every node linked to the event listener or logic listener
-         //define a relay function the event will call
-         foreach (EntityNode entityNode in m_Script.EntityNodes)
-         {
-            if (false == entityNode is LinkNode)
-            {
-               DefineRelay(entityNode);
+               DefineExternalInput(external, stubCode);
             }
          }
 
@@ -3317,7 +3326,7 @@ namespace Detox.ScriptEditor
       }
 
       //create the external function outsiders can call
-      private void DefineExternalInput(ExternalConnection externalInput)
+      private void DefineExternalInput(ExternalConnection externalInput, bool stubCode)
       {
          Profile profile = new Profile("DefineExternalInput");
 
@@ -3493,7 +3502,7 @@ namespace Detox.ScriptEditor
 
          if (allowedRelays.Count > 0)
          {
-            DefineExternalInput(externalInput, allowedRelays.ToArray(), args);
+            DefineExternalInput(externalInput, allowedRelays.ToArray(), args, stubCode);
          }
 
          profile.End();
@@ -3557,7 +3566,7 @@ namespace Detox.ScriptEditor
          return lowestParameter;
       }
 
-      void DefineExternalInput(ExternalConnection externalInput, LinkNode.Connection[] connections, string args)
+      void DefineExternalInput(ExternalConnection externalInput, LinkNode.Connection[] connections, string args, bool stubCode)
       {
          Profile profile = new Profile("DefineExternalInput");
 
@@ -3568,84 +3577,87 @@ namespace Detox.ScriptEditor
          AddCSharpLine("public void " + inputPlug.Name + "( " + args + " )");
          AddCSharpLine("{");
 
-         ++m_TabStack;
-
-         PrintDebug(externalInput);
-
-         AddCSharpLine("");
-
-
-         //transfer input args to our member variables
-         Hashtable filledExternals = new Hashtable();
-         foreach (ExternalConnection external in m_Script.Externals)
+         if (false == stubCode)
          {
-            LinkNode[] inputs = FindLinksBySource(external.Guid, external.Connection);
+            ++m_TabStack;
+   
+            PrintDebug(externalInput);
 
-            foreach (LinkNode link in inputs)
+            AddCSharpLine("");
+
+
+            //transfer input args to our member variables
+            Hashtable filledExternals = new Hashtable();
+            foreach (ExternalConnection external in m_Script.Externals)
             {
-               EntityNode parameterNode = m_Script.GetNode(link.Destination.Guid);
+               LinkNode[] inputs = FindLinksBySource(external.Guid, external.Connection);
 
-               foreach (Parameter p in parameterNode.Parameters)
+               foreach (LinkNode link in inputs)
                {
-                  if (p.Name == link.Destination.Anchor)
-                  {
-                     AddCSharpLine(CSharpName(external, external.Connection) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";");
-                     SyncReferencedGameObject(parameterNode, p);
-                  }
-               }
+                  EntityNode parameterNode = m_Script.GetNode(link.Destination.Guid);
 
-               if (parameterNode.Instance.Name == link.Destination.Anchor)
-               {
-                  if (false == filledExternals.Contains(external.Guid))
+                  foreach (Parameter p in parameterNode.Parameters)
                   {
-                     AddCSharpLine(CSharpName(external) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";");
-                     filledExternals[external.Guid] = external;
+                     if (p.Name == link.Destination.Anchor)
+                     {
+                        AddCSharpLine(CSharpName(external, external.Connection) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";");
+                        SyncReferencedGameObject(parameterNode, p);
+                     }
                   }
-               }
 
-               break;
+                  if (parameterNode.Instance.Name == link.Destination.Anchor)
+                  {
+                     if (false == filledExternals.Contains(external.Guid))
+                     {
+                        AddCSharpLine(CSharpName(external) + " = " + CSharpExternalParameterDeclaration(external.Name.Default).Name + ";");
+                        filledExternals[external.Guid] = external;
+                     }
+                  }
+
+                  break;
+               }
             }
+
+            foreach (LinkNode.Connection connection in connections)
+            {
+               EntityNode node = m_Script.GetNode(connection.Guid);
+               AddCSharpLine(CSharpRelay(node, connection.Anchor) + "( );");
+            }
+
+            //We no longer transfer our member variable to the output args
+            //because an external always sends the output through event arguments
+
+            ////transfer our member variables to the output args
+            //foreach (ExternalConnection external in m_Script.Externals)
+            //{
+            //   LinkNode[] outputs = FindLinksByDestination(external.Guid, external.Connection);
+
+            //   foreach (LinkNode link in outputs)
+            //   {
+            //      EntityNode parameterNode = m_Script.GetNode(link.Source.Guid);
+
+            //      foreach (Parameter p in parameterNode.Parameters)
+            //      {
+            //         if (p.Name == link.Source.Anchor)
+            //         {
+            //            //external connections don't have a parameter
+            //            //because they take on whatever parameter they link to
+            //            Parameter parameter = new Parameter();
+            //            parameter.Name = external.Connection;
+            //            parameter.Type = p.Type;
+            //            SyncSlaveConnections(external, new Parameter[] { parameter });
+
+            //            AddCSharpLine(CSharpExternalParameterDeclaration(external.Name.Default).Name + " = " + CSharpName(external, p.Name) + ";");
+            //         }
+            //      }
+
+            //      //only one link allowed for each external parameter out
+            //      break;
+            //   }
+            //}
+
+            --m_TabStack;
          }
-
-         foreach (LinkNode.Connection connection in connections)
-         {
-            EntityNode node = m_Script.GetNode(connection.Guid);
-            AddCSharpLine(CSharpRelay(node, connection.Anchor) + "( );");
-         }
-
-         //We no longer transfer our member variable to the output args
-         //because an external always sends the output through event arguments
-
-         ////transfer our member variables to the output args
-         //foreach (ExternalConnection external in m_Script.Externals)
-         //{
-         //   LinkNode[] outputs = FindLinksByDestination(external.Guid, external.Connection);
-
-         //   foreach (LinkNode link in outputs)
-         //   {
-         //      EntityNode parameterNode = m_Script.GetNode(link.Source.Guid);
-
-         //      foreach (Parameter p in parameterNode.Parameters)
-         //      {
-         //         if (p.Name == link.Source.Anchor)
-         //         {
-         //            //external connections don't have a parameter
-         //            //because they take on whatever parameter they link to
-         //            Parameter parameter = new Parameter();
-         //            parameter.Name = external.Connection;
-         //            parameter.Type = p.Type;
-         //            SyncSlaveConnections(external, new Parameter[] { parameter });
-
-         //            AddCSharpLine(CSharpExternalParameterDeclaration(external.Name.Default).Name + " = " + CSharpName(external, p.Name) + ";");
-         //         }
-         //      }
-
-         //      //only one link allowed for each external parameter out
-         //      break;
-         //   }
-         //}
-
-         --m_TabStack;
 
          AddCSharpLine("}");
          AddCSharpLine("");
@@ -4746,6 +4758,9 @@ namespace Detox.ScriptEditor
             count++;
          }
 
+         if (count == 0)
+            isSafe = false;
+
          return typeSafe;
       }
 
@@ -4878,12 +4893,6 @@ namespace Detox.ScriptEditor
          if (methodName == "OnDisable")   return "_" + methodName;
          if (methodName == "OnEnable")    return "_" + methodName;
 
-         //we no longer derive from ScriptableObject
-         //so these aren't a concern
-         //if ( methodName == "OnDestroy" )   return "_" + methodName;
-         //if ( methodName == "LateUpdate" )  return "_" + methodName;
-         //if ( methodName == "FixedUpdate" ) return "_" + methodName;
-
          return methodName;
       }
 
@@ -4897,6 +4906,7 @@ namespace Detox.ScriptEditor
          //so the name stays the same even if they reorder the nodes
          //this prevents links from breaking in the parent scripts
          string methodName = MakeSyntaxSafe(plug.FriendlyName);
+         if (methodName == "") methodName = "UNNAMED_EXTERNAL_INPUT";
 
          //make sure it doesn't conflict with any known unity reflected calls
          methodName = RemoveReflectionConflicts(methodName);
@@ -4916,6 +4926,7 @@ namespace Detox.ScriptEditor
          //so the name stays the same even if they reorder the nodes
          //this prevents links from breaking in the parent scripts
          plug.Name = MakeSyntaxSafe(plug.FriendlyName);
+         if (plug.Name == "") plug.Name = "UNNAMED_EXTERNAL_PARAMETER";
 
          return plug;
       }
@@ -4930,6 +4941,7 @@ namespace Detox.ScriptEditor
          //so the name stays the same even if they reorder the nodes
          //this prevents links from breaking in the parent scripts
          plug.Name = MakeSyntaxSafe(plug.FriendlyName);
+         if (plug.Name == "") plug.Name = "UNNAMED_EXTERNAL_PARAMETER";
 
          return plug;
       }
@@ -4948,6 +4960,7 @@ namespace Detox.ScriptEditor
          //so the name stays the same even if they reorder the nodes
          //this prevents links from breaking in the parent scripts
          plug.Name = MakeSyntaxSafe(plug.FriendlyName);
+         if (plug.Name == "") plug.Name = "UNNAMED_EXTERNAL_EVENT";
 
          return plug;
       }
