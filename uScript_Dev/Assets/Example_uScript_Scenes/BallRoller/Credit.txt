@@ -1,5 +1,0 @@
-Original example created by Thomas Pasieka.
-
-http://www.uscript.net/forum/viewtopic.php?f=20&t=109
-
-Later modified (jump and camera logic) by Detox Studios LLC with permision by Thomas Pasieka.
