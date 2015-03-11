@@ -30,8 +30,8 @@ public static class uScriptBuild
 
    // Version Name and Version Data
    // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public static string Number { get { return "1.0.2830"; } }
-   private static string productNameAppendText = " (RC17)";
+   public static string Number { get { return "1.0.2839"; } }
+   private static string productNameAppendText = " (RC18)";
 
 
 #if DETOX_STORE_PLE
