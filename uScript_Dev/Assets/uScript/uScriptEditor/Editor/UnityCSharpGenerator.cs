@@ -3433,8 +3433,9 @@ namespace Detox.ScriptEditor
             }
             else if (false == p.Input && true == p.Output)
             {
-               args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\", \"" + description + "\")] ";
-               args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(key).Name + ", ";
+               //Output parameters are sent via events now
+               //args += "[FriendlyName(\"" + CSharpExternalParameterDeclaration(key).FriendlyName + "\", \"" + description + "\")] ";
+               //args += "out " + FormatType(p.Type) + " " + CSharpExternalParameterDeclaration(key).Name + ", ";
             }
          }
 
@@ -4117,7 +4118,10 @@ namespace Detox.ScriptEditor
                }
                else
                {
-                  args += "out " + CSharpName(receiver, parameter.Name) + ", ";
+                  // if it is a nested node then all the values are sent back via an event
+                  // and there are no output parameters
+                  if (receiver.IsNestedNode == false)
+                     args += "out " + CSharpName(receiver, parameter.Name) + ", ";
                }
             }
             else if (true == parameter.Input)
