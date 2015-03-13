@@ -3713,18 +3713,23 @@ namespace Detox.ScriptEditor
                AddCSharpLine(CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(logicNode, parameter.Name) + ";");
                outputList.Add(parameter);
 
-               foreach (Parameter p in argNode.Parameters)
+               // don't sync up entity properties, they will sync themselves up
+               // at the RefreshSetProperties call
+               if (false == (argNode is EntityProperty))
                {
-                  if (p.Name == link.Destination.Anchor)
+                  foreach (Parameter p in argNode.Parameters)
                   {
-                     SyncReferencedGameObject(argNode, parameter);
-                     break;
+                     if (p.Name == link.Destination.Anchor)
+                     {
+                        SyncReferencedGameObject(argNode, parameter);
+                        break;
+                     }
                   }
-               }
 
-               if (argNode.Instance.Name == link.Destination.Anchor)
-               {
-                  SyncReferencedGameObject(argNode, argNode.Instance);
+                  if (argNode.Instance.Name == link.Destination.Anchor)
+                  {
+                     SyncReferencedGameObject(argNode, argNode.Instance);
+                  }
                }
             }
          }
@@ -3872,18 +3877,23 @@ namespace Detox.ScriptEditor
                AddCSharpLine(CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";");
                outputList.Add(parameter);
 
-               foreach (Parameter p in argNode.Parameters)
+               // don't sync up entity properties, they will sync themselves up
+               // at the RefreshSetProperties call
+               if (false == (argNode is EntityProperty))
                {
-                  if (p.Name == link.Destination.Anchor)
+                  foreach (Parameter p in argNode.Parameters)
                   {
-                     SyncReferencedGameObject(argNode, parameter);
-                     break;
+                     if (p.Name == link.Destination.Anchor)
+                     {
+                        SyncReferencedGameObject(argNode, parameter);
+                        break;
+                     }
                   }
-               }
 
-               if (argNode.Instance.Name == link.Destination.Anchor)
-               {
-                  SyncReferencedGameObject(argNode, argNode.Instance);
+                  if (argNode.Instance.Name == link.Destination.Anchor)
+                  {
+                     SyncReferencedGameObject(argNode, argNode.Instance);
+                  }
                }
             }
          }
@@ -4040,18 +4050,23 @@ namespace Detox.ScriptEditor
                EntityNode argNode = m_Script.GetNode(link.Destination.Guid);
                AddCSharpLine(CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";");
 
-               foreach (Parameter p in argNode.Parameters)
+               // don't sync up entity properties, they will sync themselves up
+               // at the RefreshSetProperties call
+               if (false == (argNode is EntityProperty))
                {
-                  if (p.Name == link.Destination.Anchor)
+                  foreach (Parameter p in argNode.Parameters)
                   {
-                     SyncReferencedGameObject(argNode, parameter);
-                     break;
+                     if (p.Name == link.Destination.Anchor)
+                     {
+                        SyncReferencedGameObject(argNode, parameter);
+                        break;
+                     }
                   }
-               }
 
-               if (argNode.Instance.Name == link.Destination.Anchor)
-               {
-                  SyncReferencedGameObject(argNode, argNode.Instance);
+                  if (argNode.Instance.Name == link.Destination.Anchor)
+                  {
+                     SyncReferencedGameObject(argNode, argNode.Instance);
+                  }
                }
             }
          }
@@ -4170,18 +4185,23 @@ namespace Detox.ScriptEditor
                   EntityNode argNode = m_Script.GetNode(link.Destination.Guid);
                   AddCSharpLine(CSharpName(argNode, link.Destination.Anchor) + " = " + CSharpName(receiver, parameter.Name) + ";");
 
-                  foreach (Parameter p in argNode.Parameters)
+                  // don't sync up entity properties, they will sync themselves up
+                  // at the RefreshSetProperties call
+                  if (false == (argNode is EntityProperty))
                   {
-                     if (p.Name == link.Destination.Anchor)
+                     foreach (Parameter p in argNode.Parameters)
                      {
-                        SyncReferencedGameObject(argNode, parameter);
-                        break;
+                        if (p.Name == link.Destination.Anchor)   
+                        {
+                           SyncReferencedGameObject(argNode, parameter);
+                           break;
+                        } 
                      }
-                  }
 
-                  if (argNode.Instance.Name == link.Destination.Anchor)
-                  {
-                     SyncReferencedGameObject(argNode, argNode.Instance);
+                     if (argNode.Instance.Name == link.Destination.Anchor)
+                     {
+                        SyncReferencedGameObject(argNode, argNode.Instance);
+                     }
                   }
                }
             }
@@ -5326,10 +5346,10 @@ namespace Detox.ScriptEditor
                {
                   EntityProperty property = (EntityProperty)argNode;
 
-                  if (true == property.Parameter.Input)
+                  if (true == property.Parameter.Input) 
                   {
-                     SyncReferencedGameObject(property, property.Parameter);
                      AddCSharpLine(CSharpRefreshSetPropertyDeclaration(property) + "( );");
+                     SyncReferencedGameObject(property, property.Parameter);
                   }
                }
             }
