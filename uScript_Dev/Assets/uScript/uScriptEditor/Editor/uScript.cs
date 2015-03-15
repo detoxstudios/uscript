@@ -1286,6 +1286,10 @@ public sealed partial class uScript : EditorWindow
                      this.BuildCanvasContextMenu(itemChild, itemPath);
                   }
                }
+               else if (toolStripMenuItem.Text == "No Debug Info")
+               {
+                  this._canvasContextMenu.AddDisabledItem(new GUIContent(toolStripMenuItem.Text));
+               }
                else
                {
                   // This is a menu item
