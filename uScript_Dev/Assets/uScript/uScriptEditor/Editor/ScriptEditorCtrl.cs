@@ -2569,8 +2569,6 @@ namespace Detox.ScriptEditor
 
       private void m_ContextMenuStrip_Opening(object sender, CancelEventArgs args)
       {
-         Profile overall = new Profile("m_ContextMenuStrip_Opening");
-
          m_ContextObject = null;
          m_ContextCursor = Detox.Windows.Forms.Cursor.Position;
          m_ContextCursor = m_FlowChart.PointToClient( m_ContextCursor );
@@ -2943,8 +2941,6 @@ namespace Detox.ScriptEditor
                m_ContextMenuStrip.Items.Add( deleteMissingNode );
             }
          }
-
-        overall.End();
       }
 
       private void BuildAddMenu(ToolStripMenuItem addMenu, Hashtable typeHash)

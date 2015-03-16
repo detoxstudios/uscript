@@ -1684,9 +1684,13 @@ public sealed partial class uScript : EditorWindow
             // mouse is over the canvas when the event occurs
             if (this._canvasRect.Contains(e.mousePosition))
             {
-               var profile = new Profile("BuildContextMenu");
+               {
+                  var buildInterntalContextMenu = new Profile("BuildInterntalContextMenu");
 
-               this.m_ScriptEditorCtrl.BuildContextMenu();
+                  this.m_ScriptEditorCtrl.BuildContextMenu();
+
+                  buildInterntalContextMenu.End();
+               }
 
                //we can't rely on the cache'd context menu because
                //the breakpoints might have changed and the context menu
@@ -1695,12 +1699,20 @@ public sealed partial class uScript : EditorWindow
                //as we do with m_ScriptEditorCtrl.BuildContextMenu()
                //if (this._canvasContextMenu == null)
                {
+                  var buildCanvasContextMenu = new Profile("BuildCanvasContextMenu");
                   // cache the context menu...
                   this.BuildCanvasContextMenu(null, null);
-               }
-               this._canvasContextMenu.ShowAsContext();
 
-               profile.End();
+                  buildCanvasContextMenu.End();
+               }
+
+               {
+                  var showAsContext = new Profile("ShowAsContext");
+
+                  this._canvasContextMenu.ShowAsContext();
+               
+                  showAsContext.End();
+               }
 
                //// stupid hack to prevent the "canvasDragging" behavior
                //if (mouseDown)
