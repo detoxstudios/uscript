@@ -39,8 +39,6 @@ public class uScriptAct_SetLayer : uScriptLogic
          if (((Layer.value >> index) & 0x1) != 0) break;
       }
 
-      Debug.Log("setting " + index);
-
       foreach (GameObject obj in Target)
       {
          Transform objTrans = obj.transform;
