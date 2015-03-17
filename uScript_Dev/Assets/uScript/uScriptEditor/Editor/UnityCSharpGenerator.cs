@@ -3968,11 +3968,17 @@ namespace Detox.ScriptEditor
 
                    if (returnParam != Parameter.Empty)
                    {
-                      AddCSharpLine("component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();");
+                      // Entity properties are defined by their .parameter and their .instance
+                      // whereas other nodes are simply defined by the default EntityNode
+                      if (node is EntityProperty)
+                         AddCSharpLine("component = " + CSharpName(node, node.Parameters[0].Name) + ".GetComponent<" + receiver.ComponentType + ">();");
+                      else
+                        AddCSharpLine("component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();");
+                      
                       AddCSharpLine("if ( null != component )");
                       AddCSharpLine("{");
                       ++m_TabStack;
-
+                       
                       AddCSharpLine(CSharpName(receiver, returnParam.Name) + " = component." + receiver.Input.Name + "(" + args + ");");
 
                       --m_TabStack;
@@ -3984,7 +3990,13 @@ namespace Detox.ScriptEditor
                    }
                    else
                    {
-                      AddCSharpLine("component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();");
+                      // Entity properties are defined by their .parameter and their .instance
+                      // whereas other nodes are simply defined by the default EntityNode
+                      if (node is EntityProperty)
+                         AddCSharpLine("component = " + CSharpName(node, node.Parameters[0].Name) + ".GetComponent<" + receiver.ComponentType + ">();");
+                      else
+                        AddCSharpLine("component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();");
+  
                       AddCSharpLine("if ( null != component )");
                       AddCSharpLine("{");
                       ++m_TabStack;
