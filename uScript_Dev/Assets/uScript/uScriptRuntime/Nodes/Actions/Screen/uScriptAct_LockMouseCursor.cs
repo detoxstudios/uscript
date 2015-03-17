@@ -29,10 +29,12 @@ public class uScriptAct_LockMouseCursor : uScriptLogic
       if (Lock == true)
       {
          Cursor.lockState = CursorLockMode.Locked;
+		 Cursor.visible = false;
       }
       else
       {
          Cursor.lockState = CursorLockMode.None;
+		 Cursor.visible = true;
       }
 #endif
    }
