@@ -207,6 +207,12 @@ public class Preferences
       set { this.LoadIfRequired(); this.preferences["PropertyPanelNodeLimit"] = value; }
    }
 
+   public float LineWidthMultiplier
+   {
+      get { this.LoadIfRequired(); return (float)this.preferences["LineWidthMultiplier"]; }
+      set { this.LoadIfRequired(); this.preferences["LineWidthMultiplier"] = value; }
+   }
+
    public bool ExpandFavoritePanel
    {
       get { this.LoadIfRequired(); return (bool)this.preferences["ExpandFavoritePanel"]; }
@@ -422,6 +428,7 @@ public class Preferences
       this.SetDefault("GraphListFolderStates", string.Empty);
 
       this.SetDefault("ShowHierarchyIcon", true);
+      this.SetDefault("LineWidthMultiplier", 1.0f);
    }
 
    private void LoadIfRequired()

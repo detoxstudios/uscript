@@ -1368,7 +1368,7 @@ namespace Detox.FlowChart
                   int index = (int) value;
 
                   Handles.color = uScriptConfig.LineColors[index];
-                  lineWidth = uScriptConfig.LineWidths[index];
+                  lineWidth = uScriptConfig.LineWidths[index] * uScript.Preferences.LineWidthMultiplier;
                }
                else
                {
@@ -1380,7 +1380,7 @@ namespace Detox.FlowChart
                   if ( true == oneNodeIsVariable )
                   {
                      Handles.color = uScriptConfig.LineColors[0];
-                     lineWidth = uScriptConfig.LineWidths[0];
+                     lineWidth = uScriptConfig.LineWidths[0] * uScript.Preferences.LineWidthMultiplier;
                   }
                }
 

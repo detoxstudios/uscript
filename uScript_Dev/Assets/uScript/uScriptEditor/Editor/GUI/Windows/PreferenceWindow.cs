@@ -246,6 +246,7 @@ namespace Detox.Editor.GUI.Windows
             (Preferences.VariableExpansionType)
             EditorGUILayout.EnumPopup("Variable Expansion Mode", this.preferences.VariableExpansion);
          this.preferences.GridSnap = EditorGUILayout.Toggle("Snap to Grid", this.preferences.GridSnap);
+         this.preferences.LineWidthMultiplier = EditorGUILayout.FloatField("Connector Line Width", this.preferences.LineWidthMultiplier);
 
          EditorGUILayout.Separator();
       }
