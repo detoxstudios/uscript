@@ -1222,8 +1222,8 @@ namespace Detox.FlowChart
             }
          }
 
-         Pen pen = new Pen( Detox.Drawing.Color.Black, uScriptConfig.BezierPenWidth );
-         Pen selectedPen = new Pen( Detox.Drawing.Color.LightYellow, uScriptConfig.BezierPenWidthSelected );
+         Pen pen = new Pen( Detox.Drawing.Color.Black, uScriptConfig.BezierPenWidth * uScript.Preferences.LineWidthMultiplier );
+         Pen selectedPen = new Pen( Detox.Drawing.Color.LightYellow, uScriptConfig.BezierPenWidthSelected * uScript.Preferences.LineWidthMultiplier );
 
          if (null != m_StartLinkNode)
          {
