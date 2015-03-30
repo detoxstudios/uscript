@@ -2,8 +2,6 @@
 // (C) 2011 Detox Studios LLC
 // Desc: The master uScript component. This class is also used as a data transport class between the uScript window and the uScriptBackgroundProcess.
 
-//#define DETOX_STORE_PLE
-
 using UnityEngine;
 using System;
 using System.Reflection;

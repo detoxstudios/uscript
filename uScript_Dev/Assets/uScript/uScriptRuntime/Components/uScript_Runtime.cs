@@ -7,11 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-#define UNITY_STORE_PRO //Don't forget LicenseWindow.cs
-//#define UNITY_STORE_BASIC //Don't forget LicenseWindow.cs
-//#define DETOX_STORE_PRO //Don't forget LicenseWindow.cs
-//#define DETOX_STORE_BASIC //Don't forget LicenseWindow.cs
-//#define DETOX_STORE_PLE // Don't forget uScript_MasterComponent.cs and LicenseWindow.cs
+#if !RELEASE
+#define UNITY_STORE_PRO
+#endif
 //#define CLOSED_BETA
 
 //#define ENABLE_DEBUG_LOG
