@@ -7,7 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if !RELEASE
 #define ENABLE_DEBUG_LOG
+#endif
 
 using System;
 using System.Collections.Generic;

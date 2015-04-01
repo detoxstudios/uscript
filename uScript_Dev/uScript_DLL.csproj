@@ -38,7 +38,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_3_3_0;UNITY_3_3;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -53,7 +53,7 @@
     <NoWarn>0169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Unity_Store_Pro|AnyCPU'">
-    <OutputPath>bin\Release_Unity_Store_Pro\</OutputPath>
+    <OutputPath>Temp\bin\Release_Unity_Store_Pro\</OutputPath>
     <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_PRO</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
@@ -63,7 +63,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Unity_Store_Basic|AnyCPU'">
-    <OutputPath>bin\Release_Unity_Store_Basic\</OutputPath>
+    <OutputPath>Temp\bin\Release_Unity_Store_Basic\</OutputPath>
     <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_BASIC</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
@@ -73,7 +73,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Detox_Store_Pro|AnyCPU'">
-    <OutputPath>bin\Release_Detox_Store_Pro\</OutputPath>
+    <OutputPath>Temp\bin\Release_Detox_Store_Pro\</OutputPath>
     <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;DETOX_STORE_PRO</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
@@ -83,7 +83,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Detox_Store_Basic|AnyCPU'">
-    <OutputPath>bin\Release_Detox_Store_Basic\</OutputPath>
+    <OutputPath>Temp\bin\Release_Detox_Store_Basic\</OutputPath>
     <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;DETOX_STORE_BASIC</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
@@ -93,7 +93,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Detox_Store_PLE|AnyCPU'">
-    <OutputPath>bin\Release_Detox_Store_PLE\</OutputPath>
+    <OutputPath>Temp\bin\Release_Detox_Store_PLE\</OutputPath>
     <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;DETOX_STORE_PLE</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
@@ -170,6 +170,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\UpdateNotification.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptBackgroundProcess.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptBuild.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptConfig.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUI.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\uScriptGUIContent.cs" />
@@ -215,6 +216,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) ..\..\..\..\uScript_Test\Assets\uScript\uScriptEditor\Editor</PostBuildEvent>
+    <PostBuildEvent>if not exist ..\..\..\..\uScript_Test\Assets\uScript\uScriptEditor\Editor mkdir ..\..\..\..\uScript_Test\Assets\uScript\uScriptEditor\Editor
+copy $(TargetPath) ..\..\..\..\uScript_Test\Assets\uScript\uScriptEditor\Editor</PostBuildEvent>
   </PropertyGroup>
 </Project>
