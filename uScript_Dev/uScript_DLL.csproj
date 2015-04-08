@@ -216,7 +216,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>if not exist ..\..\..\..\uScript_Test\Assets\uScript\uScriptEditor\Editor mkdir ..\..\..\..\uScript_Test\Assets\uScript\uScriptEditor\Editor
-copy $(TargetPath) ..\..\..\..\uScript_Test\Assets\uScript\uScriptEditor\Editor</PostBuildEvent>
+    <PostBuildEvent>if not exist $(ProjectDir)..\uScript_Test\Assets\uScript\uScriptEditor\Editor mkdir $(ProjectDir)..\uScript_Test\Assets\uScript\uScriptEditor\Editor
+copy $(TargetPath) $(ProjectDir)..\uScript_Test\Assets\uScript\uScriptEditor\Editor</PostBuildEvent>
   </PropertyGroup>
 </Project>

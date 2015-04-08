@@ -151,7 +151,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>if not exist ..\..\..\..\uScript_Test\Assets\uScript\uScriptRuntime mkdir ..\..\..\..\uScript_Test\Assets\uScript\uScriptRuntime
-copy $(TargetPath) ..\..\..\..\uScript_Test\Assets\uScript\uScriptRuntime</PostBuildEvent>
+    <PostBuildEvent>if not exist $(ProjectDir)..\uScript_Test\Assets\uScript\uScriptRuntime mkdir $(ProjectDir)..\uScript_Test\Assets\uScript\uScriptRuntime
+copy $(TargetPath) $(ProjectDir)..\uScript_Test\Assets\uScript\uScriptRuntime</PostBuildEvent>
   </PropertyGroup>
 </Project>
