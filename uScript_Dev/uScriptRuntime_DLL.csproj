@@ -56,7 +56,7 @@
     <NoWarn>0169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Unity_Store_Pro|AnyCPU'">
-    <OutputPath>bin\Release_Unity_Store_Pro\</OutputPath>
+    <OutputPath>Temp\bin\Release_Unity_Store_Pro\</OutputPath>
     <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_PRO</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
@@ -66,7 +66,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Unity_Store_Basic|AnyCPU'">
-    <OutputPath>bin\Release_Unity_Store_Basic\</OutputPath>
+    <OutputPath>Temp\bin\Release_Unity_Store_Basic\</OutputPath>
     <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;UNITY_STORE_BASIC</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
@@ -76,7 +76,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Detox_Store_Pro|AnyCPU'">
-    <OutputPath>bin\Release_Detox_Store_Pro\</OutputPath>
+    <OutputPath>Temp\bin\Release_Detox_Store_Pro\</OutputPath>
     <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;DETOX_STORE_PRO</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
@@ -86,7 +86,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Detox_Store_Basic|AnyCPU'">
-    <OutputPath>bin\Release_Detox_Store_Basic\</OutputPath>
+    <OutputPath>Temp\bin\Release_Detox_Store_Basic\</OutputPath>
     <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;DETOX_STORE_BASIC</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
@@ -96,7 +96,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_Detox_Store_PLE|AnyCPU'">
-    <OutputPath>bin\Release_Detox_Store_PLE\</OutputPath>
+    <OutputPath>Temp\bin\Release_Detox_Store_PLE\</OutputPath>
     <DefineConstants>TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_WIN;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;RELEASE;DETOX_STORE_PLE</DefineConstants>
     <Optimize>true</Optimize>
     <NoWarn>0169</NoWarn>
