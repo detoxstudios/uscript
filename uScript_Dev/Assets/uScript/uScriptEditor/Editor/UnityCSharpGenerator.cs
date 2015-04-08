@@ -1113,13 +1113,17 @@ namespace Detox.ScriptEditor
       //these are property get and set functions for the entity
       //
       //Set:
-      //as per the 'how it works' comment, our input node variable will be set
+      //as per the 'how it works' comment, our 'input node variable' will be set
       //and then a PropertySet function is called which sends that variable
       //to the entity's properties
       //
       //Get:
       //a PropertyGet function is called to refresh a CSharp variable with
       //the latest entity property value
+
+      //NOTE: the 'input node variable' used in the Set is not updated with the Get call, 
+      //the Get call should return directly into whichever variable wants to consume it
+      //the 'input node variable' is only required by the Set function
       private void SetupProperties()
       {
          Profile p = new Profile("SetupProperties");
@@ -1221,15 +1225,29 @@ namespace Detox.ScriptEditor
 
                      if (true == entityProperty.Parameter.Output)
                      {
+
                         //as stated above, cretae a function which
                         //gets the property from the entity and sets the corresponding CSharp variable
                         AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
                         AddCSharpLine("{");
                         ++m_TabStack;
-                        if (entityProperty.ComponentType != "UnityEngine.GameObject")
-                           AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+
+                        if (entityNode is EntityProperty)
+                        {
+                           SyncSlaveConnections(entityProperty, new Parameter[]{entityProperty.Instance});
+
+                           if (entityProperty.ComponentType != "UnityEngine.GameObject")
+                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                           else
+                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ";");
+                        }
                         else
-                           AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ";");
+                        {
+                           if (entityProperty.ComponentType != "UnityEngine.GameObject")
+                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                           else
+                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ";");
+                        }
 
                         AddCSharpLine("if ( null != component )");
                         AddCSharpLine("{");
@@ -1263,10 +1281,23 @@ namespace Detox.ScriptEditor
                         AddCSharpLine("void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "( )");
                         AddCSharpLine("{");
                         ++m_TabStack;
-                        if (entityProperty.ComponentType != "UnityEngine.GameObject")
-                           AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+
+                        if (entityNode is EntityProperty)
+                        {
+                           SyncSlaveConnections(entityProperty, new Parameter[]{entityProperty.Instance});
+
+                           if (entityProperty.ComponentType != "UnityEngine.GameObject")
+                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                           else
+                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ";");
+                        }
                         else
-                           AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ";");
+                        {
+                           if (entityProperty.ComponentType != "UnityEngine.GameObject")
+                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                           else
+                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ";");
+                        }
 
                         AddCSharpLine("if ( null != component )");
                         AddCSharpLine("{");
@@ -3973,7 +4004,7 @@ namespace Detox.ScriptEditor
                       if (node is EntityProperty)
                          AddCSharpLine("component = " + CSharpName(node, node.Parameters[0].Name) + ".GetComponent<" + receiver.ComponentType + ">();");
                       else
-                        AddCSharpLine("component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();");
+                         AddCSharpLine("component = " + CSharpName(node) + ".GetComponent<" + receiver.ComponentType + ">();");
                       
                       AddCSharpLine("if ( null != component )");
                       AddCSharpLine("{");
@@ -5279,14 +5310,19 @@ namespace Detox.ScriptEditor
                   //we need to write the line for the property to refresh
                   else if (argNode is EntityProperty)
                   {
-                     EntityProperty entityProperty = (EntityProperty)argNode;
+                     EntityProperty entityProperty = (EntityProperty)argNode; 
 
                      if (true == entityProperty.Parameter.Output)
                      {
                         SyncReferencedGameObject(entityProperty, entityProperty.Parameter);
 
-                        AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
-                        AddCSharpLine("");
+                        //If our node is an entity property
+                        //we do nothing because it will refreshed automatically when its used
+                        if (node is EntityProperty) 
+                        {} // do nothing
+                        else
+                           //otherwise we fill the node with a new value
+                           AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
                      }
                   }
                }
@@ -5492,7 +5528,7 @@ namespace Detox.ScriptEditor
             }
             foreach (EntityProperty property in m_Script.Properties)
             {
-               AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + property.Guid + "\", " + CSharpName(property, property.Parameter.Name) + ");");
+               AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + property.Guid + "\", " + CSharpRefreshGetPropertyDeclaration(property) + "());");
             }
 
             --m_TabStack;
