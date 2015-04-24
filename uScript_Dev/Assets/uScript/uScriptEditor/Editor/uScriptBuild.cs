@@ -1,5 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Detox Studios, LLC" file="uScript_Runtime.cs">
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Detox Studios, LLC" file="uScriptBuild.cs">
 //   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
@@ -18,9 +18,9 @@ public static class uScriptBuild
    public static string Copyright { get { return "\u00A9 2010-2015 Detox Studios, LLC."; } }
 
    // Version Name and Version Data
-   // Set version - format is MAJOR.MINOR.FOUR-DIGIT-SVN-COMMIT-NUMBER
-   public static string Number { get { return "1.0.2874"; } }
-   private static string productNameAppendText = " (RC21)";
+   // Set version - format is MAJOR.MINOR.FOUR-DIGIT-BUILD-NUMBER
+   public static string Number { get { return "1.0.2900"; } }
+   private static string productNameAppendText = " (RC22)";
 
 
 #if DETOX_STORE_PLE
