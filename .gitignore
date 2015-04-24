@@ -6,3 +6,10 @@ uScript_Dev/Assets/Gizmos/
 uScript_Dev/Assets/uScriptProjectFiles/uScriptSettings.settings
 uScript_Dev/Assets/uScriptProjectFiles/uScriptSettings.settings.meta
 uScript_Dev/Assets/Gizmos.meta
+uScript_Dev/Assets/UnityVS/
+uScript_Dev/Assets/UnityVS.meta
+uScript_Dev/UnityVS.uScript_Dev.CSharp.Editor.csproj
+uScript_Dev/UnityVS.uScript_Dev.CSharp.Plugins.csproj
+uScript_Dev/UnityVS.uScript_Dev.CSharp.csproj
+uScript_Dev/UnityVS.uScript_Dev.sln
+uScript_Dev/obj/

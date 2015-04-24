@@ -126,6 +126,7 @@
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_MasterComponent.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Runtime.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_UndoComponent.cs" />
+    <Compile Include="Assets\uScript\uScriptRuntime\uScriptUnityVersion.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
