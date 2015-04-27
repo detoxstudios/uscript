@@ -569,6 +569,63 @@ public sealed partial class uScript : EditorWindow
       instance.Launching();
    }
 
+   public static void FixMissingReferences(bool dryRun = true)
+   {
+      string[] sceneFiles = FindAllFiles(Application.dataPath, ".unity");
+      foreach (string scene in sceneFiles)
+      {
+         if (EditorApplication.OpenScene(scene))
+         {
+            Debug.Log(string.Format("Checking scene: {0}...", scene));
+            GameObject go = GameObject.Find("_uScript");
+            if (go == null)
+            {
+               Debug.Log(string.Format("No '_uScript' game object found in scene: {0}, skipping...", scene));
+               continue;
+            }
+
+            string componentNames = ":";
+            Component[] components = go.GetComponents<Component>();
+            List<Component> nullComponents = new List<Component>();
+            for (int i = 0; i < components.Length; i++)
+            {
+               if (components[i] == null)
+               {
+                  string s = go.name;
+                  Transform t = go.transform;
+                  while (t.parent != null)
+                  {
+                     s = t.parent.name + "/" + s;
+                     t = t.parent;
+                  }
+                  nullComponents.Add(components[i]);
+               }
+               else
+               {
+                  componentNames += string.Format("{0}:", components[i].GetType().ToString());
+               }
+            }
+
+            if (nullComponents.Count == 2 && !componentNames.Contains("uScript_MasterComponent") && !componentNames.Contains("uScript_UndoComponent"))
+            {
+               if (dryRun)
+               {
+                  Debug.Log(string.Format("Found potential missing uScript components in scene {0}!", scene));
+               }
+               else
+               {
+                  Debug.Log(string.Format("Fixed missing uScript components in scene {0}!", scene));
+                  Component.DestroyImmediate(nullComponents[0]);
+                  Component.DestroyImmediate(nullComponents[1]);
+                  go.AddComponent<uScript_MasterComponent>();
+                  go.AddComponent<uScript_UndoComponent>();
+                  EditorApplication.SaveScene();
+               }
+            }
+         }
+      }
+   }
+
    // Call to force release the mouse and stop a drag operation
    public void ForceReleaseMouse()
    {
@@ -2428,7 +2485,7 @@ public sealed partial class uScript : EditorWindow
 
       var currentNodeClassName = ScriptEditor.FindNodeType(displayNode.EntityNode);
       var currentNodeClassPath = GetClassPath(currentNodeClassName);
-      var scriptPath = this.FindFile(Preferences.UserScripts, currentNodeClassName + ".uscript");
+      var scriptPath = FindFile(Preferences.UserScripts, currentNodeClassName + ".uscript");
       int assetInstanceID;
 
       if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.PingSource)
@@ -3565,7 +3622,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   public string FindFile(string path, string fileName)
+   public static string FindFile(string path, string fileName)
    {
       DirectoryInfo directory = new DirectoryInfo(path);
 
@@ -3591,7 +3648,7 @@ public sealed partial class uScript : EditorWindow
       return string.Empty;
    }
 
-   private string[] FindAllFiles(string rootPath, string extension)
+   private static string[] FindAllFiles(string rootPath, string extension)
    {
       List<string> paths = new List<string>();
 
