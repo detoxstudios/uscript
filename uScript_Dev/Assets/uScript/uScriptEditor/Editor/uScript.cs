@@ -586,7 +586,7 @@ public sealed partial class uScript : EditorWindow
 
             string componentNames = ":";
             Component[] components = go.GetComponents<Component>();
-            List<Component> nullComponents = new List<Component>();
+            List<int> nullComponents = new List<int>();
             for (int i = 0; i < components.Length; i++)
             {
                if (components[i] == null)
@@ -598,7 +598,7 @@ public sealed partial class uScript : EditorWindow
                      s = t.parent.name + "/" + s;
                      t = t.parent;
                   }
-                  nullComponents.Add(components[i]);
+                  nullComponents.Add(i);
                }
                else
                {
@@ -614,12 +614,27 @@ public sealed partial class uScript : EditorWindow
                }
                else
                {
-                  Debug.Log(string.Format("Fixed missing uScript components in scene {0}!", scene));
-                  Component.DestroyImmediate(nullComponents[0]);
-                  Component.DestroyImmediate(nullComponents[1]);
+                  // Create a serialized object so that we can edit the component list
+                  var serializedObject = new SerializedObject(go);
+
+                  // Find the component list property
+                  var prop = serializedObject.FindProperty("m_Component");
+
+                  // Remove from the serialized component array
+                  prop.DeleteArrayElementAtIndex(nullComponents[0]);
+                  prop.DeleteArrayElementAtIndex(nullComponents[1]-1);  // need "-1" since we've already removed an earlier component in the array
+                  
+                  // Apply our changes to the game object
+                  serializedObject.ApplyModifiedProperties();
+
+                  // Add required components
                   go.AddComponent<uScript_MasterComponent>();
                   go.AddComponent<uScript_UndoComponent>();
+
+                  // Save scene
                   EditorApplication.SaveScene();
+
+                  Debug.Log(string.Format("Fixed missing uScript components in scene {0}!", scene));
                }
             }
          }
