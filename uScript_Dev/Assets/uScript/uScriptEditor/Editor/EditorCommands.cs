@@ -37,15 +37,5 @@ namespace Detox.Editor
       {
          WelcomeWindow.Open();
       }
-
-      public static void TestFixUScriptReferences()
-      {
-         uScript.FixMissingReferences();
-      }
-
-      public static void FixUScriptReferences()
-      {
-         uScript.FixMissingReferences(false);
-      }
    }
 }

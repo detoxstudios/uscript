@@ -569,101 +569,6 @@ public sealed partial class uScript : EditorWindow
       instance.Launching();
    }
 
-   public static void FixMissingReferences(bool dryRun = true)
-   {
-      string[] sceneFiles = FindAllFiles(Application.dataPath, ".unity");
-      List<string> fixedScenes = new List<string>();
-      foreach (string scene in sceneFiles)
-      {
-         if (EditorApplication.OpenScene(scene))
-         {
-            Debug.Log(string.Format("Checking scene: {0}...", scene));
-            GameObject go = GameObject.Find("_uScript");
-            if (go == null)
-            {
-               Debug.Log(string.Format("No '_uScript' game object found in scene: {0}, skipping...", scene));
-               continue;
-            }
-
-            Selection.objects = new UnityEngine.Object[] { go };
-
-               string componentNames = ":";
-               Component[] components = go.GetComponents<Component>();
-               List<int> nullComponents = new List<int>();
-               for (int i = 0; i < components.Length; i++)
-               {
-                  if (components[i] == null)
-                  {
-                     string s = go.name;
-                     Transform t = go.transform;
-                     while (t.parent != null)
-                     {
-                        s = t.parent.name + "/" + s;
-                        t = t.parent;
-                     }
-                     nullComponents.Add(i);
-                  }
-                  else
-                  {
-                     componentNames += string.Format("{0}:", components[i].GetType().ToString());
-                  }
-               }
-
-               if (nullComponents.Count == 2 && !componentNames.Contains("uScript_MasterComponent") && !componentNames.Contains("uScript_UndoComponent"))
-               {
-                  fixedScenes.Add(scene);
-                  if (dryRun)
-                  {
-                     Debug.Log(string.Format("Found potential missing uScript components in scene {0}!", scene));
-                  }
-                  else
-                  {
-                     // Add required components
-                     go.AddComponent<uScript_MasterComponent>();
-                     go.AddComponent<uScript_UndoComponent>();
-
-                     // Create a serialized object so that we can edit the component list
-//                     var serializedObject = new SerializedObject(go);
-
-                     // Find the component list property
-//                     var prop = serializedObject.FindProperty("m_Component");
-
-                     // Remove from the serialized component array
-//                     prop.DeleteArrayElementAtIndex(nullComponents[0]);
-//                     prop.DeleteArrayElementAtIndex(nullComponents[1] - 1);  // need "- 1" since we've already removed an earlier component in the array
-                  
-                     // Apply our changes to the game object
-//                     serializedObject.ApplyModifiedProperties();
-//                     serializedObject.SetIsDifferentCacheDirty();
-
-                     // Save scene
-                     EditorApplication.SaveScene();
-
-                     Debug.Log(string.Format("Fixed missing uScript components in scene {0}!", scene));
-                  }
-               }
-
-            Selection.objects = new UnityEngine.Object[] { };
-         }
-      }
-
-      if (fixedScenes.Count > 0)
-      {
-         if (dryRun)
-         {
-            Debug.Log(string.Format("Found {0} scenes that had missing uScript references:", fixedScenes.Count));
-         }
-         else
-         {
-            Debug.Log(string.Format("Found and fixed {0} scenes that had missing uScript references:", fixedScenes.Count));
-         }
-         foreach(string sceneName in fixedScenes)
-         {
-            Debug.Log(sceneName);
-         }
-      }
-   }
-
    // Call to force release the mouse and stop a drag operation
    public void ForceReleaseMouse()
    {
@@ -3686,7 +3591,7 @@ public sealed partial class uScript : EditorWindow
       return string.Empty;
    }
 
-   private static string[] FindAllFiles(string rootPath, string extension)
+   public static string[] FindAllFiles(string rootPath, string extension)
    {
       List<string> paths = new List<string>();
 

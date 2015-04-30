@@ -127,18 +127,6 @@ namespace Detox.Editor
       {
          EditorCommands.OpenAboutWindow();
       }
-
-      [MenuItem(MenuRoot + ""uScript/Fix Missing uScript References"", false)]
-      internal static void FixMissingReferences()
-      {
-         EditorCommands.FixUScriptReferences();
-      }
-
-      [MenuItem(MenuRoot + ""uScript/Fix Missing uScript References (Dry Run)"", false)]
-      internal static void TestFixMissingReferences()
-      {
-         EditorCommands.TestFixUScriptReferences();
-      }
    }
 }
 ";
