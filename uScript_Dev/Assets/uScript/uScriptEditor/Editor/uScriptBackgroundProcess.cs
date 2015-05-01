@@ -25,6 +25,8 @@ public class uScriptBackgroundProcess
    private const int FilesPerTick = 5;
 
    private static int currentKeyIndex = -1;
+	
+   private static bool m_SkipLabelsCheck = false;
 
    static uScriptBackgroundProcess()
    {
@@ -79,10 +81,60 @@ public class uScriptBackgroundProcess
       currentKeyIndex = 0;
    }
 
+   public static UnityEngine.Object[] GetAtPath(string path)
+   {
+      List<UnityEngine.Object> al = new List<UnityEngine.Object>();
+      string[] dirEntries = Directory.GetDirectories(path);
+      string[] fileEntries = Directory.GetFiles(path);
+
+      foreach (string dirName in dirEntries)
+      {
+         if (Directory.Exists(dirName)) al.AddRange(GetAtPath(dirName));
+      }
+
+      foreach (string fileName in fileEntries)
+      {
+         UnityEngine.Object t = AssetDatabase.LoadMainAssetAtPath(fileName.RelativeAssetPath());
+         if (t != null) al.Add(t);
+      }
+
+      return al.ToArray();
+   }
+   
    private static void Update()
    {
       if (uScript.IsOpen == false)
       {
+         if (!m_SkipLabelsCheck)
+         {
+            // check for asset labels
+            UnityEngine.Object[] objs = GetAtPath(uScript.Preferences.UserScripts);
+            foreach (UnityEngine.Object obj in objs)
+            {
+               string[] labels = AssetDatabase.GetLabels(obj);
+               if (labels == null) continue;
+               foreach (string label in labels)
+               {
+                  if (label.Contains("uScript"))
+                  {
+                     m_SkipLabelsCheck = true;
+                     return;
+                  }
+               }
+            }
+				
+            // if we made it this far, assign labels
+            foreach (UnityEngine.Object obj in objs)
+            {
+               AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptSource" });
+            }
+            objs = GetAtPath(uScript.Preferences.UserScripts + "/_GeneratedCode");
+            foreach (UnityEngine.Object obj in objs)
+            {
+               AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
+            }
+            m_SkipLabelsCheck = true;
+         }
          return;
       }
 

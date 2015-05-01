@@ -1,5 +1,8 @@
 fileFormatVersion: 2
 guid: 605809b4af12e3844a7b61dd2099ddea
+labels:
+- uScript
+- uScriptCode
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []

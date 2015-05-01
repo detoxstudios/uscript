@@ -3022,6 +3022,22 @@ public sealed partial class uScript : EditorWindow
             wrapperPath));
 
       AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
+
+      UnityEngine.Object obj = AssetDatabase.LoadMainAssetAtPath(this.fullPath.RelativeAssetPath());
+      if (obj != null)
+      {
+         AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptSource" });
+      }
+      obj = AssetDatabase.LoadMainAssetAtPath(logicPath);
+      if (obj != null)
+      {
+         AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
+      }
+      obj = AssetDatabase.LoadMainAssetAtPath(wrapperPath);
+      if (obj != null)
+      {
+         AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
+      }
    }
 
    void DrawMenuItemShortcut(string shortcut)

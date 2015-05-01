@@ -1,2 +1,5 @@
 fileFormatVersion: 2
 guid: a8c1b7f8d4bc919419f24e7ddc20749e
+labels:
+- uScript
+- uScriptSource
