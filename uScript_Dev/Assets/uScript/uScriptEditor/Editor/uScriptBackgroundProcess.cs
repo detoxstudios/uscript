@@ -72,7 +72,8 @@ public class uScriptBackgroundProcess
       foreach (var path in uScript.GetGraphPaths())
       {
          var graphName = Path.GetFileNameWithoutExtension(path);
-         if (graphName != null)
+         GraphInfo gi = new GraphInfo(path);
+         if (graphName != null && !GraphInfoList.TryGetValue(graphName, out gi))
          {
             GraphInfoList.Add(graphName, new GraphInfo(path));
          }

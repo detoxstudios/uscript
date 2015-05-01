@@ -472,7 +472,17 @@ public sealed partial class uScript : EditorWindow
 
    public static List<string> GetGraphPaths()
    {
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+      List<string> files = new List<string>();
+      var guids = AssetDatabase.FindAssets ("l:uScriptSource", null);
+      foreach (var guid in guids)
+      {
+         files.Add(AssetDatabase.GUIDToAssetPath(guid));
+      }
+      return files;
+#else
       return Directory.GetFiles(Preferences.UserScripts, "*.uscript", SearchOption.AllDirectories).Select(s => s.Replace("\\", "/")).ToList();
+#endif
    }
 
    public bool IsStale(string scriptName)
