@@ -81,16 +81,10 @@ public class uScriptBackgroundProcess
       currentKeyIndex = 0;
    }
 
-   public static UnityEngine.Object[] GetAtPath(string path)
+   public static UnityEngine.Object[] GetAtPath(string path, string filterString = "*")
    {
       List<UnityEngine.Object> al = new List<UnityEngine.Object>();
-      string[] dirEntries = Directory.GetDirectories(path);
-      string[] fileEntries = Directory.GetFiles(path);
-
-      foreach (string dirName in dirEntries)
-      {
-         if (Directory.Exists(dirName)) al.AddRange(GetAtPath(dirName));
-      }
+      string[] fileEntries = Directory.GetFiles(path, filterString, SearchOption.AllDirectories);
 
       foreach (string fileName in fileEntries)
       {
@@ -108,7 +102,7 @@ public class uScriptBackgroundProcess
          if (!m_SkipLabelsCheck)
          {
             // check for asset labels
-            UnityEngine.Object[] objs = GetAtPath(uScript.Preferences.UserScripts);
+            UnityEngine.Object[] objs = GetAtPath(uScript.Preferences.UserScripts, "*.uscript");
             foreach (UnityEngine.Object obj in objs)
             {
                string[] labels = AssetDatabase.GetLabels(obj);
@@ -128,7 +122,7 @@ public class uScriptBackgroundProcess
             {
                AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptSource" });
             }
-            objs = GetAtPath(uScript.Preferences.UserScripts + "/_GeneratedCode");
+            objs = GetAtPath(uScript.Preferences.UserScripts + "/_GeneratedCode", "*.cs");
             foreach (UnityEngine.Object obj in objs)
             {
                AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
