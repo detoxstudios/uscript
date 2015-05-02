@@ -470,16 +470,23 @@ public sealed partial class uScript : EditorWindow
 
    private Dictionary<string, bool> _staleScriptCache = new Dictionary<string, bool>();
 
-   public static List<string> GetGraphPaths()
-   {
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+   private static List<string> GetFilePathsWithLabel(string label)
+   {
       List<string> files = new List<string>();
-      var guids = AssetDatabase.FindAssets ("l:uScriptSource", null);
+      var guids = AssetDatabase.FindAssets("l:" + label, null);
       foreach (var guid in guids)
       {
          files.Add(AssetDatabase.GUIDToAssetPath(guid));
       }
       return files;
+   }
+#endif 
+
+   public static List<string> GetGraphPaths(string label = "uScriptSource")
+   {
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+      return GetFilePathsWithLabel(label);
 #else
       return Directory.GetFiles(Preferences.UserScripts, "*.uscript", SearchOption.AllDirectories).Select(s => s.Replace("\\", "/")).ToList();
 #endif
@@ -4013,26 +4020,46 @@ public sealed partial class uScript : EditorWindow
 
    private string GetGeneratedScriptPath(string binaryPath)
    {
+      String fileName = Path.GetFileNameWithoutExtension(binaryPath) + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
+
       Directory.CreateDirectory(Preferences.GeneratedScripts);
 
-      string wrapperPath = Preferences.GeneratedScripts;
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+      // first see if we've already saved the file and then just use that path
+      List<string> files = GetFilePathsWithLabel("uScriptCode");
+      foreach (string file in files)
+      {
+         if (file.Contains(fileName)) return file;
+      }
 
-      String fileName = Path.GetFileNameWithoutExtension(binaryPath);
-
-      wrapperPath += "/" + fileName + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
+      // not found, fall back to default
+      string wrapperPath = Preferences.GeneratedScripts + "/" + fileName;
+#else
+      string wrapperPath = Preferences.GeneratedScripts + "/" + fileName;
+#endif
 
       return wrapperPath;
    }
 
    private string GetNestedScriptPath(string binaryPath)
    {
+      String fileName = Path.GetFileNameWithoutExtension(binaryPath) + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
+
       Directory.CreateDirectory(Preferences.NestedScripts);
 
-      string logicPath = Preferences.NestedScripts;
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+      // first see if we've already saved the file and then just use that path
+      List<string> files = GetFilePathsWithLabel("uScriptCode");
+      foreach(string file in files)
+      {
+         if (file.Contains(fileName)) return file;
+      }
 
-      String fileName = Path.GetFileNameWithoutExtension(binaryPath);
-
-      logicPath += "/" + fileName + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
+      // not found, fall back to default
+      string logicPath = Preferences.NestedScripts + "/" + fileName;
+#else
+      string logicPath = Preferences.NestedScripts + "/" + fileName;
+#endif
 
       return logicPath;
    }
@@ -4311,11 +4338,29 @@ public sealed partial class uScript : EditorWindow
 #endif
    }
 
-   void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType)
+   void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType, string label = "")
    {
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
       DirectoryInfo directory = new DirectoryInfo(path);
-
+      List<FileInfo> filesList = new List<FileInfo>();
+      FileInfo[] files;
+      if (!string.IsNullOrEmpty(label))
+      {
+         List<string> filePaths = GetFilePathsWithLabel(label);
+         foreach(string filepath in filePaths)
+         {
+            filesList.Add(new FileInfo(filepath));
+         }
+         files = filesList.ToArray();
+      }
+      else
+      {
+         files = directory.GetFiles();
+      }
+#else
+      DirectoryInfo directory = new DirectoryInfo(path);
       FileInfo[] files = directory.GetFiles();
+#endif
 
       foreach (FileInfo file in files)
       {
@@ -4337,7 +4382,7 @@ public sealed partial class uScript : EditorWindow
       {
          if (subDirectory.Name.StartsWith(".") || subDirectory.Name.StartsWith("_")) continue;
 
-         GatherDerivedTypes(uniqueNodes, subDirectory.FullName, baseType);
+         GatherDerivedTypes(uniqueNodes, subDirectory.FullName, baseType, label);
       }
    }
 
@@ -4359,8 +4404,8 @@ public sealed partial class uScript : EditorWindow
 
          GatherDerivedTypes(uniqueNodes, uScriptConfig.ConstantPaths.RuntimeNodes, typeof(uScriptLogic));
 
-         GatherDerivedTypes(uniqueNodes, Preferences.UserNodes, typeof(uScriptLogic));
-         GatherDerivedTypes(uniqueNodes, Preferences.NestedScripts, typeof(uScriptLogic));
+         GatherDerivedTypes(uniqueNodes, Preferences.UserNodes, typeof(uScriptLogic), "uScriptCode");
+         GatherDerivedTypes(uniqueNodes, Preferences.NestedScripts, typeof(uScriptLogic), "uScriptCode");
 
          m_SzLogicTypes = new string[uniqueNodes.Values.Count];
 
@@ -5079,7 +5124,7 @@ public sealed partial class uScript : EditorWindow
 
          Dictionary<Type, Type> eventNodes = new Dictionary<Type, Type>();
          GatherDerivedTypes(eventNodes, uScriptConfig.ConstantPaths.RuntimeNodes, typeof(uScriptEvent));
-         GatherDerivedTypes(eventNodes, Preferences.UserNodes, typeof(uScriptEvent));
+         GatherDerivedTypes(eventNodes, Preferences.UserNodes, typeof(uScriptEvent), "uScriptCode");
 
          foreach (UnityEngine.Object o in allObjects)
          {

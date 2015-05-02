@@ -546,7 +546,16 @@ namespace Detox.Editor
 
       public static bool IsGeneratedScriptMissing(string graphName)
       {
-         var assetPathRelativeToProject = uScript.Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6) + "/" + graphName + ".cs";
+         var csName = graphName + ".cs";
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+         // first see if we've already saved the file and then just use that path
+         List<string> files = uScript.GetGraphPaths("uScriptCode");
+         foreach (string file in files)
+         {
+            if (file.Contains(csName)) return false;
+         }
+#endif
+         var assetPathRelativeToProject = uScript.Preferences.GeneratedScripts.Substring(Application.dataPath.Length - 6) + "/" + csName;
          var result = uScript.GetAssetInstanceID(assetPathRelativeToProject, typeof(TextAsset));
          return result == -1;
       }
