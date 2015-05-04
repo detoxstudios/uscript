@@ -4774,9 +4774,20 @@ namespace Detox.ScriptEditor
             const string Start = "/*[[BEGIN BASE64\r\n";
             const string End = "\r\nEND BASE64]]*/";
 
-            contents = contents.Substring(contents.IndexOf(Start, StringComparison.Ordinal));
-            contents = contents.Substring(Start.Length);
-            contents = contents.Substring(0, contents.Length - End.Length);
+            if (contents.IndexOf(Start, StringComparison.Ordinal) == -1)
+            {
+               const string OtherStart = "/*[[BEGIN BASE64\n";
+               const string OtherEnd = "\nEND BASE64]]*/";
+               contents = contents.Substring(contents.IndexOf(OtherStart, StringComparison.Ordinal));
+               contents = contents.Substring(OtherStart.Length);
+               contents = contents.Substring(0, contents.Length - OtherEnd.Length);
+            }
+            else
+            {
+               contents = contents.Substring(contents.IndexOf(Start, StringComparison.Ordinal));
+               contents = contents.Substring(Start.Length);
+               contents = contents.Substring(0, contents.Length - End.Length);
+            }
 
             var result = this.OpenFromBase64(fullPath, Path.GetFileName(fullPath), contents);
 

@@ -183,17 +183,31 @@ public static class uScriptConfig
       static ConstantPaths()
       {
          var assets = Application.dataPath;
+         var uscript = assets + "/uScript";
+         var asblyPath = typeof(uScript).Assembly.Location;
 
-         Editor = string.Format("{0}/uScript/uScriptEditor", assets);
-         RuntimeNodes = string.Format("{0}/uScript/uScriptRuntime/Nodes", assets);
+         // if we're in a dll, we need to locate the root install directory
+         if (asblyPath.ToLower().Contains("uscript.dll"))
+         {
+            // go from [path-to-unity-project]/Assets/path/to/uscript/uScriptEditor/Editor/uScript.dll
+            //      to [path-to-unity-project]/Assets/path/to/uscript
+            uscript = asblyPath;
+            for (int i = 0; i < 3; i++)
+            {
+               uscript = uscript.Substring(0, uscript.LastIndexOf("/"));
+            }  
+         }
+         // else - assume uScript root is [path-to-unity-project]/Assets/uscript
+
+         Editor = string.Format("{0}/uScriptEditor", uscript);
+         RuntimeNodes = string.Format("{0}/uScriptRuntime/Nodes", uscript);
 
          Gizmos = string.Format("{0}/Editor/_Gizmos", Editor);
          Skin = string.Format("{0}/Editor/_GUI/uScriptDefault", Editor);
          Skins = string.Format("{0}/Editor/Skins", Editor);
          Templates = string.Format("{0}/Editor/_Templates", Editor);
 
-         var path = assets.Substring(0, assets.LastIndexOf("/Assets", StringComparison.Ordinal));
-         Screenshots = string.Format("{0}/Screenshots", path);
+         Screenshots = string.Format("{0}/Screenshots", assets);
 
          Settings = string.Format("{0}/uScriptProjectFiles", assets);
       }
