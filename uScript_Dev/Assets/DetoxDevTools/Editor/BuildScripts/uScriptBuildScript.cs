@@ -4,29 +4,6 @@ using System.Collections.Generic;
 
 public class uScriptBuildScript : MonoBehaviour
 {
-   public static void BuildPreExamplesPackage()
-   {
-      string[] directories = new string[]
-      {
-         "Assets/DetoxDevTools/BuildScripts", 
-         "Assets/Example_uScript_Scenes",
-         "Assets/Standard Assets",
-         "Assets/uScriptProjectFiles/uScripts"
-      };
-      AssetDatabase.ExportPackage(directories, "PreExamples.unitypackage", ExportPackageOptions.Recurse);
-   }
-
-   public static void BuildExamplesPackage()
-   {
-      string[] directories = new string[]
-      {
-         "Assets/Example_uScript_Scenes",
-         "Assets/Standard Assets",
-         "Assets/uScriptProjectFiles/uScripts"
-      };
-      AssetDatabase.ExportPackage(directories, "Examples.unitypackage", ExportPackageOptions.Recurse);
-   }
-   
    [MenuItem("uScript/Internal/Fixup Example Scenes")]
    public static void FixupExampleScenes()
    {
