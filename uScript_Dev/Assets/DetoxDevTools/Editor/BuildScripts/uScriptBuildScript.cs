@@ -83,4 +83,29 @@ public class uScriptBuildScript : MonoBehaviour
 
       return true;
    }
+
+   [MenuItem("uScript/Internal/Build Example Builder Package")]
+   public static void BuildExampleBuilderPackage()
+   {
+      string[] directories = new string[] 
+      { 
+         "Assets\\DetoxDevTools\\Editor\\BuildScripts", 
+         "Assets\\Example_uScript_Scenes", 
+         "Assets\\Standard Assets", 
+         "Assets\\uScriptProjectFiles\\uScripts" 
+      };
+      AssetDatabase.ExportPackage(directories, "ExampleBuilder.unitypackage", ExportPackageOptions.Recurse);
+   }
+
+   [MenuItem("uScript/Internal/Build Examples Package")]
+   public static void BuildExamplesPackage()
+   {
+      string[] directories = new string[]
+      {
+         "Assets\\Example_uScript_Scenes",
+         "Assets\\Standard Assets",
+         "Assets\\uScriptProjectFiles\\uScripts"
+      };
+      AssetDatabase.ExportPackage(directories, "Examples.unitypackage", ExportPackageOptions.Recurse);
+   }
 }
