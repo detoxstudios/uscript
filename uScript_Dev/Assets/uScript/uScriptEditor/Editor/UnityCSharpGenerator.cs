@@ -1145,6 +1145,7 @@ namespace Detox.ScriptEditor
                      AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
                      AddCSharpLine("{");
                      ++m_TabStack;
+                     AddCSharpLine(entityProperty.ComponentType + " component = null;");
                      if (entityProperty.ComponentType != "UnityEngine.GameObject")
                      {
                         AddCSharpLine("if (" + CSharpName(entityProperty, entityProperty.Instance.Name) + " != null)");
