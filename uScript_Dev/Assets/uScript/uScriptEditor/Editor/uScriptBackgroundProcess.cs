@@ -102,31 +102,34 @@ public class uScriptBackgroundProcess
       {
          if (!m_SkipLabelsCheck)
          {
-            // check for asset labels
-            UnityEngine.Object[] objs = GetAtPath(uScript.Preferences.UserScripts, "*.uscript");
-            foreach (UnityEngine.Object obj in objs)
+            if (Directory.Exists(uScript.Preferences.UserScripts))
             {
-               string[] labels = AssetDatabase.GetLabels(obj);
-               if (labels == null) continue;
-               foreach (string label in labels)
+               // check for asset labels
+               UnityEngine.Object[] objs = GetAtPath(uScript.Preferences.UserScripts, "*.uscript");
+               foreach (UnityEngine.Object obj in objs)
                {
-                  if (label.Contains("uScript"))
+                  string[] labels = AssetDatabase.GetLabels(obj);
+                  if (labels == null) continue;
+                  foreach (string label in labels)
                   {
-                     m_SkipLabelsCheck = true;
-                     return;
+                     if (label.Contains("uScript"))
+                     {
+                        m_SkipLabelsCheck = true;
+                        return;
+                     }
                   }
                }
-            }
-				
-            // if we made it this far, assign labels
-            foreach (UnityEngine.Object obj in objs)
-            {
-               AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptSource" });
-            }
-            objs = GetAtPath(uScript.Preferences.UserScripts + "/_GeneratedCode", "*.cs");
-            foreach (UnityEngine.Object obj in objs)
-            {
-               AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
+
+               // if we made it this far, assign labels
+               foreach (UnityEngine.Object obj in objs)
+               {
+                  AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptSource" });
+               }
+               objs = GetAtPath(uScript.Preferences.UserScripts + "/_GeneratedCode", "*.cs");
+               foreach (UnityEngine.Object obj in objs)
+               {
+                  AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
+               }
             }
             m_SkipLabelsCheck = true;
          }
