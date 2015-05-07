@@ -85,4 +85,22 @@ public class uScriptBuildScript : MonoBehaviour
       };
       AssetDatabase.ExportPackage(directories, "Examples.unitypackage", ExportPackageOptions.Recurse);
    }
+
+   [MenuItem("uScript/Internal/Stub uScript Code")]
+   public static void StubUScriptCode()
+   {
+      AssetDatabase.StartAssetEditing();
+      uScript.Instance.StubGeneratedCode(uScript.Preferences.UserScripts);
+      AssetDatabase.StopAssetEditing();
+      AssetDatabase.Refresh();
+   }
+
+   [MenuItem("uScript/Internal/Regenerate uScript Code")]
+   public static void RegenerateUScriptCode()
+   {
+      AssetDatabase.StartAssetEditing();
+      uScript.Instance.RebuildScripts(uScript.Preferences.UserScripts, false);
+      AssetDatabase.StopAssetEditing();
+      AssetDatabase.Refresh();
+   }
 }

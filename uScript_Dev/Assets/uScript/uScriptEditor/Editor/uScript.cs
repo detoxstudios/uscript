@@ -4001,7 +4001,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private void RebuildScripts(string path, bool stubCode)
+   public void RebuildScripts(string path, bool stubCode)
    {
       var directory = new DirectoryInfo(path);
 
