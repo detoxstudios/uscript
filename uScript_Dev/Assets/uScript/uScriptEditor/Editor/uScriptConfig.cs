@@ -189,6 +189,7 @@ public static class uScriptConfig
          // if we're in a dll, we need to locate the root install directory
          if (asblyPath.ToLower().Contains("uscript.dll"))
          {
+            Debug.Log(asblyPath);
             // go from [path-to-unity-project]/Assets/path/to/uscript/uScriptEditor/Editor/uScript.dll
             //      to [path-to-unity-project]/Assets/path/to/uscript
             uscript = asblyPath;
