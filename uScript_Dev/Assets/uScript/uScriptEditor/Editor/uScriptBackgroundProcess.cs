@@ -102,6 +102,9 @@ public class uScriptBackgroundProcess
       {
          if (!m_SkipLabelsCheck)
          {
+            // the following code is used to update existing uscripts and their generated code
+            // so that .uscript files have a "uScript" and "uScriptSource" label and the
+            // generated files have a "uScript" and "uScriptCode" label
             if (Directory.Exists(uScript.Preferences.UserScripts))
             {
                // check for asset labels

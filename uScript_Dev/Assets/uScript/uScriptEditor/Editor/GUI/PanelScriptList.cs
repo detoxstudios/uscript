@@ -146,7 +146,11 @@ namespace Detox.Editor.GUI
             }
 
             // Get the graph paths, making the path relative to the project folder
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+            var initialPaths = uScript.GetGraphPaths();
+#else
             var initialPaths = uScript.GetGraphPaths().Select(path => path.Replace(uScript.Preferences.UserScripts + "/", string.Empty)).ToList();
+#endif
 
             // Send final (filtered and sorted) list to the ListView control
             this.listView.ClearItems();

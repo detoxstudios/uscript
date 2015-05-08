@@ -471,6 +471,17 @@ public sealed partial class uScript : EditorWindow
    private Dictionary<string, bool> _staleScriptCache = new Dictionary<string, bool>();
 
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+   private static string GetFilePathWithLabel(string label, string fileName)
+   {
+      var guids = AssetDatabase.FindAssets("l:" + label, null);
+      foreach (var guid in guids)
+      {
+         var path = AssetDatabase.GUIDToAssetPath(guid);
+         if (path.Contains(fileName)) return path;
+      }
+      return string.Format("File: {0} not found with label {1}!", fileName, label);
+   }
+
    private static List<string> GetFilePathsWithLabel(string label)
    {
       List<string> files = new List<string>();
@@ -492,6 +503,15 @@ public sealed partial class uScript : EditorWindow
 #endif
    }
 
+   public static string GetGraphPath(string fileName, string label = "uScriptSource")
+   {
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+      return GetFilePathWithLabel(label, fileName);
+#else
+      return uScript.Preferences.UserScripts + "/" + fileName;
+#endif
+   }
+
    public bool IsStale(string scriptName)
    {
       if (_staleScriptCache.ContainsKey(scriptName))
@@ -500,7 +520,11 @@ public sealed partial class uScript : EditorWindow
       }
       else
       {
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+         string path = GetGraphPath(scriptName + ".uscript");
+#else
          string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
+#endif
 
          if (path != string.Empty)
          {
@@ -551,7 +575,11 @@ public sealed partial class uScript : EditorWindow
       }
       else
       {
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+         string path = GetGraphPath(scriptName + ".uscript");
+#else
          string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
+#endif
 
          if (string.Empty != path)
          {
@@ -2445,7 +2473,11 @@ public sealed partial class uScript : EditorWindow
 
       var currentNodeClassName = ScriptEditor.FindNodeType(displayNode.EntityNode);
       var currentNodeClassPath = GetClassPath(currentNodeClassName);
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+      var scriptPath = GetGraphPath(currentNodeClassName + ".uscript");
+#else
       var scriptPath = FindFile(Preferences.UserScripts, currentNodeClassName + ".uscript");
+#endif
       int assetInstanceID;
 
       if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.PingSource)
@@ -4003,6 +4035,13 @@ public sealed partial class uScript : EditorWindow
 
    public void RebuildScripts(string path, bool stubCode)
    {
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+      List<string> files = GetGraphPaths();
+      foreach (string file in files)
+      {
+         this.RebuildScript(file, stubCode);
+      }
+#else
       var directory = new DirectoryInfo(path);
 
       var files = directory.GetFiles();
@@ -4016,6 +4055,7 @@ public sealed partial class uScript : EditorWindow
       {
          this.RebuildScripts(subDirectory.FullName, stubCode);
       }
+#endif
    }
 
    private string GetGeneratedScriptPath(string binaryPath)
@@ -4033,12 +4073,10 @@ public sealed partial class uScript : EditorWindow
       }
 
       // not found, fall back to default
-      string wrapperPath = Preferences.GeneratedScripts + "/" + fileName;
+      return Preferences.GeneratedScripts + "/" + fileName;
 #else
-      string wrapperPath = Preferences.GeneratedScripts + "/" + fileName;
+      return Preferences.GeneratedScripts + "/" + fileName;
 #endif
-
-      return wrapperPath;
    }
 
    private string GetNestedScriptPath(string binaryPath)
@@ -4056,12 +4094,10 @@ public sealed partial class uScript : EditorWindow
       }
 
       // not found, fall back to default
-      string logicPath = Preferences.NestedScripts + "/" + fileName;
+      return Preferences.NestedScripts + "/" + fileName;
 #else
-      string logicPath = Preferences.NestedScripts + "/" + fileName;
+      return Preferences.NestedScripts + "/" + fileName;
 #endif
-
-      return logicPath;
    }
 
    private bool SaveGraph(ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo, bool stubCode)
@@ -4119,6 +4155,7 @@ public sealed partial class uScript : EditorWindow
 
             if (chosenPath != string.Empty)
             {
+#if UNITY_3_5
                // Validate the chosen graph location
                isSafe = chosenPath.StartsWith(Preferences.UserScripts + "/");
                if (!isSafe)
@@ -4146,6 +4183,7 @@ public sealed partial class uScript : EditorWindow
 
                   continue;
                }
+#endif
 
                // Update the defaults to reflect the most recently selected path
                directory = Path.GetDirectoryName(chosenPath);
@@ -4698,7 +4736,11 @@ public sealed partial class uScript : EditorWindow
    {
       List<RawScript> rawScripts = new List<RawScript>();
 
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+      string[] files = GetGraphPaths().ToArray();
+#else
       string[] files = FindAllFiles(Preferences.UserScripts, ".uscript");
+#endif
 
       foreach (string file in files)
       {
@@ -4731,7 +4773,7 @@ public sealed partial class uScript : EditorWindow
 
       foreach (RawScript rawScript in rawScripts)
       {
-         //omly use it if it exposes some type of external
+         //only use it if it exposes some type of external
          if (rawScript.ExternalParameters.Length > 0 ||
               rawScript.ExternalInputs.Length > 0 ||
               rawScript.ExternalOutputs.Length > 0 ||
