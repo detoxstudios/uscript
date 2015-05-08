@@ -1156,7 +1156,7 @@ namespace Detox.ScriptEditor
                         AddCSharpLine("}");
                      }
                      else
-                        AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ";");
+                        AddCSharpLine("component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ";");
                       
                      AddCSharpLine("if ( null != component )");
                      AddCSharpLine("{");
