@@ -77,7 +77,8 @@ namespace Detox.ScriptEditor
 
    public partial class ScriptEditorCtrl 
    {
-      public ContextMenuStrip ContextMenu { get { return m_ContextMenuStrip; } }
+      public ContextMenuStrip ContextMenuWithReflection { get { return m_ContextMenuStrip; } }
+      public ContextMenuStrip ContextMenuSansReflection { get { return PruneReflection(m_ContextMenuStrip); } }
       
       private ContextMenuStrip m_ContextMenuStrip = new ContextMenuStrip( );
       private Detox.FlowChart.FlowChartCtrl m_FlowChart = new Detox.FlowChart.FlowChartCtrl( );

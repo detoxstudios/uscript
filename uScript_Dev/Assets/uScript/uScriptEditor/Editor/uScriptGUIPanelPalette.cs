@@ -399,12 +399,12 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
          // Create a new palette menu, destroying the old one
          this.paletteMenuItems = new List<PaletteMenuItem>();
 
-         var items = uScript.Instance.ScriptEditorCtrl.ContextMenu.Items.Items;
+         var items = uScript.Instance.ScriptEditorCtrl.ContextMenuWithReflection.Items;
          foreach (var item in items)
          {
             if ((item is ToolStripMenuItem) && (item.Text == "Add..."))
             {
-               foreach (var subitem in ((ToolStripMenuItem)item).DropDownItems.Items)
+               foreach (var subitem in ((ToolStripMenuItem)item).DropDownItems)
                {
                   var paletteItem = new PaletteMenuItem { Indent = 0 };
 
@@ -413,11 +413,11 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                   this.paletteMenuItems.Add(paletteItem);
                }
             }
-         }
+         } 
       }
       else if (!(contextMenuItem is ToolStripSeparator))
       {
-         if ((contextMenuItem is ToolStripMenuItem) && ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items.Count > 0)
+         if ((contextMenuItem is ToolStripMenuItem) && ((ToolStripMenuItem)contextMenuItem).DropDownItems.Count > 0)
          {
             // This is a foldout
             paletteMenuItem.Name = contextMenuItem.Text.Replace("...", string.Empty);
@@ -429,7 +429,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                PaletteMenuItemFoldout.Add(paletteMenuItem.Path, false);
             }
 
-            foreach (var item in ((ToolStripMenuItem)contextMenuItem).DropDownItems.Items)
+            foreach (var item in ((ToolStripMenuItem)contextMenuItem).DropDownItems)
             {
                var newItem = new PaletteMenuItem { Indent = paletteMenuItem.Indent + 1 };
                if (item == null)

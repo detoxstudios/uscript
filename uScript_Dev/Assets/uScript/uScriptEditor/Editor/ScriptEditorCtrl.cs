@@ -806,8 +806,8 @@ namespace Detox.ScriptEditor
 
 
          BuildAddMenu( addMenu, typeHash );
-
-         m_ContextMenuStrip.Items.AddRange( addMenu.DropDownItems.Items.ToArray( ) );
+         
+         m_ContextMenuStrip.Items.AddRange( addMenu.DropDownItems.ToArray( ) );
 
          return true;
       }
@@ -2531,7 +2531,7 @@ namespace Detox.ScriptEditor
 
       private ToolStripMenuItem GetItem(ToolStripMenuItem menu, string name)
       {
-         foreach ( ToolStripItem item in menu.DropDownItems.Items )
+         foreach ( ToolStripItem item in menu.DropDownItems )
          {
             if ( item.Text == name ) 
             {
@@ -2991,15 +2991,17 @@ namespace Detox.ScriptEditor
 
                      foreach ( EntityEvent m in events )
                      {
-                        ToolStripItem item = subMenu.DropDownItems.Add( m.FriendlyType + GetMethodSignature(m)  );
+                        ToolStripItem item = new ToolStripItem(m.FriendlyType + GetMethodSignature(m));
                         item.Tag = m;
+                        subMenu.DropDownItems.Add( item );
 
                         item.Click += new System.EventHandler(m_MenuAddNode_Click);
                      }
                   }
                   else
                   {
-                     ToolStripItem item = friendlyMenu.DropDownItems.Add( events[0].FriendlyType );
+                     ToolStripItem item = new ToolStripItem( events[0].FriendlyType );
+                     friendlyMenu.DropDownItems.Add( item );
                      item.Tag = events[0];
 
                      item.Click += new System.EventHandler(m_MenuAddNode_Click);
@@ -3044,7 +3046,8 @@ namespace Detox.ScriptEditor
 
                      foreach ( EntityMethod m in methods )
                      {
-                        ToolStripItem item = subMenu.DropDownItems.Add( m.Input.FriendlyName + GetMethodSignature(m)  );
+                        ToolStripItem item = new ToolStripItem( m.Input.FriendlyName + GetMethodSignature(m) );
+                        subMenu.DropDownItems.Add( item );
                         item.Tag = m;
 
                         item.Click += new System.EventHandler(m_MenuAddNode_Click);
@@ -3052,7 +3055,8 @@ namespace Detox.ScriptEditor
                   }
                   else
                   {
-                     ToolStripItem item = friendlyMenu.DropDownItems.Add( methods[ 0 ].Input.FriendlyName );
+                     ToolStripItem item = new ToolStripItem( methods[ 0 ].Input.FriendlyName );
+                     friendlyMenu.DropDownItems.Add( item );
                      item.Tag = methods[0];
 
                      item.Click += new System.EventHandler(m_MenuAddNode_Click);
@@ -3073,7 +3077,8 @@ namespace Detox.ScriptEditor
 
                   ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName );
 
-                  ToolStripItem item = friendlyMenu.DropDownItems.Add( e.Parameter.FriendlyName );
+                  ToolStripItem item = new ToolStripItem( e.Parameter.FriendlyName );
+                  friendlyMenu.DropDownItems.Add( item );
                   item.Tag = e;
 
                   item.Click += new System.EventHandler(m_MenuAddNode_Click);
@@ -3178,17 +3183,66 @@ namespace Detox.ScriptEditor
       {
          if ( null == item ) return;
          
-         if ( item.DropDownItems.Items.Count > 0 )
+         if ( item.DropDownItems.Count > 0 )
          {
             item.Text += "...";
          }
 
-         foreach ( ToolStripItem subItem in item.DropDownItems.Items )
+         foreach ( ToolStripItem subItem in item.DropDownItems )
          {
             ReformatMenu( subItem as ToolStripMenuItem );
          }
 
-         item.DropDownItems.Items.Sort( MenuSorter );
+         item.DropDownItems.Sort( MenuSorter );
+      }
+
+      private ToolStripItem PruneReflection(ToolStripItem item)
+      {
+         if (item.Text.StartsWith("Reflected"))
+            return null;
+
+         ToolStripItem newItem = null;
+
+       
+
+         return newItem;
+      }
+
+      private ContextMenuStrip PruneReflection(ContextMenuStrip contextMenuStrip)
+      {
+         if ( null == contextMenuStrip ) return null;
+
+         ContextMenuStrip newContextStrip = new ContextMenuStrip();
+
+         foreach ( ToolStripItem item in contextMenuStrip.Items )
+         {
+            ToolStripItem newItem = null;
+
+            if ( item is ToolStripMenuItem )
+            {
+               ToolStripMenuItem newItems = new ToolStripMenuItem(item.Text);
+   
+               foreach ( ToolStripItem subItem in ((ToolStripMenuItem)item).DropDownItems )
+               {
+                  if ( subItem.Text.StartsWith("Reflected") )
+                     continue;
+
+                  newItems.DropDownItems.Add( subItem );
+               }
+
+               newItem = newItems;
+            }
+            else if ( item is ToolStripSeparator )
+               newItem = new ToolStripSeparator( );
+            else if ( item is ToolStripItem )
+               newItem = new ToolStripItem( item );
+            else
+               throw new Exception("Unrecognized ToolStripItem Type: " + item.GetType() );
+            
+            newContextStrip.Items.Add( newItem );
+         }
+
+         return newContextStrip;
       }
 
       public static string GetTypeAlias(string type)

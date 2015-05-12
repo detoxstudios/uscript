@@ -1284,17 +1284,21 @@ public sealed partial class uScript : EditorWindow
          // Create a new context menu, destroying the old one
          this._canvasContextMenu = new GenericMenu();
 
-         foreach (var item in this.m_ScriptEditorCtrl.ContextMenu.Items.Items)
+         ContextMenuStrip contextMenu = (Control.ModifierKeys.Pressed & Keys.Shift) != 0 ?
+            m_ScriptEditorCtrl.ContextMenuWithReflection :
+            m_ScriptEditorCtrl.ContextMenuSansReflection;
+
+         foreach (var item in contextMenu.Items)
          {
             var toolStripMenuItem = item as ToolStripMenuItem;
             if (toolStripMenuItem != null)
             {
-               if (toolStripMenuItem.DropDownItems.Items.Count > 0)
+               if (toolStripMenuItem.DropDownItems.Count > 0)
                {
                   // This is the parent of a submenu
                   var itemPath = string.Format("{0}/", toolStripMenuItem.Text.Replace("...", string.Empty));
 
-                  foreach (var itemChild in toolStripMenuItem.DropDownItems.Items)
+                  foreach (var itemChild in toolStripMenuItem.DropDownItems)
                   {
                      this.BuildCanvasContextMenu(itemChild, itemPath);
                   }
@@ -1327,12 +1331,12 @@ public sealed partial class uScript : EditorWindow
       else if (!(toolStripItem is ToolStripSeparator))
       {
          var toolStripMenuItem = toolStripItem as ToolStripMenuItem;
-         if (toolStripMenuItem != null && toolStripMenuItem.DropDownItems.Items.Count > 0)
+         if (toolStripMenuItem != null && toolStripMenuItem.DropDownItems.Count > 0)
          {
             // There are sub items
             var itemPath = path + toolStripMenuItem.Text.Replace("...", string.Empty) + "/";
 
-            foreach (var itemChild in toolStripMenuItem.DropDownItems.Items)
+            foreach (var itemChild in toolStripMenuItem.DropDownItems)
             {
                this.BuildCanvasContextMenu(itemChild, itemPath);
             }
@@ -3575,7 +3579,7 @@ public sealed partial class uScript : EditorWindow
       GUI.depth = 0;
       if (null == m_CurrentMenu)
       {
-         foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenu.Items.Items)
+         foreach (ToolStripItem item in m_ScriptEditorCtrl.ContextMenuWithReflection.Items)
          {
             if (item.Text == "<hr>")
             {
@@ -3653,7 +3657,7 @@ public sealed partial class uScript : EditorWindow
    {
       if (null == menuItem) return;
 
-      foreach (ToolStripItem item in menuItem.DropDownItems.Items)
+      foreach (ToolStripItem item in menuItem.DropDownItems)
       {
          if (GUILayout.Button(item.Text.Replace("&", string.Empty), uScriptGUIStyle.MenuContextButton))
          {

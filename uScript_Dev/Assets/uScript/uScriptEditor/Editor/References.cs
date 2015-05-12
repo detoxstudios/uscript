@@ -449,41 +449,41 @@ namespace Detox.Windows.Forms
       {}
    }
 
-   public class ItemList
-   {
-      public List<ToolStripItem> Items = new List<ToolStripItem>( );
+   //public class ItemList
+   //{
+   //   public List<ToolStripItem> Items = new List<ToolStripItem>( );
 
-      public ToolStripItem Add(string name)
-      {
-         ToolStripItem newItem = new ToolStripItem( name );
+   //   public ToolStripItem Add(string name)
+   //   {
+   //      ToolStripItem newItem = new ToolStripItem( name );
 
-         Items.Add( newItem );
+   //      Items.Add( newItem );
 
-         return newItem;      
-      }
+   //      return newItem;      
+   //   }
 
-      public void AddRange(ToolStripItem []range)
-      {
-         foreach (ToolStripItem item in range)
-         {
-            Items.Add( item );
-         }
-      }
+   //   public void AddRange(ToolStripItem []range)
+   //   {
+   //      foreach (ToolStripItem item in range)
+   //      {
+   //         Items.Add( item );
+   //      }
+   //   }
 
-      public void Add(ToolStripItem item)
-      {
-         Items.Add( item );
-      }
+   //   public void Add(ToolStripItem item)
+   //   {
+   //      Items.Add( item );
+   //   }
 
-      public void Clear( )
-      {
-         Items.Clear( );
-      }
-   }
+   //   public void Clear( )
+   //   {
+   //      Items.Clear( );
+   //   }
+   //}
 
    public class ContextMenuStrip
    {
-      public ItemList Items = new ItemList( );
+      public List<ToolStripItem> Items = new List<ToolStripItem>( );
    }
 
    public class ToolStripSeparator : ToolStripItem
@@ -494,7 +494,7 @@ namespace Detox.Windows.Forms
 
    public class ToolStripMenuItem : ToolStripItem
    {
-      public ItemList DropDownItems = new ItemList( );
+      public List<ToolStripItem> DropDownItems = new List<ToolStripItem>( );
       
       public ToolStripMenuItem() : base("")
       {}
@@ -510,6 +510,14 @@ namespace Detox.Windows.Forms
 
    public class ToolStripItem : MenuItem
    {
+      public ToolStripItem(ToolStripItem item)
+      {
+         Text = item.Text;
+         Size = item.Size;
+         Name = item.Name;
+         Click = item.Click;
+      }
+
       public ToolStripItem(string name)
       {
          Text = name;
