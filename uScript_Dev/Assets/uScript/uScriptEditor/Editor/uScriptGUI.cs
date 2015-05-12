@@ -299,7 +299,7 @@ namespace Detox.Editor
       // TODO: Remove when no longer needed
       public static string GetImagePath(string imageName)
       {
-         return string.Format("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/{0}.png", imageName);
+         return string.Format("Assets" + uScriptConfig.ConstantPaths.Editor.Replace(Application.dataPath, "") + "/Editor/_GUI/EditorImages/{0}.png", imageName);
       }
 
       // TODO: Remove when no longer needed
@@ -311,7 +311,7 @@ namespace Detox.Editor
       public static Texture2D GetTexture(string textureName)
       {
          return AssetDatabase.LoadAssetAtPath(
-            string.Format("Assets/uScript/uScriptEditor/Editor/_GUI/EditorImages/{0}.png", textureName),
+            string.Format("Assets" + uScriptConfig.ConstantPaths.Editor.Replace(Application.dataPath, "") + "/Editor/_GUI/EditorImages/{0}.png", textureName),
             typeof(Texture2D)) as Texture2D;
       }
 
