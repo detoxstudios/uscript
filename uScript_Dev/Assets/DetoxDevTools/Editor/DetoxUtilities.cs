@@ -113,7 +113,7 @@ public class DetoxUtilities : EditorWindow
    public static void FixGUITextures()
    {
       Debug.Log("Fix GUI Texture Settings: Not Yet Working!");
-      //UnityEditor.AssetDatabase.ImportAsset( "Assets/uScript/uScriptEditor/Editor/_GUI/uScriptDefault/uscript_background.png", ImportAssetOptions.ImportRecursive);
+      //UnityEditor.AssetDatabase.ImportAsset( uScriptConfig.ConstantPaths.Editor + "/Editor/_GUI/uScriptDefault/uscript_background.png", ImportAssetOptions.ImportRecursive);
    }
    */
 }

@@ -43,7 +43,11 @@ namespace Detox.Editor.GUI
       {
          get
          {
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+            return uScript.GetGraphPath(this.ItemName);
+#else
             return uScript.Preferences.UserScripts + "/" + this.ItemPath;
+#endif
          }
       }
 
@@ -67,7 +71,7 @@ namespace Detox.Editor.GUI
 
       // GraphID     - <path>/<name>
       // GraphName   - <name>
-      // GraphPath   - <path>/<name>.<extention>
+      // GraphPath   - <path>/<name>.<extension>
 
       public override void Draw(ref Rect itemRowRect)
       {
@@ -204,12 +208,16 @@ namespace Detox.Editor.GUI
 
       private void CommandDirectoryLocate()
       {
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+         uScriptGUI.PingProjectGraph(this.GraphPath);
+#else
          var directoryPath = uScript.Preferences.UserScripts + "/";
 
          // Foldout paths duplicate the folder name at the end, so remove it (e.g., "foo/bar/bar" -> "foo/bar")
          directoryPath += this.ItemPath.Substring(0, this.ItemPath.LastIndexOf("/", StringComparison.Ordinal));
 
          uScriptGUI.PingProjectGraph(directoryPath);
+#endif
       }
 
       private void CommandGraphLoad()
