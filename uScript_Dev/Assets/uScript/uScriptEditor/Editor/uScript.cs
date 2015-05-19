@@ -2834,6 +2834,12 @@ public sealed partial class uScript : EditorWindow
                      key = ((EntityPropertyDisplayNode)displayNode).DisplayName.Replace("\n", ": ");
                      comment = ((EntityPropertyDisplayNode)displayNode).DisplayValue;
                   }
+                  else if (displayNode is EntityMethodDisplayNode)
+                  {
+                     category = "Actions";
+                     key = ((EntityMethodDisplayNode)displayNode).EntityMethod.Input.FriendlyName;
+                     comment = ((EntityMethodDisplayNode)displayNode).EntityMethod.Comment.Default;
+                  }
 
                   // Validate strings
                   key = (String.IsNullOrEmpty(key) ? "UNKNOWN" : key);
