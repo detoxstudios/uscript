@@ -16,7 +16,6 @@ public class uScriptAct_GetKeyCode : uScriptLogic
 
 
 {
-	private int k;
 	private KeyCode firstKey;
    public bool Out { get { return true; } }
 

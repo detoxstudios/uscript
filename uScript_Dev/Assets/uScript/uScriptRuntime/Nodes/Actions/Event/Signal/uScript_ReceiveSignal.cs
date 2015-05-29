@@ -30,8 +30,6 @@ public class uScript_ReceiveSignal : uScriptEvent
 
    public delegate void uScriptEventHandler(object sender, ReceiveSignalEventArgs args);
 
-   private GameObject m_Parent;
-
    [FriendlyName("Receive Signal")]
    public event uScriptEventHandler OnReceiveSignal;
 

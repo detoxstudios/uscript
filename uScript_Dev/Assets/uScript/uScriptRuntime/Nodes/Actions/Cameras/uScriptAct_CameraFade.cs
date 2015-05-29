@@ -26,7 +26,6 @@ public class uScriptAct_CameraFade : uScriptLogic
 	private Color m_OriginalColor;
 	private Material m_FadeMaterial;
 	private bool m_ColorOverride;
-	private Color m_StartColor;
 	
 	private bool m_ImmediateOut = false;
 	[FriendlyName("Immediate Out")]

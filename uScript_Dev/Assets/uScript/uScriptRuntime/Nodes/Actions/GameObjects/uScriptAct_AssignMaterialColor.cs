@@ -14,8 +14,6 @@ using System.Collections;
 [FriendlyName("Assign Material Color", "Assigns the Material color of the target GameObject on the specifed material channel.")]
 public class uScriptAct_AssignMaterialColor : uScriptLogic
 {
-   private Material m_NewMaterial;
-
    public bool Out { get { return true; } }
 
    public void In(
