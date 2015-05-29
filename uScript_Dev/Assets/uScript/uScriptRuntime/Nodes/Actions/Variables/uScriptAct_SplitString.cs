@@ -30,8 +30,7 @@ public class uScriptAct_SplitString : uScriptLogic
 		// Determine what to split
 		if (Separator != "" && Target.Contains(Separator))
 		{
-			char[] delimiter = Separator.ToCharArray();
-			tmpResult = Target.Split(delimiter, SplitOptions);
+			tmpResult = Target.Split(new string[] { Separator }, SplitOptions);
 		}
 		else
 		{
