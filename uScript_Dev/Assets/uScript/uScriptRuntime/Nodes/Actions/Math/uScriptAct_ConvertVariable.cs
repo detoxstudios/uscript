@@ -363,10 +363,7 @@ public class uScriptAct_ConvertVariable : uScriptLogic
             tempInt64Value = System.Convert.ToInt64(tmpTarget);
             tempFloatValue = tmpTarget;
             tempBooleanValue = true;
-            NumberFormatInfo current = (NumberFormatInfo)CultureInfo.CurrentCulture.NumberFormat.Clone ();
-            current.NumberDecimalDigits = 0;
-            current.NumberGroupSeparator = FloatGroupSeparator;
-            tempStringValue = tmpTarget.ToString("N", current);
+            tempStringValue = tmpTarget.ToString();
          }
       }
 		
