@@ -217,7 +217,17 @@ public class uScriptAct_ConvertVariable : uScriptLogic
                tempFloatValue = 1F;
             }
 
-            tempBooleanValue = true;
+            bool boolValue = true;
+            bool canConvertBool = System.Boolean.TryParse(tmpTarget, out boolValue);
+            if (canConvertBool)
+            {
+               tempBooleanValue = boolValue;
+            }
+            else
+            {
+               tempBooleanValue = true;
+            }
+
             tempStringValue = tmpTarget;
          }
       }
@@ -272,7 +282,18 @@ public class uScriptAct_ConvertVariable : uScriptLogic
                tempFloatValue = 1F;
             }
 
-            tempBooleanValue = true;
+            bool boolValue = true;
+            bool canConvertBool = System.Boolean.TryParse(tmpTarget, out boolValue);
+            if (canConvertBool)
+            {
+               tempBooleanValue = boolValue;
+            }
+            else
+            {
+               tempBooleanValue = true;
+            }
+
+            
             tempStringValue = tmpTarget;
          }
       }
