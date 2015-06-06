@@ -4825,7 +4825,13 @@ namespace Detox.ScriptEditor
          {
             m_Name = Path.GetFileName( binaryFile );
 
-            streamWriter = File.CreateText( binaryFile );
+            // blocking checkout of versioned file, if necessary
+            if (UnityEditor.VersionControl.Provider.isActive)
+            {
+               UnityEditor.VersionControl.Provider.Checkout(binaryFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+            }
+
+            streamWriter = File.CreateText(binaryFile);
             streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
             streamWriter.Close( );
          }
@@ -4853,6 +4859,12 @@ namespace Detox.ScriptEditor
          {
             m_Name = Path.GetFileName( binaryFile );
 
+            // blocking checkout of versioned file, if necessary
+            if (UnityEditor.VersionControl.Provider.isActive)
+            {
+               UnityEditor.VersionControl.Provider.Checkout(binaryFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+            }
+
             streamWriter = File.CreateText( binaryFile );
             streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
             streamWriter.Close( );
@@ -4873,7 +4885,13 @@ namespace Detox.ScriptEditor
          {
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
-            streamWriter = File.CreateText( wrapperFile );
+            // blocking checkout of versioned file, if necessary
+            if (UnityEditor.VersionControl.Provider.isActive)
+            {
+               UnityEditor.VersionControl.Provider.Checkout(wrapperFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+            }
+
+            streamWriter = File.CreateText(wrapperFile);
             streamWriter.Write( codeGenerator.GenerateGameObjectScript(logicClass, this, stubCode) );
             streamWriter.Close( );
          }
@@ -4892,7 +4910,13 @@ namespace Detox.ScriptEditor
          {
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
-            streamWriter = File.CreateText( logicFile );
+            // blocking checkout of versioned file, if necessary
+            if (UnityEditor.VersionControl.Provider.isActive)
+            {
+               UnityEditor.VersionControl.Provider.Checkout(logicFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+            }
+
+            streamWriter = File.CreateText(logicFile);
             streamWriter.Write( codeGenerator.GenerateLogicScript(logicClass, this, saveForDebugging, stubCode) );
             streamWriter.Close( );
          }
