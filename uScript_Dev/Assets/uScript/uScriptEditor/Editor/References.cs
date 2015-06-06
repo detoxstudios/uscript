@@ -499,6 +499,9 @@ namespace Detox.Windows.Forms
       public ToolStripMenuItem() : base("")
       {}
 
+      public ToolStripMenuItem(ToolStripItem item) : base(item)
+      {}
+
       public ToolStripMenuItem(string name) : base(name)
       {}
    }
@@ -516,6 +519,7 @@ namespace Detox.Windows.Forms
          Size = item.Size;
          Name = item.Name;
          Click = item.Click;
+         Tag = item.Tag;
       }
 
       public ToolStripItem(string name)

@@ -3196,18 +3196,6 @@ namespace Detox.ScriptEditor
          item.DropDownItems.Sort( MenuSorter );
       }
 
-      private ToolStripItem PruneReflection(ToolStripItem item)
-      {
-         if (item.Text.StartsWith("Reflected"))
-            return null;
-
-         ToolStripItem newItem = null;
-
-       
-
-         return newItem;
-      }
-
       private ContextMenuStrip PruneReflection(ContextMenuStrip contextMenuStrip)
       {
          if ( null == contextMenuStrip ) return null;
@@ -3220,8 +3208,9 @@ namespace Detox.ScriptEditor
 
             if ( item is ToolStripMenuItem )
             {
-               ToolStripMenuItem newItems = new ToolStripMenuItem(item.Text);
-   
+               // create a new copy to hold only the children we want
+               ToolStripMenuItem newItems = new ToolStripMenuItem(item);
+
                foreach ( ToolStripItem subItem in ((ToolStripMenuItem)item).DropDownItems )
                {
                   if ( subItem.Text.StartsWith("Reflected") )
@@ -3235,7 +3224,7 @@ namespace Detox.ScriptEditor
             else if ( item is ToolStripSeparator )
                newItem = new ToolStripSeparator( );
             else if ( item is ToolStripItem )
-               newItem = new ToolStripItem( item );
+               newItem = item;
             else
                throw new Exception("Unrecognized ToolStripItem Type: " + item.GetType() );
             
