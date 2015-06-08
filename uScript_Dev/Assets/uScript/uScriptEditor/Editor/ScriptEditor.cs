@@ -4826,10 +4826,10 @@ namespace Detox.ScriptEditor
             m_Name = Path.GetFileName( binaryFile );
 
             // blocking checkout of versioned file, if necessary
-            if (UnityEditor.VersionControl.Provider.isActive)
-            {
-               UnityEditor.VersionControl.Provider.Checkout(binaryFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
-            }
+//            if (UnityEditor.VersionControl.Provider.isActive)
+//            {
+//               UnityEditor.VersionControl.Provider.Checkout(binaryFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+//            }
 
             streamWriter = File.CreateText(binaryFile);
             streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
@@ -4860,10 +4860,10 @@ namespace Detox.ScriptEditor
             m_Name = Path.GetFileName( binaryFile );
 
             // blocking checkout of versioned file, if necessary
-            if (UnityEditor.VersionControl.Provider.isActive)
-            {
-               UnityEditor.VersionControl.Provider.Checkout(binaryFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
-            }
+//            if (UnityEditor.VersionControl.Provider.isActive)
+//            {
+//               UnityEditor.VersionControl.Provider.Checkout(binaryFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+//            }
 
             streamWriter = File.CreateText( binaryFile );
             streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
@@ -4886,10 +4886,10 @@ namespace Detox.ScriptEditor
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
             // blocking checkout of versioned file, if necessary
-            if (UnityEditor.VersionControl.Provider.isActive)
-            {
-               UnityEditor.VersionControl.Provider.Checkout(wrapperFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
-            }
+//            if (UnityEditor.VersionControl.Provider.isActive)
+//            {
+//               UnityEditor.VersionControl.Provider.Checkout(wrapperFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+//            }
 
             streamWriter = File.CreateText(wrapperFile);
             streamWriter.Write( codeGenerator.GenerateGameObjectScript(logicClass, this, stubCode) );
@@ -4911,10 +4911,10 @@ namespace Detox.ScriptEditor
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
             // blocking checkout of versioned file, if necessary
-            if (UnityEditor.VersionControl.Provider.isActive)
-            {
-               UnityEditor.VersionControl.Provider.Checkout(logicFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
-            }
+//            if (UnityEditor.VersionControl.Provider.isActive)
+//            {
+//               UnityEditor.VersionControl.Provider.Checkout(logicFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+//            }
 
             streamWriter = File.CreateText(logicFile);
             streamWriter.Write( codeGenerator.GenerateLogicScript(logicClass, this, saveForDebugging, stubCode) );
