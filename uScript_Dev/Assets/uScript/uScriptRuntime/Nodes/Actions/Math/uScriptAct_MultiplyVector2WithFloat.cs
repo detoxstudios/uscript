@@ -17,7 +17,7 @@ public class uScriptAct_MultiplyVector2WithFloat : uScriptLogic
    public bool Out { get { return true; } }
 
    public void In(
-      [FriendlyName("Vector3", "The Vector2 you wish to multiple with.")]
+      [FriendlyName("Vector2", "The Vector2 you wish to multiple with.")]
       Vector2 targetVector2,
 
       [FriendlyName("Float", "The Float you wish to multiple with.")]
