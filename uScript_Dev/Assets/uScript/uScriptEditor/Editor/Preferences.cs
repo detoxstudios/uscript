@@ -219,6 +219,12 @@ public class Preferences
       set { this.LoadIfRequired(); this.preferences["ExpandFavoritePanel"] = value; }
    }
 
+   public bool EnableSceneWarning
+   {
+      get { this.LoadIfRequired(); return (bool)this.preferences["EnableSceneWarning"]; }
+      set { this.LoadIfRequired(); this.preferences["EnableSceneWarning"] = value; }
+   }
+
    public string ProjectGraphListFilter
    {
       get { this.LoadIfRequired(); return this.preferences["ProjectGraphListFilter"] as string; }
@@ -429,6 +435,7 @@ public class Preferences
 
       this.SetDefault("ShowHierarchyIcon", true);
       this.SetDefault("LineWidthMultiplier", 1.0f);
+      this.SetDefault("EnableSceneWarning", true);
    }
 
    private void LoadIfRequired()
