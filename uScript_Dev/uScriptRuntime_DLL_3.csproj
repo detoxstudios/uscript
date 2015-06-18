@@ -110,7 +110,7 @@
     <Reference Include="System.XML" />
     <Reference Include="System.Core" />
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files (x86)/Unity3.5.7/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

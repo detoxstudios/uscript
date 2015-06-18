@@ -105,13 +105,13 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
     <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files (x86)/Unity3.5.7/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:\Unity\Editor\Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files (x86)/Unity3.5.7/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\uScript\uScriptEditor\Editor\AnimData.cs" />
