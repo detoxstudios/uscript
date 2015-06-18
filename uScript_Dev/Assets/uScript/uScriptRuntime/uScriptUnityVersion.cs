@@ -9,23 +9,11 @@
 
 public class uScriptUnityVersion : uScriptIUnityVersion
 {
-#if UNITY_3_5
+#if UNITY_3
    public float Version { get { return 3.5f; } }
-#elif UNITY_4_0
-   public float Version { get { return 4.0f; } }
-#elif UNITY_4_1
-   public float Version { get { return 4.1f; } }
-#elif UNITY_4_2
-   public float Version { get { return 4.2f; } }
-#elif UNITY_4_3
-   public float Version { get { return 4.3f; } }
-#elif UNITY_4_4
-   public float Version { get { return 4.4f; } }
-#elif UNITY_4_5
-   public float Version { get { return 4.5f; } }
-#elif UNITY_4_6
+#elif UNITY_4
    public float Version { get { return 4.6f; } }
-#elif UNITY_5_0
+#elif UNITY_5
    public float Version { get { return 5.0f; } }
 #else
    public float Version { get { return 0.0f; } }

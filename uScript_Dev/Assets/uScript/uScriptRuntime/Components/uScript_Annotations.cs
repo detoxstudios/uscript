@@ -1,4 +1,4 @@
-#if (UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_3_5 || UNITY_4_6)
 
 //
 // Unity 5 and later include a copy of these Annotations, and so they no longer need to be included manually.
