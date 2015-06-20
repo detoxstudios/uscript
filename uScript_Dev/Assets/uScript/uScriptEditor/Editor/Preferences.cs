@@ -81,6 +81,12 @@ public class Preferences
       set { this.LoadIfRequired(); this.preferences["AutoExpandToolbox"] = value; }
    }
 
+   public bool AutoUpdateReflection
+   {
+      get { this.LoadIfRequired(); return (bool)this.preferences["AutoUpdateReflection"]; }
+      set { this.LoadIfRequired(); this.preferences["AutoUpdateReflection"] = value; }
+   }
+
    public bool DrawPanelsOnUpdate
    {
       get { this.LoadIfRequired(); return (bool)this.preferences["DrawPanelsOnUpdate"]; }
@@ -303,11 +309,11 @@ public class Preferences
       set { this.LoadIfRequired(); this.preferences["GraphListFolderStates"] = value; }
    }
 
-	public bool ShowHierarchyIcon
-	{
-		get { this.LoadIfRequired(); return (bool)this.preferences["ShowHierarchyIcon"]; }
-		set { this.LoadIfRequired(); this.preferences["ShowHierarchyIcon"] = value; }
-	}
+    public bool ShowHierarchyIcon
+    {
+        get { this.LoadIfRequired(); return (bool)this.preferences["ShowHierarchyIcon"]; }
+        set { this.LoadIfRequired(); this.preferences["ShowHierarchyIcon"] = value; }
+    }
 
    public string GetFavoriteNode(int number)
    {
@@ -382,6 +388,7 @@ public class Preferences
    private void LoadDefaultsIfRequired()
    {
       this.SetDefault("AutoExpandToolbox", true);
+      this.SetDefault("AutoUpdateReflection", false);
       this.SetDefault("DrawPanelsOnUpdate", false);
       this.SetDefault("ShowGrid", uScriptConfig.Style.ShowGrid);
       this.SetDefault("GridSize", uScriptConfig.Style.GridSize);

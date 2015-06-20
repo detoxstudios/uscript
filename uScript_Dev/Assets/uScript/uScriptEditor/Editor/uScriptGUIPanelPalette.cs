@@ -139,7 +139,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                   this.FilterToolboxMenuItems(filterText, false);
                }
             }
-
             EditorGUILayout.EndHorizontal();
 
             if (uScriptInstance.wasCanvasDragged && uScript.Preferences.DrawPanelsOnUpdate == false)
@@ -218,7 +217,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                      }
                   }
                }
-
                EditorGUILayout.EndScrollView();
    
                if (Event.current.type == EventType.Repaint)
@@ -229,12 +227,42 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                isMouseOverScrollview = scrollviewRect.Contains(Event.current.mousePosition);
             }
          }
-
          EditorGUILayout.EndVertical();
+
+#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
+       
+#else
+         EditorGUILayout.BeginHorizontal();
+         {
+            GUILayout.Label(uScriptInstance.ScriptEditorCtrl.ScriptEditor.EntityDescs.Length + " Reflected Types");
+
+            var toggleState = GUILayout.Toggle(uScript.Preferences.AutoUpdateReflection, "Auto", EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false));
+            if (uScript.Preferences.AutoUpdateReflection != toggleState)
+            {
+               uScript.Preferences.AutoUpdateReflection = toggleState;
+               uScript.Preferences.Save();
+
+               if (uScript.Preferences.AutoUpdateReflection)
+               {
+                  uScript.Instance.UpdateReflectedTypes();
+               }
+            }
+
+            var originalState = GUI.enabled;
+            GUI.enabled = originalState && !uScript.Preferences.AutoUpdateReflection;
+
+            if (GUILayout.Button("Refresh", EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false)))
+            {
+               uScript.Instance.UpdateReflectedTypes();
+            }
+
+            GUI.enabled = originalState;
+         }
+         EditorGUILayout.EndHorizontal();
+#endif
 
          this.DrawFavoritesPanel();
       }
-
       EditorGUILayout.EndVertical();
       
       if ((int)uScript.Instance.paletteRect.width != 0 && (int)uScript.Instance.paletteRect.width != uScriptGUI.PanelLeftWidth)
@@ -291,7 +319,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    public void BuildPaletteMenu()
    {
       this.BuildPaletteMenu(null, null, string.Empty);
-
       this.BuildFavoritesMenu();
    }
 
@@ -531,7 +558,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                uScript.Preferences.Save();
             }
          }
-
          EditorGUILayout.EndHorizontal();
 
          if (isPanelExpanded)
@@ -599,11 +625,9 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                   }
                }
             }
-
             EditorGUILayout.EndVertical();
          }
       }
-
       EditorGUILayout.EndVertical();
    }
 
