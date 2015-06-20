@@ -234,8 +234,6 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
 #else
          EditorGUILayout.BeginHorizontal();
          {
-            GUILayout.Label(uScriptInstance.ScriptEditorCtrl.ScriptEditor.EntityDescs.Length + " Reflected Types");
-
             var toggleState = GUILayout.Toggle(uScript.Preferences.AutoUpdateReflection, "Auto", EditorStyles.miniButtonLeft, GUILayout.ExpandWidth(false));
             if (uScript.Preferences.AutoUpdateReflection != toggleState)
             {
@@ -257,6 +255,8 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
             }
 
             GUI.enabled = originalState;
+
+            GUILayout.Label(uScriptInstance.ScriptEditorCtrl.ScriptEditor.EntityDescs.Length + " reflected types");
          }
          EditorGUILayout.EndHorizontal();
 #endif
