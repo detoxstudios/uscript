@@ -1205,6 +1205,16 @@ public sealed partial class uScript : EditorWindow
          if (false == Application.isPlaying)
          {
             _wasHierarchyChanged = false;
+
+#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
+       
+#else
+            if (Preferences.AutoUpdateReflection)
+            {
+               this.UpdateReflectedTypes();
+            }
+#endif
+
             OpenFromCache();
          }
       }
@@ -3928,6 +3938,13 @@ public sealed partial class uScript : EditorWindow
       m_SzLogicTypes = null;
    }
 
+   public void UpdateReflectedTypes()
+   {
+      this.ClearEntityTypes();
+      this.PopulateEntityTypes(null);
+      this.OpenFromCache();
+   }
+
    public bool OpenGraph(string fullPath, bool launching)
    {
       if (File.Exists(fullPath) == false)
@@ -4436,7 +4453,10 @@ public sealed partial class uScript : EditorWindow
 
    private LogicNode[] PopulateLogicTypes()
    {
-      if (null != m_LogicTypes) return m_LogicTypes;
+      if (this.m_LogicTypes != null)
+      {
+         return m_LogicTypes;
+      }
 
       uScriptDebug.Log("Rebuilding Logic Types", uScriptDebug.Type.Debug);
 
@@ -5111,7 +5131,10 @@ public sealed partial class uScript : EditorWindow
             }
          }
 
-         if (this.m_EntityTypes != null) return m_EntityTypes;
+         if (this.m_EntityTypes != null)
+         {
+            return m_EntityTypes;
+         }
       }
 
       uScriptDebug.Log("Rebuilding Entity Types", uScriptDebug.Type.Debug);
