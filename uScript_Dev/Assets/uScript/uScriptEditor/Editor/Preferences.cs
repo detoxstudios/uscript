@@ -219,6 +219,12 @@ public class Preferences
       set { this.LoadIfRequired(); this.preferences["LineWidthMultiplier"] = value; }
    }
 
+   public bool EnableSceneWarning
+   {
+      get { this.LoadIfRequired(); return (bool)this.preferences["EnableSceneWarning"]; }
+      set { this.LoadIfRequired(); this.preferences["EnableSceneWarning"] = value; }
+   }
+
    public bool ExpandFavoritePanel
    {
       get { this.LoadIfRequired(); return (bool)this.preferences["ExpandFavoritePanel"]; }
@@ -436,6 +442,7 @@ public class Preferences
 
       this.SetDefault("ShowHierarchyIcon", true);
       this.SetDefault("LineWidthMultiplier", 1.0f);
+      this.SetDefault("EnableSceneWarning", true);
    }
 
    private void LoadIfRequired()

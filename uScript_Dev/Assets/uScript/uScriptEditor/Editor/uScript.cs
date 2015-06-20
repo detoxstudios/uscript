@@ -3975,7 +3975,7 @@ public sealed partial class uScript : EditorWindow
 
       if (scriptEditor.Open(fullPath))
       {
-         if (scriptEditor.SceneName != string.Empty
+         if (uScript.Preferences.EnableSceneWarning && scriptEditor.SceneName != string.Empty
              && scriptEditor.SceneName != Path.GetFileNameWithoutExtension(UnityEditor.EditorApplication.currentScene))
          {
             var message =

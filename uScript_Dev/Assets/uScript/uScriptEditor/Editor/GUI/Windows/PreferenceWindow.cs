@@ -208,7 +208,10 @@ namespace Detox.Editor.GUI.Windows
 
          boolValue = EditorGUILayout.Toggle("Show uScript Icon in Hierarchy", this.preferences.ShowHierarchyIcon);
          this.preferences.ShowHierarchyIcon = boolValue;
-         
+
+         boolValue = EditorGUILayout.Toggle("Enable uScript Scene Warning", this.preferences.EnableSceneWarning);
+         this.preferences.EnableSceneWarning = boolValue;
+
          EditorGUILayout.BeginHorizontal();
          {
             boolValue = EditorGUILayout.Toggle("Check for Updates on Start", this.preferences.CheckForUpdate);
