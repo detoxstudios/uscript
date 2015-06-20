@@ -470,7 +470,7 @@ public sealed partial class uScript : EditorWindow
 
    private Dictionary<string, bool> _staleScriptCache = new Dictionary<string, bool>();
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
    private static string GetFilePathWithLabel(string label, string fileName)
    {
       var guids = AssetDatabase.FindAssets("l:" + label, null);
@@ -496,7 +496,7 @@ public sealed partial class uScript : EditorWindow
 
    public static List<string> GetGraphPaths(string label = "uScriptSource")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
       return GetFilePathsWithLabel(label);
 #else
       return Directory.GetFiles(Preferences.UserScripts, "*.uscript", SearchOption.AllDirectories).Select(s => s.Replace("\\", "/")).ToList();
@@ -505,7 +505,7 @@ public sealed partial class uScript : EditorWindow
 
    public static string GetGraphPath(string fileName, string label = "uScriptSource")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
       return GetFilePathWithLabel(label, fileName);
 #else
       return uScript.Preferences.UserScripts + "/" + fileName;
@@ -520,7 +520,7 @@ public sealed partial class uScript : EditorWindow
       }
       else
       {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
          string path = GetGraphPath(scriptName + ".uscript");
 #else
          string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
@@ -575,7 +575,7 @@ public sealed partial class uScript : EditorWindow
       }
       else
       {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
          string path = GetGraphPath(scriptName + ".uscript");
 #else
          string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
@@ -1021,7 +1021,7 @@ public sealed partial class uScript : EditorWindow
       // Test for Unity Pro - Unity 3.1 Indie does not support RenderTextures
       get
       {
-#if (UNITY_3_3 || UNITY_3_4 || UNITY_3_5 || UNITY_4_0)
+#if (UNITY_3_5 || UNITY_4_6)
          return SystemInfo.supportsRenderTextures;
 #else
          return Application.HasProLicense();
@@ -2487,7 +2487,7 @@ public sealed partial class uScript : EditorWindow
 
       var currentNodeClassName = ScriptEditor.FindNodeType(displayNode.EntityNode);
       var currentNodeClassPath = GetClassPath(currentNodeClassName);
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
       var scriptPath = GetGraphPath(currentNodeClassName + ".uscript");
 #else
       var scriptPath = FindFile(Preferences.UserScripts, currentNodeClassName + ".uscript");
@@ -4062,7 +4062,7 @@ public sealed partial class uScript : EditorWindow
 
    public void RebuildScripts(string path, bool stubCode)
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
       List<string> files = GetGraphPaths();
       foreach (string file in files)
       {
@@ -4091,7 +4091,7 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.GeneratedScripts);
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
       foreach (string file in files)
@@ -4112,7 +4112,7 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.NestedScripts);
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
       foreach(string file in files)
@@ -4405,7 +4405,7 @@ public sealed partial class uScript : EditorWindow
 
    void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType, string label = "")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
       DirectoryInfo directory = new DirectoryInfo(path);
       List<FileInfo> filesList = new List<FileInfo>();
       FileInfo[] files;
@@ -4766,7 +4766,7 @@ public sealed partial class uScript : EditorWindow
    {
       List<RawScript> rawScripts = new List<RawScript>();
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
       string[] files = GetGraphPaths().ToArray();
 #else
       string[] files = FindAllFiles(Preferences.UserScripts, ".uscript");

@@ -127,12 +127,7 @@ namespace Detox.Editor
       {
          get
          {
-#if (UNITY_3_2 || UNITY_3_3 || UNITY_3_4)
-   // The isProSkin property was introduced in Unity 3.5 API
-         return (UnityEngine.GUI.skin.name == "SceneGUISkin");
-#else
             return EditorGUIUtility.isProSkin;
-#endif
          }
       }
 
@@ -547,7 +542,7 @@ namespace Detox.Editor
       public static bool IsGeneratedScriptMissing(string graphName)
       {
          var csName = graphName + ".cs";
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5)
+#if (UNITY_4_6 || UNITY_5)
          // first see if we've already saved the file and then just use that path
          List<string> files = uScript.GetGraphPaths("uScriptCode");
          foreach (string file in files)
@@ -903,7 +898,7 @@ namespace Detox.Editor
             // Socket segment
             GUILayout.Box(GUIContent.none, uScriptGUIStyle.PropertyButtonLeft);
 
-#if UNITY_3_5 || UNITY_3_6
+#if UNITY_3_5
    // EditorGUI.showMixedValue was introduced in Unity 3.5
 
    // Display socket toggle, if appropriate
@@ -978,71 +973,6 @@ namespace Detox.Editor
                }
             }
          }
-#elif !UNITY_3_3 && !UNITY_3_4
-            // Display socket toggle, if appropriate
-            if (isFoldoutExpanded)
-            {
-               if (node != null)
-               {
-                  var expandCount = 0;
-                  var collapseCount = 0;
-
-                  foreach (var p in entityNode.Parameters)
-                  {
-                     if (scriptEditorCtrl.CanExpandParameter(p))
-                     {
-                        expandCount++;
-                     }
-                     else if (scriptEditorCtrl.CanCollapseParameter(node.Guid, p))
-                     {
-                        collapseCount++;
-                     }
-                  }
-
-                  if (scriptEditorCtrl.CanExpandParameter(entityNode.Instance))
-                  {
-                     expandCount++;
-                  }
-                  else if (scriptEditorCtrl.CanCollapseParameter(node.Guid, entityNode.Instance))
-                  {
-                     collapseCount++;
-                  }
-
-                  if (expandCount != 0 || collapseCount != 0)
-                  {
-                     var toggleRect = GUILayoutUtility.GetLastRect();
-                     toggleRect.x += 3;
-                     toggleRect.y += 1;
-                     toggleRect.width = 20;
-                     toggleRect.height = 20;
-
-                     var toggleState = collapseCount > 0;
-
-                     if (expandCount > 0 && collapseCount > 0)
-                     {
-                        EditorGUI.showMixedValue = true;
-                     }
-
-                     var toggleStyle = EditorGUI.showMixedValue ? "ToggleMixed" : UnityEngine.GUI.skin.toggle;
-
-                     EditorGUI.BeginChangeCheck();
-                     toggleState = UnityEngine.GUI.Toggle(toggleRect, toggleState, GUIContent.none, toggleStyle);
-                     if (EditorGUI.EndChangeCheck())
-                     {
-                        if (toggleState)
-                        {
-                           scriptEditorCtrl.ExpandNode(node);
-                        }
-                        else
-                        {
-                           scriptEditorCtrl.CollapseNode(node);
-                        }
-                     }
-
-                     EditorGUI.showMixedValue = false;
-                  }
-               }
-            }
 #endif
 
             // Name segment
@@ -2287,7 +2217,7 @@ namespace Detox.Editor
          }
 
          // Display the column label
-#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
+#if UNITY_3_5
       EditorGUIUtility.LookLikeControls(columnLabel.Width);
 #else
          EditorGUIUtility.labelWidth = columnLabel.Width;
