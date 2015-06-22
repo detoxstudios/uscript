@@ -22,13 +22,22 @@ public static class uScriptBuild
    public static string Number { get { return "1.0.2941"; } }
    private static string productNameAppendText = " (RC25)";
 
+#if UNITY_5
+   private static string productNameAppendTextFinal = productNameAppendText + " U5";
+#elif UNITY_4
+   private static string productNameAppendTextFinal = productNameAppendText + " U4";
+#else
+   private static string productNameAppendTextFinal = productNameAppendText + " U3";
+#endif
+
+
 
 #if DETOX_STORE_PLE
    public static string Name { get { return "Personal Learning Edition" + productNameAppendText; } }
 #elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
    public static string Name { get { return "Basic Edition" + productNameAppendText; } }
 #else
-   public static string Name { get { return "Professional Edition" + productNameAppendText; } }
+   public static string Name { get { return "Professional Edition" + productNameAppendTextFinal; } }
 #endif
 
 
