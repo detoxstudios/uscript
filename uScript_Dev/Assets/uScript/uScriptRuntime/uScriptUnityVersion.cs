@@ -9,7 +9,7 @@
 
 public class uScriptUnityVersion : uScriptIUnityVersion
 {
-#if UNITY_3
+#if UNITY_3_5
    public float Version { get { return 3.5f; } }
 #elif UNITY_4
    public float Version { get { return 4.6f; } }
