@@ -27,6 +27,16 @@ namespace Detox.Editor.GUI.Windows
 
       private bool isFirstRun;
 
+#if UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
+      private static string unityVersion = "on Unity 3";
+#elif UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6
+      private static string unityVersion = "on Unity 4";
+#elif UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5
+      private static string unityVersion = "on Unity 5";
+#else
+      private static string unityVersion = "on Unity ?";
+#endif
+
       public static void Open()
       {
          window = GetWindow<AboutWindow>(true, "About uScript", true);
@@ -66,7 +76,7 @@ namespace Detox.Editor.GUI.Windows
          GUILayout.Space(16);
 
          GUILayout.Label("uScript " + uScriptBuild.Name, Style.ProductName);
-         GUILayout.Label("Build " + uScriptBuild.Number, Style.ProductVersion);
+         GUILayout.Label("Build " + uScriptBuild.Number + " (" + unityVersion + ")", Style.ProductVersion);
          GUILayout.Label("\n" + uScriptBuild.Copyright + "\nAll rights reserved.\n", Style.ProductCopyright);
 
          if (GUILayout.Button("www.detoxstudios.com", Style.WebsiteLink))
