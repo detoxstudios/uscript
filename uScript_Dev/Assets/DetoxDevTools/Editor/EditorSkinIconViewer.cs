@@ -90,7 +90,7 @@ public sealed class EditorSkinIconViewer : EditorWindow
    private bool shouldGrab;
    private Rect viewportRect;
 
-   [MenuItem("uScript/Internal/Editor Skin Icon Viewer")]
+   [MenuItem("uScript/Internal/Test Windows/Editor Skin Icon Viewer", false, 200)]
    internal static void Init()
    {
       var window = GetWindow<EditorSkinIconViewer>(true, "Skin Icons");
