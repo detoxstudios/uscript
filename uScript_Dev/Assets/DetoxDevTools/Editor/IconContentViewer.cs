@@ -65,7 +65,7 @@ public sealed class IconContentViewer : EditorWindow
    private bool shouldGrab;
    private Rect viewportRect;
 
-   [MenuItem("uScript/Internal/Content Icon Viewer")]
+   [MenuItem("uScript/Internal/Test Windows/Content Icon Viewer", false, 200)]
    internal static void Init()
    {
       var window = GetWindow<IconContentViewer>(true, "Content Icons");

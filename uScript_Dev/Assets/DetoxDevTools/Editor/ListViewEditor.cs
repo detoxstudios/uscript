@@ -29,7 +29,7 @@ public class ListViewEditor : EditorWindow
       }
    }
 
-   [MenuItem("uScript/Internal/ListView Editor &%l", false, 501)]
+   [MenuItem("uScript/Internal/Test Windows/ListView Editor &%l", false, 400)]
    internal static void Init()
    {
       // Get existing open window or if none, make a new one:

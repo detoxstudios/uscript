@@ -136,7 +136,7 @@ namespace Detox.DetoxDevTools.Editor
          EditorGUILayout.EndVertical();
       }
 
-      [MenuItem("uScript/Internal/Folder Sort Editor", false, 501)]
+      [MenuItem("uScript/Internal/Test Windows/Folder Sort Editor", false, 400)]
       private static void Init()
       {
          // Get existing open window or if none, make a new one:

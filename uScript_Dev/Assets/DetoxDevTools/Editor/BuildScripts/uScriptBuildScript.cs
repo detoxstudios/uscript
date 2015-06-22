@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
 public class uScriptBuildScript : MonoBehaviour
 {
-   [MenuItem("uScript/Internal/Fixup Example Scenes")]
+   [MenuItem("uScript/Internal/Fixup Example Scenes", false, 200)]
    public static void FixupExampleScenes()
    {
       string[] sceneFiles = uScript.FindAllFiles(Application.dataPath + "/Example_uScript_Scenes", ".unity");
@@ -35,7 +35,7 @@ public class uScriptBuildScript : MonoBehaviour
       }
    }
 
-   [MenuItem("uScript/Internal/Add uScript Components to Open Scene")]
+   [MenuItem("uScript/Internal/Add uScript Components to Open Scene", false, 100)]
    public static void AddUScriptComponentsToOpenScene_Menu()
    {
       AddUScriptComponentsToOpenScene(EditorApplication.currentScene);
@@ -61,7 +61,7 @@ public class uScriptBuildScript : MonoBehaviour
       return true;
    }
 
-   [MenuItem("uScript/Internal/Build Example Builder Package")]
+   [MenuItem("uScript/Internal/Build Example Builder Package", false, 200)]
    public static void BuildExampleBuilderPackage()
    {
       string[] directories = new string[] 
@@ -74,7 +74,7 @@ public class uScriptBuildScript : MonoBehaviour
       AssetDatabase.ExportPackage(directories, "ExampleBuilder.unitypackage", ExportPackageOptions.Recurse);
    }
 
-   [MenuItem("uScript/Internal/Build Examples Package")]
+   [MenuItem("uScript/Internal/Build Examples Package", false, 200)]
    public static void BuildExamplesPackage()
    {
       string[] directories = new string[]
@@ -86,7 +86,7 @@ public class uScriptBuildScript : MonoBehaviour
       AssetDatabase.ExportPackage(directories, "Examples.unitypackage", ExportPackageOptions.Recurse);
    }
 
-   [MenuItem("uScript/Internal/Stub uScript Code")]
+   [MenuItem("uScript/Internal/Stub uScript Code", false, 300)]
    public static void StubUScriptCode()
    {
       AssetDatabase.StartAssetEditing();
@@ -95,7 +95,7 @@ public class uScriptBuildScript : MonoBehaviour
       AssetDatabase.Refresh();
    }
 
-   [MenuItem("uScript/Internal/Regenerate uScript Code")]
+   [MenuItem("uScript/Internal/Regenerate uScript Code", false, 300)]
    public static void RegenerateUScriptCode()
    {
       AssetDatabase.StartAssetEditing();

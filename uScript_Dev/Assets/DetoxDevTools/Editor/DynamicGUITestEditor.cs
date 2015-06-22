@@ -29,7 +29,7 @@ namespace Detox.DetoxDevTools.Editor
       private string textField = "TEXT";
       private Color colorField = Color.blue;
 
-      [MenuItem("uScript/Internal/Dynamic GUI Text Editor &%g", false, 501)]
+      [MenuItem("uScript/Internal/Test Windows/Dynamic GUI Text Editor &%g", false, 300)]
       private static void Init()
       {
          panel = (DynamicGUITestEditor)GetWindow(typeof(DynamicGUITestEditor), true, "Dynamic GUI Test Editor");

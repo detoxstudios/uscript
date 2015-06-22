@@ -7,7 +7,7 @@ using System.Collections;
 
 public class DetoxUtilities : EditorWindow
 {
-   [MenuItem("uScript/Internal/Setup TestBed Scene", false, 501)]
+   [MenuItem("uScript/Internal/Setup TestBed Scene", false, 100)]
    public static void SetupScene()
    {
       Debug.Log("STARTING TESTBED REBUILD...\n");

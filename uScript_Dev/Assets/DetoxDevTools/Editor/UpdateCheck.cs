@@ -17,7 +17,7 @@ public class UpdateCheck : EditorWindow
 {
    private UpdateNotification.UpdateStatus updateStatus = UpdateNotification.UpdateStatus.None;
 
-   [MenuItem("uScript/Internal/Check for Updates", false, 501)]
+   [MenuItem("uScript/Internal/Test Windows/Check for Updates", false, 100)]
    internal static void Init()
    {
       // Get existing open window or if none, make a new one:

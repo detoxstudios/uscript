@@ -42,7 +42,7 @@ public class GenericMenuTestEditor : EditorWindow
       }
    }
 
-   [MenuItem("uScript/Internal/GenericMenu Test Editor", false, 501)]
+   [MenuItem("uScript/Internal/Test Windows/GenericMenu Test Editor", false, 300)]
    private static void Init()
    {
       // Get existing open window or if none, make a new one:
