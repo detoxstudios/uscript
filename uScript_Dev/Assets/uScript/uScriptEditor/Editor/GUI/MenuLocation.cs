@@ -167,6 +167,8 @@ namespace Detox.Editor
 
       private static bool VersionIsObsolete()
       {
+         return false;
+         /* This code will not work in a DLL. We are just going to stop checking for now.
          BuildInfo newBuild;
          BuildInfo oldBuild;
 
@@ -178,7 +180,7 @@ namespace Detox.Editor
 #else
          return newBuild > oldBuild;
 #endif
-
+         */
       }
    }
 }
