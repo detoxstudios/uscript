@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="PanelScript.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the PanelScript type.
@@ -15,10 +15,6 @@ namespace Detox.Editor.GUI
 
    public sealed partial class PanelScript : uScriptGUIPanel
    {
-      // === Constants ==================================================================
-
-      // === Fields =====================================================================
-
       private static PanelScript instance;
 
       private static uScript uScriptInstance;
@@ -27,8 +23,6 @@ namespace Detox.Editor.GUI
 
       private PanelScriptList panelScriptList;
 
-      // === Constructors ===============================================================
-
       private PanelScript()
       {
          instance = this;
@@ -36,8 +30,6 @@ namespace Detox.Editor.GUI
 
          this.Init();
       }
-
-      // === Properties =================================================================
 
       public static PanelScript Instance
       {
@@ -50,8 +42,6 @@ namespace Detox.Editor.GUI
       public static bool ShowFriendlyNames { get; set; }
 
       public static bool ShowLabelIcons { get; set; }
-
-      // === Methods ====================================================================
 
       /// <summary>
       /// Draw this panel.  This method should only be called during OnGUI.
@@ -92,8 +82,6 @@ namespace Detox.Editor.GUI
       public void Init()
       {
          this._name = "uScripts";
-         //      _size = 150;
-         //      _region = uScriptGUI.Region.Script;
 
          this.panelScriptCurrent = new PanelScriptCurrent();
          this.panelScriptList = new PanelScriptList();
@@ -110,9 +98,6 @@ namespace Detox.Editor.GUI
          this.panelScriptList.SaveState();
       }
 
-      // === Structures =================================================================
-
-      // === Classes ====================================================================
       public static class SourceStateContent
       {
          static SourceStateContent()

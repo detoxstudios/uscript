@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="PanelScriptList.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the PanelScript type.
@@ -26,15 +26,9 @@ namespace Detox.Editor.GUI
          // TODO: Better handling of the double-click execute command
          // TODO: Add support for column sorting
 
-         // === Constants ==================================================================
-
-         // === Fields =====================================================================
-
          private readonly ListView listView;
 
          private string filterText = string.Empty;
-
-         // === Constructors ===============================================================
 
          public PanelScriptList()
          {
@@ -60,10 +54,6 @@ namespace Detox.Editor.GUI
             EditorApplication.projectWindowChanged += this.UpdateListContents;
             uScript.GraphSaved += this.UpdateListContents;
          }
-
-         // === Properties =================================================================
-
-         // === Methods ====================================================================
 
          public void Draw()
          {
@@ -263,10 +253,6 @@ namespace Detox.Editor.GUI
          {
             return paths;
          }
-
-         // === Structures =================================================================
-
-         // === Classes ====================================================================
       }
    }
 }

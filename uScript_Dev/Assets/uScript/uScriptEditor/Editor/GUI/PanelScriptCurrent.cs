@@ -19,10 +19,6 @@ namespace Detox.Editor.GUI
    {
       private class PanelScriptCurrent
       {
-         // === Constants ==================================================================
-
-         // === Fields =====================================================================
-
          private static ScriptEditorCtrl scriptEditorCtrl;
 
          private string currentSceneName = string.Empty;
@@ -32,12 +28,6 @@ namespace Detox.Editor.GUI
          private string graphSceneName = string.Empty;
 
          private bool sourceMissing;
-
-         // === Constructors ===============================================================
-
-         // === Properties =================================================================
-
-         // === Methods ====================================================================
 
          public void Draw()
          {
@@ -176,13 +166,13 @@ namespace Detox.Editor.GUI
             if (this.sourceMissing)
             {
                menu.AddDisabledItem(new GUIContent("Source/Locate in Project"));
-               //menu.AddDisabledItem(new GUIContent("Source/Remove from Project"));
+               ////menu.AddDisabledItem(new GUIContent("Source/Remove from Project"));
             }
             else
             {
                menu.AddItem(new GUIContent("Source/Locate in Project"), false, this.CommandSourceLocate);
-               //menu.AddDisabledItem(new GUIContent("Source/Remove from Project"));
-               //menu.AddItem(new GUIContent("Source/Remove from Project"), false, this.CommandSourceRemove);
+               ////menu.AddDisabledItem(new GUIContent("Source/Remove from Project"));
+               ////menu.AddItem(new GUIContent("Source/Remove from Project"), false, this.CommandSourceRemove);
             }
 
             if (rect.width > 0)
@@ -375,10 +365,6 @@ namespace Detox.Editor.GUI
 
             this.currentSceneName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
          }
-
-         // === Structures =================================================================
-
-         // === Classes ====================================================================
 
          private static class Content
          {

@@ -25,7 +25,7 @@ public class uScriptBackgroundProcess
    private const int FilesPerTick = 5;
 
    private static int currentKeyIndex = -1;
-	
+    
    private static bool m_SkipLabelsCheck = false;
 
    static uScriptBackgroundProcess()
@@ -102,6 +102,9 @@ public class uScriptBackgroundProcess
       {
          if (!m_SkipLabelsCheck)
          {
+            // TODO: We should probably use "uScriptGraph" for graphs and "uScriptCode" for generated files.
+            //       The term 'source' is vague, and used to refer to generated code elsewhere in the UI.
+
             // the following code is used to update existing uscripts and their generated code
             // so that .uscript files have a "uScript" and "uScriptSource" label and the
             // generated files have a "uScript" and "uScriptCode" label
@@ -128,6 +131,7 @@ public class uScriptBackgroundProcess
                {
                   AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptSource" });
                }
+
                objs = GetAtPath(uScript.Preferences.UserScripts + "/_GeneratedCode", "*.cs");
                foreach (UnityEngine.Object obj in objs)
                {
