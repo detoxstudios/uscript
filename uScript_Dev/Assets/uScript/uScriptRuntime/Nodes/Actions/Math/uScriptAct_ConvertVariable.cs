@@ -176,12 +176,13 @@ public class uScriptAct_ConvertVariable : uScriptLogic
          else
          {
             string []components = tmpTarget.Split( ',' );
+            char[] trimchars = { '(', ')' };
 
             if ( components.Length >= 3 )
             {
-               System.Single.TryParse(components[0], out tempVector3Value.x);
+               System.Single.TryParse(components[0].TrimStart(trimchars), out tempVector3Value.x);
                System.Single.TryParse(components[1], out tempVector3Value.y);
-               System.Single.TryParse(components[2], out tempVector3Value.z);
+               System.Single.TryParse(components[2].TrimEnd(trimchars), out tempVector3Value.z);
             }
 
             int intNumber = 1;
