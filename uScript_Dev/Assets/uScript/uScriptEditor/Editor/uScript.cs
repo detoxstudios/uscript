@@ -638,6 +638,10 @@ public sealed partial class uScript : EditorWindow
          return;
       }
 
+      // NOTE: This will never trigger on a DLL build, as the UnityVersion is hard coded in the DLLs.
+      // If this functionality is desired, we need to check the user's actual Unity version against
+      // some range of valid version numbers (i.e. 3.5.7, 4.6.6, and 5.0+).
+      
       shouldTestCompatibility = false;
 
       var msg =
