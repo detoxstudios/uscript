@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="uScriptUtility.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2013 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   This file contains a collection of utility classes for use with uScript.
@@ -8,14 +8,48 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.IO;
-
-using UnityEditor;
+using System.Linq;
 
 using UnityEngine;
 
 public static class uScriptUtility
 {
+   /// <summary>
+   /// Returns the common parent path in a list of paths or an empty string, if none is found.
+   /// </summary>
+   /// <param name="paths">List of paths.</param>
+   /// <returns>The common path.</returns>
+   public static string FindCommonPath(List<string> paths)
+   {
+      if (paths.Count == 0)
+      {
+         return string.Empty;
+      }
+
+      var matchingChars = (from len in Enumerable.Range(0, paths.Min(s => s.Length)).Reverse()
+                           let possibleMatch = paths.First().Substring(0, len)
+                           where paths.All(f => f.StartsWith(possibleMatch))
+                           select possibleMatch).ToList();
+
+      if (matchingChars.Any() == false)
+      {
+         return string.Empty;
+      }
+
+      var commonPath = Path.GetDirectoryName(matchingChars.First());
+      if (string.IsNullOrEmpty(commonPath))
+      {
+         return string.Empty;
+      }
+
+      commonPath = commonPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                   + Path.DirectorySeparatorChar;
+
+      return commonPath;
+   }
+
    /// <summary>Gets the index of an enumeration by name.</summary>
    /// <returns>The first occurrence of the specified name within the enumeration, if found; otherwise, -1.</returns>
    /// <param name="e">The enumeration type.</param>
@@ -52,19 +86,26 @@ public static class uScriptUtility
       return ((int[])Enum.GetValues(e.GetType()))[index];
    }
 
-   /// <summary>Rounds a numer to the nearest multiple.</summary>
+   /// <summary>Rounds a number to the nearest multiple.</summary>
    /// <returns>The rounded number.</returns>
    /// <param name='number'>The number to round.</param>
    /// <param name='multiple'>The multiple.</param>
    public static int RoundToMultiple(int number, int multiple)
    {
-      return ((multiple / 2 + number) / multiple) * multiple;
+      return (((multiple / 2) + number) / multiple) * multiple;
    }
 }
 
 internal static class uScriptExtensions
 {
-   public static void Information(this UnityEngine.GUIStyle style, int columns)
+   public enum TextOverflowMethod
+   {
+      Clip,
+      EllipsisEnd,
+      EllipsisMiddle
+   }
+
+   public static void Information(this GUIStyle style, int columns)
    {
       uScriptGUIStyle.Information(style, columns);
    }
@@ -72,8 +113,8 @@ internal static class uScriptExtensions
    /// <summary>
    /// Examines the content and returns a string of Tab characters useful for indentation. This takes into account the various tab widths and fonts used across Unity versions and platforms.
    /// </summary>
-   /// <param name="content">The content used for alignment. The last character should be a Tab (\t), but it doesn't need to be.</param>
    /// <param name="style">The GUIStyle used to calculate alignment.</param>
+   /// <param name="content">The content used for alignment. The last character should be a Tab (\t), but it doesn't need to be.</param>
    /// <returns>A string consisting of one or more Tab characters.</returns>
    public static string GetTabIndent(this GUIStyle style, string content)
    {
@@ -84,8 +125,8 @@ internal static class uScriptExtensions
    /// <summary>
    /// Examines the content and returns the number of Tab characters needed to align indentation. This takes into account the various tab widths and fonts used across Unity versions and platforms.
    /// </summary>
-   /// <param name="content">The content used for alignment. The last character should be a Tab (\t), but it doesn't need to be.</param>
    /// <param name="style">The GUIStyle used to calculate alignment.</param>
+   /// <param name="content">The content used for alignment. The last character should be a Tab (\t), but it doesn't need to be.</param>
    /// <returns>The number of Tab characters needed for alignment.</returns>
    public static int GetTabIndentLevel(this GUIStyle style, string content)
    {
@@ -105,14 +146,7 @@ internal static class uScriptExtensions
       return (int)style.CalcSize(uScriptGUIContent.Temp("\t")).x;
    }
 
-   public enum TextOverflowMethod
-   {
-      Clip,
-      EllipsisEnd,
-      EllipsisMiddle
-   }
-
-   public static string FormatTextOverflow(this string text, UnityEngine.GUIStyle style, float maxWidth, TextOverflowMethod method)
+   public static string FormatTextOverflow(this string text, GUIStyle style, float maxWidth, TextOverflowMethod method)
    {
       return text + "_OVERFLOW";
    }
@@ -139,12 +173,36 @@ internal static class uScriptExtensions
    }
 }
 
-
 /// <summary>
 /// String Extensions
 /// </summary>
 internal static class StringExtensions
 {
+   /// <summary>
+   /// Normalizes the specified path where "c:\foo\xxx\..\bar" will return "c:\foo\bar".
+   /// </summary>
+   /// <param name="path">The path to normalize.</param>
+   /// <returns>The normalized path.</returns>
+   public static string NormalizePath(this string path)
+   {
+      if (string.IsNullOrEmpty(path))
+      {
+         return string.Empty;
+      }
+
+      try
+      {
+         path = Path.GetFullPath(new Uri(path).LocalPath);
+      }
+      catch (UriFormatException)
+      {
+         uScriptDebug.Log(string.Format("Invalid system path: \"{0}\"", path), uScriptDebug.Type.Error);
+         return string.Empty;
+      }
+
+      return path.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+   }
+
    /// <summary>
    /// Returns a modified path that is relative to the Unity project folder, as long as the specified path points to a Unity asset. In either case, all backslash characters are replaced with forward slashes.
    /// </summary>
@@ -230,7 +288,7 @@ internal static class StringExtensions
    #endregion
 
    #region UnityEngine.Color to hex
-   public static string ToHex(this UnityEngine.Color color)
+   public static string ToHex(this Color color)
    {
       return ((int)(color.r * 255)).ToString("X2") + ((int)(color.g * 255)).ToString("X2") + ((int)(color.b * 255)).ToString("X2");
    }
@@ -274,7 +332,7 @@ internal static class StringExtensions
       return string.Format("<i>{0}</i>", value);
    }
 
-   public static string Color(this string value, UnityEngine.Color color)
+   public static string Color(this string value, Color color)
    {
       return string.Format("<color=#{0}>{1}</color>", color.ToHex(), value);
    }
@@ -323,7 +381,7 @@ internal static class StringExtensions
    /// </summary>
    /// <typeparam name="T">The type of the Enum</typeparam>
    /// <param name="value">String value to parse</param>
-   /// <param name="ignorecase">Ignore the case of the string being parsed</param>
+   /// <param name="ignoreCase">Ignore the case of the string being parsed</param>
    /// <returns>The Enum corresponding to the stringExtensions</returns>
    public static T ToEnum<T>(this string value, bool ignoreCase)
    {
@@ -511,10 +569,8 @@ internal static class StringExtensions
    
 
 
-   public static bool IsEmpty(this UnityEngine.Rect rect)
+   public static bool IsEmpty(this Rect rect)
    {
       return ((((rect.height == 0) && (rect.width == 0)) && (rect.x == 0)) && (rect.y == 0));
    }
-
-
 }
