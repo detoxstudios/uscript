@@ -4478,7 +4478,7 @@ public sealed partial class uScript : EditorWindow
 
          GatherDerivedTypes(uniqueNodes, uScriptConfig.ConstantPaths.RuntimeNodes, typeof(uScriptLogic));
 
-         GatherDerivedTypes(uniqueNodes, Preferences.UserNodes, typeof(uScriptLogic), "uScriptCode");
+         GatherDerivedTypes(uniqueNodes, Preferences.UserNodes, typeof(uScriptLogic));
          GatherDerivedTypes(uniqueNodes, Preferences.NestedScripts, typeof(uScriptLogic), "uScriptCode");
 
          m_SzLogicTypes = new string[uniqueNodes.Values.Count];
@@ -5205,7 +5205,7 @@ public sealed partial class uScript : EditorWindow
 
          Dictionary<Type, Type> eventNodes = new Dictionary<Type, Type>();
          GatherDerivedTypes(eventNodes, uScriptConfig.ConstantPaths.RuntimeNodes, typeof(uScriptEvent));
-         GatherDerivedTypes(eventNodes, Preferences.UserNodes, typeof(uScriptEvent), "uScriptCode");
+         GatherDerivedTypes(eventNodes, Preferences.UserNodes, typeof(uScriptEvent));
 
          foreach (UnityEngine.Object o in allObjects)
          {
