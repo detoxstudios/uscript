@@ -4095,14 +4095,13 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.GeneratedScripts);
 
-/* This code causes uScript graphs that contain the same string within the name to fail
-* (example Condition & BodyCondition both have Condition in it).
 #if (UNITY_4_6 || UNITY_5)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
+      string fullPath = binaryPath.Substring(0, binaryPath.LastIndexOf(".")) + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
       foreach (string file in files)
       {
-         if (file.Contains(fileName)) return file;
+         if (file == fullPath) return file;
       }
 
       // not found, fall back to default
@@ -4110,8 +4109,6 @@ public sealed partial class uScript : EditorWindow
 #else
       return Preferences.GeneratedScripts + "/" + fileName;
 #endif
-*/
-      return Preferences.GeneratedScripts + "/" + fileName;
    }
 
    private string GetNestedScriptPath(string binaryPath)
@@ -4120,14 +4117,13 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.NestedScripts);
 
-/* This code causes uScript graphs that contain the same string within the name to fail
-* (example Condition & BodyCondition both have Condition in it).
 #if (UNITY_4_6 || UNITY_5)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
-      foreach(string file in files)
+      string fullPath = binaryPath.Substring(0, binaryPath.LastIndexOf(".")) + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
+      foreach (string file in files)
       {
-         if (file.Contains(fileName)) return file;
+         if (file == fullPath) return file;
       }
 
       // not found, fall back to default
@@ -4135,8 +4131,6 @@ public sealed partial class uScript : EditorWindow
 #else
       return Preferences.NestedScripts + "/" + fileName;
 #endif
-*/
-      return Preferences.NestedScripts + "/" + fileName;
    }
 
    private bool SaveGraph(ScriptEditor script, string binaryPath, bool generateCode, bool generateDebugInfo, bool stubCode)
