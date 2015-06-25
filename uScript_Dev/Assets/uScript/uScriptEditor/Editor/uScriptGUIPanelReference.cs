@@ -421,7 +421,7 @@ namespace Detox.Editor
 
       private void PingSource()
       {
-         uScriptGUI.PingObject(uScript.GetClassPath(this.selectedNodeClassName), typeof(TextAsset));
+         uScriptGUI.PingObject(uScript.GetRelativePathToNodeSource(this.selectedNodeClassName), typeof(TextAsset));
       }
 
       private void ResetInformation()

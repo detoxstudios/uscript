@@ -479,7 +479,8 @@ public sealed partial class uScript : EditorWindow
          var path = AssetDatabase.GUIDToAssetPath(guid);
          if (path.Contains(fileName)) return path;
       }
-      return string.Format("File: {0} not found with label {1}!", fileName, label);
+
+      return string.Empty;
    }
 
    private static List<string> GetFilePathsWithLabel(string label)
@@ -508,55 +509,46 @@ public sealed partial class uScript : EditorWindow
 #if (UNITY_4_6 || UNITY_5)
       return GetFilePathWithLabel(label, fileName);
 #else
-      return uScript.Preferences.UserScripts + "/" + fileName;
+      return FindFile(Preferences.UserScripts, string.Format("{0}.uscript", fileName));
 #endif
    }
 
-   public bool IsStale(string scriptName)
+   public bool IsStale(string graphName)
    {
-      if (_staleScriptCache.ContainsKey(scriptName))
+      if (_staleScriptCache.ContainsKey(graphName))
       {
-         return _staleScriptCache[scriptName];
+         return _staleScriptCache[graphName];
       }
-      else
-      {
-#if (UNITY_4_6 || UNITY_5)
-         string path = GetGraphPath(scriptName + ".uscript");
-#else
-         string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
-#endif
 
-         if (path != string.Empty)
+      var path = GetGraphPath(string.Format("{0}.uscript", graphName));
+      if (string.Empty != path)
+      {
+         var s = new ScriptEditor(string.Empty, null, null);
+         if (s.Open(path))
          {
-            ScriptEditor s = new ScriptEditor(string.Empty, null, null);
-            if (true == s.Open(path))
+            var stale = s.GeneratedCodeIsStale;
+            if (stale == false)
             {
-               bool stale = s.GeneratedCodeIsStale;
+               var wrapperPath = this.GetGeneratedScriptPath(path);
+               var logicPath = this.GetNestedScriptPath(path);
 
-               if (false == stale)
+               if (File.Exists(wrapperPath) == false || File.Exists(logicPath) == false)
                {
-                  string wrapperPath = GetGeneratedScriptPath(path);
-                  string logicPath = GetNestedScriptPath(path);
-
-                  if (false == File.Exists(wrapperPath) ||
-                       false == File.Exists(logicPath))
-                  {
-                     stale = true;
-                  }
+                  stale = true;
                }
-
-               SetStaleState(scriptName, stale);
             }
-         }
 
-         //if we failed to find it, mark it as always stale
-         if (false == _staleScriptCache.ContainsKey(scriptName))
-         {
-            SetStaleState(scriptName, true);
+            this.SetStaleState(graphName, stale);
          }
-
-         return _staleScriptCache[scriptName];
       }
+
+      //if we failed to find it, mark it as always stale
+      if (this._staleScriptCache.ContainsKey(graphName) == false)
+      {
+         this.SetStaleState(graphName, true);
+      }
+
+      return this._staleScriptCache[graphName];
    }
 
    // The stale script state cache should be updated whenever a script's stale state changes, and when uScript first launches.
@@ -567,39 +559,31 @@ public sealed partial class uScript : EditorWindow
 
    private Dictionary<string, bool> _debugScriptCache = new Dictionary<string, bool>();
 
-   public bool HasDebugCode(string scriptName)
+   public bool HasDebugCode(string graphName)
    {
-      if (_debugScriptCache.ContainsKey(scriptName))
+      if (_debugScriptCache.ContainsKey(graphName))
       {
-         return _debugScriptCache[scriptName];
+         return _debugScriptCache[graphName];
       }
-      else
+
+      var path = GetGraphPath(string.Format("{0}.uscript", graphName));
+      if (path != string.Empty)
       {
-#if (UNITY_4_6 || UNITY_5)
-         string path = GetGraphPath(scriptName + ".uscript");
-#else
-         string path = FindFile(Preferences.UserScripts, scriptName + ".uscript");
-#endif
-
-         if (string.Empty != path)
+         var s = new ScriptEditor(string.Empty, null, null);
+         if (s.Open(path))
          {
-            ScriptEditor s = new ScriptEditor(string.Empty, null, null);
-            if (true == s.Open(path))
-            {
-               bool debugCode = s.SavedForDebugging;
-
-               SetDebugState(scriptName, debugCode);
-            }
+            var debugCode = s.SavedForDebugging;
+            this.SetDebugState(graphName, debugCode);
          }
-
-         // if we failed to find it, mark it as note containing debug info
-         if (false == _debugScriptCache.ContainsKey(scriptName))
-         {
-            SetDebugState(scriptName, false);
-         }
-
-         return _debugScriptCache[scriptName];
       }
+
+      // if we failed to find it, mark it as note containing debug info
+      if (this._debugScriptCache.ContainsKey(graphName) == false)
+      {
+         this.SetDebugState(graphName, false);
+      }
+
+      return this._debugScriptCache[graphName];
    }
 
    // The debug script state cache should be updated whenever a script's debug state changes, and when uScript first launches.
@@ -2487,52 +2471,67 @@ public sealed partial class uScript : EditorWindow
          return;
       }
 
-      // Ping the source, Open the source in the default editor, or Load the Nested Graph
+      var entityNode = displayNode.EntityNode;
+      switch (Preferences.DoubleClickBehavior)
+      {
+         case Preferences.DoubleClickBehaviorType.PingSource:
+            this.PingSource(entityNode);
+            break;
 
-      var currentNodeClassName = ScriptEditor.FindNodeType(displayNode.EntityNode);
-      var currentNodeClassPath = GetClassPath(currentNodeClassName);
-#if (UNITY_4_6 || UNITY_5)
-      var scriptPath = GetGraphPath(currentNodeClassName + ".uscript");
-#else
-      var scriptPath = FindFile(Preferences.UserScripts, currentNodeClassName + ".uscript");
-#endif
-      int assetInstanceID;
+         case Preferences.DoubleClickBehaviorType.OpenSource:
+            this.OpenSource(entityNode);
+            break;
 
-      if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.PingSource)
-      {
-         // PING node source, PING script source
-         uScriptGUI.PingObject(currentNodeClassPath, typeof(TextAsset));
+         case Preferences.DoubleClickBehaviorType.LoadGraphPingSource:
+            this.LoadGraphPingSource(entityNode);
+            break;
+
+         case Preferences.DoubleClickBehaviorType.LoadGraphOpenSource:
+            this.LoadGraphOpenSource(entityNode);
+            break;
       }
-      else if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.OpenSource)
+   }
+
+   private void PingSource(EntityNode entityNode)
+   {
+      var nodeType = ScriptEditor.FindNodeType(entityNode);
+      var relativePath = GetRelativePathToNodeSource(nodeType);
+      uScriptGUI.PingObject(relativePath, typeof(TextAsset));
+   }
+
+   private void OpenSource(EntityNode entityNode)
+   {
+      var nodeType = ScriptEditor.FindNodeType(entityNode);
+      var relativePath = GetRelativePathToNodeSource(nodeType);
+      var assetInstanceID = GetAssetInstanceID(relativePath, typeof(TextAsset));
+      AssetDatabase.OpenAsset(assetInstanceID);
+   }
+
+   private void LoadGraphPingSource(EntityNode entityNode)
+   {
+      var nodeType = ScriptEditor.FindNodeType(entityNode);
+      var graphPath = GetGraphPath(string.Format("{0}.uscript", nodeType));
+      if (graphPath == string.Empty)
       {
-         // OPEN node source, OPEN script source
-         assetInstanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
-         AssetDatabase.OpenAsset(assetInstanceID);
-      }
-      else if (Preferences.DoubleClickBehavior == Preferences.DoubleClickBehaviorType.LoadGraphPingSource)
-      {
-         // PING node source, LOAD script
-         if (scriptPath == string.Empty)
-         {
-            uScriptGUI.PingObject(GetClassPath(currentNodeClassName), typeof(TextAsset));
-         }
-         else
-         {
-            this.OpenGraph(scriptPath, false);
-         }
+         this.PingSource(entityNode);
       }
       else
       {
-         // OPEN node source, LOAD script
-         if (scriptPath == string.Empty)
-         {
-            assetInstanceID = GetAssetInstanceID(currentNodeClassPath, typeof(TextAsset));
-            AssetDatabase.OpenAsset(assetInstanceID);
-         }
-         else
-         {
-            this.OpenGraph(scriptPath, false);
-         }
+         this.OpenGraph(graphPath, false);
+      }
+   }
+
+   private void LoadGraphOpenSource(EntityNode entityNode)
+   {
+      var nodeType = ScriptEditor.FindNodeType(entityNode);
+      var graphPath = GetGraphPath(string.Format("{0}.uscript", nodeType));
+      if (graphPath == string.Empty)
+      {
+         this.OpenSource(entityNode);
+      }
+      else
+      {
+         this.OpenGraph(graphPath, false);
       }
    }
 
@@ -5735,25 +5734,28 @@ public sealed partial class uScript : EditorWindow
    }
 
    // This method can be expensive, so call it sparingly
-   public static string GetClassPath(string newName)
+   public static string GetRelativePathToNodeSource(string nodeType)
    {
-      if (string.IsNullOrEmpty(newName) == false)
+      if (string.IsNullOrEmpty(nodeType))
       {
-         // Find the associated class file
-         string startPath = Application.dataPath;
-         string[] exts = new string[] { ".cs", ".js", ".boo" };
-
-         foreach (string ext in exts)
-         {
-            string[] files = Directory.GetFiles(startPath, newName + ext, SearchOption.AllDirectories);
-            if (files.Length == 1)
-            {
-               return files[0].Remove(0, startPath.Length - 6);
-            }
-         }
+         return string.Empty;
       }
 
-      return string.Empty;
+      const StringComparison IgnoreCase = StringComparison.OrdinalIgnoreCase;
+
+      var path = Application.dataPath;
+      var searchPattern = string.Format("{0}.*", nodeType);
+
+      var files =
+         Directory.GetFiles(path, searchPattern, SearchOption.AllDirectories)
+            .Where(
+               s => s.EndsWith(".cs", IgnoreCase) || s.EndsWith(".js", IgnoreCase) || s.EndsWith(".boo", IgnoreCase))
+            .ToList();
+
+      Debug.Assert(files.Count <= 1, string.Format("Multiple files where found matching \"{0}\".", searchPattern));
+
+      var file = files.FirstOrDefault() ?? string.Empty;
+      return file.RelativeAssetPath();
    }
 }
 

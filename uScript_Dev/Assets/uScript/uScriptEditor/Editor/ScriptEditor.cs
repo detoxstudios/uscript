@@ -5291,28 +5291,27 @@ namespace Detox.ScriptEditor
 
       public static string FindNodeType(EntityNode node)
       {
-         if ( node is EntityEvent )
+         if (node is EntityEvent)
          {
-            EntityEvent entityEvent = (EntityEvent) node;         
-            return entityEvent.ComponentType;
-         }
-         else if ( node is LogicNode )
-         {
-            LogicNode logicNode = (LogicNode) node;         
-            return logicNode.Type;
-         }
-         else if ( node is EntityProperty )
-         {
-            EntityProperty entityProperty = (EntityProperty) node;         
-            return entityProperty.ComponentType;
-         }
-         else if ( node is EntityMethod )
-         {
-            EntityMethod entityMethod = (EntityMethod) node;         
-            return entityMethod.ComponentType;
+            return ((EntityEvent)node).ComponentType;
          }
 
-         return "";
+         if (node is LogicNode)
+         {
+            return ((LogicNode)node).Type;
+         }
+         
+         if (node is EntityProperty)
+         {
+            return ((EntityProperty)node).ComponentType;
+         }
+         
+         if (node is EntityMethod)
+         {
+            return ((EntityMethod)node).ComponentType;
+         }
+
+         return string.Empty;
       }
    }
 }
