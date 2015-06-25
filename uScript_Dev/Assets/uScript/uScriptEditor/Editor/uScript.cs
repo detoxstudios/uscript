@@ -5752,7 +5752,7 @@ public sealed partial class uScript : EditorWindow
                s => s.EndsWith(".cs", IgnoreCase) || s.EndsWith(".js", IgnoreCase) || s.EndsWith(".boo", IgnoreCase))
             .ToList();
 
-      Debug.Assert(files.Count <= 1, string.Format("Multiple files where found matching \"{0}\".", searchPattern));
+      uScriptDebug.Assert(files.Count <= 1, string.Format("Multiple files where found matching \"{0}\".", searchPattern));
 
       var file = files.FirstOrDefault() ?? string.Empty;
       return file.RelativeAssetPath();
