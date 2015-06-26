@@ -30,6 +30,7 @@ namespace Detox.Editor.GUI
          private readonly ListView listView;
 
          private string filterText = string.Empty;
+         private bool updateRequested = false;
 
          public PanelScriptList()
          {
@@ -50,10 +51,10 @@ namespace Detox.Editor.GUI
 
             this.CreateColumns();
 
-            this.UpdateListContents();
+            this.RequestListUpdate();
 
-            EditorApplication.projectWindowChanged += this.UpdateListContents;
-            uScript.GraphSaved += this.UpdateListContents;
+            EditorApplication.projectWindowChanged += this.RequestListUpdate;
+            uScript.GraphSaved += this.RequestListUpdate;
          }
 
          public void Draw()
@@ -63,6 +64,12 @@ namespace Detox.Editor.GUI
             //   Debug.Log("EXECUTE LOAD of \"" + this.listView.PendingExecution.Path + "\"\n");
             //   this.listView.PendingExecution = null;
             //}
+
+            if (updateRequested)
+            {
+               updateRequested = false;
+               UpdateListContents();
+            }
 
             var rectPanel = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.ExpandHeight(true));
             {
@@ -123,7 +130,12 @@ namespace Detox.Editor.GUI
          /// <summary>
          /// Generate the initial list contents. Should be called during uScript Editor initialization and OnProjectChanged.
          /// </summary>
-         public void UpdateListContents()
+         public void RequestListUpdate()
+         {
+            updateRequested = true;
+         }
+
+         private void UpdateListContents()
          {
             if (uScript.IsOpen == false)
             {
@@ -154,8 +166,6 @@ namespace Detox.Editor.GUI
             }
 
             this.listView.FilterItems(this.filterText);
-
-            uScript.Instance.Repaint();
          }
 
          private void CreateColumns()

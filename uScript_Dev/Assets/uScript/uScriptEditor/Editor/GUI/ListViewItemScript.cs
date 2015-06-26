@@ -55,7 +55,10 @@ namespace Detox.Editor.GUI
       {
          get
          {
-            return uScriptBackgroundProcess.GraphInfoList[this.ItemName].SceneName ?? string.Empty;
+            GraphInfo gi;
+            if (uScriptBackgroundProcess.GraphInfoList.TryGetValue(this.ItemName, out gi)) return gi.SceneName;
+
+            return string.Empty;
          }
       }
 
@@ -65,7 +68,10 @@ namespace Detox.Editor.GUI
       {
          get
          {
-            return uScriptBackgroundProcess.GraphInfoList[this.ItemName].SourceState;
+            GraphInfo gi;
+            if (uScriptBackgroundProcess.GraphInfoList.TryGetValue(this.ItemName, out gi)) return gi.SourceState;
+
+            return GraphInfo.State.Missing;
          }
       }
 
