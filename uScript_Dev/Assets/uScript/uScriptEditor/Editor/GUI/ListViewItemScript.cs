@@ -43,7 +43,7 @@ namespace Detox.Editor.GUI
       {
          get
          {
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
             return uScript.GetGraphPath(this.ItemName);
 #else
             return uScript.Preferences.UserScripts + "/" + this.ItemPath;
@@ -208,7 +208,7 @@ namespace Detox.Editor.GUI
 
       private void CommandDirectoryLocate()
       {
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
          uScriptGUI.PingProjectGraph(this.GraphPath);
 #else
          var directoryPath = uScript.Preferences.UserScripts + "/";

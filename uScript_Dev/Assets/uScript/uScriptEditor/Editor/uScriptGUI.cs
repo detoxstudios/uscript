@@ -515,12 +515,12 @@ namespace Detox.Editor
                AssetBrowserWindow.shouldOpen = true;
                AssetBrowserWindow.nodeKey = nodeKey;
 
-               //            AssetBrowserWindow.Init(resourcePath, AssetBrowserWindow.AssetType.Texture);
-               //            AssetBrowserWindow.FocusWindowIfItsOpen<AssetBrowserWindow>();
+//               AssetBrowserWindow.Init(resourcePath, AssetBrowserWindow.AssetType.Texture);
+//               AssetBrowserWindow.FocusWindowIfItsOpen<AssetBrowserWindow>();
 
-               //            Debug.Log("BUTTON PRESSED\n");
-               //            filepath = EditorUtility.OpenFilePanel(name, path, extension);
-               //            Debug.Log("Results: " + filepath + "\n");
+//               Debug.Log("BUTTON PRESSED\n");
+//               filepath = EditorUtility.OpenFilePanel(name, path, extension);
+//               Debug.Log("Results: " + filepath + "\n");
             }
 
             if (AssetBrowserWindow.nodeKey == nodeKey && AssetBrowserWindow.assetFilePath != string.Empty)
@@ -542,7 +542,7 @@ namespace Detox.Editor
       public static bool IsGeneratedScriptMissing(string graphName)
       {
          var csName = graphName + ".cs";
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
          // first see if we've already saved the file and then just use that path
          List<string> files = uScript.GetGraphPaths("uScriptCode");
          foreach (string file in files)

@@ -4825,7 +4825,7 @@ namespace Detox.ScriptEditor
          {
             m_Name = Path.GetFileName( binaryFile );
 
-#if UNITY_4 || UNITY_5
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
             // blocking checkout of versioned file, if necessary
             if (UnityEditor.VersionControl.Provider.isActive)
             {
@@ -4861,7 +4861,7 @@ namespace Detox.ScriptEditor
          {
             m_Name = Path.GetFileName( binaryFile );
 
-#if UNITY_4 || UNITY_5
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
             // blocking checkout of versioned file, if necessary
             if (UnityEditor.VersionControl.Provider.isActive)
             {
@@ -4889,7 +4889,7 @@ namespace Detox.ScriptEditor
          {
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
-#if UNITY_4 || UNITY_5
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
             // blocking checkout of versioned file, if necessary
             if (UnityEditor.VersionControl.Provider.isActive)
             {
@@ -4916,7 +4916,7 @@ namespace Detox.ScriptEditor
          {
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
-#if UNITY_4 || UNITY_5
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
             // blocking checkout of versioned file, if necessary
             if (UnityEditor.VersionControl.Provider.isActive)
             {

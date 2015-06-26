@@ -470,7 +470,7 @@ public sealed partial class uScript : EditorWindow
 
    private Dictionary<string, bool> _staleScriptCache = new Dictionary<string, bool>();
 
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
    private static string GetFilePathWithLabel(string label, string fileName)
    {
       var guids = AssetDatabase.FindAssets("l:" + label, null);
@@ -497,7 +497,7 @@ public sealed partial class uScript : EditorWindow
 
    public static List<string> GetGraphPaths(string label = "uScriptSource")
    {
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       return GetFilePathsWithLabel(label);
 #else
       return Directory.GetFiles(Preferences.UserScripts, "*.uscript", SearchOption.AllDirectories).Select(s => s.Replace("\\", "/")).ToList();
@@ -506,7 +506,7 @@ public sealed partial class uScript : EditorWindow
 
    public static string GetGraphPath(string fileName, string label = "uScriptSource")
    {
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       return GetFilePathWithLabel(label, fileName);
 #else
       return FindFile(Preferences.UserScripts, string.Format("{0}.uscript", fileName));
@@ -1147,43 +1147,7 @@ public sealed partial class uScript : EditorWindow
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
 
-      if (UndoComponent.UndoNumber != m_UndoNumber)
-      {
-         //if their number is greater then it was a redo
-         //so apply the patch
-         if (UndoComponent.UndoNumber > m_UndoNumber)
-         {
-            //for some reason we're going out of range when starting Unity with uScript open
-            //so make sure it's clamped here until i figure out the cause
-            if (m_UndoPatches.Length <= UndoComponent.UndoNumber - 1)
-            {
-               UndoComponent.UndoNumber = m_UndoPatches.Length;
-            }
-
-            ApplyPatch(m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber - 1]);
-         }
-         else
-         {
-            //if their number was less then it was an undo
-            //so remove the previous change
-
-            //for some reason we're going out of range when starting Unity with uScript open
-            //so make sure it's clamped here until i figure out the cause
-            if (m_UndoPatches.Length <= UndoComponent.UndoNumber)
-            {
-               UndoComponent.UndoNumber = m_UndoPatches.Length - 1;
-            }
-
-            RemovePatch(m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber]);
-         }
-
-         //recache the script since we're out of date with the patches
-         CacheScript();
-
-         m_UndoNumber = UndoComponent.UndoNumber;
-         
-         //Debug.Log("applied undo " + m_UndoNumber );
-      }
+      UndoRedoPerformed();
 
       if (_wasHierarchyChanged)
       {
@@ -1296,6 +1260,44 @@ public sealed partial class uScript : EditorWindow
          uScript.Instance.Repaint();
          //         Debug.Log("Repaint\n");
       }
+   }
+
+   private void UndoRedoPerformed()
+   {
+      //if their number is greater then it was a redo
+      //so apply the patch
+      if (UndoComponent.UndoNumber > m_UndoNumber)
+      {
+         //for some reason we're going out of range when starting Unity with uScript open
+         //so make sure it's clamped here until i figure out the cause
+         if (m_UndoPatches.Length <= UndoComponent.UndoNumber - 1)
+         {
+            UndoComponent.UndoNumber = m_UndoPatches.Length;
+         }
+
+         ApplyPatch(m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber - 1]);
+      }
+      else
+      {
+         //if their number was less then it was an undo
+         //so remove the previous change
+
+         //for some reason we're going out of range when starting Unity with uScript open
+         //so make sure it's clamped here until i figure out the cause
+         if (m_UndoPatches.Length <= UndoComponent.UndoNumber)
+         {
+            UndoComponent.UndoNumber = m_UndoPatches.Length - 1;
+         }
+
+         RemovePatch(m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber]);
+      }
+
+      //recache the script since we're out of date with the patches
+      CacheScript();
+
+      m_UndoNumber = UndoComponent.UndoNumber;
+
+      //Debug.Log("applied undo " + m_UndoNumber );
    }
 
    // Canvas Context Menu
@@ -4065,7 +4067,7 @@ public sealed partial class uScript : EditorWindow
 
    public void RebuildScripts(string path, bool stubCode)
    {
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       List<string> files = GetGraphPaths();
       foreach (string file in files)
       {
@@ -4094,7 +4096,7 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.GeneratedScripts);
 
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
       string fullPath = binaryPath.Substring(0, binaryPath.LastIndexOf(".")) + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
@@ -4116,7 +4118,7 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.NestedScripts);
 
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
       string fullPath = binaryPath.Substring(0, binaryPath.LastIndexOf(".")) + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
@@ -4410,7 +4412,7 @@ public sealed partial class uScript : EditorWindow
 
    void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType, string label = "")
    {
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       DirectoryInfo directory = new DirectoryInfo(path);
       List<FileInfo> filesList = new List<FileInfo>();
       FileInfo[] files;
@@ -4771,7 +4773,7 @@ public sealed partial class uScript : EditorWindow
    {
       List<RawScript> rawScripts = new List<RawScript>();
 
-#if (UNITY_4_6 || UNITY_5)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       string[] files = GetGraphPaths().ToArray();
 #else
       string[] files = FindAllFiles(Preferences.UserScripts, ".uscript");
