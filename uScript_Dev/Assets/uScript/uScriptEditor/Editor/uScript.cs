@@ -3072,8 +3072,9 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   public void RefreshAssetDatabase()
+   public void RefreshAssetDatabase(bool quick)
    {
+      UnityEngine.Object obj;
       const string Label = "Saved:\t";
       var indent = GUIStyle.none.GetTabIndent(string.Format("uScript: {0}", Label));
 
@@ -3083,34 +3084,49 @@ public sealed partial class uScript : EditorWindow
       var logicPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedCodeExtension);
       var wrapperPath = string.Format("{0}/{1}{2}.cs", relativePath, fileName, uScriptConfig.Files.GeneratedComponentExtension);
 
-      uScriptDebug.Log(
-         string.Format(
-            "{0}{1}\n{2}... and generated source files based on the graph.\n\n{3}\n- {4}\n\n{5}\n- {6}\n- {7}",
-            Label,
-            fileName.Bold(),
-            indent,
-            "Graph:".Bold(),
-            this.fullPath.RelativeAssetPath(),
-            "Generated source files:".Bold(),
-            logicPath,
-            wrapperPath));
-
       AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
 
-      UnityEngine.Object obj = AssetDatabase.LoadMainAssetAtPath(this.fullPath.RelativeAssetPath());
+      if (quick)
+      {
+         uScriptDebug.Log(
+            string.Format(
+               "{0}{1}\n{2}... based on the graph.\n\n{3}\n- {4}",
+               Label,
+               fileName.Bold(),
+               indent,
+               "Graph:".Bold(),
+               this.fullPath.RelativeAssetPath()));
+      }
+      else
+      {
+         uScriptDebug.Log(
+            string.Format(
+               "{0}{1}\n{2}... and generated source files based on the graph.\n\n{3}\n- {4}\n\n{5}\n- {6}\n- {7}",
+               Label,
+               fileName.Bold(),
+               indent,
+               "Graph:".Bold(),
+               this.fullPath.RelativeAssetPath(),
+               "Generated source files:".Bold(),
+               logicPath,
+               wrapperPath));
+
+         obj = AssetDatabase.LoadMainAssetAtPath(logicPath);
+         if (obj != null)
+         {
+            AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
+         }
+         obj = AssetDatabase.LoadMainAssetAtPath(wrapperPath);
+         if (obj != null)
+         {
+            AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
+         }
+      }
+
+      obj = AssetDatabase.LoadMainAssetAtPath(this.fullPath.RelativeAssetPath());
       if (obj != null)
       {
          AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptSource" });
-      }
-      obj = AssetDatabase.LoadMainAssetAtPath(logicPath);
-      if (obj != null)
-      {
-         AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
-      }
-      obj = AssetDatabase.LoadMainAssetAtPath(wrapperPath);
-      if (obj != null)
-      {
-         AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
       }
    }
 
@@ -3281,21 +3297,13 @@ public sealed partial class uScript : EditorWindow
 
       var saved = false;
 
-      if (quick)
-      {
-         this.SaveGraph(rename, false, debug);
-         // TODO: Invalidate source files if saved
-      }
-      else
-      {
-         AssetDatabase.StartAssetEditing();
-         saved = this.SaveGraph(rename, true, debug);
-         AssetDatabase.StopAssetEditing();
+      AssetDatabase.StartAssetEditing();
+      saved = this.SaveGraph(rename, !quick, debug);
+      AssetDatabase.StopAssetEditing();
 
-         if (saved)
-         {
-            this.RefreshAssetDatabase();
-         }
+      if (saved)
+      {
+         this.RefreshAssetDatabase(quick);
       }
 
       return saved;
