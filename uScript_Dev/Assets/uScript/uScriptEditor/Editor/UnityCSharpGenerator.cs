@@ -1088,17 +1088,18 @@ namespace Detox.ScriptEditor
 
       private void DeclareNamespaces()
       {
-         Profile p = new Profile("DeclareNamespaces");
+         var p = new Profile("DeclareNamespaces");
 
-         AddCSharpLine("//uScript Generated Code - Build " + uScriptBuild.Number);
-         if (true == m_GenerateDebugInfo)
+         this.AddCSharpLine("// uScript Generated Code - Build " + uScriptBuild.Number);
+         if (this.m_GenerateDebugInfo)
          {
-            AddCSharpLine("//Generated with Debug Info");
+            this.AddCSharpLine("// Generated with Debug Info");
          }
-
-         AddCSharpLine("using UnityEngine;");
-         AddCSharpLine("using System.Collections;");
-         AddCSharpLine("using System.Collections.Generic;");
+         this.AddCSharpLine();
+         this.AddCSharpLine("using System.Collections;");
+         this.AddCSharpLine("using System.Collections.Generic;");
+         this.AddCSharpLine();
+         this.AddCSharpLine("using UnityEngine;");
 
          p.End();
       }
@@ -1136,7 +1137,7 @@ namespace Detox.ScriptEditor
       {
          Profile p = new Profile("SetupProperties");
 
-         AddCSharpLine("//functions to refresh properties from entities");
+         this.AddCSharpLine_Comment("// Functions to refresh properties from entities");
 
          foreach (EntityProperty entityProperty in m_Script.Properties)
          {
@@ -2071,7 +2072,7 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine();
-         AddCSharpLine("//externally exposed events");
+         this.AddCSharpLine_Comment("// Externally exposed events");
          Plug[] events = FindExternalEvents();
 
          if (events.Length > 0)
@@ -2088,7 +2089,7 @@ namespace Detox.ScriptEditor
 
 
          AddCSharpLine();
-         AddCSharpLine("//external parameters");
+         this.AddCSharpLine_Comment("// External parameters");
          foreach (ExternalConnection external in m_Script.Externals)
          {
             Parameter lowestParameter = GetLowestCommonExternalParameter(external);
@@ -2120,7 +2121,7 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine();
-         AddCSharpLine("//local nodes");
+         this.AddCSharpLine_Comment("// Local nodes");
 
          LocalNode [] locals = m_Script.UniqueLocals;
          Array.Sort(locals, LocalComparer);
@@ -2143,20 +2144,20 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine();
-         AddCSharpLine("//owner nodes");
+         this.AddCSharpLine_Comment("// Owner nodes");
          foreach (OwnerConnection owner in m_Script.Owners)
          {
             AddCSharpLine(FormatType(owner.Connection.Type) + " " + CSharpName(owner) + " = null;");
          }
 
          AddCSharpLine();
-         AddCSharpLine("//logic nodes");
+         this.AddCSharpLine_Comment("// Logic nodes");
 
          foreach (LogicNode logic in m_Script.Logics)
          {
             string prefix = (true == (logic.InspectorName.Default != "")) ? "public " : "";
 
-            AddCSharpLine("//pointer to script instanced logic node");
+            this.AddCSharpLine_Comment("// Pointer to script instanced logic node");
             AddCSharpLine(prefix + FormatType(logic.Type) + " " + CSharpName(logic, logic.Type) + " = new " + FormatType(logic.Type) + "( );");
 
             foreach (Parameter parameter in logic.Parameters)
@@ -2183,7 +2184,7 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine();
-         AddCSharpLine("//event nodes");
+         this.AddCSharpLine_Comment("// Event nodes");
 
          foreach (EntityEvent entityEvent in m_Script.Events)
          {
@@ -2199,7 +2200,7 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine();
-         AddCSharpLine("//property nodes");
+         this.AddCSharpLine_Comment("// Property nodes");
 
          foreach (EntityProperty entityProperty in m_Script.Properties)
          {
@@ -2217,7 +2218,7 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine();
-         AddCSharpLine("//method nodes");
+         this.AddCSharpLine_Comment("// Method nodes");
 
          foreach (EntityMethod entityMethod in m_Script.Methods)
          {
@@ -2324,9 +2325,9 @@ namespace Detox.ScriptEditor
 
          if (true == m_GenerateDebugInfo)
          {
-            AddCSharpLine("//reset each Update, and increments each method call");
-            AddCSharpLine("//if it ever goes above MaxRelayCallCount before being reset");
-            AddCSharpLine("//then we assume it is stuck in an infinite loop");
+            this.AddCSharpLine_Comment("// Reset each Update, and increments each method call.");
+            this.AddCSharpLine_Comment("// If it ever goes above MaxRelayCallCount before being reset,");
+            this.AddCSharpLine_Comment("// then we assume it is stuck in an infinite loop.");
             AddCSharpLine("if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;");
 
             AddCSharpLine("if ( null != m_ContinueExecution )");
@@ -2344,8 +2345,8 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine();
-         AddCSharpLine("//other scripts might have added GameObjects with event scripts");
-         AddCSharpLine("//so we need to verify all our event listeners are registered");
+         this.AddCSharpLine_Comment("// Other scripts might have added GameObjects with event scripts,");
+         this.AddCSharpLine_Comment("// so we need to verify all our event listeners are registered.");
          AddCSharpLine(CSharpSyncEventListenersDeclaration() + ";");
          AddCSharpLine();
 
@@ -2879,9 +2880,9 @@ namespace Detox.ScriptEditor
                string newCode = SetCode(currentCode);
                if (newCode != "")
                {
-                  AddCSharpLine("//reset event listeners if needed");
-                  AddCSharpLine("//this isn't a variable node so it should only be called once per enabling of the script");
-                  AddCSharpLine("//if it's called twice there would be a double event registration (which is an error)");
+                  this.AddCSharpLine_Comment("// Reset event listeners, if needed. This isn't a variable node, so it");
+                  this.AddCSharpLine_Comment("// should only be called once per enabling of the script. If called");
+                  this.AddCSharpLine_Comment("// twice, there would be a double event registration (an error).");
                   AddCSharpLine("if ( false == m_RegisteredForEvents )");
                   AddCSharpLine("{");
                      m_CSharpString.Append(newCode);
@@ -2898,12 +2899,12 @@ namespace Detox.ScriptEditor
                if (true == node is EntityProperty && node.Instance != parameter)
                   AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration((EntityProperty)node) + "();");
 
-               AddCSharpLine("//if our game object reference was changed then we need to reset event listeners");
+               this.AddCSharpLine_Comment("// If the game object reference changed, reset event listeners.");
                AddCSharpLine("if ( " + PreviousName(node, parameter.Name) + " != " + CSharpName(node, parameter.Name) + " || false == m_RegisteredForEvents )");
                AddCSharpLine("{");
                ++m_TabStack;
 
-               AddCSharpLine("//tear down old listeners");
+               this.AddCSharpLine_Comment("// Tear down old listeners");
                if ((node is LocalNode) ||
                    (node is EntityProperty && node.Instance != parameter))
                   SetupEventListeners(PreviousName(node, parameter.Name), node, false);
@@ -2912,7 +2913,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine(PreviousName(node, parameter.Name) + " = " + CSharpName(node, parameter.Name) + ";");
                AddCSharpLine();
 
-               AddCSharpLine("//setup new listeners");
+               this.AddCSharpLine_Comment("// Setup new listeners");
                if ((node is LocalNode) ||
                    (node is EntityProperty && node.Instance != parameter))
                   SetupEventListeners(CSharpName(node, parameter.Name), node, true);
@@ -3263,9 +3264,9 @@ namespace Detox.ScriptEditor
 
          if (true == m_GenerateDebugInfo)
          {
-            AddCSharpLine("//reset event call");
-            AddCSharpLine("//if it ever goes above MaxRelayCallCount before being reset");
-            AddCSharpLine("//then we assume it is stuck in an infinite loop");
+            this.AddCSharpLine_Comment("// Reset event call.");
+            this.AddCSharpLine_Comment("// If it ever goes above MaxRelayCallCount before being reset,");
+            this.AddCSharpLine_Comment("// assume it is stuck in an infinite loop.");
             AddCSharpLine("if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;");
             AddCSharpLine();
          }
@@ -3274,7 +3275,7 @@ namespace Detox.ScriptEditor
 
          //all we want to do for an entityevent is output the variables
          //then call the relays
-         AddCSharpLine("//fill globals");
+         this.AddCSharpLine_Comment("// Fill globals");
          foreach (Parameter parameter in entityEvent.Parameters)
          {
             //only allow output parameters, those come through in the event args
@@ -3284,7 +3285,7 @@ namespace Detox.ScriptEditor
             ++i;
          }
 
-         AddCSharpLine("//relay event to nodes");
+         this.AddCSharpLine_Comment("// Relay event to nodes");
          AddCSharpLine(CSharpRelay(entityEvent, output) + "( );");
 
          --m_TabStack;
@@ -3727,7 +3728,7 @@ namespace Detox.ScriptEditor
 
          //all we want to do for an entityevent is output the variables
          //then call the relays
-         AddCSharpLine("//fill globals");
+         this.AddCSharpLine_Comment("// Fill globals");
          foreach (Parameter parameter in logicNode.EventParameters)
          {
             //only allow output parameters, those come through in the event args
@@ -3750,7 +3751,7 @@ namespace Detox.ScriptEditor
 
             LinkNode[] argLinks = FindLinksBySource(logicNode.Guid, parameter.Name);
 
-            AddCSharpLine("//links to " + parameter.Name + " = " + argLinks.Length);
+            this.AddCSharpLine_Comment("// Links to " + parameter.Name + " = " + argLinks.Length);
 
             foreach (LinkNode link in argLinks)
             {
@@ -3784,7 +3785,7 @@ namespace Detox.ScriptEditor
          //force any potential entites affected to update
          RefreshSetProperties(logicNode, outputList.ToArray());
 
-         AddCSharpLine("//relay event to nodes");
+         this.AddCSharpLine_Comment("// Relay event to nodes");
          AddCSharpLine(CSharpRelay(logicNode, eventName) + "( );");
 
          --m_TabStack;
@@ -4272,14 +4273,16 @@ namespace Detox.ScriptEditor
          {
 
             AddCSharpLine();
-            AddCSharpLine("//Don't copy 'out' values back to the global variables because this was an auto generated nested node");
-            AddCSharpLine("//and those values get set through an event which is called before the above method exited");
+            this.AddCSharpLine_Comment("// Don't copy 'out' values back to the global variables, because this was an");
+            this.AddCSharpLine_Comment("// auto generated nested node, and those values get set through an event,");
+            this.AddCSharpLine_Comment("// which is called before the above method exited.");
          }
 
          if (receiver.Outputs.Length > 0)
          {
             AddCSharpLine();
-            AddCSharpLine("//save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested");
+            this.AddCSharpLine_Comment("// Save off values because, if there are multiple, our relay logic could");
+            this.AddCSharpLine_Comment("// cause them to change before the next value is tested.");
          }
 
          int i = 0;
@@ -4681,6 +4684,14 @@ namespace Detox.ScriptEditor
          }
       }
 
+      private void AddCSharpLine_Comment(string line)
+      {
+         if (this.m_GenerateDebugInfo)
+         {
+            this.AddCSharpLine(line);
+         }
+      }
+
       private string PreviousName(EntityNode entityNode)
       {
          return PreviousName(entityNode, "Default");
@@ -4925,7 +4936,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine("{");
                ++m_TabStack;
 
-               AddCSharpLine("//OnGUI need unique listeners so calls like GUI.depth will work across uScripts");
+               this.AddCSharpLine_Comment("// OnGUI needs unique listeners so calls like GUI.depth will work across graphs.");
                AddCSharpLine(OnGuiListenerName() + " = " + eventVariable + ".AddComponent<" + entityEvent.ComponentType + ">();");
 
                --m_TabStack;
