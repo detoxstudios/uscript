@@ -1,13 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using UnityEditor;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UnityCSharpGenerator.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the Profile type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Detox.ScriptEditor
 {
+   using System;
+   using System.Collections;
+   using System.Collections.Generic;
+   using System.Text;
+
    public class Profile
    {
       static int m_Tab;
@@ -587,9 +593,9 @@ namespace Detox.ScriptEditor
             Preprocess(false);
 
             DeclareNamespaces();
-            AddCSharpLine("");
+            AddCSharpLine();
             AddCSharpLine("// This is the component script that you should assign to GameObjects to use this graph on them. Use the uScript/Graphs section of Unity's \"Component\" menu to assign this graph to a selected GameObject.");
-            AddCSharpLine("");
+            AddCSharpLine();
 
             AddCSharpLine("[AddComponentMenu(\"uScript/Graphs/" + logicClassName + "\")]");
             AddCSharpLine("public class " + System.IO.Path.GetFileNameWithoutExtension(script.Name) + uScriptConfig.Files.GeneratedComponentExtension + " : uScriptCode");
@@ -600,7 +606,7 @@ namespace Detox.ScriptEditor
             AddCSharpLine("public " + logicClassName + " ExposedVariables = new " + logicClassName + "( ); ");
             AddCSharpLine("#pragma warning restore 414");
 
-            AddCSharpLine("");
+            AddCSharpLine();
 
             //any named variables using the "Make Public" property should be also marked as public properties
             //so they can be get/set by other uscripts
@@ -612,7 +618,7 @@ namespace Detox.ScriptEditor
                }
             }
 
-            AddCSharpLine("");
+            AddCSharpLine();
 
             AddCSharpLine("void Awake( )");
             AddCSharpLine("{");
@@ -878,33 +884,33 @@ namespace Detox.ScriptEditor
             Preprocess(false);
 
             DeclareNamespaces();
-            AddCSharpLine("");
+            AddCSharpLine();
 
             AddCSharpLine("[NodePath(\"Graphs\")]");
             AddCSharpLine("[System.Serializable]");
             AddCSharpLine("[FriendlyName(\"" + EscapeString(script.FriendlyName.Default) + "\", \"" + EscapeString(script.Description.Default) + "\")]");
             BeginLogicClass(logicClassName);
-            AddCSharpLine("");
+            AddCSharpLine();
 
             ++m_TabStack;
             //required even when we stub code
             //so the inspector variables remain
             DeclareMemberVariables();
             DeclareEventArgs();
-            AddCSharpLine("");
+            AddCSharpLine();
 
             if (false == stubCode)
             {
                SetupProperties();
-               AddCSharpLine("");
+               AddCSharpLine();
                DefineSyncUnityHooks();
-               AddCSharpLine("");
+               AddCSharpLine();
                DefineRegisterForUnityHooks();
-               AddCSharpLine("");
+               AddCSharpLine();
                DefineSyncEventListeners();
-               AddCSharpLine("");
+               AddCSharpLine();
                DefineUnregisterEventListeners();
-               AddCSharpLine("");
+               AddCSharpLine();
 
                AddCSharpLine("public override void SetParent(GameObject g)");
                AddCSharpLine("{");
@@ -927,7 +933,7 @@ namespace Detox.ScriptEditor
 
             --m_TabStack;
             AddCSharpLine("}");
-            AddCSharpLine("");
+            AddCSharpLine();
 
             if (false == m_RequiredMethods.Contains("Start")) m_RequiredMethods.Add("Start");
 
@@ -942,7 +948,7 @@ namespace Detox.ScriptEditor
 
             --m_TabStack;
             AddCSharpLine("}");
-            AddCSharpLine("");
+            AddCSharpLine();
 
             if (false == m_RequiredMethods.Contains("OnEnable")) m_RequiredMethods.Add("OnEnable");
 
@@ -957,7 +963,7 @@ namespace Detox.ScriptEditor
 
             --m_TabStack;
             AddCSharpLine("}");
-            AddCSharpLine("");
+            AddCSharpLine();
 
             if (false == m_RequiredMethods.Contains("OnDisable")) m_RequiredMethods.Add("OnDisable");
 
@@ -972,7 +978,7 @@ namespace Detox.ScriptEditor
 
             --m_TabStack;
             AddCSharpLine("}");
-            AddCSharpLine("");
+            AddCSharpLine();
 
             //always do fixed update because this is where we sync our unity hooks
             if (false == m_RequiredMethods.Contains("Update")) m_RequiredMethods.Add("Update");
@@ -988,7 +994,7 @@ namespace Detox.ScriptEditor
 
             --m_TabStack;
             AddCSharpLine("}");
-            AddCSharpLine("");
+            AddCSharpLine();
 
 
             if (false == m_RequiredMethods.Contains("OnDestroy")) m_RequiredMethods.Add("OnDestroy");
@@ -1004,7 +1010,7 @@ namespace Detox.ScriptEditor
 
             --m_TabStack;
             AddCSharpLine("}");
-            AddCSharpLine("");
+            AddCSharpLine();
 
 
             if (true == NeedsMethod("LateUpdate"))
@@ -1022,7 +1028,7 @@ namespace Detox.ScriptEditor
 
                --m_TabStack;
                AddCSharpLine("}");
-               AddCSharpLine("");
+               AddCSharpLine();
             }
 
             if (true == NeedsMethod("FixedUpdate"))
@@ -1040,7 +1046,7 @@ namespace Detox.ScriptEditor
 
                --m_TabStack;
                AddCSharpLine("}");
-               AddCSharpLine("");
+               AddCSharpLine();
             }
 
             if (true == NeedsMethod("OnGUI"))
@@ -1058,7 +1064,7 @@ namespace Detox.ScriptEditor
 
                --m_TabStack;
                AddCSharpLine("}");
-               AddCSharpLine("");
+               AddCSharpLine();
             }
 
             DefineEvents(stubCode);
@@ -1180,7 +1186,7 @@ namespace Detox.ScriptEditor
                      AddCSharpLine("}");
                      --m_TabStack;
                      AddCSharpLine("}");
-                     AddCSharpLine("");
+                     AddCSharpLine();
                   }
 
                   if (true == entityProperty.Parameter.Input)
@@ -1211,7 +1217,7 @@ namespace Detox.ScriptEditor
                      AddCSharpLine("}");
                      --m_TabStack;
                      AddCSharpLine("}");
-                     AddCSharpLine("");
+                     AddCSharpLine();
                   }
                }
                else
@@ -1271,7 +1277,7 @@ namespace Detox.ScriptEditor
                         AddCSharpLine("}");
                         --m_TabStack;
                         AddCSharpLine("}");
-                        AddCSharpLine("");
+                        AddCSharpLine();
                      }
 
                      if (true == entityProperty.Parameter.Input)
@@ -1315,7 +1321,7 @@ namespace Detox.ScriptEditor
                         AddCSharpLine("}");
                         --m_TabStack;
                         AddCSharpLine("}");
-                        AddCSharpLine("");
+                        AddCSharpLine();
                      }
 
                      break;
@@ -1335,7 +1341,7 @@ namespace Detox.ScriptEditor
                   --m_TabStack;
 
                   AddCSharpLine("}");
-                  AddCSharpLine("");
+                  AddCSharpLine();
                }
 
                if (true == entityProperty.Parameter.Input)
@@ -1352,7 +1358,7 @@ namespace Detox.ScriptEditor
                      --m_TabStack;
                   }
                   AddCSharpLine("}");
-                  AddCSharpLine("");
+                  AddCSharpLine();
                }
             }
          }
@@ -2018,7 +2024,7 @@ namespace Detox.ScriptEditor
 
 
          AddCSharpLine("public delegate void uScriptEventHandler(object sender, LogicEventArgs args);");
-         AddCSharpLine("");
+         AddCSharpLine();
 
          AddCSharpLine("public class " + LogicEventArgsDeclaration() + " : System.EventArgs");
          AddCSharpLine("{");
@@ -2062,7 +2068,7 @@ namespace Detox.ScriptEditor
             AddCSharpLine("int relayCallCount = 0;");
          }
 
-         AddCSharpLine("");
+         AddCSharpLine();
          AddCSharpLine("//externally exposed events");
          Plug[] events = FindExternalEvents();
 
@@ -2079,7 +2085,7 @@ namespace Detox.ScriptEditor
          }
 
 
-         AddCSharpLine("");
+         AddCSharpLine();
          AddCSharpLine("//external parameters");
          foreach (ExternalConnection external in m_Script.Externals)
          {
@@ -2111,7 +2117,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine("");
+         AddCSharpLine();
          AddCSharpLine("//local nodes");
 
          LocalNode [] locals = m_Script.UniqueLocals;
@@ -2134,14 +2140,14 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine("");
+         AddCSharpLine();
          AddCSharpLine("//owner nodes");
          foreach (OwnerConnection owner in m_Script.Owners)
          {
             AddCSharpLine(FormatType(owner.Connection.Type) + " " + CSharpName(owner) + " = null;");
          }
 
-         AddCSharpLine("");
+         AddCSharpLine();
          AddCSharpLine("//logic nodes");
 
          foreach (LogicNode logic in m_Script.Logics)
@@ -2174,7 +2180,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine("");
+         AddCSharpLine();
          AddCSharpLine("//event nodes");
 
          foreach (EntityEvent entityEvent in m_Script.Events)
@@ -2190,7 +2196,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine("");
+         AddCSharpLine();
          AddCSharpLine("//property nodes");
 
          foreach (EntityProperty entityProperty in m_Script.Properties)
@@ -2208,7 +2214,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine("");
+         AddCSharpLine();
          AddCSharpLine("//method nodes");
 
          foreach (EntityMethod entityMethod in m_Script.Methods)
@@ -2232,7 +2238,7 @@ namespace Detox.ScriptEditor
       private void DefineSetParent()
       {
          AddCSharpLine("parentGameObject = g;");
-         AddCSharpLine("");
+         AddCSharpLine();
 
          foreach (LogicNode logic in m_Script.Logics)
          {
@@ -2275,7 +2281,7 @@ namespace Detox.ScriptEditor
          AddCSharpLine(CSharpSyncUnityHooksDeclaration() + ";");
          AddCSharpLine("m_RegisteredForEvents = true;");
 
-         AddCSharpLine("");
+         AddCSharpLine();
 
          //for each logic node, create an script specific instance
          foreach (LogicNode logicNode in m_Script.Logics)
@@ -2298,7 +2304,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine("");
+         AddCSharpLine();
 
          //for each logic node event, register event listeners with it
          foreach (LogicNode logicNode in m_Script.Logics)
@@ -2335,11 +2341,11 @@ namespace Detox.ScriptEditor
             AddCSharpLine(UpdateEditorValuesDeclaration() + ";");
          }
 
-         AddCSharpLine("");
+         AddCSharpLine();
          AddCSharpLine("//other scripts might have added GameObjects with event scripts");
          AddCSharpLine("//so we need to verify all our event listeners are registered");
          AddCSharpLine(CSharpSyncEventListenersDeclaration() + ";");
-         AddCSharpLine("");
+         AddCSharpLine();
 
          foreach (LogicNode logicNode in m_Script.Logics)
          {
@@ -2899,10 +2905,10 @@ namespace Detox.ScriptEditor
                if ((node is LocalNode) ||
                    (node is EntityProperty && node.Instance != parameter))
                   SetupEventListeners(PreviousName(node, parameter.Name), node, false);
-               AddCSharpLine("");
+               AddCSharpLine();
 
                AddCSharpLine(PreviousName(node, parameter.Name) + " = " + CSharpName(node, parameter.Name) + ";");
-               AddCSharpLine("");
+               AddCSharpLine();
 
                AddCSharpLine("//setup new listeners");
                if ((node is LocalNode) ||
@@ -3259,7 +3265,7 @@ namespace Detox.ScriptEditor
             AddCSharpLine("//if it ever goes above MaxRelayCallCount before being reset");
             AddCSharpLine("//then we assume it is stuck in an infinite loop");
             AddCSharpLine("if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;");
-            AddCSharpLine("");
+            AddCSharpLine();
          }
 
          int i = 0;
@@ -3282,7 +3288,7 @@ namespace Detox.ScriptEditor
          --m_TabStack;
 
          AddCSharpLine("}");
-         AddCSharpLine("");
+         AddCSharpLine();
 
          p.End();
       }
@@ -3623,7 +3629,7 @@ namespace Detox.ScriptEditor
    
             PrintDebug(externalInput);
 
-            AddCSharpLine("");
+            AddCSharpLine();
 
 
             //transfer input args to our member variables
@@ -3700,7 +3706,7 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine("}");
-         AddCSharpLine("");
+         AddCSharpLine();
 
          profile.End();
       }
@@ -3782,7 +3788,7 @@ namespace Detox.ScriptEditor
          --m_TabStack;
 
          AddCSharpLine("}");
-         AddCSharpLine("");
+         AddCSharpLine();
 
          profile.End();
       }
@@ -4263,14 +4269,14 @@ namespace Detox.ScriptEditor
          else
          {
 
-            AddCSharpLine("");
+            AddCSharpLine();
             AddCSharpLine("//Don't copy 'out' values back to the global variables because this was an auto generated nested node");
             AddCSharpLine("//and those values get set through an event which is called before the above method exited");
          }
 
          if (receiver.Outputs.Length > 0)
          {
-            AddCSharpLine("");
+            AddCSharpLine();
             AddCSharpLine("//save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested");
          }
 
@@ -4286,7 +4292,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine("");
+         AddCSharpLine();
          i = 0;
 
          //call anyone else connected to our outputs
@@ -4443,7 +4449,7 @@ namespace Detox.ScriptEditor
             --m_TabStack;
 
             AddCSharpLine("}");
-            AddCSharpLine("");
+            AddCSharpLine();
          }
          if (receiver is EntityEvent)
          {
@@ -4472,7 +4478,7 @@ namespace Detox.ScriptEditor
                --m_TabStack;
 
                AddCSharpLine("}");
-               AddCSharpLine("");
+               AddCSharpLine();
             }
          }
          if (receiver is ExternalConnection)
@@ -4513,7 +4519,7 @@ namespace Detox.ScriptEditor
             --m_TabStack;
 
             AddCSharpLine("}");
-            AddCSharpLine("");
+            AddCSharpLine();
          }
          if (receiver is LogicNode)
          {
@@ -4555,7 +4561,7 @@ namespace Detox.ScriptEditor
                --m_TabStack;
 
                AddCSharpLine("}");
-               AddCSharpLine("");
+               AddCSharpLine();
             }
 
             foreach (Plug input in logicNode.Inputs)
@@ -4594,7 +4600,7 @@ namespace Detox.ScriptEditor
                --m_TabStack;
 
                AddCSharpLine("}");
-               AddCSharpLine("");
+               AddCSharpLine();
             }
 
             foreach (string driven in logicNode.Drivens)
@@ -4635,14 +4641,17 @@ namespace Detox.ScriptEditor
          p.End();
       }
 
-      private void AddCSharpLine(string CSharpScript)
+      private void AddCSharpLine(string line = "")
       {
-         for (int i = 0; i < m_TabStack; i++)
+         if (line != string.Empty)
          {
-            m_CSharpString.Append("   ");
+            for (var i = 0; i < m_TabStack; i++)
+            {
+               m_CSharpString.Append("   ");
+            }
          }
 
-         m_CSharpString.Append(CSharpScript + "\r\n");
+         m_CSharpString.Append(line + "\r\n");
       }
 
       private string PreviousName(EntityNode entityNode)
@@ -5148,7 +5157,7 @@ namespace Detox.ScriptEditor
                         //copy the source node array into the input parameter array
                         //AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
                         //AddCSharpLine("index += properties.Length;");
-                        //AddCSharpLine("");
+                        //AddCSharpLine();
 
                         needsProperties = true;
                         //needsIndex = true;
@@ -5172,7 +5181,7 @@ namespace Detox.ScriptEditor
 
                         ////copy the source node value into the input parameter array
                         //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
-                        //AddCSharpLine("");
+                        //AddCSharpLine();
 
                         needsProperties = true;
 
@@ -5198,7 +5207,7 @@ namespace Detox.ScriptEditor
 
                      ////copy the source node value into the input parameter array
                      //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
-                     //AddCSharpLine("");
+                     //AddCSharpLine();
 
                      needsProperties = true;
 
@@ -5249,7 +5258,7 @@ namespace Detox.ScriptEditor
 
                            //AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
                            //AddCSharpLine("index += properties.Length;");
-                           //AddCSharpLine("");
+                           //AddCSharpLine();
 
                            needsProperties = true;
                            //needsIndex = true;
@@ -5272,7 +5281,7 @@ namespace Detox.ScriptEditor
 
                            ////copy the source node value into the input parameter array
                            //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
-                           //AddCSharpLine("");
+                           //AddCSharpLine();
 
                            needsProperties = true;
 
@@ -5303,7 +5312,7 @@ namespace Detox.ScriptEditor
                      }
 
                      AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
-                     AddCSharpLine("");
+                     AddCSharpLine();
                   }
 
                   //if any of those links is a property node
@@ -5467,7 +5476,7 @@ namespace Detox.ScriptEditor
             AddCSharpLine("{");
             ++m_TabStack;
             AddCSharpLine("if (true == m_Breakpoint) return true;");
-            AddCSharpLine("");
+            AddCSharpLine();
 
             AddCSharpLine("if (true == uScript_MasterComponent.FindBreakpoint(guid))");
             AddCSharpLine("{");
