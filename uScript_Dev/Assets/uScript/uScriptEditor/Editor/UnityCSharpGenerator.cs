@@ -60,6 +60,8 @@ namespace Detox.ScriptEditor
    {
       private const int MaxRelayCallCount = 1000;
 
+      private int pendingIndent;
+
       public Parameter[] ExternalParameters { get { return m_ExternalParameters.ToArray(); } }
       public Plug[] ExternalInputs { get { return m_ExternalInputs.ToArray(); } }
       public Plug[] ExternalOutputs { get { return m_ExternalOutputs.ToArray(); } }
@@ -4643,15 +4645,40 @@ namespace Detox.ScriptEditor
 
       private void AddCSharpLine(string line = "")
       {
+         if (this.pendingIndent > 0)
+         {
+            --this.pendingIndent;
+            this.AddCSharpLine("{");
+            ++this.m_TabStack;
+         }
+
          if (line != string.Empty)
          {
-            for (var i = 0; i < m_TabStack; i++)
+            for (var i = 0; i < this.m_TabStack; i++)
             {
-               m_CSharpString.Append("   ");
+               this.m_CSharpString.Append("   ");
             }
          }
 
-         m_CSharpString.Append(line + "\r\n");
+         this.m_CSharpString.Append(line + "\r\n");
+      }
+
+      private void AddCSharpLine_BeginBlock()
+      {
+         ++this.pendingIndent;
+      }
+
+      private void AddCSharpLine_EndBlock()
+      {
+         if (this.pendingIndent > 0)
+         {
+            --this.pendingIndent;
+         }
+         else
+         {
+            --this.m_TabStack;
+            this.AddCSharpLine("}");
+         }
       }
 
       private string PreviousName(EntityNode entityNode)
@@ -5065,210 +5092,134 @@ namespace Detox.ScriptEditor
       //write themselves to the input parameters for the node passed into this method
       private void SyncSlaveConnections(EntityNode node, Parameter[] parameters)
       {
-         AddCSharpLine("{");
-         ++m_TabStack;
-
-         //bool needsIndex = false;
-
-
-         foreach (Parameter parameter in parameters)
+         this.AddCSharpLine_BeginBlock();
          {
-            //bool needsPropertiesCleared = false;
-            //bool needsIndexCleared = false;
+            //bool needsIndex = false;
 
-            //string nestedCode = SetCode("");
-            AddCSharpLine("{");
-            ++m_TabStack;
-
-            bool needsProperties = false;
-            string currentCode = SetCode("");
-
-            //get all the links hooked to the input on this node
-            LinkNode[] links = FindLinksByDestination(node.Guid, parameter.Name);
-            if (links.Length == 0)
+            foreach (Parameter parameter in parameters)
             {
-               //no links? then they've specified
-               //a default parmaeter so make sure that is hooked up
-               SyncReferencedGameObject(node, parameter);
-            }
+               //bool needsPropertiesCleared = false;
+               //bool needsIndexCleared = false;
 
-            if (parameter.Type.Contains("[]"))
-            {
-               //if the input parameter is an array
-               //we need to place all source node values into the array
-               //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
+               //string nestedCode = SetCode("");
+               bool needsProperties = false;
 
-               foreach (LinkNode link in links)
+               this.AddCSharpLine_BeginBlock();
                {
-                  //AddCSharpLine("{");
-                  //++m_TabStack;
+                  string currentCode = SetCode("");
 
-                  EntityNode argNode = m_Script.GetNode(link.Source.Guid);
-
-                  //check to see if any source nodes are local variables
-                  if (argNode is LocalNode || argNode is ExternalConnection)
+                  //get all the links hooked to the input on this node
+                  LinkNode[] links = FindLinksByDestination(node.Guid, parameter.Name);
+                  if (links.Length == 0)
                   {
-                     Parameter value;
-
-                     if (argNode is LocalNode)
-                     {
-                        LocalNode localNode = (LocalNode)argNode;
-                        value = localNode.Value;
-                     }
-                     else
-                     {
-                        //external connections take on the type
-                        //they are connected to
-                        value = GetLowestCommonExternalParameter((ExternalConnection)argNode);
-                     }
-
-                     SyncReferencedGameObject(argNode, value);
-
-                     //if the local variable is an array then we need to copy the array
-                     //to the next available index of the input parameter
-
-                     if (value.Type.Contains("[]"))
-                     {
-                        if (value.Type == parameter.Type)
-                        {
-                           AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
-                        }
-                        else
-                        {
-                           AddCSharpLine("foreach (" + FormatType(value.Type.Replace("[]", "")) + " _fet in " + CSharpName(argNode) + ")");
-                           AddCSharpLine("{");
-                           ++m_TabStack;
-                              AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
-                           --m_TabStack;
-                           AddCSharpLine("}");
-                        }
-
-                        //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
-                        //AddCSharpLine("properties = " + CSharpName(argNode) + ";");
-
-                        //make sure our input array is large enough to hold the array we're copying into it
-                        //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)");
-                        //AddCSharpLine("{");
-                        //++m_TabStack;
-                        //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);");
-                        //--m_TabStack;
-                        //AddCSharpLine("}");
-
-                        //copy the source node array into the input parameter array
-                        //AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
-                        //AddCSharpLine("index += properties.Length;");
-                        //AddCSharpLine();
-
-                        needsProperties = true;
-                        //needsIndex = true;
-
-                        //needsPropertiesCleared = true;
-                        //needsIndexCleared = true;
-
-                     }
-                     else
-                     {
-                        AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
-                        //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
-
-                        ////make sure our input array is large enough to hold another value
-                        //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
-                        //AddCSharpLine("{");
-                        //++m_TabStack;
-                        //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
-                        //--m_TabStack;
-                        //AddCSharpLine("}");
-
-                        ////copy the source node value into the input parameter array
-                        //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
-                        //AddCSharpLine();
-
-                        needsProperties = true;
-
-                        //needsIndex = true;
-                        //needsIndexCleared = true;
-                     }
+                     //no links? then they've specified
+                     //a default parmaeter so make sure that is hooked up
+                     SyncReferencedGameObject(node, parameter);
                   }
 
-                  //check to see if any source nodes are local variables
-                  if (argNode is OwnerConnection)
+                  if (parameter.Type.Contains("[]"))
                   {
+                     //if the input parameter is an array
+                     //we need to place all source node values into the array
                      //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
-                     AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
-                     //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
 
-                     ////make sure our input array is large enough to hold another value
-                     //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
-                     //AddCSharpLine("{");
-                     //++m_TabStack;
-                     //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
-                     //--m_TabStack;
-                     //AddCSharpLine("}");
-
-                     ////copy the source node value into the input parameter array
-                     //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
-                     //AddCSharpLine();
-
-                     needsProperties = true;
-
-                     //needsIndex = true;
-                     //needsIndexCleared = true;
-                  }
-
-                  //check to see if any source nodes are property nodes
-                  else if (argNode is EntityProperty)
-                  {
-                     EntityProperty entityProperty = (EntityProperty)argNode;
-
-                     if (true == entityProperty.Parameter.Output)
+                     foreach (LinkNode link in links)
                      {
-                        SyncReferencedGameObject(argNode, entityProperty.Parameter);
+                        //AddCSharpLine("{");
+                        //++m_TabStack;
 
-                        //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
+                        EntityNode argNode = m_Script.GetNode(link.Source.Guid);
 
-                        //if the property variable is an array then we need to copy the array
-                        //to the next available index of the input parameter
-                        if (entityProperty.Parameter.Type.Contains("[]"))
+                        //check to see if any source nodes are local variables
+                        if (argNode is LocalNode || argNode is ExternalConnection)
                         {
-                           if (entityProperty.Parameter.Type == parameter.Type)
+                           Parameter value;
+
+                           if (argNode is LocalNode)
                            {
-                              AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                              LocalNode localNode = (LocalNode)argNode;
+                              value = localNode.Value;
                            }
                            else
                            {
-                              AddCSharpLine("foreach (" + FormatType(entityProperty.Parameter.Type.Replace("[]", "")) + " _fet in " + CSharpRefreshGetPropertyDeclaration(entityProperty) + ")");
-                              AddCSharpLine("{");
-                              ++m_TabStack;
-                                 AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
-                              --m_TabStack;
-                              AddCSharpLine("}");
+                              //external connections take on the type
+                              //they are connected to
+                              value = GetLowestCommonExternalParameter((ExternalConnection)argNode);
                            }
-                           
-                           
-                           //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
-                           //AddCSharpLine("properties = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
 
-                           //make sure our input array is large enough to hold the array we're copying into it
-                           //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)");
-                           //AddCSharpLine("{");
-                           //++m_TabStack;
-                           //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);");
-                           //--m_TabStack;
-                           //AddCSharpLine("}");
+                           SyncReferencedGameObject(argNode, value);
 
-                           //AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
-                           //AddCSharpLine("index += properties.Length;");
-                           //AddCSharpLine();
+                           //if the local variable is an array then we need to copy the array
+                           //to the next available index of the input parameter
 
-                           needsProperties = true;
-                           //needsIndex = true;
-                           //needsPropertiesCleared = true;
-                           //needsIndexCleared = true;
+                           if (value.Type.Contains("[]"))
+                           {
+                              if (value.Type == parameter.Type)
+                              {
+                                 AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
+                              }
+                              else
+                              {
+                                 AddCSharpLine("foreach (" + FormatType(value.Type.Replace("[]", "")) + " _fet in " + CSharpName(argNode) + ")");
+                                 this.AddCSharpLine_BeginBlock();
+                                 {
+                                    AddCSharpLine("properties.Add((" + FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
+                                 }
+                                 this.AddCSharpLine_EndBlock();
+                              }
 
+                              //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+                              //AddCSharpLine("properties = " + CSharpName(argNode) + ";");
+
+                              //make sure our input array is large enough to hold the array we're copying into it
+                              //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)");
+                              //AddCSharpLine("{");
+                              //++m_TabStack;
+                              //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);");
+                              //--m_TabStack;
+                              //AddCSharpLine("}");
+
+                              //copy the source node array into the input parameter array
+                              //AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
+                              //AddCSharpLine("index += properties.Length;");
+                              //AddCSharpLine();
+
+                              needsProperties = true;
+                              //needsIndex = true;
+
+                              //needsPropertiesCleared = true;
+                              //needsIndexCleared = true;
+
+                           }
+                           else
+                           {
+                              AddCSharpLine("properties.Add((" + FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
+                              //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+
+                              ////make sure our input array is large enough to hold another value
+                              //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
+                              //AddCSharpLine("{");
+                              //++m_TabStack;
+                              //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
+                              //--m_TabStack;
+                              //AddCSharpLine("}");
+
+                              ////copy the source node value into the input parameter array
+                              //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
+                              //AddCSharpLine();
+
+                              needsProperties = true;
+
+                              //needsIndex = true;
+                              //needsIndexCleared = true;
+                           }
                         }
-                        else
+
+                        //check to see if any source nodes are local variables
+                        if (argNode is OwnerConnection)
                         {
-                           AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                           //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
+                           AddCSharpLine("properties.Add((" + FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
                            //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
 
                            ////make sure our input array is large enough to hold another value
@@ -5280,7 +5231,7 @@ namespace Detox.ScriptEditor
                            //AddCSharpLine("}");
 
                            ////copy the source node value into the input parameter array
-                           //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
+                           //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
                            //AddCSharpLine();
 
                            needsProperties = true;
@@ -5288,84 +5239,155 @@ namespace Detox.ScriptEditor
                            //needsIndex = true;
                            //needsIndexCleared = true;
                         }
+
+                           //check to see if any source nodes are property nodes
+                        else if (argNode is EntityProperty)
+                        {
+                           EntityProperty entityProperty = (EntityProperty)argNode;
+
+                           if (true == entityProperty.Parameter.Output)
+                           {
+                              SyncReferencedGameObject(argNode, entityProperty.Parameter);
+
+                              //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
+
+                              //if the property variable is an array then we need to copy the array
+                              //to the next available index of the input parameter
+                              if (entityProperty.Parameter.Type.Contains("[]"))
+                              {
+                                 if (entityProperty.Parameter.Type == parameter.Type)
+                                 {
+                                    AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                                 }
+                                 else
+                                 {
+                                    AddCSharpLine("foreach (" + FormatType(entityProperty.Parameter.Type.Replace("[]", "")) + " _fet in " + CSharpRefreshGetPropertyDeclaration(entityProperty) + ")");
+                                    this.AddCSharpLine_BeginBlock();
+                                    {
+                                       AddCSharpLine("properties.Add((" + FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
+                                    }
+                                    this.AddCSharpLine_EndBlock();
+                                 }
+
+                                 //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+                                 //AddCSharpLine("properties = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
+
+                                 //make sure our input array is large enough to hold the array we're copying into it
+                                 //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)");
+                                 //AddCSharpLine("{");
+                                 //++m_TabStack;
+                                 //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);");
+                                 //--m_TabStack;
+                                 //AddCSharpLine("}");
+
+                                 //AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
+                                 //AddCSharpLine("index += properties.Length;");
+                                 //AddCSharpLine();
+
+                                 needsProperties = true;
+                                 //needsIndex = true;
+                                 //needsPropertiesCleared = true;
+                                 //needsIndexCleared = true;
+
+                              }
+                              else
+                              {
+                                 AddCSharpLine("properties.Add((" + FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                                 //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+
+                                 ////make sure our input array is large enough to hold another value
+                                 //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
+                                 //AddCSharpLine("{");
+                                 //++m_TabStack;
+                                 //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
+                                 //--m_TabStack;
+                                 //AddCSharpLine("}");
+
+                                 ////copy the source node value into the input parameter array
+                                 //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
+                                 //AddCSharpLine();
+
+                                 needsProperties = true;
+
+                                 //needsIndex = true;
+                                 //needsIndexCleared = true;
+                              }
+                           }
+                        }
+
+                        //--m_TabStack;
+                        //AddCSharpLine("}");
                      }
                   }
-
-                  //--m_TabStack;
-                  //AddCSharpLine("}");
-               }
-            }
-            else
-            {
-               foreach (LinkNode link in links)
-               {
-                  EntityNode argNode = m_Script.GetNode(link.Source.Guid);
-
-                  //if any of those links is a local node
-                  //we need to write the line for the property to refresh
-                  if (argNode is LocalNode || argNode is OwnerConnection || argNode is ExternalConnection)
+                  else
                   {
-                     if (argNode is LocalNode)
+                     foreach (LinkNode link in links)
                      {
-                        LocalNode localNode = (LocalNode)argNode;
-                        SyncReferencedGameObject(localNode, localNode.Value);
-                     }
+                        EntityNode argNode = m_Script.GetNode(link.Source.Guid);
 
-                     AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
-                     AddCSharpLine();
+                        //if any of those links is a local node
+                        //we need to write the line for the property to refresh
+                        if (argNode is LocalNode || argNode is OwnerConnection || argNode is ExternalConnection)
+                        {
+                           if (argNode is LocalNode)
+                           {
+                              LocalNode localNode = (LocalNode)argNode;
+                              SyncReferencedGameObject(localNode, localNode.Value);
+                           }
+
+                           AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
+                           AddCSharpLine();
+                        }
+
+                           //if any of those links is a property node
+                        //we need to write the line for the property to refresh
+                        else if (argNode is EntityProperty)
+                        {
+                           EntityProperty entityProperty = (EntityProperty)argNode;
+
+                           if (true == entityProperty.Parameter.Output)
+                           {
+                              SyncReferencedGameObject(entityProperty, entityProperty.Parameter);
+
+                              // If our node is an entity property, we do nothing, because
+                              // it will be refreshed automatically when its used
+                              if (node is EntityProperty)
+                              {
+                              } // do nothing
+                              else
+                                 //otherwise we fill the node with a new value
+                                 AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
+                           }
+                        }
+                     }
                   }
 
-                  //if any of those links is a property node
-                  //we need to write the line for the property to refresh
-                  else if (argNode is EntityProperty)
-                  {
-                     EntityProperty entityProperty = (EntityProperty)argNode; 
+                  string newCode = SetCode(currentCode);
 
-                     if (true == entityProperty.Parameter.Output)
-                     {
-                        SyncReferencedGameObject(entityProperty, entityProperty.Parameter);
+                  if (true == needsProperties)
+                     AddCSharpLine("List<" + FormatType(parameter.Type.Replace("[]", "")) + "> properties = new List<" + FormatType(parameter.Type.Replace("[]", "")) + ">();");
 
-                        //If our node is an entity property
-                        //we do nothing because it will refreshed automatically when its used
-                        if (node is EntityProperty) 
-                        {} // do nothing
-                        else
-                           //otherwise we fill the node with a new value
-                           AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
-                     }
-                  }
+                  m_CSharpString.Append(newCode);
+
+                  if (true == needsProperties)
+                     AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
                }
+               this.AddCSharpLine_EndBlock();
+
+               needsProperties = false;
             }
 
+            //string newCode = SetCode(currentCode);
 
-            string newCode = SetCode(currentCode);
+            //if (newCode != "")
+            //{
+            //   if (true == needsIndex) AddCSharpLine("int index;");
+            //   if (true == needsProperties) AddCSharpLine("System.Array properties;");
 
-            if (true == needsProperties)
-               AddCSharpLine("List<" + FormatType(parameter.Type.Replace("[]", "")) + "> properties = new List<" + FormatType(parameter.Type.Replace("[]", "")) + ">();");
-
-            m_CSharpString.Append(newCode);
-
-            if (true == needsProperties)
-               AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
-
-            --m_TabStack;
-            AddCSharpLine("}");
-
-            needsProperties = false;
+            //   m_CSharpString += newCode;
+            //}
          }
-
-         //string newCode = SetCode(currentCode);
-
-         //if (newCode != "")
-         //{
-         //   if (true == needsIndex) AddCSharpLine("int index;");
-         //   if (true == needsProperties) AddCSharpLine("System.Array properties;");
-
-         //   m_CSharpString += newCode;
-         //}
-
-         --m_TabStack;
-         AddCSharpLine("}");
+         this.AddCSharpLine_EndBlock();
       }
 
       private void SyncReferencedGameObject(EntityNode node, Parameter parameter)
