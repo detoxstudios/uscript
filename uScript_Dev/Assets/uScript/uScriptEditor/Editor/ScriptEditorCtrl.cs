@@ -3254,9 +3254,10 @@ namespace Detox.ScriptEditor
             case "System.Boolean":  tokens[0] = "bool";     break;
             case "System.Char":     tokens[0] = "char";     break;
             case "System.String":   tokens[0] = "string";   break;
+            case "System.Object":   tokens[0] = "object";   break;
          }
 
-         return String.Join("[", tokens);
+         return string.Join("[", tokens);
       }
 
       public static string GetMethodSignature(EntityNode node)
