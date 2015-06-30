@@ -104,6 +104,7 @@ public sealed partial class uScript : EditorWindow
    private Rect helpButtonRect;
    private Rect fileButtonRect;
    private Rect viewButtonRect;
+   private uScript_UndoObject UndoComponent = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
 
    private Hashtable m_EntityTypeHash = null;
    private EntityDesc[] m_EntityTypes = null;
@@ -275,17 +276,6 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   //IMPORTANT - THIS CANNOT BE CACHED
-   //BECAUSE WE END UP WITH STALE VERSIONS AS THE UNITY UNDO STACK IS MODIFIED
-   public static uScript_UndoComponent UndoComponent
-   {
-      get
-      {
-         var uScriptMaster = GetMasterGameObject();
-         return uScriptMaster.GetComponent<uScript_UndoComponent>();
-      }
-   }
-
    // IMPORTANT - THIS CANNOT BE CACHED
    // BECAUSE WE END UP WITH STALE VERSIONS
    public static uScript_MasterComponent MasterComponent
@@ -379,7 +369,6 @@ public sealed partial class uScript : EditorWindow
       }
 
       EnsureMasterComponentExists(uScriptMaster);
-      EnsureUndoComponentExists(uScriptMaster);
       return uScriptMaster;
    }
 
@@ -394,20 +383,6 @@ public sealed partial class uScript : EditorWindow
          string.Format("Master Component added to master GameObject ({0})", uScriptRuntimeConfig.MasterObjectName),
          uScriptDebug.Type.Debug);
       uScriptMaster.AddComponent<uScript_MasterComponent>();
-   }
-
-   private static void EnsureUndoComponentExists(GameObject uScriptMaster)
-   {
-      if (uScriptMaster.GetComponent<uScript_UndoComponent>() != null)
-      {
-         return;
-      }
-
-      uScriptDebug.Log(
-         string.Format("Undo Component added to the master GameObject ({0})", uScriptRuntimeConfig.MasterObjectName),
-         uScriptDebug.Type.Debug);
-      uScriptMaster.AddComponent<uScript_UndoComponent>();
-      Instance.ClearChangeStack();
    }
 
    public bool AllowKeyInput()
@@ -964,6 +939,8 @@ public sealed partial class uScript : EditorWindow
    {
       if (null != UndoComponent)
       {
+         Debug.Log("Registering Undo");
+
          string base64 = p.ToBase64();
 
          UndoComponent.UndoNumber = m_UndoNumber;
@@ -1262,6 +1239,7 @@ public sealed partial class uScript : EditorWindow
    {
       //if their number is greater then it was a redo
       //so apply the patch
+      
       if (UndoComponent.UndoNumber > m_UndoNumber)
       {
          //for some reason we're going out of range when starting Unity with uScript open
@@ -5217,7 +5195,7 @@ public sealed partial class uScript : EditorWindow
 
             //ignore our logic scripts, they are handled separately
             if (typeof(uScriptLogic).IsAssignableFrom(o.GetType())) continue;
-            if (typeof(uScript_UndoComponent).IsAssignableFrom(o.GetType())) continue;
+            if (typeof(uScript_UndoObject).IsAssignableFrom(o.GetType())) continue;
 
             uniqueObjects[o.GetType().ToString()] = o.GetType();
          }
