@@ -7,6 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if !RELEASE
+#define UNITY_STORE_BASIC
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

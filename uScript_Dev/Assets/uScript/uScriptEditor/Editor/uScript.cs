@@ -105,13 +105,9 @@ public sealed partial class uScript : EditorWindow
    private Rect fileButtonRect;
    private Rect viewButtonRect;
 
-#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
-
-#else
    private Hashtable m_EntityTypeHash = null;
    private EntityDesc[] m_EntityTypes = null;
    private string[] m_SzEntityTypes = null;
-#endif
 
    private LogicNode[] m_LogicTypes = null;
    private string[] m_SzLogicTypes = null;
@@ -3937,12 +3933,8 @@ public sealed partial class uScript : EditorWindow
 
    private void ClearEntityTypes()
    {
-#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
-       
-#else
       m_EntityTypes = null;
       m_SzEntityTypes = null;
-#endif
    }
 
    private void ClearLogicTypes()
@@ -4863,7 +4855,9 @@ public sealed partial class uScript : EditorWindow
       MethodInfo[] methodInfos = type.GetMethods();
       EventInfo[] eventInfos = type.GetEvents();
       PropertyInfo[] propertyInfos = type.GetProperties();
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
       FieldInfo[] fieldInfos = type.GetFields();
+#endif
 
       List<EntityMethod> entityMethods = new List<EntityMethod>();
 
@@ -5102,6 +5096,7 @@ public sealed partial class uScript : EditorWindow
          uScript.Instance.AddType(p.PropertyType);
       }
 
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
       foreach (FieldInfo f in fieldInfos)
       {
          if (false == f.IsPublic) continue;
@@ -5112,7 +5107,7 @@ public sealed partial class uScript : EditorWindow
 
          uScript.Instance.AddType(f.FieldType);
       }
-
+#endif
       entityDesc.Properties = entityProperties.ToArray();
 
       entityDescs.Add(entityDesc);
@@ -5125,12 +5120,6 @@ public sealed partial class uScript : EditorWindow
 
    private EntityDesc[] PopulateEntityTypes(string[] requiredTypes)
    {
-
-#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
-
-       return new EntityDesc[0];
-
-#else
       if (this.m_EntityTypes != null)
       {
          if (null != requiredTypes)
@@ -5160,6 +5149,7 @@ public sealed partial class uScript : EditorWindow
 
       List<EntityDesc> entityDescs = new List<EntityDesc>();
 
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
       foreach (MethodInfo m in typeof(UnityEngine.Behaviour).GetMethods(BindingFlags.DeclaredOnly))
       {
          baseMethods[m.Name] = m.Name;
@@ -5204,18 +5194,22 @@ public sealed partial class uScript : EditorWindow
       {
          baseProperties[p.Name] = p.Name;
       }
+#endif
 
       if (this.m_SzEntityTypes == null)
       {
          uScriptDebug.Log("Reparsing Entity Types", uScriptDebug.Type.Debug);
 
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
          List<UnityEngine.Object> allObjects = new List<UnityEngine.Object>(FindObjectsOfType(typeof(UnityEngine.Object)));
+#endif
          Dictionary<string, Type> uniqueObjects = new Dictionary<string, Type>();
 
          Dictionary<Type, Type> eventNodes = new Dictionary<Type, Type>();
          GatherDerivedTypes(eventNodes, uScriptConfig.ConstantPaths.RuntimeNodes, typeof(uScriptEvent));
          GatherDerivedTypes(eventNodes, Preferences.UserNodes, typeof(uScriptEvent));
 
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
          foreach (UnityEngine.Object o in allObjects)
          {
             //don't ignore uScriptCode because we want to reflect
@@ -5227,12 +5221,14 @@ public sealed partial class uScript : EditorWindow
 
             uniqueObjects[o.GetType().ToString()] = o.GetType();
          }
+#endif
 
          foreach (Type t in eventNodes.Values)
          {
             uniqueObjects[t.ToString()] = t;
          }
 
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
          string[] userTypes = UserTypes;
 
          foreach (string s in userTypes)
@@ -5313,6 +5309,7 @@ public sealed partial class uScript : EditorWindow
 
          uniqueObjects[typeof(Math).ToString()] = typeof(Math);
          uniqueObjects[typeof(UnityEngine.Mathf).ToString()] = typeof(UnityEngine.Mathf);
+#endif
 
          m_SzEntityTypes = new string[uniqueObjects.Values.Count];
 
@@ -5388,7 +5385,6 @@ public sealed partial class uScript : EditorWindow
       }
 
       return m_EntityTypes;
-#endif
    }
 
    public string AutoAssignInstance(EntityNode entityNode)
