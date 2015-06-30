@@ -54,8 +54,7 @@ public class uScriptBuildScript : MonoBehaviour
 
       // Add required components
       go.AddComponent<uScript_MasterComponent>();
-      go.AddComponent<uScript_UndoComponent>();
-
+      
       Selection.activeGameObject = null;
 
       return true;
