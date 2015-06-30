@@ -4829,7 +4829,15 @@ namespace Detox.ScriptEditor
             // blocking checkout of versioned file, if necessary
             if (UnityEditor.VersionControl.Provider.isActive)
             {
-               UnityEditor.VersionControl.Provider.Checkout(binaryFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+               UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(binaryFile);
+               if (UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
+               {
+                  UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+               }
+               else if (UnityEditor.VersionControl.Provider.AddIsValid(new UnityEditor.VersionControl.AssetList() { asset }))
+               {
+                  UnityEditor.VersionControl.Provider.Add(asset, false);
+               }
             }
 #endif
 
@@ -4865,7 +4873,15 @@ namespace Detox.ScriptEditor
             // blocking checkout of versioned file, if necessary
             if (UnityEditor.VersionControl.Provider.isActive)
             {
-               UnityEditor.VersionControl.Provider.Checkout(binaryFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+               UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(binaryFile);
+               if (UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
+               {
+                  UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+               }
+               else if (UnityEditor.VersionControl.Provider.AddIsValid(new UnityEditor.VersionControl.AssetList() { asset }))
+               {
+                  UnityEditor.VersionControl.Provider.Add(asset, false);
+               }
             }
 #endif
 
@@ -4893,7 +4909,15 @@ namespace Detox.ScriptEditor
             // blocking checkout of versioned file, if necessary
             if (UnityEditor.VersionControl.Provider.isActive)
             {
-               UnityEditor.VersionControl.Provider.Checkout(wrapperFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+               UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(wrapperFile);
+               if (UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
+               {
+                  UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+               }
+               else if (UnityEditor.VersionControl.Provider.AddIsValid(new UnityEditor.VersionControl.AssetList() { asset }))
+               {
+                  UnityEditor.VersionControl.Provider.Add(asset, false);
+               }
             }
 #endif
 
@@ -4920,7 +4944,15 @@ namespace Detox.ScriptEditor
             // blocking checkout of versioned file, if necessary
             if (UnityEditor.VersionControl.Provider.isActive)
             {
-               UnityEditor.VersionControl.Provider.Checkout(logicFile, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+               UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(logicFile);
+               if (UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
+               {
+                  UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Asset).Wait();
+               }
+               else if (UnityEditor.VersionControl.Provider.AddIsValid(new UnityEditor.VersionControl.AssetList() { asset }))
+               {
+                  UnityEditor.VersionControl.Provider.Add(asset, false);
+               }
             }
 #endif
 
