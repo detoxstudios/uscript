@@ -3254,10 +3254,9 @@ namespace Detox.ScriptEditor
             case "System.Boolean":  tokens[0] = "bool";     break;
             case "System.Char":     tokens[0] = "char";     break;
             case "System.String":   tokens[0] = "string";   break;
-            //case "System.Object":   tokens[0] = "object";   break; // Need to test to make sure enabling this doesn't break anything. May also want to update uScriptConfig.cs to add the alias there, as well.
          }
 
-         return string.Join("[", tokens);
+         return String.Join("[", tokens);
       }
 
       public static string GetMethodSignature(EntityNode node)

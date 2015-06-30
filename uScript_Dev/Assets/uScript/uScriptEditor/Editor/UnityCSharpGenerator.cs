@@ -1,21 +1,13 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnityCSharpGenerator.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
-// </copyright>
-// <summary>
-//   Defines the Profile type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Text;
+using UnityEngine;
+using UnityEditor;
 
 namespace Detox.ScriptEditor
 {
-   using System;
-   using System.Collections;
-   using System.Collections.Generic;
-   using System.Text;
-
-   using JetBrains.Annotations;
-
    public class Profile
    {
       static int m_Tab;
@@ -61,8 +53,6 @@ namespace Detox.ScriptEditor
    public class UnityCSharpGenerator
    {
       private const int MaxRelayCallCount = 1000;
-
-      private int pendingIndent;
 
       public Parameter[] ExternalParameters { get { return m_ExternalParameters.ToArray(); } }
       public Plug[] ExternalInputs { get { return m_ExternalInputs.ToArray(); } }
@@ -587,6 +577,7 @@ namespace Detox.ScriptEditor
          m_GenerateDebugInfo = false;
          m_CSharpString = new StringBuilder();
          m_TabStack = 0;
+
          m_Script = null;
 
          if (null != script)
@@ -596,181 +587,193 @@ namespace Detox.ScriptEditor
             Preprocess(false);
 
             DeclareNamespaces();
-            AddCSharpLine();
+            AddCSharpLine("");
+            AddCSharpLine("// This is the component script that you should assign to GameObjects to use this graph on them. Use the uScript/Graphs section of Unity's \"Component\" menu to assign this graph to a selected GameObject.");
+            AddCSharpLine("");
 
-            AddCSharpLine("// This is the component script that you should assign to GameObjects to use this graph on them.");
-            AddCSharpLine("// Use the uScript/Graphs section of Unity's \"Component\" menu to assign this graph to a selected");
-            AddCSharpLine("// GameObject.");
-            AddCSharpLine();
-
-            AddCSharpLine("[AddComponentMenu(\"uScript/Graphs/{0}\")]", logicClassName);
+            AddCSharpLine("[AddComponentMenu(\"uScript/Graphs/" + logicClassName + "\")]");
             AddCSharpLine("public class " + System.IO.Path.GetFileNameWithoutExtension(script.Name) + uScriptConfig.Files.GeneratedComponentExtension + " : uScriptCode");
-            this.AddCSharpLine_BeginBlock();
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            AddCSharpLine("#pragma warning disable 414");
+            AddCSharpLine("public " + logicClassName + " ExposedVariables = new " + logicClassName + "( ); ");
+            AddCSharpLine("#pragma warning restore 414");
+
+            AddCSharpLine("");
+
+            //any named variables using the "Make Public" property should be also marked as public properties
+            //so they can be get/set by other uscripts
+            foreach (LocalNode node in m_Script.UniqueLocals)
             {
-               this.AddCSharpLine_ConditionalDefine(
-                  "#pragma warning disable 414 // private field assigned but not used");
-               this.AddCSharpLine("public {0} ExposedVariables = new {0}();", logicClassName);
-               this.AddCSharpLine_ConditionalDefine("#pragma warning restore 414");
-               this.AddCSharpLine();
-
-               //any named variables using the "Make Public" property should be also marked as public properties
-               //so they can be get/set by other uscripts
-               foreach (LocalNode node in m_Script.UniqueLocals)
+               if ("true" == node.Externaled.Default)
                {
-                  if ("true" == node.Externaled.Default)
-                  {
-                     AddCSharpLine("public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return ExposedVariables." + CSharpName(node) + "; } set { ExposedVariables." + CSharpName(node) + " = value; } } ");
-                  }
+                  AddCSharpLine("public " + FormatType(node.Value.Type) + " " + CSharpName(node) + " { get { return ExposedVariables." + CSharpName(node) + "; } set { ExposedVariables." + CSharpName(node) + " = value; } } ");
                }
-
-               AddCSharpLine("void Awake()");
-               this.AddCSharpLine_BeginBlock();
-               {
-                  if (false == stubCode)
-                  {
-                     this.AddCSharpLine_ConditionalDefine("#if !UNITY_FLASH");
-                     {
-                        AddCSharpLine("useGUILayout = {0}", this.NeedsGuiLayout() ? "true;" : "false;");
-                     }
-                     this.AddCSharpLine_ConditionalDefine("#endif");
-                     this.AddCSharpLine();
-
-                     AddCSharpLine("ExposedVariables.Awake();");
-
-                     //AddCSharpLine( "ExposedVariables = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
-                     AddCSharpLine("ExposedVariables.SetParent(this.gameObject);");
-
-                     string version = uScript_MasterComponent.Version;
-                     AddCSharpLine("if (uScript_MasterComponent.Version != \"{0}\")", version);
-                     this.AddCSharpLine_BeginBlock();
-                     {
-                        AddCSharpLine(
-                           "uScriptDebug.Log(\"The generated code is not compatible with your current uScript Runtime \" + uScript_MasterComponent.Version, uScriptDebug.Type.Error);");
-                        AddCSharpLine("ExposedVariables = null;");
-                        AddCSharpLine("Debug.Break();");
-                     }
-                     this.AddCSharpLine_EndBlock();
-                  }
-               }
-               this.AddCSharpLine_EndBlock();
-               this.AddCSharpLine();
-
-               AddCSharpLine("void Start()");
-               this.AddCSharpLine_BeginBlock();
-               {
-                  if (false == stubCode)
-                  {
-                     AddCSharpLine("ExposedVariables.Start();");
-                  }
-               }
-               this.AddCSharpLine_EndBlock();
-               this.AddCSharpLine();
-
-               AddCSharpLine("void OnEnable()");
-               this.AddCSharpLine_BeginBlock();
-               {
-                  if (false == stubCode)
-                  {
-                     AddCSharpLine("ExposedVariables.OnEnable();");
-                  }
-               }
-               this.AddCSharpLine_EndBlock();
-               this.AddCSharpLine();
-
-               AddCSharpLine("void OnDisable()");
-               this.AddCSharpLine_BeginBlock();
-               {
-                  if (false == stubCode)
-                  {
-                     AddCSharpLine("ExposedVariables.OnDisable();");
-                  }
-               }
-               this.AddCSharpLine_EndBlock();
-               this.AddCSharpLine();
-
-               // always do update, because the unity hooks and "drivens" are validated there
-               AddCSharpLine("void Update()");
-               this.AddCSharpLine_BeginBlock();
-               {
-                  if (false == stubCode)
-                  {
-                     AddCSharpLine("ExposedVariables.Update();");
-                  }
-               }
-               this.AddCSharpLine_EndBlock();
-               this.AddCSharpLine();
-
-               AddCSharpLine("void OnDestroy()");
-               this.AddCSharpLine_BeginBlock();
-               {
-                  if (false == stubCode)
-                  {
-                     AddCSharpLine("ExposedVariables.OnDestroy();");
-                  }
-               }
-               this.AddCSharpLine_EndBlock();
-               this.AddCSharpLine();
-
-               if (true == NeedsMethod("LateUpdate"))
-               {
-                  AddCSharpLine("void LateUpdate()");
-                  this.AddCSharpLine_BeginBlock();
-                  {
-                     if (false == stubCode)
-                     {
-                        AddCSharpLine("ExposedVariables.LateUpdate();");
-                     }
-                  }
-                  this.AddCSharpLine_EndBlock();
-                  this.AddCSharpLine();
-               }
-
-               if (true == NeedsMethod("FixedUpdate"))
-               {
-                  AddCSharpLine("void FixedUpdate()");
-                  this.AddCSharpLine_BeginBlock();
-                  {
-                     if (false == stubCode)
-                     {
-                        AddCSharpLine("ExposedVariables.FixedUpdate();");
-                     }
-                  }
-                  this.AddCSharpLine_EndBlock();
-                  this.AddCSharpLine();
-               }
-
-               if (this.NeedsMethod("OnGUI"))
-               {
-                  AddCSharpLine("void OnGUI()");
-                  this.AddCSharpLine_BeginBlock();
-                  {
-                     if (false == stubCode)
-                     {
-                        AddCSharpLine("ExposedVariables.OnGUI();");
-                     }
-                  }
-                  this.AddCSharpLine_EndBlock();
-                  this.AddCSharpLine();
-               }
-
-               this.AddCSharpLine_ConditionalDefine("#if UNITY_EDITOR");
-               {
-                  AddCSharpLine("void OnDrawGizmos()");
-                  this.AddCSharpLine_BeginBlock();
-                  {
-                     if (false == stubCode)
-                     {
-                        DefineDrawGizmos();
-                     }
-                  }
-                  this.AddCSharpLine_EndBlock();
-               }
-               this.AddCSharpLine_ConditionalDefine("#endif");
             }
-            this.AddCSharpLine_EndBlock();
+
+            AddCSharpLine("");
+
+            AddCSharpLine("void Awake( )");
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
+            {
+               AddCSharpLine("#if !(UNITY_FLASH)");
+               AddCSharpLine("useGUILayout = " + (NeedsGuiLayout() ? "true;" : "false;"));
+               AddCSharpLine("#endif");
+               AddCSharpLine("ExposedVariables.Awake( );");
+
+               //AddCSharpLine( "ExposedVariables = ScriptableObject.CreateInstance(typeof(" + logicClassName + ")) as " + logicClassName + ";" );
+               AddCSharpLine("ExposedVariables.SetParent( this.gameObject );");
+
+               string version = uScript_MasterComponent.Version;
+
+               AddCSharpLine("if ( \"" + version + "\" != uScript_MasterComponent.Version )");
+               AddCSharpLine("{");
+               ++m_TabStack;
+               AddCSharpLine("uScriptDebug.Log( \"The generated code is not compatible with your current uScript Runtime \" + uScript_MasterComponent.Version, uScriptDebug.Type.Error );");
+               AddCSharpLine("ExposedVariables = null;");
+               AddCSharpLine("UnityEngine.Debug.Break();");
+               --m_TabStack;
+               AddCSharpLine("}");
+            }
+
+            --m_TabStack;
+            AddCSharpLine("}");
+
+            AddCSharpLine("void Start( )");
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
+            {
+               AddCSharpLine("ExposedVariables.Start( );");
+            }
+
+            --m_TabStack;
+            AddCSharpLine("}");
+
+            AddCSharpLine("void OnEnable( )");
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
+            {
+               AddCSharpLine("ExposedVariables.OnEnable( );");
+            }
+
+            --m_TabStack;
+            AddCSharpLine("}");
+
+            AddCSharpLine("void OnDisable( )");
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
+            {
+               AddCSharpLine("ExposedVariables.OnDisable( );");
+            }
+
+            --m_TabStack;
+            AddCSharpLine("}");
+
+
+            //always do update because the unity hooks
+            //and drivens are valdiated there
+            AddCSharpLine("void Update( )");
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
+            {
+               AddCSharpLine("ExposedVariables.Update( );");
+            }
+
+            --m_TabStack;
+            AddCSharpLine("}");
+
+            AddCSharpLine("void OnDestroy( )");
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
+            {
+               AddCSharpLine("ExposedVariables.OnDestroy( );");
+            }
+
+            --m_TabStack;
+            AddCSharpLine("}");
+
+            if (true == NeedsMethod("LateUpdate"))
+            {
+               AddCSharpLine("void LateUpdate( )");
+               AddCSharpLine("{");
+               ++m_TabStack;
+
+               if (false == stubCode)
+               {
+                  AddCSharpLine("ExposedVariables.LateUpdate( );");
+               }
+
+               --m_TabStack;
+               AddCSharpLine("}");
+            }
+
+            if (true == NeedsMethod("FixedUpdate"))
+            {
+               AddCSharpLine("void FixedUpdate( )");
+               AddCSharpLine("{");
+               ++m_TabStack;
+
+               if (false == stubCode)
+               {
+                  AddCSharpLine("ExposedVariables.FixedUpdate( );");
+               }
+
+               --m_TabStack;
+               AddCSharpLine("}");
+            }
+
+            if (true == NeedsMethod("OnGUI"))
+            {
+               AddCSharpLine("void OnGUI( )");
+               AddCSharpLine("{");
+               ++m_TabStack;
+
+               if (false == stubCode)
+               {
+                  AddCSharpLine("ExposedVariables.OnGUI( );");
+               }
+
+               --m_TabStack;
+               AddCSharpLine("}");
+            }
+
+            AddCSharpLine("#if UNITY_EDITOR");
+            ++m_TabStack;
+
+            AddCSharpLine("void OnDrawGizmos( )");
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
+            {
+               DefineDrawGizmos();
+            }
+
+            --m_TabStack;
+            AddCSharpLine("}");
+
+            --m_TabStack;
+            AddCSharpLine("#endif");
+
+            --m_TabStack;
+            AddCSharpLine("}");
          }
 
-         p.End();
+         p.End( );
 
          return m_CSharpString.ToString();
       }
@@ -865,7 +868,7 @@ namespace Detox.ScriptEditor
          m_ExternalInputs = new List<Plug>();
          m_ExternalOutputs = new List<Plug>();
          m_ExternalEvents = new List<Plug>();
-         // m_Drivens         = new List<string>();
+         // m_Drivens         = new List<string>( );
          m_RequiredMethods = new List<string>();
 
          if (null != script)
@@ -875,120 +878,133 @@ namespace Detox.ScriptEditor
             Preprocess(false);
 
             DeclareNamespaces();
-            AddCSharpLine();
+            AddCSharpLine("");
 
             AddCSharpLine("[NodePath(\"Graphs\")]");
             AddCSharpLine("[System.Serializable]");
             AddCSharpLine("[FriendlyName(\"" + EscapeString(script.FriendlyName.Default) + "\", \"" + EscapeString(script.Description.Default) + "\")]");
             BeginLogicClass(logicClassName);
-            AddCSharpLine();
+            AddCSharpLine("");
 
             ++m_TabStack;
             //required even when we stub code
             //so the inspector variables remain
             DeclareMemberVariables();
             DeclareEventArgs();
-            AddCSharpLine();
+            AddCSharpLine("");
 
             if (false == stubCode)
             {
                SetupProperties();
-               AddCSharpLine();
+               AddCSharpLine("");
                DefineSyncUnityHooks();
-               AddCSharpLine();
+               AddCSharpLine("");
                DefineRegisterForUnityHooks();
-               AddCSharpLine();
+               AddCSharpLine("");
                DefineSyncEventListeners();
-               AddCSharpLine();
+               AddCSharpLine("");
                DefineUnregisterEventListeners();
-               AddCSharpLine();
+               AddCSharpLine("");
 
                AddCSharpLine("public override void SetParent(GameObject g)");
-               this.AddCSharpLine_BeginBlock();
-               {
-                  DefineSetParent();
-               }
-               this.AddCSharpLine_EndBlock();
+               AddCSharpLine("{");
+               ++m_TabStack;
+               DefineSetParent();
+               --m_TabStack;
+               AddCSharpLine("}");
             }
 
             //we have to define each method regardless if we stub code or not
             //because classes which reflect us need to know if we have certain methods or not
             AddCSharpLine("public void Awake()");
-            this.AddCSharpLine_BeginBlock();
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
             {
-               if (false == stubCode)
-               {
-                  DefineAwakeInitialization();
-               }
+               DefineAwakeInitialization();
             }
-            this.AddCSharpLine_EndBlock();
-            AddCSharpLine();
+
+            --m_TabStack;
+            AddCSharpLine("}");
+            AddCSharpLine("");
 
             if (false == m_RequiredMethods.Contains("Start")) m_RequiredMethods.Add("Start");
 
             AddCSharpLine("public void Start()");
-            this.AddCSharpLine_BeginBlock();
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
             {
-               if (false == stubCode)
-               {
-                  DefineStartInitialization();
-               }
+               DefineStartInitialization();
             }
-            this.AddCSharpLine_EndBlock();
-            AddCSharpLine();
+
+            --m_TabStack;
+            AddCSharpLine("}");
+            AddCSharpLine("");
 
             if (false == m_RequiredMethods.Contains("OnEnable")) m_RequiredMethods.Add("OnEnable");
 
             AddCSharpLine("public void OnEnable()");
-            this.AddCSharpLine_BeginBlock();
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
             {
-               if (false == stubCode)
-               {
-                  DefineOnEnable();
-               }
+               DefineOnEnable();
             }
-            this.AddCSharpLine_EndBlock();
-            AddCSharpLine();
+
+            --m_TabStack;
+            AddCSharpLine("}");
+            AddCSharpLine("");
 
             if (false == m_RequiredMethods.Contains("OnDisable")) m_RequiredMethods.Add("OnDisable");
 
             AddCSharpLine("public void OnDisable()");
-            this.AddCSharpLine_BeginBlock();
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
             {
-               if (false == stubCode)
-               {
-                  DefineOnDisable();
-               }
+               DefineOnDisable();
             }
-            this.AddCSharpLine_EndBlock();
-            AddCSharpLine();
+
+            --m_TabStack;
+            AddCSharpLine("}");
+            AddCSharpLine("");
 
             //always do fixed update because this is where we sync our unity hooks
             if (false == m_RequiredMethods.Contains("Update")) m_RequiredMethods.Add("Update");
 
             AddCSharpLine("public void Update()");
-            this.AddCSharpLine_BeginBlock();
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
             {
-               if (false == stubCode)
-               {
-                  DefineUpdate();
-               }
+               DefineUpdate();
             }
-            this.AddCSharpLine_EndBlock();
-            AddCSharpLine();
+
+            --m_TabStack;
+            AddCSharpLine("}");
+            AddCSharpLine("");
+
 
             if (false == m_RequiredMethods.Contains("OnDestroy")) m_RequiredMethods.Add("OnDestroy");
 
             AddCSharpLine("public void OnDestroy()");
-            this.AddCSharpLine_BeginBlock();
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            if (false == stubCode)
             {
-               if (false == stubCode)
-               {
-                  DefineOnDestroy();
-               }
+               DefineOnDestroy();
             }
-            this.AddCSharpLine_EndBlock();
-            AddCSharpLine();
+
+            --m_TabStack;
+            AddCSharpLine("}");
+            AddCSharpLine("");
 
 
             if (true == NeedsMethod("LateUpdate"))
@@ -996,15 +1012,17 @@ namespace Detox.ScriptEditor
                if (false == m_RequiredMethods.Contains("LateUpdate")) m_RequiredMethods.Add("LateUpdate");
 
                AddCSharpLine("public void LateUpdate()");
-               this.AddCSharpLine_BeginBlock();
+               AddCSharpLine("{");
+               ++m_TabStack;
+
+               if (false == stubCode)
                {
-                  if (false == stubCode)
-                  {
-                     DefineLateUpdate();
-                  }
+                  DefineLateUpdate();
                }
-               this.AddCSharpLine_EndBlock();
-               AddCSharpLine();
+
+               --m_TabStack;
+               AddCSharpLine("}");
+               AddCSharpLine("");
             }
 
             if (true == NeedsMethod("FixedUpdate"))
@@ -1012,15 +1030,17 @@ namespace Detox.ScriptEditor
                if (false == m_RequiredMethods.Contains("FixedUpdate")) m_RequiredMethods.Add("FixedUpdate");
 
                AddCSharpLine("public void FixedUpdate()");
-               this.AddCSharpLine_BeginBlock();
+               AddCSharpLine("{");
+               ++m_TabStack;
+
+               if (false == stubCode)
                {
-                  if (false == stubCode)
-                  {
-                     DefineFixedUpdate();
-                  }
+                  DefineFixedUpdate();
                }
-               this.AddCSharpLine_EndBlock();
-               AddCSharpLine();
+
+               --m_TabStack;
+               AddCSharpLine("}");
+               AddCSharpLine("");
             }
 
             if (true == NeedsMethod("OnGUI"))
@@ -1028,15 +1048,17 @@ namespace Detox.ScriptEditor
                if (false == m_RequiredMethods.Contains("OnGUI")) m_RequiredMethods.Add("OnGUI");
 
                AddCSharpLine("public void OnGUI()");
-               this.AddCSharpLine_BeginBlock();
+               AddCSharpLine("{");
+               ++m_TabStack;
+
+               if (false == stubCode)
                {
-                  if (false == stubCode)
-                  {
-                     DefineOnGUI();
-                  }
+                  DefineOnGUI();
                }
-               this.AddCSharpLine_EndBlock();
-               AddCSharpLine();
+
+               --m_TabStack;
+               AddCSharpLine("}");
+               AddCSharpLine("");
             }
 
             DefineEvents(stubCode);
@@ -1058,18 +1080,17 @@ namespace Detox.ScriptEditor
 
       private void DeclareNamespaces()
       {
-         var p = new Profile("DeclareNamespaces");
+         Profile p = new Profile("DeclareNamespaces");
 
-         this.AddCSharpLine("// uScript Generated Code - Build " + uScriptBuild.Number);
-         if (this.m_GenerateDebugInfo)
+         AddCSharpLine("//uScript Generated Code - Build " + uScriptBuild.Number);
+         if (true == m_GenerateDebugInfo)
          {
-            this.AddCSharpLine("// Generated with Debug Info");
+            AddCSharpLine("//Generated with Debug Info");
          }
-         this.AddCSharpLine();
-         this.AddCSharpLine("using System.Collections;");
-         this.AddCSharpLine("using System.Collections.Generic;");
-         this.AddCSharpLine();
-         this.AddCSharpLine("using UnityEngine;");
+
+         AddCSharpLine("using UnityEngine;");
+         AddCSharpLine("using System.Collections;");
+         AddCSharpLine("using System.Collections.Generic;");
 
          p.End();
       }
@@ -1107,7 +1128,7 @@ namespace Detox.ScriptEditor
       {
          Profile p = new Profile("SetupProperties");
 
-         this.AddCSharpLine_Comment("// Functions to refresh properties from entities");
+         AddCSharpLine("//functions to refresh properties from entities");
 
          foreach (EntityProperty entityProperty in m_Script.Properties)
          {
@@ -1121,7 +1142,7 @@ namespace Detox.ScriptEditor
                   {
                      //as stated above, cretae a function which
                      //gets the property from the entity and sets the corresponding CSharp variable
-                     AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "()");
+                     AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
                      AddCSharpLine("{");
                      ++m_TabStack;
                      AddCSharpLine(entityProperty.ComponentType + " component = null;");
@@ -1159,14 +1180,14 @@ namespace Detox.ScriptEditor
                      AddCSharpLine("}");
                      --m_TabStack;
                      AddCSharpLine("}");
-                     AddCSharpLine();
+                     AddCSharpLine("");
                   }
 
                   if (true == entityProperty.Parameter.Input)
                   {
                      //as stated above, create a function which sets the entity's property to the
                      //corresponding CSharp variable's value
-                     AddCSharpLine("void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "()");
+                     AddCSharpLine("void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "( )");
                      AddCSharpLine("{");
                      ++m_TabStack;
                      if (entityProperty.ComponentType != "UnityEngine.GameObject")
@@ -1190,7 +1211,7 @@ namespace Detox.ScriptEditor
                      AddCSharpLine("}");
                      --m_TabStack;
                      AddCSharpLine("}");
-                     AddCSharpLine();
+                     AddCSharpLine("");
                   }
                }
                else
@@ -1207,7 +1228,7 @@ namespace Detox.ScriptEditor
 
                         //as stated above, cretae a function which
                         //gets the property from the entity and sets the corresponding CSharp variable
-                        AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "()");
+                        AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
                         AddCSharpLine("{");
                         ++m_TabStack;
 
@@ -1250,14 +1271,14 @@ namespace Detox.ScriptEditor
                         AddCSharpLine("}");
                         --m_TabStack;
                         AddCSharpLine("}");
-                        AddCSharpLine();
+                        AddCSharpLine("");
                      }
 
                      if (true == entityProperty.Parameter.Input)
                      {
                         //as stated above, create a function which sets the entity's property to the
                         //corresponding CSharp variable's value
-                        AddCSharpLine("void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "()");
+                        AddCSharpLine("void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "( )");
                         AddCSharpLine("{");
                         ++m_TabStack;
 
@@ -1294,7 +1315,7 @@ namespace Detox.ScriptEditor
                         AddCSharpLine("}");
                         --m_TabStack;
                         AddCSharpLine("}");
-                        AddCSharpLine();
+                        AddCSharpLine("");
                      }
 
                      break;
@@ -1307,21 +1328,21 @@ namespace Detox.ScriptEditor
                {
                   //as stated above, cretae a function which
                   //gets the property from the entity and sets the corresponding CSharp variable
-                  AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "()");
+                  AddCSharpLine(FormatType(entityProperty.Parameter.Type) + " " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( )");
                   AddCSharpLine("{");
                   ++m_TabStack;
                   AddCSharpLine("return " + entityProperty.ComponentType + "." + entityProperty.Parameter.Name + ";");
                   --m_TabStack;
 
                   AddCSharpLine("}");
-                  AddCSharpLine();
+                  AddCSharpLine("");
                }
 
                if (true == entityProperty.Parameter.Input)
                {
                   //as stated above, create a function which sets the entity's property to the
                   //corresponding CSharp variable's value
-                  AddCSharpLine("void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "()");
+                  AddCSharpLine("void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "( )");
                   AddCSharpLine("{");
                   // don't allow property setter for constants
                   if (entityProperty.ComponentType != "UnityEngine.Mathf")
@@ -1331,7 +1352,7 @@ namespace Detox.ScriptEditor
                      --m_TabStack;
                   }
                   AddCSharpLine("}");
-                  AddCSharpLine();
+                  AddCSharpLine("");
                }
             }
          }
@@ -1365,7 +1386,7 @@ namespace Detox.ScriptEditor
                string[] subString = stringValue.Split(',');
                return "new Quaternion( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
             }
-            catch (Exception) { return "new Quaternion()"; }
+            catch (Exception) { return "new Quaternion( )"; }
          }
          else if ("UnityEngine.Matrix4x4" == type)
          {
@@ -1376,7 +1397,7 @@ namespace Detox.ScriptEditor
                               "new Quaternion((float)" + subString[3] + ", (float)" + subString[4] + ", (float)" + subString[5] + ", (float)" + subString[6] + "), " +
                               "new Vector3((float)" + subString[7] + ", (float)" + subString[8] + ", (float)" + subString[9] + "))";
             }
-            catch (Exception) { return "new Matrix4x4()"; }
+            catch (Exception) { return "new Matrix4x4( )"; }
          }
          else if ("UnityEngine.Vector2" == type)
          {
@@ -1385,7 +1406,7 @@ namespace Detox.ScriptEditor
                string[] subString = stringValue.Split(',');
                return "new Vector2( (float)" + subString[0] + ", (float)" + subString[1] + " )";
             }
-            catch (Exception) { return "new Vector2()"; }
+            catch (Exception) { return "new Vector2( )"; }
          }
          else if ("UnityEngine.Vector3" == type)
          {
@@ -1394,7 +1415,7 @@ namespace Detox.ScriptEditor
                string[] subString = stringValue.Split(',');
                return "new Vector3( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + " )";
             }
-            catch (Exception) { return "new Vector3()"; }
+            catch (Exception) { return "new Vector3( )"; }
          }
          else if ("UnityEngine.Vector4" == type)
          {
@@ -1403,7 +1424,7 @@ namespace Detox.ScriptEditor
                string[] subString = stringValue.Split(',');
                return "new Vector4( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
             }
-            catch (Exception) { return "new Vector4()"; }
+            catch (Exception) { return "new Vector4( )"; }
          }
          else if ("UnityEngine.Rect" == type)
          {
@@ -1412,7 +1433,7 @@ namespace Detox.ScriptEditor
                string[] subString = stringValue.Split(',');
                return "new Rect( (float)" + subString[0] + ", (float)" + subString[1] + ", (float)" + subString[2] + ", (float)" + subString[3] + " )";
             }
-            catch (Exception) { return "new Rect()"; }
+            catch (Exception) { return "new Rect( )"; }
          }
          else if ("System.Single" == type)
          {
@@ -1542,7 +1563,7 @@ namespace Detox.ScriptEditor
          }
          else if (type.Contains("Dictionary"))
          {
-            return "new " + FormatType(type) + "()";
+            return "new " + FormatType(type) + "( )";
          }
          else if ("UnityEngine.LayerMask" == type)
          {
@@ -1997,7 +2018,7 @@ namespace Detox.ScriptEditor
 
 
          AddCSharpLine("public delegate void uScriptEventHandler(object sender, LogicEventArgs args);");
-         AddCSharpLine();
+         AddCSharpLine("");
 
          AddCSharpLine("public class " + LogicEventArgsDeclaration() + " : System.EventArgs");
          AddCSharpLine("{");
@@ -2041,8 +2062,8 @@ namespace Detox.ScriptEditor
             AddCSharpLine("int relayCallCount = 0;");
          }
 
-         AddCSharpLine();
-         this.AddCSharpLine_Comment("// Externally exposed events");
+         AddCSharpLine("");
+         AddCSharpLine("//externally exposed events");
          Plug[] events = FindExternalEvents();
 
          if (events.Length > 0)
@@ -2058,8 +2079,8 @@ namespace Detox.ScriptEditor
          }
 
 
-         AddCSharpLine();
-         this.AddCSharpLine_Comment("// External parameters");
+         AddCSharpLine("");
+         AddCSharpLine("//external parameters");
          foreach (ExternalConnection external in m_Script.Externals)
          {
             Parameter lowestParameter = GetLowestCommonExternalParameter(external);
@@ -2090,8 +2111,8 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine();
-         this.AddCSharpLine_Comment("// Local nodes");
+         AddCSharpLine("");
+         AddCSharpLine("//local nodes");
 
          LocalNode [] locals = m_Script.UniqueLocals;
          Array.Sort(locals, LocalComparer);
@@ -2113,22 +2134,22 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine();
-         this.AddCSharpLine_Comment("// Owner nodes");
+         AddCSharpLine("");
+         AddCSharpLine("//owner nodes");
          foreach (OwnerConnection owner in m_Script.Owners)
          {
             AddCSharpLine(FormatType(owner.Connection.Type) + " " + CSharpName(owner) + " = null;");
          }
 
-         AddCSharpLine();
-         this.AddCSharpLine_Comment("// Logic nodes");
+         AddCSharpLine("");
+         AddCSharpLine("//logic nodes");
 
          foreach (LogicNode logic in m_Script.Logics)
          {
             string prefix = (true == (logic.InspectorName.Default != "")) ? "public " : "";
 
-            this.AddCSharpLine_Comment("// Pointer to script instanced logic node");
-            AddCSharpLine(prefix + FormatType(logic.Type) + " " + CSharpName(logic, logic.Type) + " = new " + FormatType(logic.Type) + "();");
+            AddCSharpLine("//pointer to script instanced logic node");
+            AddCSharpLine(prefix + FormatType(logic.Type) + " " + CSharpName(logic, logic.Type) + " = new " + FormatType(logic.Type) + "( );");
 
             foreach (Parameter parameter in logic.Parameters)
             {
@@ -2153,8 +2174,8 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine();
-         this.AddCSharpLine_Comment("// Event nodes");
+         AddCSharpLine("");
+         AddCSharpLine("//event nodes");
 
          foreach (EntityEvent entityEvent in m_Script.Events)
          {
@@ -2169,8 +2190,8 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine();
-         this.AddCSharpLine_Comment("// Property nodes");
+         AddCSharpLine("");
+         AddCSharpLine("//property nodes");
 
          foreach (EntityProperty entityProperty in m_Script.Properties)
          {
@@ -2187,8 +2208,8 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine();
-         this.AddCSharpLine_Comment("// Method nodes");
+         AddCSharpLine("");
+         AddCSharpLine("//method nodes");
 
          foreach (EntityMethod entityMethod in m_Script.Methods)
          {
@@ -2211,7 +2232,7 @@ namespace Detox.ScriptEditor
       private void DefineSetParent()
       {
          AddCSharpLine("parentGameObject = g;");
-         AddCSharpLine();
+         AddCSharpLine("");
 
          foreach (LogicNode logic in m_Script.Logics)
          {
@@ -2229,7 +2250,7 @@ namespace Detox.ScriptEditor
          {
             if (NeedsMethod(logicNode, "OnEnable"))
             {
-               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnEnable();");
+               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnEnable( );");
             }
          }
       }
@@ -2241,7 +2262,7 @@ namespace Detox.ScriptEditor
          {
             if (NeedsMethod(logicNode, "OnDisable"))
             {
-               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnDisable();");
+               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnDisable( );");
             }
          }
 
@@ -2254,14 +2275,14 @@ namespace Detox.ScriptEditor
          AddCSharpLine(CSharpSyncUnityHooksDeclaration() + ";");
          AddCSharpLine("m_RegisteredForEvents = true;");
 
-         AddCSharpLine();
+         AddCSharpLine("");
 
          //for each logic node, create an script specific instance
          foreach (LogicNode logicNode in m_Script.Logics)
          {
             if (NeedsMethod(logicNode, "Start"))
             {
-               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".Start();");
+               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".Start( );");
             }
          }
       }
@@ -2273,11 +2294,11 @@ namespace Detox.ScriptEditor
          {
             if (NeedsMethod(logicNode, "Awake"))
             {
-               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".Awake();");
+               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".Awake( );");
             }
          }
 
-         AddCSharpLine();
+         AddCSharpLine("");
 
          //for each logic node event, register event listeners with it
          foreach (LogicNode logicNode in m_Script.Logics)
@@ -2295,9 +2316,9 @@ namespace Detox.ScriptEditor
 
          if (true == m_GenerateDebugInfo)
          {
-            this.AddCSharpLine_Comment("// Reset each Update, and increments each method call.");
-            this.AddCSharpLine_Comment("// If it ever goes above MaxRelayCallCount before being reset,");
-            this.AddCSharpLine_Comment("// then we assume it is stuck in an infinite loop.");
+            AddCSharpLine("//reset each Update, and increments each method call");
+            AddCSharpLine("//if it ever goes above MaxRelayCallCount before being reset");
+            AddCSharpLine("//then we assume it is stuck in an infinite loop");
             AddCSharpLine("if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;");
 
             AddCSharpLine("if ( null != m_ContinueExecution )");
@@ -2306,7 +2327,7 @@ namespace Detox.ScriptEditor
             AddCSharpLine("ContinueExecution continueEx = m_ContinueExecution;");
             AddCSharpLine("m_ContinueExecution = null;");
             AddCSharpLine("m_Breakpoint = false;");
-            AddCSharpLine("continueEx();");
+            AddCSharpLine("continueEx( );");
             AddCSharpLine("return;");
             --m_TabStack;
             AddCSharpLine("}");
@@ -2314,17 +2335,17 @@ namespace Detox.ScriptEditor
             AddCSharpLine(UpdateEditorValuesDeclaration() + ";");
          }
 
-         AddCSharpLine();
-         this.AddCSharpLine_Comment("// Other scripts might have added GameObjects with event scripts,");
-         this.AddCSharpLine_Comment("// so we need to verify all our event listeners are registered.");
+         AddCSharpLine("");
+         AddCSharpLine("//other scripts might have added GameObjects with event scripts");
+         AddCSharpLine("//so we need to verify all our event listeners are registered");
          AddCSharpLine(CSharpSyncEventListenersDeclaration() + ";");
-         AddCSharpLine();
+         AddCSharpLine("");
 
          foreach (LogicNode logicNode in m_Script.Logics)
          {
             if (true == NeedsMethod(logicNode, "Update"))
             {
-               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".Update();");
+               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".Update( );");
             }
          }
 
@@ -2352,7 +2373,7 @@ namespace Detox.ScriptEditor
          {
             if (true == NeedsMethod(logicNode, "OnDestroy"))
             {
-               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnDestroy();");
+               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnDestroy( );");
             }
          }
 
@@ -2375,7 +2396,7 @@ namespace Detox.ScriptEditor
          {
             if (true == NeedsMethod(logicNode, "LateUpdate"))
             {
-               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".LateUpdate();");
+               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".LateUpdate( );");
             }
          }
       }
@@ -2387,7 +2408,7 @@ namespace Detox.ScriptEditor
          {
             if (true == NeedsMethod(logicNode, "FixedUpdate"))
             {
-               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".FixedUpdate();");
+               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".FixedUpdate( );");
             }
          }
       }
@@ -2399,7 +2420,7 @@ namespace Detox.ScriptEditor
          {
             if (true == NeedsMethod(logicNode, "OnGUI"))
             {
-               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnGUI();");
+               AddCSharpLine(CSharpName(logicNode, logicNode.Type) + ".OnGUI( );");
             }
          }
       }
@@ -2850,9 +2871,9 @@ namespace Detox.ScriptEditor
                string newCode = SetCode(currentCode);
                if (newCode != "")
                {
-                  this.AddCSharpLine_Comment("// Reset event listeners, if needed. This isn't a variable node, so it");
-                  this.AddCSharpLine_Comment("// should only be called once per enabling of the script. If called");
-                  this.AddCSharpLine_Comment("// twice, there would be a double event registration (an error).");
+                  AddCSharpLine("//reset event listeners if needed");
+                  AddCSharpLine("//this isn't a variable node so it should only be called once per enabling of the script");
+                  AddCSharpLine("//if it's called twice there would be a double event registration (which is an error)");
                   AddCSharpLine("if ( false == m_RegisteredForEvents )");
                   AddCSharpLine("{");
                      m_CSharpString.Append(newCode);
@@ -2869,21 +2890,21 @@ namespace Detox.ScriptEditor
                if (true == node is EntityProperty && node.Instance != parameter)
                   AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration((EntityProperty)node) + "();");
 
-               this.AddCSharpLine_Comment("// If the game object reference changed, reset event listeners.");
+               AddCSharpLine("//if our game object reference was changed then we need to reset event listeners");
                AddCSharpLine("if ( " + PreviousName(node, parameter.Name) + " != " + CSharpName(node, parameter.Name) + " || false == m_RegisteredForEvents )");
                AddCSharpLine("{");
                ++m_TabStack;
 
-               this.AddCSharpLine_Comment("// Tear down old listeners");
+               AddCSharpLine("//tear down old listeners");
                if ((node is LocalNode) ||
                    (node is EntityProperty && node.Instance != parameter))
                   SetupEventListeners(PreviousName(node, parameter.Name), node, false);
-               AddCSharpLine();
+               AddCSharpLine("");
 
                AddCSharpLine(PreviousName(node, parameter.Name) + " = " + CSharpName(node, parameter.Name) + ";");
-               AddCSharpLine();
+               AddCSharpLine("");
 
-               this.AddCSharpLine_Comment("// Setup new listeners");
+               AddCSharpLine("//setup new listeners");
                if ((node is LocalNode) ||
                    (node is EntityProperty && node.Instance != parameter))
                   SetupEventListeners(CSharpName(node, parameter.Name), node, true);
@@ -3234,18 +3255,18 @@ namespace Detox.ScriptEditor
 
          if (true == m_GenerateDebugInfo)
          {
-            this.AddCSharpLine_Comment("// Reset event call.");
-            this.AddCSharpLine_Comment("// If it ever goes above MaxRelayCallCount before being reset,");
-            this.AddCSharpLine_Comment("// assume it is stuck in an infinite loop.");
+            AddCSharpLine("//reset event call");
+            AddCSharpLine("//if it ever goes above MaxRelayCallCount before being reset");
+            AddCSharpLine("//then we assume it is stuck in an infinite loop");
             AddCSharpLine("if ( relayCallCount < MaxRelayCallCount ) relayCallCount = 0;");
-            AddCSharpLine();
+            AddCSharpLine("");
          }
 
          int i = 0;
 
          //all we want to do for an entityevent is output the variables
          //then call the relays
-         this.AddCSharpLine_Comment("// Fill globals");
+         AddCSharpLine("//fill globals");
          foreach (Parameter parameter in entityEvent.Parameters)
          {
             //only allow output parameters, those come through in the event args
@@ -3255,13 +3276,13 @@ namespace Detox.ScriptEditor
             ++i;
          }
 
-         this.AddCSharpLine_Comment("// Relay event to nodes");
-         AddCSharpLine(CSharpRelay(entityEvent, output) + "();");
+         AddCSharpLine("//relay event to nodes");
+         AddCSharpLine(CSharpRelay(entityEvent, output) + "( );");
 
          --m_TabStack;
 
          AddCSharpLine("}");
-         AddCSharpLine();
+         AddCSharpLine("");
 
          p.End();
       }
@@ -3602,7 +3623,7 @@ namespace Detox.ScriptEditor
    
             PrintDebug(externalInput);
 
-            AddCSharpLine();
+            AddCSharpLine("");
 
 
             //transfer input args to our member variables
@@ -3640,7 +3661,7 @@ namespace Detox.ScriptEditor
             foreach (LinkNode.Connection connection in connections)
             {
                EntityNode node = m_Script.GetNode(connection.Guid);
-               AddCSharpLine(CSharpRelay(node, connection.Anchor) + "();");
+               AddCSharpLine(CSharpRelay(node, connection.Anchor) + "( );");
             }
 
             //We no longer transfer our member variable to the output args
@@ -3679,7 +3700,7 @@ namespace Detox.ScriptEditor
          }
 
          AddCSharpLine("}");
-         AddCSharpLine();
+         AddCSharpLine("");
 
          profile.End();
       }
@@ -3698,7 +3719,7 @@ namespace Detox.ScriptEditor
 
          //all we want to do for an entityevent is output the variables
          //then call the relays
-         this.AddCSharpLine_Comment("// Fill globals");
+         AddCSharpLine("//fill globals");
          foreach (Parameter parameter in logicNode.EventParameters)
          {
             //only allow output parameters, those come through in the event args
@@ -3721,7 +3742,7 @@ namespace Detox.ScriptEditor
 
             LinkNode[] argLinks = FindLinksBySource(logicNode.Guid, parameter.Name);
 
-            this.AddCSharpLine_Comment("// Links to " + parameter.Name + " = " + argLinks.Length);
+            AddCSharpLine("//links to " + parameter.Name + " = " + argLinks.Length);
 
             foreach (LinkNode link in argLinks)
             {
@@ -3755,13 +3776,13 @@ namespace Detox.ScriptEditor
          //force any potential entites affected to update
          RefreshSetProperties(logicNode, outputList.ToArray());
 
-         this.AddCSharpLine_Comment("// Relay event to nodes");
-         AddCSharpLine(CSharpRelay(logicNode, eventName) + "();");
+         AddCSharpLine("//relay event to nodes");
+         AddCSharpLine(CSharpRelay(logicNode, eventName) + "( );");
 
          --m_TabStack;
 
          AddCSharpLine("}");
-         AddCSharpLine();
+         AddCSharpLine("");
 
          profile.End();
       }
@@ -3858,7 +3879,7 @@ namespace Detox.ScriptEditor
                AddCSharpLine("{");
                ++m_TabStack;
 
-               AddCSharpLine(LogicEventArgsDeclaration() + " eventArgs = new " + LogicEventArgsDeclaration() + "();");
+               AddCSharpLine(LogicEventArgsDeclaration() + " eventArgs = new " + LogicEventArgsDeclaration() + "( );");
                foreach (ExternalEventParameter eep in m_LogicEventArgs)
                {
                   AddCSharpLine("eventArgs." + eep.ExternalParameter.Name + " = " + CSharpName(eep.ExternalVariableNode) + ";");
@@ -4242,17 +4263,15 @@ namespace Detox.ScriptEditor
          else
          {
 
-            AddCSharpLine();
-            this.AddCSharpLine_Comment("// Don't copy 'out' values back to the global variables, because this was an");
-            this.AddCSharpLine_Comment("// auto generated nested node, and those values get set through an event,");
-            this.AddCSharpLine_Comment("// which is called before the above method exited.");
+            AddCSharpLine("");
+            AddCSharpLine("//Don't copy 'out' values back to the global variables because this was an auto generated nested node");
+            AddCSharpLine("//and those values get set through an event which is called before the above method exited");
          }
 
          if (receiver.Outputs.Length > 0)
          {
-            AddCSharpLine();
-            this.AddCSharpLine_Comment("// Save off values because, if there are multiple, our relay logic could");
-            this.AddCSharpLine_Comment("// cause them to change before the next value is tested.");
+            AddCSharpLine("");
+            AddCSharpLine("//save off values because, if there are multiple, our relay logic could cause them to change before the next value is tested");
          }
 
          int i = 0;
@@ -4267,7 +4286,7 @@ namespace Detox.ScriptEditor
             }
          }
 
-         AddCSharpLine();
+         AddCSharpLine("");
          i = 0;
 
          //call anyone else connected to our outputs
@@ -4390,35 +4409,42 @@ namespace Detox.ScriptEditor
          if (receiver is EntityMethod)
          {
             AddCSharpLine("void " + CSharpRelay(receiver, ((EntityMethod)receiver).Input.Name) + "()");
-            this.AddCSharpLine_BeginBlock();
-            {
-               if (this.m_GenerateDebugInfo)
-               {
-                  AddCSharpLine("if ( relayCallCount++ < MaxRelayCallCount )");
-                  this.AddCSharpLine_BeginBlock();
-                  {
-                     PrintDebug(receiver);
-                     CheckDebugBreak(receiver, CSharpRelay(receiver, ((EntityMethod)receiver).Input.Name));
-                     RelayToMethod((EntityMethod)receiver);
-                  }
-                  this.AddCSharpLine_EndBlock();
-                  AddCSharpLine("else");
-                  this.AddCSharpLine_BeginBlock();
-                  {
-                     AddCSharpLine("uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + ((EntityMethod)receiver).ComponentType + ".  " +
-                              "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);");
-                  }
-                  this.AddCSharpLine_EndBlock();
-               }
-               else
-               {
-                  RelayToMethod((EntityMethod)receiver);
-               }
-            }
-            this.AddCSharpLine_EndBlock();
-            AddCSharpLine();
-         }
+            AddCSharpLine("{");
 
+            ++m_TabStack;
+
+            if (true == m_GenerateDebugInfo)
+            {
+               AddCSharpLine("if ( relayCallCount++ < MaxRelayCallCount )");
+               AddCSharpLine("{");
+               ++m_TabStack;
+
+               PrintDebug(receiver);
+               CheckDebugBreak(receiver, CSharpRelay(receiver, ((EntityMethod)receiver).Input.Name));
+               RelayToMethod((EntityMethod)receiver);
+
+               --m_TabStack;
+               AddCSharpLine("}");
+               AddCSharpLine("else");
+               AddCSharpLine("{");
+               ++m_TabStack;
+
+               AddCSharpLine("uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + ((EntityMethod)receiver).ComponentType + ".  " +
+                        "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);");
+
+               --m_TabStack;
+               AddCSharpLine("}");
+            }
+            else
+            {
+               RelayToMethod((EntityMethod)receiver);
+            }
+
+            --m_TabStack;
+
+            AddCSharpLine("}");
+            AddCSharpLine("");
+         }
          if (receiver is EntityEvent)
          {
             EntityEvent entityEvent = (EntityEvent)receiver;
@@ -4446,7 +4472,7 @@ namespace Detox.ScriptEditor
                --m_TabStack;
 
                AddCSharpLine("}");
-               AddCSharpLine();
+               AddCSharpLine("");
             }
          }
          if (receiver is ExternalConnection)
@@ -4487,7 +4513,7 @@ namespace Detox.ScriptEditor
             --m_TabStack;
 
             AddCSharpLine("}");
-            AddCSharpLine();
+            AddCSharpLine("");
          }
          if (receiver is LogicNode)
          {
@@ -4529,7 +4555,7 @@ namespace Detox.ScriptEditor
                --m_TabStack;
 
                AddCSharpLine("}");
-               AddCSharpLine();
+               AddCSharpLine("");
             }
 
             foreach (Plug input in logicNode.Inputs)
@@ -4568,109 +4594,55 @@ namespace Detox.ScriptEditor
                --m_TabStack;
 
                AddCSharpLine("}");
-               AddCSharpLine();
+               AddCSharpLine("");
             }
 
             foreach (string driven in logicNode.Drivens)
             {
-               AddCSharpLine("void " + CSharpRelay(logicNode, driven) + "()");
-               this.AddCSharpLine_BeginBlock();
+               AddCSharpLine("void " + CSharpRelay(logicNode, driven) + "( )");
+               AddCSharpLine("{");
+               ++m_TabStack;
+
+               if (true == m_GenerateDebugInfo)
                {
-                  if (this.m_GenerateDebugInfo)
-                  {
-                     AddCSharpLine("if ( relayCallCount++ < MaxRelayCallCount )");
-                     this.AddCSharpLine_BeginBlock();
-                     {
-                        DefineDriven(logicNode, driven);
-                     }
-                     this.AddCSharpLine_EndBlock();
-                     AddCSharpLine("else");
-                     this.AddCSharpLine_BeginBlock();
-                     {
-                        AddCSharpLine("uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " +
-                                 "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);");
-                     }
-                     this.AddCSharpLine_EndBlock();
-                  }
-                  else
-                  {
-                     DefineDriven(logicNode, driven);
-                  }
+                  AddCSharpLine("if ( relayCallCount++ < MaxRelayCallCount )");
+                  AddCSharpLine("{");
+                  ++m_TabStack;
+
+                  DefineDriven(logicNode, driven);
+
+                  --m_TabStack;
+                  AddCSharpLine("}");
+                  AddCSharpLine("else");
+                  AddCSharpLine("{");
+                  ++m_TabStack;
+
+                  AddCSharpLine("uScriptDebug.Log( \"Possible infinite loop detected in uScript " + m_Script.Name + " at " + logicNode.FriendlyName + ".  " +
+                           "If this is in error you can change the Maximum Node Recursion in the Preferences Panel and regenerate the script.\", uScriptDebug.Type.Error);");
+                  --m_TabStack;
+                  AddCSharpLine("}");
                }
-               this.AddCSharpLine_EndBlock();
+               else
+               {
+                  DefineDriven(logicNode, driven);
+               }
+
+               --m_TabStack;
+               AddCSharpLine("}");
             }
          }
 
          p.End();
       }
 
-      private void AddCSharpLine(string line = "")
+      private void AddCSharpLine(string CSharpScript)
       {
-         if (this.pendingIndent > 0)
+         for (int i = 0; i < m_TabStack; i++)
          {
-            --this.pendingIndent;
-            this.AddCSharpLine("{");
-            ++this.m_TabStack;
+            m_CSharpString.Append("   ");
          }
 
-         if (line != string.Empty)
-         {
-            for (var i = 0; i < this.m_TabStack; i++)
-            {
-               this.m_CSharpString.Append("   ");
-            }
-         }
-
-         this.m_CSharpString.AppendFormat("{0}\r\n", line);
-      }
-
-      [StringFormatMethod("format")]
-      private void AddCSharpLine(string format, params object[] args)
-      {
-         // ReSharper disable once RedundantStringFormatCall
-         this.AddCSharpLine(string.Format(format, args));
-      }
-
-      private void AddCSharpLine_BeginBlock(bool shouldDelayOutput = false)
-      {
-         if (shouldDelayOutput)
-         {
-         ++this.pendingIndent;
-         }
-         else
-         {
-            this.AddCSharpLine("{");
-            ++this.m_TabStack;
-         }
-      }
-
-      private void AddCSharpLine_EndBlock()
-      {
-         if (this.pendingIndent > 0)
-         {
-            --this.pendingIndent;
-         }
-         else
-         {
-            --this.m_TabStack;
-            this.AddCSharpLine("}");
-         }
-      }
-
-      private void AddCSharpLine_Comment(string line)
-      {
-         if (this.m_GenerateDebugInfo)
-         {
-            this.AddCSharpLine(line);
-         }
-      }
-
-      private void AddCSharpLine_ConditionalDefine(string line)
-      {
-         var original = this.m_TabStack;
-         this.m_TabStack = 0;
-         this.AddCSharpLine(line);
-         this.m_TabStack = original;
+         m_CSharpString.Append(CSharpScript + "\r\n");
       }
 
       private string PreviousName(EntityNode entityNode)
@@ -4914,24 +4886,28 @@ namespace Detox.ScriptEditor
             else
             {
                AddCSharpLine("if ( null == " + OnGuiListenerName() + " )");
-               this.AddCSharpLine_BeginBlock();
-               {
-                  this.AddCSharpLine_Comment("// OnGUI needs unique listeners so calls like GUI.depth will work across graphs.");
-                  AddCSharpLine(OnGuiListenerName() + " = " + eventVariable + ".AddComponent<" + entityEvent.ComponentType + ">();");
-               }
-               this.AddCSharpLine_EndBlock();
+               AddCSharpLine("{");
+               ++m_TabStack;
+
+               AddCSharpLine("//OnGUI need unique listeners so calls like GUI.depth will work across uScripts");
+               AddCSharpLine(OnGuiListenerName() + " = " + eventVariable + ".AddComponent<" + entityEvent.ComponentType + ">();");
+
+               --m_TabStack;
+               AddCSharpLine("}");
 
                AddCSharpLine(entityEvent.ComponentType + " component = " + OnGuiListenerName() + ";");
             }
             AddCSharpLine("if ( null != component )");
-            this.AddCSharpLine_BeginBlock();
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            foreach (Plug output in entityEvent.Outputs)
             {
-               foreach (Plug output in entityEvent.Outputs)
-               {
-                  AddCSharpLine("component." + output.Name + operation + CSharpEventDeclaration(entityEvent, output.Name) + ";");
-               }
+               AddCSharpLine("component." + output.Name + operation + CSharpEventDeclaration(entityEvent, output.Name) + ";");
             }
-            this.AddCSharpLine_EndBlock();
+
+            --m_TabStack;
+            AddCSharpLine("}");
          }
       }
 
@@ -4957,22 +4933,22 @@ namespace Detox.ScriptEditor
 
       private string CSharpSyncUnityHooksDeclaration()
       {
-         return "SyncUnityHooks()";
+         return "SyncUnityHooks( )";
       }
 
       private string CSharpRegisterForUnityHooksDeclaration()
       {
-         return "RegisterForUnityHooks()";
+         return "RegisterForUnityHooks( )";
       }
 
       private string CSharpUnregisterEventListenersDeclaration()
       {
-         return "UnregisterEventListeners()";
+         return "UnregisterEventListeners( )";
       }
 
       private string CSharpSyncEventListenersDeclaration()
       {
-         return "SyncEventListeners()";
+         return "SyncEventListeners( )";
       }
 
       private string CSharpExternalDriven(EntityNode node, string name)
@@ -5080,134 +5056,210 @@ namespace Detox.ScriptEditor
       //write themselves to the input parameters for the node passed into this method
       private void SyncSlaveConnections(EntityNode node, Parameter[] parameters)
       {
-         this.AddCSharpLine_BeginBlock(true);
+         AddCSharpLine("{");
+         ++m_TabStack;
+
+         //bool needsIndex = false;
+
+
+         foreach (Parameter parameter in parameters)
          {
-            //bool needsIndex = false;
+            //bool needsPropertiesCleared = false;
+            //bool needsIndexCleared = false;
 
-            foreach (Parameter parameter in parameters)
+            //string nestedCode = SetCode("");
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            bool needsProperties = false;
+            string currentCode = SetCode("");
+
+            //get all the links hooked to the input on this node
+            LinkNode[] links = FindLinksByDestination(node.Guid, parameter.Name);
+            if (links.Length == 0)
             {
-               //bool needsPropertiesCleared = false;
-               //bool needsIndexCleared = false;
+               //no links? then they've specified
+               //a default parmaeter so make sure that is hooked up
+               SyncReferencedGameObject(node, parameter);
+            }
 
-               //string nestedCode = SetCode("");
-               bool needsProperties = false;
+            if (parameter.Type.Contains("[]"))
+            {
+               //if the input parameter is an array
+               //we need to place all source node values into the array
+               //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
 
-               this.AddCSharpLine_BeginBlock(true);
+               foreach (LinkNode link in links)
                {
-                  string currentCode = SetCode(string.Empty);
+                  //AddCSharpLine("{");
+                  //++m_TabStack;
 
-                  //get all the links hooked to the input on this node
-                  LinkNode[] links = FindLinksByDestination(node.Guid, parameter.Name);
-                  if (links.Length == 0)
+                  EntityNode argNode = m_Script.GetNode(link.Source.Guid);
+
+                  //check to see if any source nodes are local variables
+                  if (argNode is LocalNode || argNode is ExternalConnection)
                   {
-                     //no links? then they've specified
-                     //a default parmaeter so make sure that is hooked up
-                     SyncReferencedGameObject(node, parameter);
-                  }
+                     Parameter value;
 
-                  if (parameter.Type.Contains("[]"))
-                  {
-                     //if the input parameter is an array
-                     //we need to place all source node values into the array
-                     //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
-
-                     foreach (LinkNode link in links)
+                     if (argNode is LocalNode)
                      {
-                        //AddCSharpLine("{");
-                        //++m_TabStack;
+                        LocalNode localNode = (LocalNode)argNode;
+                        value = localNode.Value;
+                     }
+                     else
+                     {
+                        //external connections take on the type
+                        //they are connected to
+                        value = GetLowestCommonExternalParameter((ExternalConnection)argNode);
+                     }
 
-                        EntityNode argNode = m_Script.GetNode(link.Source.Guid);
+                     SyncReferencedGameObject(argNode, value);
 
-                        //check to see if any source nodes are local variables
-                        if (argNode is LocalNode || argNode is ExternalConnection)
+                     //if the local variable is an array then we need to copy the array
+                     //to the next available index of the input parameter
+
+                     if (value.Type.Contains("[]"))
+                     {
+                        if (value.Type == parameter.Type)
                         {
-                           Parameter value;
-
-                           if (argNode is LocalNode)
-                           {
-                              LocalNode localNode = (LocalNode)argNode;
-                              value = localNode.Value;
-                           }
-                           else
-                           {
-                              //external connections take on the type
-                              //they are connected to
-                              value = GetLowestCommonExternalParameter((ExternalConnection)argNode);
-                           }
-
-                           SyncReferencedGameObject(argNode, value);
-
-                           //if the local variable is an array then we need to copy the array
-                           //to the next available index of the input parameter
-
-                           if (value.Type.Contains("[]"))
-                           {
-                              if (value.Type == parameter.Type)
-                              {
-                                 AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
-                              }
-                              else
-                              {
-                                 AddCSharpLine("foreach (" + FormatType(value.Type.Replace("[]", string.Empty)) + " _fet in " + CSharpName(argNode) + ")");
-                                 this.AddCSharpLine_BeginBlock();
-                                 {
-                                    AddCSharpLine("properties.Add((" + FormatType(parameter.Type.Replace("[]", string.Empty)) + ") _fet);");
-                                 }
-                                 this.AddCSharpLine_EndBlock();
-                              }
-
-                              //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
-                              //AddCSharpLine("properties = " + CSharpName(argNode) + ";");
-
-                              //make sure our input array is large enough to hold the array we're copying into it
-                              //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)");
-                              //AddCSharpLine("{");
-                              //++m_TabStack;
-                              //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);");
-                              //--m_TabStack;
-                              //AddCSharpLine("}");
-
-                              //copy the source node array into the input parameter array
-                              //AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
-                              //AddCSharpLine("index += properties.Length;");
-                              //AddCSharpLine();
-
-                              needsProperties = true;
-                              //needsIndex = true;
-
-                              //needsPropertiesCleared = true;
-                              //needsIndexCleared = true;
-
-                           }
-                           else
-                           {
-                              AddCSharpLine("properties.Add((" + FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
-                              //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
-
-                              ////make sure our input array is large enough to hold another value
-                              //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
-                              //AddCSharpLine("{");
-                              //++m_TabStack;
-                              //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
-                              //--m_TabStack;
-                              //AddCSharpLine("}");
-
-                              ////copy the source node value into the input parameter array
-                              //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
-                              //AddCSharpLine();
-
-                              needsProperties = true;
-
-                              //needsIndex = true;
-                              //needsIndexCleared = true;
-                           }
+                           AddCSharpLine("properties.AddRange(" + CSharpName(argNode) + ");");
+                        }
+                        else
+                        {
+                           AddCSharpLine("foreach (" + FormatType(value.Type.Replace("[]", "")) + " _fet in " + CSharpName(argNode) + ")");
+                           AddCSharpLine("{");
+                           ++m_TabStack;
+                              AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
+                           --m_TabStack;
+                           AddCSharpLine("}");
                         }
 
-                        //check to see if any source nodes are local variables
-                        if (argNode is OwnerConnection)
+                        //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+                        //AddCSharpLine("properties = " + CSharpName(argNode) + ";");
+
+                        //make sure our input array is large enough to hold the array we're copying into it
+                        //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)");
+                        //AddCSharpLine("{");
+                        //++m_TabStack;
+                        //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);");
+                        //--m_TabStack;
+                        //AddCSharpLine("}");
+
+                        //copy the source node array into the input parameter array
+                        //AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
+                        //AddCSharpLine("index += properties.Length;");
+                        //AddCSharpLine("");
+
+                        needsProperties = true;
+                        //needsIndex = true;
+
+                        //needsPropertiesCleared = true;
+                        //needsIndexCleared = true;
+
+                     }
+                     else
+                     {
+                        AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
+                        //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+
+                        ////make sure our input array is large enough to hold another value
+                        //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
+                        //AddCSharpLine("{");
+                        //++m_TabStack;
+                        //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
+                        //--m_TabStack;
+                        //AddCSharpLine("}");
+
+                        ////copy the source node value into the input parameter array
+                        //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
+                        //AddCSharpLine("");
+
+                        needsProperties = true;
+
+                        //needsIndex = true;
+                        //needsIndexCleared = true;
+                     }
+                  }
+
+                  //check to see if any source nodes are local variables
+                  if (argNode is OwnerConnection)
+                  {
+                     //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
+                     AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
+                     //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+
+                     ////make sure our input array is large enough to hold another value
+                     //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
+                     //AddCSharpLine("{");
+                     //++m_TabStack;
+                     //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
+                     //--m_TabStack;
+                     //AddCSharpLine("}");
+
+                     ////copy the source node value into the input parameter array
+                     //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
+                     //AddCSharpLine("");
+
+                     needsProperties = true;
+
+                     //needsIndex = true;
+                     //needsIndexCleared = true;
+                  }
+
+                  //check to see if any source nodes are property nodes
+                  else if (argNode is EntityProperty)
+                  {
+                     EntityProperty entityProperty = (EntityProperty)argNode;
+
+                     if (true == entityProperty.Parameter.Output)
+                     {
+                        SyncReferencedGameObject(argNode, entityProperty.Parameter);
+
+                        //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
+
+                        //if the property variable is an array then we need to copy the array
+                        //to the next available index of the input parameter
+                        if (entityProperty.Parameter.Type.Contains("[]"))
                         {
-                           //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
-                           AddCSharpLine("properties.Add((" + FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpName(argNode) + ");");
+                           if (entityProperty.Parameter.Type == parameter.Type)
+                           {
+                              AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
+                           }
+                           else
+                           {
+                              AddCSharpLine("foreach (" + FormatType(entityProperty.Parameter.Type.Replace("[]", "")) + " _fet in " + CSharpRefreshGetPropertyDeclaration(entityProperty) + ")");
+                              AddCSharpLine("{");
+                              ++m_TabStack;
+                                 AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ") _fet);");
+                              --m_TabStack;
+                              AddCSharpLine("}");
+                           }
+                           
+                           
+                           //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+                           //AddCSharpLine("properties = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
+
+                           //make sure our input array is large enough to hold the array we're copying into it
+                           //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)");
+                           //AddCSharpLine("{");
+                           //++m_TabStack;
+                           //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);");
+                           //--m_TabStack;
+                           //AddCSharpLine("}");
+
+                           //AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
+                           //AddCSharpLine("index += properties.Length;");
+                           //AddCSharpLine("");
+
+                           needsProperties = true;
+                           //needsIndex = true;
+                           //needsPropertiesCleared = true;
+                           //needsIndexCleared = true;
+
+                        }
+                        else
+                        {
+                           AddCSharpLine("properties.Add((" +  FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
                            //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
 
                            ////make sure our input array is large enough to hold another value
@@ -5219,163 +5271,92 @@ namespace Detox.ScriptEditor
                            //AddCSharpLine("}");
 
                            ////copy the source node value into the input parameter array
-                           //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpName(argNode) + ";");
-                           //AddCSharpLine();
+                           //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
+                           //AddCSharpLine("");
 
                            needsProperties = true;
 
                            //needsIndex = true;
                            //needsIndexCleared = true;
                         }
-
-                           //check to see if any source nodes are property nodes
-                        else if (argNode is EntityProperty)
-                        {
-                           EntityProperty entityProperty = (EntityProperty)argNode;
-
-                           if (true == entityProperty.Parameter.Output)
-                           {
-                              SyncReferencedGameObject(argNode, entityProperty.Parameter);
-
-                              //AddCSharpLine("List<" + parameter.Type.Replace("[]", "") + "> properties = new List<" + parameter.Type.Replace("[]", "") + ">();");
-
-                              //if the property variable is an array then we need to copy the array
-                              //to the next available index of the input parameter
-                              if (entityProperty.Parameter.Type.Contains("[]"))
-                              {
-                                 if (entityProperty.Parameter.Type == parameter.Type)
-                                 {
-                                    AddCSharpLine("properties.AddRange(" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
-                                 }
-                                 else
-                                 {
-                                    AddCSharpLine("foreach (" + FormatType(entityProperty.Parameter.Type.Replace("[]", string.Empty)) + " _fet in " + CSharpRefreshGetPropertyDeclaration(entityProperty) + ")");
-                                    this.AddCSharpLine_BeginBlock();
-                                    {
-                                       AddCSharpLine("properties.Add((" + FormatType(parameter.Type.Replace("[]", string.Empty)) + ") _fet);");
-                                    }
-                                    this.AddCSharpLine_EndBlock();
-                                 }
-
-                                 //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
-                                 //AddCSharpLine("properties = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "();");
-
-                                 //make sure our input array is large enough to hold the array we're copying into it
-                                 //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length != index + properties.Length)");
-                                 //AddCSharpLine("{");
-                                 //++m_TabStack;
-                                 //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + properties.Length);");
-                                 //--m_TabStack;
-                                 //AddCSharpLine("}");
-
-                                 //AddCSharpLine("System.Array.Copy(properties, 0, " + CSharpName(node, parameter.Name) + ", index, properties.Length);");
-                                 //AddCSharpLine("index += properties.Length;");
-                                 //AddCSharpLine();
-
-                                 needsProperties = true;
-                                 //needsIndex = true;
-                                 //needsPropertiesCleared = true;
-                                 //needsIndexCleared = true;
-
-                              }
-                              else
-                              {
-                                 AddCSharpLine("properties.Add((" + FormatType(parameter.Type.Replace("[]", "")) + ")" + CSharpRefreshGetPropertyDeclaration(entityProperty) + "());");
-                                 //AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
-
-                                 ////make sure our input array is large enough to hold another value
-                                 //AddCSharpLine("if ( " + CSharpName(node, parameter.Name) + ".Length <= index)");
-                                 //AddCSharpLine("{");
-                                 //++m_TabStack;
-                                 //AddCSharpLine("System.Array.Resize(ref " + CSharpName(node, parameter.Name) + ", index + 1);");
-                                 //--m_TabStack;
-                                 //AddCSharpLine("}");
-
-                                 ////copy the source node value into the input parameter array
-                                 //AddCSharpLine(CSharpName(node, parameter.Name) + "[ index++ ] = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "();");
-                                 //AddCSharpLine();
-
-                                 needsProperties = true;
-
-                                 //needsIndex = true;
-                                 //needsIndexCleared = true;
-                              }
-                           }
-                        }
-
-                        //--m_TabStack;
-                        //AddCSharpLine("}");
-                     }
-                  }
-                  else
-                  {
-                     foreach (LinkNode link in links)
-                     {
-                        EntityNode argNode = m_Script.GetNode(link.Source.Guid);
-
-                        //if any of those links is a local node
-                        //we need to write the line for the property to refresh
-                        if (argNode is LocalNode || argNode is OwnerConnection || argNode is ExternalConnection)
-                        {
-                           if (argNode is LocalNode)
-                           {
-                              LocalNode localNode = (LocalNode)argNode;
-                              SyncReferencedGameObject(localNode, localNode.Value);
-                           }
-
-                           AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
-                           AddCSharpLine();
-                        }
-
-                           //if any of those links is a property node
-                        //we need to write the line for the property to refresh
-                        else if (argNode is EntityProperty)
-                        {
-                           EntityProperty entityProperty = (EntityProperty)argNode;
-
-                           if (true == entityProperty.Parameter.Output)
-                           {
-                              SyncReferencedGameObject(entityProperty, entityProperty.Parameter);
-
-                              // If our node is an entity property, we do nothing, because
-                              // it will be refreshed automatically when its used
-                              if (node is EntityProperty)
-                              {
-                              } // do nothing
-                              else
-                                 //otherwise we fill the node with a new value
-                                 AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "();");
-                           }
-                        }
                      }
                   }
 
-                  string newCode = SetCode(currentCode);
-
-                  if (true == needsProperties)
-                     AddCSharpLine("List<" + FormatType(parameter.Type.Replace("[]", "")) + "> properties = new List<" + FormatType(parameter.Type.Replace("[]", "")) + ">();");
-
-                  m_CSharpString.Append(newCode);
-
-                  if (true == needsProperties)
-                     AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+                  //--m_TabStack;
+                  //AddCSharpLine("}");
                }
-               this.AddCSharpLine_EndBlock();
+            }
+            else
+            {
+               foreach (LinkNode link in links)
+               {
+                  EntityNode argNode = m_Script.GetNode(link.Source.Guid);
 
-               needsProperties = false;
+                  //if any of those links is a local node
+                  //we need to write the line for the property to refresh
+                  if (argNode is LocalNode || argNode is OwnerConnection || argNode is ExternalConnection)
+                  {
+                     if (argNode is LocalNode)
+                     {
+                        LocalNode localNode = (LocalNode)argNode;
+                        SyncReferencedGameObject(localNode, localNode.Value);
+                     }
+
+                     AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpName(argNode) + ";");
+                     AddCSharpLine("");
+                  }
+
+                  //if any of those links is a property node
+                  //we need to write the line for the property to refresh
+                  else if (argNode is EntityProperty)
+                  {
+                     EntityProperty entityProperty = (EntityProperty)argNode; 
+
+                     if (true == entityProperty.Parameter.Output)
+                     {
+                        SyncReferencedGameObject(entityProperty, entityProperty.Parameter);
+
+                        //If our node is an entity property
+                        //we do nothing because it will refreshed automatically when its used
+                        if (node is EntityProperty) 
+                        {} // do nothing
+                        else
+                           //otherwise we fill the node with a new value
+                           AddCSharpLine(CSharpName(node, parameter.Name) + " = " + CSharpRefreshGetPropertyDeclaration(entityProperty) + "( );");
+                     }
+                  }
+               }
             }
 
-            //string newCode = SetCode(currentCode);
 
-            //if (newCode != "")
-            //{
-            //   if (true == needsIndex) AddCSharpLine("int index;");
-            //   if (true == needsProperties) AddCSharpLine("System.Array properties;");
+            string newCode = SetCode(currentCode);
 
-            //   m_CSharpString += newCode;
-            //}
+            if (true == needsProperties)
+               AddCSharpLine("List<" + FormatType(parameter.Type.Replace("[]", "")) + "> properties = new List<" + FormatType(parameter.Type.Replace("[]", "")) + ">();");
+
+            m_CSharpString.Append(newCode);
+
+            if (true == needsProperties)
+               AddCSharpLine(CSharpName(node, parameter.Name) + " = properties.ToArray();");
+
+            --m_TabStack;
+            AddCSharpLine("}");
+
+            needsProperties = false;
          }
-         this.AddCSharpLine_EndBlock();
+
+         //string newCode = SetCode(currentCode);
+
+         //if (newCode != "")
+         //{
+         //   if (true == needsIndex) AddCSharpLine("int index;");
+         //   if (true == needsProperties) AddCSharpLine("System.Array properties;");
+
+         //   m_CSharpString += newCode;
+         //}
+
+         --m_TabStack;
+         AddCSharpLine("}");
       }
 
       private void SyncReferencedGameObject(EntityNode node, Parameter parameter)
@@ -5423,7 +5404,7 @@ namespace Detox.ScriptEditor
 
                   if (true == property.Parameter.Input) 
                   {
-                     AddCSharpLine(CSharpRefreshSetPropertyDeclaration(property) + "();");
+                     AddCSharpLine(CSharpRefreshSetPropertyDeclaration(property) + "( );");
                      SyncReferencedGameObject(property, property.Parameter);
                   }
                }
@@ -5483,40 +5464,39 @@ namespace Detox.ScriptEditor
          if (true == m_GenerateDebugInfo)
          {
             AddCSharpLine("bool CheckDebugBreak(string guid, string name, ContinueExecution method)");
-            this.AddCSharpLine_BeginBlock();
-            {
-               AddCSharpLine("if (true == m_Breakpoint) return true;");
-               AddCSharpLine();
+            AddCSharpLine("{");
+            ++m_TabStack;
+            AddCSharpLine("if (true == m_Breakpoint) return true;");
+            AddCSharpLine("");
 
-               AddCSharpLine("if (true == uScript_MasterComponent.FindBreakpoint(guid))");
-               this.AddCSharpLine_BeginBlock();
-               {
-                  AddCSharpLine("if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)");
-                  this.AddCSharpLine_BeginBlock();
-                  {
-                     AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = \"\";");
-                  }
-                  this.AddCSharpLine_EndBlock();
-                  AddCSharpLine("else");
-                  this.AddCSharpLine_BeginBlock();
-                  {
-                     AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = guid;");
-                     AddCSharpLine(UpdateEditorValuesDeclaration() + ";");
-                     AddCSharpLine("UnityEngine.Debug.Log(\"uScript BREAK Node:\" + name + \" ((Time: \" + Time.time + \"\");");
-                     AddCSharpLine("UnityEngine.Debug.Break();");
-                     AddCSharpLine("#if (!UNITY_FLASH)");
-                     AddCSharpLine("m_ContinueExecution = new ContinueExecution(method);");
-                     AddCSharpLine("#endif");
-                     AddCSharpLine("m_Breakpoint = true;");
-                     AddCSharpLine("return true;");
-                  }
-                  this.AddCSharpLine_EndBlock();
-               }
-               this.AddCSharpLine_EndBlock();
-
-               AddCSharpLine("return false;");
-            }
-            this.AddCSharpLine_EndBlock();
+            AddCSharpLine("if (true == uScript_MasterComponent.FindBreakpoint(guid))");
+            AddCSharpLine("{");
+            ++m_TabStack;
+            AddCSharpLine("if (uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint == guid)");
+            AddCSharpLine("{");
+            ++m_TabStack;
+            AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = \"\";");
+            --m_TabStack;
+            AddCSharpLine("}");
+            AddCSharpLine("else");
+            AddCSharpLine("{");
+            ++m_TabStack;
+            AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.CurrentBreakpoint = guid;");
+            AddCSharpLine(UpdateEditorValuesDeclaration() + ";");
+            AddCSharpLine("UnityEngine.Debug.Log(\"uScript BREAK Node:\" + name + \" ((Time: \" + Time.time + \"\");");
+            AddCSharpLine("UnityEngine.Debug.Break();");
+            AddCSharpLine("#if (!UNITY_FLASH)");
+            AddCSharpLine("m_ContinueExecution = new ContinueExecution(method);");
+            AddCSharpLine("#endif");
+            AddCSharpLine("m_Breakpoint = true;");
+            AddCSharpLine("return true;");
+            --m_TabStack;
+            AddCSharpLine("}");
+            --m_TabStack;
+            AddCSharpLine("}");
+            AddCSharpLine("return false;");
+            --m_TabStack;
+            AddCSharpLine("}");
          }
       }
 
@@ -5536,27 +5516,29 @@ namespace Detox.ScriptEditor
          if (true == m_GenerateDebugInfo)
          {
             AddCSharpLine("private void " + UpdateEditorValuesDeclaration());
-            this.AddCSharpLine_BeginBlock();
+            AddCSharpLine("{");
+            ++m_TabStack;
+
+            foreach (LocalNode local in m_Script.Locals)
             {
-               foreach (LocalNode local in m_Script.Locals)
-               {
-                  //send by name and id because non-globals don't have a synch'd name so they would have to use Id, whereas named variables have been consolidated
-                  //to a single id so we have to use their name
-                  AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + m_Script.Name + ":" + local.Name.Default + "\", " + CSharpName(local) + ");");
-                  AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + local.Guid + "\", " + CSharpName(local) + ");");
-               }
-               foreach (EntityProperty property in m_Script.Properties)
-               {
-                  AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + property.Guid + "\", " + CSharpRefreshGetPropertyDeclaration(property) + "());");
-               }
+               //send by name and id because non-globals don't have a synch'd name so they would have to use Id, whereas named variables have been consolidated
+               //to a single id so we have to use their name
+               AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + m_Script.Name + ":" + local.Name.Default + "\", " + CSharpName(local) + ");");
+               AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + local.Guid + "\", " + CSharpName(local) + ");");
             }
-            this.AddCSharpLine_EndBlock();
+            foreach (EntityProperty property in m_Script.Properties)
+            {
+               AddCSharpLine("uScript_MasterComponent.LatestMasterComponent.UpdateNodeValue( \"" + property.Guid + "\", " + CSharpRefreshGetPropertyDeclaration(property) + "());");
+            }
+
+            --m_TabStack;
+            AddCSharpLine("}");
          }
       }
 
       private string UpdateEditorValuesDeclaration()
       {
-         return "UpdateEditorValues()";
+         return "UpdateEditorValues( )";
       }
 
       private int LocalComparer(LocalNode a, LocalNode b)
