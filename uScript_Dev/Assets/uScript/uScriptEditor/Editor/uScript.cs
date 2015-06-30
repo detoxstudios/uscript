@@ -939,8 +939,6 @@ public sealed partial class uScript : EditorWindow
    {
       if (null != UndoComponent)
       {
-         Debug.Log("Registering Undo");
-
          string base64 = p.ToBase64();
 
          UndoComponent.UndoNumber = m_UndoNumber;
