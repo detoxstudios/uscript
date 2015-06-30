@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 #if !RELEASE
-#define UNITY_STORE_BASIC
+#define UNITY_STORE_PRO
 #endif
 
 using System;
