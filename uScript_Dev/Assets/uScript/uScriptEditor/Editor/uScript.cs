@@ -104,7 +104,7 @@ public sealed partial class uScript : EditorWindow
    private Rect helpButtonRect;
    private Rect fileButtonRect;
    private Rect viewButtonRect;
-   private uScript_UndoObject UndoComponent = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
+   private uScript_UndoObject undoObject = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
 
    private Hashtable m_EntityTypeHash = null;
    private EntityDesc[] m_EntityTypes = null;
@@ -755,8 +755,8 @@ public sealed partial class uScript : EditorWindow
    private void ClearChangeStack()
    {
       m_UndoNumber = 0;
-      UndoComponent.UndoNumber = m_UndoNumber;
-      UnityEditor.Undo.ClearUndo(UndoComponent);
+      this.undoObject.UndoNumber = m_UndoNumber;
+      UnityEditor.Undo.ClearUndo(this.undoObject);
 
       m_UndoPatches = new string[0];
       this.patches = new string[0];
@@ -940,11 +940,11 @@ public sealed partial class uScript : EditorWindow
 
    public void RegisterUndo(Detox.Patch.PatchData p)
    {
-      if (null != UndoComponent)
+      if (null != this.undoObject)
       {
          string base64 = p.ToBase64();
 
-         UndoComponent.UndoNumber = m_UndoNumber;
+         this.undoObject.UndoNumber = m_UndoNumber;
 
          Array.Resize(ref this.patches, this.patches.Length + 1);
          this.patches[this.patches.Length - 1] = base64;
@@ -957,16 +957,16 @@ public sealed partial class uScript : EditorWindow
          m_UndoPatches[m_UndoNumber] = base64;
 
 #if  UNITY_3_5
-         UnityEditor.Undo.RegisterUndo(UndoComponent, p.Name + " (uScript)");
+         UnityEditor.Undo.RegisterUndo(this.undoObject, p.Name + " (uScript)");
 #else
-         UnityEditor.Undo.RecordObject(UndoComponent, p.Name + " (uScript)");
+         UnityEditor.Undo.RecordObject(this.undoObject, p.Name + " (uScript)");
 #endif
 
 
          //now increment and if the old one is restored
          //the numbers won't match
          ++m_UndoNumber;
-         UndoComponent.UndoNumber = m_UndoNumber;
+         this.undoObject.UndoNumber = m_UndoNumber;
       }
    }
 
@@ -1050,7 +1050,7 @@ public sealed partial class uScript : EditorWindow
 
          //keep our undo stack at the value it was
          //when they last undid
-         UndoComponent.UndoNumber = m_UndoNumber;
+         this.undoObject.UndoNumber = m_UndoNumber;
       }
 
       // Update the reference panel with the node palette's hot selection.
@@ -1121,7 +1121,7 @@ public sealed partial class uScript : EditorWindow
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
 
-      if (UndoComponent.UndoNumber != m_UndoNumber) UndoRedoPerformed();
+      if (this.undoObject.UndoNumber != m_UndoNumber) UndoRedoPerformed();
 
       if (_wasHierarchyChanged)
       {
@@ -1241,16 +1241,16 @@ public sealed partial class uScript : EditorWindow
       //if their number is greater then it was a redo
       //so apply the patch
       
-      if (UndoComponent.UndoNumber > m_UndoNumber)
+      if (this.undoObject.UndoNumber > m_UndoNumber)
       {
          //for some reason we're going out of range when starting Unity with uScript open
          //so make sure it's clamped here until i figure out the cause
-         if (m_UndoPatches.Length <= UndoComponent.UndoNumber - 1)
+         if (m_UndoPatches.Length <= this.undoObject.UndoNumber - 1)
          {
-            UndoComponent.UndoNumber = m_UndoPatches.Length;
+            this.undoObject.UndoNumber = m_UndoPatches.Length;
          }
 
-         ApplyPatch(m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber - 1]);
+         ApplyPatch(m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[this.undoObject.UndoNumber - 1]);
       }
       else
       {
@@ -1259,18 +1259,18 @@ public sealed partial class uScript : EditorWindow
 
          //for some reason we're going out of range when starting Unity with uScript open
          //so make sure it's clamped here until i figure out the cause
-         if (m_UndoPatches.Length <= UndoComponent.UndoNumber)
+         if (m_UndoPatches.Length <= this.undoObject.UndoNumber)
          {
-            UndoComponent.UndoNumber = m_UndoPatches.Length - 1;
+            this.undoObject.UndoNumber = m_UndoPatches.Length - 1;
          }
 
-         RemovePatch(m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[UndoComponent.UndoNumber]);
+         RemovePatch(m_ScriptEditorCtrl, m_ScriptEditorCtrl.ScriptEditor, m_UndoPatches[this.undoObject.UndoNumber]);
       }
 
       //recache the script since we're out of date with the patches
       CacheScript();
 
-      m_UndoNumber = UndoComponent.UndoNumber;
+      m_UndoNumber = this.undoObject.UndoNumber;
 
       //Debug.Log("applied undo " + m_UndoNumber );
    }
