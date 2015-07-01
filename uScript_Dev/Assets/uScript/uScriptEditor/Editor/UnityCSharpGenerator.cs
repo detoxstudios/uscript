@@ -1364,7 +1364,7 @@ namespace Detox.ScriptEditor
       {
          if ("System.Object" == type)
          {
-            return "\"" + stringValue.Replace("\"", "\\\"") + "\"";
+            return "\"" + EscapeString(stringValue) + "\"";
          }
          else if ("System.Boolean" == type)
          {
