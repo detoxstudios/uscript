@@ -355,7 +355,10 @@ public sealed partial class uScript : EditorWindow
          string.Format("Adding default uScript master GameObject: {0}", uScriptRuntimeConfig.MasterObjectName),
          uScriptDebug.Type.Debug);
 
-      var uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
+      var uScriptMaster = GameObject.Find(uScriptRuntimeConfig.MasterObjectName);
+      if (null != uScriptMaster) return uScriptMaster;
+
+      uScriptMaster = new GameObject(uScriptRuntimeConfig.MasterObjectName);
       uScriptMaster.transform.position = Vector3.zero;
       return uScriptMaster;
    }
