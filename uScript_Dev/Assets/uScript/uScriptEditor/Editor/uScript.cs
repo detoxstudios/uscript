@@ -4826,11 +4826,6 @@ public sealed partial class uScript : EditorWindow
 
    private void Reflect(Type type, List<EntityDesc> entityDescs, Hashtable baseMethods, Hashtable baseEvents, Hashtable baseProperties)
    {
-      if (type.ToString() == "UnityEngine.Application")
-      {
-         int zz = 0;
-      }
-
       EntityDesc entityDesc = new EntityDesc();
 
       entityDesc.Type = type.ToString();
