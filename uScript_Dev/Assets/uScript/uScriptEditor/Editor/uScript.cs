@@ -4826,6 +4826,11 @@ public sealed partial class uScript : EditorWindow
 
    private void Reflect(Type type, List<EntityDesc> entityDescs, Hashtable baseMethods, Hashtable baseEvents, Hashtable baseProperties)
    {
+      if (type.ToString() == "UnityEngine.Application")
+      {
+         int zz = 0;
+      }
+
       EntityDesc entityDesc = new EntityDesc();
 
       entityDesc.Type = type.ToString();
@@ -4948,44 +4953,7 @@ public sealed partial class uScript : EditorWindow
       {
          if (true == baseEvents.Contains(e.Name)) continue;
 
-         List<Parameter> eventInputsOutpus = new List<Parameter>();
-
-         //look for any set properties which will exist on the event
-         //because we can't set them via method parameters
-         foreach (PropertyInfo p in propertyInfos)
-         {
-            propertyInEvent[p.Name] = true;
-
-            if (baseProperties.Contains(p.Name)) continue;
-
-            if (p.GetSetMethod() != null)
-            {
-               //only input properties directly declared in this event
-               //are valid to be set, otherwise this gets spammed
-               //with every property of the class heirarchy
-               if (p.DeclaringType == type)
-               {
-                  Parameter input = new Parameter();
-
-                  //inputs to events can never be connected because there is no source to trigger
-                  //them and push in the value
-                  input.State = Parameter.VisibleState.Locked | Parameter.VisibleState.Hidden;
-                  input.Name = p.Name;
-                  input.Type = p.PropertyType.ToString().Replace("&", string.Empty);
-                  input.Input = true;
-                  input.Output = false;
-                  input.DefaultAsObject = FindDefaultValue(string.Empty, p.GetCustomAttributes(false));
-                  input.FriendlyName = FindFriendlyName(p.Name, p.GetCustomAttributes(false));
-
-                  AddAssetPathField(type.ToString(), p.Name, p.GetCustomAttributes(false));
-                  AddParameterDescField(type.ToString(), p.Name, p.GetCustomAttributes(false));
-                  AddRequiresLink(type.ToString(), p.Name, p.GetCustomAttributes(false));
-                  uScript.Instance.AddType(p.PropertyType);
-
-                  eventInputsOutpus.Add(input);
-               }
-            }
-         }
+         List<Parameter> eventOutputs = new List<Parameter>();
 
          Plug[] outputPlug = new Plug[1];
 
@@ -5030,7 +4998,7 @@ public sealed partial class uScript : EditorWindow
 
                            uScript.Instance.AddType(eventProperty.PropertyType);
 
-                           eventInputsOutpus.Add(output);
+                           eventOutputs.Add(output);
 
                            AddParameterDescField(type.ToString(), eventProperty.Name, eventProperty.GetCustomAttributes(false));
                         }
@@ -5043,7 +5011,7 @@ public sealed partial class uScript : EditorWindow
             }
          }
 
-         entityEvent.Parameters = eventInputsOutpus.ToArray();
+         entityEvent.Parameters = eventOutputs.ToArray();
          entityEvents.Add(entityEvent);
       }
 
