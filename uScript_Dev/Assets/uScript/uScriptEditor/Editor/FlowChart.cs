@@ -1,16 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using Detox.Windows.Forms;
-using Detox.Drawing;
-
-using UnityEditor;
-using UnityEngine;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="FlowChart.cs" company="Detox Studios, LLC">
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// </copyright>
+// <summary>
+//   Defines the FlowChartCtrl type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Detox.FlowChart
 {
+   using System;
+   using System.Collections;
+   using System.Collections.Generic;
+   using System.Linq;
+   using System.Reflection;
+
+   using Detox.Drawing;
+   using Detox.Windows.Forms;
+
+   using UnityEditor;
+
+   using UnityEngine;
+
    public class FlowChartCtrl : UserControl
    {
       private Hashtable m_Nodes = new Hashtable( );
@@ -1137,6 +1148,19 @@ namespace Detox.FlowChart
          return new Vector2(rect.xMin, rect.yMin);
       }
 
+      private static Rect GetGUIGroupRect()
+      {
+         var guiClip = Assembly.GetAssembly(typeof(GUI)).GetType("UnityEngine.GUIClip");
+         if (guiClip == null)
+         {
+            return new Rect();
+         }
+
+         const BindingFlags Bindings = BindingFlags.Public | BindingFlags.Static;
+         var property = guiClip.GetProperty("topmostRect", Bindings);
+         return (Rect)property.GetValue(null, null);
+      }
+
       public override void OnPaint(PaintEventArgs e)
       {
          // Abort if the NodeWindowRect hasn't been initialized yet
@@ -1145,10 +1169,11 @@ namespace Detox.FlowChart
 
          Vector2 screenOffset = Detox.Editor.Extensions.UnityEditorExtensions.DockedGUIOffset(uScript.Instance);
 
-         // We are two groups deep into clipping
-         // both need to be popped
-         // Ideally we'd get them and restore them but there isn't an API method to do that
+         // We are two groups deep into clipping, so both need to be popped.
+         // Get the initial values first, so they can be restored correctly later.
+         var group1 = GetGUIGroupRect();
          GUI.EndGroup();
+         var group2 = GetGUIGroupRect();
          GUI.EndGroup();
 
          Rect boundingArea = uScript.Instance._canvasRect;
@@ -1475,9 +1500,9 @@ namespace Detox.FlowChart
 
          GUI.EndGroup();
 
-         // Since we had to pop two groups, we must add two more now that we're done
-         GUI.BeginGroup(new Rect(screenOffset.x, screenOffset.y, Screen.width, Screen.height));
-         GUI.BeginGroup(new Rect(screenOffset.x, screenOffset.y, Screen.width, Screen.height));
+         // Since we had to pop two groups, we must restore them in the reverse order
+         GUI.BeginGroup(group2);
+         GUI.BeginGroup(group1);
       }
 
       public void AddLink(Link link)
