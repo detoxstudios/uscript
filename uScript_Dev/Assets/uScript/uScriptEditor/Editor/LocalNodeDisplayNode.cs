@@ -28,7 +28,6 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
-         IsCircleWhenZoomed = true;
          Location = new Detox.Drawing.Point( localNode.Position.X, localNode.Position.Y );
          Name = "";
 
@@ -113,10 +112,10 @@ namespace Detox.ScriptEditor
             return new Size(57, 57);
          }
 
-         if ( true == this.m_Ctrl.FlowChart.Zoom < 1.0f )
-         {
-            return new Size(57, 57);
-         }
+         //if ( true == this.m_Ctrl.FlowChart.Zoom < 1.0f )
+         //{
+         //   return new Size(57, 57);
+         //}
 
          Size size = base.CalculateSize(sockets);
          if (size.Width < 57) size.Width = 57;
@@ -139,7 +138,7 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
-         IsCircleWhenZoomed = true;
+         
          NodeStyle = "externalconnection";
 
          Location = new Detox.Drawing.Point( externalConnection.Position.X, externalConnection.Position.Y );
@@ -205,10 +204,10 @@ namespace Detox.ScriptEditor
          if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) &&
                uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded ) return new Size(61, 59);
 
-         if ( true == this.m_Ctrl.FlowChart.Zoom < 1.0f )
-         {
-            return new Size(61, 59);
-         }
+         //if ( true == this.m_Ctrl.FlowChart.Zoom < 1.0f )
+         //{
+         //   return new Size(61, 59);
+         //}
 
          Size size = base.CalculateSize(sockets);
          if (size.Width < 61) size.Width = 61;
@@ -271,7 +270,6 @@ namespace Detox.ScriptEditor
          InitializeComponent();
          AddEventHandlers( );
 
-         IsCircleWhenZoomed = true;
          NodeStyle = "variable_owner";
 
          Location = new Detox.Drawing.Point( ownerConnection.Position.X, ownerConnection.Position.Y );

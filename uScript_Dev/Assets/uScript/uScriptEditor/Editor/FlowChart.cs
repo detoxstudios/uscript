@@ -358,14 +358,14 @@ namespace Detox.FlowChart
 
       private bool LinkInRect(Link link, Rectangle rect)
       {
-         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width),
-                                  (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height) );
+         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.Size.Width),
+                                  (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.Size.Height) );
 
          start  = link.Source.Node.PointToScreen( start );
          start  = this.PointToClient( start );
 
-         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width),
-                                (int) (link.Destination.Anchor.Y / 100.0f * link.Destination.Node.ZoomSize.Height) );
+         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.Size.Width),
+                                (int) (link.Destination.Anchor.Y / 100.0f * link.Destination.Node.Size.Height) );
 
          end  = link.Destination.Node.PointToScreen( end );
          end  = this.PointToClient( end );
@@ -393,14 +393,14 @@ namespace Detox.FlowChart
          //(in actuality it's slightly curved w/ bezier rendering)
          //but in my tests so far, this is still accurate enough
 
-         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width),
-                                  (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height) );
+         Point start = new Point( (int) (link.Source.Anchor.X / 100.0f * link.Source.Node.Size.Width),
+                                  (int) (link.Source.Anchor.Y / 100.0f * link.Source.Node.Size.Height) );
 
          start  = link.Source.Node.PointToScreen( start );
          start  = this.PointToClient( start );
 
-         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width),
-                                (int) (link.Destination.Anchor.Y / 100.0f * link.Destination.Node.ZoomSize.Height) );
+         Point end = new Point( (int) (link.Destination.Anchor.X / 100.0f * link.Destination.Node.Size.Width),
+                                (int) (link.Destination.Anchor.Y / 100.0f * link.Destination.Node.Size.Height) );
 
          end  = link.Destination.Node.PointToScreen( end );
          end  = this.PointToClient( end );
@@ -456,11 +456,11 @@ namespace Detox.FlowChart
          {
             m_AllowPanning = true;
          }
-         m_FCMouseDownPoint = Detox.Windows.Forms.Cursor.Position;
+         m_FCMouseDownPoint = Detox.Windows.Forms.Cursor.AbsolutePosition;
 
          if ( e.Button == MouseButtons.Left )
          {
-            m_MoveBoundariesStart = Detox.Windows.Forms.Cursor.Position;
+            m_MoveBoundariesStart = Detox.Windows.Forms.Cursor.AbsolutePosition;
          }
       }
 
@@ -507,13 +507,13 @@ namespace Detox.FlowChart
                }
             }
 
-            m_MoveBoundariesStart = Detox.Windows.Forms.Cursor.Position;
+            m_MoveBoundariesStart = Detox.Windows.Forms.Cursor.AbsolutePosition;
 
             //use the parent's position
             //for mouse coords, if we use our position
             //the mouse is relative to us which throws it off when
             //we move ourselves
-            Point position = Detox.Windows.Forms.Cursor.Position;
+            Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
             position = node.PointToClient( position );
 
             AnchorPoint anchorPoint = new AnchorPoint( );
@@ -565,8 +565,8 @@ namespace Detox.FlowChart
 
                if ( true == node.CanResize )
                {
-                  if ( position.X > node.ZoomSize.Width  - uScriptConfig.ResizeTexture.width &&
-                       position.Y > node.ZoomSize.Height - uScriptConfig.ResizeTexture.height )
+                  if ( position.X > node.Size.Width  - uScriptConfig.ResizeTexture.width &&
+                       position.Y > node.Size.Height - uScriptConfig.ResizeTexture.height )
                   {
                      m_NodeMouseSizing = true;
                   }
@@ -689,8 +689,8 @@ namespace Detox.FlowChart
 
       private bool UserProbablyDidntMeanToMoveMouse( )
       {
-         int dx = m_FCMouseDownPoint.X - Detox.Windows.Forms.Cursor.Position.X;
-         int dy = m_FCMouseDownPoint.Y - Detox.Windows.Forms.Cursor.Position.Y;
+         int dx = m_FCMouseDownPoint.X - Detox.Windows.Forms.Cursor.ScaledPosition.X;
+         int dy = m_FCMouseDownPoint.Y - Detox.Windows.Forms.Cursor.ScaledPosition.Y;
 
          dx = Math.Abs(dx);
          dy = Math.Abs(dy);
@@ -733,7 +733,7 @@ namespace Detox.FlowChart
 
             if ( null != m_StartLinkNode )
             {
-               Point position = Detox.Windows.Forms.Cursor.Position;
+               Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
 
                AnchorPoint hitPoint = new AnchorPoint( );
 
@@ -918,7 +918,7 @@ namespace Detox.FlowChart
 
       private bool MouseOverLink(out Link retLink)
       {
-         Point position = PointToClient( Detox.Windows.Forms.Cursor.Position );
+         Point position = PointToClient( Detox.Windows.Forms.Cursor.ScaledPosition );
          retLink = null;
 
          foreach ( Link link in m_Links )
@@ -935,7 +935,7 @@ namespace Detox.FlowChart
 
       private void RunMarqueeSelect( )
       {
-         Point position = Detox.Windows.Forms.Cursor.Position;
+         Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
          position = this.PointToClient( position );
 
          int startX = Math.Min( m_StartMarquee.X, position.X );
@@ -1039,8 +1039,8 @@ namespace Detox.FlowChart
 
          //cursor is already in NodeWindowRect space
          //no need to subtract coordinates
-         location.X = Detox.Windows.Forms.Cursor.Position.X;
-         location.Y = Detox.Windows.Forms.Cursor.Position.Y;
+         location.X = Detox.Windows.Forms.Cursor.AbsolutePosition.X;
+         location.Y = Detox.Windows.Forms.Cursor.AbsolutePosition.Y;
 
          float width  = uScript.Instance.NodeWindowRect.xMax - uScript.Instance.NodeWindowRect.xMin;
          float height = uScript.Instance.NodeWindowRect.yMax - uScript.Instance.NodeWindowRect.yMin;
@@ -1079,17 +1079,17 @@ namespace Detox.FlowChart
          this.Focus( );
       }
 
-      public void MoveWithCursor( float movementScale )
+      public void MoveWithCursor( )
       {
-         Point position = Detox.Windows.Forms.Cursor.Position;
+         Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
 
          if ( Point.Empty == m_MoveOffset )
          {
-            m_MoveOffset        = Detox.Windows.Forms.Cursor.Position;
+            m_MoveOffset        = Detox.Windows.Forms.Cursor.ScaledPosition;
             m_StartMoveLocation = Location;
          }
 
-         position = new Point( (int) (movementScale * (position.X - m_MoveOffset.X)), (int) (movementScale * (position.Y - m_MoveOffset.Y)) );
+         position = new Point( (int) ((position.X - m_MoveOffset.X)), (int) ((position.Y - m_MoveOffset.Y)) );
          position = new Point( m_StartMoveLocation.X + position.X, m_StartMoveLocation.Y + position.Y );
 
          //clamp top left
@@ -1118,18 +1118,54 @@ namespace Detox.FlowChart
          Location = position;
       }
 
-      private void MoveWithCursor( )
+      public Rect ScaleSizeBy(Rect rect, float scale, Vector2 pivotPoint)
       {
-         MoveWithCursor( 1.0f / Zoom );
+         Rect result = rect;
+         result.x -= pivotPoint.x;
+         result.y -= pivotPoint.y;
+         result.xMin *= scale;
+         result.xMax *= scale;
+         result.yMin *= scale;
+         result.yMax *= scale;
+         result.x += pivotPoint.x;
+         result.y += pivotPoint.y;
+         return result;
+      }
+
+      public Vector2 TopLeft(Rect rect)
+      {
+         return new Vector2(rect.xMin, rect.yMin);
       }
 
       public override void OnPaint(PaintEventArgs e)
       {
          // Abort if the NodeWindowRect hasn't been initialized yet
          if (uScript.Instance.NodeWindowRect == new Rect())
-         {
             return;
-         }
+
+         Vector2 screenOffset = Detox.Editor.Extensions.UnityEditorExtensions.DockedGUIOffset(uScript.Instance);
+
+         // We are two groups deep into clipping
+         // both need to be popped
+         // Ideally we'd get them and restore them but there isn't an API method to do that
+         GUI.EndGroup();
+         GUI.EndGroup();
+
+         Rect boundingArea = uScript.Instance._canvasRect;
+
+         Rect clippedArea = ScaleSizeBy(boundingArea, 1.0f / Zoom, TopLeft(boundingArea));
+
+         clippedArea.x += screenOffset.x;
+         clippedArea.y += screenOffset.y;
+         
+         GUI.BeginGroup(clippedArea);
+
+         Matrix4x4 prevGuiMatrix = GUI.matrix;
+
+         Matrix4x4 translation = Matrix4x4.TRS(TopLeft(clippedArea), Quaternion.identity, Vector3.one);
+         Matrix4x4 scale = Matrix4x4.Scale(new Vector3(Zoom, Zoom, 1.0f));
+         
+         GUI.matrix = translation * scale * translation.inverse * GUI.matrix;
 
          if ( true == InMoveMode && m_StartMarquee == Point.Empty )
          {
@@ -1151,9 +1187,10 @@ namespace Detox.FlowChart
 
          // This is the viewport Rect
          //Rectangle visibleRect = new Rectangle(-Location.X, -Location.Y, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
-         Rectangle visibleRect = new Rectangle(0,0, (int)uScript.Instance.NodeWindowRect.width, (int)uScript.Instance.NodeWindowRect.height);
+         Rectangle visibleRect = new Rectangle(0,0, (int)(uScript.Instance.NodeWindowRect.width / Zoom), (int)(uScript.Instance.NodeWindowRect.height / Zoom));
 
-         if ( 1.0f == Zoom && uScript.Preferences.ShowGrid == true )
+         //if ( 1.0f == Zoom && uScript.Preferences.ShowGrid == true )
+         if ( uScript.Preferences.ShowGrid == true )
          {
             float g;
 
@@ -1167,12 +1204,12 @@ namespace Detox.FlowChart
             int majorGridSpacing = majorGridPixelOffset / gridSize;
 
             Vector3 startGrid = new Vector3( offsetX, offsetY );
-            Vector3 endGrid   = new Vector3( uScript.Instance.NodeWindowRect.width, offsetY );
+            Vector3 endGrid   = new Vector3( uScript.Instance.NodeWindowRect.width / Zoom, offsetY );
 
             // Finally flip it because our location we modded with will be negative
             int gridSubdivisionCount = - majorGridSpacing;
 
-            for ( g = 0; g < uScript.Instance.NodeWindowRect.height; g += gridSize )
+            for ( g = 0; g < uScript.Instance.NodeWindowRect.height / Zoom; g += gridSize )
             {
                if ( gridSubdivisionCount == gridSubdivisions )
                {
@@ -1193,7 +1230,7 @@ namespace Detox.FlowChart
             }
 
             startGrid = new Vector3( offsetX, offsetY );
-            endGrid   = new Vector3( offsetX, uScript.Instance.NodeWindowRect.height );
+            endGrid   = new Vector3( offsetX, uScript.Instance.NodeWindowRect.height / Zoom );
 
             majorGridPixelOffset = Location.X % (gridSize * gridSubdivisions);
             majorGridSpacing = majorGridPixelOffset / gridSize;
@@ -1201,7 +1238,7 @@ namespace Detox.FlowChart
             // Finally flip it because our location we modded with will be negative
             gridSubdivisionCount = - majorGridSpacing;
 
-            for ( g = 0; g < uScript.Instance.NodeWindowRect.width; g += uScript.Preferences.GridSize )
+            for ( g = 0; g < uScript.Instance.NodeWindowRect.width / Zoom; g += uScript.Preferences.GridSize )
             {
                if ( gridSubdivisionCount == gridSubdivisions )
                {
@@ -1227,7 +1264,7 @@ namespace Detox.FlowChart
 
          if (null != m_StartLinkNode)
          {
-            PointF position = new PointF(Detox.Windows.Forms.Cursor.Position.X, Detox.Windows.Forms.Cursor.Position.Y);
+            PointF position = new PointF(Detox.Windows.Forms.Cursor.ScaledPosition.X, Detox.Windows.Forms.Cursor.ScaledPosition.Y);
             position = this.PointToClient( position );
 
             PointF start = new PointF( (m_LinkStartAnchor.X / 100.0f * m_StartLinkNode.Size.Width),
@@ -1239,7 +1276,7 @@ namespace Detox.FlowChart
             start.X += Location.X;
             start.Y += Location.Y;
 
-            PointF end = new PointF(Detox.Windows.Forms.Cursor.Position.X, Detox.Windows.Forms.Cursor.Position.Y);
+            PointF end = new PointF(Detox.Windows.Forms.Cursor.ScaledPosition.X, Detox.Windows.Forms.Cursor.ScaledPosition.Y);
             end = PointToClient( end );
 
             end.X += Location.X;
@@ -1276,7 +1313,7 @@ namespace Detox.FlowChart
          for (i = 0; i < Controls.Count; i++)
          {
             Node node = Controls[i] as Node;
-            node.ZoomScale = Zoom;
+            
             if (node.IsVisible(visibleRect) || Detox.Editor.ExportPNG.IsExporting)
             {
                visibleList.Add(node);
@@ -1295,7 +1332,6 @@ namespace Detox.FlowChart
                   break;
                }
 
-               node.ZoomScale = Zoom;
                node.OnPaint(e);
             }
          }
@@ -1311,8 +1347,10 @@ namespace Detox.FlowChart
                continue;
             }
 
-            PointF start = new PointF( link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width,
-                                       link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height );
+            //PointF start = new PointF( link.Source.Anchor.X / 100.0f * link.Source.Node.ZoomSize.Width,
+            //                           link.Source.Anchor.Y / 100.0f * link.Source.Node.ZoomSize.Height );
+            PointF start = new PointF( link.Source.Anchor.X / 100.0f * link.Source.Node.Size.Width,
+                                       link.Source.Anchor.Y / 100.0f * link.Source.Node.Size.Height );
 
             start  = link.Source.Node.PointToScreen( start );
             start  = PointToClient( start );
@@ -1320,8 +1358,10 @@ namespace Detox.FlowChart
             start.X += Location.X;
             start.Y += Location.Y;
 
-            PointF end = new PointF( link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width,
-                                     link.Destination.Anchor.Y / 100.0f * link.Destination.Node.ZoomSize.Height );
+            //PointF end = new PointF( link.Destination.Anchor.X / 100.0f * link.Destination.Node.ZoomSize.Width,
+            //                         link.Destination.Anchor.Y / 100.0f * link.Destination.Node.ZoomSize.Height );
+            PointF end = new PointF( link.Destination.Anchor.X / 100.0f * link.Destination.Node.Size.Width,
+                                     link.Destination.Anchor.Y / 100.0f * link.Destination.Node.Size.Height );
 
             end  = link.Destination.Node.PointToScreen( end );
             end  = PointToClient( end );
@@ -1403,14 +1443,13 @@ namespace Detox.FlowChart
             Node node = visibleList[i] as Node;
             if (node != null)
             {
-               node.ZoomScale = Zoom;
                node.OnPaint(e);
             }
          }
 
          if ( Point.Empty != m_StartMarquee )
          {
-            Point position = Detox.Windows.Forms.Cursor.Position;
+            Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
             position = this.PointToClient( position );
 
             int startX = Math.Min( m_StartMarquee.X, position.X );
@@ -1431,6 +1470,14 @@ namespace Detox.FlowChart
 
          selectedPen.Dispose();
          pen.Dispose( );
+      
+         GUI.matrix = prevGuiMatrix;
+
+         GUI.EndGroup();
+
+         // Since we had to pop two groups, we must add two more now that we're done
+         GUI.BeginGroup(new Rect(screenOffset.x, screenOffset.y, Screen.width, Screen.height));
+         GUI.BeginGroup(new Rect(screenOffset.x, screenOffset.y, Screen.width, Screen.height));
       }
 
       public void AddLink(Link link)
@@ -1625,8 +1672,6 @@ namespace Detox.FlowChart
 
    public abstract class Node : UserControl
    {
-      public bool IsCircleWhenZoomed = false;
-
       public string StyleName = "";
       public string UnselectedStyleName = "";
 
@@ -1660,12 +1705,12 @@ namespace Detox.FlowChart
 
       public bool IntersectsWith(Rectangle rectangle)
       {
-         Point p = new Point( (int) ((Location.X + Parent.Location.X) * ZoomScale),
-                              (int) ((Location.Y + Parent.Location.Y) * ZoomScale));
+         Point p = new Point( (int) ((Location.X + Parent.Location.X)),
+                              (int) ((Location.Y + Parent.Location.Y)));
 
          p = Parent.PointToClient( p );
 
-         Rectangle b = new Rectangle( p.X, p.Y, ZoomSize.Width, ZoomSize.Height );
+         Rectangle b = new Rectangle( p.X, p.Y, Size.Width, Size.Height );
 
          if ( b.Right  < rectangle.Left )   return false;
          if ( b.Left   > rectangle.Right )  return false;
@@ -1697,7 +1742,7 @@ namespace Detox.FlowChart
          Point location = PointToScreen( new Point(0,0) );
 
          float leftSide  = location.X;
-         float rightSide = location.X + ZoomSize.Width;
+         float rightSide = location.X + Size.Width;
 
          if (rightSide < visibleRect.X || leftSide > visibleRect.Right)
          {
@@ -1705,7 +1750,7 @@ namespace Detox.FlowChart
          }
 
          float topSide = location.Y;
-         float bottomSide = location.Y + ZoomSize.Height;
+         float bottomSide = location.Y + Size.Height;
 
          if (bottomSide < visibleRect.Y || topSide > visibleRect.Bottom )
          {
@@ -1719,18 +1764,16 @@ namespace Detox.FlowChart
       {
          bool found = false;
 
-         Detox.Drawing.Graphics g = CreateGraphics( );
-
          if ( m_AnchorPoints == null ) return false;
 
          foreach ( AnchorPoint ap in m_AnchorPoints )
          {
             //RectangleF rect = ap.Region.GetBounds(g);
-            float x = ap.X / 100.0f * ZoomSize.Width;
-            float y = ap.Y / 100.0f * ZoomSize.Height;
+            float x = ap.X / 100.0f * Size.Width;
+            float y = ap.Y / 100.0f * Size.Height;
 
-            float width  = ap.Width / 100.0f * ZoomSize.Width;
-            float height = ap.Height / 100.0f * ZoomSize.Height;
+            float width  = ap.Width / 100.0f * Size.Width;
+            float height = ap.Height / 100.0f * Size.Height;
 
             if ( point.X >= x - width  / 2 && point.X <= x + width / 2 &&
                  point.Y >= y - height / 2 && point.Y <= y + height / 2 )
@@ -1741,14 +1784,12 @@ namespace Detox.FlowChart
             }
          }
 
-         g.Dispose( );
-
          return found;
       }
 
       public void StartNodeMove( )
       {
-         Point position = Detox.Windows.Forms.Cursor.Position;
+         Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
          position = this.Parent.PointToClient( position );
 
          Point p = PointToScreen( new Point(0, 0) );
@@ -1759,8 +1800,8 @@ namespace Detox.FlowChart
 
       public void StartNodeResize( )
       {
-         m_MouseOffset  = Detox.Windows.Forms.Cursor.Position;
-         m_ResizeOffset = ZoomSize;
+         m_MouseOffset  = Detox.Windows.Forms.Cursor.ScaledPosition;
+         m_ResizeOffset = Size;
       }
 
       public void NodeMove( )
@@ -1769,7 +1810,7 @@ namespace Detox.FlowChart
          //for mouse coords, if we use our position
          //the mouse is relative to us which throws it off when
          //we move ourselves
-         Point position = Detox.Windows.Forms.Cursor.Position;
+         Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
          position = this.Parent.PointToClient( position );
 
          Point p = new Detox.Drawing.Point( (int) ((position.X - m_MouseOffset.X)), (int) ((position.Y - m_MouseOffset.Y)) );
@@ -1777,8 +1818,8 @@ namespace Detox.FlowChart
          p = this.Parent.PointToScreen( p );
 
          //accounting for zoom factor must take place in screen space
-         p.X = (int) (p.X / ZoomScale);
-         p.Y = (int) (p.Y / ZoomScale);
+         //p.X = (int) (p.X / ZoomScale);
+         //p.Y = (int) (p.Y / ZoomScale);
 
          p = this.Parent.PointToClient( p );
 
@@ -1791,7 +1832,7 @@ namespace Detox.FlowChart
          //for mouse coords, if we use our position
          //the mouse is relative to us which throws it off when
          //we move ourselves
-         Point position = Detox.Windows.Forms.Cursor.Position;
+         Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
 
          Size = new Detox.Drawing.Size(m_ResizeOffset.Width + position.X - m_MouseOffset.X, m_ResizeOffset.Height + position.Y - m_MouseOffset.Y );
 
@@ -1853,36 +1894,23 @@ namespace Detox.FlowChart
          Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
 
          Rectangle nodeRect = new Rectangle( );
-         nodeRect.X      = (int) (location.X * ZoomScale);
-         nodeRect.Y      = (int) (location.Y * ZoomScale);
-         nodeRect.Width  = (int) (ZoomSize.Width);
-         nodeRect.Height = (int) (ZoomSize.Height);
+         //nodeRect.X      = (int) (location.X * ZoomScale);
+         //nodeRect.Y      = (int) (location.Y * ZoomScale);
+         //nodeRect.Width  = (int) (ZoomSize.Width);
+         //nodeRect.Height = (int) (ZoomSize.Height);
+
+         nodeRect.X      = (int) (location.X);
+         nodeRect.Y      = (int) (location.Y);
+         nodeRect.Width  = (int) (Size.Width);
+         nodeRect.Height = (int) (Size.Height);
 
          // Draw the node
-         if ( 1.0f != ZoomScale )
-         {
-            if ( true == IsCircleWhenZoomed )
-            {
-               UnityEngine.Color color = Handles.color;
-
-               Handles.color = uScriptConfig.GetStyleColor(StyleName);
-
-               Handles.DrawSolidDisc(new Vector3(nodeRect.X + nodeRect.Width / 2, nodeRect.Y + nodeRect.Height / 2, 0), new Vector3(0, 0, -1), nodeRect.Width / 2.0f);
-
-               Handles.color = color;
-            }
-            else
-            {
-               e.Graphics.FillRectangle(StyleName, nodeRect, Name, this);
-            }
-         }
-         else
          {
             e.Graphics.FillRectangle(StyleName, nodeRect, Name, this);
 
             FlowChartCtrl flowChart = Parent as FlowChartCtrl;
 
-            Point position = Detox.Windows.Forms.Cursor.Position;
+            Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
             position = PointToClient( position );
 
 
@@ -1892,10 +1920,13 @@ namespace Detox.FlowChart
 
                bool connecting = false;
 
-               float x = point.X / 100.0f * ZoomSize.Width;
-               float y = point.Y / 100.0f * ZoomSize.Height;
+               //float x = point.X / 100.0f * ZoomSize.Width;
+               //float y = point.Y / 100.0f * ZoomSize.Height;
+               float x = point.X / 100.0f * Size.Width;
+               float y = point.Y / 100.0f * Size.Height;
 
-               float diameter = (point.Width / 100.0f * ZoomSize.Width);
+               //float diameter = (point.Width / 100.0f * ZoomSize.Width);
+               float diameter = (point.Width / 100.0f * Size.Width);
                float radius   = (diameter / 2.0f + 0.5f);
 
                if ( true == flowChart.LinkStartAnchor.Output && true == point.Input ||
@@ -1934,8 +1965,10 @@ namespace Detox.FlowChart
 
             for (int i = 0; i < TextPoints.Count(); i++)
             {
-               float x = TextPoints[i].X / 100.0f * ZoomSize.Width;
-               float y = TextPoints[i].Y / 100.0f * ZoomSize.Height;
+               //float x = TextPoints[i].X / 100.0f * ZoomSize.Width;
+               //float y = TextPoints[i].Y / 100.0f * ZoomSize.Height;
+               float x = TextPoints[i].X / 100.0f * Size.Width;
+               float y = TextPoints[i].Y / 100.0f * Size.Height;
 
                //trapperm...
                //we do Size.Height + 14 because we want some text to be able to hang off of the
@@ -1950,12 +1983,14 @@ namespace Detox.FlowChart
                }
 
                // Socket labels
-               GUI.Label( new Rect(x + location.X, y + location.Y, ZoomSize.Width - x, (ZoomSize.Height + 14) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
+               //GUI.Label( new Rect(x + location.X, y + location.Y, ZoomSize.Width - x, (ZoomSize.Height + 14) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
+               GUI.Label( new Rect(x + location.X, y + location.Y, Size.Width - x, (Size.Height + 14) - y), TextPoints[i].Name, uScriptConfig.Style.Get(TextPoints[i].StyleName) );
             }
 
             if ( CanResize )
             {
-               Rect rect = new Rect( location.X + ZoomSize.Width - uScriptConfig.ResizeTexture.width, location.Y + ZoomSize.Height - uScriptConfig.ResizeTexture.height, uScriptConfig.ResizeTexture.width, uScriptConfig.ResizeTexture.height );
+               //Rect rect = new Rect( location.X + ZoomSize.Width - uScriptConfig.ResizeTexture.width, location.Y + ZoomSize.Height - uScriptConfig.ResizeTexture.height, uScriptConfig.ResizeTexture.width, uScriptConfig.ResizeTexture.height );
+               Rect rect = new Rect( location.X + Size.Width - uScriptConfig.ResizeTexture.width, location.Y + Size.Height - uScriptConfig.ResizeTexture.height, uScriptConfig.ResizeTexture.width, uScriptConfig.ResizeTexture.height );
                GUI.DrawTexture( rect, uScriptConfig.ResizeTexture );
             }
          }

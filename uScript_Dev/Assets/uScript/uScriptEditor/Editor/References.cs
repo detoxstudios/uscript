@@ -563,16 +563,6 @@ namespace Detox.Windows.Forms
       //which will take into account the child and parent zooms
       //then you can translate back PointToClient
 
-      public float ZoomScale = 1.0f;
-
-      public Size ZoomSize
-      {
-         get
-         {
-            return new Size( (int) (Size.Width * ZoomScale), (int) (Size.Height * ZoomScale) );
-         }
-      }
-
       public Rectangle Bounds
       {
          get
@@ -597,8 +587,8 @@ namespace Detox.Windows.Forms
             location = Parent.PointToScreen( location );
          }
 
-         location.X = (int) (location.X * ZoomScale);
-         location.Y = (int) (location.Y * ZoomScale);
+         //location.X = (int) (location.X * ZoomScale);
+         //location.Y = (int) (location.Y * ZoomScale);
 
          p.X = point.X + location.X;
          p.Y = point.Y + location.Y;
@@ -617,8 +607,8 @@ namespace Detox.Windows.Forms
             location = Parent.PointToScreen( location );
          }
 
-         location.X = (int) (location.X * ZoomScale);
-         location.Y = (int) (location.Y * ZoomScale);
+         //location.X = (int) (location.X * ZoomScale);
+         //location.Y = (int) (location.Y * ZoomScale);
 
          p.X = point.X + location.X;
          p.Y = point.Y + location.Y;
@@ -635,8 +625,8 @@ namespace Detox.Windows.Forms
             p = Parent.PointToClient( p );
          }
 
-         p.X = (int)(point.X - ((Location.X - p.X) * ZoomScale));
-         p.Y = (int)(point.Y - ((Location.Y - p.Y) * ZoomScale));
+         p.X = (int)(point.X - ((Location.X - p.X)));
+         p.Y = (int)(point.Y - ((Location.Y - p.Y)));
 
          return p;
       }
@@ -650,8 +640,8 @@ namespace Detox.Windows.Forms
             p = Parent.PointToClient( p );
          }
 
-         p.X = point.X - ((Location.X - p.X) * ZoomScale);
-         p.Y = point.Y - ((Location.Y - p.Y) * ZoomScale);
+         p.X = point.X - ((Location.X - p.X));
+         p.Y = point.Y - ((Location.Y - p.Y));
 
          return p;
       }
@@ -660,7 +650,7 @@ namespace Detox.Windows.Forms
       public event MouseEventHandler MouseDown;
       public event MouseEventHandler MouseUp;
 
-      public bool OnMouseDown( Detox.Windows.Forms.MouseEventArgs e )
+      public bool OnMouseDown( )
       {
          Control []controls = Controls.ToArray( );
          int i;
@@ -669,16 +659,16 @@ namespace Detox.Windows.Forms
          {
             Control control = controls[i];
 
-            if ( true == control.OnMouseDown(e) )
+            if ( true == control.OnMouseDown() )
             {
                return true;
             }
          }
 
-         Point point = PointToClient( new Point(e.X, e.Y) );
+         Point point = PointToClient( Cursor.ScaledPosition );
 
-         bool inRect = point.X > 0 && point.X < ZoomSize.Width &&
-                       point.Y > 0 && point.Y < ZoomSize.Height;
+         bool inRect = point.X > 0 && point.X < Size.Width &&
+                       point.Y > 0 && point.Y < Size.Height;
          
          if ( false == m_MouseIsDown &&
               true == inRect )
@@ -688,7 +678,7 @@ namespace Detox.Windows.Forms
             Detox.Windows.Forms.MouseEventArgs args = new Detox.Windows.Forms.MouseEventArgs( );
             args.X = point.X;
             args.Y = point.Y;
-            args.Button = e.Button;
+            args.Button = Cursor.Button;
 
             if ( null != MouseDown ) MouseDown( this, args );
          }
@@ -696,18 +686,18 @@ namespace Detox.Windows.Forms
          return inRect;
       }
 
-      public void OnMouseUp( Detox.Windows.Forms.MouseEventArgs e )
+      public void OnMouseUp( )
       {
          if ( true == m_MouseIsDown )
          {
             m_MouseIsDown = false;
 
-            Point point = PointToClient( new Point(e.X, e.Y) );
+            Point point = PointToClient( Cursor.ScaledPosition );
             
             Detox.Windows.Forms.MouseEventArgs args = new Detox.Windows.Forms.MouseEventArgs( );
             args.X = point.X;
             args.Y = point.Y;
-            args.Button = e.Button;
+            args.Button = Cursor.Button;
 
             if ( null != MouseUp ) MouseUp( this, args );
          }
@@ -716,20 +706,20 @@ namespace Detox.Windows.Forms
 
          foreach ( Control control in controls )
          {
-            control.OnMouseUp( e );
+            control.OnMouseUp( );
          }
       }
 
-      public void OnMouseMove( Detox.Windows.Forms.MouseEventArgs e )
+      public void OnMouseMove( )
       {
          if ( true == m_MouseIsDown )
          {
-            Point point = PointToClient( new Point(e.X, e.Y) );
+            Point point = PointToClient( Cursor.ScaledPosition );
             
             Detox.Windows.Forms.MouseEventArgs args = new Detox.Windows.Forms.MouseEventArgs( );
             args.X = point.X;
             args.Y = point.Y;
-            args.Button = e.Button;
+            args.Button = Cursor.Button;
 
             if ( null != MouseMove ) MouseMove( this, args );
          }
@@ -738,7 +728,7 @@ namespace Detox.Windows.Forms
 
          foreach ( Control control in controls )
          {
-            control.OnMouseMove( e );
+            control.OnMouseMove( );
          }
       }
 
@@ -772,7 +762,16 @@ namespace Detox.Windows.Forms
 
    public class Cursor
    {
-      static public Point Position;
+      static public int Button;
+      static public Point AbsolutePosition;
+
+      static public Point ScaledPosition 
+      { 
+         get 
+         { 
+            return new Point( (int) (AbsolutePosition.X / uScript.Instance.MapScale), (int) (AbsolutePosition.Y / uScript.Instance.MapScale) );
+         }
+      }
    }
 
    public struct Keys

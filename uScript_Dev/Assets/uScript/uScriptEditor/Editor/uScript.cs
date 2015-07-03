@@ -78,7 +78,7 @@ public sealed partial class uScript : EditorWindow
    private ScriptEditorCtrl m_ScriptEditorCtrl;
 
    private bool mouseDown;
-   private bool mouseDownOverCanvas;
+   private bool mouseDownOverCanvas; 
 
    private bool wantsCopy;
    private bool wantsCut;
@@ -830,6 +830,9 @@ public sealed partial class uScript : EditorWindow
 
       m_ScriptEditorCtrl.IsDirty = this.currentScriptDirty || this.patches.Length > 0;
 
+      undoObject = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
+      undoObject.UndoNumber = m_UndoNumber;
+
       //clear out all patches and cache new copy of the script
       CacheScript();
 
@@ -1168,7 +1171,7 @@ public sealed partial class uScript : EditorWindow
          m_ScriptEditorCtrl.DeselectAll();
 
          Point canvasPosition = (this.pendingNodeUsesMousePosition
-            ? Detox.Windows.Forms.Cursor.Position
+            ? Detox.Windows.Forms.Cursor.ScaledPosition
             : new Point((int)(NodeWindowRect.width * 0.5f), (int)(NodeWindowRect.height * 0.5f))); // viewport center
 
          EntityNode entityNode = uScriptGUIPanelPalette.Instance.GetToolboxNode(this.pendingNodeSignature);
@@ -2314,7 +2317,7 @@ public sealed partial class uScript : EditorWindow
          case EventType.ScrollWheel:
             if (_canvasRect.Contains(e.mousePosition))
             {
-               this.zoomPoint = Detox.Windows.Forms.Cursor.Position;
+               this.zoomPoint = Detox.Windows.Forms.Cursor.AbsolutePosition;
 
                float newScale = Mathf.Clamp(this.mapScale - Mathf.Clamp(e.delta.y * 0.01f, -1, 1), 0.1f, 1.0f);
 
@@ -3191,12 +3194,12 @@ public sealed partial class uScript : EditorWindow
 
    private void CommandCanvasZoomIn()
    {
-      this.mapScale = Mathf.Min(this.mapScale + 0.1f, 1.0f);
+      this.mapScale = Mathf.Min(this.mapScale * .9f, 1.0f);
    }
 
    private void CommandCanvasZoomOut()
    {
-      this.mapScale = Mathf.Max(this.mapScale - 0.1f, 0.1f);
+      this.mapScale = Mathf.Max(this.mapScale * - .9f, 0.1f);
    }
 
    private void CommandCanvasLocateOrigin()
@@ -3721,22 +3724,22 @@ public sealed partial class uScript : EditorWindow
    {
       Control.MouseButtons.Buttons = m_MouseDownArgs.Button;
 
-      Detox.Windows.Forms.Cursor.Position.X = m_MouseDownArgs.X;
-      Detox.Windows.Forms.Cursor.Position.Y = m_MouseDownArgs.Y;
+      Detox.Windows.Forms.Cursor.AbsolutePosition = new Point(m_MouseDownArgs.X, m_MouseDownArgs.Y );
+      Detox.Windows.Forms.Cursor.Button = m_MouseDownArgs.Button;
 
       //      Debug.Log("BUTTON " + Control.MouseButtons.Buttons + " - OnMouseDown() at " + Detox.Windows.Forms.Cursor.Position.ToString() + "\n");
 
-      m_ScriptEditorCtrl.OnMouseDown(m_MouseDownArgs);
+      m_ScriptEditorCtrl.OnMouseDown();
    }
 
    public void OnMouseUp()
    {
-      Detox.Windows.Forms.Cursor.Position.X = m_MouseUpArgs.X;
-      Detox.Windows.Forms.Cursor.Position.Y = m_MouseUpArgs.Y;
+      Detox.Windows.Forms.Cursor.AbsolutePosition = new Point( m_MouseUpArgs.X, m_MouseUpArgs.Y );
+      Detox.Windows.Forms.Cursor.Button = m_MouseUpArgs.Button;
 
       //      Debug.Log("BUTTON " + Control.MouseButtons.Buttons + " - OnMouseUp() at " + Detox.Windows.Forms.Cursor.Position.ToString() + "\n");
 
-      m_ScriptEditorCtrl.OnMouseUp(m_MouseUpArgs);
+      m_ScriptEditorCtrl.OnMouseUp();
 
       this.currentCanvasPosition = m_ScriptEditorCtrl.FlowChart.Location.X.ToString() + "," + m_ScriptEditorCtrl.FlowChart.Location.Y.ToString();
       if (!String.IsNullOrEmpty(this.fullPath))
@@ -3744,6 +3747,7 @@ public sealed partial class uScript : EditorWindow
          SetSetting("uScript\\" + uScriptConfig.ConstantPaths.RelativePath(this.fullPath) + "\\CanvasPosition", this.currentCanvasPosition);
       }
 
+      Detox.Windows.Forms.Cursor.Button = 0;
       Control.MouseButtons.Buttons = 0;
    }
 
@@ -3768,12 +3772,12 @@ public sealed partial class uScript : EditorWindow
       //                + "\n_canvasRect: \t\t\t" + _canvasRect.x.ToString() + ", " + _canvasRect.y.ToString() + " ... "
       //                + (uScriptGUI.panelLeftWidth + DIVIDER_WIDTH - 1).ToString());
 
-      Detox.Windows.Forms.Cursor.Position.X = m_MouseMoveArgs.X;
-      Detox.Windows.Forms.Cursor.Position.Y = m_MouseMoveArgs.Y;
+      Detox.Windows.Forms.Cursor.AbsolutePosition = new Point( m_MouseMoveArgs.X, m_MouseMoveArgs.Y );
+      Detox.Windows.Forms.Cursor.Button = m_MouseMoveArgs.Button;
 
       if (this.mouseRegion == MouseRegion.Canvas)
       {
-         m_ScriptEditorCtrl.OnMouseMove(m_MouseMoveArgs);
+         m_ScriptEditorCtrl.OnMouseMove();
       }
 
       // convert back to screen
@@ -4942,8 +4946,6 @@ public sealed partial class uScript : EditorWindow
 
       List<EntityEvent> entityEvents = new List<EntityEvent>();
 
-      Hashtable propertyInEvent = new Hashtable();
-
       foreach (EventInfo e in eventInfos)
       {
          if (true == baseEvents.Contains(e.Name)) continue;
@@ -5016,9 +5018,6 @@ public sealed partial class uScript : EditorWindow
 
       foreach (PropertyInfo p in propertyInfos)
       {
-         if (null != propertyInEvent[p.Name])
-            continue;
-
          bool isInput = p.GetSetMethod() != null;
          bool isOutput = p.GetGetMethod() != null;
 

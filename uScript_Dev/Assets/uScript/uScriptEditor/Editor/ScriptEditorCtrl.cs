@@ -486,11 +486,11 @@ namespace Detox.ScriptEditor
          {
             EntityNode entityNode = ((DisplayNode)node).EntityNode;
 
-            Point point = node.PointToClient( Cursor.Position );
+            Point point = node.PointToClient( Cursor.ScaledPosition );
 
             if ( point.X >= 0 && point.Y >= 0 && 
-                 point.X <= node.ZoomSize.Width &&
-                 point.Y <= node.ZoomSize.Height )
+                 point.X <= node.Size.Width &&
+                 point.Y <= node.Size.Height )
             {      
                string type = ScriptEditor.FindNodeType(entityNode);
                Type t = uScriptUtils.GetAssemblyQualifiedType(type);
@@ -575,11 +575,11 @@ namespace Detox.ScriptEditor
          {
             EntityNode entityNode = ((DisplayNode)node).EntityNode;
 
-            Point point = node.PointToClient( Cursor.Position );
+            Point point = node.PointToClient( Cursor.ScaledPosition );
 
             if ( point.X >= 0 && point.Y >= 0 && 
-                 point.X <= node.ZoomSize.Width &&
-                 point.Y <= node.ZoomSize.Height )
+                 point.X <= node.Size.Width &&
+                 point.Y <= node.Size.Height )
             {
                string type = ScriptEditor.FindNodeType(entityNode);
                Type t = uScriptUtils.GetAssemblyQualifiedType(type);
@@ -747,11 +747,11 @@ namespace Detox.ScriptEditor
          // first check to make sure we're not over a node
          foreach ( Node node in m_FlowChart.Nodes )
          {
-            Point point = node.PointToClient( Cursor.Position );
+            Point point = node.PointToClient( Cursor.ScaledPosition );
 
             if ( point.X >= 0 && point.Y >= 0 && 
-                 point.X <= node.ZoomSize.Width &&
-                 point.Y <= node.ZoomSize.Height )
+                 point.X <= node.Size.Width &&
+                 point.Y <= node.Size.Height )
             {               
                return false;
             }
@@ -769,7 +769,7 @@ namespace Detox.ScriptEditor
       {
          //no nodes were intersected so allow context menu
          m_ContextObject = objects;
-         m_ContextCursor = Detox.Windows.Forms.Cursor.Position;
+         m_ContextCursor = Detox.Windows.Forms.Cursor.ScaledPosition;
          m_ContextCursor = m_FlowChart.PointToClient( m_ContextCursor );
 
          m_ContextMenuStrip.Items.Clear( );
@@ -1251,7 +1251,7 @@ namespace Detox.ScriptEditor
          {
             Patch.Batch batchPatch = new Detox.Patch.Batch( "Add Linked Variable" );
 
-            Point point = m_FlowChart.PointToClient( Cursor.Position );
+            Point point = m_FlowChart.PointToClient( Cursor.ScaledPosition );
 
             List<Guid> guidsToSelect = new List<Guid>();
 
@@ -2129,7 +2129,7 @@ namespace Detox.ScriptEditor
                int halfHeight = (int)(uScript.Instance.NodeWindowRect.height / 2.0f);
                Point center = new Point((int)(minX + (maxX - minX) / 2.0f), (int)(minY + (maxY - minY) / 2.0f));
                m_FlowChart.Location = new Point(Math.Min(0, Math.Max(-System.UInt16.MaxValue, -center.X + halfWidth)), Math.Min(0, Math.Max(-System.UInt16.MaxValue, -center.Y + halfHeight - (int)uScript.Instance.NodeToolbarRect.height)));
-//               m_FlowChart.Invalidate( );  // RefreshScript (zoomExtents)
+               //               m_FlowChart.Invalidate( );  // RefreshScript (zoomExtents)
             }
          }
 
@@ -2570,7 +2570,7 @@ namespace Detox.ScriptEditor
       private void m_ContextMenuStrip_Opening(object sender, CancelEventArgs args)
       {
          m_ContextObject = null;
-         m_ContextCursor = Detox.Windows.Forms.Cursor.Position;
+         m_ContextCursor = Detox.Windows.Forms.Cursor.ScaledPosition;
          m_ContextCursor = m_FlowChart.PointToClient( m_ContextCursor );
 
          m_ContextMenuStrip.Items.Clear( );
@@ -2770,7 +2770,7 @@ namespace Detox.ScriptEditor
             EntityNode entityNode = ((DisplayNode)node).EntityNode;
             if ( entityNode is LocalNode ) continue;
 
-            Point position = Detox.Windows.Forms.Cursor.Position;
+            Point position = Detox.Windows.Forms.Cursor.ScaledPosition;
             position = node.PointToClient( position );
 
             AnchorPoint hitPoint = new AnchorPoint( );
@@ -3657,15 +3657,12 @@ namespace Detox.ScriptEditor
       {
          UpdateStyleName();   // remove this later when we figure out why removing it doesn't initialize StyleName correctly
    
-         if (1.0f == ZoomScale)
+         if (m_EntityNode.Comment != Parameter.Empty && !String.IsNullOrEmpty(m_EntityNode.Comment.Default))
          {
-            if (m_EntityNode.Comment != Parameter.Empty && !String.IsNullOrEmpty(m_EntityNode.Comment.Default))
-            {
-               String comment = m_EntityNode.Comment.Default;
-               Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
+            String comment = m_EntityNode.Comment.Default;
+            Point location = new Point( Location.X + Parent.Location.X, Location.Y + Parent.Location.Y );
             
-               e.Graphics.FillRectangle("title_comment", new Rectangle(location.X, location.Y, Size.Width, Size.Height), comment, this);
-            }
+            e.Graphics.FillRectangle("title_comment", new Rectangle(location.X, location.Y, Size.Width, Size.Height), comment, this);
          }
 
          base.OnPaint( e );
@@ -3704,11 +3701,11 @@ namespace Detox.ScriptEditor
             m_CenteredOnBP = true;
          }
 
-         radius *= ZoomScale;
+         //radius *= ZoomScale;
 
          PointF location = new PointF( Location.X + Parent.Location.X + radius / 2, Location.Y + Parent.Location.Y + radius / 2);
-         location.X *= ZoomScale;
-         location.Y *= ZoomScale;
+         //location.X *= ZoomScale;
+         //location.Y *= ZoomScale;
 
          UnityEditor.Handles.DrawSolidDisc(new UnityEngine.Vector3(location.X, location.Y, 0), new UnityEngine.Vector3(0, 0, -1), radius);
       
