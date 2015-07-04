@@ -126,6 +126,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\EntityMethodDisplayNode.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\EntityPropertyDisplayNode.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ExportPNG.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\Extensions\UnityEditorExtensions.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\FlowChart.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GraphInfo.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\HierarchyWindowIcon.cs" />
