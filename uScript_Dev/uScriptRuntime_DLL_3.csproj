@@ -119,6 +119,7 @@
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Lerper.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_MasterComponent.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_Runtime.cs" />
+    <Compile Include="Assets\uScript\uScriptRuntime\Components\uScript_UndoObject.cs" />
     <Compile Include="Assets\uScript\uScriptRuntime\uScriptUnityVersion.cs" />
   </ItemGroup>
   <ItemGroup>
