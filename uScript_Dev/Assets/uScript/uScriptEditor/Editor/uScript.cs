@@ -4016,7 +4016,7 @@ public sealed partial class uScript : EditorWindow
 
    public void StubGeneratedCode(string path)
    {
-      RebuildScripts(path, true);
+      RebuildScripts(path);
    }
 
    public void RebuildAllScripts()
