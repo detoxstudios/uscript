@@ -44,7 +44,7 @@ namespace Detox.Editor.GUI
          get
          {
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
-            return uScript.GetGraphPath(this.ItemName);
+            return uScript.GetGraphPath(this.ItemName + ".uscript");
 #else
             return uScript.Preferences.UserScripts + "/" + this.ItemPath;
 #endif
