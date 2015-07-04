@@ -179,6 +179,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewColumn.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItem.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItemData.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\uScript_UndoComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
