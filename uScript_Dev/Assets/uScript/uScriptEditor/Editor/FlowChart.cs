@@ -16,6 +16,7 @@ namespace Detox.FlowChart
    using System.Reflection;
 
    using Detox.Drawing;
+   using Detox.Editor;
    using Detox.Windows.Forms;
 
    using UnityEditor;
@@ -63,6 +64,8 @@ namespace Detox.FlowChart
             //of at the top left
 
             if ( m_PrevZoom == Zoom ) return;
+
+            uScriptGUI.AntiAlias(Zoom);
 
             foreach ( Node n in m_Nodes.Values )
             {

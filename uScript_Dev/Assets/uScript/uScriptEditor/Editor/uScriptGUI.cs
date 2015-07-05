@@ -247,6 +247,11 @@ namespace Detox.Editor
 
       // === Methods ====================================================================
 
+      public static void AntiAlias(float zoomScale)
+      {
+         uScript.Instance.antiAlias = zoomScale < 1 ? 2 : 0;
+      }
+
       public static void InitPanels()
       {
          if (panelsInitialized)
