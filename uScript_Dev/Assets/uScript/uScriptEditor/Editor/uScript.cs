@@ -87,7 +87,7 @@ public sealed partial class uScript : EditorWindow
    private bool rebuildWhenReady;
 
    private float mapScale = 1.0f;
-   private Point zoomPoint = new Point(0, 0);
+   private Vector2 zoomPoint;
 
    private string pendingNodeSignature = string.Empty;
    private bool pendingNodeUsesMousePosition;
@@ -2323,7 +2323,9 @@ public sealed partial class uScript : EditorWindow
             {
                const float Divisor = 300 / 9f;
 
-               this.zoomPoint = Detox.Windows.Forms.Cursor.AbsolutePosition;
+               this.zoomPoint = new Vector2(
+                  Detox.Windows.Forms.Cursor.AbsolutePosition.X,
+                  Detox.Windows.Forms.Cursor.AbsolutePosition.Y);
 
                float newScale = Mathf.Clamp(this.mapScale - Mathf.Clamp(e.delta.y / Divisor, -1, 1), 0.1f, 1.0f);
 
@@ -3183,11 +3185,13 @@ public sealed partial class uScript : EditorWindow
    private void CommandCanvasZoomIn()
    {
       this.mapScale = Mathf.Min(this.mapScale + 0.09f, 1.0f);
+      this.zoomPoint = new Vector2(this._canvasRect.width * 0.5f, this._canvasRect.height * 0.5f);
    }
 
    private void CommandCanvasZoomOut()
    {
       this.mapScale = Mathf.Max(this.mapScale - 0.09f, 0.1f);
+      this.zoomPoint = new Vector2(this._canvasRect.width * 0.5f, this._canvasRect.height * 0.5f);
    }
 
    private void CommandCanvasLocateOrigin()
@@ -3469,7 +3473,7 @@ public sealed partial class uScript : EditorWindow
                if (m_ScriptEditorCtrl != null)
                {
                   m_ScriptEditorCtrl.FlowChart.Zoom = this.mapScale;
-                  m_ScriptEditorCtrl.FlowChart.ZoomPoint = this.zoomPoint;
+                  m_ScriptEditorCtrl.FlowChart.ZoomPoint = new Point((int)this.zoomPoint.x, (int)this.zoomPoint.y);
 
                   m_ScriptEditorCtrl.GuiPaint(args);
                }

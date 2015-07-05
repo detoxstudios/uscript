@@ -96,8 +96,9 @@ namespace Detox.FlowChart
 
             m_PrevZoom = Zoom;
 
-            Location.X = (int) x;
-            Location.Y = (int) y;
+            // Apply a magic offset that prevents crawling when zooming in and out
+            Location.X = (int)(x - 0.5f);
+            Location.Y = (int)(y - 0.5f);
          }
       }
 

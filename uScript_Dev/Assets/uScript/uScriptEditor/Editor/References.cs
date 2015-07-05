@@ -767,9 +767,11 @@ namespace Detox.Windows.Forms
 
       static public Point ScaledPosition 
       { 
-         get 
-         { 
-            return new Point( (int) (AbsolutePosition.X / uScript.Instance.MapScale), (int) (AbsolutePosition.Y / uScript.Instance.MapScale) );
+         get
+         {
+            return new Point(
+               (int)(AbsolutePosition.X / uScript.Instance.MapScale),
+               (int)(AbsolutePosition.Y / uScript.Instance.MapScale));
          }
       }
    }
