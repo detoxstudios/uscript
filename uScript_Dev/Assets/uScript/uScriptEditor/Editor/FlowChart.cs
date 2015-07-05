@@ -1181,7 +1181,7 @@ namespace Detox.FlowChart
          Rect clippedArea = ScaleSizeBy(boundingArea, 1.0f / Zoom, TopLeft(boundingArea));
 
          clippedArea.x += screenOffset.x;
-         clippedArea.y += screenOffset.y;
+         clippedArea.y += 22 + screenOffset.y;
          
          GUI.BeginGroup(clippedArea);
 
