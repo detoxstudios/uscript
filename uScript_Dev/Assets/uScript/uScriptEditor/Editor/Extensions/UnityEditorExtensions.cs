@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UnityEditorExtensions.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2014 Detox Studios, LLC. All rights reserved.
+//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Defines the Extensions type.
@@ -20,7 +20,7 @@ namespace Detox.Editor.Extensions
       public static Vector2 DockedGUIOffset(this EditorWindow editorWindow)
       {
          var offset = Vector2.zero;
-         var borderSize = editorWindow.ParentBorderSize();
+         var borderSize = ParentBorderSize(editorWindow);
 
          offset.x = borderSize.left;
          offset.y = (borderSize.bottom == 2 || borderSize.bottom == 4) ? -3 : 0;
@@ -35,12 +35,18 @@ namespace Detox.Editor.Extensions
          // Get the viewport border size from Unity via reflection
          const BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
          var fi = editorWindow.GetType().GetField("m_Parent", Flags);
-         System.Diagnostics.Debug.Assert(fi != null, "fi is null");
-         if (fi != null)
+         if (fi == null)
+         {
+            uScriptDebug.Log("The m_Parent field info is null.", uScriptDebug.Type.Error);
+         }
+         else
          {
             var parent = fi.GetValue(editorWindow);
-            System.Diagnostics.Debug.Assert(parent != null, "parent is null");
-            if (parent != null)
+            if (parent == null)
+            {
+               uScriptDebug.Log("The parent EditorWindow is null.", uScriptDebug.Type.Error);
+            }
+            else
             {
                var pi = parent.GetType().GetProperty("borderSize", Flags);
                borderSize = pi.GetValue(parent, null) as RectOffset;
