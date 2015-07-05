@@ -451,7 +451,7 @@ public sealed partial class uScript : EditorWindow
       foreach (var guid in guids)
       {
          var path = AssetDatabase.GUIDToAssetPath(guid);
-         if (path.Contains(fileName)) return path;
+         if (path.Substring(path.LastIndexOf("/") + 1) == fileName) return path;
       }
 
       return string.Empty;
@@ -4054,7 +4054,10 @@ public sealed partial class uScript : EditorWindow
       List<string> files = GetGraphPaths();
       foreach (string file in files)
       {
-         this.RebuildScript(file, stubCode);
+         if (file.Contains(path))
+         {
+            this.RebuildScript(file, stubCode);
+         }
       }
 #else
       var directory = new DirectoryInfo(path);
