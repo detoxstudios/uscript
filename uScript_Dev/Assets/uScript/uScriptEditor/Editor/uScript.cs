@@ -1683,11 +1683,15 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   void OnGUI_HandleInput_Canvas()
+   private void OnGUI_HandleInput_Canvas()
    {
       Event e = Event.current;
 
-      if (e == null) { Control.ModifierKeys.Pressed = 0; return; }
+      if (e == null)
+      {
+         Control.ModifierKeys.Pressed = 0;
+         return;
+      }
 
       int modifierKeys = 0;
 
@@ -1731,7 +1735,7 @@ public sealed partial class uScript : EditorWindow
                   var showAsContext = new Profile("ShowAsContext");
 
                   this._canvasContextMenu.ShowAsContext();
-               
+
                   showAsContext.End();
                }
 
@@ -1794,7 +1798,7 @@ public sealed partial class uScript : EditorWindow
             }
             break;
 
-         // drag events
+            // drag events
          case EventType.DragExited:
             break;
 
@@ -1806,7 +1810,7 @@ public sealed partial class uScript : EditorWindow
             m_MouseMoveArgs.Y = (int)e.mousePosition.y;
             break;
 
-         // key events
+            // key events
          case EventType.KeyDown:
             if (e.keyCode != KeyCode.None)
             {
@@ -1822,10 +1826,10 @@ public sealed partial class uScript : EditorWindow
                {
                   switch (e.keyCode)
                   {
-                     case KeyCode.F:   // Open File Menu
-                     case KeyCode.G:   // Toggle grid visibility
-                     case KeyCode.H:   // Position graph at (0, 0)
-                     case KeyCode.W:   // Close uScript Editor window
+                     case KeyCode.F: // Open File Menu
+                     case KeyCode.G: // Toggle grid visibility
+                     case KeyCode.H: // Position graph at (0, 0)
+                     case KeyCode.W: // Close uScript Editor window
                         e.Use();
                         break;
                   }
@@ -1834,19 +1838,19 @@ public sealed partial class uScript : EditorWindow
                {
                   switch (e.keyCode)
                   {
-                     case KeyCode.Greater:   // Expand All
-                     case KeyCode.Less:      // Collapse All
-                     case KeyCode.End:       // Snap selected nodes to grid
-                     case KeyCode.A:         // Save As ...
-                     case KeyCode.D:         // Debug Save
-                     case KeyCode.E:         // Export PNG
-                     case KeyCode.F:         // Open File Menu
-                     case KeyCode.G:         // Toggle grid snapping
-                     case KeyCode.N:         // New uScript graph
-                     case KeyCode.O:         // Open uScript graph
-                     case KeyCode.Q:         // Quick Save
-                     case KeyCode.R:         // Release Save
-                     case KeyCode.S:         // Save
+                     case KeyCode.Greater: // Expand All
+                     case KeyCode.Less: // Collapse All
+                     case KeyCode.End: // Snap selected nodes to grid
+                     case KeyCode.A: // Save As ...
+                     case KeyCode.D: // Debug Save
+                     case KeyCode.E: // Export PNG
+                     case KeyCode.F: // Open File Menu
+                     case KeyCode.G: // Toggle grid snapping
+                     case KeyCode.N: // New uScript graph
+                     case KeyCode.O: // Open uScript graph
+                     case KeyCode.Q: // Quick Save
+                     case KeyCode.R: // Release Save
+                     case KeyCode.S: // Save
                         e.Use();
                         break;
                   }
@@ -1856,7 +1860,7 @@ public sealed partial class uScript : EditorWindow
                   switch (e.keyCode)
                   {
                      case KeyCode.Period: // Expand Selection
-                     case KeyCode.Comma:  // Collapse Selection
+                     case KeyCode.Comma: // Collapse Selection
                         e.Use();
                         break;
                   }
@@ -1872,7 +1876,7 @@ public sealed partial class uScript : EditorWindow
                   switch (e.keyCode)
                   {
                      case KeyCode.Period: // Expand All
-                     case KeyCode.Comma:  // Collapse All
+                     case KeyCode.Comma: // Collapse All
                         e.Use();
                         break;
                   }
@@ -1884,39 +1888,39 @@ public sealed partial class uScript : EditorWindow
                {
                   switch (e.keyCode)
                   {
-                     case KeyCode.F1:              // Open uScript online documentation
-                     case KeyCode.Backspace:       // Delete graph selection
-                     case KeyCode.Delete:          // Delete graph selection
-                     case KeyCode.Greater:         // Expand Selection
-                     case KeyCode.Less:            // Collapse Selection
-                     case KeyCode.Escape:          // Drop graph selection
-                     case KeyCode.Home:            // Position graph at (0, 0)
-                     case KeyCode.LeftBracket:     // Position graph at previous Event node
-                     case KeyCode.RightBracket:    // Position graph at next Event node
-                     case KeyCode.BackQuote:       // Toggle panel visibility
-                     case KeyCode.Backslash:       // Toggle panel visibility
-                     case KeyCode.Minus:           // Zoom graph out
-                     case KeyCode.Equals:          // Zoom graph in
-                     case KeyCode.Alpha0:          // Zoom graph default
-                     case KeyCode.Alpha1:          // (onMouseUp) Place FavoriteNode1
-                     case KeyCode.Alpha2:          // (onMouseUp) Place FavoriteNode2
-                     case KeyCode.Alpha3:          // (onMouseUp) Place FavoriteNode3
-                     case KeyCode.Alpha4:          // (onMouseUp) Place FavoriteNode4
-                     case KeyCode.Alpha5:          // (onMouseUp) Place FavoriteNode5
-                     case KeyCode.Alpha6:          // (onMouseUp) Place FavoriteNode6
-                     case KeyCode.Alpha7:          // (onMouseUp) Place FavoriteNode7
-                     case KeyCode.Alpha8:          // (onMouseUp) Place FavoriteNode8
-                     case KeyCode.Alpha9:          // (onMouseUp) Place FavoriteNode9
-                     case KeyCode.B:               // (onMouseUp) Place Bool variable node
-                     case KeyCode.C:               // (onMouseUp) Place Comment
-                     case KeyCode.E:               // (onMouseUp) Place External variable node
-                     case KeyCode.F:               // (onMouseUp) Place Float variable node
-                     case KeyCode.G:               // (onMouseUp) Place GameObject variable node
-                     case KeyCode.I:               // (onMouseUp) Place Int variable node
-                     case KeyCode.L:               // (onMouseUp) Place Log action node
-                     case KeyCode.O:               // (onMouseUp) Place Object variable node
-                     case KeyCode.S:               // (onMouseUp) Place String variable node
-                     case KeyCode.V:               // (onMouseUp) Place Vector3 variable node
+                     case KeyCode.F1: // Open uScript online documentation
+                     case KeyCode.Backspace: // Delete graph selection
+                     case KeyCode.Delete: // Delete graph selection
+                     case KeyCode.Greater: // Expand Selection
+                     case KeyCode.Less: // Collapse Selection
+                     case KeyCode.Escape: // Drop graph selection
+                     case KeyCode.Home: // Position graph at (0, 0)
+                     case KeyCode.LeftBracket: // Position graph at previous Event node
+                     case KeyCode.RightBracket: // Position graph at next Event node
+                     case KeyCode.BackQuote: // Toggle panel visibility
+                     case KeyCode.Backslash: // Toggle panel visibility
+                     case KeyCode.Minus: // Zoom graph out
+                     case KeyCode.Equals: // Zoom graph in
+                     case KeyCode.Alpha0: // Zoom graph default
+                     case KeyCode.Alpha1: // (onMouseUp) Place FavoriteNode1
+                     case KeyCode.Alpha2: // (onMouseUp) Place FavoriteNode2
+                     case KeyCode.Alpha3: // (onMouseUp) Place FavoriteNode3
+                     case KeyCode.Alpha4: // (onMouseUp) Place FavoriteNode4
+                     case KeyCode.Alpha5: // (onMouseUp) Place FavoriteNode5
+                     case KeyCode.Alpha6: // (onMouseUp) Place FavoriteNode6
+                     case KeyCode.Alpha7: // (onMouseUp) Place FavoriteNode7
+                     case KeyCode.Alpha8: // (onMouseUp) Place FavoriteNode8
+                     case KeyCode.Alpha9: // (onMouseUp) Place FavoriteNode9
+                     case KeyCode.B: // (onMouseUp) Place Bool variable node
+                     case KeyCode.C: // (onMouseUp) Place Comment
+                     case KeyCode.E: // (onMouseUp) Place External variable node
+                     case KeyCode.F: // (onMouseUp) Place Float variable node
+                     case KeyCode.G: // (onMouseUp) Place GameObject variable node
+                     case KeyCode.I: // (onMouseUp) Place Int variable node
+                     case KeyCode.L: // (onMouseUp) Place Log action node
+                     case KeyCode.O: // (onMouseUp) Place Object variable node
+                     case KeyCode.S: // (onMouseUp) Place String variable node
+                     case KeyCode.V: // (onMouseUp) Place Vector3 variable node
                         e.Use();
                         break;
                   }
@@ -2032,7 +2036,7 @@ public sealed partial class uScript : EditorWindow
                         this.CommandCanvasShowPanels();
                         break;
 
-                     case KeyCode.Minus:  // _
+                     case KeyCode.Minus: // _
                         this.CommandCanvasZoomOut();
                         break;
 
@@ -2138,7 +2142,7 @@ public sealed partial class uScript : EditorWindow
             e.Use();
             break;
 
-         // mouse events
+            // mouse events
          case EventType.MouseDown:
             // Ignore Right-clicks
             if (e.button != 1)
@@ -2317,31 +2321,15 @@ public sealed partial class uScript : EditorWindow
          case EventType.ScrollWheel:
             if (_canvasRect.Contains(e.mousePosition))
             {
+               const float Divisor = 300 / 9f;
+
                this.zoomPoint = Detox.Windows.Forms.Cursor.AbsolutePosition;
 
-               float newScale = Mathf.Clamp(this.mapScale - Mathf.Clamp(e.delta.y * 0.01f, -1, 1), 0.1f, 1.0f);
-
-               //make sure we stop on 1.0 before going lower or higher
-               if (this.mapScale < 1 && newScale > 1) newScale = 1;
-               if (this.mapScale > 1 && newScale < 1) newScale = 1;
+               float newScale = Mathf.Clamp(this.mapScale - Mathf.Clamp(e.delta.y / Divisor, -1, 1), 0.1f, 1.0f);
 
                this.mapScale = newScale;
-
-               //               Debug.Log("SCROLLWHEEL: " + e.delta + "\n");
             }
             break;
-
-         //         // paint/layout events
-         //         case EventType.Layout:
-         //            break;
-         //         case EventType.Repaint:
-         //            break;
-         //
-         //         // ignore these events
-         //         case EventType.Ignore:
-         //         case EventType.Used:
-         //         default:
-         //            break;
       }
    }
 
@@ -3194,12 +3182,12 @@ public sealed partial class uScript : EditorWindow
 
    private void CommandCanvasZoomIn()
    {
-      this.mapScale = Mathf.Min(this.mapScale * .9f, 1.0f);
+      this.mapScale = Mathf.Min(this.mapScale + 0.09f, 1.0f);
    }
 
    private void CommandCanvasZoomOut()
    {
-      this.mapScale = Mathf.Max(this.mapScale * - .9f, 0.1f);
+      this.mapScale = Mathf.Max(this.mapScale - 0.09f, 0.1f);
    }
 
    private void CommandCanvasLocateOrigin()
