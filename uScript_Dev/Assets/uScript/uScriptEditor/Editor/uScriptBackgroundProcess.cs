@@ -161,6 +161,15 @@ public class uScriptBackgroundProcess
          return;
       }
 
+#if UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+      var graphs = uScript.GetGraphPaths();
+      if (GraphInfoList.Count != graphs.Count)
+      {
+         // refresh file list
+         ForceFileRefresh();
+      }
+#endif
+
       int i;
       var keys = new List<string>(GraphInfoList.Keys).ToArray();
 
