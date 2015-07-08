@@ -21,8 +21,6 @@ namespace Detox.ScriptEditor
    using Detox.FlowChart;
    using Detox.Windows.Forms;
 
-   using UnityEngine;
-
    using Cursor = Detox.Windows.Forms.Cursor;
    using Graphics = Detox.Drawing.Graphics;
    using Object = System.Object;
@@ -1341,6 +1339,7 @@ namespace Detox.ScriptEditor
          //it restores our cache to the previous state anyway
       }
       
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
       private void m_MenuAddBreakpoint_Click(object sender, EventArgs e)
       {
          foreach ( DisplayNode node in SelectedNodes )
@@ -1352,6 +1351,7 @@ namespace Detox.ScriptEditor
             }
          }
       }
+#endif
       
       private void m_MenuRemoveBreakpoint_Click(object sender, EventArgs e)
       {
@@ -2675,8 +2675,6 @@ namespace Detox.ScriptEditor
 
          if ( ScriptEditor.SavedForDebugging )
          {
-            m_ContextMenuStrip.Items.Add( new ToolStripSeparator( ) );
-
             bool hasBreakpoint = false;
             bool needsBreakpoint = false;
 
@@ -2691,7 +2689,11 @@ namespace Detox.ScriptEditor
                   }
                   else
                   {
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
                      needsBreakpoint = true;
+#else
+                     needsBreakpoint = false;
+#endif
                   }
                }
 
@@ -2700,8 +2702,11 @@ namespace Detox.ScriptEditor
 
             if ( true == hasBreakpoint || true == needsBreakpoint )
             {
+               m_ContextMenuStrip.Items.Add(new ToolStripSeparator());
+
                ToolStripMenuItem item;
 
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
                if ( true == needsBreakpoint )
                {
                   item = new ToolStripMenuItem( );
@@ -2712,6 +2717,7 @@ namespace Detox.ScriptEditor
                   
                   m_ContextMenuStrip.Items.Add( item );
                }
+#endif
                if ( true == hasBreakpoint )
                {
                   item = new ToolStripMenuItem( );
