@@ -3121,27 +3121,46 @@ public sealed partial class uScript : EditorWindow
       EditorCommands.OpenAboutWindow();
    }
 
+#if DETOX_STORE_PLE
+   private static void CommandHelpMenuBuyBasic()
+   {
+      // TODO: specify the correct ID for the basic product
+      Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/?????");
+   }
+
+   private static void CommandHelpMenuBuyPro()
+   {
+      Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/1808");
+   }
+#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
+   private static void CommandHelpMenuUpgrade()
+   {
+      // TODO: specify the correct ID for the upgrade product
+      Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/?????");
+   }
+#endif
+
    private static void CommandHelpMenuWelcome()
    {
       EditorCommands.OpenWelcomeWindow();
    }
 
-   private void CommandHelpMenuDocs()
+   private static void CommandHelpMenuDocs()
    {
       Help.BrowseURL("http://docs.uscript.net/");
    }
 
-   private void CommandHelpMenuForum()
+   private static void CommandHelpMenuForum()
    {
       Help.BrowseURL("http://uscript.net/forum/");
    }
 
-   private void CommandHelpMenuShortcuts()
+   private static void CommandHelpMenuShortcuts()
    {
       ReferenceWindow.Init();
    }
 
-   private void CommandHelpMenuUpdates()
+   private static void CommandHelpMenuUpdates()
    {
       UpdateNotification.ManualCheck();
    }
@@ -3586,13 +3605,23 @@ public sealed partial class uScript : EditorWindow
    {
       var menu = new GenericMenu();
 
-      menu.AddItem(uScriptGUIContent.HelpMenuItemShortcuts, false, this.CommandHelpMenuShortcuts);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemShortcuts, false, CommandHelpMenuShortcuts);
       menu.AddItem(uScriptGUIContent.HelpMenuItemWelcome, false, CommandHelpMenuWelcome);
       menu.AddSeparator(string.Empty);
-      menu.AddItem(uScriptGUIContent.HelpMenuItemOnlineDocs, false, this.CommandHelpMenuDocs);
-      menu.AddItem(uScriptGUIContent.HelpMenuItemOnlineForum, false, this.CommandHelpMenuForum);
-      menu.AddItem(uScriptGUIContent.HelpMenuItemUpdates, false, this.CommandHelpMenuUpdates);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemOnlineDocs, false, CommandHelpMenuDocs);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemOnlineForum, false, CommandHelpMenuForum);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemUpdates, false, CommandHelpMenuUpdates);
       menu.AddSeparator(string.Empty);
+
+#if DETOX_STORE_PLE
+      menu.AddItem(uScriptGUIContent.HelpMenuItemBuyBasic, false, CommandHelpMenuBuyBasic);
+      menu.AddItem(uScriptGUIContent.HelpMenuItemBuyPro, false, CommandHelpMenuBuyPro);
+      menu.AddSeparator(string.Empty);
+#elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
+      menu.AddItem(uScriptGUIContent.HelpMenuItemUpgrade, false, CommandHelpMenuUpgrade);
+      menu.AddSeparator(string.Empty);
+#endif
+
       menu.AddItem(uScriptGUIContent.HelpMenuItemAbout, false, CommandHelpMenuAbout);
 
       menu.DropDown(rect);
