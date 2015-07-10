@@ -1229,13 +1229,11 @@ public sealed partial class uScript : EditorWindow
          }
       }
 
-      // Repaint if a request was previously made
-      //
-      if (_wasRepaintRequested)
+      // Repaint if a request was previously made180
+      if (pendingRepaintRequests > 0)
       {
-         _wasRepaintRequested = false;
-         uScript.Instance.Repaint();
-         //         Debug.Log("Repaint\n");
+         pendingRepaintRequests--;
+         this.Repaint();
       }
    }
 
@@ -3124,19 +3122,21 @@ public sealed partial class uScript : EditorWindow
 #if DETOX_STORE_PLE
    private static void CommandHelpMenuBuyBasic()
    {
-      // TODO: specify the correct ID for the basic product
-      Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/?????");
+      //Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/31443");
+      UnityEditorInternal.AssetStore.Open("content/31443");
    }
 
    private static void CommandHelpMenuBuyPro()
    {
-      Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/1808");
+      //Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/1808");
+      UnityEditorInternal.AssetStore.Open("content/1808");
    }
 #elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
    private static void CommandHelpMenuUpgrade()
    {
       // TODO: specify the correct ID for the upgrade product
-      Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/?????");
+      //Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/?????");
+      UnityEditorInternal.AssetStore.Open("content/????");
    }
 #endif
 
@@ -3187,6 +3187,8 @@ public sealed partial class uScript : EditorWindow
          m_ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
          m_ScriptEditorCtrl.RebuildScript(null, false);
       }
+
+      RequestRepaint(2);
    }
 
    private void CommandViewMenuGrid()
@@ -3831,10 +3833,10 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private static bool _wasRepaintRequested;
-   public static void RequestRepaint()
+   private static int pendingRepaintRequests;
+   public static void RequestRepaint(int minimumRedraws = 1)
    {
-      _wasRepaintRequested = true;
+      pendingRepaintRequests = Mathf.Max(pendingRepaintRequests, minimumRedraws);
    }
 
    private bool WasCurrentGraphSaved(bool allowCancel)
