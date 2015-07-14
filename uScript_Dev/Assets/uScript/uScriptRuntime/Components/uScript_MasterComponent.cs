@@ -324,13 +324,28 @@ public class uScript_MasterComponent : MonoBehaviour
    {
       get { return m_uScriptsToAttach; }
    }
-   
+
+   [HideInInspector]
+   public string[] m_FilesToAddToVC = new string[0];
+   public string[] FilesToAddToVC
+   {
+      get { return m_FilesToAddToVC; }
+   }
+
    public void ClearAttachList() { m_uScriptsToAttach = new string[0]; }
    
    public void AttachScriptToMaster(string fullPath)
    {
       System.Array.Resize(ref m_uScriptsToAttach, m_uScriptsToAttach.Length + 1 );
       m_uScriptsToAttach[ m_uScriptsToAttach.Length - 1 ] = fullPath;
+   }
+
+   public void ClearAddList() { m_FilesToAddToVC = new string[0]; }
+
+   public void AddFileToVersionControl(string relativePath)
+   {
+      System.Array.Resize(ref m_FilesToAddToVC, m_FilesToAddToVC.Length + 1);
+      m_FilesToAddToVC[m_FilesToAddToVC.Length - 1] = relativePath;
    }
 
    void OnDrawGizmos( )

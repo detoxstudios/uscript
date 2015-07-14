@@ -60,6 +60,32 @@ public class uScriptBackgroundProcess
       uScript.MasterComponent.ClearAttachList();
    }
 
+   private static void AddFilesToVC()
+   {
+      if (uScript.MasterComponent.FilesToAddToVC.Length <= 0)
+      {
+         return;
+      }
+
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+      foreach (var path in uScript.MasterComponent.FilesToAddToVC)
+      {
+         // blocking add of unversioned file, if necessary
+         if (UnityEditor.VersionControl.Provider.isActive)
+         {
+            UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(path);
+            if (asset != null && UnityEditor.VersionControl.Provider.AddIsValid(new UnityEditor.VersionControl.AssetList() { asset }))
+            {
+               UnityEditor.VersionControl.Provider.Add(asset, false).Wait();
+            }
+         }
+      }
+
+      ForceFileRefresh();
+#endif
+      uScript.MasterComponent.ClearAddList();
+   }
+
    public static void ForceFileRefresh()
    {
       if (uScript.IsOpen == false)
@@ -153,6 +179,7 @@ public class uScriptBackgroundProcess
       if (!EditorApplication.isCompiling)
       {
          AttachUScripts();
+         AddFilesToVC();
       }
 
       // Any graphs left to process? Process using multiple ticks, if necessary.

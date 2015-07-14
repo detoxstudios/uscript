@@ -4820,6 +4820,7 @@ namespace Detox.ScriptEditor
          string base64 = ToBase64( binaryFile );
 
          StreamWriter streamWriter = null;
+         bool inVC = false;
          
          try
          {
@@ -4830,13 +4831,10 @@ namespace Detox.ScriptEditor
             if (UnityEditor.VersionControl.Provider.isActive)
             {
                UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(binaryFile.RelativeAssetPath());
-               if (UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
+               if (asset != null && UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
                {
+                  inVC = true;
                   UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Both).Wait();
-               }
-               else if (UnityEditor.VersionControl.Provider.AddIsValid(new UnityEditor.VersionControl.AssetList() { asset }))
-               {
-                  UnityEditor.VersionControl.Provider.Add(asset, false);
                }
             }
 #endif
@@ -4844,6 +4842,13 @@ namespace Detox.ScriptEditor
             streamWriter = File.CreateText(binaryFile);
             streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
             streamWriter.Close( );
+
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+            if (!inVC)
+            {
+               uScript.MasterComponent.AddFileToVersionControl(binaryFile.RelativeAssetPath());
+            }
+#endif
          }
          catch (Exception e)
          {
@@ -4864,6 +4869,7 @@ namespace Detox.ScriptEditor
          string base64 = ToBase64( binaryFile );
 
          StreamWriter streamWriter = null;
+         bool inVC = false;
          
          try
          {
@@ -4874,13 +4880,10 @@ namespace Detox.ScriptEditor
             if (UnityEditor.VersionControl.Provider.isActive)
             {
                UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(binaryFile.RelativeAssetPath());
-               if (UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
+               if (asset != null && UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
                {
+                  inVC = true;
                   UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Both).Wait();
-               }
-               else if (UnityEditor.VersionControl.Provider.AddIsValid(new UnityEditor.VersionControl.AssetList() { asset }))
-               {
-                  UnityEditor.VersionControl.Provider.Add(asset, false);
                }
             }
 #endif
@@ -4888,6 +4891,13 @@ namespace Detox.ScriptEditor
             streamWriter = File.CreateText( binaryFile );
             streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
             streamWriter.Close( );
+
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+            if (!inVC)
+            {
+               uScript.MasterComponent.AddFileToVersionControl(binaryFile.RelativeAssetPath());
+            }
+#endif
          }
          catch (Exception e)
          {
@@ -4906,17 +4916,16 @@ namespace Detox.ScriptEditor
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
 #if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+            inVC = false;
+
             // blocking checkout of versioned file, if necessary
             if (UnityEditor.VersionControl.Provider.isActive)
             {
                UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(wrapperFile.RelativeAssetPath());
-               if (UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
+               if (asset != null && UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
                {
+                  inVC = true;
                   UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Both).Wait();
-               }
-               else if (UnityEditor.VersionControl.Provider.AddIsValid(new UnityEditor.VersionControl.AssetList() { asset }))
-               {
-                  UnityEditor.VersionControl.Provider.Add(asset, false);
                }
             }
 #endif
@@ -4924,6 +4933,13 @@ namespace Detox.ScriptEditor
             streamWriter = File.CreateText(wrapperFile);
             streamWriter.Write( codeGenerator.GenerateGameObjectScript(logicClass, this, stubCode) );
             streamWriter.Close( );
+
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+            if (!inVC)
+            {
+               uScript.MasterComponent.AddFileToVersionControl(wrapperFile.RelativeAssetPath());
+            }
+#endif
          }
          catch (Exception e)
          {
@@ -4941,17 +4957,16 @@ namespace Detox.ScriptEditor
             UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
 
 #if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+            inVC = false;
+
             // blocking checkout of versioned file, if necessary
             if (UnityEditor.VersionControl.Provider.isActive)
             {
                UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(logicFile.RelativeAssetPath());
-               if (UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
+               if (asset != null && UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
                {
+                  inVC = true;
                   UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Both).Wait();
-               }
-               else if (UnityEditor.VersionControl.Provider.AddIsValid(new UnityEditor.VersionControl.AssetList() { asset }))
-               {
-                  UnityEditor.VersionControl.Provider.Add(asset, false);
                }
             }
 #endif
@@ -4959,6 +4974,13 @@ namespace Detox.ScriptEditor
             streamWriter = File.CreateText(logicFile);
             streamWriter.Write( codeGenerator.GenerateLogicScript(logicClass, this, saveForDebugging, stubCode) );
             streamWriter.Close( );
+
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+            if (!inVC)
+            {
+               uScript.MasterComponent.AddFileToVersionControl(logicFile.RelativeAssetPath());
+            }
+#endif
          }
          catch (Exception e)
          {
