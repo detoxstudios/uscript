@@ -320,6 +320,11 @@ namespace Detox.Editor
          return GetTexture(string.Format("{0}_{1}", IsProSkin ? "DarkSkin" : "LightSkin", textureName));
       }
 
+      public static Font GetFont(string fontPathWithFileExtension)
+      {
+         return AssetDatabase.LoadAssetAtPath(fontPathWithFileExtension, typeof(Font)) as Font;
+      }
+
       /// <summary>Deconstructs the specified GUILayoutOption object into individual variables.</summary>
       /// <returns>True if the deconstruction succeeded, False otherwise.</returns>
       /// <param name='option'>The GUILayoutOption object to split.</param>
@@ -2223,7 +2228,7 @@ namespace Detox.Editor
 
          // Display the column label
 #if UNITY_3_5
-      EditorGUIUtility.LookLikeControls(columnLabel.Width);
+         EditorGUIUtility.LookLikeControls(columnLabel.Width);
 #else
          EditorGUIUtility.labelWidth = columnLabel.Width;
 #endif
