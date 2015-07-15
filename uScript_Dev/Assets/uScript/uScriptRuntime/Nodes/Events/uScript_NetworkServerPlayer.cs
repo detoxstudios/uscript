@@ -1,6 +1,7 @@
 // uScript uScript_Input.cs
 // (C) 2010 Detox Studios LLC
 
+#if !(UNITY_WP8 || UNITY_WP8_1)
 using UnityEngine;
 using System.Collections;
 
@@ -48,3 +49,4 @@ public class uScript_NetworkServerPlayer : uScriptEvent
    }
 #endif
 }
+#endif

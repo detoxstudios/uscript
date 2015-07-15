@@ -1,6 +1,7 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
 
+#if !(UNITY_WP8 || UNITY_WP8_1)
 using UnityEngine;
 using System.Collections;
 
@@ -73,5 +74,5 @@ public class uScriptAct_GetNetworkStatus : uScriptLogic
         netStatus = temp;
    }
 }
-
+#endif
 

@@ -1,6 +1,8 @@
 // uScript uScript_NetworkClientConnection.cs
 // (C) 2010 Detox Studios LLC
 
+#if !(UNITY_WP8 || UNITY_WP8_1)
+
 using UnityEngine;
 using System.Collections;
 
@@ -67,3 +69,4 @@ public class uScript_NetworkClientConnection : uScriptEvent
    }
 #endif
 }
+#endif
