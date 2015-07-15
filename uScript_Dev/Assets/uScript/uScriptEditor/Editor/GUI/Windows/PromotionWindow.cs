@@ -24,6 +24,7 @@ namespace Detox.Editor.GUI.Windows
 
       private static PromotionWindow window;
 
+      // ReSharper disable once RedundantNameQualifier
       private static Detox.Editor.Promotion promotion;
 
       public static string WebResponseText { get; private set; }
@@ -149,6 +150,7 @@ namespace Detox.Editor.GUI.Windows
             return;
          }
 
+         // ReSharper disable once RedundantNameQualifier
          promotion = new Detox.Editor.Promotion
                         {
                            ID = promotionID,
