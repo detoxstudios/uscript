@@ -24,7 +24,7 @@ namespace Detox.Editor.GUI.Windows
 
       private static PromotionWindow window;
 
-      private static Promotion promotion;
+      private static Detox.Editor.Promotion promotion;
 
       public static string WebResponseText { get; private set; }
 
@@ -149,7 +149,7 @@ namespace Detox.Editor.GUI.Windows
             return;
          }
 
-         promotion = new Promotion
+         promotion = new Detox.Editor.Promotion
                         {
                            ID = promotionID,
                            LinkPath = headers["X-USCRIPT-PROMOTION-LINK"],
