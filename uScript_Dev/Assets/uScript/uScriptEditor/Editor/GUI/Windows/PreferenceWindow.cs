@@ -103,6 +103,7 @@ namespace Detox.Editor.GUI.Windows
             this.DrawNodeSettings();
             this.DrawPerformanceSettings();
             this.DrawMiscellaneousSettings();
+            this.DrawDevDebugSettings();
 
             EditorGUI.indentLevel = 0;
             
@@ -225,15 +226,30 @@ namespace Detox.Editor.GUI.Windows
 
          EditorGUILayout.EndHorizontal();
 
-         // Add some development fields for debugging and testing
-         if (uScript.IsDevelopmentBuild)
-         {
-            var intValue = EditorGUILayout.IntField("Last Update Check", this.preferences.LastUpdateCheck);
-            this.preferences.LastUpdateCheck = intValue;
+         EditorGUILayout.Separator();
+      }
 
-            var textValue = EditorGUILayout.TextField("Ignore Build", this.preferences.IgnoreUpdateBuild);
-            this.preferences.IgnoreUpdateBuild = textValue;
+      private void DrawDevDebugSettings()
+      {
+         if (uScript.IsDevelopmentBuild == false)
+         {
+            return;
          }
+
+         GUILayout.Label("Development Debug Settings", EditorStyles.boldLabel);
+
+         // Add some development fields for debugging and testing
+         var promotionLastCheck = EditorGUILayout.IntField("Last Promotion Check", this.preferences.LastPromotionCheck);
+         this.preferences.LastPromotionCheck = promotionLastCheck;
+
+         var promotionIgnoreList = EditorGUILayout.TextField("Promotion Ignore List", this.preferences.IgnorePromotions);
+         this.preferences.IgnorePromotions = promotionIgnoreList;
+
+         var updateLastCheck = EditorGUILayout.IntField("Last Update Check", this.preferences.LastUpdateCheck);
+         this.preferences.LastUpdateCheck = updateLastCheck;
+
+         var updateIgnoreBuild = EditorGUILayout.TextField("Update Check Build Ignore ID", this.preferences.IgnoreUpdateBuild);
+         this.preferences.IgnoreUpdateBuild = updateIgnoreBuild;
 
          EditorGUILayout.Separator();
       }

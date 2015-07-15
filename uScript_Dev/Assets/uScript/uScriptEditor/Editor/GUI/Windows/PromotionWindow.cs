@@ -39,6 +39,23 @@ namespace Detox.Editor.GUI.Windows
          return window;
       }
 
+      public static void StartupCheck()
+      {
+         const string DateFormat = "yyyyMMdd";
+         var preferences = uScript.Preferences;
+
+         // Only check once per day
+         var today = int.Parse(DateTime.Now.ToString(DateFormat));
+         if (preferences.LastPromotionCheck < today)
+         {
+            // Update the date so we won't check again until tomorrow
+            preferences.LastPromotionCheck = today;
+            preferences.Save();
+
+            CheckServerForPromotion(uScriptBuild.Edition, preferences.IgnorePromotions);
+         }
+      }
+
       public static void CheckServerForPromotion(uScriptBuild.EditionType target, string ignoredIDs, string dateOverride = "")
       {
          WebResponseText = "Checking server for promotion ...";
@@ -159,6 +176,11 @@ namespace Detox.Editor.GUI.Windows
                         };
 
          Open();
+
+         // Store the promotion ID so that it can be ignored in the future
+         var preferences = uScript.Preferences;
+         preferences.IgnorePromotions = string.Format("{0},{1}", promotionID, preferences.IgnorePromotions).TrimEnd(',');
+         preferences.Save();
 
          window.Repaint();
       }

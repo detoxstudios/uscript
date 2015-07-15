@@ -195,6 +195,18 @@ public class Preferences
       set { this.LoadIfRequired(); this.preferences["CheckForUpdate"] = value; }
    }
 
+   public int LastPromotionCheck
+   {
+      get { this.LoadIfRequired(); return (int)this.preferences["LastPromotionCheck"]; }
+      set { this.LoadIfRequired(); this.preferences["LastPromotionCheck"] = value; }
+   }
+
+   public string IgnorePromotions
+   {
+      get { this.LoadIfRequired(); return this.preferences["IgnorePromotions"] as string; }
+      set { this.LoadIfRequired(); this.preferences["IgnorePromotions"] = value; }
+   }
+
    public int LastUpdateCheck
    {
       get { this.LoadIfRequired(); return (int)this.preferences["LastUpdateCheck"]; }
@@ -408,6 +420,8 @@ public class Preferences
       this.SetDefault("ShowAllHotkeys", false);
       this.SetDefault("LeftMouseButtonPrimary", true);
       this.SetDefault("CheckForUpdate", true);
+      this.SetDefault("LastPromotionCheck", 0);
+      this.SetDefault("IgnorePromotions", string.Empty);
       this.SetDefault("LastUpdateCheck", 0);
       this.SetDefault("IgnoreUpdateBuild", string.Empty);
 

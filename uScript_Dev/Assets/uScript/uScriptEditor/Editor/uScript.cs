@@ -27,6 +27,7 @@ using Detox.Data.Tools;
 using Detox.Drawing;
 using Detox.Editor;
 using Detox.Editor.GUI;
+using Detox.Editor.GUI.Windows;
 using Detox.FlowChart;
 using Detox.ScriptEditor;
 using Detox.Windows.Forms;
@@ -623,6 +624,13 @@ public sealed partial class uScript : EditorWindow
       UpdateNotification.StartupCheck();
    }
 
+   private static void PerformPromotionCheck()
+   {
+#if DETOX_STORE_PLE || DETOX_STORE_BASIC || UNITY_STORE_BASIC
+      PromotionWindow.StartupCheck();
+#endif
+   }
+
    private void Launching()
    {
       if (null != this.complexData)
@@ -1002,6 +1010,8 @@ public sealed partial class uScript : EditorWindow
       VerifyBuildCompatibility();
 
       PerformUpdateCheck();
+
+      PerformPromotionCheck();
 
       //Debug.Log("Update()\n" + EditorWindow.focusedWindow + " has focus, the mouse is over " + EditorWindow.mouseOverWindow);
 
