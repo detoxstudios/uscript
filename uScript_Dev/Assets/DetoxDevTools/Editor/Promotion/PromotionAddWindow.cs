@@ -213,7 +213,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          form.AddField("target", this.current.Edition.ToString());
          form.AddField("startDate", this.current.StartDate);
          form.AddField("endDate", this.current.EndDate);
-         form.AddField("link", this.current.LinkPath);
+         form.AddField("link", this.current.Link);
 
          //var encoded = Convert.ToBase64String(this.current.Image.EncodeToPNG());
          //Debug.Log("ENCODED: " + encoded + "\n");
@@ -465,10 +465,10 @@ namespace Detox.DetoxDevTools.Editor.Promotion
       {
          EditorGUILayout.BeginHorizontal();
          {
-            var value = this.current.LinkPath;
+            var value = this.current.Link;
             value = EditorGUILayout.TextField(Content.PropertyLabelLinkPath, value).Trim();
-            value = ResetFieldButton(value, this.original.LinkPath);
-            this.current.LinkPath = value;
+            value = ResetFieldButton(value, this.original.Link);
+            this.current.Link = value;
          }
          EditorGUILayout.EndHorizontal();
       }
@@ -786,7 +786,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
       private void OnGUIDrawSaveButton()
       {
          var originalEnabledState = GUI.enabled;
-         GUI.enabled = !string.IsNullOrEmpty(this.current.ImagePath) && !string.IsNullOrEmpty(this.current.LinkPath)
+         GUI.enabled = !string.IsNullOrEmpty(this.current.ImagePath) && !string.IsNullOrEmpty(this.current.Link)
                        && originalEnabledState;
 
          if (GUILayout.Button(Content.ButtonSave, GUILayout.ExpandWidth(false)))
