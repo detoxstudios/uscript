@@ -65,18 +65,6 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
       private bool datePickerIsForStart = true;
 
-      public enum UpdateStatus
-      {
-         None,
-         CheckNeeded,
-         CheckInProgress,
-         ClientBuildCurrent,
-         ClientBuildNewer,
-         ClientBuildOlder,
-         UpdateClientError,
-         UpdateServerError
-      }
-
       public static string WebResponse { get; private set; }
 
       public static PromotionAddWindow Window
@@ -210,6 +198,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
          var form = new WWWForm();
          form.AddField("action", action);
+         form.AddField("title", this.current.Title);
          form.AddField("target", this.current.Edition.ToString());
          form.AddField("startDate", this.current.StartDate);
          form.AddField("endDate", this.current.EndDate);
@@ -473,6 +462,18 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          EditorGUILayout.EndHorizontal();
       }
 
+      private void OnGUIDrawFieldTitle()
+      {
+         EditorGUILayout.BeginHorizontal();
+         {
+            var value = this.current.Title;
+            value = EditorGUILayout.TextField(Content.PropertyLabelTitle, value).Trim();
+            value = ResetFieldButton(value, this.original.Title);
+            this.current.Title = value;
+         }
+         EditorGUILayout.EndHorizontal();
+      }
+
       private void OnGUIDrawFieldStartDate()
       {
          var e = Event.current;
@@ -707,7 +708,8 @@ namespace Detox.DetoxDevTools.Editor.Promotion
             this.OnGUIDrawFieldEndDate();
 
             EditorGUILayout.Space();
-            
+
+            this.OnGUIDrawFieldTitle();
             this.OnGUIDrawFieldLinkPath();
             this.OnGUIDrawFieldImagePath();
          }
@@ -721,7 +723,18 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          {
             var found = texture.width != 8 || texture.height != 8;
             var label = found ? string.Format("{0} x {1}", texture.width, texture.height) : "No image was found.";
+
+            if (found == false)
+            {
+               GUILayout.FlexibleSpace();
+            }
+
             GUILayout.Label(label, Style.ImageDimensions);
+
+            if (found == false)
+            {
+               GUILayout.FlexibleSpace();
+            }
          }
       }
 
@@ -744,6 +757,10 @@ namespace Detox.DetoxDevTools.Editor.Promotion
                GUILayout.Label(this.current.Image, GUILayout.Width(width), GUILayout.Height(height));
             }
          }
+         else
+         {
+            GUILayout.FlexibleSpace();
+         }
       }
 
       private void OnGUIDrawButtons()
@@ -762,7 +779,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          if (Event.current.type == EventType.Repaint)
          {
             var rect = GUILayoutUtility.GetLastRect();
-            Window.minSize = Window.maxSize = new Vector2(300, rect.yMax);
+            Window.minSize = Window.maxSize = new Vector2(300, Mathf.Max(250, rect.yMax));
          }
       }
 
@@ -821,7 +838,9 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
             PropertyLabelImagePath = new GUIContent("Image Path", "Absolute path to the image file");
 
-            PropertyLabelLinkPath = new GUIContent("Link Path", "Relative asset store path or a full HTTP(s) URL.");
+            PropertyLabelLinkPath = new GUIContent("Link Path", "Relative asset store path (content/#) or a full http(s) URL.");
+
+            PropertyLabelTitle = new GUIContent("Title", "The promotion title will appears at the top of the editor window.");
 
             WindowTitle = "Add Promotion";
          }
@@ -841,6 +860,8 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          public static GUIContent PropertyLabelImagePath { get; private set; }
 
          public static GUIContent PropertyLabelLinkPath { get; private set; }
+
+         public static GUIContent PropertyLabelTitle { get; private set; }
 
          public static GUIContent PropertyLabelStartDate { get; private set; }
 
