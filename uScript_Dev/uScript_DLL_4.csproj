@@ -140,6 +140,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\HotkeyWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\LicenseWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\PreferenceWindow.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\PromotionWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\ReferenceWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\WelcomeWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\LocalNodeDisplayNode.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\PatchData.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Platform.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Preferences.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\Promotion.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\RawScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\References.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\ScriptEditor.cs" />
