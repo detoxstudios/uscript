@@ -102,7 +102,11 @@ namespace Detox.Editor.GUI.Windows
 
          if (string.IsNullOrEmpty(promotion.Title) == false)
          {
+#if UNITY_5
             this.titleContent = new GUIContent(promotion.Title);
+#else
+            this.title = promotion.Title;
+#endif
          }
 
          //rect.y += rect.height;
