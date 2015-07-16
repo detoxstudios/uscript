@@ -803,7 +803,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
       private void OnGUIDrawSaveButton()
       {
          var originalEnabledState = GUI.enabled;
-         GUI.enabled = !string.IsNullOrEmpty(this.current.ImagePath) && !string.IsNullOrEmpty(this.current.Link)
+         GUI.enabled = !string.IsNullOrEmpty(this.current.ImagePath) /* && !string.IsNullOrEmpty(this.current.Link) */
                        && originalEnabledState;
 
          if (GUILayout.Button(Content.ButtonSave, GUILayout.ExpandWidth(false)))
