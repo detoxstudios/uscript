@@ -103,6 +103,7 @@ namespace Detox.Editor.GUI.Windows
          if (string.IsNullOrEmpty(promotion.Title) == false)
          {
 #if UNITY_5_1
+            // This isn't in the Unity API until 5.1
             this.titleContent = new GUIContent(promotion.Title);
 #else
             this.title = promotion.Title;
