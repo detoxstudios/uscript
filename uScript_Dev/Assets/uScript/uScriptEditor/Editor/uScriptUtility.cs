@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -94,6 +95,30 @@ public static class uScriptUtility
    {
       return (((multiple / 2) + number) / multiple) * multiple;
    }
+
+   public static Dictionary<TK, TV> HashtableToDictionary<TK, TV>(Hashtable table)
+   {
+      return table.Cast<DictionaryEntry>().ToDictionary(kvp => (TK)kvp.Key, kvp => (TV)kvp.Value);
+   }
+
+#if UNITY_3_5
+   // Unity 3 returns a Hashtable and needs that type later.
+   public static Hashtable GetFormHeaders(WWWForm form)
+   {
+      return form.headers;
+   }
+#else
+   public static Dictionary<string, string> GetFormHeaders(WWWForm form)
+   {
+#if UNITY_5
+      // Unity 5 returns a Dictionary<string, string> and needs that type later.
+      return form.headers;
+#else
+      // Unity 4.6 returns a Hashtable from the form, but needs a Dictionary<string, string> later.
+      return uScriptUtility.HashtableToDictionary<string, string>(form.headers);
+#endif
+   }
+#endif
 }
 
 internal static class uScriptExtensions

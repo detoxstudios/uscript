@@ -209,7 +209,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          //form.AddField("imageData", encoded);
          form.AddBinaryData("image", this.current.Image.EncodeToPNG(), Path.GetFileName(this.current.ImagePath));
 
-         var headers = form.headers;
+         var headers = uScriptUtility.GetFormHeaders(form);
          headers.Add("X-uScript-Edition", uScriptBuild.Edition.ToString());
          headers.Add("X-uScript-Version", uScriptBuild.Number);
 

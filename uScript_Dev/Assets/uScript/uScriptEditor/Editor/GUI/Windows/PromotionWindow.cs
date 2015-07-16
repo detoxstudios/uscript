@@ -143,7 +143,7 @@ namespace Detox.Editor.GUI.Windows
             form.AddField("date", date);
          }
 
-         var headers = form.headers;
+         var headers = uScriptUtility.GetFormHeaders(form);
          headers.Add("X-USCRIPT-EDITION", target.ToString());
          headers.Add("X-USCRIPT-VERSION", uScriptBuild.Number);
 
@@ -224,7 +224,7 @@ namespace Detox.Editor.GUI.Windows
          var form = new WWWForm();
          form.AddField("clicked", promotionID);
 
-         var headers = form.headers;
+         var headers = uScriptUtility.GetFormHeaders(form);
          headers.Add("X-USCRIPT-EDITION", uScriptBuild.Edition.ToString());
          headers.Add("X-USCRIPT-VERSION", uScriptBuild.Number);
 
