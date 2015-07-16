@@ -92,12 +92,18 @@ namespace Detox.Editor.GUI.Windows
          EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
          if (GUI.Button(rect, promotion.Image, GUIStyle.none))
          {
-            ReportClick(promotion.ID);
-            OpenLink(promotion.Link);
+            if (string.IsNullOrEmpty(promotion.Link) == false)
+            {
+               ReportClick(promotion.ID);
+               OpenLink(promotion.Link);
+            }
             this.Close();
          }
 
-         GUI.DrawTexture(rect, promotion.Image);
+         if (string.IsNullOrEmpty(promotion.Title) == false)
+         {
+            this.titleContent = new GUIContent(promotion.Title);
+         }
 
          //rect.y += rect.height;
          //rect.height = 20;
@@ -161,8 +167,8 @@ namespace Detox.Editor.GUI.Windows
 
          if (headers.ContainsKey("X-USCRIPT-PROMOTION-ID") == false
              || int.TryParse(webRequest.responseHeaders["X-USCRIPT-PROMOTION-ID"], out promotionID) == false
-             || headers.ContainsKey("X-USCRIPT-PROMOTION-LINK") == false
-             || string.IsNullOrEmpty(headers["X-USCRIPT-PROMOTION-LINK"]))
+             || headers.ContainsKey("X-USCRIPT-PROMOTION-TITLE") == false
+             || headers.ContainsKey("X-USCRIPT-PROMOTION-LINK") == false)
          {
             // The response must be invalid, so abort.
             return;
@@ -172,6 +178,7 @@ namespace Detox.Editor.GUI.Windows
          promotion = new Detox.Editor.Promotion
                         {
                            ID = promotionID,
+                           Title = headers["X-USCRIPT-PROMOTION-TITLE"],
                            Link = headers["X-USCRIPT-PROMOTION-LINK"],
                            Image = webRequest.textureNonReadable
                         };
