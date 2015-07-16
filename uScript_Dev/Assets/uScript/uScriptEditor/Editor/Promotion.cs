@@ -19,15 +19,18 @@ namespace Detox.Editor
 
       public Promotion()
       {
+         this.Title = string.Empty;
          this.Edition = uScriptBuild.EditionType.Basic;
          this.StartDate = DateTime.Now.Date.ToString(DateFormat);
          this.EndDate = this.StartDate;
 
          this.ImagePath = string.Empty;
-         this.LinkPath = string.Empty;
+         this.Link = string.Empty;
       }
 
       public int ID { get; set; }
+
+      public string Title { get; set; }
 
       public uScriptBuild.EditionType Edition { get; set; }
 
@@ -37,11 +40,9 @@ namespace Detox.Editor
 
       public Texture2D Image { get; set; }
 
-      public string ImageData { get; set; }
-
       public string ImagePath { get; set; }
 
-      public string LinkPath { get; set; }
+      public string Link { get; set; }
 
       public Promotion DeepClone()
       {
@@ -54,13 +55,13 @@ namespace Detox.Editor
          unchecked
          {
             var hashCode = this.ID;
+            hashCode = (hashCode * 397) ^ (this.Title != null ? this.Title.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ (int)this.Edition;
             hashCode = (hashCode * 397) ^ (this.StartDate != null ? this.StartDate.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ (this.EndDate != null ? this.EndDate.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ (this.Image != null ? this.Image.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (this.ImageData != null ? this.ImageData.GetHashCode() : 0);
             hashCode = (hashCode * 397) ^ (this.ImagePath != null ? this.ImagePath.GetHashCode() : 0);
-            hashCode = (hashCode * 397) ^ (this.LinkPath != null ? this.LinkPath.GetHashCode() : 0);
+            hashCode = (hashCode * 397) ^ (this.Link != null ? this.Link.GetHashCode() : 0);
             return hashCode;
          }
       }
@@ -82,10 +83,10 @@ namespace Detox.Editor
 
       private bool Equals(Promotion p)
       {
-         return this.ID == p.ID && this.Edition == p.Edition && string.Equals(this.StartDate, p.StartDate)
-                && string.Equals(this.EndDate, p.EndDate) /* && Equals(this.Image, p.Image) */
-                && string.Equals(this.ImageData, p.ImageData) && string.Equals(this.ImagePath, p.ImagePath)
-                && string.Equals(this.LinkPath, p.LinkPath);
+         return this.ID == p.ID && string.Equals(this.Title, p.Title) && this.Edition == p.Edition
+                && string.Equals(this.StartDate, p.StartDate) && string.Equals(this.EndDate, p.EndDate)
+                && string.Equals(this.ImagePath, p.ImagePath) && string.Equals(this.Link, p.Link)
+            /* && Equals(this.Image, p.Image) */;
       }
    }
 }

@@ -92,7 +92,8 @@ namespace Detox.Editor.GUI.Windows
          EditorGUIUtility.AddCursorRect(rect, MouseCursor.Link);
          if (GUI.Button(rect, promotion.Image, GUIStyle.none))
          {
-            OpenLink(promotion.LinkPath);
+            ReportClick(promotion.ID);
+            OpenLink(promotion.Link);
             this.Close();
          }
 
@@ -171,7 +172,7 @@ namespace Detox.Editor.GUI.Windows
          promotion = new Detox.Editor.Promotion
                         {
                            ID = promotionID,
-                           LinkPath = headers["X-USCRIPT-PROMOTION-LINK"],
+                           Link = headers["X-USCRIPT-PROMOTION-LINK"],
                            Image = webRequest.textureNonReadable
                         };
 
@@ -187,7 +188,7 @@ namespace Detox.Editor.GUI.Windows
 
       private static void OpenLink(string url)
       {
-         if (promotion.LinkPath.StartsWith("content/"))
+         if (promotion.Link.StartsWith("content/"))
          {
             // This is appears to be a Unity asset store link, so open it in the store.
             UnityEditorInternal.AssetStore.Open(url);
@@ -203,6 +204,33 @@ namespace Detox.Editor.GUI.Windows
 
             Application.OpenURL(url);
          }
+      }
+
+      private static void ReportClick(int promotionID)
+      {
+         var uri = string.Format("https://www.detoxstudios.com/download/promotion.php");
+
+         var form = new WWWForm();
+         form.AddField("clicked", promotionID);
+
+         var headers = form.headers;
+         headers.Add("X-USCRIPT-EDITION", uScriptBuild.Edition.ToString());
+         headers.Add("X-USCRIPT-VERSION", uScriptBuild.Number);
+
+         webRequest = new WWW(uri, form.data, headers);
+
+         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+         var timeout = new TimeSpan(0, 0, 0, 5);
+
+         while (!webRequest.isDone && stopwatch.Elapsed < timeout)
+         {
+         }
+
+         stopwatch.Stop();
+
+         // we don't care about the response, since we're just notifying the server to record the click event
+
+         webRequest.Dispose();
       }
    }
 
