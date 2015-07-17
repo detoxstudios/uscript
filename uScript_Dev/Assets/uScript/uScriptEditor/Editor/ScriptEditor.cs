@@ -4813,54 +4813,71 @@ namespace Detox.ScriptEditor
          return script;
       }
 
+      private bool SaveTextFile(string path, string fileContents)
+      {
+         StreamWriter streamWriter = null;
+         bool inVC = false;
+
+         try
+         {
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+            // blocking checkout of versioned file, if necessary
+            if (UnityEditor.VersionControl.Provider.isActive)
+            {
+               UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(path.RelativeAssetPath());
+               if (asset != null)
+               {
+                  UnityEditor.VersionControl.Task statusTask = UnityEditor.VersionControl.Provider.Status(asset);
+                  statusTask.Wait();
+                  if (UnityEditor.VersionControl.Provider.CheckoutIsValid(statusTask.assetList[0]))
+                  {
+                     inVC = true;
+                     UnityEditor.VersionControl.Task coTask = UnityEditor.VersionControl.Provider.Checkout(statusTask.assetList[0], UnityEditor.VersionControl.CheckoutMode.Both);
+                     coTask.Wait();
+                  }
+               }
+            }
+#endif
+
+            streamWriter = File.CreateText(path);
+            streamWriter.Write(fileContents);
+            streamWriter.Close();
+
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+            if (!inVC)
+            {
+               uScript.MasterComponent.AddFileToVersionControl(path.RelativeAssetPath());
+            }
+#endif
+         }
+         catch (Exception e)
+         {
+            if (null != streamWriter) streamWriter.Close();
+
+            Status.Error("Failed to write to " + path + ". Exception: " + e.Message);
+            return false;
+         }
+
+         return true;
+      }
+
       public bool Save(string binaryFile)
       {
          m_GeneratedCodeIsStale = true;
 
          string base64 = ToBase64( binaryFile );
 
-         StreamWriter streamWriter = null;
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-         bool inVC = false;
-#endif
-         
          try
          {
             m_Name = Path.GetFileName( binaryFile );
-
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-            // blocking checkout of versioned file, if necessary
-            if (UnityEditor.VersionControl.Provider.isActive)
-            {
-               UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(binaryFile.RelativeAssetPath());
-               if (asset != null && UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
-               {
-                  inVC = true;
-                  UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Both).Wait();
-               }
-            }
-#endif
-
-            streamWriter = File.CreateText(binaryFile);
-            streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
-            streamWriter.Close( );
-
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-            if (!inVC)
-            {
-               uScript.MasterComponent.AddFileToVersionControl(binaryFile.RelativeAssetPath());
-            }
-#endif
          }
          catch (Exception e)
          {
-            if ( null != streamWriter ) streamWriter.Close( );
-
             Status.Error( "Failed to write to " + binaryFile + ". Exception: " + e.Message );
             return false;
          }
 
-         return true;
+         return SaveTextFile(binaryFile, "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/");
       }
 
       public bool Save(string binaryFile, string logicFile, string wrapperFile, bool saveForDebugging, bool stubCode)
@@ -4870,128 +4887,41 @@ namespace Detox.ScriptEditor
 
          string base64 = ToBase64( binaryFile );
 
-         StreamWriter streamWriter = null;
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-         bool inVC = false;
-#endif
-
          try
          {
             m_Name = Path.GetFileName( binaryFile );
-
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-            // blocking checkout of versioned file, if necessary
-            if (UnityEditor.VersionControl.Provider.isActive)
-            {
-               UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(binaryFile.RelativeAssetPath());
-               if (asset != null && UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
-               {
-                  inVC = true;
-                  UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Both).Wait();
-               }
-            }
-#endif
-
-            streamWriter = File.CreateText( binaryFile );
-            streamWriter.Write( "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/" );
-            streamWriter.Close( );
-
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-            if (!inVC)
-            {
-               uScript.MasterComponent.AddFileToVersionControl(binaryFile.RelativeAssetPath());
-            }
-#endif
          }
          catch (Exception e)
          {
-            if ( null != streamWriter ) streamWriter.Close( );
-
             Status.Error( "Failed to write to " + binaryFile + ". Exception: " + e.Message );
             return false;
          }
 
-         string logicClass = System.IO.Path.GetFileNameWithoutExtension( logicFile );
-
-         streamWriter = null;
-
-         try
+         // save .uscript file
+         if (!SaveTextFile(binaryFile, "/*[[BEGIN BASE64\r\n" + base64 + "\r\nEND BASE64]]*/"))
          {
-            UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
-
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-            inVC = false;
-
-            // blocking checkout of versioned file, if necessary
-            if (UnityEditor.VersionControl.Provider.isActive)
-            {
-               UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(wrapperFile.RelativeAssetPath());
-               if (asset != null && UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
-               {
-                  inVC = true;
-                  UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Both).Wait();
-               }
-            }
-#endif
-
-            streamWriter = File.CreateText(wrapperFile);
-            streamWriter.Write( codeGenerator.GenerateGameObjectScript(logicClass, this, stubCode) );
-            streamWriter.Close( );
-
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-            if (!inVC)
-            {
-               uScript.MasterComponent.AddFileToVersionControl(wrapperFile.RelativeAssetPath());
-            }
-#endif
-         }
-         catch (Exception e)
-         {
-            if ( null != streamWriter ) streamWriter.Close( );
-            m_GeneratedCodeIsStale = true;
-
-            Status.Error( "Failed to write to " + wrapperFile + ". Exception: " + e.Message );
+            Status.Error("Failed to write to " + binaryFile + ".");
             return false;
          }
 
-         streamWriter = null;
-
-         try
+         // save _component file
+         string logicClass = System.IO.Path.GetFileNameWithoutExtension( logicFile );
+         UnityCSharpGenerator wrapperCodeGenerator = new UnityCSharpGenerator( );
+         if (!SaveTextFile(wrapperFile, wrapperCodeGenerator.GenerateGameObjectScript(logicClass, this, stubCode)))
          {
-            UnityCSharpGenerator codeGenerator = new UnityCSharpGenerator( );
-
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-            inVC = false;
-
-            // blocking checkout of versioned file, if necessary
-            if (UnityEditor.VersionControl.Provider.isActive)
-            {
-               UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(logicFile.RelativeAssetPath());
-               if (asset != null && UnityEditor.VersionControl.Provider.CheckoutIsValid(asset))
-               {
-                  inVC = true;
-                  UnityEditor.VersionControl.Provider.Checkout(asset, UnityEditor.VersionControl.CheckoutMode.Both).Wait();
-               }
-            }
-#endif
-
-            streamWriter = File.CreateText(logicFile);
-            streamWriter.Write( codeGenerator.GenerateLogicScript(logicClass, this, saveForDebugging, stubCode) );
-            streamWriter.Close( );
-
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-            if (!inVC)
-            {
-               uScript.MasterComponent.AddFileToVersionControl(logicFile.RelativeAssetPath());
-            }
-#endif
-         }
-         catch (Exception e)
-         {
-            if ( null != streamWriter ) streamWriter.Close( );
             m_GeneratedCodeIsStale = true;
 
-            Status.Error( "Failed to write to " + logicFile + ". Exception: " + e.Message );
+            Status.Error("Failed to write to " + wrapperFile + ".");
+            return false;
+         }
+
+         // save logic file
+         UnityCSharpGenerator logicCodeGenerator = new UnityCSharpGenerator( );
+         if (!SaveTextFile(logicFile, logicCodeGenerator.GenerateLogicScript(logicClass, this, saveForDebugging, stubCode)))
+         {
+            m_GeneratedCodeIsStale = true;
+
+            Status.Error( "Failed to write to " + logicFile + ".");
             return false;
          }
 
