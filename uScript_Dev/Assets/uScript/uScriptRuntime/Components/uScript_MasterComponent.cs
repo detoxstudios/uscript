@@ -17,6 +17,8 @@ public class uScript_MasterComponent : MonoBehaviour
 
 #if UNITY_EDITOR
    private Hashtable m_BreakpointCache = null;
+   [HideInInspector]
+   public uScript_UndoObject undoObjectReference = null;
 #endif
 
    private static GameObject m_LatestMaster;

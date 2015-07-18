@@ -378,15 +378,17 @@ public sealed partial class uScript : EditorWindow
 
    private static void EnsureMasterComponentExists(GameObject uScriptMaster)
    {
-      if (uScriptMaster.GetComponent<uScript_MasterComponent>() != null)
+      if (uScriptMaster.GetComponent<uScript_MasterComponent>() == null)
       {
-         return;
+         uScriptDebug.Log(
+            string.Format("Master Component added to master GameObject ({0})", uScriptRuntimeConfig.MasterObjectName),
+            uScriptDebug.Type.Debug);
+         uScriptMaster.AddComponent<uScript_MasterComponent>();
       }
 
-      uScriptDebug.Log(
-         string.Format("Master Component added to master GameObject ({0})", uScriptRuntimeConfig.MasterObjectName),
-         uScriptDebug.Type.Debug);
-      uScriptMaster.AddComponent<uScript_MasterComponent>();
+      if (uScriptMaster.GetComponent<uScript_MasterComponent>().undoObjectReference == null)
+         uScriptMaster.GetComponent<uScript_MasterComponent>().undoObjectReference = uScript.Instance.undoObject;
+
    }
 
    public bool AllowKeyInput()
@@ -838,6 +840,7 @@ public sealed partial class uScript : EditorWindow
 
       m_ScriptEditorCtrl.IsDirty = this.currentScriptDirty || this.patches.Length > 0;
 
+      ScriptableObject.DestroyImmediate(undoObject);
       undoObject = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
       undoObject.UndoNumber = m_UndoNumber;
 
