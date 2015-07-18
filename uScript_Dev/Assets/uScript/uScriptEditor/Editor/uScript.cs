@@ -12,6 +12,7 @@
 #define DEVELOPMENT_BUILD // Allows us to wrap features in progress. Used along with other BUILD settings.
 #endif
 
+
 //#define CLOSED_BETA
 //#define ENABLE_ANALYTICS
 
@@ -5060,6 +5061,7 @@ public sealed partial class uScript : EditorWindow
 
       List<EntityProperty> entityProperties = new List<EntityProperty>();
 
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
       foreach (PropertyInfo p in propertyInfos)
       {
          bool isInput = p.GetSetMethod() != null;
@@ -5081,7 +5083,6 @@ public sealed partial class uScript : EditorWindow
          uScript.Instance.AddType(p.PropertyType);
       }
 
-#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
       foreach (FieldInfo f in fieldInfos)
       {
          if (false == f.IsPublic) continue;
