@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 
+[ExecuteInEditMode]
 public class uScript_UndoObject : ScriptableObject
 {
 #if UNITY_EDITOR
