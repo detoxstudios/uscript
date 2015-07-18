@@ -3639,8 +3639,8 @@ public sealed partial class uScript : EditorWindow
       menu.AddItem(uScriptGUIContent.HelpMenuItemBuyPro, false, CommandHelpMenuBuyPro);
       menu.AddSeparator(string.Empty);
 #elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
-      menu.AddItem(uScriptGUIContent.HelpMenuItemUpgrade, false, CommandHelpMenuUpgrade);
-      menu.AddSeparator(string.Empty);
+      //menu.AddItem(uScriptGUIContent.HelpMenuItemUpgrade, false, CommandHelpMenuUpgrade);
+      //menu.AddSeparator(string.Empty);
 #endif
 
       menu.AddItem(uScriptGUIContent.HelpMenuItemAbout, false, CommandHelpMenuAbout);
