@@ -46,14 +46,14 @@ namespace Detox.Editor.GUI.Windows
 
          // Only check once per day
          var today = int.Parse(DateTime.Now.ToString(DateFormat));
-         if (preferences.LastPromotionCheck < today)
+         if (preferences.LastPromotionCheck > 0 && preferences.LastPromotionCheck < today)
          {
-            // Update the date so we won't check again until tomorrow
-            preferences.LastPromotionCheck = today;
-            preferences.Save();
-
             CheckServerForPromotion(uScriptBuild.Edition, preferences.IgnorePromotions);
          }
+
+         // Update the date so we won't check again until tomorrow
+         preferences.LastPromotionCheck = today;
+         preferences.Save();
       }
 
       public static void CheckServerForPromotion(uScriptBuild.EditionType target, string ignoredIDs, string dateOverride = "")
