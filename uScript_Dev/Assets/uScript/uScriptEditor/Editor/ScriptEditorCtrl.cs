@@ -3092,6 +3092,12 @@ namespace Detox.ScriptEditor
                {
                   if ( true == uScript.IsNodeTypeDeprecated(e) ) continue;
 
+                  var uScriptType = uScript.Instance.GetType(e.ComponentType);
+                  if (uScriptType != null)
+                  {
+                     if (typeof(uScriptEvent).IsAssignableFrom(uScriptType)) continue;
+                  }
+
                   ToolStripMenuItem friendlyMenu = GetMenu(addMenu, categoryName );
 
                   ToolStripItem item = new ToolStripItem( e.Parameter.FriendlyName );
