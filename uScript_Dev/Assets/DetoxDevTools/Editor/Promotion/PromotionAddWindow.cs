@@ -175,21 +175,14 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
          webRequest = this.CreateWebRequest("add");
 
-         var stopwatch = Stopwatch.StartNew();
-         var timeout = new TimeSpan(0, 0, 0, 50);
-
-         while (!webRequest.isDone && stopwatch.Elapsed < timeout)
-         {
-         }
-
-         stopwatch.Stop();
-
-         if (webRequest.isDone)
-         {
-            this.ProcessWebResponse();
-         }
-
-         webRequest.Dispose();
+         // Coroutines do not work in the editor, but we still need to handle the request in a non-blocking manner.
+         JobManager.Add(
+            () => webRequest.isDone,
+            () =>
+               {
+                  this.ProcessWebResponse();
+                  webRequest.Dispose();
+               });
       }
 
       private WWW CreateWebRequest(string action)

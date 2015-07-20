@@ -10,7 +10,6 @@
    using System;
    using System.Collections;
    using System.Collections.Generic;
-   using System.Diagnostics;
    using System.Linq;
 
    using Detox.Editor;
@@ -63,7 +62,7 @@ public class UpdateNotification : EditorWindow
   
    public static UpdateNotification Open()
    {
-      window = GetWindow<UpdateNotification>(true, string.Empty, true);
+      window = (UpdateNotification)GetWindow(typeof(UpdateNotification), true, string.Empty, true);
       window.isFirstRun = true;
       window.shouldUpdateLayout = true;
 
@@ -137,7 +136,7 @@ public class UpdateNotification : EditorWindow
 
    internal void OnEnabled()
    {
-      shouldUpdateLayout = true;
+      this.shouldUpdateLayout = true;
    }
 
    internal void OnGUI()
@@ -164,12 +163,12 @@ public class UpdateNotification : EditorWindow
          }
       }
 
-      if ((shouldUpdateLayout || PreviousBody != this.Body) && Event.current.type == EventType.Layout)
+      if ((this.shouldUpdateLayout || this.PreviousBody != this.Body) && Event.current.type == EventType.Layout)
       {
-         PreviousBody = this.Body;
+         this.PreviousBody = this.Body;
          this.LayoutGUI();
 
-         shouldUpdateLayout = false;
+         this.shouldUpdateLayout = false;
 
          //if (shouldRunSilent && hidden == false)
          //{
@@ -227,21 +226,14 @@ public class UpdateNotification : EditorWindow
    {
       webRequest = CreateWebRequest();
 
-      var stopwatch = Stopwatch.StartNew();
-      var timeout = new TimeSpan(0, 0, 0, 5);
-
-      while (!webRequest.isDone && stopwatch.Elapsed < timeout)
-      {
-      }
-
-      stopwatch.Stop();
-
-      if (webRequest.isDone)
-      {
-         SilentlyProcessWebResponse();
-      }
-
-      webRequest.Dispose();
+      // Coroutines do not work in the editor, but we still need to handle the request in a non-blocking manner.
+      JobManager.Add(
+         () => webRequest.isDone,
+         () =>
+            {
+               SilentlyProcessWebResponse();
+               webRequest.Dispose();
+            });
    }
 
    private static WWW CreateWebRequest()
@@ -574,7 +566,7 @@ public class UpdateNotification : EditorWindow
          ButtonRemind = new GUIContent("Remind in 7 Days");
          ButtonSkip = new GUIContent("Skip this Update");
 
-         Icon = new GUIContent(Detox.Editor.uScriptGUI.GetTexture("iconWelcomeLogo"));
+         Icon = new GUIContent(uScriptGUI.GetTexture("iconWelcomeLogo"));
 
          TitleCheckInProgress = new GUIContent("Check for Updates");
          TitleClientBuildCurrent = new GUIContent("You're up to date!");

@@ -62,21 +62,14 @@ namespace Detox.Editor.GUI.Windows
 
          webRequest = CreateWebRequest(target, ignoredIDs, dateOverride);
 
-         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-         var timeout = new TimeSpan(0, 0, 0, 5);
-
-         while (!webRequest.isDone && stopwatch.Elapsed < timeout)
-         {
-         }
-
-         stopwatch.Stop();
-
-         if (webRequest.isDone)
-         {
-            ProcessWebResponse();
-         }
-
-         webRequest.Dispose();
+         // Coroutines do not work in the editor, but we still need to handle the request in a non-blocking manner.
+         JobManager.Add(
+            () => webRequest.isDone,
+            () =>
+               {
+                  ProcessWebResponse();
+                  webRequest.Dispose();
+               });
       }
 
       internal void OnGUI()
@@ -128,10 +121,6 @@ namespace Detox.Editor.GUI.Windows
 
          window.minSize = window.maxSize = new Vector2(promotion.Image.width, promotion.Image.height);
       }
-
-      //internal void Update()
-      //{
-      //}
 
       private static WWW CreateWebRequest(uScriptBuild.EditionType target, string id, string date = "")
       {
@@ -231,18 +220,9 @@ namespace Detox.Editor.GUI.Windows
 
          webRequest = new WWW(uri, form.data, headers);
 
-         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-         var timeout = new TimeSpan(0, 0, 0, 5);
-
-         while (!webRequest.isDone && stopwatch.Elapsed < timeout)
-         {
-         }
-
-         stopwatch.Stop();
-
-         // we don't care about the response, since we're just notifying the server to record the click event
-
-         webRequest.Dispose();
+         // Coroutines do not work in the editor, but we still need to handle the request in a non-blocking manner.
+         // We don't care about the response, since we're just notifying the server to record the click event.
+         JobManager.Add(() => webRequest.isDone, () => webRequest.Dispose());
       }
    }
 
