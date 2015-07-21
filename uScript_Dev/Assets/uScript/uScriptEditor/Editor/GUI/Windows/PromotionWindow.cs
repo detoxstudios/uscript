@@ -63,7 +63,8 @@ namespace Detox.Editor.GUI.Windows
          webRequest = CreateWebRequest(target, ignoredIDs, dateOverride);
 
          // Coroutines do not work in the editor, but we still need to handle the request in a non-blocking manner.
-         JobManager.Add(
+         // ReSharper disable once RedundantNameQualifier
+         Detox.Editor.JobManager.Add(
             () => webRequest.isDone,
             () =>
                {
@@ -222,7 +223,8 @@ namespace Detox.Editor.GUI.Windows
 
          // Coroutines do not work in the editor, but we still need to handle the request in a non-blocking manner.
          // We don't care about the response, since we're just notifying the server to record the click event.
-         JobManager.Add(() => webRequest.isDone, () => webRequest.Dispose());
+         // ReSharper disable once RedundantNameQualifier
+         Detox.Editor.JobManager.Add(() => webRequest.isDone, () => webRequest.Dispose());
       }
    }
 
