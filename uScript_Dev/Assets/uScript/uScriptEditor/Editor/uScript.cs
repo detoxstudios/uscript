@@ -2430,6 +2430,10 @@ public sealed partial class uScript : EditorWindow
 
    void OnDestroy()
    {
+      MasterComponent.undoObjectReference = null;
+      ScriptableObject.DestroyImmediate(undoObject);
+      undoObject = null;
+
       this.WasCurrentGraphSaved(false);
 
       if (m_ScriptEditorCtrl != null)
