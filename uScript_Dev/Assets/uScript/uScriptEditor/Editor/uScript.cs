@@ -106,7 +106,7 @@ public sealed partial class uScript : EditorWindow
    private Rect helpButtonRect;
    private Rect fileButtonRect;
    private Rect viewButtonRect;
-   private uScript_UndoObject undoObject = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
+   private uScript_UndoObject undoObject = null;
 
    private Hashtable m_EntityTypeHash = null;
    private EntityDesc[] m_EntityTypes = null;
@@ -389,7 +389,9 @@ public sealed partial class uScript : EditorWindow
 
       if (uScriptMaster.GetComponent<uScript_MasterComponent>().undoObjectReference != uScript.Instance.undoObject)
       {
-         ScriptableObject.DestroyImmediate(uScriptMaster.GetComponent<uScript_MasterComponent>().undoObjectReference);
+         if (uScriptMaster.GetComponent<uScript_MasterComponent>().undoObjectReference != null)
+            ScriptableObject.DestroyImmediate(uScriptMaster.GetComponent<uScript_MasterComponent>().undoObjectReference);
+         
          uScriptMaster.GetComponent<uScript_MasterComponent>().undoObjectReference = uScript.Instance.undoObject;
       }
    }
@@ -671,6 +673,8 @@ public sealed partial class uScript : EditorWindow
       Directory.CreateDirectory(Preferences.GeneratedScripts);
       Directory.CreateDirectory(Preferences.NestedScripts);
 
+      undoObject = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
+
       // Move the uScriptUserTypes.cs.template file into the uScriptProjectFiles folder if one doesn't already exist.
       string userTypesFileTemplate = uScriptConfig.ConstantPaths.Templates + "/uScriptUserTypes.cs.template";
       string userTypesFile = uScriptConfig.ConstantPaths.Settings + "/uScriptUserTypes.cs";
@@ -750,7 +754,7 @@ public sealed partial class uScript : EditorWindow
       Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
       uScriptBackgroundProcess.ForceFileRefresh();
-      MasterComponent.undoObjectReference = undoObject;
+      //MasterComponent.undoObjectReference = undoObject;
    }
 
    private void RelaunchingFromRebuiltAppDomain()
@@ -764,7 +768,7 @@ public sealed partial class uScript : EditorWindow
       OpenFromCache();
 
       uScriptBackgroundProcess.ForceFileRefresh();
-      MasterComponent.undoObjectReference = undoObject;
+      //MasterComponent.undoObjectReference = undoObject;
    }
 
    private void ClearChangeStack()
@@ -845,10 +849,10 @@ public sealed partial class uScript : EditorWindow
 
       m_ScriptEditorCtrl.IsDirty = this.currentScriptDirty || this.patches.Length > 0;
 
-      ScriptableObject.DestroyImmediate(undoObject);
-      undoObject = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
-      undoObject.UndoNumber = m_UndoNumber;
-      MasterComponent.undoObjectReference = undoObject;
+      //ScriptableObject.DestroyImmediate(undoObject);
+      //undoObject = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
+      //undoObject.UndoNumber = m_UndoNumber;
+      //MasterComponent.undoObjectReference = undoObject;
 
       //clear out all patches and cache new copy of the script
       CacheScript();
@@ -2430,9 +2434,9 @@ public sealed partial class uScript : EditorWindow
 
    void OnDestroy()
    {
-      MasterComponent.undoObjectReference = null;
-      ScriptableObject.DestroyImmediate(undoObject);
-      undoObject = null;
+      //MasterComponent.undoObjectReference = null;
+      //ScriptableObject.DestroyImmediate(undoObject);
+      //undoObject = null;
 
       this.WasCurrentGraphSaved(false);
 
