@@ -129,6 +129,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Extensions\UnityEditorExtensions.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\FlowChart.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GraphInfo.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Control.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\HierarchyWindowIcon.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ProjectWindowIcon.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\ListViewItemScript.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScript.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptCurrent.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptList.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Property.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\AboutWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\HotkeyWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\LicenseWindow.cs" />
