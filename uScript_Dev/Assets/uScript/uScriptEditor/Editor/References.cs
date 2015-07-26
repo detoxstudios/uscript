@@ -113,16 +113,16 @@ namespace Detox.Application
 
 namespace Detox.Windows.Forms
 {
-   using System.Reflection;
    using System;
    using System.Collections.Generic;
 
-   using Detox.Editor;
-   using Detox.Windows.Forms;
    using Detox.Drawing;
-   using UnityEngine;
-   using UnityEditor;
+   using Detox.Editor;
+   using Detox.Editor.GUI;
+   using Detox.FlowChart;
    using Detox.ScriptEditor;
+
+   using UnityEngine;
 
    public class PropertyValueChangedEventArgs : System.EventArgs
    {}
@@ -175,7 +175,9 @@ namespace Detox.Windows.Forms
 
             if (parameters.Parameters.Length > 1)
             {
-               Detox.FlowChart.Node node = parameters.EntityNode != null ? uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid) : null;
+               Node node = parameters.EntityNode != null
+                              ? uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid)
+                              : null;
 
                if (uScriptGUI.BeginPropertyList(parameters.Description, node))
                {
@@ -191,117 +193,120 @@ namespace Detox.Windows.Forms
 
                      object val = cloned.DefaultAsObject;
 
-                     bool isSocketExposed  = p.IsVisible( );
-                     bool isReadOnly = false == p.Input;
-                     bool isLocked = true == p.IsLocked( );
+                     bool isLocked = p.IsLocked();
 
                      if (null != node)
                      {
                         if ( false == isLocked )
                         {
-                           if ( false == parameters.ScriptEditorCtrl.CanCollapseParameter(parameters.EntityNode.Guid, p) &&
-                                false == parameters.ScriptEditorCtrl.CanExpandParameter(p) )
+                           if ( false == parameters.ScriptEditorCtrl.CanCollapseParameter(parameters.EntityNode.Guid, p)
+                                && false == parameters.ScriptEditorCtrl.CanExpandParameter(p) )
                            {
                               isLocked = true;
                            }
                         }
                      }
 
+                     Property.State propertyState = new Property.State(
+                        isSocketExposed: p.IsVisible(),
+                        isLocked: isLocked,
+                        isReadOnly: p.Input == false);
+
                      if ( node == null || false == uScript.GetRequiresLink(parameters.EntityNode, p.Name) )
                      {
-                        if ( val.GetType() == typeof(System.Boolean[]) )
+                        if ( val.GetType() == typeof(bool[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<System.Boolean>(p.FriendlyName, (Boolean[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (bool[])val, propertyState);
                         }
-                        else if ( val.GetType() == typeof(System.Boolean) )
+                        else if ( val.GetType() == typeof(bool) )
                         {
-                           val = uScriptGUI.BoolField(p.FriendlyName, (bool) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.BoolField(p.FriendlyName, (bool)val, propertyState);
                         }
-                        else if ( val.GetType() == typeof(System.Int32[]) )
+                        else if ( val.GetType() == typeof(int[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<System.Int32>(p.FriendlyName, (int[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (int[])val, propertyState);
                         }
-                        else if ( val.GetType() == typeof(System.Int32) )
+                        else if ( val.GetType() == typeof(int) )
                         {
-                           val = uScriptGUI.IntField(p.FriendlyName, (int) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.IntField(p.FriendlyName, (int)val, propertyState);
                         }
-                        else if ( val.GetType() == typeof(System.Single[]) )
+                        else if ( val.GetType() == typeof(float[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<System.Single>(p.FriendlyName, (Single[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (float[])val, propertyState);
                         }
-                        else if ( val.GetType() == typeof(System.Single) )
+                        else if ( val.GetType() == typeof(float) )
                         {
-                           val = uScriptGUI.FloatField(p.FriendlyName, (float) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.FloatField(p.FriendlyName, (float)val, propertyState);
                         }
-                        else if ( val.GetType() == typeof(System.Double[]) )
+                        else if ( val.GetType() == typeof(double[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<System.Double>(p.FriendlyName, (Double[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (double[])val, propertyState);
                         }
-                        else if ( val.GetType() == typeof(System.Double) )
+                        else if ( val.GetType() == typeof(double) )
                         {
-                           val = (double) uScriptGUI.FloatField(p.FriendlyName, (float) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = (double)uScriptGUI.FloatField(p.FriendlyName, (float)val, propertyState);
                         }
                         else if ( val.GetType() == typeof(Vector2[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<Vector2>(p.FriendlyName, (Vector2[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Vector2[])val, propertyState);
                         }
                         else if ( val.GetType() == typeof(Vector2) )
                         {
-                           val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2)val, propertyState);
                         }
                         else if ( val.GetType() == typeof(Rect[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<Rect>(p.FriendlyName, (Rect[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Rect[])val, propertyState);
                         }
                         else if ( val.GetType() == typeof(Rect) )
                         {
-                           val = uScriptGUI.RectField(p.FriendlyName, (Rect) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.RectField(p.FriendlyName, (Rect)val, propertyState);
                         }
                         else if ( val.GetType() == typeof(Vector3[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<Vector3>(p.FriendlyName, (Vector3[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Vector3[])val, propertyState);
                         }
                         else if ( val.GetType() == typeof(Vector3) )
                         {
-                           val = uScriptGUI.Vector3Field(p.FriendlyName, (Vector3) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.Vector3Field(p.FriendlyName, (Vector3)val, propertyState);
                         }
                         else if ( val.GetType() == typeof(Vector4[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<Vector4>(p.FriendlyName, (Vector4[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Vector4[])val, propertyState);
                         }
                         else if ( val.GetType() == typeof(Vector4) )
                         {
-                           val = uScriptGUI.Vector4Field(p.FriendlyName, (Vector4) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.Vector4Field(p.FriendlyName, (Vector4)val, propertyState);
                         }
                         else if ( val.GetType() == typeof(Quaternion[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<Quaternion>(p.FriendlyName, (Quaternion[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Quaternion[])val, propertyState);
                         }
                         else if ( val.GetType() == typeof(Quaternion) )
                         {
-                           val = uScriptGUI.QuaternionField(p.FriendlyName, (Quaternion) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.QuaternionField(p.FriendlyName, (Quaternion)val, propertyState);
                         }
                         else if ( val.GetType() == typeof(UnityEngine.Color[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<UnityEngine.Color>(p.FriendlyName, (UnityEngine.Color[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (UnityEngine.Color[])val, propertyState);
                         }
                         else if ( val.GetType() == typeof(UnityEngine.Color) )
                         {
-                           val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color)val, propertyState);
                         }
                         else if ( val.GetType() == typeof(GUILayoutOption[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<GUILayoutOption>(p.FriendlyName, (GUILayoutOption[])val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (GUILayoutOption[])val, propertyState);
                         }
                         else if ( val.GetType() == typeof(GUILayoutOption) )
                         {
-                           val = uScriptGUI.GUILayoutOptionField(p.FriendlyName, (GUILayoutOption)val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.GUILayoutOptionField(p.FriendlyName, (GUILayoutOption)val, propertyState);
                         }
-                        else if ( val.GetType() == typeof(UnityEngine.LayerMask[]) )
+                        else if ( val.GetType() == typeof(LayerMask[]) )
                         {
-                           val = uScriptGUI.ArrayFoldout<UnityEngine.LayerMask>(p.FriendlyName, (UnityEngine.LayerMask[]) val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (LayerMask[])val, propertyState);
                         }
-                        else if ( typeof(UnityEngine.LayerMask).IsAssignableFrom(val.GetType()) )
+                        else if ( typeof(LayerMask).IsAssignableFrom(val.GetType()) )
                         {
    //                        UnityEngine.LayerMask mask = (UnityEngine.LayerMask)val;
    //                        string layerValue = UnityEngine.LayerMask.LayerToName(mask);
@@ -316,7 +321,7 @@ namespace Detox.Windows.Forms
    //                           }
    //                        }
    //
-   //                        string returnedName = uScriptGUI.ChoiceField(p.FriendlyName, layerValue, layerList.ToArray(), ref isSocketExposed, isLocked, isReadOnly);
+   //                        string returnedName = uScriptGUI.ChoiceField(p.FriendlyName, layerValue, layerList.ToArray(), propertyState);
    //
    //                        for (int i = 0; i < 32; i++)
    //                        {
@@ -328,7 +333,7 @@ namespace Detox.Windows.Forms
    //                           }
    //                        }
 
-                           val = uScriptGUI.LayerField(p.FriendlyName, (LayerMask)val, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.LayerField(p.FriendlyName, (LayerMask)val, propertyState);
    //                        // Later, if we support actual LayerMask fields, the popup control should use
    //                        // labels like "xxx" or "xxx, xxx" or "xxx, xxx, xxx" or "Mixed ..."
    //                        //
@@ -347,30 +352,34 @@ namespace Detox.Windows.Forms
                         {
                            //use p.Type to figure out the specific type of enum it is, instead of a generic System.Enum
                            System.Type eType = uScript.Instance.GetType(p.Type.ToString().Replace("[]", ""));
-                           val = uScriptGUI.ArrayFoldout<System.Enum>(p.FriendlyName, (System.Enum[]) val, ref isSocketExposed, isLocked, isReadOnly, eType);
+                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Enum[])val, propertyState, eType);
                         }
                         else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
                         {
-                           val = uScriptGUI.EnumTextField(p.FriendlyName, (System.Enum) val, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.EnumTextField(p.FriendlyName, (Enum)val, p.Default, propertyState);
                         }
                         else if ( AssetType.Invalid != uScript.GetAssetPathField(parameters.EntityNode, p.Name) )
                         {
-                           val = uScriptGUI.AssetPathField(p.FriendlyName, uScript.GetAssetPathField(parameters.EntityNode, p.Name), p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.AssetPathField(
+                              p.FriendlyName,
+                              uScript.GetAssetPathField(parameters.EntityNode, p.Name),
+                              p.Default,
+                              propertyState);
                         }
                         else if ( null != GetObjectArrayFieldType(p.Type) )
                         {
                            //arrays are stored as comma delimited string, so parse it now
-                           string []values = Parameter.StringToArray(p.Default);
-                           values = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly, typeof(GameObject));
+                           string[] values = Parameter.StringToArray(p.Default);
+                           values = uScriptGUI.ArrayFoldout(p.FriendlyName, values, propertyState, typeof(GameObject));
                            val = Parameter.ArrayToString(values);
                         }
                         else if (null != this.GetObjectFieldType(p.Type))
                         {
-                           val = uScriptGUI.ObjectField(p.FriendlyName, null, this.GetObjectFieldType(p.Type), p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.ObjectField(p.FriendlyName, null, this.GetObjectFieldType(p.Type), p.Default, propertyState);
                         }
                         else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "TextArea" )
                         {
-                           val = uScriptGUI.TextArea(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                           val = uScriptGUI.TextArea(p.FriendlyName, p.Default, propertyState);
                         }
                         else
                         {
@@ -378,27 +387,27 @@ namespace Detox.Windows.Forms
                            if ( p.Type.Contains("[]") )
                            {
                               string []values = Parameter.StringToArray(p.Default);
-                              val = uScriptGUI.ArrayFoldout<string>(p.FriendlyName, values, ref isSocketExposed, isLocked, isReadOnly);
+                              val = uScriptGUI.ArrayFoldout(p.FriendlyName, values, propertyState);
                            }
                            else
                            {
                               if (p.FriendlyName == "Name" || p.FriendlyName == "Friendly Name")
                               {
-                                 val = uScriptGUI.TextField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                                 val = uScriptGUI.TextField(p.FriendlyName, p.Default, propertyState);
 
                                  // TODO: Unity 4.1 has problems with the VariableNameField control, so disable it until it is actually needed.
-                                 //val = uScriptGUI.VariableNameField(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                                 //val = uScriptGUI.VariableNameField(p.FriendlyName, p.Default, propertyState);
                               }
                               else
                               {
-                                 val = uScriptGUI.TextArea(p.FriendlyName, p.Default, ref isSocketExposed, isLocked, isReadOnly);
+                                 val = uScriptGUI.TextArea(p.FriendlyName, p.Default, propertyState);
                               }
                            }
                         }
                      }
                      else
                      {
-                        uScriptGUI.BlankField(p.FriendlyName, "Requires Link", ref isSocketExposed, isLocked);
+                        uScriptGUI.BlankField(p.FriendlyName, "Requires Link", propertyState);
                      }
 
                      //remove the old states
@@ -406,7 +415,7 @@ namespace Detox.Windows.Forms
                      cloned.State &= ~Parameter.VisibleState.Hidden;
 
                      //add it back in if selected
-                     if ( true == isSocketExposed )
+                     if ( true == propertyState.IsSocketExposed )
                      {
                         cloned.State |= Parameter.VisibleState.Visible;
                      }
@@ -867,9 +876,11 @@ namespace Detox.Windows.Forms
 
 namespace Detox.Drawing
 {
-   using UnityEditor;
-   using UnityEngine;
    using System;
+
+   using UnityEditor;
+
+   using UnityEngine;
 
    public struct Point
    {

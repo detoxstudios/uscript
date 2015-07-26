@@ -16,6 +16,7 @@ namespace Detox.Editor
    using System.Linq;
    using System.Reflection;
 
+   using Detox.Editor.GUI;
    using Detox.FlowChart;
    using Detox.ScriptEditor;
 
@@ -437,7 +438,7 @@ namespace Detox.Editor
          }
       }
 
-      public static string ResourcePathField(string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static string ResourcePathField(string value, Property.State state)
       {
          // Resource Path
          //
@@ -457,9 +458,9 @@ namespace Detox.Editor
             //         choices = _resourcePaths.ToArray();
          }
 
-         BeginStaticRow("Resource Path", ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow("Resource Path", state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             var menuIndex = 0;
             for (var i = 0; i < resourcePaths.Count; i++)
@@ -487,7 +488,7 @@ namespace Detox.Editor
          return value;
       }
 
-      public static string AssetPathField(string label, AssetType assetType, string assetPath, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static string AssetPathField(string label, AssetType assetType, string assetPath, Property.State state)
       {
          // Asset File Name
          //
@@ -508,9 +509,9 @@ namespace Detox.Editor
                            padding = new RectOffset(6, 6, 1, 2)
                         };
 
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             var buttonSize = style.CalcSize(new GUIContent("Browse"));
 
@@ -1095,16 +1096,16 @@ namespace Detox.Editor
          }
       }
 
-      public static int IntField(string label, int value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static int IntField(string label, int value, Property.State state)
       {
-         return IntField(label, value, ref isSocketExposed, isLocked, isReadOnly, int.MinValue, int.MaxValue);
+         return IntField(label, value, state, int.MinValue, int.MaxValue);
       }
 
-      public static int IntField(string label, int value, ref bool isSocketExposed, bool isLocked, bool isReadOnly, int min, int max)
+      public static int IntField(string label, int value, Property.State state, int min, int max)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             value = EditorGUILayout.IntField(value, uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width));
          }
@@ -1113,11 +1114,11 @@ namespace Detox.Editor
          return value;
       }
 
-      public static float FloatField(string label, float value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static float FloatField(string label, float value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             value = EditorGUILayout.FloatField(value, uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width));
          }
@@ -1140,11 +1141,11 @@ namespace Detox.Editor
          return (T)propertyInfo.GetValue(null, null);
       }
 
-      public static string VariableNameField(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static string VariableNameField(string label, string value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             // FIXME: Unity 4.1 has issues here as well, which should be fixed before this control is used.  See: http://uscript.net/forum/viewtopic.php?f=11&t=2434
 
@@ -1196,11 +1197,11 @@ namespace Detox.Editor
          return value;
       }
 
-      public static string TextField(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static string TextField(string label, string value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             value = EditorGUILayout.TextField(value, uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width));
          }
@@ -1209,16 +1210,16 @@ namespace Detox.Editor
          return value;
       }
 
-      public static string TextArea(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static string TextArea(string label, string value, Property.State state)
       {
          const int LineHeight = 13;
          const int Padding = 3;
          const int MinLines = Padding + (LineHeight * 2);
          const int MaxLines = Padding + (LineHeight * 10);
 
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             var content = new GUIContent(value);
             var calcHeight = Mathf.Clamp(
@@ -1237,11 +1238,11 @@ namespace Detox.Editor
          return value;
       }
 
-      public static bool BoolField(string label, bool value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static bool BoolField(string label, bool value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             value = GUILayout.Toggle(value, GUIContent.none, uScriptGUIStyle.PropertyBoolField, GUILayout.Width(columnValue.Width));
          }
@@ -1250,20 +1251,22 @@ namespace Detox.Editor
          return value;
       }
 
-      public static void BlankField(string label, string text, ref bool isSocketExposed, bool isLocked)
+      public static void BlankField(string label, string text, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, true);
+         var tempState = new Property.State(state.IsSocketExposed, state.IsLocked, true);
+         BeginStaticRow(label, tempState);
+         state.IsSocketExposed = tempState.IsSocketExposed;
 
          EditorGUILayout.TextField(text, uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width));
 
          EndRow(string.Empty);
       }
 
-      public static Color ColorField(string label, Color value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static Color ColorField(string label, Color value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             value = EditorGUILayout.ColorField(value, GUILayout.Width(columnValue.Width));
          }
@@ -1287,11 +1290,11 @@ namespace Detox.Editor
          return value;
       }
 
-      public static GUILayoutOption GUILayoutOptionField(string label, GUILayoutOption value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static GUILayoutOption GUILayoutOptionField(string label, GUILayoutOption value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             const int Spacing = 4; // 4 * 1
             var w = (columnValue.Width - Spacing) / 2;
@@ -1371,11 +1374,11 @@ namespace Detox.Editor
          verticalScrollbarThumb = null;
       }
 
-      public static Vector2 Vector2Field(string label, Vector2 value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static Vector2 Vector2Field(string label, Vector2 value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             const int Spacing = 4; // 4 * 1
             var w = (columnValue.Width - Spacing) / 2;
@@ -1389,11 +1392,11 @@ namespace Detox.Editor
          return value;
       }
 
-      public static Vector3 Vector3Field(string label, Vector3 value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static Vector3 Vector3Field(string label, Vector3 value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             const int Spacing = 8; // 4 * 2
             var w = (columnValue.Width - Spacing) / 3;
@@ -1408,11 +1411,11 @@ namespace Detox.Editor
          return value;
       }
 
-      public static Vector4 Vector4Field(string label, Vector4 value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static Vector4 Vector4Field(string label, Vector4 value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             const int Spacing = 12; // 4 * 3
             var w = (columnValue.Width - Spacing) / 4;
@@ -1428,11 +1431,11 @@ namespace Detox.Editor
          return value;
       }
 
-      public static Rect RectField(string label, Rect value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static Rect RectField(string label, Rect value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             const int Spacing = 12; // 4 * 3
             var w = (columnValue.Width - Spacing) / 4;
@@ -1448,11 +1451,11 @@ namespace Detox.Editor
          return value;
       }
 
-      public static Quaternion QuaternionField(string label, Quaternion value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static Quaternion QuaternionField(string label, Quaternion value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             const int Spacing = 12; // 4 * 3
             var w = (columnValue.Width - Spacing) / 4;
@@ -1468,11 +1471,11 @@ namespace Detox.Editor
          return value;
       }
 
-      public static Enum EnumField(string label, Enum value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static Enum EnumField(string label, Enum value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             //int spacing = 12; // 4 * 3
             //int w = (columnValue.Width - spacing) / 4;
@@ -1489,11 +1492,11 @@ namespace Detox.Editor
          return value;
       }
 
-      public static int LayerField(string label, int value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static int LayerField(string label, int value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             //  0         1    Default
             //  1         2    TransparentFX
@@ -1531,11 +1534,11 @@ namespace Detox.Editor
          return (int)Math.Log(number, 2);
       }
 
-      public static string TagField(string label, string value, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static string TagField(string label, string value, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             value = EditorGUILayout.TagField(value, GUILayout.Width(columnValue.Width));
          }
@@ -1568,11 +1571,11 @@ namespace Detox.Editor
          return "Invalid Value";
       }
 
-      public static string ChoiceField(string label, string value, string[] choices, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static string ChoiceField(string label, string value, string[] choices, Property.State state)
       {
-         BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(label, state);
 
-         if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+         if (IsFieldUsable(state))
          {
             var menuIndex = 0;
             for (var i = 0; i < choices.Length; i++)
@@ -1594,13 +1597,13 @@ namespace Detox.Editor
          return value;
       }
 
-      public static Enum EnumTextField(string label, Enum value, string textValue, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static Enum EnumTextField(string label, Enum value, string textValue, Property.State state)
       {
          EditorGUILayout.BeginVertical();
          {
-            BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+            BeginStaticRow(label, state);
 
-            if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+            if (IsFieldUsable(state))
             {
                //first show the text field and get back the same (or changed value)
                var userText = EditorGUILayout.TextField(textValue, uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width));
@@ -1619,9 +1622,8 @@ namespace Detox.Editor
 
                EndRow(textValue.GetType().ToString());
 
-               var tempBoolean = false;
-
-               BeginStaticRow(string.Empty, ref tempBoolean, true, isReadOnly);
+               var tempState = new Property.State(false, true, state.IsReadOnly);
+               BeginStaticRow(string.Empty, tempState);
 
                //send the new value to the enum popup and whatever it
                //returns (in case the user modified it here) is what our final value is
@@ -1635,21 +1637,20 @@ namespace Detox.Editor
          return value;
       }
 
-      public static string ObjectField(string label, UnityEngine.Object value, Type type, string textValue, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static string ObjectField(string label, UnityEngine.Object value, Type type, string textValue, Property.State state)
       {
          EditorGUILayout.BeginVertical();
          {
-            BeginStaticRow(label, ref isSocketExposed, isLocked, isReadOnly);
+            BeginStaticRow(label, state);
 
-            if (IsFieldUsable(isSocketExposed, isLocked, isReadOnly))
+            if (IsFieldUsable(state))
             {
                textValue = EditorGUILayout.TextField(textValue, uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width));
 
                EndRow(textValue.GetType().ToString());
 
-               var socketExposed = false;
-
-               BeginStaticRow(string.Empty, ref socketExposed, true, isReadOnly);
+               var tempState = new Property.State(false, true, state.IsReadOnly);
+               BeginStaticRow(string.Empty, tempState);
 
                // now try and update the object browser with an instance of the specified object
                var objects = UnityEngine.Object.FindObjectsOfType(type);
@@ -1683,46 +1684,53 @@ namespace Detox.Editor
          return textValue;
       }
 
-      public static T[] ArrayFoldout<T>(string label, T[] array, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      public static T[] ArrayFoldout<T>(string label, T[] array, Property.State state)
       {
-         return ArrayFoldout(label, array, ref isSocketExposed, isLocked, isReadOnly, null);
+         return ArrayFoldout(label, array, state, null);
       }
 
-      public static T[] ArrayFoldout<T>(string label, T[] array, ref bool isSocketExposed, bool isLocked, bool isReadOnly, Type type)
+      public static T[] ArrayFoldout<T>(string label, T[] array, Property.State state, Type type)
       {
          var propertyKey = string.Format("{0}_{1}", nodeKey, label);
          var isExpanded = !FoldoutExpanded.ContainsKey(propertyKey) || FoldoutExpanded[propertyKey];
 
          // The Foldout row
-         BeginFoldoutRow(label, ref isSocketExposed, isLocked, isReadOnly, ref isExpanded);
+         BeginFoldoutRow(label, state, ref isExpanded);
 
          // Display the array info, readonly, socketUsed, or an empty area
-         var isFieldUsable = IsFieldUsable(isSocketExposed, isLocked, isReadOnly);
+         var isFieldUsable = IsFieldUsable(state);
          if (isFieldUsable)
          {
-            GUILayout.Label("... (" + array.Length + " item" + (array.Length == 1 ? string.Empty : "s") + ")", styleLabel, GUILayout.Width(columnValue.Width));
+            GUILayout.Label(
+               string.Format("... ({0} {1})", array.Length, array.Length == 1 ? "item" : "items"),
+               styleLabel,
+               GUILayout.Width(columnValue.Width));
 
             var btnRect = GUILayoutUtility.GetLastRect();
             btnRect.x = btnRect.xMax - 18;
             btnRect.width = 18;
             btnRect.height = 16;
 
-            if (UnityEngine.GUI.Button(btnRect, uScriptGUIContent.buttonArrayAdd, uScriptGUIStyle.PropertyArrayTextButton))
+            if (UnityEngine.GUI.Button(
+               btnRect,
+               uScriptGUIContent.buttonArrayAdd,
+               uScriptGUIStyle.PropertyArrayTextButton))
             {
                GUIUtility.keyboardControl = 0;
 
                // Special conversion case for strings and GUILayoutOption objects
                var element = typeof(T) == typeof(string)
                                 ? (T)(object)string.Empty
-                                : (typeof(T) == typeof(GUILayoutOption)
-                                      ? (T)(object)GUILayout.Width(0)
-                                      : default(T));
+                                : (typeof(T) == typeof(GUILayoutOption) ? (T)(object)GUILayout.Width(0) : default(T));
                array = ArrayAppend(array, element);
             }
 
             btnRect.x -= 18;
 
-            if (UnityEngine.GUI.Button(btnRect, uScriptGUIContent.buttonArrayClear, uScriptGUIStyle.PropertyArrayTextButton))
+            if (UnityEngine.GUI.Button(
+               btnRect,
+               uScriptGUIContent.buttonArrayClear,
+               uScriptGUIStyle.PropertyArrayTextButton))
             {
                GUIUtility.keyboardControl = 0;
                array = new T[] { };
@@ -1734,8 +1742,6 @@ namespace Detox.Editor
          // The array size
          if (isExpanded && isFieldUsable)
          {
-            var hideSocket = false;
-
             EditorGUI.indentLevel += 2;
 
             // The elements
@@ -1756,7 +1762,8 @@ namespace Detox.Editor
                   }
                }
 
-               array[i] = ArrayElementRow(ref array, i, entry, ref hideSocket, true, false, type);
+               var tempState = new Property.State(false, true, false);
+               array[i] = ArrayElementRow(ref array, i, entry, tempState, type);
             }
 
             EditorGUI.indentLevel -= 2;
@@ -1779,12 +1786,12 @@ namespace Detox.Editor
          return '/' + result.Remove(result.Length - 1);
       }
 
-      public static T ArrayElementRow<T>(ref T[] array, int index, T value, ref bool isSocketExposed, bool isLocked, bool isReadOnly, Type type)
+      public static T ArrayElementRow<T>(ref T[] array, int index, T value, Property.State state, Type type)
       {
          var r1 = GUILayoutUtility.GetLastRect();
          r1.y = r1.yMax + 2;
 
-         BeginStaticRow(string.Format("[{0}]", index.ToString(CultureInfo.InvariantCulture)), ref isSocketExposed, isLocked, isReadOnly);
+         BeginStaticRow(string.Format("[{0}]", index.ToString(CultureInfo.InvariantCulture)), state);
 
          // Get the last rect to determine where we want to draw the array modifier buttons
          var row = GUILayoutUtility.GetLastRect();
@@ -2184,45 +2191,52 @@ namespace Detox.Editor
          return list.ToArray();
       }
 
-      private static void BeginFoldoutRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly, ref bool isExpanded)
+      private static void BeginFoldoutRow(string label, Property.State state, ref bool isExpanded)
       {
-         SetupRow(ref isSocketExposed, isLocked, isReadOnly);
+         SetupRow(state);
 
-         if (isSocketExposed && (isLocked || isReadOnly))
+         if (state.IsSocketExposed && (state.IsLocked || state.IsReadOnly))
          {
             EditorGUILayout.PrefixLabel(label, styleLabel);
          }
          else
          {
-            isExpanded = GUILayout.Toggle(isExpanded, label, EditorStyles.foldout, GUILayout.Width(columnLabel.Width - 3));
+            isExpanded = GUILayout.Toggle(
+               isExpanded,
+               label,
+               EditorStyles.foldout,
+               GUILayout.Width(columnLabel.Width - 3));
          }
 
-         Enabled = (!isReadOnly) && (!isSocketExposed || !isLocked);
+         Enabled = (!state.IsReadOnly) && (!state.IsSocketExposed || !state.IsLocked);
       }
 
-      private static void BeginStaticRow(string label, ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      private static void BeginStaticRow(string label, Property.State state)
       {
-         SetupRow(ref isSocketExposed, isLocked, isReadOnly);
+         SetupRow(state);
 
          EditorGUILayout.PrefixLabel(string.IsNullOrEmpty(label) ? " " : label, styleLabel);
-         Enabled = (!isReadOnly) && (!isSocketExposed || !isLocked);
+         Enabled = (!state.IsReadOnly) && (!state.IsSocketExposed || !state.IsLocked);
       }
 
-      private static void SetupRow(ref bool isSocketExposed, bool isLocked, bool isReadOnly)
+      private static void SetupRow(Property.State state)
       {
-         // TODO: isReadOnly is not used. Investigate why and remove if not needed.
-
-         EditorGUILayout.BeginHorizontal(isPropertyRowEven ? uScriptGUIStyle.PropertyRowEven : uScriptGUIStyle.PropertyRowOdd);
+         EditorGUILayout.BeginHorizontal(
+            isPropertyRowEven ? uScriptGUIStyle.PropertyRowEven : uScriptGUIStyle.PropertyRowOdd);
          isPropertyRowEven = !isPropertyRowEven;
 
-         if (isSocketExposed == false && isLocked)
+         if (state.IsSocketExposed == false && state.IsLocked)
          {
             GUILayout.Space(columnEnabled.Width + 4);
          }
          else
          {
-            Enabled = false == isLocked;
-            isSocketExposed = GUILayout.Toggle(isSocketExposed, string.Empty, styleEnabled, GUILayout.Width(columnEnabled.Width));
+            Enabled = state.IsLocked == false;
+            state.IsSocketExposed = GUILayout.Toggle(
+               state.IsSocketExposed,
+               string.Empty,
+               styleEnabled,
+               GUILayout.Width(columnEnabled.Width));
             Enabled = true;
          }
 
@@ -2247,15 +2261,18 @@ namespace Detox.Editor
          propertyCount++;
       }
 
-      private static bool IsFieldUsable(bool isSocketExposed, bool isLocked, bool isReadOnly)
+      private static bool IsFieldUsable(Property.State state)
       {
-         if (isSocketExposed && (isLocked || isReadOnly))
+         if (!state.IsSocketExposed || (!state.IsLocked && !state.IsReadOnly))
          {
-            EditorGUILayout.TextField(isReadOnly ? "(read-only)" : "(socket used)", uScriptGUIStyle.PropertyTextField, GUILayout.Width(columnValue.Width));
-            return false;
+            return true;
          }
 
-         return true;
+         EditorGUILayout.TextField(
+            state.IsReadOnly ? "(read-only)" : "(socket used)",
+            uScriptGUIStyle.PropertyTextField,
+            GUILayout.Width(columnValue.Width));
+         return false;
       }
 
       private static string GetControlName(string suffix)
