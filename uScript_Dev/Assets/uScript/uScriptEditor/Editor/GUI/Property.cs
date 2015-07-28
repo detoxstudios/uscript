@@ -806,29 +806,23 @@ namespace Detox.Editor.GUI
          var r1 = GUILayoutUtility.GetLastRect();
          r1.y = r1.yMax + 2;
 
+         EditorGUI.indentLevel += 2;
+
          BeginRow(string.Format("[{0}]", index.ToString(CultureInfo.InvariantCulture)), state);
+
+         EditorGUI.indentLevel -= 2;
 
          // Get the last rect to determine where we want to draw the array modifier buttons
          var row = GUILayoutUtility.GetLastRect();
 
          var btnRect = row;
-         btnRect.x = btnRect.xMax - 18;
+         btnRect.x = btnRect.xMax - 30;
          btnRect.width = 18;
          btnRect.height = 16;
 
          // Determine the rect for the entire property panel row
          row.x = uScriptGUIPanel.Rect.x;
          row.width = uScriptGUIPanel.Rect.width;
-
-         // When the mouse is over the row
-         //      if (row.Contains(Event.current.mousePosition))
-         //      {
-         //         // Draw once if the row has changed
-         //         if (_previousHotRect != row)
-         //         {
-         //            _previousHotRect = row;
-         //            uScript.RequestRepaint();
-         //         }
 
          if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayRemove, Style.ArrayTextButton))
          {
@@ -860,237 +854,124 @@ namespace Detox.Editor.GUI
             array = ArrayInsert(array, index, element);
          }
 
-         //      }
-
          object t = value;
          var typeFormat = string.Empty;
 
          if (value is int)
          {
-            t = EditorGUILayout.IntField((int)t, Style.TextField, GUILayout.Width(columnValue.Width));
+            t = IntField((int)t);
          }
          else if (value is float)
          {
-            t = EditorGUILayout.FloatField((float)t, Style.TextField, GUILayout.Width(columnValue.Width));
+            t = FloatField((float)t);
          }
          else if (value is bool)
          {
-            t = GUILayout.Toggle((bool)t, GUIContent.none, Style.BoolField, GUILayout.Width(columnValue.Width));
+            t = BoolField((bool)t);
          }
          else if (value is Enum)
          {
-            t = EditorGUILayout.EnumPopup((Enum)t, GUILayout.Width(columnValue.Width));
+            t = EnumField((Enum)t);
          }
          else if (value is GUILayoutOption)
          {
-            const int Spacing = 4; // 4 * 1
-            var w = (columnValue.Width - Spacing) / 2;
-            var p = (columnValue.Width - Spacing) % (w * 2);
-
-            int optionIndex;
-            int optionValue;
-
-            DeconstructGUILayoutOption((GUILayoutOption)t, out optionIndex, out optionValue);
-
-            optionIndex = EditorGUILayout.Popup(optionIndex, GUILayoutOptionDisplayNames, GUILayout.Width(w));
-
-            string optionName = GUILayoutOptionDisplayNames[optionIndex];
-            if (optionName == "ExpandWidth" || optionName == "ExpandHeight")
-            {
-               bool optionBool = optionValue != 0;
-               optionBool = GUILayout.Toggle(optionBool, GUIContent.none, Style.BoolField, GUILayout.Width(w + p));
-               optionValue = optionBool ? 1 : 0;
-            }
-            else
-            {
-               int indent = EditorGUI.indentLevel;
-               EditorGUI.indentLevel = 0;
-               optionValue = Math.Max(0, EditorGUILayout.IntField(optionValue, Style.TextField, GUILayout.Width(w + p)));
-               EditorGUI.indentLevel = indent;
-            }
-
-            t = CreateGUILayoutOption(optionIndex, optionValue);
+            t = GUILayoutOptionField((GUILayoutOption)t);
          }
          else if (value is Color)
          {
-            t = EditorGUILayout.ColorField((Color)t, GUILayout.Width(columnValue.Width));
+            t = ColorField((Color)t);
          }
          else if (value is Vector2)
          {
-            const int Spacing = 4; // 4 * 1
-            var w = (columnValue.Width - Spacing) / 2;
-            var p = (columnValue.Width - Spacing) % (w * 2);
-            var val = (Vector2)t;
-
-            val.x = EditorGUILayout.FloatField(val.x, Style.TextField, GUILayout.Width(w));
-            val.y = EditorGUILayout.FloatField(val.y, Style.TextField, GUILayout.Width(w + p));
+            t = Vector2Field((Vector2)t);
             typeFormat = " [X, Y]";
-
-            t = val;
          }
          else if (value is Vector3)
          {
-            const int Spacing = 8; // 4 * 2
-            var w = (columnValue.Width - Spacing) / 3;
-            var p = (columnValue.Width - Spacing) % (w * 3);
-            var val = (Vector3)t;
-
-            val.x = EditorGUILayout.FloatField(val.x, Style.TextField, GUILayout.Width(w));
-            val.y = EditorGUILayout.FloatField(val.y, Style.TextField, GUILayout.Width(w));
-            val.z = EditorGUILayout.FloatField(val.z, Style.TextField, GUILayout.Width(w + p));
+            t = Vector3Field((Vector3)t);
             typeFormat = " [X, Y, Z]";
-
-            t = val;
          }
          else if (value is Vector4)
          {
-            const int Spacing = 12; // 4 * 3
-            var w = (columnValue.Width - Spacing) / 4;
-            var p = (columnValue.Width - Spacing) % (w * 4);
-            var val = (Vector4)t;
-
-            val.x = EditorGUILayout.FloatField(val.x, Style.TextField, GUILayout.Width(w));
-            val.y = EditorGUILayout.FloatField(val.y, Style.TextField, GUILayout.Width(w));
-            val.z = EditorGUILayout.FloatField(val.z, Style.TextField, GUILayout.Width(w));
-            val.w = EditorGUILayout.FloatField(val.w, Style.TextField, GUILayout.Width(w + p));
+            t = Vector4Field((Vector4)t);
             typeFormat = " [X, Y, Z, W]";
-
-            t = val;
          }
          else if (value is Rect)
          {
-            const int Spacing = 12; // 4 * 3
-            var w = (columnValue.Width - Spacing) / 4;
-            var p = (columnValue.Width - Spacing) % (w * 4);
-            var val = (Rect)t;
-
-            val.x = EditorGUILayout.FloatField(val.x, Style.TextField, GUILayout.Width(w));
-            val.y = EditorGUILayout.FloatField(val.y, Style.TextField, GUILayout.Width(w));
-            val.width = EditorGUILayout.FloatField(val.width, Style.TextField, GUILayout.Width(w));
-            val.height = EditorGUILayout.FloatField(val.height, Style.TextField, GUILayout.Width(w + p));
+            t = RectField((Rect)t);
             typeFormat = " [X, Y, W, H]";
-
-            t = val;
          }
          else if (value is Quaternion)
          {
-            const int Spacing = 12; // 4 * 3
-            var w = (columnValue.Width - Spacing) / 4;
-            var p = (columnValue.Width - Spacing) % (w * 4);
-            var val = (Quaternion)t;
-
-            val.x = EditorGUILayout.FloatField(val.x, Style.TextField, GUILayout.Width(w));
-            val.y = EditorGUILayout.FloatField(val.y, Style.TextField, GUILayout.Width(w));
-            val.z = EditorGUILayout.FloatField(val.z, Style.TextField, GUILayout.Width(w));
-            val.w = EditorGUILayout.FloatField(val.w, Style.TextField, GUILayout.Width(w + p));
+            t = QuaternionField((Quaternion)t);
             typeFormat = " [X, Y, Z, W]";
-
-            t = val;
          }
          else if (type != null && typeof(UnityEngine.Object).IsAssignableFrom(type))
          {
-            var objects = UnityEngine.Object.FindObjectsOfType(type);
-            var unityObject = objects.FirstOrDefault(o => o.name == value as string);
-
-            // now try and update the object browser with an instance of the specified object
-
-            // components should never be instances in the property grid
-            // we must refer to (and select) their parent game object
-            if (typeof(Component).IsAssignableFrom(type))
-            {
-               //type = typeof(GameObject);
-               if (null != unityObject)
-               {
-                  unityObject = ((Component)unityObject).gameObject;
-               }
-            }
-
-            unityObject = EditorGUILayout.ObjectField(unityObject, type, true, GUILayout.Width(columnValue.Width));
-
-            // if that object (or the changed object) does exist, use it's name to update the property value
-            // if it doesn't exist then the 'val' will stay as what was entered into the TextField
-            t = unityObject != null ? unityObject.name : string.Empty;
+            t = UnityObjectField((string)t, type);
          }
          else if (value is string)
          {
-            if (type != null)
-            {
-               Debug.LogWarning("This is obsolete\n");
+            //if (type != null)
+            //{
+            //   Debug.LogWarning("This is obsolete\n");
 
-               EditorGUILayout.BeginHorizontal(GUILayout.Width(columnValue.Width));
-               {
-                  t = EditorGUILayout.TextField((string)t, Style.TextField, GUILayout.ExpandWidth(true));
-                  var r = GUILayoutUtility.GetLastRect();
+            //   EditorGUILayout.BeginHorizontal(GUILayout.Width(columnValue.Width));
+            //   {
+            //      t = EditorGUILayout.TextField((string)t, Style.TextField, GUILayout.ExpandWidth(true));
+            //      var r = GUILayoutUtility.GetLastRect();
 
-                  if (r.Contains(Event.current.mousePosition) && GUI.enabled)
-                  {
-                     var objectReferences = DragAndDrop.objectReferences;
+            //      if (r.Contains(Event.current.mousePosition) && GUI.enabled)
+            //      {
+            //         var objectReferences = DragAndDrop.objectReferences;
 
-                     if (objectReferences.Length == 1)
-                     {
-                        if (objectReferences[0] is GameObject)
-                        {
-                           var go = objectReferences[0] as GameObject;
+            //         if (objectReferences.Length == 1)
+            //         {
+            //            if (objectReferences[0] is GameObject)
+            //            {
+            //               var go = objectReferences[0] as GameObject;
 
-                           DragAndDrop.visualMode = DragAndDropVisualMode.Link;
+            //               DragAndDrop.visualMode = DragAndDropVisualMode.Link;
 
-                           if (Event.current.type == EventType.DragPerform)
-                           {
-                              t = uScriptUtility.GetHierarchyPath(go.transform);
-                              GUI.changed = true;
-                              DragAndDrop.AcceptDrag();
-                              DragAndDrop.activeControlID = 0;
-                           }
-                        }
+            //               if (Event.current.type == EventType.DragPerform)
+            //               {
+            //                  t = uScriptUtility.GetHierarchyPath(go.transform);
+            //                  GUI.changed = true;
+            //                  DragAndDrop.AcceptDrag();
+            //                  DragAndDrop.activeControlID = 0;
+            //               }
+            //            }
 
-                        Event.current.Use();
-                     }
-                  }
+            //            Event.current.Use();
+            //         }
+            //      }
 
-                  uScriptGUI.Enabled = string.IsNullOrEmpty((string)t) == false;
+            //      uScriptGUI.Enabled = string.IsNullOrEmpty((string)t) == false;
 
-                  if (GUILayout.Button(uScriptGUIContent.buttonArraySearch, Style.ArrayIconButton))
-                  {
-                     GUIUtility.keyboardControl = 0;
-                     GameObject go = GameObject.Find((string)t);
-                     if (go != null)
-                     {
-                        EditorGUIUtility.PingObject(go);
-                     }
-                     else
-                     {
-                        Debug.LogWarning(
-                           string.Format(
-                              "No GameObject matching \"{0}\" was found in the Scene.\n\tAn associated Game Object may not yet exist, or might not be active.  Game Object names may contain leading and trailing whitespace.\n",
-                              t));
-                     }
-                  }
+            //      if (GUILayout.Button(uScriptGUIContent.buttonArraySearch, Style.ArrayIconButton))
+            //      {
+            //         GUIUtility.keyboardControl = 0;
+            //         GameObject go = GameObject.Find((string)t);
+            //         if (go != null)
+            //         {
+            //            EditorGUIUtility.PingObject(go);
+            //         }
+            //         else
+            //         {
+            //            Debug.LogWarning(
+            //               string.Format(
+            //                  "No GameObject matching \"{0}\" was found in the Scene.\n\tAn associated Game Object may not yet exist, or might not be active.  Game Object names may contain leading and trailing whitespace.\n",
+            //                  t));
+            //         }
+            //      }
 
-                  uScriptGUI.Enabled = true;
-               }
+            //      uScriptGUI.Enabled = true;
+            //   }
 
-               EditorGUILayout.EndHorizontal();
-            }
-            else
-            {
-               //t = EditorGUILayout.TextField((string)t, Property.Style.TextField, GUILayout.Width(ValueColumn.Width));
-               const int LineHeight = 13;
-               const int Padding = 3;
-               const int MinLines = Padding + (LineHeight * 1);
-               const int MaxLines = Padding + (LineHeight * 5);
+            //   EditorGUILayout.EndHorizontal();
+            //}
 
-               var content = new GUIContent((string)t);
-               var height = Mathf.Clamp(
-                  Style.TextArea.CalcHeight(content, columnValue.Width - 30),
-                  MinLines,
-                  MaxLines);
-
-               t = EditorGUILayout.TextArea(
-                  (string)t,
-                  Style.TextArea,
-                  GUILayout.Width(columnValue.Width),
-                  GUILayout.Height(height));
-            }
+            t = TextArea((string)t, minLines: 1, maxLines: 5);
          }
          else
          {
@@ -1152,8 +1033,6 @@ namespace Detox.Editor.GUI
          // The array size
          if (isExpanded && isFieldUsable)
          {
-            EditorGUI.indentLevel += 2;
-
             // The elements
             for (var i = 0; i < array.Length; i++)
             {
@@ -1175,8 +1054,6 @@ namespace Detox.Editor.GUI
                var tempState = new State(false, true, false);
                array[i] = ArrayElementRow(ref array, i, entry, tempState, type);
             }
-
-            EditorGUI.indentLevel -= 2;
          }
 
          FoldoutExpanded[propertyKey] = isExpanded;
@@ -1409,9 +1286,9 @@ namespace Detox.Editor.GUI
          var optionName = GUILayoutOptionDisplayNames[index];
          if (optionName == "ExpandWidth" || optionName == "ExpandHeight")
          {
-            var v = optionValue != 0;
-            v = GUILayout.Toggle(v, GUIContent.none, Style.BoolField, GUILayout.Width(w + p));
-            optionValue = v ? 1 : 0;
+            var toggle = optionValue != 0;
+            toggle = GUILayout.Toggle(toggle, GUIContent.none, Style.BoolField, GUILayout.Width(w + p));
+            optionValue = toggle ? 1 : 0;
          }
          else
          {
@@ -1578,15 +1455,16 @@ namespace Detox.Editor.GUI
 #endif
       }
 
-      private static string TextArea(string value)
+      private static string TextArea(string value, int minLines = 2, int maxLines = 10)
       {
          const int LineHeight = 13;
          const int Padding = 3;
-         const int MinLines = Padding + (LineHeight * 2);
-         const int MaxLines = Padding + (LineHeight * 10);
+
+         var minLineHeight = Padding + (LineHeight * minLines);
+         var maxLineHeight = Padding + (LineHeight * maxLines);
 
          var content = new GUIContent(value);
-         var height = Mathf.Clamp(Style.TextArea.CalcHeight(content, columnValue.Width), MinLines, MaxLines);
+         var height = Mathf.Clamp(Style.TextArea.CalcHeight(content, columnValue.Width), minLineHeight, maxLineHeight);
 
          value = EditorGUILayout.TextArea(
             value,
@@ -1620,15 +1498,13 @@ namespace Detox.Editor.GUI
 
       private static string UnityObjectField(string value, Type type)
       {
-         // now try and update the object browser with an instance of the specified object
          var objects = UnityEngine.Object.FindObjectsOfType(type);
          var unityObject = objects.FirstOrDefault(o => o.name == value);
 
-         // components should never be instances in the property grid
-         // we must refer to (and select) their parent game object
+         // Components should never be instances in the property grid.
+         // We must refer to (and select) their parent game object
          if (typeof(Component).IsAssignableFrom(type))
          {
-            //type = typeof(GameObject);
             if (null != unityObject)
             {
                unityObject = ((Component)unityObject).gameObject;
