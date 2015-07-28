@@ -167,6 +167,11 @@ namespace Detox.Editor
 
       public static void DebugBox(Rect rect, Color color, string text)
       {
+         if (Event.current.type != EventType.Repaint)
+         {
+            return;
+         }
+
          var texture = GetTexture("DebugBox");
 
          var style = new GUIStyle(EditorStyles.miniLabel)
