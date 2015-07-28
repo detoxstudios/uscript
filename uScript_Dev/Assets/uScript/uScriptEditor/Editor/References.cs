@@ -117,12 +117,9 @@ namespace Detox.Windows.Forms
    using System.Collections.Generic;
 
    using Detox.Drawing;
-   using Detox.Editor;
    using Detox.Editor.GUI;
    using Detox.FlowChart;
    using Detox.ScriptEditor;
-
-   using UnityEngine;
 
    public class PropertyValueChangedEventArgs : System.EventArgs
    {}
@@ -139,33 +136,13 @@ namespace Detox.Windows.Forms
          if ( null != PropertyValueChanged ) PropertyValueChanged( this, new PropertyValueChangedEventArgs( ) );
       }
 
-      private Type GetObjectArrayFieldType(string stringType)
-      {
-         Type type = uScript.Instance.GetType(stringType);
-         if ( null == type ) return null;
-
-         if ( typeof(UnityEngine.Object[]).IsAssignableFrom(type) ) return type;
-
-         return null;
-      }
-
-      private Type GetObjectFieldType(string stringType)
-      {
-         Type type = uScript.Instance.GetType(stringType);
-         if ( null == type ) return null;
-
-         if ( typeof(UnityEngine.Object).IsAssignableFrom(type) ) return type;
-
-         return null;
-      }
-
       public void OnPaint( )
       {
          bool signalUpdate = false;
 
          if (SelectedObjects.Length == 0)
          {
-            uScriptGUI.ResetFoldouts();
+            Property.ResetFoldouts();
          }
 
          foreach ( object selectedObject in SelectedObjects )
@@ -179,7 +156,7 @@ namespace Detox.Windows.Forms
                               ? uScript.Instance.ScriptEditorCtrl.GetNode(parameters.EntityNode.Guid)
                               : null;
 
-               if (uScriptGUI.BeginPropertyList(parameters.Description, node))
+               if (Property.BeginPropertyList(parameters.Description, node))
                {
                   foreach ( Parameter p in parameters.Parameters )
                   {
@@ -210,204 +187,19 @@ namespace Detox.Windows.Forms
                      Property.State propertyState = new Property.State(
                         isSocketExposed: p.IsVisible(),
                         isLocked: isLocked,
-                        isReadOnly: p.Input == false);
+                        isReadOnly: p.Input == false,
+                        name: p.Name,
+                        type: p.Type,
+                        defaultValue: p.Default,
+                        entityNode: parameters.EntityNode);
 
                      if ( node == null || false == uScript.GetRequiresLink(parameters.EntityNode, p.Name) )
                      {
-                        if ( val.GetType() == typeof(bool[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (bool[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(bool) )
-                        {
-                           val = uScriptGUI.BoolField(p.FriendlyName, (bool)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(int[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (int[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(int) )
-                        {
-                           val = uScriptGUI.IntField(p.FriendlyName, (int)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(float[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (float[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(float) )
-                        {
-                           val = uScriptGUI.FloatField(p.FriendlyName, (float)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(double[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (double[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(double) )
-                        {
-                           val = (double)uScriptGUI.FloatField(p.FriendlyName, (float)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(Vector2[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Vector2[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(Vector2) )
-                        {
-                           val = uScriptGUI.Vector2Field(p.FriendlyName, (Vector2)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(Rect[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Rect[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(Rect) )
-                        {
-                           val = uScriptGUI.RectField(p.FriendlyName, (Rect)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(Vector3[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Vector3[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(Vector3) )
-                        {
-                           val = uScriptGUI.Vector3Field(p.FriendlyName, (Vector3)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(Vector4[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Vector4[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(Vector4) )
-                        {
-                           val = uScriptGUI.Vector4Field(p.FriendlyName, (Vector4)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(Quaternion[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Quaternion[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(Quaternion) )
-                        {
-                           val = uScriptGUI.QuaternionField(p.FriendlyName, (Quaternion)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(UnityEngine.Color[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (UnityEngine.Color[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(UnityEngine.Color) )
-                        {
-                           val = uScriptGUI.ColorField(p.FriendlyName, (UnityEngine.Color)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(GUILayoutOption[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (GUILayoutOption[])val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(GUILayoutOption) )
-                        {
-                           val = uScriptGUI.GUILayoutOptionField(p.FriendlyName, (GUILayoutOption)val, propertyState);
-                        }
-                        else if ( val.GetType() == typeof(LayerMask[]) )
-                        {
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (LayerMask[])val, propertyState);
-                        }
-                        else if ( typeof(LayerMask).IsAssignableFrom(val.GetType()) )
-                        {
-   //                        UnityEngine.LayerMask mask = (UnityEngine.LayerMask)val;
-   //                        string layerValue = UnityEngine.LayerMask.LayerToName(mask);
-   //
-   //                        // build layer list
-   //                        List<string> layerList = new List<string>();
-   //                        for (int i = 0; i < 32; i++)
-   //                        {
-   //                           if (!string.IsNullOrEmpty(UnityEngine.LayerMask.LayerToName(i)))
-   //                           {
-   //                              layerList.Add(UnityEngine.LayerMask.LayerToName(i));
-   //                           }
-   //                        }
-   //
-   //                        string returnedName = uScriptGUI.ChoiceField(p.FriendlyName, layerValue, layerList.ToArray(), propertyState);
-   //
-   //                        for (int i = 0; i < 32; i++)
-   //                        {
-   //                           string name = UnityEngine.LayerMask.LayerToName(i);
-   //                           if (!string.IsNullOrEmpty(name) && returnedName == name)
-   //                           {
-   //                              val = UnityEngine.LayerMask.NameToLayer(returnedName);
-   //                              break;
-   //                           }
-   //                        }
-
-                           val = uScriptGUI.LayerField(p.FriendlyName, (LayerMask)val, propertyState);
-   //                        // Later, if we support actual LayerMask fields, the popup control should use
-   //                        // labels like "xxx" or "xxx, xxx" or "xxx, xxx, xxx" or "Mixed ..."
-   //                        //
-   //                        // See the Camera Culling Mask in the Inspector for example
-   //
-   //                        //    Nothing           0
-   //                        //    Everything        -1
-   //                        // 0  Default           1
-   //                        // 1  TransparentFX     2
-   //                        // 2  Ignore Raycast    4
-   //                        // ...
-   //                        // 31  Unnamed 31
-
-                        }
-                        else if ( typeof(System.Enum[]).IsAssignableFrom(val.GetType()) )
-                        {
-                           //use p.Type to figure out the specific type of enum it is, instead of a generic System.Enum
-                           System.Type eType = uScript.Instance.GetType(p.Type.ToString().Replace("[]", ""));
-                           val = uScriptGUI.ArrayFoldout(p.FriendlyName, (Enum[])val, propertyState, eType);
-                        }
-                        else if ( typeof(System.Enum).IsAssignableFrom(val.GetType()) )
-                        {
-                           val = uScriptGUI.EnumTextField(p.FriendlyName, (Enum)val, p.Default, propertyState);
-                        }
-                        else if ( AssetType.Invalid != uScript.GetAssetPathField(parameters.EntityNode, p.Name) )
-                        {
-                           val = uScriptGUI.AssetPathField(
-                              p.FriendlyName,
-                              uScript.GetAssetPathField(parameters.EntityNode, p.Name),
-                              p.Default,
-                              propertyState);
-                        }
-                        else if ( null != GetObjectArrayFieldType(p.Type) )
-                        {
-                           //arrays are stored as comma delimited string, so parse it now
-                           string[] values = Parameter.StringToArray(p.Default);
-                           values = uScriptGUI.ArrayFoldout(p.FriendlyName, values, propertyState, typeof(GameObject));
-                           val = Parameter.ArrayToString(values);
-                        }
-                        else if (null != this.GetObjectFieldType(p.Type))
-                        {
-                           val = uScriptGUI.ObjectField(p.FriendlyName, null, this.GetObjectFieldType(p.Type), p.Default, propertyState);
-                        }
-                        else if ( uScriptConfig.Variable.FriendlyName(p.Type) == "TextArea" )
-                        {
-                           val = uScriptGUI.TextArea(p.FriendlyName, p.Default, propertyState);
-                        }
-                        else
-                        {
-                           //arrays are stored as comma delimited string, so parse it now
-                           if ( p.Type.Contains("[]") )
-                           {
-                              string []values = Parameter.StringToArray(p.Default);
-                              val = uScriptGUI.ArrayFoldout(p.FriendlyName, values, propertyState);
-                           }
-                           else
-                           {
-                              if (p.FriendlyName == "Name" || p.FriendlyName == "Friendly Name")
-                              {
-                                 val = uScriptGUI.TextField(p.FriendlyName, p.Default, propertyState);
-
-                                 // TODO: Unity 4.1 has problems with the VariableNameField control, so disable it until it is actually needed.
-                                 //val = uScriptGUI.VariableNameField(p.FriendlyName, p.Default, propertyState);
-                              }
-                              else
-                              {
-                                 val = uScriptGUI.TextArea(p.FriendlyName, p.Default, propertyState);
-                              }
-                           }
-                        }
+                        val = Property.Draw(p.FriendlyName, val, propertyState);
                      }
                      else
                      {
-                        uScriptGUI.BlankField(p.FriendlyName, "Requires Link", propertyState);
+                        Property.DrawText(p.FriendlyName, "Requires Link", propertyState);
                      }
 
                      //remove the old states
@@ -441,7 +233,7 @@ namespace Detox.Windows.Forms
 
                   parameters.Parameters = updatedParameters.ToArray( );
                }
-               uScriptGUI.EndPropertyList();
+               Property.EndPropertyList();
             }
          }
 

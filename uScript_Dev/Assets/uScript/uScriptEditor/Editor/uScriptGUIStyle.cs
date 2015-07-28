@@ -17,8 +17,6 @@ using UnityEngine;
 // TODO: Move associated GUIStyle properties from uScriptGUIStyle to a subclass of the type where they are utilizied
 public static class uScriptGUIStyle
 {
-   public static readonly int ColumnHeaderHeight = 16;
-
    static uScriptGUIStyle()
    {
       var texturePropertyRowEven = uScriptGUI.GetSkinnedTexture("LineItem");
@@ -78,17 +76,6 @@ public static class uScriptGUIStyle
          stretchHeight = true
       };
 
-      ColumnHeader = new GUIStyle(EditorStyles.toolbarButton)
-      {
-         name = "columnHeader",
-         fontStyle = FontStyle.Bold,
-         alignment = TextAnchor.MiddleLeft,
-         padding = new RectOffset(5, 8, 0, 0),
-         fixedHeight = ColumnHeaderHeight,
-         contentOffset = new Vector2(0, -1)
-      };
-      ColumnHeader.normal.background = ColumnHeader.onNormal.background;
-
       HorizontalDivider = new GUIStyle(GUI.skin.box)
       {
          name = "hDivider",
@@ -116,7 +103,7 @@ public static class uScriptGUIStyle
       // vColumnScrollbar.name = "vColumnScrollbar";    // DO NOT RENAME
       VerticalColumnScrollbar = new GUIStyle(VerticalScrollbar)
       {
-         normal = { background = ColumnHeader.normal.background },
+         normal = { background = EditorStyles.toolbarButton.onNormal.background },
          overflow = new RectOffset()
       };
 
@@ -262,90 +249,6 @@ public static class uScriptGUIStyle
          padding = new RectOffset(0, 0, 2, 2)
       };
 
-      PropertyButtonLeft = new GUIStyle("ButtonLeft")
-      {
-         name = "uScript_propertyButtonLeft",
-         fixedHeight = 20,
-         fixedWidth = 20,
-         fontStyle = FontStyle.Bold,
-         margin = new RectOffset(4, 0, 0, 0)
-      };
-
-      PropertyButtonMiddleDeprecated = new GUIStyle("ButtonMid")
-      {
-         name = "uScript_propertyButtonMiddleDeprecated",
-         fixedHeight = 20,
-         fontStyle = FontStyle.Bold,
-         margin = new RectOffset()
-      };
-
-      PropertyButtonMiddleFavorite = new GUIStyle(PropertyButtonMiddleDeprecated)
-      {
-         name = "uScript_propertyButtonMiddleFavorite",
-         alignment = TextAnchor.MiddleLeft,
-         contentOffset = new Vector2(6, 0),
-         fixedWidth = 30,
-         padding = new RectOffset(12, 6, 2, 3)
-      };
-
-      PropertyButtonMiddleFavoriteStar = new GUIStyle(EditorStyles.largeLabel)
-      {
-         name = "uScript_propertyButtonMiddleFavoriteStar",
-         padding = new RectOffset(4, 4, 0, 0),
-         fontSize = 15
-      };
-
-      PropertyButtonMiddleName = new GUIStyle(PropertyButtonMiddleDeprecated)
-      {
-         name = "uScript_propertyButtonMiddleName",
-         alignment = TextAnchor.MiddleLeft,
-         fixedWidth = 0,
-         contentOffset = Vector2.zero
-      };
-
-      PropertyButtonRightSearch = new GUIStyle("ButtonRight")
-      {
-         name = "uScript_propertyButtonRightSearch",
-         fixedHeight = 20,
-         fixedWidth = 20,
-         fontStyle = FontStyle.Bold,
-         margin = new RectOffset(0, 4, 0, 0),
-         padding = new RectOffset()
-      };
-
-      PropertyButtonRightName = new GUIStyle(PropertyButtonRightSearch)
-      {
-         name = "uScript_propertyButtonRightName",
-         alignment = TextAnchor.MiddleLeft,
-         fixedWidth = 0,
-         padding = ((GUIStyle)"ButtonRight").padding
-      };
-
-      PropertyTextArea = new GUIStyle(EditorStyles.textField) { margin = new RectOffset(4, 4, 2, 2), wordWrap = true, stretchHeight = true };
-
-      PropertyTextField = new GUIStyle(EditorStyles.textField) { margin = new RectOffset(4, 4, 2, 2) };
-
-      PropertyBoolField = new GUIStyle(EditorStyles.toggle) { margin = new RectOffset(4, 4, 1, 1) };
-
-      PropertyArrayIconButton = new GUIStyle(EditorStyles.miniButton)
-      {
-         margin = new RectOffset(4, 4, 2, 2),
-         padding = new RectOffset(3, 3, 2, 2),
-         stretchWidth = false
-      };
-
-      PropertyArrayTextButton = new GUIStyle(EditorStyles.miniButton)
-      {
-         fontStyle = FontStyle.Bold,
-         padding = new RectOffset(0, 2, 1, 1),
-         contentOffset = new Vector2(0, 1),
-         alignment = TextAnchor.UpperCenter
-      };
-
-      PropertyRowOdd = new GUIStyle(GUIStyle.none) { /* fixedHeight = 20 */ };
-
-      PropertyRowEven = new GUIStyle(PropertyRowOdd) { normal = { background = texturePropertyRowEven } };
-
       ScriptRowOdd = new GUIStyle(GUIStyle.none) { fixedHeight = 17 };
 
       ScriptRowEven = new GUIStyle(ScriptRowOdd) { normal = { background = texturePropertyRowEven } };
@@ -374,8 +277,6 @@ public static class uScriptGUIStyle
    public static GUIStyle PanelTitleDropDown { get; private set; }
 
    public static GUIStyle ReferenceText { get; private set; }
-
-   public static GUIStyle ColumnHeader { get; private set; }
 
    public static GUIStyle HorizontalDivider { get; private set; }
 
@@ -422,34 +323,6 @@ public static class uScriptGUIStyle
    public static GUIStyle PanelMessage { get; private set; }
 
    public static GUIStyle PanelMessageBold { get; private set; }
-
-   public static GUIStyle PropertyButtonLeft { get; private set; }
-
-   public static GUIStyle PropertyButtonMiddleDeprecated { get; private set; }
-
-   public static GUIStyle PropertyButtonMiddleFavorite { get; private set; }
-
-   public static GUIStyle PropertyButtonMiddleFavoriteStar { get; private set; }
-
-   public static GUIStyle PropertyButtonMiddleName { get; private set; }
-
-   public static GUIStyle PropertyButtonRightSearch { get; private set; }
-
-   public static GUIStyle PropertyButtonRightName { get; private set; }
-
-   public static GUIStyle PropertyArrayIconButton { get; private set; }
-
-   public static GUIStyle PropertyArrayTextButton { get; private set; }
-
-   public static GUIStyle PropertyBoolField { get; private set; }
-
-   public static GUIStyle PropertyRowOdd { get; private set; }
-
-   public static GUIStyle PropertyRowEven { get; private set; }
-
-   public static GUIStyle PropertyTextArea { get; private set; }
-
-   public static GUIStyle PropertyTextField { get; private set; }
 
    public static GUIStyle ScriptRowOdd { get; private set; }
 

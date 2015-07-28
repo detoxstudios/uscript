@@ -1538,7 +1538,7 @@ public sealed partial class uScript : EditorWindow
 
       if (Event.current.type == EventType.Repaint)
       {
-         uScriptGUI.MonitorGUIControlFocusChanges();
+         Property.MonitorGUIControlFocusChanges();
       }
 
       if (this.mouseDown == false)

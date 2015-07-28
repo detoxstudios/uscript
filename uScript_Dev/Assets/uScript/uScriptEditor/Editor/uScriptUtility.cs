@@ -51,6 +51,18 @@ public static class uScriptUtility
       return commonPath;
    }
 
+   public static string GetHierarchyPath(Transform transform)
+   {
+      var result = string.Empty;
+      while (transform)
+      {
+         result = string.Format("{0}/{1}", transform.gameObject.name, result);
+         transform = transform.parent;
+      }
+
+      return string.Format("/{0}", result.Remove(result.Length - 1));
+   }
+
    /// <summary>Gets the index of an enumeration by name.</summary>
    /// <returns>The first occurrence of the specified name within the enumeration, if found; otherwise, -1.</returns>
    /// <param name="e">The enumeration type.</param>
@@ -85,6 +97,19 @@ public static class uScriptUtility
    public static int GetEnumValueByIndex(Enum e, int index)
    {
       return ((int[])Enum.GetValues(e.GetType()))[index];
+   }
+
+   public static int Log2(uint number)
+   {
+      var isPowerOfTwo = number > 0 && (number & (number - 1)) == 0;
+      if (!isPowerOfTwo)
+      {
+         return 0;
+
+         //throw new ArgumentException("Not a power of two", "number");
+      }
+
+      return (int)Math.Log(number, 2);
    }
 
    /// <summary>Rounds a number to the nearest multiple.</summary>
@@ -438,21 +463,25 @@ internal static class StringExtensions
    /// <returns>A bool based on the string value</returns>
    public static bool? ToBoolean(this string value)
    {
-   if (string.Compare("T",value,true) == 0)
-   {
-   return true;
+      if (string.Compare("T", value, StringComparison.OrdinalIgnoreCase) == 0)
+      {
+         return true;
+      }
+
+      if (string.Compare("F", value, StringComparison.OrdinalIgnoreCase) == 0)
+      {
+         return false;
+      }
+
+      bool result;
+      if (bool.TryParse(value, out result))
+      {
+         return result;
+      }
+
+      return null;
    }
-   if (string.Compare("F", value, true) == 0)
-   {
-   return false;
-   }
-   bool result;
-   if (bool.TryParse(value, out result))
-   {
-   return result;
-   }
-   else return null;
-   }
+
    #endregion
 
    #region ValueOrDefault
@@ -463,11 +492,9 @@ internal static class StringExtensions
 
    public static string GetValueOrDefault(this string value, string defaultvalue)
    {
-      if (value != null) return value;
-      {
-         return defaultvalue;
-      }
+      return value ?? defaultvalue;
    }
+
    #endregion
 
    #region Email

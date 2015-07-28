@@ -20,6 +20,7 @@ namespace Detox.ScriptEditor
    using Detox.Data.ScriptEditor;
    using Detox.Drawing;
    using Detox.Editor;
+   using Detox.Editor.GUI;
    using Detox.Utility;
 
    using UnityEngine;
@@ -192,7 +193,7 @@ namespace Detox.ScriptEditor
                   }
 
                   int optionValue = int.Parse(tokens[1]);
-                  array[i] = uScriptGUI.CreateGUILayoutOption(tokens[0], optionValue);
+                  array[i] = Property.CreateGUILayoutOption(tokens[0], optionValue);
                }
 
                return array;
@@ -463,8 +464,8 @@ namespace Detox.ScriptEditor
                foreach (GUILayoutOption a in array)
                {
                   int optionIndex, optionValue;
-                  uScriptGUI.DeconstructGUILayoutOption(a, out optionIndex, out optionValue);
-                  string optionDisplayName = uScriptGUI.GUILayoutOptionDisplayNames[optionIndex];
+                  Property.DeconstructGUILayoutOption(a, out optionIndex, out optionValue);
+                  string optionDisplayName = Property.GUILayoutOptionDisplayNames[optionIndex];
 
                   if (optionDisplayName == "ExpandWidth" || optionDisplayName == "ExpandHeight")
                   {
@@ -1052,7 +1053,7 @@ namespace Detox.ScriptEditor
                      }
                   }
 
-                  int optionEnumIndex = Array.IndexOf(uScriptGUI.GUILayoutOptionEnumNames, optionEnumName);
+                  int optionEnumIndex = Array.IndexOf(Property.GUILayoutOptionEnumNames, optionEnumName);
                   if (optionEnumIndex == -1)
                   {
                      throw new System.MissingMemberException("Unable to identify the GUILayoutOption type member");
@@ -1060,11 +1061,11 @@ namespace Detox.ScriptEditor
 
                   if (optionEnumName == "stretchWidth" || optionEnumName == "stretchHeight")
                   {
-                     Default = uScriptGUI.GUILayoutOptionDisplayNames[optionEnumIndex] + ":" + (optionValue != 0 ? "true" : "false");
+                     Default = Property.GUILayoutOptionDisplayNames[optionEnumIndex] + ":" + (optionValue != 0 ? "true" : "false");
                   }
                   else
                   {
-                     Default = uScriptGUI.GUILayoutOptionDisplayNames[optionEnumIndex] + ":" + optionValue.ToString();
+                     Default = Property.GUILayoutOptionDisplayNames[optionEnumIndex] + ":" + optionValue.ToString();
                   }
                }
                catch

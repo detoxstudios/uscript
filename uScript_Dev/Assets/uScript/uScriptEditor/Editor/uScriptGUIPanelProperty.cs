@@ -10,6 +10,7 @@
 using System;
 
 using Detox.Editor;
+using Detox.Editor.GUI;
 
 using UnityEditor;
 
@@ -95,7 +96,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
             uScriptGUIStyle.VerticalScrollbar,
             "scrollview");
          {
-            uScriptGUI.BeginColumns("Property", "Value", "Type", this._scrollviewOffset, this.scrollviewRect);
+            Property.BeginColumns("Property", "Value", "Type", this._scrollviewOffset, this.scrollviewRect);
             {
                if (uScript.Instance.ScriptEditorCtrl != null)
                {
@@ -103,7 +104,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
                }
             }
 
-            uScriptGUI.EndColumns();
+            Property.EndColumns();
          }
 
          EditorGUILayout.EndScrollView();

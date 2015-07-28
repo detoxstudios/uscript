@@ -129,7 +129,7 @@ namespace Detox.Editor.GUI.Windows
             this.minSize = new Vector2(WindowWidth, WindowHeight);
 
             // Make sure the skin is set at least once
-            this.isProSkin = !uScriptGUI.IsProSkin;
+            this.isProSkin = !EditorGUIUtility.isProSkin;
 
             if (IsWindows)
             {
@@ -137,9 +137,9 @@ namespace Detox.Editor.GUI.Windows
             }
          }
 
-         if (this.isProSkin != uScriptGUI.IsProSkin)
+         if (this.isProSkin != EditorGUIUtility.isProSkin)
          {
-            this.isProSkin = uScriptGUI.IsProSkin;
+            this.isProSkin = EditorGUIUtility.isProSkin;
 
             this.UpdateCustomStyles();
          }

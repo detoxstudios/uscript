@@ -41,15 +41,6 @@ public class AssetBrowserWindow : EditorWindow
    private static string selectedAssetPath = string.Empty;
 
    // Pre-calculated layout and style data
-   private static GUIStyle styleWindow;
-   private static GUIStyle styleListView;
-   private static GUIStyle styleListHeader;
-   private static GUIStyle styleListItemOdd;
-   private static GUIStyle styleListItemEven;
-   private static GUIStyle styleListItemPath;
-   private static GUIStyle styleAssetPingButton;
-   private static GUIStyle styleCloseButton;
-   private static GUIStyle styleWarningMessage;
    private static GUIContent contentWarningMessage;
 
    // Window
@@ -57,7 +48,6 @@ public class AssetBrowserWindow : EditorWindow
 
    private bool firstRun = true;
    private bool saveOnClose;
-   private RectOffset windowPadding = new RectOffset(16, 16, 8, 16);
    private Rect windowPosition;
 
    // Scrollview
@@ -186,63 +176,23 @@ public class AssetBrowserWindow : EditorWindow
       {
          this.firstRun = false;
 
-         int _windowFixedWidth = 310;
-
          // Force the window to a position relative to the uScript window
          base.position = new Rect(uScript.Instance.position.x + 50, uScript.Instance.position.y + 50, 0, 0);
-
-         // Setup the custom GUIStyles used to layout the window
-         styleWindow = new GUIStyle();
-         styleWindow.margin = this.windowPadding;
-         styleWindow.fixedWidth = _windowFixedWidth;
-
-         styleListView = new GUIStyle(GUI.skin.box);
-         styleListView.overflow = new RectOffset(1, 1, 1, 1);
-         styleListView.margin = new RectOffset(4, 4, 1, 4);
-         styleListView.padding = new RectOffset(0, 0, 0, 0);
-
-         styleListHeader = new GUIStyle(GUI.skin.box);
-         styleListHeader.overflow = new RectOffset(1, 1, 1, 1);
-         styleListHeader.margin = new RectOffset(4, 4, 4, 1);
-
-         styleListItemOdd = new GUIStyle(EditorStyles.toolbarButton);
-         styleListItemOdd.alignment = TextAnchor.MiddleLeft;
-         styleListItemOdd.active.background = styleListItemOdd.normal.background;
-         styleListItemOdd.normal.background = null;
-         styleListItemOdd.fontSize = 11;
-         styleListItemOdd.fontStyle = FontStyle.Bold;
-         styleListItemOdd.contentOffset = new Vector2(0, 0);
-
-         styleListItemEven = new GUIStyle(styleListItemOdd);
-         styleListItemEven.normal.background = uScriptGUIStyle.PropertyRowEven.normal.background;
-
-         styleListItemPath = new GUIStyle(styleListItemOdd);
-         styleListItemPath.fontStyle = FontStyle.Normal;
-
-         styleAssetPingButton = new GUIStyle(GUI.skin.button);
-         styleAssetPingButton.alignment = TextAnchor.MiddleLeft;
-
-         styleCloseButton = new GUIStyle(GUI.skin.button);
-         styleCloseButton.fixedWidth = (_windowFixedWidth - 20) * 0.5f;
-
-         styleWarningMessage = new GUIStyle(uScriptGUIStyle.ReferenceText);
-         styleWarningMessage.margin = new RectOffset(4, 4, 0, 0);
-         styleWarningMessage.padding = new RectOffset(0, 0, 2, 8);
 
          GetResourceFolderPaths(Application.dataPath, 0);
 
          // Set height of the asset scrollview
-         this.scrollviewFixedHeight = styleListItemOdd.CalcSize(new GUIContent("W")).y * 10;
+         this.scrollviewFixedHeight = Style.ListItemOdd.CalcSize(new GUIContent("W")).y * 10;
       }
 
       if (this.windowPosition != new Rect())
       {
          // Set the min and max window dimensions to prevent resizing
-         base.minSize = new Vector2(this.windowPosition.width + this.windowPadding.left + this.windowPadding.right, this.windowPosition.height + this.windowPadding.top + this.windowPadding.bottom);
+         base.minSize = new Vector2(this.windowPosition.width + Style.WindowPadding.left + Style.WindowPadding.right, this.windowPosition.height + Style.WindowPadding.top + Style.WindowPadding.bottom);
          base.maxSize = base.minSize;
       }
 
-      EditorGUILayout.BeginVertical(styleWindow);
+      EditorGUILayout.BeginVertical(Style.Window);
       {
          EditorGUI.indentLevel = 1;
 
@@ -265,7 +215,7 @@ public class AssetBrowserWindow : EditorWindow
          // List header
          uScriptGUI.HideScrollbars();
          this.scrollviewHeaderPosition.x = this.scrollviewListPosition.x;
-         EditorGUILayout.BeginScrollView(this.scrollviewHeaderPosition, false, false, uScriptGUIStyle.HorizontalColumnScrollbar, uScriptGUIStyle.VerticalColumnScrollbar, styleListHeader, GUILayout.Height(uScriptGUIStyle.ColumnHeaderHeight));
+         EditorGUILayout.BeginScrollView(this.scrollviewHeaderPosition, false, false, uScriptGUIStyle.HorizontalColumnScrollbar, uScriptGUIStyle.VerticalColumnScrollbar, Style.ListHeader, GUILayout.Height(Style.ColumnHeaderHeight));
          {
             DrawColumns();
          }
@@ -273,12 +223,12 @@ public class AssetBrowserWindow : EditorWindow
          uScriptGUI.ShowScrollbars();
 
          // List content
-         this.scrollviewListPosition = EditorGUILayout.BeginScrollView(this.scrollviewListPosition, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, styleListView, GUILayout.Height(this.scrollviewFixedHeight));
+         this.scrollviewListPosition = EditorGUILayout.BeginScrollView(this.scrollviewListPosition, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, Style.ListView, GUILayout.Height(this.scrollviewFixedHeight));
          {
             foreach (KeyValuePair<string, AssetParts> kvp in assetParts)
             {
                evenRow = !evenRow;
-               if (GUILayout.Toggle(kvp.Value.FullPath == selectedAssetPath, kvp.Value.Content, (evenRow ? styleListItemEven : styleListItemOdd), GUILayout.MinWidth(this.listItemWidth)))
+               if (GUILayout.Toggle(kvp.Value.FullPath == selectedAssetPath, kvp.Value.Content, (evenRow ? Style.ListItemEven : Style.ListItemOdd), GUILayout.MinWidth(this.listItemWidth)))
                {
                   selectedAssetPath = kvp.Value.FullPath;
                   window.Repaint();
@@ -288,7 +238,7 @@ public class AssetBrowserWindow : EditorWindow
                r.x += this.maxNameWidth + ColumnPadding;
                r.width = this.maxPathWidth;
 
-               GUI.Label(r, kvp.Value.Path, styleListItemPath);
+               GUI.Label(r, kvp.Value.Path, Style.ListItemPath);
             }
          }
          EditorGUILayout.EndScrollView();
@@ -320,14 +270,14 @@ public class AssetBrowserWindow : EditorWindow
                EditorGUILayout.BeginHorizontal();
                {
                   GUILayout.Label(uScriptGUIContent.iconWarn32, GUIStyle.none);
-                  GUILayout.Label(contentWarningMessage, styleWarningMessage);
+                  GUILayout.Label(contentWarningMessage, Style.WarningMessage);
                }
                EditorGUILayout.EndHorizontal();
             }
 
             for (int i=0; i < assetSelection.Count; i++)
             {
-               if (GUILayout.Button(assetSelection[i], styleAssetPingButton))
+               if (GUILayout.Button(assetSelection[i], Style.AssetPingButton))
                {
                   uScriptGUI.PingObject("Assets/" + assetSelection[i], type);
                }
@@ -341,7 +291,7 @@ public class AssetBrowserWindow : EditorWindow
          //save or cancel
          EditorGUILayout.BeginHorizontal();
          {
-            if (GUILayout.Button("Cancel", styleCloseButton))
+            if (GUILayout.Button("Cancel", Style.CloseButton))
             {
                this.Close();
             }
@@ -350,7 +300,7 @@ public class AssetBrowserWindow : EditorWindow
 
             uScriptGUI.Enabled = !string.IsNullOrEmpty(selectedAssetPath);
 
-            if (GUILayout.Button("Select", styleCloseButton))
+            if (GUILayout.Button("Select", Style.CloseButton))
             {
                this.saveOnClose = true;
                this.Close();
@@ -466,7 +416,7 @@ public class AssetBrowserWindow : EditorWindow
    private void DrawColumns()
    {
       // Block out an area for the column header using GUILayout
-      GUILayout.Label(string.Empty, GUIStyle.none, GUILayout.Height(uScriptGUIStyle.ColumnHeaderHeight), GUILayout.Width(this.listItemWidth));
+      GUILayout.Label(string.Empty, GUIStyle.none, GUILayout.Height(Style.ColumnHeaderHeight), GUILayout.Width(this.listItemWidth));
 
       // The columns have a margin of 4. Margins of adjacent cells overlap, so the spacing
       // betweem columns is the width of the largest margin, not the sum.
@@ -483,13 +433,13 @@ public class AssetBrowserWindow : EditorWindow
       // Finally, the left margin of the left column, and the right margin of the right column
       // is excluded when positioning the GUI elements, since the offset is automatically applied.
 
-      Rect r = new Rect(0, 0, (this.maxNameWidth + ColumnPadding + 4), uScriptGUIStyle.ColumnHeaderHeight);
-      GUI.Label(r, "Asset Name", uScriptGUIStyle.ColumnHeader);
+      var r = new Rect(0, 0, this.maxNameWidth + ColumnPadding + 4, Style.ColumnHeaderHeight);
+      GUI.Label(r, "Asset Name", Style.ColumnHeader);
 
       // This right-most column should appear to have an expanded width
-      r.x += (this.maxNameWidth + ColumnPadding + 4);
-      r.width = Mathf.Max(this.maxPathWidth, styleWindow.fixedWidth);
-      GUI.Label(r, "Resource Path", uScriptGUIStyle.ColumnHeader);
+      r.x += this.maxNameWidth + ColumnPadding + 4;
+      r.width = Mathf.Max(this.maxPathWidth, Style.Window.fixedWidth);
+      GUI.Label(r, "Resource Path", Style.ColumnHeader);
    }
 
    struct AssetParts
@@ -518,14 +468,100 @@ public class AssetBrowserWindow : EditorWindow
          Path = path;
 
          Content = new GUIContent(path);
-         PathWidth = styleListItemPath.CalcSize(Content).x;
+         PathWidth = Style.ListItemPath.CalcSize(Content).x;
 
          Content.text = name;
-         NameWidth = styleListItemOdd.CalcSize(Content).x;
+         NameWidth = Style.ListItemOdd.CalcSize(Content).x;
 
          Content.image = EditorGUIUtility.ObjectContent(null, type).image;
 
          FullPath = (string.IsNullOrEmpty(path) ? string.Empty : path + "/") + name;
       }
+   }
+
+   private static class Style
+   {
+      public const int ColumnHeaderHeight = 16;
+
+      static Style()
+      {
+         const int WindowFixedWidth = 310;
+
+         var texturePropertyRowEven = uScriptGUI.GetSkinnedTexture("LineItem");
+
+         WindowPadding = new RectOffset(16, 16, 8, 16);
+
+         ColumnHeader = new GUIStyle(EditorStyles.toolbarButton)
+                           {
+                              name = "columnHeader",
+                              fontStyle = FontStyle.Bold,
+                              alignment = TextAnchor.MiddleLeft,
+                              padding = new RectOffset(5, 8, 0, 0),
+                              fixedHeight = ColumnHeaderHeight,
+                              contentOffset = new Vector2(0, -1)
+                           };
+         ColumnHeader.normal.background = ColumnHeader.onNormal.background;
+
+         Window = new GUIStyle { margin = WindowPadding, fixedWidth = WindowFixedWidth };
+
+         ListView = new GUIStyle(GUI.skin.box)
+                       {
+                          overflow = new RectOffset(1, 1, 1, 1),
+                          margin = new RectOffset(4, 4, 1, 4),
+                          padding = new RectOffset(0, 0, 0, 0)
+                       };
+
+         ListHeader = new GUIStyle(GUI.skin.box)
+                         {
+                            overflow = new RectOffset(1, 1, 1, 1),
+                            margin = new RectOffset(4, 4, 4, 1)
+                         };
+
+         ListItemOdd = new GUIStyle(EditorStyles.toolbarButton)
+                          {
+                             alignment = TextAnchor.MiddleLeft,
+                             fontSize = 11,
+                             fontStyle = FontStyle.Bold,
+                             contentOffset = new Vector2(0, 0)
+                          };
+         ListItemOdd.active.background = ListItemOdd.normal.background;
+         ListItemOdd.normal.background = null;
+
+         ListItemEven = new GUIStyle(ListItemOdd) { normal = { background = texturePropertyRowEven } };
+
+         ListItemPath = new GUIStyle(ListItemOdd) { fontStyle = FontStyle.Normal };
+
+         AssetPingButton = new GUIStyle(GUI.skin.button) { alignment = TextAnchor.MiddleLeft };
+
+         CloseButton = new GUIStyle(GUI.skin.button) { fixedWidth = (WindowFixedWidth - 20) * 0.5f };
+
+         WarningMessage = new GUIStyle(uScriptGUIStyle.ReferenceText)
+                             {
+                                margin = new RectOffset(4, 4, 0, 0),
+                                padding = new RectOffset(0, 0, 2, 8)
+                             };
+      }
+
+      public static GUIStyle AssetPingButton { get; private set; }
+
+      public static GUIStyle CloseButton { get; private set; }
+
+      public static GUIStyle ColumnHeader { get; private set; }
+
+      public static GUIStyle ListHeader { get; private set; }
+      
+      public static GUIStyle ListItemEven { get; private set; }
+      
+      public static GUIStyle ListItemOdd { get; private set; }
+      
+      public static GUIStyle ListItemPath { get; private set; }
+
+      public static GUIStyle ListView { get; private set; }
+
+      public static GUIStyle WarningMessage { get; private set; }
+
+      public static GUIStyle Window { get; private set; }
+
+      public static RectOffset WindowPadding { get; private set; }
    }
 }
