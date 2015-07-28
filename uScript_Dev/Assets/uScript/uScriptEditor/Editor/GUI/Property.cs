@@ -181,6 +181,8 @@ namespace Detox.Editor.GUI
          scrollviewRect = rect;
 
          GUILayout.Label(string.Empty, new GUIStyle(), GUILayout.Height(Style.ColumnHeaderHeight));
+
+         Style.Label.fixedWidth = columnLabel.Width;
       }
 
       public static bool BeginPropertyList(string label, Node node)
@@ -572,8 +574,8 @@ namespace Detox.Editor.GUI
          {
             if (state.IsSocketExposed && (state.IsLocked || state.IsReadOnly))
             {
-               label = state.IsReadOnly ? "(read-only)" : "(socket used)";
-               EditorGUILayout.TextField(label, Style.TextField, GUILayout.Width(width));
+               var text = state.IsReadOnly ? "(read-only)" : "(socket used)";
+               EditorGUILayout.TextField(text, Style.TextField, GUILayout.Width(width));
             }
             else
             {
@@ -975,7 +977,7 @@ namespace Detox.Editor.GUI
          }
          else
          {
-            Debug.LogWarning("Unhandled array type: " + value.GetType() + "\n");
+            Debug.LogWarning(string.Format("Unhandled array type: {0}\n", value.GetType()));
 
             //throw System.ArgumentException("Unhandled type: " + value.GetType().ToString());
          }
@@ -998,10 +1000,8 @@ namespace Detox.Editor.GUI
          var isFieldUsable = IsFieldUsable(state);
          if (isFieldUsable)
          {
-            GUILayout.Label(
-               string.Format("... ({0} {1})", array.Length, array.Length == 1 ? "item" : "items"),
-               Style.Label,
-               GUILayout.Width(columnValue.Width));
+            var text = string.Format("... ({0} {1})", array.Length, array.Length == 1 ? "item" : "items");
+            GUILayout.Label(text, Style.Label, GUILayout.Width(columnValue.Width));
 
             var btnRect = GUILayoutUtility.GetLastRect();
             btnRect.x = btnRect.xMax - 18;
@@ -1175,13 +1175,22 @@ namespace Detox.Editor.GUI
       {
          SetupRow(state);
 
-         EditorGUILayout.PrefixLabel(string.IsNullOrEmpty(label) ? " " : label, Style.Label);
-         uScriptGUI.Enabled = (!state.IsReadOnly) && (!state.IsSocketExposed || !state.IsLocked);
+         var enabled = (!state.IsReadOnly) && (!state.IsSocketExposed || !state.IsLocked);
+         if (enabled)
+         {
+            EditorGUILayout.PrefixLabel(string.IsNullOrEmpty(label) ? " " : label, Style.Label);
+         }
+         else
+         {
+            GUILayout.Label(string.IsNullOrEmpty(label) ? " " : label, Style.Label);
+         }
+
+         uScriptGUI.Enabled = enabled;
       }
 
       private static bool BoolField(bool value)
       {
-         return GUILayout.Toggle(value, GUIContent.none, Style.BoolField, GUILayout.Width(columnValue.Width));
+         return EditorGUILayout.Toggle(value, Style.BoolField, GUILayout.Width(columnValue.Width));
       }
 
       private static Color ColorField(Color value)
