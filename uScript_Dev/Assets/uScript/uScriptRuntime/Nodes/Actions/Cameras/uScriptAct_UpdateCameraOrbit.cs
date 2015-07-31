@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Places the specified camera in orbit around the a world vector.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Update_Camera_Orbit")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Update Camera Orbit",
               "Places the specified camera in orbit around a world vector."

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Clamps a Color variable between a min and a max value for the desired components and returns the resulting Color.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Clamp Color", "Clamps Color variable components between minimun and maximum values." +
  "\n\nValues must be within the normalized color range of 0 and 1. Values outside this range are themselves clamped.")]

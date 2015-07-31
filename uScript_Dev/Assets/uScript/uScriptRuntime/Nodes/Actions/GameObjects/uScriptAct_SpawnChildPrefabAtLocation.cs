@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Create an instance of a Prefab as a child of the parent GameObject at the specified spawn point.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Spawn Child Prefab At Location", "Create (instantiate) an instance of a Prefab as a child of the parent GameObject at the specified Vector3 location at runtime (must be in the Resources folder structure).")]
 public class uScriptAct_SpawnChildPrefabAtLocation : uScriptLogic

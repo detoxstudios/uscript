@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the current time scale and delta time (fixed timestep) of the game.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Game_Time")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Game Time", "Gets the current time scale and delta time (fixed timestep) of the game.")]
 public class uScriptAct_GetGameTime : uScriptLogic

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if the Target float is between a minimum and maximum range.")]
 [NodeAuthor("Detox Studios LLC. Original node by SvdV on the uScript Community Forum", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Between Ints", "Checks to see if the Target int is between a minimum and maximum range.")]
 public class uScriptCon_BetweenInts : uScriptLogic

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns the GameObjects in the scene with the specified tag.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_GameObjects_By_Tag")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get GameObjects By Tag", "Returns the GameObjects in the scene with the specified tag.\n\nThe \"Found\" output socket will be triggered if at least one child GameObject matching the tag is found, otherwise the \"Not Found\" output socket will be triggered.")]
 public class uScriptAct_GetGameObjectsByTag : uScriptLogic

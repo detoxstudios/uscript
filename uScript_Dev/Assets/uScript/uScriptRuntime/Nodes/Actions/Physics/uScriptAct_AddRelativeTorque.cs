@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the position and rotation of a GameObject and outputs them as a Vector3.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Add_Relative_Torque")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Add Relative Torque", "Applies an Add Relative Torque to the specified GameObject. Target must have a Rigid Body Component in order to recieve a force.")]
 public class uScriptAct_AddRelativeTorque : uScriptLogic

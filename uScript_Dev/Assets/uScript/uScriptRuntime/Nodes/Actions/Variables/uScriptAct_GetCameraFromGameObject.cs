@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the Camera component from the target GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Camera From GameObject", "Gets the Camera component from the target GameObject. This node will assign the main Camera if no existing Camera component is found on the target (or the target is null).")]
 public class uScriptAct_GetCameraFromGameObject : uScriptLogic

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a GUIButton on the screen and allows responses when held down, released, and clicked.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Button")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("GUI Button", "Shows a GUIButton on the screen and allows responses when held down, released, and clicked.")]
 public class uScriptAct_GUIButton : uScriptLogic

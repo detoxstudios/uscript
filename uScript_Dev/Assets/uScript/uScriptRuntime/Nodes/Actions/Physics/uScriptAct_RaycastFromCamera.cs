@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Cast a ray from the Camera out to the center of the screen.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Raycast_From_Camera")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Raycast From Camera", "Cast a ray from the Camera out to the center of the screen, determines if anything was hit along the way, and fires the associated output link.")]
 public class uScriptAct_RaycastFromCamera : uScriptLogic

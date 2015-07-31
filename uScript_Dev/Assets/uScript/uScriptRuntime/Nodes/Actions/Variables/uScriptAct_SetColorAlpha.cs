@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Takes the red, green and blue values of the Value color variable and combines them with the specified alpha value, outputing the results to the target color variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Color")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Set Color Alpha", "Takes an existing Color variable and applies the specified Alpha value.  The results are returned to the Target variable.")]
 public class uScriptAct_SetColorAlpha : uScriptLogic

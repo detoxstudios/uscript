@@ -13,7 +13,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when the network client fails to connect to the server.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Network_Failed_Connection")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Network Failed Connection", "Fires an event signal when the network client fails to connect to the server.")]
 public class uScript_NetworkFailedConnection : uScriptEvent

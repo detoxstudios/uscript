@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the tag of a GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Set Tag", "Sets the tag of a GameObject. The tag must be created in Unity's tag manager before using them with this node. Use \"Untagged\" for the tag name if you wish to remove an existing tag.")]
 public class uScriptAct_SetTag : uScriptLogic

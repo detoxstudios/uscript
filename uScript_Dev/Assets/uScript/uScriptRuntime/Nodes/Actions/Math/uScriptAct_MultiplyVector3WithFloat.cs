@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Multiplies a Vector3 with a Float.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Multiply Vector3 With Float", "Multiplies a Vector3 with a Float. This is useful for multiplying things like Delta Time with a Vector3 velocity for example.")]
 public class uScriptAct_MultiplyVector3WithFloat : uScriptLogic

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Attaches one GameObject to another, setting the Target as the parent of the Attachment.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Attach_To_GameObject")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Attach To GameObject", "Attaches one GameObject to another, setting the Target as the parent of the Attachment.")]
 public class uScriptAct_AttachToGameObject : uScriptLogic

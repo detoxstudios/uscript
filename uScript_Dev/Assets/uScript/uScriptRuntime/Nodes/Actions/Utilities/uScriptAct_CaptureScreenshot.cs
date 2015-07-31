@@ -16,7 +16,7 @@ using System.IO;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Captures a screenshot as a PNG file.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Capture_Screenshot")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Capture Screenshot", "Captures a screenshot as a PNG file. If the file already exists, it will be overwritten. If no path is defined or a bad path is provided, the screenshot will be placed in the root folder of the project." +
  "\n\nNote: This node will not function when run from the web player or a Dashboard widget.")]

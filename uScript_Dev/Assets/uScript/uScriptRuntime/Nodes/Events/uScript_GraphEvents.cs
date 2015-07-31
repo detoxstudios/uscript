@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event when the graph is Enabled, Disabled, and Destroyed")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#uScript_GraphEvents")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Graph Events", "Fires an event when the graph is Enabled, Disabled, and Destroyed.")]
 public class uScript_GraphEvents : uScriptLogic 

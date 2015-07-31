@@ -8,7 +8,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Insert a space in the current layout group.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUILayout_Space")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("GUILayout Space", "Insert a space in the current layout group.  The direction of the space is dependent on the layout group the node is in when called. For example, if in a vertical group, the space will be vertical.")]
 public class uScriptAct_GUILayoutSpace : uScriptLogic

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Returns the sibling GameObjects of a GameObject with the specified name.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Siblings_By_Name")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Siblings By Name",
               "Searches the parent of the target GameObject for siblings using the specified name.\n\n" +

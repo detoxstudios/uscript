@@ -10,7 +10,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Performs a 2D ray trace from the starting point to the end point.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Raycast")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Raycast (2D)", "Performs a 2D ray trace from the starting point to the end point, determines if anything was hit along the way, and fires the associated output link. GameObjects being hit must have a 2D Collider component in order to be detected.")]
 public class uScriptAct_Raycast2D : uScriptLogic

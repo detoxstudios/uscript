@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Returns part of the Target string as specified.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Sub-String", "Returns part of the Target string as specified. Note, if you supply values outside of a valid range, nothing will be returned in th new string.")]
 public class uScriptAct_GetSubString : uScriptLogic

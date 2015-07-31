@@ -12,7 +12,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2015 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a button is clicked.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#UI_Button_Events")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("UI Button Events", "Fires an event signal when Instance Button receives a click event.")]
 public class uScript_Button : uScriptEvent

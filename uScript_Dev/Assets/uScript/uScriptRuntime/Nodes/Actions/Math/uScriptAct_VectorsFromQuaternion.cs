@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Converts a quaternion into forward and up vectors.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Vectors_From_Quaternion")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Vectors From Quaternion", "Converts a quaternion into forward, up, and right vectors.")]
 public class uScriptAct_VectorsFromQuaternion : uScriptLogic

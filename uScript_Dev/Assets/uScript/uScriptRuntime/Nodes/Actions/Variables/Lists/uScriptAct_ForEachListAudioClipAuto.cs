@@ -11,7 +11,7 @@ using System;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each AudioClip in a AudioClip List (node will automatically iterate through the list).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("For Each In List Auto (AudioClip)", "Iterate through each AudioClip in a AudioClip List (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListAudioClipAuto : uScriptLogic

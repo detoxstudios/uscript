@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Clamps a Vector3 variable between a min and a max value for the desired components and returns the resulting Vector3.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Clamp Vector3", "Clamps Vector3 variable components between minimun and maximum values.")]
 public class uScriptAct_ClampVector3 : uScriptLogic

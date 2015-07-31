@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the Maximum Queued Frames from the current Quality Settings.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Max Queued Frames", "Gets the Maximum Queued Frames setting from the current Quality Settings.")]
 public class uScriptAct_QualitySettingsGetMaxQueuedFrames : uScriptLogic

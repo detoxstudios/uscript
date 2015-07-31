@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Gets the rotation information of a Transform variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Rotation From Transform", "Gets the rotation information of a Transform variable.")]
 public class uScriptAct_GetRotationFromTransform : uScriptLogic

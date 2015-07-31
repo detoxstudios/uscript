@@ -10,7 +10,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when Instance receives a 2D collision.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("On Collision (2D)", "Fires an event signal when Instance GameObject receives a 2D collision. The GameObjects involved must have a 2D rigidbody component on them to fire this event.")]
 public class uScript_Collision_2D : uScriptEvent

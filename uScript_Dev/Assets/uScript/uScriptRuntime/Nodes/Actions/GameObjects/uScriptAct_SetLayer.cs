@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the layer for the target GameObjects.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_GameObject_By_Name")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Set Layer", "Sets the layer for the target GameObjects.")]
 public class uScriptAct_SetLayer : uScriptLogic

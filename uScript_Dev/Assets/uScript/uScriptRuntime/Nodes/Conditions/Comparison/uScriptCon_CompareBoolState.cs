@@ -12,7 +12,7 @@
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Examines the target boolean variable and fires the appropriate output link depending on how it compares to its previous state.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Compare_Bool_State")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Compare Bool State", "Examines the target boolean variable and fires the appropriate output link depending on how it compares to its previous state.")]
 public class uScriptCon_CompareBoolState : uScriptLogic

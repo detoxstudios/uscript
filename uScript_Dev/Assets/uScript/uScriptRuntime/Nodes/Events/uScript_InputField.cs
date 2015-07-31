@@ -12,7 +12,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2015 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when an input field's value has changed or editing has ended.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#UI_Input_Field_Events")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("UI Input Field Events", "Fires an event signal when Instance InputField receives a value change event or when editing has ended.")]
 public class uScript_InputField : uScriptEvent

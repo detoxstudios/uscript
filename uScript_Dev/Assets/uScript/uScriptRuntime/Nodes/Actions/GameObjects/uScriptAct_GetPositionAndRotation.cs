@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Gets the position and rotation of a GameObject and outputs them as a Vector3.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Position_and_Rotation")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Position and Rotation", "Gets the position and rotation (in quaternion and euler angle formats) of a GameObject and outputs them as Vector3 variables.")]
 public class uScriptAct_GetPositionAndRotation : uScriptLogic

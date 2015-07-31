@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Returns the child GameObject of a parent GameObject with the specified name.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Find_Child_Transform")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Find Child Transform",
               "Searches the target GameObject for a child using the specified name.\n\n" +

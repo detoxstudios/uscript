@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Gets the components of a Quaternion as floats.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Components (Quaternion)", "Gets the components of a Quaternion as floats.")]
 public class uScriptAct_GetComponentsQuaternion : uScriptLogic

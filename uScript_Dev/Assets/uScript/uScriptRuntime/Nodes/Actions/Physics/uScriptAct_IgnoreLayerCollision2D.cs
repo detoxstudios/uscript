@@ -10,7 +10,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Tells the collision detection system ignore all 2D collisions between any GameObject in Layer A and any GameObject in Layer B.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Ignore Layer Collision (2D)", "Tells the collision detection system ignore all 2D collisions between any GameObject in Layer A and any GameObject in Layer B.")]
 public class uScriptAct_IgnoreLayerCollision2D : uScriptLogic

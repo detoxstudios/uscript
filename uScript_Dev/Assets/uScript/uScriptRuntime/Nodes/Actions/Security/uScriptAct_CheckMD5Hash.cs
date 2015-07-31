@@ -17,7 +17,7 @@ using System.Security.Cryptography;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if the Key string generates the provided MD5 Hash string.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Check MD5 Hash", "Checks to see if the Key string is a match for the provided MD5 Hash string.")]
 public class uScriptAct_CheckMD5Hash : uScriptLogic

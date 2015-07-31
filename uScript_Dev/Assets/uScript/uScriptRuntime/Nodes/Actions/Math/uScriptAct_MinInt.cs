@@ -8,7 +8,7 @@ using UnityEngine;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns the value of the smallest integer variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Min_Int")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Min Int", "Returns the value of the smallest integer variable.")]
 public class uScriptAct_MinInt : uScriptLogic

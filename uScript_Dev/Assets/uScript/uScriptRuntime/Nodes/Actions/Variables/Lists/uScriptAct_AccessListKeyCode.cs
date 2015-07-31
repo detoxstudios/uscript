@@ -11,7 +11,7 @@ using System;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Access different elements in a KeyCode List. Can access first, last, random or by index.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Access_GameObject_List")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Access List (KeyCode)", "Access the contents of a list. May return the first or last item, a random item, or the item at a specific index.")]
 public class uScriptAct_AccessListKeyCode : uScriptLogic

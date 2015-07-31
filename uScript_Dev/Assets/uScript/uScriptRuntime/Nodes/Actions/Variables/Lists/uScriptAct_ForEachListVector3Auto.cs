@@ -11,7 +11,7 @@ using System;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Iterate through each Vector3 in a Vector3 List (node will automatically iterate through the list).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("For Each In List Auto (Vector3)", "Iterate through each Vector3 in a Vector3 List (node will automatically iterate through the list).")]
 public class uScriptAct_ForEachListVector3Auto : uScriptLogic

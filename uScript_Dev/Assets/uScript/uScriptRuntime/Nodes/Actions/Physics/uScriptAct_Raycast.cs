@@ -15,7 +15,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Performs a ray trace from the starting point to the end point. Returns any hit data.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Raycast")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Raycast", "Performs a ray trace from the starting point to the end point, determines if anything was hit along the way, and fires the associated output link.")]
 public class uScriptAct_Raycast : uScriptLogic

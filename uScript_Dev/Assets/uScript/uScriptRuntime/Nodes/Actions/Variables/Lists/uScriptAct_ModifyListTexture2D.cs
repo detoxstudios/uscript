@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes Texture2D from a Texture2D List. Can also empty the Texture2D List.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Modify List (Texture2D)", "Modify a list by adding/removing the specified variable(s), or by emptying it entirely.")]
 public class uScriptAct_ModifyListTexture2D : uScriptLogic

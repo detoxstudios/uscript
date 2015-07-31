@@ -8,7 +8,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Make a toolbar.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUILayout_Toolbar")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("GUILayout Toolbar", "Make a toolbar.")]
 public class uScriptAct_GUILayoutToolbar : uScriptLogic

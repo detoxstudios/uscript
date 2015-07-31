@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a GameObject enters, exits, or stays in a trigger.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Trigger_Events")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [NodePropertiesPath("Properties/Triggers")]
 [FriendlyName("Trigger Events\n[Use Trigger Event]", "Fires an event signal when a GameObject enters, exits, or stays in a trigger. The Instance GameObject must have a collider component on it set to be a trigger. Also, only other Gameobjects with a rigidbody component will trigger this event (the 'Triggerd By' GameObject).")]

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns true while the virtual button identified by Button Name is held down.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Button", "Returns true while the virtual button identified by Button Name is held down. This will return true as long as the button is held down. Note, for detecting standard keyboard and mouse button presses, you should use the Input Filter node.\n\nFor use with the Input Events event node.")]
 public class uScriptAct_GetButton : uScriptLogic

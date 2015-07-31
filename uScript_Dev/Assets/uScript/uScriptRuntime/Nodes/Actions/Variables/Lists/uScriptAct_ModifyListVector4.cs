@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes Vector4 from a Vector4 List. Can also empty the Vector4 List.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Modify List (Vector4)", "Modify a list by adding/removing the specified variable(s), or by emptying it entirely.")]
 public class uScriptAct_ModifyListVector4 : uScriptLogic

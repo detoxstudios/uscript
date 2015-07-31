@@ -8,7 +8,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Begin a GUILayout block of GUI controls in a fixed screen area.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUILayout_BeginArea")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("GUILayout Begin Area", "Begin a GUILayout block of GUI controls in a fixed screen area.\n"
    + "\n"

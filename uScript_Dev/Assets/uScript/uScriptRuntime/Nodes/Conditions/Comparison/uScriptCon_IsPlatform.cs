@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Outputs true if the current platform is one of the attached platform variables.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Is_Platform")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Is Platform", "Outputs True if the current platform is one of the attached platform variables.")]
 public class uScriptCon_IsPlatform : uScriptLogic

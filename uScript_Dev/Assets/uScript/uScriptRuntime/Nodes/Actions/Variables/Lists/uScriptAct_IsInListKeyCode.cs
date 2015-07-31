@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if a int is in a KeyCode List.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Is In List (KeyCode)", "Checks to see if a KeyCode is in a KeyCode List.")]
 public class uScriptAct_IsInListKeyCode : uScriptLogic

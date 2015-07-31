@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Rewind all animations on the target GameObjects.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Rewind Animation", "Rewind all animations on the target GameObjects. You can specify an optional animation name to rewind just that animation on the target GameObjects.")]
 public class uScriptAct_RewindAnimation : uScriptLogic

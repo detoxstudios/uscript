@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Blend animations from one to the other.")]
 [NodeAuthor("Detox Studios LLC. Original node by Krillbite", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Play Animation (Cross Fading)", "Blend animations from one to the other. Use the Fire Before value to determine when to trigger the Play Next output socket.")]
 public class uScriptAct_PlayAnimationCrossFading : uScriptLogic

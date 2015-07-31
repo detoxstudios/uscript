@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Replaces all instances of a value in the list with the new value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Replace Value In List (Material)", "Replaces all instances of a value in the list with the new value. It will also return the number of values replaced.")]
 public class uScriptAct_ReplaceValueInListMaterial : uScriptLogic

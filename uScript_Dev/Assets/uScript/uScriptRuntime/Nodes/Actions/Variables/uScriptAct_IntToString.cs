@@ -8,7 +8,7 @@ using System.Globalization;
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Converts an integer to a string with advanced formatting options.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Int_To_String")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Int To String", "Converts an integer to a string with advanced formatting options.")]
 public class uScriptAct_IntToString : uScriptLogic

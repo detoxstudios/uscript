@@ -10,7 +10,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Applies a 2D Add Force to the specified GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 
 [FriendlyName("Add Force (2D)", "Applies a 2D Add Force to the specified GameObject. Target must have a RigidBody2D Component in order to recieve a force.")]

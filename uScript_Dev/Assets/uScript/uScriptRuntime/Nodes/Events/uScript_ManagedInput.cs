@@ -11,7 +11,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Monitors Unity's Input Manager and returns the current state of each named input axis.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Managed_Input_Events")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Managed Input Events", "Monitors Unity's Input Manager and returns the current state of each named input axis." +
    "\n\nThis node only works with the default Input Manager settings that Unity provides.  If you have" +

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Adds a new Material to the existing set of materials on the target GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Add Material", "Adds a new Material to the existing set of materials on the target GameObject. This new material will be appended to the GameObject's existing material channel array and be at the last index position.")]
 public class uScriptAct_AddMaterial : uScriptLogic

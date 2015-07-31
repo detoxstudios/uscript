@@ -11,7 +11,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when an on-screen keyboard event happens.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#On-Screen_Keyboard_Events")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("On-Screen Keyboard Events", "Fires an event signal when an on-screen keyboard event happens.")]
 public class uScript_OnScreenKeyboard : uScriptEvent

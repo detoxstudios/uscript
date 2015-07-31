@@ -11,7 +11,7 @@ using System;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if a int is in a Int64 List.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Is In List (Int64)", "Checks to see if a Int64 is in a Int64 List.")]
 public class uScriptAct_IsInListInt64 : uScriptLogic

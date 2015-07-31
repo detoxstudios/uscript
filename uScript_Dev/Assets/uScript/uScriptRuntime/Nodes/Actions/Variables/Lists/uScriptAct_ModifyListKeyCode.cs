@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Adds/removes KeyCodes from a KeyCode List. Can also empty the KeyCode List.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Modify List (KeyCode)", "Modify a list by adding/removing the specified variable(s), or by emptying it entirely.")]
 public class uScriptAct_ModifyListKeyCode : uScriptLogic

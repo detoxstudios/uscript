@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Allows you to fade to or from a color with the Target Camera.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Camera Fade", "Allows you to fade to or from a color with the Target Camera. This node works by creating a temporary primitive plane GameObject containing the specified material in front of the camera. The GameObject is removed after the fade is completed.")]
 public class uScriptAct_CameraFade : uScriptLogic

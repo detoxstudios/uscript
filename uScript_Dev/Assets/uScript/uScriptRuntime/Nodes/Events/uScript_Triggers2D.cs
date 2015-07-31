@@ -10,7 +10,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a GameObject enters, exits, or stays in a 2D trigger.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Trigger_Events")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [NodePropertiesPath("Properties/Triggers")]
 [FriendlyName("Trigger Events (2D) [Deprecated Use Trigger Event (2D)]", "Fires an event signal when a GameObject enters, exits, or stays in a 2D trigger. The Instance GameObject must have a 2D collider component on it set to be a trigger. Also, only other Gameobjects with a 2D rigidbody and 2D collider components will work with the trigger (the 'Triggerd By' GameObject).")]

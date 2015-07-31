@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Randomly sets the world position of a GameObject based around an origin point in the world.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Set Random Position", "Randomly sets the world position of a GameObject based around an origin point in the world.\n\nNote: Preserving an axis will also override that axis for the specified Origin.")]
 public class uScriptAct_SetRandomPosition : uScriptLogic

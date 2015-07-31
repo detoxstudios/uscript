@@ -10,7 +10,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when Instance receives a custom event with a Vector4.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Custom_Event_.28Vector4.29")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Custom Event (Vector4)", "Fires an event signal when Instance receives a custom event with a Vector4.")]
 public class uScript_CustomEventVector4 : uScriptEvent

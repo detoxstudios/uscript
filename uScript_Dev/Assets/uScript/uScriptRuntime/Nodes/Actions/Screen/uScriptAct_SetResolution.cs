@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Switches the screen resolution.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Set Resolution", "Switches the screen resolution using Width and Height.  If no matching resolution is supported, the nearest will be used." +
  "\n\nIn the web player you may only switch resolutions after the user has clicked on the content. The recommended way of doing it is to switch resolutions only when the user clicks on a designated button." +

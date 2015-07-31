@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Creates a GameObject with a primitive mesh renderer and appropriate collider.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Create_Primitive_GameObject")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Create Primitive", "Creates a GameObject with a primitive mesh renderer and appropriate collider.")]
 public class uScriptAct_CreatePrimitive : uScriptLogic

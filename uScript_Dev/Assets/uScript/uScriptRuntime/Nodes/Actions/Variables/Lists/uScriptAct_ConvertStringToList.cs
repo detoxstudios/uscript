@@ -11,7 +11,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Converts a string into int, float and string lists.")]
 [NodeAuthor("Detox Studios LLC. Original node by John on the uScript Community Forum", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 
 [FriendlyName("Convert String to List", "Converts a string into int, float and string lists dependent on the content of the input string.\n\nFor example, the input string 'apple,orange,27,1.66' will output a string list containing all four items, a float list containing two items (27, 1.66) and an int list with a single item (27).\n\nYou can opt to preserve the length of the lists and a padding value (0 unless you specify otherwise) will be insertedwhere an appropriate value isn't in the original string.\n\nIn the example above this would mean that the float list would be (0,0,27,1.66) and the int list (0,0,27,0)\n\nInput: A string with each item separated by a comma.")]

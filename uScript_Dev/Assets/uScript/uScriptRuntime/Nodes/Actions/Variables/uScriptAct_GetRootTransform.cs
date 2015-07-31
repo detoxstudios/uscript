@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Gets the topmost Transform in the hierarchy.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Root Transform", "Gets the topmost Transform in the hierarchy. If the target Transform is the root transofrm, it will return itself.")]
 public class uScriptAct_GetRootTransform : uScriptLogic

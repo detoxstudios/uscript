@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Outputs True if the target GameObjects are not null (unassigned/empty).")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Is GameObject Null", "Outputs True if the target GameObjects are not null (unassigned/empty). If checking multiple GameObjects at once, the node will fire the Is Null socket if ANY of the target GameObjects are null.")]
 public class uScriptCon_IsNull : uScriptLogic

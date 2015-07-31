@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Moves a GameObject in the specified direction.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Control GameObject (Move)", "Moves a GameObject in the specified direction (local to the GameObject). Please note that this is a simple move node that brute-forces the movement of the GameObject's position-- it does not use the physics system. It is recomended you create your own game-specific character controller if you need more functionality.")]
 public class uScriptAct_ControlGameObjectMove : uScriptLogic

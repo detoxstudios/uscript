@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Applies an Add Force at the specified location for the Target GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Add Force At Position", "Applies an Add Force at the specified location for the Target GameObject. Target must have a rigidbody component in order to recieve a force.")]
 public class uScriptAct_AddForceAtPosition : uScriptLogic

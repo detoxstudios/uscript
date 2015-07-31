@@ -8,7 +8,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Shows a GUI Toggle on the screen using Unity's automatic layout system.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUILayout_Toggle")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("GUILayout Toggle", "Shows a GUI Toggle on the screen using Unity's automatic layout system. The Changed event will fire when the control state changes.")]
 public class uScriptAct_GUILayoutToggle : uScriptLogic

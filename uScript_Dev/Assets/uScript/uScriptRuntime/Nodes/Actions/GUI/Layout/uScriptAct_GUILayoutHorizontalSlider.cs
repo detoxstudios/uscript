@@ -8,7 +8,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Shows a horizontal slider that the user can drag to change a value.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUILayout_HorizontalSlider")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("GUILayout Horizontal Slider", "Shows a horizontal slider that the user can drag to change a value.")]
 public class uScriptAct_GUILayoutHorizontalSlider : uScriptLogic

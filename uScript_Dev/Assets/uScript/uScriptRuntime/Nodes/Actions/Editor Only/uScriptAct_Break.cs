@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Pauses the game and spits out the game time and an optional text string to Unity's console.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Break", "Pauses the game and spits out the game time and an optional text string to Unity's console. Resume the game by pressing the Pause button in the Unity editor.")]
 public class uScriptAct_Break : uScriptLogic

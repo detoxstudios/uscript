@@ -8,7 +8,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Get the name of named control that has keyboard focus.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Get_Focused_Control")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("GUI Get Focused Control", "Get the name of named control that has keyboard focus.\n"
    + "\n"

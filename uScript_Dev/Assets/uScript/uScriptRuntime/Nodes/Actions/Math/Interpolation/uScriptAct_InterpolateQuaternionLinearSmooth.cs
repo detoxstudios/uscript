@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Linearly interpolate a Quaternion over time.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Interpolate_Quaternion_Linear")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Interpolate Quaternion Linear (Smooth)", "Linearly interpolate a Quaternion over time.")]
 public class uScriptAct_InterpolateQuaternionLinearSmooth : uScriptLogic

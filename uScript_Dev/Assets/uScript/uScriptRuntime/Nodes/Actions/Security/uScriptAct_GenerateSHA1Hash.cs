@@ -17,7 +17,7 @@ using System.Security.Cryptography;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Generates an SHA1 hash string from a key.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Generate SHA1 Hash", "Generates an SHA1 hash string from a key.")]
 public class uScriptAct_GenerateSHA1Hash : uScriptLogic

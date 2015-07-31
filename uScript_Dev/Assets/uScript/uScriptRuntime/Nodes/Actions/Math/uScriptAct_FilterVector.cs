@@ -15,7 +15,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Takes any Vector3 or Vector4 and outputs a low-pass filtered version.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Filter_Vector")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Filter Vector", "Takes any Vector3 or Vector4 and outputs a low-pass filtered version.")]
 public class uScriptAct_FilterVector : uScriptLogic

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Applies an Add Relative Force to the specified GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Add_Relative_Force")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Add Relative Force", "Applies an Add Relative Force to the specified GameObject. Target must have a Rigid Body Component in order to recieve a force.")]
 public class uScriptAct_AddRelativeForce : uScriptLogic

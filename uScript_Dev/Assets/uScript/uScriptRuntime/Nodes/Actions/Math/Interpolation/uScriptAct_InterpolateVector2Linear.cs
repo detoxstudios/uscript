@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Linearly interpolate a Vector2 over time.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Interpolate_Vector2_Linear")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Interpolate Vector2 Linear", "Linearly interpolate a Vector2 over time.")]
 [NodeDeprecated(typeof(uScriptAct_InterpolateVector2LinearSmooth))]

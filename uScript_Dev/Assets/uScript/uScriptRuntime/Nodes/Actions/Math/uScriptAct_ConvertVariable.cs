@@ -16,7 +16,7 @@ using System.Globalization;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Converts a variable into another type.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Convert_Variable")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Convert Variable", "Converts a variable into another type.")]
 public class uScriptAct_ConvertVariable : uScriptLogic

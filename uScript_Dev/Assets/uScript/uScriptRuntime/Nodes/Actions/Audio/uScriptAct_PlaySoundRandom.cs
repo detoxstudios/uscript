@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Plays the specified AudioClip on the target GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Play Sound (Random)", "Plays a single random AudioClip on a single random Target GameObject from those specified. You can only specify a single target GameObject or AudioClip if you wish to just have one of the two things be random (either AudioClips or GameObjects).")]
 public class uScriptAct_PlaySoundRandom : uScriptLogic

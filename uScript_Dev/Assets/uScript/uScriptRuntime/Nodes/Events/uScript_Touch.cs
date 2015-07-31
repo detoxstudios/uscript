@@ -11,7 +11,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Touch_Events")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Touch Events", "Fires an event signal when a touch event(s) happens. Supported Touch events are: Touch Began, Touch Moved, Touch Stationary, Touch Ended, Touch Canceled.")]
 public class uScript_Touch : uScriptEvent

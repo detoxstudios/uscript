@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip( "Gets the first key pressed from the current frame.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Pressed KeyCode", "Returns the KeyCode of the first key pressed in the current frame (KeyCode.None if there wasn't one pressed).  Warning - this is very slow and should not run on every tick!")]
 public class uScriptAct_GetKeyCode : uScriptLogic

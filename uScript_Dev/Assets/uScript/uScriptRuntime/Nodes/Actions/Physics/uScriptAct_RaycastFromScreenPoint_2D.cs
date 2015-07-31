@@ -10,7 +10,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Cast a 2D ray from the specified screen location (in pixels) out into the scene.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Raycast From Screen Point (2D)", "Cast a 2D ray from the specified screen location (in pixels) out into the scene, determines if anything was hit along the way, and fires the associated output link. Used with Unity's 2D Physics system.")]
 public class uScriptAct_RaycastFromScreenPoint_2D : uScriptLogic

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Shows a GUIPasswordField on the screen and allows getting/setting of its string contents and repsonses to changed event.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUI_Password_Field")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("GUI Password Field", "Shows a GUIPasswordField on the screen and allows getting/setting of its string contents and repsonses to changed event.")]
 public class uScriptAct_GUIPasswordField : uScriptLogic

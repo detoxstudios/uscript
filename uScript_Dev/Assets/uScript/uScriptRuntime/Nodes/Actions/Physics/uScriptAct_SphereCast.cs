@@ -15,7 +15,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Casts a sphere against all colliders in the scene and returns information on what was hit.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Raycast")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Sphere Cast", "Casts a sphere against all colliders in the scene and returns information on what was hit. Please note that the sphere cast does not work against colliders configured as triggers.")]
 public class uScriptAct_SphereCast : uScriptLogic

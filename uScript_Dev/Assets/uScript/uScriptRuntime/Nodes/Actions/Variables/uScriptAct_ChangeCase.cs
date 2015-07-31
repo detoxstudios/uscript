@@ -15,7 +15,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Changes the case of the chracters in the specified string.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Change Case", "Changes the case of the chracters in the specified string based on the case type (Upper, Lower, or Inverted).")]
 public class uScriptAct_ChangeCase : uScriptLogic

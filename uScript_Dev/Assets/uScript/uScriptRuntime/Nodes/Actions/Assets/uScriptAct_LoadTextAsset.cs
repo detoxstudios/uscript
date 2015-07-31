@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Loads a TextAsset")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Load_TextAsset")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Load TextAsset", "Loads a TextAsset file from your Resources directory. Binary files can be loaded as a TextAsset, but they must use the \"bytes\" file extension.")]
 public class uScriptAct_LoadTextAsset : uScriptLogic

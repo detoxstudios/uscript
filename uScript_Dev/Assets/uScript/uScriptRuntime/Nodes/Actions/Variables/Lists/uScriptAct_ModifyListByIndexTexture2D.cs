@@ -9,7 +9,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Modify a list by specifying a specific slot number (index) in the list.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Modify List By Index (Texture2D)", "Modify a list by specifying a specific slot number (index) in the list.")]
 public class uScriptAct_ModifyListByIndexTexture2D : uScriptLogic

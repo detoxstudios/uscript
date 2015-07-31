@@ -10,7 +10,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2014 by Detox Studios LLC")]
 [NodeToolTip("Gets the velocity of a GameObject's Rigidbody as a Vector3.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Rigidbody Velocity (2D)", "Gets the velocity of a GameObject's Rigidbody2D component as a Vector2. If Target does not have a Rigidbody2D component, will return Vector2.zero.")]
 public class uScriptAct_GetRigidbodyVelocity2D : uScriptLogic

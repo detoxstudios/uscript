@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Keeps a float variable between a min and a max value while allowing it to wrap back around and returns the result.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Wrap_Float")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Wrap Float", "Keeps a float variable between a min and a max value while allowing it to wrap back around and returns the result.")]
 public class uScriptAct_WrapFloat : uScriptLogic

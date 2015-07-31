@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Calculate the size of a some content if it is rendered with this style.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUIStyleCalcSize")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 [NodeDeprecated()]
 
 [FriendlyName("GUI Calculate Style Size", "Calculate the size of a some content if it is rendered with this style.")]

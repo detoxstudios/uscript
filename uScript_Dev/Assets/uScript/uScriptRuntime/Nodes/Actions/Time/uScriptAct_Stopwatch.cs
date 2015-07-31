@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Used for measuring time like a stopwatch. Start, stop, reset, and check time functions.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Stopwatch")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Stopwatch", "Used for measuring time like a stopwatch. Start, stop, reset, and check time functions.")]
 public class uScriptAct_Stopwatch : uScriptLogic

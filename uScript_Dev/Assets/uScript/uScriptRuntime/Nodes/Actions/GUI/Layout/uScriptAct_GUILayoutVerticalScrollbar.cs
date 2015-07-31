@@ -8,7 +8,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Shows a vertical scrollbar that the user can drag.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUILayout_VerticalScrollbar")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("GUILayout Vertical Scrollbar", "Shows a vertical scrollbar that the user can drag.")]
 public class uScriptAct_GUILayoutVerticalScrollbar : uScriptLogic

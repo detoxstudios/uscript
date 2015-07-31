@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip( "Converts a forward and up vector into a quaternion.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Quaternion_From_Vectors")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Quaternion Euler", "Returns a rotation that rotates Z degrees around the Z axis, X degrees around the X axis, and Y degrees around the Y axis (in that order).")]
 public class uScriptAct_QuaternionEuler : uScriptLogic

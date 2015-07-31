@@ -8,7 +8,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Make a grid of buttons.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#GUILayout_Selection_Grid")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("GUILayout Selection Grid", "Make a grid of buttons.")]
 public class uScriptAct_GUILayoutSelectionGrid : uScriptLogic

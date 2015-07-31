@@ -11,7 +11,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when the specified variable(s) changed.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Variable Changed (Bool)", "Fires an event signal when the specified variable(s) changed.")]
 public class uScript_VariableChangedBool : uScriptEvent

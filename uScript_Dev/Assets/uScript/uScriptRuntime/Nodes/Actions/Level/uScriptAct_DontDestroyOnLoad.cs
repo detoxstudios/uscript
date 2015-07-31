@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets DontDestroyOnLoad on an object so it will not be destroyed automatically when loading a new scene.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Don't Destroy On Load", "Sets DontDestroyOnLoad on an object so it will not be destroyed automatically when loading a new scene. If the object is a component or GameObject then its entire transform hierarchy will not be destroyed either.")]
 public class uScriptAct_DontDestroyOnLoad : uScriptLogic

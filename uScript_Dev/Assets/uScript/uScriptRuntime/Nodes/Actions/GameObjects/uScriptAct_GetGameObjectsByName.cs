@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2013 by Detox Studios LLC")]
 [NodeToolTip("Returns the GameObjects in the scene with the specified name.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_GameObjects_By_Name")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get GameObjects By Name",
               "Returns the GameObjects in the scene with the specified name." +

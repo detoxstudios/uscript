@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Compares the unique tag, name and InstanceID of the attached GameObject variables and outputs accordingly.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Compare_GameObjects")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Compare GameObjects", "Compares the unique InstanceID of the attached GameObject variables and outputs accordingly." +
  "\n\nOptionally, you can compare by a GameObject's tag and/or name instead.  Please note, if Compare By Name and Compare By Tag are both checked, they must both match for the 'Same' signal to fire.")]

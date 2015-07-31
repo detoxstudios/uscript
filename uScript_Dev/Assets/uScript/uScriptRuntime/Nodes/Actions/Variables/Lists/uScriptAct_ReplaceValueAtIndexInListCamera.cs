@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Replaces a value in the list with the new value at the specified index.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Replace Value At Index In List (Camera)", "Replaces a value in the list with the new value at the specified index.")]
 public class uScriptAct_ReplaceValueAtIndexInListCamera : uScriptLogic

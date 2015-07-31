@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the fog density the renderer should use.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Set Fog Density", "Sets the fog density the renderer should use when using an exponential fog mode (0.0 - 1.0). Please note, that fog density is NOT used for the linear fog mode.")]
 public class uScriptAct_RenderSettingsSetFogDensity : uScriptLogic

@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Replaces the value of one or more components of the target variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://docs.uscript.net")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Replace Components (Vector3)", "Updates the components of the Output variable with values from the Input variable and/or the individual component values specified in the node itself. Hook up both the Input and Output socket to the same variable to have it update itself. You may also use different variables for the Input and Output sockets and set all the components to 'Ignore' in order to use one variable's values to update another directly. Lastly, If no Input is provided, '0' will be used by default for any component not specified directly in the node.")]
 public class uScriptAct_ReplaceComponentsVector3 : uScriptLogic

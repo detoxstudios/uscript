@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Plays the specified AudioClip on the target GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Play AudioSource", "Plays the specified AudioSource on the target GameObject(s). Playing the AudioSource will immediately replace any existing sound playing from it. If you wish to change settings on the AudioSource (such as volume or pitch) at runtime, use the reflected properties to do so.\n\nNOTE: To use this node, you must have already setup an AudioSource component on the target GameObject(s). If you want to simply play a sound with default AudioSource settings without needing to have an existing AudioSource component on the GameObject, use the Play Sound node. Also, for the Stop input, the node will stop any sounds that were originally attached when Play was fired and ALSO any new/different sources that are attached at the time Stop is fired.")]
 public class uScriptAct_PlayAudioSource : uScriptLogic

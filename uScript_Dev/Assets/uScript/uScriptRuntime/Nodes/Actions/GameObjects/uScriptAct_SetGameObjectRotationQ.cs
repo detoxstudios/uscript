@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the rotation in quaternion format of a GameObject in local or world coordinates.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_RotationQ")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Set Rotation Quaternion", "Sets the rotation of a GameObject in local or world coordinates as a quaternion. Optionally, can set rotation as offest from the target's current rotation.")]
 public class uScriptAct_SetGameObjectRotationQ : uScriptLogic

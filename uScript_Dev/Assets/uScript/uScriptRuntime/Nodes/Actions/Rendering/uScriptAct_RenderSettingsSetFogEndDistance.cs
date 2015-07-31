@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the fog end distance the renderer should use.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Set Fog End Distance", "Sets the fog end distance the renderer should use when using the linear fog mode. Please note, that the fog end distance is NOT used for the exponential fog modes.")]
 public class uScriptAct_RenderSettingsSetFogEndDistance : uScriptLogic

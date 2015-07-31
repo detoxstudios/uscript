@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns the machine's IP address as a string")]
 [NodeAuthor("Detox Studios LLC. Original node by xzlashed on the uScript Community Forum", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Set Normalized Animation Position", "Sets the current position of the specified animation to a percentage of the whole animaiton (normalized position). For example, if you wish to have the animation play from middle of the animation, you would set the normalize position to 0.5 (50%).")]
 public class uScriptAct_SetAnimationPosition : uScriptLogic {

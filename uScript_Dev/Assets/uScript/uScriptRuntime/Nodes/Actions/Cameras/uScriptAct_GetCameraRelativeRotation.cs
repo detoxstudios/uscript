@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Takes a Camera and an analog control x/y pair and computes the world rotation relative to the current camera view.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Camera Relative Rotation", "Takes a Camera and an analog control x/y pair and computes the world rotation relative to the current camera view.")]
 public class uScriptAct_GetCameraRelativeRotation : uScriptLogic

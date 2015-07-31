@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Sets the gravity applied to all rigid bodies.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Set_Gravity")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Set Gravity", "Sets the gravity force and direction applied to all rigid bodies. Use a zero Vector3 to turn gravity off (0, 0, 0).")]
 public class uScriptAct_SetGravity : uScriptLogic

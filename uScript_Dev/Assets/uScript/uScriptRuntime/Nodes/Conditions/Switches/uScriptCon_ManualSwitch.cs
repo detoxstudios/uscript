@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Manually pick an Output to fire the signal to.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Manual_Switch")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Manual Switch", "Manually pick an Output to fire the signal to.\n\nThe specified Output To Use value will be clamped within the range of 1 to 6.")]
 public class uScriptCon_ManualSwitch : uScriptLogic

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Returns the Root GameObject of a hierarchy of GameObjects.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://docs.unity3d.com/Documentation/ScriptReference/Transform-root.html")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Root", "Returns the Root GameObject of a hierarchy of GameObjects.")]
 public class uScriptAct_GetRoot : uScriptLogic

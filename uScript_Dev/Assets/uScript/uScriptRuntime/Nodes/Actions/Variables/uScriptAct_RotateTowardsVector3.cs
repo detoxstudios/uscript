@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2015 by Detox Studios LLC")]
 [NodeToolTip("Wrapper around the Vector3.RotateTowards function.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Vector3_Rotate_Towards")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Rotate Towards", "Rotate a Vector3 towards another Vector3.")]
 public class uScriptAct_RotateTowardsVector3 : uScriptLogic

@@ -9,7 +9,7 @@ using UnityEngine;
 [NodeCopyright("Copyright 2015 by Detox Studios LLC")]
 [NodeToolTip("Gets the shadow casting mode of the specified GameObject's renderer.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Get_Shadow_Casting_Mode")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Shadow Casting Mode", "Gets the shadow casting mode of the specified GameObject's renderer.")]
 public class uScriptAct_GetShadowCastingMode : uScriptLogic

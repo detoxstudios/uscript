@@ -9,7 +9,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Switches from 'From Camera' to 'To Camera'.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Switch_Cameras")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Switch Cameras", "Disables the 'From' GameObject camera and enables the 'To' GameObject camera. Good for switching from one main camera to another.")]
 public class uScriptAct_SwitchCameras : uScriptLogic

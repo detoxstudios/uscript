@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2012 by Detox Studios LLC")]
 [NodeToolTip("Gets information about the target Texture2D variable.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Get Texture2D Info", "Gets information about the target Texture2D variable. See Unity's documentation on Texture2D for more information.")]
 public class uScriptAct_GetTextureInfo : uScriptLogic

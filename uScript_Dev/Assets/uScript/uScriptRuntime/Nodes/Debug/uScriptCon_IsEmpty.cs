@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Checks to see if the target variable is empty/null.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Is Empty", "Checks to see if the target variable is empty/null. If more than one variable is hooked up to the Target socket, it will only return Not Empty if all the provided targets are not empty.")]
 public class uScriptCon_IsEmpty : uScriptLogic

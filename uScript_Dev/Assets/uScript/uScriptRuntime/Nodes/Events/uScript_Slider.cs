@@ -12,7 +12,7 @@ using System.Collections;
 [NodeCopyright("Copyright 2015 by Detox Studios LLC")]
 [NodeToolTip("Fires an event signal when a slider's value has changed.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#UI_Slider_Events")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("UI Slider Events", "Fires an event signal when Instance Slider receives a value changed event.")]
 public class uScript_Slider : uScriptEvent

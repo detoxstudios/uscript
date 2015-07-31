@@ -10,7 +10,7 @@ using System.Collections.Generic;
 [NodeCopyright("Copyright 2011 by Detox Studios LLC")]
 [NodeToolTip("Plays the specified AudioClip on the target GameObject.")]
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
-[NodeHelp("http://www.uscript.net/docs/index.php?title=Node_Reference_Guide#Play_Sound")]
+[NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
 [FriendlyName("Play Sound", "Plays the specified AudioClip on the target GameObject.\n\nNote: This node will create a new instance of an AudioSource component when playing. If you wish to play a soud using a GameObjects existing AudioSource component, please use the Play AudioSource or Play AudioSource (OneShot) nodes instead.")]
 public class uScriptAct_PlaySound : uScriptLogic
