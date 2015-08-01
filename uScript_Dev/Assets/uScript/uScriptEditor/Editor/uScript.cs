@@ -1147,7 +1147,7 @@ public sealed partial class uScript : EditorWindow
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
 
-      if (this.undoObject.UndoNumber != m_UndoNumber) UndoRedoPerformed();
+      if (this.undoObject != null && this.undoObject.UndoNumber != m_UndoNumber) UndoRedoPerformed();
 
       if (_wasHierarchyChanged)
       {
