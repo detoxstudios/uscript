@@ -28,6 +28,40 @@ namespace Detox.Editor.Extensions
          return offset;
       }
 
+      public static Rect GetControlRect(params GUILayoutOption[] options)
+      {
+         return GetControlRect(true, 16f, EditorStyles.layerMaskField, options);
+      }
+
+      public static Rect GetControlRect(bool hasLabel, params GUILayoutOption[] options)
+      {
+         return GetControlRect(hasLabel, 16f, EditorStyles.layerMaskField, options);
+      }
+
+      public static Rect GetControlRect(bool hasLabel, float height, params GUILayoutOption[] options)
+      {
+         return GetControlRect(hasLabel, height, EditorStyles.layerMaskField, options);
+      }
+
+      public static Rect GetControlRect(bool hasLabel, float height, GUIStyle style, params GUILayoutOption[] options)
+      {
+#if UNITY_3_5 || UNITY_4_0 || UNITY_4_1 || UNITY_4_2
+         // EditorGUILayout.GetControlRect was introduced in 4.3.0
+         var value = new Rect();
+
+         var method = typeof(GUILayoutUtility).GetMethod("GetControlRect", BindingFlags.NonPublic | BindingFlags.Static);
+         if (method != null)
+         {
+            var parameters = new object[] { hasLabel, height, style, options };
+            value = (Rect)method.Invoke(null, parameters);
+         }
+
+         return value;
+#else
+         return EditorGUILayout.GetControlRect(hasLabel, height, style, options);
+#endif
+      }
+
       public static RectOffset ParentBorderSize(this EditorWindow editorWindow)
       {
          RectOffset borderSize = null;
