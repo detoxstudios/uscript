@@ -7,8 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if !UNITY_3_5
 namespace Detox.DetoxDevTools.Editor
 {
+#endif
    using System.Globalization;
 
    using Detox.Editor;
@@ -106,4 +108,6 @@ namespace Detox.DetoxDevTools.Editor
          return result;
       }
    }
+#if !UNITY_3_5
 }
+#endif
