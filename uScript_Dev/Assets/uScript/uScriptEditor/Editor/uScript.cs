@@ -3149,21 +3149,18 @@ public sealed partial class uScript : EditorWindow
 #if DETOX_STORE_PLE
    private static void CommandHelpMenuBuyBasic()
    {
-      //Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/31443");
       UnityEditorInternal.AssetStore.Open("content/31443");
    }
 
    private static void CommandHelpMenuBuyPro()
    {
-      //Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/1808");
       UnityEditorInternal.AssetStore.Open("content/1808");
    }
 #elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
    private static void CommandHelpMenuUpgrade()
    {
-      // TODO: specify the correct ID for the upgrade product
-      //Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/?????");
-      UnityEditorInternal.AssetStore.Open("content/????");
+      //Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/1808");
+      UnityEditorInternal.AssetStore.Open("content/1808");
    }
 #endif
 
