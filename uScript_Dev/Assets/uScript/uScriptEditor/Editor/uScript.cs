@@ -85,7 +85,8 @@ public sealed partial class uScript : EditorWindow
    private bool wantsCopy;
    private bool wantsCut;
    private bool wantsPaste;
-   private bool copyPerformed = true;  // need to initialize as true in case copy was performed in previous editing session
+
+   private bool checkClipboard = true;
 
    private bool rebuildWhenReady;
 
@@ -848,6 +849,8 @@ public sealed partial class uScript : EditorWindow
       m_ScriptEditorCtrl.BuildContextMenu();
       uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
 
+      this.checkClipboard = true; // check the clipboard for uscript data
+
       m_ScriptEditorCtrl.IsDirty = this.currentScriptDirty || this.patches.Length > 0;
 
       //ScriptableObject.DestroyImmediate(undoObject);
@@ -1176,7 +1179,7 @@ public sealed partial class uScript : EditorWindow
       {
          m_ScriptEditorCtrl.CopyToClipboard();
          this.wantsCopy = false;
-         this.copyPerformed = true;
+         this.checkClipboard = true;
       }
       if (this.wantsCut)
       {
@@ -1482,11 +1485,11 @@ public sealed partial class uScript : EditorWindow
 
       this.DropKeyboardFocusWhenNewControlClicked();
 
-      if (this.copyPerformed)
+      if (this.checkClipboard)
       {
          // Must be done in OnGUI rather than on demand
          m_ScriptEditorCtrl.ParseClipboardData();
-         this.copyPerformed = false;
+         this.checkClipboard = false;
       }
 
       GUI.enabled = this.IsLicenseAccepted && !IsPreferenceWindowOpen;
@@ -3939,6 +3942,7 @@ public sealed partial class uScript : EditorWindow
 
       m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor);
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
+      this.checkClipboard = true; // check the clipboard for uscript data
 
       m_ScriptEditorCtrl.BuildContextMenu();
       uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
@@ -4368,6 +4372,8 @@ public sealed partial class uScript : EditorWindow
 
             m_ScriptEditorCtrl.BuildContextMenu();
             uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
+
+            this.checkClipboard = true; // check the clipboard for uscript data
          }
 
          string scriptName = Path.GetFileNameWithoutExtension(this.fullPath);
