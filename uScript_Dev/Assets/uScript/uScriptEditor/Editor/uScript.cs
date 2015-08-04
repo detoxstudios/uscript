@@ -85,6 +85,7 @@ public sealed partial class uScript : EditorWindow
    private bool wantsCopy;
    private bool wantsCut;
    private bool wantsPaste;
+   private bool copyPerformed = true;  // need to initialize as true in case copy was performed in previous editing session
 
    private bool rebuildWhenReady;
 
@@ -1175,6 +1176,7 @@ public sealed partial class uScript : EditorWindow
       {
          m_ScriptEditorCtrl.CopyToClipboard();
          this.wantsCopy = false;
+         this.copyPerformed = true;
       }
       if (this.wantsCut)
       {
@@ -1480,8 +1482,12 @@ public sealed partial class uScript : EditorWindow
 
       this.DropKeyboardFocusWhenNewControlClicked();
 
-      // Must be done in OnGUI rather than on demand
-      m_ScriptEditorCtrl.ParseClipboardData();
+      if (this.copyPerformed)
+      {
+         // Must be done in OnGUI rather than on demand
+         m_ScriptEditorCtrl.ParseClipboardData();
+         this.copyPerformed = false;
+      }
 
       GUI.enabled = this.IsLicenseAccepted && !IsPreferenceWindowOpen;
 
