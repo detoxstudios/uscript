@@ -4111,10 +4111,7 @@ public sealed partial class uScript : EditorWindow
       List<string> files = GetGraphPaths();
       foreach (string file in files)
       {
-         if (file.Contains(path))
-         {
-            this.RebuildScript(file, stubCode);
-         }
+         this.RebuildScript(file, stubCode);
       }
 #else
       var directory = new DirectoryInfo(path);
@@ -4142,10 +4139,11 @@ public sealed partial class uScript : EditorWindow
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
-      string fullPath = binaryPath.Substring(0, binaryPath.LastIndexOf(".")) + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
+      string filename = binaryPath.Substring(binaryPath.LastIndexOf("/"));
+      filename = filename.Substring(0, filename.LastIndexOf(".")) + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
       foreach (string file in files)
       {
-         if (file == fullPath) return file;
+         if (file.Contains(filename)) return file;
       }
 
       // not found, fall back to default
@@ -4164,10 +4162,11 @@ public sealed partial class uScript : EditorWindow
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
-      string fullPath = binaryPath.Substring(0, binaryPath.LastIndexOf(".")) + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
+      string filename = binaryPath.Substring(binaryPath.LastIndexOf("/"));
+      filename = filename.Substring(0, filename.LastIndexOf(".")) + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
       foreach (string file in files)
       {
-         if (file == fullPath) return file;
+         if (file.Contains(filename)) return file;
       }
 
       // not found, fall back to default
