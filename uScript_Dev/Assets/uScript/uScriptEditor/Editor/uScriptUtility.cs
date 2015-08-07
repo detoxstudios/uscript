@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using UnityEditor;
+
 using UnityEngine;
 
 public static class uScriptUtility
@@ -203,7 +205,7 @@ internal static class uScriptExtensions
 
    public static string NewLine(this string text)
    {
-      return text + "\n";
+      return string.Format("{0}\n", text);
    }
 
    public static bool CoinToss(this System.Random r)
@@ -270,12 +272,11 @@ internal static class StringExtensions
    /// <returns>The relative path beginning with the Unity project folder</returns>
    public static string RelativeProjectPath(this string path)
    {
-      var projectPath = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf("/Assets", StringComparison.Ordinal));
+      var length = Application.dataPath.LastIndexOf("/Assets", StringComparison.Ordinal);
+      var projectPath = Application.dataPath.Substring(0, length);
       projectPath = projectPath.Substring(0, projectPath.LastIndexOf("/", StringComparison.Ordinal) + 1);
       return path.Replace('\\', '/').Replace(projectPath, string.Empty);
    }
-
-   #region FormatWith
 
    /// <summary>
    /// Formats a string with one literal placeholder.
@@ -335,16 +336,33 @@ internal static class StringExtensions
    {
       return string.Format(provider, text, args);
    }
-   #endregion
 
-   #region UnityEngine.Color to hex
    public static string ToHex(this Color color)
    {
-      return ((int)(color.r * 255)).ToString("X2") + ((int)(color.g * 255)).ToString("X2") + ((int)(color.b * 255)).ToString("X2");
+      return ((int)(color.r * 255)).ToString("X2") + ((int)(color.g * 255)).ToString("X2")
+             + ((int)(color.b * 255)).ToString("X2");
    }
-   #endregion
 
-   #region HTML Tags
+   public static string ReplaceFirst(
+      this string value,
+      string oldValue,
+      string newValue,
+      StringComparison comparison = StringComparison.Ordinal)
+   {
+      var index = value.IndexOf(oldValue, comparison);
+      return index == -1 ? value : value.Remove(index, oldValue.Length).Insert(index, newValue);
+   }
+
+   public static string ReplaceLast(
+      this string value,
+      string oldValue,
+      string newValue,
+      StringComparison comparison = StringComparison.Ordinal)
+   {
+      var index = value.LastIndexOf(oldValue, comparison);
+      return index == -1 ? value : value.Remove(index, oldValue.Length).Insert(index, newValue);
+   }
+
 #if UNITY_3_5
    public static string Bold(this string value)
    {
@@ -366,6 +384,22 @@ internal static class StringExtensions
       return value;
    }
 
+   public static string HighlightMatch(
+      this string value,
+      string match,
+      StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+   {
+      return value;
+   }
+
+   public static string HighlightMatch(
+      this string value,
+      string match,
+      Color color,
+      StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+   {
+      return value;
+   }
 #else
    public static string Bold(this string value)
    {
@@ -385,6 +419,30 @@ internal static class StringExtensions
    public static string Color(this string value, Color color)
    {
       return string.Format("<color=#{0}>{1}</color>", color.ToHex(), value);
+   }
+
+   public static string HighlightMatch(
+      this string value,
+      string match,
+      StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+   {
+      return HighlightMatch(value, match, EditorStyles.label.onFocused.textColor, comparison);
+   }
+
+   public static string HighlightMatch(
+      this string value,
+      string match,
+      Color color,
+      StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+   {
+      var index = value.IndexOf(match, StringComparison.OrdinalIgnoreCase);
+      if (index == -1)
+      {
+         return value;
+      }
+
+      match = value.Substring(index, match.Length);
+      return value.Replace(match, match.Color(color));
    }
 #endif
 
@@ -412,16 +470,14 @@ internal static class StringExtensions
    {
       return value.Color(UnityEngine.Color.blue);
    }
-   #endregion
 
-   #region To X conversions
    /// <summary>
    /// Parses a string into an Enum
    /// </summary>
    /// <typeparam name="T">The type of the Enum</typeparam>
    /// <param name="value">String value to parse</param>
    /// <returns>The Enum corresponding to the stringExtensions</returns>
-   public static T ToEnum<T>(this string value)
+   public static T ToEnum<T>(this string value) where T : struct, IConvertible
    {
       return ToEnum<T>(value, false);
    }
@@ -433,24 +489,24 @@ internal static class StringExtensions
    /// <param name="value">String value to parse</param>
    /// <param name="ignoreCase">Ignore the case of the string being parsed</param>
    /// <returns>The Enum corresponding to the stringExtensions</returns>
-   public static T ToEnum<T>(this string value, bool ignoreCase)
+   public static T ToEnum<T>(this string value, bool ignoreCase) where T : struct, IConvertible
    {
       if (value == null)
       {
-         throw new ArgumentNullException("Value");
+         throw new ArgumentNullException("value");
       }
 
       value = value.Trim();
 
       if (value.Length == 0)
       {
-         throw new ArgumentNullException("Must specify valid information for parsing in the string.", "value");
+         throw new ArgumentNullException("value", "Must specify valid information for parsing in the string.");
       }
 
-      Type t = typeof(T);
+      var t = typeof(T);
       if (!t.IsEnum)
       {
-         throw new ArgumentException("Type provided must be an Enum.", "T");
+         throw new ArgumentException("T must be an enumerated type.");
       }
 
       return (T)Enum.Parse(t, value, ignoreCase);
@@ -482,147 +538,112 @@ internal static class StringExtensions
       return null;
    }
 
-   #endregion
-
-   #region ValueOrDefault
-   public static string GetValueOrEmpty(this string value)
+   public static string ValueOrEmpty(this string value)
    {
-      return GetValueOrDefault(value, string.Empty);
+      return ValueOrDefault(value, string.Empty);
    }
 
-   public static string GetValueOrDefault(this string value, string defaultvalue)
+   public static string ValueOrDefault(this string value, string defaultvalue)
    {
       return value ?? defaultvalue;
    }
 
-   #endregion
+   ///// <summary>
+   ///// Send an email using the supplied string.
+   ///// </summary>
+   ///// <param name="body">String that will be used i the body of the email.</param>
+   ///// <param name="subject">Subject of the email.</param>
+   ///// <param name="sender">The email address from which the message was sent.</param>
+   ///// <param name="recipient">The receiver of the email.</param>
+   ///// <param name="server">The server from which the email will be sent.</param>
+   ///// <returns>A boolean value indicating the success of the email send.</returns>
+   //public static bool Email(this string body, string subject, string sender, string recipient, string server)
+   //{
+   //    var senderAddress = new System.Net.Mail.MailAddress(sender);
+   //    var recipientAddress = new System.Net.Mail.MailAddress(recipient);
+   //    var message = new System.Net.Mail.MailMessage(senderAddress.Address, recipientAddress.Address, subject, body);
+   //    var client = new System.Net.Mail.SmtpClient(server) { Credentials = new System.Net.NetworkCredential() };
+   //
+   //    try
+   //    {
+   //        client.Send(message);
+   //        UnityEngine.Debug.Log("Mail sent!".NewLine());
+   //    }
+   //    catch (Exception e)
+   //    {
+   //        UnityEngine.Debug.Log("Mail was not sent!".NewLine());
+   //        throw new Exception(
+   //            string.Format(
+   //                "Could not send mail from: {0} to: {1} thru SMTP server: {2}\n\n{3}",
+   //                sender,
+   //                recipient,
+   //                server,
+   //                e.Message),
+   //            e);
+   //    }
+   //
+   //    return true;
+   //}
 
-   #region Email
-   /// <summary>
-   /// Send an email using the supplied string.
-   /// </summary>
-   /// <param name="body">String that will be used i the body of the email.</param>
-   /// <param name="subject">Subject of the email.</param>
-   /// <param name="sender">The email address from which the message was sent.</param>
-   /// <param name="recipient">The receiver of the email.</param>
-   /// <param name="server">The server from which the email will be sent.</param>
-   /// <returns>A boolean value indicating the success of the email send.</returns>
-//   public static bool Email(this string body, string subject, string sender, string recipient, string server)
-//   {
-//      System.Net.Mail.MailAddress senderAddress = new System.Net.Mail.MailAddress(sender);
-//      System.Net.Mail.MailAddress recipientAddress = new System.Net.Mail.MailAddress(recipient);
-//      System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage(senderAddress.Address, recipientAddress.Address, subject, body);
-//      System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(server);
-//      client.Credentials = new System.Net.NetworkCredential();
-//      try
-//      {
-//         client.Send(message);
-//         UnityEngine.Debug.Log("Mail sent!".NewLine());
-//      }
-//      catch (Exception e)
-//      {
-//         UnityEngine.Debug.Log("Mail was not sent!".NewLine());
-//         throw new Exception("Could not send mail from: " + sender + " to: " + recipient + " thru smtp server: " + server + "\n\n" + e.Message, e);
-//      }
-//      return true;
-//   }
-   #endregion
-   
-   #region Truncate
-   /// <summary>
-   /// Truncates the string to a specified length and replace the truncated to a ...
-   /// </summary>
-   /// <param name="maxLength">total length of characters to maintain before the truncate happens</param>
-   /// <returns>truncated string</returns>
-//   public static string Truncate(this string text, int maxLength)
-//   {
-//   // replaces the truncated string to a ...
-//   const string suffix = "...";
-//   string truncatedString = text;
-//   if (maxLength <= 0) return truncatedString;
-//   int strLength = maxLength - suffix.Length;
-//   if (strLength <= 0) return truncatedString;
-//   if (text == null || text.Length <= maxLength) return truncatedString;
-//   truncatedString = text.Substring(0, strLength);
-//   truncatedString = truncatedString.TrimEnd();
-//   truncatedString += suffix;
-//   return truncatedString;
-//   }
-   #endregion
+   ///// <summary>
+   ///// Truncates the string to a specified length and replace the truncated to a ...
+   ///// </summary>
+   ///// <param name="text">String that will be truncated.</param>
+   ///// <param name="maxLength">total length of characters to maintain before the truncate happens</param>
+   ///// <returns>truncated string</returns>
+   //public static string Truncate(this string text, int maxLength)
+   //{
+   //    // replaces the truncated string to a ...
+   //    const string Suffix = "...";
+   //
+   //    var truncatedString = text;
+   //    if (maxLength <= 0)
+   //    {
+   //        return truncatedString;
+   //    }
+   //
+   //    var strLength = maxLength - Suffix.Length;
+   //    if (strLength <= 0)
+   //    {
+   //        return truncatedString;
+   //    }
+   //
+   //    if (text == null || text.Length <= maxLength)
+   //    {
+   //        return truncatedString;
+   //    }
+   //
+   //    truncatedString = text.Substring(0, strLength);
+   //    truncatedString = truncatedString.TrimEnd();
+   //    truncatedString += Suffix;
+   //
+   //    return truncatedString;
+   //}
 
-   #region HTMLHelper
-
-   /// <summary>
-   /// Converts to a HTML-encoded string
-   /// </summary>
-   /// <param name="data">The data.</param>
-   /// <returns></returns>
-//   public static string HtmlEncode(this string data)
-//   {
-//      return System.Web.HttpUtility.HtmlEncode(data);
-//   }
-
-   /// <summary>
-   /// Converts the HTML-encoded string into a decoded string
-   /// </summary>
-//   public static string HtmlDecode(this string data)
-//   {
-//      return System.Web.HttpUtility.HtmlDecode(data);
-//   }
-
-   /// <summary>
-   /// Parses a query string into a System.Collections.Specialized.NameValueCollection
-   /// using System.Text.Encoding.UTF8 encoding.
-   /// </summary>
-//   public static System.Collections.Specialized.NameValueCollection ParseQueryString(this string query)
-//   {
-//      return System.Web.HttpUtility.ParseQueryString(query);
-//   }
-   
-   /// <summary>
-   /// Encode an Url string
-   /// </summary>
-//   public static string UrlEncode(this string url)
-//   {
-//      return System.Web.HttpUtility.UrlEncode(url);
-//   }
-   
-   /// <summary>
-   /// Converts a string that has been encoded for transmission in a URL into a
-   /// decoded string.
-   /// </summary>
-//   public static string UrlDecode(this string url)
-//   {
-//      return System.Web.HttpUtility.UrlDecode(url);
-//   }
-   
-   /// <summary>
-   /// Encodes the path portion of a URL string for reliable HTTP transmission from
-   /// the Web server to a client.
-   /// </summary>
-//   public static string UrlPathEncode(this string url)
-//   {
-//      return System.Web.HttpUtility.UrlPathEncode(url);
-//   }
-   #endregion
-   
-   #region IsNullOrEmpty
    /// <summary>
    /// Determines whether [is not null or empty] [the specified input].
    /// </summary>
+   /// <param name="input">The string to test.</param>
    /// <returns>
    ///  <c>true</c> if [is not null or empty] [the specified input]; otherwise, <c>false</c>.
    /// </returns>
    public static bool IsNotNullOrEmpty(this string input)
    {
-      return !String.IsNullOrEmpty(input);
+      return !string.IsNullOrEmpty(input);
    }
-   #endregion
-   
-
 
    public static bool IsEmpty(this Rect rect)
    {
-      return ((((rect.height == 0) && (rect.width == 0)) && (rect.x == 0)) && (rect.y == 0));
+      return rect.x.AlmostZero() && rect.y.AlmostZero() && rect.height.AlmostZero() && rect.width.AlmostZero();
+   }
+
+   public static bool AlmostEquals(this float value1, float value2, float precision = 0.0000001f)
+   {
+      return Math.Abs(value1 - value2) <= precision;
+   }
+
+   public static bool AlmostZero(this float value, float precision = 0.0000001f)
+   {
+      return Math.Abs(value) <= precision;
    }
 }
