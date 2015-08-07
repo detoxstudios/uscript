@@ -86,6 +86,8 @@ public sealed partial class uScript : EditorWindow
    private bool wantsCut;
    private bool wantsPaste;
 
+   private bool checkClipboard = true;
+
    private bool rebuildWhenReady;
 
    private float mapScale = 1.0f;
@@ -847,6 +849,8 @@ public sealed partial class uScript : EditorWindow
       m_ScriptEditorCtrl.BuildContextMenu();
       uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
 
+      this.checkClipboard = true; // check the clipboard for uscript data
+
       m_ScriptEditorCtrl.IsDirty = this.currentScriptDirty || this.patches.Length > 0;
 
       //ScriptableObject.DestroyImmediate(undoObject);
@@ -1175,6 +1179,7 @@ public sealed partial class uScript : EditorWindow
       {
          m_ScriptEditorCtrl.CopyToClipboard();
          this.wantsCopy = false;
+         this.checkClipboard = true;
       }
       if (this.wantsCut)
       {
@@ -1480,8 +1485,12 @@ public sealed partial class uScript : EditorWindow
 
       this.DropKeyboardFocusWhenNewControlClicked();
 
-      // Must be done in OnGUI rather than on demand
-      m_ScriptEditorCtrl.ParseClipboardData();
+      if (this.checkClipboard)
+      {
+         // Must be done in OnGUI rather than on demand
+         m_ScriptEditorCtrl.ParseClipboardData();
+         this.checkClipboard = false;
+      }
 
       GUI.enabled = this.IsLicenseAccepted && !IsPreferenceWindowOpen;
 
@@ -3933,6 +3942,7 @@ public sealed partial class uScript : EditorWindow
 
       m_ScriptEditorCtrl = new ScriptEditorCtrl(scriptEditor);
       m_ScriptEditorCtrl.ScriptModified += new ScriptEditorCtrl.ScriptModifiedEventHandler(m_ScriptEditorCtrl_ScriptModified);
+      this.checkClipboard = true; // check the clipboard for uscript data
 
       m_ScriptEditorCtrl.BuildContextMenu();
       uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
@@ -4101,10 +4111,7 @@ public sealed partial class uScript : EditorWindow
       List<string> files = GetGraphPaths();
       foreach (string file in files)
       {
-         if (file.Contains(path))
-         {
-            this.RebuildScript(file, stubCode);
-         }
+         this.RebuildScript(file, stubCode);
       }
 #else
       var directory = new DirectoryInfo(path);
@@ -4132,10 +4139,11 @@ public sealed partial class uScript : EditorWindow
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
-      string fullPath = binaryPath.Substring(0, binaryPath.LastIndexOf(".")) + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
+      string filename = binaryPath.Substring(binaryPath.LastIndexOf("/"));
+      filename = filename.Substring(0, filename.LastIndexOf(".")) + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
       foreach (string file in files)
       {
-         if (file == fullPath) return file;
+         if (file.Contains(filename)) return file;
       }
 
       // not found, fall back to default
@@ -4154,10 +4162,11 @@ public sealed partial class uScript : EditorWindow
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
-      string fullPath = binaryPath.Substring(0, binaryPath.LastIndexOf(".")) + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
+      string filename = binaryPath.Substring(binaryPath.LastIndexOf("/"));
+      filename = filename.Substring(0, filename.LastIndexOf(".")) + uScriptConfig.Files.GeneratedCodeExtension + ".cs";
       foreach (string file in files)
       {
-         if (file == fullPath) return file;
+         if (file.Contains(filename)) return file;
       }
 
       // not found, fall back to default
@@ -4362,6 +4371,8 @@ public sealed partial class uScript : EditorWindow
 
             m_ScriptEditorCtrl.BuildContextMenu();
             uScriptGUIPanelPalette.Instance.BuildPaletteMenu();
+
+            this.checkClipboard = true; // check the clipboard for uscript data
          }
 
          string scriptName = Path.GetFileNameWithoutExtension(this.fullPath);

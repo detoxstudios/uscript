@@ -107,7 +107,7 @@ public class uScriptAct_SetRandomPosition : uScriptLogic
 			}
 
 	        Vector3 randomPosition = new Vector3(finalX, finalY, finalZ);
-           Vector3 origin = Vector3.zero;
+           Vector3 origin = Origin;
 
 				if (AsOffset)
 				{
