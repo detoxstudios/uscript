@@ -16,6 +16,7 @@ namespace Detox.Editor
    using System.Reflection;
 
    using Detox.Drawing;
+   using Detox.Editor.Extensions;
 
    using UnityEngine;
 

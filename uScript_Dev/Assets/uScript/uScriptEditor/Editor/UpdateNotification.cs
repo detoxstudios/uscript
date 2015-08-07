@@ -13,6 +13,7 @@
    using System.Linq;
 
    using Detox.Editor;
+   using Detox.Editor.Extensions;
 
    using UnityEditor;
 

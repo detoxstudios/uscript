@@ -337,12 +337,6 @@ internal static class StringExtensions
       return string.Format(provider, text, args);
    }
 
-   public static string ToHex(this Color color)
-   {
-      return ((int)(color.r * 255)).ToString("X2") + ((int)(color.g * 255)).ToString("X2")
-             + ((int)(color.b * 255)).ToString("X2");
-   }
-
    public static string ReplaceFirst(
       this string value,
       string oldValue,
@@ -361,114 +355,6 @@ internal static class StringExtensions
    {
       var index = value.LastIndexOf(oldValue, comparison);
       return index == -1 ? value : value.Remove(index, oldValue.Length).Insert(index, newValue);
-   }
-
-#if UNITY_3_5
-   public static string Bold(this string value)
-   {
-      return value;
-   }
-
-   public static string BoldItalic(this string value)
-   {
-      return value;
-   }
-
-   public static string Italic(this string value)
-   {
-      return value;
-   }
-
-   public static string Color(this string value, UnityEngine.Color color)
-   {
-      return value;
-   }
-
-   public static string HighlightMatch(
-      this string value,
-      string match,
-      StringComparison comparison = StringComparison.OrdinalIgnoreCase)
-   {
-      return value;
-   }
-
-   public static string HighlightMatch(
-      this string value,
-      string match,
-      Color color,
-      StringComparison comparison = StringComparison.OrdinalIgnoreCase)
-   {
-      return value;
-   }
-#else
-   public static string Bold(this string value)
-   {
-      return string.Format("<b>{0}</b>", value);
-   }
-
-   public static string BoldItalic(this string value)
-   {
-      return string.Format("<b><i>{0}</i></b>", value);
-   }
-
-   public static string Italic(this string value)
-   {
-      return string.Format("<i>{0}</i>", value);
-   }
-
-   public static string Color(this string value, Color color)
-   {
-      return string.Format("<color=#{0}>{1}</color>", color.ToHex(), value);
-   }
-
-   public static string HighlightMatch(
-      this string value,
-      string match,
-      StringComparison comparison = StringComparison.OrdinalIgnoreCase)
-   {
-      return HighlightMatch(value, match, EditorStyles.label.onFocused.textColor, comparison);
-   }
-
-   public static string HighlightMatch(
-      this string value,
-      string match,
-      Color color,
-      StringComparison comparison = StringComparison.OrdinalIgnoreCase)
-   {
-      var index = value.IndexOf(match, StringComparison.OrdinalIgnoreCase);
-      if (index == -1)
-      {
-         return value;
-      }
-
-      match = value.Substring(index, match.Length);
-      return value.Replace(match, match.Color(color));
-   }
-#endif
-
-   public static string White(this string value)
-   {
-      return value.Color(UnityEngine.Color.white);
-   }
-
-   public static string Black(this string value)
-   {
-      return value.Color(UnityEngine.Color.black);
-   }
-
-   public static string Red(this string value)
-   {
-      return value.Color(UnityEngine.Color.red);
-   }
-
-   public static string Green(this string value)
-   {
-      return value.Color(UnityEngine.Color.green);
-   }
-
-   public static string Blue(this string value)
-   {
-      return value.Color(UnityEngine.Color.blue);
    }
 
    /// <summary>
