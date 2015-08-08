@@ -48,16 +48,54 @@ public sealed partial class uScript : EditorWindow
 
    public static EditorApplication.CallbackFunction GraphSaved;
 
+   public static int _paletteMode;  // TEMP variable for testing the new property grid methods
+
+   public Rect paletteRect;
+   public bool m_SelectAllNodes;
+
+   public bool wasCanvasDragged;
+
+   public string[] m_UndoPatches = new string[0];
+
+   public Vector2 _guiContentScrollPos;
+
+   public Rect _canvasRect;
+
    private static readonly AppFrameworkData AppData = new AppFrameworkData();
    private static readonly Hashtable NodeParameterFields = new Hashtable();
    private static readonly Hashtable NodeParameterDescFields = new Hashtable();
    private static readonly Hashtable RequiresLink = new Hashtable();
+
+   private static Hashtable m_RawDescription = new Hashtable();
 
    private static uScript instance;
 
    private static bool shouldTestCompatibility;
 
    private static bool shouldPerformUpdateCheck;
+
+   private static int lastMouseX;
+   private static int lastMouseY;
+
+   private static int pendingRepaintRequests;
+   private static float unityVersion;
+
+   // This allows you to set the ifdef here but use this info in other classes by calling - uScript.IsDevelopmentBuild
+#if DEVELOPMENT_BUILD
+   private static bool _isDevelopmentBuild = true;
+#else
+   private static bool _isDevelopmentBuild;
+#endif
+
+   private Dictionary<MouseRegion, Rect> mouseRegionRect = new Dictionary<MouseRegion, Rect>();
+
+   private Dictionary<string, bool> _foldoutsGraphContent = new Dictionary<string, bool>();
+
+   private Dictionary<string, bool> _debugScriptCache = new Dictionary<string, bool>();
+
+   private Dictionary<string, bool> _staleScriptCache = new Dictionary<string, bool>();
+
+   private Hashtable m_Types = new Hashtable();
 
    // So we know if the current script we've cached is dirty or has been saved to a file
    private bool currentScriptDirty;
@@ -73,8 +111,6 @@ public sealed partial class uScript : EditorWindow
    private MouseRegion mouseRegion = MouseRegion.Outside;
    private MouseRegion mouseRegionUpdate = MouseRegion.Outside;
    private MouseRegion mouseDownRegion = MouseRegion.Outside;
-
-   private Dictionary<MouseRegion, Rect> mouseRegionRect = new Dictionary<MouseRegion, Rect>();
 
    private bool firstRun = true;
 
@@ -117,6 +153,40 @@ public sealed partial class uScript : EditorWindow
 
    private LogicNode[] m_LogicTypes;
    private string[] m_SzLogicTypes;
+
+   private bool _wasMoving;         // TEMP variable for testing the new property grid methods
+
+   private string m_CurrentBreakpoint = string.Empty;
+
+   private bool m_IsDebuggingValues;
+
+   private GenericMenu _canvasContextMenu;
+
+   private MouseEventArgs m_MouseDownArgs;
+   private MouseEventArgs m_MouseUpArgs;
+   private MouseEventArgs m_MouseMoveArgs = new MouseEventArgs();
+
+   private bool _wasHierarchyChanged;
+
+   private bool m_CanvasDragging;
+
+   private bool _isContextMenuOpen;
+
+   private int m_UndoNumber;
+
+   private int m_ContextX;
+   private int m_ContextY;
+   private ToolStripItem m_CurrentMenu;
+
+   private Rect m_NodeWindowRect;
+   private Rect m_NodeToolbarRect;
+
+   private Vector2 _guiPanelPalette_ScrollPos;
+
+   private Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
+
+   private string _graphListFilterText = string.Empty;
+   private string _statusbarMessage;
 
    public enum MouseRegion
    {
@@ -202,22 +272,9 @@ public sealed partial class uScript : EditorWindow
 
    public Node NodeClicked { get; set; }
 
-   // This allows you to set the ifdef here but use this info in other clases by calling - uScript.IsDevelopmentBuild
-#if DEVELOPMENT_BUILD
-   private static bool _isDevelopmentBuild = true;
-#else
-   private static bool _isDevelopmentBuild;
-#endif
    public static bool IsDevelopmentBuild { get { return _isDevelopmentBuild; } }
 
-   bool _wasHierarchyChanged;
-
-   private bool m_CanvasDragging;
-   public bool wasCanvasDragged;
-
    public bool GenerateDebugInfo { get { return Preferences.SaveMethod != Preferences.SaveMethodType.Release; } }
-
-   bool _isContextMenuOpen;
 
    public bool isContextMenuOpen
    {
@@ -243,31 +300,9 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private int m_UndoNumber = 0;
-   public string[] m_UndoPatches = new string[0];
-
-   private int m_ContextX = 0;
-   private int m_ContextY = 0;
-   private ToolStripItem m_CurrentMenu = null;
-
-   private Rect m_NodeWindowRect;
    public Rect NodeWindowRect { get { return m_NodeWindowRect; } }
 
-   private Rect m_NodeToolbarRect;
    public Rect NodeToolbarRect { get { return m_NodeToolbarRect; } }
-
-   public Rect _canvasRect;
-   private Vector2 _guiPanelPalette_ScrollPos;
-
-   public Vector2 _guiContentScrollPos;
-
-   private Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
-
-   // Palette Variables
-   private string _graphListFilterText = string.Empty;
-
-   // Statusbar Variables
-   private string _statusbarMessage;
 
    // IMPORTANT - THIS CANNOT BE CACHED
    // BECAUSE WE END UP WITH STALE VERSIONS
@@ -290,8 +325,6 @@ public sealed partial class uScript : EditorWindow
          return uScriptMaster.GetComponent<uScript_MasterComponent>();
       }
    }
-
-   private static float unityVersion;
 
    public static float UnityVersion
    {
@@ -318,8 +351,6 @@ public sealed partial class uScript : EditorWindow
          return unityVersion;
       }
    }
-
-   private Hashtable m_Types = new Hashtable();
 
    public Type GetType(string typeName)
    {
@@ -408,13 +439,6 @@ public sealed partial class uScript : EditorWindow
       get { return m_ScriptEditorCtrl; }
    }
 
-   // Content Panel Variables
-   private MouseEventArgs m_MouseDownArgs;
-   private MouseEventArgs m_MouseUpArgs;
-   private MouseEventArgs m_MouseMoveArgs = new MouseEventArgs();
-
-   public bool m_SelectAllNodes;
-
    public bool IsAttachedToMaster
    {
       get
@@ -451,8 +475,6 @@ public sealed partial class uScript : EditorWindow
          return false;
       }
    }
-
-   private Dictionary<string, bool> _staleScriptCache = new Dictionary<string, bool>();
 
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
    private static string GetFilePathWithLabel(string label, string fileName)
@@ -540,8 +562,6 @@ public sealed partial class uScript : EditorWindow
    {
       _staleScriptCache[scriptName] = isStale;
    }
-
-   private Dictionary<string, bool> _debugScriptCache = new Dictionary<string, bool>();
 
    public bool HasDebugCode(string graphName)
    {
@@ -1016,9 +1036,6 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private string m_CurrentBreakpoint = string.Empty;
-   private bool m_IsDebuggingValues;
-
    internal void Update()
    {
       VerifyBuildCompatibility();
@@ -1302,8 +1319,6 @@ public sealed partial class uScript : EditorWindow
    }
 
    // Canvas Context Menu
-   private GenericMenu _canvasContextMenu;
-
    private void BuildCanvasContextMenu(ToolStripItem toolStripItem, string path)
    {
       GUIContent content;
@@ -2990,10 +3005,6 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private Dictionary<string, bool> _foldoutsGraphContent = new Dictionary<string, bool>();
-
-   public Rect paletteRect = new Rect();
-
    private void DrawGUIPalette()
    {
       if (_paletteMode == 0)
@@ -3533,13 +3544,6 @@ public sealed partial class uScript : EditorWindow
       SetMouseRegion(MouseRegion.Canvas);//, 3, 1, -2, -4 );
    }
 
-   // TEMP Variables for testing the new property grid methods
-
-   public static int _paletteMode;
-   private bool _wasMoving;
-
-   // END TEMP Variables
-
    private void ContextMenuFile(Rect rect)
    {
       var menu = new GenericMenu();
@@ -3792,9 +3796,6 @@ public sealed partial class uScript : EditorWindow
       Control.MouseButtons.Buttons = 0;
    }
 
-   private static int lastMouseX;
-   private static int lastMouseY;
-
    public void OnMouseMove()
    {
       //      Debug.Log("OnMouseMove()\n");
@@ -3851,7 +3852,6 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private static int pendingRepaintRequests;
    public static void RequestRepaint(int minimumRedraws = 1)
    {
       pendingRepaintRequests = Mathf.Max(pendingRepaintRequests, minimumRedraws);
@@ -4823,8 +4823,6 @@ public sealed partial class uScript : EditorWindow
 
       return rawScripts.ToArray();
    }
-
-   private static Hashtable m_RawDescription = new Hashtable();
 
    private LogicNode[] OverrideNestedScriptTypes(LogicNode[] logicNodes)
    {
