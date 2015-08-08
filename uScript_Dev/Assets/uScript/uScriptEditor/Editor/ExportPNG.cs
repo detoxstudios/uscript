@@ -125,7 +125,8 @@ namespace Detox.Editor
       {
          uScriptGUI.CheckOnGUI();
 
-         if (Event.current.type != EventType.Repaint)
+         // User input should be disabled during the export process
+         if (IsExporting == false || Event.current.type != EventType.Repaint)
          {
             return;
          }

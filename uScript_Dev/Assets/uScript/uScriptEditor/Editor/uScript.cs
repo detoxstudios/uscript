@@ -109,14 +109,14 @@ public sealed partial class uScript : EditorWindow
    private Rect helpButtonRect;
    private Rect fileButtonRect;
    private Rect viewButtonRect;
-   private uScript_UndoObject undoObject = null;
+   private uScript_UndoObject undoObject;
 
-   private Hashtable m_EntityTypeHash = null;
-   private EntityDesc[] m_EntityTypes = null;
-   private string[] m_SzEntityTypes = null;
+   private Hashtable m_EntityTypeHash;
+   private EntityDesc[] m_EntityTypes;
+   private string[] m_SzEntityTypes;
 
-   private LogicNode[] m_LogicTypes = null;
-   private string[] m_SzLogicTypes = null;
+   private LogicNode[] m_LogicTypes;
+   private string[] m_SzLogicTypes;
 
    public enum MouseRegion
    {
@@ -200,25 +200,24 @@ public sealed partial class uScript : EditorWindow
       set { this.mouseDownRegion = value; }
    }
 
-   private Node _nodeClicked = null;
-   public Node NodeClicked { get { return _nodeClicked; } set { _nodeClicked = value; } }
+   public Node NodeClicked { get; set; }
 
    // This allows you to set the ifdef here but use this info in other clases by calling - uScript.IsDevelopmentBuild
 #if DEVELOPMENT_BUILD
    private static bool _isDevelopmentBuild = true;
 #else
-   private static bool _isDevelopmentBuild = false;
+   private static bool _isDevelopmentBuild;
 #endif
    public static bool IsDevelopmentBuild { get { return _isDevelopmentBuild; } }
 
-   bool _wasHierarchyChanged = false;
+   bool _wasHierarchyChanged;
 
-   private bool m_CanvasDragging = false;
-   public bool wasCanvasDragged = false;
+   private bool m_CanvasDragging;
+   public bool wasCanvasDragged;
 
    public bool GenerateDebugInfo { get { return Preferences.SaveMethod != Preferences.SaveMethodType.Release; } }
 
-   bool _isContextMenuOpen = false;
+   bool _isContextMenuOpen;
 
    public bool isContextMenuOpen
    {
@@ -251,24 +250,24 @@ public sealed partial class uScript : EditorWindow
    private int m_ContextY = 0;
    private ToolStripItem m_CurrentMenu = null;
 
-   Rect m_NodeWindowRect;
+   private Rect m_NodeWindowRect;
    public Rect NodeWindowRect { get { return m_NodeWindowRect; } }
 
-   Rect m_NodeToolbarRect;
+   private Rect m_NodeToolbarRect;
    public Rect NodeToolbarRect { get { return m_NodeToolbarRect; } }
 
    public Rect _canvasRect;
-   Vector2 _guiPanelPalette_ScrollPos;
+   private Vector2 _guiPanelPalette_ScrollPos;
 
    public Vector2 _guiContentScrollPos;
 
-   Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
+   private Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
 
    // Palette Variables
-   String _graphListFilterText = string.Empty;
+   private string _graphListFilterText = string.Empty;
 
    // Statusbar Variables
-   string _statusbarMessage;
+   private string _statusbarMessage;
 
    // IMPORTANT - THIS CANNOT BE CACHED
    // BECAUSE WE END UP WITH STALE VERSIONS
@@ -410,11 +409,11 @@ public sealed partial class uScript : EditorWindow
    }
 
    // Content Panel Variables
-   MouseEventArgs m_MouseDownArgs = null;
-   MouseEventArgs m_MouseUpArgs = null;
-   MouseEventArgs m_MouseMoveArgs = new MouseEventArgs();
+   private MouseEventArgs m_MouseDownArgs;
+   private MouseEventArgs m_MouseUpArgs;
+   private MouseEventArgs m_MouseMoveArgs = new MouseEventArgs();
 
-   public bool m_SelectAllNodes = false;
+   public bool m_SelectAllNodes;
 
    public bool IsAttachedToMaster
    {
@@ -950,7 +949,7 @@ public sealed partial class uScript : EditorWindow
       Preferences.Load();
    }
 
-   static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)
+   private static void Status_StatusUpdate(Detox.Utility.StatusUpdateEventArgs e)
    {
       var uScriptType = uScriptDebug.Type.Message;
 
@@ -991,7 +990,6 @@ public sealed partial class uScript : EditorWindow
          UnityEditor.Undo.RecordObject(this.undoObject, p.Name + " (uScript)");
 #endif
 
-
          //now increment and if the old one is restored
          //the numbers won't match
          ++m_UndoNumber;
@@ -999,9 +997,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   // Unity Methods
-   //
-   void Awake()
+   internal void Awake()
    {
       EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       this.forceCodeValidation = true;
@@ -1452,34 +1448,12 @@ public sealed partial class uScript : EditorWindow
 
       uScriptGUI.OverrideTextEditorTabBehavior();
 
+      this.OnGUIFirstRun();
+
       // Store the current event locally since it is reference so frequently
       var e = Event.current;
 
-      // Make sure the initial window size it not too small
-      if (this.firstRun)
-      {
-         this.firstRun = false;
-
-         var minSize = new Rect(200, 200, 620, 550);
-         if (position.width < minSize.width || position.height < minSize.height)
-         {
-            position = minSize;
-         }
-
-         uScriptGUI.PanelPropertiesWidth = (int)(uScript.Instance.position.width / 3);
-         uScriptGUI.PanelScriptsWidth = (int)(uScript.Instance.position.width / 3);
-
-
-         if (Preferences.ShowAtStartup)
-         {
-            EditorCommands.OpenWelcomeWindow();
-         }
-
-         RequestVersionCompatiblyTest();
-         RequestUpdateCheck();
-      }
-
-      if (m_ScriptEditorCtrl == null)
+      if (this.m_ScriptEditorCtrl == null)
       {
          return;
       }
@@ -1489,7 +1463,7 @@ public sealed partial class uScript : EditorWindow
       if (this.checkClipboard)
       {
          // Must be done in OnGUI rather than on demand
-         m_ScriptEditorCtrl.ParseClipboardData();
+         this.m_ScriptEditorCtrl.ParseClipboardData();
          this.checkClipboard = false;
       }
 
@@ -1503,48 +1477,44 @@ public sealed partial class uScript : EditorWindow
 
       var lastMouseDown = this.mouseDown;
 
-      isContextMenuOpen = 0 != m_ContextX || 0 != m_ContextY;
+      this.isContextMenuOpen = 0 != this.m_ContextX || 0 != this.m_ContextY;
       if (false == IsPreferenceWindowOpen)
       {
-         if (isContextMenuOpen)
+         if (this.isContextMenuOpen)
          {
-            OnGUI_HandleInput_ContextMenu();
+            this.OnGUIHandleContextMenuInput();
          }
          else
          {
-            OnGUI_HandleInput_Canvas();
+            this.OnGUIHandleCanvasInput();
          }
       }
       else
       {
          if (this.mouseDown)
          {
-            m_MouseDownArgs = null;
+            this.m_MouseDownArgs = null;
             this.mouseDown = false;
 
-            m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
-            m_MouseUpArgs.Button = MouseButtons.Left;
-            m_MouseUpArgs.X = (int)e.mousePosition.x;
-            m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
+            this.m_MouseUpArgs = new MouseEventArgs
+            {
+               Button = MouseButtons.Left,
+               X = (int)e.mousePosition.x,
+               Y = (int)(e.mousePosition.y - this._canvasRect.yMin)
+            };
          }
       }
 
-      //
       // All the GUI drawing code
-      //
-      DrawMainGUI();
+      this.DrawMainGUI();
 
       // where is the mouse?
-      CalculateMouseRegion();
+      this.CalculateMouseRegion();
 
-      // do external windows/popups
-      DrawPopups();
+      // Draw GUI.Windows last, so that they appear on top of all other controls
+      this.OnGUIDrawWindows();
 
-      // User input should be disabled during the export process
-      if (ExportPNG.IsExporting)
-      {
-         ExportPNG.ContinueExport();
-      }
+      ExportPNG.ContinueExport();
 
       if (Event.current.type == EventType.Repaint)
       {
@@ -1554,22 +1524,14 @@ public sealed partial class uScript : EditorWindow
       if (this.mouseDown == false)
       {
          // turn panel rendering back on
-         m_CanvasDragging = false;
+         this.m_CanvasDragging = false;
       }
 
-      // the following code must be here because it needs to happen 
-      // after we've figured out what region the mouse is in
-      if (this.mouseRegion == MouseRegion.Outside)
-      {
-         // if the mouse is not over our window, don't look for mouse move events
-         // fixes an exception when trying to close a dirty uscript
-         wantsMouseMove = false;
-      }
-      else
-      {
-         // when the mouse is over our window, look for mouse move events
-         wantsMouseMove = true;
-      }
+      // The following code must be here, because it needs to happen after we've figured out what region the mouse is in
+      //
+      // Only look for mouse move events when the mouse is over our window.
+      // NOTE: This fixes an exception when trying to close a dirty uScript graph.
+      this.wantsMouseMove = this.mouseRegion != MouseRegion.Outside;
 
       // mark mouse down region for dragging resize handles
       if (lastMouseDown == false && this.mouseDown)
@@ -1607,6 +1569,34 @@ public sealed partial class uScript : EditorWindow
             e.Use();
          }
       }
+   }
+
+   private void OnGUIFirstRun()
+   {
+      if (this.firstRun == false)
+      {
+         return;
+      }
+
+      this.firstRun = false;
+
+      // Make sure the initial window size it not too small
+      var minimum = new Rect(200, 200, 620, 550);
+      if (this.position.width < minimum.width || this.position.height < minimum.height)
+      {
+         this.position = minimum;
+      }
+
+      uScriptGUI.PanelPropertiesWidth = (int)(Instance.position.width / 3);
+      uScriptGUI.PanelScriptsWidth = (int)(Instance.position.width / 3);
+
+      if (Preferences.ShowAtStartup)
+      {
+         EditorCommands.OpenWelcomeWindow();
+      }
+
+      RequestVersionCompatiblyTest();
+      RequestUpdateCheck();
    }
 
    private static void SendEventToHotkeyWindow()
@@ -1649,7 +1639,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   void OnGUI_HandleInput_ContextMenu()
+   private void OnGUIHandleContextMenuInput()
    {
       Event e = Event.current;
 
@@ -1714,7 +1704,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private void OnGUI_HandleInput_Canvas()
+   private void OnGUIHandleCanvasInput()
    {
       Event e = Event.current;
 
@@ -2375,7 +2365,7 @@ public sealed partial class uScript : EditorWindow
       this.pendingNodeUsesMousePosition = useMousePosition;
    }
 
-   public void DrawPopups()
+   public void OnGUIDrawWindows()
    {
       // Draw window elements, including the context menu
       //
@@ -2425,7 +2415,7 @@ public sealed partial class uScript : EditorWindow
       this.EndWindows();
    }
 
-   void OnPlaymodeStateChanged()
+   private void OnPlaymodeStateChanged()
    {
       //if we're not debugging values then we're just starting into playing in the editor
       //and warn them, otherwise we've already warned them so don't pop up a warning again
@@ -2442,7 +2432,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   void OnDestroy()
+   internal void OnDestroy()
    {
       //MasterComponent.undoObjectReference = null;
       //ScriptableObject.DestroyImmediate(undoObject);
@@ -2581,7 +2571,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   void DrawGUITopAreas()
+   private void DrawGUITopAreas()
    {
       EditorGUILayout.BeginHorizontal();
       {
@@ -2621,7 +2611,7 @@ public sealed partial class uScript : EditorWindow
       EditorGUILayout.EndHorizontal();
    }
 
-   void DrawGUIBottomAreas()
+   private void DrawGUIBottomAreas()
    {
       Rect rect = EditorGUILayout.BeginHorizontal(GUILayout.Height(uScriptGUI.PanelPropertiesHeight));
       if (rect.height != 0.0f && rect.height != (float)uScriptGUI.PanelPropertiesHeight)
@@ -2648,19 +2638,17 @@ public sealed partial class uScript : EditorWindow
       EditorGUILayout.EndHorizontal();
    }
 
-   void DrawGUIHorizontalDivider()
+   private void DrawGUIHorizontalDivider()
    {
       GUILayout.Box(string.Empty, uScriptGUIStyle.HorizontalDivider, GUILayout.Height(uScriptGUI.PanelDividerThickness), GUILayout.ExpandWidth(true));
    }
 
-   void DrawGUIVerticalDivider()
+   private void DrawGUIVerticalDivider()
    {
       GUILayout.Box(string.Empty, uScriptGUIStyle.VerticalDivider, GUILayout.Width(uScriptGUI.PanelDividerThickness), GUILayout.ExpandHeight(true));
    }
 
-   //   int counter = 0;
-
-   void OnGUI_DrawStatusbar()
+   private void OnGUI_DrawStatusbar()
    {
       Event e = Event.current;
 
@@ -2709,12 +2697,11 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   void DrawGraphContentsPanel()
+   private void DrawGraphContentsPanel()
    {
       paletteRect = EditorGUILayout.BeginVertical(uScriptGUIStyle.PanelBox, GUILayout.Width(uScriptGUI.PanelLeftWidth));
       {
          // Toolbar
-         //
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
          {
             string[] options = { "Toolbox", "Contents" };
@@ -2755,7 +2742,6 @@ public sealed partial class uScript : EditorWindow
          EditorGUILayout.EndHorizontal();
 
          // Draw the contents
-         //
          if (m_CanvasDragging && Preferences.DrawPanelsOnUpdate == false)
          {
             _wasMoving = true;
@@ -2779,11 +2765,9 @@ public sealed partial class uScript : EditorWindow
             }
             else
             {
-               //
                // Graph Contents list
                //
                // Every node in the graph should be listed here, categorized by type.
-               //
 
                // Process all nodes and place them in the appropriate list
                var categories = new Dictionary<string, Dictionary<string, List<DisplayNode>>>();
@@ -3006,11 +2990,11 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   Dictionary<string, bool> _foldoutsGraphContent = new Dictionary<string, bool>();
+   private Dictionary<string, bool> _foldoutsGraphContent = new Dictionary<string, bool>();
 
    public Rect paletteRect = new Rect();
 
-   void DrawGUIPalette()
+   private void DrawGUIPalette()
    {
       if (_paletteMode == 0)
       {
@@ -3055,14 +3039,14 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   bool HiddenRegion(MouseRegion region)
+   private bool HiddenRegion(MouseRegion region)
    {
       if (!uScriptGUI.PanelsHidden) return false;
 
       return region != uScript.MouseRegion.Canvas && region != uScript.MouseRegion.Outside;
    }
 
-   void CalculateMouseRegion()
+   private void CalculateMouseRegion()
    {
       foreach (KeyValuePair<MouseRegion, Rect> kvp in this.mouseRegionRect)
       {
@@ -3133,7 +3117,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   void DrawMenuItemShortcut(string shortcut)
+   private void DrawMenuItemShortcut(string shortcut)
    {
       if (string.IsNullOrEmpty(shortcut))
       {
@@ -3551,8 +3535,8 @@ public sealed partial class uScript : EditorWindow
 
    // TEMP Variables for testing the new property grid methods
 
-   public static int _paletteMode = 0;
-   bool _wasMoving = false;
+   public static int _paletteMode;
+   private bool _wasMoving;
 
    // END TEMP Variables
 
@@ -3665,12 +3649,12 @@ public sealed partial class uScript : EditorWindow
       Event.current.Use();
    }
 
-   void m_ScriptEditorCtrl_ScriptModified(object sender, EventArgs e)
+   private void m_ScriptEditorCtrl_ScriptModified(object sender, EventArgs e)
    {
       RequestRepaint();
    }
 
-   void DrawContextMenuWindow(int windowID)
+   private void DrawContextMenuWindow(int windowID)
    {
       GUI.depth = 0;
       if (null == m_CurrentMenu)
@@ -3808,8 +3792,8 @@ public sealed partial class uScript : EditorWindow
       Control.MouseButtons.Buttons = 0;
    }
 
-   static int lastMouseX = 0;
-   static int lastMouseY = 0;
+   private static int lastMouseX;
+   private static int lastMouseY;
 
    public void OnMouseMove()
    {
@@ -4411,7 +4395,7 @@ public sealed partial class uScript : EditorWindow
    /// <param name='script'>
    /// The graph you want to grab all the node data for.
    /// </param>
-   void GetGraphAnalyticsData(Detox.ScriptEditor.ScriptEditor script)
+   private void GetGraphAnalyticsData(Detox.ScriptEditor.ScriptEditor script)
    {
       // Create list of unique nodes used and their quantity used on the graph:
       Dictionary<string, KeyValuePair<string, int>> nodesUsed = new Dictionary<string, KeyValuePair<string, int>>();
@@ -4448,14 +4432,14 @@ public sealed partial class uScript : EditorWindow
 
    }
 
-   void AttachToMasterGO(String path)
+   private void AttachToMasterGO(String path)
    {
 #if UNITY_EDITOR
       MasterComponent.AttachScriptToMaster(path);
 #endif
    }
 
-   void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType, string label = "")
+   private void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType, string label = "")
    {
 #if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       DirectoryInfo directory = new DirectoryInfo(path);
@@ -4814,7 +4798,7 @@ public sealed partial class uScript : EditorWindow
       return m_LogicTypes;
    }
 
-   RawScript[] GatherRawScripts()
+   private RawScript[] GatherRawScripts()
    {
       List<RawScript> rawScripts = new List<RawScript>();
 
