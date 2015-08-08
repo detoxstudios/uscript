@@ -26,15 +26,6 @@ namespace Detox.Editor.Extensions
 #endif
       }
 
-      public static string BoldItalic(this string value)
-      {
-#if UNITY_3_5
-         return value;
-#else
-         return string.Format("<b><i>{0}</i></b>", value);
-#endif
-      }
-
       public static string Italic(this string value)
       {
 #if UNITY_3_5
