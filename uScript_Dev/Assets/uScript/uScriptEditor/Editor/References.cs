@@ -115,6 +115,7 @@ namespace Detox.Windows.Forms
 {
    using System;
    using System.Collections.Generic;
+   using System.Linq;
 
    using Detox.Drawing;
    using Detox.Editor.GUI;
@@ -129,7 +130,15 @@ namespace Detox.Windows.Forms
    public class PropertyGrid
    {
       public object [] SelectedObjects = new object[ 0 ];
-   
+
+      public Guid[] SelectedGuidArray
+      {
+         get
+         {
+            return (from PropertyGridParameters o in SelectedObjects select o.EntityNode.Guid).ToArray();
+         }
+      }
+
       public event PropertyValueChangedEventHandler PropertyValueChanged;
       public void OnPropertyValueChanged( )
       {
