@@ -139,6 +139,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptCurrent.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\PanelScriptList.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Property.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\StatusBar.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\AboutWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\HotkeyWindow.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Windows\LicenseWindow.cs" />

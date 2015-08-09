@@ -186,7 +186,6 @@ public sealed partial class uScript : EditorWindow
    private Rect rectContextMenuWindow = new Rect(10, 10, 10, 10);
 
    private string _graphListFilterText = string.Empty;
-   private string _statusbarMessage;
 
    public enum MouseRegion
    {
@@ -426,6 +425,14 @@ public sealed partial class uScript : EditorWindow
             ScriptableObject.DestroyImmediate(uScriptMaster.GetComponent<uScript_MasterComponent>().undoObjectReference);
          
          uScriptMaster.GetComponent<uScript_MasterComponent>().undoObjectReference = uScript.Instance.undoObject;
+      }
+   }
+
+   public static MouseRegion OverMouseRegion
+   {
+      get
+      {
+         return Instance.mouseRegion;
       }
    }
 
@@ -2576,7 +2583,7 @@ public sealed partial class uScript : EditorWindow
          this.DrawGUIBottomAreas();
       }
 
-      this.OnGUI_DrawStatusbar();
+      StatusBar.Draw();
 
       // TODO: This bool flag could be removed if the GUI is repainted after the canvas stops panning
       if (this._wasMoving)
@@ -2661,55 +2668,6 @@ public sealed partial class uScript : EditorWindow
    private void DrawGUIVerticalDivider()
    {
       GUILayout.Box(string.Empty, uScriptGUIStyle.VerticalDivider, GUILayout.Width(uScriptGUI.PanelDividerThickness), GUILayout.ExpandHeight(true));
-   }
-
-   private void OnGUI_DrawStatusbar()
-   {
-      Event e = Event.current;
-
-      if (GUI.tooltip != _statusbarMessage || e.type == EventType.MouseMove)
-      {
-         _statusbarMessage = GUI.tooltip;
-      }
-
-      if (uScript.IsDevelopmentBuild == false)
-      {
-         GUILayout.Label(_statusbarMessage, GUILayout.ExpandWidth(true));
-      }
-      else
-      {
-         // Get mouse position and region
-         string extraDetails = string.Format("{0}, {1} ({2})", (int)e.mousePosition.x, (int)e.mousePosition.y, this.mouseRegion);
-
-         // Get button state
-         if (Control.MouseButtons.Buttons != 0)
-         {
-            var click = Control.MouseButtons.Buttons == MouseButtons.Left
-               ? "Left-Click"
-               : Control.MouseButtons.Buttons == MouseButtons.Middle ? "Middle-Click" : "Right-Click";
-            extraDetails = string.Format("{0} :: {1}", click, extraDetails);
-         }
-
-         // Get modifiers
-         if (e.modifiers != 0)
-         {
-            extraDetails = e.modifiers.ToString().Replace(",", " +")
-                           + (Control.MouseButtons.Buttons != 0 ? " + " : " :: ")
-                           + extraDetails;
-         }
-
-         //         extraDetails = "Counter: " + (int)(counter++ / 50) + " - " + extraDetails;
-
-         EditorGUILayout.BeginHorizontal();
-         {
-            GUILayout.Label("#" + GUIUtility.keyboardControl
-               + "\t\t[" + GUI.GetNameOfFocusedControl() + "]"
-               + "\t\t" + _statusbarMessage, GUILayout.ExpandWidth(true));
-            //            GUILayout.Label(_statusbarMessage, GUILayout.ExpandWidth(true));
-            GUILayout.Label(extraDetails, GUILayout.ExpandWidth(false));
-         }
-         EditorGUILayout.EndHorizontal();
-      }
    }
 
    private void DrawGraphContentsPanel()
