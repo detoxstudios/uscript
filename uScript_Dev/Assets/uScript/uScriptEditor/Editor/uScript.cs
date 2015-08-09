@@ -1472,6 +1472,9 @@ public sealed partial class uScript : EditorWindow
 
       this.OnGUIFirstRun();
 
+      // Handle GUI.Window support operations early, so that they have priority over later GUI calls
+      this.OnGUIHandleWindowOverrides();
+
       // Store the current event locally since it is reference so frequently
       var e = Event.current;
 
@@ -1593,6 +1596,62 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
+   private void OnGUIDrawWindows()
+   {
+      GUI.enabled = true;
+
+      this.BeginWindows();
+      {
+         if (this.isContextMenuOpen)
+         {
+            const int PaddingAroundContextMenu = 4;
+
+            // Try to put the window where the user clicked
+            this.rectContextMenuWindow.x = this.m_ContextX;
+            this.rectContextMenuWindow.y = this.m_ContextY;
+
+            // Update the x, y, width, and height to ensure the context menu appears within the _canvasRect bounds.
+            // They should be handled in the xMax, xMin and then yMax and yMin order.
+            if (this._canvasRect.xMax - PaddingAroundContextMenu < this.rectContextMenuWindow.xMax)
+            {
+               this.rectContextMenuWindow.x -= this.rectContextMenuWindow.xMax
+                                               - (this._canvasRect.xMax - PaddingAroundContextMenu);
+            }
+
+            if (this._canvasRect.xMin + PaddingAroundContextMenu > this.rectContextMenuWindow.xMin)
+            {
+               this.rectContextMenuWindow.x = this._canvasRect.xMin + PaddingAroundContextMenu;
+            }
+
+            if (this.position.height - PaddingAroundContextMenu < this.rectContextMenuWindow.yMax)
+            {
+               this.rectContextMenuWindow.y -= this.rectContextMenuWindow.yMax
+                                               - (this.position.height - PaddingAroundContextMenu);
+            }
+
+            if (this._canvasRect.yMin + PaddingAroundContextMenu > this.rectContextMenuWindow.yMin)
+            {
+               this.rectContextMenuWindow.y = this._canvasRect.yMin + PaddingAroundContextMenu;
+            }
+
+            var tmpRect = GUILayout.Window(
+               "ContextMenu".GetHashCode(),
+               this.rectContextMenuWindow,
+               this.DrawContextMenuWindow,
+               string.Empty,
+               uScriptGUIStyle.MenuContextWindow);
+            if (Event.current.type == EventType.Repaint)
+            {
+               this.rectContextMenuWindow = tmpRect;
+            }
+         }
+      }
+
+      this.EndWindows();
+
+      GUI.enabled = true;
+   }
+
    private void OnGUIFirstRun()
    {
       if (this.firstRun == false)
@@ -1619,46 +1678,6 @@ public sealed partial class uScript : EditorWindow
 
       RequestVersionCompatiblyTest();
       RequestUpdateCheck();
-   }
-
-   private static void SendEventToHotkeyWindow()
-   {
-#if !UNITY_3_5
-      var e = Event.current;
-
-      if (HotkeyWindow != null)
-      {
-         switch (e.type)
-         {
-            case EventType.KeyDown:
-            case EventType.KeyUp:
-            case EventType.MouseDown:
-            case EventType.MouseUp:
-            case EventType.MouseDrag:
-            case EventType.ScrollWheel:
-               // Forcing the mousePosition to appear over the toolbar of the target windows
-               // to prevent mouse clicks and drags from affecting the window. Y should be
-               // somewhere in the range of 22 and 40, probably.
-               var modifiedEvent = e;
-               modifiedEvent.mousePosition = new Vector2(0, 30);
-               HotkeyWindow.SendEvent(modifiedEvent);
-               break;
-         }
-      }
-#endif
-   }
-
-   private void DropKeyboardFocusWhenNewControlClicked()
-   {
-      if (this.hasFocus == false)
-      {
-         return;
-      }
-
-      if (GUIUtility.hotControl != 0 && GUIUtility.hotControl != GUIUtility.keyboardControl)
-      {
-         GUIUtility.keyboardControl = 0;
-      }
    }
 
    private void OnGUIHandleContextMenuInput()
@@ -1693,12 +1712,12 @@ public sealed partial class uScript : EditorWindow
             }
             break;
 
-         //         case EventType.MouseUp:
-         //            if (e.button != 0)
-         //            {
-         //               isContextMenuOpen = false;
-         //            }
-         //            break;
+         //case EventType.MouseUp:
+         //   if (e.button != 0)
+         //   {
+         //      isContextMenuOpen = false;
+         //   }
+         //   break;
 
          case EventType.ScrollWheel:
             if (rectContextMenuWindow.Contains(e.mousePosition) == false)
@@ -1707,17 +1726,17 @@ public sealed partial class uScript : EditorWindow
             }
             break;
 
-         //         // paint/layout events
-         //         case EventType.Layout:
-         //            break;
-         //         case EventType.Repaint:
-         //            break;
-         //
-         //         // ignore these events
-         //         case EventType.Ignore:
-         //         case EventType.Used:
-         //         default:
-         //            break;
+         //// paint/layout events
+         //case EventType.Layout:
+         //   break;
+         //case EventType.Repaint:
+         //   break;
+
+         //// ignore these events
+         //case EventType.Ignore:
+         //case EventType.Used:
+         //default:
+         //   break;
       }
 
       if (isContextMenuOpen == false)
@@ -1841,7 +1860,7 @@ public sealed partial class uScript : EditorWindow
             }
             break;
 
-            // drag events
+         // drag events
          case EventType.DragExited:
             break;
 
@@ -1853,7 +1872,7 @@ public sealed partial class uScript : EditorWindow
             m_MouseMoveArgs.Y = (int)e.mousePosition.y;
             break;
 
-            // key events
+         // key events
          case EventType.KeyDown:
             if (e.keyCode != KeyCode.None)
             {
@@ -2185,7 +2204,7 @@ public sealed partial class uScript : EditorWindow
             e.Use();
             break;
 
-            // mouse events
+         // mouse events
          case EventType.MouseDown:
             // Ignore Right-clicks
             if (e.button != 1)
@@ -2378,6 +2397,53 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
+   /// <summary>
+   /// GUI.Windows needs special handling, which should be processed at the top of the EditorWindow.OnGUI() method.
+   /// </summary>
+   private void OnGUIHandleWindowOverrides()
+   {
+   }
+
+   private static void SendEventToHotkeyWindow()
+   {
+#if !UNITY_3_5
+      var e = Event.current;
+
+      if (HotkeyWindow != null)
+      {
+         switch (e.type)
+         {
+            case EventType.KeyDown:
+            case EventType.KeyUp:
+            case EventType.MouseDown:
+            case EventType.MouseUp:
+            case EventType.MouseDrag:
+            case EventType.ScrollWheel:
+               // Forcing the mousePosition to appear over the toolbar of the target windows
+               // to prevent mouse clicks and drags from affecting the window. Y should be
+               // somewhere in the range of 22 and 40, probably.
+               var modifiedEvent = e;
+               modifiedEvent.mousePosition = new Vector2(0, 30);
+               HotkeyWindow.SendEvent(modifiedEvent);
+               break;
+         }
+      }
+#endif
+   }
+
+   private void DropKeyboardFocusWhenNewControlClicked()
+   {
+      if (this.hasFocus == false)
+      {
+         return;
+      }
+
+      if (GUIUtility.hotControl != 0 && GUIUtility.hotControl != GUIUtility.keyboardControl)
+      {
+         GUIUtility.keyboardControl = 0;
+      }
+   }
+
    /// <summary>Notifies uScript that a node should be created and placed the node on canvas.</summary>
    /// <param name='nodeSignature'>The unique node signature as generated by uScript.GetNodeSignature().</param>
    /// <param name='useMousePosition'>When True, the mouse position will be used as the node's initial canvas location.</param>
@@ -2385,56 +2451,6 @@ public sealed partial class uScript : EditorWindow
    {
       this.pendingNodeSignature = nodeSignature;
       this.pendingNodeUsesMousePosition = useMousePosition;
-   }
-
-   public void OnGUIDrawWindows()
-   {
-      // Draw window elements, including the context menu
-      //
-      GUI.enabled = true;
-      BeginWindows();
-      {
-         if (isContextMenuOpen)
-         {
-            int _paddingAroundContextMenu = 4;
-
-            // try to put the window where the user clicked
-            rectContextMenuWindow.x = m_ContextX;
-            rectContextMenuWindow.y = m_ContextY;
-
-            // update the x, y, width, and height to ensure the context menu appears within the _canvasRect bounds
-            //
-            // they should be handled in the xMax, xMin and then yMax and yMin order
-            //
-            if (_canvasRect.xMax - _paddingAroundContextMenu < rectContextMenuWindow.xMax)
-            {
-               rectContextMenuWindow.x -= rectContextMenuWindow.xMax - (_canvasRect.xMax - _paddingAroundContextMenu);
-            }
-
-            if (_canvasRect.xMin + _paddingAroundContextMenu > rectContextMenuWindow.xMin)
-            {
-               rectContextMenuWindow.x = (_canvasRect.xMin + _paddingAroundContextMenu);
-            }
-
-            if (position.height - _paddingAroundContextMenu < rectContextMenuWindow.yMax)
-            {
-               rectContextMenuWindow.y -= rectContextMenuWindow.yMax - (position.height - _paddingAroundContextMenu);
-            }
-
-            if (_canvasRect.yMin + _paddingAroundContextMenu > rectContextMenuWindow.yMin)
-            {
-               rectContextMenuWindow.y = (_canvasRect.yMin + _paddingAroundContextMenu);
-            }
-
-            Rect tmpRect = GUILayout.Window("ContextMenu".GetHashCode(), rectContextMenuWindow, DrawContextMenuWindow, string.Empty, uScriptGUIStyle.MenuContextWindow);
-            if (Event.current.type == EventType.Repaint)
-            {
-               rectContextMenuWindow = tmpRect;
-            }
-         }
-      }
-
-      this.EndWindows();
    }
 
    private void OnPlaymodeStateChanged()
