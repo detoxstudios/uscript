@@ -630,9 +630,13 @@ namespace Detox.Windows.Forms
    {
       public int Buttons;
 
+      public const int None = 0;
       public const int Left   = 1 << 0;
       public const int Middle = 1 << 1;
       public const int Right  = 1 << 2;
+
+      public const int All = Left + Middle + Right;
+      public const int Any = 1 << 3;
 
       public bool Contains(int button)
       {
