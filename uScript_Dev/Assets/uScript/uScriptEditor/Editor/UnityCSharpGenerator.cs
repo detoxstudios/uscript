@@ -1190,10 +1190,18 @@ namespace Detox.ScriptEditor
                      AddCSharpLine("void " + CSharpRefreshSetPropertyDeclaration(entityProperty) + "( )");
                      AddCSharpLine("{");
                      ++m_TabStack;
+                     AddCSharpLine(entityProperty.ComponentType + " component = null;");
                      if (entityProperty.ComponentType != "UnityEngine.GameObject")
-                        AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                     {
+                        AddCSharpLine("if (" + CSharpName(entityProperty, entityProperty.Instance.Name) + " != null)");
+                        AddCSharpLine("{");
+                        ++m_TabStack;
+                           AddCSharpLine("component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                        --m_TabStack;
+                        AddCSharpLine("}");
+                     }
                      else
-                        AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ";");
+                        AddCSharpLine("component = " + CSharpName(entityProperty, entityProperty.Instance.Name) + ";");
 
                      AddCSharpLine("if ( null != component )");
                      AddCSharpLine("{");
@@ -1232,21 +1240,37 @@ namespace Detox.ScriptEditor
                         AddCSharpLine("{");
                         ++m_TabStack;
 
+                        AddCSharpLine(entityProperty.ComponentType + " component = null;"); 
+                        
                         if (entityNode is EntityProperty)
                         {
                            SyncSlaveConnections(entityProperty, new Parameter[]{entityProperty.Instance});
 
                            if (entityProperty.ComponentType != "UnityEngine.GameObject")
-                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                           {
+                              AddCSharpLine("if (" + CSharpName(entityNode, entityNode.Parameters[0].Name) + " != null)");
+                              AddCSharpLine("{");
+                              ++m_TabStack;
+                                 AddCSharpLine("component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                              --m_TabStack;
+                              AddCSharpLine("}");
+                           }
                            else
-                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ";");
+                              AddCSharpLine("component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ";");
                         }
                         else
                         {
                            if (entityProperty.ComponentType != "UnityEngine.GameObject")
-                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                           {
+                              AddCSharpLine("if (" + CSharpName(entityNode)  + " != null)");
+                              AddCSharpLine("{");
+                              ++m_TabStack;
+                                 AddCSharpLine("component = " + CSharpName(entityNode)  + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                              --m_TabStack;
+                              AddCSharpLine("}");
+                           }
                            else
-                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ";");
+                              AddCSharpLine("component = " + CSharpName(entityNode) + ";");
                         }
 
                         AddCSharpLine("if ( null != component )");
@@ -1282,21 +1306,37 @@ namespace Detox.ScriptEditor
                         AddCSharpLine("{");
                         ++m_TabStack;
 
+                        AddCSharpLine(entityProperty.ComponentType + " component = null;");
+
                         if (entityNode is EntityProperty)
                         {
                            SyncSlaveConnections(entityProperty, new Parameter[]{entityProperty.Instance});
 
                            if (entityProperty.ComponentType != "UnityEngine.GameObject")
-                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                           {
+                              AddCSharpLine("if (" + CSharpName(entityNode, entityNode.Parameters[0].Name) + " != null)");
+                              AddCSharpLine("{");
+                              ++m_TabStack;
+                                 AddCSharpLine("component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                              --m_TabStack;
+                              AddCSharpLine("}");
+                           }
                            else
-                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ";");
+                              AddCSharpLine("component = " + CSharpName(entityNode, entityNode.Parameters[0].Name) + ";");
                         }
                         else
                         {
                            if (entityProperty.ComponentType != "UnityEngine.GameObject")
-                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                           {
+                              AddCSharpLine("if (" + CSharpName(entityNode) + " != null)");
+                              AddCSharpLine("{");
+                              ++m_TabStack;
+                                 AddCSharpLine("component = " + CSharpName(entityNode) + ".GetComponent<" + entityProperty.ComponentType + ">();");
+                              --m_TabStack;
+                              AddCSharpLine("}");
+                           }
                            else
-                              AddCSharpLine(entityProperty.ComponentType + " component = " + CSharpName(entityNode) + ";");
+                              AddCSharpLine("component = " + CSharpName(entityNode) + ";");
                         }
 
                         AddCSharpLine("if ( null != component )");
