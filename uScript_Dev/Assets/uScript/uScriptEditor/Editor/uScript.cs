@@ -785,7 +785,6 @@ public sealed partial class uScript : EditorWindow
       Detox.Utility.Status.StatusUpdate += new Detox.Utility.Status.StatusUpdateEventHandler(Status_StatusUpdate);
 
       uScriptBackgroundProcess.ForceFileRefresh();
-      //MasterComponent.undoObjectReference = undoObject;
    }
 
    private void RelaunchingFromRebuiltAppDomain()
@@ -799,7 +798,6 @@ public sealed partial class uScript : EditorWindow
       OpenFromCache();
 
       uScriptBackgroundProcess.ForceFileRefresh();
-      //MasterComponent.undoObjectReference = undoObject;
    }
 
    private void ClearChangeStack()
@@ -881,11 +879,6 @@ public sealed partial class uScript : EditorWindow
       this.checkClipboard = true; // check the clipboard for uscript data
 
       m_ScriptEditorCtrl.IsDirty = this.currentScriptDirty || this.patches.Length > 0;
-
-      //ScriptableObject.DestroyImmediate(undoObject);
-      //undoObject = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
-      //undoObject.UndoNumber = m_UndoNumber;
-      //MasterComponent.undoObjectReference = undoObject;
 
       //clear out all patches and cache new copy of the script
       CacheScript();
@@ -1180,7 +1173,15 @@ public sealed partial class uScript : EditorWindow
          EditorApplication.playmodeStateChanged = OnPlaymodeStateChanged;
       }
 
-      if (this.undoObject != null && this.undoObject.UndoNumber != m_UndoNumber) UndoRedoPerformed();
+      if (this.undoObject != null )
+      {
+         if ( this.undoObject.UndoNumber != m_UndoNumber) UndoRedoPerformed();
+      }
+      else
+      {
+         this.undoObject = (uScript_UndoObject) ScriptableObject.CreateInstance("uScript_UndoObject");
+         this.undoObject.UndoNumber = m_UndoNumber;
+      }
 
       if (_wasHierarchyChanged)
       {
