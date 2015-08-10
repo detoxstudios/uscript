@@ -187,6 +187,8 @@ public sealed partial class uScript : EditorWindow
 
    private string _graphListFilterText = string.Empty;
 
+   private bool shouldCloseEditorWindowOnNextUpdate;
+
    public enum MouseRegion
    {
       Outside,
@@ -1045,6 +1047,12 @@ public sealed partial class uScript : EditorWindow
 
    internal void Update()
    {
+      if (this.shouldCloseEditorWindowOnNextUpdate)
+      {
+         this.Close();
+         return;
+      }
+
       VerifyBuildCompatibility();
 
       PerformUpdateCheck();
@@ -1680,6 +1688,11 @@ public sealed partial class uScript : EditorWindow
       RequestUpdateCheck();
    }
 
+   public static void CloseEditorWindow()
+   {
+      Instance.shouldCloseEditorWindowOnNextUpdate = true;
+   }
+
    private void OnGUIHandleContextMenuInput()
    {
       Event e = Event.current;
@@ -1763,6 +1776,8 @@ public sealed partial class uScript : EditorWindow
 
       Control.ModifierKeys.Pressed = modifierKeys;
 
+      var allowKeyInput = this.AllowKeyInput();
+
       // handle normal canvas controls
       switch (e.type)
       {
@@ -1814,50 +1829,49 @@ public sealed partial class uScript : EditorWindow
             break;
 
          case EventType.ValidateCommand:
-            if (e.commandName == "Copy")
+            if (allowKeyInput)
             {
-               if (m_ScriptEditorCtrl.CanCopy && AllowKeyInput())
+               if (e.commandName == "Copy" && this.m_ScriptEditorCtrl.CanCopy)
+               {
+                  e.Use();
+               }
+               else if (e.commandName == "Cut" && this.m_ScriptEditorCtrl.CanCopy)
+               {
+                  e.Use();
+               }
+               else if (e.commandName == "Paste" && this.m_ScriptEditorCtrl.CanPaste)
+               {
+                  e.Use();
+               }
+               else if (e.commandName == "SelectAll")
                {
                   e.Use();
                }
             }
-            else if (e.commandName == "Cut")
-            {
-               if (m_ScriptEditorCtrl.CanCopy && AllowKeyInput())
-               {
-                  e.Use();
-               }
-            }
-            else if (e.commandName == "Paste" && AllowKeyInput())
-            {
-               if (m_ScriptEditorCtrl.CanPaste)
-               {
-                  e.Use();
-               }
-            }
-            else if (e.commandName == "SelectAll" && AllowKeyInput())
-            {
-               e.Use();
-            }
+
             break;
 
          case EventType.ExecuteCommand:
-            if (e.commandName == "Copy" && AllowKeyInput())
+            if (allowKeyInput)
             {
-               this.wantsCopy = true;
+               if (e.commandName == "Copy")
+               {
+                  this.wantsCopy = true;
+               }
+               else if (e.commandName == "Cut")
+               {
+                  this.wantsCut = true;
+               }
+               else if (e.commandName == "Paste")
+               {
+                  this.wantsPaste = true;
+               }
+               else if (e.commandName == "SelectAll")
+               {
+                  this.m_SelectAllNodes = true;
+               }
             }
-            else if (e.commandName == "Cut" && AllowKeyInput())
-            {
-               this.wantsCut = true;
-            }
-            else if (e.commandName == "Paste" && AllowKeyInput())
-            {
-               this.wantsPaste = true;
-            }
-            else if (e.commandName == "SelectAll" && AllowKeyInput())
-            {
-               m_SelectAllNodes = true;
-            }
+
             break;
 
          // drag events
@@ -1879,323 +1893,21 @@ public sealed partial class uScript : EditorWindow
                this.pressedKey = e.keyCode;
             }
 
-            if (AllowKeyInput())
+            if (allowKeyInput)
             {
-               // Check for valid shortcut keys, and eat the KeyDown
-               // event to avoid the "invalid key" beep on Mac.
-
-               if (modifierKeys == Keys.Control)
+               // If the shortcut is valid, consume the event to avoid the "invalid key" beep on Mac.
+               if (CanvasCommands.Contains(modifierKeys, e.keyCode, MouseButtons.Any))
                {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.F: // Open File Menu
-                     case KeyCode.G: // Toggle grid visibility
-                     case KeyCode.H: // Position graph at (0, 0)
-                     case KeyCode.W: // Close uScript Editor window
-                        e.Use();
-                        break;
-                  }
-               }
-               else if (modifierKeys == Keys.Alt)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Greater: // Expand All
-                     case KeyCode.Less: // Collapse All
-                     case KeyCode.End: // Snap selected nodes to grid
-                     case KeyCode.A: // Save As ...
-                     case KeyCode.D: // Debug Save
-                     case KeyCode.E: // Export PNG
-                     case KeyCode.F: // Open File Menu
-                     case KeyCode.G: // Toggle grid snapping
-                     case KeyCode.N: // New uScript graph
-                     case KeyCode.O: // Open uScript graph
-                     case KeyCode.Q: // Quick Save
-                     case KeyCode.R: // Release Save
-                     case KeyCode.S: // Save
-                        e.Use();
-                        break;
-                  }
-               }
-               else if (modifierKeys == Keys.Shift)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Period: // Expand Selection
-                     case KeyCode.Comma: // Collapse Selection
-                        e.Use();
-                        break;
-                  }
-               }
-               else if (modifierKeys == Keys.ControlAlt)
-               {
-               }
-               else if (modifierKeys == Keys.ControlShift)
-               {
-               }
-               else if (modifierKeys == Keys.AltShift)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Period: // Expand All
-                     case KeyCode.Comma: // Collapse All
-                        e.Use();
-                        break;
-                  }
-               }
-               else if (modifierKeys == Keys.ControlAltShift)
-               {
-               }
-               else // (modifierKeys == Keys.None)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.F1: // Open uScript online documentation
-                     case KeyCode.Backspace: // Delete graph selection
-                     case KeyCode.Delete: // Delete graph selection
-                     case KeyCode.Greater: // Expand Selection
-                     case KeyCode.Less: // Collapse Selection
-                     case KeyCode.Escape: // Drop graph selection
-                     case KeyCode.Home: // Position graph at (0, 0)
-                     case KeyCode.LeftBracket: // Position graph at previous Event node
-                     case KeyCode.RightBracket: // Position graph at next Event node
-                     case KeyCode.BackQuote: // Toggle panel visibility
-                     case KeyCode.Backslash: // Toggle panel visibility
-                     case KeyCode.Minus: // Zoom graph out
-                     case KeyCode.Equals: // Zoom graph in
-                     case KeyCode.Alpha0: // Zoom graph default
-                     case KeyCode.Alpha1: // (onMouseUp) Place FavoriteNode1
-                     case KeyCode.Alpha2: // (onMouseUp) Place FavoriteNode2
-                     case KeyCode.Alpha3: // (onMouseUp) Place FavoriteNode3
-                     case KeyCode.Alpha4: // (onMouseUp) Place FavoriteNode4
-                     case KeyCode.Alpha5: // (onMouseUp) Place FavoriteNode5
-                     case KeyCode.Alpha6: // (onMouseUp) Place FavoriteNode6
-                     case KeyCode.Alpha7: // (onMouseUp) Place FavoriteNode7
-                     case KeyCode.Alpha8: // (onMouseUp) Place FavoriteNode8
-                     case KeyCode.Alpha9: // (onMouseUp) Place FavoriteNode9
-                     case KeyCode.B: // (onMouseUp) Place Bool variable node
-                     case KeyCode.C: // (onMouseUp) Place Comment
-                     case KeyCode.E: // (onMouseUp) Place External variable node
-                     case KeyCode.F: // (onMouseUp) Place Float variable node
-                     case KeyCode.G: // (onMouseUp) Place GameObject variable node
-                     case KeyCode.I: // (onMouseUp) Place Int variable node
-                     case KeyCode.L: // (onMouseUp) Place Log action node
-                     case KeyCode.O: // (onMouseUp) Place Object variable node
-                     case KeyCode.S: // (onMouseUp) Place String variable node
-                     case KeyCode.V: // (onMouseUp) Place Vector3 variable node
-                        e.Use();
-                        break;
-                  }
+                  e.Use();
                }
             }
             break;
 
          case EventType.KeyUp:
-            if (AllowKeyInput())
+            if (allowKeyInput)
             {
-               if (modifierKeys == Keys.Control)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.F:
-                        // TODO: OPEN the file menu here
-                        //this.ContextMenuFile(toolbarRect);
-                        break;
-
-                     case KeyCode.G:
-                        this.CommandViewMenuGrid();
-                        break;
-
-                     case KeyCode.H:
-                        //
-                        // Position graph at (0, 0)
-                        //
-                        if (m_ScriptEditorCtrl != null)
-                        {
-                           m_ScriptEditorCtrl.RebuildScript(null, true);
-                        }
-                        break;
-
-                     case KeyCode.W:
-                        //
-                        // Close uScript Editor window
-                        //
-                        this.Close();
-                        break;
-                  }
-               }
-               else if (modifierKeys == Keys.Alt)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Greater:
-                        m_ScriptEditorCtrl.ExpandAllNodes();
-                        break;
-
-                     case KeyCode.Less:
-                        m_ScriptEditorCtrl.CollapseAllNodes();
-                        break;
-
-                     case KeyCode.End:
-                        m_ScriptEditorCtrl.FlowChart.SnapSelectedNodesToGrid();
-                        break;
-
-                     case KeyCode.A:
-                        FileMenuItem_SaveAs();
-                        break;
-
-                     case KeyCode.D:
-                        FileMenuItem_DebugSave();
-                        break;
-
-                     case KeyCode.E:
-                        FileMenuItem_ExportPNG();
-                        break;
-
-                     case KeyCode.F:
-                        // TODO: Open the file menu here
-                        //this.ContextMenuFile(toolbarRect);
-                        break;
-
-                     case KeyCode.G:
-                        this.CommandViewMenuSnap();
-                        break;
-
-                     case KeyCode.N:
-                        FileMenuItem_New();
-                        break;
-
-                     case KeyCode.O:
-                        FileMenuItem_Open();
-                        break;
-
-                     case KeyCode.Q:
-                        FileMenuItem_QuickSave();
-                        break;
-
-                     case KeyCode.R:
-                        FileMenuItem_ReleaseSave();
-                        break;
-
-                     case KeyCode.S:
-                        FileMenuItem_Save();
-                        break;
-                  }
-               }
-               else if (modifierKeys == Keys.Shift)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Period:
-                        m_ScriptEditorCtrl.ExpandSelectedNodes();
-                        break;
-
-                     case KeyCode.Comma:
-                        m_ScriptEditorCtrl.CollapseSelectedNodes();
-                        break;
-
-                     case KeyCode.BackQuote: // ~
-                        this.CommandCanvasShowPanels();
-                        break;
-
-                     case KeyCode.Minus: // _
-                        this.CommandCanvasZoomOut();
-                        break;
-
-                     case KeyCode.Equals: // +
-                        this.CommandCanvasZoomIn();
-                        break;
-                  }
-               }
-               else if (modifierKeys == Keys.ControlAlt)
-               {
-               }
-               else if (modifierKeys == Keys.ControlShift)
-               {
-               }
-               else if (modifierKeys == Keys.AltShift)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.Period:
-                        m_ScriptEditorCtrl.ExpandAllNodes();
-                        break;
-
-                     case KeyCode.Comma:
-                        m_ScriptEditorCtrl.CollapseAllNodes();
-                        break;
-                  }
-               }
-               else if (modifierKeys == Keys.ControlAltShift)
-               {
-               }
-               else // (modifierKeys == Keys.None)
-               {
-                  switch (e.keyCode)
-                  {
-                     case KeyCode.F1:
-                        //
-                        // Open uScript online documentation
-                        //
-                        Help.BrowseURL("http://docs.uscript.net/");
-                        break;
-
-                     case KeyCode.Backspace:
-                     case KeyCode.Delete:
-                        //
-                        // Delete graph selection
-                        //
-                        m_ScriptEditorCtrl.DeleteSelectedNodes();
-                        break;
-
-                     case KeyCode.Greater:
-                        m_ScriptEditorCtrl.ExpandSelectedNodes();
-                        break;
-
-                     case KeyCode.Less:
-                        m_ScriptEditorCtrl.CollapseSelectedNodes();
-                        break;
-
-                     case KeyCode.Escape:
-                        //
-                        // Drop graph selection
-                        //
-                        m_ScriptEditorCtrl.DeselectAll();
-                        break;
-
-                     case KeyCode.Home:
-                        this.CommandCanvasLocateOrigin();
-                        break;
-
-                     case KeyCode.LeftBracket:
-                        this.CommandCanvasLocatePreviousEvent();
-                        break;
-
-                     case KeyCode.RightBracket:
-                        this.CommandCanvasLocateNextEvent();
-                        break;
-
-                     case KeyCode.BackQuote:
-                     case KeyCode.Backslash:
-                        this.CommandCanvasShowPanels();
-                        break;
-
-                     case KeyCode.Alpha0:
-                        this.CommandCanvasZoomReset();
-                        break;
-
-                     case KeyCode.Minus:
-                     case KeyCode.KeypadMinus:
-                        this.CommandCanvasZoomOut();
-                        break;
-
-                     case KeyCode.Equals:
-                     case KeyCode.Plus:
-                     case KeyCode.KeypadPlus:
-                        this.CommandCanvasZoomIn();
-                        break;
-                  }
-               }
+               // Invoke the command assigned to the user input
+               CanvasCommands.Invoke(modifierKeys, e.keyCode);
             }
 
             this.pressedKey = KeyCode.None;
@@ -2282,98 +1994,25 @@ public sealed partial class uScript : EditorWindow
          case EventType.MouseUp:
             if (this.mouseDown && this.mouseDownOverCanvas)
             {
-               m_MouseUpArgs = new Detox.Windows.Forms.MouseEventArgs();
+               var button = (e.button == 0) ? MouseButtons.Left
+                          : (e.button == 1) ? MouseButtons.Right
+                          : (e.button == 2) ? MouseButtons.Middle
+                          : MouseButtons.None;
 
-               int button = 0;
-
-               if (e.button == 0) button = MouseButtons.Left;
-               else if (e.button == 1) button = MouseButtons.Right;
-               else if (e.button == 2) button = MouseButtons.Middle;
-
-               m_MouseUpArgs.Button = button;
-               m_MouseUpArgs.X = (int)(e.mousePosition.x);
-               if (!uScriptGUI.PanelsHidden) m_MouseUpArgs.X -= uScriptGUI.PanelLeftWidth;
-               m_MouseUpArgs.Y = (int)(e.mousePosition.y - _canvasRect.yMin);
-
-               if (modifierKeys == Keys.None)
+               this.m_MouseUpArgs = new MouseEventArgs
                {
-                  if (this.pressedKey == KeyCode.S)
-                  {
-                     this.PlaceNodeOnCanvas("string", true);
-                  }
-                  else if (this.pressedKey == KeyCode.V)
-                  {
-                     this.PlaceNodeOnCanvas("UnityEngine.Vector3", true);
-                  }
-                  else if (this.pressedKey == KeyCode.I)
-                  {
-                     this.PlaceNodeOnCanvas("int", true);
-                  }
-                  else if (this.pressedKey == KeyCode.F)
-                  {
-                     this.PlaceNodeOnCanvas("float", true);
-                  }
-                  else if (this.pressedKey == KeyCode.B)
-                  {
-                     this.PlaceNodeOnCanvas("bool", true);
-                  }
-                  else if (this.pressedKey == KeyCode.G)
-                  {
-                     this.PlaceNodeOnCanvas("UnityEngine.GameObject", true);
-                  }
-                  else if (this.pressedKey == KeyCode.O)
-                  {
-                     this.PlaceNodeOnCanvas("OwnerConnection", true);
-                  }
-                  else if (this.pressedKey == KeyCode.C)
-                  {
-                     this.PlaceNodeOnCanvas("CommentNode", true);
-                  }
-                  else if (this.pressedKey == KeyCode.E)
-                  {
-                     this.PlaceNodeOnCanvas("ExternalConnection", true);
-                  }
-                  else if (this.pressedKey == KeyCode.L)
-                  {
-                     this.PlaceNodeOnCanvas("uScriptAct_Log", true);
-                  }
-                  else if (this.pressedKey == KeyCode.Alpha1)
-                  {
-                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode1, true);
-                  }
-                  else if (this.pressedKey == KeyCode.Alpha2)
-                  {
-                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode2, true);
-                  }
-                  else if (this.pressedKey == KeyCode.Alpha3)
-                  {
-                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode3, true);
-                  }
-                  else if (this.pressedKey == KeyCode.Alpha4)
-                  {
-                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode4, true);
-                  }
-                  else if (this.pressedKey == KeyCode.Alpha5)
-                  {
-                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode5, true);
-                  }
-                  else if (this.pressedKey == KeyCode.Alpha6)
-                  {
-                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode6, true);
-                  }
-                  else if (this.pressedKey == KeyCode.Alpha7)
-                  {
-                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode7, true);
-                  }
-                  else if (this.pressedKey == KeyCode.Alpha8)
-                  {
-                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode8, true);
-                  }
-                  else if (this.pressedKey == KeyCode.Alpha9)
-                  {
-                     this.PlaceNodeOnCanvas(Preferences.FavoriteNode9, true);
-                  }
+                  Button = button,
+                  X = (int)e.mousePosition.x,
+                  Y = (int)(e.mousePosition.y - this._canvasRect.yMin)
+               };
+
+               if (!uScriptGUI.PanelsHidden)
+               {
+                  this.m_MouseUpArgs.X -= uScriptGUI.PanelLeftWidth;
                }
+
+               // Invoke the command assigned to the user input
+               CanvasCommands.Invoke(modifierKeys, this.pressedKey, button);
             }
             this.mouseDownRegion = MouseRegion.Outside;
             this.mouseDownOverCanvas = false;
@@ -3168,7 +2807,7 @@ public sealed partial class uScript : EditorWindow
       UpdateNotification.ManualCheck();
    }
 
-   private void CommandCanvasShowPanels()
+   public void CommandCanvasShowPanels()
    {
       // Toggle panel visibility
       //
@@ -3194,39 +2833,40 @@ public sealed partial class uScript : EditorWindow
       RequestRepaint(2);
    }
 
-   private void CommandViewMenuGrid()
+   public static void CommandViewMenuGrid()
    {
       Preferences.ShowGrid = !Preferences.ShowGrid;
       Preferences.Save();
    }
 
-   private void CommandViewMenuSnap()
+   public static void CommandViewMenuSnap()
    {
       Preferences.GridSnap = !Preferences.GridSnap;
       Preferences.Save();
    }
 
-   private void CommandCanvasZoomIn()
+   public void CommandCanvasZoomIn()
    {
       this.mapScale = Mathf.Min(this.mapScale + 0.09f, 1.0f);
       this.zoomPoint = new Vector2(this._canvasRect.width * 0.5f, this._canvasRect.height * 0.5f);
    }
 
-   private void CommandCanvasZoomOut()
+   public void CommandCanvasZoomOut()
    {
       this.mapScale = Mathf.Max(this.mapScale - 0.09f, 0.1f);
       this.zoomPoint = new Vector2(this._canvasRect.width * 0.5f, this._canvasRect.height * 0.5f);
    }
 
-   private void CommandCanvasLocateOrigin()
+   public static void CommandCanvasLocateOrigin()
    {
-      if (m_ScriptEditorCtrl != null)
+      var script = Instance;
+      if (script.m_ScriptEditorCtrl != null)
       {
-         m_ScriptEditorCtrl.RebuildScript(null, true);
+         script.m_ScriptEditorCtrl.RebuildScript(null, true);
       }
    }
 
-   private void CommandCanvasLocatePreviousEvent()
+   public void CommandCanvasLocatePreviousEvent()
    {
       this.focusedNode = m_ScriptEditorCtrl.GetPrevNode(this.focusedNode, typeof(EntityEventDisplayNode));
       if (this.focusedNode != null)
@@ -3235,7 +2875,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private void CommandCanvasLocateNextEvent()
+   public void CommandCanvasLocateNextEvent()
    {
       this.focusedNode = m_ScriptEditorCtrl.GetNextNode(this.focusedNode, typeof(EntityEventDisplayNode));
       if (this.focusedNode != null)
@@ -3244,7 +2884,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private void CommandCanvasZoomReset()
+   public void CommandCanvasZoomReset()
    {
       this.mapScale = 1.0f;
    }
@@ -3254,20 +2894,21 @@ public sealed partial class uScript : EditorWindow
       EditorCommands.OpenPreferenceWindow();
    }
 
-   void FileMenuItem_New()
+   public static void FileMenuItem_New()
    {
-      if (this.WasCurrentGraphSaved(true))
+      var script = Instance;
+      if (script.WasCurrentGraphSaved(true))
       {
-         this.CreateNewGraph();
+         script.CreateNewGraph();
       }
    }
 
-   void FileMenuItem_Open()
+   public static void FileMenuItem_Open()
    {
-      string path = EditorUtility.OpenFilePanel("Open uScript", Preferences.UserScripts, "uscript");
+      var path = EditorUtility.OpenFilePanel("Open uScript", Preferences.UserScripts, "uscript");
       if (path.Length > 0)
       {
-         this.OpenGraph(path, false);
+         Instance.OpenGraph(path, false);
       }
    }
 
@@ -3303,40 +2944,40 @@ public sealed partial class uScript : EditorWindow
       return saved;
    }
 
-   private void FileMenuItem_Save()
+   public static void FileMenuItem_Save()
    {
-      RequestSave(
+      Instance.RequestSave(
          Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
          Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
          false);
    }
 
-   private void FileMenuItem_SaveAs()
+   public static void FileMenuItem_SaveAs()
    {
-      RequestSave(
+      Instance.RequestSave(
          Preferences.SaveMethod == Preferences.SaveMethodType.Quick,
          Preferences.SaveMethod == Preferences.SaveMethodType.Debug,
          true);
    }
 
-   void FileMenuItem_QuickSave()
+   public static void FileMenuItem_QuickSave()
    {
-      RequestSave(true, false, false);
+      Instance.RequestSave(true, false, false);
    }
 
-   void FileMenuItem_DebugSave()
+   public static void FileMenuItem_DebugSave()
    {
-      RequestSave(false, true, false);
+      Instance.RequestSave(false, true, false);
    }
 
-   void FileMenuItem_ReleaseSave()
+   public static void FileMenuItem_ReleaseSave()
    {
-      RequestSave(false, false, false);
+      Instance.RequestSave(false, false, false);
    }
 
-   void FileMenuItem_ExportPNG()
+   public static void FileMenuItem_ExportPNG()
    {
-      Detox.Editor.ExportPNG.BeginExport();
+      ExportPNG.BeginExport();
    }
 
    void FileMenuItem_UpgradeDeprecatedNodes()
@@ -3522,17 +3163,17 @@ public sealed partial class uScript : EditorWindow
    {
       var menu = new GenericMenu();
 
-      menu.AddItem(uScriptGUIContent.FileMenuItemNew, false, this.FileMenuItem_New);
-      menu.AddItem(uScriptGUIContent.FileMenuItemOpen, false, this.FileMenuItem_Open);
+      menu.AddItem(uScriptGUIContent.FileMenuItemNew, false, FileMenuItem_New);
+      menu.AddItem(uScriptGUIContent.FileMenuItemOpen, false, FileMenuItem_Open);
       menu.AddSeparator(string.Empty);
-      menu.AddItem(uScriptGUIContent.FileMenuItemSave, false, this.FileMenuItem_Save);
-      menu.AddItem(uScriptGUIContent.FileMenuItemSaveAs, false, this.FileMenuItem_SaveAs);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSave, false, FileMenuItem_Save);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSaveAs, false, FileMenuItem_SaveAs);
       menu.AddSeparator(string.Empty);
-      menu.AddItem(uScriptGUIContent.FileMenuItemSaveQuick, false, this.FileMenuItem_QuickSave);
-      menu.AddItem(uScriptGUIContent.FileMenuItemSaveDebug, false, this.FileMenuItem_DebugSave);
-      menu.AddItem(uScriptGUIContent.FileMenuItemSaveRelease, false, this.FileMenuItem_ReleaseSave);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSaveQuick, false, FileMenuItem_QuickSave);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSaveDebug, false, FileMenuItem_DebugSave);
+      menu.AddItem(uScriptGUIContent.FileMenuItemSaveRelease, false, FileMenuItem_ReleaseSave);
       menu.AddSeparator(string.Empty);
-      menu.AddItem(uScriptGUIContent.FileMenuItemExportImage, false, this.FileMenuItem_ExportPNG);
+      menu.AddItem(uScriptGUIContent.FileMenuItemExportImage, false, FileMenuItem_ExportPNG);
       menu.AddItem(uScriptGUIContent.FileMenuItemUpgradeNodes, false, this.FileMenuItem_UpgradeDeprecatedNodes);
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemRebuildGraphs, false, this.FileMenuItem_RebuildAll);
@@ -3552,12 +3193,12 @@ public sealed partial class uScript : EditorWindow
 
       menu.AddItem(uScriptGUIContent.ViewMenuItemPanels, !uScriptGUI.PanelsHidden, this.CommandCanvasShowPanels);
       menu.AddSeparator(string.Empty);
-      menu.AddItem(uScriptGUIContent.ViewMenuItemGrid, Preferences.ShowGrid, this.CommandViewMenuGrid);
-      menu.AddItem(uScriptGUIContent.ViewMenuItemSnap, Preferences.GridSnap, this.CommandViewMenuSnap);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemGrid, Preferences.ShowGrid, CommandViewMenuGrid);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemSnap, Preferences.GridSnap, CommandViewMenuSnap);
       menu.AddDisabledItem(uScriptGUIContent.ViewMenuItemSnapSelected);
       menu.AddSeparator(string.Empty);
 
-      menu.AddItem(uScriptGUIContent.ViewMenuItemFindCanvasOrigin, false, this.CommandCanvasLocateOrigin);
+      menu.AddItem(uScriptGUIContent.ViewMenuItemFindCanvasOrigin, false, CommandCanvasLocateOrigin);
       menu.AddItem(uScriptGUIContent.ViewMenuItemFindNextEvent, false, this.CommandCanvasLocateNextEvent);
       menu.AddItem(uScriptGUIContent.ViewMenuItemFindPreviousEvent, false, this.CommandCanvasLocatePreviousEvent);
 
