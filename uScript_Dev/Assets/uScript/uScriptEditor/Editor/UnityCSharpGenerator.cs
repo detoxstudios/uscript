@@ -2278,6 +2278,15 @@ namespace Detox.ScriptEditor
          {
             AddCSharpLine(CSharpName(logic, logic.Type) + ".SetParent(g);");
          }
+
+         // Required because an owner game object might be accessed
+         // through an OnEnable event before the initial Start has had a chance
+         // to populate it:
+         // http://www.uscript.net/forum/viewtopic.php?f=11&t=3012&p=21396#p21396
+         foreach (OwnerConnection owner in m_Script.Owners)
+         {
+            AddCSharpLine(CSharpName(owner) + " = parentGameObject;");
+         }
       }
 
       private void DefineOnEnable()
