@@ -4666,11 +4666,11 @@ namespace Detox.ScriptEditor
 
       public bool Read(string cacheName, MemoryStream stream)
       {
-          ScriptEditorData cachedData;
+         ScriptEditorData cachedData;
 
-          Profile p;
+         Profile p;
 
-         if (null != cacheName) cacheName = cacheName.Replace('/', '\\');
+         if (null != cacheName) cacheName = cacheName.RelativeAssetPath();
 
          if (null != cacheName && s_Cache.TryGetValue(cacheName, out cachedData))
          {
@@ -4692,7 +4692,7 @@ namespace Detox.ScriptEditor
             ScriptEditorData = data as ScriptEditorData;
 
             if (null != cacheName) s_Cache[cacheName] = data as ScriptEditorData;
-             //VerifyAllLinks( );
+            //VerifyAllLinks( );
          }
 
           p.End();
@@ -4709,7 +4709,7 @@ namespace Detox.ScriptEditor
 
          if (null != cacheName)
          {
-            cacheName = cacheName.Replace('/', '\\');
+            cacheName = cacheName.RelativeAssetPath();
             s_Cache[cacheName] = ScriptEditorData;
          }
 
