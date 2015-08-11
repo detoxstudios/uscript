@@ -1787,43 +1787,7 @@ public sealed partial class uScript : EditorWindow
             // mouse is over the canvas when the event occurs
             if (this._canvasRect.Contains(e.mousePosition))
             {
-               {
-                  var buildInterntalContextMenu = new Profile("BuildInterntalContextMenu");
-
-                  this.m_ScriptEditorCtrl.BuildContextMenu();
-
-                  buildInterntalContextMenu.End();
-               }
-
-               //we can't rely on the cache'd context menu because
-               //the breakpoints might have changed and the context menu
-               //must update accordingly
-               //we might need to only rebuild the parts of it which changed
-               //as we do with m_ScriptEditorCtrl.BuildContextMenu()
-               //if (this._canvasContextMenu == null)
-               {
-                  var buildCanvasContextMenu = new Profile("BuildCanvasContextMenu");
-                  // cache the context menu...
-                  this.BuildCanvasContextMenu(null, null);
-
-                  buildCanvasContextMenu.End();
-               }
-
-               {
-                  var showAsContext = new Profile("ShowAsContext");
-
-                  this._canvasContextMenu.ShowAsContext();
-
-                  showAsContext.End();
-               }
-
-               //// stupid hack to prevent the "canvasDragging" behavior
-               //if (mouseDown)
-               //{
-               //   this.mouseDownRegion = MouseRegion.Reference;
-               //   mouseDown = false;
-               //}
-
+               this.ShowCanvasContextMenu();
                e.Use();
             }
 
@@ -2035,6 +1999,67 @@ public sealed partial class uScript : EditorWindow
             }
             break;
       }
+   }
+
+   public void ShowCanvasContextMenu()
+   {
+      {
+         var buildInternalContextMenu = new Profile("BuildInternalContextMenu");
+
+         this.m_ScriptEditorCtrl.BuildContextMenu();
+
+         buildInternalContextMenu.End();
+      }
+
+      // We can't rely on the cached context menu, because the breakpoints
+      // might have changed and the context menu must update accordingly.
+      //
+      // We might need to only rebuild the parts of it which changed as we
+      // do with m_ScriptEditorCtrl.BuildContextMenu().
+
+      //if (this._canvasContextMenu == null)
+      {
+         var buildCanvasContextMenu = new Profile("BuildCanvasContextMenu");
+
+         // cache the context menu...
+         this.BuildCanvasContextMenu(null, null);
+
+         buildCanvasContextMenu.End();
+      }
+
+      // Ensure the cursor context is within the bounds of the visible canvas
+      this.m_ScriptEditorCtrl.ContextCursor = this.ClampContextCursor();
+
+      {
+         var showAsContext = new Profile("ShowAsContext");
+
+         this._canvasContextMenu.ShowAsContext();
+
+         showAsContext.End();
+      }
+
+      //// Stupid hack to prevent the "canvasDragging" behavior
+      //if (mouseDown)
+      //{
+      //   this.mouseDownRegion = MouseRegion.Reference;
+      //   mouseDown = false;
+      //}
+   }
+
+   private Point ClampContextCursor()
+   {
+      const int Padding = 20;
+      var canvasPosition = Event.current.mousePosition;
+
+      // Account for the canvas offset due to the toolbox and toolbar
+      canvasPosition.x -= this._canvasRect.x;
+      canvasPosition.y -= this._canvasRect.y;
+
+      // Clamp the position to the canvas viewport bounds with right and bottom padding
+      canvasPosition.x = Mathf.Clamp(canvasPosition.x, 0, this._canvasRect.width - Padding);
+      canvasPosition.y = Mathf.Clamp(canvasPosition.y, 0, this._canvasRect.height - Padding);
+
+      return canvasPosition.ToPoint();
    }
 
    /// <summary>
