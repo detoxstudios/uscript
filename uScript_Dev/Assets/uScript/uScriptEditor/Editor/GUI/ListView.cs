@@ -977,9 +977,11 @@ namespace Detox.Editor.GUI
 
       public void HandleMouseInput(ListViewItem item)
       {
-         var e = Event.current;
+         var modifiers = GetPrimaryModifiers();
 
-         if (e.modifiers == 0)
+         // Remove extra modifiers that may exist on some platforms
+
+         if (modifiers == 0)
          {
             if (!item.Selected || this.SelectedItems.Length > 1)
             {
@@ -997,8 +999,8 @@ namespace Detox.Editor.GUI
                }
             }
          }
-         else if ((e.modifiers == EventModifiers.Control && Application.platform == RuntimePlatform.WindowsEditor)
-                  || (e.modifiers == EventModifiers.Command && Application.platform == RuntimePlatform.OSXEditor))
+         else if ((modifiers == EventModifiers.Control && Application.platform == RuntimePlatform.WindowsEditor)
+                  || (modifiers == EventModifiers.Command && Application.platform == RuntimePlatform.OSXEditor))
          {
             if (!this.MultiSelectEnabled && !item.Selected)
             {
@@ -1009,7 +1011,7 @@ namespace Detox.Editor.GUI
                this.ClickToggleSelection(item);
             }
          }
-         else if (e.modifiers == EventModifiers.Shift)
+         else if (modifiers == EventModifiers.Shift)
          {
             if (this.MultiSelectEnabled)
             {
@@ -1021,7 +1023,7 @@ namespace Detox.Editor.GUI
             }
          }
 
-         e.Use();
+         Event.current.Use();
       }
 
       public ListViewItem SelectItem(int index)
@@ -1199,6 +1201,30 @@ namespace Detox.Editor.GUI
          this.SelectNone();
          this.SelectItem(nextItem);
          this.FrameItem(nextItem);
+      }
+
+      private static EventModifiers GetPrimaryModifiers()
+      {
+         var e = Event.current;
+         var modifiers = e.modifiers;
+
+         if (e.capsLock)
+         {
+            modifiers -= EventModifiers.CapsLock;
+         }
+
+         // TODO: Enable one or both of the other modifiers if they cause a problem.
+         //if (e.functionKey)
+         //{
+         //   modifiers -= EventModifiers.FunctionKey;
+         //}
+
+         //if (e.numeric)
+         //{
+         //   modifiers -= EventModifiers.Numeric;
+         //}
+
+         return modifiers;
       }
 
       private void SaveFolderStates()
