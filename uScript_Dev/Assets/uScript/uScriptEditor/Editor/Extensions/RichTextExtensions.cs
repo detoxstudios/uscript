@@ -40,7 +40,8 @@ namespace Detox.Editor.Extensions
 #if UNITY_3_5
          return value;
 #else
-         return string.Format("<color=#{0}>{1}</color>", color.ToHex(), value);
+         // ReSharper disable once InvokeAsExtensionMethod
+         return string.Format("<color=#{0}>{1}</color>", UnityEditorExtensions.ToHex(color), value);
 #endif
       }
 
