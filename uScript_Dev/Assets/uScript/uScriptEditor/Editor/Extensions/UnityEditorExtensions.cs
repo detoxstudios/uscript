@@ -17,6 +17,8 @@ namespace Detox.Editor.Extensions
 
    using UnityEngine;
 
+   using Color = UnityEngine.Color;
+
    public static class UnityEditorExtensions
    {
       public static Vector2 DockedGUIOffset(this EditorWindow editorWindow)
