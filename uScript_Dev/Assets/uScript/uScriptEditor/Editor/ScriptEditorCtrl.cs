@@ -27,6 +27,8 @@ namespace Detox.ScriptEditor
 
    public partial class ScriptEditorCtrl : ToolWindow
    {
+      private bool shouldParseClipboardData;
+
       public struct AutoLinkDesc
       {
          public Guid Guid;
@@ -193,6 +195,8 @@ namespace Detox.ScriptEditor
          RebuildScript( null, true, location );
       
           p.End();
+
+         this.shouldParseClipboardData = true; // check the clipboard for uScript data in uScript.OnGUI()
       }
 
       public void UpdateObjectReferences( )
@@ -810,7 +814,7 @@ namespace Detox.ScriptEditor
          return true;
       }
 
-      public void CopyToClipboard( )
+      public void CopyToClipboard(bool shouldParseClipboardData = false)
       {
          List<EntityNode> entityNodes = new List<EntityNode>( );
 
@@ -846,6 +850,8 @@ namespace Detox.ScriptEditor
          m_CopiedFromThisLocation = true;
 
          OnScriptModified( );
+
+         this.shouldParseClipboardData = shouldParseClipboardData;
       }
 
       public void PasteFromClipboard( Point cursorPoint )
@@ -961,6 +967,13 @@ namespace Detox.ScriptEditor
       //on demand
       public void ParseClipboardData( )
       {
+         if (this.shouldParseClipboardData == false)
+         {
+            return;
+         }
+
+         this.shouldParseClipboardData = false;
+
          m_ClipboardText = null;
 
          string text = null;
@@ -1149,7 +1162,7 @@ namespace Detox.ScriptEditor
 
       private void m_MenuCopy_Click(object sender, EventArgs e)
       {
-         CopyToClipboard( );
+         CopyToClipboard(true);
       }
 
       private void m_MenuPaste_Click(object sender, EventArgs e)
