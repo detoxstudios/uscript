@@ -97,8 +97,7 @@ namespace Detox.FlowChart
             m_PrevZoom = Zoom;
 
             // Apply a magic offset that prevents crawling when zooming in and out
-            Location.X = (int)(x - 0.5f);
-            Location.Y = (int)(y - 0.5f);
+            Location = new Point((int)(x - 0.5f), (int)(y - 0.5f));
          }
       }
 
@@ -257,7 +256,13 @@ namespace Detox.FlowChart
          if (null != LocationChanged) LocationChanged(this, new EventArgs());
       }
 
-      public void Clear( )
+      public override Point Location
+      {
+         get { return m_Location; }
+         set { m_Location = value; OnLocationChanged(); }
+      }
+
+      public void Clear()
       {
          Controls.Clear( );
          m_Links.Clear( );
@@ -1059,29 +1064,36 @@ namespace Detox.FlowChart
 
          float width  = uScript.Instance.NodeWindowRect.xMax - uScript.Instance.NodeWindowRect.xMin;
          float height = uScript.Instance.NodeWindowRect.yMax - uScript.Instance.NodeWindowRect.yMin;
+         Point loc = Location;
+         bool update = false;
 
          if ( location.X < moveStart && location.X < m_MoveBoundariesStart.X )
          {
             float v = 1.0f - (location.X / moveStart);
-            Location.X += (int) (v * v * v * maxMoveRate);
+            loc.X += (int) (v * v * v * maxMoveRate);
+            update = true;
          }
          else if ( location.X > width - moveStart && location.X > m_MoveBoundariesStart.X )
          {
             float v = 1.0f - (width - location.X) / moveStart;
-            Location.X -= (int) (v * v * v * maxMoveRate);
+            loc.X -= (int) (v * v * v * maxMoveRate);
+            update = true;
          }
 
          if ( location.Y < moveStart && location.Y < m_MoveBoundariesStart.Y )
          {
             float v = 1.0f - (location.Y / moveStart);
-            Location.Y += (int) (v * v * v * maxMoveRate);
+            loc.Y += (int) (v * v * v * maxMoveRate);
+            update = true;
          }
          else if( location.Y > height - moveStart && location.Y > m_MoveBoundariesStart.Y )
          {
             float v = 1.0f - (height - location.Y) / moveStart;
-            Location.Y -= (int) (v * v * v * maxMoveRate);
+            loc.Y -= (int) (v * v * v * maxMoveRate);
+            update = true;
          }
 
+         if (update) Location = loc;
          //keeps it clamped
          MoveWithCursor( );
       }
@@ -1876,18 +1888,21 @@ namespace Detox.FlowChart
          bool result = false;
          int x = uScriptUtility.RoundToMultiple(Location.X, uScript.Preferences.GridSize);
          int y = uScriptUtility.RoundToMultiple(Location.Y, uScript.Preferences.GridSize);
+         Point location = Location;
 
-         if (Location.X != x)
+         if (location.X != x)
          {
-            Location.X = x;
+            location.X = x;
             result = true;
          }
 
-         if (Location.Y != y)
+         if (location.Y != y)
          {
-            Location.Y = y;
+            location.Y = y;
             result = true;
          }
+
+         if (result) Location = location;
 
          return result;
       }
