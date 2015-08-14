@@ -364,7 +364,6 @@ namespace Detox.Windows.Forms
       public Region    Region;   
       public Control   Parent;
 
-      public Point Location;
       public Size  Size;
 
       //important notes about zooming
@@ -377,8 +376,15 @@ namespace Detox.Windows.Forms
       {
          get
          {
-            return new Rectangle( (int) (Location.X), (int) (Location.Y), (int) (Size.Width), (int) (Size.Height) );
+            return new Rectangle((int)(m_Location.X), (int)(m_Location.Y), (int)(Size.Width), (int)(Size.Height));
          }
+      }
+
+      protected Point m_Location;
+      public virtual Point Location
+      {
+         get { return m_Location; }
+         set { m_Location = value; }
       }
 
       public Detox.Drawing.Graphics CreateGraphics( )

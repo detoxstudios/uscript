@@ -2840,13 +2840,13 @@ public sealed partial class uScript : EditorWindow
       if (uScriptGUI.PanelsHidden)
       {
          // m_ScriptEditorCtrl.FlowChart.Location.X += (int)_canvasRect.x;
-         m_ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
+         m_ScriptEditorCtrl.FlowChart.Location = new Point(m_ScriptEditorCtrl.FlowChart.Location.X + uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness, m_ScriptEditorCtrl.FlowChart.Location.Y);
          m_ScriptEditorCtrl.RebuildScript(null, false);
       }
       else
       {
          // m_ScriptEditorCtrl.FlowChart.Location.X -= (int)_canvasRect.x;
-         m_ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness;
+         m_ScriptEditorCtrl.FlowChart.Location = new Point(m_ScriptEditorCtrl.FlowChart.Location.X - uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness, m_ScriptEditorCtrl.FlowChart.Location.Y);
          m_ScriptEditorCtrl.RebuildScript(null, false);
       }
 

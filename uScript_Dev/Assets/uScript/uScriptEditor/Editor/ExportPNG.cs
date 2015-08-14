@@ -155,8 +155,7 @@ namespace Detox.Editor
                if (originalPanelState == false)
                {
                   uScriptGUI.PanelsHidden = true;
-                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location.X += uScriptGUI.PanelLeftWidth
-                                                                           + uScriptGUI.PanelDividerThickness;
+                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location = new Point(uScriptInstance.ScriptEditorCtrl.FlowChart.Location.X + uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness, uScriptInstance.ScriptEditorCtrl.FlowChart.Location.Y);
                   uScriptInstance.ScriptEditorCtrl.RebuildScript(null, false);
                }
                uScriptInstance.MapScale = 1;
@@ -170,8 +169,7 @@ namespace Detox.Editor
                if (originalPanelState == false)
                {
                   uScriptGUI.PanelsHidden = false;
-                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location.X -= uScriptGUI.PanelLeftWidth
-                                                                           + uScriptGUI.PanelDividerThickness;
+                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location = new Point(uScriptInstance.ScriptEditorCtrl.FlowChart.Location.X - uScriptGUI.PanelLeftWidth + uScriptGUI.PanelDividerThickness, uScriptInstance.ScriptEditorCtrl.FlowChart.Location.Y);
                   uScriptInstance.ScriptEditorCtrl.RebuildScript(null, false);
                }
                uScriptInstance.MapScale = originalMapScale;
@@ -307,8 +305,7 @@ namespace Detox.Editor
                   segmentY = segmentRow * viewportHeight;
 
                   // Update the canvas position to point to the segment
-                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location.X = -(int)targetBounds.x - segmentX;
-                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location.Y = -(int)targetBounds.y - segmentY;
+                  uScriptInstance.ScriptEditorCtrl.FlowChart.Location = new Point(-(int)targetBounds.x - segmentX, -(int)targetBounds.y - segmentY);
 
                   segmentY = (int)targetBounds.height - segmentHeight - segmentY;
 
