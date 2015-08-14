@@ -29,7 +29,7 @@ public class uScriptAct_AnimatorPlay : uScriptLogic
       int Layer,
 
       [FriendlyName("Normalized Time", "The normalized time at which the state will play. If no explicit normalizedTime is specified or normalizedTime value is float.NegativeInfinity, the state will either be played from the start if it's not already playing, or will continue playing from its current time.")]
-      [DefaultValue(0f)] // TODO - This needs to be float.NegativeInfinity !!!
+      [DefaultValue(-1f)]
       [SocketState(false, false)]
       float NormalizedTime
       )
@@ -39,7 +39,10 @@ public class uScriptAct_AnimatorPlay : uScriptLogic
          Animator animController = obj.GetComponent<Animator>();
          if (null != animController)
          {
-            animController.Play(Name, Layer, NormalizedTime);
+            float finalTime = NormalizedTime;
+            if (finalTime == -1f) { finalTime = float.NegativeInfinity; }
+
+            animController.Play(Name, Layer, finalTime);
          }
          else
          {

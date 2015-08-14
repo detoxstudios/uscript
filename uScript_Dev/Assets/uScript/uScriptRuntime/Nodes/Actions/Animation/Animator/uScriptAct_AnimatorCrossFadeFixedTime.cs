@@ -29,7 +29,7 @@ public class uScriptAct_AnimatorCrossFadeFixedTime : uScriptLogic
       float  Duration,
 
       [FriendlyName("Fixed Time", "Start time of the current destination state. Value is in seconds. If no explicit fixedTime is specified or fixedTime value is float.NegativeInfinity, the state will either be played from the start if it's not already playing, or will continue playing from its current time and no transition will happen.")]
-      [DefaultValue(0f)] // TODO - This needs to be float.NegativeInfinity !!!
+      [DefaultValue(-1f)]
       [SocketState(false, false)]
       float  FixedTime,
 
@@ -44,7 +44,10 @@ public class uScriptAct_AnimatorCrossFadeFixedTime : uScriptLogic
          Animator animController = obj.GetComponent<Animator>();
          if (null != animController)
          {
-            animController.CrossFadeInFixedTime(Name, Duration, Layer, FixedTime);
+            float finalTime = FixedTime;
+            if (finalTime == -1f) { finalTime = float.NegativeInfinity; }
+
+            animController.CrossFadeInFixedTime(Name, Duration, Layer, finalTime);
          }
          else
          {

@@ -29,7 +29,7 @@ public class uScriptAct_AnimatorCrossFade : uScriptLogic
       float  Duration,
 
       [FriendlyName("Normalized Time", "Start time of the current destination state. Value is in source state normalized time, should be between 0 and 1. If no explicit normalizedTime is specified or normalizedTime value is float.NegativeInfinity, the state will either be played from the start if it's not already playing, or will continue playing from its current time and no transition will happen.")]
-      [DefaultValue(0f)] // TODO - This needs to be float.NegativeInfinity !!!
+      [DefaultValue(-1f)]
       [SocketState(false, false)]
       float  NormalizedTime,
 
@@ -44,7 +44,10 @@ public class uScriptAct_AnimatorCrossFade : uScriptLogic
          Animator animController = obj.GetComponent<Animator>();
          if (null != animController)
          {
-            animController.CrossFade(Name, Duration, Layer, NormalizedTime);
+            float finalTime = NormalizedTime;
+            if (finalTime == -1f) { finalTime = float.NegativeInfinity; }
+
+            animController.CrossFade(Name, Duration, Layer, finalTime);
          }
          else
          {
