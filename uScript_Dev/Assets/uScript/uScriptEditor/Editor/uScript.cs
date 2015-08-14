@@ -1495,7 +1495,10 @@ public sealed partial class uScript : EditorWindow
       GUI.enabled = this.IsLicenseAccepted && !IsPreferenceWindowOpen;
 
       // Set the default mouse region
-      this.mouseRegionUpdate = MouseRegion.Outside;
+      if (Event.current.type == EventType.Repaint)
+      {
+         this.mouseRegionUpdate = MouseRegion.Outside;
+      }
 
       // As little logic as possible should be performed here.  It is better
       // to use Update() to perform tasks once per tick.
@@ -1946,6 +1949,7 @@ public sealed partial class uScript : EditorWindow
                // this is the switch to use to turn off panel rendering while panning/marquee selecting
                m_CanvasDragging = true;
             }
+
             break;
          case EventType.MouseUp:
             if (this.mouseDown && this.mouseDownOverCanvas)
@@ -1970,6 +1974,7 @@ public sealed partial class uScript : EditorWindow
                // Invoke the command assigned to the user input
                CanvasCommands.Invoke(modifierKeys, this.pressedKey, button);
             }
+
             this.mouseDownRegion = MouseRegion.Outside;
             this.mouseDownOverCanvas = false;
             this.mouseDown = false;
@@ -2680,22 +2685,20 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   private bool HiddenRegion(MouseRegion region)
+   private static bool IsHiddenRegion(MouseRegion region)
    {
-      if (!uScriptGUI.PanelsHidden) return false;
-
-      return region != uScript.MouseRegion.Canvas && region != uScript.MouseRegion.Outside;
+      return uScriptGUI.PanelsHidden && (region != MouseRegion.Canvas && region != MouseRegion.Outside);
    }
 
    private void CalculateMouseRegion()
    {
-      foreach (KeyValuePair<MouseRegion, Rect> kvp in this.mouseRegionRect)
+      foreach (var kvp in this.mouseRegionRect)
       {
-         if (kvp.Value.Contains(Event.current.mousePosition) && !HiddenRegion(kvp.Key))
+         if (kvp.Value.Contains(Event.current.mousePosition) && IsHiddenRegion(kvp.Key) == false)
          {
             this.mouseRegionUpdate = kvp.Key;
+            //EditorGUIUtility.DrawColorSwatch(kvp.Value, UnityEngine.Color.cyan);
             break;
-            //EditorGUIUtility.DrawColorSwatch(mouseRegionRect[region], UnityEngine.Color.cyan);
          }
       }
    }
