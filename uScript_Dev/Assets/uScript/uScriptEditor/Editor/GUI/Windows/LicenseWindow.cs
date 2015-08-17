@@ -3,7 +3,7 @@
 #endif
 //#define CLOSED_BETA
 
-#if !(UNITY_STORE_PRO || UNITY_STORE_BASIC)
+#if !(UNITY_STORE_PRO || UNITY_STORE_BASIC || UNITY_STORE_PLE)
 
 using UnityEditor;
 using UnityEngine;

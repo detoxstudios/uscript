@@ -87,7 +87,7 @@ public static class uScriptGUIContent
       HelpMenuItemAbout = new GUIContent("About uScript");
       HelpMenuItemWelcome = new GUIContent("Welcome Window");
 
-#if DETOX_STORE_PLE
+#if DETOX_STORE_PLE || UNITY_STORE_PLE
       HelpMenuItemBuyBasic = new GUIContent("Buy uScript Basic");
       HelpMenuItemBuyPro = new GUIContent("Buy uScript Pro");
 #elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
@@ -311,7 +311,7 @@ public static class uScriptGUIContent
 
    public static GUIContent HelpMenuItemWelcome { get; private set; }
 
-#if DETOX_STORE_PLE
+#if DETOX_STORE_PLE || UNITY_STORE_PLE
    public static GUIContent HelpMenuItemBuyBasic { get; private set; }
    public static GUIContent HelpMenuItemBuyPro { get; private set; }
 #elif DETOX_STORE_BASIC || UNITY_STORE_BASIC

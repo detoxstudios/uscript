@@ -662,7 +662,7 @@ public sealed partial class uScript : EditorWindow
 
    private static void PerformPromotionCheck()
    {
-#if DETOX_STORE_PLE || DETOX_STORE_BASIC || UNITY_STORE_BASIC
+#if DETOX_STORE_PLE || UNITY_STORE_PLE || DETOX_STORE_BASIC || UNITY_STORE_BASIC
       PromotionWindow.StartupCheck();
 #endif
    }
@@ -1058,7 +1058,7 @@ public sealed partial class uScript : EditorWindow
 
       if (null == m_ScriptEditorCtrl) return;
 
-#if !(UNITY_STORE_PRO || UNITY_STORE_BASIC)
+#if !(UNITY_STORE_PRO || UNITY_STORE_BASIC || UNITY_STORE_PLE)
       // Initialize the LicenseWindow here if needed. Doing it during OnGUI may
       // cause issues, such as null exception errors and reports that OnGUI calls
       // are being made outside of OnGUI.
@@ -1188,9 +1188,7 @@ public sealed partial class uScript : EditorWindow
          {
             _wasHierarchyChanged = false;
 
-#if DETOX_STORE_BASIC || UNITY_STORE_BASIC
-       
-#else
+#if !(DETOX_STORE_BASIC || UNITY_STORE_BASIC)
             if (Preferences.AutoUpdateReflection)
             {
                this.UpdateReflectedTypes();
@@ -2784,7 +2782,7 @@ public sealed partial class uScript : EditorWindow
       EditorCommands.OpenAboutWindow();
    }
 
-#if DETOX_STORE_PLE
+#if DETOX_STORE_PLE || UNITY_STORE_PLE
    private static void CommandHelpMenuBuyBasic()
    {
       UnityEditorInternal.AssetStore.Open("content/31443");
@@ -3272,7 +3270,7 @@ public sealed partial class uScript : EditorWindow
       menu.AddItem(uScriptGUIContent.HelpMenuItemUpdates, false, CommandHelpMenuUpdates);
       menu.AddSeparator(string.Empty);
 
-#if DETOX_STORE_PLE
+#if DETOX_STORE_PLE || UNITY_STORE_PLE
       menu.AddItem(uScriptGUIContent.HelpMenuItemBuyBasic, false, CommandHelpMenuBuyBasic);
       menu.AddItem(uScriptGUIContent.HelpMenuItemBuyPro, false, CommandHelpMenuBuyPro);
       menu.AddSeparator(string.Empty);

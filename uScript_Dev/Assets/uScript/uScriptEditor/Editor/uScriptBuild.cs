@@ -23,7 +23,7 @@ public static class uScriptBuild
    private static string productNameAppendText = "";
 
 
-#if DETOX_STORE_PLE
+#if DETOX_STORE_PLE || UNITY_STORE_PLE
    public static string Name { get { return "Personal Learning Edition" + productNameAppendText; } }
 #elif DETOX_STORE_BASIC || UNITY_STORE_BASIC
    public static string Name { get { return "Basic Edition" + productNameAppendText; } }
@@ -46,6 +46,9 @@ public static class uScriptBuild
    public const SourceType Source = SourceType.Unity;
 #elif UNITY_STORE_BASIC
    public const EditionType Edition = EditionType.Basic;
+   public const SourceType Source = SourceType.Unity;
+#elif UNITY_STORE_PLE
+   public const EditionType Edition = EditionType.PLE;
    public const SourceType Source = SourceType.Unity;
 #elif DETOX_STORE_PRO
    public const EditionType Edition = EditionType.Pro;
