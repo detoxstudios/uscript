@@ -78,7 +78,7 @@ public class uScript_MasterComponent : MonoBehaviour
    }
 
 
-#if DETOX_STORE_PLE
+#if DETOX_STORE_PLE || UNITY_STORE_PLE
    public static string Version = "1.PLE";
 
    // This created the Texture2D variable and stores the watermark bytes in string format created by the watermark tool
@@ -211,7 +211,7 @@ public class uScript_MasterComponent : MonoBehaviour
 #endif
 //END BREAKPOINTS
 
-#if DETOX_STORE_PLE
+#if DETOX_STORE_PLE || UNITY_STORE_PLE
    void OnGUI()
    {
       // Draw the PLE watermark

@@ -11,9 +11,13 @@ namespace Detox.Editor.Extensions
 {
    using System.Reflection;
 
+   using Detox.Drawing;
+
    using UnityEditor;
 
    using UnityEngine;
+
+   using Color = UnityEngine.Color;
 
    public static class UnityEditorExtensions
    {
@@ -96,6 +100,11 @@ namespace Detox.Editor.Extensions
       {
          return ((int)(color.r * 255)).ToString("X2") + ((int)(color.g * 255)).ToString("X2")
                 + ((int)(color.b * 255)).ToString("X2");
+      }
+
+      public static Point ToPoint(this Vector2 vector)
+      {
+         return new Point((int)vector.x, (int)vector.y);
       }
    }
 }

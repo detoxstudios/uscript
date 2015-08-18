@@ -41,6 +41,7 @@ namespace Detox.Editor.GUI
          Add(Keys.None, KeyCode.Plus, Command.ZoomIn);
          Add(Keys.None, KeyCode.KeypadPlus, Command.ZoomIn);
          Add(Keys.None, KeyCode.Alpha0, Command.ZoomReset);
+         Add(Keys.None, KeyCode.Menu, Command.ShowCanvasContextMenu);
 
          Add(Keys.Control, KeyCode.F, Command.OpenFileMenu);
          Add(Keys.Control, KeyCode.G, Command.ToggleGrid);
@@ -388,6 +389,11 @@ namespace Detox.Editor.GUI
          public static void SaveGraphRelease()
          {
             uScript.FileMenuItem_ReleaseSave();
+         }
+
+         public static void ShowCanvasContextMenu()
+         {
+            uScript.Instance.ShowCanvasContextMenu();
          }
 
          public static void SnapSelectedNodesToGrid()
