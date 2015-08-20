@@ -115,6 +115,7 @@ namespace Detox.DetoxDevTools.Editor
             () => webRequest.isDone,
             () =>
                {
+                  Debug.Log("Web Request is done.\n");
                   SilentlyProcessWebResponse();
                   webRequest.Dispose();
                });
@@ -132,8 +133,9 @@ namespace Detox.DetoxDevTools.Editor
          headers.Add("Referer", "https://www.assetstore.unity3d.com/en/");
          headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36");
          headers.Add("X-Requested-With", "UnityAssetStore");
-         headers.Add("X-Kharma-Version", "5.0.0-r84275");
+         headers.Add("X-Kharma-Version", "5.1.0-r84383");
          headers.Add("X-Unity-Session", "26c4202eb475d02864b40827dfff11a14657aa41");
+         //
 
          //foreach (var h in headers)
          //{
@@ -171,71 +173,85 @@ $opts = array(
 
       private static void SilentlyProcessWebResponse()
       {
-         if (string.IsNullOrEmpty(webRequest.error) == false)
+         if (webRequest != null)
          {
-            // DO NOTHING - Better to silently fail than to report a web request error during the startup check.
-            // An error will be generated when WWW fails to connect to the internet, and we don't want to annoy
-            // users with daily warning messages, if they frequently run offline.
+            Debug.Log("webRequest: " + webRequest + "\n");
+            Debug.Log("webRequest.error: " + webRequest.error + "\n");
+            Debug.Log("webRequest.isDone: " + webRequest.isDone + "\n");
+            Debug.Log("webRequest.progress: " + webRequest.progress + "\n");
+            Debug.Log("webRequest.responseHeaders: " + webRequest.responseHeaders + "\n");
+            Debug.Log("webRequest.size: " + webRequest.size + "\n");
+            Debug.Log("webRequest.text: " + webRequest.text + "\n");
+            Debug.Log("webRequest.url: " + webRequest.url + "\n");
 
-            var msg = string.Format("Error: \"{0}\"", webRequest.error);
-            uScriptDebug.Log(msg, uScriptDebug.Type.Warning);
+            if (string.IsNullOrEmpty(webRequest.error) == false)
+            {
+               // DO NOTHING - Better to silently fail than to report a web request error during the startup check.
+               // An error will be generated when WWW fails to connect to the internet, and we don't want to annoy
+               // users with daily warning messages, if they frequently run offline.
+
+               var msg = string.Format("Error: \"{0}\"", webRequest.error);
+               uScriptDebug.Log(msg, uScriptDebug.Type.Warning);
+            }
+            else
+            {
+               Debug.Log("webRequest.text: " + webRequest.text + "\n");
+            }
+            //else if (BuildInfo.TryParse(webRequest.text, out serverBuild) == false)
+            //{
+            //   var msg = string.Format("Failed to parse server response: '{0}'", webRequest.text);
+            //   uScriptDebug.Log(msg, uScriptDebug.Type.Error);
+            //}
+            //else if (BuildInfo.TryParse(uScriptBuild.Number, out clientBuild) == false)
+            //{
+            //   var msg = string.Format("Failed to parse client build number: '{0}'", uScriptBuild.Number);
+            //   uScriptDebug.Log(msg, uScriptDebug.Type.Error);
+            //}
+            //         else
+            //         {
+            //            updateStatus = clientBuild == serverBuild
+            //                              ? UpdateStatus.ClientBuildCurrent
+            //                              : (clientBuild > serverBuild ? UpdateStatus.ClientBuildNewer : UpdateStatus.ClientBuildOlder);
+
+            //            if (updateStatus == UpdateStatus.ClientBuildCurrent || updateStatus == UpdateStatus.ClientBuildNewer)
+            //            {
+            //               return;
+            //            }
+
+            //            // Add build information
+            //            var clientVersion = clientBuild.ToString();
+            //            var serverVersion = LatestVersion = serverBuild.ToString();
+
+            //            if (uScript.Preferences.IgnoreUpdateBuild == serverVersion)
+            //            {
+            //               return;
+            //            }
+
+            //#if !UNITY_3_5
+            //            if (updateStatus == UpdateStatus.ClientBuildOlder)
+            //            {
+            //               serverVersion = serverVersion.Bold();
+            //            }
+            //#endif
+
+            //            clientVersion = string.Format("        Your version: \t{0}", clientVersion);
+            //            serverVersion = string.Format("        Latest version: \t{0}", serverVersion);
+
+            //            Open();
+            //            updateStatus = UpdateStatus.ClientBuildOlder;
+            //            window.Title = Content.TitleClientBuildOlder;
+            //            var msg = IsAsssetStoreProduct
+            //                         ? Content.BodyClientBuildOlderUnity.text
+            //                         : Content.BodyClientBuildOlderDetox.text;
+            //            window.Body = new GUIContent(string.Format("{0}\n\n{1}\n{2}", msg, clientVersion, serverVersion));
+            //            window.Repaint();
+            //         }
          }
          else
          {
-            Debug.Log("webRequest.text: " + webRequest.text + "\n");
+            Debug.LogError("SilentlyProcessWebResponse(): webRequest is null.\n");
          }
-         //else if (BuildInfo.TryParse(webRequest.text, out serverBuild) == false)
-         //{
-         //   var msg = string.Format("Failed to parse server response: '{0}'", webRequest.text);
-         //   uScriptDebug.Log(msg, uScriptDebug.Type.Error);
-         //}
-         //else if (BuildInfo.TryParse(uScriptBuild.Number, out clientBuild) == false)
-         //{
-         //   var msg = string.Format("Failed to parse client build number: '{0}'", uScriptBuild.Number);
-         //   uScriptDebug.Log(msg, uScriptDebug.Type.Error);
-         //}
-//         else
-//         {
-//            updateStatus = clientBuild == serverBuild
-//                              ? UpdateStatus.ClientBuildCurrent
-//                              : (clientBuild > serverBuild ? UpdateStatus.ClientBuildNewer : UpdateStatus.ClientBuildOlder);
-
-//            if (updateStatus == UpdateStatus.ClientBuildCurrent || updateStatus == UpdateStatus.ClientBuildNewer)
-//            {
-//               return;
-//            }
-
-//            // Add build information
-//            var clientVersion = clientBuild.ToString();
-//            var serverVersion = LatestVersion = serverBuild.ToString();
-
-//            if (uScript.Preferences.IgnoreUpdateBuild == serverVersion)
-//            {
-//               return;
-//            }
-
-//#if !UNITY_3_5
-//            if (updateStatus == UpdateStatus.ClientBuildOlder)
-//            {
-//               serverVersion = serverVersion.Bold();
-//            }
-//#endif
-
-//            clientVersion = string.Format("        Your version: \t{0}", clientVersion);
-//            serverVersion = string.Format("        Latest version: \t{0}", serverVersion);
-
-//            Open();
-//            updateStatus = UpdateStatus.ClientBuildOlder;
-//            window.Title = Content.TitleClientBuildOlder;
-//            var msg = IsAsssetStoreProduct
-//                         ? Content.BodyClientBuildOlderUnity.text
-//                         : Content.BodyClientBuildOlderDetox.text;
-//            window.Body = new GUIContent(string.Format("{0}\n\n{1}\n{2}", msg, clientVersion, serverVersion));
-//            window.Repaint();
-//         }
       }
-
-
    }
 }
 #endif
