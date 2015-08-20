@@ -553,7 +553,11 @@ public static class uScriptGUIStyle
                 + "\n\t states:\t normal( " + style.normal.background + ", " + style.normal.textColor + " )"
                 + "\n\t\t\t\t hover( " + style.hover.background + ", " + style.hover.textColor + " )"
                 + "\n\t\t\t\t active( " + style.active.background + ", " + style.active.textColor + " )"
-                + "\n\t\t\t\t focused( " + style.focused.background + ", " + style.focused.textColor + " )" + "\n");
+                + "\n\t\t\t\t focused( " + style.focused.background + ", " + style.focused.textColor + " )" + "\n"
+                + "\n\t states:\t onNormal( " + style.onNormal.background + ", " + style.onNormal.textColor + " )"
+                + "\n\t\t\t\t onHover( " + style.onHover.background + ", " + style.onHover.textColor + " )"
+                + "\n\t\t\t\t onActive( " + style.onActive.background + ", " + style.onActive.textColor + " )"
+                + "\n\t\t\t\t onFocused( " + style.onFocused.background + ", " + style.onFocused.textColor + " )" + "\n");
    }
 
    private class StyleInformationItem
