@@ -1206,7 +1206,7 @@ public sealed partial class uScript : EditorWindow
       }
       if (this.wantsCut)
       {
-         m_ScriptEditorCtrl.CopyToClipboard();
+         m_ScriptEditorCtrl.CopyToClipboard(true);
          m_ScriptEditorCtrl.DeleteSelectedNodes();
          this.wantsCut = false;
       }
