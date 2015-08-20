@@ -253,7 +253,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
                GUI.enabled = true;
 
-               GUI.Window(10, this.calendarWindowRect, this.OnGUIDrawCalendar, string.Empty, Style.CalendarWindow);
+               GUI.Window("CalendarPopup".GetHashCode(), this.calendarWindowRect, this.OnGUIDrawCalendar, string.Empty, Style.CalendarWindow);
 
                if (e.type == EventType.MouseDown || e.type == EventType.ContextClick)
                {
