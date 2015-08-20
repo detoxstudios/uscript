@@ -79,7 +79,7 @@ namespace Detox.Editor.GUI
                //{
 
                //   //Focused = EditorWindow.focusedWindow && rectPanel.Contains(e.mousePosition);
-               //   bool newFocus = ((GUIUtility.keyboardControl == 0) && rectPanel.Contains(e.mousePosition));
+               //   bool newFocus = ((FocusedControl.ID == 0) && rectPanel.Contains(e.mousePosition));
                //   if (newFocus == false && newFocus != _listView.hasFocus)
                //   {
                //      // check the hot control too
@@ -87,8 +87,8 @@ namespace Detox.Editor.GUI
                //      ListViewEditor.Instance.Repaint();
                //   }
 
-               //   //Debug.Log("FOCUS: " + _listView.hasFocus.ToString() + ", KEYBOARD CONTROL: " + GUIUtility.keyboardControl.ToString() + ", EVENT: " + e.ToString() + "\n");
-               //   Debug.Log("FOCUS: " + _listView.hasFocus.ToString() + ",\t\t" + "keyboardControl: " + GUIUtility.keyboardControl.ToString() + "\t\tEventType: " + e.type.ToString()
+               //   //Debug.Log("FOCUS: " + _listView.hasFocus.ToString() + ", KEYBOARD CONTROL: " + FocusedControl.ToString() + ", EVENT: " + e.ToString() + "\n");
+               //   Debug.Log("FOCUS: " + _listView.hasFocus.ToString() + ",\t\t" + "keyboardControl: " + FocusedControl.ToString() + "\t\tEventType: " + e.type.ToString()
                //      + "\n" + "\t\t\t\t\t\t" + "hotControl: " + GUIUtility.hotControl.ToString() + "\t\t\t\t\t" + "FocusChanged: " + (newFocus != _listView.hasFocus).ToString());
 
                //   _listView.hasFocus = newFocus;
@@ -108,7 +108,7 @@ namespace Detox.Editor.GUI
                //// Update the list view focus
                //if (e.type == EventType.MouseDown || e.type == EventType.Used)
                //{
-               //   bool newFocus = ((GUIUtility.keyboardControl == 0) && rectPanel.Contains(e.mousePosition));
+               //   bool newFocus = ((FocusedControl.ID == 0) && rectPanel.Contains(e.mousePosition));
                //   if (newFocus != _listView.hasFocus)
                //   {
                //      ListViewEditor.Instance.Repaint();
@@ -226,7 +226,7 @@ namespace Detox.Editor.GUI
                // Drop focus if the user inserted a newline (hit enter)
                if (newFilterText.Contains("\n"))
                {
-                  GUIUtility.keyboardControl = 0;
+                  FocusedControl.Clear();
                }
             }
 

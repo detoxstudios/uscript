@@ -14,6 +14,7 @@ namespace Detox.DetoxDevTools.Editor
    using System.Globalization;
 
    using Detox.Editor;
+   using Detox.Editor.GUI;
 
    using UnityEditor;
 
@@ -49,7 +50,7 @@ namespace Detox.DetoxDevTools.Editor
             EditorGUILayout.Separator();
 
             EditorGUILayout.LabelField("Name of focused control:", "\"" + GUI.GetNameOfFocusedControl() + "\"");
-            EditorGUILayout.LabelField("keyboardControl:", GUIUtility.keyboardControl.ToString(CultureInfo.InvariantCulture));
+            EditorGUILayout.LabelField("keyboardControl:", FocusedControl.ToString());
             EditorGUILayout.LabelField("hotControl:", GUIUtility.hotControl.ToString(CultureInfo.InvariantCulture));
       
             EditorGUILayout.Separator();
@@ -92,9 +93,9 @@ namespace Detox.DetoxDevTools.Editor
 
             EditorGUILayout.Separator();
          
-            if (GUILayout.Button("keyboardControl = 0"))
+            if (GUILayout.Button("Reset KeyboardControl"))
             {
-               GUIUtility.keyboardControl = 0;
+               FocusedControl.Clear();
             }
          }
 

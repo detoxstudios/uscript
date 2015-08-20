@@ -17,6 +17,7 @@ using System.Linq;
 
 using Detox.Drawing;
 using Detox.Editor;
+using Detox.Editor.GUI;
 using Detox.ScriptEditor;
 using Detox.Windows.Forms;
 
@@ -134,7 +135,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                   // Drop focus if the user inserted a newline (hit enter)
                   if (filterText.Contains("\n"))
                   {
-                     GUIUtility.keyboardControl = 0;
+                     FocusedControl.Clear();
                   }
    
                   // Trim leading whitespace

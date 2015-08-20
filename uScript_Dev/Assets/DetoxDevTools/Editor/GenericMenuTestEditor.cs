@@ -10,6 +10,7 @@
 using System.Globalization;
 
 using Detox.Editor;
+using Detox.Editor.GUI;
 
 using UnityEditor;
 
@@ -92,7 +93,7 @@ public class GenericMenuTestEditor : EditorWindow
          
          if (Event.current.type == EventType.ContextClick && rect.Contains(Event.current.mousePosition))
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
             
             if (this.shouldRebuildMenu || this.genericMenu == null || this.genericMenu.GetItemCount() != totalMenuSize)
             {

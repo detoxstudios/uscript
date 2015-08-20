@@ -13,6 +13,7 @@ namespace Detox.DetoxDevTools.Editor
    using System.Linq;
 
    using Detox.Editor;
+   using Detox.Editor.GUI;
 
    using UnityEditor;
 
@@ -174,7 +175,7 @@ namespace Detox.DetoxDevTools.Editor
 
          if (GUILayout.Button("Execute Sort", Style.SortButton))
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
             this.RefreshSort();
          }
 
@@ -198,12 +199,12 @@ namespace Detox.DetoxDevTools.Editor
                switch (Event.current.keyCode)
                {
                   case KeyCode.Return:
-                     GUIUtility.keyboardControl = 0;
+                     FocusedControl.Clear();
                      Event.current.Use();
                      break;
 
                   case KeyCode.Escape:
-                     GUIUtility.keyboardControl = 0;
+                     FocusedControl.Clear();
                      this.filterText = this.filterTextCache;
                      Event.current.Use();
                      this.RefreshSort();
@@ -244,7 +245,7 @@ namespace Detox.DetoxDevTools.Editor
 
          if (EditorGUI.EndChangeCheck())
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
             this.RefreshSort();
          }
 

@@ -763,18 +763,18 @@ namespace Detox.Editor.GUI
       public static void MonitorGUIControlFocusChanges()
       {
          // TODO: Disable or comment out until needed. Only used by VariableNameField()
-         if (GUIUtility.keyboardControl != focusedControlID)
+         if (FocusedControl.ID != focusedControlID)
          {
             if (ControlIDList.ContainsKey(focusedControlID))
             {
                var oldControlName = ControlIDList[focusedControlID];
 
                //            string newName = "UNKNOWN";
-               //            if (controlIDList.ContainsKey(GUIUtility.keyboardControl))
+               //            if (controlIDList.ContainsKey(FocusedControl.ID))
                //            {
-               //               newName = controlIDList[GUIUtility.keyboardControl];
+               //               newName = controlIDList[FocusedControl.ID];
                //            }
-               //            Debug.Log("FOCUS CHANGED: \t" + focusedControlID.ToString() + " (" + oldName + ") -> " + GUIUtility.keyboardControl.ToString() + " (" + newName + ")\n");
+               //            Debug.Log("FOCUS CHANGED: \t" + focusedControlID.ToString() + " (" + oldName + ") -> " + FocusedControl.ToString() + " (" + newName + ")\n");
 
                // When specific fields lose focus, send out an event
                if (oldControlName == WatchedControlName)
@@ -788,7 +788,7 @@ namespace Detox.Editor.GUI
                }
             }
 
-            focusedControlID = GUIUtility.keyboardControl;
+            focusedControlID = FocusedControl.ID;
          }
       }
 
@@ -828,7 +828,7 @@ namespace Detox.Editor.GUI
 
          if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayRemove, Style.ArrayTextButton))
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
             array = ArrayRemove(array, index);
          }
 
@@ -836,7 +836,7 @@ namespace Detox.Editor.GUI
 
          if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayDuplicate, Style.ArrayTextButton))
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
             array = ArrayInsert(array, index, array[index]);
          }
 
@@ -844,7 +844,7 @@ namespace Detox.Editor.GUI
 
          if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayInsert, Style.ArrayTextButton))
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
 
             // Special conversion case for strings and GUILayoutOption objects
             var element = typeof(T) == typeof(string)
@@ -952,7 +952,7 @@ namespace Detox.Editor.GUI
 
             //      if (GUILayout.Button(uScriptGUIContent.buttonArraySearch, Style.ArrayIconButton))
             //      {
-            //         GUIUtility.keyboardControl = 0;
+            //         FocusedControl.Clear();
             //         GameObject go = GameObject.Find((string)t);
             //         if (go != null)
             //         {
@@ -1010,7 +1010,7 @@ namespace Detox.Editor.GUI
 
             if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayAdd, Style.ArrayTextButton))
             {
-               GUIUtility.keyboardControl = 0;
+               FocusedControl.Clear();
 
                // Special conversion case for strings and GUILayoutOption objects
                var element = typeof(T) == typeof(string)
@@ -1023,7 +1023,7 @@ namespace Detox.Editor.GUI
 
             if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayClear, Style.ArrayTextButton))
             {
-               GUIUtility.keyboardControl = 0;
+               FocusedControl.Clear();
                array = new T[] { };
             }
          }

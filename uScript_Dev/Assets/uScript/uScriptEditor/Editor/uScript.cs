@@ -438,7 +438,7 @@ public sealed partial class uScript : EditorWindow
 
    public bool AllowKeyInput()
    {
-      return (UnityVersion <= 3.5f && "MainView" == GUI.GetNameOfFocusedControl()) || GUIUtility.keyboardControl == 0;
+      return (UnityVersion <= 3.5f && "MainView" == GUI.GetNameOfFocusedControl()) || FocusedControl.ID == 0;
    }
 
    public ScriptEditorCtrl ScriptEditorCtrl
@@ -2097,9 +2097,9 @@ public sealed partial class uScript : EditorWindow
          return;
       }
 
-      if (GUIUtility.hotControl != 0 && GUIUtility.hotControl != GUIUtility.keyboardControl)
+      if (GUIUtility.hotControl != 0 && GUIUtility.hotControl != FocusedControl.ID)
       {
-         GUIUtility.keyboardControl = 0;
+         FocusedControl.Clear();
       }
    }
 
@@ -2377,7 +2377,7 @@ public sealed partial class uScript : EditorWindow
                   // Drop focus if the user inserted a newline (hit enter)
                   if (filterText.Contains('\n'))
                   {
-                     GUIUtility.keyboardControl = 0;
+                     FocusedControl.Clear();
                   }
 
                   // Trim leading whitespace
@@ -2555,7 +2555,7 @@ public sealed partial class uScript : EditorWindow
                                     var selected = GUILayout.Toggle(dn.Selected, nodeButtonContent, uScriptGUIStyle.NodeButtonLeft);
                                     if (selected != dn.Selected)
                                     {
-                                       GUIUtility.keyboardControl = 0;
+                                       FocusedControl.Clear();
 
                                        // is the shift key modifier being used?
                                        if (Event.current.modifiers != EventModifiers.Shift)
@@ -2576,7 +2576,7 @@ public sealed partial class uScript : EditorWindow
                                        {
                                           if (GUILayout.Button(uScriptGUIContent.buttonNodeUpgrade, uScriptGUIStyle.NodeButtonMiddle, GUILayout.Width(20)))
                                           {
-                                             GUIUtility.keyboardControl = 0;
+                                             FocusedControl.Clear();
 
                                              var click = new EventHandler(m_ScriptEditorCtrl.m_MenuUpgradeNode_Click);
                                              if (click != null)
@@ -2593,7 +2593,7 @@ public sealed partial class uScript : EditorWindow
                                        {
                                           if (GUILayout.Button(uScriptGUIContent.buttonNodeDeleteMissing, uScriptGUIStyle.NodeButtonMiddle, GUILayout.Width(20)))
                                           {
-                                             GUIUtility.keyboardControl = 0;
+                                             FocusedControl.Clear();
 
                                              var click = new EventHandler(m_ScriptEditorCtrl.m_MenuDeleteMissingNode_Click);
                                              if (click != null)

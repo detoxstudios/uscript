@@ -1963,14 +1963,14 @@ namespace Detox.Editor.GUI
 ////               //       then right click it to open the context menu.
 ////            }
 
-////////            Debug.Log("hotControl: " + GUIUtility.hotControl.ToString() + ", keyboardControl: " + GUIUtility.keyboardControl.ToString() + "\n");
+////////            Debug.Log("hotControl: " + GUIUtility.hotControl.ToString() + ", keyboardControl: " + FocusedControl.ToString() + "\n");
 ////////
 ////////               else
 ////////               {
 ////////                  this.EndNameEditing();
 ////////                  this.m_CurrentDragSelectionIDs = this.GetSelection(newHierarchyProperty, true);
 ////////                  GUIUtility.hotControl = controlID;
-////////                  GUIUtility.keyboardControl = 0;
+////////                  FocusedControl.Clear();
 ////////                  DragAndDropDelay stateObject = (DragAndDropDelay) GUIUtility.GetStateObject(typeof(DragAndDropDelay), controlID);
 ////////                  stateObject.mouseDownPosition = Event.current.mousePosition;
 ////////               }
@@ -2052,21 +2052,21 @@ namespace Detox.Editor.GUI
             {
                this.HasFocus = false;
             }
-            else if (GUIUtility.keyboardControl != this.controlID)
+            else if (FocusedControl.ID != this.controlID)
             {
                this.HasFocus = false;
             }
             else if ((e.type == EventType.MouseDown || e.type == EventType.Used) && parentPanelRect.Contains(e.mousePosition) == false)
             {
                this.HasFocus = false;
-               GUIUtility.keyboardControl = 0;
+               FocusedControl.Clear();
             }
 
             if (this.HasFocus == false)
             {
                // Focus was lost
                uScript.Instance.Repaint();
-               //Debug.Log("LOST FOCUS: keyboardControl: " + GUIUtility.keyboardControl + "\n");
+               //Debug.Log("LOST FOCUS: keyboardControl: " + FocusedControl.ID + "\n");
             }
          }
          else
@@ -2076,7 +2076,7 @@ namespace Detox.Editor.GUI
             {
                this.HasFocus = true;
             }
-            else if (GUIUtility.keyboardControl == this.controlID && uScript.Instance.HasFocus)
+            else if (FocusedControl.ID == this.controlID && uScript.Instance.HasFocus)
             {
                this.HasFocus = true;
             }
@@ -2084,9 +2084,9 @@ namespace Detox.Editor.GUI
             if (this.HasFocus)
             {
                // Focus was received
-               GUIUtility.keyboardControl = this.controlID;
+               FocusedControl.ID = this.controlID;
                uScript.Instance.Repaint();
-               //Debug.Log("RECEIVED FOCUS: keyboardControl: " + GUIUtility.keyboardControl + "\n");
+               //Debug.Log("RECEIVED FOCUS: keyboardControl: " + FocusedControl.ID + "\n");
             }
          }
 

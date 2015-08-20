@@ -16,6 +16,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
    using System.IO;
 
    using Detox.Editor;
+   using Detox.Editor.GUI;
 
    using UnityEditor;
 
@@ -118,7 +119,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
       {
          if (GUILayout.Button(GlyphUpload, Style.PopupIconButton, GUILayout.ExpandWidth(false)))
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
 
             const string Title = "Select Promotion Image";
             const string Extension = "*.pcx;*.png;*.jpg;*.jpeg;*.gif";
@@ -161,7 +162,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
          var buttonLabel = GUI.enabled ? Content.ButtonResetField : GUIContent.none;
          if (GUILayout.Button(buttonLabel, Style.PopupIconButton, GUILayout.Width(16)))
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
             value = originalValue;
          }
 
@@ -344,7 +345,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
             if (GUILayout.Button(GlyphCalendar, Style.PopupIconButton, GUILayout.ExpandWidth(false)))
             {
-               GUIUtility.keyboardControl = 0;
+               FocusedControl.Clear();
                this.showCalendarPopup = !this.showCalendarPopup;
                this.datePickerIsForStart = false;
 
@@ -409,7 +410,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
          //   if (GUILayout.Button("Reset", EditorStyles.miniButton, GUILayout.ExpandWidth(false)))
          //   {
-         //      GUIUtility.keyboardControl = 0;
+         //      FocusedControl.Clear();
          //      value = 0;
          //   }
          //}
@@ -480,7 +481,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
             if (GUILayout.Button(GlyphCalendar, Style.PopupIconButton, GUILayout.ExpandWidth(false)))
             {
-               GUIUtility.keyboardControl = 0;
+               FocusedControl.Clear();
                this.showCalendarPopup = !this.showCalendarPopup;
                this.datePickerIsForStart = true;
 
@@ -780,7 +781,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
       {
          if (GUILayout.Button(Content.ButtonResetFields, GUILayout.ExpandWidth(false)))
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
             this.current = this.original.DeepClone();
          }
       }

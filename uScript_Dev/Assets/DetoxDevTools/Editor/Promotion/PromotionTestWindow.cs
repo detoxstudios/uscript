@@ -15,6 +15,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
    using System.Globalization;
    using System.Linq;
 
+   using Detox.Editor.GUI;
    using Detox.Editor.GUI.Windows;
 
    using UnityEditor;
@@ -68,7 +69,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
          if (GUILayout.Button("Check for Promotion"))
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
             PromotionWindow.CheckServerForPromotion(this.targetParameter, this.idParameter, this.dateParameter);
          }
 
@@ -158,7 +159,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
             if (GUILayout.Button("Reset", EditorStyles.miniButton, GUILayout.ExpandWidth(false)))
             {
-               GUIUtility.keyboardControl = 0;
+               FocusedControl.Clear();
                value = string.Empty;
             }
          }
@@ -206,7 +207,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
             if (GUILayout.Button("Reset", EditorStyles.miniButton, GUILayout.ExpandWidth(false)))
             {
-               GUIUtility.keyboardControl = 0;
+               FocusedControl.Clear();
                value = string.Empty;
             }
 
@@ -231,7 +232,7 @@ namespace Detox.DetoxDevTools.Editor.Promotion
 
             if (GUILayout.Button("Reset", EditorStyles.miniButton, GUILayout.ExpandWidth(false)))
             {
-               GUIUtility.keyboardControl = 0;
+               FocusedControl.Clear();
                value = uScriptBuild.EditionType.Basic;
             }
          }

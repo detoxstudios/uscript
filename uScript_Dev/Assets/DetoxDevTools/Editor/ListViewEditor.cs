@@ -45,9 +45,9 @@ public class ListViewEditor : EditorWindow
       // Clear keyboard focus from search panels and other text fields, if necessary
       if (Event.current.type == EventType.MouseUp)
       {
-         if (GUIUtility.hotControl != GUIUtility.keyboardControl)
+         if (GUIUtility.hotControl != FocusedControl.ID)
          {
-            GUIUtility.keyboardControl = 0;
+            FocusedControl.Clear();
             editorWindow.Repaint();
          }
       }
@@ -90,7 +90,7 @@ public class ListViewEditor : EditorWindow
 ////         Debug.Log(e.ToString());
 ////         Debug.Log("EVENT: " + Event.current.type.ToString() + "\n");
 //
-////         Debug.Log("hotControl: " + GUIUtility.hotControl.ToString() + ", keyboardControl: " + GUIUtility.keyboardControl.ToString() + "\n");
+////         Debug.Log("hotControl: " + GUIUtility.hotControl.ToString() + ", keyboardControl: " + FocusedControl.ToString() + "\n");
 //      }
    }
 

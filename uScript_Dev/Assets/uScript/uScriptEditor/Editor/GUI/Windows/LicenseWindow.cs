@@ -266,7 +266,7 @@ Should you have any questions concerning this EULA, or if you desire to contact 
 #endif
                if (GUI.GetNameOfFocusedControl() == "EULA")
                {
-                  GUIUtility.keyboardControl = 0;
+                  FocusedControl.Clear();
                }
             }
             EditorGUILayout.EndScrollView();

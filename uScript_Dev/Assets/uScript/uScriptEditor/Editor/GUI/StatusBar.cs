@@ -34,7 +34,7 @@ namespace Detox.Editor.GUI
 
          var keyboardFocusDetails = string.Format(
             "#{0} [{1}]\t{2}",
-            GUIUtility.keyboardControl,
+            FocusedControl.ID,
             GUI.GetNameOfFocusedControl(),
             tooltip);
 
