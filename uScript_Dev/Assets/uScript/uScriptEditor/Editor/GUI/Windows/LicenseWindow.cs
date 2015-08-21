@@ -5,6 +5,8 @@
 
 #if !(UNITY_STORE_PRO || UNITY_STORE_BASIC || UNITY_STORE_PLE)
 
+using Detox.Editor.GUI;
+
 using UnityEditor;
 using UnityEngine;
 
