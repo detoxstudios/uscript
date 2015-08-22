@@ -298,7 +298,7 @@ public class AssetBrowserWindow : EditorWindow
 
             GUILayout.FlexibleSpace();
 
-            uScriptGUI.Enabled = !string.IsNullOrEmpty(selectedAssetPath);
+            GUI.enabled = !string.IsNullOrEmpty(selectedAssetPath);
 
             if (GUILayout.Button("Select", Style.CloseButton))
             {
@@ -306,7 +306,7 @@ public class AssetBrowserWindow : EditorWindow
                this.Close();
             }
 
-            uScriptGUI.Enabled = true;
+            GUI.enabled = true;
          }
          EditorGUILayout.EndHorizontal();
 
