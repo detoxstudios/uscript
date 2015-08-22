@@ -251,15 +251,15 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                }
             }
 
-            var originalState = GUI.enabled;
-            GUI.enabled = originalState && !uScript.Preferences.AutoUpdateReflection;
+            uScript.GuiState.StoreState();
+            uScript.GuiState.Enabled = uScript.GuiState.Enabled && !uScript.Preferences.AutoUpdateReflection;
 
             if (GUILayout.Button("Refresh", EditorStyles.miniButtonRight, GUILayout.ExpandWidth(false)))
             {
                uScript.Instance.UpdateReflectedTypes();
             }
 
-            GUI.enabled = originalState;
+            uScript.GuiState.RestoreState();
 
             GUILayout.Label(uScriptInstance.ScriptEditorCtrl.ScriptEditor.EntityDescs.Length + " reflected types");
          }

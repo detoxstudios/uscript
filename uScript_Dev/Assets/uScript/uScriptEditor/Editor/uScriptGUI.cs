@@ -63,25 +63,6 @@ namespace Detox.Editor
 
       public static int SaveMethodPopupWidth { get; private set; }
 
-      /// <summary>
-      /// Gets or sets a value indicating whether the GUI is enabled. This method should
-      /// be called instead of GUI.enabled when the state needs to change during OnGUI,
-      /// especially during the uScriptGUI custom control calls.
-      /// </summary>
-      public static bool Enabled
-      {
-         get
-         {
-            return UnityEngine.GUI.enabled;
-         }
-
-         set
-         {
-            var instance = uScript.Instance;
-            UnityEngine.GUI.enabled = value && (instance.IsLicenseAccepted && !uScript.IsPreferenceWindowOpen && !instance.isContextMenuOpen);
-         }
-      }
-
       public static void AntiAlias(float zoomScale)
       {
          uScript.Instance.antiAlias = zoomScale < 1 ? 2 : 0;

@@ -351,6 +351,17 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
+   public static GuiState GuiState { get; private set; }
+
+   /// <summary>
+   /// Delegate class used by GuiState for checking whether the GUI should be enabled.
+   /// </summary>
+   /// <returns>Returns True if it can be enabled, otherwise False.</returns>
+   private static bool CanGuiBeEnabled()
+   {
+      return Instance.IsLicenseAccepted && IsPreferenceWindowOpen == false && Instance.isContextMenuOpen == false;
+   }
+
    public Type GetType(string typeName)
    {
       var type = this.m_Types[typeName] as Type ?? uScriptUtils.GetAssemblyQualifiedType(typeName);
@@ -607,6 +618,8 @@ public sealed partial class uScript : EditorWindow
    {
       instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript");
       instance.Launching();
+
+      GuiState = new GuiState(CanGuiBeEnabled);
    }
 
    // Call to force release the mouse and stop a drag operation
@@ -1490,7 +1503,7 @@ public sealed partial class uScript : EditorWindow
       // Must be done in OnGUI rather than on demand
       this.m_ScriptEditorCtrl.ParseClipboardData();
 
-      GUI.enabled = this.IsLicenseAccepted && !IsPreferenceWindowOpen;
+      GuiState.Enable();
 
       // Set the default mouse region
       if (Event.current.type == EventType.Repaint)
@@ -1599,7 +1612,7 @@ public sealed partial class uScript : EditorWindow
 
    private void OnGUIDrawWindows()
    {
-      GUI.enabled = true;
+      GuiState.Enable();
 
       this.BeginWindows();
       {
@@ -1650,7 +1663,7 @@ public sealed partial class uScript : EditorWindow
 
       this.EndWindows();
 
-      GUI.enabled = true;
+      GuiState.Enable();
    }
 
    private void OnGUIFirstRun()
@@ -2666,7 +2679,7 @@ public sealed partial class uScript : EditorWindow
 
       if (this.mouseRegionRect.ContainsKey(region))
       {
-         if (GUI.enabled)
+         if (GuiState.Enabled)
          {
             switch (region)
             {
@@ -3460,7 +3473,7 @@ public sealed partial class uScript : EditorWindow
       m_MouseMoveArgs.Y += (int)_canvasRect.y;
 
       // check for divider draggging
-      if (GUI.enabled && !uScriptGUI.PanelsHidden && this.mouseDown)
+      if (GuiState.Enabled && !uScriptGUI.PanelsHidden && this.mouseDown)
       {
          if (this.mouseDownRegion == MouseRegion.HandleCanvas && deltaY != 0)
          {

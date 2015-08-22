@@ -948,7 +948,7 @@ namespace Detox.Editor.GUI
             //         }
             //      }
 
-            //      uScriptGUI.Enabled = string.IsNullOrEmpty((string)t) == false;
+            //      uScript.GuiState.Enabled = string.IsNullOrEmpty((string)t) == false;
 
             //      if (GUILayout.Button(uScriptGUIContent.buttonArraySearch, Style.ArrayIconButton))
             //      {
@@ -967,7 +967,7 @@ namespace Detox.Editor.GUI
             //         }
             //      }
 
-            //      uScriptGUI.Enabled = true;
+            //      uScript.GuiState.Enable();
             //   }
 
             //   EditorGUILayout.EndHorizontal();
@@ -1118,7 +1118,7 @@ namespace Detox.Editor.GUI
 
             assetPath = EditorGUILayout.TextField(assetPath, Style.TextField, GUILayout.Width(columnValue.Width - 4 - buttonSize.x));
 
-            uScriptGUI.Enabled = !AssetBrowserWindow.isOpen;
+            uScript.GuiState.Enabled = !AssetBrowserWindow.isOpen;
 
             if (GUILayout.Button("Browse", style, GUILayout.Width(buttonSize.x)))
             {
@@ -1143,7 +1143,7 @@ namespace Detox.Editor.GUI
                AssetBrowserWindow.assetFilePath = string.Empty;
             }
 
-            uScriptGUI.Enabled = true;
+            uScript.GuiState.Enable();
          }
 
          EndRow(assetPath.GetType().ToString());
@@ -1168,7 +1168,7 @@ namespace Detox.Editor.GUI
                GUILayout.Width(columnLabel.Width - 3));
          }
 
-         uScriptGUI.Enabled = (!state.IsReadOnly) && (!state.IsSocketExposed || !state.IsLocked);
+         uScript.GuiState.Enabled = (!state.IsReadOnly) && (!state.IsSocketExposed || !state.IsLocked);
       }
 
       private static void BeginRow(string label, State state)
@@ -1185,7 +1185,7 @@ namespace Detox.Editor.GUI
             GUILayout.Label(string.IsNullOrEmpty(label) ? " " : label, Style.Label);
          }
 
-         uScriptGUI.Enabled = enabled;
+         uScript.GuiState.Enabled = enabled;
       }
 
       private static bool BoolField(bool value)
@@ -1204,7 +1204,7 @@ namespace Detox.Editor.GUI
          var v = Style.Type.CalcSize(new GUIContent(type));
          columnType.Width = Mathf.Max(columnType.Width, (int)v.x);
 
-         uScriptGUI.Enabled = true;
+         uScript.GuiState.Enable();
          GUILayout.Label(type, Style.Type);
          EditorGUILayout.EndHorizontal();
 
@@ -1447,13 +1447,13 @@ namespace Detox.Editor.GUI
          }
          else
          {
-            uScriptGUI.Enabled = state.IsLocked == false;
+            uScript.GuiState.Enabled = state.IsLocked == false;
             state.IsSocketExposed = GUILayout.Toggle(
                state.IsSocketExposed,
                string.Empty,
                Style.Enabled,
                GUILayout.Width(columnEnabled.Width));
-            uScriptGUI.Enabled = true;
+            uScript.GuiState.Enable();
          }
 
          // Display the column label
