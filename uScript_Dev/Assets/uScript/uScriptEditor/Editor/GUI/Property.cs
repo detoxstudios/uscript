@@ -16,6 +16,7 @@ namespace Detox.Editor.GUI
    using System.Linq;
    using System.Reflection;
 
+   using Detox.Editor.Extensions;
    using Detox.FlowChart;
    using Detox.ScriptEditor;
 
@@ -545,6 +546,8 @@ namespace Detox.Editor.GUI
             {
                // Arrays are stored as comma delimited string, so parse it now
                var values = Parameter.StringToArray(state.DefaultValueAsString);
+               Debug.LogFormat("OBJECTS: {0}, {1}\n", values, state.Type);
+
                values = ArrayFoldout(label, values, state, unityObjectType.GetElementType());
                value = Parameter.ArrayToString(values);
             }
@@ -760,8 +763,23 @@ namespace Detox.Editor.GUI
          }
       }
 
+      public static string GetControlName()
+      {
+         return GetControlName(string.Empty);
+      }
+
+      public static string GetControlName(string suffix)
+      {
+         return string.Format("{0}[{1}]{2}", nodeKey, propertyCount.ToString(CultureInfo.InvariantCulture), suffix);
+      }
+
       public static void MonitorGUIControlFocusChanges()
       {
+         if (Event.current.type != EventType.Repaint)
+         {
+            return;
+         }
+
          // TODO: Disable or comment out until needed. Only used by VariableNameField()
          if (FocusedControl.ID != focusedControlID)
          {
@@ -769,12 +787,12 @@ namespace Detox.Editor.GUI
             {
                var oldControlName = ControlIDList[focusedControlID];
 
-               //            string newName = "UNKNOWN";
-               //            if (controlIDList.ContainsKey(FocusedControl.ID))
-               //            {
-               //               newName = controlIDList[FocusedControl.ID];
-               //            }
-               //            Debug.Log("FOCUS CHANGED: \t" + focusedControlID.ToString() + " (" + oldName + ") -> " + FocusedControl.ToString() + " (" + newName + ")\n");
+               //string newName = "UNKNOWN";
+               //if (controlIDList.ContainsKey(FocusedControl.ID))
+               //{
+               //   newName = controlIDList[FocusedControl.ID];
+               //}
+               //Debug.Log("FOCUS CHANGED: \t" + focusedControlID.ToString() + " (" + oldName + ") -> " + FocusedControl.ToString() + " (" + newName + ")\n");
 
                // When specific fields lose focus, send out an event
                if (oldControlName == WatchedControlName)
@@ -923,7 +941,7 @@ namespace Detox.Editor.GUI
             //      t = EditorGUILayout.TextField((string)t, Style.TextField, GUILayout.ExpandWidth(true));
             //      var r = GUILayoutUtility.GetLastRect();
 
-            //      if (r.Contains(Event.current.mousePosition) && GUI.enabled)
+            //      if (r.Contains(Event.current.mousePosition) && uScript.GuiState.Enabled)
             //      {
             //         var objectReferences = DragAndDrop.objectReferences;
 
@@ -1219,32 +1237,6 @@ namespace Detox.Editor.GUI
       private static float FloatField(float value)
       {
          return EditorGUILayout.FloatField(value, Style.TextField, GUILayout.Width(columnValue.Width));
-      }
-
-      private static string GetControlName()
-      {
-         return GetControlName(string.Empty);
-      }
-
-      private static string GetControlName(string suffix)
-      {
-         return string.Format("{0}[{1}]{2}", nodeKey, propertyCount.ToString(CultureInfo.InvariantCulture), suffix);
-      }
-
-      private static T GetFieldValue<T>(Type type, string fieldName, BindingFlags bindingFlags)
-      {
-         var fieldInfo = type.GetField(fieldName, bindingFlags);
-         uScriptDebug.Assert(fieldInfo != null, string.Format("Unable to access a field named \"{0}\"", fieldName));
-         return (T)fieldInfo.GetValue(null);
-      }
-
-      private static T GetPropertyValue<T>(Type type, string propertyName, BindingFlags bindingFlags)
-      {
-         var propertyInfo = type.GetProperty(propertyName, bindingFlags);
-         uScriptDebug.Assert(
-            propertyInfo != null,
-            string.Format("Unable to access a property named \"{0}\"", propertyName));
-         return (T)propertyInfo.GetValue(null, null);
       }
 
       private static void GetResourceFolderPaths(string sourceDir, int recursionDepth)
@@ -1568,34 +1560,32 @@ namespace Detox.Editor.GUI
 
             // Unity 3.x uses a FIELD, whereas Unity 4.x uses a PROPERTY. Ugh.
             var maxWidth = uScript.UnityVersion < 4.0f
-                              ? GetFieldValue<float>(typeof(EditorGUILayout), "kLabelFloatMaxW", Flags)
-                              : GetPropertyValue<float>(typeof(EditorGUILayout), "kLabelFloatMaxW", Flags);
-            var minWidth = GetFieldValue<float>(typeof(EditorGUI), "kNumberW", Flags);
+                              ? UnityEditorExtensions.GetFieldValue<float>(
+                                 typeof(EditorGUILayout),
+                                 "kLabelFloatMaxW",
+                                 Flags)
+                              : UnityEditorExtensions.GetPropertyValue<float>(
+                                 typeof(EditorGUILayout),
+                                 "kLabelFloatMaxW",
+                                 Flags);
+            var minWidth = UnityEditorExtensions.GetFieldValue<float>(typeof(EditorGUI), "kNumberW", Flags);
 
             var style = Style.TextField;
             var position = GUILayoutUtility.GetRect(minWidth, maxWidth, 16f, 16f, style, GUILayout.Width(columnValue.Width));
             var controlName = GetControlName();
             var id = GUIUtility.GetControlID(controlName.GetHashCode(), FocusType.Keyboard, position);
 
-            var fieldInfo = typeof(EditorGUI).GetField("s_RecycledEditor", Flags);
-            uScriptDebug.Assert(fieldInfo != null, "Unable to access the RecycledEditor field.");
-
-            var parameters = new[]
-                                {
-                                   fieldInfo.GetValue(null),           // RecycledTextEditor editor
-                                   id,                                 // int id
-                                   EditorGUI.IndentedRect(position),   // Rect position
-                                   value,                              // string text
-                                   style,                              // GUIStyle style
-                                   null,                               // string allowedLetters
-                                   false,                              // out bool changed
-                                   false,                              // bool reset
-                                   false,                              // bool multi-line
-                                   false                               // bool passwordField
-                                };
-
-            var methodInfo = typeof(EditorGUI).GetMethod("DoTextField", Flags);
-            value = (string)methodInfo.Invoke(null, parameters);
+            bool changed;
+            value = UnityEditorExtensions.DoTextField(
+               id,
+               EditorGUI.IndentedRect(position),
+               value,
+               style,
+               null,
+               out changed,
+               false,
+               false,
+               false);
 
             // Associate the id with the control name
             ControlIDList[id] = controlName;

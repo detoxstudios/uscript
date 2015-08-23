@@ -9,6 +9,9 @@
 
 namespace Detox.Editor.Extensions
 {
+   using System;
+   using System.Collections.Generic;
+   using System.Linq;
    using System.Reflection;
 
    using Detox.Drawing;
@@ -19,7 +22,7 @@ namespace Detox.Editor.Extensions
 
    using Color = UnityEngine.Color;
 
-   public static class UnityEditorExtensions
+   internal static class UnityEditorExtensions
    {
       public static Vector2 DockedGUIOffset(this EditorWindow editorWindow)
       {
@@ -30,6 +33,37 @@ namespace Detox.Editor.Extensions
          offset.y = (borderSize.bottom == 2 || borderSize.bottom == 4) ? -3 : 0;
 
          return offset;
+      }
+
+      public static string DoTextField(
+         int id,
+         Rect position,
+         string text,
+         GUIStyle style,
+         string allowedLetters,
+         out bool changed,
+         bool reset,
+         bool multiLine,
+         bool passwordField)
+      {
+         const BindingFlags Flags = BindingFlags.NonPublic | BindingFlags.Static;
+
+         var parameters = new[]
+                             {
+                                GetRecycledTextEditor(), id, position, text, style, allowedLetters, null, reset,
+                                multiLine, passwordField
+                             };
+
+         var types = GetTypes(parameters);
+         types[5] = typeof(string); // string could be null
+         types[6] = typeof(bool).MakeByRefType(); // out bool
+
+         var method = GetMethod<string>(typeof(EditorGUI), "DoTextField", types, Flags);
+
+         var result = (string)method.Invoke(null, parameters);
+         changed = (bool)parameters[6];
+
+         return result;
       }
 
       public static Rect GetControlRect(params GUILayoutOption[] options)
@@ -64,6 +98,67 @@ namespace Detox.Editor.Extensions
 #else
          return EditorGUILayout.GetControlRect(hasLabel, height, style, options);
 #endif
+      }
+
+      public static T GetFieldValue<T>(Type type, string fieldName, BindingFlags bindingFlags)
+      {
+         var info = type.GetField(fieldName, bindingFlags);
+
+         if (info == null || info.FieldType.IsAssignableFrom(typeof(T)))
+         {
+            uScriptDebug.Log(
+               string.Format("Unable to access field: {0}.{1}.", type, fieldName),
+               uScriptDebug.Type.Error);
+            throw new ArgumentException();
+         }
+
+         return (T)info.GetValue(null);
+      }
+
+      public static MethodInfo GetMethod<T>(Type type, string methodName, Type[] types, BindingFlags bindingFlags)
+      {
+         var info = typeof(EditorGUI).GetMethod(
+            methodName,
+            BindingFlags.NonPublic | BindingFlags.Static,
+            null,
+            types,
+            null);
+
+         if (info == null || info.ReturnType != typeof(T))
+         {
+            uScriptDebug.Log(
+               string.Format("Unable to access method: {0}.{1}.", type, methodName),
+               uScriptDebug.Type.Error);
+            throw new ArgumentException();
+         }
+
+         return info;
+      }
+
+      public static T GetPropertyValue<T>(Type type, string propertyName, BindingFlags bindingFlags)
+      {
+         var info = type.GetProperty(propertyName, bindingFlags);
+
+         if (info == null || info.PropertyType.IsAssignableFrom(typeof(T)))
+         {
+            uScriptDebug.Log(
+               string.Format("Unable to access property: {0}.{1}.", type, propertyName),
+               uScriptDebug.Type.Error);
+            throw new ArgumentException();
+         }
+
+         return (T)info.GetValue(null, null);
+      }
+
+      public static object GetRecycledTextEditor()
+      {
+         const BindingFlags Flags = BindingFlags.NonPublic | BindingFlags.Static;
+         return GetFieldValue<object>(typeof(EditorGUI), "s_RecycledEditor", Flags);
+      }
+
+      public static Type[] GetTypes(IEnumerable<object> objects)
+      {
+         return objects.Select(o => o == null ? typeof(object) : o.GetType()).ToArray();
       }
 
       public static RectOffset ParentBorderSize(this EditorWindow editorWindow)
