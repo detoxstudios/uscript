@@ -20,7 +20,6 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 {
    private static readonly uScriptGUIPanelProperty PanelInstance = new uScriptGUIPanelProperty();
 
-   private Rect scrollviewRect;
    private int selectedNodeCount;
 
    private uScriptGUIPanelProperty()
@@ -35,6 +34,10 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
          return PanelInstance;
       }
    }
+
+   public Rect Rect { get; private set; }
+
+   public Rect ScrollviewRect { get; private set; }
 
    public override void Draw()
    {
@@ -60,7 +63,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
       if (Event.current.type == EventType.Repaint)
       {
-          _rect = GUILayoutUtility.GetLastRect();
+         this.Rect = GUILayoutUtility.GetLastRect();
       }
 
       uScriptInstance.SetMouseRegion(uScript.MouseRegion.Properties);
@@ -70,7 +73,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
    {
       EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
       {
-         GUILayout.Label(this._name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
+         GUILayout.Label(this.Name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
       }
 
       EditorGUILayout.EndHorizontal();
@@ -88,15 +91,15 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
       }
       else
       {
-         this._scrollviewOffset = EditorGUILayout.BeginScrollView(
-            this._scrollviewOffset,
+         this.ScrollviewOffset = EditorGUILayout.BeginScrollView(
+            this.ScrollviewOffset,
             false,
             false,
             uScriptGUIStyle.HorizontalScrollbar,
             uScriptGUIStyle.VerticalScrollbar,
             "scrollview");
          {
-            Property.BeginColumns("Property", "Value", "Type", this._scrollviewOffset, this.scrollviewRect);
+            Property.BeginColumns("Property", "Value", "Type", this.ScrollviewOffset, this.ScrollviewRect);
             {
                if (uScript.Instance.ScriptEditorCtrl != null)
                {
@@ -111,7 +114,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
          if (Event.current.type == EventType.Repaint)
          {
-            this.scrollviewRect = GUILayoutUtility.GetLastRect();
+            this.ScrollviewRect = GUILayoutUtility.GetLastRect();
          }
       }
    }
@@ -123,7 +126,7 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
          string.Format(
             "The {0} panel is configured to show the properties of {1}, but there are currently {2} nodes selected.\n\n"
             + "The limit can be modified via the Preferences panel, although increasing the limit may adversely affect performance.",
-            this._name,
+            this.Name,
             limit == 1 ? "a single selected node" : string.Format("no more than {0} selected nodes", limit),
             this.selectedNodeCount);
 
@@ -137,6 +140,6 @@ public sealed class uScriptGUIPanelProperty : uScriptGUIPanel
 
    private void Init()
    {
-      this._name = "Properties";
+      this.Name = "Properties";
    }
 }

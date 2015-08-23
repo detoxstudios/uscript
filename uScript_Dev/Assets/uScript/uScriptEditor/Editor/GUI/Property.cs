@@ -841,8 +841,8 @@ namespace Detox.Editor.GUI
          btnRect.height = 16;
 
          // Determine the rect for the entire property panel row
-         row.x = uScriptGUIPanel.Rect.x;
-         row.width = uScriptGUIPanel.Rect.width;
+         row.x = uScriptGUIPanelProperty.Instance.Rect.x;
+         row.width = uScriptGUIPanelProperty.Instance.Rect.width;
 
          if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayRemove, Style.ArrayTextButton))
          {
