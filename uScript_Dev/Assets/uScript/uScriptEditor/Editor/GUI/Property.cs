@@ -647,7 +647,8 @@ namespace Detox.Editor.GUI
                      Debug.LogWarning(string.Format("value ({0}) does not equal state.Default ({1})\n", value, state.DefaultValueAsString));
                   }
 
-                  value = UnityObjectField((string)value, unityObjectType);
+                  //value = UnityObjectField((string)value, unityObjectType);
+                  value = SceneObjectPathField((string)value, unityObjectType);
                   type = unityObjectType.ToString();
                }
                else
@@ -928,7 +929,8 @@ namespace Detox.Editor.GUI
          }
          else if (type != null && typeof(UnityEngine.Object).IsAssignableFrom(type))
          {
-            t = UnityObjectField((string)t, type);
+            //t = UnityObjectField((string)t, type);
+            t = SceneObjectPathField((string)t, type);
          }
          else if (value is string)
          {
@@ -1429,6 +1431,11 @@ namespace Detox.Editor.GUI
          return value;
       }
 
+      private static string SceneObjectPathField(string value, Type type)
+      {
+         return Control.SceneObjectPathField(value, type, GUILayout.Width(columnValue.Width));
+      }
+
       private static void SetupRow(State state)
       {
          EditorGUILayout.BeginHorizontal(Style.RowBackground);
@@ -1541,6 +1548,53 @@ namespace Detox.Editor.GUI
       //   // if that object (or the changed object) does exist, use it's name to update the property value
       //   // if it doesn't exist then the 'val' will stay as what was entered into the TextField
       //   return unityObject != null ? unityObject.name : string.Empty;
+      //}
+
+      //private static string ObjectField(string label, UnityEngine.Object value, Type type, string textValue, State state)
+      //{
+      //   EditorGUILayout.BeginVertical();
+      //   {
+      //      BeginRow(label, state);
+
+      //      if (IsFieldUsable(state))
+      //      {
+      //         textValue = EditorGUILayout.TextField(textValue, Style.TextField, GUILayout.Width(columnValue.Width));
+
+      //         EndRow(textValue.GetType().ToString());
+
+      //         var tempState = new Property.State(false, true, state.IsReadOnly);
+      //         BeginRow(string.Empty, tempState);
+
+      //         // now try and update the object browser with an instance of the specified object
+      //         var objects = UnityEngine.Object.FindObjectsOfType(type);
+      //         var unityObject = objects.FirstOrDefault(o => o.name == textValue);
+
+      //         // components should never be instances in the property grid
+      //         // we must refer to (and select) their parent game object
+      //         if (typeof(Component).IsAssignableFrom(type))
+      //         {
+      //            //type = typeof(GameObject);
+      //            if (null != unityObject)
+      //            {
+      //               unityObject = ((Component)unityObject).gameObject;
+      //            }
+      //         }
+
+      //         unityObject = EditorGUILayout.ObjectField(unityObject, type, true, GUILayout.Width(columnValue.Width));
+
+      //         // if that object (or the changed object) does exist, use it's name to update the property value
+      //         // if it doesn't exist then the 'val' will stay as what was entered into the TextField
+      //         if (unityObject != null)
+      //         {
+      //            textValue = unityObject.name;
+      //         }
+      //      }
+
+      //      EndRow(type.ToString());
+      //   }
+
+      //   EditorGUILayout.EndVertical();
+      //   return textValue;
       //}
 
       private static string VariableNameField(string label, string value, State state)

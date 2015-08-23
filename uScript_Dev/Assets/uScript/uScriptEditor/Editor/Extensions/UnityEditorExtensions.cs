@@ -15,6 +15,7 @@ namespace Detox.Editor.Extensions
    using System.Reflection;
 
    using Detox.Drawing;
+   using Detox.Editor.GUI;
 
    using UnityEditor;
 
@@ -24,6 +25,35 @@ namespace Detox.Editor.Extensions
 
    internal static class UnityEditorExtensions
    {
+      public static bool CurrentGUIViewHasFocus()
+      {
+         var unityEditor = Assembly.GetAssembly(typeof(EditorGUI));
+
+         var guiView = unityEditor.GetType("UnityEditor.GUIView");
+         if (guiView == null)
+         {
+            uScriptDebug.Log("UnityEditor.GUIView was not found in the assembly.", uScriptDebug.Type.Error);
+            return false;
+         }
+
+         var currentPropertyInfo = guiView.GetProperty("current", BindingFlags.Public | BindingFlags.Static);
+         if (currentPropertyInfo == null)
+         {
+            uScriptDebug.Log("UnityEditor.GUIView.current was not found in the assembly.", uScriptDebug.Type.Error);
+            return false;
+         }
+
+         var hasFocusPropertyInfo = guiView.GetProperty("hasFocus", BindingFlags.Public | BindingFlags.Instance);
+         if (hasFocusPropertyInfo == null)
+         {
+            uScriptDebug.Log("UnityEditor.GUIView.hasFocus was not found in the assembly.", uScriptDebug.Type.Error);
+            return false;
+         }
+
+         var current = currentPropertyInfo.GetValue(null, null);
+         return (bool)hasFocusPropertyInfo.GetValue(current, null);
+      }
+
       public static Vector2 DockedGUIOffset(this EditorWindow editorWindow)
       {
          var offset = Vector2.zero;
@@ -159,6 +189,31 @@ namespace Detox.Editor.Extensions
       public static Type[] GetTypes(IEnumerable<object> objects)
       {
          return objects.Select(o => o == null ? typeof(object) : o.GetType()).ToArray();
+      }
+
+
+      public static bool HasKeyboardFocus(int controlID)
+      {
+         return FocusedControl.ID == controlID && CurrentGUIViewHasFocus();
+      }
+
+      public static bool IsEditingControl(int id)
+      {
+         return id != 0 && HasKeyboardFocus(id) && IsEditingTextField();
+      }
+
+      public static bool IsEditingTextField()
+      {
+         var method = typeof(EditorGUI).GetMethod("IsEditingTextField", BindingFlags.NonPublic | BindingFlags.Static);
+         if (method == null)
+         {
+            uScriptDebug.Log("EditorGUI.IsEditingTextField was not found in the assembly.", uScriptDebug.Type.Error);
+            return false;
+         }
+
+         var result = (bool)method.Invoke(null, null);
+
+         return result;
       }
 
       public static RectOffset ParentBorderSize(this EditorWindow editorWindow)

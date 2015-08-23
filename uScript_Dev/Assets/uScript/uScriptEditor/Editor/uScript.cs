@@ -359,7 +359,18 @@ public sealed partial class uScript : EditorWindow
    /// <returns>Returns True if it can be enabled, otherwise False.</returns>
    private static bool CanGuiBeEnabled()
    {
-      return Instance.IsLicenseAccepted && IsPreferenceWindowOpen == false && Instance.isContextMenuOpen == false;
+      var autoCompletePopupCheck = true;
+
+      if (Detox.Editor.GUI.Control.AutoCompletePopup.Visible)
+      {
+         // TODO: if (UnityExtensions.IsEditing(Control.AutoCompletePopup.ParentControlID) == false)
+         if (Detox.Editor.GUI.Control.AutoCompletePopup.ParentControlID != FocusedControl.ID)
+         {
+            autoCompletePopupCheck = false;
+         }
+      }
+
+      return Instance.IsLicenseAccepted && IsPreferenceWindowOpen == false && Instance.isContextMenuOpen == false && autoCompletePopupCheck;
    }
 
    public Type GetType(string typeName)
@@ -1659,6 +1670,8 @@ public sealed partial class uScript : EditorWindow
                this.rectContextMenuWindow = tmpRect;
             }
          }
+
+         Detox.Editor.GUI.Control.AutoCompletePopup.Draw(uScriptGUIPanelProperty.Instance.scrollviewRect.position);
       }
 
       this.EndWindows();
@@ -2074,6 +2087,17 @@ public sealed partial class uScript : EditorWindow
    /// </summary>
    private void OnGUIHandleWindowOverrides()
    {
+      uScriptGUI.IsDrawingGUIWindows = Detox.Editor.GUI.Control.AutoCompletePopup.Visible;
+
+      // When a Window is open, the non-Window GUI must be disabled except while repainting.
+      if (uScriptGUI.IsDrawingGUIWindows && Event.current.type != EventType.Repaint)
+      {
+         // Disable the entire GUI until the window is drawn
+         GuiState.Disable();
+      }
+
+      // CursorRects associated with GUI.Windows must be applied before the rest of the GUI is processed.
+      Detox.Editor.GUI.Control.AutoCompletePopup.AddCursorRect();
    }
 
    private static void SendEventToHotkeyWindow()
