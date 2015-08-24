@@ -546,7 +546,8 @@ namespace Detox.Editor.GUI
             {
                // Arrays are stored as comma delimited string, so parse it now
                var values = Parameter.StringToArray(state.DefaultValueAsString);
-               Debug.LogFormat("OBJECTS: {0}, {1}\n", values, state.Type);
+
+               //Debug.LogFormat("OBJECTS: {0}, {1}\n", values, state.Type);
 
                values = ArrayFoldout(label, values, state, unityObjectType.GetElementType());
                value = Parameter.ArrayToString(values);
@@ -646,9 +647,11 @@ namespace Detox.Editor.GUI
                   {
                      Debug.LogWarning(string.Format("value ({0}) does not equal state.Default ({1})\n", value, state.DefaultValueAsString));
                   }
-
-                  //value = UnityObjectField((string)value, unityObjectType);
+#if UNITY_3_5
+                  value = UnityObjectField((string)value, unityObjectType);
+#else
                   value = SceneObjectPathField((string)value, unityObjectType);
+#endif
                   type = unityObjectType.ToString();
                }
                else
@@ -929,8 +932,11 @@ namespace Detox.Editor.GUI
          }
          else if (type != null && typeof(UnityEngine.Object).IsAssignableFrom(type))
          {
-            //t = UnityObjectField((string)t, type);
+#if UNITY_3_5
+            t = UnityObjectField((string)t, type);
+#else
             t = SceneObjectPathField((string)t, type);
+#endif
          }
          else if (value is string)
          {

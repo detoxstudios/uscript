@@ -22,6 +22,7 @@ namespace Detox.Editor.Extensions
    using UnityEngine;
 
    using Color = UnityEngine.Color;
+   using Debug = System.Diagnostics.Debug;
 
    internal static class UnityEditorExtensions
    {
@@ -63,6 +64,11 @@ namespace Detox.Editor.Extensions
          offset.y = (borderSize.bottom == 2 || borderSize.bottom == 4) ? -3 : 0;
 
          return offset;
+      }
+
+      public static string DoTextField(int id, Rect position, string text, GUIStyle style, out bool changed)
+      {
+         return DoTextField(id, position, text, style, null, out changed, false, false, false);
       }
 
       public static string DoTextField(
@@ -145,14 +151,24 @@ namespace Detox.Editor.Extensions
          return (T)info.GetValue(null);
       }
 
+      public static MethodInfo GetMethod(Type type, string methodName, Type[] types, BindingFlags bindingFlags)
+      {
+         var info = type.GetMethod(methodName, bindingFlags, null, types, null);
+
+         if (info == null || info.ReturnType != typeof(void))
+         {
+            uScriptDebug.Log(
+               string.Format("Unable to access method: {0}.{1}.", type, methodName),
+               uScriptDebug.Type.Error);
+            throw new ArgumentException();
+         }
+
+         return info;
+      }
+
       public static MethodInfo GetMethod<T>(Type type, string methodName, Type[] types, BindingFlags bindingFlags)
       {
-         var info = typeof(EditorGUI).GetMethod(
-            methodName,
-            BindingFlags.NonPublic | BindingFlags.Static,
-            null,
-            types,
-            null);
+         var info = type.GetMethod(methodName, bindingFlags, null, types, null);
 
          if (info == null || info.ReturnType != typeof(T))
          {
@@ -191,7 +207,6 @@ namespace Detox.Editor.Extensions
          return objects.Select(o => o == null ? typeof(object) : o.GetType()).ToArray();
       }
 
-
       public static bool HasKeyboardFocus(int controlID)
       {
          return FocusedControl.ID == controlID && CurrentGUIViewHasFocus();
@@ -199,6 +214,7 @@ namespace Detox.Editor.Extensions
 
       public static bool IsEditingControl(int id)
       {
+         // Never returns True when Event.current is "Layout" or "Used"
          return id != 0 && HasKeyboardFocus(id) && IsEditingTextField();
       }
 
@@ -241,9 +257,34 @@ namespace Detox.Editor.Extensions
             }
          }
 
-         System.Diagnostics.Debug.Assert(borderSize != null, "borderSize is null");
+         Debug.Assert(borderSize != null, "borderSize is null");
 
          return borderSize;
+      }
+
+      /// <summary>
+      /// The "Rect.position" property was not introduced until Unity 4.5
+      /// </summary>
+      /// <param name="rect">The target rectangle.</param>
+      /// <returns>Returns the position of the target.</returns>
+      public static Vector2 Position(this Rect rect)
+      {
+         return new Vector2(rect.xMin, rect.yMin);
+      }
+
+      public static void ReplaceRecycledTextEditorContents(string text)
+      {
+         const BindingFlags Flags = BindingFlags.Public | BindingFlags.Instance;
+
+         var recycledEditor = GetRecycledTextEditor();
+
+         var selectAllMethod = GetMethod(recycledEditor.GetType(), "SelectAll", new Type[0], Flags);
+         selectAllMethod.Invoke(recycledEditor, null);
+
+         var parameters = new object[] { text };
+         var types = GetTypes(parameters);
+         var replaceSelectionMethod = GetMethod(recycledEditor.GetType(), "ReplaceSelection", types, Flags);
+         replaceSelectionMethod.Invoke(recycledEditor, parameters);
       }
 
       public static string ToHex(this Color color)

@@ -49,6 +49,8 @@ namespace Detox.Editor
 
       private static MethodInfo methodCheckOnGUI;
 
+      public static bool IsDrawingGUIWindows { get; set; }
+
       public static int PanelDividerThickness { get; private set; }
 
       public static int PanelLeftWidth { get; set; }
@@ -62,6 +64,15 @@ namespace Detox.Editor
       public static bool PanelsHidden { get; set; }
 
       public static int SaveMethodPopupWidth { get; private set; }
+
+      public static bool IsRepainting
+      {
+         get
+         {
+            // TODO: Test to make sure we're actually in OnGUI
+            return Event.current.type == EventType.Repaint;
+         }
+      }
 
       public static void AntiAlias(float zoomScale)
       {

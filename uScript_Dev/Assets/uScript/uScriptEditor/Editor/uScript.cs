@@ -357,20 +357,9 @@ public sealed partial class uScript : EditorWindow
    /// Delegate class used by GuiState for checking whether the GUI should be enabled.
    /// </summary>
    /// <returns>Returns True if it can be enabled, otherwise False.</returns>
-   private static bool CanGuiBeEnabled()
+   private static bool GuiStateEnableCondition()
    {
-      var autoCompletePopupCheck = true;
-
-      if (Detox.Editor.GUI.Control.AutoCompletePopup.Visible)
-      {
-         // TODO: if (UnityExtensions.IsEditing(Control.AutoCompletePopup.ParentControlID) == false)
-         if (Detox.Editor.GUI.Control.AutoCompletePopup.ParentControlID != FocusedControl.ID)
-         {
-            autoCompletePopupCheck = false;
-         }
-      }
-
-      return Instance.IsLicenseAccepted && IsPreferenceWindowOpen == false && Instance.isContextMenuOpen == false && autoCompletePopupCheck;
+      return Instance.IsLicenseAccepted && IsPreferenceWindowOpen == false && Instance.isContextMenuOpen == false;
    }
 
    public Type GetType(string typeName)
@@ -630,7 +619,7 @@ public sealed partial class uScript : EditorWindow
       instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript");
       instance.Launching();
 
-      GuiState = new GuiState(CanGuiBeEnabled);
+      GuiState = new GuiState(GuiStateEnableCondition);
    }
 
    // Call to force release the mouse and stop a drag operation
@@ -1561,9 +1550,6 @@ public sealed partial class uScript : EditorWindow
       // where is the mouse?
       this.CalculateMouseRegion();
 
-      // Draw GUI.Windows last, so that they appear on top of all other controls
-      this.OnGUIDrawWindows();
-
       ExportPNG.ContinueExport();
 
       if (Event.current.type == EventType.Repaint)
@@ -1619,6 +1605,9 @@ public sealed partial class uScript : EditorWindow
             e.Use();
          }
       }
+
+      // Draw GUI.Windows last, so that they appear on top of all other controls
+      this.OnGUIDrawWindows();
    }
 
    private void OnGUIDrawWindows()
@@ -1671,7 +1660,10 @@ public sealed partial class uScript : EditorWindow
             }
          }
 
-         Detox.Editor.GUI.Control.AutoCompletePopup.Draw(uScriptGUIPanelProperty.Instance.scrollviewRect.position);
+         var drawingOffset = uScriptGUIPanelProperty.Instance.ScrollviewRect.Position()
+                             - uScriptGUIPanelProperty.Instance.ScrollviewOffset;
+         Detox.Editor.GUI.Control.AutoCompletePopup.Draw(drawingOffset);
+         //Detox.Editor.GUI.Control.AutoCompletePopup.Draw(Vector2.zero);
       }
 
       this.EndWindows();
@@ -2087,10 +2079,10 @@ public sealed partial class uScript : EditorWindow
    /// </summary>
    private void OnGUIHandleWindowOverrides()
    {
-      uScriptGUI.IsDrawingGUIWindows = Detox.Editor.GUI.Control.AutoCompletePopup.Visible;
+      Detox.Editor.GUI.Control.AutoCompletePopup.InterceptMouseInput();
 
       // When a Window is open, the non-Window GUI must be disabled except while repainting.
-      if (uScriptGUI.IsDrawingGUIWindows && Event.current.type != EventType.Repaint)
+      if (Detox.Editor.GUI.Control.AutoCompletePopup.IsVisible && Event.current.type != EventType.Repaint)
       {
          // Disable the entire GUI until the window is drawn
          GuiState.Disable();
