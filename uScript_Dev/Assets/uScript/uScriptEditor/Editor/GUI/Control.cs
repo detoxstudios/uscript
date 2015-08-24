@@ -242,7 +242,7 @@ namespace Detox.Editor.GUI
             foreach (var reference in references)
             {
                var gameObject = reference as GameObject;
-               if (gameObject != null)
+               if (gameObject != null && EditorUtility.IsPersistent(gameObject) == false)
                {
                   var components = gameObject.GetComponents(typeof(Component));
                   foreach (var component in components.Where(type.IsInstanceOfType))
@@ -256,7 +256,16 @@ namespace Detox.Editor.GUI
          }
 
          // ... otherwise return the first GameObject in the array.
-         return references.OfType<GameObject>().FirstOrDefault();
+         foreach (var reference in references)
+         {
+            var gameObject = reference as GameObject;
+            if (gameObject != null && EditorUtility.IsPersistent(gameObject) == false)
+            {
+               return gameObject;
+            }
+         }
+
+         return null;
       }
 
       private static class Cache
