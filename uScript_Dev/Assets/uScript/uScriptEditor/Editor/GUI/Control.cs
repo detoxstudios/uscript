@@ -123,6 +123,17 @@ namespace Detox.Editor.GUI
                }
             }
          }
+         else if (Event.current.type == EventType.Repaint)
+         {
+            if (fieldPosition.Contains(Event.current.mousePosition) && GUI.enabled)
+            {
+               if (DragAndDrop.visualMode != DragAndDropVisualMode.None
+                   && DragAndDrop.visualMode != DragAndDropVisualMode.Rejected)
+               {
+                  EditorGUI.DrawRect(fieldPosition, Color.white);
+               }
+            }
+         }
 
          // Call the internal Unity control
          bool changed;
