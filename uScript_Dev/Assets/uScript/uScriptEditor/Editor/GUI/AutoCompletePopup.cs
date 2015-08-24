@@ -27,6 +27,8 @@ namespace Detox.Editor.GUI
 
          private static readonly List<string> List = new List<string>();
 
+         private static readonly Dictionary<string, int> Duplicates = new Dictionary<string, int>();
+
          private static readonly Dictionary<string, string> MarkupText = new Dictionary<string, string>();
 
          private static int currentIndex;
@@ -114,6 +116,20 @@ namespace Detox.Editor.GUI
 
          public static void Add(string label)
          {
+            if (List.Contains(label))
+            {
+               if (Duplicates.ContainsKey(label))
+               {
+                  Duplicates[label]++;
+               }
+               else
+               {
+                  Duplicates.Add(label, 1);
+               }
+
+               return;
+            }
+
             List.Add(label);
          }
 
@@ -327,10 +343,9 @@ namespace Detox.Editor.GUI
             popupRect.x += offset.x;
             popupRect.y += offset.y;
 
-            var id = "AutoCompletePopup".GetHashCode();
-            var tempRect = GUILayout.Window(id, popupRect, Window, string.Empty, Style.Window);
+            // TODO: move the panel above the parent control if there is limited room below it
 
-            position.height = tempRect.height;
+            GUILayout.Window("AutoCompletePopup".GetHashCode(), popupRect, Window, string.Empty, Style.Window);
 
             uScript.GuiState.Enable();
          }
@@ -340,6 +355,7 @@ namespace Detox.Editor.GUI
             currentIndex = -1;
             List.Clear();
             MarkupText.Clear();
+            Duplicates.Clear();
             IsVisible = false;
 
             if (WasReturnPressed == false)
@@ -418,7 +434,7 @@ namespace Detox.Editor.GUI
             {
                var content = List[i];
                var selected = i == currentIndex;
-               var style = Style.Row(i, selected);
+               var rowStyle = Style.Row(i, selected);
 
                if (selected == false)
                {
@@ -430,7 +446,23 @@ namespace Detox.Editor.GUI
                   }
                }
 
-               GUILayout.Label(content, style);
+               EditorGUILayout.BeginHorizontal(rowStyle);
+               {
+                  GUILayout.Label(content, selected ? Style.ItemSelected : Style.Item);
+
+                  var count = 0;
+                  if (Duplicates.TryGetValue(List[i], out count))
+                  {
+                     var warningMessage = string.Format("[{0} {1}]", count, count == 1 ? "duplicate" : "duplicates");
+                     if (selected == false)
+                     {
+                        warningMessage = warningMessage.Color(Color.red);
+                     }
+
+                     GUILayout.Label(warningMessage, Style.Warning);
+                  }
+               }
+               EditorGUILayout.EndHorizontal();
             }
 
             if (maxItems < List.Count)
@@ -443,44 +475,53 @@ namespace Detox.Editor.GUI
 
          private static class Style
          {
-            private static readonly GUIStyle ItemEven;
+            private static readonly GUIStyle RowEven;
 
-            private static readonly GUIStyle ItemOdd;
+            private static readonly GUIStyle RowOdd;
 
-            private static readonly GUIStyle ItemSelected;
+            private static readonly GUIStyle RowSelected;
 
             static Style()
             {
                var windowBackground = uScriptGUI.GetSkinnedTexture("MenuContext");
 
-               ItemOdd = new GUIStyle(GUI.skin.button)
+               RowEven = new GUIStyle(GUI.skin.button)
+               {
+                  alignment = TextAnchor.MiddleLeft,
+                  fixedHeight = 20,
+                  margin = new RectOffset(),
+                  padding = new RectOffset(),
+                  overflow = new RectOffset(),
+                  focused = GUI.skin.button.normal,
+                  normal = ((GUIStyle)"CN EntryBackEven").normal,
+               };
+
+               RowOdd = new GUIStyle(RowEven) { normal = ((GUIStyle)"CN EntryBackodd").normal, };
+
+               RowSelected = new GUIStyle(RowEven) { normal = ((GUIStyle)"CN EntryBackodd").onNormal, };
+
+               Item = new GUIStyle(GUI.skin.button)
                {
                   alignment = TextAnchor.MiddleLeft,
                   fixedHeight = 20,
                   margin = new RectOffset(),
                   overflow = new RectOffset(),
-                  focused = GUI.skin.button.normal,
-                  normal = ((GUIStyle)"CN EntryBackodd").normal,
+                  normal = EditorStyles.label.normal,
+                  onNormal = RowSelected.onNormal,
 #if !UNITY_3_5
                   richText = true
 #endif
                };
 
-               ItemEven = new GUIStyle(ItemOdd) { normal = ((GUIStyle)"CN EntryBackEven").normal };
-
-               ItemSelected = new GUIStyle(ItemEven)
-               {
-                  normal = ((GUIStyle)"CN EntryBackodd").onNormal,
-#if !UNITY_3_5
-                  richText = false
-#endif
-               };
+               ItemSelected = new GUIStyle(Item) { normal = RowSelected.normal };
 
                Message = new GUIStyle(GUI.skin.label)
                {
                   alignment = TextAnchor.MiddleRight,
                   fontStyle = FontStyle.Italic
                };
+
+               Warning = new GUIStyle(Item) { alignment = TextAnchor.MiddleRight };
 
                Window = new GUIStyle(GUI.skin.window)
                {
@@ -493,13 +534,19 @@ namespace Detox.Editor.GUI
                };
             }
 
+            public static GUIStyle Item { get; private set; }
+
+            public static GUIStyle ItemSelected { get; private set; }
+
             public static GUIStyle Message { get; private set; }
+
+            public static GUIStyle Warning { get; private set; }
 
             public static GUIStyle Window { get; private set; }
 
             public static GUIStyle Row(int index, bool selected)
             {
-               return selected ? ItemSelected : (index % 2 != 0 ? ItemEven : ItemOdd);
+               return selected ? RowSelected : (index % 2 != 0 ? RowEven : RowOdd);
             }
          }
       }
