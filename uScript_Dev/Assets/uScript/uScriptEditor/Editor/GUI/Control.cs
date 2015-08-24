@@ -20,6 +20,8 @@ namespace Detox.Editor.GUI
 
    using UnityEngine;
 
+   using Object = UnityEngine.Object;
+
    public static partial class Control
    {
       private static readonly GUIContent SearchButton;
@@ -32,6 +34,8 @@ namespace Detox.Editor.GUI
             uScriptGUI.GetSkinnedTexture("iconSearch"),
             "Locate the object in the Hierarchy window.");
       }
+
+      internal delegate UnityEngine.Object SceneObjectPathFieldValidator(UnityEngine.Object[] references, Type type, SerializedProperty property);
 
       public static string SceneObjectPathField(string text, Type type, params GUILayoutOption[] options)
       {
@@ -74,9 +78,54 @@ namespace Detox.Editor.GUI
             GUI.color = new Color(1, 0.5f, 0.5f, 1);
          }
 
+         //var hasObjectThumbnail = EditorGUIUtility.HasObjectThumbnail(type);
+         //Debug.Log(type + " hasObjectThumbnail: " + hasObjectThumbnail + "\n");
+
+         //var iconSize = EditorGUIUtility.GetIconSize();
+         //Debug.Log("iconSize: " + iconSize + "\n");
+         //EditorGUIUtility.SetIconSize(new Vector2(12f, 12f));
+
+         // Handle Drag and Drop
+         var fieldPosition = new Rect(position.x, position.y, position.width - 18, position.height);
+
+         if (Event.current.type == EventType.DragUpdated || Event.current.type == EventType.DragPerform)
+         {
+            if (fieldPosition.Contains(Event.current.mousePosition) && GUI.enabled)
+            {
+               var objectReferences = DragAndDrop.objectReferences;
+               var validator = new SceneObjectPathFieldValidator(ValidateSceneObjectPathFieldAssignment);
+               var target = validator(objectReferences, type, null);
+               if (target != null)
+               {
+                  DragAndDrop.visualMode = DragAndDropVisualMode.Link;
+                  if (Event.current.type == EventType.DragPerform)
+                  {
+                     var component = target as Component;
+                     if (component != null)
+                     {
+                        text = uScriptUtility.GetHierarchyPath(component.transform);
+                     }
+                     else
+                     {
+                        var gameObject = (GameObject)target;
+                        text = uScriptUtility.GetHierarchyPath(gameObject.transform);
+                     }
+
+                     GUI.changed = true;
+                     DragAndDrop.AcceptDrag();
+                     DragAndDrop.activeControlID = 0;
+                  }
+                  else
+                  {
+                     DragAndDrop.activeControlID = id;
+                  }
+                  Event.current.Use();
+               }
+            }
+         }
+
          // Call the internal Unity control
          bool changed;
-         var fieldPosition = new Rect(position.x, position.y, position.width - 18, position.height);
          var value = UnityEditorExtensions.DoTextField(id, fieldPosition, text, style, out changed);
 
          // Reset the tint
@@ -172,6 +221,42 @@ namespace Detox.Editor.GUI
          }
 
          return value;
+      }
+
+      private static UnityEngine.Object ValidateSceneObjectPathFieldAssignment(
+         UnityEngine.Object[] references,
+         Type type,
+         SerializedProperty property)
+      {
+         // This validator accepts any number of UnityEngine.Objects
+         // and returns the first compatible object in the array.
+
+         if (references.Length <= 0)
+         {
+            return null;
+         }
+
+         if (typeof(Component).IsAssignableFrom(type))
+         {
+            // We want a component, so accept nothing other than a component.
+            foreach (var reference in references)
+            {
+               var gameObject = reference as GameObject;
+               if (gameObject != null)
+               {
+                  var components = gameObject.GetComponents(typeof(Component));
+                  foreach (var component in components.Where(type.IsInstanceOfType))
+                  {
+                     return component;
+                  }
+               }
+            }
+
+            return null;
+         }
+
+         // ... otherwise return the first GameObject in the array.
+         return references.OfType<GameObject>().FirstOrDefault();
       }
 
       private static class Cache
