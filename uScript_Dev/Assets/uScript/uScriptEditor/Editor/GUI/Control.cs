@@ -130,7 +130,9 @@ namespace Detox.Editor.GUI
                if (DragAndDrop.visualMode != DragAndDropVisualMode.None
                    && DragAndDrop.visualMode != DragAndDropVisualMode.Rejected)
                {
+#if !UNITY_3_5
                   EditorGUI.DrawRect(fieldPosition, Color.white);
+#endif
                }
             }
          }
