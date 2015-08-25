@@ -43,6 +43,11 @@ namespace Detox.Editor.GUI
       {
          Cache.Refresh(true);
          hierarchyChanged = true;
+
+         // Repaint so the editor looks more responsive. The focus is generally on the Hierarchy
+         // window when the event is triggered, which would normally delay the uScript Editor
+         // window repaint.
+         uScript.RequestRepaint();
       }
 
       internal delegate UnityEngine.Object SceneObjectPathFieldValidator(UnityEngine.Object[] references, Type type, SerializedProperty property);
