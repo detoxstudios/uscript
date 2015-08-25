@@ -612,7 +612,6 @@ namespace Detox.Editor.GUI
          if (stateType != null && stateType.IsClass
             && stateType != typeof(string)
             && stateType != typeof(GameObject)
-            //&& stateType != typeof(Component)
             && typeof(Component).IsAssignableFrom(stateType) == false)
          {
             //Debug.Log("CLASS: value: \"" + value + "\", type: " + valueType + "\nState: " + state + "\n");
@@ -1596,6 +1595,7 @@ namespace Detox.Editor.GUI
          return type != null;
       }
 
+#if UNITY_3_5
       private static string UnityObjectField(string value, Type type)
       {
          var objects = UnityEngine.Object.FindObjectsOfType(type);
@@ -1617,77 +1617,7 @@ namespace Detox.Editor.GUI
          // if it doesn't exist then the 'val' will stay as what was entered into the TextField
          return unityObject != null ? unityObject.name : string.Empty;
       }
-
-      //private static string UnityObjectField_ORIGINAL(string value, Type type)
-      //{
-      //   // now try and update the object browser with an instance of the specified object
-      //   var objects = UnityEngine.Object.FindObjectsOfType(type);
-      //   var unityObject = objects.FirstOrDefault(o => o.name == value);
-
-      //   // components should never be instances in the property grid
-      //   // we must refer to (and select) their parent game object
-      //   if (typeof(Component).IsAssignableFrom(type))
-      //   {
-      //      //type = typeof(GameObject);
-      //      if (null != unityObject)
-      //      {
-      //         unityObject = ((Component)unityObject).gameObject;
-      //      }
-      //   }
-
-      //   unityObject = EditorGUILayout.ObjectField(unityObject, type, true, GUILayout.Width(columnValue.Width));
-
-      //   // if that object (or the changed object) does exist, use it's name to update the property value
-      //   // if it doesn't exist then the 'val' will stay as what was entered into the TextField
-      //   return unityObject != null ? unityObject.name : string.Empty;
-      //}
-
-      //private static string ObjectField(string label, UnityEngine.Object value, Type type, string textValue, State state)
-      //{
-      //   EditorGUILayout.BeginVertical();
-      //   {
-      //      BeginRow(label, state);
-
-      //      if (IsFieldUsable(state))
-      //      {
-      //         textValue = EditorGUILayout.TextField(textValue, Style.TextField, GUILayout.Width(columnValue.Width));
-
-      //         EndRow(textValue.GetType().ToString());
-
-      //         var tempState = new Property.State(false, true, state.IsReadOnly);
-      //         BeginRow(string.Empty, tempState);
-
-      //         // now try and update the object browser with an instance of the specified object
-      //         var objects = UnityEngine.Object.FindObjectsOfType(type);
-      //         var unityObject = objects.FirstOrDefault(o => o.name == textValue);
-
-      //         // components should never be instances in the property grid
-      //         // we must refer to (and select) their parent game object
-      //         if (typeof(Component).IsAssignableFrom(type))
-      //         {
-      //            //type = typeof(GameObject);
-      //            if (null != unityObject)
-      //            {
-      //               unityObject = ((Component)unityObject).gameObject;
-      //            }
-      //         }
-
-      //         unityObject = EditorGUILayout.ObjectField(unityObject, type, true, GUILayout.Width(columnValue.Width));
-
-      //         // if that object (or the changed object) does exist, use it's name to update the property value
-      //         // if it doesn't exist then the 'val' will stay as what was entered into the TextField
-      //         if (unityObject != null)
-      //         {
-      //            textValue = unityObject.name;
-      //         }
-      //      }
-
-      //      EndRow(type.ToString());
-      //   }
-
-      //   EditorGUILayout.EndVertical();
-      //   return textValue;
-      //}
+#endif
 
       private static string VariableNameField(string label, string value, State state)
       {

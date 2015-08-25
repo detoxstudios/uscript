@@ -177,7 +177,7 @@ namespace Detox.Editor.GUI
                   SelectedItem = List[currentIndex];
                   WasTabPressed = true;
                   e.Use();
-                  return;
+                  ////return;
                }
             }
 
@@ -533,6 +533,7 @@ namespace Detox.Editor.GUI
             uScript.GuiState.Disable();
          }
 
+         // ReSharper disable once MemberHidesStaticFromOuterClass
          private static class Style
          {
             private static readonly GUIStyle RowEven;

@@ -20,8 +20,6 @@ namespace Detox.Editor.GUI
 
    using UnityEngine;
 
-   using Object = UnityEngine.Object;
-
    public static partial class Control
    {
       private static readonly GUIContent SearchButton;
@@ -37,17 +35,6 @@ namespace Detox.Editor.GUI
          SearchButton = new GUIContent(
             uScriptGUI.GetSkinnedTexture("iconSearch"),
             "Locate the object in the Hierarchy window.");
-      }
-
-      internal static void OnHierarchyChange()
-      {
-         Cache.Refresh(true);
-         hierarchyChanged = true;
-
-         // Repaint so the editor looks more responsive. The focus is generally on the Hierarchy
-         // window when the event is triggered, which would normally delay the uScript Editor
-         // window repaint.
-         uScript.RequestRepaint();
       }
 
       internal delegate UnityEngine.Object SceneObjectPathFieldValidator(UnityEngine.Object[] references, Type type, SerializedProperty property);
@@ -251,6 +238,18 @@ namespace Detox.Editor.GUI
          return value;
       }
 
+      internal static void OnHierarchyChange()
+      {
+         Cache.Refresh(true);
+         hierarchyChanged = true;
+
+         // Repaint so the editor looks more responsive. The focus is generally on the Hierarchy
+         // window when the event is triggered, which would normally delay the uScript Editor
+         // window repaint.
+         uScript.RequestRepaint();
+      }
+
+      // ReSharper disable once RedundantNameQualifier
       private static UnityEngine.Object ValidateSceneObjectPathFieldAssignment(
          UnityEngine.Object[] references,
          Type type,
