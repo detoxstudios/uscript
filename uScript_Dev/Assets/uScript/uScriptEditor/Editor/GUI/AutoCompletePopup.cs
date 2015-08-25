@@ -33,48 +33,25 @@ namespace Detox.Editor.GUI
 
          private static int currentIndex;
 
+         private static Vector2 drawOffset;
+
          private static string matchValue;
 
-         private static Rect offsetParentPosition;
-
-         private static Rect offsetPosition;
+         private static Rect originalParentPosition;
 
          private static Rect parentPosition;
 
-         private static Rect position;
+         private static float previousWindowPositionTop;
+
+         private static float previousWindowWidth;
+
+         private static Rect windowPosition;
 
          private static bool mouseDown;
+
          private static int mouseDownIndex;
 
          private static string selectedItem;
-
-         private static Vector2 drawOffset;
-
-         public static Vector2 DrawOffset
-         {
-            get
-            {
-               return drawOffset;
-            }
-
-            set
-            {
-               drawOffset = value;
-
-               // Account for the parent button width
-               offsetParentPosition = new Rect(
-                  parentPosition.x + DrawOffset.x,
-                  parentPosition.y + DrawOffset.y,
-                  parentPosition.width - 18,
-                  parentPosition.height);
-
-               offsetPosition = new Rect(
-                  position.x + DrawOffset.x,
-                  position.y + DrawOffset.y,
-                  position.width,
-                  position.height);
-            }
-         }
 
          public static bool IsDrawing { get; set; }
 
@@ -106,12 +83,19 @@ namespace Detox.Editor.GUI
          /// </summary>
          public static void AddCursorRect()
          {
-            if (IsVisible == false)
+            if (IsVisible == false || Event.current.type != EventType.Repaint)
             {
                return;
             }
 
-            EditorGUIUtility.AddCursorRect(position, MouseCursor.Arrow);
+            var debugBox = new Rect(
+               windowPosition.x - 2,
+               windowPosition.y - 2,
+               windowPosition.width + 4,
+               windowPosition.height + 4);
+
+            ////uScriptGUI.DebugBox(debugBox, Color.red);
+            EditorGUIUtility.AddCursorRect(debugBox, MouseCursor.Arrow);
          }
 
          public static void Add(string label)
@@ -238,8 +222,8 @@ namespace Detox.Editor.GUI
 
             var e = Event.current;
 
-            var outsideParent = offsetParentPosition.Contains(e.mousePosition) == false;
-            var outsideWindow = offsetPosition.Contains(e.mousePosition) == false;
+            var outsideParent = parentPosition.Contains(e.mousePosition) == false;
+            var outsideWindow = windowPosition.Contains(e.mousePosition) == false;
 
             // The context click always closes the window.
             if ((e.type == EventType.MouseDown && e.button == 1) || e.type == EventType.ContextClick)
@@ -248,7 +232,7 @@ namespace Detox.Editor.GUI
                uScript.RequestRepaint();
 
                // Allow the ContextClick to pass through to the parent, consume it otherwise.
-               if (offsetParentPosition.Contains(e.mousePosition) == false)
+               if (parentPosition.Contains(e.mousePosition) == false)
                {
                   e.Use();
                }
@@ -266,13 +250,13 @@ namespace Detox.Editor.GUI
                else if (outsideWindow == false)
                {
                   // When over a menu item, select it
-                  var y = e.mousePosition.y - offsetPosition.y - 1;
+                  var y = e.mousePosition.y - windowPosition.y - 1;
                   var index = (int)(y / 20);
                   var maxItems = Math.Min(MaxItems, List.Count);
 
                   if (index < maxItems)
                   {
-                     //Debug.LogFormat("MousePosition: {0} ({1}) in {2}\n", e.mousePosition, index, offsetPosition);
+                     //Debug.LogFormat("MousePosition: {0} ({1}) in {2}\n", e.mousePosition, index, windowPosition);
                      mouseDown = true;
                      mouseDownIndex = index;
                      currentIndex = mouseDownIndex;
@@ -291,7 +275,7 @@ namespace Detox.Editor.GUI
                }
                else
                {
-                  var y = e.mousePosition.y - offsetPosition.y - 1;
+                  var y = e.mousePosition.y - windowPosition.y - 1;
                   var index = (int)(y / 20);
 
                   // If over the same index, select it.
@@ -313,7 +297,7 @@ namespace Detox.Editor.GUI
                   return;
                }
 
-               var y = e.mousePosition.y - offsetPosition.y - 1;
+               var y = e.mousePosition.y - windowPosition.y - 1;
                var index = (int)(y / 20);
 
                // If over the same index, select it.
@@ -337,15 +321,45 @@ namespace Detox.Editor.GUI
                return;
             }
 
-            DrawOffset = offset;
+            // Update the offset and recalculate only when it changes
+            if (drawOffset != offset)
+            {
+               drawOffset = offset;
 
-            var popupRect = position;
-            popupRect.x += offset.x;
-            popupRect.y += offset.y;
+               // Update the parent position
+               parentPosition = new Rect(
+                  originalParentPosition.x + offset.x,
+                  originalParentPosition.y + offset.y,
+                  originalParentPosition.width,
+                  originalParentPosition.height);
 
-            // TODO: move the panel above the parent control if there is limited room below it
+               // Update window position
+               windowPosition = new Rect(
+                  parentPosition.x,
+                  parentPosition.yMax + 1,
+                  Math.Min(originalParentPosition.width, previousWindowWidth),
+                  GetWindowHeight());
 
-            GUILayout.Window("AutoCompletePopup".GetHashCode(), popupRect, Window, string.Empty, Style.Window);
+               windowPosition.y = GetWindowTopValue(ShouldDrawWindowAboveParentControl());
+
+            }
+
+            // Hack to prevent the window width from resetting during Repaint while the EditorWindow is being resized.
+            // Not sure why this is needed or what's actually causing the issue.
+            if (Event.current.type == EventType.Repaint)
+            {
+               windowPosition.width = previousWindowWidth;
+            }
+
+            GUI.Window("AutoCompletePopup".GetHashCode(), windowPosition, Window, string.Empty, Style.Window);
+
+            // Move the panel above the parent control, if there is limited room below it
+            windowPosition.y = GetWindowTopValue(ShouldDrawWindowAboveParentControl());
+            if (previousWindowPositionTop.AlmostEquals(windowPosition.y) == false)
+            {
+               previousWindowPositionTop = windowPosition.y;
+               uScript.RequestRepaint();
+            }
 
             uScript.GuiState.Enable();
          }
@@ -383,11 +397,23 @@ namespace Detox.Editor.GUI
             List.Sort();
 
             ParentControlID = FocusedControl.ID;
-            parentPosition = rect;
-            position = new Rect(rect.x, rect.yMax + 1, rect.width, 0);
+            originalParentPosition = rect;
+
+            drawOffset = new Vector2();
 
             currentIndex = -1;
             IsVisible = true;
+         }
+
+         private static float GetWindowHeight()
+         {
+            return (Math.Min(List.Count, MaxItems) * Style.Item.fixedHeight)
+                   + (MaxItems < List.Count ? Style.Message.fixedHeight + 2 : 2);
+         }
+
+         private static float GetWindowTopValue(bool shouldDrawAbove)
+         {
+            return shouldDrawAbove ? parentPosition.y - windowPosition.height - 1 : parentPosition.yMax + 1;
          }
 
          private static bool InputStateMatched(
@@ -425,32 +451,68 @@ namespace Detox.Editor.GUI
             }
          }
 
+         private static bool ShouldDrawWindowAboveParentControl()
+         {
+            return uScript.Instance.position.height - (parentPosition.yMax + 1 + windowPosition.height) < 0;
+         }
+
          private static void Window(int windowID)
          {
             uScript.GuiState.Enable();
 
             var maxItems = Math.Min(MaxItems, List.Count);
-            for (var i = 0; i < maxItems; i++)
-            {
-               var content = List[i];
-               var selected = i == currentIndex;
-               var rowStyle = Style.Row(i, selected);
 
-               if (selected == false)
+            if (Event.current.type == EventType.Layout)
+            {
+               // Calculate the dimensions of the window and its contents
+               windowPosition.width = parentPosition.width;
+               windowPosition.height = GetWindowHeight();
+
+               for (var i = 0; i < maxItems; i++)
                {
-                  // Get the marked up version of the text
-                  if (MarkupText.TryGetValue(List[i], out content) == false)
+                  var content = List[i];
+                  var contentSize = Style.Item.CalcSize(uScriptGUIContent.Temp(content));
+                  var rowWidth = contentSize.x;
+
+                  int count;
+                  if (Duplicates.TryGetValue(content, out count))
                   {
-                     content = List[i].HighlightMatch(matchValue);
-                     MarkupText.Add(List[i], content);
+                     var warningMessage = string.Format("[{0} {1}]", count, count == 1 ? "duplicate" : "duplicates");
+                     contentSize = Style.Warning.CalcSize(uScriptGUIContent.Temp(warningMessage));
+                     rowWidth += contentSize.x;
                   }
+
+                  windowPosition.width = Math.Max(windowPosition.width, rowWidth + 20);
                }
 
-               EditorGUILayout.BeginHorizontal(rowStyle);
-               {
-                  GUILayout.Label(content, selected ? Style.ItemSelected : Style.Item);
+               previousWindowWidth = windowPosition.width;
+            }
+            else if (Event.current.type == EventType.Repaint)
+            {
+               // Draw the window and its content
+               var rect = new Rect(1, 1, windowPosition.width - 2, Style.Item.fixedHeight);
 
-                  var count = 0;
+               for (var i = 0; i < maxItems; i++)
+               {
+                  var content = List[i];
+                  var selected = i == currentIndex;
+                  var rowStyle = Style.Row(i);
+
+                  if (selected == false)
+                  {
+                     // Get the marked up version of the text
+                     if (MarkupText.TryGetValue(List[i], out content) == false)
+                     {
+                        content = List[i].HighlightMatch(matchValue);
+                        MarkupText.Add(List[i], content);
+                     }
+                  }
+
+                  rowStyle.Draw(rect, false, false, selected, false);
+
+                  Style.Item.Draw(rect, content, false, false, selected, false);
+
+                  int count;
                   if (Duplicates.TryGetValue(List[i], out count))
                   {
                      var warningMessage = string.Format("[{0} {1}]", count, count == 1 ? "duplicate" : "duplicates");
@@ -459,15 +521,18 @@ namespace Detox.Editor.GUI
                         warningMessage = warningMessage.Color(Color.red);
                      }
 
-                     GUILayout.Label(warningMessage, Style.Warning);
+                     Style.Warning.Draw(rect, warningMessage, false, false, false, false);
                   }
-               }
-               EditorGUILayout.EndHorizontal();
-            }
 
-            if (maxItems < List.Count)
-            {
-               GUILayout.Label(string.Format("+{0} more", List.Count - maxItems), Style.Message);
+                  rect.y += rect.height;
+               }
+
+               if (maxItems < List.Count)
+               {
+                  rect.height = Style.Message.fixedHeight;
+                  var message = string.Format("+{0} more", List.Count - maxItems);
+                  Style.Message.Draw(rect, message, false, false, false, false);
+               }
             }
 
             uScript.GuiState.Disable();
@@ -478,8 +543,6 @@ namespace Detox.Editor.GUI
             private static readonly GUIStyle RowEven;
 
             private static readonly GUIStyle RowOdd;
-
-            private static readonly GUIStyle RowSelected;
 
             static Style()
             {
@@ -494,31 +557,34 @@ namespace Detox.Editor.GUI
                   overflow = new RectOffset(),
                   focused = GUI.skin.button.normal,
                   normal = ((GUIStyle)"CN EntryBackEven").normal,
+                  onNormal = ((GUIStyle)"CN EntryBackEven").onNormal,
                };
 
-               RowOdd = new GUIStyle(RowEven) { normal = ((GUIStyle)"CN EntryBackodd").normal, };
-
-               RowSelected = new GUIStyle(RowEven) { normal = ((GUIStyle)"CN EntryBackodd").onNormal, };
-
-               Item = new GUIStyle(GUI.skin.button)
+               RowOdd = new GUIStyle(RowEven)
                {
+                  normal = ((GUIStyle)"CN EntryBackodd").normal,
+                  onNormal = ((GUIStyle)"CN EntryBackodd").onNormal,
+               };
+
+               Item = new GUIStyle(GUI.skin.label)
+               {
+                  name = "AutoCompletePopup.Item",
                   alignment = TextAnchor.MiddleLeft,
                   fixedHeight = 20,
                   margin = new RectOffset(),
-                  overflow = new RectOffset(),
-                  normal = EditorStyles.label.normal,
-                  onNormal = RowSelected.onNormal,
+                  padding = new RectOffset(2, 2, 1, 2),
+                  onNormal = ((GUIStyle)"CN EntryBackEven").onNormal,
 #if !UNITY_3_5
                   richText = true
 #endif
                };
 
-               ItemSelected = new GUIStyle(Item) { normal = RowSelected.normal };
-
                Message = new GUIStyle(GUI.skin.label)
                {
                   alignment = TextAnchor.MiddleRight,
-                  fontStyle = FontStyle.Italic
+                  fixedHeight = 16,
+                  fontStyle = FontStyle.Italic,
+                  padding = new RectOffset(2, 8, 1, 2),
                };
 
                Warning = new GUIStyle(Item) { alignment = TextAnchor.MiddleRight };
@@ -536,20 +602,17 @@ namespace Detox.Editor.GUI
 
             public static GUIStyle Item { get; private set; }
 
-            public static GUIStyle ItemSelected { get; private set; }
-
             public static GUIStyle Message { get; private set; }
 
             public static GUIStyle Warning { get; private set; }
 
             public static GUIStyle Window { get; private set; }
 
-            public static GUIStyle Row(int index, bool selected)
+            public static GUIStyle Row(int index)
             {
-               return selected ? RowSelected : (index % 2 != 0 ? RowEven : RowOdd);
+               return index % 2 != 0 ? RowEven : RowOdd;
             }
          }
       }
-
    }
 }

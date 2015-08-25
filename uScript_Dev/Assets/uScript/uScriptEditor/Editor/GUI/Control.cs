@@ -230,7 +230,7 @@ namespace Detox.Editor.GUI
                }
             }
 
-            AutoCompletePopup.Update(position, value);
+            AutoCompletePopup.Update(fieldPosition, value);
          }
 
          return value;
