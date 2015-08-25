@@ -19,10 +19,6 @@ namespace Detox.Editor.GUI
    {
       public static class AutoCompletePopup
       {
-         // TODO: Limit the results to immediate children, if possible. So, "/Parent/Ch" will match "/Parent/Child 1" and "/Parent/Child 2", but not "/Parent/Child 1/Pet" and other subitems.
-
-         // TODO: If there are multiple identical final matches, notify the user of the situation.
-
          private const int MaxItems = 5;
 
          private static readonly List<string> List = new List<string>();
@@ -51,28 +47,13 @@ namespace Detox.Editor.GUI
 
          private static int mouseDownIndex;
 
-         private static string selectedItem;
-
          public static bool IsDrawing { get; set; }
 
          public static bool IsVisible { get; set; }
 
          public static int ParentControlID { get; set; }
 
-         //public static string SelectedItem { get; private set; }
-         public static string SelectedItem
-         {
-            get
-            {
-               return selectedItem;
-            }
-
-            private set
-            {
-               //Debug.LogFormat("SelectedItem changed from '{0}' to '{1}'\n", SelectedItem, value);
-               selectedItem = value;
-            }
-         }
+         public static string SelectedItem { get; private set; }
 
          public static bool WasReturnPressed { get; set; }
 
@@ -320,6 +301,20 @@ namespace Detox.Editor.GUI
             {
                return;
             }
+
+            // Automatically close the window when editing ends on the parent control.
+            if (UnityEditorExtensions.IsEditingControl(ParentControlID) == false)
+            {
+               IsVisible = false;
+               return;
+            }
+
+            // Automatically close the window when the parent control loses focus.
+            ////if (FocusedControl.ID != ParentControlID)
+            ////{
+            ////   IsVisible = false;
+            ////   return;
+            ////}
 
             // Update the offset and recalculate only when it changes
             if (drawOffset != offset)
