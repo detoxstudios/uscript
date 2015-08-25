@@ -71,13 +71,6 @@ namespace Detox.Editor.GUI
          // The popup needs to intercept some keyboard input before it reaches the text field
          AutoCompletePopup.InterceptKeyboardInput(id);
 
-         // Tint the control red, if the object cannot be found in the hierarchy
-         var originalColor = GUI.color;
-         if (Cache.SceneObjectFound(name, text) == false)
-         {
-            GUI.color = new Color(1, 0.5f, 0.5f, 1);
-         }
-
          //var hasObjectThumbnail = EditorGUIUtility.HasObjectThumbnail(type);
          //Debug.Log(type + " hasObjectThumbnail: " + hasObjectThumbnail + "\n");
 
@@ -137,12 +130,19 @@ namespace Detox.Editor.GUI
             }
          }
 
+         // Tint the control red, if the object cannot be found in the hierarchy
+         var originalColor = GUI.backgroundColor;
+         if (Cache.SceneObjectFound(name, text) == false)
+         {
+            GUI.backgroundColor = new Color(1, 0.5f, 0.5f, 1);
+         }
+
          // Call the internal Unity control
          bool changed;
          var value = UnityEditorExtensions.DoTextField(id, fieldPosition, text, style, out changed);
 
          // Reset the tint
-         GUI.color = originalColor;
+         GUI.backgroundColor = originalColor;
 
          // If the control is active and a selection has been made ...
          if (id == AutoCompletePopup.ParentControlID && string.IsNullOrEmpty(AutoCompletePopup.SelectedItem) == false)
