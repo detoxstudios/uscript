@@ -26,13 +26,23 @@ namespace Detox.Editor.GUI
    {
       private static readonly GUIContent SearchButton;
 
+      private static bool hierarchyChanged;
+
       private static List<string> paths = new List<string>();
 
       static Control()
       {
+         EditorApplication.hierarchyWindowChanged += OnHierarchyChange;
+
          SearchButton = new GUIContent(
             uScriptGUI.GetSkinnedTexture("iconSearch"),
             "Locate the object in the Hierarchy window.");
+      }
+
+      internal static void OnHierarchyChange()
+      {
+         Cache.Refresh(true);
+         hierarchyChanged = true;
       }
 
       internal delegate UnityEngine.Object SceneObjectPathFieldValidator(UnityEngine.Object[] references, Type type, SerializedProperty property);
@@ -163,7 +173,6 @@ namespace Detox.Editor.GUI
          }
 
          // Refresh the cache if the node selection has changed
-         // TODO: Do this also when the scene hierarchy changes.
          Cache.Refresh();
 
          // Generate the object list, if necessary
@@ -205,13 +214,14 @@ namespace Detox.Editor.GUI
             Cache.SceneObjects.Add(type, objectPaths);
          }
 
-         // Get the list of object we've already generated
-         paths = Cache.SceneObjects[type];
-
          // Update the auto-complete list, if the text has changed
-         // TODO: Do this once also when the scene hierarchy changes.
-         if (changed)
+         if (changed || hierarchyChanged)
          {
+            hierarchyChanged = false;
+
+            // Get the list of object we've already generated
+            paths = Cache.SceneObjects[type];
+
             AutoCompletePopup.Reset();
 
             if (value != string.Empty)
@@ -314,16 +324,21 @@ namespace Detox.Editor.GUI
             return GameObjectFindCache[propertyName][hierarchyPath];
          }
 
-         public static void Refresh()
+         public static void Refresh(bool ignoreSelection = false)
          {
-            var newSelection = uScript.Instance.ScriptEditorCtrl.PropertyGrid.SelectedGuidArray.OrderBy(t => t);
-            var equal = selectedObjects.SequenceEqual(newSelection);
-            if (equal == false)
+            if (ignoreSelection == false)
             {
-               GameObjectFindCache.Clear();
+               var newSelection = uScript.Instance.ScriptEditorCtrl.PropertyGrid.SelectedGuidArray.OrderBy(t => t);
+               if (selectedObjects.SequenceEqual(newSelection))
+               {
+                  return;
+               }
+
                selectedObjects = newSelection.ToList();
-               SceneObjects.Clear();
             }
+
+            GameObjectFindCache.Clear();
+            SceneObjects.Clear();
          }
       }
 
