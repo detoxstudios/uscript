@@ -544,18 +544,34 @@ namespace Detox.Editor.GUI
             }
             else if (TryParseUnityObjectArrayType(state.Type, out unityObjectType))
             {
+               var elementType = unityObjectType.GetElementType();
+               if (elementType != typeof(GameObject) && typeof(Component).IsAssignableFrom(elementType) == false)
+               {
+                  state.IsReadOnly = true;
+               }
+
                // Arrays are stored as comma delimited string, so parse it now
                var values = Parameter.StringToArray(state.DefaultValueAsString);
-
-               //Debug.LogFormat("OBJECTS: {0}, {1}\n", values, state.Type);
 
                values = ArrayFoldout(label, values, state, unityObjectType.GetElementType());
                value = Parameter.ArrayToString(values);
             }
             else if (state.Type.Contains("[]"))
             {
+               var elementType = uScript.Instance.GetType(state.Type.ReplaceLast("[]", string.Empty));
+               if (elementType != typeof(string))
+               {
+                  state.IsReadOnly = true;
+
+                  //Debug.LogWarningFormat(
+                  //   "Unhandled property type: \"{0}\", type: {1}\n\tState: {2}\n",
+                  //   value,
+                  //   elementType,
+                  //   state);
+               }
+
                var values = Parameter.StringToArray(state.DefaultValueAsString);
-               value = ArrayFoldout(label, values, state);
+               value = ArrayFoldout(label, values, state, elementType);
             }
 
             return value;
@@ -571,12 +587,53 @@ namespace Detox.Editor.GUI
                state);
          }
 
-         var type = value.GetType().ToString();
+         var valueType = value.GetType().ToString();
          var width = columnValue.Width;
+
+         // Flag all unknown struct types as being only accessible through nodes.
+         var stateType = uScript.Instance.GetType(state.Type);
+         if (stateType != null && stateType.IsValueType && stateType.IsEnum == false
+            && stateType != typeof(bool)
+            && stateType != typeof(int)
+            && stateType != typeof(float)
+            //&& stateType != typeof(double)
+            && stateType != typeof(Vector2)
+            && stateType != typeof(Vector3)
+            && stateType != typeof(Vector4)
+            && stateType != typeof(Rect)
+            && stateType != typeof(Quaternion)
+            && stateType != typeof(Color)
+            && stateType != typeof(LayerMask))
+         {
+            state.IsReadOnly = true;
+         }
+
+         // Flag all unknown reference types as being only accessible through nodes.
+         if (stateType != null && stateType.IsClass
+            && stateType != typeof(string)
+            && stateType != typeof(GameObject)
+            //&& stateType != typeof(Component)
+            && typeof(Component).IsAssignableFrom(stateType) == false)
+         {
+            //Debug.Log("CLASS: value: \"" + value + "\", type: " + valueType + "\nState: " + state + "\n");
+            state.IsReadOnly = true;
+         }
+
+         // Flag all unknown interfaces (which is all of them)
+         if (stateType != null && stateType.IsInterface)
+         {
+            state.IsReadOnly = true;
+         }
 
          BeginRow(label, state);
          {
-            if (state.IsSocketExposed && (state.IsLocked || state.IsReadOnly))
+            if (state.IsSocketExposed == false && state.IsLocked && state.IsReadOnly && stateType != null
+                && (stateType.IsInterface || stateType.IsClass || (stateType.IsValueType && stateType.IsEnum == false)))
+            {
+               EditorGUILayout.TextField("(node accessible)", Style.TextField, GUILayout.Width(width));
+               valueType = state.Type;
+            }
+            else if (state.IsSocketExposed && (state.IsLocked || state.IsReadOnly))
             {
                var text = state.IsReadOnly ? "(read-only)" : "(socket used)";
                EditorGUILayout.TextField(text, Style.TextField, GUILayout.Width(width));
@@ -595,34 +652,34 @@ namespace Detox.Editor.GUI
                {
                   value = FloatField((float)value);
                }
-               else if (value is double)
-               {
-                  value = (double)FloatField((float)value);
-               }
+               //else if (value is double)
+               //{
+               //   value = (double)FloatField((float)value);
+               //}
                else if (value is Vector2)
                {
                   value = Vector2Field((Vector2)value);
-                  type = string.Format("{0} [X, Y]", value.GetType());
+                  valueType = string.Format("{0} [X, Y]", value.GetType());
                }
                else if (value is Vector3)
                {
                   value = Vector3Field((Vector3)value);
-                  type = string.Format("{0} [X, Y, Z]", value.GetType());
+                  valueType = string.Format("{0} [X, Y, Z]", value.GetType());
                }
                else if (value is Vector4)
                {
                   value = Vector4Field((Vector4)value);
-                  type = string.Format("{0} [X, Y, Z, W]", value.GetType());
+                  valueType = string.Format("{0} [X, Y, Z, W]", value.GetType());
                }
                else if (value is Rect)
                {
                   value = RectField((Rect)value);
-                  type = string.Format("{0} [X, Y, W, H]", value.GetType());
+                  valueType = string.Format("{0} [X, Y, W, H]", value.GetType());
                }
                else if (value is Quaternion)
                {
                   value = QuaternionField((Quaternion)value);
-                  type = string.Format("{0} [X, Y, Z, W]", value.GetType());
+                  valueType = string.Format("{0} [X, Y, Z, W]", value.GetType());
                }
                else if (value is Color)
                {
@@ -631,7 +688,7 @@ namespace Detox.Editor.GUI
                else if (value is GUILayoutOption)
                {
                   value = GUILayoutOptionField((GUILayoutOption)value);
-                  type = "GUILayoutOption";
+                  valueType = "GUILayoutOption";
                }
                else if (value is LayerMask)
                {
@@ -641,26 +698,38 @@ namespace Detox.Editor.GUI
                {
                   value = EnumField((Enum)value);
                }
-               else if (TryParseUnityObjectType(state.Type, out unityObjectType))
+               else if (TryParseUnityObjectType(state.Type, out unityObjectType)
+                        && (unityObjectType == typeof(GameObject) || typeof(Component).IsAssignableFrom(unityObjectType)))
                {
                   if (value.ToString() != state.DefaultValueAsString)
                   {
-                     Debug.LogWarning(string.Format("value ({0}) does not equal state.Default ({1})\n", value, state.DefaultValueAsString));
+                     Debug.LogWarning(
+                        string.Format(
+                           "value ({0}) does not equal state.Default ({1})\n",
+                           value,
+                           state.DefaultValueAsString));
                   }
+
 #if UNITY_3_5
                   value = UnityObjectField((string)value, unityObjectType);
 #else
                   value = SceneObjectPathField((string)value, unityObjectType);
 #endif
-                  type = unityObjectType.ToString();
+
+                  valueType = unityObjectType.ToString();
                }
                else
                {
                   // Treat everything else as a string
+                  //Debug.Log("2: state.Type: " + state.Type + ", value: \"" + value + "\", type: " + valueType + "\n");
 
                   if (value.ToString() != state.DefaultValueAsString)
                   {
-                     Debug.LogWarning(string.Format("value ({0}) does not equal state.Default ({1})\n", value, state.DefaultValueAsString));
+                     Debug.LogWarning(
+                        string.Format(
+                           "value ({0}) does not equal state.Default ({1})\n",
+                           value,
+                           state.DefaultValueAsString));
                   }
 
                   if (uScriptConfig.Variable.FriendlyName(state.Type) == "TextArea")
@@ -676,15 +745,26 @@ namespace Detox.Editor.GUI
                      // TODO: Disable VariableNameField until needed, as Unity 4.1 has issues.
                      //value = VariableNameField(label, p.Default, state);
                   }
-                  else
+                  else if (stateType != null && stateType == typeof(string))
                   {
                      // Should "state.Default" be passed instead of "value"?
                      value = TextArea((string)value);
+
+                  }
+                  else
+                  {
+                     uScriptDebug.Log(
+                        string.Format(
+                           "Unhandled property type: \"{0}\", type: {1}\n\tState: {2}\n",
+                           value,
+                           valueType,
+                           state),
+                        uScriptDebug.Type.Warning);
                   }
                }
             }
          }
-         EndRow(type);
+         EndRow(valueType);
 
          return value;
       }
@@ -1027,6 +1107,12 @@ namespace Detox.Editor.GUI
          if (isFieldUsable)
          {
             var text = string.Format("... ({0} {1})", array.Length, array.Length == 1 ? "item" : "items");
+
+            if (state.IsReadOnly)
+            {
+               text = "(node accessible)";
+            }
+
             GUILayout.Label(text, Style.Label, GUILayout.Width(columnValue.Width));
 
             var btnRect = GUILayoutUtility.GetLastRect();
@@ -1716,8 +1802,6 @@ namespace Detox.Editor.GUI
 
          public readonly bool IsLocked;
 
-         public readonly bool IsReadOnly;
-
          public readonly string Name;
 
          public readonly string Type;
@@ -1746,7 +1830,30 @@ namespace Detox.Editor.GUI
             this.EntityNode = entityNode;
          }
 
+         public bool IsReadOnly { get; set; }
+
          public bool IsSocketExposed { get; set; }
+
+         public override string ToString()
+         {
+            var flags = string.Empty;
+            if (this.IsSocketExposed)
+            {
+               flags += ", SocketExposed";
+            }
+
+            if (this.IsLocked)
+            {
+               flags += ", IsLocked";
+            }
+
+            if (this.IsReadOnly)
+            {
+               flags += ", IsReadOnly";
+            }
+
+            return string.Format("(\"{0}\", {1}{2})", this.Name, this.Type, flags);
+         }
       }
 
       private static class Style
