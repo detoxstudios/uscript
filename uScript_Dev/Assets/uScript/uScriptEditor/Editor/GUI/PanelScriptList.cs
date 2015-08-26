@@ -238,7 +238,7 @@ namespace Detox.Editor.GUI
                }
                else
                {
-                  uScript.Instance.RefreshAssetDatabase(true);
+                  AssetDatabase.Refresh();
                   RequestListUpdate();
                   EditorUtility.DisplayDialog("uScript", string.Format("Found and fixed {0} missing uScripts.", found), "OK");
                }
