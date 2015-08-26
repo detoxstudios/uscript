@@ -214,7 +214,7 @@ namespace Detox.Editor.GUI
             GUILayout.FlexibleSpace();
 
             // Fix missing scripts button
-            if (GUILayout.Button(uScriptGUIContent.buttonScriptFixMissingScripts, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(uScriptGUIContent.buttonScriptFixMissingScripts).x)))
+            if (GUILayout.Button(uScriptGUIContent.buttonScriptFindMissingGraphs, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(uScriptGUIContent.buttonScriptFindMissingGraphs).x)))
             {
                AssetDatabase.StartAssetEditing();
                List<string> paths = uScript.GetAllUScriptPaths();
@@ -224,7 +224,7 @@ namespace Detox.Editor.GUI
                   if (!uScript.FileHasLabels(path, new string[] { "uScript", "uScriptSource" }))
                   {
                      found++;
-                     uScriptDebug.Log(string.Format("Found missing uscript: {0} - updating labels...", path.RelativeAssetPath()));
+                     uScriptDebug.Log(string.Format("Found missing graph: {0} - updating labels...", path.RelativeAssetPath()));
                      uScript.SetLabelsOnFile(path, new string[] { "uScript", "uScriptSource" });
 
                      // TODO: if this uscript file is missing its labels, chances are its generated files are missing theirs, too - check now
@@ -234,13 +234,13 @@ namespace Detox.Editor.GUI
 
                if (found == 0)
                {
-                  EditorUtility.DisplayDialog("uScript", "No missing uScripts found.", "OK");
+                  EditorUtility.DisplayDialog("uScript", "No missing graphs found.", "OK");
                }
                else
                {
                   AssetDatabase.Refresh();
                   RequestListUpdate();
-                  EditorUtility.DisplayDialog("uScript", string.Format("Found and fixed {0} missing uScripts.", found), "OK");
+                  EditorUtility.DisplayDialog("uScript", string.Format("Found and fixed {0} missing graphs.", found), "OK");
                }
             } 
             

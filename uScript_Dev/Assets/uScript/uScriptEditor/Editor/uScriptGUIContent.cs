@@ -49,7 +49,7 @@ public static class uScriptGUIContent
       buttonScriptSourceStale = new GUIContent("Source", "Ping the source file associated with this uScript.  Save using Release or Debug to generate code for this script.");
       buttonScriptSourceDebug = new GUIContent("Source", "Ping the source file associated with this uScript.  This script contains Debug information.");
       buttonScriptUpgradeNodes = new GUIContent("Upgrade Deprecated Nodes", "Upgrade all deprecated nodes in this graph. If this graph is assigned to a specific Unity scene, please be sure that scene is open before doing this or you could loose work!");
-      buttonScriptFixMissingScripts = new GUIContent("Fix Missing uScripts", "Not seeing all of your uScripts?  Click this button to run a tool to find them all and restore them to this list.");
+      buttonScriptFindMissingGraphs = new GUIContent("Find Missing", "Find missing graphs and restore them to this list.");
 
       buttonScriptNew = new GUIContent("New _&N", "Create a new uScript.  The active uScript will be closed automatically.");
 
@@ -230,7 +230,7 @@ public static class uScriptGUIContent
 
    public static GUIContent buttonScriptsRemoveGenerated { get; private set; }
 
-   public static GUIContent buttonScriptFixMissingScripts { get; private set; }
+   public static GUIContent buttonScriptFindMissingGraphs { get; private set; }
 
    public static GUIContent favoritePanelCollapse { get; private set; }
 
