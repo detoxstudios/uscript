@@ -81,7 +81,7 @@ namespace Detox.Editor.GUI
 
       public void Init()
       {
-         this._name = "uScripts";
+         this.Name = "uScripts";
 
          this.panelScriptCurrent = new PanelScriptCurrent();
          this.panelScriptList = new PanelScriptList();

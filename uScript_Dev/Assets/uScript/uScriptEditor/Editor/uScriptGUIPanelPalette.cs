@@ -70,7 +70,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
    // Methods common to the panel classes
    public void Init()
    {
-      this._name = "Toolbox";
+      this.Name = "Toolbox";
    }
 
    public void Update()
@@ -155,7 +155,7 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
                // Draw the contents
    
                // Node list
-               this._scrollviewOffset = EditorGUILayout.BeginScrollView(this._scrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview", GUILayout.ExpandWidth(true));
+               this.ScrollviewOffset = EditorGUILayout.BeginScrollView(this.ScrollviewOffset, false, false, uScriptGUIStyle.HorizontalScrollbar, uScriptGUIStyle.VerticalScrollbar, "scrollview", GUILayout.ExpandWidth(true));
                {
                   this.listItemRowCount = 0;
                   this.listItemRowWidth = 0;
@@ -649,10 +649,10 @@ public sealed class uScriptGUIPanelPalette : uScriptGUIPanel
       this.buttonRect.width = this.listItemRowWidth - item.X - ButtonPadding;
 
       // Determine if the item should be drawn
-      if (_scrollviewOffset.y <= this.buttonRect.yMax)
+      if (this.ScrollviewOffset.y <= this.buttonRect.yMax)
       {
          // draw
-         if (_scrollviewOffset.y + scrollviewRect.height > this.buttonRect.yMin)
+         if (this.ScrollviewOffset.y + scrollviewRect.height > this.buttonRect.yMin)
          {
             // Draw the foldout or menu item button
             if (item.Items == null)

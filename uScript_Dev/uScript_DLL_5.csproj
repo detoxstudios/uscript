@@ -130,6 +130,7 @@
     <Compile Include="Assets\uScript\uScriptEditor\Editor\Extensions\UnityEditorExtensions.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\FlowChart.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GraphInfo.cs" />
+    <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\AutoCompletePopup.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\CanvasCommands.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\Control.cs" />
     <Compile Include="Assets\uScript\uScriptEditor\Editor\GUI\FocusedControl.cs" />

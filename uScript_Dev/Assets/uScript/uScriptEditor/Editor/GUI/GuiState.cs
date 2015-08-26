@@ -62,6 +62,11 @@ namespace Detox.Editor.GUI
 
       public void Enable()
       {
+         if (GUI.enabled)
+         {
+            return;
+         }
+
          // Only enable if the conditions are right for the EditorWindow that instantiated this object
          GUI.enabled = this.EnableCondition == null || this.EnableCondition();
       }
