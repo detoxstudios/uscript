@@ -4817,41 +4817,21 @@ namespace Detox.ScriptEditor
       private bool SaveTextFile(string path, string fileContents)
       {
          StreamWriter streamWriter = null;
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
          bool inVC = false;
-#endif
 
          try
          {
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-            // blocking checkout of versioned file, if necessary
-            if (UnityEditor.VersionControl.Provider.isActive)
-            {
-               UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(path.RelativeAssetPath());
-               if (asset != null)
-               {
-                  UnityEditor.VersionControl.Task statusTask = UnityEditor.VersionControl.Provider.Status(asset);
-                  statusTask.Wait();
-                  if (UnityEditor.VersionControl.Provider.CheckoutIsValid(statusTask.assetList[0]))
-                  {
-                     inVC = true;
-                     UnityEditor.VersionControl.Task coTask = UnityEditor.VersionControl.Provider.Checkout(statusTask.assetList[0], UnityEditor.VersionControl.CheckoutMode.Both);
-                     coTask.Wait();
-                  }
-               }
-            }
-#endif
+            inVC = uScript.IsFileInSourceControl(path);
 
             streamWriter = File.CreateText(path);
             streamWriter.Write(fileContents);
             streamWriter.Close();
 
-#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
             if (!inVC)
             {
+               // this will do nothing if source control is not available
                uScript.MasterComponent.AddFileToVersionControl(path.RelativeAssetPath());
             }
-#endif
          }
          catch (Exception e)
          {

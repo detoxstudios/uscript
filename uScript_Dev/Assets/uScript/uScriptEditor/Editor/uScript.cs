@@ -537,6 +537,13 @@ public sealed partial class uScript : EditorWindow
 #endif
    }
 
+   // this function is expensive - it gets all *.uscript files starting from Assets/ down
+   // written specifically for label fixup (i.e. "Fix Missing uScripts" button)
+   public static List<string> GetAllUScriptPaths()
+   {
+      return Directory.GetFiles(Application.dataPath, "*.uscript", SearchOption.AllDirectories).Select(s => s.Replace("\\", "/")).ToList();
+   }
+
    public bool IsStale(string graphName)
    {
       if (_staleScriptCache.ContainsKey(graphName))
@@ -2732,7 +2739,6 @@ public sealed partial class uScript : EditorWindow
 
    public void RefreshAssetDatabase(bool quick)
    {
-      UnityEngine.Object obj;
       const string Label = "Saved:\t";
       var indent = GUIStyle.none.GetTabIndent(string.Format("uScript: {0}", Label));
 
@@ -2769,23 +2775,11 @@ public sealed partial class uScript : EditorWindow
                logicPath,
                wrapperPath));
 
-         obj = AssetDatabase.LoadMainAssetAtPath(logicPath);
-         if (obj != null)
-         {
-            AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
-         }
-         obj = AssetDatabase.LoadMainAssetAtPath(wrapperPath);
-         if (obj != null)
-         {
-            AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
-         }
+         SetLabelsOnFile(logicPath, new string[] { "uScript", "uScriptCode" });
+         SetLabelsOnFile(wrapperPath, new string[] { "uScript", "uScriptCode" });
       }
 
-      obj = AssetDatabase.LoadMainAssetAtPath(this.fullPath.RelativeAssetPath());
-      if (obj != null)
-      {
-         AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptSource" });
-      }
+      SetLabelsOnFile(this.fullPath, new string[] { "uScript", "uScriptSource" });
    }
 
    private void DrawMenuItemShortcut(string shortcut)
@@ -3776,6 +3770,65 @@ public sealed partial class uScript : EditorWindow
 #endif
    }
 
+   // returns false if path is not in source control or source control is not active
+   // optionally, you can check out the file if it is in source control (defaults behavior is to check out)
+   public static bool IsFileInSourceControl(string path, bool checkout = true)
+   {
+      bool inVC = false;
+
+#if UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+      // blocking checkout of versioned file, if necessary
+      if (UnityEditor.VersionControl.Provider.isActive)
+      {
+         UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(path.RelativeAssetPath());
+         if (asset != null)
+         {
+            UnityEditor.VersionControl.Task statusTask = UnityEditor.VersionControl.Provider.Status(asset);
+            statusTask.Wait();
+            if (UnityEditor.VersionControl.Provider.CheckoutIsValid(statusTask.assetList[0]))
+            {
+               inVC = true;
+               if (checkout)
+               {
+                  UnityEditor.VersionControl.Task coTask = UnityEditor.VersionControl.Provider.Checkout(statusTask.assetList[0], UnityEditor.VersionControl.CheckoutMode.Both);
+                  coTask.Wait();
+               }
+            }
+         }
+      }
+#endif
+
+      return inVC;
+   }
+
+   public static bool FileHasLabels(string fullPath, string[] labels)
+   {
+      UnityEngine.Object obj = AssetDatabase.LoadMainAssetAtPath(fullPath.RelativeAssetPath());
+      if (obj != null)
+      {
+         string[] lbls = AssetDatabase.GetLabels(obj);
+         foreach(string label in labels)
+         {
+            if (!lbls.Contains(label)) return false;
+         }
+      }
+
+      return true;
+   }
+
+   public static void SetLabelsOnFile(string fullPath, string[] labels)
+   {
+      if (!FileHasLabels(fullPath, labels))
+      {
+         UnityEngine.Object obj = AssetDatabase.LoadMainAssetAtPath(fullPath.RelativeAssetPath());
+         if (obj != null)
+         {
+            IsFileInSourceControl(fullPath);  // checkout if necessary
+            AssetDatabase.SetLabels(obj, labels);
+         }
+      }
+   }
+
    private string GetGeneratedScriptPath(string binaryPath)
    {
       String fileName = Path.GetFileNameWithoutExtension(binaryPath) + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
@@ -4007,7 +4060,7 @@ public sealed partial class uScript : EditorWindow
 
       if (this.SaveGraph(script, this.fullPath, generateCode, generateDebugInfo, false))
       {
-         // When a file is saved (regardless of method), we should updated the
+         // When a file is saved (regardless of method), we should update the
          // Dictionary cache for that script.
 
          //script was saved under a new name, refresh the control
