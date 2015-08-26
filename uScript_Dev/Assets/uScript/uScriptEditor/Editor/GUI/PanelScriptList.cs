@@ -213,6 +213,37 @@ namespace Detox.Editor.GUI
 
             GUILayout.FlexibleSpace();
 
+            // Fix missing scripts button
+            if (GUILayout.Button(uScriptGUIContent.buttonScriptFixMissingScripts, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(uScriptGUIContent.buttonScriptFixMissingScripts).x)))
+            {
+               AssetDatabase.StartAssetEditing();
+               List<string> paths = uScript.GetAllUScriptPaths();
+               int found = 0;
+               foreach (string path in paths)
+               {
+                  if (!uScript.FileHasLabels(path, new string[] { "uScript", "uScriptSource" }))
+                  {
+                     found++;
+                     uScriptDebug.Log(string.Format("Found missing uscript: {0} - updating labels...", path.RelativeAssetPath()));
+                     uScript.SetLabelsOnFile(path, new string[] { "uScript", "uScriptSource" });
+
+                     // TODO: if this uscript file is missing its labels, chances are its generated files are missing theirs, too - check now
+                  }
+               }
+               AssetDatabase.StopAssetEditing();
+
+               if (found == 0)
+               {
+                  EditorUtility.DisplayDialog("uScript", "No missing uScripts found.", "OK");
+               }
+               else
+               {
+                  uScript.Instance.RefreshAssetDatabase(true);
+                  RequestListUpdate();
+                  EditorUtility.DisplayDialog("uScript", string.Format("Found and fixed {0} missing uScripts.", found), "OK");
+               }
+            } 
+            
             GUI.SetNextControlName("ScriptFilterSearch");
             var newFilterText = uScriptGUI.ToolbarSearchField(this.filterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
             if (this.filterText != newFilterText)
