@@ -140,8 +140,21 @@ namespace Detox.Editor.GUI
          }
 
          // Call the internal Unity control
+         const string DefaultMessage = "\u0002(type to search)\u0003";
+         if (Event.current.type == EventType.Repaint && text == string.Empty && UnityEditorExtensions.IsEditingControl(id) == false)
+         {
+            text = DefaultMessage;
+            style = new GUIStyle(style) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Italic };
+         }
+
          bool changed;
          var value = UnityEditorExtensions.DoTextField(id, fieldPosition, text, style, out changed);
+
+         if (text == DefaultMessage && value == DefaultMessage)
+         {
+            changed = false;
+            value = string.Empty;
+         }
 
          // Reset the tint
          GUI.backgroundColor = originalColor;
