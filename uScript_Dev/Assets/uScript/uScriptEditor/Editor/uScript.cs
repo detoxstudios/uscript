@@ -3022,6 +3022,11 @@ public sealed partial class uScript : EditorWindow
       ExportPNG.BeginExport();
    }
 
+   public static void FileMenuItem_FindMissingGraphs()
+   {
+      PanelScript.Instance.FindMissingGraphs();
+   }
+
    void FileMenuItem_UpgradeDeprecatedNodes()
    {
       int count = 0;
@@ -3217,6 +3222,8 @@ public sealed partial class uScript : EditorWindow
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemExportImage, false, FileMenuItem_ExportPNG);
       menu.AddItem(uScriptGUIContent.FileMenuItemUpgradeNodes, false, this.FileMenuItem_UpgradeDeprecatedNodes);
+      menu.AddSeparator(string.Empty);
+      menu.AddItem(uScriptGUIContent.FileMenuItemFindMissingGraphs, false, FileMenuItem_FindMissingGraphs);
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemRebuildGraphs, false, this.FileMenuItem_RebuildAll);
       menu.AddItem(uScriptGUIContent.FileMenuItemRemoveSource, false, this.FileMenuItem_Clean);

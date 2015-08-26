@@ -120,6 +120,36 @@ namespace Detox.Editor.GUI
             EditorGUILayout.EndVertical();
          }
 
+         public void FindMissingGraphs()
+         {
+            AssetDatabase.StartAssetEditing();
+            List<string> paths = uScript.GetAllUScriptPaths();
+            int found = 0;
+            foreach (string path in paths)
+            {
+               if (!uScript.FileHasLabels(path, new string[] { "uScript", "uScriptSource" }))
+               {
+                  found++;
+                  uScriptDebug.Log(string.Format("Found missing graph: {0} - updating labels...", path.RelativeAssetPath()));
+                  uScript.SetLabelsOnFile(path, new string[] { "uScript", "uScriptSource" });
+
+                  // TODO: if this graph file is missing its labels, chances are its generated files are missing theirs, too - check now
+               }
+            }
+            AssetDatabase.StopAssetEditing();
+
+            if (found == 0)
+            {
+               EditorUtility.DisplayDialog("uScript", "No missing graphs found.", "OK");
+            }
+            else
+            {
+               AssetDatabase.Refresh();
+               this.RequestListUpdate();
+               EditorUtility.DisplayDialog("uScript", string.Format("Found and fixed {0} missing graphs.", found), "OK");
+            }
+         }
+
          public void SaveState()
          {
             uScript.Preferences.ProjectGraphListFilter = this.filterText;
@@ -213,37 +243,6 @@ namespace Detox.Editor.GUI
 
             GUILayout.FlexibleSpace();
 
-            // Fix missing scripts button
-            if (GUILayout.Button(uScriptGUIContent.buttonScriptFindMissingGraphs, EditorStyles.toolbarButton, GUILayout.Width(EditorStyles.toolbarButton.CalcSize(uScriptGUIContent.buttonScriptFindMissingGraphs).x)))
-            {
-               AssetDatabase.StartAssetEditing();
-               List<string> paths = uScript.GetAllUScriptPaths();
-               int found = 0;
-               foreach (string path in paths)
-               {
-                  if (!uScript.FileHasLabels(path, new string[] { "uScript", "uScriptSource" }))
-                  {
-                     found++;
-                     uScriptDebug.Log(string.Format("Found missing graph: {0} - updating labels...", path.RelativeAssetPath()));
-                     uScript.SetLabelsOnFile(path, new string[] { "uScript", "uScriptSource" });
-
-                     // TODO: if this uscript file is missing its labels, chances are its generated files are missing theirs, too - check now
-                  }
-               }
-               AssetDatabase.StopAssetEditing();
-
-               if (found == 0)
-               {
-                  EditorUtility.DisplayDialog("uScript", "No missing graphs found.", "OK");
-               }
-               else
-               {
-                  AssetDatabase.Refresh();
-                  RequestListUpdate();
-                  EditorUtility.DisplayDialog("uScript", string.Format("Found and fixed {0} missing graphs.", found), "OK");
-               }
-            } 
-            
             GUI.SetNextControlName("ScriptFilterSearch");
             var newFilterText = uScriptGUI.ToolbarSearchField(this.filterText, GUILayout.MinWidth(50), GUILayout.MaxWidth(100));
             if (this.filterText != newFilterText)

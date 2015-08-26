@@ -79,6 +79,11 @@ namespace Detox.Editor.GUI
          uScriptInstance.SetMouseRegion(uScript.MouseRegion.Scripts);
       }
 
+      public void FindMissingGraphs()
+      {
+         this.panelScriptList.FindMissingGraphs();
+      }
+
       public void Init()
       {
          this.Name = "uScripts";

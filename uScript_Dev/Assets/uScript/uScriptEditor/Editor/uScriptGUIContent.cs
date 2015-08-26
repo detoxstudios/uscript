@@ -49,7 +49,6 @@ public static class uScriptGUIContent
       buttonScriptSourceStale = new GUIContent("Source", "Ping the source file associated with this uScript.  Save using Release or Debug to generate code for this script.");
       buttonScriptSourceDebug = new GUIContent("Source", "Ping the source file associated with this uScript.  This script contains Debug information.");
       buttonScriptUpgradeNodes = new GUIContent("Upgrade Deprecated Nodes", "Upgrade all deprecated nodes in this graph. If this graph is assigned to a specific Unity scene, please be sure that scene is open before doing this or you could loose work!");
-      buttonScriptFindMissingGraphs = new GUIContent("Find Missing", "Find missing graphs and restore them to this list.");
 
       buttonScriptNew = new GUIContent("New _&N", "Create a new uScript.  The active uScript will be closed automatically.");
 
@@ -63,6 +62,7 @@ public static class uScriptGUIContent
       FileMenuItemSaveRelease = new GUIContent("Save Release &R");
       FileMenuItemExportImage = new GUIContent("Export to Image (PNG)   &E");
       FileMenuItemUpgradeNodes = new GUIContent("Upgrade Deprecated Nodes");
+      FileMenuItemFindMissingGraphs = new GUIContent("Find Missing Graphs");
       FileMenuItemRebuildGraphs = new GUIContent("Rebuild All Graphs");
       FileMenuItemRemoveSource = new GUIContent("Remove Generated Code");
 
@@ -230,8 +230,6 @@ public static class uScriptGUIContent
 
    public static GUIContent buttonScriptsRemoveGenerated { get; private set; }
 
-   public static GUIContent buttonScriptFindMissingGraphs { get; private set; }
-
    public static GUIContent favoritePanelCollapse { get; private set; }
 
    public static GUIContent favoritePanelExpand { get; private set; }
@@ -269,6 +267,8 @@ public static class uScriptGUIContent
    public static GUIContent FileMenuItemSaveRelease { get; private set; }
 
    public static GUIContent FileMenuItemExportImage { get; private set; }
+
+   public static GUIContent FileMenuItemFindMissingGraphs { get; private set; }
 
    public static GUIContent FileMenuItemUpgradeNodes { get; private set; }
 
