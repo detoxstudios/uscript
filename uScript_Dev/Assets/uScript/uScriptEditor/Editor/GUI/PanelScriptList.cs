@@ -140,13 +140,13 @@ namespace Detox.Editor.GUI
 
             if (found == 0)
             {
-               EditorUtility.DisplayDialog("uScript", "No missing graphs found.", "OK");
+               EditorUtility.DisplayDialog("Find Missing Graphs", "No missing graphs found.", "OK");
             }
             else
             {
                AssetDatabase.Refresh();
                this.RequestListUpdate();
-               EditorUtility.DisplayDialog("uScript", string.Format("Found and fixed {0} missing graphs.", found), "OK");
+               EditorUtility.DisplayDialog("Find Missing Graphs", string.Format("Found and fixed {0} missing graphs.", found), "OK");
             }
          }
 
