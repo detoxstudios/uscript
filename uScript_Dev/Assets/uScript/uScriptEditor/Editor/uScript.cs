@@ -2730,7 +2730,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   public void RefreshAssetDatabase(bool quick)
+   public void RefreshAssetDatabase(bool quick, bool debug)
    {
       UnityEngine.Object obj;
       const string Label = "Saved:\t";
@@ -2748,7 +2748,7 @@ public sealed partial class uScript : EditorWindow
       {
          uScriptDebug.Log(
             string.Format(
-               "{0}{1}\n{2}... based on the graph.\n\n{3}\n- {4}",
+               "{0}{1}\n{2}... [Quick Save]\n\n{3}\n- {4}",
                Label,
                fileName.Bold(),
                indent,
@@ -2759,10 +2759,11 @@ public sealed partial class uScript : EditorWindow
       {
          uScriptDebug.Log(
             string.Format(
-               "{0}{1}\n{2}... and generated source files based on the graph.\n\n{3}\n- {4}\n\n{5}\n- {6}\n- {7}",
+               "{0}{1}\n{2}... and generated source files based on the graph.{3}\n\n{4}\n- {5}\n\n{6}\n- {7}\n- {8}",
                Label,
                fileName.Bold(),
                indent,
+               debug ? " [Debug Save]" : string.Empty,
                "Graph:".Bold(),
                this.fullPath.RelativeAssetPath(),
                "Generated source files:".Bold(),
@@ -2985,7 +2986,7 @@ public sealed partial class uScript : EditorWindow
 
       if (saved)
       {
-         this.RefreshAssetDatabase(quick);
+         this.RefreshAssetDatabase(quick, debug);
       }
 
       return saved;
