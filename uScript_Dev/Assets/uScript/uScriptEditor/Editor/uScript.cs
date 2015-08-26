@@ -5403,7 +5403,7 @@ public sealed partial class uScript : EditorWindow
 
                   return string.Format("The value of the variable. Only values supported by this variable type are allowed.{0}", searchInstructions);
                case "Make Public": return "When checked, this will allow you to access this variable from other uScript graphs as a reflected property. You must name this variable before you can use this option (see the Name field above). This is the equivalent of making a variable \"public\" in a script.";
-               case "Hide In Inspector": return "When checked, this will hide this variable from Unity so that it will not show up in the Inspector panel for this graph's component. You must name this variable and make it public using the \"Make Public\" checkbox above before you can use this option (see the Name field above). This is the equivelent of using the [HideInInspector] attribute above a variable in a script.";
+               case "Hide In Inspector": return "When checked, this will hide this variable from Unity so that it will not show up in the Inspector panel for this graph's component. You must name this variable and make it public using the \"Make Public\" checkbox above before you can use this option (see the Name field above). This is the equivalent of using the [HideInInspector] attribute above a variable in a script.";
             }
 
             break;
