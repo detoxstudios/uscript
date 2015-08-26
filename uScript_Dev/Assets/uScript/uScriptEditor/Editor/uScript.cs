@@ -5398,7 +5398,7 @@ public sealed partial class uScript : EditorWindow
                   if (valueType == typeof(GameObject) || typeof(Component).IsAssignableFrom(valueType))
                   {
                      searchInstructions =
-                        "\n\nEnter text in the field to search for an object in the scene hierarchy. Specify a complete hierarchy path when possible for faster and more accurate results at runtime.";
+                        "\n\nEnter text to search for an object in the scene hierarchy. For faster and more accurate results at runtime, specify the complete hierarchy path.";
                   }
 
                   return string.Format("The value of the variable. Only values supported by this variable type are allowed.{0}", searchInstructions);
