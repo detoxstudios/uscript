@@ -120,7 +120,7 @@ namespace Detox.Editor.GUI
          }
          else if (Event.current.type == EventType.Repaint)
          {
-            if (fieldPosition.Contains(Event.current.mousePosition) && GUI.enabled)
+            if (GUI.enabled && id == DragAndDrop.activeControlID && fieldPosition.Contains(Event.current.mousePosition))
             {
                if (DragAndDrop.visualMode != DragAndDropVisualMode.None
                    && DragAndDrop.visualMode != DragAndDropVisualMode.Rejected)
