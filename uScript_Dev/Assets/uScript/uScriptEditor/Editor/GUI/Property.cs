@@ -559,15 +559,9 @@ namespace Detox.Editor.GUI
             else if (state.Type.Contains("[]"))
             {
                var elementType = uScript.Instance.GetType(state.Type.ReplaceLast("[]", string.Empty));
-               if (elementType != typeof(string))
+               if (IsSupportedReferenceType(elementType) == false)
                {
                   state.IsReadOnly = true;
-
-                  //Debug.LogWarningFormat(
-                  //   "Unhandled property type: \"{0}\", type: {1}\n\tState: {2}\n",
-                  //   value,
-                  //   elementType,
-                  //   state);
                }
 
                var values = Parameter.StringToArray(state.DefaultValueAsString);
@@ -592,36 +586,20 @@ namespace Detox.Editor.GUI
 
          // Flag all unknown struct types as being only accessible through nodes.
          var stateType = uScript.Instance.GetType(state.Type);
-         if (stateType != null && stateType.IsValueType && stateType.IsEnum == false
-            && stateType != typeof(bool)
-            && stateType != typeof(int)
-            && stateType != typeof(float)
-            //&& stateType != typeof(double)
-            && stateType != typeof(Vector2)
-            && stateType != typeof(Vector3)
-            && stateType != typeof(Vector4)
-            && stateType != typeof(Rect)
-            && stateType != typeof(Quaternion)
-            && stateType != typeof(Color)
-            && stateType != typeof(LayerMask))
+         if (stateType == null)
          {
-            state.IsReadOnly = true;
+            uScriptDebug.Log("The property type is unhandled.", uScriptDebug.Type.Warning);
          }
-
-         // Flag all unknown reference types as being only accessible through nodes.
-         if (stateType != null && stateType.IsClass
-            && stateType != typeof(string)
-            && stateType != typeof(GameObject)
-            && typeof(Component).IsAssignableFrom(stateType) == false)
+         else
          {
-            //Debug.Log("CLASS: value: \"" + value + "\", type: " + valueType + "\nState: " + state + "\n");
-            state.IsReadOnly = true;
-         }
+            if ((stateType.IsValueType && IsSupportedValueType(stateType) == false)
+                || (stateType.IsClass && IsSupportedReferenceType(stateType) == false)
+                || (stateType.IsInterface && IsSupportedInterfaceType(stateType) == false))
+            {
+               state.IsReadOnly = true;
+            }
 
-         // Flag all unknown interfaces (which is all of them)
-         if (stateType != null && stateType.IsInterface)
-         {
-            state.IsReadOnly = true;
+            valueType = state.Type;
          }
 
          BeginRow(label, state);
@@ -632,10 +610,13 @@ namespace Detox.Editor.GUI
                EditorGUILayout.TextField("(node accessible)", Style.TextField, GUILayout.Width(width));
                valueType = state.Type;
             }
-            else if (state.IsSocketExposed && (state.IsLocked || state.IsReadOnly))
+            else if (state.IsSocketExposed && state.IsLocked)
             {
-               var text = state.IsReadOnly ? "(read-only)" : "(socket used)";
-               EditorGUILayout.TextField(text, Style.TextField, GUILayout.Width(width));
+               EditorGUILayout.TextField("(socket used)", Style.TextField, GUILayout.Width(width));
+            }
+            else if (state.IsReadOnly)
+            {
+               EditorGUILayout.TextField("(use socket)", Style.TextField, GUILayout.Width(width));
             }
             else
             {
@@ -752,13 +733,14 @@ namespace Detox.Editor.GUI
                   }
                   else
                   {
-                     uScriptDebug.Log(
-                        string.Format(
-                           "Unhandled property type: \"{0}\", type: {1}\n\tState: {2}\n",
-                           value,
-                           valueType,
-                           state),
-                        uScriptDebug.Type.Warning);
+                     value = TextField((string)value);
+                     //uScriptDebug.Log(
+                     //   string.Format(
+                     //      "Unhandled property type: \"{0}\", type: {1}\n\tState: {2}\n",
+                     //      value,
+                     //      valueType,
+                     //      state),
+                     //   uScriptDebug.Type.Warning);
                   }
                }
             }
@@ -1107,7 +1089,11 @@ namespace Detox.Editor.GUI
          {
             var text = string.Format("... ({0} {1})", array.Length, array.Length == 1 ? "item" : "items");
 
-            if (state.IsReadOnly)
+            if (state.IsReadOnly && state.IsLocked == false)
+            {
+               text = "(use socket)";
+            }
+            else if (state.IsReadOnly)
             {
                text = "(node accessible)";
             }
@@ -1406,9 +1392,38 @@ namespace Detox.Editor.GUI
          }
 
          EditorGUILayout.TextField(
-            state.IsReadOnly ? "(read-only)" : "(socket used)",
+            state.IsReadOnly ? "(use socket)" : "(socket used)",
             Style.TextField,
             GUILayout.Width(columnValue.Width));
+         return false;
+      }
+
+      private static bool IsSupportedValueType(Type type)
+      {
+         return type.IsEnum
+            || type == typeof(bool)
+            || type == typeof(int)
+            || type == typeof(float)
+            || type == typeof(Vector2)
+            || type == typeof(Vector3)
+            || type == typeof(Vector4)
+            || type == typeof(Rect)
+            || type == typeof(Quaternion)
+            || type == typeof(Color)
+            || type == typeof(LayerMask);
+      }
+
+      private static bool IsSupportedReferenceType(Type type)
+      {
+         return type == typeof(object)
+            || type == typeof(string)
+            || type == typeof(GameObject)
+            || typeof(Component).IsAssignableFrom(type);
+      }
+
+      private static bool IsSupportedInterfaceType(Type type)
+      {
+         // None are specifically supported
          return false;
       }
 
