@@ -80,6 +80,7 @@ namespace Detox.ScriptEditor
 
                if (this.LocalNode.Value.Default.Contains(Data.ScriptEditor.Parameter.ArrayDelimeter.ToString()))
                {
+                  // This is an array
                   var elements = this.LocalNode.Value.Default.Split(Data.ScriptEditor.Parameter.ArrayDelimeter);
 
                   if (valueType == typeof(GameObject) || typeof(Component).IsAssignableFrom(valueType))
@@ -105,6 +106,12 @@ namespace Detox.ScriptEditor
 
                      for (var index = 1; index < elements.Length; index++)
                      {
+                        if (valueType == typeof(string) && elements[index] == string.Empty)
+                        {
+                           var name = uScriptConfig.Variable.FriendlyName(valueType.ToString());
+                           elements[index] = string.Format("({0})", name);
+                        }
+
                         if (valueType != typeof(int) && valueType != typeof(float) && valueType != typeof(string)
                             && valueType != null && valueType.IsEnum == false)
                         {
@@ -118,6 +125,7 @@ namespace Detox.ScriptEditor
                }
                else
                {
+                  // This is NOT an array
                   if (valueType == typeof(GameObject) || typeof(Component).IsAssignableFrom(valueType))
                   {
                      // "/Parent 1/Child A/" will show as "Child A"
