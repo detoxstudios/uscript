@@ -1,22 +1,22 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PreferenceWindow.cs" company="Detox Studios, LLC">
-//   Copyright 2010-2015 Detox Studios, LLC. All rights reserved.
+// <copyright file="PreferenceWindow.cs" company="Detox Studios LLC">
+//   Copyright 2010-2015 Detox Studios LLC. All rights reserved.
 // </copyright>
-// <summary>
-//   Defines the PreferenceWindow type.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 #if !UNITY_3_5
 namespace Detox.Editor.GUI.Windows
 {
 #endif
+   using System.Diagnostics.CodeAnalysis;
+
    using Detox.Editor.GUI;
 
    using UnityEditor;
 
    using UnityEngine;
 
+   [SuppressMessage("ReSharper", "RedundantNameQualifier")]
    public class PreferenceWindow : EditorWindow
    {
       private const int LabelWidth = 230;
@@ -41,13 +41,13 @@ namespace Detox.Editor.GUI.Windows
       private bool saveOnClose;
       private Rect windowPosition;
 
-      private Preferences.MenuLocationType originalLocation;
+      private Detox.Editor.Preferences.MenuLocationType originalLocation;
 
-      private Preferences preferences;
+      private Detox.Editor.Preferences preferences;
 
       public static void Open()
       {
-         GetWindow<PreferenceWindow>(true, "uScript Preferences", true);
+         EditorWindow.GetWindow<PreferenceWindow>(true, "uScript Preferences", true);
       }
 
       internal void OnEnable()
@@ -157,7 +157,7 @@ namespace Detox.Editor.GUI.Windows
          var maxValue = EditorGUILayout.IntField("Maximum Node Recursion", this.preferences.MaximumNodeRecursionCount);
          this.preferences.MaximumNodeRecursionCount = Mathf.Min(MaxRecursion, Mathf.Max(MinRecursion, maxValue));
 
-         var method = (Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", this.preferences.SaveMethod);
+         var method = (Detox.Editor.Preferences.SaveMethodType)EditorGUILayout.EnumPopup("Save Method", this.preferences.SaveMethod);
          this.preferences.SaveMethod = method;
 
          EditorGUILayout.Separator();
@@ -201,7 +201,7 @@ namespace Detox.Editor.GUI.Windows
       {
          GUILayout.Label("Miscellaneous Settings", EditorStyles.boldLabel);
 
-         var location = (Preferences.MenuLocationType)EditorGUILayout.EnumPopup("Menu Location", this.preferences.MenuLocation);
+         var location = (Detox.Editor.Preferences.MenuLocationType)EditorGUILayout.EnumPopup("Menu Location", this.preferences.MenuLocation);
          this.preferences.MenuLocation = location;
 
          var boolValue = EditorGUILayout.Toggle("Show Welcome Window on Start", this.preferences.ShowAtStartup);
@@ -259,10 +259,10 @@ namespace Detox.Editor.GUI.Windows
          GUILayout.Label("Node Settings", EditorStyles.boldLabel);
 
          this.preferences.DoubleClickBehavior =
-            (Preferences.DoubleClickBehaviorType)
+            (Detox.Editor.Preferences.DoubleClickBehaviorType)
             EditorGUILayout.EnumPopup("Double-Click Behavior", this.preferences.DoubleClickBehavior);
          this.preferences.VariableExpansion =
-            (Preferences.VariableExpansionType)
+            (Detox.Editor.Preferences.VariableExpansionType)
             EditorGUILayout.EnumPopup("Variable Expansion Mode", this.preferences.VariableExpansion);
          this.preferences.GridSnap = EditorGUILayout.Toggle("Snap to Grid", this.preferences.GridSnap);
          this.preferences.LineWidthMultiplier = EditorGUILayout.FloatField("Connector Line Width", this.preferences.LineWidthMultiplier);

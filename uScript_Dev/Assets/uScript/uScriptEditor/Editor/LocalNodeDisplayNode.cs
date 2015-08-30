@@ -74,7 +74,7 @@ namespace Detox.ScriptEditor
             {
                var isArray = false;
                var valueType = uScript.Instance.GetType(this.LocalNode.Value.Type);
-               if (valueType.HasElementType)
+               if (valueType != null && valueType.HasElementType)
                {
                   valueType = valueType.GetElementType();
                   isArray = true;
