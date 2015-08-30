@@ -157,7 +157,7 @@ namespace Detox.Data.ScriptEditor
       public bool   Input;
       public bool   Output;
 
-      public static char ArrayDelimeter { get { return (char) 31; } }
+      public static char ArrayDelimeter { get { return '\u001f'; } }
    }
 
    public struct Plug
