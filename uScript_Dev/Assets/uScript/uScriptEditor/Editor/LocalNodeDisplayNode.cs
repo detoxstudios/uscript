@@ -72,10 +72,12 @@ namespace Detox.ScriptEditor
             }
             else
             {
+               var isArray = false;
                var valueType = uScript.Instance.GetType(this.LocalNode.Value.Type);
                if (valueType.HasElementType)
                {
                   valueType = valueType.GetElementType();
+                  isArray = true;
                }
 
                if (this.LocalNode.Value.Default.Contains(Data.ScriptEditor.Parameter.ArrayDelimeter.ToString()))
@@ -125,12 +127,17 @@ namespace Detox.ScriptEditor
                }
                else
                {
-                  // This is NOT an array
+                  // This is NOT an array, or an array with no elements.
                   if (valueType == typeof(GameObject) || typeof(Component).IsAssignableFrom(valueType))
                   {
                      // "/Parent 1/Child A/" will show as "Child A"
                      var element = System.IO.Path.GetFileName(this.LocalNode.Value.Default.TrimEnd('/'));
                      value = element;
+                  }
+                  else if (isArray)
+                  {
+                     value = uScriptConfig.Variable.FriendlyName(this.LocalNode.Value.Type)
+                        .ReplaceFirst("UnityEngine.", string.Empty);
                   }
                   else
                   {
