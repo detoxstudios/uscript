@@ -588,7 +588,11 @@ namespace Detox.Editor.GUI
          var stateType = uScript.Instance.GetType(state.Type);
          if (stateType == null)
          {
-            uScriptDebug.Log("The property type is unhandled.", uScriptDebug.Type.Warning);
+            if (state.Type != "TextArea")
+            {
+               var message = string.Format("The property type is unhandled: {0}.", state.Type);
+               uScriptDebug.Log(message, uScriptDebug.Type.Warning);
+            }
          }
          else
          {
