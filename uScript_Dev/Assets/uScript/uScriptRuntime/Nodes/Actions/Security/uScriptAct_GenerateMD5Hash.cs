@@ -1,7 +1,7 @@
 // uScript Action Node
 // (C) 2011 Detox Studios LLC
 
-#if (UNITY_FLASH)
+#if (UNITY_FLASH || UNITY_WP8 || UNITY_WP8_1 || UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WINRT || UNITY_WINRT_8_0 || UNITY_WINRT_8_1)
 
    // This node is not supported on Flash at this time. This compiler directive is needed for the project to compile for these devices without error.
 
