@@ -31,13 +31,13 @@ namespace Detox.Editor.GUI.Windows
       private static string unityVersion = "on Unity 3";
 #elif UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6
       private static string unityVersion = "on Unity 4";
-#elif UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5
+#elif UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9
       private static string unityVersion = "on Unity 5";
 #else
       private static string unityVersion = "on Unity ?";
 #endif
 
-      public static void Open()
+   public static void Open()
       {
          window = GetWindow<AboutWindow>(true, "About uScript", true);
          window.isFirstRun = true;
