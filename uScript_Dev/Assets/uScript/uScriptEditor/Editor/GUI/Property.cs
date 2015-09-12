@@ -16,6 +16,7 @@ namespace Detox.Editor.GUI
    using System.Linq;
    using System.Reflection;
 
+   using Detox.Editor.Extensions;
    using Detox.FlowChart;
    using Detox.ScriptEditor;
 
@@ -543,15 +544,28 @@ namespace Detox.Editor.GUI
             }
             else if (TryParseUnityObjectArrayType(state.Type, out unityObjectType))
             {
+               var elementType = unityObjectType.GetElementType();
+               if (elementType != typeof(GameObject) && typeof(Component).IsAssignableFrom(elementType) == false)
+               {
+                  state.IsReadOnly = true;
+               }
+
                // Arrays are stored as comma delimited string, so parse it now
                var values = Parameter.StringToArray(state.DefaultValueAsString);
+
                values = ArrayFoldout(label, values, state, unityObjectType.GetElementType());
                value = Parameter.ArrayToString(values);
             }
             else if (state.Type.Contains("[]"))
             {
+               var elementType = uScript.Instance.GetType(state.Type.ReplaceLast("[]", string.Empty));
+               if (IsSupportedReferenceType(elementType) == false)
+               {
+                  state.IsReadOnly = true;
+               }
+
                var values = Parameter.StringToArray(state.DefaultValueAsString);
-               value = ArrayFoldout(label, values, state);
+               value = ArrayFoldout(label, values, state, elementType);
             }
 
             return value;
@@ -567,15 +581,46 @@ namespace Detox.Editor.GUI
                state);
          }
 
-         var type = value.GetType().ToString();
+         var valueType = value.GetType().ToString();
          var width = columnValue.Width;
+
+         // Flag all unknown struct types as being only accessible through nodes.
+         var stateType = uScript.Instance.GetType(state.Type);
+         if (stateType == null)
+         {
+            if (state.Type != "TextArea")
+            {
+               var message = string.Format("The property type is unhandled: {0}.", state.Type);
+               uScriptDebug.Log(message, uScriptDebug.Type.Warning);
+            }
+         }
+         else
+         {
+            if ((stateType.IsValueType && IsSupportedValueType(stateType) == false)
+                || (stateType.IsClass && IsSupportedReferenceType(stateType) == false)
+                || (stateType.IsInterface && IsSupportedInterfaceType(stateType) == false))
+            {
+               state.IsReadOnly = true;
+            }
+
+            valueType = state.Type;
+         }
 
          BeginRow(label, state);
          {
-            if (state.IsSocketExposed && (state.IsLocked || state.IsReadOnly))
+            if (state.IsSocketExposed == false && state.IsLocked && state.IsReadOnly && stateType != null
+                && (stateType.IsInterface || stateType.IsClass || (stateType.IsValueType && stateType.IsEnum == false)))
             {
-               var text = state.IsReadOnly ? "(read-only)" : "(socket used)";
-               EditorGUILayout.TextField(text, Style.TextField, GUILayout.Width(width));
+               EditorGUILayout.TextField("(node accessible)", Style.TextField, GUILayout.Width(width));
+               valueType = state.Type;
+            }
+            else if (state.IsSocketExposed && state.IsLocked)
+            {
+               EditorGUILayout.TextField("(socket used)", Style.TextField, GUILayout.Width(width));
+            }
+            else if (state.IsReadOnly)
+            {
+               EditorGUILayout.TextField("(use socket)", Style.TextField, GUILayout.Width(width));
             }
             else
             {
@@ -591,34 +636,34 @@ namespace Detox.Editor.GUI
                {
                   value = FloatField((float)value);
                }
-               else if (value is double)
-               {
-                  value = (double)FloatField((float)value);
-               }
+               //else if (value is double)
+               //{
+               //   value = (double)FloatField((float)value);
+               //}
                else if (value is Vector2)
                {
                   value = Vector2Field((Vector2)value);
-                  type = string.Format("{0} [X, Y]", value.GetType());
+                  valueType = string.Format("{0} [X, Y]", value.GetType());
                }
                else if (value is Vector3)
                {
                   value = Vector3Field((Vector3)value);
-                  type = string.Format("{0} [X, Y, Z]", value.GetType());
+                  valueType = string.Format("{0} [X, Y, Z]", value.GetType());
                }
                else if (value is Vector4)
                {
                   value = Vector4Field((Vector4)value);
-                  type = string.Format("{0} [X, Y, Z, W]", value.GetType());
+                  valueType = string.Format("{0} [X, Y, Z, W]", value.GetType());
                }
                else if (value is Rect)
                {
                   value = RectField((Rect)value);
-                  type = string.Format("{0} [X, Y, W, H]", value.GetType());
+                  valueType = string.Format("{0} [X, Y, W, H]", value.GetType());
                }
                else if (value is Quaternion)
                {
                   value = QuaternionField((Quaternion)value);
-                  type = string.Format("{0} [X, Y, Z, W]", value.GetType());
+                  valueType = string.Format("{0} [X, Y, Z, W]", value.GetType());
                }
                else if (value is Color)
                {
@@ -627,7 +672,7 @@ namespace Detox.Editor.GUI
                else if (value is GUILayoutOption)
                {
                   value = GUILayoutOptionField((GUILayoutOption)value);
-                  type = "GUILayoutOption";
+                  valueType = "GUILayoutOption";
                }
                else if (value is LayerMask)
                {
@@ -637,23 +682,38 @@ namespace Detox.Editor.GUI
                {
                   value = EnumField((Enum)value);
                }
-               else if (TryParseUnityObjectType(state.Type, out unityObjectType))
+               else if (TryParseUnityObjectType(state.Type, out unityObjectType)
+                        && (unityObjectType == typeof(GameObject) || typeof(Component).IsAssignableFrom(unityObjectType)))
                {
                   if (value.ToString() != state.DefaultValueAsString)
                   {
-                     Debug.LogWarning(string.Format("value ({0}) does not equal state.Default ({1})\n", value, state.DefaultValueAsString));
+                     Debug.LogWarning(
+                        string.Format(
+                           "value ({0}) does not equal state.Default ({1})\n",
+                           value,
+                           state.DefaultValueAsString));
                   }
 
+#if UNITY_3_5
                   value = UnityObjectField((string)value, unityObjectType);
-                  type = unityObjectType.ToString();
+#else
+                  value = SceneObjectPathField((string)value, unityObjectType);
+#endif
+
+                  valueType = unityObjectType.ToString();
                }
                else
                {
                   // Treat everything else as a string
+                  //Debug.Log("2: state.Type: " + state.Type + ", value: \"" + value + "\", type: " + valueType + "\n");
 
                   if (value.ToString() != state.DefaultValueAsString)
                   {
-                     Debug.LogWarning(string.Format("value ({0}) does not equal state.Default ({1})\n", value, state.DefaultValueAsString));
+                     Debug.LogWarning(
+                        string.Format(
+                           "value ({0}) does not equal state.Default ({1})\n",
+                           value,
+                           state.DefaultValueAsString));
                   }
 
                   if (uScriptConfig.Variable.FriendlyName(state.Type) == "TextArea")
@@ -669,15 +729,27 @@ namespace Detox.Editor.GUI
                      // TODO: Disable VariableNameField until needed, as Unity 4.1 has issues.
                      //value = VariableNameField(label, p.Default, state);
                   }
-                  else
+                  else if (stateType != null && stateType == typeof(string))
                   {
                      // Should "state.Default" be passed instead of "value"?
                      value = TextArea((string)value);
+
+                  }
+                  else
+                  {
+                     value = TextField((string)value);
+                     //uScriptDebug.Log(
+                     //   string.Format(
+                     //      "Unhandled property type: \"{0}\", type: {1}\n\tState: {2}\n",
+                     //      value,
+                     //      valueType,
+                     //      state),
+                     //   uScriptDebug.Type.Warning);
                   }
                }
             }
          }
-         EndRow(type);
+         EndRow(valueType);
 
          return value;
       }
@@ -760,8 +832,23 @@ namespace Detox.Editor.GUI
          }
       }
 
+      public static string GetControlName()
+      {
+         return GetControlName(string.Empty);
+      }
+
+      public static string GetControlName(string suffix)
+      {
+         return string.Format("{0}[{1}]{2}", nodeKey, propertyCount.ToString(CultureInfo.InvariantCulture), suffix);
+      }
+
       public static void MonitorGUIControlFocusChanges()
       {
+         if (Event.current.type != EventType.Repaint)
+         {
+            return;
+         }
+
          // TODO: Disable or comment out until needed. Only used by VariableNameField()
          if (FocusedControl.ID != focusedControlID)
          {
@@ -769,12 +856,12 @@ namespace Detox.Editor.GUI
             {
                var oldControlName = ControlIDList[focusedControlID];
 
-               //            string newName = "UNKNOWN";
-               //            if (controlIDList.ContainsKey(FocusedControl.ID))
-               //            {
-               //               newName = controlIDList[FocusedControl.ID];
-               //            }
-               //            Debug.Log("FOCUS CHANGED: \t" + focusedControlID.ToString() + " (" + oldName + ") -> " + FocusedControl.ToString() + " (" + newName + ")\n");
+               //string newName = "UNKNOWN";
+               //if (controlIDList.ContainsKey(FocusedControl.ID))
+               //{
+               //   newName = controlIDList[FocusedControl.ID];
+               //}
+               //Debug.Log("FOCUS CHANGED: \t" + focusedControlID.ToString() + " (" + oldName + ") -> " + FocusedControl.ToString() + " (" + newName + ")\n");
 
                // When specific fields lose focus, send out an event
                if (oldControlName == WatchedControlName)
@@ -823,8 +910,8 @@ namespace Detox.Editor.GUI
          btnRect.height = 16;
 
          // Determine the rect for the entire property panel row
-         row.x = uScriptGUIPanel.Rect.x;
-         row.width = uScriptGUIPanel.Rect.width;
+         row.x = uScriptGUIPanelProperty.Instance.Rect.x;
+         row.width = uScriptGUIPanelProperty.Instance.Rect.width;
 
          if (GUI.Button(btnRect, uScriptGUIContent.buttonArrayRemove, Style.ArrayTextButton))
          {
@@ -910,7 +997,11 @@ namespace Detox.Editor.GUI
          }
          else if (type != null && typeof(UnityEngine.Object).IsAssignableFrom(type))
          {
+#if UNITY_3_5
             t = UnityObjectField((string)t, type);
+#else
+            t = SceneObjectPathField((string)t, type);
+#endif
          }
          else if (value is string)
          {
@@ -923,7 +1014,7 @@ namespace Detox.Editor.GUI
             //      t = EditorGUILayout.TextField((string)t, Style.TextField, GUILayout.ExpandWidth(true));
             //      var r = GUILayoutUtility.GetLastRect();
 
-            //      if (r.Contains(Event.current.mousePosition) && GUI.enabled)
+            //      if (r.Contains(Event.current.mousePosition) && uScript.GuiState.Enabled)
             //      {
             //         var objectReferences = DragAndDrop.objectReferences;
 
@@ -948,7 +1039,7 @@ namespace Detox.Editor.GUI
             //         }
             //      }
 
-            //      uScriptGUI.Enabled = string.IsNullOrEmpty((string)t) == false;
+            //      uScript.GuiState.Enabled = string.IsNullOrEmpty((string)t) == false;
 
             //      if (GUILayout.Button(uScriptGUIContent.buttonArraySearch, Style.ArrayIconButton))
             //      {
@@ -967,7 +1058,7 @@ namespace Detox.Editor.GUI
             //         }
             //      }
 
-            //      uScriptGUI.Enabled = true;
+            //      uScript.GuiState.Enable();
             //   }
 
             //   EditorGUILayout.EndHorizontal();
@@ -1001,6 +1092,16 @@ namespace Detox.Editor.GUI
          if (isFieldUsable)
          {
             var text = string.Format("... ({0} {1})", array.Length, array.Length == 1 ? "item" : "items");
+
+            if (state.IsReadOnly && state.IsLocked == false)
+            {
+               text = "(use socket)";
+            }
+            else if (state.IsReadOnly)
+            {
+               text = "(node accessible)";
+            }
+
             GUILayout.Label(text, Style.Label, GUILayout.Width(columnValue.Width));
 
             var btnRect = GUILayoutUtility.GetLastRect();
@@ -1118,7 +1219,7 @@ namespace Detox.Editor.GUI
 
             assetPath = EditorGUILayout.TextField(assetPath, Style.TextField, GUILayout.Width(columnValue.Width - 4 - buttonSize.x));
 
-            uScriptGUI.Enabled = !AssetBrowserWindow.isOpen;
+            uScript.GuiState.Enabled = !AssetBrowserWindow.isOpen;
 
             if (GUILayout.Button("Browse", style, GUILayout.Width(buttonSize.x)))
             {
@@ -1143,7 +1244,7 @@ namespace Detox.Editor.GUI
                AssetBrowserWindow.assetFilePath = string.Empty;
             }
 
-            uScriptGUI.Enabled = true;
+            uScript.GuiState.Enable();
          }
 
          EndRow(assetPath.GetType().ToString());
@@ -1168,7 +1269,7 @@ namespace Detox.Editor.GUI
                GUILayout.Width(columnLabel.Width - 3));
          }
 
-         uScriptGUI.Enabled = (!state.IsReadOnly) && (!state.IsSocketExposed || !state.IsLocked);
+         uScript.GuiState.Enabled = (!state.IsReadOnly) && (!state.IsSocketExposed || !state.IsLocked);
       }
 
       private static void BeginRow(string label, State state)
@@ -1185,7 +1286,7 @@ namespace Detox.Editor.GUI
             GUILayout.Label(string.IsNullOrEmpty(label) ? " " : label, Style.Label);
          }
 
-         uScriptGUI.Enabled = enabled;
+         uScript.GuiState.Enabled = enabled;
       }
 
       private static bool BoolField(bool value)
@@ -1204,7 +1305,7 @@ namespace Detox.Editor.GUI
          var v = Style.Type.CalcSize(new GUIContent(type));
          columnType.Width = Mathf.Max(columnType.Width, (int)v.x);
 
-         uScriptGUI.Enabled = true;
+         uScript.GuiState.Enable();
          GUILayout.Label(type, Style.Type);
          EditorGUILayout.EndHorizontal();
 
@@ -1219,32 +1320,6 @@ namespace Detox.Editor.GUI
       private static float FloatField(float value)
       {
          return EditorGUILayout.FloatField(value, Style.TextField, GUILayout.Width(columnValue.Width));
-      }
-
-      private static string GetControlName()
-      {
-         return GetControlName(string.Empty);
-      }
-
-      private static string GetControlName(string suffix)
-      {
-         return string.Format("{0}[{1}]{2}", nodeKey, propertyCount.ToString(CultureInfo.InvariantCulture), suffix);
-      }
-
-      private static T GetFieldValue<T>(Type type, string fieldName, BindingFlags bindingFlags)
-      {
-         var fieldInfo = type.GetField(fieldName, bindingFlags);
-         uScriptDebug.Assert(fieldInfo != null, string.Format("Unable to access a field named \"{0}\"", fieldName));
-         return (T)fieldInfo.GetValue(null);
-      }
-
-      private static T GetPropertyValue<T>(Type type, string propertyName, BindingFlags bindingFlags)
-      {
-         var propertyInfo = type.GetProperty(propertyName, bindingFlags);
-         uScriptDebug.Assert(
-            propertyInfo != null,
-            string.Format("Unable to access a property named \"{0}\"", propertyName));
-         return (T)propertyInfo.GetValue(null, null);
       }
 
       private static void GetResourceFolderPaths(string sourceDir, int recursionDepth)
@@ -1321,9 +1396,38 @@ namespace Detox.Editor.GUI
          }
 
          EditorGUILayout.TextField(
-            state.IsReadOnly ? "(read-only)" : "(socket used)",
+            state.IsReadOnly ? "(use socket)" : "(socket used)",
             Style.TextField,
             GUILayout.Width(columnValue.Width));
+         return false;
+      }
+
+      private static bool IsSupportedValueType(Type type)
+      {
+         return type.IsEnum
+            || type == typeof(bool)
+            || type == typeof(int)
+            || type == typeof(float)
+            || type == typeof(Vector2)
+            || type == typeof(Vector3)
+            || type == typeof(Vector4)
+            || type == typeof(Rect)
+            || type == typeof(Quaternion)
+            || type == typeof(Color)
+            || type == typeof(LayerMask);
+      }
+
+      private static bool IsSupportedReferenceType(Type type)
+      {
+         return type == typeof(object)
+            || type == typeof(string)
+            || type == typeof(GameObject)
+            || typeof(Component).IsAssignableFrom(type);
+      }
+
+      private static bool IsSupportedInterfaceType(Type type)
+      {
+         // None are specifically supported
          return false;
       }
 
@@ -1437,6 +1541,11 @@ namespace Detox.Editor.GUI
          return value;
       }
 
+      private static string SceneObjectPathField(string value, Type type)
+      {
+         return Control.SceneObjectPathField(value, type, GUILayout.Width(columnValue.Width));
+      }
+
       private static void SetupRow(State state)
       {
          EditorGUILayout.BeginHorizontal(Style.RowBackground);
@@ -1447,13 +1556,13 @@ namespace Detox.Editor.GUI
          }
          else
          {
-            uScriptGUI.Enabled = state.IsLocked == false;
+            uScript.GuiState.Enabled = state.IsLocked == false;
             state.IsSocketExposed = GUILayout.Toggle(
                state.IsSocketExposed,
                string.Empty,
                Style.Enabled,
                GUILayout.Width(columnEnabled.Width));
-            uScriptGUI.Enabled = true;
+            uScript.GuiState.Enable();
          }
 
          // Display the column label
@@ -1505,6 +1614,7 @@ namespace Detox.Editor.GUI
          return type != null;
       }
 
+#if UNITY_3_5
       private static string UnityObjectField(string value, Type type)
       {
          var objects = UnityEngine.Object.FindObjectsOfType(type);
@@ -1526,30 +1636,7 @@ namespace Detox.Editor.GUI
          // if it doesn't exist then the 'val' will stay as what was entered into the TextField
          return unityObject != null ? unityObject.name : string.Empty;
       }
-
-      //private static string UnityObjectField_ORIGINAL(string value, Type type)
-      //{
-      //   // now try and update the object browser with an instance of the specified object
-      //   var objects = UnityEngine.Object.FindObjectsOfType(type);
-      //   var unityObject = objects.FirstOrDefault(o => o.name == value);
-
-      //   // components should never be instances in the property grid
-      //   // we must refer to (and select) their parent game object
-      //   if (typeof(Component).IsAssignableFrom(type))
-      //   {
-      //      //type = typeof(GameObject);
-      //      if (null != unityObject)
-      //      {
-      //         unityObject = ((Component)unityObject).gameObject;
-      //      }
-      //   }
-
-      //   unityObject = EditorGUILayout.ObjectField(unityObject, type, true, GUILayout.Width(columnValue.Width));
-
-      //   // if that object (or the changed object) does exist, use it's name to update the property value
-      //   // if it doesn't exist then the 'val' will stay as what was entered into the TextField
-      //   return unityObject != null ? unityObject.name : string.Empty;
-      //}
+#endif
 
       private static string VariableNameField(string label, string value, State state)
       {
@@ -1568,34 +1655,32 @@ namespace Detox.Editor.GUI
 
             // Unity 3.x uses a FIELD, whereas Unity 4.x uses a PROPERTY. Ugh.
             var maxWidth = uScript.UnityVersion < 4.0f
-                              ? GetFieldValue<float>(typeof(EditorGUILayout), "kLabelFloatMaxW", Flags)
-                              : GetPropertyValue<float>(typeof(EditorGUILayout), "kLabelFloatMaxW", Flags);
-            var minWidth = GetFieldValue<float>(typeof(EditorGUI), "kNumberW", Flags);
+                              ? UnityEditorExtensions.GetFieldValue<float>(
+                                 typeof(EditorGUILayout),
+                                 "kLabelFloatMaxW",
+                                 Flags)
+                              : UnityEditorExtensions.GetPropertyValue<float>(
+                                 typeof(EditorGUILayout),
+                                 "kLabelFloatMaxW",
+                                 Flags);
+            var minWidth = UnityEditorExtensions.GetFieldValue<float>(typeof(EditorGUI), "kNumberW", Flags);
 
             var style = Style.TextField;
             var position = GUILayoutUtility.GetRect(minWidth, maxWidth, 16f, 16f, style, GUILayout.Width(columnValue.Width));
             var controlName = GetControlName();
             var id = GUIUtility.GetControlID(controlName.GetHashCode(), FocusType.Keyboard, position);
 
-            var fieldInfo = typeof(EditorGUI).GetField("s_RecycledEditor", Flags);
-            uScriptDebug.Assert(fieldInfo != null, "Unable to access the RecycledEditor field.");
-
-            var parameters = new[]
-                                {
-                                   fieldInfo.GetValue(null),           // RecycledTextEditor editor
-                                   id,                                 // int id
-                                   EditorGUI.IndentedRect(position),   // Rect position
-                                   value,                              // string text
-                                   style,                              // GUIStyle style
-                                   null,                               // string allowedLetters
-                                   false,                              // out bool changed
-                                   false,                              // bool reset
-                                   false,                              // bool multi-line
-                                   false                               // bool passwordField
-                                };
-
-            var methodInfo = typeof(EditorGUI).GetMethod("DoTextField", Flags);
-            value = (string)methodInfo.Invoke(null, parameters);
+            bool changed;
+            value = UnityEditorExtensions.DoTextField(
+               id,
+               EditorGUI.IndentedRect(position),
+               value,
+               style,
+               null,
+               out changed,
+               false,
+               false,
+               false);
 
             // Associate the id with the control name
             ControlIDList[id] = controlName;
@@ -1666,8 +1751,6 @@ namespace Detox.Editor.GUI
 
          public readonly bool IsLocked;
 
-         public readonly bool IsReadOnly;
-
          public readonly string Name;
 
          public readonly string Type;
@@ -1696,7 +1779,30 @@ namespace Detox.Editor.GUI
             this.EntityNode = entityNode;
          }
 
+         public bool IsReadOnly { get; set; }
+
          public bool IsSocketExposed { get; set; }
+
+         public override string ToString()
+         {
+            var flags = string.Empty;
+            if (this.IsSocketExposed)
+            {
+               flags += ", SocketExposed";
+            }
+
+            if (this.IsLocked)
+            {
+               flags += ", IsLocked";
+            }
+
+            if (this.IsReadOnly)
+            {
+               flags += ", IsReadOnly";
+            }
+
+            return string.Format("(\"{0}\", {1}{2})", this.Name, this.Type, flags);
+         }
       }
 
       private static class Style

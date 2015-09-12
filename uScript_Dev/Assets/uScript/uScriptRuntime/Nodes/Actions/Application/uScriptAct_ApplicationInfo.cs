@@ -33,10 +33,14 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       [SocketState(false, false)]
       out bool isEditor,
 
+      // This functionality was depricated in 5.2. You now need to specify a level index, so for
+      // general application reporting you can no longer find out if ANY level might be currently loading, which
+      // is what this node's intention to report out from this socket was for.
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       [FriendlyName("isLoadingLevel", "Is some level being loaded?")]
       [SocketState(false, false)]
       out bool isLoadingLevel,
-
+#endif
       [FriendlyName("isPlaying", "Returns true when in any kind of player.")]
       [SocketState(false, false)]
       out bool isPlaying,
@@ -77,12 +81,10 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       [SocketState(false, false)]
       out SystemLanguage systemLanguage,
 
-      //allow for 3_4 and higher
-#if !UNITY_3_2 && !UNITY_3_3
       [FriendlyName("internetReachability", "Returns internet reachability status.")]
       [SocketState(false, false)]
       out NetworkReachability internetReachability,
-#endif
+
       [FriendlyName("webSecurityEnabled", "Indicates whether Unity's webplayer security model is enabled.")]
       [SocketState(false, false)]
       out bool webSecurityEnabled,
@@ -112,7 +114,14 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       loadedLevelName = Application.loadedLevelName;
 
       isEditor = Application.isEditor;
+
+      // This functionality was depricated in 5.2. You now need to specify a level index, so for
+      // general application reporting you can no longer find out if ANY level might be currently loading, which
+      // is what this node's intention to report out from this socket was for.
+#if (UNITY_3_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
       isLoadingLevel = Application.isLoadingLevel;
+#endif
+
       isPlaying = Application.isPlaying;
       isWebPlayer = Application.isWebPlayer;
       streamedBytes = Application.streamedBytes;
@@ -127,10 +136,7 @@ public class uScriptAct_ApplicationInfo : uScriptLogic
       unityVersion = Application.unityVersion;
       systemLanguage = Application.systemLanguage;
 
-      //allow for 3_4 and higher
-      #if !UNITY_3_2 && !UNITY_3_3
-            internetReachability = Application.internetReachability;
-      #endif
+      internetReachability = Application.internetReachability;
 
       webSecurityEnabled = Application.webSecurityEnabled;
       webSecurityHostUrl = Application.webSecurityHostUrl;

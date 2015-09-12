@@ -96,11 +96,11 @@ namespace Detox.Editor.GUI.Windows
 
          if (string.IsNullOrEmpty(promotion.Title) == false)
          {
-#if UNITY_5_1
+#if UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9
             // This isn't in the Unity API until 5.1
             this.titleContent = new GUIContent(promotion.Title);
 #else
-            this.title = promotion.Title;
+         this.title = promotion.Title;
 #endif
          }
 
@@ -146,8 +146,6 @@ namespace Detox.Editor.GUI.Windows
          var headers = webRequest.responseHeaders;
 
          WebResponseHeaders = headers;
-         WebResponseText = webRequest.text;
-         WebResponseTexture = webRequest.textureNonReadable;
 
          if (string.IsNullOrEmpty(webRequest.error) == false)
          {
@@ -157,6 +155,9 @@ namespace Detox.Editor.GUI.Windows
             WebResponseText = webRequest.error;
             return;
          }
+
+         WebResponseText = webRequest.text;
+         WebResponseTexture = webRequest.textureNonReadable;
 
          int promotionID;
 

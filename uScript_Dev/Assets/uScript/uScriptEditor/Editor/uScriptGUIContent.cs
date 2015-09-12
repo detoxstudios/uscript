@@ -62,6 +62,7 @@ public static class uScriptGUIContent
       FileMenuItemSaveRelease = new GUIContent("Save Release &R");
       FileMenuItemExportImage = new GUIContent("Export to Image (PNG)   &E");
       FileMenuItemUpgradeNodes = new GUIContent("Upgrade Deprecated Nodes");
+      FileMenuItemFindMissingGraphs = new GUIContent("Find Missing Graphs");
       FileMenuItemRebuildGraphs = new GUIContent("Rebuild All Graphs");
       FileMenuItemRemoveSource = new GUIContent("Remove Generated Code");
 
@@ -266,6 +267,8 @@ public static class uScriptGUIContent
    public static GUIContent FileMenuItemSaveRelease { get; private set; }
 
    public static GUIContent FileMenuItemExportImage { get; private set; }
+
+   public static GUIContent FileMenuItemFindMissingGraphs { get; private set; }
 
    public static GUIContent FileMenuItemUpgradeNodes { get; private set; }
 

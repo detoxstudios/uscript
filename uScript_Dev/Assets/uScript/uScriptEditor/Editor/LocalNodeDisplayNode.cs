@@ -9,11 +9,16 @@
 
 namespace Detox.ScriptEditor
 {
+   using System;
    using System.Collections.Generic;
 
    using Detox.Drawing;
    using Detox.Editor;
    using Detox.FlowChart;
+
+   using UnityEngine;
+
+   using Graphics = Detox.Drawing.Graphics;
 
    public partial class LocalNodeDisplayNode : DisplayNode
    {
@@ -54,27 +59,99 @@ namespace Detox.ScriptEditor
          Name = LocalNode.Name.Default;
 
          // Use the variable type name if the variable is empty/null
-         if ( "" == LocalNode.Value.Default )
+         if ("" == LocalNode.Value.Default)
          {
-            value = "(" + uScriptConfig.Variable.FriendlyName(LocalNode.Value.Type) + ")";
+            var name = uScriptConfig.Variable.FriendlyName(this.LocalNode.Value.Type);
+            value = string.Format("({0})", name.ReplaceFirst("UnityEngine.", string.Empty));
          }
          else
          {
-            if (LocalNode.Value.Type.Contains("Mask"))
+            if (this.LocalNode.Value.Type.Contains("Mask"))
             {
-               value = uScriptGUI.FormatMaskDisplay(LocalNode.Value.Default);
+               value = uScriptGUI.FormatMaskDisplay(this.LocalNode.Value.Default);
             }
             else
             {
-               value = LocalNode.Value.Default;
+               var isArray = false;
+               var valueType = uScript.Instance.GetType(this.LocalNode.Value.Type);
+               if (valueType != null && valueType.HasElementType)
+               {
+                  valueType = valueType.GetElementType();
+                  isArray = true;
+               }
+
+               if (this.LocalNode.Value.Default.Contains(Data.ScriptEditor.Parameter.ArrayDelimeter.ToString()))
+               {
+                  // This is an array
+                  var elements = this.LocalNode.Value.Default.Split(Data.ScriptEditor.Parameter.ArrayDelimeter);
+
+                  if (valueType == typeof(GameObject) || typeof(Component).IsAssignableFrom(valueType))
+                  {
+                     for (var index = 1; index < elements.Length; index++)
+                     {
+                        var element = System.IO.Path.GetFileName(elements[index]);
+                        if (element == string.Empty && valueType != null)
+                        {
+                           var name = uScriptConfig.Variable.FriendlyName(valueType.ToString());
+                           element = string.Format("({0})", name.ReplaceFirst("UnityEngine.", string.Empty));
+                        }
+                        elements[index] = element;
+                     }
+                     value = string.Join(string.Format("{0} ", Data.ScriptEditor.Parameter.ArrayDelimeter), elements);
+                  }
+                  else
+                  {
+                     //Debug.LogFormat(
+                     //   "ArrayDelimeter\n" + "Type: {0}, Default: '{1}' ",
+                     //   this.LocalNode.Value.Type,
+                     //   this.LocalNode.Value.Default);
+
+                     for (var index = 1; index < elements.Length; index++)
+                     {
+                        if (valueType == typeof(string) && elements[index] == string.Empty)
+                        {
+                           var name = uScriptConfig.Variable.FriendlyName(valueType.ToString());
+                           elements[index] = string.Format("({0})", name);
+                        }
+
+                        if (valueType != typeof(int) && valueType != typeof(float) && valueType != typeof(string)
+                            && valueType != null && valueType.IsEnum == false)
+                        {
+                           elements[index] = string.Format("({0})", elements[index]);
+                        }
+                     }
+
+                     value = string.Join(string.Format("{0} ", Data.ScriptEditor.Parameter.ArrayDelimeter), elements);
+                  }
+
+               }
+               else
+               {
+                  // This is NOT an array, or an array with no elements.
+                  if (valueType == typeof(GameObject) || typeof(Component).IsAssignableFrom(valueType))
+                  {
+                     // "/Parent 1/Child A/" will show as "Child A"
+                     var element = System.IO.Path.GetFileName(this.LocalNode.Value.Default.TrimEnd('/'));
+                     value = element;
+                  }
+                  else if (isArray)
+                  {
+                     value = uScriptConfig.Variable.FriendlyName(this.LocalNode.Value.Type)
+                        .ReplaceFirst("UnityEngine.", string.Empty);
+                  }
+                  else
+                  {
+                     value = this.LocalNode.Value.Default;
+                  }
+               }
             }
          }
 
-         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded )
+         if (Preferences.ShouldDrawCollapsedVariable(this.Selected))
          {
-            if ( value.Length > 3 )
+            if (value.Length > 3)
             {
-               value = value.Substring( 0, 3 ) + "...";
+               value = value.Substring(0, 3) + "...";
             }
          }
 
@@ -104,25 +181,11 @@ namespace Detox.ScriptEditor
          UpdateSockets( sockets.ToArray( ) );
       }
 
-      protected override Size CalculateSize(Socket []sockets)
+      protected override Size CalculateSize(Socket[] sockets)
       {
-         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) &&
-              uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded )
-         {
-            return new Size(57, 57);
-         }
-
-         //if ( true == this.m_Ctrl.FlowChart.Zoom < 1.0f )
-         //{
-         //   return new Size(57, 57);
-         //}
-
-         Size size = base.CalculateSize(sockets);
-         if (size.Width < 57) size.Width = 57;
-
-         size.Height = 57;
-
-         return size;
+         return Preferences.ShouldDrawCollapsedVariable(this.Selected)
+                   ? new Size(57, 57)
+                   : new Size(System.Math.Max(base.CalculateSize(sockets).Width, 57), 57);
       }
    }
 
@@ -167,7 +230,7 @@ namespace Detox.ScriptEditor
 
          if ( "" != ExternalConnection.Name.Default ) name = ExternalConnection.Name.Default;
 
-         if ((false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) && uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded)
+         if (Preferences.ShouldDrawCollapsedVariable(this.Selected))
          {
             if (name.Length > 3)
             {
@@ -199,22 +262,11 @@ namespace Detox.ScriptEditor
          UpdateSockets( sockets.ToArray( ) );
       }
 
-      protected override Size CalculateSize(Socket []sockets)
+      protected override Size CalculateSize(Socket[] sockets)
       {
-         if ( (false == Selected || uScript.Preferences.VariableExpansion == Preferences.VariableExpansionType.AlwaysCollapsed) &&
-               uScript.Preferences.VariableExpansion != Preferences.VariableExpansionType.AlwaysExpanded ) return new Size(61, 59);
-
-         //if ( true == this.m_Ctrl.FlowChart.Zoom < 1.0f )
-         //{
-         //   return new Size(61, 59);
-         //}
-
-         Size size = base.CalculateSize(sockets);
-         if (size.Width < 61) size.Width = 61;
-
-         size.Height = 59;
-
-         return size;
+         return Preferences.ShouldDrawCollapsedVariable(this.Selected)
+                   ? new Size(61, 59)
+                   : new Size(System.Math.Max(base.CalculateSize(sockets).Width, 61), 59);
       }
 
       protected override void CenterPoints(Socket []sockets, List<AnchorPoint> points, List<TextPoint> textPoints)

@@ -351,6 +351,17 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
+   public static GuiState GuiState { get; private set; }
+
+   /// <summary>
+   /// Delegate class used by GuiState for checking whether the GUI should be enabled.
+   /// </summary>
+   /// <returns>Returns True if it can be enabled, otherwise False.</returns>
+   private static bool GuiStateEnableCondition()
+   {
+      return Instance.IsLicenseAccepted && IsPreferenceWindowOpen == false && Instance.isContextMenuOpen == false;
+   }
+
    public Type GetType(string typeName)
    {
       var type = this.m_Types[typeName] as Type ?? uScriptUtils.GetAssemblyQualifiedType(typeName);
@@ -483,7 +494,7 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
    private static string GetFilePathWithLabel(string label, string fileName)
    {
       var guids = AssetDatabase.FindAssets("l:" + label, null);
@@ -510,7 +521,7 @@ public sealed partial class uScript : EditorWindow
 
    public static List<string> GetGraphPaths(string label = "uScriptSource")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       return GetFilePathsWithLabel(label);
 #else
       return Directory.GetFiles(Preferences.UserScripts, "*.uscript", SearchOption.AllDirectories).Select(s => s.Replace("\\", "/")).ToList();
@@ -519,11 +530,18 @@ public sealed partial class uScript : EditorWindow
 
    public static string GetGraphPath(string fileName, string label = "uScriptSource")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       return GetFilePathWithLabel(label, fileName);
 #else
       return FindFile(Preferences.UserScripts, string.Format("{0}.uscript", fileName));
 #endif
+   }
+
+   // this function is expensive - it gets all *.uscript files starting from Assets/ down
+   // written specifically for label fixup (i.e. "Fix Missing uScripts" button)
+   public static List<string> GetAllUScriptPaths()
+   {
+      return Directory.GetFiles(Application.dataPath, "*.uscript", SearchOption.AllDirectories).Select(s => s.Replace("\\", "/")).ToList();
    }
 
    public bool IsStale(string graphName)
@@ -607,6 +625,8 @@ public sealed partial class uScript : EditorWindow
    {
       instance = (uScript)EditorWindow.GetWindow(typeof(uScript), false, "uScript");
       instance.Launching();
+
+      GuiState = new GuiState(GuiStateEnableCondition);
    }
 
    // Call to force release the mouse and stop a drag operation
@@ -1490,7 +1510,7 @@ public sealed partial class uScript : EditorWindow
       // Must be done in OnGUI rather than on demand
       this.m_ScriptEditorCtrl.ParseClipboardData();
 
-      GUI.enabled = this.IsLicenseAccepted && !IsPreferenceWindowOpen;
+      GuiState.Enable();
 
       // Set the default mouse region
       if (Event.current.type == EventType.Repaint)
@@ -1536,9 +1556,6 @@ public sealed partial class uScript : EditorWindow
 
       // where is the mouse?
       this.CalculateMouseRegion();
-
-      // Draw GUI.Windows last, so that they appear on top of all other controls
-      this.OnGUIDrawWindows();
 
       ExportPNG.ContinueExport();
 
@@ -1595,11 +1612,14 @@ public sealed partial class uScript : EditorWindow
             e.Use();
          }
       }
+
+      // Draw GUI.Windows last, so that they appear on top of all other controls
+      this.OnGUIDrawWindows();
    }
 
    private void OnGUIDrawWindows()
    {
-      GUI.enabled = true;
+      GuiState.Enable();
 
       this.BeginWindows();
       {
@@ -1646,11 +1666,16 @@ public sealed partial class uScript : EditorWindow
                this.rectContextMenuWindow = tmpRect;
             }
          }
+
+         var drawingOffset = uScriptGUIPanelProperty.Instance.ScrollviewRect.Position()
+                             - uScriptGUIPanelProperty.Instance.ScrollviewOffset;
+         Detox.Editor.GUI.Control.AutoCompletePopup.Draw(drawingOffset);
+         //Detox.Editor.GUI.Control.AutoCompletePopup.Draw(Vector2.zero);
       }
 
       this.EndWindows();
 
-      GUI.enabled = true;
+      GuiState.Enable();
    }
 
    private void OnGUIFirstRun()
@@ -2061,6 +2086,17 @@ public sealed partial class uScript : EditorWindow
    /// </summary>
    private void OnGUIHandleWindowOverrides()
    {
+      Detox.Editor.GUI.Control.AutoCompletePopup.InterceptMouseInput();
+
+      // When a Window is open, the non-Window GUI must be disabled except while repainting.
+      if (Detox.Editor.GUI.Control.AutoCompletePopup.IsVisible && Event.current.type != EventType.Repaint)
+      {
+         // Disable the entire GUI until the window is drawn
+         GuiState.Disable();
+      }
+
+      // CursorRects associated with GUI.Windows must be applied before the rest of the GUI is processed.
+      Detox.Editor.GUI.Control.AutoCompletePopup.AddCursorRect();
    }
 
    private static void SendEventToHotkeyWindow()
@@ -2666,7 +2702,7 @@ public sealed partial class uScript : EditorWindow
 
       if (this.mouseRegionRect.ContainsKey(region))
       {
-         if (GUI.enabled)
+         if (GuiState.Enabled)
          {
             switch (region)
             {
@@ -2701,9 +2737,8 @@ public sealed partial class uScript : EditorWindow
       }
    }
 
-   public void RefreshAssetDatabase(bool quick)
+   public void RefreshAssetDatabase(bool quick, bool debug)
    {
-      UnityEngine.Object obj;
       const string Label = "Saved:\t";
       var indent = GUIStyle.none.GetTabIndent(string.Format("uScript: {0}", Label));
 
@@ -2719,7 +2754,7 @@ public sealed partial class uScript : EditorWindow
       {
          uScriptDebug.Log(
             string.Format(
-               "{0}{1}\n{2}... based on the graph.\n\n{3}\n- {4}",
+               "{0}{1}\n{2}... [Quick Save]\n\n{3}\n- {4}",
                Label,
                fileName.Bold(),
                indent,
@@ -2730,33 +2765,22 @@ public sealed partial class uScript : EditorWindow
       {
          uScriptDebug.Log(
             string.Format(
-               "{0}{1}\n{2}... and generated source files based on the graph.\n\n{3}\n- {4}\n\n{5}\n- {6}\n- {7}",
+               "{0}{1}\n{2}... and generated source files based on the graph.{3}\n\n{4}\n- {5}\n\n{6}\n- {7}\n- {8}",
                Label,
                fileName.Bold(),
                indent,
+               debug ? " [Debug Save]" : string.Empty,
                "Graph:".Bold(),
                this.fullPath.RelativeAssetPath(),
                "Generated source files:".Bold(),
                logicPath,
                wrapperPath));
 
-         obj = AssetDatabase.LoadMainAssetAtPath(logicPath);
-         if (obj != null)
-         {
-            AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
-         }
-         obj = AssetDatabase.LoadMainAssetAtPath(wrapperPath);
-         if (obj != null)
-         {
-            AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptCode" });
-         }
+         SetLabelsOnFile(logicPath, new string[] { "uScript", "uScriptCode" });
+         SetLabelsOnFile(wrapperPath, new string[] { "uScript", "uScriptCode" });
       }
 
-      obj = AssetDatabase.LoadMainAssetAtPath(this.fullPath.RelativeAssetPath());
-      if (obj != null)
-      {
-         AssetDatabase.SetLabels(obj, new string[] { "uScript", "uScriptSource" });
-      }
+      SetLabelsOnFile(this.fullPath, new string[] { "uScript", "uScriptSource" });
    }
 
    private void DrawMenuItemShortcut(string shortcut)
@@ -2956,7 +2980,7 @@ public sealed partial class uScript : EditorWindow
 
       if (saved)
       {
-         this.RefreshAssetDatabase(quick);
+         this.RefreshAssetDatabase(quick, debug);
       }
 
       return saved;
@@ -2996,6 +3020,11 @@ public sealed partial class uScript : EditorWindow
    public static void FileMenuItem_ExportPNG()
    {
       ExportPNG.BeginExport();
+   }
+
+   public static void FileMenuItem_FindMissingGraphs()
+   {
+      PanelScript.Instance.FindMissingGraphs();
    }
 
    void FileMenuItem_UpgradeDeprecatedNodes()
@@ -3193,6 +3222,8 @@ public sealed partial class uScript : EditorWindow
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemExportImage, false, FileMenuItem_ExportPNG);
       menu.AddItem(uScriptGUIContent.FileMenuItemUpgradeNodes, false, this.FileMenuItem_UpgradeDeprecatedNodes);
+      menu.AddSeparator(string.Empty);
+      menu.AddItem(uScriptGUIContent.FileMenuItemFindMissingGraphs, false, FileMenuItem_FindMissingGraphs);
       menu.AddSeparator(string.Empty);
       menu.AddItem(uScriptGUIContent.FileMenuItemRebuildGraphs, false, this.FileMenuItem_RebuildAll);
       menu.AddItem(uScriptGUIContent.FileMenuItemRemoveSource, false, this.FileMenuItem_Clean);
@@ -3460,7 +3491,7 @@ public sealed partial class uScript : EditorWindow
       m_MouseMoveArgs.Y += (int)_canvasRect.y;
 
       // check for divider draggging
-      if (GUI.enabled && !uScriptGUI.PanelsHidden && this.mouseDown)
+      if (GuiState.Enabled && !uScriptGUI.PanelsHidden && this.mouseDown)
       {
          if (this.mouseDownRegion == MouseRegion.HandleCanvas && deltaY != 0)
          {
@@ -3724,7 +3755,7 @@ public sealed partial class uScript : EditorWindow
 
    public void RebuildScripts(string path, bool stubCode)
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       List<string> files = GetGraphPaths();
       foreach (string file in files)
       {
@@ -3747,13 +3778,72 @@ public sealed partial class uScript : EditorWindow
 #endif
    }
 
+   // returns false if path is not in source control or source control is not active
+   // optionally, you can check out the file if it is in source control (defaults behavior is to check out)
+   public static bool IsFileInSourceControl(string path, bool checkout = true)
+   {
+      bool inVC = false;
+
+#if (UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
+      // blocking checkout of versioned file, if necessary
+      if (UnityEditor.VersionControl.Provider.isActive)
+      {
+         UnityEditor.VersionControl.Asset asset = UnityEditor.VersionControl.Provider.GetAssetByPath(path.RelativeAssetPath());
+         if (asset != null)
+         {
+            UnityEditor.VersionControl.Task statusTask = UnityEditor.VersionControl.Provider.Status(asset);
+            statusTask.Wait();
+            if (UnityEditor.VersionControl.Provider.CheckoutIsValid(statusTask.assetList[0]))
+            {
+               inVC = true;
+               if (checkout)
+               {
+                  UnityEditor.VersionControl.Task coTask = UnityEditor.VersionControl.Provider.Checkout(statusTask.assetList[0], UnityEditor.VersionControl.CheckoutMode.Both);
+                  coTask.Wait();
+               }
+            }
+         }
+      }
+#endif
+
+      return inVC;
+   }
+
+   public static bool FileHasLabels(string fullPath, string[] labels)
+   {
+      UnityEngine.Object obj = AssetDatabase.LoadMainAssetAtPath(fullPath.RelativeAssetPath());
+      if (obj != null)
+      {
+         string[] lbls = AssetDatabase.GetLabels(obj);
+         foreach(string label in labels)
+         {
+            if (!lbls.Contains(label)) return false;
+         }
+      }
+
+      return true;
+   }
+
+   public static void SetLabelsOnFile(string fullPath, string[] labels)
+   {
+      if (!FileHasLabels(fullPath, labels))
+      {
+         UnityEngine.Object obj = AssetDatabase.LoadMainAssetAtPath(fullPath.RelativeAssetPath());
+         if (obj != null)
+         {
+            IsFileInSourceControl(fullPath);  // checkout if necessary
+            AssetDatabase.SetLabels(obj, labels);
+         }
+      }
+   }
+
    private string GetGeneratedScriptPath(string binaryPath)
    {
       String fileName = Path.GetFileNameWithoutExtension(binaryPath) + uScriptConfig.Files.GeneratedComponentExtension + ".cs";
 
       Directory.CreateDirectory(Preferences.GeneratedScripts);
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
       string filename = binaryPath.Substring(binaryPath.LastIndexOf("/"));
@@ -3776,7 +3866,7 @@ public sealed partial class uScript : EditorWindow
 
       Directory.CreateDirectory(Preferences.NestedScripts);
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       // first see if we've already saved the file and then just use that path
       List<string> files = GetFilePathsWithLabel("uScriptCode");
       string filename = binaryPath.Substring(binaryPath.LastIndexOf("/"));
@@ -3978,7 +4068,7 @@ public sealed partial class uScript : EditorWindow
 
       if (this.SaveGraph(script, this.fullPath, generateCode, generateDebugInfo, false))
       {
-         // When a file is saved (regardless of method), we should updated the
+         // When a file is saved (regardless of method), we should update the
          // Dictionary cache for that script.
 
          //script was saved under a new name, refresh the control
@@ -4071,7 +4161,7 @@ public sealed partial class uScript : EditorWindow
 
    private void GatherDerivedTypes(Dictionary<Type, Type> uniqueNodes, string path, Type baseType, string label = "")
    {
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       DirectoryInfo directory = new DirectoryInfo(path);
       List<FileInfo> filesList = new List<FileInfo>();
       FileInfo[] files;
@@ -4432,7 +4522,7 @@ public sealed partial class uScript : EditorWindow
    {
       List<RawScript> rawScripts = new List<RawScript>();
 
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
       string[] files = GetGraphPaths().ToArray();
 #else
       string[] files = FindAllFiles(Preferences.UserScripts, ".uscript");
@@ -5302,9 +5392,18 @@ public sealed partial class uScript : EditorWindow
             switch (p.FriendlyName)
             {
                case "Name": return "The variable name (optional). Variables that share the same name are automatically linked together and treated as the same variable in your graph. Once linked, changing the value of one will affect all others in the graph. Variables with the same name in different graphs are NOT connected in any way. Use the \"Make Public\" option below in order to access this variable as a reflected property between graphs.";
-               case "Value": return "The value of the variable. Only values supported by this variable type are allowed.";
-               case "Make Public": return "When checked, this will allow you to access this variable from other uScript graphs as a reflected property. You must name this variable before you can use this option (see the Name field above). This is the equivelent of making a variable \"public\" in a script.";
-               case "Hide In Inspector": return "When checked, this will hide this variable from Unity so that it will not show up in the Inspector panel for this graph's component. You must name this variable and make it public using the \"Make Public\" checkbox above before you can use this option (see the Name field above). This is the equivelent of using the [HideInInspector] attribute above a variable in a script.";
+               case "Value":
+                  var searchInstructions = string.Empty;
+                  var valueType = Instance.GetType(p.Type);
+                  if (valueType == typeof(GameObject) || typeof(Component).IsAssignableFrom(valueType))
+                  {
+                     searchInstructions =
+                        "\n\nEnter text to search for an object in the scene hierarchy. For faster and more accurate results at runtime, specify the complete hierarchy path.";
+                  }
+
+                  return string.Format("The value of the variable. Only values supported by this variable type are allowed.{0}", searchInstructions);
+               case "Make Public": return "When checked, this will allow you to access this variable from other uScript graphs as a reflected property. You must name this variable before you can use this option (see the Name field above). This is the equivalent of making a variable \"public\" in a script.";
+               case "Hide In Inspector": return "When checked, this will hide this variable from Unity so that it will not show up in the Inspector panel for this graph's component. You must name this variable and make it public using the \"Make Public\" checkbox above before you can use this option (see the Name field above). This is the equivalent of using the [HideInInspector] attribute above a variable in a script.";
             }
 
             break;

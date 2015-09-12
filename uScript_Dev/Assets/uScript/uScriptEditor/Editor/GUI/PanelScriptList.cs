@@ -120,6 +120,36 @@ namespace Detox.Editor.GUI
             EditorGUILayout.EndVertical();
          }
 
+         public void FindMissingGraphs()
+         {
+            AssetDatabase.StartAssetEditing();
+            List<string> paths = uScript.GetAllUScriptPaths();
+            int found = 0;
+            foreach (string path in paths)
+            {
+               if (!uScript.FileHasLabels(path, new string[] { "uScript", "uScriptSource" }))
+               {
+                  found++;
+                  uScriptDebug.Log(string.Format("Found missing graph: {0} - updating labels...", path.RelativeAssetPath()));
+                  uScript.SetLabelsOnFile(path, new string[] { "uScript", "uScriptSource" });
+
+                  // TODO: if this graph file is missing its labels, chances are its generated files are missing theirs, too - check now
+               }
+            }
+            AssetDatabase.StopAssetEditing();
+
+            if (found == 0)
+            {
+               EditorUtility.DisplayDialog("Find Missing Graphs", "No missing graphs found.", "OK");
+            }
+            else
+            {
+               AssetDatabase.Refresh();
+               this.RequestListUpdate();
+               EditorUtility.DisplayDialog("Find Missing Graphs", string.Format("Found and fixed {0} missing graphs.", found), "OK");
+            }
+         }
+
          public void SaveState()
          {
             uScript.Preferences.ProjectGraphListFilter = this.filterText;
@@ -149,7 +179,7 @@ namespace Detox.Editor.GUI
             }
 
             // Get the graph paths, making the path relative to the project folder
-#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if (UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9)
             var initialPaths = uScript.GetGraphPaths();
             var commonPath = uScriptUtility.FindCommonPath(initialPaths).Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             initialPaths = initialPaths.Select(path => path.Replace(commonPath, string.Empty)).ToList();

@@ -972,25 +972,22 @@ namespace Detox.ScriptEditor
             return;
          }
 
-         this.shouldParseClipboardData = false;
-
          m_ClipboardText = null;
-
-         string text = null;
-
+         
          try
          {
-            text = UnityEditor.EditorGUIUtility.systemCopyBuffer;
+            if ( null == UnityEditor.EditorGUIUtility.systemCopyBuffer ) return;
+
+            if ( false == UnityEditor.EditorGUIUtility.systemCopyBuffer.StartsWith("[SCRIPTEDITOR]") )  return;
+
+            this.shouldParseClipboardData = false;
+
+            m_ClipboardText = UnityEditor.EditorGUIUtility.systemCopyBuffer.Substring( "[SCRIPTEDITOR]".Length );
+            //UnityEngine.Debug.Log("Successful copy");
          }
-         catch ( Exception )
+         catch (Exception)
          {
          }
-         
-         if ( null == text ) return;
-
-         if ( false == text.StartsWith("[SCRIPTEDITOR]") )  return;
-
-         m_ClipboardText = text.Substring( "[SCRIPTEDITOR]".Length );
       }
 
       public void ExpandNode(Node node)

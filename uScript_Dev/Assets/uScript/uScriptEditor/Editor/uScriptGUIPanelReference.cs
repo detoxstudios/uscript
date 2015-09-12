@@ -59,7 +59,7 @@ namespace Detox.Editor
 
       public void Init()
       {
-         this._name = "Reference";
+         this.Name = "Reference";
 
          //_size = 250;
          //_region = uScriptGUI.Region.Reference;
@@ -82,8 +82,8 @@ namespace Detox.Editor
             }
             else
             {
-               this._scrollviewOffset = EditorGUILayout.BeginScrollView(
-                  this._scrollviewOffset,
+               this.ScrollviewOffset = EditorGUILayout.BeginScrollView(
+                  this.ScrollviewOffset,
                   false,
                   false,
                   uScriptGUIStyle.HorizontalScrollbar,
@@ -353,7 +353,7 @@ namespace Detox.Editor
       {
          EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
          {
-            GUILayout.Label(this._name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
+            GUILayout.Label(this.Name, uScriptGUIStyle.PanelTitle, GUILayout.ExpandWidth(true));
 
             Content.ButtonHelp.tooltip = this.toolbarButtonHelpTooltip;
 

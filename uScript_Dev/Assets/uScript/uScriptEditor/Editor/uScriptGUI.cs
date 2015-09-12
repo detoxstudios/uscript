@@ -49,6 +49,8 @@ namespace Detox.Editor
 
       private static MethodInfo methodCheckOnGUI;
 
+      public static bool IsDrawingGUIWindows { get; set; }
+
       public static int PanelDividerThickness { get; private set; }
 
       public static int PanelLeftWidth { get; set; }
@@ -63,22 +65,12 @@ namespace Detox.Editor
 
       public static int SaveMethodPopupWidth { get; private set; }
 
-      /// <summary>
-      /// Gets or sets a value indicating whether the GUI is enabled. This method should
-      /// be called instead of GUI.enabled when the state needs to change during OnGUI,
-      /// especially during the uScriptGUI custom control calls.
-      /// </summary>
-      public static bool Enabled
+      public static bool IsRepainting
       {
          get
          {
-            return UnityEngine.GUI.enabled;
-         }
-
-         set
-         {
-            var instance = uScript.Instance;
-            UnityEngine.GUI.enabled = value && (instance.IsLicenseAccepted && !uScript.IsPreferenceWindowOpen && !instance.isContextMenuOpen);
+            // TODO: Test to make sure we're actually in OnGUI
+            return Event.current.type == EventType.Repaint;
          }
       }
 
