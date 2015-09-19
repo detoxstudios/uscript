@@ -11,7 +11,7 @@ using System.Collections;
 [NodeAuthor("Detox Studios LLC", "http://www.detoxstudios.com")]
 [NodeHelp("http://docs.uscript.net/#3-Working_With_uScript/3.4-Nodes.htm")]
 
-[FriendlyName("Get Sub-String", "Returns part of the Target string as specified. Note, if you supply values outside of a valid range, nothing will be returned in th new string.")]
+[FriendlyName("Get Sub-String", "Returns part of the Target string as specified. Note, if you supply values outside of a valid range, nothing will be returned in the new string.")]
 public class uScriptAct_GetSubString : uScriptLogic
 {
    public bool Out { get { return true; } }
@@ -39,7 +39,7 @@ public class uScriptAct_GetSubString : uScriptLogic
 			
 			// Make sure everything is within bounds of the Target string
 			if (StartPos < 0) { StartPos = 0; }
-			if (StartPos > indexMax) { StartPos = indexMax; }
+			if (StartPos > indexMax) { skip = true; }
 			if (StringLength > 0) { useLength = true; }
 			
 			if (StringLength > Target.Length) { skip = true; }
