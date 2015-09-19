@@ -139,16 +139,29 @@ namespace Detox.Editor.GUI
             GUI.backgroundColor = new Color(1, 0.5f, 0.5f, 1);
          }
 
-         // Call the internal Unity control
          const string DefaultMessage = "\u0002(type to search)\u0003";
-         if (Event.current.type == EventType.Repaint && text == string.Empty && UnityEditorExtensions.IsEditingControl(id) == false)
-         {
-            text = DefaultMessage;
-            style = new GUIStyle(style) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Italic };
-         }
 
-         bool changed;
-         var value = UnityEditorExtensions.DoTextField(id, fieldPosition, text, style, out changed);
+         var changed = false;
+         var value = text;
+
+         // When the text is longer than the field width, we want to draw it using Ellipsis at the beginning of the string.
+         // This should be done only during Repaint and when the control is not being edited.
+         if (Event.current.type == EventType.Repaint && UnityEditorExtensions.IsEditingControl(id) == false)
+         {
+            if (text == string.Empty)
+            {
+               text = DefaultMessage;
+               style = new GUIStyle(style) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Italic };
+            }
+
+            var shortened = Ellipsis.Compact(text, style, fieldPosition, Ellipsis.Format.Start);
+            GUI.Label(fieldPosition, shortened, style);
+         }
+         else
+         {
+            // Call the internal Unity control
+            value = UnityEditorExtensions.DoTextField(id, fieldPosition, text, style, out changed);
+         }
 
          if (text == DefaultMessage && value == DefaultMessage)
          {
