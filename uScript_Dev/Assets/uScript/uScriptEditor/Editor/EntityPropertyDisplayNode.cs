@@ -25,7 +25,19 @@ namespace Detox.ScriptEditor
             string name = "";
 
             name = EntityProperty.Instance.Default;
-            if ( "" == name ) name = "(" + uScriptConfig.Variable.FriendlyName(EntityProperty.ComponentType) + ")";
+            if ( "" == name )
+            {
+                name = uScriptConfig.Variable.FriendlyName(EntityProperty.ComponentType); 
+                if (name == EntityProperty.ComponentType)
+                {
+                    int index = name.LastIndexOf("_Component");
+
+                    if (-1 != index)
+                        name = name.Substring(0, index);
+                }
+                
+                name = "(" + name + ")";
+            }
 
             name += "\n";
             name += EntityProperty.Parameter.FriendlyName;
